@@ -1,66 +1,80 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [RFC/PATCH] attr: map builtin userdiff drivers to well-known
- extensions
-Date: Thu, 25 Aug 2011 23:58:50 -0400
-Message-ID: <4E5719FA.9060603@sunshineco.com>
-References: <20110825204047.GA9948@sigill.intra.peff.net> <5qgbkjmEZ8jSRkpVNieElg1bcVbuEStD525CFu1hZPQ7F03R3EzjXwQdDKQBOnR1zWDiZBsGu53K20rbOGpYd6rmp2-e-ZI3Z42BKT01TVI@cipher.nrlssc.navy.mil> <20110826024533.GB17625@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>,
-	Boaz Harrosh <bharrosh@panasas.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 26 05:58:59 2011
+From: Kris Shannon <kris@shannon.id.au>
+Subject: [RFC PATCH] diff: use $COLUMNS if available for default stat_width
+Date: Fri, 26 Aug 2011 15:47:27 +1000
+Message-ID: <1314337647-29270-1-git-send-email-kris@shannon.id.au>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 26 07:48:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwnZK-0003JS-QI
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 05:58:59 +0200
+	id 1QwpHL-0003hg-2T
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 07:48:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752692Ab1HZD6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Aug 2011 23:58:54 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:57730 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752059Ab1HZD6x (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2011 23:58:53 -0400
-Received: by qyk34 with SMTP id 34so1978079qyk.19
-        for <git@vger.kernel.org>; Thu, 25 Aug 2011 20:58:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=fuqU/m6QmZXs+yucCZpiskQyjsBn8NY2Z84ViBFaR1A=;
-        b=JqqL+gHt2JchgFeMg6PXI3PEKDDbC6wWj5FgIL4H9AB0IYHxnCGAOc5xrkl5pLmUoS
-         NEAuul5a52DkAsz2KbGxFPNRZ9sq1z/Mkk8B98FYWKURguNsqNn0B5C80FTNKVt/rz+1
-         unCb49fO42MuCeZoE2eT0J0rv1ws4td78L4o4=
-Received: by 10.229.46.142 with SMTP id j14mr752398qcf.263.1314331132709;
-        Thu, 25 Aug 2011 20:58:52 -0700 (PDT)
-Received: from [192.168.1.3] (user-0c936tj.cable.mindspring.com [24.145.155.179])
-        by mx.google.com with ESMTPS id f17sm1031658qct.18.2011.08.25.20.58.51
-        (version=SSLv3 cipher=OTHER);
-        Thu, 25 Aug 2011 20:58:51 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.18) Gecko/20110617 Thunderbird/3.1.11
-In-Reply-To: <20110826024533.GB17625@sigill.intra.peff.net>
+	id S1751714Ab1HZFrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Aug 2011 01:47:40 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:65419 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751124Ab1HZFrj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2011 01:47:39 -0400
+Received: by gya6 with SMTP id 6so2469592gya.19
+        for <git@vger.kernel.org>; Thu, 25 Aug 2011 22:47:38 -0700 (PDT)
+Received: by 10.100.35.1 with SMTP id i1mr610808ani.139.1314337658530;
+        Thu, 25 Aug 2011 22:47:38 -0700 (PDT)
+Received: from localhost.localdomain (thoth.sisgroup.com.au [122.252.0.61])
+        by mx.google.com with ESMTPS id w2sm518241anm.21.2011.08.25.22.47.36
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 25 Aug 2011 22:47:37 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180151>
 
-On 08/25/2011 10:45 PM, Jeff King wrote:
-> Should all of our matches be case-insensitive? That is, should we be
-> matching both .HTML and .html? Clearly lowercase is the One True Way,
-> but I don't know what kind of junk people with case-insensitive
-> filesystems have, or whether we should even worry about it.
+If the COLUMNS environment variable is set use it's value
+as the default stat_width.
 
-In the Windows world, uppercase extensions are common. Also, one often 
-finds .htm on Windows rather than .html.
+Also set the stat_name_width default to 2/3 of the full width.
 
-Speaking of other platforms, on Mac OS X:
+This does change the default from 50 to 53 when using the
+original 80 column stat_width fallback.
 
-Objective-C is .m
-Objective-C++ is .mm (and long-deprecated .M is probably not relevant)
+Signed-off-by: Kris Shannon <kris@shannon.id.au>
+---
+ diff.c |   12 ++++++++++--
+ 1 files changed, 10 insertions(+), 2 deletions(-)
 
--- ES
+This has bugged me for a long time.  I finally decided to see how hard it would
+be to fix.
+
+I thought about getting the COLUMNS value once but I'm not sure it's worth the
+extra code.
+
+diff --git a/diff.c b/diff.c
+index 9038f19..6954134 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1329,8 +1329,16 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ 		line_prefix = msg->buf;
+ 	}
+ 
+-	width = options->stat_width ? options->stat_width : 80;
+-	name_width = options->stat_name_width ? options->stat_name_width : 50;
++	width = options->stat_width;
++	if (!width) {
++		char *cols = getenv("COLUMNS");
++
++		if (cols)
++			width = strtoul(cols, NULL, 10);
++		if (!width)
++			width = 80;
++	}
++	name_width = options->stat_name_width ? options->stat_name_width : ((width * 2 + 1) / 3);
+ 
+ 	/* Sanity: give at least 5 columns to the graph,
+ 	 * but leave at least 10 columns for the name.
+-- 
+1.7.6.1
