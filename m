@@ -1,76 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 2/5] git-tag: introduce long forms for the options
-Date: Fri, 26 Aug 2011 10:11:22 -0700
-Message-ID: <7vpqjsdrnp.fsf@alter.siamese.dyndns.org>
-References: <20110825175301.GC519@sigill.intra.peff.net>
- <f02e446227a93fff37591f1a866566e6220ce283.1314367414.git.git@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Aug 26 19:11:34 2011
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 1/2] fast-import: initialize variable require_explicit_termination
+Date: Fri, 26 Aug 2011 19:11:28 +0200
+Message-ID: <1314378689-8997-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Aug 26 19:11:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwzwI-0007WB-Kt
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 19:11:30 +0200
+	id 1QwzwW-0007dx-PN
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 19:11:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752139Ab1HZRLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Aug 2011 13:11:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60960 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750934Ab1HZRLZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Aug 2011 13:11:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 245D840B0;
-	Fri, 26 Aug 2011 13:11:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DPr/wr9TFe0lfgnuI1SiTjwKqfw=; b=oMDlNF
-	U3Zq1zhmNgNPYT9nJiUY2lM9p0DpwdOpozDMby0WLuMOgQsPm87xGRyG2l3sZM+w
-	l9WCWFm9htmRrmB4KFciTN+sRYgdoKnnZA/QNR1CGRZ50tocmhPfZdkBOUEyCAXt
-	I5BBYdJMfKXC24S/UbhSd2dg6tiC+sGQo1onI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=g/pLQazZGt/b5SEUdXojjrLYnqMh4IZ2
-	1DKABBjhL5xTCKNADrEwH9vLySrv9iafkYHYmsG/nC0cakAX5y0hIldBNfJPFwlq
-	FiBZ5oEam2dp8qA/Z9JWdpSzE4Hms8Iyw1ZnzhnGz7R4O05X9Um70tYj7oxg8FEe
-	kN6dxHJ9BGs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BD6040AF;
-	Fri, 26 Aug 2011 13:11:24 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F63B40AC; Fri, 26 Aug 2011
- 13:11:23 -0400 (EDT)
-In-Reply-To: <f02e446227a93fff37591f1a866566e6220ce283.1314367414.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Fri, 26 Aug 2011 16:05:12 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6CDE1BAE-D006-11E0-98DB-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752621Ab1HZRLj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Aug 2011 13:11:39 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:60785 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750934Ab1HZRLj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2011 13:11:39 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p7QHBApv007234
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 26 Aug 2011 19:11:10 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1QwzwL-0002WK-BZ; Fri, 26 Aug 2011 19:11:33 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1QwzwL-0002Wp-0J; Fri, 26 Aug 2011 19:11:33 +0200
+X-Mailer: git-send-email 1.7.6.585.g5929f.dirty
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 26 Aug 2011 19:11:10 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p7QHBApv007234
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1314983472.55963@evGMjqiD/Qj90qauElDRRw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180180>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+The uninitialized variable seems harmless in practice, but let's still be clean.
 
-> Long forms are better to memoize, and more reliably uniform across
-> commands.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+For some reason, remote helpers seem to be forced to use the "done"
+command now. Investing why, I found this, but that wasn't what I was
+looking for.
 
-I think people "memorize" and machines "memoize"; machines will do so just
-fine without long forms, but I think you are talking about helping people.
+ fast-import.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-The part after ", and" lacks a verb, making it a non-sentence.
-
-> Design notes:
->
-> -u,--local-user is named following the analogous gnupg option.
->
-> -l,--list is not an argument taking option but a mode switch.
-
-Ok.
-
-The remainder looks good. Thanks.
+diff --git a/fast-import.c b/fast-import.c
+index 7cc2262..ed8f3cd 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -355,7 +355,7 @@ static unsigned int cmd_save = 100;
+ static uintmax_t next_mark;
+ static struct strbuf new_data = STRBUF_INIT;
+ static int seen_data_command;
+-static int require_explicit_termination;
++static int require_explicit_termination = 0;
+ 
+ /* Signal handling */
+ static volatile sig_atomic_t checkpoint_requested;
+-- 
+1.7.6.585.g5929f.dirty
