@@ -1,61 +1,92 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] .gitattributes: Enable cpp diff parsing for .[ch] files
-Date: Fri, 26 Aug 2011 13:59:35 -0700
-Message-ID: <CA+55aFy=T82q==OxAzRfUgyfzMvy7=oeLOEAL8=rTJWOwkw-iA@mail.gmail.com>
-References: <4E56CE8F.8080501@panasas.com> <CA+55aFxNXK-AJdrHBBycM5W632qUBi4E=jangcdRoefQiHzbug@mail.gmail.com>
- <7vfwkndhc4.fsf@alter.siamese.dyndns.org>
+From: Shaun Ruffell <sruffell@digium.com>
+Subject: Re: Files that cannot be added to the index
+Date: Fri, 26 Aug 2011 16:12:33 -0500
+Message-ID: <20110826211233.GB3093@digium.com>
+References: <CAMvu5bLuRWinMYNc4NoRKQKiLCWLcwkpowEFT4GQ0mcJYj6eOg@mail.gmail.com>
+ <4E57A93A.6090405@drmicha.warpmail.net>
+ <20110826205919.GB8107@sooty-2.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Boaz Harrosh <bharrosh@panasas.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	linux-kernel <linux-kernel@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 26 23:00:19 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 26 23:12:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qx3Vh-00070l-4Z
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 23:00:17 +0200
+	id 1Qx3hi-0004JY-3e
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 23:12:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755182Ab1HZVAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Aug 2011 17:00:00 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:46684 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755111Ab1HZU77 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Aug 2011 16:59:59 -0400
-Received: from mail-wy0-f174.google.com (mail-wy0-f174.google.com [74.125.82.174])
-	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p7QKxuZS007950
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL);
-	Fri, 26 Aug 2011 13:59:58 -0700
-Received: by wyg24 with SMTP id 24so2761389wyg.19
-        for <multiple recipients>; Fri, 26 Aug 2011 13:59:55 -0700 (PDT)
-Received: by 10.216.14.234 with SMTP id d84mr2124652wed.85.1314392395118; Fri,
- 26 Aug 2011 13:59:55 -0700 (PDT)
-Received: by 10.216.187.66 with HTTP; Fri, 26 Aug 2011 13:59:35 -0700 (PDT)
-In-Reply-To: <7vfwkndhc4.fsf@alter.siamese.dyndns.org>
-X-Spam-Status: No, hits=-105.003 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL,USER_IN_WHITELIST
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754892Ab1HZVMg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Aug 2011 17:12:36 -0400
+Received: from mail.digium.com ([216.207.245.2]:45437 "EHLO mail.digium.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753774Ab1HZVMg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2011 17:12:36 -0400
+Received: from zimbra.digium.internal ([10.24.55.203] helo=zimbra.hsv.digium.com)
+	by mail.digium.com with esmtp (Exim 4.69)
+	(envelope-from <sruffell@digium.com>)
+	id 1Qx3hb-0004LF-8b
+	for git@vger.kernel.org; Fri, 26 Aug 2011 16:12:35 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zimbra.hsv.digium.com (Postfix) with ESMTP id 42023D82AC
+	for <git@vger.kernel.org>; Fri, 26 Aug 2011 16:12:35 -0500 (CDT)
+Received: from zimbra.hsv.digium.com ([127.0.0.1])
+	by localhost (zimbra.hsv.digium.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id YYdPzh+yqcnW; Fri, 26 Aug 2011 16:12:34 -0500 (CDT)
+Received: from digium.com (sruffell.digium.internal [10.19.134.249])
+	by zimbra.hsv.digium.com (Postfix) with ESMTPSA id B6365D8024;
+	Fri, 26 Aug 2011 16:12:34 -0500 (CDT)
+Content-Disposition: inline
+In-Reply-To: <20110826205919.GB8107@sooty-2.local>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180200>
 
-On Fri, Aug 26, 2011 at 1:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Not quite sure what you exactly mean by "extend it from just binary-vs-text".
-> Do you mean update buffer_is_binary() and add source language detection?
+On Fri, Aug 26, 2011 at 10:59:19PM +0200, seanh wrote:
+> I'm using git version 1.7.4.4 on OSX Lion, from macports. (I was
+> having the problem on Snow Leopard too.)
 
-Yes. Except the "detection" would be just "if we auto-detect it as
-text, then use the standard file extensions to also make an automatic
-hunk rule detection".
+Not sure if this is your problem exactly but awhile back I ran into
+something similar to what you describe and tracked it down to the
+fact that my filesystem was case insensitive. i.e.
 
-So it would do the most common cases (*.[Cch] etc)
+  $ git clone git://github.com/sruffell/dahdi-linux
+  Cloning into dahdi-linux...
+  done.
 
-                         Linus
+  $ cd dahdi-linux/
+  $ ls
+  LICENSE      Makefile     UPGRADE.txt  drivers
+  LICENSE.LGPL README       build_tools  include
+
+  $ git ls-files -m
+  $ rm Makefile 
+  $ touch makefile
+  $ git add makefile 
+  $ git ls-files -m
+  Makefile
+
+  $ git commit
+  # On branch master
+  # Changes not staged for commit:
+  #   (use "git add <file>..." to update what will be committed)
+  #   (use "git checkout -- <file>..." to discard changes in working directory)
+  #
+  #	modified:   Makefile
+  #
+  no changes added to commit (use "git add" and/or "git commit -a")
+
+  $ git add makefile 
+  $ git commit
+  # On branch master
+  # Changes not staged for commit:
+  #   (use "git add <file>..." to update what will be committed)
+  #   (use "git checkout -- <file>..." to discard changes in working directory)
+  #
+  #	modified:   Makefile
+  #
+  no changes added to commit (use "git add" and/or "git commit -a")
