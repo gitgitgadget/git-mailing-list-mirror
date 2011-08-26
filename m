@@ -1,84 +1,84 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: git diff annoyance / feature request
-Date: Fri, 26 Aug 2011 18:08:46 +0900
-Message-ID: <buo4o148rq9.fsf@dhlpc061.dev.necel.com>
-References: <4E569F10.8060808@panasas.com>
- <7vippljkxs.fsf@alter.siamese.dyndns.org> <4E56C58E.4080905@panasas.com>
+From: Marat Radchenko <marat@slonopotamus.org>
+Subject: Re: What's the difference between =?utf-8?b?YGdpdA==?= show branch:file =?utf-8?b?fA==?= diff -u - =?utf-8?b?ZmlsZWA=?= vs =?utf-8?b?YGdpdA==?= diff branch =?utf-8?b?ZmlsZWA/?=
+Date: Fri, 26 Aug 2011 09:43:31 +0000 (UTC)
+Message-ID: <loom.20110826T113153-510@post.gmane.org>
+References: <loom.20110823T091132-107@post.gmane.org> <4E537AF0.9070604@drmicha.warpmail.net> <1314096731.15017.2.camel@n900.home.ru> <4E53C89A.9000604@drmicha.warpmail.net> <7vk4a4rqvb.fsf@alter.siamese.dyndns.org> <4E54088F.7050700@drmicha.warpmail.net> <7vy5yhi4eq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	git discussion list <git@vger.kernel.org>
-To: Boaz Harrosh <bharrosh@panasas.com>
-X-From: git-owner@vger.kernel.org Fri Aug 26 11:08:57 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 26 11:43:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwsPI-0000OB-Ma
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 11:08:57 +0200
+	id 1QwsxA-0007z7-Oq
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 11:43:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753948Ab1HZJIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Aug 2011 05:08:51 -0400
-Received: from relmlor4.renesas.com ([210.160.252.174]:52089 "EHLO
-	relmlor4.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753808Ab1HZJIu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Aug 2011 05:08:50 -0400
-Received: from relmlir1.idc.renesas.com ([10.200.68.151])
- by relmlor4.idc.renesas.com ( SJSMS)
- with ESMTP id <0LQJ00CAM2QOH430@relmlor4.idc.renesas.com> for
- git@vger.kernel.org; Fri, 26 Aug 2011 18:08:48 +0900 (JST)
-Received: from relmlac1.idc.renesas.com ([10.200.69.21])
- by relmlir1.idc.renesas.com (SJSMS)
- with ESMTP id <0LQJ00I9R2QO64E0@relmlir1.idc.renesas.com> for
- git@vger.kernel.org; Fri, 26 Aug 2011 18:08:48 +0900 (JST)
-Received: by relmlac1.idc.renesas.com (Postfix, from userid 0)
-	id 6120E800A2; Fri, 26 Aug 2011 18:08:48 +0900 (JST)
-Received: from relmlac1.idc.renesas.com (localhost [127.0.0.1])
-	by relmlac1.idc.renesas.com (Postfix) with ESMTP id 5C3C0800A4; Fri,
- 26 Aug 2011 18:08:48 +0900 (JST)
-Received: from relmlii2.idc.renesas.com [10.200.68.66]	by
- relmlac1.idc.renesas.com with ESMTP id UAG03908; Fri,
- 26 Aug 2011 18:08:48 +0900
-X-IronPort-AV: E=Sophos;i="4.68,284,1312124400";   d="scan'208";a="42785334"
-Received: from unknown (HELO relay21.aps.necel.com) ([10.29.19.50])
- by relmlii2.idc.renesas.com with ESMTP; Fri, 26 Aug 2011 18:08:47 +0900
-Received: from relay21.aps.necel.com ([10.29.19.50] [10.29.19.50])
- by relay21.aps.necel.com with ESMTP; Fri, 26 Aug 2011 18:08:47 +0900
-Received: from dhlpc061 ([10.114.97.215] [10.114.97.215])
- by relay21.aps.necel.com with ESMTP; Fri, 26 Aug 2011 18:08:47 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)	id 538D552E2D0; Fri,
- 26 Aug 2011 18:08:47 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-reply-to: <4E56C58E.4080905@panasas.com>
+	id S1754650Ab1HZJnv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Aug 2011 05:43:51 -0400
+Received: from lo.gmane.org ([80.91.229.12]:56130 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753948Ab1HZJnu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2011 05:43:50 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Qwsx1-0007sh-0X
+	for git@vger.kernel.org; Fri, 26 Aug 2011 11:43:49 +0200
+Received: from 195.218.191.171 ([195.218.191.171])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 26 Aug 2011 11:43:47 +0200
+Received: from marat by 195.218.191.171 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 26 Aug 2011 11:43:47 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 195.218.191.171 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180159>
 
-Boaz Harrosh <bharrosh@panasas.com> writes:
->> Personally, I would have to say that the source wouldn't be using too many
->> labels with the same name for this behaviour to be problematic, especially
->> if it is not freaking BASIC ;-), so...
->
-> The Linux Kernel is full of "goto out" or "goto err" its a common error handling
-> practice. I actually like it because it taps onto a known pattern.
->
-> Now the patch tell me @@@ lable out: !! that's not very useful I would say
->
-> Thanks I'm sure I can shape it up the way I like it
+Junio C Hamano <gitster <at> pobox.com> writes:
+> An interesting comparison may be to run this once:
+> 
+>    $ git show branch:file >fileI
+> 
+> and then compare between these two:
+> 
+>     $ diff -u fileI file
+>     $ git diff --no-index fileI file
 
-Incidentally, if these annoyances were inherited from GNU diff, it would
-be good to send a bug report there too,... I doubt anybody likes the
-behavior any better with diff!
+In all times below, "file" is the same file i used in original report.
 
-[I know I've been annoyed by such things before...]
+$ time diff -u fileI file > /dev/null 
 
-Thanks,
+real    0m0.002s
+user    0m0.000s
+sys     0m0.000s
 
--Miles
+$ time git diff --no-index fileI file > /dev/null 
 
--- 
-Innards, n. pl. The stomach, heart, soul, and other bowels.
+real    0m0.331s
+user    0m0.270s
+sys     0m0.060s
+
+Same with "pu" branch (has 27af01d):
+$ time ~/git/git-diff --no-index fileI file > /dev/null 
+
+real    0m0.307s
+user    0m0.220s
+sys     0m0.080s
+
+> 
+> If the latter is slower than the former in the same way as the original
+> experiment, that would mean that the tree traversal time does not have
+> anything to do with it (iow, your "The way 'git diff' is now, it does
+> that" is not just incorrect---we don't read the full tree to begin
+> with---but irrelevant).
+I still suspect tree traversal. Original report with "pu" branch is still 30s.
