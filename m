@@ -1,64 +1,147 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] submodule: Search for merges only at end of
- recursive merge
-Date: Fri, 26 Aug 2011 12:04:32 -0700
-Message-ID: <7vr548c7un.fsf@alter.siamese.dyndns.org>
-References: <074f22629c034dba738b7241c78229db7f9159ec.1314275112.git.brad.king@kitware.com> <03300e44101092641810b34086738a151e01d8ee.1314368109.git.brad.king@kitware.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Heiko Voigt <hvoigt@hvoigt.net>
-To: Brad King <brad.king@kitware.com>
-X-From: git-owner@vger.kernel.org Fri Aug 26 21:04:40 2011
+From: Brad King <brad.king@kitware.com>
+Subject: [PATCH v2/RFC] submodule: Search for merges only at end of recursive merge
+Date: Fri, 26 Aug 2011 15:30:56 -0400
+Message-ID: <8e4e80f75d281c8bdd07b0a29eee9ad407661102.1314386859.git.brad.king@kitware.com>
+References: <7vr548c7un.fsf@alter.siamese.dyndns.org>
+Cc: gitster@pobox.com, Heiko Voigt <hvoigt@hvoigt.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 26 21:31:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qx1hn-00039g-IO
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 21:04:39 +0200
+	id 1Qx27L-0007Zt-4V
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 21:31:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753601Ab1HZTEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Aug 2011 15:04:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40293 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753597Ab1HZTEe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Aug 2011 15:04:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 307444338;
-	Fri, 26 Aug 2011 15:04:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5LwAH8s29YqgotnS7/FbBN0zUfQ=; b=GYatNt
-	SWJjgFnHmF5g/DG1Rao6GdITl+hPuCz5M860kq9qxhLxft0C1fV7HvVro9aqaQuI
-	7ww+wg1GInLc0PxcDjlaGv5YVRKaUWGIH/qU4QzzTci3u1AMwafiG/wkak5EGIcS
-	312DOKCmFdmDNTjKLz4PsrEKlmNwv2z4DjeUg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=H1NAP1+i9uTnl8VvsEQHoOQr9sZp4bWA
-	jY2pXUxiOjYkRA3no25d69+wpZnG1OeFQCjnSTpneN7BESY7QgchKjvjxZo+I4LT
-	03+KQw3615P1xSaU2ctaAEek9MbBnCtgJ691sigenwN1VR2r5SzA1EbmOdoD+EyH
-	0Zd9XnRXAw8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 27D334337;
-	Fri, 26 Aug 2011 15:04:34 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 97F554336; Fri, 26 Aug 2011
- 15:04:33 -0400 (EDT)
-In-Reply-To: <03300e44101092641810b34086738a151e01d8ee.1314368109.git.brad.king@kitware.com> (Brad King's message of "Fri, 26 Aug 2011 10:18:28 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3C0B3678-D016-11E0-AB25-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752288Ab1HZTa6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Aug 2011 15:30:58 -0400
+Received: from 66-194-253-20.static.twtelecom.net ([66.194.253.20]:47018 "EHLO
+	public.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751929Ab1HZTa5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2011 15:30:57 -0400
+Received: from vesper (vesper.kitwarein.com [192.168.1.207])
+	by public.kitware.com (Postfix) with ESMTP id 4EF0536B24;
+	Fri, 26 Aug 2011 15:30:56 -0400 (EDT)
+Received: by vesper (Postfix, from userid 1000)
+	id 491916098; Fri, 26 Aug 2011 15:30:56 -0400 (EDT)
+X-Mailer: git-send-email 1.7.4.4
+In-Reply-To: <7vr548c7un.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180192>
 
-This is a knee-jerk reaction without thinking things thoroughly through,
-but wouldn't it make more sense to do this by conditionally calling
-merge_submodule() when !o->call_depth, leaving the callee oblivious to
-what is in the "merge_options" structure? That way, you do not have to
-touch submodule.c at all, I would think.
+The submodule merge search is not useful during virtual merges because
+the results cannot be used automatically.  Furthermore any suggestions
+made by the search may apply to commits different than HEAD:sub and
+MERGE_HEAD:sub, thus confusing the user.  Skip searching for submodule
+merges during a virtual merge such as that between B and C while merging
+the heads of:
 
-After all, merge_submodule() should be usable in a future merge strategy
-that is different from recursive and has no notion of call_depth.
+    B---BC
+   / \ /
+  A   X
+   \ / \
+    C---CB
+
+Run the search only when the recursion level is zero (!o->call_depth).
+This fixes known breakage tested in t7405-submodule-merge.
+
+Signed-off-by: Brad King <brad.king@kitware.com>
+---
+On 8/26/2011 3:04 PM, Junio C Hamano wrote:
+> This is a knee-jerk reaction without thinking things thoroughly through,
+> but wouldn't it make more sense to do this by conditionally calling
+> merge_submodule() when !o->call_depth, leaving the callee oblivious to
+> what is in the "merge_options" structure? That way, you do not have to
+> touch submodule.c at all, I would think.
+
+I originally considered that but I think merge_submodule is still useful
+during virtual merges in the fast forward case.  I haven't thought that
+through in detail though.
+
+> After all, merge_submodule() should be usable in a future merge strategy
+> that is different from recursive and has no notion of call_depth.
+
+That's a worthwhile goal.  Perhaps instead we should pass in a parameter
+to tell merge_submodule whether or not to do the search after the fast
+forward case fails.
+
+Brad
+
+ merge-recursive.c          |    6 ++++--
+ submodule.c                |    6 +++++-
+ submodule.h                |    2 +-
+ t/t7405-submodule-merge.sh |    2 +-
+ 4 files changed, 11 insertions(+), 5 deletions(-)
+
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 0cc1e6f..390811e 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -830,8 +830,10 @@ static struct merge_file_info merge_file(struct merge_options *o,
+ 			free(result_buf.ptr);
+ 			result.clean = (merge_status == 0);
+ 		} else if (S_ISGITLINK(a->mode)) {
+-			result.clean = merge_submodule(result.sha, one->path, one->sha1,
+-						       a->sha1, b->sha1);
++			result.clean = merge_submodule(result.sha,
++						       one->path, one->sha1,
++						       a->sha1, b->sha1,
++						       !o->call_depth);
+ 		} else if (S_ISLNK(a->mode)) {
+ 			hashcpy(result.sha, a->sha1);
+ 
+diff --git a/submodule.c b/submodule.c
+index 1ba9646..bf4f693 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -644,7 +644,7 @@ static void print_commit(struct commit *commit)
+ 
+ int merge_submodule(unsigned char result[20], const char *path,
+ 		    const unsigned char base[20], const unsigned char a[20],
+-		    const unsigned char b[20])
++		    const unsigned char b[20], int search)
+ {
+ 	struct commit *commit_base, *commit_a, *commit_b;
+ 	int parent_count;
+@@ -699,6 +699,10 @@ int merge_submodule(unsigned char result[20], const char *path,
+ 	 * user needs to confirm the resolution.
+ 	 */
+ 
++	/* Skip the search if makes no sense to the calling context.  */
++	if (!search)
++		return 0;
++
+ 	/* find commit which merges them */
+ 	parent_count = find_first_merges(&merges, path, commit_a, commit_b);
+ 	switch (parent_count) {
+diff --git a/submodule.h b/submodule.h
+index 5350b0d..d4344c8 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -28,6 +28,6 @@ int fetch_populated_submodules(int num_options, const char **options,
+ 			       int quiet);
+ unsigned is_submodule_modified(const char *path, int ignore_untracked);
+ int merge_submodule(unsigned char result[20], const char *path, const unsigned char base[20],
+-		    const unsigned char a[20], const unsigned char b[20]);
++		    const unsigned char a[20], const unsigned char b[20], int search);
+ 
+ #endif
+diff --git a/t/t7405-submodule-merge.sh b/t/t7405-submodule-merge.sh
+index 14da2e3..0d5b42a 100755
+--- a/t/t7405-submodule-merge.sh
++++ b/t/t7405-submodule-merge.sh
+@@ -269,7 +269,7 @@ test_expect_success 'setup for recursive merge with submodule' '
+ '
+ 
+ # merge should leave submodule unmerged in index
+-test_expect_failure 'recursive merge with submodule' '
++test_expect_success 'recursive merge with submodule' '
+ 	(cd merge-recursive &&
+ 	 test_must_fail git merge top-bc &&
+ 	 echo "160000 $(git rev-parse top-cb:sub) 2	sub" > expect2 &&
+-- 
+1.7.4.4
