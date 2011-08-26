@@ -1,7 +1,7 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv2 5/5] branch: allow pattern arguments
-Date: Fri, 26 Aug 2011 16:05:15 +0200
-Message-ID: <b4a43ac3686d66b3ef8eddbed2c98c56b6f13312.1314367414.git.git@drmicha.warpmail.net>
+Subject: [PATCHv2 3/5] git-branch: introduce missing long forms for the options
+Date: Fri, 26 Aug 2011 16:05:13 +0200
+Message-ID: <c79179fa3476629ce47556c219719495c213f5f9.1314367414.git.git@drmicha.warpmail.net>
 References: <20110825175301.GC519@sigill.intra.peff.net>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 To: git@vger.kernel.org
@@ -11,31 +11,31 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qwx2U-0007ZO-HS
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 16:05:42 +0200
+	id 1Qwx2T-0007ZO-HL
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 16:05:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755175Ab1HZOFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Aug 2011 10:05:33 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:41881 "EHLO
+	id S1755170Ab1HZOF0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Aug 2011 10:05:26 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:47888 "EHLO
 	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755137Ab1HZOF1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Aug 2011 10:05:27 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 76848209D6;
-	Fri, 26 Aug 2011 10:05:27 -0400 (EDT)
+	by vger.kernel.org with ESMTP id S1755137Ab1HZOFY (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Aug 2011 10:05:24 -0400
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id BCC1F20993;
+	Fri, 26 Aug 2011 10:05:23 -0400 (EDT)
 Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute4.internal (MEProxy); Fri, 26 Aug 2011 10:05:27 -0400
+  by compute5.internal (MEProxy); Fri, 26 Aug 2011 10:05:23 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=from:to:cc:subject:date:message-id
-	:in-reply-to:references:in-reply-to:references; s=smtpout; bh=8x
-	4E9oLnJ30YRZHk6+u8K/hGyDU=; b=Zv8q/2GBRq4S9+R5phZMY5xGUHigjDG4so
-	3LHT0L0GRyPnWg8eB/G+8ZHVrUX2kp/sX6yRI3GRd3b9Jivl2zuIN3UGOT+5y38E
-	quSMfMC+wRySBcbQFa+pks7dC7I2/PShDSySvAgfzuBwX+camRIDngDYsAebd1fx
-	rU6FFdyS4=
-X-Sasl-enc: JCi6n+uNr77IY2x2bIuVgNvdmUXKD3yAi7mNdgkdkGfQ 1314367526
+	:in-reply-to:references:in-reply-to:references; s=smtpout; bh=FO
+	gEppOw9ah62smO0Xp53R9y5vA=; b=KJtnVo1yuTYE1ssTLQGAhPYF1rej5FWkaQ
+	nu4hnzjWH8CE6R3GlxyIysAyaQfc+eCKfv9DuaBhgfSAGVZWY9dRqV5hAheEZP+T
+	PA/C5kT000KnG58Y/JgCrSRNGPNke2LtqQLUnCMQKtBU9eNZM1CbStCLGqUEukDj
+	BTB3OJAGk=
+X-Sasl-enc: h7cTaXPgUGiAL51eZySyY5uZEx0ta7S3MBtyDbN3HR6A 1314367523
 Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id E8175B00093;
-	Fri, 26 Aug 2011 10:05:26 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 3F28FB00094;
+	Fri, 26 Aug 2011 10:05:23 -0400 (EDT)
 X-Mailer: git-send-email 1.7.6.845.gc3c05
 In-Reply-To: <20110825175301.GC519@sigill.intra.peff.net>
 In-Reply-To: <cover.1314367414.git.git@drmicha.warpmail.net>
@@ -44,143 +44,92 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180170>
 
-Allow pattern arguments for the list mode just like for git tag -l.
+Long forms are better to memoize, and more reliably uniform across
+commands.
 
 Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- Documentation/git-branch.txt |    8 ++++++--
- builtin/branch.c             |   24 +++++++++++++++++++++---
- t/t3203-branch-output.sh     |   10 ++++++++++
- 3 files changed, 37 insertions(+), 5 deletions(-)
+I'm somewhat torn between --move and --rename for -m. We have no real precedent
+besides "git remote rename".
+
+I left out -M and -D because I feel they should really be -m -f resp. -d -f.
+---
+ Documentation/git-branch.txt |    5 +++++
+ builtin/branch.c             |   10 +++++-----
+ 2 files changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index ac278fb..2b8bc84 100644
+index 507b8d0..4c64ac9 100644
 --- a/Documentation/git-branch.txt
 +++ b/Documentation/git-branch.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- [verse]
- 'git branch' [--color[=<when>] | --no-color] [-r | -a]
- 	[--list] [-v [--abbrev=<length> | --no-abbrev]]
--	[(--merged | --no-merged | --contains) [<commit>]]
-+	[(--merged | --no-merged | --contains) [<commit>]] [<pattern>...]
- 'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
- 'git branch' (-m | -M) [<oldbranch>] <newbranch>
- 'git branch' (-d | -D) [-r] <branchname>...
-@@ -22,6 +22,9 @@ With no arguments, existing branches are listed and the current branch will
- be highlighted with an asterisk.  Option `-r` causes the remote-tracking
- branches to be listed, and option `-a` shows both. This list mode is also
- activated by the `--list` and `-v` options (see below).
-+<pattern> restricts the output to matching branches, the pattern is a shell
-+wildcard (i.e., matched using fnmatch(3))
-+Multiple patterns may be given; if any of them matches, the tag is shown.
+@@ -64,6 +64,7 @@ way to clean up all obsolete remote-tracking branches.
+ OPTIONS
+ -------
+ -d::
++--delete::
+ 	Delete a branch. The branch must be fully merged in its
+ 	upstream branch, or in `HEAD` if no upstream was set with
+ 	`--track` or `--set-upstream`.
+@@ -72,6 +73,7 @@ OPTIONS
+ 	Delete a branch irrespective of its merged status.
  
- With `--contains`, shows only the branches that contain the named commit
- (in other words, the branches whose tip commits are descendants of the
-@@ -112,7 +115,8 @@ OPTIONS
+ -l::
++--create-reflog::
+ 	Create the branch's reflog.  This activates recording of
+ 	all changes made to the branch ref, enabling use of date
+ 	based sha1 expressions such as "<branchname>@\{yesterday}".
+@@ -84,6 +86,7 @@ OPTIONS
+ 	already. Without `-f` 'git branch' refuses to change an existing branch.
+ 
+ -m::
++--move::
+ 	Move/rename a branch and the corresponding reflog.
+ 
+ -M::
+@@ -100,9 +103,11 @@ OPTIONS
+ 	Same as `--color=never`.
+ 
+ -r::
++--remotes::
+ 	List or delete (if used with -d) the remote-tracking branches.
+ 
+ -a::
++--all::
  	List both remote-tracking branches and local branches.
  
- --list::
--	Activate the list mode.
-+	Activate the list mode. `git branch <pattern>` would try to create a branch,
-+	use `git branch --list <pattern>` to list matching branches.
- 
  -v::
- --verbose::
 diff --git a/builtin/branch.c b/builtin/branch.c
-index 4a33b07..e6bef49 100644
+index aa705a0..94e41ae 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -260,9 +260,22 @@ static char *resolve_symref(const char *src, const char *prefix)
+@@ -624,7 +624,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT_SET_INT( 0, "set-upstream",  &track, "change upstream info",
+ 			BRANCH_TRACK_OVERRIDE),
+ 		OPT__COLOR(&branch_use_color, "use colored output"),
+-		OPT_SET_INT('r', NULL,     &kinds, "act on remote-tracking branches",
++		OPT_SET_INT('r', "remotes",     &kinds, "act on remote-tracking branches",
+ 			REF_REMOTE_BRANCH),
+ 		{
+ 			OPTION_CALLBACK, 0, "contains", &with_commit, "commit",
+@@ -641,13 +641,13 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT__ABBREV(&abbrev),
  
- struct append_ref_cb {
- 	struct ref_list *ref_list;
-+	const char **pattern;
- 	int ret;
- };
- 
-+static int match_patterns(const char **pattern, const char *refname)
-+{
-+	if (!*pattern)
-+		return 1; /* no pattern always matches */
-+	while (*pattern) {
-+		if (!fnmatch(*pattern, refname, 0))
-+			return 1;
-+		pattern++;
-+	}
-+	return 0;
-+}
-+
- static int append_ref(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
- {
- 	struct append_ref_cb *cb = (struct append_ref_cb *)(cb_data);
-@@ -297,6 +310,9 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
- 	if ((kind & ref_list->kinds) == 0)
- 		return 0;
- 
-+	if (!match_patterns(cb->pattern, refname))
-+		return 0;
-+
- 	commit = NULL;
- 	if (ref_list->verbose || ref_list->with_commit || merge_filter != NO_FILTER) {
- 		commit = lookup_commit_reference_gently(sha1, 1);
-@@ -492,7 +508,7 @@ static void show_detached(struct ref_list *ref_list)
- 	}
- }
- 
--static int print_ref_list(int kinds, int detached, int verbose, int abbrev, struct commit_list *with_commit)
-+static int print_ref_list(int kinds, int detached, int verbose, int abbrev, struct commit_list *with_commit, const char **pattern)
- {
- 	int i;
- 	struct append_ref_cb cb;
-@@ -506,6 +522,7 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
- 	if (merge_filter != NO_FILTER)
- 		init_revisions(&ref_list.revs, NULL);
- 	cb.ref_list = &ref_list;
-+	cb.pattern = pattern;
- 	cb.ret = 0;
- 	for_each_rawref(append_ref, &cb);
- 	if (merge_filter != NO_FILTER) {
-@@ -523,7 +540,7 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
- 	qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp);
- 
- 	detached = (detached && (kinds & REF_LOCAL_BRANCH));
--	if (detached)
-+	if (detached && match_patterns(pattern, "HEAD"))
- 		show_detached(&ref_list);
- 
- 	for (i = 0; i < ref_list.index; i++) {
-@@ -701,7 +718,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	if (delete)
- 		return delete_branches(argc, argv, delete > 1, kinds);
- 	else if (list)
--		return print_ref_list(kinds, detached, verbose, abbrev, with_commit);
-+		return print_ref_list(kinds, detached, verbose, abbrev,
-+				      with_commit, argv);
- 	else if (rename && (argc == 1))
- 		rename_branch(head, argv[0], rename > 1);
- 	else if (rename && (argc == 2))
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index 61e095c..f2b294b 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -81,6 +81,16 @@ test_expect_success 'git branch -v shows branch summaries' '
- '
- 
- cat >expect <<'EOF'
-+two
-+one
-+EOF
-+test_expect_success 'git branch -v pattern shows branch summaries' '
-+	git branch -v branch* >tmp &&
-+	awk "{print \$NF}" <tmp >actual &&
-+	test_cmp expect actual
-+'
-+
-+cat >expect <<'EOF'
- * (no branch)
-   branch-one
-   branch-two
+ 		OPT_GROUP("Specific git-branch actions:"),
+-		OPT_SET_INT('a', NULL, &kinds, "list both remote-tracking and local branches",
++		OPT_SET_INT('a', "all", &kinds, "list both remote-tracking and local branches",
+ 			REF_REMOTE_BRANCH | REF_LOCAL_BRANCH),
+-		OPT_BIT('d', NULL, &delete, "delete fully merged branch", 1),
++		OPT_BIT('d', "delete", &delete, "delete fully merged branch", 1),
+ 		OPT_BIT('D', NULL, &delete, "delete branch (even if not merged)", 2),
+-		OPT_BIT('m', NULL, &rename, "move/rename a branch and its reflog", 1),
++		OPT_BIT('m', "move", &rename, "move/rename a branch and its reflog", 1),
+ 		OPT_BIT('M', NULL, &rename, "move/rename a branch, even if target exists", 2),
+-		OPT_BOOLEAN('l', NULL, &reflog, "create the branch's reflog"),
++		OPT_BOOLEAN('l', "create-reflog", &reflog, "create the branch's reflog"),
+ 		OPT__FORCE(&force_create, "force creation (when already exists)"),
+ 		{
+ 			OPTION_CALLBACK, 0, "no-merged", &merge_filter_ref,
 -- 
 1.7.6.845.gc3c05
