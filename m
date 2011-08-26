@@ -1,127 +1,101 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: highlight: strip non-printable characters via col(1)
-Date: Fri, 26 Aug 2011 21:54:13 +0200
-Message-ID: <201108262154.14493.jnareb@gmail.com>
-References: <1314053923-13122-1-git-send-email-cfuhrman@panix.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Looking up objects that point to other objects
+Date: Fri, 26 Aug 2011 16:10:55 -0400
+Message-ID: <20110826201055.GA9223@sigill.intra.peff.net>
+References: <CACBZZX6sydEmuwj_C-KNocjra=6ynud5KFoezPd_Rr3bN4wh2w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org, cwilson@cdwilson.us,
-	sylvain@abstraction.fr
-To: "Christopher M. Fuhrman" <cfuhrman@panix.com>
-X-From: git-owner@vger.kernel.org Fri Aug 26 21:54:36 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 26 22:11:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qx2U7-0001j3-R9
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 21:54:36 +0200
+	id 1Qx2k2-0000c3-RW
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 22:11:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753705Ab1HZTya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Aug 2011 15:54:30 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:37771 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753313Ab1HZTya (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Aug 2011 15:54:30 -0400
-Received: by fxh19 with SMTP id 19so2819381fxh.19
-        for <git@vger.kernel.org>; Fri, 26 Aug 2011 12:54:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=m7evexFuD/fDsByMgrlEKbA4sJjTC6YsmhMw1TKIbKY=;
-        b=i3atRNfSQKnKg69SIH8gPSqfl7E9MVr81mJek2Jekknb/536u/u32pm3ey09mcThka
-         ZyTmpEkSqfHWCMAWZvOQJEAuYqWsoZsjrCR19w+HO0AgIpoXMnBmOoxtu5F5l5oK5JZ4
-         jCRBHIJ5G1SIZcc8AcUNZ6aBkZlyGZI6QjsM8=
-Received: by 10.223.11.6 with SMTP id r6mr2275200far.57.1314388468826;
-        Fri, 26 Aug 2011 12:54:28 -0700 (PDT)
-Received: from [192.168.1.13] (abwo191.neoplus.adsl.tpnet.pl [83.8.238.191])
-        by mx.google.com with ESMTPS id l22sm1587900fam.13.2011.08.26.12.54.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 26 Aug 2011 12:54:21 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1314053923-13122-1-git-send-email-cfuhrman@panix.com>
+	id S1753747Ab1HZUK6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Aug 2011 16:10:58 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57062
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753874Ab1HZUK5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2011 16:10:57 -0400
+Received: (qmail 30873 invoked by uid 107); 26 Aug 2011 20:11:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 26 Aug 2011 16:11:40 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Aug 2011 16:10:55 -0400
 Content-Disposition: inline
+In-Reply-To: <CACBZZX6sydEmuwj_C-KNocjra=6ynud5KFoezPd_Rr3bN4wh2w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180194>
 
-On Tue, 23 Aug 2011, Christopher M. Fuhrman wrote:
+On Fri, Aug 26, 2011 at 09:01:22PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
 
-> The current code, as is, passes control characters, such as form-feed
-> (^L) to highlight which then passes it through to the browser.  This
-> will cause the browser to display one of the following warnings:
-> 
-> Safari v5.1 (6534.50) & Google Chrome v13.0.782.112:
-> 
->   This page contains the following errors:
-> 
->   error on line 657 at column 38: PCDATA invalid Char value 12
->   Below is a rendering of the page up to the first error.
-> 
-> Mozilla Firefox 3.6.19 & Mozilla Firefox 5.0:
-> 
->    XML Parsing Error: not well-formed
->    Location:
->    http://path/to/git/repo/blah/blah
-> 
-> Both errors were generated by gitweb.perl v1.7.3.4 w/ highlight 2.7
-> using arch/ia64/kernel/unwind.c from the Linux kernel.
-> 
-> Strip non-printable control-characters by piping the output produced
-> by git-cat-file(1) to col(1) as follows:
-> 
->   git cat-file blob deadbeef314159 | col -bx | highlight <args>
-> 
-> Note usage of the '-x' option which tells col(1) to output multiple
-> spaces instead of tabs.
+> Here's a couple of tasks that require brute-force with the Git object
+> format that I've wanted to do at some point.
+>=20
+>  * Associate a blob with trees
+>=20
+>    Given a blob sha1 find trees that reference it.
+>=20
+>  * Associate trees with commits / other trees.
+>=20
+>    Given a tree find which commit points to that tree, or a parent
+>    tree N levels up the stack that a commit points to.
 
-Why use external program (which ming be not installed, or might not
-strip control-characters), instead of making gitweb sanitize highlighter
-output itself.  Something like the patch below (which additionally
-shows where there are control characters):
+I've more frequently wanted to find the entrance and exit points of a
+particular blob in history, and used something like:
 
--- >8 --
-diff --git i/gitweb/gitweb.perl w/gitweb/gitweb.perl
-index 7cf12af..192db2c 100755
---- i/gitweb/gitweb.perl
-+++ w/gitweb/gitweb.perl
-@@ -1517,6 +1517,17 @@ sub esc_path {
- 	return $str;
- }
- 
-+# Sanitize for use in XHTML + application/xml+xhtml
-+sub sanitize {
-+	my $str = shift;
-+
-+	return undef unless defined $str;
-+
-+	$str = to_utf8($str);
-+	$str =~ s|([[:cntrl:]])|quot_cec($1)|eg;
-+	return $str;
-+}
-+
- # Make control characters "printable", using character escape codes (CEC)
- sub quot_cec {
- 	my $cntrl = shift;
-@@ -6546,7 +6557,8 @@ sub git_blob {
- 			$nr++;
- 			$line = untabify($line);
- 			printf qq!<div class="pre"><a id="l%i" href="%s#l%i" class="linenr">%4i</a> %s</div>\n!,
--			       $nr, esc_attr(href(-replay => 1)), $nr, $nr, $syntax ? to_utf8($line) : esc_html($line, -nbsp=>1);
-+			       $nr, esc_attr(href(-replay => 1)), $nr, $nr,
-+			       $syntax ? sanitize($line) : esc_html($line, -nbsp=>1);
- 		}
- 	}
- 	close $fd
+  git log --all --no-abbrev -c --raw --format=3D'commit %H' |
+  perl -le '
+    my @blobs =3D map { qr/$_/ } @ARGV;
+    while(<STDIN>) {
+      if (/^commit (.*)/) {
+        $commit =3D $1;
+      }
+      else {
+        foreach my $re (@blobs) {
+          next unless /$re/;
+          print $commit;
+          last;
+        }
+      }
+    }
+  ' $blobs
 
--- 8< --
+which is fairly efficient. It's brute-force, but at least it all happen=
+s
+in O(1) processes. It can find blobs in git.git in about a minute or so
+on my machine.
 
--- 
-Jakub Narebski
-Poland
+I don't think there's a way to ask for all of the trees in a commit in =
+a
+single process. It wouldn't be hard to write in C, of course, but it's
+not something the current tools support. However, you can use the above
+script to narrow the range of commits that you know contain a blob, and
+then individually run ls-tree each one. It's better at least than runni=
+ng
+ls-tree on every commit in the repo.
+
+Anything that iterates over commits is going to end up seeing the same
+trees again and again. I think you could probably do better by thinking
+of it like a directed graph problem. Nodes are sha1s, and edges are any
+references of interest:
+
+  1. For a commit, make an edge from the commit to its tree.
+
+  2. For a tree, make an edge from the tree to each of its entries.
+
+And then the problem is reduced to "find all commit nodes that have a
+path to $blob". Which you can do by breadth-first search from the
+commits (or backwards from the blob).
+
+-Peff
