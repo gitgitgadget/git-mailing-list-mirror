@@ -1,86 +1,70 @@
-From: Ted Zlatanov <tzz@lifelogs.com>
-Subject: Re: [PATCH 10/14] http: use hostname in credential description
-Date: Fri, 26 Aug 2011 10:29:50 -0500
-Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
- Cienfuegos
-Message-ID: <87ei08nqc1.fsf@lifelogs.com>
-References: <20110718074642.GA11678@sigill.intra.peff.net>
-	<20110718075232.GJ12341@sigill.intra.peff.net>
-	<7vr55k4mxn.fsf@alter.siamese.dyndns.org>
-	<20110722204749.GC11922@sigill.intra.peff.net>
-	<7vbowmx9da.fsf@alter.siamese.dyndns.org>
-	<20110722221337.GA15753@sigill.intra.peff.net>
-	<87d3g1k3u6.fsf@lifelogs.com>
-	<20110825202326.GC6165@sigill.intra.peff.net>
-Reply-To: git@vger.kernel.org
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: [RFC/PATCH] attr: map builtin userdiff drivers to well-known
+ extensions
+Date: Fri, 26 Aug 2011 10:33:38 -0500
+Message-ID: <49Jb0B80dYohdvQHEk2HW7bFvbaGqrVei6JPtUczcIQObOhHK_bRVKFymHMrH2zujgbzsGeCGMdeqznOy2_QjqRtEmq6i-OlPkXcT1B76QA@cipher.nrlssc.navy.mil>
+References: <20110825204047.GA9948@sigill.intra.peff.net> <MHA1dh6UZVuMcLY3WlGaxgT1aGDDZPlJNdM-l--eDgr_pi3krsey_A@cipher.nrlssc.navy.mil> <20110826024533.GB17625@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 26 17:30:21 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Boaz Harrosh <bharrosh@panasas.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 26 17:33:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwyMN-0002lU-1t
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 17:30:19 +0200
+	id 1QwyPu-0004ti-FA
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 17:33:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753981Ab1HZPaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Aug 2011 11:30:13 -0400
-Received: from lo.gmane.org ([80.91.229.12]:41433 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753693Ab1HZPaM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Aug 2011 11:30:12 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1QwyMB-0002cN-Rd
-	for git@vger.kernel.org; Fri, 26 Aug 2011 17:30:07 +0200
-Received: from 38.98.147.133 ([38.98.147.133])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 26 Aug 2011 17:30:07 +0200
-Received: from tzz by 38.98.147.133 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 26 Aug 2011 17:30:07 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-Mail-Followup-To: git@vger.kernel.org
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 38.98.147.133
-X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
-Mail-Copies-To: never
-User-Agent: Gnus/5.110018 (No Gnus v0.18) Emacs/24.0.50 (gnu/linux)
-Cancel-Lock: sha1:he1O+eHFvk9IYpWLgImnqnzottc=
+	id S1753955Ab1HZPdy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Aug 2011 11:33:54 -0400
+Received: from mail3.nrlssc.navy.mil ([128.160.11.249]:42840 "EHLO
+	mail3.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753787Ab1HZPdx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2011 11:33:53 -0400
+Received: by mail3.nrlssc.navy.mil id p7QFXccQ014971; Fri, 26 Aug 2011 10:33:38 -0500
+In-Reply-To: <20110826024533.GB17625@sigill.intra.peff.net>
+X-OriginalArrivalTime: 26 Aug 2011 15:33:38.0496 (UTC) FILETIME=[86BBA400:01CC6405]
+X-Virus-Scanned: clamav-milter 0.97.2 at mail3
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180174>
 
-On Thu, 25 Aug 2011 16:23:26 -0400 Jeff King <peff@peff.net> wrote: 
+On 08/25/2011 09:45 PM, Jeff King wrote:
+> On Thu, Aug 25, 2011 at 05:29:36PM -0500, Brandon Casey wrote:
+> 
+>>> Also, any other extensions that would go into such a list?
+>>
+>> *.bib diff=bibtex
+>> *.tex diff=tex
+> 
+> I had those ones already. ;P
 
-JK> On Fri, Aug 19, 2011 at 07:01:21AM -0500, Ted Zlatanov wrote:
->> I see some info in "What's Cooking" about this patch but it's unclear to
->> me whether the hostname issue (where it's hard to have multiple
->> identities on a single server, which I think is all right) is blocking
->> the inclusion of the patch into the next release, or if it will be
->> included eventually if no one complains about that issue, or something
->> else...
+Indeed.  I must be blind, I skipped right over them.
 
-JK> Junio and I discussed it a bit in another thread. I think the ability to
-JK> use "user@hostname" to disambiguate means the problem is dealt with at a
-JK> high level. And the "cache" helper handles that just fine. But the
-JK> "store" helper will conflate two entries for the same host. I'll see if
-JK> I can work on a patch for that.
+>> *.[Ff] diff=fortran
+>> *.[Ff][0-9][0-9] diff=fortran
+> 
+> Thanks, I'll add those. I don't see a big problem with generalizing
+> f[0-9][0-9] to always be fortran, even though many of those numbers
+> aren't used. I don't think I've ever seen one used for anything else.
+> 
+> Should all of our matches be case-insensitive? That is, should we be
+> matching both .HTML and .html? Clearly lowercase is the One True Way,
+> but I don't know what kind of junk people with case-insensitive
+> filesystems have, or whether we should even worry about it.
 
-Cool, I hope this is the last wrinkle on the bundled helpers.
+For the fortran case, Gnu fortran actually processes the files differently
+depending on whether the f is capitalized (it preprocesses or not).  So
+there is a functional reason for using a capital letter.
 
-JK> It looks like Junio is planning to hold the series off until 1.7.8. Have
-JK> you been working on a Secrets API helper? If so, I'd love to get
-JK> feedback on how well the interface is serving your needs.
+For the others, I don't know.  Do people still create files named .HTML
+or is that just a relic of the past?  I can't really think of a strong
+argument for or against matching insensitively.
 
-Work and Real Life have interfered with coding for fun, but I will have
-time next week to try writing a few helpers.  This is high priority for
-me because of various projects that require it; sorry for taking so long
-to start using it.
-
-Ted
+-Brandon
