@@ -1,67 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] fast-import: initialize variable
- require_explicit_termination
-Date: Fri, 26 Aug 2011 11:55:31 -0700
-Message-ID: <7vvctkc89o.fsf@alter.siamese.dyndns.org>
-References: <1314378689-8997-1-git-send-email-Matthieu.Moy@imag.fr>
- <7v8vqgdpsv.fsf@alter.siamese.dyndns.org> <vpqr548hx40.fsf@bauges.imag.fr>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Looking up objects that point to other objects
+Date: Fri, 26 Aug 2011 21:01:22 +0200
+Message-ID: <CACBZZX6sydEmuwj_C-KNocjra=6ynud5KFoezPd_Rr3bN4wh2w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Aug 26 20:55:40 2011
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 26 21:01:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qx1Z5-0007RV-FR
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 20:55:39 +0200
+	id 1Qx1ei-0001kC-FG
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 21:01:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752171Ab1HZSze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Aug 2011 14:55:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36796 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750973Ab1HZSzd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Aug 2011 14:55:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B2DF416B;
-	Fri, 26 Aug 2011 14:55:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cpFEKu3y1hSkQYUSCtm9gifGWzE=; b=xfMk43
-	xQMXxeA5U+wPAUkShcPp8VIexQ3p8G6EfSD06zIgotJb29h6t15fNp7ji+HA8RZb
-	mKqvcyLyizBS8r8Q/Tcz+C1Fy9x/1ADC0scy9dV70rLCnRYoJf1J+FEeWPt3Z92q
-	kCaF0+28qptBQ575E9eT4DAYwBnJRtSIG2kFI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I5+oUsfCFNzC5KQtRiDyX8BNcsTcM39L
-	JiWyM+wCk4AZL7Wu4WXmf57UexpVU6MpklGYrmnZZPDeI0VcLj5uUxsLX4zKixSc
-	/Pnn0gwzW0sGSVCqsvSYQH452T0IBlpdzrCGbrD3mUQLC/NQakk0fFrgHg5mSOFI
-	f+CfFu/r80s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3253A416A;
-	Fri, 26 Aug 2011 14:55:33 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BBA364169; Fri, 26 Aug 2011
- 14:55:32 -0400 (EDT)
-In-Reply-To: <vpqr548hx40.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Fri, 26 Aug 2011 19:59:59 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F9AB516A-D014-11E0-9E6E-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752107Ab1HZTBY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Aug 2011 15:01:24 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:59980 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750973Ab1HZTBX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2011 15:01:23 -0400
+Received: by fxh19 with SMTP id 19so2787437fxh.19
+        for <git@vger.kernel.org>; Fri, 26 Aug 2011 12:01:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=kPkA2Yk1nqOOHtMAB3sq5MzhvlnaYBOuxc9e0axfLi4=;
+        b=thn91RR6iVCgzFj+hSUpUqTpDVZKYLPLAUuEW2PBvja84myYhbyw9gfcfps+02y7ub
+         je+DB9popGxtEjP07P1Doya03x7NM8Zby6+l17vYQo5orahUYdr8ymI0sxDSZqcqPL/8
+         xAZaClq1f8AkQK76+WTKXRxGC0sY1V9a7juWA=
+Received: by 10.223.18.73 with SMTP id v9mr2116067faa.70.1314385282526; Fri,
+ 26 Aug 2011 12:01:22 -0700 (PDT)
+Received: by 10.223.78.203 with HTTP; Fri, 26 Aug 2011 12:01:22 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180190>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Here's a couple of tasks that require brute-force with the Git object
+format that I've wanted to do at some point.
 
->> Please do not write unnecessary " = 0" there.
->
-> I prefer being explicit, but that's a matter of taste, and I don't
-> really care, so let's drop this patch.
+ * Associate a blob with trees
 
-I prefer being explicit, too, but "static int foo;" is explicit enough if
-you know C.
+   Given a blob sha1 find trees that reference it.
+
+ * Associate trees with commits / other trees.
+
+   Given a tree find which commit points to that tree, or a parent
+   tree N levels up the stack that a commit points to.
+
+Has anyone written tools to do this? They'd obviously be very CPU and
+I/O intensive, but occasionally I encounter cases where I'd find this
+useful, e.g. to find what commit contains this huge blob, or what
+trees / commits are involved with a corrupted object.
