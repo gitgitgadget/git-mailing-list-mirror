@@ -1,114 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: highlight: strip non-printable characters via col(1)
-Date: Sat, 27 Aug 2011 00:06:18 +0200
-Message-ID: <201108270006.19289.jnareb@gmail.com>
-References: <1314053923-13122-1-git-send-email-cfuhrman@panix.com> <201108262154.14493.jnareb@gmail.com> <7v8vqfdf0l.fsf@alter.siamese.dyndns.org>
+From: Bruce Korb <bruce.korb@gmail.com>
+Subject: How do I get a readable diff?
+Date: Fri, 26 Aug 2011 15:42:50 -0700
+Message-ID: <4E58216A.8060508@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Christopher M. Fuhrman" <cfuhrman@panix.com>, git@vger.kernel.org,
-	Christopher Wilson <cwilson@cdwilson.us>,
-	Sylvain Rabot <sylvain@abstraction.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 27 00:06:34 2011
+To: GIT Development <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 27 00:43:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qx4Xq-0002EH-BO
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Aug 2011 00:06:34 +0200
+	id 1Qx576-00070x-OK
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Aug 2011 00:43:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751405Ab1HZWG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Aug 2011 18:06:29 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:41491 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751244Ab1HZWG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Aug 2011 18:06:28 -0400
-Received: by fxh19 with SMTP id 19so2892939fxh.19
-        for <git@vger.kernel.org>; Fri, 26 Aug 2011 15:06:27 -0700 (PDT)
+	id S1751047Ab1HZWm4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Aug 2011 18:42:56 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:60193 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750947Ab1HZWmy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2011 18:42:54 -0400
+Received: by ywf7 with SMTP id 7so3244802ywf.19
+        for <git@vger.kernel.org>; Fri, 26 Aug 2011 15:42:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=OHcnHf+cqbPhrU9SO3xgH3flHCsTDU4pDt8IKw8ua8A=;
-        b=ZwDGRxgasInJLX8bXnHcJ6nNtpc+G7csikhWQJm3zn1p00CiBRdg3MFxT5uRB/MQjc
-         r00H4rEkfpDJiCfwYNSpVWlvb0YsyO62mW3VyZsySOZeIVmNBb+TGXjKQhONIYGju5Rz
-         bt0chwlRtPrStx78O+ID0s1rX5YNcAfIRjRlc=
-Received: by 10.223.88.214 with SMTP id b22mr588585fam.5.1314396387448;
-        Fri, 26 Aug 2011 15:06:27 -0700 (PDT)
-Received: from [192.168.1.13] (abwo191.neoplus.adsl.tpnet.pl [83.8.238.191])
-        by mx.google.com with ESMTPS id 16sm1659456faw.42.2011.08.26.15.06.24
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=snF4l7FXCqwS/E1LHvutxOAGLIgcJk69uN8nGsUZpEo=;
+        b=tkQGk9PX/fTIY2IHRQcZL1s30Uy4jHGap8C4tpKtW6pduYQxLsRPMGPyzDjAnMTKdn
+         2Vp0YIif+h6kt3hSQuQ3eQxDPYwS6gdWhAX0tXq83MZ1F2ffmDuWanovYlv4lRehM8Ik
+         wNHxBtw5LXm00kwaw76qh4AIK81+XfSJi9Pbw=
+Received: by 10.42.178.194 with SMTP id bn2mr793126icb.475.1314398574084;
+        Fri, 26 Aug 2011 15:42:54 -0700 (PDT)
+Received: from [10.0.0.2] (adsl-75-2-137-220.dsl.pltn13.sbcglobal.net [75.2.137.220])
+        by mx.google.com with ESMTPS id bv10sm2127183icb.13.2011.08.26.15.42.51
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 26 Aug 2011 15:06:26 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v8vqfdf0l.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+        Fri, 26 Aug 2011 15:42:53 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110616 SUSE/3.1.11 Thunderbird/3.1.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180206>
 
-On Fri, 26 Aug 2011, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > Why use external program (which ming be not installed, or might not
-> > strip control-characters), instead of making gitweb sanitize highlighter
-> > output itself.  Something like the patch below (which additionally
-> > shows where there are control characters):
-> 
-> I agree that that would be a more sensible approach. What does your sample
-> code below do to a HT by the way?
+I know I can pipe it through "cat", but I'd rather the clutter be gone.
+There has to be a way.
 
-Actually the line earlier
-
- 			$line = untabify($line);
-
-replaces HT ("\t") with spaces.
-
-> > -- >8 --
-> > diff --git i/gitweb/gitweb.perl w/gitweb/gitweb.perl
-> > index 7cf12af..192db2c 100755
-> > --- i/gitweb/gitweb.perl
-> > +++ w/gitweb/gitweb.perl
-> > @@ -1517,6 +1517,17 @@ sub esc_path {
-> >  	return $str;
-> >  }
-> >  
-> > +# Sanitize for use in XHTML + application/xml+xhtml
-> > +sub sanitize {
-> > +	my $str = shift;
-> > +
-> > +	return undef unless defined $str;
-> > +
-> > +	$str = to_utf8($str);
-> > +	$str =~ s|([[:cntrl:]])|quot_cec($1)|eg;
-> > +	return $str;
-> > +}
-
-Anyway, it could well be
-
-+	$str =~ s|([[:cntrl:]])|(($1 ne "\t") ? quot_cec($1) : $1)|eg;
-+	return $str;
-
-like in esc_html rather than like in esc_path.
-
-> > @@ -6546,7 +6557,8 @@ sub git_blob {
-> >  			$nr++;
-> >  			$line = untabify($line);
-                        ^^^^^^^^^^^^^^^^^^^^^^^^
-
-> >  			printf qq!<div class="pre"><a id="l%i" href="%s#l%i" class="linenr">%4i</a> %s</div>\n!,
-> > -			       $nr, esc_attr(href(-replay => 1)), $nr, $nr, $syntax ? to_utf8($line) : esc_html($line, -nbsp=>1);
-> > +			       $nr, esc_attr(href(-replay => 1)), $nr, $nr,
-> > +			       $syntax ? sanitize($line) : esc_html($line, -nbsp=>1);
-> >  		}
-> >  	}
-> >  	close $fd
-
--- 
-Jakub Narebski
-Poland
+ESC[1mdiff --git a/lustre/include/lustre_disk.h b/lustre/include/lustre_disk.hESC[m
+ESC[1mindex 10f6328..564fc08 100644ESC[m
+ESC[1m--- a/lustre/include/lustre_disk.hESC[m
+ESC[1m+++ b/lustre/include/lustre_disk.hESC[m
+ESC[36m@@ -185,6 +185,7 @@ESC[m ESC[mstruct lustre_mount_data {ESC[m
+          int        lmd_exclude_count;ESC[m
+          int        lmd_recovery_time_soft;ESC[m
+          int        lmd_recovery_time_hard;ESC[m
+ESC[32m+ESC[mESC[32m        int        lmd_reserved_inodes; /* preferred value */ESC[m
+          char      *lmd_dev;           /* device name */ESC[m
+          char      *lmd_profile;       /* client only */ESC[m
+          char      *lmd_mgssec;        /* sptlrpc flavor to mgs */ESC[m
+ESC[36m@@ -202,6 +203,8 @@ESC[m ESC[mstruct lustre_mount_data {ESC[m
+                                          existing MGS services */ESC[m
+  #define LMD_FLG_WRITECONF    0x0040  /* Rewrite config log */ESC[m
+  ESC[m
+ESC[32m+ESC[mESC[32m#define LMD_RESERVED_INODES_DEFAULT 100ESC[m
+ESC[32m+ESC[m
+  #define lmd_is_client(x) ((x)->lmd_flags & LMD_FLG_CLIENT)ESC[m
+  ESC[m
+  ESC[m
