@@ -1,84 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git diff annoyance / feature request
-Date: Fri, 26 Aug 2011 14:52:21 -0700
-Message-ID: <7v4o13dene.fsf@alter.siamese.dyndns.org>
-References: <4E569F10.8060808@panasas.com> <4E580D49.1070006@lsrfire.ath.cx>
- <4E581213.6070304@panasas.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: highlight: strip non-printable characters via col(1)
+Date: Sat, 27 Aug 2011 00:06:18 +0200
+Message-ID: <201108270006.19289.jnareb@gmail.com>
+References: <1314053923-13122-1-git-send-email-cfuhrman@panix.com> <201108262154.14493.jnareb@gmail.com> <7v8vqfdf0l.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	git discussion list <git@vger.kernel.org>
-To: Boaz Harrosh <bharrosh@panasas.com>
-X-From: git-owner@vger.kernel.org Fri Aug 26 23:52:31 2011
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: "Christopher M. Fuhrman" <cfuhrman@panix.com>, git@vger.kernel.org,
+	Christopher Wilson <cwilson@cdwilson.us>,
+	Sylvain Rabot <sylvain@abstraction.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 27 00:06:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qx4KC-0004np-RK
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 23:52:29 +0200
+	id 1Qx4Xq-0002EH-BO
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Aug 2011 00:06:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755616Ab1HZVwY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Aug 2011 17:52:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33690 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755608Ab1HZVwX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Aug 2011 17:52:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 218F24DE2;
-	Fri, 26 Aug 2011 17:52:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=2/Wz5LWChOwl
-	/3dfOHhd59GKyoI=; b=BZPs3/zBx9sDZUTaeFK7lVSetRTKJzydIKMEj7ObbvmP
-	upaNFbNBJGoHRD57uEqYaWbN/j0Vl1NNiQUbLzRdVIUlVUNFmvPUVq+UDkyyRvb5
-	91cN3cS4gzEcP2E2vTfCYfHIgD32VKwxQIr9qIiAp6xAOcJ773t3hGbkCLSTIqU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=sBTWya
-	G2EYiPriNBitkjQT+fjZmXvFS3BpNtAVhcImW1Tz7a3jXUkZY8r35DLGaGpJ0b4V
-	YNuXkObp9zFUDTUTho3MJ5LFBLoKiIdpJKM0BABCN3ToFjo/Ha5yEWI0MIUkSaQR
-	eXoulMmm5X+3WqoDD0R4mQPj2XmdCz77QsfKE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 18A374DE1;
-	Fri, 26 Aug 2011 17:52:23 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8BF184DE0; Fri, 26 Aug 2011
- 17:52:22 -0400 (EDT)
-In-Reply-To: <4E581213.6070304@panasas.com> (Boaz Harrosh's message of "Fri,
- 26 Aug 2011 14:37:23 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AD9AFCBC-D02D-11E0-AA6C-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751405Ab1HZWG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Aug 2011 18:06:29 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:41491 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751244Ab1HZWG2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2011 18:06:28 -0400
+Received: by fxh19 with SMTP id 19so2892939fxh.19
+        for <git@vger.kernel.org>; Fri, 26 Aug 2011 15:06:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=OHcnHf+cqbPhrU9SO3xgH3flHCsTDU4pDt8IKw8ua8A=;
+        b=ZwDGRxgasInJLX8bXnHcJ6nNtpc+G7csikhWQJm3zn1p00CiBRdg3MFxT5uRB/MQjc
+         r00H4rEkfpDJiCfwYNSpVWlvb0YsyO62mW3VyZsySOZeIVmNBb+TGXjKQhONIYGju5Rz
+         bt0chwlRtPrStx78O+ID0s1rX5YNcAfIRjRlc=
+Received: by 10.223.88.214 with SMTP id b22mr588585fam.5.1314396387448;
+        Fri, 26 Aug 2011 15:06:27 -0700 (PDT)
+Received: from [192.168.1.13] (abwo191.neoplus.adsl.tpnet.pl [83.8.238.191])
+        by mx.google.com with ESMTPS id 16sm1659456faw.42.2011.08.26.15.06.24
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 26 Aug 2011 15:06:26 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7v8vqfdf0l.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180205>
 
-Boaz Harrosh <bharrosh@panasas.com> writes:
+On Fri, 26 Aug 2011, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > Why use external program (which ming be not installed, or might not
+> > strip control-characters), instead of making gitweb sanitize highlighter
+> > output itself.  Something like the patch below (which additionally
+> > shows where there are control characters):
+> 
+> I agree that that would be a more sensible approach. What does your sample
+> code below do to a HT by the way?
 
-> On 08/26/2011 02:16 PM, Ren=C3=A9 Scharfe wrote:
->> Am 25.08.2011 21:14, schrieb Boaz Harrosh:
->>=20
->> Cheap trick: change your coding style to place a single space before
->> labels instead of having them start right at the beginning of a line=
-=2E
->>=20
->> Ren=C3=A9
->>=20
->
-> Nope, does not work! and I have no choice about it, it's Linux coding
-> style
+Actually the line earlier
 
-I too thought it was in the Documentation/CodingStyle, but I don't find=
- it
-in my copy. "Chapter 7" has an example of using goto and it does have
-label at the left edge of the page without indentation, but does not se=
-em
-to say it should not be indented.
+ 			$line = untabify($line);
 
-Taken together with the output from "grep '#goto label' scripts/checkpa=
-tch.pl"
-I concluded that "it's Linux coding style" was a myth.
+replaces HT ("\t") with spaces.
+
+> > -- >8 --
+> > diff --git i/gitweb/gitweb.perl w/gitweb/gitweb.perl
+> > index 7cf12af..192db2c 100755
+> > --- i/gitweb/gitweb.perl
+> > +++ w/gitweb/gitweb.perl
+> > @@ -1517,6 +1517,17 @@ sub esc_path {
+> >  	return $str;
+> >  }
+> >  
+> > +# Sanitize for use in XHTML + application/xml+xhtml
+> > +sub sanitize {
+> > +	my $str = shift;
+> > +
+> > +	return undef unless defined $str;
+> > +
+> > +	$str = to_utf8($str);
+> > +	$str =~ s|([[:cntrl:]])|quot_cec($1)|eg;
+> > +	return $str;
+> > +}
+
+Anyway, it could well be
+
++	$str =~ s|([[:cntrl:]])|(($1 ne "\t") ? quot_cec($1) : $1)|eg;
++	return $str;
+
+like in esc_html rather than like in esc_path.
+
+> > @@ -6546,7 +6557,8 @@ sub git_blob {
+> >  			$nr++;
+> >  			$line = untabify($line);
+                        ^^^^^^^^^^^^^^^^^^^^^^^^
+
+> >  			printf qq!<div class="pre"><a id="l%i" href="%s#l%i" class="linenr">%4i</a> %s</div>\n!,
+> > -			       $nr, esc_attr(href(-replay => 1)), $nr, $nr, $syntax ? to_utf8($line) : esc_html($line, -nbsp=>1);
+> > +			       $nr, esc_attr(href(-replay => 1)), $nr, $nr,
+> > +			       $syntax ? sanitize($line) : esc_html($line, -nbsp=>1);
+> >  		}
+> >  	}
+> >  	close $fd
+
+-- 
+Jakub Narebski
+Poland
