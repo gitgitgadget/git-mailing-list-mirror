@@ -1,128 +1,108 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: Is there a scriptable way to update the stat-info in the index
- without having git open and read those files?
-Date: Sat, 27 Aug 2011 11:18:24 -0400
-Message-ID: <20110827151824.GA1903@arf.padd.com>
-References: <CABPp-BEiN7ffNmvLCvEfz056M_F36j+gV9t6J9-x_=H9q0rZFw@mail.gmail.com>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: git for game development?
+Date: Sat, 27 Aug 2011 15:32:29 +0000
+Message-ID: <CAMOZ1BsiFdSwhi2xMx7_-hsKYccUTf09W-4UpK8CwQjqY4cpig@mail.gmail.com>
+References: <416D1A48-9916-4E44-A200-3A13C39C4D70@gmail.com>
+ <20110824012418.GA19091@sigill.intra.peff.net> <7vwre2pw3m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 27 17:18:35 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Avery Pennarun <apenwarr@gmail.com>, Jeff King <peff@peff.net>,
+	Lawrence Brett <lcbrett@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 27 17:33:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QxKeZ-0002EU-0Z
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Aug 2011 17:18:35 +0200
+	id 1QxKsn-0008JV-Nj
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Aug 2011 17:33:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751582Ab1H0PS3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Aug 2011 11:18:29 -0400
-Received: from honk.padd.com ([74.3.171.149]:56760 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751090Ab1H0PS2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Aug 2011 11:18:28 -0400
-Received: from arf.padd.com (unknown [50.52.168.230])
-	by honk.padd.com (Postfix) with ESMTPSA id 81E625B64;
-	Sat, 27 Aug 2011 08:18:27 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id AF2CF314D1; Sat, 27 Aug 2011 11:18:24 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <CABPp-BEiN7ffNmvLCvEfz056M_F36j+gV9t6J9-x_=H9q0rZFw@mail.gmail.com>
+	id S1751354Ab1H0PdE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Aug 2011 11:33:04 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:64106 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751300Ab1H0PdA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Aug 2011 11:33:00 -0400
+Received: by ywf7 with SMTP id 7so3637478ywf.19
+        for <git@vger.kernel.org>; Sat, 27 Aug 2011 08:32:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=9gw6l06J8lxDqeF2Ft7QQ+6CMSwxMBbPGvt1rjr657o=;
+        b=PDjDE8LIpN7tmlGilPLd45ri9miAS7exaCrEOE67pamZ7Wv0xOhn1VoC1iWoBOj9sS
+         x5uzsgfwMAgGPavrqU+BDiG+z/C/PNUb1J1qJ5dT3PmpyVSS+myMeOw0lt6oiWCApKat
+         iIA8O0BLcIKwDwjtCzGa7GtzrM2wKMJYv7rX0=
+Received: by 10.42.158.7 with SMTP id f7mr2429707icx.89.1314459179073; Sat, 27
+ Aug 2011 08:32:59 -0700 (PDT)
+Received: by 10.42.138.66 with HTTP; Sat, 27 Aug 2011 08:32:29 -0700 (PDT)
+In-Reply-To: <7vwre2pw3m.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180232>
 
-newren@gmail.com wrote on Mon, 22 Aug 2011 16:28 -0600:
-> I want to do something really close to
->   git update-index -q --refresh
-> However, I want it to assume the files in the working tree are
-> unmodified from the index (i.e. don't waste time opening and reading
-> the file) and simply update the stat information in the index to match
-> the current files on disk.
-> 
-> Yes, I know that would be unsafe if the files don't have the
-> appropriate contents; I'm promising that they do have the appropriate
-> contents and don't want to pay the performance penalty for git to
-> verify.  Is that possible?
+On Wed, Aug 24, 2011 at 17:17, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>
+>> I don't remember all of the details of bup, but if it's possible to
+>> implement something similar at a lower level (i.e., at the layer of
+>> packfiles or object storage), then it can be a purely local thing, and
+>> the compatibility issues can go away.
+>
+> I tend to agree, and we might be closer than we realize.
+>
+> I suspect that people with large binary assets were scared away by rumors
+> they heard second-hand, based on bad experiences other people had before
+> any of the recent efforts made in various "large Git" topics, and they
+> themselves haven't tried recent versions of Git enough to be able to tell
+> what the remaining pain points are. I wouldn't be surprised if none of the
+> core Git people tried shoving huge binary assets in test repositories with
+> recent versions of Git---I certainly haven't.
+>
+> We used to always map the blob data as a whole for anything we do, but
+> these days, with changes like your abb371a (diff: don't retrieve binary
+> blobs for diffstat, 2011-02-19) and my recent "send large blob straight to
+> a new pack" and "stream large data out to the working tree without holding
+> everything in core while checking out" topics, I suspect that the support
+> for local usage of large blobs might be sufficiently better than the old
+> days. Git might even be usable locally without anything else, which I find
+> implausible, but I wouldn't be surprised if there remained only a handful
+> minor things remaining that we need to add to make it usable.
+>
+> People toyed around with ideas to have a separate object store
+> representation for large and possibly incompressible blobs (a possible
+> complaint being that it is pointless to send them even to its own
+> packfile). One possible implementation would be to add a new huge
+> hierarchy under $GIT_DIR/objects/, compute the object name exactly the
+> same way for huge blobs as we normally would (i.e. hash concatenation of
+> object header and then contents) to decide which subdirectory under the
+> "huge" hierarchy to store the data (huge/[0-9a-f]{2}/[0-9a-f]{38}/ like we
+> do for loose objects, or perhaps huge/[0-9a-f]{40}/ expecting that there
+> won't be very many). The data can be stored unmodified as a file in that
+> directory, with type stored in a separate file---that way, we won't have
+> to compress, but we just copy. You still need to hash it at least once to
+> come up with the object name, but that is what gives us integrity checks,
+> is unavoidable and is not going to change.
+>
+> The sha1_object_info() layer can learn to return the type and size from
+> such a representation, and you can further tweak the same places as the
+> "streaming checkout" and the "checkin to a pack" topics touched to support
+> such a representation.
+>
+> I would suspect that the local object representation is _not_ the largest
+> pain point; such a separate object store representation is not buying us
+> very much over a simpler "single large blob in a separate packfile", and
+> if the counter-argument is "no, decompressing still costs a lot", then the
+> real issue might be we decompress and look at the data when we do not have
+> to (i.e. issues similar to what abb371a addressed), not "decompress vs
+> straight copy make a bit difference".
 
-I have the same issue in my workflow, and agree with Junio that this
-is just too bizarre to put in the code.  Here's the script I use,
-relying on dulwich, that you might find helpful.
+I've added Avery to the Cc list, because he really needs to chime in here.
 
-		-- Pete
-
-
-------8<------------------
-#!/usr/bin/env python2.6
-# git-index-clone - Update index after a volume clone
-# Copyright 2010 Pete Wyckoff <pw@padd.com>
-
-import sys
-import os
-from dulwich.index import Index
-
-index_name = ".git/index"
-
-#
-# Debugging option:  show the index entry for just one file name,
-# e.g. git-index-clone file/name/in/tree
-#
-def show_entry(name):
-    idx = Index(index_name)
-    if name not in idx:
-	print >>sys.stderr, "No index entry", name
-	return
-    print "index", idx[name]
-    t = update_from_stat(idx[name], name)
-    print "stat ", t
-
-#
-# Stat the file, return the new tuple
-#
-def update_from_stat(idx, name):
-    (ctime, mtime, dev, ino, mode, uid, gid, size, sha, flags) = idx
-
-    sb = os.lstat(name)
-
-    # times are float; dulwich converts to (sec, ns) on write
-    ctime = sb.st_ctime
-    mtime = sb.st_mtime
-    dev = sb.st_dev
-    ino = sb.st_ino
-    # assume mode unchanged
-    uid = sb.st_uid
-    gid = sb.st_gid
-    # assume size, sha, flags unchanged
-    return (ctime, mtime, dev, ino, mode, uid, gid, size, sha, flags)
-
-def convert():
-    idx_in = Index(index_name)
-    os.unlink(index_name)
-
-    idx_out = Index(index_name)
-
-    for name in idx_in:
-	idx_out[name] = update_from_stat(idx_in[name], name)
-
-    idx_out.write()
-    os.chmod(index_name, 0644)  # drop exec perms
-
-def usage():
-    print >>sys.stderr, "Usage: %s [<index entry name>]\n"
-    sys.exit(1)
-
-def main():
-    if len(sys.argv) == 1:
-	convert()
-    elif len(sys.argv) == 2:
-	show_entry(sys.argv[1])
-    else:
-	usage()
-    return 0
-
-if __name__ == "__main__":
-    sys.exit(main())
+I am completely unqualified to make a comment about this, but I think
+that it would be silly to ignore the insights that Avery has about
+storing large objects; `bup' uses rolling checksums and a `bloom
+filter' implementation and who knows what else.
