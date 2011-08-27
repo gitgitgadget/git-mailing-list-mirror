@@ -1,91 +1,78 @@
-From: Shaun Ruffell <sruffell@digium.com>
-Subject: Re: Files that cannot be added to the index
-Date: Sat, 27 Aug 2011 13:40:09 -0500
-Message-ID: <20110827184009.GA12767@digium.com>
-References: <CAMvu5bLuRWinMYNc4NoRKQKiLCWLcwkpowEFT4GQ0mcJYj6eOg@mail.gmail.com>
- <4E57A93A.6090405@drmicha.warpmail.net>
- <20110826205919.GB8107@sooty-2.local>
- <20110826211233.GB3093@digium.com>
- <20110827060718.GA28136@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/2] check-ref-format --print: Normalize refnames that
+ start with slashes
+Date: Sat, 27 Aug 2011 11:30:26 -0700
+Message-ID: <7vty92adv0.fsf@alter.siamese.dyndns.org>
+References: <1314418364-2532-1-git-send-email-mhagger@alum.mit.edu>
+ <1314418364-2532-2-git-send-email-mhagger@alum.mit.edu>
+ <4E58710B.60507@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	seanh <snhmnd@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Aug 27 20:40:31 2011
+Cc: git@vger.kernel.org, cmn@elego.de
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sat Aug 27 20:50:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QxNnx-0007NH-D1
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Aug 2011 20:40:29 +0200
+	id 1QxNxE-0002Sl-5U
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Aug 2011 20:50:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751216Ab1H0SkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Aug 2011 14:40:18 -0400
-Received: from mail.digium.com ([216.207.245.2]:60022 "EHLO mail.digium.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751039Ab1H0SkR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Aug 2011 14:40:17 -0400
-Received: from zimbra.digium.internal ([10.24.55.203] helo=zimbra.hsv.digium.com)
-	by mail.digium.com with esmtp (Exim 4.69)
-	(envelope-from <sruffell@digium.com>)
-	id 1QxNnh-0002O4-Tu; Sat, 27 Aug 2011 13:40:13 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by zimbra.hsv.digium.com (Postfix) with ESMTP id D7171D82A5;
-	Sat, 27 Aug 2011 13:40:13 -0500 (CDT)
-Received: from zimbra.hsv.digium.com ([127.0.0.1])
-	by localhost (zimbra.hsv.digium.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TEbTSJPhLn5o; Sat, 27 Aug 2011 13:40:12 -0500 (CDT)
-Received: from digium.com (sruffell.digium.internal [10.19.134.249])
-	by zimbra.hsv.digium.com (Postfix) with ESMTPSA id 8CDA6D8024;
-	Sat, 27 Aug 2011 13:40:12 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <20110827060718.GA28136@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751302Ab1H0St6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Aug 2011 14:49:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41529 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750974Ab1H0St6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Aug 2011 14:49:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4307639D1;
+	Sat, 27 Aug 2011 14:49:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:references:message-id:mime-version:content-type;
+	 s=sasl; bh=mbdokqWc9iL49k0gODOMeBaI6Pk=; b=GuW63Wht3AJZn5cE/qEB
+	V1bQEg/nOMjmvjXnSMl+nMu5+pZ6I1Tj4NNpyCgoY18wdcHbOMS8O6gP9T1Q0hb/
+	wc1Tx/Hh0oi0HGdxqyQp+fjxrxrY30bCGhKjwtnB8TU9mpZoCz8IwqL65UO4EujF
+	5m+Nb/I8Uu8ghPLMb15F6SA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:references:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=dWM6fuD30pBQwFsMCyopISZ2ZPeEGb73t3kmo211DEEGjp
+	I/YOgk4k7942GLTZjgF2qauk14XkC3FGNcKCL3hYcqYYEFtShZw/+d3ogPeop9HF
+	VIQ7MKt6pn6FG8qTTQ/GETcL8LOsLyKFlACRYVjJ1I60nKbitxGQ7TuogfXCY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3A3B039D0;
+	Sat, 27 Aug 2011 14:49:57 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AEA3139CF; Sat, 27 Aug 2011
+ 14:49:56 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5BC79412-D0DD-11E0-967C-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180237>
 
-On Sat, Aug 27, 2011 at 02:07:18AM -0400, Jeff King wrote:
-> On Fri, Aug 26, 2011 at 04:12:33PM -0500, Shaun Ruffell wrote:
-> 
-> > On Fri, Aug 26, 2011 at 10:59:19PM +0200, seanh wrote:
-> > > I'm using git version 1.7.4.4 on OSX Lion, from macports. (I was
-> > > having the problem on Snow Leopard too.)
-> > 
-> > Not sure if this is your problem exactly but awhile back I ran into
-> > something similar to what you describe and tracked it down to the
-> > fact that my filesystem was case insensitive. i.e.
-> 
-> I think both of you may be seeing the same bug I tracked down here:
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/173612/focus=174634
-> 
-> Does the patch from the very end of the thread solve the problem for
-> you? I should probably clean it up for inclusion in git.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-I was going to apply the patch and see what happens, however when I
-built and tested 1.7.6 as a baseline I no longer could reproduce the
-issue.
+> On 08/27/2011 06:12 AM, Michael Haggerty wrote:
+>> And add tests that such refnames are accepted and normalized
+>> correctly.
+>
+> ...oops, I just noticed that you have committed a this same patch to pu
+> already, but with a better log message.  Please retain that version.
 
-  $ git commit -m "Makefile"
-  [master a931b27] Makefile
-   1 files changed, 0 insertions(+), 222 deletions(-)
-   delete mode 100644 Makefile
-   create mode 100644 makefile
-  $ git ls-files -m
+Thanks. Very much appreciated.
 
-The previous version I had installed from one of the OSX package
-managers (not sure if it was fink or Macports) was 1.6.5.3.
+It sometimes gets frustrating to see a re-rolled submission that ignores
+the fix-ups to messages and patches I make locally before queued to 'pu'.
 
-NOTE: I had to compile git from source like "NO_FINK=1 make" in
-order to avoid the "ld: warning: in /sw/lib/libiconv.dylib, file is
-not of required architecture" error message.
+It is easy for me to say that they should fetch 'pu' to see what is queued
+before resubmitting, but I've been wondering if there is a better way to
+communicate back such differences, so that submitters can easily sanity
+check to see if my fix-ups are sensible, and to ensure that the re-rolled
+patches do not discard them by mistake before submitting.
 
-So, in summary, it looks like this is fixed.
-
-Thanks,
-Shaun
+I could post what are queued in new topics back to the list as part of
+ack, but that would make the list too noisy to read.
