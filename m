@@ -1,352 +1,204 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: obstack fails to compile on OS X 10.7
-Date: Sat, 27 Aug 2011 03:14:43 -0700
-Message-ID: <20110827101418.GA8074@gmail.com>
-References: <4A1A024F-C5D5-4E5F-8474-DA3D87412C8A@gernhardtsoftware.com>
+From: Michal Sojka <sojka@os.inf.tu-dresden.de>
+Subject: [PATCH v4] gitk: Allow commit editing
+Date: Sat, 27 Aug 2011 14:31:02 +0200
+Message-ID: <87fwknaveh.fsf@steelpick.2x.cz>
+References: <87obzlwpx0.fsf@steelpick.2x.cz> <1313756753-26498-1-git-send-email-sojka@os.inf.tu-dresden.de> <20110825031420.GB3465@sigill.intra.peff.net> <87bovdvdhd.fsf@steelpick.2x.cz> <20110825173018.GA519@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Fredrik Kuivinen <frekui@gmail.com>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Sat Aug 27 12:15:13 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, paulus@samba.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Aug 27 14:31:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QxFux-0008Ex-E4
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Aug 2011 12:15:12 +0200
+	id 1QxI2i-0005tq-Dd
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Aug 2011 14:31:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750993Ab1H0KO7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Aug 2011 06:14:59 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:44922 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750916Ab1H0KO6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Aug 2011 06:14:58 -0400
-Received: by pzk37 with SMTP id 37so5593225pzk.1
-        for <git@vger.kernel.org>; Sat, 27 Aug 2011 03:14:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ZcWFlnKMVQGG8Tubq8tHfMLrLo4a22BbahqIHdqfx1M=;
-        b=psLQUKoCTf2APYQ6xVw0bv+URq9SPDATxp2u+u9JJTHO0GawnazEEb/z16ZKElIIwC
-         AQhCuScxuWdE6FoADHbe+yW7cJNfo6/pEbe7Uj0BZPWv+W5q7CsfHIIyVWyF5nW1mmxg
-         b7w+A6VfnpzjZSQEP07UStS+oB0/GEukx4gkM=
-Received: by 10.142.172.16 with SMTP id u16mr724425wfe.286.1314440097539;
-        Sat, 27 Aug 2011 03:14:57 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id i1sm6263200pbi.10.2011.08.27.03.14.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 27 Aug 2011 03:14:56 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4A1A024F-C5D5-4E5F-8474-DA3D87412C8A@gernhardtsoftware.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751378Ab1H0MbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Aug 2011 08:31:09 -0400
+Received: from max.feld.cvut.cz ([147.32.192.36]:57307 "EHLO max.feld.cvut.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751146Ab1H0MbH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Aug 2011 08:31:07 -0400
+Received: from localhost (unknown [192.168.200.4])
+	by max.feld.cvut.cz (Postfix) with ESMTP id C76793CFE72;
+	Sat, 27 Aug 2011 14:31:05 +0200 (CEST)
+X-Virus-Scanned: IMAP AMAVIS
+Received: from max.feld.cvut.cz ([192.168.200.1])
+	by localhost (styx.feld.cvut.cz [192.168.200.4]) (amavisd-new, port 10044)
+	with ESMTP id 0CdZEd+7CO+7; Sat, 27 Aug 2011 14:31:04 +0200 (CEST)
+Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
+	by max.feld.cvut.cz (Postfix) with ESMTP id 35DE819F333B;
+	Sat, 27 Aug 2011 14:31:04 +0200 (CEST)
+Received: from steelpick.2x.cz (unknown [141.76.49.12])
+	(Authenticated sender: sojkam1)
+	by imap.feld.cvut.cz (Postfix) with ESMTPSA id 71E1CFA003;
+	Sat, 27 Aug 2011 14:31:03 +0200 (CEST)
+Received: from wsh by steelpick.2x.cz with local (Exim 4.76)
+	(envelope-from <sojka@os.inf.tu-dresden.de>)
+	id 1QxI2R-0007Ow-01; Sat, 27 Aug 2011 14:31:02 +0200
+In-Reply-To: <20110825173018.GA519@sigill.intra.peff.net>
+User-Agent: Notmuch/0.6.1-96-g451f68f (http://notmuchmail.org) Emacs/23.3.1 (x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180228>
 
-On Sat, Aug 27, 2011 at 02:21:40AM -0400, Brian Gernhardt wrote:
-> Some of the errors look like things I could track down, but some just=
- confuse me.  If anyone else could take a look into this, it would be m=
-uch appreciated.
->=20
-> ~~ Brian G.
->=20
-> gcc -o compat/obstack.o -c -MF compat/.depend/obstack.o.d -MMD -MP  -=
-Wall -Wdeclaration-after-statement -Werror -Wno-deprecated-declarations=
- -I. -DUSE_ST_TIMESPEC  -DSHA1_HEADER=3D'"block-sha1/sha1.h"'  -DNO_MEM=
-MEM  compat/obstack.c
-> In file included from compat/obstack.c:30:
-> compat/obstack.h:190: error: __block attribute can be specified on va=
-riables only
-> compat/obstack.c:70: error: expected specifier-qualifier-list before =
-=E2=80=98uintmax_t=E2=80=99
-> compat/obstack.c:111:24: error: exitfail.h: No such file or directory
-> cc1: warnings being treated as errors
-> compat/obstack.c: In function =E2=80=98print_and_abort=E2=80=99:
-> compat/obstack.c:436: warning: implicit declaration of function =E2=80=
-=98gettext=E2=80=99
-> compat/obstack.c:436: warning: incompatible implicit declaration of b=
-uilt-in function =E2=80=98gettext=E2=80=99
-> compat/obstack.c:438: error: =E2=80=98exit_failure=E2=80=99 undeclare=
-d (first use in this function)
-> compat/obstack.c:438: error: (Each undeclared identifier is reported =
-only once
-> compat/obstack.c:438: error: for each function it appears in.)
-> compat/obstack.c:439: warning: =E2=80=98noreturn=E2=80=99 function do=
-es return
-> make: *** [compat/obstack.o] Error 1
->=20
-> $ gcc --version
-> i686-apple-darwin11-llvm-gcc-4.2 (GCC) 4.2.1 (Based on Apple Inc. bui=
-ld 5658) (LLVM build 2335.15.00)
+On Thu, 25 Aug 2011, Jeff King wrote:
+> On Thu, Aug 25, 2011 at 03:15:42PM +0200, Michal Sojka wrote:
+> > +    # Check whether some other refs contain the commit to be edited
+> > +    if {[exec git rev-list --stdin $id << $otherrefsneg] eq {}} {
+> > +	if { [confirm_popup [mc "The commit you are going to edit is contained in another, possibly non-local, ref (e.g. branch or tag).\
+> > +				It is a bad idea to change a ref that is possibly used by other people. See git-rebase(1) for details.\n\n\
+> > +				Do you want to continue?"]]} {
+> > +	    return 1
+> 
+> Minor micro-optimization: this can be "git rev-list -1". You only care
+> if it produces the one commit, so that's sufficient. Without "-1", git
+> will keep reporting commits all the way down to the merge base with some
+> other ref.
 
-I ran into the same thing.
+Here is a new version with the micro-optimization.
 
-This fixes it for me, but we might want to rearrange the
-#includes a bit.  I think this needs more work.. including
-compat/obstack.h from kwset.c seems wrong.
-Should we just include obstack.h in git-compat-util instead?
+Another minor change is that this patch now applies to gitk repo
+(http://git.kernel.org/pub/scm/gitk/gitk.git) instead of the main git
+repo.
 
-I suspect that more exotic platforms may have problems
-with obstack.h as well.  This probably needs some testing
-on SunOS, AIX, IRIX, etc.
+-Michal
 
--- 8< --
-Subject: [RFC PATCH] obstack: Fix portability issues
+--8<---------------cut here---------------start------------->8---
+I often use gitk to review patches before pushing them out and I would
+like to have an easy way to edit commits. The current approach with
+copying the commitid, switching to terminal, invoking git rebase -i,
+editing the commit and switching back to gitk is a way too complicated
+just for changing a single letter in the commit message or removing a
+debug printf().
 
-i686-apple-darwin10-gcc-4.2.1 (GCC) 4.2.1 and possibly others
-do not have exit.h, exitfail.h, or obstack.h.  Add compat
-versions of these headers as well as exitfail.c from glibc.
+This patch adds "Edit this commit" item to gitk's context menu which
+invokes interactive rebase in a non-interactive way :-). git gui is
+used to actually edit the commit.
 
-The ELIDE_CODE check in obstack.c is not sufficient so add a
-separate NEEDS_OBSTACK variable to allow platforms to opt into
-using the compatibility versions of these files.
+Besides editing the commit message, splitting of commits, as described
+in git-rebase(1), is also supported.
 
-The __block variable was renamed to __blk to avoid a gcc error:
+The user is warned if the commit to be edited is contained in another
+ref besides the current branch and the stash (e.g. in a remote
+branch). Additionally, error box is displayed if the user attempts to
+edit a commit not contained in the current branch.
 
-compat/obstack.h:190: error: __block attribute can be specified on vari=
-ables only
-
-Signed-off-by: David Aguilar <davvid@gmail.com>
-Reported-by: Brian Gernhardt <brian@gernhardtsoftware.com>
+Signed-off-by: Michal Sojka <sojka@os.inf.tu-dresden.de>
 ---
- Makefile          |   11 +++++++++++
- compat/exit.h     |   32 ++++++++++++++++++++++++++++++++
- compat/exitfail.c |   24 ++++++++++++++++++++++++
- compat/exitfail.h |   20 ++++++++++++++++++++
- compat/obstack.c  |   19 +++----------------
- compat/obstack.h  |    2 +-
- kwset.c           |    3 ++-
- 7 files changed, 93 insertions(+), 18 deletions(-)
- create mode 100644 compat/exit.h
- create mode 100644 compat/exitfail.c
- create mode 100644 compat/exitfail.h
+ gitk |   71 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 67 insertions(+), 4 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 30f3812..87ad4a2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -517,6 +517,8 @@ LIB_H +=3D compat/bswap.h
- LIB_H +=3D compat/cygwin.h
- LIB_H +=3D compat/mingw.h
- LIB_H +=3D compat/obstack.h
-+LIB_H +=3D compat/exitfail.h
-+LIB_H +=3D compat/exit.h
- LIB_H +=3D compat/win32/pthread.h
- LIB_H +=3D compat/win32/syslog.h
- LIB_H +=3D compat/win32/sys/poll.h
-@@ -599,6 +601,7 @@ LIB_OBJS +=3D cache-tree.o
- LIB_OBJS +=3D color.o
- LIB_OBJS +=3D combine-diff.o
- LIB_OBJS +=3D commit.o
-+LIB_OBJS +=3D compat/exitfail.o
- LIB_OBJS +=3D compat/obstack.o
- LIB_OBJS +=3D config.o
- LIB_OBJS +=3D connect.o
-@@ -872,6 +875,8 @@ ifeq ($(uname_S),Darwin)
- 	NEEDS_CRYPTO_WITH_SSL =3D YesPlease
- 	NEEDS_SSL_WITH_CRYPTO =3D YesPlease
- 	NEEDS_LIBICONV =3D YesPlease
-+	NEEDS_OBSTACK =3D YesPlease
-+	NEEDS_EXITFAIL =3D YesPlease
- 	ifeq ($(shell expr "$(uname_R)" : '[15678]\.'),2)
- 		OLD_ICONV =3D UnfortunatelyYes
- 	endif
-@@ -1416,6 +1421,12 @@ endif
- ifdef NEEDS_RESOLV
- 	EXTLIBS +=3D -lresolv
- endif
-+ifdef NEEDS_OBSTACK
-+	BASIC_CFLAGS +=3D -DNEEDS_OBSTACK
-+endif
-+ifdef NEEDS_EXITFAIL
-+	BASIC_CFLAGS +=3D -DNEEDS_EXITFAIL
-+endif
- ifdef NO_D_TYPE_IN_DIRENT
- 	BASIC_CFLAGS +=3D -DNO_D_TYPE_IN_DIRENT
- endif
-diff --git a/compat/exit.h b/compat/exit.h
-new file mode 100644
-index 0000000..9dbfb7c
---- /dev/null
-+++ b/compat/exit.h
-@@ -0,0 +1,32 @@
-+/* exit() function.
-+   Copyright (C) 1995, 2001 Free Software Foundation, Inc.
-+
-+   This program is free software; you can redistribute it and/or modif=
-y
-+   it under the terms of the GNU General Public License as published b=
-y
-+   the Free Software Foundation; either version 2, or (at your option)
-+   any later version.
-+
-+   This program is distributed in the hope that it will be useful,
-+   but WITHOUT ANY WARRANTY; without even the implied warranty of
-+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+   GNU General Public License for more details.
-+
-+   You should have received a copy of the GNU General Public License
-+   along with this program; if not, write to the Free Software Foundat=
-ion,
-+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. =
- */
-+
-+#ifndef _EXIT_H
-+#define _EXIT_H
-+
-+/* Get exit() declaration.  */
-+#include <stdlib.h>
-+
-+/* Some systems do not define EXIT_*, even with STDC_HEADERS.  */
-+#ifndef EXIT_SUCCESS
-+# define EXIT_SUCCESS 0
-+#endif
-+#ifndef EXIT_FAILURE
-+# define EXIT_FAILURE 1
-+#endif
-+
-+#endif /* _EXIT_H */
-diff --git a/compat/exitfail.c b/compat/exitfail.c
-new file mode 100644
-index 0000000..a2dd5dd
---- /dev/null
-+++ b/compat/exitfail.c
-@@ -0,0 +1,24 @@
-+/* Failure exit status
-+
-+   Copyright (C) 2002, 2003 Free Software Foundation, Inc.
-+
-+   This program is free software; you can redistribute it and/or modif=
-y
-+   it under the terms of the GNU General Public License as published b=
-y
-+   the Free Software Foundation; either version 2, or (at your option)
-+   any later version.
-+
-+   This program is distributed in the hope that it will be useful,
-+   but WITHOUT ANY WARRANTY; without even the implied warranty of
-+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+   GNU General Public License for more details.
-+
-+   You should have received a copy of the GNU General Public License
-+   along with this program; see the file COPYING.
-+   If not, write to the Free Software Foundation,
-+   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
-+#ifdef NEEDS_EXITFAIL
-+#include "exitfail.h"
-+#include "exit.h"
-+
-+int volatile exit_failure =3D EXIT_FAILURE;
-+#endif
-diff --git a/compat/exitfail.h b/compat/exitfail.h
-new file mode 100644
-index 0000000..e46cf9c
---- /dev/null
-+++ b/compat/exitfail.h
-@@ -0,0 +1,20 @@
-+/* Failure exit status
-+
-+   Copyright (C) 2002 Free Software Foundation, Inc.
-+
-+   This program is free software; you can redistribute it and/or modif=
-y
-+   it under the terms of the GNU General Public License as published b=
-y
-+   the Free Software Foundation; either version 2, or (at your option)
-+   any later version.
-+
-+   This program is distributed in the hope that it will be useful,
-+   but WITHOUT ANY WARRANTY; without even the implied warranty of
-+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+   GNU General Public License for more details.
-+
-+   You should have received a copy of the GNU General Public License
-+   along with this program; see the file COPYING.
-+   If not, write to the Free Software Foundation,
-+   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
-+
-+extern int volatile exit_failure;
-diff --git a/compat/obstack.c b/compat/obstack.c
-index 75440d9..825658c 100644
---- a/compat/obstack.c
-+++ b/compat/obstack.c
-@@ -18,15 +18,12 @@
-    Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-    Boston, MA 02110-1301, USA.  */
-=20
--
--#ifdef HAVE_CONFIG_H
--# include <config.h>
--#endif
--
- #ifdef _LIBC
- # include <obstack.h>
- # include <shlib-compat.h>
- #else
-+# include <gettext.h>
-+# include "git-compat-util.h"
- # include "obstack.h"
- #endif
-=20
-@@ -54,7 +51,7 @@
-=20
- #include <stddef.h>
-=20
--#ifndef ELIDE_CODE
-+#if !defined ELIDE_CODE || defined NEEDS_OBSTACK
-=20
-=20
- # if HAVE_INTTYPES_H
-@@ -400,16 +397,6 @@ _obstack_memory_used (struct obstack *h)
-   return nbytes;
+diff --git a/gitk b/gitk
+index a701e0d..1ca2d00 100755
+--- a/gitk
++++ b/gitk
+@@ -2481,6 +2481,7 @@ proc makewindow {} {
+     makemenu $rowctxmenu {
+ 	{mc "Diff this -> selected" command {diffvssel 0}}
+ 	{mc "Diff selected -> this" command {diffvssel 1}}
++	{mc "Edit this commit" command edit_commit}
+ 	{mc "Make patch" command mkpatch}
+ 	{mc "Create tag" command mktag}
+ 	{mc "Write commit to file" command writecommit}
+@@ -8445,18 +8446,18 @@ proc rowmenu {x y id} {
+     if {$id ne $nullid && $id ne $nullid2} {
+ 	set menu $rowctxmenu
+ 	if {$mainhead ne {}} {
+-	    $menu entryconfigure 7 -label [mc "Reset %s branch to here" $mainhead] -state normal
++	    $menu entryconfigure 8 -label [mc "Reset %s branch to here" $mainhead] -state normal
+ 	} else {
+-	    $menu entryconfigure 7 -label [mc "Detached head: can't reset" $mainhead] -state disabled
++	    $menu entryconfigure 8 -label [mc "Detached head: can't reset" $mainhead] -state disabled
+ 	}
+ 	if {[info exists markedid] && $markedid ne $id} {
+-	    $menu entryconfigure 9 -state normal
+ 	    $menu entryconfigure 10 -state normal
+ 	    $menu entryconfigure 11 -state normal
++	    $menu entryconfigure 12 -state normal
+ 	} else {
+-	    $menu entryconfigure 9 -state disabled
+ 	    $menu entryconfigure 10 -state disabled
+ 	    $menu entryconfigure 11 -state disabled
++	    $menu entryconfigure 12 -state disabled
+ 	}
+     } else {
+ 	set menu $fakerowmenu
+@@ -9120,6 +9121,68 @@ proc cherrypick {} {
+     notbusy cherrypick
  }
- =0C
--/* Define the error handler.  */
--# ifdef _LIBC
--#  include <libintl.h>
--# else
--#  include "gettext.h"
--# endif
--# ifndef _
--#  define _(msgid) gettext (msgid)
--# endif
--
- # ifdef _LIBC
- #  include <libio/iolibio.h>
- # endif
-diff --git a/compat/obstack.h b/compat/obstack.h
-index 449070e..5636b91 100644
---- a/compat/obstack.h
-+++ b/compat/obstack.h
-@@ -187,7 +187,7 @@ extern int _obstack_begin_1 (struct obstack *, int,=
- int,
- 			     void (*) (void *, void *), void *);
- extern int _obstack_memory_used (struct obstack *);
-=20
--void obstack_free (struct obstack *__obstack, void *__block);
-+void obstack_free (struct obstack *__obstack, void *__blk);
-=20
- =0C
- /* Error handler called when `obstack_chunk_alloc' failed to allocate
-diff --git a/kwset.c b/kwset.c
-index fd4515a..d01c562 100644
---- a/kwset.c
-+++ b/kwset.c
-@@ -37,7 +37,8 @@
- #include "cache.h"
-=20
- #include "kwset.h"
--#include "obstack.h"
-+#include "git-compat-util.h"
-+#include "compat/obstack.h"
-=20
- #define NCHAR (UCHAR_MAX + 1)
- #define obstack_chunk_alloc xmalloc
---=20
-1.7.6.476.g57292
+ 
++proc rebase_ok {id} {
++    if {[exec git merge-base $id HEAD] ne $id} {
++	error_popup [mc "You cannot edit commits outside of the current branch."]
++	return 0
++    }
++    set headref [exec git symbolic-ref HEAD]
++    set allrefs [split [exec git for-each-ref --format=%(refname)] "\n"]
++    set otherrefs {}
++    set otherrefsneg ""
++    foreach ref $allrefs {
++	if {$ref eq "refs/stash" || $ref eq $headref} continue
++	set otherrefsneg "$otherrefsneg^$ref\n"
++    }
++
++    # Check whether some other refs contain the commit to be edited
++    if {[exec git rev-list --stdin $id --max-count=1 << $otherrefsneg] eq {}} {
++	if { [confirm_popup [mc "The commit you are going to edit is contained in another, possibly non-local, ref (e.g. branch or tag).\
++				It is a bad idea to change a ref that is possibly used by other people. See git-rebase(1) for details.\n\n\
++				Do you want to continue?"]]} {
++	    return 1
++	} else {
++	    return 0
++	}
++    }
++    return 1
++}
++
++proc edit_commit {} {
++    global rowmenuid selectedline
++
++    if {![rebase_ok $rowmenuid]} return
++
++    nowbusy edit [mc "Editing commit"]
++    if {[catch {exec sh -c "(GIT_EDITOR='sed -ie 1s/^pick/edit/' git rebase -p -i --no-autosquash $rowmenuid^ && git gui citool --amend) 2>&1"} err]} {
++	notbusy edit
++	error_popup $err
++	exec git rebase --abort
++	return
++    }
++    set newcommit [exec git rev-parse HEAD]
++    while {[catch {exec sh -c "git diff-index --quiet --cached HEAD && git diff-files --quiet"} err]} {
++	if {[confirm_popup [mc "There are uncommited changes in the working tree or in the index.\
++				Do you want to create a new commit (OK) or discard them (Cancel)?"]]} {
++	    catch {exec git gui citool} err;
++	    # In case of error (i.e. the user did not commit anything), we just ask him again
++	} else {
++	    exec git reset --hard
++	}
++    }
++    if {[catch {exec sh -c "git rebase --continue 2>&1"} err]} {
++	notbusy edit
++	error_popup $err
++	exec git rebase --abort
++	return
++    }
++    updatecommits
++    # XXX How to select the edited commit? This doesn't work.
++    selbyid $newcommit
++    notbusy edit
++}
++
++
+ proc resethead {} {
+     global mainhead rowmenuid confirm_ok resettype NS
+ 
+-- 
+1.7.5.4
+
+--8<---------------cut here---------------end--------------->8---
