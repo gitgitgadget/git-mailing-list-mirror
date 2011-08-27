@@ -1,128 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 1.7.7-rc0 tagged and pushed out
-Date: Fri, 26 Aug 2011 16:20:20 -0700
-Message-ID: <7vobzbbw0b.fsf@alter.siamese.dyndns.org>
-References: <7vwrdzbwrt.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 27 01:20:28 2011
+From: Brandon Casey <drafnel@gmail.com>
+Subject: [PATCH 1/4] t/t3905: use the name 'actual' for test output, swap arguments to test_cmp
+Date: Fri, 26 Aug 2011 19:59:24 -0500
+Message-ID: <1314406767-17832-1-git-send-email-drafnel@gmail.com>
+Cc: git@vger.kernel.org, hilco.wijbenga@gmail.com, david@porkrind.org,
+	Brandon Casey <drafnel@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Aug 27 03:01:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qx5hM-0002O6-C7
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Aug 2011 01:20:28 +0200
+	id 1Qx7Gd-00074o-3B
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Aug 2011 03:00:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753378Ab1HZXUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Aug 2011 19:20:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61868 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752963Ab1HZXUX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Aug 2011 19:20:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 00D53494C;
-	Fri, 26 Aug 2011 19:20:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=e4IJAuyXXZ/xQQ8bQdg864xIdMA=; b=ctHqcR
-	dO5ASwTXNDG62SzgSc9S1vKDuKUCHee5jzt9XZ5pwQRQGXQoqXw8IDKxK5X/sh+4
-	ZTs5++a1KVLMA+XW6beyDiJHxzECSl/lOGKfdPGNqZhPr+xdKFg5Y6JQ+hNdB4xN
-	HFRD6xaDNMMYIeMT8lQVDCOHXCt5y39YiycAk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PnLhG6gxwROyihEQ7CMW/qvNL4j/U3tB
-	2Um8KWtxf1/0HFysAEToVjMAN91a6BWk9N5WpbTQROh+HCY9mtyQWY1v0w5cLuqc
-	XX2HvE8R43W6fOUs41oFtrdX7TnwCVGuYKtY+pID+NLrsn0jWl7qBFg5wNFxdymg
-	Vku2vgRk98s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ECF4B494B;
-	Fri, 26 Aug 2011 19:20:22 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6179B494A; Fri, 26 Aug 2011
- 19:20:22 -0400 (EDT)
-In-Reply-To: <7vwrdzbwrt.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 26 Aug 2011 16:03:50 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F8A071A4-D039-11E0-8F24-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754593Ab1H0BAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Aug 2011 21:00:54 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:50847 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754411Ab1H0BAx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2011 21:00:53 -0400
+Received: by yie30 with SMTP id 30so2066831yie.19
+        for <git@vger.kernel.org>; Fri, 26 Aug 2011 18:00:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=vcbqAbJIyO63GM9qh6+sjk1wJ9vh1m5FJYFcT0V/piU=;
+        b=VJ0Dq3og7VkPFxbrQMdw//v82jlRnj3JAErAVvrRKDv63xRJgOHEEyi06fGDLAJfJC
+         zjcDbsZaadr/iqqrF+JBY8DVwGcFstJ2+0nH4Y5+nJGFdmb8Lw6kekySsI+79qGzqKVn
+         2PDy1NCH1QF7z23FNVQ4B5t4JYts4KxJRCXfI=
+Received: by 10.236.182.201 with SMTP id o49mr5129556yhm.57.1314406852923;
+        Fri, 26 Aug 2011 18:00:52 -0700 (PDT)
+Received: from localhost.localdomain ([96.19.140.155])
+        by mx.google.com with ESMTPS id j45sm2756593yhe.36.2011.08.26.18.00.51
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 26 Aug 2011 18:00:51 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180211>
 
-Junio C Hamano <gitster@pobox.com> writes:
+It is common practice in the git test suite to use the file names 'actual'
+and 'expect' to hold the actual and expected output of commands.  So change
+the name 'output' to 'actual'.
 
-> ... and I think I've collected all the recent leftover topics from the
-> list that are at least going in the right direction if not perfect and
-> queued them to update 'pu'.
+Additionally, swap the order of arguments to test_cmp when comparing
+expected output and actual output so that if diff output is produced, it
+describes how the actual output differs from what was expected rather than
+the other way around.
 
-Here is a preview of the "New Topics" section of the next "What's
-cooking".
+Signed-off-by: Brandon Casey <drafnel@gmail.com>
+---
+ t/t3905-stash-include-untracked.sh |   24 ++++++++++++------------
+ 1 files changed, 12 insertions(+), 12 deletions(-)
 
-
-[New Topics]
-
-* mg/maint-notes-C-doc (2011-08-25) 1 commit
- - git-notes.txt: clarify -C vs. copy and -F
-
-* jc/clean-exclude-doc (2011-08-26) 1 commit
- - Documentation: clarify "git clean -e <pattern>"
-
-* mh/check-ref-format-print-normalize (2011-08-25) 1 commit
- - check-ref-format --print: Normalize refnames that start with slashes
-
-These tiny clean-up topics could go to 1.7.7 final. On the other hand,
-they are not urgent, either.
-
-* bk/ancestry-path (2011-08-25) 3 commits
- - revision: do not include sibling history in --ancestry-path output
- - revision: keep track of the end-user input from the command line
- - rev-list: Demonstrate breakage with --ancestry-path --all
-
-The topic came up a bit too late in the cycle.
-
-* mg/branch-list (2011-08-26) 5 commits
- - branch: allow pattern arguments
- - branch: introduce --list option
- - git-branch: introduce missing long forms for the options
- - git-tag: introduce long forms for the options
- - t6040: test branch -vv
- (this branch uses nk/branch-v-abbrev.)
-
-The topic came up a bit too late in the cycle.
-
-* mm/rebase-i-exec-edit (2011-08-26) 2 commits
- - rebase -i: notice and warn if "exec $cmd" modifies the index or the working tree
- - rebase -i: clean error message for --continue after failed exec
-
-The topic came up a bit too late in the cycle.
-
-* jk/default-attr (2011-08-26) 1 commit
- - attr: map builtin userdiff drivers to well-known extensions
-
-I fixed up the test breakage just for fun, but this is not urgent.
-
-* hv/submodule-merge-search (2011-08-26) 4 commits
- - submodule: Search for merges only at end of recursive merge
- - allow multiple calls to submodule merge search for the same path
- - submodule: Demonstrate known breakage during recursive merge
- - push: Don't push a repository with unpushed submodules
- (this branch uses fg/submodule-ff-check-before-push, fg/submodule-ff-check-before-push and jc/combine-diff-callback.)
-
-The topic came up a bit too late in the cycle.
-The bottom one needs to be replaced with a properly written commit log message.
-
-* mm/mediawiki-as-a-remote (2011-08-26) 1 commit
- - Add a remote helper to interact with mediawiki (fetch & push)
-
-Fun.
-
-* nd/maint-autofix-tag-in-head (2011-08-26) 3 commits
- - Accept tags in HEAD or MERGE_HEAD
- - merge: remove global variable head[]
- - merge: keep stash[] a local variable
-
-Probably needs a re-roll to aim a bit higher.
+diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-untracked.sh
+index 4f2eedf..adc2524 100755
+--- a/t/t3905-stash-include-untracked.sh
++++ b/t/t3905-stash-include-untracked.sh
+@@ -23,13 +23,13 @@ test_expect_success 'stash save --include-untracked some dirty working directory
+ '
+ 
+ cat > expect <<EOF
++?? actual
+ ?? expect
+-?? output
+ EOF
+ 
+ test_expect_success 'stash save --include-untracked cleaned the untracked files' '
+-	git status --porcelain > output
+-	test_cmp output expect
++	git status --porcelain >actual
++	test_cmp expect actual
+ '
+ 
+ cat > expect.diff <<EOF
+@@ -47,10 +47,10 @@ EOF
+ 
+ test_expect_success 'stash save --include-untracked stashed the untracked files' '
+ 	test "!" -f file2 &&
+-	git diff HEAD..stash^3 -- file2 > output &&
+-	test_cmp output expect.diff &&
+-	git ls-tree --name-only stash^3: > output &&
+-	test_cmp output expect.lstree
++	git diff HEAD..stash^3 -- file2 >actual &&
++	test_cmp expect.diff actual &&
++	git ls-tree --name-only stash^3: >actual &&
++	test_cmp expect.lstree actual
+ '
+ test_expect_success 'stash save --patch --include-untracked fails' '
+ 	test_must_fail git stash --patch --include-untracked
+@@ -64,15 +64,15 @@ git clean --force --quiet
+ 
+ cat > expect <<EOF
+  M file
++?? actual
+ ?? expect
+ ?? file2
+-?? output
+ EOF
+ 
+ test_expect_success 'stash pop after save --include-untracked leaves files untracked again' '
+ 	git stash pop &&
+-	git status --porcelain > output
+-	test_cmp output expect
++	git status --porcelain >actual
++	test_cmp expect actual
+ '
+ 
+ git clean --force --quiet
+@@ -96,8 +96,8 @@ EOF
+ 
+ test_expect_success 'stash save --include-untracked dirty index got stashed' '
+ 	git stash pop --index &&
+-	git diff --cached > output &&
+-	test_cmp output expect
++	git diff --cached >actual &&
++	test_cmp expect actual
+ '
+ 
+ git reset > /dev/null
+-- 
+1.7.6
