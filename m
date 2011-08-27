@@ -1,63 +1,92 @@
-From: rupert THURNER <rupert.thurner@gmail.com>
-Subject: "git submodule foreach" very slow ...
-Date: Sat, 27 Aug 2011 21:07:23 +0200
-Message-ID: <CAJs9aZ8Bbaji-Did9gYzUQ85VRkp=ZpRq=Pej6M-9fkKK5BurA@mail.gmail.com>
+From: Shaun Ruffell <sruffell@digium.com>
+Subject: Re: Files that cannot be added to the index
+Date: Sat, 27 Aug 2011 14:26:55 -0500
+Message-ID: <20110827192655.GA14333@digium.com>
+References: <CAMvu5bLuRWinMYNc4NoRKQKiLCWLcwkpowEFT4GQ0mcJYj6eOg@mail.gmail.com>
+ <4E57A93A.6090405@drmicha.warpmail.net>
+ <20110826205919.GB8107@sooty-2.local>
+ <20110826211233.GB3093@digium.com>
+ <20110827060718.GA28136@sigill.intra.peff.net>
+ <20110827184009.GA12767@digium.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 27 21:07:50 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	seanh <snhmnd@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Aug 27 21:27:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QxOEO-0000b8-Ni
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Aug 2011 21:07:49 +0200
+	id 1QxOXD-0007Um-DP
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Aug 2011 21:27:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751254Ab1H0THo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Aug 2011 15:07:44 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:60759 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750951Ab1H0THo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Aug 2011 15:07:44 -0400
-Received: by gxk21 with SMTP id 21so3758325gxk.19
-        for <git@vger.kernel.org>; Sat, 27 Aug 2011 12:07:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=gSIeVK75OmAkqVIyFevQFb5zsNMIF1k0uwKFfcjJRCI=;
-        b=Zr/tCwpCQ8SswmCQYIjkyR1+evlgkefHJHj/2OgndoMuNBegL3C89RcnRprRiQkfxg
-         JW1feVFNnlzDZuBwYAxCOQwhzaBBcbH0dTEhcTIXNpQit5uXfSI93MO5A8Eu3cI4JDeH
-         g6QBnmL/9EacSG4pzMcRkP7I0XNITLRlKZtC4=
-Received: by 10.42.131.9 with SMTP id x9mr2803274ics.255.1314472063059; Sat,
- 27 Aug 2011 12:07:43 -0700 (PDT)
-Received: by 10.42.180.70 with HTTP; Sat, 27 Aug 2011 12:07:23 -0700 (PDT)
+	id S1751506Ab1H0T1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Aug 2011 15:27:08 -0400
+Received: from mail.digium.com ([216.207.245.2]:38958 "EHLO mail.digium.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751216Ab1H0T1G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Aug 2011 15:27:06 -0400
+Received: from zimbra.digium.internal ([10.24.55.203] helo=zimbra.hsv.digium.com)
+	by mail.digium.com with esmtp (Exim 4.69)
+	(envelope-from <sruffell@digium.com>)
+	id 1QxOX1-0002ZC-13; Sat, 27 Aug 2011 14:27:03 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zimbra.hsv.digium.com (Postfix) with ESMTP id E0B8CD82A5;
+	Sat, 27 Aug 2011 14:27:02 -0500 (CDT)
+Received: from zimbra.hsv.digium.com ([127.0.0.1])
+	by localhost (zimbra.hsv.digium.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 4HGM3mrxB2w7; Sat, 27 Aug 2011 14:27:02 -0500 (CDT)
+Received: from digium.com (sruffell.digium.internal [10.19.134.249])
+	by zimbra.hsv.digium.com (Postfix) with ESMTPSA id DEC13D8024;
+	Sat, 27 Aug 2011 14:27:01 -0500 (CDT)
+Content-Disposition: inline
+In-Reply-To: <20110827184009.GA12767@digium.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180242>
 
-git usually is lightning fast, it even knows how many processor
-threads are available and uses them. for a test i converted
-https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg into a git
-repository with one subrepository for every directory. rebasing takes
-now 3 hours, while git without subrepositories takes 10 minutes.
+On Sat, Aug 27, 2011 at 01:40:09PM -0500, Shaun Ruffell wrote:
+> 
+> So, in summary, it looks like this is fixed.
 
-$ ls -1 | wc
-   1162    1162    9527
-$ time git submodule foreach git svn rebase
-....
-real    199m29.626s
-user    60m49.631s
-sys     70m51.888s
+Actually, after playing with it a little more on OSX, I think it was
+just operator error on my part and that, for this, the versions are
+behaving the same.
 
-contrary, if one creates one git repository for all these little
-directories, rebasing is twenty times faster:
-$ time git svn rebase
-...
-real    10m1.032s
-user    5m33.632s
-sys     2m53.955s
+Adding a non-existent file produces an error:
+  $ git add adjaskdj
+  fatal: pathspec 'adjaskdj' did not match any files
 
-rupert
+Adding a file that is on the filesystem but only differs in case with a
+file in the index silently fails:
+
+  $ mv Makefile makefile
+  $ echo "hello" >> makefile
+  $ git ls-files -m
+  Makefile
+  $ git add makefile
+
+And then when you try to commit the file you just added it fails:
+
+  $ git commit
+  # On branch master
+  # Changes not staged for commit:
+  #   (use "git add <file>..." to update what will be committed)
+  #   (use "git checkout -- <file>..." to discard changes in working directory)
+  #
+  #	modified:   Makefile
+  #
+  no changes added to commit (use "git add" and/or "git commit -a")
+
+Adding a file that is in the index, but only differs by case with a file
+in the filesystem works:
+
+  $ git add Makefile
+  $ git commit -m "test"
+  [master 8de0bd6] test
+   1 files changed, 1 insertions(+), 0 deletions(-)
