@@ -1,77 +1,68 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: Overriding ~/.gitconfig using GIT_CONFIG
-Date: Sun, 28 Aug 2011 06:05:56 -0700
-Message-ID: <20110828130555.GA56765@gmail.com>
-References: <1313163498.14274.505.camel@rex>
- <7vr54qmodf.fsf@alter.siamese.dyndns.org>
- <7vmxfemnc4.fsf@alter.siamese.dyndns.org>
- <1313181853.14274.535.camel@rex>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	=?utf-8?B?Tmd1eeG7IG4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Richard Purdie <rpurdie@rpsys.net>
-X-From: git-owner@vger.kernel.org Sun Aug 28 15:08:49 2011
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv3 0/5] patterns for branch list
+Date: Sun, 28 Aug 2011 16:54:27 +0200
+Message-ID: <cover.1314543252.git.git@drmicha.warpmail.net>
+References: <cover.1314367414.git.git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 28 16:54:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qxf6V-0000rv-5I
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Aug 2011 15:08:47 +0200
+	id 1Qxgl4-0008Rv-F2
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Aug 2011 16:54:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751915Ab1H1NGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Aug 2011 09:06:11 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:59527 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750941Ab1H1NGJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Aug 2011 09:06:09 -0400
-Received: by pzk37 with SMTP id 37so6903015pzk.1
-        for <git@vger.kernel.org>; Sun, 28 Aug 2011 06:06:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ZitO70g4/YT0DdCUp7RJHWWj8eBW/GWaxw1pnn71yMg=;
-        b=Lta/gnsMVlvjkzMZC0mCi20u+zKEp+4SOciTlR9iRKd0SRkjaiTN0OVrGdgQpi4Qej
-         rLnj+T0Z5SWmeo/Oe1H/U1nfn41If3ENkurUPAE2/QOJvs36EUIdChgwOl2ZnoK1izW+
-         p9/GHbqBBLuA7nF3BIu7ypZt5NYi7PDb5DzUs=
-Received: by 10.142.43.2 with SMTP id q2mr1882569wfq.89.1314536768759;
-        Sun, 28 Aug 2011 06:06:08 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id t7sm1294833pbn.11.2011.08.28.06.06.06
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 28 Aug 2011 06:06:07 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1313181853.14274.535.camel@rex>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1750998Ab1H1Oyj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Aug 2011 10:54:39 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:48959 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751037Ab1H1Oyh (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 Aug 2011 10:54:37 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 3E8D420ED8;
+	Sun, 28 Aug 2011 10:54:35 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Sun, 28 Aug 2011 10:54:35 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=from:to:cc:subject:date:message-id
+	:in-reply-to:references; s=smtpout; bh=Z4dpxH4G9kfWU2EAnf/BbJBZd
+	wE=; b=ELiSJOvOPdKjcALdOxLds2G5V4AwWCQV3fPnz9nAe7mt5y6jxQsCsf+N8
+	Lt1Ew4I1N3p/b7Up4o849iDABpGeH7L9Kr5sMtgpKDs7BpiCs6Ii96xswWSiLEg9
+	BoqGrAL2o5KU7YkEVxjQsyjaogbzZF614ve8RRXzxVoqD48dP4=
+X-Sasl-enc: 5yDH0Q4kHL6+64m9n+vWdJDzpTvUlqlADY2aPNQSwLMQ 1314543274
+Received: from localhost (p54859364.dip0.t-ipconnect.de [84.133.147.100])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 9003CA00250;
+	Sun, 28 Aug 2011 10:54:34 -0400 (EDT)
+X-Mailer: git-send-email 1.7.6.845.gc3c05
+In-Reply-To: <cover.1314367414.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180268>
 
-On Fri, Aug 12, 2011 at 09:44:13PM +0100, Richard Purdie wrote:
-> My problem isn't that I want to specify a specific .gitconfig file, I
-> just need it to ignore the one in $HOME. I'm happy for the .git/config
-> file to be used, in fact I need it to be.
+v3 has reworded commit messages for 2,3,4 and tests for combinations
+of branch options in 4, as suggested.
 
-If you're writing a tool then it should restrict itself to
-git's plumbing commands.  You should be able to do just about
-anything without needing to worry about differences in
-configuraiton.  Git commands almost always provide a way to
-override configuration through the use of flags.
+No code changes (besides the additional tests in 4).
 
-The plumbing commands are listed in the main git manpage.
-See "Low-level commands (plumbing)" here:
-http://www.kernel.org/pub/software/scm/git/docs/
+Michael J Gruber (5):
+  t6040: test branch -vv
+  git-tag: introduce long forms for the options
+  git-branch: introduce missing long forms for the options
+  branch: introduce --list option
+  branch: allow pattern arguments
 
-What is the specific problem solved by overriding the
-configuration?  It may be possible to solve it without needing
-to get too complicated.
+ Documentation/git-branch.txt |   20 +++++++++++++++--
+ Documentation/git-tag.txt    |    8 +++++++
+ builtin/branch.c             |   46 +++++++++++++++++++++++++++++++----------
+ builtin/tag.c                |   16 +++++++-------
+ t/t3200-branch.sh            |   32 +++++++++++++++++++++++++++++
+ t/t3203-branch-output.sh     |   24 +++++++++++++++++++++
+ t/t6040-tracking-info.sh     |   16 ++++++++++++++
+ 7 files changed, 140 insertions(+), 22 deletions(-)
 
-Have fun,
 -- 
-					David
+1.7.6.845.gc3c05
