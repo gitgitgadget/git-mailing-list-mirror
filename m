@@ -1,138 +1,162 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: git project patch workflow
-Date: Sun, 28 Aug 2011 17:50:26 +0200
-Message-ID: <4E5A63C2.5010207@alum.mit.edu>
-References: <1314418364-2532-1-git-send-email-mhagger@alum.mit.edu> <1314418364-2532-2-git-send-email-mhagger@alum.mit.edu> <4E58710B.60507@alum.mit.edu> <7vty92adv0.fsf@alter.siamese.dyndns.org>
+From: Steffen Daode Nurpmeso <sdaoden@googlemail.com>
+Subject: [PATCH] checkout: add --verbose, and restrict progress reporting
+ (was: Re: [PATCH] checkout: be quiet if not on isatty())
+Date: Sun, 28 Aug 2011 19:37:27 +0200
+Message-ID: <20110828173644.GA1553@sherwood.local>
+References: <cover.1314472512.git.sdaoden@gmail.com>
+ <c70a246a601bec0ce973b177bf5553d3fee47014.1314472512.git.sdaoden@gmail.com>
+ <7vaaau9hso.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, cmn@elego.de,
-	Michael J Gruber <git@drmicha.warpmail.net>
+Content-Type: text/plain; charset=utf-8
+Cc: martin f krafft <madduck@madduck.net>,
+	Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org,
+	sdaoden@gmail.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 28 17:56:02 2011
+X-From: git-owner@vger.kernel.org Sun Aug 28 19:37:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QxhiI-0001tJ-IV
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Aug 2011 17:55:59 +0200
+	id 1QxjIp-0007tg-4q
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Aug 2011 19:37:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750814Ab1H1Puz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Aug 2011 11:50:55 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:41838 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750780Ab1H1Pux (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Aug 2011 11:50:53 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.134] (p54BEA689.dip.t-dialin.net [84.190.166.137])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p7SFoQhV001927
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 28 Aug 2011 17:50:27 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.20) Gecko/20110805 Lightning/1.0b2 Thunderbird/3.1.12
-In-Reply-To: <7vty92adv0.fsf@alter.siamese.dyndns.org>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1751368Ab1H1Rhk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Aug 2011 13:37:40 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:58214 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751034Ab1H1Rhj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Aug 2011 13:37:39 -0400
+Received: by fxh19 with SMTP id 19so3810008fxh.19
+        for <git@vger.kernel.org>; Sun, 28 Aug 2011 10:37:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=d03BPd03dkHr/T+hfDTjS8NXBlkR2f4MyEGgcW1tZHk=;
+        b=u1fc7Hzae7EP1JeG/BoEuFTs/K9h36/o3k8P3EI9q0T1FsefqMUmqvfwMi7F2A5EeG
+         gIzIMoIsE7lFxOPd1uauPbGDYU0wrbtQMNyypjzaDFfrz7voFLsf64k40zMxfJ2k0ZvM
+         5caEmOCkVqhe/K+tC4KBtMpWbqbZmz/+RLfTw=
+Received: by 10.223.58.73 with SMTP id f9mr606051fah.149.1314553058497;
+        Sun, 28 Aug 2011 10:37:38 -0700 (PDT)
+Received: from sherwood.local ([82.113.99.150])
+        by mx.google.com with ESMTPS id d5sm3096415fak.0.2011.08.28.10.37.31
+        (version=SSLv3 cipher=OTHER);
+        Sun, 28 Aug 2011 10:37:37 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vaaau9hso.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180279>
 
-On 08/27/2011 08:30 PM, Junio C Hamano wrote:
-> It sometimes gets frustrating to see a re-rolled submission that ignores
-> the fix-ups to messages and patches I make locally before queued to 'pu'.
-> 
-> It is easy for me to say that they should fetch 'pu' to see what is queued
-> before resubmitting [...]
+This commit adds support for the -v/--verbose pair of options,
+and thus offers the possibility to be more specific in deciding
+which purely informational feedback message is displayed or not.
 
-I usually try to do this, but it is awkward (or maybe I am doing it
-wrong).  If I run git fetch and notice that one of the upstream branches
-was updated, then I still have to do a semi-manual step to see whether
-any of the new commits are from a patch series that I submitted,
-possibly which version of the patch series they are from, and whether
-the patch or commit message was edited by you.  Sometimes it is not even
-clear which branch you will choose to apply a patch series to (maint vs
-master).  Contrast that, for example, with the ease of determining in
-github whether a patch series has made it upstream.
+Without any of --verbose and --quiet involved, the progress
+reporting is now restricted to interactive sessions, i.e. only
+shown if the output is send to a terminal.
 
-In this particular case your email mentioned your code improvement, and
-I obviously checked that your change made sense and squashed it onto my
-own patch.  But your email didn't mention your changes to the commit
-message, so I did not think to look for any.  Given that we, the
-unwashed masses, have to transact all of our git patches through the
-mailing list, I naively assumed that you would also mention your changes
-on the mailing list.
+Analyzed-by: Junio C Hamano <gitster@pobox.com>
+Inspired-by: martin f krafft <madduck@madduck.net>
+Signed-off-by: Steffen Daode Nurpmeso <sdaoden@gmail.com>
+---
 
-I am amazed at the volume, quality, promptness, and patience of your
-feedback (thanks!) and we should all bend over backwards to make your
-life easier even at the expense of some extra work for ourselves.  Junio
-doesn't scale :-)  So my suggestions below should only be considered if
-they do not increase your bureaucratic work at the expense of your
-technical work.
+Well i was stepping down from my hill, actually singing my
+sunday's song (was it Elvis..), but i didn't dare to implement the
+behaviour Martin suggested.  But isn't he right?
+This thing here was also tested a bit.
 
-> [...] but I've been wondering if there is a better way to
-> communicate back such differences, so that submitters can easily sanity
-> check to see if my fix-ups are sensible, and to ensure that the re-rolled
-> patches do not discard them by mistake before submitting.
-> 
-> I could post what are queued in new topics back to the list as part of
-> ack, but that would make the list too noisy to read.
+ Documentation/git-checkout.txt |   13 +++++++++----
+ builtin/checkout.c             |   12 +++++++++---
+ 2 files changed, 18 insertions(+), 7 deletions(-)
 
-I personally would find it helpful if you would mention any changes that
-you made in an acknowledgment email.  Ideally, the email would also
-mention the branch name that you have chosen for the feature branch, to
-make it easier to grep for the commit in your repo where it was merged
-into pu and in your "What's cooking" messages.  In your case it would be
-enough to *mention* that you made a change because we can see the change
-itself in your repo.  I wouldn't worry too much about mailing list
-traffic, because the acknowledgement would presumably be in the same
-thread as the original patch series and thus easily ignorable by people
-who are not interested in the subject.
-
-
-Taking a step back, the real irony is that the git project hardly use
-the distributed features of git *for the development of git itself*.  I
-was flabbergasted when I first realized that fact.  Why is that?  It
-seems that the kind of fork/pull request/merge workflow that github
-makes so easy would be more convenient (and if not, the dogfooding would
-force us to *make* it more convenient).  I personally found it vastly
-easier to contribute my first patch to a github-based project than to git.
-
-What would it take to make a git-centered workflow meet all of the
-requirements that are satisfied by the mailing-list centered workflow
-that is used currently?
-
-ISTM that if there were a pull request procedure that automatically sent
-PATCH emails to the mailing list for review (including the
-non-log-message comments), then we would already be 95% of the way
-there.  The goal would be to make git the definitive store of
-information, and the patch emails a side-product.  That's the real
-reason I started the thread "'git format-patch' should get more
-information out of git": if all necessary information were in git then
-there would be no need for all changes to be serialized through the
-mailing list.
-
-1. Author creates v1 of patch series
-2. Author pushes changes to any publicly-visible git repo, including
-non-log-message comments as notes
-3. Author creates v1 tag and submits pull request, which results in
-emails being sent to the mailing list as now (but with links to the git
-repo and tag containing the patches)
-4. Reviewers submit feedback via the mailing list.  They can either work
-directly with the patch emails or can fetch the patches directly from
-the author.  The feedback is handled informally as now, but might
-include links to changed versions in their own public repo).
-5. Author responds to feedback via the mailing list as now.  Goto 1 if
-needed, creating tags for v2, v3 etc. of the patch series.
-6. When satisfied, maintainer pulls branch to shared repo.  *The
-author's commits retain their SHA1s.*
-
-Pie in the sky?
-
-Michael
-
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index c0a96e6..77ad4f3 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -8,9 +8,9 @@ git-checkout - Checkout a branch or paths to the working tree
+ SYNOPSIS
+ --------
+ [verse]
+-'git checkout' [-q] [-f] [-m] [<branch>]
+-'git checkout' [-q] [-f] [-m] [--detach] [<commit>]
+-'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
++'git checkout' [-v] [-q] [-f] [-m] [<branch>]
++'git checkout' [-v] [-q] [-f] [-m] [--detach] [<commit>]
++'git checkout' [-v] [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
+ 'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <paths>...
+ 'git checkout' [-p|--patch] [<tree-ish>] [--] [<paths>...]
+ 
+@@ -66,9 +66,14 @@ file can be discarded to re-create the original conflicted merge result.
+ 
+ OPTIONS
+ -------
++-v::
++--verbose::
++	Be verbose, force progress reporting.
++
+ -q::
+ --quiet::
+-	Quiet, suppress feedback messages.
++	Be quiet, suppress feedback messages and progress reporting.
++	Overrides "--verbose", if given.
+ 
+ -f::
+ --force::
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 4eaedff..7297843 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -27,6 +27,7 @@ static const char * const checkout_usage[] = {
+ };
+ 
+ struct checkout_opts {
++	int verbose;
+ 	int quiet;
+ 	int merge;
+ 	int force;
+@@ -325,7 +326,7 @@ static int reset_tree(struct tree *tree, struct checkout_opts *o, int worktree)
+ 	opts.reset = 1;
+ 	opts.merge = 1;
+ 	opts.fn = oneway_merge;
+-	opts.verbose_update = !o->quiet;
++	opts.verbose_update = o->verbose;
+ 	opts.src_index = &the_index;
+ 	opts.dst_index = &the_index;
+ 	parse_tree(tree);
+@@ -402,7 +403,7 @@ static int merge_working_tree(struct checkout_opts *opts,
+ 		topts.update = 1;
+ 		topts.merge = 1;
+ 		topts.gently = opts->merge && old->commit;
+-		topts.verbose_update = !opts->quiet;
++		topts.verbose_update = opts->verbose;
+ 		topts.fn = twoway_merge;
+ 		topts.dir = xcalloc(1, sizeof(*topts.dir));
+ 		topts.dir->flags |= DIR_SHOW_IGNORED;
+@@ -927,7 +928,8 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	int patch_mode = 0;
+ 	int dwim_new_local_branch = 1;
+ 	struct option options[] = {
+-		OPT__QUIET(&opts.quiet, "suppress progress reporting"),
++		OPT__VERBOSE(&opts.verbose, "force progress reporting"),
++		OPT__QUIET(&opts.quiet, "suppress feedback reporting"),
+ 		OPT_STRING('b', NULL, &opts.new_branch, "branch",
+ 			   "create and checkout a new branch"),
+ 		OPT_STRING('B', NULL, &opts.new_branch_force, "branch",
+@@ -958,6 +960,10 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	gitmodules_config();
+ 	git_config(git_checkout_config, &opts);
+ 
++	if (opts.quiet)
++		opts.verbose = 0;
++	else if (!opts.verbose)
++		opts.verbose = isatty(2);
+ 	opts.track = BRANCH_TRACK_UNSPECIFIED;
+ 
+ 	argc = parse_options(argc, argv, prefix, options, checkout_usage,
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.7.7.rc0.dirty
