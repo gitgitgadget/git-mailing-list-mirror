@@ -1,70 +1,92 @@
-From: Lynn Lin <lynn.xin.lin@gmail.com>
-Subject: branch practice in my project
-Date: Sun, 28 Aug 2011 17:23:06 +0800
-Message-ID: <CAPgpnMQmLUcxfNBDO53=s1SfigJtq2zk4H+npZeX0B_Vf0FAuA@mail.gmail.com>
+From: Fredrik Kuivinen <frekui@gmail.com>
+Subject: Re: [PATCH v2 5/5] Use kwset in grep
+Date: Sun, 28 Aug 2011 13:31:49 +0200
+Message-ID: <CALx8hKTuZ5hG6fGUnTbRPLifF=N-SJcfmgYAKUVDO-jgzrKRaA@mail.gmail.com>
+References: <20110820223032.12380.72469.stgit@localhost6.localdomain6>
+	<20110820224218.GF2199@fredrik-Q430-Q530>
+	<4E51F998.50801@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 28 11:23:20 2011
+Cc: git@vger.kernel.org, dpotapov@gmail.com,
+	Junio C Hamano <gitster@pobox.com>
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Aug 28 13:31:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QxbaJ-0006z8-GX
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Aug 2011 11:23:19 +0200
+	id 1Qxdan-0000Zz-6n
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Aug 2011 13:31:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751601Ab1H1JXJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Aug 2011 05:23:09 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:42316 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751561Ab1H1JXH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 Aug 2011 05:23:07 -0400
-Received: by vws1 with SMTP id 1so3960362vws.19
-        for <git@vger.kernel.org>; Sun, 28 Aug 2011 02:23:06 -0700 (PDT)
+	id S1751879Ab1H1Lbx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Aug 2011 07:31:53 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:44630 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750766Ab1H1Lbv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 Aug 2011 07:31:51 -0400
+Received: by fxh19 with SMTP id 19so3661968fxh.19
+        for <git@vger.kernel.org>; Sun, 28 Aug 2011 04:31:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=7+LXCIDp9fSuMPZVp09+Y5BhnfAVFg7rPwbJpxE9yOg=;
-        b=VCvL4aIZ5XY0nJnBwki/C6kBPW5D80BNBZ8rtqXXJIGb6LikpdNoWwj/2WFzzsFW5U
-         3Nu863Veg0e8FBtSlF7r61M725djtt9375hJph9ngnyHAeCsUZV5D9wridTx/EMtTJUs
-         M8PYq8XTodtklfsR+fCcTY4kAP4iYIiQploio=
-Received: by 10.220.9.199 with SMTP id m7mr874250vcm.278.1314523386244; Sun,
- 28 Aug 2011 02:23:06 -0700 (PDT)
-Received: by 10.52.157.41 with HTTP; Sun, 28 Aug 2011 02:23:06 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=08sZ7ym9w+koQ+C3C0ZDVtTRSQAj9vZHzkzk462pBvI=;
+        b=Y04xoBWKTVI4Bf4gh63b45kAwqatdbzDi94J2haC3HQTob/mWz0UHq4kCsPKfG9VIo
+         7jUSefEmS9HHZ8CaDKYhN+O80a2wTi2jh2IlFCKYB33lO/YDSBS3CvY+yiJRHZnsvjNI
+         SQ/aTRhV7I9Yfy0rnCj7PWiNchRkyi3nYnqZw=
+Received: by 10.223.39.216 with SMTP id h24mr5146969fae.31.1314531110304; Sun,
+ 28 Aug 2011 04:31:50 -0700 (PDT)
+Received: by 10.223.143.19 with HTTP; Sun, 28 Aug 2011 04:31:49 -0700 (PDT)
+In-Reply-To: <4E51F998.50801@gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180264>
 
-Hi git experts,
-     currently our project use git to manage source code,we only have
-master branch to support development and release.However when we goes
-into regression phase,code freeze will be runnning on master branch
-and it will hold lots of patch in developers.
+On Mon, Aug 22, 2011 at 08:39, Paolo Bonzini <bonzini@gnu.org> wrote:
+> On 08/21/2011 12:42 AM, Fredrik Kuivinen wrote:
+>>
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (opt->regflags& =A0REG_ICASE || p->=
+ignore_case) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 static char trans[256]=
+;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 int i;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 for (i =3D 0; i< =A025=
+6; i++)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 trans[=
+i] =3D tolower(i);
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 p->kws =3D kwsalloc(tr=
+ans);
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 } else {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 p->kws =3D kwsalloc(NU=
+LL);
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
+>
+> Of course, this makes absolutely no sense for MB_CUR_MAX > 1. =A0It's=
+ worth
+> mentioning that grep instead uses a loop with mbrtowc/towlower/wcrtom=
+b.
+> =A0This in turn will remove the need for the complex kwset code. :)
 
-I want to use a new branch strategy  to resolve code freeeze issue
+Good catch. At least it is not a regression from the current behavior,
+neither our own strcasestr in compat/ nor strcasestr in glibc can
+handle MB_CUR_MAX > 1. My original idea was to make use of kwset also
+for the case when more than one fixed string is given to git-grep, but
+I didn't find a nice way to refactor the code to make that possible.
 
+> The "mbtolower" code" dates to after the license change, but I wrote =
+it and
+> I give permission to use it under GPLv2. =A0See commits 70e23616 and =
+30af8050
+> in the GNU grep repository.
+>
+> Should still be good enough for most uses, so I'll give my
+>
+> Acked-by: Paolo Bonzini <bonzini@gnu.org>
 
-master   branch    ----1----2----3-----4-----5-----6-----7------8--->
-                                     |                               |
- release                         3=91----4=92---5=91                  7=
-'----8'
+Thanks.
 
-our release sprint  cycle is 3 weeks per sprint. when we start  a new
-sprint,we can create a release branch and get the data back to master
-branch after the sprint is over
-
-how to get the data back to master branch?   I  suggest we can merge
-release branch back, and others are afraid that merge conflict will be
-a big deal for us so they suggest we can double commit into master and
-release branch
-
-what's your thoughts? Could you give me some suggestions?
-
-Thanks in advance
-
-Lynn
+- Fredrik
