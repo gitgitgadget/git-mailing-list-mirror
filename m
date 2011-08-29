@@ -1,55 +1,92 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 0/3] Un-pessimize "diff-index $commit -- $pathspec"
-Date: Mon, 29 Aug 2011 15:11:34 -0700
-Message-ID: <CA+55aFz9givAWhP5_SfnneY6x_0ekcN2U9HrKr+NTgY=Ot=6TQ@mail.gmail.com>
-References: <7vty9054qr.fsf@alter.siamese.dyndns.org> <1314653603-7533-1-git-send-email-gitster@pobox.com>
- <CA+55aFzk+hn9wMAp3H92SHAGO8CQVBpTsmR41FgCy32T7muUzA@mail.gmail.com> <7v1uw36fgb.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/2] check-ref-format --print: Normalize refnames that
+ start with slashes
+Date: Mon, 29 Aug 2011 15:22:55 -0700
+Message-ID: <7vwrdv503k.fsf@alter.siamese.dyndns.org>
+References: <1314418364-2532-1-git-send-email-mhagger@alum.mit.edu>
+ <1314418364-2532-2-git-send-email-mhagger@alum.mit.edu>
+ <4E58710B.60507@alum.mit.edu> <7vty92adv0.fsf@alter.siamese.dyndns.org>
+ <20110829185011.GC756@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 30 00:12:31 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	cmn@elego.de
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 30 00:23:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyA4D-0005nO-Sb
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 00:12:30 +0200
+	id 1QyAEQ-0001Ke-Pg
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 00:23:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755277Ab1H2WMY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Aug 2011 18:12:24 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:43067 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754895Ab1H2WMX (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2011 18:12:23 -0400
-Received: from mail-ww0-f44.google.com (mail-ww0-f44.google.com [74.125.82.44])
-	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p7TMBsjo020942
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Mon, 29 Aug 2011 15:11:55 -0700
-Received: by wwf5 with SMTP id 5so6195995wwf.1
-        for <git@vger.kernel.org>; Mon, 29 Aug 2011 15:11:54 -0700 (PDT)
-Received: by 10.216.188.17 with SMTP id z17mr1810134wem.70.1314655914130; Mon,
- 29 Aug 2011 15:11:54 -0700 (PDT)
-Received: by 10.216.187.66 with HTTP; Mon, 29 Aug 2011 15:11:34 -0700 (PDT)
-In-Reply-To: <7v1uw36fgb.fsf@alter.siamese.dyndns.org>
-X-Spam-Status: No, hits=-103.511 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,USER_IN_WHITELIST
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754583Ab1H2WW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Aug 2011 18:22:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56699 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754103Ab1H2WW5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Aug 2011 18:22:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 291AC4F94;
+	Mon, 29 Aug 2011 18:22:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=79udPzLceT4tMyjDN4svrWVMb/c=; b=a2X3fs
+	7KtzUSShUNq7pJIbjlQiU5Spg8dASFhloVC0L93WjzP73u3DXHqVROnNe4OcwZSr
+	t++pIw86uRNEWPaZ5QavohGyi6kXQBMsKPMa19irNBGxWS4t9Er/Jg1qU1s/8k7X
+	4TT4JrCCGH/1pvGEW7DJNUbybmTzaX+f934dc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SVtl2EGzmWP7RJfK1xaViDB4HVqdFvdG
+	PAn23njVfo363VstgiocFwpYvZnZyHHv1+nhIkAUsAN+NOzxaAB0ajZEpmezHoIg
+	XlQOcbg4HiHnmh2sXiQE9BIOb0QXb+w2ce5WuQSEdPh7z2NKKHmZKnQblz+8D/Kj
+	Ll5ogL8Qiwc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 206344F8E;
+	Mon, 29 Aug 2011 18:22:57 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A68A94F89; Mon, 29 Aug 2011
+ 18:22:56 -0400 (EDT)
+In-Reply-To: <20110829185011.GC756@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 29 Aug 2011 14:50:12 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 720F3C00-D28D-11E0-827F-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180368>
 
-On Mon, Aug 29, 2011 at 3:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Jeff King <peff@peff.net> writes:
+
+> ... I always assumed that you did one of:
 >
-> The topic started by Marat Radchenko in
+>   1. Comment on the patch via email, just as any other reviewer, so it
+>      can go into the re-roll.
+>
+>   2. Fix-up the patch or commit message during "am", with the assumption
+>      that it is ready to be merged at least to "next", at which point
+>      re-rolls are no longer OK, anyway.
 
-Ugh, that's ugly. Is it verified to solve Marat's nasty case too?
+Not really.
 
-But yeah, ack on the series.
+I usually amend patches queued to 'pu' (or queue fixup! separately) when I
+am reasonably confident that my suggestion had enough merits.  Also I roll
+in suggestions that are obviously (to me) good from the list, which may or
+may not be the same to the list concensus. Maybe I should try to be less
+aggressive.
 
-                 Linus
+> I mentioned "it takes effort" above. I don't mean "submitters shouldn't
+> be expected to put in extra effort". But we should make sure the effort
+> is well-spent, which means:
+>
+>   1. Giving them some indication that you tweaked things during
+>      application. It doesn't have to be an inclusive list. Even saying
+>      "Thanks, applied with some spelling fixes" instead of your usual
+>      "Thanks" is enough (actually, I think you frequently do so
+>      already).
+
+Just started consciously doing so yesterday, after starthing this offtopic
+therad ;-)
