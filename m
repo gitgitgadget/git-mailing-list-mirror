@@ -1,80 +1,101 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [tig] [PATCH] Display line numbers in main view
-Date: Sun, 28 Aug 2011 23:16:31 -0400
-Message-ID: <CAFuPQ1LQgmOO=ziDZcJC9jMckCOu1NEHYM=R9HnMRXWzDuydZw@mail.gmail.com>
-References: <20110805010616.GA16045@146653177.ece.utexas.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t5540-http-test: shorten grep pattern
+Date: Sun, 28 Aug 2011 22:17:25 -0700
+Message-ID: <7vhb5094pm.fsf@alter.siamese.dyndns.org>
+References: <1314506520-17430-1-git-send-email-brian@gernhardtsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 29 05:19:46 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Brian Gernhardt <brian@gernhardtsoftware.com>
+X-From: git-owner@vger.kernel.org Mon Aug 29 07:18:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QxsO0-0003cc-Eg
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Aug 2011 05:19:44 +0200
+	id 1QxuEs-0003Nc-AQ
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Aug 2011 07:18:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752194Ab1H2DQx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Aug 2011 23:16:53 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:57196 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751961Ab1H2DQw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 Aug 2011 23:16:52 -0400
-Received: by fxh19 with SMTP id 19so4050871fxh.19
-        for <git@vger.kernel.org>; Sun, 28 Aug 2011 20:16:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=P+ByGAEv+QRCs88lQl5W5WwA/QDYT+tmnDHBu8OThKI=;
-        b=EwQOQWoDGi+6hQ8PPS25TODoH3CLkEQCVUFmBXDR63ATkBiDUtU8lh8ooIeQpB/+Cz
-         3o2Yu0CS+gKeWDqguBCkQWKfIGADRxSXUQk13npcV5xqHXBK+HP4ICZP41grNCRd18xv
-         nz4JGjpG5A+QH0tWpShOjDk4uejB/Huh7hMzw=
-Received: by 10.223.63.139 with SMTP id b11mr1353174fai.111.1314587811132;
- Sun, 28 Aug 2011 20:16:51 -0700 (PDT)
-Received: by 10.223.96.11 with HTTP; Sun, 28 Aug 2011 20:16:31 -0700 (PDT)
-In-Reply-To: <20110805010616.GA16045@146653177.ece.utexas.edu>
-X-Google-Sender-Auth: l0Nw6H3U24dNNRDh6UvS6lim0mo
+	id S1752105Ab1H2FRa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Aug 2011 01:17:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48662 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750873Ab1H2FR3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Aug 2011 01:17:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD15E5C7E;
+	Mon, 29 Aug 2011 01:17:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eAyfvNoqdww9oQnK7BVmdwPWRtA=; b=iCX83y
+	R8OBTR8kor44Am3bRkcrIVCTL98hVG8WV16Gik2QzNtvPb/nj7agro/Ft1W2fBLY
+	yvN+TkdL62qa59UFoGIJlhXfSkccGk0M/JndmNubdIuRGTn9drFhl5TC0GuAHR+M
+	npUSyTysA/A4qNnLQpx9WUc5R6D7K/hsjwmDo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hiwb4bqoJyzrzlgIcLkatRFroimMejtt
+	cigqk/TFwUnRU4DN7P526fjYdbUGHnXUDkB2TJ16q1ICf8+f3tcmrzo1wQhcXnYQ
+	yPnoIW9xAnO/M5cIK39I8dY/NiN4YqOqvlf3cUgHXkU1yq46uFxo0By4ODyj9T02
+	me3ZlAoBr9U=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4E935C7D;
+	Mon, 29 Aug 2011 01:17:27 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 19E705C7C; Mon, 29 Aug 2011
+ 01:17:26 -0400 (EDT)
+In-Reply-To: <1314506520-17430-1-git-send-email-brian@gernhardtsoftware.com>
+ (Brian Gernhardt's message of "Sun, 28 Aug 2011 00:42:00 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2F92D024-D1FE-11E0-A320-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180294>
 
-Applied, thanks!
+Brian Gernhardt <brian@gernhardtsoftware.com> writes:
 
-On Thu, Aug 4, 2011 at 21:06, Kumar Appaiah <a.kumar@alumni.iitm.ac.in>=
- wrote:
-> When line numbers are enabled, this enables the display of line
-> numbers in the main view as well. This is useful for cases where one
-> would want to quickly navigate to a particular commit by the ordering
-> displayed in tig, using the `:<num>' approach.
+> On OS X, the grep pattern
+>
+>     "\"OP .*/objects/$x2/X38_X40 HTTP/[.0-9]*\" 20[0-9] "
+>
+> is far too long ($x38 and $x40 represent 38 and 40 copies of
+> [0-9a-f]).  In order to still be able to match this, use the sed
+> invocation to replace what we're looking for a token.
+>
+> Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
 > ---
-> =C2=A0tig.c | =C2=A0 =C2=A03 +++
-> =C2=A01 files changed, 3 insertions(+), 0 deletions(-)
+>  t/t5540-http-push.sh |    5 +++--
+>  1 files changed, 3 insertions(+), 2 deletions(-)
 >
-> diff --git a/tig.c b/tig.c
-> index ed92400..92091ab 100644
-> --- a/tig.c
-> +++ b/tig.c
-> @@ -6194,6 +6194,9 @@ main_draw(struct view *view, struct line *line,=
- unsigned int lineno)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!commit->author)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return FALSE;
->
-> + =C2=A0 =C2=A0 =C2=A0 if (opt_line_number && draw_lineno(view, linen=
-o))
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return TRUE;
-> +
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (draw_date(view, &commit->time))
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return TRUE;
->
-> --
-> 1.7.2.5
->
+> diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
+> index a266ca5..5bf287d 100755
+> --- a/t/t5540-http-push.sh
+> +++ b/t/t5540-http-push.sh
+> @@ -132,8 +132,9 @@ x38="$x5$x5$x5$x5$x5$x5$x5$x1$x1$x1"
+>  x40="$x38$x2"
+>  
+>  test_expect_success 'PUT and MOVE sends object to URLs with SHA-1 hash suffix' '
+> -	sed -e "s/PUT /OP /" -e "s/MOVE /OP /" "$HTTPD_ROOT_PATH"/access.log |
+> -	grep -e "\"OP .*/objects/$x2/${x38}_$x40 HTTP/[.0-9]*\" 20[0-9] "
+> +	sed -e "s/PUT /OP /" -e "s/MOVE /OP /" -e "s/$x40/X40/" -e "s/$x38/X38/"\
+> +		"$HTTPD_ROOT_PATH"/access.log |
+> +	grep -e "\"OP .*/objects/$x2/X38_X40 HTTP/[.0-9]*\" 20[0-9] "
+>  
+>  '
 
---=20
-Jonas Fonseca
+Hmm...
+
+Is it sensible to replace $x40 with X40 and $x38 with X38 on any line
+anywhere for the purpose of this test? As the downstream test is only
+interested in a line with HTTP request line that asks for a specific path
+under objects/??/?{38}_?{40}, wouldn't it make more sense to replace
+occurrences of only such line?
+
+	sed -n \
+            -e "s/PUT /OP " \
+	    -e "s/MOVE /OP /" \
+	    -e "s|/objects/$x2/$x38_$x40|WANTED_PATH_REQUEST|p" \
+	    "$HTTPD_ROOT_PATH/access.log" |
+	grep -e "\"OP .*WANTED_PATH_REQUEST HTTP/[.0-9]*\" 20[0-9] "
