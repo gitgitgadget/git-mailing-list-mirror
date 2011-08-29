@@ -1,85 +1,78 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH 4/4] Document negated forms of format-patch --to --cc --add-headers
-Date: Mon, 29 Aug 2011 22:10:49 +0200
-Message-ID: <b18a36a42a45dd4147c43d959c64e00b9b17e4ac.1314648438.git.trast@student.ethz.ch>
-References: <bbfb7190ca0125798417f57f4d33b5443257e478.1314648438.git.trast@student.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stephen Boyd <bebarino@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 29 22:11:10 2011
+From: sdaoden@googlemail.com
+Subject: [PATCH 0/2 RFC] Add update_progress(), divert checkout messages
+Date: Mon, 29 Aug 2011 22:14:59 +0200
+Message-ID: <cover.1314647163.git.sdaoden@gmail.com>
+References: <7vaaau9hso.fsf@alter.siamese.dyndns.org>
+Cc: Steffen Daode Nurpmeso <sdaoden@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 29 22:16:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qy8Ao-0005Zk-6L
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Aug 2011 22:11:10 +0200
+	id 1Qy8Ft-0007uE-GZ
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Aug 2011 22:16:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754996Ab1H2UKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Aug 2011 16:10:55 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:51140 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754969Ab1H2UKw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Aug 2011 16:10:52 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.289.1; Mon, 29 Aug
- 2011 22:10:49 +0200
-Received: from localhost.localdomain (129.132.153.219) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.289.1; Mon, 29 Aug
- 2011 22:10:50 +0200
-X-Mailer: git-send-email 1.7.7.rc0.370.gdcae57
-In-Reply-To: <bbfb7190ca0125798417f57f4d33b5443257e478.1314648438.git.trast@student.ethz.ch>
-X-Originating-IP: [129.132.153.219]
+	id S1755015Ab1H2UQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Aug 2011 16:16:20 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:58599 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754969Ab1H2UQU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Aug 2011 16:16:20 -0400
+Received: by fxh19 with SMTP id 19so4797127fxh.19
+        for <git@vger.kernel.org>; Mon, 29 Aug 2011 13:16:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to;
+        bh=6lNjSqOF80g36tvcZH9g1cEBjNFxjBPDsNk8fCUvL/g=;
+        b=Of9ckY5M8MsCBZwLIbBDMoUxS3NAcnrJBBQUHEGQDUM6MBFHOG4YSoXCFcqJWiK4z4
+         Mx8Wlo/xes9Pk8dqqK5STLoTtw5lr7lqzAjlM+jMLg8sloZsZbnfgPFWea9BSSwvOMJh
+         y1dcuIJO/Hh8eUWsxh7kZgD7W0pwb8DkCmRyM=
+Received: by 10.223.22.131 with SMTP id n3mr7770816fab.4.1314648979112;
+        Mon, 29 Aug 2011 13:16:19 -0700 (PDT)
+Received: from localhost.localdomain ([89.204.137.171])
+        by mx.google.com with ESMTPS id b14sm4037549fak.5.2011.08.29.13.16.16
+        (version=SSLv3 cipher=OTHER);
+        Mon, 29 Aug 2011 13:16:18 -0700 (PDT)
+X-Mailer: git-send-email 1.7.7.rc0.dirty
+In-Reply-To: <7vaaau9hso.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180343>
 
-The negated forms introduced in c426003 (format-patch: add --no-cc,
---no-to, and --no-add-headers, 2010-03-07) were not documented
-anywhere.  Add them to the descriptions of the positive forms.
+From: Steffen Daode Nurpmeso <sdaoden@gmail.com>
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+Whereas only syntactic sugar, i think it's a bit odd that during
+a checkout which mostly removes files the git-checkout progress
+displays "Checking out files" all of the time.
 
-I can't help but notice that the options aren't symmetric:
---no-add-header clears more than just the options added by
---add-header.  It's probably too late to change though.
+There are two solutions to this: either simply change that string
+to "Updating working tree", which is acceptable to anybody at
+anytime.  Or divert what progress reports to the actual action
+which is currently performed.  This series tries to achieve the
+latter.
 
+But maybe progress should instead be extended that it could handle
+a situation like the following directly.  I.e., offer an
+additional start_parted_progress() series, or extend the current
+one with an additional "signed parted" argument.  That
+update_progress() could then instead be named
+progress_change_part() or whatever.  ?
 
- Documentation/git-format-patch.txt |    9 ++++++++-
- 1 files changed, 8 insertions(+), 1 deletions(-)
+    Updating work tree: removing files (x/y [xy%]) total%
+       Main-Title        Action-title  Action-cnt 
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index d13c9b2..6ea9be7 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -166,15 +166,22 @@ will want to ensure that threading is disabled for `git send-email`.
- --to=<email>::
- 	Add a `To:` header to the email headers. This is in addition
- 	to any configured headers, and may be used multiple times.
-+	The negated form `--no-to` discards all `To:` headers added so
-+	far (from config or command line).
- 
- --cc=<email>::
- 	Add a `Cc:` header to the email headers. This is in addition
- 	to any configured headers, and may be used multiple times.
-+	The negated form `--no-cc` discards all `Cc:` headers added so
-+	far (from config or command line).
- 
- --add-header=<header>::
- 	Add an arbitrary header to the email headers.  This is in addition
- 	to any configured headers, and may be used multiple times.
--	For example, `--add-header="Organization: git-foo"`
-+	For example, `--add-header="Organization: git-foo"`.
-+	The negated form `--no-add-header` discards *all* (`To:`,
-+	`Cc:`, and custom) headers added so far from config or command
-+	line.
- 
- --cover-letter::
- 	In addition to the patches, generate a cover letter file
+Steffen Daode Nurpmeso (2):
+  progress: add update_progress()
+  unpack-trees: divert check_updates() output via update_progress()
+
+ progress.c     |   15 +++++++++++++++
+ progress.h     |    2 ++
+ unpack-trees.c |   30 +++++++++++++++++++++++-------
+ 3 files changed, 40 insertions(+), 7 deletions(-)
+
 -- 
-1.7.7.rc0.370.gdcae57
+1.7.7.rc0.dirty
