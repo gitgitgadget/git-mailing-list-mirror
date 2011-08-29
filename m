@@ -1,68 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 4/5] branch: introduce --list option
-Date: Sun, 28 Aug 2011 23:51:25 -0700
-Message-ID: <7vippg7lsi.fsf@alter.siamese.dyndns.org>
-References: <cover.1314367414.git.git@drmicha.warpmail.net>
- <cover.1314543252.git.git@drmicha.warpmail.net>
- <05a1a73e0b942dd94dd091c233be964fa19dfc6a.1314543252.git.git@drmicha.warpmail.net> <7v8vqc92yp.fsf@alter.siamese.dyndns.org> <4E5B3317.7000207@drmicha.warpmail.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: What's the difference between `git show branch:file | diff -u -
+ file` vs `git diff branch file`?
+Date: Mon, 29 Aug 2011 14:41:45 +0700
+Message-ID: <CACsJy8DMqjMfb5wVMnsrZhP8yv2rF1wyQ6LM6b-PVcYY1SXkcQ@mail.gmail.com>
+References: <loom.20110823T091132-107@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Aug 29 08:51:36 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Marat Radchenko <marat@slonopotamus.org>
+X-From: git-owner@vger.kernel.org Mon Aug 29 09:42:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qxvh1-0000Vu-5I
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Aug 2011 08:51:35 +0200
+	id 1QxwUD-0006vQ-8d
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Aug 2011 09:42:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751894Ab1H2Gvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Aug 2011 02:51:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40945 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751039Ab1H2Gva (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Aug 2011 02:51:30 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22A6B2483;
-	Mon, 29 Aug 2011 02:51:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FGDjTn4HFUohwR4MVwkeWDlsl1s=; b=LsJT7Y
-	k2WjUXlZd6O+G/P5yjrApkK/ugrK1yvpzbN9pm4nOJvgJMcs1uaFws2UWRelHb59
-	p3wz5oU1gMOCHQwde/TEDuIqrCl7LWSbhez5TzvQ9RmrEHxR2Fs6EJwDQIscqRbW
-	h2Mm3zRDsqhG4PWF6+RMAhebZgjs5Tuqm4xEE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ax4+VfU6iK5hPwvGUILKmt2zTCP4/Bna
-	wf7SsqeIB6pbHCkwrhuZvMPchZSLPrtFRFFDCMccbJSREkQ+mEJ6hsg2jtnxM9sm
-	tRfwKUlR39kMQSvu9ylu20c1CH5F9G4iQfaPjJiY/Qwvj9bkq7coZ+hYNHsPoZiF
-	/aYgd1L489Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 19AD32482;
-	Mon, 29 Aug 2011 02:51:27 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A82922481; Mon, 29 Aug 2011
- 02:51:26 -0400 (EDT)
-In-Reply-To: <4E5B3317.7000207@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Mon, 29 Aug 2011 08:35:03 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5106F048-D20B-11E0-A514-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752955Ab1H2HmV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Aug 2011 03:42:21 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:33039 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752785Ab1H2HmT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2011 03:42:19 -0400
+Received: by bke11 with SMTP id 11so3942867bke.19
+        for <git@vger.kernel.org>; Mon, 29 Aug 2011 00:42:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=mwMfe5TS41yMRv8nxkme/gKJcv7qHBUOJbAnaQZvP1o=;
+        b=lpy6lg0zvb/j9ceThL3y+1pGwZnBbWvGL8q/1esByuR2ZuX1cF35Gtq7F5AEFyMynT
+         bqEH6PQQwOUCh4P+PP+PBqMg411trBLFkSX54Pr+SmXh2r68Bf01CSNbUryZlHZbhQiL
+         W5lK9uJBCBkSO6dbHBA3aQ28yu4c9hFnszhh4=
+Received: by 10.204.13.69 with SMTP id b5mr1799238bka.289.1314603736239; Mon,
+ 29 Aug 2011 00:42:16 -0700 (PDT)
+Received: by 10.204.7.138 with HTTP; Mon, 29 Aug 2011 00:41:45 -0700 (PDT)
+In-Reply-To: <loom.20110823T091132-107@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180305>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Tue, Aug 23, 2011 at 2:25 PM, Marat Radchenko <marat@slonopotamus.or=
+g> wrote:
+> $ time git show branch:file | diff -u - file > /dev/null
+>
+> real =C2=A0 =C2=A00m0.003s
+> user =C2=A0 =C2=A00m0.000s
+> sys =C2=A0 =C2=A0 0m0.000s
+>
+> $ time git diff branch -- file > /dev/null
+>
+> real =C2=A0 =C2=A00m31.442s
+> user =C2=A0 =C2=A00m31.040s
+> sys =C2=A0 =C2=A0 0m0.380s
+>
+> What does git diff do so it takes that much time?
 
-> Sheesh, that rebasing mistake (flipping the order of 4 and 5) was
-> present in v2 already. Only recently I learned about rebase-i's "exec"
-> and have to make it a habit to use it for step-by-step series testing.
+You said elsewhere in this thread this is private repo, so some more qu=
+estions:
 
-That's Ok. Locally moved the offending part of the test to 5 when
-applying.
-
-Thanks.
+ - is "file" above at top repo, or is it actually very/deep/path/to/a/f=
+ile?
+ - how many entries in the tree that contain "file"?
+ - how is "git ls-files | wc -l"?
+ - how about "time git diff branch another-branch -- file >/dev/null"?
+That'd remove unpack-trees code.
+--=20
+Duy
