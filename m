@@ -1,76 +1,70 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCHv3 4/5] branch: introduce --list option
-Date: Mon, 29 Aug 2011 08:35:03 +0200
-Message-ID: <4E5B3317.7000207@drmicha.warpmail.net>
-References: <cover.1314367414.git.git@drmicha.warpmail.net> <cover.1314543252.git.git@drmicha.warpmail.net> <05a1a73e0b942dd94dd091c233be964fa19dfc6a.1314543252.git.git@drmicha.warpmail.net> <7v8vqc92yp.fsf@alter.siamese.dyndns.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 2/2] Add a remote helper to interact with mediawiki (fetch
+ & push)
+Date: Mon, 29 Aug 2011 08:41:30 +0200
+Message-ID: <CAGdFq_jwLGZ+tLKramRrLJmwyY_uDtj7JXUwYBO9pSqOmZ20xQ@mail.gmail.com>
+References: <1314378689-8997-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1314378689-8997-2-git-send-email-Matthieu.Moy@imag.fr> <7v4o14dppz.fsf@alter.siamese.dyndns.org>
+ <CAGdFq_iYRkfnTbYAgmX1g4uOxWb_ZYxr+TNinVfWRV-zXrnzAg@mail.gmail.com> <7v4o1092hn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
+	Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr>,
+	Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>,
+	Claire Fousse <claire.fousse@ensimag.imag.fr>,
+	David Amouyal <david.amouyal@ensimag.imag.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	=?UTF-8?Q?Sylvain_Boulm=C3=A9?= <sylvain.boulme@imag.fr>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 29 08:35:14 2011
+X-From: git-owner@vger.kernel.org Mon Aug 29 08:42:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QxvRA-0004zc-U6
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Aug 2011 08:35:13 +0200
+	id 1QxvY1-0006oJ-07
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Aug 2011 08:42:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751302Ab1H2GfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Aug 2011 02:35:07 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:35364 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750780Ab1H2GfG (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2011 02:35:06 -0400
-Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id A9F9D20FC0;
-	Mon, 29 Aug 2011 02:35:05 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute5.internal (MEProxy); Mon, 29 Aug 2011 02:35:05 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=w/E87WySb95LxFWDlyBJ1r
-	r8fzE=; b=HynalGtj3WxAy6/myeH7FgKwiTSATW7v056fhvA9BxPRze7/82MTB0
-	ZAdzDDEo8uMlYt0dq7mTR4ofRQYsBGsoFU0T/CaRu/DBBFltSJ8LBJcfnAsLE86/
-	mA1euVo8Y0Uao1ljvN4YsEYhN7y8iQBF1VnS32Ver0vxzJBnrH8B8=
-X-Sasl-enc: wdaZ7H60jo5ErHT5534MT95ycvwvk/3POY+24ITbXZ/B 1314599705
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 0D429A20358;
-	Mon, 29 Aug 2011 02:35:04 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
-In-Reply-To: <7v8vqc92yp.fsf@alter.siamese.dyndns.org>
+	id S1751458Ab1H2GmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Aug 2011 02:42:12 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:35669 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751080Ab1H2GmK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Aug 2011 02:42:10 -0400
+Received: by pzk37 with SMTP id 37so7934389pzk.1
+        for <git@vger.kernel.org>; Sun, 28 Aug 2011 23:42:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=z18LKeDzDyGjZ/gXys+uWS7m+6pEJ3NQXk/28ex9zu0=;
+        b=RhWB2zJjF0Q+jFbDLtHpsU0A60S4HpkpsvjbsdCvivm2vYV46g1WJ6nNffTBJm+WB3
+         0JVAgB4vpFXNFMGdTZDZHe5nQERv+U074ryWKPuyAzdsYNMBUqwi+dGzMr038SeZ2PL7
+         4A39UIxMeAdgDAadpxYDi95+8CtcQ0V/1pjvc=
+Received: by 10.142.187.12 with SMTP id k12mr2564043wff.38.1314600130163; Sun,
+ 28 Aug 2011 23:42:10 -0700 (PDT)
+Received: by 10.68.55.170 with HTTP; Sun, 28 Aug 2011 23:41:30 -0700 (PDT)
+In-Reply-To: <7v4o1092hn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180302>
 
-Junio C Hamano venit, vidit, dixit 29.08.2011 07:55:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> +test_expect_success 'git branch --list shows local branches' '
->> +	git branch --list >actual &&
->> +	test_cmp expect actual
->> +'
->> +
->> +cat >expect <<'EOF'
->> +  branch-one
->> +  branch-two
->> +EOF
->> +test_expect_success 'git branch --list pattern shows matching local branches' '
->> +	git branch --list branch* >actual &&
->> +	test_cmp expect actual
->> +'
-> 
-> Does this one exclude the "* master" entry at this stage in the series?
+Heya,
 
-Sheesh, that rebasing mistake (flipping the order of 4 and 5) was
-present in v2 already. Only recently I learned about rebase-i's "exec"
-and have to make it a habit to use it for step-by-step series testing.
+On Mon, Aug 29, 2011 at 08:05, Junio C Hamano <gitster@pobox.com> wrote:
+> Does this exchange suggest that at least we would need an update to
+> documentation around "done", as Matthieu's "why is 'done' needed even
+> though I am not calling with --done?" sounds like a very fair question.
 
-Sorry, I'll send out v3 a bit later when I see that there are no more
-comments (and a full step-by-step series test has passed).
+No I think the documentation for fast-import is correct. If you pass
+--use-done-feature or print 'feature done' in the stream the use of
+'done' is required, otherwise it isn't. We did recently changed git to
+pass '--use-done-feature' to the fast-import process though :).
 
-Michael
+-- 
+Cheers,
+
+Sverre Rabbelier
