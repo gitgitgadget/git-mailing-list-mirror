@@ -1,60 +1,98 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: Re: [PATCH v4 0/4] git-p4: Improve branch support
-Date: Mon, 29 Aug 2011 10:33:39 +0100
-Message-ID: <20110829103339.4ee9282d@fenix.utopia.dhis.org>
-References: <1314568710-6472-1-git-send-email-vitor.hda@gmail.com>
-	<7vmxes7nu2.fsf@alter.siamese.dyndns.org>
+From: Richard Purdie <rpurdie@rpsys.net>
+Subject: Re: Overriding ~/.gitconfig using GIT_CONFIG
+Date: Mon, 29 Aug 2011 13:16:06 +0100
+Message-ID: <1314620166.5939.282.camel@rex>
+References: <1313163498.14274.505.camel@rex>
+	 <7vr54qmodf.fsf@alter.siamese.dyndns.org>
+	 <7vmxfemnc4.fsf@alter.siamese.dyndns.org> <1313181853.14274.535.camel@rex>
+	 <20110828130555.GA56765@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Pete Wyckoff <pw@padd.com>,
-	Tor Arvid Lund <torarvid@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 29 11:33:54 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Nguy?? n =?UTF-8?Q?Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
+	<pclouds@gmail.com>, GIT Mailing-list <git@vger.kernel.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 29 14:16:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QxyE4-0001Ze-E8
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Aug 2011 11:33:52 +0200
+	id 1Qy0lc-0001TN-N5
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Aug 2011 14:16:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753442Ab1H2Jdt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Aug 2011 05:33:49 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:48437 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753358Ab1H2Jdr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Aug 2011 05:33:47 -0400
-Received: by wwf5 with SMTP id 5so5511235wwf.1
-        for <git@vger.kernel.org>; Mon, 29 Aug 2011 02:33:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        bh=chFHDvKGHAfxm6ZlX5VZUl6qqA2FuTtw/nwOM0l02Iw=;
-        b=lFNa/TWPVkX3Mq8ScDaE/RudDvsD4IDYGcbGk177/DBxs9FZqSyoZxv+gmx0GOIlH1
-         7+kAQ5lbhaY0z6TImU/CQcclJbWNM9fkIX74joRYVD+DYO7A8q1kIqwvU/Kmpfe3XxfE
-         9I1sPs9osnbRTtVZ9/SOMv/c9YSWIBvfa1Ryc=
-Received: by 10.227.207.129 with SMTP id fy1mr3614179wbb.22.1314610426531;
-        Mon, 29 Aug 2011 02:33:46 -0700 (PDT)
-Received: from fenix.utopia.dhis.org (111.216.54.77.rev.vodafone.pt [77.54.216.111])
-        by mx.google.com with ESMTPS id n20sm3569048wbh.67.2011.08.29.02.33.45
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 29 Aug 2011 02:33:46 -0700 (PDT)
-In-Reply-To: <7vmxes7nu2.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.24.5; x86_64-pc-linux-gnu)
+	id S1752556Ab1H2MQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Aug 2011 08:16:36 -0400
+Received: from 93-97-173-237.zone5.bethere.co.uk ([93.97.173.237]:58173 "EHLO
+	tim.rpsys.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751781Ab1H2MQf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Aug 2011 08:16:35 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by tim.rpsys.net (8.13.6/8.13.8) with ESMTP id p7TCGQhL002812;
+	Mon, 29 Aug 2011 13:16:26 +0100
+Received: from tim.rpsys.net ([127.0.0.1])
+ by localhost (tim.rpsys.net [127.0.0.1]) (amavisd-new, port 10024) with LMTP
+ id 17826-07; Mon, 29 Aug 2011 13:16:21 +0100 (BST)
+Received: from [192.168.3.10] ([192.168.3.10])
+	(authenticated bits=0)
+	by tim.rpsys.net (8.13.6/8.13.8) with ESMTP id p7TCGE7O002806
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 29 Aug 2011 13:16:15 +0100
+In-Reply-To: <20110828130555.GA56765@gmail.com>
+X-Mailer: Evolution 2.32.2 
+X-Virus-Scanned: amavisd-new at rpsys.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180309>
 
-On Sun, 28 Aug 2011 23:07:17 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
+On Sun, 2011-08-28 at 06:05 -0700, David Aguilar wrote:
+> On Fri, Aug 12, 2011 at 09:44:13PM +0100, Richard Purdie wrote:
+> > My problem isn't that I want to specify a specific .gitconfig file, I
+> > just need it to ignore the one in $HOME. I'm happy for the .git/config
+> > file to be used, in fact I need it to be.
+> 
+> If you're writing a tool then it should restrict itself to
+> git's plumbing commands.  You should be able to do just about
+> anything without needing to worry about differences in
+> configuraiton.  Git commands almost always provide a way to
+> override configuration through the use of flags.
+> 
+> The plumbing commands are listed in the main git manpage.
+> See "Low-level commands (plumbing)" here:
+> http://www.kernel.org/pub/software/scm/git/docs/
+> 
+> What is the specific problem solved by overriding the
+> configuration?  It may be possible to solve it without needing
+> to get too complicated.
 
-> Could you make this an incremental patch relative to what is already in
-> next?
+I'm not sure writing my own porcelain makes sense in this case.
 
-Done.
+The tool in question is a build system which is primarily interested in
+building software. Sometimes the software we want to build is "bleeding
+edge" and hence rather than download tarballs, we want to interact
+directly with SCMs like git to obtain it.
+
+The commands I'm using are the likes of "git clone" and "git fetch"
+although we do use commands listed under the plumbing section too such
+as ls-remote and read-tree. We do "cache" checkouts and support
+automatically noticing changes and updating/building.
+
+What I do want to be able to say is "ignore whatever the user might have
+put in their ~/.gitconfig file" since I've open bug reports about people
+putting things in there that break builds.
+
+The fetch/clone commands do what I need, apart from being influenced by
+userconfig so reimplementing them myself doesn't seem like a good
+approach.
+
+Cheers,
+
+Richard
+
 -- 
-Vitor Antunes
+Linux Foundation
+http://www.yoctoproject.org/
