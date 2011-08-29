@@ -1,69 +1,94 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] .gitattributes: Enable cpp diff parsing for .[ch] files
-Date: Mon, 29 Aug 2011 15:02:35 -0700
-Message-ID: <CA+55aFxB7mBByT9W4c0D6kELcZMZDD_j0_S2869nS4LV0mNTbA@mail.gmail.com>
-References: <4E56CE8F.8080501@panasas.com> <CA+55aFxNXK-AJdrHBBycM5W632qUBi4E=jangcdRoefQiHzbug@mail.gmail.com>
- <4E580830.4010305@panasas.com> <1314624752.2816.32.camel@twins> <4E5BFD36.2090000@panasas.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] Un-pessimize "diff-index $commit -- $pathspec"
+Date: Mon, 29 Aug 2011 15:05:56 -0700
+Message-ID: <7v1uw36fgb.fsf@alter.siamese.dyndns.org>
+References: <7vty9054qr.fsf@alter.siamese.dyndns.org>
+ <1314653603-7533-1-git-send-email-gitster@pobox.com>
+ <CA+55aFzk+hn9wMAp3H92SHAGO8CQVBpTsmR41FgCy32T7muUzA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter Zijlstra <peterz@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	linux-kernel <linux-kernel@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Boaz Harrosh <bharrosh@panasas.com>
-X-From: git-owner@vger.kernel.org Tue Aug 30 00:03:37 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Aug 30 00:06:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qy9vd-0002pF-2k
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 00:03:37 +0200
+	id 1Qy9y0-0003fA-4A
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 00:06:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755123Ab1H2WDc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Aug 2011 18:03:32 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:53240 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753945Ab1H2WDa convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Aug 2011 18:03:30 -0400
-Received: from mail-ww0-f44.google.com (mail-ww0-f44.google.com [74.125.82.44])
-	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p7TM2uSE017629
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL);
-	Mon, 29 Aug 2011 15:02:57 -0700
-Received: by wwf5 with SMTP id 5so6190142wwf.1
-        for <multiple recipients>; Mon, 29 Aug 2011 15:02:56 -0700 (PDT)
-Received: by 10.216.161.146 with SMTP id w18mr26496wek.70.1314655376156; Mon,
- 29 Aug 2011 15:02:56 -0700 (PDT)
-Received: by 10.216.187.66 with HTTP; Mon, 29 Aug 2011 15:02:35 -0700 (PDT)
-In-Reply-To: <4E5BFD36.2090000@panasas.com>
-X-Spam-Status: No, hits=-105.01 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL,USER_IN_WHITELIST
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754833Ab1H2WF7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Aug 2011 18:05:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51034 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754537Ab1H2WF7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Aug 2011 18:05:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 105B64D0C;
+	Mon, 29 Aug 2011 18:05:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OClonsgBMjVfK3rktTjYDMosGIw=; b=O5qKwq
+	Di1zmhn7i09PvZCJ4GIsJMdccd9IZ/8yb8xnEogZeXAMsenyWp3mhos3ooKSB9yg
+	2iE4eYgNFLQiFXmYkcLWy3J+gX9EBPCtJOQxWkN4B5IwyWRndI0XUYkv0LHjBqzi
+	2U0JP8p7H2EiRlJvKi166+LMMv3nKknvp6nC8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kgpCXn2kHpbbFR6okJDk1SS0poHhDdF7
+	6FZZhA+W43xWkqaqfUKneauRB2wnu3y75kegNK8vAwa3UJf39wEKNZPP2A0vhvDT
+	w92qpN7T1OvgHbD5L3gpq/DTCuLxAEnNuKR0uQqCvVGqlIqtRmbPn6cR0L0hqJQH
+	leW10a+hwJc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 07E204D0B;
+	Mon, 29 Aug 2011 18:05:58 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8ABDA4D0A; Mon, 29 Aug 2011
+ 18:05:57 -0400 (EDT)
+In-Reply-To: <CA+55aFzk+hn9wMAp3H92SHAGO8CQVBpTsmR41FgCy32T7muUzA@mail.gmail.com> (Linus
+ Torvalds's message of "Mon, 29 Aug 2011 14:56:02 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 129EAB9A-D28B-11E0-9C29-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180366>
 
-On Mon, Aug 29, 2011 at 1:57 PM, Boaz Harrosh <bharrosh@panasas.com> wr=
-ote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
+
+> On Mon, Aug 29, 2011 at 2:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Before and after applying this series, looking for changes in the kernel
+>> repository with a fairly narrow pathspec gets a moderate speeds up.
 >
-> =A0What are you guys afraid of? what possibly could be bad about this=
- patch?
+> "moderate speeds up"?
+>
+> Looks like a big win to me. Admittedly it's already a pretty fast
+> operation, but script it and repeat it a million times, and that will
+> matter a lot more.
+>
+> I guess the "--raw" diff part means that you are hiding the time to
+> make a real diff, which would otherwise swamp everything else. Even
+> so, this looks like a good improvement.
 
-I just detest filling the kernel tree with git stuff.
+The topic started by Marat Radchenko in
 
-Right now, the only git-specific file we have in the kernel tree is
-the ".gitignore" files, afaik. And if you were to use some other SCM,
-the "ignore" model at least translates directly to just about anything
-else (with the problem that the .gitignore model tends to be more
-powerful than most other SCM's have, but whatever).
+    http://thread.gmane.org/gmane.comp.version-control.git/179926
 
-I'd hate to start populating the project with more stuff.
+who was trying to pick a single path (we do not know how deep it is), and
+was comparing between these two:
 
-                     Linus
+  $ time git show branch:file | diff -u - file > /dev/null 
+  real    0m0.003s
+  user    0m0.000s
+  sys     0m0.000s
+  $ time git diff branch -- file > /dev/null 
+  real    0m31.442s
+  user    0m31.040s
+  sys     0m0.380s
+
+Replacing "diff -u" with "git diff --no-index" in the former didn't make
+much of a difference. It turned out that Marat had 603k paths in the index
+and the most of the time was spent in the unpack machinery.
