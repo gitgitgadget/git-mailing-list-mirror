@@ -1,135 +1,115 @@
-From: sdaoden@googlemail.com
-Subject: [PATCH 2/2] unpack-trees: divert check_updates() output via update_progress()
-Date: Mon, 29 Aug 2011 22:17:40 +0200
-Message-ID: <a768a89aa9e98435030631d6a19d6524c352acde.1314647163.git.sdaoden@gmail.com>
-References: <cover.1314647163.git.sdaoden@gmail.com>
- <bc530ff857b92ad58bfd6f331cf6732ed86c42b0.1314647163.git.sdaoden@gmail.com>
-Cc: Steffen Daode Nurpmeso <sdaoden@gmail.com>
+From: Joey Hess <joey@kitenet.net>
+Subject: [PATCH] do not require filters to consume stdin
+Date: Mon, 29 Aug 2011 16:31:07 -0400
+Message-ID: <20110829203107.GA4946@gnu.kitenet.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 29 22:19:17 2011
+X-From: git-owner@vger.kernel.org Mon Aug 29 22:39:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qy8Ic-0000ot-5R
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Aug 2011 22:19:14 +0200
+	id 1Qy8bh-0000do-0F
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Aug 2011 22:38:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755092Ab1H2UTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Aug 2011 16:19:09 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:37959 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755018Ab1H2UTG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Aug 2011 16:19:06 -0400
-Received: by mail-fx0-f46.google.com with SMTP id 19so4798916fxh.19
-        for <git@vger.kernel.org>; Mon, 29 Aug 2011 13:19:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :in-reply-to:references;
-        bh=ZcFSFqYeBkP7L2mA6hZ+UmvG0l+emNpz4ASt9k19nTs=;
-        b=aYqGMqCNuS5UeaZi9V/owtfCJBlwhyeHbnTccVchz0ljiyAnEiN9ScI7fU/y4SA9Ce
-         e5HEyNHnc0tNMlv1zYWn8fdmaIp49LOVjtxeuzxy2fV2FVeT+eywvGtxqO8tjisgF1Rk
-         h/83wVHKk+2UBJzFT323A9OlgNgFEgBs8PvfA=
-Received: by 10.223.7.10 with SMTP id b10mr7680006fab.76.1314649145665;
-        Mon, 29 Aug 2011 13:19:05 -0700 (PDT)
-Received: from localhost.localdomain ([89.204.137.171])
-        by mx.google.com with ESMTPS id 11sm4034094fav.34.2011.08.29.13.19.02
-        (version=SSLv3 cipher=OTHER);
-        Mon, 29 Aug 2011 13:19:04 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7.rc0.dirty
-In-Reply-To: <bc530ff857b92ad58bfd6f331cf6732ed86c42b0.1314647163.git.sdaoden@gmail.com>
-In-Reply-To: <cover.1314647163.git.sdaoden@gmail.com>
-References: <cover.1314647163.git.sdaoden@gmail.com>
+	id S1755103Ab1H2Uiw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Aug 2011 16:38:52 -0400
+Received: from wren.kitenet.net ([80.68.85.49]:58940 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754954Ab1H2Uiv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Aug 2011 16:38:51 -0400
+X-Greylist: delayed 457 seconds by postgrey-1.27 at vger.kernel.org; Mon, 29 Aug 2011 16:38:51 EDT
+Received: from gnu.kitenet.net (dialup-4.153.14.169.Dial1.Atlanta1.Level3.net [4.153.14.169])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 446C4118BA7
+	for <git@vger.kernel.org>; Mon, 29 Aug 2011 16:31:12 -0400 (EDT)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id 2EA2C44BFE; Mon, 29 Aug 2011 16:31:07 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180346>
 
-From: Steffen Daode Nurpmeso <sdaoden@gmail.com>
+A clean filter that uses %f to examine a file may not need to consume
+the entire file content from stdin every time it's run, due to caching
+or other optimisations to support large files.
 
-The progress shown by check_updates() yet always printed
-"Checking out files", even if basically files were only
-unlinked.
-
-This commit diverts that into "Updating working tree:" plus the
-actual action which currently is performed (i.e. "removing
-files" or "checking out files").
-
-Inspired-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Steffen Daode Nurpmeso <sdaoden@gmail.com>
+Ignore the SIGPIPE that may result when writing to the filter
+if it exits without consuming stdin, and do not check that all
+content is sent to it. The filter is still required to exit
+successfully, so a crash in the filter should still be handled
+correctly.
 ---
- unpack-trees.c |   30 +++++++++++++++++++++++-------
- 1 files changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index cc616c3..95cd8a6 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -178,26 +178,34 @@ static void unlink_entry(struct cache_entry *ce)
- static struct checkout state;
- static int check_updates(struct unpack_trees_options *o)
- {
--	unsigned cnt = 0, total = 0;
-+	unsigned rm_cnt, co_cnt, cnt;
- 	struct progress *progress = NULL;
- 	struct index_state *index = &o->result;
- 	int i;
- 	int errs = 0;
+There has been discussion before about using clean and smudge filters
+with %f to handle big files in git, with the file content stored outside
+git somewhere.  A simplistic clean filter for large files could look
+like this:
+
+#!/bin/sh
+file="$1"
+ln -f $file ~/.big/$file
+echo $file
+
+But trying to use this will fail on truely large files. For example:
+
+$ ls -l sorta.huge 
+-rw-r--r-- 3 joey joey 524288000 Aug 29 15:19 sorta.huge
+$ git add sorta.huge 
+broken pipe  git add sorta.huge
+$ echo $?
+141
+
+The SIGPIPE occurs because git expects the clean filter to read
+the full file content from stdin. (Although if the content is small
+enough, a SIGPIPE may not occur.) So the clean filter needs to
+look like this:
+
+#!/bin/sh
+file="$1"
+cat >/dev/null
+ln -f $file ~/.big/$file
+echo $file
+
+But this means much more work has to be done whenever the clean filter
+is run. Including every time git status is run. So it's currently
+impractical to use clean/smudge filters like this for large files.
+This patch should close that gap and allow such filters to be developed.
+
+ convert.c |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/convert.c b/convert.c
+index 416bf83..3d528c4 100644
+--- a/convert.c
++++ b/convert.c
+@@ -330,7 +330,7 @@ static int filter_buffer(int in, int out, void *data)
+ 	 */
+ 	struct child_process child_process;
+ 	struct filter_params *params = (struct filter_params *)data;
+-	int write_err, status;
++	int write_err = 0, status;
+ 	const char *argv[] = { NULL, NULL };
  
- 	if (o->update && o->verbose_update) {
--		for (total = cnt = 0; cnt < index->cache_nr; cnt++) {
-+		rm_cnt = co_cnt = 0;
-+		for (cnt = 0; cnt < index->cache_nr; cnt++) {
- 			struct cache_entry *ce = index->cache[cnt];
--			if (ce->ce_flags & (CE_UPDATE | CE_WT_REMOVE))
--				total++;
-+			switch (ce->ce_flags & (CE_UPDATE | CE_WT_REMOVE)) {
-+			case CE_UPDATE:
-+				co_cnt++;
-+				break;
-+			default:
-+				rm_cnt++;
-+				break;
-+			}
- 		}
+ 	/* apply % substitution to cmd */
+@@ -360,9 +360,11 @@ static int filter_buffer(int in, int out, void *data)
+ 	if (start_command(&child_process))
+ 		return error("cannot fork to run external filter %s", params->cmd);
  
--		progress = start_progress_delay("Checking out files",
--						total, 50, 1);
-+		progress = start_progress_delay("Updating work tree: "
-+						"removing files",
-+						rm_cnt, 64, 1);
- 		cnt = 0;
- 	}
--
- 	if (o->update)
- 		git_attr_set_direction(GIT_ATTR_CHECKOUT, &o->result);
-+
- 	for (i = 0; i < index->cache_nr; i++) {
- 		struct cache_entry *ce = index->cache[i];
+-	write_err = (write_in_full(child_process.in, params->src, params->size) < 0);
++	signal(SIGPIPE, SIG_IGN);
++	write_in_full(child_process.in, params->src, params->size);
+ 	if (close(child_process.in))
+ 		write_err = 1;
++	signal(SIGPIPE, SIG_DFL);
+ 	if (write_err)
+ 		error("cannot feed the input to external filter %s", params->cmd);
  
-@@ -211,6 +219,13 @@ static int check_updates(struct unpack_trees_options *o)
- 	remove_marked_cache_entries(&o->result);
- 	remove_scheduled_dirs();
- 
-+	if (co_cnt > 0) {
-+		update_progress(progress,
-+				"Updating work tree: checking out files",
-+				co_cnt);
-+		cnt = 0;
-+	}
-+
- 	for (i = 0; i < index->cache_nr; i++) {
- 		struct cache_entry *ce = index->cache[i];
- 
-@@ -222,6 +237,7 @@ static int check_updates(struct unpack_trees_options *o)
- 			}
- 		}
- 	}
-+
- 	stop_progress(&progress);
- 	if (o->update)
- 		git_attr_set_direction(GIT_ATTR_CHECKIN, NULL);
 -- 
-1.7.7.rc0.dirty
+1.7.5.4
