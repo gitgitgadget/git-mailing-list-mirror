@@ -1,56 +1,57 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: What would be a normal tool chain for supporting git
-Date: Mon, 29 Aug 2011 23:25:55 +0100
-Organization: OPDS
-Message-ID: <F1265D09DAFA47258EDC0F3FD47233CF@PhilipOakley>
-References: <3EA7FAC7B6F4447792312CA1B87EB3E2@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] t4014: check for empty files from git format-patch
+ --stdout
+Date: Mon, 29 Aug 2011 15:30:17 -0700
+Message-ID: <7vsjoj4zra.fsf@alter.siamese.dyndns.org>
+References: <bbfb7190ca0125798417f57f4d33b5443257e478.1314648438.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=response
-Content-Transfer-Encoding: 7bit
-To: "Git List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 30 00:25:09 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, Stephen Boyd <bebarino@gmail.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Aug 30 00:30:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyAGT-000256-2z
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 00:25:09 +0200
+	id 1QyALZ-00040l-Ka
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 00:30:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754767Ab1H2WZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Aug 2011 18:25:04 -0400
-Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:23188 "EHLO
-	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754103Ab1H2WZD (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2011 18:25:03 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgsFAI8RXE5cHK4R/2dsb2JhbABCihidaniBOwEEAQEFCAEBLh4BASwCAwUCAQMVDCUUAQQaBgcXBhMIAgECAwGHWwgCuVuFbGAEhzWcbw
-X-IronPort-AV: E=Sophos;i="4.68,298,1312153200"; 
-   d="scan'208";a="358222836"
-Received: from host-92-28-174-17.as13285.net (HELO PhilipOakley) ([92.28.174.17])
-  by out1.ip03ir2.opaltelecom.net with SMTP; 29 Aug 2011 23:24:57 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6109
+	id S1754805Ab1H2WaU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Aug 2011 18:30:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59661 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753838Ab1H2WaU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Aug 2011 18:30:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8582850C2;
+	Mon, 29 Aug 2011 18:30:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=M7D+v6
+	1UrcYzzugfwl2YpsdHxfnfI+XwucRMFJHWGTQXzmlFzhWnetfZNKgvv3WBJLJXBV
+	kMU4Yz+nCDxOqh4DWOnzDfYyjkXJUjAhLnhugIZFl15n8CykPFbHf/5V/JF6f0Fw
+	kFTzEGXxiDay67NPPZA8rF2C/v1L5mR7sYu5w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pc2FKFM51JiVX7nUbIIKUWGAF46WeuUu
+	opsRSsn9U84ZhTZ6HPQPrwHvI3YSHe0qM64uFcg/fCr8s54wPjfJrjZG2CIXC+Ns
+	BqLT47UZXu+m8uRCi43h+SDHZ8pYqHT59I/RyP3rMkqF2dA53ma0X0gR9/DgHsmY
+	PwPX43pY2RM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D77550C1;
+	Mon, 29 Aug 2011 18:30:19 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0EFC950BC; Mon, 29 Aug 2011
+ 18:30:18 -0400 (EDT)
+In-Reply-To: <bbfb7190ca0125798417f57f4d33b5443257e478.1314648438.git.trast@student.ethz.ch> (Thomas Rast's message of "Mon, 29 Aug 2011 22:10:46 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 79BCE97E-D28E-11E0-B82A-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180370>
 
-From: "Philip Oakley" <philipoakley@iee.org>
-> I'm using git in a windows engineering environment [visual studio, matlab, 
-> etc]. My main familiarity has been with windows tools :-( I know). My unix 
-> knowledge is dated.
->
-> What would be a typical toolset I would need to set up for contributing to 
-> git?
->
-> Philip
-See http://article.gmane.org/gmane.comp.version-control.msysgit/13284 for 
-the preferred method.
+Thanks.
