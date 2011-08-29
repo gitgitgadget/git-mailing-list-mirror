@@ -1,70 +1,92 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 2/2] Add a remote helper to interact with mediawiki (fetch
- & push)
-Date: Mon, 29 Aug 2011 08:41:30 +0200
-Message-ID: <CAGdFq_jwLGZ+tLKramRrLJmwyY_uDtj7JXUwYBO9pSqOmZ20xQ@mail.gmail.com>
-References: <1314378689-8997-1-git-send-email-Matthieu.Moy@imag.fr>
- <1314378689-8997-2-git-send-email-Matthieu.Moy@imag.fr> <7v4o14dppz.fsf@alter.siamese.dyndns.org>
- <CAGdFq_iYRkfnTbYAgmX1g4uOxWb_ZYxr+TNinVfWRV-zXrnzAg@mail.gmail.com> <7v4o1092hn.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
-	Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr>,
-	Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>,
-	Claire Fousse <claire.fousse@ensimag.imag.fr>,
-	David Amouyal <david.amouyal@ensimag.imag.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	=?UTF-8?Q?Sylvain_Boulm=C3=A9?= <sylvain.boulme@imag.fr>
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: [PATCH v2] t5540-http-test: shorten grep pattern
+Date: Mon, 29 Aug 2011 02:42:21 -0400
+Message-ID: <FA05560D-EE6C-43F4-BD67-EF9E77FA969A@gernhardtsoftware.com>
+References: <1314506520-17430-1-git-send-email-brian@gernhardtsoftware.com> <7vhb5094pm.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1244.3)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 29 08:42:18 2011
+X-From: git-owner@vger.kernel.org Mon Aug 29 08:42:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QxvY1-0006oJ-07
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Aug 2011 08:42:17 +0200
+	id 1QxvYF-0006qx-9q
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Aug 2011 08:42:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751458Ab1H2GmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Aug 2011 02:42:12 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:35669 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751080Ab1H2GmK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Aug 2011 02:42:10 -0400
-Received: by pzk37 with SMTP id 37so7934389pzk.1
-        for <git@vger.kernel.org>; Sun, 28 Aug 2011 23:42:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=z18LKeDzDyGjZ/gXys+uWS7m+6pEJ3NQXk/28ex9zu0=;
-        b=RhWB2zJjF0Q+jFbDLtHpsU0A60S4HpkpsvjbsdCvivm2vYV46g1WJ6nNffTBJm+WB3
-         0JVAgB4vpFXNFMGdTZDZHe5nQERv+U074ryWKPuyAzdsYNMBUqwi+dGzMr038SeZ2PL7
-         4A39UIxMeAdgDAadpxYDi95+8CtcQ0V/1pjvc=
-Received: by 10.142.187.12 with SMTP id k12mr2564043wff.38.1314600130163; Sun,
- 28 Aug 2011 23:42:10 -0700 (PDT)
-Received: by 10.68.55.170 with HTTP; Sun, 28 Aug 2011 23:41:30 -0700 (PDT)
-In-Reply-To: <7v4o1092hn.fsf@alter.siamese.dyndns.org>
+	id S1751624Ab1H2Gm1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Aug 2011 02:42:27 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:56217 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751080Ab1H2Gm0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2011 02:42:26 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 6484D1FFC165; Mon, 29 Aug 2011 06:42:13 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.0 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [10.10.10.10] (cpe-74-65-60-43.rochester.res.rr.com [74.65.60.43])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id 7AA561FFC02F;
+	Mon, 29 Aug 2011 06:42:10 +0000 (UTC)
+In-Reply-To: <7vhb5094pm.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1244.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180303>
 
-Heya,
+On OS X, the grep pattern
 
-On Mon, Aug 29, 2011 at 08:05, Junio C Hamano <gitster@pobox.com> wrote:
-> Does this exchange suggest that at least we would need an update to
-> documentation around "done", as Matthieu's "why is 'done' needed even
-> though I am not calling with --done?" sounds like a very fair question.
+    "\"OP .*/objects/$x2/X38_X40 HTTP/[.0-9]*\" 20[0-9] "
 
-No I think the documentation for fast-import is correct. If you pass
---use-done-feature or print 'feature done' in the stream the use of
-'done' is required, otherwise it isn't. We did recently changed git to
-pass '--use-done-feature' to the fast-import process though :).
+is too long ($x38 and $x40 represent 38 and 40 copies of [0-9a-f]) for
+grep to handle.  In order to still be able to match this, use the sed
+invocation to replace what we're looking for with a token.
 
+Improved-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
+---
+ t/t5540-http-push.sh |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
+
+On Aug 29, 2011, at 1:17 AM, Junio C Hamano wrote:
+
+> Is it sensible to replace $x40 with X40 and $x38 with X38 on any line
+> anywhere for the purpose of this test? As the downstream test is only
+> interested in a line with HTTP request line that asks for a specific path
+> under objects/??/?{38}_?{40}, wouldn't it make more sense to replace
+> occurrences of only such line?
+
+Yes, of course.  The reason it ended up the way it did was that I first
+tried replacing $x40 with SHA-1, but that was still too long.  Your way
+makes more sense in the end, although the $x38_$x40 bit needs to be
+${x38}_$x40 so the shell looks for the right variable.
+
+diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
+index a266ca5..64767d8 100755
+--- a/t/t5540-http-push.sh
++++ b/t/t5540-http-push.sh
+@@ -132,8 +132,12 @@ x38="$x5$x5$x5$x5$x5$x5$x5$x1$x1$x1"
+ x40="$x38$x2"
+ 
+ test_expect_success 'PUT and MOVE sends object to URLs with SHA-1 hash suffix' '
+-	sed -e "s/PUT /OP /" -e "s/MOVE /OP /" "$HTTPD_ROOT_PATH"/access.log |
+-	grep -e "\"OP .*/objects/$x2/${x38}_$x40 HTTP/[.0-9]*\" 20[0-9] "
++	sed \
++		-e "s/PUT /OP /" \
++		-e "s/MOVE /OP /" \
++	    -e "s|/objects/$x2/${x38}_$x40|WANTED_PATH_REQUEST|" \
++		"$HTTPD_ROOT_PATH"/access.log |
++	grep -e "\"OP .*WANTED_PATH_REQUEST HTTP/[.0-9]*\" 20[0-9] "
+ 
+ '
+ 
 -- 
-Cheers,
-
-Sverre Rabbelier
+1.7.7.rc0.308.g517a2
