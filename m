@@ -1,62 +1,117 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH] am: format is in $patch_format, not parse_patch
-Date: Mon, 29 Aug 2011 18:46:42 +0200
-Message-ID: <CAOxFTcwcBgCNpwNNdsQXwE92w6948cfjwMTum03D+SJ0Rq-Yuw@mail.gmail.com>
-References: <1314631326-11796-1-git-send-email-giuseppe.bilotta@gmail.com> <7vaaas6vtt.fsf@alter.siamese.dyndns.org>
+From: Alex Vandiver <alex@chmrr.net>
+Subject: Re: git-config: case insensitivity for subsections
+Date: Mon, 29 Aug 2011 12:47:46 -0400
+Message-ID: <1314636466.17526.16.camel@umgah.localdomain>
+References: <20110818063528.GH13342@hal.rescomp.berkeley.edu>
+	 <20110825205849.GA10384@sigill.intra.peff.net>
+	 <20110825215757.GA94231@hal.rescomp.berkeley.edu>
+	 <1314579031.10094.19.camel@umgah.localdomain>
+	 <20110829054240.GB94231@hal.rescomp.berkeley.edu>
+	 <20110829155819.GA756@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 29 18:47:10 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: milki <milki@rescomp.berkeley.edu>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Aug 29 18:48:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qy4zN-0001Gz-Pr
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Aug 2011 18:47:10 +0200
+	id 1Qy50E-0001YR-2Z
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Aug 2011 18:48:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754094Ab1H2QrF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Aug 2011 12:47:05 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:37068 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753228Ab1H2QrD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Aug 2011 12:47:03 -0400
-Received: by iabu26 with SMTP id u26so635623iab.19
-        for <git@vger.kernel.org>; Mon, 29 Aug 2011 09:47:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Radsd0VLTIQPX9zRpXwqu1d2LYSSX4+qUAVagiP+YJ8=;
-        b=UYS7j+lyb4gIwO0YkEENrJ0K9tnRYCIcp/p9q0ucX+tkRBITRBJ1EkgjMD+rQ8+QYy
-         OB4RWBM0k1g2I2DlLu+/ZzAtABROME7dV9ruW1SkfSLJqqtZualncyXcva2dKU5icxmd
-         9XSDIpxiAqmSGUTTEU7ZmWJRsRlmDf7xm8vvY=
-Received: by 10.231.29.101 with SMTP id p37mr10926695ibc.81.1314636422108;
- Mon, 29 Aug 2011 09:47:02 -0700 (PDT)
-Received: by 10.231.14.131 with HTTP; Mon, 29 Aug 2011 09:46:42 -0700 (PDT)
-In-Reply-To: <7vaaas6vtt.fsf@alter.siamese.dyndns.org>
+	id S1754197Ab1H2Qr5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Aug 2011 12:47:57 -0400
+Received: from chmrr.net ([209.67.253.66]:34546 "EHLO utwig.chmrr.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753595Ab1H2Qr5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Aug 2011 12:47:57 -0400
+Received: from 75-147-59-54-newengland.hfc.comcastbusiness.net ([75.147.59.54] helo=[10.1.10.64])
+	by utwig.chmrr.net with esmtpsa (SSLv3:CAMELLIA256-SHA:256)
+	(Exim 4.76)
+	(envelope-from <alex@chmrr.net>)
+	id 1Qy503-0008ST-Vj; Mon, 29 Aug 2011 12:47:55 -0400
+In-Reply-To: <20110829155819.GA756@sigill.intra.peff.net>
+X-Mailer: Evolution 2.32.2 
+X-Authenticated-User: chmrr
+X-Authenticator: plain
+X-Sender-Verify: SUCCEEDED (sender exists & accepts mail)
+X-Exim-Version: 4.76 (build at 25-May-2011 17:04:25)
+X-Date: 2011-08-29 12:47:55
+X-Connected-IP: 75.147.59.54:45000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180320>
 
-On Mon, Aug 29, 2011 at 6:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
->
->> The error message given when the patch format was not recognized was
->> wrong, since the variable checked was $parse_patch rather than
->> $patch_format. Fix by checking the non-emptyness of the correct
->> variable.
->
-> Thanks for a fix to a problem that is from more than two years ago ;-)
+On Mon, 2011-08-29 at 11:58 -0400, Jeff King wrote:
+> Isn't his config somewhat broken?  It looks like this:
+> 
+>   last = "!f(){ since="$1"; shift; git lg --since=\"last $since\" "$@"; }; f"
+> 
+> Those interior double-quotes should all be backslash-escaped. I didn't
+> check, but git should interpret this as:
+> 
+>   !f(){ since=$1; shift; git lg --since="last $since" $@; }; f
+> 
+> which is probably not quite what he wanted (the quotes around $1 were
+> actually superfluous, but the ones around $@ are important).
 
-You're welcome. I'm actually surprised that wasn't something _I_ did
-by mistake ;-)
+Yes, those should be escaped to do what he probably intends.
+Nonetheless, certainly a parsing bug.
 
-That part of the code isn't being stressed too much. I've just found
-another issue. Patch coming, plus another enhancement.
+> That being said, I think it is intentional that the value is not just "a
+> single double-quoted chunk" but rather could consist of several quoted
+> (or unquoted) chunks concatenated together. What does your parser think
+> of:
+> 
+>   [foo]
+>     bar = "foo"bar"baz"
+> 
+> It should be:
+> 
+>   $ git config foo.bar
+>   foobarbaz
 
+And with the below patch to config-gitlike, it does -- thanks for the
+bug report.
+ - Alex
+
+--------8<-----------
+From 433dcc2f739c8906c65329a899b45424c146535c Mon Sep 17 00:00:00 2001
+From: Alex Vandiver <alexmv@bestpractical.com>
+Date: Mon, 29 Aug 2011 12:04:37 -0400
+Subject: [PATCH] Allow quoted strings to adjoin directly to unquoted strings
+
+This resolves a bug wherein:
+
+    [foo]
+        bar = "foo"bar"baz"
+
+...was incorrectly parsed as << foo.bar=foobar"baz" >> and not the
+correct << foo.bar=foobarbaz >>.  Make the fall-through value not
+consume quotes when consuming a token, as it should be instead parsed as
+the start of a quoted-value.  This bug was only evident when the quoted
+value abutted the unquoted value with no separating space.
+---
+ lib/Config/GitLike.pm |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/lib/Config/GitLike.pm b/lib/Config/GitLike.pm
+index c19911e..8a7195b 100644
+--- a/lib/Config/GitLike.pm
++++ b/lib/Config/GitLike.pm
+@@ -333,7 +333,7 @@ sub parse_content {
+                     $value .= $v;
+                 }
+                 # valid value (no escape codes)
+-                elsif ($c =~ s/\A([^\t \\\n]+)//im) {
++                elsif ($c =~ s/\A([^\t \\\n"]+)//im) {
+                     $value .= $1;
+                 # unparseable
+                 }
 -- 
-Giuseppe "Oblomov" Bilotta
+1.7.4.1
