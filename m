@@ -1,96 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-for-each-ref: move GPG sigs off %(body) to
- %(signature).
-Date: Tue, 30 Aug 2011 12:27:43 -0400
-Message-ID: <20110830162743.GB15790@sigill.intra.peff.net>
-References: <20110829213757.GB14299@sigill.intra.peff.net>
- <1314694641-24148-1-git-send-email-mgorny@gentoo.org>
- <4E5CB0D0.7000905@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] am: preliminary support for hg patches
+Date: Tue, 30 Aug 2011 10:02:15 -0700
+Message-ID: <7vwrdu3ka0.fsf@alter.siamese.dyndns.org>
+References: <1314636247-26125-1-git-send-email-giuseppe.bilotta@gmail.com>
+ <1314636247-26125-2-git-send-email-giuseppe.bilotta@gmail.com>
+ <7v62lg6tr3.fsf@alter.siamese.dyndns.org>
+ <CAOxFTcyqGCB3TcS2CmFuVXqrCP2H-1aBDv3JJVKrNp-Q8Zahmg@mail.gmail.com>
+ <7vd3fo53oe.fsf@alter.siamese.dyndns.org>
+ <CAOxFTczyNtyLWyXppj=0UW_zeD3t+rDtzt-vwqXkwvWOTdxi2g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
-	git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Aug 30 18:27:52 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 30 19:02:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyRAG-0004wW-1r
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 18:27:52 +0200
+	id 1QyRhg-0005ub-8D
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 19:02:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755593Ab1H3Q1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Aug 2011 12:27:46 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41939
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753315Ab1H3Q1q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Aug 2011 12:27:46 -0400
-Received: (qmail 27786 invoked by uid 107); 30 Aug 2011 16:28:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 30 Aug 2011 12:28:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Aug 2011 12:27:43 -0400
-Content-Disposition: inline
-In-Reply-To: <4E5CB0D0.7000905@drmicha.warpmail.net>
+	id S1752578Ab1H3RCT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Aug 2011 13:02:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37786 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752258Ab1H3RCS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Aug 2011 13:02:18 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 075D83DC2;
+	Tue, 30 Aug 2011 13:02:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wCwSBHrQeE8N80un+jE2beB2CJU=; b=grPuga
+	g1nZ1dY1gLLWoS633VHqvoVSPhHd0wDObxB/oBe0qaG0HAFFXSuB9b2XJr7501Bk
+	G+vr0YKnSa9JAagQ6xN8CUofy2mAWglA0/c/VJBdd029mm1PEE4m+a/PXRTTkkR1
+	qP8lTzwrRZib7VW+wCHpGi6OMRQ2lbHFCZm6c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=geyVhlp75uAz6w3WNz05ehPbkPgyvPLg
+	u+ify3F/iLUS7gU6gd0Hda15OJt8DbF5K/QXvS2guxNAH80eBA/F3Qt2s4Mk1/0Y
+	+DYSUWdKIYRuaEsqr1PNEnseIUHgQfXnehG9LoXbhMpVIdAAWitQylzAdgJxmCxw
+	eiiw3GKfN0A=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F29C63DC1;
+	Tue, 30 Aug 2011 13:02:16 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8330F3DC0; Tue, 30 Aug 2011
+ 13:02:16 -0400 (EDT)
+In-Reply-To: <CAOxFTczyNtyLWyXppj=0UW_zeD3t+rDtzt-vwqXkwvWOTdxi2g@mail.gmail.com>
+ (Giuseppe Bilotta's message of "Tue, 30 Aug 2011 10:28:33 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D073B78E-D329-11E0-831F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180417>
 
-On Tue, Aug 30, 2011 at 11:43:44AM +0200, Michael J Gruber wrote:
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 
-> > When grabbing a %(body) or %(contents) off a tag, one doesn't really
-> > expect to get the GPG signature as well (as it's basically useless
-> > without the complete signed text). Thus, strip it off those two tags,
-> > and make available via %(signature) if anyone needs it.
-> 
-> No, please do not change %(contents). It is the complete content which
-> (together with the header) enters into the sha1 calculation.
-> 
-> You will probably also face opposition as regards to %(body), changing
-> existing behaviour.
+> ... This is
+> correctly detected by -3, with
+>
+> Applying: Threeway test
+> fatal: sha1 information is lacking or useless (dir.h).
+> Repository lacks necessary blobs to fall back on 3-way merge.
+> Cannot fall back to three-way merge.
+> Patch failed at 0001 Threeway test
+>
+> The message is a bit misleading (it's not the repo lacking the blobs,
+> it's the patch missing the information), but the process fails as
+> expected.
+>
+>> What about renaming patches?
+>
+> They lack similarity indices, but they seem to be properly formated
+> (and the simple cases I tested apply correctly).
 
-Yeah. If it were 2005, I think it might make sense to have
-non-overlapping individual keys to get each part of the tag. But it's
-not worth breaking backwards compatibility of "%(body)" today. So it has
-to remain as-is, and we have to introduce a new key for "the body
-without the signature".
+These were exactly what I wanted to know. Thanks for experimenting.
 
-> In fact, I wish we didn't have %(body) but %(contents:body) just like
-> other modifiers such as :short.
-> 
-> I think I'd go for
-> 
-> %(contents:signature)
+> So I think that keeping the --git is the right choice.
 
-That makes some sense to me, though it is a little weird that the
-":signature" modifier works only for tags, and not commits. In other
-cases, whole keys either work or don't work (e.g., "taggerdate"). But I
-guess it is not that big a deal.
-
-> %(contents:subject) the same as %(subject)
-> %(contents:body) as contents minus subject minus signature
-> 
-> and slowly deprecate %(subject) and %(body) (simply un-document for now).
-
-That leaves no way to get what "%(body)" provides now, right? I wonder
-if anyone cares. You can always ask for:
-
-  %(contents:body)%(contents:signature)
-
-I guess.
-
-> > +	/* look for GPG signature */
-> 
-> Again I have to say no. Please look at
-> 
-> 3d5854e (tag: recognize rfc1991 signatures, 2010-11-10)
-> 
-> which uses the factored out signature detection as introduced in the
-> previous commits. Thanks!
-
-Yeah. More correct, and it's less code, too. :)
-
--Peff
+Yeah, sounds like we are safe and better off keeping it.
