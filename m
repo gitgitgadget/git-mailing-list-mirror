@@ -1,99 +1,67 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: Re: [PATCH] do not require filters to consume stdin
-Date: Mon, 29 Aug 2011 21:20:29 -0400
-Message-ID: <20110830012029.GA27516@gnu.kitenet.net>
-References: <20110829203107.GA4946@gnu.kitenet.net>
- <7vobz74yoe.fsf@alter.siamese.dyndns.org>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH] t3903: fix misquoted rev-parse invocation
+Date: Tue, 30 Aug 2011 11:52:53 +1000
+Message-ID: <CAH3AnrophV=bi+70B8EnfZpBQXVbEAJ9nSo9UbZ2svDNre9W=A@mail.gmail.com>
+References: <fa41d38f9297ca14b61e05033c9d1b5f5a778263.1314662636.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="bg08WKrSYDhXBjb5"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 30 03:20:51 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Aug 30 03:53:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyD0U-0002tQ-79
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 03:20:50 +0200
+	id 1QyDVb-0002yu-0K
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 03:52:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751882Ab1H3BUk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Aug 2011 21:20:40 -0400
-Received: from wren.kitenet.net ([80.68.85.49]:45254 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751874Ab1H3BUi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Aug 2011 21:20:38 -0400
-Received: from gnu.kitenet.net (dialup-4.88.13.110.Dial1.Atlanta1.Level3.net [4.88.13.110])
-	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id 80102118BA7
-	for <git@vger.kernel.org>; Mon, 29 Aug 2011 21:20:36 -0400 (EDT)
-Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id 9E1C544BC9; Mon, 29 Aug 2011 21:20:29 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <7vobz74yoe.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751568Ab1H3Bwy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Aug 2011 21:52:54 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:64671 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750778Ab1H3Bwx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2011 21:52:53 -0400
+Received: by vxi9 with SMTP id 9so4725803vxi.19
+        for <git@vger.kernel.org>; Mon, 29 Aug 2011 18:52:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=o/uFY8dwrGe4nor/Vnvpr2dFlz+z0ONlDRI5nvqREVs=;
+        b=fbz8wh5OyzJemMs3Kl62gPI1jT0sRePpF3ZbwArq/K1zUpVpvQhCrIVtqDAC39TPT6
+         OR3L4ROJL6IRSHa+qh2nPZfEc2jtEgr6BjSrmTO/BsjBluPv9dOLU2wFKZGs8kb5EBUV
+         qcHjVnxbNSmk8mAgH4uauvMEvRWxLb02MyDiM=
+Received: by 10.52.67.144 with SMTP id n16mr766217vdt.382.1314669173197; Mon,
+ 29 Aug 2011 18:52:53 -0700 (PDT)
+Received: by 10.52.188.7 with HTTP; Mon, 29 Aug 2011 18:52:53 -0700 (PDT)
+In-Reply-To: <fa41d38f9297ca14b61e05033c9d1b5f5a778263.1314662636.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180384>
 
+On Tue, Aug 30, 2011 at 10:06 AM, Thomas Rast <trast@student.ethz.ch> w=
+rote:
+>
+> !"git ..." hopefully always succeeds because "git ..." is not the nam=
+e
+> of any executable. =C2=A0However, that's not what was intended. =C2=A0=
+Unquote
+> it, and while we're at it, also replace ! with test_must_fail since i=
+t
+> is a call to git.
+>
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+> ---
 
---bg08WKrSYDhXBjb5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Oops.
 
-Junio C Hamano wrote:
-> Isn't this filter already broken if clean request is for a blob contents
-> that is different from what is on the filesystem?  The name %f is passed
-> to give the filter a _hint_ on what the path is about (so that the filter
-> can choose to work differently depending on the extension, for example),
-> but the data may or may not come from the filesystem, depending on what is
-> calling the filter, no?
->=20
-> Most notably, renormalize_buffer() would call convert_to_git() on a buffer
-> that is internal, possibly quite different from what is in the working
-> tree.
+Acked-by: Jon Seymour <jon.seymour@gmail.com>
 
-So during a merge.
+| Apologies for resend, didn't realise my gmail was sending in rich tex=
+t.
 
-gitattributes(5) is not very clear about this, it would probably be good
-to add a caveat there about what %f is not.
-
-This seems to make it impractical to build the sort of thing described here:
-http://lists-archives.org/git/737857-fwd-git-and-large-binaries-a-proposed-=
-solution.html
-
-Arguably that thread already reached the same conclusion about using
-smudge/clean for handling large files, for other reasons. Since I
-already have something that works without smudge/clean, perhaps I should
-give up on them.
-
---=20
-see shy jo
-
---bg08WKrSYDhXBjb5
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQIVAwUBTlw62skQ2SIlEuPHAQiCmQ/+KAPT3/YoSHRFaAYkgl3zOuPo2kRJ2H9V
-dIcONl/5KhqOqqm6jsz8BtXO2MESesJkFrM8x4DzZ/6u9Zv3olvCUpd19DhgiZjB
-01X1ruUE3afSEEfcmt9Ix+pnsq2xGORcYIiAT636aYsKI2HM+hw1+Z58Ur4fmBnu
-G5CXC/RRQCPiYf3d8Iq6fbXAbjBG6EQsG453utbEGSYM9IZxSwO6rkzPiPV5TOYO
-Jjnv+getZpC0o6mz+YAiNW0eAq5pve0gVxNOXU1sdql9MU9bGPbbS66GmhndXEwv
-o8w85FryahLQzVg6wsxKEKA98dFa7b6VFD7qB/9gzyVObgUjwPaIX1QDo/QmUdhC
-IIIr3wSXOux4qIAoXEF4g5gLwRzZsUPBfdru+NJUB+Abf+Mij9kGq5H2FM3h+8VV
-EixNlOQH2uIcrJepmEyvQ25N/Ax4Ss1rPaX3YmRObg+mKweasBQdtU1j2+YBHCnn
-TNgL2g26I5FFmRESHHTmuat3bfeXrYpBwrOqUqA8Wnl8G1h6YHD1QhPCxeVgsoqv
-u3v80I907Y4J3NOpLCCUnimuQQ5ldWq5bZ4GMGZm9ihZMAB1N/IgVAOju5p1gjwV
-SYlblC54oUgnBraHeUuNEeDXSDLvTaZsXI9h1A9eUFHdrhJucJ6yM+E8FeqIZmTD
-5vBAV1BrkCI=
-=UIkj
------END PGP SIGNATURE-----
-
---bg08WKrSYDhXBjb5--
+jon.
