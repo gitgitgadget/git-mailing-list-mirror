@@ -1,98 +1,166 @@
-From: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
-Subject: [PATCH] grep: Fix race condition in delta_base_cache
-Date: Tue, 30 Aug 2011 15:45:38 +0200
-Message-ID: <4E5CE982.7080200@morey-chaisemartin.com>
-Reply-To: devel-git@morey-chaisemartin.com
-Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------060100070806040400020700"
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 31 00:01:59 2011
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH] bisect: take advantage of gettextln, eval_gettextln.
+Date: Wed, 31 Aug 2011 09:09:47 +1000
+Message-ID: <1314745788-5060-1-git-send-email-jon.seymour@gmail.com>
+Cc: gitster@pobox.com, Jon Seymour <jon.seymour@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 31 01:10:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyWNa-0002bk-Sv
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 00:01:59 +0200
+	id 1QyXRg-0001J2-R3
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 01:10:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752070Ab1H3WBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Aug 2011 18:01:53 -0400
-Received: from 18.mo1.mail-out.ovh.net ([46.105.35.72]:45273 "EHLO
-	mo1.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751854Ab1H3WBx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Aug 2011 18:01:53 -0400
-X-Greylist: delayed 25195 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Aug 2011 18:01:52 EDT
-Received: from mail194.ha.ovh.net (b9.ovh.net [213.186.33.59])
-	by mo1.mail-out.ovh.net (Postfix) with SMTP id 1F1F61008736
-	for <git@vger.kernel.org>; Tue, 30 Aug 2011 15:45:54 +0200 (CEST)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 30 Aug 2011 15:45:41 +0200
-Received: from mailhost.kalray.eu (HELO sat.lin.mbt.kalray.eu) (devel-git@morey-chaisemartin.com@217.108.237.233)
-  by ns0.ovh.net with SMTP; 30 Aug 2011 15:45:39 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110707 Thunderbird/5.0
-X-Ovh-Mailout: 178.32.228.1 (mo1.mail-out.ovh.net)
-X-Ovh-Tracer-Id: 16826292634427449304
-X-Ovh-Remote: 217.108.237.233 (mailhost.kalray.eu)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-Spam-Check: DONE|U 0.5/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -30
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeftddrtdeiucetggdotefuucfrrhhofhhilhgvmecuqfggjfenuceurghilhhouhhtmecufedttdenuchthhgvuchprhhosghlvghmucdlqdeftddm
+	id S1753870Ab1H3XKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Aug 2011 19:10:07 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:41386 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752989Ab1H3XKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Aug 2011 19:10:06 -0400
+Received: by ywf7 with SMTP id 7so132249ywf.19
+        for <git@vger.kernel.org>; Tue, 30 Aug 2011 16:10:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=arN2vMu/R2X5ZyEuZIIm3OHa+oh46Th06GzM9SK1FF8=;
+        b=bOdO5YtXp8Nrz055WgAki7p6L5vy6XpMVHf+pP074vWU+xVP7PAUsOq4MybvDGOHc/
+         /WKEruCKqucHweEx2zjZbMUkJzcseSUeiKuH6z60zMRdfBLw8mBMDwmKLOemK5qLKaeH
+         P07DDAHjnL9H5AYoPhe/4IXi8OIOziBU00Afs=
+Received: by 10.150.187.8 with SMTP id k8mr6678105ybf.64.1314745805440;
+        Tue, 30 Aug 2011 16:10:05 -0700 (PDT)
+Received: from localhost.localdomain (124-149-177-137.dyn.iinet.net.au [124.149.177.137])
+        by mx.google.com with ESMTPS id e8sm20408ybg.8.2011.08.30.16.10.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 30 Aug 2011 16:10:04 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.44.gdbb64d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180447>
 
-This is a multi-part message in MIME format.
---------------060100070806040400020700
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-
-
-When running large git grep (ie: git grep regexp $(git rev-list --all)), glibc error sometimes occur:
-*** glibc detected *** git: double free or corruption (!prev): 0x00000000010abdf0 ***
-
-According to gdb the problem originate from release_delta_cash (sha1_file.c:1703)
-		free(ent->data);
-
->From my analysis it seems that git grep threads do acquire lock before calling read_sha1_file but not before calling
-read_object_with_reference who ends up calling read_sha1_file too.
-
-Adding the lock around read_object_with_reference seems to fix the issue for me.
-I've ran git grep about a dozen time and seen no more error while
-it usually happened half the time before.
-
-Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
- builtin/grep.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ git-bisect.sh |   49 ++++++++++++++-----------------------------------
+ 1 files changed, 14 insertions(+), 35 deletions(-)
 
+Now that both dependencies have been merged into master, this patch is ready
+to be merged.
 
-
---------------060100070806040400020700
-Content-Type: text/x-patch;
- name="0001-grep-Fix-race-condition-in-delta_base_cache.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename*0="0001-grep-Fix-race-condition-in-delta_base_cache.patch"
-
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 1c359c2..56398d5 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -598,8 +598,10 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
- 		struct strbuf base;
- 		int hit, len;
+diff --git a/git-bisect.sh b/git-bisect.sh
+index e0ca3fb..2524060 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -45,10 +45,7 @@ bisect_head()
  
-+		read_sha1_lock();
- 		data = read_object_with_reference(obj->sha1, tree_type,
- 						  &size, NULL);
-+		read_sha1_unlock();
- 		if (!data)
- 			die(_("unable to read tree (%s)"), sha1_to_hex(obj->sha1));
+ bisect_autostart() {
+ 	test -s "$GIT_DIR/BISECT_START" || {
+-		(
+-			gettext "You need to start by \"git bisect start\"" &&
+-			echo
+-		) >&2
++		gettextln "You need to start by \"git bisect start\"" >&2
+ 		if test -t 0
+ 		then
+ 			# TRANSLATORS: Make sure to include [Y] and [n] in your
+@@ -272,10 +269,7 @@ bisect_next_check() {
+ 	t,,good)
+ 		# have bad but not good.  we could bisect although
+ 		# this is less optimum.
+-		(
+-			gettext "Warning: bisecting only with a bad commit." &&
+-			echo
+-		) >&2
++		gettextln "Warning: bisecting only with a bad commit." >&2
+ 		if test -t 0
+ 		then
+ 			# TRANSLATORS: Make sure to include [Y] and [n] in your
+@@ -291,18 +285,12 @@ bisect_next_check() {
  
-
-
---------------060100070806040400020700--
+ 		if test -s "$GIT_DIR/BISECT_START"
+ 		then
+-			(
+-				gettext "You need to give me at least one good and one bad revisions.
+-(You can use \"git bisect bad\" and \"git bisect good\" for that.)" &&
+-				echo
+-			) >&2
++			gettextln "You need to give me at least one good and one bad revisions.
++(You can use \"git bisect bad\" and \"git bisect good\" for that.)" >&2
+ 		else
+-			(
+-				gettext "You need to start by \"git bisect start\".
++			gettextln "You need to start by \"git bisect start\".
+ You then need to give me at least one good and one bad revisions.
+-(You can use \"git bisect bad\" and \"git bisect good\" for that.)" &&
+-				echo
+-			) >&2
++(You can use \"git bisect bad\" and \"git bisect good\" for that.)" >&2
+ 		fi
+ 		exit 1 ;;
+ 	esac
+@@ -355,7 +343,7 @@ bisect_visualize() {
+ 
+ bisect_reset() {
+ 	test -s "$GIT_DIR/BISECT_START" || {
+-		gettext "We are not bisecting."; echo
++		gettextln "We are not bisecting."
+ 		return
+ 	}
+ 	case "$#" in
+@@ -428,18 +416,15 @@ bisect_run () {
+ 	while true
+ 	do
+ 		command="$@"
+-		eval_gettext "running \$command"; echo
++		eval_gettextln "running \$command"
+ 		"$@"
+ 		res=$?
+ 
+ 		# Check for really bad run error.
+ 		if [ $res -lt 0 -o $res -ge 128 ]
+ 		then
+-			(
+-				eval_gettext "bisect run failed:
+-exit code \$res from '\$command' is < 0 or >= 128" &&
+-				echo
+-			) >&2
++			eval_gettextln "bisect run failed:
++exit code \$res from '\$command' is < 0 or >= 128" >&2
+ 			exit $res
+ 		fi
+ 
+@@ -464,26 +449,20 @@ exit code \$res from '\$command' is < 0 or >= 128" &&
+ 		if sane_grep "first bad commit could be any of" "$GIT_DIR/BISECT_RUN" \
+ 			> /dev/null
+ 		then
+-			(
+-				gettext "bisect run cannot continue any more" &&
+-				echo
+-			) >&2
++			gettextln "bisect run cannot continue any more" >&2
+ 			exit $res
+ 		fi
+ 
+ 		if [ $res -ne 0 ]
+ 		then
+-			(
+-				eval_gettext "bisect run failed:
+-'bisect_state \$state' exited with error code \$res" &&
+-				echo
+-			) >&2
++			eval_gettextln "bisect run failed:
++'bisect_state \$state' exited with error code \$res" >&2
+ 			exit $res
+ 		fi
+ 
+ 		if sane_grep "is the first bad commit" "$GIT_DIR/BISECT_RUN" > /dev/null
+ 		then
+-			gettext "bisect run success"; echo
++			gettextln "bisect run success"
+ 			exit 0;
+ 		fi
+ 
+-- 
+1.7.6.44.gdbb64d
