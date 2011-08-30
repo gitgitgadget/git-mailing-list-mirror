@@ -1,89 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] unpack-trees: allow pruning with pathspec
-Date: Tue, 30 Aug 2011 10:32:17 -0700
-Message-ID: <7v7h5u3ivy.fsf@alter.siamese.dyndns.org>
-References: <7vty9054qr.fsf@alter.siamese.dyndns.org>
- <1314653603-7533-1-git-send-email-gitster@pobox.com>
- <1314653603-7533-3-git-send-email-gitster@pobox.com>
- <CACsJy8CBJEimG5am8+aWTGP7kzuZ79WfZ3KQKh7pyjKTx-mR9A@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: Idea: "git format-patch" should get more information out of git
+Date: Tue, 30 Aug 2011 19:39:52 +0200
+Message-ID: <201108301939.53487.johan@herland.net>
+References: <4E587CC0.4090508@alum.mit.edu> <20110830152217.GA13022@sigill.intra.peff.net> <4E5D048D.4010902@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 30 19:32:28 2011
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Aug 30 19:40:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QySAk-0003g4-BE
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 19:32:26 +0200
+	id 1QySIS-00073e-Ds
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 19:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755828Ab1H3RcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Aug 2011 13:32:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50272 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755822Ab1H3RcW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Aug 2011 13:32:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7BC1943AD;
-	Tue, 30 Aug 2011 13:32:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=roCP8+kpOzIEG6rNYgXK3OMhj2U=; b=SpfMmG
-	GkAKpL9GfY8JSgtl/7f8K0bJnO9u1kRsL04mE8zpcjhPkZlgPYkBznlsQ5Sqc3Oi
-	GMqQSo32ukfwPEIn1P20/jxnCr0Ld/lxut36MbE00j0ks0zJDGQqjJhRcktU6ccH
-	BCzcEXVS648EaU3NbyP6oGOr8IsTA5iPJanWg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lr38UbTd7u4putAuttlkYM7JI8egFfaT
-	jltDT3z5mlRJrYIUQoy4DJMhGtxNwiQ56kvgryBNGEuiC4JSiWvLjfpin/4KRYGD
-	5lY2BowGA9EPBUT/bB7qrbsnFgOmE1pSsc6w9F2YX1j9pB6yrq1vPTVbYvelekvX
-	0Y5Se8v4dhk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 71ED243AC;
-	Tue, 30 Aug 2011 13:32:19 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 04E2B43AA; Tue, 30 Aug 2011
- 13:32:18 -0400 (EDT)
-In-Reply-To: <CACsJy8CBJEimG5am8+aWTGP7kzuZ79WfZ3KQKh7pyjKTx-mR9A@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Tue, 30 Aug 2011 20:03:35 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 02D0D884-D32E-11E0-AF8B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755846Ab1H3RkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Aug 2011 13:40:19 -0400
+Received: from smtp.opera.com ([213.236.208.81]:47307 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755797Ab1H3RkS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Aug 2011 13:40:18 -0400
+Received: from johanh.localnet (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p7UHdsTK014366
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 30 Aug 2011 17:39:54 GMT
+User-Agent: KMail/1.13.7 (Linux/2.6.38-ARCH; KDE/4.6.3; x86_64; ; )
+In-Reply-To: <4E5D048D.4010902@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180423>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+On Tuesday 30. August 2011, Michael J Gruber wrote:
+> Reminds me of the ref namespace restructuring which could help
+> sharing notes... Oh, lots to do before git 3.0!
 
-> On Tue, Aug 30, 2011 at 4:33 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> and this codepath probably should not be enabled while running a merge
->
-> But do you think if it works with merge (ie. a partial merge)?
+Indeed. I am very sorry to not have been able to properly follow up on 
+that proposal (or a couple of other patches for that matter), but I'm 
+currently in the middle of changing jobs and moving to a new apartment, 
+which unfortunately leaves little if any spare time for git work. I 
+don't believe I'll find the time to pick this up in the next month or 
+two, so if someone wants to run with it, you are very welcome to do so.
 
-I highly doubt it.
+I will try to participate in discussions where I'm CCed, but the rest of 
+the mailing list is mostly a blur, these days.
 
-The primary reason why I doubt it would work is actually the same as the
-very reason why a merge would work with unpack_trees() machinery. It walks
-all the entries in the trees involved, picking matching entries that would
-go in the result, while also picking the corresponding entry from the index,
-and compute their merge and depositing the result in the final index. If
-you "optimize" it by not walking some parts of trees, you don't just omit
-merging damages made to these parts by other trees, but you also omit
-recording the contributions by the current HEAD and the index. You would
-need to compensate for that by doing something that copies the contents
-of the index for paths outside the area covered by pathspec.
 
-And whole point of this series is not doing that. We don't want to say
-"because they are outside pathspec, we pretend that these paths in index
-do not have corresponding entries in the trees we are merging into" and
-end up producing creation filepairs for them.
+...Johan
 
-But I honestly am not interested giving it unnecessary deep thought at
-this point in the cycle. I haven't found a need for a low-level partial
-merge machinery implementation to support any higher level workflows in
-git, and the path-level 3-way merge machinery already exists in the form
-of ll_merge().
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
