@@ -1,78 +1,95 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 0/3] Un-pessimize "diff-index $commit -- $pathspec"
-Date: Tue, 30 Aug 2011 12:04:54 +0200
-Message-ID: <4E5CB5C6.6020403@drmicha.warpmail.net>
-References: <7vty9054qr.fsf@alter.siamese.dyndns.org> <1314653603-7533-1-git-send-email-gitster@pobox.com>
+From: Mike Gant <mwgant@gmail.com>
+Subject: Re: git tab completion shows ansi escape sequences
+Date: Tue, 30 Aug 2011 05:59:50 -0600
+Message-ID: <CAPbp7P7akkrUbe9TTjL5JG2wbYZNSwHmapAGexnsHZX2yp03wA@mail.gmail.com>
+References: <20110830021707.GA27166@gantsfort.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 30 12:05:05 2011
+Content-Transfer-Encoding: base64
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 30 13:59:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyLBm-0008GF-LQ
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 12:05:03 +0200
+	id 1QyMyz-0005Pw-Kr
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 13:59:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752397Ab1H3KE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Aug 2011 06:04:57 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:60968 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751105Ab1H3KE4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Aug 2011 06:04:56 -0400
-Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 514FB20DF8;
-	Tue, 30 Aug 2011 06:04:56 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute5.internal (MEProxy); Tue, 30 Aug 2011 06:04:56 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=HEHyeqs4big5y8/qFULT4j
-	0F54g=; b=OSl+bTtU3v/lyCt72o0Rc09e8ofHPhsLzwsiLfpHDz/fwE/IQZ5q+i
-	xvLYYw/Td2EbhLyQx7SEkUJcjscoHvWgOjx7vB2i7Sbq0hOjVNzqETSpDqhYxHRl
-	NYOOqpQS5QXFFnHFtaKTmh6qzVKz+2S7u4mAUGzgLQS7QpdgH5I9o=
-X-Sasl-enc: 1Sw1sF4761iqxXhK/cOSmyrxdaDw0UJcyQTJ5qoCU9gj 1314698696
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 8FA3E4036A2;
-	Tue, 30 Aug 2011 06:04:55 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
-In-Reply-To: <1314653603-7533-1-git-send-email-gitster@pobox.com>
+	id S1753385Ab1H3L7w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Aug 2011 07:59:52 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:38581 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752788Ab1H3L7v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Aug 2011 07:59:51 -0400
+Received: by bke11 with SMTP id 11so4976970bke.19
+        for <git@vger.kernel.org>; Tue, 30 Aug 2011 04:59:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=Kn3XhgmOE0uc5GVUnTF9A/66p0uKGxaLksiizboqMpU=;
+        b=PVWoXuQ9rsywgM3EHaSW1vG8AE75l/JBluhBWSSuJ6pTiJsDlJpbW1rlUxMndTEaem
+         btECCnBy62zPszig37IjyuDC2ueDrt5fVFg+uBpm7fq4SG25TL/ckfNcdPagADpuYCNH
+         csDMhOVzS/cV1VIh33inDhYhRU+vt7flBo8pM=
+Received: by 10.204.8.13 with SMTP id f13mr18518bkf.331.1314705590319; Tue, 30
+ Aug 2011 04:59:50 -0700 (PDT)
+Received: by 10.204.23.76 with HTTP; Tue, 30 Aug 2011 04:59:50 -0700 (PDT)
+In-Reply-To: <20110830021707.GA27166@gantsfort.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180402>
 
-Junio C Hamano venit, vidit, dixit 29.08.2011 23:33:
-> "git diff A B -- $pathspec" to compare two tree-ishes knew how to apply
-> pathspec to avoid opening trees that fall outside the area of interest,
-> but "git diff A -- $pathspec" used unpack_trees() machinery that was meant
-> for full-tree merges, and ended up reading the whole tree only to discard
-> potentially major part of the work it does.
-
-Seems my analysis wasn't that far off (though, admittedly, unspecific):
-
-MG:
-> Well, we have to read the full tree before diffing. But I can't
-...
-> I meant: The way "git diff" is now, it does that.
-
-JC:
-> anything to do with it (iow, your "The way 'git diff' is now, it does
-> that" is not just incorrect---we don't read the full tree to begin
-> with---but irrelevant).
-
-Anyways, as MR writes:
-
-MR:
-> 30s without patch and 0.3s with it. You rock ;)
-
-I agree with all of that ;)
-
-Michael
+T24gTW9uLCBBdWcgMjksIDIwMTEgYXQgODoxNyBQTSwgTWlrZSBHYW50IDxtd2dhbnRAZ21haWwu
+Y29tPiB3cm90ZToKPiBUYWIgY29tcGxldGlvbiByZXN1bHRzIGluIHRoaXMgb3V0cHV0Ogo+Cj4g
+JCBnaXQgPFRBQj48VEFCPgo+IF5bWzMxbV5bW0sgoCCgIKAgoCCgIKAgoCCgIKBjXltbbV5bW0tv
+dW50LW9iamVjdHMgoCCgIKAgZ15bW21eW1tLZXQtdGFyLWNvbW1pdC1pZCCgIHJlcGxhY2UKPiBh
+XltbbV5bW0tkZCCgIKAgoCCgIKAgoCCgIKAgY15bW21eW1tLdnNleHBvcnRjb21taXQgoCCgIGde
+W1ttXltbS3JlcCCgIKAgoCCgIKAgoCCgIKByZXF1ZXN0LXB1bGwKPiBhXltbbV5bW0ttIKAgoCCg
+IKAgoCCgIKAgoCCgY15bW21eW1tLdnNpbXBvcnQgoCCgIKAgoCCgIGdeW1ttXltbS3VpIKAgoCCg
+IKAgoCCgIKAgoCByZXNldAo+IGFeW1ttXltbS25ub3RhdGUgoCCgIKAgoCCgIKBjXltbbV5bW0t2
+c3NlcnZlciCgIKAgoCCgIKAgaGVscCCgIKAgoCCgIKAgoCCgIKAgoCCgIKAgoHJldmVydAo+IGFe
+W1ttXltbS3BwbHkgoCCgIKAgoCCgIKAgoCBjaSCgIKAgoCCgIKAgoCCgIKAgoCCgIKAgoCCgaW1h
+cC1zZW5kIKAgoCCgIKAgoCCgIKAgoCCgIHJsCj4gYV5bW21eW1tLcmNoaXZlIKAgoCCgIKAgoCCg
+IGNvIKAgoCCgIKAgoCCgIKAgoCCgIKAgoCCgIKBpbml0IKAgoCCgIKAgoCCgIKAgoCCgIKAgoCCg
+cm0KPiBiXltbbV5bW0tpc2VjdCCgIKAgoCCgIKAgoCCgZF5bW21eW1tLYWVtb24goCCgIKAgoCCg
+IKAgoGluc3Rhd2ViIKAgoCCgIKAgoCCgIKAgoCCgIKBzZW5kLWVtYWlsCj4gYl5bW21eW1tLbGFt
+ZSCgIKAgoCCgIKAgoCCgIGReW1ttXltbS2VzY3JpYmUgoCCgIKAgoCCgIKBsb2cgoCCgIKAgoCCg
+IKAgoCCgIKAgoCCgIKAgc2hvcnRsb2cKPiBiXltbbV5bW0tyYW5jaCCgIKAgoCCgIKAgoCCgZF5b
+W21eW1tLaWZmIKAgoCCgIKAgoCCgIKAgoGxvZ2sgoCCgIKAgoCCgIKAgoCCgIKAgoCCgIKBzaG93
+Cj4gYl5bW21eW1tLdW5kbGUgoCCgIKAgoCCgIKAgoGReW1ttXltbS2lmZi1maWxlcyCgIKAgoCCg
+IKBsb2wgoCCgIKAgoCCgIKAgoCCgIKAgoCCgIKAgc2hvdy1icmFuY2gKPiBiciCgIKAgoCCgIKAg
+oCCgIKAgoCCgIKAgoCCgZF5bW21eW1tLaWZmLWluZGV4IKAgoCCgIKAgoGxvbGEgoCCgIKAgoCCg
+IKAgoCCgIKAgoCCgIKBzdAo+IGNeW1ttXltbS2F0LWZpbGUgoCCgIKAgoCCgIKBkXltbbV5bW0tp
+ZmYtdHJlZSCgIKAgoCCgIKAgbHMgoCCgIKAgoCCgIKAgoCCgIKAgoCCgIKAgoHN0YQo+IGNeW1tt
+XltbS2hlY2stYXR0ciCgIKAgoCCgIKBkXltbbV5bW0tpZmZ0b29sIKAgoCCgIKAgoCCgbWVyZ2Ug
+oCCgIKAgoCCgIKAgoCCgIKAgoCCgIHN0YWdlCj4gY15bW21eW1tLaGVjay1yZWYtZm9ybWF0IKAg
+oGZeW1ttXltbS2FzdC1leHBvcnQgoCCgIKAgoCBtZXJnZXRvb2wgoCCgIKAgoCCgIKAgoCCgIKAg
+c3Rhc2gKPiBjXltbbV5bW0toZWNrb3V0IKAgoCCgIKAgoCCgZl5bW21eW1tLYXN0LWltcG9ydCCg
+IKAgoCCgIG12IKAgoCCgIKAgoCCgIKAgoCCgIKAgoCCgIKBzdGF0dXMKPiBjXltbbV5bW0toZWNr
+b3V0LWluZGV4IKAgoCCgZl5bW21eW1tLZXRjaCCgIKAgoCCgIKAgoCCgIG5hbWUtcmV2IKAgoCCg
+IKAgoCCgIKAgoCCgIKBzdHMKPiBjXltbbV5bW0toZXJyeSCgIKAgoCCgIKAgoCCgZl5bW21eW1tL
+ZXRjaC1wYWNrIKAgoCCgIKAgoG5vdGVzIKAgoCCgIKAgoCCgIKAgoCCgIKAgoCBzdWJtb2R1bGUK
+PiBjXltbbV5bW0toZXJyeS1waWNrIKAgoCCgIKAgZl5bW21eW1tLaWx0ZXItYnJhbmNoIKAgoCCg
+IHB1bGwgoCCgIKAgoCCgIKAgoCCgIKAgoCCgIKBzdm4KPiBjXltbbV5bW0tpdG9vbCCgIKAgoCCg
+IKAgoCCgZl5bW21eW1tLbXQtbWVyZ2UtbXNnIKAgoCCgIHB1c2ggoCCgIKAgoCCgIKAgoCCgIKAg
+oCCgIKB0YWcKPiBjXltbbV5bW0tsZWFuIKAgoCCgIKAgoCCgIKAgZl5bW21eW1tLb3ItZWFjaC1y
+ZWYgoCCgIKAgoHJlYmFzZSCgIKAgoCCgIKAgoCCgIKAgoCCgIKB0bG9nCj4gY15bW21eW1tLbG9u
+ZSCgIKAgoCCgIKAgoCCgIGZeW1ttXltbS29ybWF0LXBhdGNoIKAgoCCgIKByZWZsb2cgoCCgIKAg
+oCCgIKAgoCCgIKAgoCCgdW5zdGFnZQo+IGNeW1ttXltbS29tbWl0IKAgoCCgIKAgoCCgIKBmXltb
+bV5bW0tzY2sgoCCgIKAgoCCgIKAgoCCgcmVsaW5rIKAgoCCgIKAgoCCgIKAgoCCgIKAgoHdoYXRj
+aGFuZ2VkCj4gY15bW21eW1tLb21taXQtdHJlZSCgIKAgoCCgIGZeW1ttXltbS3Njay1vYmplY3Rz
+IKAgoCCgIKByZW1vdGUKPiBjXltbbV5bW0tvbmZpZyCgIKAgoCCgIKAgoCCgZ15bW21eW1tLYyCg
+IKAgoCCgIKAgoCCgIKAgoHJlcGFjawo+Cj4gVGhpcyBpcyBvbiBMaW51eCBNaW50IDExIGJ1dCBp
+dCBhbHNvIGhhcHBlbnMgb24gb3BlblN1c2UgMTEuNC4KClVwZGF0ZSBpdCBkb2VzIG5vdCBkbyB0
+aGlzIG9uIG9wZW5TdXNlIDExLjQuCgo+Cj4gJCBlY2hvICRTSEVMTAo+IGJhc2gKPgo+ICQgZWNo
+byAkQkFTSF9WRVJTSU9OCj4gNC4yLjgoMSktcmVsZWFzZQo+Cj4gJCBlY2hvICRURVJNCj4geHRl
+cm0tMjU2Y29sb3IKPgo+IFRoZSBzYW1lIHJlc3VsdCB3aGVuIFRFUk0gaXMgc2V0IHRvIHh0ZXJt
+LCByeHZ0LCByeHZ0LTI1NmNvbG9yLCByeHZ0LXVuaWNvZGUuCj4KPiBEb2VzIGFueW9uZSBrbm93
+IHdoeSBJJ20gZ2V0dGluZyB0aGlzIG91dHB1dD8KPgo+IFRoYW5rcywKPiBNaWtlCj4gLS0KPiBU
+byB1bnN1YnNjcmliZSBmcm9tIHRoaXMgbGlzdDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUg
+Z2l0IiBpbgo+IHRoZSBib2R5IG9mIGEgbWVzc2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwu
+b3JnCj4gTW9yZSBtYWpvcmRvbW8gaW5mbyBhdCCgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpv
+cmRvbW8taW5mby5odG1sCj4K
