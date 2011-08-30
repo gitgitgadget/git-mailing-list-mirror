@@ -1,49 +1,99 @@
-From: Parag Kalra <paragkalra@gmail.com>
-Subject: 'p4 sync' like command in git
-Date: Mon, 29 Aug 2011 17:52:34 -0700
-Message-ID: <CADSDpOCATv+0Shm630LcvE52e03WiBFdu5wQjdiH4TCJBmkmSw@mail.gmail.com>
+From: Joey Hess <joey@kitenet.net>
+Subject: Re: [PATCH] do not require filters to consume stdin
+Date: Mon, 29 Aug 2011 21:20:29 -0400
+Message-ID: <20110830012029.GA27516@gnu.kitenet.net>
+References: <20110829203107.GA4946@gnu.kitenet.net>
+ <7vobz74yoe.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="bg08WKrSYDhXBjb5"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 30 02:53:01 2011
+X-From: git-owner@vger.kernel.org Tue Aug 30 03:20:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyCZY-0003r5-NW
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 02:53:01 +0200
+	id 1QyD0U-0002tQ-79
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 03:20:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751458Ab1H3Aw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Aug 2011 20:52:56 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:41332 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750799Ab1H3Aw4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Aug 2011 20:52:56 -0400
-Received: by fxh19 with SMTP id 19so4970264fxh.19
-        for <git@vger.kernel.org>; Mon, 29 Aug 2011 17:52:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=3Sqe3o7RsTkGxtpkaRpqMQnvMrMncYWOtL4srZ1QCno=;
-        b=UyeKy3G+NCImYZ07nUxhpzXWVQBCBYYF6KL7hzZIJV3Xd4qS/k5WCyxh8nFB5Hxss4
-         hDwn0+DuIlfvHulbjERjGYj2nIhIjJ/3A0i1oqvz6F/TbAvyopdUVp6C0h0sqCYXm2Sz
-         QSktIHo8jjWJfWVA6+8Mas/jyZ4vqdN3fdmV8=
-Received: by 10.223.16.205 with SMTP id p13mr3828588faa.69.1314665574779; Mon,
- 29 Aug 2011 17:52:54 -0700 (PDT)
-Received: by 10.223.144.195 with HTTP; Mon, 29 Aug 2011 17:52:34 -0700 (PDT)
+	id S1751882Ab1H3BUk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Aug 2011 21:20:40 -0400
+Received: from wren.kitenet.net ([80.68.85.49]:45254 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751874Ab1H3BUi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Aug 2011 21:20:38 -0400
+Received: from gnu.kitenet.net (dialup-4.88.13.110.Dial1.Atlanta1.Level3.net [4.88.13.110])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 80102118BA7
+	for <git@vger.kernel.org>; Mon, 29 Aug 2011 21:20:36 -0400 (EDT)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id 9E1C544BC9; Mon, 29 Aug 2011 21:20:29 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7vobz74yoe.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180383>
 
-I was wondering if there is any 'p4 sync' like command in git.
 
-I did some google and found this -
-git pull git@example.com:pk/foobar.git
+--bg08WKrSYDhXBjb5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-And it seem to work for me but want to just confirm.
+Junio C Hamano wrote:
+> Isn't this filter already broken if clean request is for a blob contents
+> that is different from what is on the filesystem?  The name %f is passed
+> to give the filter a _hint_ on what the path is about (so that the filter
+> can choose to work differently depending on the extension, for example),
+> but the data may or may not come from the filesystem, depending on what is
+> calling the filter, no?
+>=20
+> Most notably, renormalize_buffer() would call convert_to_git() on a buffer
+> that is internal, possibly quite different from what is in the working
+> tree.
 
-Thanks,
-Parag
+So during a merge.
+
+gitattributes(5) is not very clear about this, it would probably be good
+to add a caveat there about what %f is not.
+
+This seems to make it impractical to build the sort of thing described here:
+http://lists-archives.org/git/737857-fwd-git-and-large-binaries-a-proposed-=
+solution.html
+
+Arguably that thread already reached the same conclusion about using
+smudge/clean for handling large files, for other reasons. Since I
+already have something that works without smudge/clean, perhaps I should
+give up on them.
+
+--=20
+see shy jo
+
+--bg08WKrSYDhXBjb5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIVAwUBTlw62skQ2SIlEuPHAQiCmQ/+KAPT3/YoSHRFaAYkgl3zOuPo2kRJ2H9V
+dIcONl/5KhqOqqm6jsz8BtXO2MESesJkFrM8x4DzZ/6u9Zv3olvCUpd19DhgiZjB
+01X1ruUE3afSEEfcmt9Ix+pnsq2xGORcYIiAT636aYsKI2HM+hw1+Z58Ur4fmBnu
+G5CXC/RRQCPiYf3d8Iq6fbXAbjBG6EQsG453utbEGSYM9IZxSwO6rkzPiPV5TOYO
+Jjnv+getZpC0o6mz+YAiNW0eAq5pve0gVxNOXU1sdql9MU9bGPbbS66GmhndXEwv
+o8w85FryahLQzVg6wsxKEKA98dFa7b6VFD7qB/9gzyVObgUjwPaIX1QDo/QmUdhC
+IIIr3wSXOux4qIAoXEF4g5gLwRzZsUPBfdru+NJUB+Abf+Mij9kGq5H2FM3h+8VV
+EixNlOQH2uIcrJepmEyvQ25N/Ax4Ss1rPaX3YmRObg+mKweasBQdtU1j2+YBHCnn
+TNgL2g26I5FFmRESHHTmuat3bfeXrYpBwrOqUqA8Wnl8G1h6YHD1QhPCxeVgsoqv
+u3v80I907Y4J3NOpLCCUnimuQQ5ldWq5bZ4GMGZm9ihZMAB1N/IgVAOju5p1gjwV
+SYlblC54oUgnBraHeUuNEeDXSDLvTaZsXI9h1A9eUFHdrhJucJ6yM+E8FeqIZmTD
+5vBAV1BrkCI=
+=UIkj
+-----END PGP SIGNATURE-----
+
+--bg08WKrSYDhXBjb5--
