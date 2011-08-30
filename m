@@ -1,87 +1,88 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v3] Makefile: Improve compiler header dependency check
-Date: Tue, 30 Aug 2011 01:27:35 -0700
-Message-ID: <1314692855-75113-1-git-send-email-davvid@gmail.com>
-References: <20110830040515.GC6647@elie.gateway.2wire.net>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Fredrik Kuivinen <frekui@gmail.com>, git@vger.kernel.org
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH 1/2] am: preliminary support for hg patches
+Date: Tue, 30 Aug 2011 10:28:33 +0200
+Message-ID: <CAOxFTczyNtyLWyXppj=0UW_zeD3t+rDtzt-vwqXkwvWOTdxi2g@mail.gmail.com>
+References: <1314636247-26125-1-git-send-email-giuseppe.bilotta@gmail.com>
+ <1314636247-26125-2-git-send-email-giuseppe.bilotta@gmail.com>
+ <7v62lg6tr3.fsf@alter.siamese.dyndns.org> <CAOxFTcyqGCB3TcS2CmFuVXqrCP2H-1aBDv3JJVKrNp-Q8Zahmg@mail.gmail.com>
+ <7vd3fo53oe.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 30 10:28:02 2011
+X-From: git-owner@vger.kernel.org Tue Aug 30 10:29:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyJfs-0002Wp-SY
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 10:28:01 +0200
+	id 1QyJgs-0002sm-2Q
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 10:29:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751260Ab1H3I1s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Aug 2011 04:27:48 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:48598 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750742Ab1H3I1q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Aug 2011 04:27:46 -0400
-Received: by pzk37 with SMTP id 37so9918090pzk.1
-        for <git@vger.kernel.org>; Tue, 30 Aug 2011 01:27:45 -0700 (PDT)
+	id S1751341Ab1H3I25 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Aug 2011 04:28:57 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:63855 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750742Ab1H3I2y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Aug 2011 04:28:54 -0400
+Received: by gya6 with SMTP id 6so5433626gya.19
+        for <git@vger.kernel.org>; Tue, 30 Aug 2011 01:28:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=ao4pviaQQMcXmAS3peb+l/qLxaiD2Os7VavNPvZUFUs=;
-        b=D7EYmP/XZk8vIUQeQkOCF7YqAvuZuaKTyq84ORBY2yzzwXXRx6TQIWUde6/7AJB+m2
-         zE95M6Rl9J0RFMR3IfpkAPd4I5SGAWmEvplgr6jLrC6ilfMCaz+LM2OYuMt6Xjz9gLNW
-         e+wit4diorRf2ZIkvp0ELmkD0ZfHIf0B1mlwY=
-Received: by 10.142.231.9 with SMTP id d9mr3056400wfh.53.1314692865855;
-        Tue, 30 Aug 2011 01:27:45 -0700 (PDT)
-Received: from localhost.localdomain (208-106-56-2.static.dsltransport.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id x6sm22846807pba.5.2011.08.30.01.27.42
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 30 Aug 2011 01:27:44 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7.rc0.326.gf688b5
-In-Reply-To: <20110830040515.GC6647@elie.gateway.2wire.net>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Itx7wdlzLMcjsJ7SyL6IUd6JwScVyIigCMx/BaabEqo=;
+        b=NRmkhRzpn+uERx6+BC+6xrPQy0m+e2tZQPJlyMI7AzCTkW3vODQFkUYAQrWMFqrKT0
+         48bqama5u9Jq3xShC9iHTYv+O1yb2iaESnGhORMP5khXtOUoS1BTt9RFCSla82i6vcmz
+         6iCxt/D3k2Q7tDmTfg7Bl4MfrgfiLhjWnNVkk=
+Received: by 10.42.37.212 with SMTP id z20mr6497838icd.209.1314692933245; Tue,
+ 30 Aug 2011 01:28:53 -0700 (PDT)
+Received: by 10.231.14.131 with HTTP; Tue, 30 Aug 2011 01:28:33 -0700 (PDT)
+In-Reply-To: <7vd3fo53oe.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180394>
 
-The Makefile enables CHECK_HEADER_DEPENDENCIES when the
-compiler supports generating header dependencies.
-Make the check use the same flags as the invocation
-to avoid a false positive when user-configured compiler
-flags contain incompatible options.
+On Mon, Aug 29, 2011 at 11:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+>
+>> Nope, it doesn't have index .... lines. Still, the patches seems to
+>> apply correctly. Well, the couple of patches I tested did, at least,
+>> even though they were marked as diff --git and they were lacking the
+>> index ... lines.
+>
+> Does "am -3" do the right thing when the patch does not apply cleanly, for
+> example?
 
-For example, without this patch, trying to build universal
-binaries on a Mac using CFLAGS='-arch i386 -arch x86_64'
-produces:
+three-way merges are impossible because all hash information is being
+stripped (hg stores them in the Node ID and Parent metadata, which we
+strip, and has no index metadata for the actual diff blocks). This is
+correctly detected by -3, with
 
-	gcc-4.2: -E, -S, -save-temps and -M options are
-	not allowed with multiple -arch flags
+Applying: Threeway test
+fatal: sha1 information is lacking or useless (dir.h).
+Repository lacks necessary blobs to fall back on 3-way merge.
+Cannot fall back to three-way merge.
+Patch failed at 0001 Threeway test
 
-Make the check use the same flags as the invocation to avoid
-false positives when user-configured compiler flags contain
-incompatible options.
+The message is a bit misleading (it's not the repo lacking the blobs,
+it's the patch missing the information), but the process fails as
+expected.
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
- Makefile |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+> What about renaming patches?
 
-diff --git a/Makefile b/Makefile
-index aa67142..0ea1a2b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1250,9 +1250,9 @@ COMPUTE_HEADER_DEPENDENCIES =
- USE_COMPUTED_HEADER_DEPENDENCIES =
- else
- ifndef COMPUTE_HEADER_DEPENDENCIES
--dep_check = $(shell sh -c \
--	'$(CC) -c -MF /dev/null -MMD -MP -x c /dev/null -o /dev/null 2>&1; \
--	echo $$?')
-+dep_check = $(shell $(CC) $(ALL_CFLAGS) \
-+	-c -MF /dev/null -MMD -MP -x c /dev/null -o /dev/null 2>&1; \
-+	echo $$?)
- ifeq ($(dep_check),0)
- COMPUTE_HEADER_DEPENDENCIES=YesPlease
- endif
+They lack similarity indices, but they seem to be properly formated
+(and the simple cases I tested apply correctly).
+
+In fact, stripping the --git from an hg patch containing a rename
+makes the patch unusable:
+
+error: datetime.move: does not exist in index
+Patch failed at 0001 Move
+
+So I think that keeping the --git is the right choice.
+
 -- 
-1.7.7.rc0.326.gf688b5
+Giuseppe "Oblomov" Bilotta
