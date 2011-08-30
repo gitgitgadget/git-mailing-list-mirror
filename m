@@ -1,55 +1,68 @@
-From: =?ISO-8859-1?Q?Ingo=20Br=FCckl?= <ib@wupperonline.de>
-Subject: Re: [PATCH] stash: Don't paginate by default with list command
-Date: Tue, 30 Aug 2011 20:24:04 +0200
-Message-ID: <4e5d2ac6.64676448.bm000@wupperonline.de>
-References: <1314726104-sup-5174@pinkfloyd.chass.utoronto.ca>
+From: Magnus =?iso-8859-1?Q?B=E4ck?= <magnus.back@sonyericsson.com>
+Subject: Re: Pointers to setup an internal git repository with access
+ control
+Date: Tue, 30 Aug 2011 20:33:46 +0200
+Message-ID: <20110830183346.GA14605@jpl.local>
+References: <CAAZ43xZPsw2CnqOtb6wO7dRC1eMd0eweQ30w-wfzUHL5cqw=Yw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 30 20:24:44 2011
+Cc: git@vger.kernel.org
+To: robert mena <robert.mena@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 30 20:33:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QySzL-0002oc-Eq
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 20:24:43 +0200
+	id 1QyT8F-00073G-00
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 20:33:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755943Ab1H3SYi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Aug 2011 14:24:38 -0400
-Received: from smtp-a.tal.de ([81.92.1.9]:48160 "EHLO smtp-a.tal.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755515Ab1H3SYh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Aug 2011 14:24:37 -0400
-Received: from point.localnet (mue-88-130-110-172.dsl.tropolys.de [88.130.110.172])
-	(Authenticated sender: ib@wtal.de)
-	by smtp-a.tal.de (Postfix) with ESMTP id 3897C11E36A5
-	for <git@vger.kernel.org>; Tue, 30 Aug 2011 20:24:35 +0200 (CEST)
-Received: from ib by point.localnet with local (masqmail 0.2.21) id
- 1QySzF-2wV-00 for <git@vger.kernel.org>; Tue, 30 Aug 2011 20:24:37 +0200
-In-Reply-To: <1314726104-sup-5174@pinkfloyd.chass.utoronto.ca>
-X-Mailer: blueMail/Linux 1.5
+	id S1755982Ab1H3Sdu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Aug 2011 14:33:50 -0400
+Received: from smtprelay-h21.telenor.se ([195.54.99.196]:42322 "EHLO
+	smtprelay-h21.telenor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754698Ab1H3Sdt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Aug 2011 14:33:49 -0400
+Received: from ipb1.telenor.se (ipb1.telenor.se [195.54.127.164])
+	by smtprelay-h21.telenor.se (Postfix) with ESMTP id 447B2E9BB4
+	for <git@vger.kernel.org>; Tue, 30 Aug 2011 20:33:48 +0200 (CEST)
+X-SMTPAUTH-B2: [b627879]
+X-SENDER-IP: [83.227.167.132]
+X-LISTENER: [smtp.bredband.net]
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ai4MALIsXU5T46eEPGdsb2JhbABCmE6PaQsBAQEBNzKBQAEBBAEyASMjBQsLNBIUDQsBDAoaE4dyArhphW1gBJ0dhw4
+X-IronPort-AV: E=Sophos;i="4.68,303,1312149600"; 
+   d="scan'208";a="215959544"
+Received: from ua-83-227-167-132.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.167.132])
+  by ipb1.telenor.se with ESMTP; 30 Aug 2011 20:33:48 +0200
+Received: by elwood.jpl.local (Postfix, from userid 1000)
+	id C4972422CF; Tue, 30 Aug 2011 20:33:46 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <CAAZ43xZPsw2CnqOtb6wO7dRC1eMd0eweQ30w-wfzUHL5cqw=Yw@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180431>
 
-Ben Walton wrote on Tue, 30 Aug 2011 13:43:46 -0400:
+On Tuesday, August 30, 2011 at 14:01 CEST,
+     robert mena <robert.mena@gmail.com> wrote:
 
-> Excerpts from Ingo Br=FCckl's message of Tue Aug 30 13:21:18 -0400 20=
-11:
+> I am trying to migrate from SVN to git and so I am looking for tools
+> that help me create an interal repository.  I currently use SVN over
+> HTTPS/Dav using the access.conf to be able to control which uses can
+> read/write to the repos or given branches.
+>=20
+> Ideally I am looking for tools that enable me to do the same with git=
+=2E
 
->> The output of "stash list" is such that piping into a pager
->> normally isn't necessary but annoying, so disable it by default.
+Gerrit Code Review (http://code.google.com/p/gerrit/) provides
+branch-level ACLs for both reading and writing.
 
-> If you $PAGER is less and you use the default LESS environment value
-> FRXS, this shouldn't be annoying at all.  Are you using either a
-> different pager or a different value for LESS?
-
-=46or some reason I have '-c' in LESS which must be convenient for a ca=
-se
-I currently don't remember.
-
-Ingo
+--=20
+Magnus B=E4ck                   Opinions are my own and do not necessar=
+ily
+SW Configuration Manager      represent the ones of my employer, etc.
+Sony Ericsson
