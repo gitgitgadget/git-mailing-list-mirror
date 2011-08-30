@@ -1,68 +1,93 @@
-From: Magnus =?iso-8859-1?Q?B=E4ck?= <magnus.back@sonyericsson.com>
-Subject: Re: Pointers to setup an internal git repository with access
- control
-Date: Tue, 30 Aug 2011 20:33:46 +0200
-Message-ID: <20110830183346.GA14605@jpl.local>
-References: <CAAZ43xZPsw2CnqOtb6wO7dRC1eMd0eweQ30w-wfzUHL5cqw=Yw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Overriding ~/.gitconfig using GIT_CONFIG
+Date: Tue, 30 Aug 2011 14:49:51 -0400
+Message-ID: <20110830184951.GA19204@sigill.intra.peff.net>
+References: <1313163498.14274.505.camel@rex>
+ <7vr54qmodf.fsf@alter.siamese.dyndns.org>
+ <7vmxfemnc4.fsf@alter.siamese.dyndns.org>
+ <1313181853.14274.535.camel@rex>
+ <20110828130555.GA56765@gmail.com>
+ <1314620166.5939.282.camel@rex>
+ <20110830031022.GA64106@gmail.com>
+ <1314706381.5939.348.camel@rex>
+ <20110830155649.GA15790@sigill.intra.peff.net>
+ <1314729545.5939.391.camel@rex>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: robert mena <robert.mena@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 30 20:33:55 2011
+Content-Type: text/plain; charset=utf-8
+Cc: David Aguilar <davvid@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Nguy?? n =?utf-8?B?VGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Richard Purdie <richard.purdie@linuxfoundation.org>
+X-From: git-owner@vger.kernel.org Tue Aug 30 20:50:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyT8F-00073G-00
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 20:33:55 +0200
+	id 1QyTNn-00062S-Px
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 20:50:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755982Ab1H3Sdu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Aug 2011 14:33:50 -0400
-Received: from smtprelay-h21.telenor.se ([195.54.99.196]:42322 "EHLO
-	smtprelay-h21.telenor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754698Ab1H3Sdt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Aug 2011 14:33:49 -0400
-Received: from ipb1.telenor.se (ipb1.telenor.se [195.54.127.164])
-	by smtprelay-h21.telenor.se (Postfix) with ESMTP id 447B2E9BB4
-	for <git@vger.kernel.org>; Tue, 30 Aug 2011 20:33:48 +0200 (CEST)
-X-SMTPAUTH-B2: [b627879]
-X-SENDER-IP: [83.227.167.132]
-X-LISTENER: [smtp.bredband.net]
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ai4MALIsXU5T46eEPGdsb2JhbABCmE6PaQsBAQEBNzKBQAEBBAEyASMjBQsLNBIUDQsBDAoaE4dyArhphW1gBJ0dhw4
-X-IronPort-AV: E=Sophos;i="4.68,303,1312149600"; 
-   d="scan'208";a="215959544"
-Received: from ua-83-227-167-132.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.167.132])
-  by ipb1.telenor.se with ESMTP; 30 Aug 2011 20:33:48 +0200
-Received: by elwood.jpl.local (Postfix, from userid 1000)
-	id C4972422CF; Tue, 30 Aug 2011 20:33:46 +0200 (CEST)
+	id S1756091Ab1H3Sty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Aug 2011 14:49:54 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52348
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755864Ab1H3Sty (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Aug 2011 14:49:54 -0400
+Received: (qmail 29109 invoked by uid 107); 30 Aug 2011 18:50:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 30 Aug 2011 14:50:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Aug 2011 14:49:51 -0400
 Content-Disposition: inline
-In-Reply-To: <CAAZ43xZPsw2CnqOtb6wO7dRC1eMd0eweQ30w-wfzUHL5cqw=Yw@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <1314729545.5939.391.camel@rex>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180432>
 
-On Tuesday, August 30, 2011 at 14:01 CEST,
-     robert mena <robert.mena@gmail.com> wrote:
+On Tue, Aug 30, 2011 at 07:39:05PM +0100, Richard Purdie wrote:
 
-> I am trying to migrate from SVN to git and so I am looking for tools
-> that help me create an interal repository.  I currently use SVN over
-> HTTPS/Dav using the access.conf to be able to control which uses can
-> read/write to the repos or given branches.
->=20
-> Ideally I am looking for tools that enable me to do the same with git=
-=2E
+> On Tue, 2011-08-30 at 11:56 -0400, Jeff King wrote:
+> > On Tue, Aug 30, 2011 at 01:13:01PM +0100, Richard Purdie wrote:
+> > 
+> > > We've gone through several iterations of this but as things stand now,
+> > > to initially clone things we're doing:
+> > > 
+> > > git clone --bare --mirror <url> <dir>
+> > > 
+> > > but if we already have some existing clone we'd update with:
+> > > 
+> > > git remote prune origin
+> > > git remote rm origin
+> > > git remote add --mirror origin <url>
+> > > git fetch --all -t
+> > >
+> > > [...]
+> > >
+> > > So if a user has an origin remote in their .gitconfig, can we ignore it?
+> > 
+> > Wouldn't:
+> > 
+> >   git fetch --prune <url> refs/heads/*:refs/remotes/origin/*
+> > 
+> > do what you want, and not look at config at all?
+> 
+> Since this is a bare/mirror clone, wouldn't that need to be:
+> 
+>  git fetch --prune <url> refs/heads/*:refs/heads/*
 
-Gerrit Code Review (http://code.google.com/p/gerrit/) provides
-branch-level ACLs for both reading and writing.
+Sorry, yes, I forgot about the mirroring bit.
 
---=20
-Magnus B=E4ck                   Opinions are my own and do not necessar=
-ily
-SW Configuration Manager      represent the ones of my employer, etc.
-Sony Ericsson
+> That also wouldn't fetch tags?
+
+It would only do autofollowing. You could use "-t", but if you really
+want a straight mirror, you could do:
+
+  git fetch --prune refs/*:refs/*
+
+to get everything.
+
+-Peff
