@@ -1,67 +1,81 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH] t3903: fix misquoted rev-parse invocation
-Date: Tue, 30 Aug 2011 11:52:53 +1000
-Message-ID: <CAH3AnrophV=bi+70B8EnfZpBQXVbEAJ9nSo9UbZ2svDNre9W=A@mail.gmail.com>
-References: <fa41d38f9297ca14b61e05033c9d1b5f5a778263.1314662636.git.trast@student.ethz.ch>
+From: Mike Gant <mwgant@gmail.com>
+Subject: git tab completion shows ansi escape sequences
+Date: Mon, 29 Aug 2011 20:17:07 -0600
+Message-ID: <20110830021707.GA27166@gantsfort.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Aug 30 03:53:02 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 30 04:24:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyDVb-0002yu-0K
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 03:52:59 +0200
+	id 1QyDzy-0002cW-UJ
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 04:24:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751568Ab1H3Bwy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Aug 2011 21:52:54 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:64671 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750778Ab1H3Bwx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2011 21:52:53 -0400
-Received: by vxi9 with SMTP id 9so4725803vxi.19
-        for <git@vger.kernel.org>; Mon, 29 Aug 2011 18:52:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=o/uFY8dwrGe4nor/Vnvpr2dFlz+z0ONlDRI5nvqREVs=;
-        b=fbz8wh5OyzJemMs3Kl62gPI1jT0sRePpF3ZbwArq/K1zUpVpvQhCrIVtqDAC39TPT6
-         OR3L4ROJL6IRSHa+qh2nPZfEc2jtEgr6BjSrmTO/BsjBluPv9dOLU2wFKZGs8kb5EBUV
-         qcHjVnxbNSmk8mAgH4uauvMEvRWxLb02MyDiM=
-Received: by 10.52.67.144 with SMTP id n16mr766217vdt.382.1314669173197; Mon,
- 29 Aug 2011 18:52:53 -0700 (PDT)
-Received: by 10.52.188.7 with HTTP; Mon, 29 Aug 2011 18:52:53 -0700 (PDT)
-In-Reply-To: <fa41d38f9297ca14b61e05033c9d1b5f5a778263.1314662636.git.trast@student.ethz.ch>
+	id S1751407Ab1H3CYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Aug 2011 22:24:18 -0400
+Received: from gantsfort.com ([64.66.245.199]:55260 "EHLO mail.gantsfort.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750966Ab1H3CYS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Aug 2011 22:24:18 -0400
+X-Greylist: delayed 429 seconds by postgrey-1.27 at vger.kernel.org; Mon, 29 Aug 2011 22:24:18 EDT
+Received: from mg1 (mg1.gantsfort.com [192.168.0.10])
+	by mail.gantsfort.com (Postfix) with SMTP id 8EC4617DFA
+	for <git@vger.kernel.org>; Mon, 29 Aug 2011 20:17:07 -0600 (MDT)
+Received: by mg1 (sSMTP sendmail emulation); Mon, 29 Aug 2011 20:17:07 -0600
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180386>
 
-On Tue, Aug 30, 2011 at 10:06 AM, Thomas Rast <trast@student.ethz.ch> w=
-rote:
->
-> !"git ..." hopefully always succeeds because "git ..." is not the nam=
-e
-> of any executable. =C2=A0However, that's not what was intended. =C2=A0=
-Unquote
-> it, and while we're at it, also replace ! with test_must_fail since i=
-t
-> is a call to git.
->
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-> ---
+Tab completion results in this output:
 
-Oops.
+$ git <TAB><TAB>
+^[[31m^[[K                  c^[[m^[[Kount-objects       g^[[m^[[Ket-tar-commit-id   replace 
+a^[[m^[[Kdd                 c^[[m^[[Kvsexportcommit     g^[[m^[[Krep                request-pull 
+a^[[m^[[Km                  c^[[m^[[Kvsimport           g^[[m^[[Kui                 reset 
+a^[[m^[[Knnotate            c^[[m^[[Kvsserver           help                        revert 
+a^[[m^[[Kpply               ci                          imap-send                   rl 
+a^[[m^[[Krchive             co                          init                        rm 
+b^[[m^[[Kisect              d^[[m^[[Kaemon              instaweb                    send-email 
+b^[[m^[[Klame               d^[[m^[[Kescribe            log                         shortlog 
+b^[[m^[[Kranch              d^[[m^[[Kiff                logk                        show 
+b^[[m^[[Kundle              d^[[m^[[Kiff-files          lol                         show-branch 
+br                          d^[[m^[[Kiff-index          lola                        st 
+c^[[m^[[Kat-file            d^[[m^[[Kiff-tree           ls                          sta 
+c^[[m^[[Kheck-attr          d^[[m^[[Kifftool            merge                       stage 
+c^[[m^[[Kheck-ref-format    f^[[m^[[Kast-export         mergetool                   stash 
+c^[[m^[[Kheckout            f^[[m^[[Kast-import         mv                          status 
+c^[[m^[[Kheckout-index      f^[[m^[[Ketch               name-rev                    sts 
+c^[[m^[[Kherry              f^[[m^[[Ketch-pack          notes                       submodule 
+c^[[m^[[Kherry-pick         f^[[m^[[Kilter-branch       pull                        svn 
+c^[[m^[[Kitool              f^[[m^[[Kmt-merge-msg       push                        tag 
+c^[[m^[[Klean               f^[[m^[[Kor-each-ref        rebase                      tlog 
+c^[[m^[[Klone               f^[[m^[[Kormat-patch        reflog                      unstage 
+c^[[m^[[Kommit              f^[[m^[[Ksck                relink                      whatchanged 
+c^[[m^[[Kommit-tree         f^[[m^[[Ksck-objects        remote                      
+c^[[m^[[Konfig              g^[[m^[[Kc                  repack                      
 
-Acked-by: Jon Seymour <jon.seymour@gmail.com>
+This is on Linux Mint 11 but it also happens on openSuse 11.4.
 
-| Apologies for resend, didn't realise my gmail was sending in rich tex=
-t.
+$ echo $SHELL
+bash
 
-jon.
+$ echo $BASH_VERSION
+4.2.8(1)-release
+
+$ echo $TERM
+xterm-256color
+
+The same result when TERM is set to xterm, rxvt, rxvt-256color, rxvt-unicode.
+
+Does anyone know why I'm getting this output?
+
+Thanks,
+Mike
