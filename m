@@ -1,61 +1,67 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Idea: "git format-patch" should get more information out of git
-Date: Tue, 30 Aug 2011 19:39:52 +0200
-Message-ID: <201108301939.53487.johan@herland.net>
-References: <4E587CC0.4090508@alum.mit.edu> <20110830152217.GA13022@sigill.intra.peff.net> <4E5D048D.4010902@drmicha.warpmail.net>
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: Re: [PATCH] stash: Don't paginate by default with list command
+Date: Tue, 30 Aug 2011 13:43:46 -0400
+Message-ID: <1314726104-sup-5174@pinkfloyd.chass.utoronto.ca>
+References: <4e5d1e5c.438d9c87.bm000@wupperonline.de>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Aug 30 19:40:25 2011
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: =?utf-8?q?Ingo_Br=C3=BCckl?= <ib@wupperonline.de>
+X-From: git-owner@vger.kernel.org Tue Aug 30 19:44:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QySIS-00073e-Ds
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 19:40:24 +0200
+	id 1QySMX-0000Tj-ST
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 19:44:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755846Ab1H3RkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Aug 2011 13:40:19 -0400
-Received: from smtp.opera.com ([213.236.208.81]:47307 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755797Ab1H3RkS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Aug 2011 13:40:18 -0400
-Received: from johanh.localnet (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p7UHdsTK014366
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 30 Aug 2011 17:39:54 GMT
-User-Agent: KMail/1.13.7 (Linux/2.6.38-ARCH; KDE/4.6.3; x86_64; ; )
-In-Reply-To: <4E5D048D.4010902@drmicha.warpmail.net>
+	id S1755904Ab1H3Roa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Aug 2011 13:44:30 -0400
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: from jerry.cquest.utoronto.ca ([192.82.128.5]:42277 "EHLO
+	jerry.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755858Ab1H3Rnt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Aug 2011 13:43:49 -0400
+Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:43992 ident=93)
+	by jerry.cquest.utoronto.ca with esmtp (Exim 4.63)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1QySLi-0005FZ-UN; Tue, 30 Aug 2011 13:43:46 -0400
+Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1QySLi-0002NA-TV; Tue, 30 Aug 2011 13:43:46 -0400
+In-reply-to: <4e5d1e5c.438d9c87.bm000@wupperonline.de>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180424>
 
-On Tuesday 30. August 2011, Michael J Gruber wrote:
-> Reminds me of the ref namespace restructuring which could help
-> sharing notes... Oh, lots to do before git 3.0!
+Excerpts from Ingo Br=C3=BCckl's message of Tue Aug 30 13:21:18 -0400 2=
+011:
 
-Indeed. I am very sorry to not have been able to properly follow up on 
-that proposal (or a couple of other patches for that matter), but I'm 
-currently in the middle of changing jobs and moving to a new apartment, 
-which unfortunately leaves little if any spare time for git work. I 
-don't believe I'll find the time to pick this up in the next month or 
-two, so if someone wants to run with it, you are very welcome to do so.
+> The output of "stash list" is such that piping into a pager
+> normally isn't necessary but annoying, so disable it by default.
 
-I will try to participate in discussions where I'm CCed, but the rest of 
-the mailing list is mostly a blur, these days.
+If you $PAGER is less and you use the default LESS environment value
+=46RXS, this shouldn't be annoying at all.  Are you using either a
+different pager or a different value for LESS?
 
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Thanks
+-Ben
+--
+Ben Walton
+Systems Programmer - CHASS
+University of Toronto
+C:416.407.5610 | W:416.978.4302
