@@ -1,60 +1,55 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Symlink mergetools scriptlets into valgrind wrappers
-Date: Tue, 30 Aug 2011 14:16:20 -0400
-Message-ID: <20110830181620.GA18386@sigill.intra.peff.net>
-References: <e11fd4c98faf1fc4f970bd1570fe931e078f436e.1314665234.git.trast@student.ethz.ch>
+From: =?ISO-8859-1?Q?Ingo=20Br=FCckl?= <ib@wupperonline.de>
+Subject: Re: [PATCH] stash: Don't paginate by default with list command
+Date: Tue, 30 Aug 2011 20:24:04 +0200
+Message-ID: <4e5d2ac6.64676448.bm000@wupperonline.de>
+References: <1314726104-sup-5174@pinkfloyd.chass.utoronto.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	David Aguilar <davvid@gmail.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Aug 30 20:16:33 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 30 20:24:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QySrQ-0007U8-Cn
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 20:16:32 +0200
+	id 1QySzL-0002oc-Eq
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 20:24:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755976Ab1H3SQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Aug 2011 14:16:27 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36465
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752643Ab1H3SQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Aug 2011 14:16:27 -0400
-Received: (qmail 28790 invoked by uid 107); 30 Aug 2011 18:17:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 30 Aug 2011 14:17:08 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Aug 2011 14:16:20 -0400
-Content-Disposition: inline
-In-Reply-To: <e11fd4c98faf1fc4f970bd1570fe931e078f436e.1314665234.git.trast@student.ethz.ch>
+	id S1755943Ab1H3SYi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Aug 2011 14:24:38 -0400
+Received: from smtp-a.tal.de ([81.92.1.9]:48160 "EHLO smtp-a.tal.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755515Ab1H3SYh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Aug 2011 14:24:37 -0400
+Received: from point.localnet (mue-88-130-110-172.dsl.tropolys.de [88.130.110.172])
+	(Authenticated sender: ib@wtal.de)
+	by smtp-a.tal.de (Postfix) with ESMTP id 3897C11E36A5
+	for <git@vger.kernel.org>; Tue, 30 Aug 2011 20:24:35 +0200 (CEST)
+Received: from ib by point.localnet with local (masqmail 0.2.21) id
+ 1QySzF-2wV-00 for <git@vger.kernel.org>; Tue, 30 Aug 2011 20:24:37 +0200
+In-Reply-To: <1314726104-sup-5174@pinkfloyd.chass.utoronto.ca>
+X-Mailer: blueMail/Linux 1.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180430>
 
-On Tue, Aug 30, 2011 at 02:47:36AM +0200, Thomas Rast wrote:
+Ben Walton wrote on Tue, 30 Aug 2011 13:43:46 -0400:
 
-> Since bc7a96a (mergetool--lib: Refactor tools into separate files,
-> 2011-08-18) the mergetools and difftools related tests fail under
-> --valgrind because the mergetools/* scriptlets are not in the exec
-> path.
-> 
-> For now, symlink the mergetools subdir into the t/valgrind/bin
-> directory as a whole, since it does not contain anything of interest
-> to the valgrind wrappers.
+> Excerpts from Ingo Br=FCckl's message of Tue Aug 30 13:21:18 -0400 20=
+11:
 
-I'm not super-excited about special-casing like this, but I don't think
-there's a way to make it much cleaner without a lot of fuss. And the
-valgrind stuff is pretty special-cased as it is (it would probably be
-cleaner if it were integrated with the bin-wrappers rules in the
-Makefile). But it's probably not worth spending effort on it. What's
-there works, and your patch is a sane and straightforward fix for this
-new issue. So:
+>> The output of "stash list" is such that piping into a pager
+>> normally isn't necessary but annoying, so disable it by default.
 
-Acked-by: Jeff King <peff@peff.net>
+> If you $PAGER is less and you use the default LESS environment value
+> FRXS, this shouldn't be annoying at all.  Are you using either a
+> different pager or a different value for LESS?
 
--Peff
+=46or some reason I have '-c' in LESS which must be convenient for a ca=
+se
+I currently don't remember.
+
+Ingo
