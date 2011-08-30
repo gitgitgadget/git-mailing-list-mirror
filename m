@@ -1,211 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Not yet 1.7.7-rc1 but...
-Date: Mon, 29 Aug 2011 19:32:15 -0700
-Message-ID: <7v62lf4ok0.fsf_-_@alter.siamese.dyndns.org>
-References: <7vwrdzbwrt.fsf@alter.siamese.dyndns.org>
- <7vobzbbw0b.fsf@alter.siamese.dyndns.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: Overriding ~/.gitconfig using GIT_CONFIG
+Date: Mon, 29 Aug 2011 20:10:24 -0700
+Message-ID: <20110830031022.GA64106@gmail.com>
+References: <1313163498.14274.505.camel@rex>
+ <7vr54qmodf.fsf@alter.siamese.dyndns.org>
+ <7vmxfemnc4.fsf@alter.siamese.dyndns.org>
+ <1313181853.14274.535.camel@rex>
+ <20110828130555.GA56765@gmail.com>
+ <1314620166.5939.282.camel@rex>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 30 04:32:34 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Nguy?? n =?utf-8?B?VGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Richard Purdie <rpurdie@rpsys.net>
+X-From: git-owner@vger.kernel.org Tue Aug 30 05:11:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyE7r-0004dR-Tf
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 04:32:32 +0200
+	id 1QyEjJ-0006Eh-Tp
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 05:11:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752059Ab1H3CcV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Aug 2011 22:32:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50720 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751974Ab1H3CcT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Aug 2011 22:32:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 243F74EA6;
-	Mon, 29 Aug 2011 22:32:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OkolRYTiegY9B/BS4L9A1mmz/UM=; b=ukPIY/
-	65ImJz4qS9p8gj8Aeo2joEbPIuB1dksGf8XG98Fk8WTEnLJSS20J/z6AAjj2JiXg
-	bTU4VsT+rOIKeKv6iOKg3LfcoHZXKElycZnfgPMzVxQhlqrIwGFohSMtCYUjcWhV
-	L6x9zX9U4/Z0SbjBXpOaHW0nmM8iAXeBwR2Gg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Yl5v3ABYsNZx5qrIVa43DZ4q0tV877AF
-	CnCIHrPGEMfLdAP1UeDm2xkn/0SRr9i+ET0b2VNi7OhnnA11E9tPJ56kKGBQjVDW
-	lCO6h31z8eECkXaKZBsXBbztgkRZmXLrjCUcwtDo3XjA8/NH02gQNvVIQ2cutD46
-	Ijk9qovgqRY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A6CE4EA5;
-	Mon, 29 Aug 2011 22:32:18 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 45E4A4EA4; Mon, 29 Aug 2011
- 22:32:17 -0400 (EDT)
-In-Reply-To: <7vobzbbw0b.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 26 Aug 2011 16:20:20 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4746012A-D2B0-11E0-9A72-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751274Ab1H3DKZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Aug 2011 23:10:25 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:63342 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751084Ab1H3DKY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Aug 2011 23:10:24 -0400
+Received: by pzk37 with SMTP id 37so9535829pzk.1
+        for <git@vger.kernel.org>; Mon, 29 Aug 2011 20:10:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=xB4rzapU1Kfct+ThpvcQKAGlzIKD82tm2fHaY34y85g=;
+        b=IjNY8lXBQz5V6w1zwSNdX0+GLZ9zlTPb+J9UGvH3IIPNekZ3UobmboRXpQhUHgsJbw
+         FhhhrqAOkUe3lyObvYQo3b3I1mxfwqdn8r6iHOwRPCfAv51R4obxS2l29d5ogNgMJuMN
+         EJNtKBmf4K3+EDTk4wbqI5e3ieqvC9MdQ9w9I=
+Received: by 10.142.242.21 with SMTP id p21mr2586797wfh.60.1314673824244;
+        Mon, 29 Aug 2011 20:10:24 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id a6sm5605371wfg.3.2011.08.29.20.10.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 29 Aug 2011 20:10:22 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1314620166.5939.282.camel@rex>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180388>
 
-... here is an updated preview of the "New Topics" section of the next
-issue of "What's cooking". People sent in fixes to bugs several topics
-that are new in 1.7.7-rc0 have introduced, and while they are still on
-the "pu" (proposed updates) branch for tonight, they should and will be
-fast tracked to 1.7.7-rc1.
+On Mon, Aug 29, 2011 at 01:16:06PM +0100, Richard Purdie wrote:
+> On Sun, 2011-08-28 at 06:05 -0700, David Aguilar wrote:
+> > On Fri, Aug 12, 2011 at 09:44:13PM +0100, Richard Purdie wrote:
+> > > My problem isn't that I want to specify a specific .gitconfig file, I
+> > > just need it to ignore the one in $HOME. I'm happy for the .git/config
+> > > file to be used, in fact I need it to be.
+> > 
+> > If you're writing a tool then it should restrict itself to
+> > git's plumbing commands.  You should be able to do just about
+> > anything without needing to worry about differences in
+> > configuraiton.  Git commands almost always provide a way to
+> > override configuration through the use of flags.
+> > 
+> > The plumbing commands are listed in the main git manpage.
+> > See "Low-level commands (plumbing)" here:
+> > http://www.kernel.org/pub/software/scm/git/docs/
+> > 
+> > What is the specific problem solved by overriding the
+> > configuration?  It may be possible to solve it without needing
+> > to get too complicated.
+> 
+> I'm not sure writing my own porcelain makes sense in this case.
 
-Thanks.
+True...  luckily we don't have to go that far.
 
--- >8 --
+> The tool in question is a build system which is primarily interested in
+> building software. Sometimes the software we want to build is "bleeding
+> edge" and hence rather than download tarballs, we want to interact
+> directly with SCMs like git to obtain it.
+> 
+> The commands I'm using are the likes of "git clone" and "git fetch"
+> although we do use commands listed under the plumbing section too such
+> as ls-remote and read-tree. We do "cache" checkouts and support
+> automatically noticing changes and updating/building.
+> 
+> What I do want to be able to say is "ignore whatever the user might have
+> put in their ~/.gitconfig file" since I've open bug reports about people
+> putting things in there that break builds.
+> 
+> The fetch/clone commands do what I need, apart from being influenced by
+> userconfig so reimplementing them myself doesn't seem like a good
+> approach.
 
-[New Topics]
+This is what we're interested in.
 
-* mg/maint-notes-C-doc (2011-08-25) 1 commit
- - git-notes.txt: clarify -C vs. copy and -F
+Do you have the specifics of exactly what in the user
+~/.gitconfig file broke the build?
 
-Will merge to "master".
+What I'm suggesting is that there's probably a way to avoid
+the user-dependent behavior by being explicit on
+the command-line.
 
-* jc/clean-exclude-doc (2011-08-28) 1 commit
- - Documentation: clarify "git clean -e <pattern>"
+Specifically regarding fetch -- if you're doing "git fetch"
+and relying on the configuration then we can probably come
+up with a more explicit fetch command that has an explicit
+and predictable behavior independent of the user's
+configuraiton.
 
-Will merge to "master".
+Using the explicit form of the command can make the build system
+more robust.
 
-* mh/check-ref-format-print-normalize (2011-08-27) 2 commits
- - Forbid DEL characters in reference names
- - check-ref-format --print: Normalize refnames that start with slashes
+Let us know what you're cooking, it sounds interesting.
 
-Will merge to "master".
-
-* bk/ancestry-path (2011-08-25) 3 commits
- - revision: do not include sibling history in --ancestry-path output
- - revision: keep track of the end-user input from the command line
- - rev-list: Demonstrate breakage with --ancestry-path --all
-
-The topic came up a bit too late in the cycle.
-Will cook for a while.
-
-* mg/branch-list (2011-08-28) 5 commits
- - branch: allow pattern arguments
- - branch: introduce --list option
- - git-branch: introduce missing long forms for the options
- - git-tag: introduce long forms for the options
- - t6040: test branch -vv
-
-The topic came up a bit too late in the cycle.
-
-* mm/rebase-i-exec-edit (2011-08-26) 2 commits
- - rebase -i: notice and warn if "exec $cmd" modifies the index or the working tree
- - rebase -i: clean error message for --continue after failed exec
-
-The topic came up a bit too late in the cycle.
-
-* jk/default-attr (2011-08-26) 1 commit
- - attr: map builtin userdiff drivers to well-known extensions
-
-I fixed up the test breakage just for fun, but this is not urgent.
-
-* hv/submodule-merge-search (2011-08-26) 4 commits
- - submodule: Search for merges only at end of recursive merge
- - allow multiple calls to submodule merge search for the same path
- - submodule: Demonstrate known breakage during recursive merge
- - push: Don't push a repository with unpushed submodules
- (this branch uses fg/submodule-ff-check-before-push.)
-
-The topic came up a bit too late in the cycle.
-The bottom one needs to be replaced with a properly written commit log message.
-
-* mm/mediawiki-as-a-remote (2011-08-26) 1 commit
- - Add a remote helper to interact with mediawiki (fetch & push)
-
-Fun.
-
-* nd/maint-autofix-tag-in-head (2011-08-26) 3 commits
- - Accept tags in HEAD or MERGE_HEAD
- - merge: remove global variable head[]
- - merge: keep stash[] a local variable
-
-Probably needs a re-roll to aim a bit higher.
-
-* bc/unstash-clean-crufts (2011-08-27) 4 commits
- - git-stash: remove untracked/ignored directories when stashed
- - t/t3905: add missing '&&' linkage
- - git-stash.sh: fix typo in error message
- - t/t3905: use the name 'actual' for test output, swap arguments to test_cmp
-
-* bg/t5540-osx-grep (2011-08-28) 1 commit
- - t5540-http-test: shorten grep pattern
-
-Will merge to "master".
-
-* cb/maint-ls-files-error-report (2011-08-28) 1 commit
- - t3005: do not assume a particular order of stdout and stderr of git-ls-files
-
-Will merge to "master".
-
-* da/make-auto-header-dependencies (2011-08-27) 1 commit
- - Makefile: Improve compiler header dependency check
- (this branch uses fk/make-auto-header-dependencies.)
-
-* ms/daemon-timeout-is-in-seconds (2011-08-28) 1 commit
- - git-daemon.txt: specify --timeout in seconds
-
-Will merge to "master".
-
-* bc/bisect-test-use-shell-path (2011-08-29) 1 commit
- - t6030: use $SHELL_PATH to invoke user's preferred shell instead of bare sh
-
-Will merge to "master".
-
-* gb/am-hg-patch (2011-08-29) 1 commit
- - am: preliminary support for hg patches
-
-* gb/maint-am-patch-format-error-message (2011-08-29) 1 commit
- - am: format is in $patch_format, not parse_patch
-
-Will merge to "master".
-
-* gb/maint-am-stgit-author-to-from-fix (2011-08-29) 1 commit
- - am: fix stgit patch mangling
-
-Will merge to "master".
-
-* jc/diff-index-unpack (2011-08-29) 3 commits
- - diff-index: pass pathspec down to unpack-trees machinery
- - unpack-trees: allow pruning with pathspec
- - traverse_trees(): allow pruning with pathspec
-
-Will cook for a while.
-
-* tr/maint-format-patch-empty-output (2011-08-29) 4 commits
- - Document negated forms of format-patch --to --cc --add-headers
- - t4014: "no-add-headers" is actually called "no-add-header"
- - t4014: invoke format-patch with --stdout where intended
- - t4014: check for empty files from git format-patch --stdout
-
-Will merge to "master".
-
-* tr/maint-ident-to-git-memmove (2011-08-29) 1 commit
- - Use memmove in ident_to_git
-
-Will merge to "master".
-
-* tr/maint-strbuf-grow-nul-termination (2011-08-29) 1 commit
- - strbuf_grow(): maintain nul-termination even for new buffer
-
-Will merge to "master".
-
-* tr/maint-t3903-misquoted-command (2011-08-29) 1 commit
- - t3903: fix misquoted rev-parse invocation
-
-Will merge to "master".
-
-* va/p4-branch-import-test-update (2011-08-29) 1 commit
- - git-p4: simple branch tests edits
-
-Will merge to "master".
+cheers,
+-- 
+					David
