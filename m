@@ -1,88 +1,72 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH 1/2] am: preliminary support for hg patches
-Date: Tue, 30 Aug 2011 10:28:33 +0200
-Message-ID: <CAOxFTczyNtyLWyXppj=0UW_zeD3t+rDtzt-vwqXkwvWOTdxi2g@mail.gmail.com>
-References: <1314636247-26125-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1314636247-26125-2-git-send-email-giuseppe.bilotta@gmail.com>
- <7v62lg6tr3.fsf@alter.siamese.dyndns.org> <CAOxFTcyqGCB3TcS2CmFuVXqrCP2H-1aBDv3JJVKrNp-Q8Zahmg@mail.gmail.com>
- <7vd3fo53oe.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v3] Makefile: Improve compiler header dependency check
+Date: Tue, 30 Aug 2011 03:33:33 -0500
+Message-ID: <20110830083311.GB23643@elie.gateway.2wire.net>
+References: <20110830040515.GC6647@elie.gateway.2wire.net>
+ <1314692855-75113-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 30 10:29:02 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Fredrik Kuivinen <frekui@gmail.com>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 30 10:33:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyJgs-0002sm-2Q
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 10:29:02 +0200
+	id 1QyJlX-0004eY-KG
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 10:33:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751341Ab1H3I25 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Aug 2011 04:28:57 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:63855 "EHLO
+	id S1752453Ab1H3Idp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Aug 2011 04:33:45 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:35185 "EHLO
 	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750742Ab1H3I2y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Aug 2011 04:28:54 -0400
-Received: by gya6 with SMTP id 6so5433626gya.19
-        for <git@vger.kernel.org>; Tue, 30 Aug 2011 01:28:53 -0700 (PDT)
+	with ESMTP id S1752296Ab1H3Ido (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Aug 2011 04:33:44 -0400
+Received: by gya6 with SMTP id 6so5435898gya.19
+        for <git@vger.kernel.org>; Tue, 30 Aug 2011 01:33:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Itx7wdlzLMcjsJ7SyL6IUd6JwScVyIigCMx/BaabEqo=;
-        b=NRmkhRzpn+uERx6+BC+6xrPQy0m+e2tZQPJlyMI7AzCTkW3vODQFkUYAQrWMFqrKT0
-         48bqama5u9Jq3xShC9iHTYv+O1yb2iaESnGhORMP5khXtOUoS1BTt9RFCSla82i6vcmz
-         6iCxt/D3k2Q7tDmTfg7Bl4MfrgfiLhjWnNVkk=
-Received: by 10.42.37.212 with SMTP id z20mr6497838icd.209.1314692933245; Tue,
- 30 Aug 2011 01:28:53 -0700 (PDT)
-Received: by 10.231.14.131 with HTTP; Tue, 30 Aug 2011 01:28:33 -0700 (PDT)
-In-Reply-To: <7vd3fo53oe.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=WD/XZKYLm7qG5LSOxMcLtl/y/ZEYNUan9s47w5pr3nI=;
+        b=bH1F2MyiAZHe6ZeRZpoLtZrAfO7AHXYaj9Wb06NPFqG7TkNK6cJdxUY7+ohOR6Bfke
+         qjJcvc/BOjspJ8zS7djmlsQBuytJFmF4gdWcWZR3REuKwrATn3V6QVjRVS06qsfEtNLY
+         E8lYF1IgbqVndnF8lvtDLdr3jovbNOJsihgB0=
+Received: by 10.43.134.72 with SMTP id ib8mr5552610icc.94.1314693223887;
+        Tue, 30 Aug 2011 01:33:43 -0700 (PDT)
+Received: from elie.gateway.2wire.net ([69.209.62.70])
+        by mx.google.com with ESMTPS id j4sm6438782icx.3.2011.08.30.01.33.42
+        (version=SSLv3 cipher=OTHER);
+        Tue, 30 Aug 2011 01:33:43 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1314692855-75113-1-git-send-email-davvid@gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180395>
 
-On Mon, Aug 29, 2011 at 11:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+David Aguilar wrote:
+
+> The Makefile enables CHECK_HEADER_DEPENDENCIES when the
+> compiler supports generating header dependencies.
+> Make the check use the same flags as the invocation
+> to avoid a false positive when user-configured compiler
+> flags contain incompatible options.
 >
->> Nope, it doesn't have index .... lines. Still, the patches seems to
->> apply correctly. Well, the couple of patches I tested did, at least,
->> even though they were marked as diff --git and they were lacking the
->> index ... lines.
+> For example, without this patch, trying to build universal
+> binaries on a Mac using CFLAGS='-arch i386 -arch x86_64'
+> produces:
 >
-> Does "am -3" do the right thing when the patch does not apply cleanly, for
-> example?
+> 	gcc-4.2: -E, -S, -save-temps and -M options are
+> 	not allowed with multiple -arch flags
+>
+> Make the check use the same flags as the invocation to avoid
+> false positives when user-configured compiler flags contain
+> incompatible options.
 
-three-way merges are impossible because all hash information is being
-stripped (hg stores them in the Node ID and Parent metadata, which we
-strip, and has no index metadata for the actual diff blocks). This is
-correctly detected by -3, with
-
-Applying: Threeway test
-fatal: sha1 information is lacking or useless (dir.h).
-Repository lacks necessary blobs to fall back on 3-way merge.
-Cannot fall back to three-way merge.
-Patch failed at 0001 Threeway test
-
-The message is a bit misleading (it's not the repo lacking the blobs,
-it's the patch missing the information), but the process fails as
-expected.
-
-> What about renaming patches?
-
-They lack similarity indices, but they seem to be properly formated
-(and the simple cases I tested apply correctly).
-
-In fact, stripping the --git from an hg patch containing a rename
-makes the patch unusable:
-
-error: datetime.move: does not exist in index
-Patch failed at 0001 Move
-
-So I think that keeping the --git is the right choice.
-
--- 
-Giuseppe "Oblomov" Bilotta
+What happened with this third paragraph?  It seems to repeat
+the first one...
