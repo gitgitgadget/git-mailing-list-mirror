@@ -1,95 +1,50 @@
-From: Mike Gant <mwgant@gmail.com>
-Subject: Re: git tab completion shows ansi escape sequences
-Date: Tue, 30 Aug 2011 05:59:50 -0600
-Message-ID: <CAPbp7P7akkrUbe9TTjL5JG2wbYZNSwHmapAGexnsHZX2yp03wA@mail.gmail.com>
-References: <20110830021707.GA27166@gantsfort.com>
+From: robert mena <robert.mena@gmail.com>
+Subject: Pointers to setup an internal git repository with access control
+Date: Tue, 30 Aug 2011 08:01:44 -0400
+Message-ID: <CAAZ43xZPsw2CnqOtb6wO7dRC1eMd0eweQ30w-wfzUHL5cqw=Yw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: base64
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 30 13:59:58 2011
+X-From: git-owner@vger.kernel.org Tue Aug 30 14:01:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyMyz-0005Pw-Kr
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 13:59:57 +0200
+	id 1QyN0o-0006MH-Dd
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 14:01:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753385Ab1H3L7w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Aug 2011 07:59:52 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:38581 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752788Ab1H3L7v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Aug 2011 07:59:51 -0400
-Received: by bke11 with SMTP id 11so4976970bke.19
-        for <git@vger.kernel.org>; Tue, 30 Aug 2011 04:59:50 -0700 (PDT)
+	id S1753398Ab1H3MBq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Aug 2011 08:01:46 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:47595 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753389Ab1H3MBq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Aug 2011 08:01:46 -0400
+Received: by fxh19 with SMTP id 19so5285782fxh.19
+        for <git@vger.kernel.org>; Tue, 30 Aug 2011 05:01:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=Kn3XhgmOE0uc5GVUnTF9A/66p0uKGxaLksiizboqMpU=;
-        b=PVWoXuQ9rsywgM3EHaSW1vG8AE75l/JBluhBWSSuJ6pTiJsDlJpbW1rlUxMndTEaem
-         btECCnBy62zPszig37IjyuDC2ueDrt5fVFg+uBpm7fq4SG25TL/ckfNcdPagADpuYCNH
-         csDMhOVzS/cV1VIh33inDhYhRU+vt7flBo8pM=
-Received: by 10.204.8.13 with SMTP id f13mr18518bkf.331.1314705590319; Tue, 30
- Aug 2011 04:59:50 -0700 (PDT)
-Received: by 10.204.23.76 with HTTP; Tue, 30 Aug 2011 04:59:50 -0700 (PDT)
-In-Reply-To: <20110830021707.GA27166@gantsfort.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=CZ2XUaQNeTMuCUYfh1corrwYEpc8nv3kaAnzh6qwvZk=;
+        b=ZENjwyjSqJk/qfN6QHBmCK1cewRTJ1NxY3GSdomSs4Odw+rdDrZ3l4qu5HGzS2qiEz
+         ti+YBNdtR6axi59bro2Uvq6qHy8WYA/5c0wAcb7N6X4qoXXSqZKsibjaQAmpGC8agHtP
+         LxzPMCGZVqhZNXzwAiMc+ST1mDcpbrx2KCbio=
+Received: by 10.223.56.20 with SMTP id w20mr1027315fag.117.1314705704625; Tue,
+ 30 Aug 2011 05:01:44 -0700 (PDT)
+Received: by 10.223.119.140 with HTTP; Tue, 30 Aug 2011 05:01:44 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180403>
 
-T24gTW9uLCBBdWcgMjksIDIwMTEgYXQgODoxNyBQTSwgTWlrZSBHYW50IDxtd2dhbnRAZ21haWwu
-Y29tPiB3cm90ZToKPiBUYWIgY29tcGxldGlvbiByZXN1bHRzIGluIHRoaXMgb3V0cHV0Ogo+Cj4g
-JCBnaXQgPFRBQj48VEFCPgo+IF5bWzMxbV5bW0sgoCCgIKAgoCCgIKAgoCCgIKBjXltbbV5bW0tv
-dW50LW9iamVjdHMgoCCgIKAgZ15bW21eW1tLZXQtdGFyLWNvbW1pdC1pZCCgIHJlcGxhY2UKPiBh
-XltbbV5bW0tkZCCgIKAgoCCgIKAgoCCgIKAgY15bW21eW1tLdnNleHBvcnRjb21taXQgoCCgIGde
-W1ttXltbS3JlcCCgIKAgoCCgIKAgoCCgIKByZXF1ZXN0LXB1bGwKPiBhXltbbV5bW0ttIKAgoCCg
-IKAgoCCgIKAgoCCgY15bW21eW1tLdnNpbXBvcnQgoCCgIKAgoCCgIGdeW1ttXltbS3VpIKAgoCCg
-IKAgoCCgIKAgoCByZXNldAo+IGFeW1ttXltbS25ub3RhdGUgoCCgIKAgoCCgIKBjXltbbV5bW0t2
-c3NlcnZlciCgIKAgoCCgIKAgaGVscCCgIKAgoCCgIKAgoCCgIKAgoCCgIKAgoHJldmVydAo+IGFe
-W1ttXltbS3BwbHkgoCCgIKAgoCCgIKAgoCBjaSCgIKAgoCCgIKAgoCCgIKAgoCCgIKAgoCCgaW1h
-cC1zZW5kIKAgoCCgIKAgoCCgIKAgoCCgIHJsCj4gYV5bW21eW1tLcmNoaXZlIKAgoCCgIKAgoCCg
-IGNvIKAgoCCgIKAgoCCgIKAgoCCgIKAgoCCgIKBpbml0IKAgoCCgIKAgoCCgIKAgoCCgIKAgoCCg
-cm0KPiBiXltbbV5bW0tpc2VjdCCgIKAgoCCgIKAgoCCgZF5bW21eW1tLYWVtb24goCCgIKAgoCCg
-IKAgoGluc3Rhd2ViIKAgoCCgIKAgoCCgIKAgoCCgIKBzZW5kLWVtYWlsCj4gYl5bW21eW1tLbGFt
-ZSCgIKAgoCCgIKAgoCCgIGReW1ttXltbS2VzY3JpYmUgoCCgIKAgoCCgIKBsb2cgoCCgIKAgoCCg
-IKAgoCCgIKAgoCCgIKAgc2hvcnRsb2cKPiBiXltbbV5bW0tyYW5jaCCgIKAgoCCgIKAgoCCgZF5b
-W21eW1tLaWZmIKAgoCCgIKAgoCCgIKAgoGxvZ2sgoCCgIKAgoCCgIKAgoCCgIKAgoCCgIKBzaG93
-Cj4gYl5bW21eW1tLdW5kbGUgoCCgIKAgoCCgIKAgoGReW1ttXltbS2lmZi1maWxlcyCgIKAgoCCg
-IKBsb2wgoCCgIKAgoCCgIKAgoCCgIKAgoCCgIKAgc2hvdy1icmFuY2gKPiBiciCgIKAgoCCgIKAg
-oCCgIKAgoCCgIKAgoCCgZF5bW21eW1tLaWZmLWluZGV4IKAgoCCgIKAgoGxvbGEgoCCgIKAgoCCg
-IKAgoCCgIKAgoCCgIKBzdAo+IGNeW1ttXltbS2F0LWZpbGUgoCCgIKAgoCCgIKBkXltbbV5bW0tp
-ZmYtdHJlZSCgIKAgoCCgIKAgbHMgoCCgIKAgoCCgIKAgoCCgIKAgoCCgIKAgoHN0YQo+IGNeW1tt
-XltbS2hlY2stYXR0ciCgIKAgoCCgIKBkXltbbV5bW0tpZmZ0b29sIKAgoCCgIKAgoCCgbWVyZ2Ug
-oCCgIKAgoCCgIKAgoCCgIKAgoCCgIHN0YWdlCj4gY15bW21eW1tLaGVjay1yZWYtZm9ybWF0IKAg
-oGZeW1ttXltbS2FzdC1leHBvcnQgoCCgIKAgoCBtZXJnZXRvb2wgoCCgIKAgoCCgIKAgoCCgIKAg
-c3Rhc2gKPiBjXltbbV5bW0toZWNrb3V0IKAgoCCgIKAgoCCgZl5bW21eW1tLYXN0LWltcG9ydCCg
-IKAgoCCgIG12IKAgoCCgIKAgoCCgIKAgoCCgIKAgoCCgIKBzdGF0dXMKPiBjXltbbV5bW0toZWNr
-b3V0LWluZGV4IKAgoCCgZl5bW21eW1tLZXRjaCCgIKAgoCCgIKAgoCCgIG5hbWUtcmV2IKAgoCCg
-IKAgoCCgIKAgoCCgIKBzdHMKPiBjXltbbV5bW0toZXJyeSCgIKAgoCCgIKAgoCCgZl5bW21eW1tL
-ZXRjaC1wYWNrIKAgoCCgIKAgoG5vdGVzIKAgoCCgIKAgoCCgIKAgoCCgIKAgoCBzdWJtb2R1bGUK
-PiBjXltbbV5bW0toZXJyeS1waWNrIKAgoCCgIKAgZl5bW21eW1tLaWx0ZXItYnJhbmNoIKAgoCCg
-IHB1bGwgoCCgIKAgoCCgIKAgoCCgIKAgoCCgIKBzdm4KPiBjXltbbV5bW0tpdG9vbCCgIKAgoCCg
-IKAgoCCgZl5bW21eW1tLbXQtbWVyZ2UtbXNnIKAgoCCgIHB1c2ggoCCgIKAgoCCgIKAgoCCgIKAg
-oCCgIKB0YWcKPiBjXltbbV5bW0tsZWFuIKAgoCCgIKAgoCCgIKAgZl5bW21eW1tLb3ItZWFjaC1y
-ZWYgoCCgIKAgoHJlYmFzZSCgIKAgoCCgIKAgoCCgIKAgoCCgIKB0bG9nCj4gY15bW21eW1tLbG9u
-ZSCgIKAgoCCgIKAgoCCgIGZeW1ttXltbS29ybWF0LXBhdGNoIKAgoCCgIKByZWZsb2cgoCCgIKAg
-oCCgIKAgoCCgIKAgoCCgdW5zdGFnZQo+IGNeW1ttXltbS29tbWl0IKAgoCCgIKAgoCCgIKBmXltb
-bV5bW0tzY2sgoCCgIKAgoCCgIKAgoCCgcmVsaW5rIKAgoCCgIKAgoCCgIKAgoCCgIKAgoHdoYXRj
-aGFuZ2VkCj4gY15bW21eW1tLb21taXQtdHJlZSCgIKAgoCCgIGZeW1ttXltbS3Njay1vYmplY3Rz
-IKAgoCCgIKByZW1vdGUKPiBjXltbbV5bW0tvbmZpZyCgIKAgoCCgIKAgoCCgZ15bW21eW1tLYyCg
-IKAgoCCgIKAgoCCgIKAgoHJlcGFjawo+Cj4gVGhpcyBpcyBvbiBMaW51eCBNaW50IDExIGJ1dCBp
-dCBhbHNvIGhhcHBlbnMgb24gb3BlblN1c2UgMTEuNC4KClVwZGF0ZSBpdCBkb2VzIG5vdCBkbyB0
-aGlzIG9uIG9wZW5TdXNlIDExLjQuCgo+Cj4gJCBlY2hvICRTSEVMTAo+IGJhc2gKPgo+ICQgZWNo
-byAkQkFTSF9WRVJTSU9OCj4gNC4yLjgoMSktcmVsZWFzZQo+Cj4gJCBlY2hvICRURVJNCj4geHRl
-cm0tMjU2Y29sb3IKPgo+IFRoZSBzYW1lIHJlc3VsdCB3aGVuIFRFUk0gaXMgc2V0IHRvIHh0ZXJt
-LCByeHZ0LCByeHZ0LTI1NmNvbG9yLCByeHZ0LXVuaWNvZGUuCj4KPiBEb2VzIGFueW9uZSBrbm93
-IHdoeSBJJ20gZ2V0dGluZyB0aGlzIG91dHB1dD8KPgo+IFRoYW5rcywKPiBNaWtlCj4gLS0KPiBU
-byB1bnN1YnNjcmliZSBmcm9tIHRoaXMgbGlzdDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUg
-Z2l0IiBpbgo+IHRoZSBib2R5IG9mIGEgbWVzc2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwu
-b3JnCj4gTW9yZSBtYWpvcmRvbW8gaW5mbyBhdCCgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpv
-cmRvbW8taW5mby5odG1sCj4K
+Hi,
+
+I am trying to migrate from SVN to git and so I am looking for tools
+that help me create an interal repository.  I currently use SVN over
+HTTPS/Dav using the access.conf to be able to control which uses can
+read/write to the repos or given branches.
+
+Ideally I am looking for tools that enable me to do the same with git.
+
+Regards.
