@@ -1,60 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] Makefile: Improve compiler header dependency check
-Date: Tue, 30 Aug 2011 10:17:32 -0700
-Message-ID: <7vbov63jkj.fsf@alter.siamese.dyndns.org>
-References: <20110830040515.GC6647@elie.gateway.2wire.net>
- <1314692855-75113-1-git-send-email-davvid@gmail.com>
+From: =?ISO-8859-1?Q?Ingo=20Br=FCckl?= <ib@wupperonline.de>
+Subject: [PATCH] stash: Don't paginate by default with list command
+Date: Tue, 30 Aug 2011 19:21:18 +0200
+Message-ID: <4e5d1e5c.438d9c87.bm000@wupperonline.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Fredrik Kuivinen <frekui@gmail.com>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 30 19:17:41 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 30 19:32:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyRwS-0005GE-5r
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 19:17:40 +0200
+	id 1QySAX-0003ZZ-2k
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Aug 2011 19:32:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755048Ab1H3RRf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Aug 2011 13:17:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43994 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754691Ab1H3RRe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Aug 2011 13:17:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 761FB40AE;
-	Tue, 30 Aug 2011 13:17:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MStkbDsm8Az33q2hJKtftafuGSA=; b=gWLMfu
-	pJzziwkXt0anDrR52JPxxGBZ6SCYHZAan7LqJZwqCgPoAbeO7AplaQk3NAOBHa0o
-	hdxzJkPf+v4fK+Te62jQL4TldtvPfIhVKxKCzWuzbqrfFmi+PaK97Emup4v0tv82
-	9SJnyVsfeEBigGiXCpK7T5f4BKChnQFuxekPE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=D9w/MZJwj8O8qDOeTlX1vCTaCQqcP8Qt
-	z4AjA4xkWeChFPe6Z6fDExAHHmAhx2saYaHjwVspDiV4oTZrMWMrQ9DwStu6Juhb
-	J6k1UA1qZRsrYr3yUrYBe+7iVBeRGNT360OwVXobxZ+Nil21GE+jLaiDld4Jmcmo
-	zADZNxeo9x4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A2B740AC;
-	Tue, 30 Aug 2011 13:17:34 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E530840A9; Tue, 30 Aug 2011
- 13:17:33 -0400 (EDT)
-In-Reply-To: <1314692855-75113-1-git-send-email-davvid@gmail.com> (David
- Aguilar's message of "Tue, 30 Aug 2011 01:27:35 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F3441EC8-D32B-11E0-B993-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755821Ab1H3RcI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Aug 2011 13:32:08 -0400
+Received: from smtp-a.tal.de ([81.92.1.9]:45812 "EHLO smtp-a.tal.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755800Ab1H3RcG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Aug 2011 13:32:06 -0400
+Received: from point.localnet (mue-88-130-110-172.dsl.tropolys.de [88.130.110.172])
+	(Authenticated sender: ib@wtal.de)
+	by smtp-a.tal.de (Postfix) with ESMTP id 40C7C11E3C23
+	for <git@vger.kernel.org>; Tue, 30 Aug 2011 19:32:04 +0200 (CEST)
+Received: from ib by point.localnet with local (masqmail 0.2.21) id
+ 1QySAQ-2Qi-00 for <git@vger.kernel.org>; Tue, 30 Aug 2011 19:32:06 +0200
+X-Mailer: blueMail/Linux 1.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180421>
 
-Thanks, both; will queue with the final paragraph updated to Jonathan's
-suggestion.
+The output of "stash list" is such that piping into a pager
+normally isn't necessary but annoying, so disable it by default.
+
+Signed-off-by: Ingo Br=FCckl <ib@wupperonline.de>
+---
+ git-stash.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-stash.sh b/git-stash.sh
+index 31dec0a..b92d986 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -264,7 +264,7 @@ have_stash () {
+
+ list_stash () {
+ 	have_stash || return 0
+-	git log --format=3D"%gd: %gs" -g "$@" $ref_stash --
++	git --no-pager log --format=3D"%gd: %gs" -g "$@" $ref_stash --
+ }
+
+ show_stash () {
+--
+1.7.6
