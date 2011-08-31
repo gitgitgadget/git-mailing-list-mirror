@@ -1,107 +1,70 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add a credential-helper for KDE
-Date: Tue, 30 Aug 2011 21:42:37 -0400
-Message-ID: <20110831014237.GA2519@sigill.intra.peff.net>
-References: <4E594B5A.6070902@gmail.com>
+Subject: Re: [PATCH] grep: Fix race condition in delta_base_cache
+Date: Tue, 30 Aug 2011 21:59:36 -0400
+Message-ID: <20110831015936.GB2519@sigill.intra.peff.net>
+References: <4E5CE982.7080200@morey-chaisemartin.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Lukas =?utf-8?Q?Sandstr=C3=B6m?= <luksan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 31 03:44:47 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
+X-From: git-owner@vger.kernel.org Wed Aug 31 03:59:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyZrC-0004yV-IE
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 03:44:46 +0200
+	id 1Qya5i-0001L1-At
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 03:59:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754657Ab1HaBmj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Aug 2011 21:42:39 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55103
+	id S1754769Ab1HaB7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Aug 2011 21:59:41 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54683
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754395Ab1HaBmj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Aug 2011 21:42:39 -0400
-Received: (qmail 31869 invoked by uid 107); 31 Aug 2011 01:43:24 -0000
+	id S1754707Ab1HaB7l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Aug 2011 21:59:41 -0400
+Received: (qmail 31973 invoked by uid 107); 31 Aug 2011 02:00:24 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 30 Aug 2011 21:43:24 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Aug 2011 21:42:37 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 30 Aug 2011 22:00:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Aug 2011 21:59:36 -0400
 Content-Disposition: inline
-In-Reply-To: <4E594B5A.6070902@gmail.com>
+In-Reply-To: <4E5CE982.7080200@morey-chaisemartin.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180453>
 
-On Sat, Aug 27, 2011 at 09:54:02PM +0200, Lukas Sandstr=C3=B6m wrote:
+On Tue, Aug 30, 2011 at 03:45:38PM +0200, Nicolas Morey-Chaisemartin wrote:
 
-> This Python script plugs into the credentials API
-> of Git to ask the user for passwords with a nice
-> KDE password dialog.
+> According to gdb the problem originate from release_delta_cash (sha1_file.c:1703)
+> 		free(ent->data);
+> 
+> From my analysis it seems that git grep threads do acquire lock before
+> calling read_sha1_file but not before calling
+> read_object_with_reference who ends up calling read_sha1_file too.
 
-Thanks for working on this.
+Yeah, I think this is necessary, and the patch looks good.
 
->  .../git-kde-credentials-helper.py                  |  122 ++++++++++=
-++++++++++
+I notice there are some other code paths that end up in xmalloc without
+locking, too (e.g., load_file, and some strbuf_* calls). Don't those
+need locking, too, as malloc may try to release packfile memory?
 
-Can we call it git-credential-kdewallet or similar? Then users can just
-do:
-
-  git config credential.helper kdewallet
-
-(where "kdewallet" can be whatever you think is most appropriate; the
-key is naming it git-credential-*).
-
->  1 files changed, 122 insertions(+), 0 deletions(-)
->  create mode 100755 contrib/kde-credetials-helper/git-kde-credentials=
--helper.py
-
-Minor typo in directory name.
-
-> +    def check_wallet(self):
-> +        (res, data) =3D self.wallet.readMap(self.token)
-> +        if res !=3D 0:
-> +            return None
-> +        try:
-> +            self.username =3D data[QString("username")]
-> +            self.password =3D data[QString("password")]
-> +        except KeyError:
-> +            return None
-> +        return self.username and self.password
-
-If I am reading this correctly, you look up based purely on the context
-token. Which means that if I do something like this:
-
-  $ git push https://host.com/repo.git
-  [enter username: user1, password: foo]
-  $ git push https://user2@host.com/other-repo.git
-
-We will invoke the helper as:
-
-  git credential-kdewallet --unique=3Dhttps:host.com --username=3Duser2
-
-but the helper will ignore the "user2" bit, and return "user1 / foo".
-
-The "cache" helper I wrote handles this situation better, by indexing
-both on the token and the username. I wonder if the username should
-become part of the token. Or if the token should really just become a
-canonicalized URL, minus the actual path. So the first one would get:
-
-  --unique=3Dhttps://host.com
-
-and the second would get:
-
-  --unique=3Dhttps://user2@host.com
-
-Then helpers wouldn't need to worry about doing anything special.
-
-What do you think? Also, any comments in general on writing a helper?
-You are the first one besides me to do so. Did you find anything in the
-interface or the documentation confusing? Suggestions are very welcome,
-as nothing has been released yet and we're free to tweak as much as we
-want.
+builtin/pack-objects.c dealt with this already by setting a new
+"try_to_free" routine that locks[1], which we should also do. It
+probably comes up less frequently, because it only happens when we're
+under memory pressure.
 
 -Peff
+
+[1] Actually, it looks like the "try_to_free" routine starts as nothing,
+    and then add_packed_git sets it lazily to try_to_free_pack_memory.
+    But what builtin/pack-objects tries to do is overwrite that with a
+    version of try_to_free_pack_memory that does locking. So it's
+    possible that we would not have read any packed objects while
+    setting up the threads, and add_packed_git will overwrite our
+    careful, locking version of try_to_free_pack_memory.
+
+    I _think_ pack-objects is probably OK, because it will have already
+    done the complete "counting objects" phase, which would look in any
+    packs. But it may be harder for grep.
