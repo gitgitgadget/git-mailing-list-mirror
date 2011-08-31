@@ -1,87 +1,98 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH v6] Add a remote helper to interact with mediawiki (fetch
- & push)
-Date: Wed, 31 Aug 2011 19:03:54 +0200
-Message-ID: <CAGdFq_gu=SyjUnUS1bcjPrcPPtKVt+UjDBvBmZqosk+OuDFDHw@mail.gmail.com>
-References: <1314381329-8989-1-git-send-email-Matthieu.Moy@imag.fr> <1314809708-8177-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Ryan Wexler <ryan@iridiumsuite.com>
+Subject: Re: need to create new repository initially seeded with several branches
+Date: Wed, 31 Aug 2011 10:09:12 -0700
+Message-ID: <CAKjsY4kYm4ixTVQE4+8XZrf7DkAfn=ASoeMYob=5i1FmJ6eK5w@mail.gmail.com>
+References: <1314804325568-6746957.post@n2.nabble.com>
+	<uvMkLVapQYcSvOHVhcHX8CqGzEDajPEPvBbkL_DctzZvxm7aI-PjCQ@cipher.nrlssc.navy.mil>
+	<20110831165405.GB4356@sigill.intra.peff.net>
+	<XWAITZ7y0RejBGQezy-miO4ykUsgbNWA0mNtHRto22msjs3PP6WSZlN-pPueaz0duxAP6dCio3ZH2lna0K_g79NKdL0q7sJbzjj8sEKicYM@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr>,
-	Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>,
-	Claire Fousse <claire.fousse@ensimag.imag.fr>,
-	David Amouyal <david.amouyal@ensimag.imag.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	=?UTF-8?Q?Sylvain_Boulm=C3=A9?= <sylvain.boulme@imag.fr>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Aug 31 19:04:42 2011
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Wed Aug 31 19:09:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyoDQ-0002ZY-Hb
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 19:04:40 +0200
+	id 1QyoHy-00059r-OK
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 19:09:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932150Ab1HaREf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Aug 2011 13:04:35 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:51725 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932118Ab1HaREe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 31 Aug 2011 13:04:34 -0400
-Received: by vws1 with SMTP id 1so709913vws.19
-        for <git@vger.kernel.org>; Wed, 31 Aug 2011 10:04:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=7mbjOZl2Q1g9nPDxenOws8tHFlfhcw656WizJaPi/MA=;
-        b=J7PJY4ZwtI4fRql98qgyCafxw4mh1bbTVzVuztmNA/OPHbsEjF9QIcDx1CjndB6FEB
-         Ao0XN/7XpzmZyIif5Oir8KyMPhrZ/Fil6AIpiO2ykSb1rxaqavdtjcgGbaCsQ8adr5Qi
-         Ev9IxIqDfd6GwaDfaNan2W6X6VhmLSuE8iHU0=
-Received: by 10.52.22.83 with SMTP id b19mr669008vdf.33.1314810274117; Wed, 31
- Aug 2011 10:04:34 -0700 (PDT)
-Received: by 10.52.161.201 with HTTP; Wed, 31 Aug 2011 10:03:54 -0700 (PDT)
-In-Reply-To: <1314809708-8177-1-git-send-email-Matthieu.Moy@imag.fr>
+	id S932194Ab1HaRJQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Aug 2011 13:09:16 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:41893 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932118Ab1HaRJN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Aug 2011 13:09:13 -0400
+Received: by wyh22 with SMTP id 22so319973wyh.19
+        for <git@vger.kernel.org>; Wed, 31 Aug 2011 10:09:12 -0700 (PDT)
+Received: by 10.216.164.210 with SMTP id c60mr628724wel.35.1314810552143; Wed,
+ 31 Aug 2011 10:09:12 -0700 (PDT)
+Received: by 10.216.53.77 with HTTP; Wed, 31 Aug 2011 10:09:12 -0700 (PDT)
+In-Reply-To: <XWAITZ7y0RejBGQezy-miO4ykUsgbNWA0mNtHRto22msjs3PP6WSZlN-pPueaz0duxAP6dCio3ZH2lna0K_g79NKdL0q7sJbzjj8sEKicYM@cipher.nrlssc.navy.mil>
+X-Google-Sender-Auth: Xxp39boGHMFEJ2_Utv86dWPn6f0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180496>
 
-Heya,
+Ok thanks for all the replies guys.  I thought I was SOL.  I will
+start playing with it here and let you know how it goes.
 
-2011/8/31 Matthieu Moy <Matthieu.Moy@imag.fr>:
-> So, after understanding better how import works, here's an updated
-> patch that gets rid of the hacky workaround to terminate and send the
-> "done" command at the right time.
-
-So what do you think of the way the protocol works now? Do you agree
-that (modulo lacking docs) it is better than previously?
-
-> Actually, push had the same problem but it just went unnoticed (the
-> remote has just one branch, so it's silly to try to push multiple
-> branches at the same time ...). This version handles push more
-> cleanly, giving accurate error message in cases like
+On Wed, Aug 31, 2011 at 10:01 AM, Brandon Casey
+<brandon.casey.ctr@nrlssc.navy.mil> wrote:
+> On 08/31/2011 11:54 AM, Jeff King wrote:
+>> On Wed, Aug 31, 2011 at 11:14:48AM -0500, Brandon Casey wrote:
+>>
+>>> =A0 =A0git checkout -b devel && =A0# make a new branch named "devel=
+"
+>>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0# which =
+has the same state as the
+>>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0# curren=
+tly checked out branch: "master"
+>>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0# i.e. d=
+evel and master point to the
+>>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0# same t=
+ip commit.
+>>> =A0 =A0rm -rf * && =A0 =A0 =A0 =A0 =A0 =A0 =A0 # remove the files i=
+n the working dir
+>>> =A0 =A0cp -a $devel_dir/* . && =A0 # cp devel source code to workin=
+g dir
+>>> =A0 =A0git add -A . && =A0 =A0 =A0 =A0 =A0 # add new/removed files =
+to the index
+>>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0# to be =
+committed on next 'git commit'
+>>> =A0 =A0git commit
+>>> =A0 =A0# use editor to give descriptive commit message
+>>>
+>>> Repeat for your topic branch based off of devel.
+>>
+>> I am probably just going to confuse the original poster more, but he=
+re
+>> is how I would do it. It's slightly more efficient, as it doesn't
+>> involve removing and copying files for the intermediate states:
+>>
+>> =A0 # make a repo and switch to it
+>> =A0 git init repo && cd repo
+>>
+>> =A0 # and now add everything from the "master" version, and
+>> =A0 # make a commit out of it
+>> =A0 GIT_WORK_TREE=3D/path/to/master git add -A
+>> =A0 git commit
+>>
+>> =A0 # now make the devel branch and do the same
+>> =A0 git checkout -b devel
+>> =A0 GIT_WORK_TREE=3D/path/to/devel git add -A
+>> =A0 git commit
+>>
+>> =A0 # and then check out the result in the working tree of
+>> =A0 # your newly created repo
+>> =A0 git checkout -f
 >
-> =C2=A0git push origin :master
-> =C2=A0git push origin foo bar master
+> Better.
 >
-> or perhaps more commonly
+> -Brandon
 >
-> =C2=A0git push --all
->
-> in a repository with branches other than master.
-
-My perl skills are minimal, but I'm curious how/where you implemented
-this? Is this something that we can port to remote-testgit to document
-the CPB on handling such things?
-
-
-
-
---=20
-Cheers,
-
-Sverre Rabbelier
