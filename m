@@ -1,124 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: git credential helper design [was: What's cooking in git.git (Aug
- 2011, #07; Wed, 24)]
-Date: Tue, 30 Aug 2011 22:38:01 -0400
-Message-ID: <20110831023801.GB3340@sigill.intra.peff.net>
-References: <7vk4a2mjx6.fsf@alter.siamese.dyndns.org>
- <20110825202057.GB6165@sigill.intra.peff.net>
- <7vhb55i11i.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Lukas =?utf-8?Q?Sandstr=C3=B6m?= <luksan@gmail.com>,
-	Ted Zlatanov <tzz@lifelogs.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 31 04:38:20 2011
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH] xdiff/xprepare: initialise xdlclassifier_t cf in xdl_prepare_env()
+Date: Wed, 31 Aug 2011 12:48:46 +0800
+Message-ID: <1314766126-5060-1-git-send-email-rctay89@gmail.com>
+Cc: "Junio C Hamano" <gitster@pobox.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 31 06:49:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qyah1-0003Ef-1s
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 04:38:19 +0200
+	id 1Qycjd-0004Ph-Jl
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 06:49:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754889Ab1HaCiF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Aug 2011 22:38:05 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52061
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754853Ab1HaCiE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Aug 2011 22:38:04 -0400
-Received: (qmail 32331 invoked by uid 107); 31 Aug 2011 02:38:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 30 Aug 2011 22:38:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Aug 2011 22:38:01 -0400
-Content-Disposition: inline
-In-Reply-To: <7vhb55i11i.fsf@alter.siamese.dyndns.org>
+	id S1752579Ab1HaEtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Aug 2011 00:49:04 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:49503 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750931Ab1HaEtB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Aug 2011 00:49:01 -0400
+Received: by gwaa12 with SMTP id a12so267573gwa.19
+        for <git@vger.kernel.org>; Tue, 30 Aug 2011 21:49:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=2hRagKu8TR+Zb4jWXgn5+hRNNNNcikBjbixAuXXTt8Y=;
+        b=wNkzKF87dPd0AbP//rrYmancYM1NqjD2ElcV24vV/Py1Jn85sWngs9Gh5LtYx2QjFh
+         x++n/imTQBG/2BwWM4Qiia909pQ1vP/TJVBz+m83CZZ29Iyzicjqm+Zt1IcPJptf8cdW
+         MnTS5AtIOKXFWmywJW29wqddaS17rwGXAhGrw=
+Received: by 10.91.47.30 with SMTP id z30mr6022645agj.58.1314766141150;
+        Tue, 30 Aug 2011 21:49:01 -0700 (PDT)
+Received: from localhost (nusnet-75-164.dynip.nus.edu.sg [137.132.75.164])
+        by mx.google.com with ESMTPS id h25sm6835540anm.30.2011.08.30.21.48.58
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 30 Aug 2011 21:49:00 -0700 (PDT)
+X-Mailer: git-send-email 1.7.4.msysgit.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180456>
 
-On Thu, Aug 25, 2011 at 03:22:49PM -0700, Junio C Hamano wrote:
+Ensure that the xdl_free_classifier() call on xdlclassifier_t cf is safe
+even if xdl_init_classifier() isn't called. This may occur in the case
+where diff is run with --histogram and a call to, say, xdl_prepare_ctx()
+fails.
 
-> > I'm OK with holding this off for another round. I'd really like to get
-> > more feedback from third-party helper writers. ...
-> 
-> I actually do not think the lack of finer-than-host level granularity a
-> problem we need to solve before moving forward. IIRC, when accessing
-> "http://github.com/frotz" and "http://github.com/nitfol", you would key
-> the authentication material with something like "http://github.com" (or
-> was it "http:github.com"? the details do not matter for the purpose of
-> this discussion).
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+---
 
-It's "http:github.com", which has always looked a bit ugly to me. I had
-hoped they would just be opaque blobs and nobody would need to look at
-them. But when you get into things like setting the username via the
-config, then users see them, and they need to look sane. Making them
-look more like a canonicalized URL is probably a good thing.
+This should go into 'rc/histogram-diff' in 'next'.
 
-After seeing the helper that Lukas posted recently on the list, I am
-wondering if they should include the username, too. I had left it
-separate, because I wanted helpers to be able to index "foo@example.com"
-and "example.com" in the same slot. I.e., to realize that the latter
-could use the same credentials cached for the former. But it also
-complicates the helpers; instead of doing:
+ xdiff/xprepare.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-  credential = secure_storage_lookup(unique_token);
-  return credential /* could be NULL */
-
-they have to do:
-
-  for credential in secure_storage_lookup(unique_token) {
-    if (!username)
-      return credential; /* take first one arbitrarily */
-    else if (username == credential.username)
-      return credential; /* ok, matched preferred username */
-  }
-  return NULL;
-
-which implies that the secure storage can even store a list indexed
-under the token.
-
-So perhaps a better model is to give the helper some canonicalized URL,
-like:
-
-  https://foo@example.com
-
-(where the canonicalization is important, because we want the helper to
-be able to just treat it like a string of bytes if it wants).  And then
-we can naturally extend that to:
-
-  https://foo@example.com/specific-repo.git
-
-if the user wants a repo-specific authentication context.
-
-> We can consider what you already have as the default case for a more
-> general "we cut off at the hostname and take that as the auth-domain
-> boundary unless told otherwise". We may not have the way to "tell
-> otherwise" yet, but as long as we are reasonably confident that we know
-> how to extend the system in a backward compatible way, it is not a
-> show-stopper.
-
-I think in either case it gets tacked onto the auth token. But it
-probably makes sense now to choose a nice syntax for the token that will
-look good when we extend it later.
-
-Ted wrote:
-
-> How about a config variable with regular expressions like
->
-> auth-domain.xyz.url = https://(.*@)?github.com/.*
-
-I like this. In fact, perhaps it makes sense for git to generate the
-maximal token, like:
-
-  https://user@host.example.com/path/to/repo.git
-
-and then provide the user with configuration like this to narrow it down
-as they see fit. Perhaps even do a substitution regexp to let them
-rewrite it arbitrarily. And then if we want to be more permissive by
-default, provide some backup regexps to be used when they don't provide
-their own, like cutting out the pathname portion.
-
--Peff
+diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
+index 620fc9a..4323596 100644
+--- a/xdiff/xprepare.c
++++ b/xdiff/xprepare.c
+@@ -239,6 +239,9 @@ int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
+ 	long enl1, enl2, sample;
+ 	xdlclassifier_t cf;
+ 
++	cf.rchash = NULL;
++	cf.ncha.head = NULL;
++
+ 	/*
+ 	 * For histogram diff, we can afford a smaller sample size and
+ 	 * thus a poorer estimate of the number of lines, as the hash
+-- 
+1.7.6.1.706.gaa5cf
