@@ -1,80 +1,78 @@
-From: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
-Subject: Re: [PATCH] grep: Fix race condition in delta_base_cache
-Date: Wed, 31 Aug 2011 21:13:28 +0200
-Message-ID: <4E5E87D8.3080108@morey-chaisemartin.com>
-References: <4E5CE982.7080200@morey-chaisemartin.com> <20110831015936.GB2519@sigill.intra.peff.net>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: [ANNOUNCE] unofficial git-announce mailing list
+Date: Wed, 31 Aug 2011 22:20:55 +0100
+Message-ID: <33453140e2f3666548447f3e89b683eb@quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 31 23:06:54 2011
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 31 23:30:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qyrzq-0003Pc-DA
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 23:06:54 +0200
+	id 1QysN5-0005ls-Vw
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 23:30:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755410Ab1HaVGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Aug 2011 17:06:49 -0400
-Received: from 12.mo1.mail-out.ovh.net ([87.98.162.229]:58529 "EHLO
-	mo1.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752429Ab1HaVGs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2011 17:06:48 -0400
-X-Greylist: delayed 104095 seconds by postgrey-1.27 at vger.kernel.org; Wed, 31 Aug 2011 17:06:48 EDT
-Received: from mail174.ha.ovh.net (b6.ovh.net [213.186.33.56])
-	by mo1.mail-out.ovh.net (Postfix) with SMTP id AA8841000F42
-	for <git@vger.kernel.org>; Wed, 31 Aug 2011 21:13:45 +0200 (CEST)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 31 Aug 2011 21:13:30 +0200
-Received: from mut38-4-82-233-116-185.fbx.proxad.net (HELO uranus.nicolas.morey-chaisemartin.com) (nicolas@morey-chaisemartin.com@82.233.116.185)
-  by ns0.ovh.net with SMTP; 31 Aug 2011 21:13:29 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20110816 Thunderbird/6.0
-X-Ovh-Mailout: 178.32.228.1 (mo1.mail-out.ovh.net)
-In-Reply-To: <20110831015936.GB2519@sigill.intra.peff.net>
-X-Ovh-Tracer-Id: 9788573790500413432
-X-Ovh-Remote: 82.233.116.185 (mut38-4-82-233-116-185.fbx.proxad.net)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-Spam-Check: DONE|U 0.500001/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -130
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeftddruddtucetggdotefuucfrrhhofhhilhgvmecuqfggjfenuceurghilhhouhhtmecufedttdenucculddquddttddmnehthhgvuchprhhosghlvghmucdlqdeftddm
+	id S1756325Ab1HaVaP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Aug 2011 17:30:15 -0400
+Received: from neutrino.quantumfyre.co.uk ([93.93.128.23]:51439 "EHLO
+	neutrino.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755766Ab1HaVaM (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Aug 2011 17:30:12 -0400
+X-Greylist: delayed 555 seconds by postgrey-1.27 at vger.kernel.org; Wed, 31 Aug 2011 17:30:12 EDT
+Received: from reaper.quantumfyre.co.uk (quantumfyre-1-pt.tunnel.tserv5.lon1.ipv6.he.net [IPv6:2001:470:1f08:1724::2])
+	by neutrino.quantumfyre.co.uk (Postfix) with ESMTP id 33D68C060A
+	for <git@vger.kernel.org>; Wed, 31 Aug 2011 22:20:56 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 09AE635F892
+	for <git@vger.kernel.org>; Wed, 31 Aug 2011 22:20:56 +0100 (BST)
+X-Virus-Scanned: amavisd-new at reaper
+Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
+	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id tU5vV3DPLZ0X for <git@vger.kernel.org>;
+	Wed, 31 Aug 2011 22:20:55 +0100 (BST)
+Received: from webmail.quantumfyre.co.uk (reaper.quantumfyre.co.uk [192.168.0.2])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 2E34E35F47A
+	for <git@vger.kernel.org>; Wed, 31 Aug 2011 22:20:55 +0100 (BST)
+X-Sender: julian@quantumfyre.co.uk
+User-Agent: Roundcube Webmail/0.5.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180507>
 
-On 08/31/2011 03:59 AM, Jeff King wrote:
-> I notice there are some other code paths that end up in xmalloc without
-> locking, too (e.g., load_file, and some strbuf_* calls). Don't those
-> need locking, too, as malloc may try to release packfile memory?
-> 
-> builtin/pack-objects.c dealt with this already by setting a new
-> "try_to_free" routine that locks[1], which we should also do. It
-> probably comes up less frequently, because it only happens when we're
-> under memory pressure.
-> 
-> -Peff
-> 
-> [1] Actually, it looks like the "try_to_free" routine starts as nothing,
->     and then add_packed_git sets it lazily to try_to_free_pack_memory.
->     But what builtin/pack-objects tries to do is overwrite that with a
->     version of try_to_free_pack_memory that does locking. So it's
->     possible that we would not have read any packed objects while
->     setting up the threads, and add_packed_git will overwrite our
->     careful, locking version of try_to_free_pack_memory.
-> 
->     I _think_ pack-objects is probably OK, because it will have already
->     done the complete "counting objects" phase, which would look in any
->     packs. But it may be harder for grep.
-> 
+Good evening all,
 
-After some more looking around, I'd say the best way to fix this is provide a lock to the try_to_free function from sha1_file
-and provide access to this lock for pack-objects and grep to replace respectively the read_mutex and read_sha1_mutex.
-So we can simplify the problem by having a single lock to avoid all the cache/free issues (and reusable elsewhere if needed in the future), whether it's shared through direct access or API (I'm not sure what's git policy about that).
-And this way, there is no need to duplicate what pack-objects is achieving and it gives some peace of mind about the fact that the try_to _free function won't be overwritten in our backs.
+As some people may be aware, some time ago now I created some RSS feeds 
+by filtering the Git mailing lists (http://gitrss.q42.co.uk/) to make 
+the task of following only certain types of information from this list 
+easier.
 
-Nicolas Morey-Chaisemartin
+I have now extended this tool to include a git-announce mailing list.  
+This is an announce-only style list that receives all the same mails 
+that are pulled into the announce RSS feed.
+
+The website for the list can be found here:
+
+   http://lists.q42.co.uk/listinfo/git-announce
+
+It's a mailman hosted list, so the normal email based interaction works 
+too.  So you can also subscribe by mailing:
+
+   git-announce-subscribe@q42.co.uk
+
+I primarily created this for my own use - but since it is something 
+that has been asked about in the past, I though I would share it.
+
+Comments/suggestions welcome (though I don't promise to change anything 
+;).
+
+Please also let me know if you have any objections to the existence of 
+this list (I do promise to respond to these).
+
+-- 
+Julian
