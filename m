@@ -1,77 +1,94 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Clean termination of remote-helpers (was Re: [PATCH 2/2] Add a
- remote helper to interact with mediawiki (fetch & push))
-Date: Wed, 31 Aug 2011 15:25:53 +0200
-Message-ID: <CAGdFq_gSpFm8D1qHs5smUgsqyZXRjw73QFCCkBjTi0n4pwzmHA@mail.gmail.com>
-References: <1314378689-8997-1-git-send-email-Matthieu.Moy@imag.fr>
- <1314378689-8997-2-git-send-email-Matthieu.Moy@imag.fr> <vpqd3flzrow.fsf_-_@bauges.imag.fr>
+Subject: Re: git-svn and mergeinfo
+Date: Wed, 31 Aug 2011 15:59:26 +0200
+Message-ID: <CAGdFq_h+KjWQUwwLdaqA-0j0p1zQznZkNNEVgfS46_o-Zfr3oQ@mail.gmail.com>
+References: <20110829132052.0ad7a088@robyn.woti.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr>,
-	Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>,
-	Claire Fousse <claire.fousse@ensimag.imag.fr>,
-	David Amouyal <david.amouyal@ensimag.imag.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Aug 31 15:27:17 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Bryan Jacobs <bjacobs@woti.com>, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Aug 31 16:00:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qykp1-0006Ru-0k
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 15:27:15 +0200
+	id 1QylKx-0000E4-BI
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 16:00:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755867Ab1HaN0j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Aug 2011 09:26:39 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:43512 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755436Ab1HaN0f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2011 09:26:35 -0400
-Received: by gxk21 with SMTP id 21so531841gxk.19
-        for <git@vger.kernel.org>; Wed, 31 Aug 2011 06:26:33 -0700 (PDT)
+	id S1750985Ab1HaOAI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Aug 2011 10:00:08 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:45684 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750820Ab1HaOAH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Aug 2011 10:00:07 -0400
+Received: by pzk37 with SMTP id 37so1359715pzk.1
+        for <git@vger.kernel.org>; Wed, 31 Aug 2011 07:00:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=M+70m6R7dpdSlqlyKtv9oH0RAc72DAUXB57NSaaaRiE=;
-        b=bO9sFaI45vd2qp3aPfE4olNRIcU3Rnh8va7VJ1fkNOfa84bAiBJFJ0dHlCbEbVXVOO
-         GX0YsPGdE68ZPk0G6ssrb75mj491DuN7PWwLg0l/BySpfbdYuSWefG5x6qwHjiUZpYJi
-         wIPZ/iy0qFMW1pwqwx7l8kTGVak7sBhN+kNUA=
-Received: by 10.68.157.230 with SMTP id wp6mr510227pbb.428.1314797193303; Wed,
- 31 Aug 2011 06:26:33 -0700 (PDT)
-Received: by 10.68.55.7 with HTTP; Wed, 31 Aug 2011 06:25:53 -0700 (PDT)
-In-Reply-To: <vpqd3flzrow.fsf_-_@bauges.imag.fr>
+         :cc:content-type:content-transfer-encoding;
+        bh=vqlkEAV/UwKMTOSPZ4DIC9eJ88T/m3CfsEv7ANLSTWA=;
+        b=YI9445UAYlTRnoglz6MhSzB0vcRiwR/zlP53w4t3V+k1JTlg6Ks8TOc+cmJSnp+VF6
+         dDqFB9comnBKD/W9WtVR/ok3qp2wQyPaKtLeOWDnTReGZuM5Wijt1BHYsDZb/x0qNsbx
+         PbM/IvhiJC+I2xPPbrp4sDdLCg1RQfhJ45D3E=
+Received: by 10.68.28.103 with SMTP id a7mr584785pbh.160.1314799206352; Wed,
+ 31 Aug 2011 07:00:06 -0700 (PDT)
+Received: by 10.68.55.7 with HTTP; Wed, 31 Aug 2011 06:59:26 -0700 (PDT)
+In-Reply-To: <20110829132052.0ad7a088@robyn.woti.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180470>
 
 Heya,
 
-On Wed, Aug 31, 2011 at 14:33, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> I was expecting this part to be more controversial, so I'm just
-> repeating it to draw more attention ;-).
+On Mon, Aug 29, 2011 at 19:20, Bryan Jacobs <bjacobs@woti.com> wrote:
+> Apologies if this is not the right forum for bug reports. I was unabl=
+e
+> to find a Bugzilla/Redmine/Flyspray instance for issue maintenance, n=
+or
+> some "proper procedure" on the git web page.
 
-Eek! :)
+This is indeed the correct way of reporting bugs :).
 
-> # Inform Git that we're done, otherwise Git won't close it's stdin,
-> # and the next loop will be infinite.
-> close(STDOUT);
-> # Flush stdin before we terminate. If we don't, git fetch
-> # (transport-helper.c's sendline function) will try to write to our
-> # stdin, which may be closed, and git fetch will be killed. That's
-> # probably a bug in transport-helper.c, but in the meantime ...
-> while (<STDIN>) {};
+> However, to make this work with git 1.7.6, I needed to make *one* cha=
+nge
+> to the git internals: --merge-info does not allow setting mergeinfo f=
+or
+> more than one branch. Because it's a complete overwrite operation
+> instead of an update, this is a serious issue preventing its use for
+> nontrivial branches.
+>
+> Might I suggest adding a block like the following around line 552 of
+> git-svn?
+>
+> =C2=A0 =C2=A0if (defined($_merge_info))
+> =C2=A0 =C2=A0{
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0$_merge_info =3D~ tr{ }{\n};
+> =C2=A0 =C2=A0}
+>
+> This will replace any spaces in --merge-info with newlines, allowing
+> specification of an svn:mergeinfo that contains merges from more than=
+ a
+> singe branch. So the user can provide "--merge-info
+> '/branch1:r2323-3849,r8888 /branch2:r9999'" and the like.
 
-Is this caused by you not reading the terminating '\n' that git sends
-when all commands are done? We previously didn't do this for imports
-(we couldn't, hence the new import/done behavior), so perhaps you just
-need to fix that? It's entirely possible you've found a bug though.
+Why not submit this as a proper patch [0] to the list, I reckon Eric
+(cc-ed, the maintainer of git-svn) wouldn't mind including it.
 
--- 
+> Thank you for your consideration. I am not subscribed to this list, s=
+o
+> if there are any replies, please copy my address.
+
+That's the policy on this list anyway :).
+
+[0] http://git.kernel.org/?p=3Dgit/git.git;a=3Dblob;f=3DDocumentation/S=
+ubmittingPatches;hb=3DHEAD
+
+--=20
 Cheers,
 
 Sverre Rabbelier
