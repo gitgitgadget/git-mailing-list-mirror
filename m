@@ -1,55 +1,143 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: need to create new repository initially seeded with several branches
-Date: Wed, 31 Aug 2011 19:48:08 +0200
-Message-ID: <4E5E73D8.4040104@kdbg.org>
-References: <1314804325568-6746957.post@n2.nabble.com> <201108311540.p7VFen5S015756@no.baka.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "ryan@iridiumsuite.com" <ryan@iridiumsuite.com>,
-	git@vger.kernel.org
-To: in-git-vger@baka.org
-X-From: git-owner@vger.kernel.org Wed Aug 31 19:48:20 2011
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] (short) documentation for the testgit remote helper
+Date: Wed, 31 Aug 2011 20:14:58 +0200
+Message-ID: <1314814498-13699-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <1314809222-30528-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Aug 31 20:15:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qyotf-0000U5-5c
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 19:48:19 +0200
+	id 1QypJh-0006Sx-WC
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 20:15:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756976Ab1HaRsN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Aug 2011 13:48:13 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:51517 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756923Ab1HaRsN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2011 13:48:13 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 8E16A1000F;
-	Wed, 31 Aug 2011 19:48:08 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 62D0119F43F;
-	Wed, 31 Aug 2011 19:48:08 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.20) Gecko/20110804 SUSE/3.1.12 Thunderbird/3.1.12
-In-Reply-To: <201108311540.p7VFen5S015756@no.baka.org>
+	id S1757005Ab1HaSPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Aug 2011 14:15:08 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:39661 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756967Ab1HaSPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Aug 2011 14:15:07 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p7VIEIFG031219
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 31 Aug 2011 20:14:18 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1QypJT-0006e6-OL; Wed, 31 Aug 2011 20:14:59 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1QypJT-0003Za-Md; Wed, 31 Aug 2011 20:14:59 +0200
+X-Mailer: git-send-email 1.7.7.rc0.75.g56f27
+In-Reply-To: <1314809222-30528-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 31 Aug 2011 20:14:18 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p7VIEIFG031219
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1315419261.43519@XDzAkqkANLlOjFlIg3o9wA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180499>
 
-Am 31.08.2011 17:40, schrieb in-git-vger@baka.org:
-> # Cause git to delete all files in the internal index
-> git read-tree --reset -i 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-> # Cause git to delete all files in the working directory
-> git clean -dfx
-> ...
-> The only "magic" is the read-tree/git-clean stuff.  The 4b82=E2=80=A6=
- value is
-> the SHA of an empty tree.  It could be replaced by...
+While it's not a command meant to be used by actual users (hence, not
+mentionned in git(1)), this command is a very precious help for
+remote-helpers authors.
 
-=2E.. a simple
+The best place for such technical doc is the source code, but users may
+not find it without a link in a manpage.
 
-  git rm -rf .
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
 
--- Hannes
+While we're improving the docs, this is one more thing that would have
+saved me some time ...
+
+ Documentation/git-remote-helpers.txt |    2 ++
+ Documentation/git-remote-testgit.txt |   30 ++++++++++++++++++++++++++++++
+ git-remote-testgit.py                |   14 ++++++++++++++
+ 3 files changed, 46 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-remote-testgit.txt
+
+diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
+index 526fc6a..674797c 100644
+--- a/Documentation/git-remote-helpers.txt
++++ b/Documentation/git-remote-helpers.txt
+@@ -362,6 +362,8 @@ SEE ALSO
+ --------
+ linkgit:git-remote[1]
+ 
++linkgit:git-remote-testgit[1]
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/Documentation/git-remote-testgit.txt b/Documentation/git-remote-testgit.txt
+new file mode 100644
+index 0000000..2a67d45
+--- /dev/null
++++ b/Documentation/git-remote-testgit.txt
+@@ -0,0 +1,30 @@
++git-remote-testgit(1)
++=====================
++
++NAME
++----
++git-remote-testgit - Example remote-helper
++
++
++SYNOPSIS
++--------
++[verse]
++git clone testgit::<source-repo> [<destination>]
++
++DESCRIPTION
++-----------
++
++This command is a simple remote-helper, that is used both as a
++testcase for the remote-helper functionality, and as an example to
++show remote-helper authors one possible implementation.
++
++The best way to learn more is to read the comments and source code in
++'git-remote-testgit.py'.
++
++SEE ALSO
++--------
++linkgit:git-remote-helpers[1]
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/git-remote-testgit.py b/git-remote-testgit.py
+index e9c832b..91d4409 100644
+--- a/git-remote-testgit.py
++++ b/git-remote-testgit.py
+@@ -1,5 +1,19 @@
+ #!/usr/bin/env python
+ 
++# This command is a simple remote-helper, that is used both as a
++# testcase for the remote-helper functionality, and as an example to
++# show remote-helper authors one possible implementation.
++#
++# This is a Git <-> Git importer/exporter, that simply uses git
++# fast-import and git fast-export to consume and produce fast-import
++# streams.
++#
++# To understand better the way things work, one can set the variable
++# "static int debug" in transport-helper.c to 1, and/or the "DEBUG"
++# variable in git_remote_helpers/util.py to True, and try various
++# commands.
++
++
+ # hashlib is only available in python >= 2.5
+ try:
+     import hashlib
+-- 
+1.7.7.rc0.75.g56f27
