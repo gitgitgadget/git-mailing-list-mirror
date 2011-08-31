@@ -1,72 +1,76 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH] xdiff/xprepare: initialise xdlclassifier_t cf in xdl_prepare_env()
-Date: Wed, 31 Aug 2011 12:48:46 +0800
-Message-ID: <1314766126-5060-1-git-send-email-rctay89@gmail.com>
-Cc: "Junio C Hamano" <gitster@pobox.com>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 31 06:49:10 2011
+From: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
+Subject: Re: [PATCH] grep: Fix race condition in delta_base_cache
+Date: Wed, 31 Aug 2011 08:32:50 +0200
+Message-ID: <4E5DD592.5090608@morey-chaisemartin.com>
+References: <4E5CE982.7080200@morey-chaisemartin.com> <20110831015936.GB2519@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Aug 31 08:33:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qycjd-0004Ph-Jl
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 06:49:09 +0200
+	id 1QyeM9-0002uO-3v
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 08:33:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752579Ab1HaEtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Aug 2011 00:49:04 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:49503 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750931Ab1HaEtB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2011 00:49:01 -0400
-Received: by gwaa12 with SMTP id a12so267573gwa.19
-        for <git@vger.kernel.org>; Tue, 30 Aug 2011 21:49:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=2hRagKu8TR+Zb4jWXgn5+hRNNNNcikBjbixAuXXTt8Y=;
-        b=wNkzKF87dPd0AbP//rrYmancYM1NqjD2ElcV24vV/Py1Jn85sWngs9Gh5LtYx2QjFh
-         x++n/imTQBG/2BwWM4Qiia909pQ1vP/TJVBz+m83CZZ29Iyzicjqm+Zt1IcPJptf8cdW
-         MnTS5AtIOKXFWmywJW29wqddaS17rwGXAhGrw=
-Received: by 10.91.47.30 with SMTP id z30mr6022645agj.58.1314766141150;
-        Tue, 30 Aug 2011 21:49:01 -0700 (PDT)
-Received: from localhost (nusnet-75-164.dynip.nus.edu.sg [137.132.75.164])
-        by mx.google.com with ESMTPS id h25sm6835540anm.30.2011.08.30.21.48.58
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 30 Aug 2011 21:49:00 -0700 (PDT)
-X-Mailer: git-send-email 1.7.4.msysgit.0
+	id S1753857Ab1HaGc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Aug 2011 02:32:56 -0400
+Received: from 20.mo1.mail-out.ovh.net ([188.165.45.168]:50290 "EHLO
+	mo1.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753750Ab1HaGcz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Aug 2011 02:32:55 -0400
+X-Greylist: delayed 58262 seconds by postgrey-1.27 at vger.kernel.org; Wed, 31 Aug 2011 02:32:55 EDT
+Received: from mail174.ha.ovh.net (b6.ovh.net [213.186.33.56])
+	by mo1.mail-out.ovh.net (Postfix) with SMTP id EB97C100800F
+	for <git@vger.kernel.org>; Wed, 31 Aug 2011 08:33:07 +0200 (CEST)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 31 Aug 2011 08:32:53 +0200
+Received: from mut38-4-82-233-116-185.fbx.proxad.net (HELO uranus.nicolas.morey-chaisemartin.com) (nicolas@morey-chaisemartin.com@82.233.116.185)
+  by ns0.ovh.net with SMTP; 31 Aug 2011 08:32:51 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20110816 Thunderbird/6.0
+X-Ovh-Mailout: 178.32.228.1 (mo1.mail-out.ovh.net)
+In-Reply-To: <20110831015936.GB2519@sigill.intra.peff.net>
+X-Ovh-Tracer-Id: 15389644352611147768
+X-Ovh-Remote: 82.233.116.185 (mut38-4-82-233-116-185.fbx.proxad.net)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-Spam-Check: DONE|U 0.506749/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeftddrtdekucetggdotefuucfrrhhofhhilhgvmecuqfggjfenuceurghilhhouhhtmecufedttdenucculddquddttddm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180457>
 
-Ensure that the xdl_free_classifier() call on xdlclassifier_t cf is safe
-even if xdl_init_classifier() isn't called. This may occur in the case
-where diff is run with --histogram and a call to, say, xdl_prepare_ctx()
-fails.
+On 08/31/2011 03:59 AM, Jeff King wrote:
+> 
+> I notice there are some other code paths that end up in xmalloc without
+> locking, too (e.g., load_file, and some strbuf_* calls). Don't those
+> need locking, too, as malloc may try to release packfile memory?
+> 
+After some consideration I think they do.
+Grep threads definitly get the try_to_free  function registered while the main one does at least some xreallock out of sha1_file.c (so not owning the lock).
+I guess it requires the same kind of lock pack-objects.c uses (meaning we need to set the try_to_free function in grep.c too).
 
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
----
+> 
+> [1] Actually, it looks like the "try_to_free" routine starts as nothing,
+>     and then add_packed_git sets it lazily to try_to_free_pack_memory.
+>     But what builtin/pack-objects tries to do is overwrite that with a
+>     version of try_to_free_pack_memory that does locking. So it's
+>     possible that we would not have read any packed objects while
+>     setting up the threads, and add_packed_git will overwrite our
+>     careful, locking version of try_to_free_pack_memory.
+> 
+>     I _think_ pack-objects is probably OK, because it will have already
+>     done the complete "counting objects" phase, which would look in any
+>     packs. But it may be harder for grep.
 
-This should go into 'rc/histogram-diff' in 'next'.
+I'm not expert enough in git pathways to be sure about pack_objects but I agree it looks "risky".
+Maybe add_packed_git should check whether there already is a free routine (other than do_nothing) instead of simply setting it up the first time.
 
- xdiff/xprepare.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index 620fc9a..4323596 100644
---- a/xdiff/xprepare.c
-+++ b/xdiff/xprepare.c
-@@ -239,6 +239,9 @@ int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 	long enl1, enl2, sample;
- 	xdlclassifier_t cf;
- 
-+	cf.rchash = NULL;
-+	cf.ncha.head = NULL;
-+
- 	/*
- 	 * For histogram diff, we can afford a smaller sample size and
- 	 * thus a poorer estimate of the number of lines, as the hash
--- 
-1.7.6.1.706.gaa5cf
+Nicolas Morey-Chaisemartin
