@@ -1,118 +1,96 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] Teach dcommit --mergeinfo to handle multiple lines
-Date: Wed, 31 Aug 2011 13:21:31 -0700
-Message-ID: <20110831202131.GA27307@dcvr.yhbt.net>
+From: Bryan Jacobs <bjacobs@woti.com>
+Subject: Re: [spf:guess] Re: [PATCH] Teach dcommit --mergeinfo to handle
+ multiple lines
+Date: Wed, 31 Aug 2011 16:51:09 -0400
+Organization: White Oak Technologies
+Message-ID: <20110831165109.0ca6373f@robyn.woti.com>
 References: <20110831124839.69c70486@robyn.woti.com>
+	<20110831202131.GA27307@dcvr.yhbt.net>
+	<4E5E9CFB.4060600@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>
-To: Bryan Jacobs <bjacobs@woti.com>
-X-From: git-owner@vger.kernel.org Wed Aug 31 22:21:39 2011
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Wed Aug 31 22:51:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyrI2-0006Hj-5H
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 22:21:38 +0200
+	id 1Qyrkn-00041Y-F6
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 22:51:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755355Ab1HaUVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Aug 2011 16:21:32 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:53057 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755220Ab1HaUVc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2011 16:21:32 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F5311F869;
-	Wed, 31 Aug 2011 20:21:31 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20110831124839.69c70486@robyn.woti.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755270Ab1HaUvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Aug 2011 16:51:14 -0400
+Received: from mail02.woti.us ([66.92.158.6]:52377 "EHLO roscoe.woti.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751411Ab1HaUvL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Aug 2011 16:51:11 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by roscoe.woti.com (Postfix) with ESMTP id 9CC09504D37ED;
+	Wed, 31 Aug 2011 16:51:10 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at woti.com
+Received: from roscoe.woti.com ([127.0.0.1])
+	by localhost (roscoe.woti.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id t6a3-1Pf-KKT; Wed, 31 Aug 2011 16:51:10 -0400 (EDT)
+Received: from robyn.woti.com (robyn.woti.com [192.168.168.187])
+	by roscoe.woti.com (Postfix) with ESMTPSA id 26EF9504D37EA;
+	Wed, 31 Aug 2011 16:51:10 -0400 (EDT)
+In-Reply-To: <4E5E9CFB.4060600@vilain.net>
+X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; x86_64-redhat-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180503>
 
-Subsystem commit subjects should be prefixed with the approriate
-subsystem (e.g. "git-svn: Teach dcommit --mergeinfo ..."
+On Wed, 31 Aug 2011 13:43:39 -0700
+Sam Vilain <sam@vilain.net> wrote:
 
-Bryan Jacobs <bjacobs@woti.com> wrote:
-> "svn dcommit --mergeinfo" replaces the svn:mergeinfo property in an
-> upstream SVN repository with the given text. The svn:mergeinfo
-> property may contain commits originating on multiple branches,
-> separated by newlines.
+> On 8/31/11 1:21 PM, Eric Wong wrote:
+> >> --- a/Documentation/git-svn.txt
+> >> +++ b/Documentation/git-svn.txt
+> >> @@ -211,8 +211,9 @@ discouraged.
+> >>   	Add the given merge information during the dcommit
+> >>   	(e.g. `--mergeinfo="/branches/foo:1-10"`). All svn
+> >> server versions can store this information (as a property), and
+> >> svn clients starting from
+> >> -	version 1.5 can make use of it. 'git svn' currently does
+> >> not use it
+> >> -	and does not set it automatically.
+> >> +	version 1.5 can make use of it. To specify merge
+> >> information from multiple
+> >> +	branches, use a single space character between the
+> >> branches
+> >> +	(`--mergeinfo="/branches/foo:1-10 /branches/bar:3,5-6,8"`)
 > 
-> Cause space characters in the mergeinfo to be replaced by newlines,
-> allowing a user to create history representing multiple branches being
-> merged into one.
-> 
-> Update the corresponding documentation and add a test for the new
-> functionality.
-> 
-> Signed-off-by: Bryan Jacobs <bjacobs@woti.com>
+> This interface seems regrettably stupid.  Like, do I need to consider 
+> the existing revisions that are already listed in the property?  Is
+> it really impossible to derive the changes that were merged and
+> generate the list automatically?
 
-This looks reasonable, Cc:-ing Sam since he handled the mergeinfo stuff.
-After all this time, I still have no experience using SVN mergeinfo
-anywhere :x
+Nope, it's possible. I didn't create the original --mergeinfo
+interface. I was very surprised when I first discovered it clobbered
+instead of integrating - it's easy to nuke your SVN repo's ability to
+merge with one careless use of this option. See below.
 
-> ---
->  Documentation/git-svn.txt    |    5 +++--
->  git-svn.perl                 |    3 +++
->  t/t9158-git-svn-mergeinfo.sh |   13 +++++++++++++
->  3 files changed, 19 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-> index ed5eca1..3ed28df 100644
-> --- a/Documentation/git-svn.txt
-> +++ b/Documentation/git-svn.txt
-> @@ -211,8 +211,9 @@ discouraged.
->  	Add the given merge information during the dcommit
->  	(e.g. `--mergeinfo="/branches/foo:1-10"`). All svn server versions can
->  	store this information (as a property), and svn clients starting from
-> -	version 1.5 can make use of it. 'git svn' currently does not use it
-> -	and does not set it automatically.
-> +	version 1.5 can make use of it. To specify merge information from multiple
-> +	branches, use a single space character between the branches
-> +	(`--mergeinfo="/branches/foo:1-10 /branches/bar:3,5-6,8"`)
->  
->  'branch'::
->  	Create a branch in the SVN repository.
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 89f83fd..3ee26a2 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -548,6 +548,9 @@ sub cmd_dcommit {
->  	}
->  	my $expect_url = $url;
->  	Git::SVN::remove_username($expect_url);
-> +	if (defined($_merge_info)) {
-> +		$_merge_info =~ tr{ }{\n};
-> +	}
->  	while (1) {
->  		my $d = shift @$linear_refs or last;
->  		unless (defined $last_rev) {
-> diff --git a/t/t9158-git-svn-mergeinfo.sh b/t/t9158-git-svn-mergeinfo.sh
-> index 3ab4390..8c9539e 100755
-> --- a/t/t9158-git-svn-mergeinfo.sh
-> +++ b/t/t9158-git-svn-mergeinfo.sh
-> @@ -38,4 +38,17 @@ test_expect_success 'verify svn:mergeinfo' '
->  	test "$mergeinfo" = "/branches/foo:1-10"
->  '
->  
-> +test_expect_success 'change svn:mergeinfo multiline' '
-> +	touch baz &&
-> +	git add baz &&
-> +	git commit -m "baz" &&
-> +	git svn dcommit --mergeinfo="/branches/bar:1-10 /branches/other:3-5,8,10-11"
-> +'
-> +
-> +test_expect_success 'verify svn:mergeinfo multiline' '
-> +	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/trunk)
-> +	test "$mergeinfo" = "/branches/bar:1-10
-> +/branches/other:3-5,8,10-11"
-> +'
-> +
->  test_done
-> -- 
-> 1.7.6
+> But so long as it makes something previously impossible possible, it
+> is a good change - my feeling is that it should be called something
+> like --mergeinfo-raw or --mergeinfo-set to leave room for a possible 
+> --mergeinfo-add which knows how the lists work and adds them (which
+> is what I'd expect a plain --mergeinfo switch to do).
+
+I completely agree. I think there should at least be a
+--mergeinfo-update which fetches the current revision, merges that with
+the provided set using the branch paths as keys (and compacts using
+svn:mergeinfo rules), and sets the property to the final result.
+
+I actually do this currently with external scripts, which is why I
+wanted to make --mergeinfo capable of delivering my final payload. It
+would make my life easier if all the logic were part of git-svn instead.
+
+That said, this change is really small. That change would be larger.
+So I submitted this first.
+
+> Sam
