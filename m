@@ -1,98 +1,64 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Clean termination of remote-helpers (was Re: [PATCH 2/2] Add a remote helper to interact with mediawiki (fetch & push))
-Date: Wed, 31 Aug 2011 16:53:20 +0200
-Message-ID: <vpqty8x3a5b.fsf@bauges.imag.fr>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Clean termination of remote-helpers (was Re: [PATCH 2/2] Add a
+ remote helper to interact with mediawiki (fetch & push))
+Date: Wed, 31 Aug 2011 17:00:44 +0200
+Message-ID: <CAGdFq_giHLBgGOLDhj3zuxV0pnJ8twDfY7DD9ckfp4s4O7E8_g@mail.gmail.com>
 References: <1314378689-8997-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1314378689-8997-2-git-send-email-Matthieu.Moy@imag.fr>
-	<vpqd3flzrow.fsf_-_@bauges.imag.fr>
-	<CAGdFq_gSpFm8D1qHs5smUgsqyZXRjw73QFCCkBjTi0n4pwzmHA@mail.gmail.com>
+ <1314378689-8997-2-git-send-email-Matthieu.Moy@imag.fr> <vpqd3flzrow.fsf_-_@bauges.imag.fr>
+ <CAGdFq_gSpFm8D1qHs5smUgsqyZXRjw73QFCCkBjTi0n4pwzmHA@mail.gmail.com> <vpqty8x3a5b.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org, gitster@pobox.com,
 	Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr>,
 	Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>,
 	Claire Fousse <claire.fousse@ensimag.imag.fr>,
 	David Amouyal <david.amouyal@ensimag.imag.fr>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 31 16:54:00 2011
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Aug 31 17:01:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QymAx-0005rJ-9h
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 16:53:59 +0200
+	id 1QymII-0001W9-6d
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 17:01:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755922Ab1HaOxy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Aug 2011 10:53:54 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:33419 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755870Ab1HaOxw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2011 10:53:52 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p7VEqdex030974
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 31 Aug 2011 16:52:39 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1QymAK-0002vD-DJ; Wed, 31 Aug 2011 16:53:20 +0200
-In-Reply-To: <CAGdFq_gSpFm8D1qHs5smUgsqyZXRjw73QFCCkBjTi0n4pwzmHA@mail.gmail.com>
-	(Sverre Rabbelier's message of "Wed, 31 Aug 2011 15:25:53 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 31 Aug 2011 16:52:40 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p7VEqdex030974
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1315407161.17336@/tLXokMZAFTM6WWsdDrcLA
+	id S1756215Ab1HaPB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Aug 2011 11:01:26 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:61767 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756130Ab1HaPBZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Aug 2011 11:01:25 -0400
+Received: by gya6 with SMTP id 6so614045gya.19
+        for <git@vger.kernel.org>; Wed, 31 Aug 2011 08:01:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=9RC0yFU2tW8A012uVDDMnadvV4jXUPLqmEeZe5fv5m0=;
+        b=hG5mhRjT6iWwX5pjC4XI5qot1cxf81qbxGE0CJPDFnIfYIhlc2ryyR8lf/X0Qqf3pP
+         sm24jf2CXmSYiHTQNWmt0LRD+xjmPooyznMqv1buHusxJCLrf9TE/NwGzIZnJiHYFeb1
+         8DXn2JBYOZrwEFUAEXGEUj7FWyFeEHFacTJzw=
+Received: by 10.68.56.199 with SMTP id c7mr665939pbq.495.1314802884098; Wed,
+ 31 Aug 2011 08:01:24 -0700 (PDT)
+Received: by 10.68.55.7 with HTTP; Wed, 31 Aug 2011 08:00:44 -0700 (PDT)
+In-Reply-To: <vpqty8x3a5b.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180474>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+Heya,
 
-> Heya,
->
-> On Wed, Aug 31, 2011 at 14:33, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
->> I was expecting this part to be more controversial, so I'm just
->> repeating it to draw more attention ;-).
->
-> Eek! :)
->
->> # Inform Git that we're done, otherwise Git won't close it's stdin,
->> # and the next loop will be infinite.
->> close(STDOUT);
->> # Flush stdin before we terminate. If we don't, git fetch
->> # (transport-helper.c's sendline function) will try to write to our
->> # stdin, which may be closed, and git fetch will be killed. That's
->> # probably a bug in transport-helper.c, but in the meantime ...
->> while (<STDIN>) {};
->
-> Is this caused by you not reading the terminating '\n' that git sends
-> when all commands are done?
+On Wed, Aug 31, 2011 at 16:53, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> So it seems the only bug I've found is insufficient documentation. A
+> patch follows.
 
-Indeed. The stream sent by git looks like
-
-import HEAD
-import refs/heads/master
-\n <-- this one closes the sequence of import
-\n <-- this one closes the sequence of commands.
-
-and I was interpreting it as
-
-import HEAD
-import refs/heads/master
-\n <-- this one closes the sequence of commands
-\n <-- what's this??
-
-So it seems the only bug I've found is insufficient documentation. A
-patch follows.
+Yay! Thanks :)
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Cheers,
+
+Sverre Rabbelier
