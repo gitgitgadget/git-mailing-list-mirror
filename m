@@ -1,115 +1,78 @@
-From: Bryan Jacobs <bjacobs@woti.com>
-Subject: [PATCH] Teach dcommit --mergeinfo to handle multiple lines
-Date: Wed, 31 Aug 2011 12:48:39 -0400
-Organization: White Oak Technologies
-Message-ID: <20110831124839.69c70486@robyn.woti.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: need to create new repository initially seeded with several
+ branches
+Date: Wed, 31 Aug 2011 12:54:05 -0400
+Message-ID: <20110831165405.GB4356@sigill.intra.peff.net>
+References: <1314804325568-6746957.post@n2.nabble.com>
+ <sDZ5pnWzh3ZbFYS6GK-NcPdn09kF53MJ2eRkBnzInzdL8-cvCiF5beUw2k9Pz6BTq-Y3i_XwpYfgTOvXNlP1vPjLSHJ6FIzxL0jN1W0d0M8@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 31 18:48:50 2011
+Content-Type: text/plain; charset=utf-8
+Cc: "ryan@iridiumsuite.com" <ryan@iridiumsuite.com>,
+	git@vger.kernel.org
+To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Wed Aug 31 18:54:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qyny5-0001uL-Cl
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 18:48:49 +0200
+	id 1Qyo3M-0005DM-DD
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 18:54:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756870Ab1HaQso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Aug 2011 12:48:44 -0400
-Received: from mail02.woti.us ([66.92.158.6]:60366 "EHLO roscoe.woti.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756842Ab1HaQsn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2011 12:48:43 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by roscoe.woti.com (Postfix) with ESMTP id E85C6504D37F0
-	for <git@vger.kernel.org>; Wed, 31 Aug 2011 12:48:40 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at woti.com
-Received: from roscoe.woti.com ([127.0.0.1])
-	by localhost (roscoe.woti.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id fiqL6I9pLcIP for <git@vger.kernel.org>;
-	Wed, 31 Aug 2011 12:48:40 -0400 (EDT)
-Received: from robyn.woti.com (robyn.woti.com [192.168.168.187])
-	by roscoe.woti.com (Postfix) with ESMTPSA id 8CF34504D37EA
-	for <git@vger.kernel.org>; Wed, 31 Aug 2011 12:48:40 -0400 (EDT)
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; x86_64-redhat-linux-gnu)
+	id S1756872Ab1HaQyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Aug 2011 12:54:11 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58937
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756808Ab1HaQyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Aug 2011 12:54:09 -0400
+Received: (qmail 4627 invoked by uid 107); 31 Aug 2011 16:54:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 31 Aug 2011 12:54:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Aug 2011 12:54:05 -0400
+Content-Disposition: inline
+In-Reply-To: <sDZ5pnWzh3ZbFYS6GK-NcPdn09kF53MJ2eRkBnzInzdL8-cvCiF5beUw2k9Pz6BTq-Y3i_XwpYfgTOvXNlP1vPjLSHJ6FIzxL0jN1W0d0M8@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180487>
 
-"svn dcommit --mergeinfo" replaces the svn:mergeinfo property in an
-upstream SVN repository with the given text. The svn:mergeinfo
-property may contain commits originating on multiple branches,
-separated by newlines.
+On Wed, Aug 31, 2011 at 11:14:48AM -0500, Brandon Casey wrote:
 
-Cause space characters in the mergeinfo to be replaced by newlines,
-allowing a user to create history representing multiple branches being
-merged into one.
+>    git checkout -b devel &&  # make a new branch named "devel"
+>                              # which has the same state as the
+>                              # currently checked out branch: "master"
+>                              # i.e. devel and master point to the
+>                              # same tip commit.
+>    rm -rf * &&               # remove the files in the working dir
+>    cp -a $devel_dir/* . &&   # cp devel source code to working dir
+>    git add -A . &&           # add new/removed files to the index
+>                              # to be committed on next 'git commit'
+>    git commit
+>    # use editor to give descriptive commit message
+> 
+> Repeat for your topic branch based off of devel.
 
-Update the corresponding documentation and add a test for the new
-functionality.
+I am probably just going to confuse the original poster more, but here
+is how I would do it. It's slightly more efficient, as it doesn't
+involve removing and copying files for the intermediate states:
 
-Signed-off-by: Bryan Jacobs <bjacobs@woti.com>
----
- Documentation/git-svn.txt    |    5 +++--
- git-svn.perl                 |    3 +++
- t/t9158-git-svn-mergeinfo.sh |   13 +++++++++++++
- 3 files changed, 19 insertions(+), 2 deletions(-)
+  # make a repo and switch to it
+  git init repo && cd repo
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index ed5eca1..3ed28df 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -211,8 +211,9 @@ discouraged.
- 	Add the given merge information during the dcommit
- 	(e.g. `--mergeinfo="/branches/foo:1-10"`). All svn server versions can
- 	store this information (as a property), and svn clients starting from
--	version 1.5 can make use of it. 'git svn' currently does not use it
--	and does not set it automatically.
-+	version 1.5 can make use of it. To specify merge information from multiple
-+	branches, use a single space character between the branches
-+	(`--mergeinfo="/branches/foo:1-10 /branches/bar:3,5-6,8"`)
- 
- 'branch'::
- 	Create a branch in the SVN repository.
-diff --git a/git-svn.perl b/git-svn.perl
-index 89f83fd..3ee26a2 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -548,6 +548,9 @@ sub cmd_dcommit {
- 	}
- 	my $expect_url = $url;
- 	Git::SVN::remove_username($expect_url);
-+	if (defined($_merge_info)) {
-+		$_merge_info =~ tr{ }{\n};
-+	}
- 	while (1) {
- 		my $d = shift @$linear_refs or last;
- 		unless (defined $last_rev) {
-diff --git a/t/t9158-git-svn-mergeinfo.sh b/t/t9158-git-svn-mergeinfo.sh
-index 3ab4390..8c9539e 100755
---- a/t/t9158-git-svn-mergeinfo.sh
-+++ b/t/t9158-git-svn-mergeinfo.sh
-@@ -38,4 +38,17 @@ test_expect_success 'verify svn:mergeinfo' '
- 	test "$mergeinfo" = "/branches/foo:1-10"
- '
- 
-+test_expect_success 'change svn:mergeinfo multiline' '
-+	touch baz &&
-+	git add baz &&
-+	git commit -m "baz" &&
-+	git svn dcommit --mergeinfo="/branches/bar:1-10 /branches/other:3-5,8,10-11"
-+'
-+
-+test_expect_success 'verify svn:mergeinfo multiline' '
-+	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/trunk)
-+	test "$mergeinfo" = "/branches/bar:1-10
-+/branches/other:3-5,8,10-11"
-+'
-+
- test_done
--- 
-1.7.6
+  # and now add everything from the "master" version, and
+  # make a commit out of it
+  GIT_WORK_TREE=/path/to/master git add -A
+  git commit
+
+  # now make the devel branch and do the same
+  git checkout -b devel
+  GIT_WORK_TREE=/path/to/devel git add -A
+  git commit
+
+  # and then check out the result in the working tree of
+  # your newly created repo
+  git checkout -f
+
+-Peff
