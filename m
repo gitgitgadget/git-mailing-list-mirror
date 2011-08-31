@@ -1,116 +1,80 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <carlos@cmartin.tk>
-Subject: [GSoC 2011] libgit2: final report
-Date: Wed, 31 Aug 2011 23:00:00 +0200
-Message-ID: <1314824402.3680.95.camel@bee.lab.cmartin.tk>
+From: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
+Subject: Re: [PATCH] grep: Fix race condition in delta_base_cache
+Date: Wed, 31 Aug 2011 21:13:28 +0200
+Message-ID: <4E5E87D8.3080108@morey-chaisemartin.com>
+References: <4E5CE982.7080200@morey-chaisemartin.com> <20110831015936.GB2519@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-IgP3xGd956QQg4/Qph1V"
-To: libgit2@librelist.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 31 23:00:10 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Aug 31 23:06:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyrtK-000099-08
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 23:00:10 +0200
+	id 1Qyrzq-0003Pc-DA
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 23:06:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755400Ab1HaVAE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Aug 2011 17:00:04 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:51162 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755085Ab1HaVAD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2011 17:00:03 -0400
-Received: from [192.168.1.15] (brln-4db9f348.pool.mediaWays.net [77.185.243.72])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 194D746156;
-	Wed, 31 Aug 2011 22:59:48 +0200 (CEST)
-X-Mailer: Evolution 3.0.2- 
+	id S1755410Ab1HaVGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Aug 2011 17:06:49 -0400
+Received: from 12.mo1.mail-out.ovh.net ([87.98.162.229]:58529 "EHLO
+	mo1.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752429Ab1HaVGs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Aug 2011 17:06:48 -0400
+X-Greylist: delayed 104095 seconds by postgrey-1.27 at vger.kernel.org; Wed, 31 Aug 2011 17:06:48 EDT
+Received: from mail174.ha.ovh.net (b6.ovh.net [213.186.33.56])
+	by mo1.mail-out.ovh.net (Postfix) with SMTP id AA8841000F42
+	for <git@vger.kernel.org>; Wed, 31 Aug 2011 21:13:45 +0200 (CEST)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 31 Aug 2011 21:13:30 +0200
+Received: from mut38-4-82-233-116-185.fbx.proxad.net (HELO uranus.nicolas.morey-chaisemartin.com) (nicolas@morey-chaisemartin.com@82.233.116.185)
+  by ns0.ovh.net with SMTP; 31 Aug 2011 21:13:29 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20110816 Thunderbird/6.0
+X-Ovh-Mailout: 178.32.228.1 (mo1.mail-out.ovh.net)
+In-Reply-To: <20110831015936.GB2519@sigill.intra.peff.net>
+X-Ovh-Tracer-Id: 9788573790500413432
+X-Ovh-Remote: 82.233.116.185 (mut38-4-82-233-116-185.fbx.proxad.net)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-Spam-Check: DONE|U 0.500001/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -130
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeftddruddtucetggdotefuucfrrhhofhhilhgvmecuqfggjfenuceurghilhhouhhtmecufedttdenucculddquddttddmnehthhgvuchprhhosghlvghmucdlqdeftddm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180506>
 
+On 08/31/2011 03:59 AM, Jeff King wrote:
+> I notice there are some other code paths that end up in xmalloc without
+> locking, too (e.g., load_file, and some strbuf_* calls). Don't those
+> need locking, too, as malloc may try to release packfile memory?
+> 
+> builtin/pack-objects.c dealt with this already by setting a new
+> "try_to_free" routine that locks[1], which we should also do. It
+> probably comes up less frequently, because it only happens when we're
+> under memory pressure.
+> 
+> -Peff
+> 
+> [1] Actually, it looks like the "try_to_free" routine starts as nothing,
+>     and then add_packed_git sets it lazily to try_to_free_pack_memory.
+>     But what builtin/pack-objects tries to do is overwrite that with a
+>     version of try_to_free_pack_memory that does locking. So it's
+>     possible that we would not have read any packed objects while
+>     setting up the threads, and add_packed_git will overwrite our
+>     careful, locking version of try_to_free_pack_memory.
+> 
+>     I _think_ pack-objects is probably OK, because it will have already
+>     done the complete "counting objects" phase, which would look in any
+>     packs. But it may be harder for grep.
+> 
 
---=-IgP3xGd956QQg4/Qph1V
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+After some more looking around, I'd say the best way to fix this is provide a lock to the try_to_free function from sha1_file
+and provide access to this lock for pack-objects and grep to replace respectively the read_mutex and read_sha1_mutex.
+So we can simplify the problem by having a single lock to avoid all the cache/free issues (and reusable elsewhere if needed in the future), whether it's shared through direct access or API (I'm not sure what's git policy about that).
+And this way, there is no need to duplicate what pack-objects is achieving and it gives some peace of mind about the fact that the try_to _free function won't be overwritten in our backs.
 
-Hello all,
-
-GSoC is finished and I'll send the proof of work to Google shortly. Many
-thanks to everyone who helped me along the way.
-
-So? How did it go? Unfortunately I wasn't able to do everything that was
-in the (quite optimistic) original plan as there were some changes and
-additions that had to be done to the library in order to support the new
-features (the code movement in preparation for the indexer
-(git-index-pack) being the clearest example of this. The code has been
-merged upstream and you want to look at examples of use, you can take a
-look at my libgit2-utils repo[0] where you can find a functional
-implementation of git-fetch (git-clone would be about 20 lines more, I
-just never got around to writing it).
-
-[0] https://github.com/carlosmn/libgit2-utils
-
-Let me give you a few highlights of what new features were added to the
-library:
-
- _Remotes_
-
-  A remote (struct git_remote) is the (library) user's interface to the
-communications with external repositories. When read from the
-configuration file, it will parse the refspecs and take them into
-consideration when fetching. With the most recent changes, you can also
-create one on the fly with an URL. The remote will create an instance of
-a transport and will take care of the lower-levels.
-
-_Transports_
-
- The logic exists inside the transports. Currently only the fetch part
-of the plain git protocol is supported, but the architecture is
-extensible. The code would have to live in the library, but adding
-support for plug-ins, as it were, would be an easy task.
-
-_pkt-line_
-
- The code for parsing and creating these lines is its own namespace, so
-that it can be used for other transports. It supports a kind of
-streaming parsing, as it will return the appropriate error code if the
-buffer isn't large enough for the line.
-
-_Indexer_
-
- This is what libgit2 has instead of git-index-pack. It's much slower
-than the git implementation because it hasn't been optimised yet as it
-uses the normal pack access methods. Currently the only user would be a
-git-fetch implementation and that is still fast enough so it's not that
-high a priority.
- As a result of this work, the memory window and pack access code has
-been made much more generic.
-
-
- I plan to continue working on this project. The next steps are push
-(which has quite a few prerequisites, not least pack generation) and
-smart HTTP support. The addition of the new backend should help make
-code more generic. After that, SSH support should be a matter of
-wrapping the existing code up.
-
---=-IgP3xGd956QQg4/Qph1V
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAABAgAGBQJOXqDQAAoJEHKRP1jG7ZzTwkUH/RHWgNPEIxgYkPeBojS+2igQ
-xLDDXrUXdSfkHsuAyGbMNKi2hbrjYvA27hJxaGvTBVqnt7QBF9WCV8nhjvrUw99D
-rfF1VZRF0pQ5x4xjGyx97i2GrL0r1Hw2xeh/UgoZLX0A/R2RPNNdHYG4RJI5nUpV
-DuO5BNa6nfEMY4RCgmbKfdoKWJ8y1rE/p5svbJ1N09NUMF5Rv3P0DRbDFEruPb/z
-NE0M1Rj1IvxeN6r41eVBio7F2Dq0IP6MWX32isWPCvrnsmXp3ZKJ91L+hTJ1G3YW
-phOMQzljBSw9UgBVHTevCJwGVazfH+cBhn0UgEyZNZRdu04YE8y3kriCDtAXSV0=
-=QNrW
------END PGP SIGNATURE-----
-
---=-IgP3xGd956QQg4/Qph1V--
+Nicolas Morey-Chaisemartin
