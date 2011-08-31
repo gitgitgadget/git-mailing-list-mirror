@@ -1,54 +1,71 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: Re: need to create new repository initially seeded with
- several branches
-Date: Wed, 31 Aug 2011 11:54:43 -0500
-Message-ID: <b0jgmOi0Ah4tb2fbieP8wOLjAFkigcbyvh9ajtwoMITJ_sDaDBsfMmEh6_jv25UG4WpHCnhlXi0IFpVlkK9KuEOzDLz2r_l4pBt97stEDXg@cipher.nrlssc.navy.mil>
-References: <1314804325568-6746957.post@n2.nabble.com> <uvMkLVapQYcSvOHVhcHX8CqGzEDajPEPvBbkL_DctzZvxm7aI-PjCQ@cipher.nrlssc.navy.mil> <201108311624.p7VGOWWq018472@no.baka.org> <yOArP4qOaF5Yee5Bgcafl_795D9Xnz_IaUH21_GToggoTEy0uLzpGd3OA-rFJt2MlFFYbhvSBNDlv5C_GjSvXfcw7SRn4Ut12giha2cV4yM@cipher.nrlssc.navy.mil>
+From: Bryan Jacobs <bjacobs@woti.com>
+Subject: Re: git-svn and mergeinfo
+Date: Wed, 31 Aug 2011 12:55:57 -0400
+Organization: White Oak Technologies
+Message-ID: <20110831125557.56ccffe2@robyn.woti.com>
+References: <20110829132052.0ad7a088@robyn.woti.com>
+	<CAGdFq_h+KjWQUwwLdaqA-0j0p1zQznZkNNEVgfS46_o-Zfr3oQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 31 18:54:54 2011
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 31 18:56:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qyo3v-0005Vp-7y
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 18:54:51 +0200
+	id 1Qyo58-0006OF-Tw
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 18:56:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932106Ab1HaQyq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Aug 2011 12:54:46 -0400
-Received: from mail4.nrlssc.navy.mil ([128.160.11.9]:37217 "EHLO
-	mail3.nrlssc.navy.mil" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756808Ab1HaQyp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2011 12:54:45 -0400
-Received: by mail3.nrlssc.navy.mil id p7VGsiHS018925; Wed, 31 Aug 2011 11:54:44 -0500
-In-Reply-To: <yOArP4qOaF5Yee5Bgcafl_795D9Xnz_IaUH21_GToggoTEy0uLzpGd3OA-rFJt2MlFFYbhvSBNDlv5C_GjSvXfcw7SRn4Ut12giha2cV4yM@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 31 Aug 2011 16:54:43.0816 (UTC) FILETIME=[AEC14E80:01CC67FE]
-X-Virus-Scanned: clamav-milter 0.97.2 at mail4
-X-Virus-Status: Clean
+	id S932121Ab1HaQ4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Aug 2011 12:56:00 -0400
+Received: from mail02.woti.us ([66.92.158.6]:35694 "EHLO roscoe.woti.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S932118Ab1HaQz7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Aug 2011 12:55:59 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by roscoe.woti.com (Postfix) with ESMTP id 8034C504D37EA;
+	Wed, 31 Aug 2011 12:55:58 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at woti.com
+Received: from roscoe.woti.com ([127.0.0.1])
+	by localhost (roscoe.woti.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 4Lbp4D1ZS9Ha; Wed, 31 Aug 2011 12:55:58 -0400 (EDT)
+Received: from robyn.woti.com (robyn.woti.com [192.168.168.187])
+	by roscoe.woti.com (Postfix) with ESMTPSA id 23A3A504D37F0;
+	Wed, 31 Aug 2011 12:55:58 -0400 (EDT)
+In-Reply-To: <CAGdFq_h+KjWQUwwLdaqA-0j0p1zQznZkNNEVgfS46_o-Zfr3oQ@mail.gmail.com>
+X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; x86_64-redhat-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180489>
 
+On Wed, 31 Aug 2011 15:59:26 +0200
+Sverre Rabbelier <srabbelier@gmail.com> wrote:
 
-@Seth Robertson
+> 
+> Why not submit this as a proper patch [0] to the list, I reckon Eric
+> (cc-ed, the maintainer of git-svn) wouldn't mind including it.
 
-Your email address seems to be broken.  My message to you bounced:
+I have submitted a patch, following your conventions as best I could. I
+forgot the CC line, sorry Eric!
 
-   ----- The following addresses had permanent fatal errors -----
-<in-git-vger@baka.org>
-    (reason: 550 5.1.1 <in-git-vger@baka.org>... User unknown)
+There was an inaccurate line in the documentation concerning the
+svn:mergeinfo property ("git-svn does not currently make use of this")
+which I clobbered with my documentation change. I did not document the
+whole of how "git svn fetch" deals with the property, but this should
+probably be done at some point.
 
-   ----- Transcript of session follows -----
-... while talking to tsutomu.baka.org.:
->>> >>> DATA
-<<< 550 5.1.1 <in-git-vger@baka.org>... User unknown
-550 5.1.1 <in-git-vger@baka.org>... User unknown
-<<< 503 5.0.0 Need RCPT (recipient)
+Side notes: It may also be productive to automatically set mergeinfo
+when all parents of a merge commit have git-svn-info annotations, but I
+have not done this (as I said earlier, I use scripts external to git
+for this task). Finally, I am uncertain why the git-svn-info lines are
+stored in commit bodies instead of as notes; a notes-based approach
+would not involve commit hashes changing when they are pushed to an
+upstream SVN server.
 
-   ----- Original message follows -----
-<snip>
+Thanks all,
+Bryan Jacobs
