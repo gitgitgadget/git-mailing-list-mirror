@@ -1,140 +1,141 @@
-From: =?UTF-8?q?Micha=C5=82=20G=C3=B3rny?= <mgorny@gentoo.org>
-Subject: [PATCH] for-each-ref: add split message parts to %(contents:*).
-Date: Wed, 31 Aug 2011 11:11:49 +0200
-Message-ID: <1314781909-19252-1-git-send-email-mgorny@gentoo.org>
-References: <4E5CB0D0.7000905@drmicha.warpmail.net>
-Cc: Jeff King <peff@peff.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	=?UTF-8?q?Micha=C5=82=20G=C3=B3rny?= <mgorny@gentoo.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 31 11:10:41 2011
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/2] Add a remote helper to interact with mediawiki (fetch & push)
+Date: Wed, 31 Aug 2011 13:54:04 +0200
+Message-ID: <vpqobz53ig3.fsf@bauges.imag.fr>
+References: <1314378689-8997-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1314378689-8997-2-git-send-email-Matthieu.Moy@imag.fr>
+	<7v4o14dppz.fsf@alter.siamese.dyndns.org>
+	<CAGdFq_iYRkfnTbYAgmX1g4uOxWb_ZYxr+TNinVfWRV-zXrnzAg@mail.gmail.com>
+	<7v4o1092hn.fsf@alter.siamese.dyndns.org>
+	<CAGdFq_jwLGZ+tLKramRrLJmwyY_uDtj7JXUwYBO9pSqOmZ20xQ@mail.gmail.com>
+	<20110830035608.GB6647@elie.gateway.2wire.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr>,
+	Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>,
+	Claire Fousse <claire.fousse@ensimag.imag.fr>,
+	David Amouyal <david.amouyal@ensimag.imag.fr>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 31 13:54:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qygoh-00077z-PL
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 11:10:40 +0200
+	id 1QyjNZ-0000bA-30
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 13:54:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754835Ab1HaJKe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Aug 2011 05:10:34 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:49773 "EHLO smtp.gentoo.org"
+	id S1755242Ab1HaLyn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Aug 2011 07:54:43 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:53998 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753124Ab1HaJKd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2011 05:10:33 -0400
-Received: from localhost.localdomain (unknown [81.219.205.214])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: mgorny)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 7A2A31B4011;
-	Wed, 31 Aug 2011 09:10:31 +0000 (UTC)
-X-Mailer: git-send-email 1.7.6.1
-In-Reply-To: <4E5CB0D0.7000905@drmicha.warpmail.net>
+	id S1755174Ab1HaLyn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Aug 2011 07:54:43 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p7VBrNGe032289
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 31 Aug 2011 13:53:23 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1QyjMq-0006F2-HR; Wed, 31 Aug 2011 13:54:04 +0200
+In-Reply-To: <20110830035608.GB6647@elie.gateway.2wire.net> (Jonathan Nieder's
+	message of "Mon, 29 Aug 2011 22:56:08 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 31 Aug 2011 13:53:24 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p7VBrNGe032289
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1315396407.55012@bq/jl/N/skcryPnUBWc5oA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180460>
 
-Now %(contents:subject) contains the message subject, %(contents:body)
-main body part and %(contents:signature) GPG signature.
----
- Documentation/git-for-each-ref.txt |    7 ++++---
- builtin/for-each-ref.c             |   22 +++++++++++++++++-----
- 2 files changed, 21 insertions(+), 8 deletions(-)
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 152e695..c872b88 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -101,9 +101,10 @@ Fields that have name-email-date tuple as its value (`author`,
- `committer`, and `tagger`) can be suffixed with `name`, `email`,
- and `date` to extract the named component.
- 
--The first line of the message in a commit and tag object is
--`subject`, the remaining lines are `body`.  The whole message
--is `contents`.
-+The complete message in a commit and tag object is `contents`.
-+Its first line is `contents:subject`, the remaining lines
-+are `contents:body` and the optional GPG signature
-+is `contents:signature`.
- 
- For sorting purposes, fields with numeric values sort in numeric
- order (`objectsize`, `authordate`, `committerdate`, `taggerdate`).
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 89e75c6..4854ab4 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -69,6 +69,9 @@ static struct {
- 	{ "subject" },
- 	{ "body" },
- 	{ "contents" },
-+	{ "contents:subject" },
-+	{ "contents:body" },
-+	{ "contents:signature" },
- 	{ "upstream" },
- 	{ "symref" },
- 	{ "flag" },
-@@ -458,7 +461,7 @@ static void grab_person(const char *who, struct atom_value *val, int deref, stru
- 	}
- }
- 
--static void find_subpos(const char *buf, unsigned long sz, const char **sub, const char **body)
-+static void find_subpos(const char *buf, unsigned long sz, const char **sub, const char **body, const char **signature)
- {
- 	while (*buf) {
- 		const char *eol = strchr(buf, '\n');
-@@ -478,18 +481,20 @@ static void find_subpos(const char *buf, unsigned long sz, const char **sub, con
- 	buf = strchr(buf, '\n');
- 	if (!buf) {
- 		*body = "";
-+		*signature = *body;
- 		return; /* no body */
- 	}
- 	while (*buf == '\n')
- 		buf++; /* skip blank between subject and body */
- 	*body = buf;
-+	*signature = buf + parse_signature(buf, strlen(buf));
- }
- 
- /* See grab_values */
- static void grab_sub_body_contents(struct atom_value *val, int deref, struct object *obj, void *buf, unsigned long sz)
- {
- 	int i;
--	const char *subpos = NULL, *bodypos = NULL;
-+	const char *subpos = NULL, *bodypos = NULL, *sigpos = NULL;
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
- 		const char *name = used_atom[i];
-@@ -500,19 +505,26 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
- 			name++;
- 		if (strcmp(name, "subject") &&
- 		    strcmp(name, "body") &&
--		    strcmp(name, "contents"))
-+		    strcmp(name, "contents") &&
-+		    strcmp(name, "contents:subject") &&
-+		    strcmp(name, "contents:body") &&
-+		    strcmp(name, "contents:signature"))
- 			continue;
- 		if (!subpos)
--			find_subpos(buf, sz, &subpos, &bodypos);
-+			find_subpos(buf, sz, &subpos, &bodypos, &sigpos);
- 		if (!subpos)
- 			return;
- 
--		if (!strcmp(name, "subject"))
-+		if (!strcmp(name, "subject") || !strcmp(name, "contents:subject"))
- 			v->s = copy_line(subpos);
- 		else if (!strcmp(name, "body"))
- 			v->s = xstrdup(bodypos);
- 		else if (!strcmp(name, "contents"))
- 			v->s = xstrdup(subpos);
-+		else if (!strcmp(name, "contents:body"))
-+			v->s = xstrndup(bodypos, sigpos - bodypos);
-+		else if (!strcmp(name, "contents:signature"))
-+			v->s = xstrdup(sigpos);
- 	}
- }
- 
+> Here's an old attempt to make the documentation a little easier to read,
+> and hopefully also to add to.
+
+Thanks, that helps. I wish we had all this earlier ;-).
+
+> +Git sends the remote helper a list of commands on standard input, one
+> +per line.  The first command is always the 'capabilities' command, 
+
+Do we want to set this in stone? Wouldn't a Git implementation calling
+"option" before "capabilities" be correct?
+
+> +Capabilities
+> +~~~~~~~~~~~~
+
+(perhaps name the section "Overview of Capabilities"?)
+
+[...]
+> +'refspec' <refspec>::
+> +	This modifies the 'import' capability, allowing the produced
+> +	fast-import stream to modify refs in a private namespace
+> +	instead of writing to refs/heads or refs/remotes directly.
+> +	It is recommended that all importers providing the 'import'
+> +	capability use this.
+> ++
+> +A helper advertising the capability
+> +`refspec refs/heads/{asterisk}:refs/svn/origin/branches/{asterisk}`
+> +is saying that, when it is asked to `import refs/heads/topic`, the
+> +stream it outputs will update the `refs/svn/origin/branches/topic`
+> +ref.
+> ++
+> +This capability can be advertised multiple times.  The first
+> +applicable refspec takes precedence.  The left-hand of refspecs
+> +advertised with this capability must cover all refs reported by
+> +the list command.  If no 'refspec' capability is advertised,
+> +there is an implied `refspec {asterisk}:{asterisk}`.
+
+Since this "Capabilities" section is meant to be an overview, I'd
+shorten this to
+
++'refspec' <refspec>::
++	This modifies the 'import' capability, allowing the produced
++	fast-import stream to modify refs in a private namespace
++	instead of writing to refs/heads or refs/remotes directly.
+
+and drop the detailed explanation here.
+
+> +Capabilities for Fetching
+> +~~~~~~~~~~~~~~~~~~~~~~~~~
+[...]
+> +'refspec' <refspec>::
+> +	This modifies the 'import' capability.
+
+Since this would be the "detailed explanation" part, this is the one
+readers will read more carefully, so I'd put the recommandation right
+here:
+
++	It is recommended that all importers providing the 'import'
++	capability use this.
+
+and of course, keep this:
+
+> ++
+> +A helper advertising
+> +`refspec refs/heads/{asterisk}:refs/svn/origin/branches/{asterisk}`
+> +in its capabilities is saying that, when it handles
+> +`import refs/heads/topic`, the stream it outputs will update the
+> +`refs/svn/origin/branches/topic` ref.
+> ++
+> +This capability can be advertised multiple times.  The first
+> +applicable refspec takes precedence.  The left-hand of refspecs
+> +advertised with this capability must cover all refs reported by
+> +the list command.  If no 'refspec' capability is advertised,
+> +there is an implied `refspec {asterisk}:{asterisk}`.
+> +
+
 -- 
-1.7.6.1
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
