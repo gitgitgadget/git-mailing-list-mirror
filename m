@@ -1,140 +1,138 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/2] Add a remote helper to interact with mediawiki (fetch & push)
-Date: Wed, 31 Aug 2011 13:54:04 +0200
-Message-ID: <vpqobz53ig3.fsf@bauges.imag.fr>
+Subject: done feature in remote-helpers (was Re: [PATCH 2/2] Add a remote helper to interact with mediawiki (fetch & push))
+Date: Wed, 31 Aug 2011 14:05:28 +0200
+Message-ID: <vpq1uw13hx3.fsf_-_@bauges.imag.fr>
 References: <1314378689-8997-1-git-send-email-Matthieu.Moy@imag.fr>
 	<1314378689-8997-2-git-send-email-Matthieu.Moy@imag.fr>
 	<7v4o14dppz.fsf@alter.siamese.dyndns.org>
 	<CAGdFq_iYRkfnTbYAgmX1g4uOxWb_ZYxr+TNinVfWRV-zXrnzAg@mail.gmail.com>
 	<7v4o1092hn.fsf@alter.siamese.dyndns.org>
 	<CAGdFq_jwLGZ+tLKramRrLJmwyY_uDtj7JXUwYBO9pSqOmZ20xQ@mail.gmail.com>
-	<20110830035608.GB6647@elie.gateway.2wire.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
 	Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr>,
 	Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>,
 	Claire Fousse <claire.fousse@ensimag.imag.fr>,
-	David Amouyal <david.amouyal@ensimag.imag.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 31 13:54:49 2011
+	David Amouyal <david.amouyal@ensimag.imag.fr>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 31 14:05:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyjNZ-0000bA-30
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 13:54:49 +0200
+	id 1QyjY6-0005FO-5h
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 14:05:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755242Ab1HaLyn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Aug 2011 07:54:43 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:53998 "EHLO rominette.imag.fr"
+	id S1755326Ab1HaMFg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Aug 2011 08:05:36 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:41727 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755174Ab1HaLyn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2011 07:54:43 -0400
+	id S1753842Ab1HaMFg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Aug 2011 08:05:36 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p7VBrNGe032289
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p7VC4m7v001525
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 31 Aug 2011 13:53:23 +0200
+	Wed, 31 Aug 2011 14:04:48 +0200
 Received: from bauges.imag.fr ([129.88.7.32])
 	by mail-veri.imag.fr with esmtp (Exim 4.69)
 	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1QyjMq-0006F2-HR; Wed, 31 Aug 2011 13:54:04 +0200
-In-Reply-To: <20110830035608.GB6647@elie.gateway.2wire.net> (Jonathan Nieder's
-	message of "Mon, 29 Aug 2011 22:56:08 -0500")
+	id 1QyjXs-0006Xl-MT; Wed, 31 Aug 2011 14:05:28 +0200
+In-Reply-To: <CAGdFq_jwLGZ+tLKramRrLJmwyY_uDtj7JXUwYBO9pSqOmZ20xQ@mail.gmail.com>
+	(Sverre Rabbelier's message of "Mon, 29 Aug 2011 08:41:30 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 31 Aug 2011 13:53:24 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 31 Aug 2011 14:04:48 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p7VBrNGe032289
+X-MailScanner-ID: p7VC4m7v001525
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1315396407.55012@bq/jl/N/skcryPnUBWc5oA
+MailScanner-NULL-Check: 1315397090.20807@SNobAoro2rl4yWbk4WjFGg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180461>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-> Here's an old attempt to make the documentation a little easier to read,
-> and hopefully also to add to.
+> Heya,
+>
+> On Mon, Aug 29, 2011 at 08:05, Junio C Hamano <gitster@pobox.com> wrote:
+>> Does this exchange suggest that at least we would need an update to
+>> documentation around "done", as Matthieu's "why is 'done' needed even
+>> though I am not calling with --done?" sounds like a very fair question.
+>
+> No I think the documentation for fast-import is correct. If you pass
+> --use-done-feature or print 'feature done' in the stream the use of
+> 'done' is required, otherwise it isn't. We did recently changed git to
+> pass '--use-done-feature' to the fast-import process though :).
 
-Thanks, that helps. I wish we had all this earlier ;-).
+That doesn't help much someone writting a remote helper.
 
-> +Git sends the remote helper a list of commands on standard input, one
-> +per line.  The first command is always the 'capabilities' command, 
+The documentation for remote-helpers neither talks about "done" nor
+about "--use-done-feature" or whatever way Git uses this feature when
+using remote-helpers.
 
-Do we want to set this in stone? Wouldn't a Git implementation calling
-"option" before "capabilities" be correct?
+The current state is particularly confusing: git seems to expect one and
+only one "done" feature, even when multiple "import" commands are
+issued. That's very strange, and I'm not sure whether it's the expected
+behavior (I can try a documentation patch, but I need to understand
+better what's expected and what's not).
 
-> +Capabilities
-> +~~~~~~~~~~~~
+It would be natural to write remote-helpers like
 
-(perhaps name the section "Overview of Capabilities"?)
+while ($cmd = <read command>) {
+    if ($cmd eq "import") {
+       <write fast-import stream>
+       print "done\n";
+    } ...
+}
 
-[...]
-> +'refspec' <refspec>::
-> +	This modifies the 'import' capability, allowing the produced
-> +	fast-import stream to modify refs in a private namespace
-> +	instead of writing to refs/heads or refs/remotes directly.
-> +	It is recommended that all importers providing the 'import'
-> +	capability use this.
-> ++
-> +A helper advertising the capability
-> +`refspec refs/heads/{asterisk}:refs/svn/origin/branches/{asterisk}`
-> +is saying that, when it is asked to `import refs/heads/topic`, the
-> +stream it outputs will update the `refs/svn/origin/branches/topic`
-> +ref.
-> ++
-> +This capability can be advertised multiple times.  The first
-> +applicable refspec takes precedence.  The left-hand of refspecs
-> +advertised with this capability must cover all refs reported by
-> +the list command.  If no 'refspec' capability is advertised,
-> +there is an implied `refspec {asterisk}:{asterisk}`.
+but in the current state, it doesn't work since we'll get a first
+"import HEAD", issue a "done", then get a "import refs/heads/master" and
+write to a dead pipe.
 
-Since this "Capabilities" section is meant to be an overview, I'd
-shorten this to
+Then, it would be very tempting to write it like
 
-+'refspec' <refspec>::
-+	This modifies the 'import' capability, allowing the produced
-+	fast-import stream to modify refs in a private namespace
-+	instead of writing to refs/heads or refs/remotes directly.
+while ($cmd = <read command>) {
+    if ($cmd eq "import") {
+       <write fast-import stream>
+    } ...
+}
+print "done\n";
 
-and drop the detailed explanation here.
+but this doesn't work either, because when calling "git push", no
+"import" command is involved, no fast-import is started, and the "done"
+breaks everything.
 
-> +Capabilities for Fetching
-> +~~~~~~~~~~~~~~~~~~~~~~~~~
-[...]
-> +'refspec' <refspec>::
-> +	This modifies the 'import' capability.
+That's why I had to make it like
 
-Since this would be the "detailed explanation" part, this is the one
-readers will read more carefully, so I'd put the recommandation right
-here:
+my $import_started;
+while ($cmd = <read command>) {
+    if ($cmd eq "import") {
+       $import_started = 1;
+       <write fast-import stream>
+    } ...
+}
+if ($import_started) {
+    print "done\n";
+}
 
-+	It is recommended that all importers providing the 'import'
-+	capability use this.
+and I really had the feeling I was working around a mis-feature of Git
+here.
 
-and of course, keep this:
+So, is this the expected behavior? Wouldn't it be more sensible to allow
+the remote-helper to issue a "done" after each "import" command? Right
+now, my understanding is that after an "import" command is issued, it's
+no longer possible to output anything other than fast-import stream on
+stdout, and I guess it'd be more future-proof to allow closing the
+fast-import with a "done", and allow any dialog between git and the
+remote helper afterwards.
 
-> ++
-> +A helper advertising
-> +`refspec refs/heads/{asterisk}:refs/svn/origin/branches/{asterisk}`
-> +in its capabilities is saying that, when it handles
-> +`import refs/heads/topic`, the stream it outputs will update the
-> +`refs/svn/origin/branches/topic` ref.
-> ++
-> +This capability can be advertised multiple times.  The first
-> +applicable refspec takes precedence.  The left-hand of refspecs
-> +advertised with this capability must cover all refs reported by
-> +the list command.  If no 'refspec' capability is advertised,
-> +there is an implied `refspec {asterisk}:{asterisk}`.
-> +
+Thanks,
 
 -- 
 Matthieu Moy
