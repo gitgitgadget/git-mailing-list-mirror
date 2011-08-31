@@ -1,143 +1,66 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] (short) documentation for the testgit remote helper
-Date: Wed, 31 Aug 2011 20:14:58 +0200
-Message-ID: <1314814498-13699-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <1314809222-30528-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Aug 31 20:15:14 2011
+From: =?ISO-8859-1?Q?Ingo=20Br=FCckl?= <ib@wupperonline.de>
+Subject: Re: [PATCH] stash: Don't paginate by default with list command
+Date: Wed, 31 Aug 2011 20:18:13 +0200
+Message-ID: <4e5e7b19.1b946de8.bm000@wupperonline.de>
+References: <4e5d2ac6.64676448.bm000@wupperonline.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 31 20:20:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QypJh-0006Sx-WC
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 20:15:14 +0200
+	id 1QypON-0000Vi-H2
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 20:20:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757005Ab1HaSPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Aug 2011 14:15:08 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:39661 "EHLO rominette.imag.fr"
+	id S932196Ab1HaST6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Aug 2011 14:19:58 -0400
+Received: from smtp-a.tal.de ([81.92.1.9]:41585 "EHLO smtp-a.tal.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756967Ab1HaSPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2011 14:15:07 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p7VIEIFG031219
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 31 Aug 2011 20:14:18 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1QypJT-0006e6-OL; Wed, 31 Aug 2011 20:14:59 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1QypJT-0003Za-Md; Wed, 31 Aug 2011 20:14:59 +0200
-X-Mailer: git-send-email 1.7.7.rc0.75.g56f27
-In-Reply-To: <1314809222-30528-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 31 Aug 2011 20:14:18 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p7VIEIFG031219
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1315419261.43519@XDzAkqkANLlOjFlIg3o9wA
+	id S1757027Ab1HaST5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Aug 2011 14:19:57 -0400
+Received: from point.localnet (mue-88-130-112-016.dsl.tropolys.de [88.130.112.16])
+	(Authenticated sender: ib@wtal.de)
+	by smtp-a.tal.de (Postfix) with ESMTP id 1435411E450C
+	for <git@vger.kernel.org>; Wed, 31 Aug 2011 20:19:54 +0200 (CEST)
+Received: from ib by point.localnet with local (masqmail 0.2.21) id
+ 1QypOB-5ti-00 for <git@vger.kernel.org>; Wed, 31 Aug 2011 20:19:51 +0200
+In-Reply-To: <4e5d2ac6.64676448.bm000@wupperonline.de>
+X-Mailer: blueMail/Linux 1.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180500>
 
-While it's not a command meant to be used by actual users (hence, not
-mentionned in git(1)), this command is a very precious help for
-remote-helpers authors.
+I wrote on Tue, 30 Aug 2011 20:24:04 +0200:
 
-The best place for such technical doc is the source code, but users may
-not find it without a link in a manpage.
+> Ben Walton wrote on Tue, 30 Aug 2011 13:43:46 -0400:
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
+>> Excerpts from Ingo Br=FCckl's message of Tue Aug 30 13:21:18 -0400 2=
+011:
 
-While we're improving the docs, this is one more thing that would have
-saved me some time ...
+>>> The output of "stash list" is such that piping into a pager
+>>> normally isn't necessary but annoying, so disable it by default.
 
- Documentation/git-remote-helpers.txt |    2 ++
- Documentation/git-remote-testgit.txt |   30 ++++++++++++++++++++++++++++++
- git-remote-testgit.py                |   14 ++++++++++++++
- 3 files changed, 46 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/git-remote-testgit.txt
+>> If you $PAGER is less and you use the default LESS environment value
+>> FRXS, this shouldn't be annoying at all.  Are you using either a
+>> different pager or a different value for LESS?
 
-diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
-index 526fc6a..674797c 100644
---- a/Documentation/git-remote-helpers.txt
-+++ b/Documentation/git-remote-helpers.txt
-@@ -362,6 +362,8 @@ SEE ALSO
- --------
- linkgit:git-remote[1]
- 
-+linkgit:git-remote-testgit[1]
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/Documentation/git-remote-testgit.txt b/Documentation/git-remote-testgit.txt
-new file mode 100644
-index 0000000..2a67d45
---- /dev/null
-+++ b/Documentation/git-remote-testgit.txt
-@@ -0,0 +1,30 @@
-+git-remote-testgit(1)
-+=====================
-+
-+NAME
-+----
-+git-remote-testgit - Example remote-helper
-+
-+
-+SYNOPSIS
-+--------
-+[verse]
-+git clone testgit::<source-repo> [<destination>]
-+
-+DESCRIPTION
-+-----------
-+
-+This command is a simple remote-helper, that is used both as a
-+testcase for the remote-helper functionality, and as an example to
-+show remote-helper authors one possible implementation.
-+
-+The best way to learn more is to read the comments and source code in
-+'git-remote-testgit.py'.
-+
-+SEE ALSO
-+--------
-+linkgit:git-remote-helpers[1]
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/git-remote-testgit.py b/git-remote-testgit.py
-index e9c832b..91d4409 100644
---- a/git-remote-testgit.py
-+++ b/git-remote-testgit.py
-@@ -1,5 +1,19 @@
- #!/usr/bin/env python
- 
-+# This command is a simple remote-helper, that is used both as a
-+# testcase for the remote-helper functionality, and as an example to
-+# show remote-helper authors one possible implementation.
-+#
-+# This is a Git <-> Git importer/exporter, that simply uses git
-+# fast-import and git fast-export to consume and produce fast-import
-+# streams.
-+#
-+# To understand better the way things work, one can set the variable
-+# "static int debug" in transport-helper.c to 1, and/or the "DEBUG"
-+# variable in git_remote_helpers/util.py to True, and try various
-+# commands.
-+
-+
- # hashlib is only available in python >= 2.5
- try:
-     import hashlib
--- 
-1.7.7.rc0.75.g56f27
+> For some reason I have '-c' in LESS which must be convenient for a ca=
+se
+> I currently don't remember.
+
+Now I know again. '-c' is within my LESS because I like small "git diff=
+"
+output printed on an erased terminal. I think it is easier to overview =
+that
+way.
+
+With "git stash list" I'd like it the other way, because that output is
+just a simple list (and usually very small in my case).
+
+Ingo
