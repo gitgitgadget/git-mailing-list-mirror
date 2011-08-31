@@ -1,78 +1,60 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: need to create new repository initially seeded with several branches
-Date: Wed, 31 Aug 2011 12:01:57 -0500
-Message-ID: <XWAITZ7y0RejBGQezy-miO4ykUsgbNWA0mNtHRto22msjs3PP6WSZlN-pPueaz0duxAP6dCio3ZH2lna0K_g79NKdL0q7sJbzjj8sEKicYM@cipher.nrlssc.navy.mil>
-References: <1314804325568-6746957.post@n2.nabble.com> <uvMkLVapQYcSvOHVhcHX8CqGzEDajPEPvBbkL_DctzZvxm7aI-PjCQ@cipher.nrlssc.navy.mil> <20110831165405.GB4356@sigill.intra.peff.net>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: git-svn and mergeinfo
+Date: Wed, 31 Aug 2011 19:01:41 +0200
+Message-ID: <CAGdFq_gG6NGCzsURg7ERZ8XgV1bP5=vwg8dii7itmnakPzt4VA@mail.gmail.com>
+References: <20110829132052.0ad7a088@robyn.woti.com> <CAGdFq_h+KjWQUwwLdaqA-0j0p1zQznZkNNEVgfS46_o-Zfr3oQ@mail.gmail.com>
+ <20110831125557.56ccffe2@robyn.woti.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "ryan@iridiumsuite.com" <ryan@iridiumsuite.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 31 19:02:13 2011
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Bryan Jacobs <bjacobs@woti.com>
+X-From: git-owner@vger.kernel.org Wed Aug 31 19:02:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyoB2-0001EV-7v
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 19:02:12 +0200
+	id 1QyoBH-0001NU-7M
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Aug 2011 19:02:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932131Ab1HaRCH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Aug 2011 13:02:07 -0400
-Received: from mail3.nrlssc.navy.mil ([128.160.11.249]:54546 "EHLO
-	mail3.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932117Ab1HaRCF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2011 13:02:05 -0400
-Received: by mail3.nrlssc.navy.mil id p7VH1wW4022696; Wed, 31 Aug 2011 12:01:58 -0500
-In-Reply-To: <20110831165405.GB4356@sigill.intra.peff.net>
-X-OriginalArrivalTime: 31 Aug 2011 17:01:58.0177 (UTC) FILETIME=[B1A78910:01CC67FF]
-X-Virus-Scanned: clamav-milter 0.97.2 at mail3
-X-Virus-Status: Clean
+	id S932152Ab1HaRCW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Aug 2011 13:02:22 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:34316 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932117Ab1HaRCV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Aug 2011 13:02:21 -0400
+Received: by vxi9 with SMTP id 9so587318vxi.19
+        for <git@vger.kernel.org>; Wed, 31 Aug 2011 10:02:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=9d1O2AkpT/ZRCKY8i6DAQlBUlALGgWzOryNLeqAlcF4=;
+        b=dho8z7Xkxpib6i3zCAto1NQW6pNrbSK1btuHexKcKu1D2sfOIjfMHuT/HkyLjPMa0P
+         Qob6C07ije0GQjcK9vxwPfTlVJTOGXSjfYR4JeNcgXSczicBCRn0Ce/Tscrp5Z013jFt
+         58BM3SLMYw0GBwMe03UE4fQ/2XVHyfmP/o8Iw=
+Received: by 10.52.20.148 with SMTP id n20mr622261vde.368.1314810141266; Wed,
+ 31 Aug 2011 10:02:21 -0700 (PDT)
+Received: by 10.52.161.201 with HTTP; Wed, 31 Aug 2011 10:01:41 -0700 (PDT)
+In-Reply-To: <20110831125557.56ccffe2@robyn.woti.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180492>
 
-On 08/31/2011 11:54 AM, Jeff King wrote:
-> On Wed, Aug 31, 2011 at 11:14:48AM -0500, Brandon Casey wrote:
-> 
->>    git checkout -b devel &&  # make a new branch named "devel"
->>                              # which has the same state as the
->>                              # currently checked out branch: "master"
->>                              # i.e. devel and master point to the
->>                              # same tip commit.
->>    rm -rf * &&               # remove the files in the working dir
->>    cp -a $devel_dir/* . &&   # cp devel source code to working dir
->>    git add -A . &&           # add new/removed files to the index
->>                              # to be committed on next 'git commit'
->>    git commit
->>    # use editor to give descriptive commit message
->>
->> Repeat for your topic branch based off of devel.
-> 
-> I am probably just going to confuse the original poster more, but here
-> is how I would do it. It's slightly more efficient, as it doesn't
-> involve removing and copying files for the intermediate states:
-> 
->   # make a repo and switch to it
->   git init repo && cd repo
-> 
->   # and now add everything from the "master" version, and
->   # make a commit out of it
->   GIT_WORK_TREE=/path/to/master git add -A
->   git commit
-> 
->   # now make the devel branch and do the same
->   git checkout -b devel
->   GIT_WORK_TREE=/path/to/devel git add -A
->   git commit
-> 
->   # and then check out the result in the working tree of
->   # your newly created repo
->   git checkout -f
+Heya,
 
-Better.
+On Wed, Aug 31, 2011 at 18:55, Bryan Jacobs <bjacobs@woti.com> wrote:
+> Finally, I am uncertain why the git-svn-info lines are
+> stored in commit bodies instead of as notes
 
--Brandon
+Hysterical raisins mostly. I think git-notes predates git-svn by
+several years :). I suspect that if someone would wade through the
+mess that is git-svn.perl and tought it to (optionally) use git-notes
+instead of commit messages that would be highly welcome.
+
+-- 
+Cheers,
+
+Sverre Rabbelier
