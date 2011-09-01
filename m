@@ -1,156 +1,110 @@
-From: =?UTF-8?q?Micha=C5=82=20G=C3=B3rny?= <mgorny@gentoo.org>
-Subject: [PATCH] for-each-ref: add split message parts to %(contents:*).
-Date: Thu,  1 Sep 2011 18:50:01 +0200
-Message-ID: <1314895801-21147-1-git-send-email-mgorny@gentoo.org>
-References: <20110901184815.2cd8b472@pomiocik.lan>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?q?Micha=C5=82=20G=C3=B3rny?= <mgorny@gentoo.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 01 18:48:26 2011
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 1/2 v2] Documentation/git-remote-helpers: explain how import works with multiple refs
+Date: Thu,  1 Sep 2011 18:49:37 +0200
+Message-ID: <1314895778-17482-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <vpqd3fk1cq5.fsf@bauges.imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Sep 01 18:50:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzARD-0002DJ-2d
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 18:48:23 +0200
+	id 1QzASm-0002yQ-37
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 18:50:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751070Ab1IAQsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Sep 2011 12:48:17 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:55946 "EHLO smtp.gentoo.org"
+	id S1751131Ab1IAQty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Sep 2011 12:49:54 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:45397 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750900Ab1IAQsR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Sep 2011 12:48:17 -0400
-Received: from localhost.localdomain (unknown [81.219.205.214])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: mgorny)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 00EA71B401C;
-	Thu,  1 Sep 2011 16:48:14 +0000 (UTC)
-X-Mailer: git-send-email 1.7.6.1
-In-Reply-To: <20110901184815.2cd8b472@pomiocik.lan>
+	id S1751342Ab1IAQtx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Sep 2011 12:49:53 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p81Gn16N004432
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 1 Sep 2011 18:49:01 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1QzASX-00034X-Vc; Thu, 01 Sep 2011 18:49:46 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1QzASX-0004Yd-TH; Thu, 01 Sep 2011 18:49:45 +0200
+X-Mailer: git-send-email 1.7.7.rc0.75.g56f27
+In-Reply-To: <vpqd3fk1cq5.fsf@bauges.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 01 Sep 2011 18:49:01 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p81Gn16N004432
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1315500544.66449@Hn4Q6iJVG865YQGNi8C3cQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180543>
 
-Now %(contents:subject) contains the message subject, %(contents:body)
-main body part and %(contents:signature) GPG signature.
+This is important for two reasons:
+
+* when two "import" lines follow each other, only one "done" command
+  should be issued in the fast-import stream, not one per "import".
+
+* The blank line terminating an import command should not be confused
+  with the one terminating the sequence of commands.
+
+While we're there, illustrate the corresponding explanation for push
+batches with an example.
+
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- Documentation/git-for-each-ref.txt |    7 +++--
- builtin/for-each-ref.c             |   42 ++++++++++++++++++++++++------------
- 2 files changed, 32 insertions(+), 17 deletions(-)
+No real change since v1, but resending together with the other to make
+it a "patch serie" ;-)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 152e695..c872b88 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -101,9 +101,10 @@ Fields that have name-email-date tuple as its value (`author`,
- `committer`, and `tagger`) can be suffixed with `name`, `email`,
- and `date` to extract the named component.
+ Documentation/git-remote-helpers.txt |   22 +++++++++++++++++++++-
+ 1 files changed, 21 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
+index 760b164..526fc6a 100644
+--- a/Documentation/git-remote-helpers.txt
++++ b/Documentation/git-remote-helpers.txt
+@@ -241,7 +241,22 @@ Supported if the helper has the "fetch" capability.
+ 'push' +<src>:<dst>::
+ 	Pushes the given local <src> commit or branch to the
+ 	remote branch described by <dst>.  A batch sequence of
+-	one or more push commands is terminated with a blank line.
++	one or more 'push' commands is terminated with a blank line
++	(if there is only one reference to push, a single 'push' command
++	is followed by a blank line). For example, the following would
++	be two batches of 'push', the first asking the remote-helper
++	to push the local ref 'master' to the remote ref 'master' and
++	the local 'HEAD' to the remote 'branch', and the second
++	asking to push ref 'foo' to ref 'bar' (forced update requested
++	by the '+').
+++
++------------
++push refs/heads/master:refs/heads/master
++push HEAD:refs/heads/branch
++\n
++push +refs/heads/foo:refs/heads/bar
++\n
++------------
+ +
+ Zero or more protocol options may be entered after the last 'push'
+ command, before the batch's terminating blank line.
+@@ -266,6 +281,11 @@ Supported if the helper has the "push" capability.
+ Especially useful for interoperability with a foreign versioning
+ system.
+ +
++Just like 'push', a batch sequence of one or more 'import' is
++terminated with a blank line. For each batch of 'import', the remote
++helper should produce a fast-import stream terminated by a 'done'
++command.
+++
+ Supported if the helper has the "import" capability.
  
--The first line of the message in a commit and tag object is
--`subject`, the remaining lines are `body`.  The whole message
--is `contents`.
-+The complete message in a commit and tag object is `contents`.
-+Its first line is `contents:subject`, the remaining lines
-+are `contents:body` and the optional GPG signature
-+is `contents:signature`.
- 
- For sorting purposes, fields with numeric values sort in numeric
- order (`objectsize`, `authordate`, `committerdate`, `taggerdate`).
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 89e75c6..e320ba2 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -69,6 +69,9 @@ static struct {
- 	{ "subject" },
- 	{ "body" },
- 	{ "contents" },
-+	{ "contents:subject" },
-+	{ "contents:body" },
-+	{ "contents:signature" },
- 	{ "upstream" },
- 	{ "symref" },
- 	{ "flag" },
-@@ -458,8 +461,9 @@ static void grab_person(const char *who, struct atom_value *val, int deref, stru
- 	}
- }
- 
--static void find_subpos(const char *buf, unsigned long sz, const char **sub, const char **body)
-+static void find_subpos(const char *buf, unsigned long sz, const char **sub, const char **body, const char **signature)
- {
-+	*signature = buf + parse_signature(buf, sz);
- 	while (*buf) {
- 		const char *eol = strchr(buf, '\n');
- 		if (!eol)
-@@ -475,21 +479,21 @@ static void find_subpos(const char *buf, unsigned long sz, const char **sub, con
- 	if (!*buf)
- 		return;
- 	*sub = buf; /* first non-empty line */
--	buf = strchr(buf, '\n');
--	if (!buf) {
--		*body = "";
--		return; /* no body */
--	}
--	while (*buf == '\n')
--		buf++; /* skip blank between subject and body */
--	*body = buf;
-+	buf = format_subject(NULL, buf, NULL);
-+
-+	/* When having a signed tag without body, format_subject()
-+	 * will start to eat the signature. */
-+	if (buf > *signature)
-+		*body = *signature;
-+	else /* - 1 to get a trailing newline to strip */
-+		*body = buf - 1;
- }
- 
- /* See grab_values */
- static void grab_sub_body_contents(struct atom_value *val, int deref, struct object *obj, void *buf, unsigned long sz)
- {
- 	int i;
--	const char *subpos = NULL, *bodypos = NULL;
-+	const char *subpos = NULL, *bodypos = NULL, *sigpos = NULL;
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
- 		const char *name = used_atom[i];
-@@ -500,19 +504,29 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
- 			name++;
- 		if (strcmp(name, "subject") &&
- 		    strcmp(name, "body") &&
--		    strcmp(name, "contents"))
-+		    strcmp(name, "contents") &&
-+		    strcmp(name, "contents:subject") &&
-+		    strcmp(name, "contents:body") &&
-+		    strcmp(name, "contents:signature"))
- 			continue;
- 		if (!subpos)
--			find_subpos(buf, sz, &subpos, &bodypos);
-+			find_subpos(buf, sz, &subpos, &bodypos, &sigpos);
- 		if (!subpos)
- 			return;
- 
--		if (!strcmp(name, "subject"))
--			v->s = copy_line(subpos);
-+		if (!strcmp(name, "subject") || !strcmp(name, "contents:subject"))
-+			v->s = xstrndup(subpos, bodypos - subpos - 1);
- 		else if (!strcmp(name, "body"))
- 			v->s = xstrdup(bodypos);
- 		else if (!strcmp(name, "contents"))
- 			v->s = xstrdup(subpos);
-+		else if (!strcmp(name, "contents:body")) {
-+			if (sigpos - bodypos > 0)
-+				v->s = xstrndup(bodypos + 1, sigpos - bodypos - 1);
-+			else
-+				v->s = xstrdup("");
-+		} else if (!strcmp(name, "contents:signature"))
-+			v->s = xstrdup(sigpos);
- 	}
- }
- 
+ 'connect' <service>::
 -- 
-1.7.6.1
+1.7.7.rc0.75.g56f27
