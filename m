@@ -1,77 +1,87 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Idea: "git format-patch" should get more information out of git
-Date: Thu, 01 Sep 2011 08:44:37 +0200
-Message-ID: <4E5F29D5.4060205@drmicha.warpmail.net>
-References: <4E587CC0.4090508@alum.mit.edu> <20110830152217.GA13022@sigill.intra.peff.net> <4E5D048D.4010902@drmicha.warpmail.net> <201108301939.53487.johan@herland.net> <4E5F0ACD.8050206@alum.mit.edu>
+From: =?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>
+Subject: Re: [PATCH] for-each-ref: add split message parts to %(contents:*).
+Date: Thu, 1 Sep 2011 09:34:50 +0200
+Organization: Gentoo
+Message-ID: <20110901093450.57512480@pomiocik.lan>
+References: <4E5CB0D0.7000905@drmicha.warpmail.net>
+	<1314781909-19252-1-git-send-email-mgorny@gentoo.org>
+	<7vy5y9xkd0.fsf@alter.siamese.dyndns.org>
+	<20110831232201.GA29296@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Sep 01 09:04:01 2011
+Content-Type: multipart/signed; micalg=PGP-SHA256;
+ boundary="Sig_/ioREA9uSpRy0Cyx7zawFlfK"; protocol="application/pgp-signature"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 01 09:33:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qz1Jg-0000Xv-Jo
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 09:04:00 +0200
+	id 1Qz1lx-0004Gb-8e
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 09:33:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755155Ab1IAHDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Sep 2011 03:03:53 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:53748 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752429Ab1IAHDw (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Sep 2011 03:03:52 -0400
-X-Greylist: delayed 1152 seconds by postgrey-1.27 at vger.kernel.org; Thu, 01 Sep 2011 03:03:52 EDT
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 6219720873;
-	Thu,  1 Sep 2011 02:44:40 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute1.internal (MEProxy); Thu, 01 Sep 2011 02:44:40 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=JSBPcoChSYW/GJ6OP+ywRD
-	n3mMM=; b=nrcLCIAnmOk/SNrdrTvaFplIr+z151DYXOIPv+Gs7eRZZ0tNz37/Z1
-	J9UeJzlv4oTV42aHfhln2WuSYpaQP43RulQf3ZmKTd2X3uQHmSIrGZLGf86NBpa+
-	jjXtPHgEWgpf/KPOG7QFvoNEvsA4HUmynunEukPuZH/hM+fwKKZbI=
-X-Sasl-enc: EFF5L3wKTqJ+IlUcVNp/lch9SpnhJdSgYTScU7SFJerA 1314859480
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 65E13A00570;
-	Thu,  1 Sep 2011 02:44:39 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
-In-Reply-To: <4E5F0ACD.8050206@alum.mit.edu>
+	id S1755570Ab1IAHdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Sep 2011 03:33:08 -0400
+Received: from smtp.gentoo.org ([140.211.166.183]:54573 "EHLO smtp.gentoo.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754380Ab1IAHdG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Sep 2011 03:33:06 -0400
+Received: from pomiocik.lan (unknown [81.219.205.214])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: mgorny)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 460831B402A;
+	Thu,  1 Sep 2011 07:33:04 +0000 (UTC)
+In-Reply-To: <20110831232201.GA29296@sigill.intra.peff.net>
+X-Mailer: Claws Mail 3.7.9 (GTK+ 2.24.5; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180524>
 
-Michael Haggerty venit, vidit, dixit 01.09.2011 06:32:
-> On 08/30/2011 07:39 PM, Johan Herland wrote:
->> On Tuesday 30. August 2011, Michael J Gruber wrote:
->>> Reminds me of the ref namespace restructuring which could help
->>> sharing notes... Oh, lots to do before git 3.0!
->>
->> Indeed. I am very sorry to not have been able to properly follow up on 
->> that proposal [...]
-> 
-> What "ref rename restructuring" are you talking about?  Can you give a
-> mailing list link?
-> 
-> (I've been working on refs lately and want to know whether your proposal
-> is relevant to my work.)
+--Sig_/ioREA9uSpRy0Cyx7zawFlfK
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Searching for "namespace" in the subject should give you all relevant
-proposals plus the new "namespaces" which might affect you also:
+On Wed, 31 Aug 2011 19:22:01 -0400
+Jeff King <peff@peff.net> wrote:
 
-http://permalink.gmane.org/gmane.comp.version-control.git/140681
-http://permalink.gmane.org/gmane.comp.version-control.git/165813
-http://permalink.gmane.org/gmane.comp.version-control.git/165799
+> On Wed, Aug 31, 2011 at 03:54:35PM -0700, Junio C Hamano wrote:
+>=20
+> > > +The complete message in a commit and tag object is `contents`.
+> > > +Its first line is `contents:subject`, the remaining lines
+> > > +are `contents:body` and the optional GPG signature
+> > > +is `contents:signature`.
+> >=20
+> > To match the parsing of commit objects, I would prefer to see
+> > "subject" to mean "the first paragraph" (usually the first line
+> > alone but that is purely from convention), but that probably is a
+> > separate topic.
+>=20
+> Good idea. I suspect pretty.c:format_subject can be reused here.
 
-http://permalink.gmane.org/gmane.comp.version-control.git/176808
+Should I fix regular 'subject' and 'body' as well, or just
+the 'contents:' variants?
 
-Michael
+--=20
+Best regards,
+Micha=C5=82 G=C3=B3rny
+
+--Sig_/ioREA9uSpRy0Cyx7zawFlfK
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Disposition: attachment; filename=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.18 (GNU/Linux)
+
+iJwEAQEIAAYFAk5fNZsACgkQfXuS5UK5QB1z5QP/U85OFqiaK2hgvK5wgr8IBfMT
+IPVXb0L/wXfMSXkUeaTgOOJbPOzLTmk8b1GwJ7fuxX2sSdZ8cTB309e4r55GsdGg
+754YMmwafqGpQqs5RrP9dYho0PGEOyArAdkjno5GRZ1bpdWxDSoAhEzjcr0BrXiw
+Pp7nZkqqAXWz9iGmoP0=
+=1qEy
+-----END PGP SIGNATURE-----
+
+--Sig_/ioREA9uSpRy0Cyx7zawFlfK--
