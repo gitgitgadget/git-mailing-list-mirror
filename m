@@ -1,85 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-checkout silently throws away the dirty status of index
- without a warning?
-Date: Thu, 01 Sep 2011 10:11:32 -0700
-Message-ID: <7v1uw0xk57.fsf@alter.siamese.dyndns.org>
-References: <CAEvN+1h+mY+f3dzK7LFOwkqokOZSS-LosCzBqtYGbyjz=Dg7Zw@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Cannot rewrite branch(es) with a dirty working directory
+Date: Thu, 01 Sep 2011 19:14:30 +0200
+Message-ID: <vpqmxeoqj61.fsf@bauges.imag.fr>
+References: <CACyv8dfL-G0Px0aFe3VFNHP-1xRUDLsFxgUu3amPGzO7qKp7jQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Tzu-Jung Lee <roylee17@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 01 19:11:47 2011
+To: James Blackburn <jamesblackburn@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 01 19:14:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzAnr-0005a9-6y
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 19:11:47 +0200
+	id 1QzAqi-0006vU-Ej
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 19:14:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755761Ab1IARLg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Sep 2011 13:11:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52553 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755700Ab1IARLf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Sep 2011 13:11:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3966D4F24;
-	Thu,  1 Sep 2011 13:11:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=82tzq1Y3vsA8KVavDf3slRTWBEY=; b=TQCQ1L
-	n4pLQdc0wU493/v5IkOqi8XUVM2NP41NLMMEpWvbXAsQttGLGYnJcXHfUdJUu9f5
-	jKimUIz/Q+uA5Hug/cDglZQmxleONTRP6a319Y+S1rGXBhid2WbBFgjGmvC1zm1m
-	4WGyn06XJWEW2MeFvU2oD/Fe766ye2rFJqKds=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fMJkwCF4z4TsP8zJnoA6xghv//5iZwHp
-	0icTjVYXVW945xAvUpfJXPqLwYv0jx+uP0jxVpLNtwCmLZ00tJu9CRIuDG/kkuVi
-	z2xAh0PczkwT4SGw2fmjZ9g4saHh/ovI+qbp0zb56H7f6TJf6z2RY1EMaF1GKTgx
-	DQR4m5n/AOI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 305EF4F23;
-	Thu,  1 Sep 2011 13:11:34 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B586D4F22; Thu,  1 Sep 2011
- 13:11:33 -0400 (EDT)
-In-Reply-To: <CAEvN+1h+mY+f3dzK7LFOwkqokOZSS-LosCzBqtYGbyjz=Dg7Zw@mail.gmail.com>
- (Tzu-Jung Lee's message of "Thu, 1 Sep 2011 23:47:59 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 716629DA-D4BD-11E0-953C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755868Ab1IAROi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Sep 2011 13:14:38 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:45231 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755404Ab1IAROi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Sep 2011 13:14:38 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p81HDnXH021007
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 1 Sep 2011 19:13:49 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1QzAqV-0003U4-4v; Thu, 01 Sep 2011 19:14:31 +0200
+In-Reply-To: <CACyv8dfL-G0Px0aFe3VFNHP-1xRUDLsFxgUu3amPGzO7qKp7jQ@mail.gmail.com>
+	(James Blackburn's message of "Thu, 1 Sep 2011 16:52:02 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 01 Sep 2011 19:13:50 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p81HDnXH021007
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1315502030.32973@rlilofnuHkPc1tK9Ubs3rg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180553>
 
-Tzu-Jung Lee <roylee17@gmail.com> writes:
+James Blackburn <jamesblackburn@gmail.com> writes:
 
-> Is this an intended behavior?
+> Is there a particular reason why filter-branch thinks the tree is
+> dirty,
 
-Yes, I think you are talking about the case where "the current index does
-not match the current HEAD, but it does match the tree we are switching
-to" case. In that case we take the contents of switched-to branch.
+No idea. It comes after a "git reset --hard", so it's supposed to be
+clean.
 
-It is the last case in the table in this old design document:
+> and status magically fixes this?
 
-    http://thread.gmane.org/gmane.comp.version-control.git/4641
+The index is considered dirty if the stat information (timestamp) is
+different. "git status" updates the stat-cache to consider unmodified
+content as up-to-date. So, it's normal that a "git status" repairs the
+dirty index.
 
-bug ignore the terminology (stage#). Read only the body of the table, with
-the understanding that the three entries in each row talk about the state
-for the same path in the index entry, the tree entry in the current HEAD,
-and the tree entry in the switched-to branch. Also the table does not talk
-about the checking performed on the working tree file, but assume that we
-do not overwrite it when the resulting entry in the index does not match
-what you have there.
-
-The reason we allow branch switching in this case, instead of failing, is
-so that you can be in a state where you applied the same change (relative
-to the current branch to the branch you are switching to) lying around
-already in your workspace and safely switch to the new branch without
-losing any work (after all, the content matches).
-
-By the way, the first six lines of your original message that describes
-"saving and applying" is not correct.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
