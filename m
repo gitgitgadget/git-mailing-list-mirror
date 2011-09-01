@@ -1,73 +1,74 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: git-svn and mergeinfo
-Date: Thu, 01 Sep 2011 10:59:51 +0200
-Message-ID: <4E5F4987.5040205@alum.mit.edu>
-References: <20110829132052.0ad7a088@robyn.woti.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] git-remote-helpers.txt: explain how import works with
+ multiple refs
+Date: Thu, 1 Sep 2011 13:24:07 +0200
+Message-ID: <CAGdFq_jfCzy71AL3XSJ9q8LVNPUCYEY=yrwpJppP1asW1GoXmg@mail.gmail.com>
+References: <CAGdFq_gooPGQMa5D19-wag=X+mDntHF1MwXiYF0zovB=L-Sybw@mail.gmail.com>
+ <1314809222-30528-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Bryan Jacobs <bjacobs@woti.com>
-X-From: git-owner@vger.kernel.org Thu Sep 01 11:00:01 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 01 13:24:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qz37w-0008G2-Gl
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 11:00:00 +0200
+	id 1Qz5O9-0005FG-98
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 13:24:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932096Ab1IAI7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Sep 2011 04:59:54 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:37098 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756469Ab1IAI7x (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Sep 2011 04:59:53 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p818xpkl000856
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 1 Sep 2011 10:59:52 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.20) Gecko/20110805 Lightning/1.0b2 Thunderbird/3.1.12
-In-Reply-To: <20110829132052.0ad7a088@robyn.woti.com>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1757160Ab1IALYs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Sep 2011 07:24:48 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:46433 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752944Ab1IALYr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Sep 2011 07:24:47 -0400
+Received: by pzk37 with SMTP id 37so2881846pzk.1
+        for <git@vger.kernel.org>; Thu, 01 Sep 2011 04:24:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=OeDneb2W1AYOzFQUNXDmKb3FmIEB7xCiE3prp+pvVg4=;
+        b=RB3k7kkzSRtPMAPuezU3iPZUl0eIOxW+oSVKNDeNKDMsOUFl0K9Ksslp8CrKRKaGum
+         UJZhkRSX0toHDUDoJWRBDFowkP59t+zc4EiG7IaQFHwe4r/xaPLEpu7ZFlFA8Q0vIKX4
+         fvs8hWro7/jP8Hb6M1A29x4HGTFM8O+peWpQk=
+Received: by 10.68.56.199 with SMTP id c7mr130326pbq.495.1314876287250; Thu,
+ 01 Sep 2011 04:24:47 -0700 (PDT)
+Received: by 10.68.43.9 with HTTP; Thu, 1 Sep 2011 04:24:07 -0700 (PDT)
+In-Reply-To: <1314809222-30528-1-git-send-email-Matthieu.Moy@imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180528>
 
-On 08/29/2011 07:20 PM, Bryan Jacobs wrote:
-> I have been (ab)using git-svn for committing to a central SVN
-> repository while doing my work locally with git. To this end, I've
-> written a set of scripts and hooks which perform squash merges locally
-> and then dcommit them with proper svn:mergeinfo annotations. The final
-> result is the perfect appearance of having done a native SVN merge in
-> the central repository, while using only local git commands and
-> gaining the full benefit of git's conflict resolution and developer
-> convenience.
-> 
-> However, to make this work with git 1.7.6, I needed to make *one* change
-> to the git internals: --merge-info does not allow setting mergeinfo for
-> more than one branch. Because it's a complete overwrite operation
-> instead of an update, this is a serious issue preventing its use for
-> nontrivial branches.
-> 
-> Might I suggest adding a block like the following around line 552 of
-> git-svn?
-> 
->     if (defined($_merge_info))
->     {  
->         $_merge_info =~ tr{ }{\n};
->     }
+Heya,
 
-Naive question: why can't you pass a newline (properly quoted, of
-course) directly within the string argument to the --mergeinfo option?
+[+Jonathan Nieder]
 
-Michael
+On Wed, Aug 31, 2011 at 18:47, Matthieu Moy <Matthieu.Moy@imag.fr> wrot=
+e:
+> This is important for two reasons:
+>
+> * when two "import" lines follow each other, only one "done" command
+> =C2=A0should be issued in the fast-import stream, not one per "import=
+".
+>
+> * The blank line terminating an import command should not be confused
+> =C2=A0with the one terminating the sequence of commands.
+>
+> While we're there, illustrate the corresponding explanation for push
+> batches with an example.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Thank you!
+
+Acked-by: Sverre Rabbelier <srabbelier@gmail.com
+
+--=20
+Cheers,
+
+Sverre Rabbelier
