@@ -1,60 +1,81 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Dropping '+' from fetch = +refs/heads/*:refs/remotes/origin/*?
-Date: Thu, 1 Sep 2011 12:50:48 -0700
-Message-ID: <CAJo=hJv4CkmaJuVvCA2VdO68zn4Xb9EQsdP8p1W-7B9zbvXSaQ@mail.gmail.com>
-References: <7vliu8w25g.fsf@alter.siamese.dyndns.org> <4E5FDAFE.6050004@drmicha.warpmail.net>
- <vpqippcm4x4.fsf@bauges.imag.fr>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Using git-svn fetch after a directory change with rewrite-root
+Date: Thu, 1 Sep 2011 20:54:04 +0000
+Message-ID: <20110901205404.GA16835@dcvr.yhbt.net>
+References: <CANWsHyfHtr0EaJtNsDK9UTcmb_AbLg-1jUA-0uWJ-nEeNosb7w@mail.gmail.com>
+ <20110820191837.GA30509@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Sep 01 21:51:28 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: H Krishnan <hetchkay@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 01 22:54:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzDIH-0004tm-1k
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 21:51:21 +0200
+	id 1QzEH8-00088n-Nn
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 22:54:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757842Ab1IATvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Sep 2011 15:51:11 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:58043 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757493Ab1IATvK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Sep 2011 15:51:10 -0400
-Received: by gya6 with SMTP id 6so1648347gya.19
-        for <git@vger.kernel.org>; Thu, 01 Sep 2011 12:51:09 -0700 (PDT)
-Received: by 10.42.156.132 with SMTP id z4mr201915icw.160.1314906668841; Thu,
- 01 Sep 2011 12:51:08 -0700 (PDT)
-Received: by 10.236.95.48 with HTTP; Thu, 1 Sep 2011 12:50:48 -0700 (PDT)
-In-Reply-To: <vpqippcm4x4.fsf@bauges.imag.fr>
+	id S1757959Ab1IAUyI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Sep 2011 16:54:08 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:59678 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757887Ab1IAUyG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Sep 2011 16:54:06 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9B2F219F1;
+	Thu,  1 Sep 2011 20:54:04 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20110820191837.GA30509@dcvr.yhbt.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180570>
 
-On Thu, Sep 1, 2011 at 12:35, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
-> By asking users to explicitely say "yes, I know, this branch can be
-> rewond", we also ask them to think about it before making a mistake.
->
-> That said, enabling the check by default may also become painful. I'd
-> vote for a configuration option, defaulting to the current behavior for
-> now. Then we can try living with it for a while and see how painful it
-> is.
+Eric Wong <normalperson@yhbt.net> wrote:
+> H Krishnan <hetchkay@gmail.com> wrote:
+> > I wonder if commit 3235b7053c45a734c1cdf9b117bda68b7ced29c9 handles
+> > rewrite-root correctly. Should the comparison be made with
+> > $gs->metadata_url instead of $gs->full_url?
+> 
+> I think you're right, can you submit a test case?  Current
+> tests all pass with  $gs->metadata_url  so I can probably
+> push it out in a bit regardless.
 
-I suspect the vast majority of branches in the wild do not rewind
-under normal conditions. Users who work against branches that rewind
-(e.g. those of us basing on a topic in pu) are already sophisticated
-enough with Git to understand what the fetch error would mean and fix
-it.
+I've pushed the following out to git://bogomips.org/git-svn.git
 
-IMHO, just change the default in clone, and better, add a warning to
-fetch if that default pattern is still in the configuration file. Let
-the user either remove the wildcarded force fetch spec, or add a new
-configuration variable to his remote block to silence the warning.
+>From 85f022e9c124ffeda31a50cab878e1418d694d87 Mon Sep 17 00:00:00 2001
+From: Eric Wong <normalperson@yhbt.net>
+Date: Mon, 29 Aug 2011 00:45:44 +0000
+Subject: [PATCH] git-svn: fix fetch with moved path when using rewriteRoot
 
+The matching step in commit 3235b7053c45a734c1cdf9b117bda68b7ced29c9
+did not properly account for users of the "rewriteRoot"
+configuration parameter.
+
+ref: <CANWsHyfHtr0EaJtNsDK9UTcmb_AbLg-1jUA-0uWJ-nEeNosb7w@mail.gmail.com>
+
+Suggested-by: H Krishnan <hetchkay@gmail.com>
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-svn.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 96f373f..32792d3 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -3022,7 +3022,7 @@ sub other_gs {
+ 			my (undef, $max_commit) = $gs->rev_map_max(1);
+ 			last if (!$max_commit);
+ 			my ($url) = ::cmt_metadata($max_commit);
+-			last if ($url eq $gs->full_url);
++			last if ($url eq $gs->metadata_url);
+ 			$ref_id .= '-';
+ 		}
+ 		print STDERR "Initializing parent: $ref_id\n" unless $::_q > 1;
 -- 
-Shawn.
+Eric Wong
