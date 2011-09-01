@@ -1,151 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Funnies with "git fetch"
-Date: Thu, 01 Sep 2011 10:53:12 -0700
-Message-ID: <7vpqjkw3nb.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] for-each-ref: add split message parts to %(contents:*).
+Date: Thu, 1 Sep 2011 14:19:05 -0400
+Message-ID: <20110901181905.GA17551@sigill.intra.peff.net>
+References: <4E5CB0D0.7000905@drmicha.warpmail.net>
+ <1314781909-19252-1-git-send-email-mgorny@gentoo.org>
+ <7vy5y9xkd0.fsf@alter.siamese.dyndns.org>
+ <20110831232201.GA29296@sigill.intra.peff.net>
+ <20110901093450.57512480@pomiocik.lan>
+ <7vbov4xnfc.fsf@alter.siamese.dyndns.org>
+ <20110901162222.GC15018@sigill.intra.peff.net>
+ <7vwrdsw5ci.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 01 19:54:24 2011
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
+	git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 01 20:19:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzBT3-0000id-PN
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 19:54:22 +0200
+	id 1QzBrA-0003zI-Dt
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 20:19:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756924Ab1IARxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Sep 2011 13:53:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38863 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756663Ab1IARxP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Sep 2011 13:53:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2B3F55AC;
-	Thu,  1 Sep 2011 13:53:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=w
-	/2CRT8KxMq0x3BtxqLyWvzghWs=; b=h5Ix3WeWgPDbyzhTn8Lbpy8ZU38wTHLzt
-	Q8K8t++DS9zD/cprZIaaLKI3YsJz1yO9IRz7jX6LL7kAZTEXESt2zKCzIAez52S6
-	UzNkg0Kji4OXyxhFIzk8/ZCE0Orz6/SNDYEpESYeH73AcSvb4Il1bTa0E7Kpk/jT
-	wkpV5G6Yaw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=KEl
-	4Q3sVpOlpXwAE704+7OVIj1wbmj10nTqf7LCGd925AjRhzmj1JuKuRJUGUViJovd
-	xw0GvE+By5vbvxkWbwoxjXQ95U/HAZ76KBRdXMb7zabnOzeDYCvP+FDrYAp3KXaH
-	Pn5LgwtnKi2WI0aaHxTKiQtoLm+FYFedDtFlYHo4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA8AD55AB;
-	Thu,  1 Sep 2011 13:53:14 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4836955AA; Thu,  1 Sep 2011
- 13:53:14 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 43D80E74-D4C3-11E0-87E5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757246Ab1IASTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Sep 2011 14:19:09 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39858
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757228Ab1IASTI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Sep 2011 14:19:08 -0400
+Received: (qmail 22171 invoked by uid 107); 1 Sep 2011 18:19:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 01 Sep 2011 14:19:54 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Sep 2011 14:19:05 -0400
+Content-Disposition: inline
+In-Reply-To: <7vwrdsw5ci.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180558>
 
-I just did this in an empty directory.
+On Thu, Sep 01, 2011 at 10:16:29AM -0700, Junio C Hamano wrote:
 
-    $ git init src
-    $ cd src
-    $ echo hello >greetings ; git add . ; git commit -m greetings
-    $ S=$(git rev-parse :greetings | sed -e 's|^..|&/|')
-    $ X=$(echo bye | git hash-object -w --stdin | sed -e 's|^..|&/|')
-    $ mv -f .git/objects/$X .git/objects/$S
+> Jeff King <peff@peff.net> writes:
+> 
+> > We could either leave %(subject) with its historical behavior, or fix it
+> > to handle multi-line subjects. Although it's technically a regression to
+> > change it, I tend to think it is simply a bug, as it doesn't match what
+> > the rest of git (like "git log --format=%s") does.
+> 
+> I think %(subject) should be updated to match %(contents:subject) as a
+> bugfix, so %(body) should be adjusted to prevent "%(subject)%(body)" from
+> duplicating lines.
 
-The tip commit _thinks_ it has "greetings" that contains "hello", but
-somebody replaced it with a corrupt "bye" that does not match self
-integrity.
+OK. That makes it much easier to implement, too, I think. :)
 
-    $ git fsck
-    error: sha1 mismatch ce013625030ba8dba906f756967f9e9ca394464a
+> Side note. We probably would want to borrow from pretty-formats to allow
+> us to say %(subject)%(+body) or something...
 
-    error: ce013625030ba8dba906f756967f9e9ca394464a: object corrupt or missing
-    missing blob ce013625030ba8dba906f756967f9e9ca394464a
+I have been meaning to take a closer look at Will Palmer's patches for
+making the pretty-formats look more like the for-each-ref formats (which
+I think would be the first step to unifying the features). But somehow
+months have slipped by, and I haven't yet.
 
-The "hello" blob is ce0136, and the tree contained in HEAD expects "hello"
-in that loose object file, but notices the contents do not match the
-filename.
+But I think unifying the formats and the code is better than trying to
+port features across.
 
-So far, so good. Let's see what others see when they interact with this
-repository.
-
-cd ../
-git init dst
-cd dst
-git config receive.fsckobjects true
-git remote add origin ../src
-git config branch.master.remote origin
-git config branch.master.merge refs/heads/master
-git fetch
-    remote: Counting objects: 3, done.
-    remote: Total 3 (delta 0), reused 0 (delta 0)
-    Unpacking objects: 100% (3/3), done.
-    From ../src
-     * [new branch]      master     -> origin/master
-
-Oops? If we run "fsck" at this point, we would notice the breakage:
-
-    $ git fsck
-    notice: HEAD points to an unborn branch (master)
-    broken link from    tree 1c93b84c9756b083e5751db1f9ffa7f80ac667e2
-                  to    blob ce013625030ba8dba906f756967f9e9ca394464a
-    missing blob ce013625030ba8dba906f756967f9e9ca394464a
-    dangling blob b023018cabc396e7692c70bbf5784a93d3f738ab
-
-Here, b02301 is the true identity of the "bye" blob the src repository
-crafted and tried to fool us into believing it is "hello".  We can see
-that the object transfer gave three objects, and because we only propagate
-the contents and have the receiving end compute the object names from the
-data, we received b02301 but not ce0136.
-
-    $ ls .git/objects/??/?*
-    .git/objects/1c/93b84c9756b083e5751db1f9ffa7f80ac667e2
-    .git/objects/61/5d8c76daef6744635c87fb312a76a5ec7462ea
-    .git/objects/b0/23018cabc396e7692c70bbf5784a93d3f738ab
-
-As a side note, if we did "git pull" instead of "git fetch", we would have
-also noticed the breakage, like so:
-
-    $ git pull
-    remote: Counting objects: 3, done.
-    remote: Total 3 (delta 0), reused 0 (delta 0)
-    Unpacking objects: 100% (3/3), done.
-    From ../src
-     * [new branch]      master     -> origin/master
-    error: unable to find ce013625030ba8dba906f756967f9e9ca394464a
-    error: unable to read sha1 file of greetings (ce013625030ba...)
-
-But the straight "fetch" did not notice anything fishy going on. Shouldn't
-we have?  Even though we may be reasonably safe, unpack-objects should be
-able to do better, especially under receive.fsckobjects option.
-
-Also as a side note, if we set 
-
-    $ git config fetch.unpacklimit 1
-
-before we run this "git fetch", we end up storing a single pack, whose
-contents are the same three objects above (as expected), and we do not get
-any indication of an error from the command.
-
-I think the breakages are:
-
- - The sending side does not give any indication that it _wanted_ to send
-   ce0136 but couldn't, and ended up sending another object;
-
- - The pack data sent over the wire was self consistent (no breakage here)
-   and sent three well-formed objects, but it was inconsistent with
-   respect to what history was being transferred (breakage is here);
-
- - The receiving end did not notice the inconsistency.
-
-The first one is of the lower priority, as the client side should be able
-to notice an upstream with corruption in any case. Perhaps after asking
-for objects between "have" and "want", "git fetch" should verify that it
-can fully walk the subhistory that was supposed to be transferred down to
-the blob level?
+-Peff
