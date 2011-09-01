@@ -1,88 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] test-lib: save test counts across invocations
-Date: Thu, 1 Sep 2011 12:38:46 -0400
-Message-ID: <20110901163846.GD15018@sigill.intra.peff.net>
-References: <8fe5381a6b69079b8c20452fd4d99a128764dd52.1314882443.git.trast@student.ethz.ch>
+From: =?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>
+Subject: Re: [PATCH] for-each-ref: add split message parts to %(contents:*).
+Date: Thu, 1 Sep 2011 18:48:15 +0200
+Organization: Gentoo
+Message-ID: <20110901184815.2cd8b472@pomiocik.lan>
+References: <4E5CB0D0.7000905@drmicha.warpmail.net>
+	<1314781909-19252-1-git-send-email-mgorny@gentoo.org>
+	<7vy5y9xkd0.fsf@alter.siamese.dyndns.org>
+	<20110831232201.GA29296@sigill.intra.peff.net>
+	<20110901093450.57512480@pomiocik.lan>
+	<7vbov4xnfc.fsf@alter.siamese.dyndns.org>
+	<20110901162222.GC15018@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Sep 01 18:38:58 2011
+Content-Type: multipart/signed; micalg=PGP-SHA256;
+ boundary="Sig_/BMk2aLoY2rLK_l640WTyqwe"; protocol="application/pgp-signature"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 01 18:46:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzAI5-0005xI-RM
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 18:38:58 +0200
+	id 1QzAPY-0001Lf-NZ
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 18:46:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757476Ab1IAQiw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Sep 2011 12:38:52 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59659
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757353Ab1IAQiv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Sep 2011 12:38:51 -0400
-Received: (qmail 20678 invoked by uid 107); 1 Sep 2011 16:39:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 01 Sep 2011 12:39:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Sep 2011 12:38:46 -0400
-Content-Disposition: inline
-In-Reply-To: <8fe5381a6b69079b8c20452fd4d99a128764dd52.1314882443.git.trast@student.ethz.ch>
+	id S1751479Ab1IAQqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Sep 2011 12:46:35 -0400
+Received: from smtp.gentoo.org ([140.211.166.183]:55849 "EHLO smtp.gentoo.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750900Ab1IAQqe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Sep 2011 12:46:34 -0400
+Received: from pomiocik.lan (unknown [81.219.205.214])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: mgorny)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 6F3CD66A46;
+	Thu,  1 Sep 2011 16:46:32 +0000 (UTC)
+In-Reply-To: <20110901162222.GC15018@sigill.intra.peff.net>
+X-Mailer: Claws Mail 3.7.9 (GTK+ 2.24.5; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180541>
 
-On Thu, Sep 01, 2011 at 03:08:45PM +0200, Thomas Rast wrote:
+--Sig_/BMk2aLoY2rLK_l640WTyqwe
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Save the number of tests run ($test_count) in a file under
-> test-counts/.  Then when sourcing test-lib.sh the next time, compare
-> the timestamps.  If the counts file is older than the test, discard.
-> Otherwise use the count that we saved and give prove the test plan
-> ("1..N") up front.
+On Thu, 1 Sep 2011 12:22:22 -0400
+Jeff King <peff@peff.net> wrote:
 
-Hmm. What happens when we're wrong? Does our eye-candy just print
-something non-sensical like "13/12", or does prove actually care that we
-run the right number of tests?
+> On Thu, Sep 01, 2011 at 09:00:39AM -0700, Junio C Hamano wrote:
+>=20
+> > >> > To match the parsing of commit objects, I would prefer to see
+> > >> > "subject" to mean "the first paragraph" (usually the first line
+> > >> > alone but that is purely from convention), but that probably
+> > >> > is a separate topic.
+> > >>=20
+> > >> Good idea. I suspect pretty.c:format_subject can be reused here.
+> > >
+> > > Should I fix regular 'subject' and 'body' as well, or just
+> > > the 'contents:' variants?
+> >=20
+> > I thought you made them synonyms...
+>=20
+> No, %(body) retains its historical usage as body+signature. If you
+> think it's OK to change that.
+>=20
+> We could either leave %(subject) with its historical behavior, or fix
+> it to handle multi-line subjects. Although it's technically a
+> regression to change it, I tend to think it is simply a bug, as it
+> doesn't match what the rest of git (like "git log --format=3D%s") does.
 
-> Sparked by a discussion on G+.  I think this is the "simple" approach.
-> The "cute" approach would be to let test-lib.sh define test_* as
-> test-counting dummies once, source the test script itself (avoiding
-> the sourcing loop with test-lib) to count what it does, then do the
-> real work.
+Ok, I'll go with fixing it. If we want to have old behavior back, it's
+as simple as putting the line copying function in the right place.
 
-I don't think the "cute" approach will ever be accurate. Deciding
-whether to run later tests sometimes depends on the results of earlier
-tests, in at least two cases:
+Sadly, I had to add a few magical '-1's and '+1's to get whitespace
+in-place. It seems that signed, unannotated signatures glue to subject.
 
-  1. Some tests find out which capabilities the system has, and set
-     prerequisites. You need to actually run those tests, not make them
-     counting dummies.
+--=20
+Best regards,
+Micha=C5=82 G=C3=B3rny
 
-  2. Some tests create state that we then iterate on. For example, I
-     think the mailinfo tests do something like:
+--Sig_/BMk2aLoY2rLK_l640WTyqwe
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Disposition: attachment; filename=signature.asc
 
-        test_expect_success 'split' '
-                git mailsplit -o patches mbox
-        '
-        for i in patches/*; do
-          test_expect_success "check patch $i" '
-                  git mailinfo $i >output
-                  ...
-          '
-        done
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.18 (GNU/Linux)
 
-      You'd get an inaccurate count if you didn't actually run the
-      mailsplit command.
+iJwEAQEIAAYFAk5ft08ACgkQfXuS5UK5QB3PEQP/ROXCxhGlRq+wj1vcjPjpFg59
+RcyZum3REabc+yVPVQgZWWuBqrrxDU24aFM7CmQEXAi2U8/NXIaozFBuBcGT53x0
+kf0mvMY+1sTW2OTX5qf6p+q6RgK3bLUnhK9yu0gMu5u9GfTScvEw19um0RaVtUF7
+7RmZMQyn9slkkFllxqk=
+=4tsb
+-----END PGP SIGNATURE-----
 
-Anyway, this whole thing is a cute idea, and I do love eye candy, but I
-wonder if it's worth the complexity. All this is telling us is how far
-into each of the scripts it is. But we have literally hundreds of test
-scripts, all with varying numbers of tests of varying speeds, and you're
-probably running 16 or more at one time. So it doesn't tell you what you
-really want to know, which is: how soon will the test suite probably be
-done running.
-
--Peff
+--Sig_/BMk2aLoY2rLK_l640WTyqwe--
