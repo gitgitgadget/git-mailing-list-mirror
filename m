@@ -1,87 +1,84 @@
-From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: Rebase & Trailing Whitespace
-Date: Wed, 31 Aug 2011 16:55:03 -0700
-Message-ID: <CAE1pOi0rY4kRR4rvEdFhzzTgfhUczHMX=H5_9+o5aHnv4vTadw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6] Add a remote helper to interact with mediawiki (fetch
+ & push)
+Date: Wed, 31 Aug 2011 17:24:05 -0700
+Message-ID: <7vobz5xg7u.fsf@alter.siamese.dyndns.org>
+References: <1314381329-8989-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1314809708-8177-1-git-send-email-Matthieu.Moy@imag.fr>
+ <CAGdFq_gu=SyjUnUS1bcjPrcPPtKVt+UjDBvBmZqosk+OuDFDHw@mail.gmail.com>
+ <vpq7h5tbia6.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Users <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 01 01:55:25 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com, Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr>,
+	Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>,
+	Claire Fousse <claire.fousse@ensimag.imag.fr>,
+	David Amouyal <david.amouyal@ensimag.imag.fr>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Sep 01 02:24:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qyucu-0004M4-Pp
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 01:55:25 +0200
+	id 1Qyv4p-0005os-Mr
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 02:24:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755249Ab1HaXzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Aug 2011 19:55:05 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:54155 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752249Ab1HaXzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2011 19:55:04 -0400
-Received: by ywf7 with SMTP id 7so1042018ywf.19
-        for <git@vger.kernel.org>; Wed, 31 Aug 2011 16:55:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=zTeh03SOonZ9Na3M/dS4493Bt0On4hZUWrsY5L/ZBgs=;
-        b=CDVHKTxwkZmyRsLo3j4nEftkCoguZoDXeHJ5D8afixJr7+3acHUbhuj6Yeqk7D+sVn
-         O5kPBzCTQSgFQ85jWzSYYcs5ClbzaXFcuuCm8H5JIxj/IKcI/x5o+A9A5lGXfbPJipOu
-         q1Hp7eyyJl0TnKOPLur7Mao+CUWu6Avt8eGWA=
-Received: by 10.236.173.67 with SMTP id u43mr5877657yhl.119.1314834903705;
- Wed, 31 Aug 2011 16:55:03 -0700 (PDT)
-Received: by 10.236.207.67 with HTTP; Wed, 31 Aug 2011 16:55:03 -0700 (PDT)
+	id S1756294Ab1IAAYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Aug 2011 20:24:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47463 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755985Ab1IAAYI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Aug 2011 20:24:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DDAB15420;
+	Wed, 31 Aug 2011 20:24:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JYOONUZ9dz3KE/NP+3NVIzdXhlE=; b=h0jPJC
+	+R/FlG/YHanW2z5ppRYvhLcO6p9e22LoD1REzWhlovzMgDVuGhAnJC2SX0/SzE9L
+	8veGEghgN5B1plPuuQJx9KS8zphk5D/m+ZM1TfzCeXLRT0AtV01CyeHf1oFmgdIT
+	Xr6JxL5Px6YSE/6auLoWn3QRAicbmD1OsPyJ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KekDrHphQNmbepyVhVFToSmBJFOECkWZ
+	sF3Vl6UBnos8Ix8EXm6CAsdJQ6EJgR1w4bBi2LVrd0VE0Hgidda8q2+OdSTspSXP
+	C4+GaVJPOd1pKERCk/8CTXX1SoWpXHDdQaSUp2EMjk4oRsOvPCPJY1WqAvaovHSm
+	b/pImSkYPHQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D527D541F;
+	Wed, 31 Aug 2011 20:24:07 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5F380541E; Wed, 31 Aug 2011
+ 20:24:07 -0400 (EDT)
+In-Reply-To: <vpq7h5tbia6.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Wed, 31 Aug 2011 19:30:25 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B498B9D0-D430-11E0-A5DF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180512>
 
-Hi all,
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-Please have a look at the output below.
+> Here:
+>
+> +	for my $refspec (@refsspecs) {
+> +		unless ($refspec =~ m/^(\+?)([^:]*):([^:]*)$/) {
+> +			die("Invalid refspec for push. Expected <src>:<dst> or +<src>:<dst>");
+> +		}
+> +		my ($force, $local, $remote) = ($1 eq "+", $2, $3);
+>
+> At this point, $force is a boolean saying whether there were a +, and
+> $local and $remote are as you can guess.
 
-hilco@centaur ~/workspaces/project-next project-next (next $)$ git rebase master
-First, rewinding head to replay your work on top of it...
-Applying: ...
-Applying: ...
-Using index info to reconstruct a base tree...
-Falling back to patching base and 3-way merge...
-No changes -- Patch already applied.
-Applying: ...
-:
-Applying: Use static WAR for SWF files and assets.
-Using index info to reconstruct a base tree...
-<stdin>:721810: trailing whitespace.
-Canadian word list.
-<stdin>:721859: trailing whitespace.
-SFX N   y     ication    y
-<stdin>:721860: trailing whitespace.
-SFX N   0     en         [^ey]
-<stdin>:721869: trailing whitespace.
-SFX H   0     th         [^y]
-<stdin>:721876: trailing whitespace.
-SFX G   0     ing        [^e]
-warning: squelched 1067 whitespace errors
-warning: 1072 lines add whitespace errors.
-Falling back to patching base and 3-way merge...
-:
-Failed to merge in the changes.
-Patch failed at 0008 Use static WAR for SWF files and assets.
+It may be slightly more Perl-ish to hoist the "0-or-1" outside the group
+and rely on $1 becoming undef, like this:
 
-Note the trailing whitespace warnings. How do I find out which file(s)
-generated these warnings? Would it be possible to add the file name
-causing the warnings to be output? By default? (Using --verbose
-doesn't seem to make any difference where the whitespace warnings are
-concerned.)
+        my ($force, $local, $remote) = $refspec =~ /^(\+)?([^:]*):([^:]*)$/
+		or die(...);
 
-Furthermore, why didn't I get these or similar warnings when I
-committed/pushed that particular commit ("Use static WAR for SWF files
-and assets.")? I did just find "[core] whitespace = trailing-space"
-which I will add to my .gitconfig, I suppose. So I guess what I really
-mean to ask is, why do rebase (and merge?) behave differently from
-commit?
-
-Cheers,
-Hilco
+Even though it largely is a matter of taste, I think.
