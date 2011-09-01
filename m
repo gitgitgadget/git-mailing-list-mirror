@@ -1,977 +1,134 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 1/2 v7] Add a remote helper to interact with mediawiki (fetch & push)
-Date: Thu,  1 Sep 2011 18:54:55 +0200
-Message-ID: <1314896096-17544-2-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpq39ggomtu.fsf@bauges.imag.fr>
- <1314896096-17544-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-checkout silently throws away the dirty status of index
+ without a warning?
+Date: Thu, 1 Sep 2011 12:56:38 -0400
+Message-ID: <20110901165638.GE15018@sigill.intra.peff.net>
+References: <CAEvN+1h+mY+f3dzK7LFOwkqokOZSS-LosCzBqtYGbyjz=Dg7Zw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr>,
-	Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>,
-	Claire Fousse <claire.fousse@ensimag.imag.fr>,
-	David Amouyal <david.amouyal@ensimag.imag.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	=?UTF-8?q?Sylvain=20Boulm=C3=A9?= <sylvain.boulme@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Sep 01 18:55:54 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Tzu-Jung Lee <roylee17@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 01 18:56:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzAYM-00060D-RB
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 18:55:47 +0200
+	id 1QzAZK-0006WS-Kv
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 18:56:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755584Ab1IAQz2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Sep 2011 12:55:28 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:34338 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752937Ab1IAQzV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Sep 2011 12:55:21 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p81GsRNh005094
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 1 Sep 2011 18:54:27 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1QzAXo-0003Ao-E0; Thu, 01 Sep 2011 18:55:12 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1QzAXo-0004Zp-Co; Thu, 01 Sep 2011 18:55:12 +0200
-X-Mailer: git-send-email 1.7.7.rc0.75.g56f27
-In-Reply-To: <1314896096-17544-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 01 Sep 2011 18:54:28 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p81GsRNh005094
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1315500870.54829@ID7TJG2GJaJTQ8oxy0b2ZQ
+	id S1752278Ab1IAQ4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Sep 2011 12:56:41 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36559
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751938Ab1IAQ4k (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Sep 2011 12:56:40 -0400
+Received: (qmail 21025 invoked by uid 107); 1 Sep 2011 16:57:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 01 Sep 2011 12:57:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Sep 2011 12:56:38 -0400
+Content-Disposition: inline
+In-Reply-To: <CAEvN+1h+mY+f3dzK7LFOwkqokOZSS-LosCzBqtYGbyjz=Dg7Zw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180548>
 
-=46rom: Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr>
+On Thu, Sep 01, 2011 at 11:47:59PM +0800, Tzu-Jung Lee wrote:
 
-Implement a gate between git and mediawiki, allowing git users to push
-and pull objects from mediawiki just as one would do with a classic git
-repository thanks to remote-helpers.
+> Correct me if I'm wrong:
+> 
+>     git-checkout saves the changes to index and working-tree, and
+> tries to apply them to the destined commit.
+>     If the changes are applicable, then git-checkout the destined
+> commit and apply the changes.
+>     Otherwise, git-checkout fails with warnings and leaves the current
+> status untouched.
 
-The following packages need to be installed (available on common
-repositories):
+Not exactly. "git checkout <branch>" will switch your HEAD to <branch>,
+and then try to make your index and working tree match the contents of
+<branch>, with two exceptions:
 
-  libmediawiki-api-perl
-  libdatetime-format-iso8601-perl
+  1. If you have local changes in a file, but the contents of the file
+     in <branch> do not differ from what's in the current HEAD, then the
+     file will be left alone (i.e., your local changes will be
+     preserved).
 
-Use remote helpers in order to be as transparent as possible to the git
-user.
+  2. If you have local changes in a file, and the contents of the file
+     in <branch> differ both from what's in your working tree and from
+     what's in your current HEAD, git will print an error and refuse to
+     overwrite your changes (though you can ask it to merge them with
+     "git checkout -m").
 
-Download Mediawiki revisions through the Mediawiki API and then
-fast-import into git.
+So it is not about "do these changes apply", but rather that we will
+give up any time file-level merging is required (unless "-m" is
+specified).
 
-Mediawiki revision number and git commits are linked thanks to notes
-bound to commits.
+The other form, "git checkout <branch> [--] <file>", is not about
+switching branches at all, but about putting content from <branch> into
+the current index and working tree, overwriting what's there.
 
-The import part is done on a refs/mediawiki/<remote> branch before
-coming to refs/remote/origin/master (Huge thanks to Jonathan Nieder
-for his help)
+> If the above correct. Please help me clarify if the following corner
+> case an intended or unexpected behavior.
+> [...]
+>     $ git checkout -b br1
+>     $ git reset HEAD^
+>     Unstaged changes after reset:
+>     M       aaa.txt
+>     M       bbb.txt
 
-We use UTF-8 everywhere: use encoding 'utf8'; does most of the job, but
-we also read the output of Git commands in UTF-8 with the small helper
-run_git, and write to the console (STDERR) in UTF-8. This allows a
-seamless use of non-ascii characters in page titles, but hasn't been
-tested on non-UTF-8 systems. In particular, UTF-8 encoding for filename=
-s
-could raise problems if different file systems handle UTF-8 filenames
-differently. A uri_escape of mediawiki filenames could be imaginable, a=
-nd
-is still to be discussed further.
+So you have changes in two commits...
 
-Partial cloning is supported using one of:
+>     $ git checkout HEAD aaa.txt
 
-git clone -c remote.origin.pages=3D'A_Page  Another_Page' mediawiki::ht=
-tp://wikiurl
+And here you explicitly overwrite the changes in aaa.txt.
 
-git clone -c remote.origin.categories=3D'Some_Category' mediawiki::http=
-://wikiurl
+>     $ git status --short
+>     M bbb.txt
 
-git clone -c remote.origin.shallow=3D'True' mediawiki::http://wikiurl
+...leaving only the changes in bbb.txt.
 
-Thanks to notes metadata, it is possible to compare remote and local la=
-st
-mediawiki revision to warn non-fast forward pushes and "everything
-up-to-date" case.
+>     $ git add bbb.txt
+>     $ git status
+> 
+>     # On branch br1
+>     # Changes to be committed:
+>     #   (use "git reset HEAD <file>..." to unstage)
+>     #
+>     #       modified:   bbb.txt
+>     #
 
-When allowed, push looks for each commit between remotes/origin/master
-and HEAD, catches every blob related to these commit and push them in
-chronological order. To do so, it uses git rev-list --children HEAD and
-travels the tree from remotes/origin/master to HEAD through children. I=
-n
-other words:
+OK, now it's staged.
 
-* Shortest path from remotes/origin/master to HEAD
-* For each commit encountered, push blobs related to this commit
+>     $ git checkout master
+>     Switched to branch 'master'
+> 
+> git silently switch to master without warning against the index are
+> "RESTORE/RESET" to clean.
 
-Signed-off-by: J=C3=A9r=C3=A9mie Nikaes <jeremie.nikaes@ensimag.imag.fr=
->
-Signed-off-by: Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>
-Signed-off-by: Claire Fousse <claire.fousse@ensimag.imag.fr>
-Signed-off-by: David Amouyal <david.amouyal@ensimag.imag.fr>
-Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Sylvain Boulm=C3=A9 <sylvain.boulme@imag.fr>
+Yes, because the changes in your index were identical to what was in the
+destination branch. So we didn't drop any changes; they're still in the
+index and in the working tree. It's simply that when compared to your
+new HEAD, they are uninteresting.
 
----
-Changes since v6:
+>     $ git checkout br1
+>     $ git status
+>     # On branch br1
+>     nothing to commit (working directory clean)
 
-* Regexp match simplification, thanks to Junio
+And now when we switch to br1, you have no changes against master in
+your working tree or index, so there is no dirty state to block
+switching branches.
 
-* Trivial whitespace fixes, for consistancy.
+I think git is working as intended here.  I agree it is a somewhat
+surprising corner case, but only because your changes happened to
+exactly match the difference between the two branches you are switching
+between. But it makes sense when you think about what "dirty state"
+means: it is differences between HEAD and your index and working tree.
+So we usually think of creating or removing dirty state by changing the
+working tree. But you could equally well do it by changing the HEAD
+without changing the working tree, which is what you did here.
 
- contrib/mw-to-git/git-remote-mediawiki     |  756 ++++++++++++++++++++=
-++++++++
- contrib/mw-to-git/git-remote-mediawiki.txt |    7 +
- 2 files changed, 763 insertions(+), 0 deletions(-)
- create mode 100755 contrib/mw-to-git/git-remote-mediawiki
- create mode 100644 contrib/mw-to-git/git-remote-mediawiki.txt
-
-diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git=
-/git-remote-mediawiki
-new file mode 100755
-index 0000000..d4d1198
---- /dev/null
-+++ b/contrib/mw-to-git/git-remote-mediawiki
-@@ -0,0 +1,756 @@
-+#! /usr/bin/perl
-+
-+# Copyright (C) 2011
-+#     J=C3=A9r=C3=A9mie Nikaes <jeremie.nikaes@ensimag.imag.fr>
-+#     Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>
-+#     Claire Fousse <claire.fousse@ensimag.imag.fr>
-+#     David Amouyal <david.amouyal@ensimag.imag.fr>
-+#     Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-+# License: GPL v2 or later
-+
-+# Gateway between Git and MediaWiki.
-+#   https://github.com/Bibzball/Git-Mediawiki/wiki
-+#
-+# Known limitations:
-+#
-+# - Only wiki pages are managed, no support for [[File:...]]
-+#   attachments.
-+#
-+# - Poor performance in the best case: it takes forever to check
-+#   whether we're up-to-date (on fetch or push) or to fetch a few
-+#   revisions from a large wiki, because we use exclusively a
-+#   page-based synchronization. We could switch to a wiki-wide
-+#   synchronization when the synchronization involves few revisions
-+#   but the wiki is large.
-+#
-+# - Git renames could be turned into MediaWiki renames (see TODO
-+#   below)
-+#
-+# - login/password support requires the user to write the password
-+#   cleartext in a file (see TODO below).
-+#
-+# - No way to import "one page, and all pages included in it"
-+#
-+# - Multiple remote MediaWikis have not been very well tested.
-+
-+use strict;
-+use MediaWiki::API;
-+use DateTime::Format::ISO8601;
-+use encoding 'utf8';
-+
-+# use encoding 'utf8' doesn't change STDERROR
-+# but we're going to output UTF-8 filenames to STDERR
-+binmode STDERR, ":utf8";
-+
-+use URI::Escape;
-+use warnings;
-+
-+# Mediawiki filenames can contain forward slashes. This variable decid=
-es by which pattern they should be replaced
-+use constant SLASH_REPLACEMENT =3D> "%2F";
-+
-+# It's not always possible to delete pages (may require some
-+# priviledges). Deleted pages are replaced with this content.
-+use constant DELETED_CONTENT =3D> "[[Category:Deleted]]\n";
-+
-+# It's not possible to create empty pages. New empty files in Git are
-+# sent with this content instead.
-+use constant EMPTY_CONTENT =3D> "<!-- empty page -->\n";
-+
-+# used to reflect file creation or deletion in diff.
-+use constant NULL_SHA1 =3D> "0000000000000000000000000000000000000000"=
-;
-+
-+my $remotename =3D $ARGV[0];
-+my $url =3D $ARGV[1];
-+
-+# Accept both space-separated and multiple keys in config file.
-+# Spaces should be written as _ anyway because we'll use chomp.
-+my @tracked_pages =3D split(/[ \n]/, run_git("config --get-all remote.=
-". $remotename .".pages"));
-+chomp(@tracked_pages);
-+
-+# Just like @tracked_pages, but for MediaWiki categories.
-+my @tracked_categories =3D split(/[ \n]/, run_git("config --get-all re=
-mote.". $remotename .".categories"));
-+chomp(@tracked_categories);
-+
-+my $wiki_login =3D run_git("config --get remote.". $remotename .".mwLo=
-gin");
-+# TODO: ideally, this should be able to read from keyboard, but we're
-+# inside a remote helper, so our stdin is connect to git, not to a
-+# terminal.
-+my $wiki_passwd =3D run_git("config --get remote.". $remotename .".mwP=
-assword");
-+chomp($wiki_login);
-+chomp($wiki_passwd);
-+
-+# Import only last revisions (both for clone and fetch)
-+my $shallow_import =3D run_git("config --get --bool remote.". $remoten=
-ame .".shallow");
-+chomp($shallow_import);
-+$shallow_import =3D ($shallow_import eq "true");
-+
-+my $wiki_name =3D $url;
-+$wiki_name =3D~ s/[^\/]*:\/\///;
-+
-+# Commands parser
-+my $entry;
-+my @cmd;
-+while (<STDIN>) {
-+	chomp;
-+	@cmd =3D split(/ /);
-+	if (defined($cmd[0])) {
-+		# Line not blank
-+		if ($cmd[0] eq "capabilities") {
-+			die("Too many arguments for capabilities") unless (!defined($cmd[1]=
-));
-+			mw_capabilities();
-+		} elsif ($cmd[0] eq "list") {
-+			die("Too many arguments for list") unless (!defined($cmd[2]));
-+			mw_list($cmd[1]);
-+		} elsif ($cmd[0] eq "import") {
-+			die("Invalid arguments for import") unless ($cmd[1] ne "" && !defin=
-ed($cmd[2]));
-+			mw_import($cmd[1]);
-+		} elsif ($cmd[0] eq "option") {
-+			die("Too many arguments for option") unless ($cmd[1] ne "" && $cmd[=
-2] ne "" && !defined($cmd[3]));
-+			mw_option($cmd[1],$cmd[2]);
-+		} elsif ($cmd[0] eq "push") {
-+			mw_push($cmd[1]);
-+		} else {
-+			print STDERR "Unknown command. Aborting...\n";
-+			last;
-+		}
-+	} else {
-+		# blank line: we should terminate
-+		last;
-+	}
-+
-+	BEGIN { $| =3D 1 } # flush STDOUT, to make sure the previous
-+			 # command is fully processed.
-+}
-+
-+########################## Functions ##############################
-+
-+# MediaWiki API instance, created lazily.
-+my $mediawiki;
-+
-+sub mw_connect_maybe {
-+	if ($mediawiki) {
-+	    return;
-+	}
-+	$mediawiki =3D MediaWiki::API->new;
-+	$mediawiki->{config}->{api_url} =3D "$url/api.php";
-+	if ($wiki_login) {
-+		if (!$mediawiki->login({
-+			lgname =3D> $wiki_login,
-+			lgpassword =3D> $wiki_passwd,
-+		})) {
-+			print STDERR "Failed to log in mediawiki user \"$wiki_login\" on $u=
-rl\n";
-+			print STDERR "(error " .
-+			    $mediawiki->{error}->{code} . ': ' .
-+			    $mediawiki->{error}->{details} . ")\n";
-+			exit 1;
-+		} else {
-+			print STDERR "Logged in with user \"$wiki_login\".\n";
-+		}
-+	}
-+}
-+
-+sub get_mw_first_pages {
-+	my $some_pages =3D shift;
-+	my @some_pages =3D @{$some_pages};
-+
-+	my $pages =3D shift;
-+
-+	# pattern 'page1|page2|...' required by the API
-+	my $titles =3D join('|', @some_pages);
-+
-+	my $mw_pages =3D $mediawiki->api({
-+		action =3D> 'query',
-+		titles =3D> $titles,
-+	});
-+	if (!defined($mw_pages)) {
-+		print STDERR "fatal: could not query the list of wiki pages.\n";
-+		print STDERR "fatal: '$url' does not appear to be a mediawiki\n";
-+		print STDERR "fatal: make sure '$url/api.php' is a valid page.\n";
-+		exit 1;
-+	}
-+	while (my ($id, $page) =3D each(%{$mw_pages->{query}->{pages}})) {
-+		if ($id < 0) {
-+			print STDERR "Warning: page $page->{title} not found on wiki\n";
-+		} else {
-+			$pages->{$page->{title}} =3D $page;
-+		}
-+	}
-+}
-+
-+sub get_mw_pages {
-+	mw_connect_maybe();
-+
-+	my %pages; # hash on page titles to avoid duplicates
-+	my $user_defined;
-+	if (@tracked_pages) {
-+		$user_defined =3D 1;
-+		# The user provided a list of pages titles, but we
-+		# still need to query the API to get the page IDs.
-+
-+		my @some_pages =3D @tracked_pages;
-+		while (@some_pages) {
-+			my $last =3D 50;
-+			if ($#some_pages < $last) {
-+				$last =3D $#some_pages;
-+			}
-+			my @slice =3D @some_pages[0..$last];
-+			get_mw_first_pages(\@slice, \%pages);
-+			@some_pages =3D @some_pages[51..$#some_pages];
-+		}
-+	}
-+	if (@tracked_categories) {
-+		$user_defined =3D 1;
-+		foreach my $category (@tracked_categories) {
-+			if (index($category, ':') < 0) {
-+				# Mediawiki requires the Category
-+				# prefix, but let's not force the user
-+				# to specify it.
-+				$category =3D "Category:" . $category;
-+			}
-+			my $mw_pages =3D $mediawiki->list( {
-+				action =3D> 'query',
-+				list =3D> 'categorymembers',
-+				cmtitle =3D> $category,
-+				cmlimit =3D> 'max' } )
-+			    || die $mediawiki->{error}->{code} . ': ' . $mediawiki->{error}=
-->{details};
-+			foreach my $page (@{$mw_pages}) {
-+				$pages{$page->{title}} =3D $page;
-+			}
-+		}
-+	}
-+	if (!$user_defined) {
-+		# No user-provided list, get the list of pages from
-+		# the API.
-+		my $mw_pages =3D $mediawiki->list({
-+			action =3D> 'query',
-+			list =3D> 'allpages',
-+			aplimit =3D> 500,
-+		});
-+		if (!defined($mw_pages)) {
-+			print STDERR "fatal: could not get the list of wiki pages.\n";
-+			print STDERR "fatal: '$url' does not appear to be a mediawiki\n";
-+			print STDERR "fatal: make sure '$url/api.php' is a valid page.\n";
-+			exit 1;
-+		}
-+		foreach my $page (@{$mw_pages}) {
-+			$pages{$page->{title}} =3D $page;
-+		}
-+	}
-+	return values(%pages);
-+}
-+
-+sub run_git {
-+	open(my $git, "-|:encoding(UTF-8)", "git " . $_[0]);
-+	my $res =3D do { local $/; <$git> };
-+	close($git);
-+
-+	return $res;
-+}
-+
-+
-+sub get_last_local_revision {
-+	# Get note regarding last mediawiki revision
-+	my $note =3D run_git("notes --ref=3D$remotename/mediawiki show refs/m=
-ediawiki/$remotename/master 2>/dev/null");
-+	my @note_info =3D split(/ /, $note);
-+
-+	my $lastrevision_number;
-+	if (!(defined($note_info[0]) && $note_info[0] eq "mediawiki_revision:=
-")) {
-+		print STDERR "No previous mediawiki revision found";
-+		$lastrevision_number =3D 0;
-+	} else {
-+		# Notes are formatted : mediawiki_revision: #number
-+		$lastrevision_number =3D $note_info[1];
-+		chomp($lastrevision_number);
-+		print STDERR "Last local mediawiki revision found is $lastrevision_n=
-umber";
-+	}
-+	return $lastrevision_number;
-+}
-+
-+sub get_last_remote_revision {
-+	mw_connect_maybe();
-+
-+	my @pages =3D get_mw_pages();
-+
-+	my $max_rev_num =3D 0;
-+
-+	foreach my $page (@pages) {
-+		my $id =3D $page->{pageid};
-+
-+		my $query =3D {
-+			action =3D> 'query',
-+			prop =3D> 'revisions',
-+			rvprop =3D> 'ids',
-+			pageids =3D> $id,
-+		};
-+
-+		my $result =3D $mediawiki->api($query);
-+
-+		my $lastrev =3D pop(@{$result->{query}->{pages}->{$id}->{revisions}}=
-);
-+
-+		$max_rev_num =3D ($lastrev->{revid} > $max_rev_num ? $lastrev->{revi=
-d} : $max_rev_num);
-+	}
-+
-+	print STDERR "Last remote revision found is $max_rev_num.\n";
-+	return $max_rev_num;
-+}
-+
-+# Clean content before sending it to MediaWiki
-+sub mediawiki_clean {
-+	my $string =3D shift;
-+	my $page_created =3D shift;
-+	# Mediawiki does not allow blank space at the end of a page and ends =
-with a single \n.
-+	# This function right trims a string and adds a \n at the end to foll=
-ow this rule
-+	$string =3D~ s/\s+$//;
-+	if ($string eq "" && $page_created) {
-+		# Creating empty pages is forbidden.
-+		$string =3D EMPTY_CONTENT;
-+	}
-+	return $string."\n";
-+}
-+
-+# Filter applied on MediaWiki data before adding them to Git
-+sub mediawiki_smudge {
-+	my $string =3D shift;
-+	if ($string eq EMPTY_CONTENT) {
-+		$string =3D "";
-+	}
-+	# This \n is important. This is due to mediawiki's way to handle end =
-of files.
-+	return $string."\n";
-+}
-+
-+sub mediawiki_clean_filename {
-+	my $filename =3D shift;
-+	$filename =3D~ s/@{[SLASH_REPLACEMENT]}/\//g;
-+	# [, ], |, {, and } are forbidden by MediaWiki, even URL-encoded.
-+	# Do a variant of URL-encoding, i.e. looks like URL-encoding,
-+	# but with _ added to prevent MediaWiki from thinking this is
-+	# an actual special character.
-+	$filename =3D~ s/[\[\]\{\}\|]/sprintf("_%%_%x", ord($&))/ge;
-+	# If we use the uri escape before
-+	# we should unescape here, before anything
-+
-+	return $filename;
-+}
-+
-+sub mediawiki_smudge_filename {
-+	my $filename =3D shift;
-+	$filename =3D~ s/\//@{[SLASH_REPLACEMENT]}/g;
-+	$filename =3D~ s/ /_/g;
-+	# Decode forbidden characters encoded in mediawiki_clean_filename
-+	$filename =3D~ s/_%_([0-9a-fA-F][0-9a-fA-F])/sprintf("%c", hex($1))/g=
-e;
-+	return $filename;
-+}
-+
-+sub literal_data {
-+	my ($content) =3D @_;
-+	print STDOUT "data ", bytes::length($content), "\n", $content;
-+}
-+
-+sub mw_capabilities {
-+	# Revisions are imported to the private namespace
-+	# refs/mediawiki/$remotename/ by the helper and fetched into
-+	# refs/remotes/$remotename later by fetch.
-+	print STDOUT "refspec refs/heads/*:refs/mediawiki/$remotename/*\n";
-+	print STDOUT "import\n";
-+	print STDOUT "list\n";
-+	print STDOUT "push\n";
-+	print STDOUT "\n";
-+}
-+
-+sub mw_list {
-+	# MediaWiki do not have branches, we consider one branch arbitrarily
-+	# called master, and HEAD pointing to it.
-+	print STDOUT "? refs/heads/master\n";
-+	print STDOUT "\@refs/heads/master HEAD\n";
-+	print STDOUT "\n";
-+}
-+
-+sub mw_option {
-+	print STDERR "remote-helper command 'option $_[0]' not yet implemente=
-d\n";
-+	print STDOUT "unsupported\n";
-+}
-+
-+sub fetch_mw_revisions_for_page {
-+	my $page =3D shift;
-+	my $id =3D shift;
-+	my $fetch_from =3D shift;
-+	my @page_revs =3D ();
-+	my $query =3D {
-+		action =3D> 'query',
-+		prop =3D> 'revisions',
-+		rvprop =3D> 'ids',
-+		rvdir =3D> 'newer',
-+		rvstartid =3D> $fetch_from,
-+		rvlimit =3D> 500,
-+		pageids =3D> $id,
-+	};
-+
-+	my $revnum =3D 0;
-+	# Get 500 revisions at a time due to the mediawiki api limit
-+	while (1) {
-+		my $result =3D $mediawiki->api($query);
-+
-+		# Parse each of those 500 revisions
-+		foreach my $revision (@{$result->{query}->{pages}->{$id}->{revisions=
-}}) {
-+			my $page_rev_ids;
-+			$page_rev_ids->{pageid} =3D $page->{pageid};
-+			$page_rev_ids->{revid} =3D $revision->{revid};
-+			push(@page_revs, $page_rev_ids);
-+			$revnum++;
-+		}
-+		last unless $result->{'query-continue'};
-+		$query->{rvstartid} =3D $result->{'query-continue'}->{revisions}->{r=
-vstartid};
-+	}
-+	if ($shallow_import && @page_revs) {
-+		print STDERR "  Found 1 revision (shallow import).\n";
-+		@page_revs =3D sort {$b->{revid} <=3D> $a->{revid}} (@page_revs);
-+		return $page_revs[0];
-+	}
-+	print STDERR "  Found ", $revnum, " revision(s).\n";
-+	return @page_revs;
-+}
-+
-+sub fetch_mw_revisions {
-+	my $pages =3D shift; my @pages =3D @{$pages};
-+	my $fetch_from =3D shift;
-+
-+	my @revisions =3D ();
-+	my $n =3D 1;
-+	foreach my $page (@pages) {
-+		my $id =3D $page->{pageid};
-+
-+		print STDERR "page $n/", scalar(@pages), ": ". $page->{title} ."\n";
-+		$n++;
-+		my @page_revs =3D fetch_mw_revisions_for_page($page, $id, $fetch_fro=
-m);
-+		@revisions =3D (@page_revs, @revisions);
-+	}
-+
-+	return ($n, @revisions);
-+}
-+
-+sub import_file_revision {
-+	my $commit =3D shift;
-+	my %commit =3D %{$commit};
-+	my $full_import =3D shift;
-+	my $n =3D shift;
-+
-+	my $title =3D $commit{title};
-+	my $comment =3D $commit{comment};
-+	my $content =3D $commit{content};
-+	my $author =3D $commit{author};
-+	my $date =3D $commit{date};
-+
-+	print STDOUT "commit refs/mediawiki/$remotename/master\n";
-+	print STDOUT "mark :$n\n";
-+	print STDOUT "committer $author <$author\@$wiki_name> ", $date->epoch=
-, " +0000\n";
-+	literal_data($comment);
-+
-+	# If it's not a clone, we need to know where to start from
-+	if (!$full_import && $n =3D=3D 1) {
-+		print STDOUT "from refs/mediawiki/$remotename/master^0\n";
-+	}
-+	if ($content ne DELETED_CONTENT) {
-+		print STDOUT "M 644 inline $title.mw\n";
-+		literal_data($content);
-+		print STDOUT "\n\n";
-+	} else {
-+		print STDOUT "D $title.mw\n";
-+	}
-+
-+	# mediawiki revision number in the git note
-+	if ($full_import && $n =3D=3D 1) {
-+		print STDOUT "reset refs/notes/$remotename/mediawiki\n";
-+	}
-+	print STDOUT "commit refs/notes/$remotename/mediawiki\n";
-+	print STDOUT "committer $author <$author\@$wiki_name> ", $date->epoch=
-, " +0000\n";
-+	literal_data("Note added by git-mediawiki during import");
-+	if (!$full_import && $n =3D=3D 1) {
-+		print STDOUT "from refs/notes/$remotename/mediawiki^0\n";
-+	}
-+	print STDOUT "N inline :$n\n";
-+	literal_data("mediawiki_revision: " . $commit{mw_revision});
-+	print STDOUT "\n\n";
-+}
-+
-+# parse a sequence of
-+# <cmd> <arg1>
-+# <cmd> <arg2>
-+# \n
-+# (like batch sequence of import and sequence of push statements)
-+sub get_more_refs {
-+	my $cmd =3D shift;
-+	my @refs;
-+	while (1) {
-+		my $line =3D <STDIN>;
-+		if ($line =3D~ m/^$cmd (.*)$/) {
-+			push(@refs, $1);
-+		} elsif ($line eq "\n") {
-+			return @refs;
-+		} else {
-+			die("Invalid command in a '$cmd' batch: ". $_);
-+		}
-+	}
-+}
-+
-+sub mw_import {
-+	# multiple import commands can follow each other.
-+	my @refs =3D (shift, get_more_refs("import"));
-+	foreach my $ref (@refs) {
-+		mw_import_ref($ref);
-+	}
-+	print STDOUT "done\n";
-+}
-+
-+sub mw_import_ref {
-+	my $ref =3D shift;
-+	# The remote helper will call "import HEAD" and
-+	# "import refs/heads/master".
-+	# Since HEAD is a symbolic ref to master (by convention,
-+	# followed by the output of the command "list" that we gave),
-+	# we don't need to do anything in this case.
-+	if ($ref eq "HEAD") {
-+		return;
-+	}
-+
-+	mw_connect_maybe();
-+
-+	my @pages =3D get_mw_pages();
-+
-+	print STDERR "Searching revisions...\n";
-+	my $last_local =3D get_last_local_revision();
-+	my $fetch_from =3D $last_local + 1;
-+	if ($fetch_from =3D=3D 1) {
-+		print STDERR ", fetching from beginning.\n";
-+	} else {
-+		print STDERR ", fetching from here.\n";
-+	}
-+	my ($n, @revisions) =3D fetch_mw_revisions(\@pages, $fetch_from);
-+
-+	# Creation of the fast-import stream
-+	print STDERR "Fetching & writing export data...\n";
-+
-+	$n =3D 0;
-+	my $last_timestamp =3D 0; # Placeholer in case $rev->timestamp is und=
-efined
-+
-+	foreach my $pagerevid (sort {$a->{revid} <=3D> $b->{revid}} @revision=
-s) {
-+		# fetch the content of the pages
-+		my $query =3D {
-+			action =3D> 'query',
-+			prop =3D> 'revisions',
-+			rvprop =3D> 'content|timestamp|comment|user|ids',
-+			revids =3D> $pagerevid->{revid},
-+		};
-+
-+		my $result =3D $mediawiki->api($query);
-+
-+		my $rev =3D pop(@{$result->{query}->{pages}->{$pagerevid->{pageid}}-=
->{revisions}});
-+
-+		$n++;
-+
-+		my %commit;
-+		$commit{author} =3D $rev->{user} || 'Anonymous';
-+		$commit{comment} =3D $rev->{comment} || '*Empty MediaWiki Message*';
-+		$commit{title} =3D mediawiki_smudge_filename(
-+			$result->{query}->{pages}->{$pagerevid->{pageid}}->{title}
-+		    );
-+		$commit{mw_revision} =3D $pagerevid->{revid};
-+		$commit{content} =3D mediawiki_smudge($rev->{'*'});
-+
-+		if (!defined($rev->{timestamp})) {
-+			$last_timestamp++;
-+		} else {
-+			$last_timestamp =3D $rev->{timestamp};
-+		}
-+		$commit{date} =3D DateTime::Format::ISO8601->parse_datetime($last_ti=
-mestamp);
-+
-+		print STDERR "$n/", scalar(@revisions), ": Revision #$pagerevid->{re=
-vid} of $commit{title}\n";
-+
-+		import_file_revision(\%commit, ($fetch_from =3D=3D 1), $n);
-+	}
-+
-+	if ($fetch_from =3D=3D 1 && $n =3D=3D 0) {
-+		print STDERR "You appear to have cloned an empty MediaWiki.\n";
-+		# Something has to be done remote-helper side. If nothing is done, a=
-n error is
-+		# thrown saying that HEAD is refering to unknown object 000000000000=
-0000000
-+		# and the clone fails.
-+	}
-+}
-+
-+sub error_non_fast_forward {
-+	# Native git-push would show this after the summary.
-+	# We can't ask it to display it cleanly, so print it
-+	# ourselves before.
-+	print STDERR "To prevent you from losing history, non-fast-forward up=
-dates were rejected\n";
-+	print STDERR "Merge the remote changes (e.g. 'git pull') before pushi=
-ng again. See the\n";
-+	print STDERR "'Note about fast-forwards' section of 'git push --help'=
- for details.\n";
-+
-+	print STDOUT "error $_[0] \"non-fast-forward\"\n";
-+	return 0;
-+}
-+
-+sub mw_push_file {
-+	my $diff_info =3D shift;
-+	# $diff_info contains a string in this format:
-+	# 100644 100644 <sha1_of_blob_before_commit> <sha1_of_blob_now> <stat=
-us>
-+	my @diff_info_split =3D split(/[ \t]/, $diff_info);
-+
-+	# Filename, including .mw extension
-+	my $complete_file_name =3D shift;
-+	# Commit message
-+	my $summary =3D shift;
-+
-+	my $new_sha1 =3D $diff_info_split[3];
-+	my $old_sha1 =3D $diff_info_split[2];
-+	my $page_created =3D ($old_sha1 eq NULL_SHA1);
-+	my $page_deleted =3D ($new_sha1 eq NULL_SHA1);
-+	$complete_file_name =3D mediawiki_clean_filename($complete_file_name)=
-;
-+
-+	if (substr($complete_file_name,-3) eq ".mw") {
-+		my $title =3D substr($complete_file_name,0,-3);
-+
-+		my $file_content;
-+		if ($page_deleted) {
-+			# Deleting a page usually requires
-+			# special priviledges. A common
-+			# convention is to replace the page
-+			# with this content instead:
-+			$file_content =3D DELETED_CONTENT;
-+		} else {
-+			$file_content =3D run_git("cat-file blob $new_sha1");
-+		}
-+
-+		mw_connect_maybe();
-+
-+		my $result =3D $mediawiki->edit( {
-+			action =3D> 'edit',
-+			summary =3D> $summary,
-+			title =3D> $title,
-+			text =3D> mediawiki_clean($file_content, $page_created),
-+				  }, {
-+					  skip_encoding =3D> 1 # Helps with names with accentuated charac=
-ters
-+				  }) || die 'Fatal: Error ' .
-+				  $mediawiki->{error}->{code} .
-+				  ' from mediwiki: ' . $mediawiki->{error}->{details};
-+		print STDERR "Pushed file : $new_sha1 - $title\n";
-+	} else {
-+		print STDERR "$complete_file_name not a mediawiki file (Not pushable=
- on this version of git-remote-mediawiki).\n"
-+	}
-+}
-+
-+sub mw_push {
-+	# multiple push statements can follow each other
-+	my @refsspecs =3D (shift, get_more_refs("push"));
-+	my %status;
-+	my $pushed;
-+	for my $refspec (@refsspecs) {
-+		my ($force, $local, $remote) =3D $refspec =3D~ /^(\+)?([^:]*):([^:]*=
-)$/
-+		    or die("Invalid refspec for push. Expected <src>:<dst> or +<src>=
-:<dst>");
-+		if ($force) {
-+			print STDERR "Warning: forced push not allowed on a MediaWiki.\n";
-+		}
-+		if ($local eq "") {
-+			print STDERR "Cannot delete remote branch on a MediaWiki\n";
-+			print STDOUT "error $remote cannot delete\n";
-+			next;
-+		}
-+		if ($remote ne "refs/heads/master") {
-+			print STDERR "Only push to the branch 'master' is supported on a Me=
-diaWiki\n";
-+			print STDOUT "error $remote only master allowed\n";
-+			next;
-+		}
-+		if (mw_push_revision($local, $remote)) {
-+			$pushed =3D 1;
-+		}
-+	}
-+
-+	# Notify Git that the push is done
-+	print STDOUT "\n";
-+
-+	if ($pushed) {
-+		print STDERR "Just pushed some revisions to MediaWiki.\n";
-+		print STDERR "The pushed revisions now have to be re-imported, and y=
-our current branch\n";
-+		print STDERR "needs to be updated with these re-imported commits. Yo=
-u can do this with\n";
-+		print STDERR "\n";
-+		print STDERR "  git pull --rebase\n";
-+		print STDERR "\n";
-+	}
-+}
-+
-+sub mw_push_revision {
-+	my $local =3D shift;
-+	my $remote =3D shift; # actually, this has to be "refs/heads/master" =
-at this point.
-+	my $last_local_revid =3D get_last_local_revision();
-+	print STDERR ".\n"; # Finish sentence started by get_last_local_revis=
-ion()
-+	my $last_remote_revid =3D get_last_remote_revision();
-+
-+	# Get sha1 of commit pointed by local HEAD
-+	my $HEAD_sha1 =3D run_git("rev-parse $local 2>/dev/null"); chomp($HEA=
-D_sha1);
-+	# Get sha1 of commit pointed by remotes/$remotename/master
-+	my $remoteorigin_sha1 =3D run_git("rev-parse refs/remotes/$remotename=
-/master 2>/dev/null");
-+	chomp($remoteorigin_sha1);
-+
-+	if ($last_local_revid > 0 &&
-+	    $last_local_revid < $last_remote_revid) {
-+		return error_non_fast_forward($remote);
-+	}
-+
-+	if ($HEAD_sha1 eq $remoteorigin_sha1) {
-+		# nothing to push
-+		return 0;
-+	}
-+
-+	# Get every commit in between HEAD and refs/remotes/origin/master,
-+	# including HEAD and refs/remotes/origin/master
-+	my @commit_pairs =3D ();
-+	if ($last_local_revid > 0) {
-+		my $parsed_sha1 =3D $remoteorigin_sha1;
-+		# Find a path from last MediaWiki commit to pushed commit
-+		while ($parsed_sha1 ne $HEAD_sha1) {
-+			my @commit_info =3D  grep(/^$parsed_sha1/, split(/\n/, run_git("rev=
--list --children $local")));
-+			if (!@commit_info) {
-+				return error_non_fast_forward($remote);
-+			}
-+			my @commit_info_split =3D split(/ |\n/, $commit_info[0]);
-+			# $commit_info_split[1] is the sha1 of the commit to export
-+			# $commit_info_split[0] is the sha1 of its direct child
-+			push(@commit_pairs, \@commit_info_split);
-+			$parsed_sha1 =3D $commit_info_split[1];
-+		}
-+	} else {
-+		# No remote mediawiki revision. Export the whole
-+		# history (linearized with --first-parent)
-+		print STDERR "Warning: no common ancestor, pushing complete history\=
-n";
-+		my $history =3D run_git("rev-list --first-parent --children $local")=
-;
-+		my @history =3D split('\n', $history);
-+		@history =3D @history[1..$#history];
-+		foreach my $line (reverse @history) {
-+			my @commit_info_split =3D split(/ |\n/, $line);
-+			push(@commit_pairs, \@commit_info_split);
-+		}
-+	}
-+
-+	foreach my $commit_info_split (@commit_pairs) {
-+		my $sha1_child =3D @{$commit_info_split}[0];
-+		my $sha1_commit =3D @{$commit_info_split}[1];
-+		my $diff_infos =3D run_git("diff-tree -r --raw -z $sha1_child $sha1_=
-commit");
-+		# TODO: we could detect rename, and encode them with a #redirect on =
-the wiki.
-+		# TODO: for now, it's just a delete+add
-+		my @diff_info_list =3D split(/\0/, $diff_infos);
-+		# Keep the first line of the commit message as mediawiki comment for=
- the revision
-+		my $commit_msg =3D (split(/\n/, run_git("show --pretty=3Dformat:\"%s=
-\" $sha1_commit")))[0];
-+		chomp($commit_msg);
-+		# Push every blob
-+		while (@diff_info_list) {
-+			# git diff-tree -z gives an output like
-+			# <metadata>\0<filename1>\0
-+			# <metadata>\0<filename2>\0
-+			# and we've split on \0.
-+			my $info =3D shift(@diff_info_list);
-+			my $file =3D shift(@diff_info_list);
-+			mw_push_file($info, $file, $commit_msg);
-+		}
-+	}
-+
-+	print STDOUT "ok $remote\n";
-+	return 1;
-+}
-diff --git a/contrib/mw-to-git/git-remote-mediawiki.txt b/contrib/mw-to=
--git/git-remote-mediawiki.txt
-new file mode 100644
-index 0000000..4d211f5
---- /dev/null
-+++ b/contrib/mw-to-git/git-remote-mediawiki.txt
-@@ -0,0 +1,7 @@
-+Git-Mediawiki is a project which aims the creation of a gate
-+between git and mediawiki, allowing git users to push and pull
-+objects from mediawiki just as one would do with a classic git
-+repository thanks to remote-helpers.
-+
-+For more information, visit the wiki at
-+https://github.com/Bibzball/Git-Mediawiki/wiki
---=20
-1.7.7.rc0.75.g56f27
+-Peff
