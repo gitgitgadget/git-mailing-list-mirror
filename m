@@ -1,62 +1,86 @@
-From: Alex Vandiver <alex@chmrr.net>
-Subject: Re: [PATCH] test-lib: save test counts across invocations
-Date: Thu, 01 Sep 2011 14:38:54 -0400
-Message-ID: <1314902334.5371.17.camel@umgah.localdomain>
-References: <8fe5381a6b69079b8c20452fd4d99a128764dd52.1314882443.git.trast@student.ethz.ch>
-	 <20110901163846.GD15018@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Dropping '+' from fetch = +refs/heads/*:refs/remotes/origin/*?
+Date: Thu, 01 Sep 2011 11:39:22 -0700
+Message-ID: <7vhb4ww1id.fsf@alter.siamese.dyndns.org>
+References: <7vliu8w25g.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 01 20:39:17 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 01 20:39:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzCAW-0004zW-U3
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 20:39:17 +0200
+	id 1QzCAm-00057r-Tm
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 20:39:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757355Ab1IASjJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Sep 2011 14:39:09 -0400
-Received: from chmrr.net ([209.67.253.66]:48139 "EHLO utwig.chmrr.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757319Ab1IASjH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Sep 2011 14:39:07 -0400
-Received: from 75-147-59-54-newengland.hfc.comcastbusiness.net ([75.147.59.54] helo=[10.1.10.64])
-	by utwig.chmrr.net with esmtpsa (SSLv3:CAMELLIA256-SHA:256)
-	(Exim 4.76)
-	(envelope-from <alex@chmrr.net>)
-	id 1QzCAG-000166-VU; Thu, 01 Sep 2011 14:39:04 -0400
-In-Reply-To: <20110901163846.GD15018@sigill.intra.peff.net>
-X-Mailer: Evolution 2.32.2 
-X-Authenticated-User: chmrr
-X-Authenticator: plain
-X-Sender-Verify: SUCCEEDED (sender exists & accepts mail)
-X-Exim-Version: 4.76 (build at 25-May-2011 17:04:25)
-X-Date: 2011-09-01 14:39:04
-X-Connected-IP: 75.147.59.54:32835
+	id S1757354Ab1IASjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Sep 2011 14:39:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56960 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757320Ab1IASjZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Sep 2011 14:39:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88CC05C15;
+	Thu,  1 Sep 2011 14:39:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hpOBxrDWSKtnPqo6eQmA4DqUdy8=; b=MHnrDH
+	Ljpf6vImDmXzk93k31OHHfQchjQ8bYi555zgGD5SSGWv1A8TrV/XaMBLDP7oYW3o
+	OpvIq1pRmOWRGqfZX2gQS0alGVWYQFL5cO94cYjgkh6FJ4ovRik3RIBGQTjjh2zl
+	oQH0dohj+4l8MMv6k97WSN5Te4j7mJLxZ64pM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kbgQrayNpL4sZdJa0O3kSMT2ILWwitls
+	//2ZKlW6mhQcqqB4AE0Zt7IBB4xMwIF+++9jYfxaUGTjMq3nRAoSXmpPzwLsH5gy
+	TjBm6vU9z18I5ZVgX1mV827ycPWSWS9UUvQPTO3+sR7TR4990CZlSDxaY2SEyEqA
+	PZRCm3XXV50=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 806045C14;
+	Thu,  1 Sep 2011 14:39:24 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1577D5C13; Thu,  1 Sep 2011
+ 14:39:23 -0400 (EDT)
+In-Reply-To: <7vliu8w25g.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 01 Sep 2011 11:25:31 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B6C4D38A-D4C9-11E0-A3C3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180562>
 
-On Thu, 2011-09-01 at 12:38 -0400, Jeff King wrote:
-> Hmm. What happens when we're wrong? Does our eye-candy just print
-> something non-sensical like "13/12", or does prove actually care that we
-> run the right number of tests?
+Junio C Hamano <gitster@pobox.com> writes:
 
-prove very much does care -- having a mismatch between the number of
-tests planned and the number of tests run is an error in the testfile,
-and is reported as such in big red text.  This is because stating how
-many tests you plan to run gives prove a way (in addition to the exit
-status) to know if the test stopped prematurely, so all mismatches
-between plan and actual test counts are reported as testfile failures.
+> Suggested reading:
+>
+>   http://git-blame.blogspot.com/2011/08/how-to-inject-malicious-commit-to-git.html
+>
+> I am wondering if we are better off applying something along the lines of
+> this patch, so that with the default configuration, users can notice if
+> their upstream unexpectedly rewound their branches.
+>
+> It would produce
+>
+> 	[remote]
+>         	url = git://.../git.git/
+>                 fetch = refs/heads/*:refs/remotes/origin/*
+>
+> upon cloning from my repository, and your "git fetch" will fail because
+> the pu (proposed updates) branch is constantly unwinding, but that can be
+> easily fixed with
+>
+>
+> 	[remote]
+>         	url = git://.../git.git/
+>                 fetch = refs/heads/*:refs/remotes/origin/*
+>                 fetch = +refs/heads/pu:refs/remotes/origin/pu
+>
+> as the explicit refspec trumps the wildcard one.
 
-As far as I know prove doesn't have a way to print the estimated time
-remaining, though using the contents of the .prove file (if you ran
-prove --state=save) to guess it wouldn't be all that hard of a change.
- - Alex
+It appears that we have a glitch somewhere in the implementation. We
+should make the explicit refspec trump the wildcarded ones.
