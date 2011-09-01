@@ -1,118 +1,230 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/3] rev-list --verify-object
-Date: Thu,  1 Sep 2011 15:43:34 -0700
-Message-ID: <1314917015-3587-3-git-send-email-gitster@pobox.com>
+Subject: [PATCH 3/3] fetch: verify we have everything we need before updating
+ our ref
+Date: Thu,  1 Sep 2011 15:43:35 -0700
+Message-ID: <1314917015-3587-4-git-send-email-gitster@pobox.com>
 References: <7vpqjkw3nb.fsf@alter.siamese.dyndns.org>
  <1314917015-3587-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 02 00:43:55 2011
+X-From: git-owner@vger.kernel.org Fri Sep 02 00:43:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzFzH-0000h6-He
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 00:43:55 +0200
+	id 1QzFzI-0000h6-23
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 00:43:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932576Ab1IAWnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Sep 2011 18:43:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39924 "EHLO
+	id S932578Ab1IAWnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Sep 2011 18:43:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39943 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932572Ab1IAWnl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Sep 2011 18:43:41 -0400
+	id S932574Ab1IAWnn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Sep 2011 18:43:43 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A636E5245
-	for <git@vger.kernel.org>; Thu,  1 Sep 2011 18:43:40 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A843B5248
+	for <git@vger.kernel.org>; Thu,  1 Sep 2011 18:43:42 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=X4UQ
-	Jwcu0h1akY/s1VyqyS9XF8w=; b=hp8MSOTG36sf5RuSw+NWKlCAXObkegzyLcCt
-	Z+4wqZjXw98YRoya5L0muW+RNi3rkwYGVRJZmu5cWUfv5i8qR8AfB6zGzu0IiGHW
-	D1SGt0RYfAVTybo9btnd55+NDPbhhTkzTiRZviVhn2avVZE0hsPB+PqIm0J7jldt
-	UxPvKxo=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=UXFV
+	e+Gn5SRWNEEJbYQHsecqWKM=; b=vqHKXapENJ2z5n2ah6LnZJUxVuEgCvvz7wo9
+	jAc74QkpINWO1w/rHm5msZFVHJ6RiVQOTyAgyqoaArxfm6pq7f7xKvxPG+pVPxIE
+	iNOUjasqXwuKi8VBoFaJ+r26hlydC7iLY74luH0dIJyEiGONgyj4WlB3T+tGELc7
+	f4QX7Zs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=sxmklj
-	51EHheImASb2oKpW31vfh2WTCqtiS7NaPxEjYcc2nFNzaw3PzfEFFk7EsZp6ndA6
-	MEWZbUfwz7V8EO9fgyb/gDF16q+qucalzTrtFuWmP8A/e5QHE83+ah7NGbB6U2VV
-	Qi3bgPx3TeeoZHOyvcTPN6ot0vO+0OFZazQGc=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=cQQzRq
+	vTOVkcN1S24elXYJn9wUkYx0aGPaIChu78vD+Kdet0VJRcAFgmA0MIENoRdNDh5B
+	Mt0ipGoyHbnFBWIyp3Kw6mmLzbVSUIbtmFRFgPieY4WJlezg+8fCJ110W7k+9fVo
+	VK63VVXrNGJTo1F6ViWW8Bo+2ZmEPkcqhAAXo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D9E95244
-	for <git@vger.kernel.org>; Thu,  1 Sep 2011 18:43:40 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A04E35247
+	for <git@vger.kernel.org>; Thu,  1 Sep 2011 18:43:42 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2C84F5243 for
- <git@vger.kernel.org>; Thu,  1 Sep 2011 18:43:40 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EB3A15246 for
+ <git@vger.kernel.org>; Thu,  1 Sep 2011 18:43:41 -0400 (EDT)
 X-Mailer: git-send-email 1.7.7.rc0.72.g4b5ea
 In-Reply-To: <1314917015-3587-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: D67B44F8-D4EB-11E0-BF64-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D78B0D74-D4EB-11E0-800E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180581>
 
-Often we want to verify everything reachable from a given set of commits
-are present in our repository and connected without a gap to the tips of
-our refs. We used to do this for this purpose:
+The "git fetch" command works in two phases. The remote side tells us what
+objects are at the tip of the refs we are fetching from, and transfers the
+objects missing from our side. After storing the objects in our repository,
+we update our remote tracking branches to point at the updated tips of the
+refs.
 
-    $ rev-list --objects $commits_to_be_tested --not --all
+A broken or malicious remote side could send a perfectly well-formed pack
+data during the object transfer phase, but there is no guarantee that the
+given data actually fill the gap between the objects we originally had and
+the refs we are updating to.
 
-Even though this is good enough for catching missing commits and trees,
-we show the object name but do not verify their existence, let alone their
-well-formedness, for the blob objects at the leaf level.
-
-Add a new "--verify-object" option so that we can catch missing and broken
-blobs as well.
+Although this kind of breakage can be caught by running fsck after a
+fetch, it is much cheaper to verify that everything that is reachable from
+the tips of the refs we fetched are indeed fully connected to the tips of
+our current set of refs before we update them.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/rev-list.c |    4 ++++
- revision.c         |    5 +++++
- revision.h         |    1 +
- 3 files changed, 10 insertions(+), 0 deletions(-)
+ builtin/fetch.c |  119 +++++++++++++++++++++++++++++--------------------------
+ 1 files changed, 63 insertions(+), 56 deletions(-)
 
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 920b91c..ab3be7c 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -180,7 +180,11 @@ static void show_object(struct object *obj,
- 			const struct name_path *path, const char *component,
- 			void *cb_data)
- {
-+	struct rev_info *info = cb_data;
-+
- 	finish_object(obj, path, component, cb_data);
-+	if (info->verify_objects && !obj->parsed && obj->type != OBJ_COMMIT)
-+		parse_object(obj->sha1);
- 	show_object_with_name(stdout, obj, path, component);
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index f9c41da..bdb03ff 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -345,6 +345,64 @@ static int update_local_ref(struct ref *ref,
+ 	}
  }
  
-diff --git a/revision.c b/revision.c
-index 072ddac..5ef498b 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1383,6 +1383,11 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->tree_objects = 1;
- 		revs->blob_objects = 1;
- 		revs->edge_hint = 1;
-+	} else if (!strcmp(arg, "--verify-objects")) {
-+		revs->tag_objects = 1;
-+		revs->tree_objects = 1;
-+		revs->blob_objects = 1;
-+		revs->verify_objects = 1;
- 	} else if (!strcmp(arg, "--unpacked")) {
- 		revs->unpacked = 1;
- 	} else if (!prefixcmp(arg, "--unpacked=")) {
-diff --git a/revision.h b/revision.h
-index da00a58..648876b 100644
---- a/revision.h
-+++ b/revision.h
-@@ -53,6 +53,7 @@ struct rev_info {
- 			tag_objects:1,
- 			tree_objects:1,
- 			blob_objects:1,
-+			verify_objects:1,
- 			edge_hint:1,
- 			limited:1,
- 			unpacked:1,
++/*
++ * The ref_map records the tips of the refs we are fetching. If
++ *
++ *  $ git rev-list --verify-objects --stdin --not --all
++ *
++ * (feeding all the refs in ref_map on its standard input) does not
++ * error out, that means everything reachable from these updated refs
++ * locally exists and is connected to some of our existing refs.
++ *
++ * Returns 0 if everything is connected, non-zero otherwise.
++ */
++static int check_everything_connected(struct ref *ref_map, int quiet)
++{
++	struct child_process rev_list;
++	const char *argv[] = {"rev-list", "--verify-objects",
++			      "--stdin", "--not", "--all", NULL, NULL};
++	char commit[41];
++	struct ref *ref;
++	int err = 0;
++
++	if (!ref_map)
++		return 0;
++
++	if (quiet)
++		argv[5] = "--quiet";
++
++	memset(&rev_list, 0, sizeof(rev_list));
++	rev_list.argv = argv;
++	rev_list.git_cmd = 1;
++	rev_list.in = -1;
++	rev_list.no_stdout = 1;
++	rev_list.no_stderr = quiet;
++	if (start_command(&rev_list))
++		return error(_("Could not run 'git rev-list'"));
++
++	sigchain_push(SIGPIPE, SIG_IGN);
++
++	memcpy(commit + 40, "\n", 2);
++	for (ref = ref_map; ref; ref = ref->next) {
++		memcpy(commit, sha1_to_hex(ref->old_sha1), 40);
++		if (write_in_full(rev_list.in, commit, 41) < 0) {
++			if (errno != EPIPE && errno != EINVAL)
++				error(_("failed write to rev-list: %s"),
++				      strerror(errno));
++			err = -1;
++			break;
++		}
++	}
++	if (close(rev_list.in)) {
++		error(_("failed to close rev-list's stdin: %s"), strerror(errno));
++		err = -1;
++	}
++
++	sigchain_pop(SIGPIPE);
++
++	return finish_command(&rev_list) || err;
++}
++
+ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 		struct ref *ref_map)
+ {
+@@ -364,6 +422,10 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 		url = transport_anonymize_url(raw_url);
+ 	else
+ 		url = xstrdup("foreign");
++
++	if (check_everything_connected(ref_map, 0))
++		return error(_("%s did not send all necessary objects\n"), url);
++
+ 	for (rm = ref_map; rm; rm = rm->next) {
+ 		struct ref *ref = NULL;
+ 
+@@ -457,24 +519,9 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+  * We would want to bypass the object transfer altogether if
+  * everything we are going to fetch already exists and is connected
+  * locally.
+- *
+- * The refs we are going to fetch are in ref_map.  If running
+- *
+- *  $ git rev-list --objects --stdin --not --all
+- *
+- * (feeding all the refs in ref_map on its standard input)
+- * does not error out, that means everything reachable from the
+- * refs we are going to fetch exists and is connected to some of
+- * our existing refs.
+  */
+ static int quickfetch(struct ref *ref_map)
+ {
+-	struct child_process revlist;
+-	struct ref *ref;
+-	int err;
+-	const char *argv[] = {"rev-list",
+-		"--quiet", "--objects", "--stdin", "--not", "--all", NULL};
+-
+ 	/*
+ 	 * If we are deepening a shallow clone we already have these
+ 	 * objects reachable.  Running rev-list here will return with
+@@ -484,47 +531,7 @@ static int quickfetch(struct ref *ref_map)
+ 	 */
+ 	if (depth)
+ 		return -1;
+-
+-	if (!ref_map)
+-		return 0;
+-
+-	memset(&revlist, 0, sizeof(revlist));
+-	revlist.argv = argv;
+-	revlist.git_cmd = 1;
+-	revlist.no_stdout = 1;
+-	revlist.no_stderr = 1;
+-	revlist.in = -1;
+-
+-	err = start_command(&revlist);
+-	if (err) {
+-		error(_("could not run rev-list"));
+-		return err;
+-	}
+-
+-	/*
+-	 * If rev-list --stdin encounters an unknown commit, it terminates,
+-	 * which will cause SIGPIPE in the write loop below.
+-	 */
+-	sigchain_push(SIGPIPE, SIG_IGN);
+-
+-	for (ref = ref_map; ref; ref = ref->next) {
+-		if (write_in_full(revlist.in, sha1_to_hex(ref->old_sha1), 40) < 0 ||
+-		    write_str_in_full(revlist.in, "\n") < 0) {
+-			if (errno != EPIPE && errno != EINVAL)
+-				error(_("failed write to rev-list: %s"), strerror(errno));
+-			err = -1;
+-			break;
+-		}
+-	}
+-
+-	if (close(revlist.in)) {
+-		error(_("failed to close rev-list's stdin: %s"), strerror(errno));
+-		err = -1;
+-	}
+-
+-	sigchain_pop(SIGPIPE);
+-
+-	return finish_command(&revlist) || err;
++	return check_everything_connected(ref_map, 1);
+ }
+ 
+ static int fetch_refs(struct transport *transport, struct ref *ref_map)
 -- 
 1.7.7.rc0.72.g4b5ea
