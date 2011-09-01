@@ -1,89 +1,100 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Rebase & Trailing Whitespace
-Date: Wed, 31 Aug 2011 22:31:27 -0400
-Message-ID: <20110901023127.GB31838@sigill.intra.peff.net>
-References: <CAE1pOi0rY4kRR4rvEdFhzzTgfhUczHMX=H5_9+o5aHnv4vTadw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] remote: write correct fetch spec when renaming
+ remote 'remote'
+Date: Wed, 31 Aug 2011 22:42:11 -0400
+Message-ID: <20110901024211.GC31838@sigill.intra.peff.net>
+References: <1314841843-19868-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Git Users <git@vger.kernel.org>
-To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 01 04:31:38 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 01 04:42:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qyx46-0002pT-Ex
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 04:31:38 +0200
+	id 1QyxER-00061l-PF
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 04:42:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757458Ab1IACbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Aug 2011 22:31:31 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43541
+	id S1757473Ab1IACmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Aug 2011 22:42:14 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45593
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757388Ab1IACba (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2011 22:31:30 -0400
-Received: (qmail 9643 invoked by uid 107); 1 Sep 2011 02:32:15 -0000
+	id S1757444Ab1IACmN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Aug 2011 22:42:13 -0400
+Received: (qmail 9697 invoked by uid 107); 1 Sep 2011 02:42:59 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 31 Aug 2011 22:32:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Aug 2011 22:31:27 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 31 Aug 2011 22:42:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Aug 2011 22:42:11 -0400
 Content-Disposition: inline
-In-Reply-To: <CAE1pOi0rY4kRR4rvEdFhzzTgfhUczHMX=H5_9+o5aHnv4vTadw@mail.gmail.com>
+In-Reply-To: <1314841843-19868-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180517>
 
-On Wed, Aug 31, 2011 at 04:55:03PM -0700, Hilco Wijbenga wrote:
+On Wed, Aug 31, 2011 at 09:50:42PM -0400, Martin von Zweigbergk wrote:
 
-> hilco@centaur ~/workspaces/project-next project-next (next $)$ git rebase master
-> [...]
-> <stdin>:721810: trailing whitespace.
-> [...]
-> Note the trailing whitespace warnings. How do I find out which file(s)
-> generated these warnings? Would it be possible to add the file name
-> causing the warnings to be output? By default? (Using --verbose
-> doesn't seem to make any difference where the whitespace warnings are
-> concerned.)
+> When renaming a remote whose name is contained in a configured fetch
+> refspec for that remote, we currently replace the first occurrence of
+> the remote name in the refspec. This is correct in most cases, but
+> breaks if the remote name occurs in the fetch refspec before the
+> expected place. For example, we currently change
+> 
+> [remote "remote"]
+> 	url = git://git.kernel.org/pub/scm/git/git.git
+> 	fetch = +refs/heads/*:refs/remotes/remote/*
+> 
+> into
+> 
+> [remote "origin"]
+> 	url = git://git.kernel.org/pub/scm/git/git.git
+> 	fetch = +refs/heads/*:refs/origins/remote/*
 
-You can see any whitespace warnings in your repository (and in which
-commit they were introduced) by doing something like:
+Oops.
 
-  git log --oneline --check
+> Reduce the risk of changing incorrect sections of the refspec by
+> requiring the string to be matched to have leading and trailing
+> slashes, i.e. match "/<name>/" instead of just "<name>".
 
-The "--check" option is just another diff output format, so you use it
-with "log" or "diff". For example, if you want to see just whitespace
-problems that still exist in your current tree, you can diff against the
-empty tree with --check, like:
+Doesn't this just mean that:
 
-  git diff --check 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+  git remote rename remotes foo
 
-where "4b825dc..." is the well-known sha1 of an empty tree[1].
+will break in the same way?
 
-> Furthermore, why didn't I get these or similar warnings when I
-> committed/pushed that particular commit ("Use static WAR for SWF files
-> and assets.")? I did just find "[core] whitespace = trailing-space"
-> which I will add to my .gitconfig, I suppose. So I guess what I really
-> mean to ask is, why do rebase (and merge?) behave differently from
-> commit?
+> We could have required even a leading ":refs/remotes/", but that would
+> mean that we would limit the types of refspecs we could help the user
+> update.
 
-Because these warnings are only triggered by default when applying
-patches. And the idea of rebase is to apply patches from one place to
-another. I thought we squelched whitespace warnings for rebase these
-days (since they are somewhat pointless; you are moving around your own
-commits, not applying commits from some other contributor), but maybe I
-am misremembering. Or maybe you have an older version of git. Which
-version are you using?
+Actually, I think it's better to be more conservative, and rename only:
 
-If you want to enforce whitespace checks during commit or push, you can
-do so with a hook. The sample "pre-commit" hook, for example, uses "diff
---check" for just this purpose. See "git help hooks" for more
-information.
+  refs/remotes/$OLD/
+
+into
+
+  refs/remotes/$NEW/
+
+If we are tweaking the refspecs, it's because we assume that the refspec
+follows a certain naming convention (i.e., the one we set up with "git
+remote add"). If somebody has tweaked this to be:
+
+  refs/heads/$OLD/*
+
+or even:
+
+  refs/heads/foo/$OLD/bar
+
+then we are just guessing about what they want. And I suspect such a
+person would not use "git remote rename", anyway, but would instead edit
+the config themselves. I'd rather make it safe for people using the
+default config, and people who want to stray from that can deal with
+updating the config themselves (since they would have to have done so to
+get into that state in the first place).
+
+Maybe we should even print a warning in that case.
 
 -Peff
-
-[1] If you don't remember the empty tree sha1, you can always derive it
-    with:
-
-        git hash-object -t tree /dev/null
