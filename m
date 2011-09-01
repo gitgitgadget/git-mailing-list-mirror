@@ -1,70 +1,85 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 1/2 v2] Documentation/git-remote-helpers: explain how
- import works with multiple refs
-Date: Thu, 1 Sep 2011 18:59:31 +0200
-Message-ID: <CAGdFq_gc6scerXf6PgbDE-89nmaTo8z49L2fOJ2E_m42_7ywfQ@mail.gmail.com>
-References: <vpqd3fk1cq5.fsf@bauges.imag.fr> <1314895778-17482-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-checkout silently throws away the dirty status of index
+ without a warning?
+Date: Thu, 01 Sep 2011 10:11:32 -0700
+Message-ID: <7v1uw0xk57.fsf@alter.siamese.dyndns.org>
+References: <CAEvN+1h+mY+f3dzK7LFOwkqokOZSS-LosCzBqtYGbyjz=Dg7Zw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Sep 01 19:00:30 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Tzu-Jung Lee <roylee17@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 01 19:11:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzAcs-00086f-Nc
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 19:00:27 +0200
+	id 1QzAnr-0005a9-6y
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 19:11:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752942Ab1IARAO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Sep 2011 13:00:14 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:40190 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752447Ab1IARAM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Sep 2011 13:00:12 -0400
-Received: by yxj19 with SMTP id 19so514984yxj.19
-        for <git@vger.kernel.org>; Thu, 01 Sep 2011 10:00:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=e9AxRkENk88rA8xX1UMZT/CQQFgvzDlyhxn0pJqEK7w=;
-        b=I288zGlfsDX5MIYTTm6Qexxi7+ES5uzmGYATZ/eygmWYhedLWS+ADIVCQPwhEOGQSy
-         CxwvJO7GzFFSM1noPU3NSPpSGf4BFOzwvChB5q5XhPPJ4kd2J4hHs+EC2B/gZeBLz7Zm
-         zb5iaB7KPUi0n28AqFKZpX4NtHRJhnuO+qFHg=
-Received: by 10.68.5.168 with SMTP id t8mr377711pbt.93.1314896411460; Thu, 01
- Sep 2011 10:00:11 -0700 (PDT)
-Received: by 10.68.43.9 with HTTP; Thu, 1 Sep 2011 09:59:31 -0700 (PDT)
-In-Reply-To: <1314895778-17482-1-git-send-email-Matthieu.Moy@imag.fr>
+	id S1755761Ab1IARLg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Sep 2011 13:11:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52553 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755700Ab1IARLf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Sep 2011 13:11:35 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3966D4F24;
+	Thu,  1 Sep 2011 13:11:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=82tzq1Y3vsA8KVavDf3slRTWBEY=; b=TQCQ1L
+	n4pLQdc0wU493/v5IkOqi8XUVM2NP41NLMMEpWvbXAsQttGLGYnJcXHfUdJUu9f5
+	jKimUIz/Q+uA5Hug/cDglZQmxleONTRP6a319Y+S1rGXBhid2WbBFgjGmvC1zm1m
+	4WGyn06XJWEW2MeFvU2oD/Fe766ye2rFJqKds=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fMJkwCF4z4TsP8zJnoA6xghv//5iZwHp
+	0icTjVYXVW945xAvUpfJXPqLwYv0jx+uP0jxVpLNtwCmLZ00tJu9CRIuDG/kkuVi
+	z2xAh0PczkwT4SGw2fmjZ9g4saHh/ovI+qbp0zb56H7f6TJf6z2RY1EMaF1GKTgx
+	DQR4m5n/AOI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 305EF4F23;
+	Thu,  1 Sep 2011 13:11:34 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B586D4F22; Thu,  1 Sep 2011
+ 13:11:33 -0400 (EDT)
+In-Reply-To: <CAEvN+1h+mY+f3dzK7LFOwkqokOZSS-LosCzBqtYGbyjz=Dg7Zw@mail.gmail.com>
+ (Tzu-Jung Lee's message of "Thu, 1 Sep 2011 23:47:59 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 716629DA-D4BD-11E0-953C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180552>
 
-Heya,
+Tzu-Jung Lee <roylee17@gmail.com> writes:
 
-On Thu, Sep 1, 2011 at 18:49, Matthieu Moy <Matthieu.Moy@imag.fr> wrote=
-:
-> This is important for two reasons:
->
-> * when two "import" lines follow each other, only one "done" command
-> =C2=A0should be issued in the fast-import stream, not one per "import=
-".
->
-> * The blank line terminating an import command should not be confused
-> =C2=A0with the one terminating the sequence of commands.
->
-> While we're there, illustrate the corresponding explanation for push
-> batches with an example.
->
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> Is this an intended behavior?
 
-Acked-by: Sverre Rabbelier <srabbelier@gmail.com>
+Yes, I think you are talking about the case where "the current index does
+not match the current HEAD, but it does match the tree we are switching
+to" case. In that case we take the contents of switched-to branch.
 
---=20
-Cheers,
+It is the last case in the table in this old design document:
 
-Sverre Rabbelier
+    http://thread.gmane.org/gmane.comp.version-control.git/4641
+
+bug ignore the terminology (stage#). Read only the body of the table, with
+the understanding that the three entries in each row talk about the state
+for the same path in the index entry, the tree entry in the current HEAD,
+and the tree entry in the switched-to branch. Also the table does not talk
+about the checking performed on the working tree file, but assume that we
+do not overwrite it when the resulting entry in the index does not match
+what you have there.
+
+The reason we allow branch switching in this case, instead of failing, is
+so that you can be in a state where you applied the same change (relative
+to the current branch to the branch you are switching to) lying around
+already in your workspace and safely switch to the new branch without
+losing any work (after all, the content matches).
+
+By the way, the first six lines of your original message that describes
+"saving and applying" is not correct.
