@@ -1,87 +1,73 @@
-From: =?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>
-Subject: Re: [PATCH] for-each-ref: add split message parts to %(contents:*).
-Date: Thu, 1 Sep 2011 09:34:50 +0200
-Organization: Gentoo
-Message-ID: <20110901093450.57512480@pomiocik.lan>
-References: <4E5CB0D0.7000905@drmicha.warpmail.net>
-	<1314781909-19252-1-git-send-email-mgorny@gentoo.org>
-	<7vy5y9xkd0.fsf@alter.siamese.dyndns.org>
-	<20110831232201.GA29296@sigill.intra.peff.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: git-svn and mergeinfo
+Date: Thu, 01 Sep 2011 10:59:51 +0200
+Message-ID: <4E5F4987.5040205@alum.mit.edu>
+References: <20110829132052.0ad7a088@robyn.woti.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=PGP-SHA256;
- boundary="Sig_/ioREA9uSpRy0Cyx7zawFlfK"; protocol="application/pgp-signature"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 01 09:33:14 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Bryan Jacobs <bjacobs@woti.com>
+X-From: git-owner@vger.kernel.org Thu Sep 01 11:00:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qz1lx-0004Gb-8e
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 09:33:13 +0200
+	id 1Qz37w-0008G2-Gl
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 11:00:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755570Ab1IAHdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Sep 2011 03:33:08 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:54573 "EHLO smtp.gentoo.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754380Ab1IAHdG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Sep 2011 03:33:06 -0400
-Received: from pomiocik.lan (unknown [81.219.205.214])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: mgorny)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 460831B402A;
-	Thu,  1 Sep 2011 07:33:04 +0000 (UTC)
-In-Reply-To: <20110831232201.GA29296@sigill.intra.peff.net>
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.24.5; x86_64-pc-linux-gnu)
+	id S932096Ab1IAI7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Sep 2011 04:59:54 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:37098 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756469Ab1IAI7x (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Sep 2011 04:59:53 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p818xpkl000856
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 1 Sep 2011 10:59:52 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.20) Gecko/20110805 Lightning/1.0b2 Thunderbird/3.1.12
+In-Reply-To: <20110829132052.0ad7a088@robyn.woti.com>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180526>
 
---Sig_/ioREA9uSpRy0Cyx7zawFlfK
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On 08/29/2011 07:20 PM, Bryan Jacobs wrote:
+> I have been (ab)using git-svn for committing to a central SVN
+> repository while doing my work locally with git. To this end, I've
+> written a set of scripts and hooks which perform squash merges locally
+> and then dcommit them with proper svn:mergeinfo annotations. The final
+> result is the perfect appearance of having done a native SVN merge in
+> the central repository, while using only local git commands and
+> gaining the full benefit of git's conflict resolution and developer
+> convenience.
+> 
+> However, to make this work with git 1.7.6, I needed to make *one* change
+> to the git internals: --merge-info does not allow setting mergeinfo for
+> more than one branch. Because it's a complete overwrite operation
+> instead of an update, this is a serious issue preventing its use for
+> nontrivial branches.
+> 
+> Might I suggest adding a block like the following around line 552 of
+> git-svn?
+> 
+>     if (defined($_merge_info))
+>     {  
+>         $_merge_info =~ tr{ }{\n};
+>     }
 
-On Wed, 31 Aug 2011 19:22:01 -0400
-Jeff King <peff@peff.net> wrote:
+Naive question: why can't you pass a newline (properly quoted, of
+course) directly within the string argument to the --mergeinfo option?
 
-> On Wed, Aug 31, 2011 at 03:54:35PM -0700, Junio C Hamano wrote:
->=20
-> > > +The complete message in a commit and tag object is `contents`.
-> > > +Its first line is `contents:subject`, the remaining lines
-> > > +are `contents:body` and the optional GPG signature
-> > > +is `contents:signature`.
-> >=20
-> > To match the parsing of commit objects, I would prefer to see
-> > "subject" to mean "the first paragraph" (usually the first line
-> > alone but that is purely from convention), but that probably is a
-> > separate topic.
->=20
-> Good idea. I suspect pretty.c:format_subject can be reused here.
+Michael
 
-Should I fix regular 'subject' and 'body' as well, or just
-the 'contents:' variants?
-
---=20
-Best regards,
-Micha=C5=82 G=C3=B3rny
-
---Sig_/ioREA9uSpRy0Cyx7zawFlfK
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Disposition: attachment; filename=signature.asc
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.18 (GNU/Linux)
-
-iJwEAQEIAAYFAk5fNZsACgkQfXuS5UK5QB1z5QP/U85OFqiaK2hgvK5wgr8IBfMT
-IPVXb0L/wXfMSXkUeaTgOOJbPOzLTmk8b1GwJ7fuxX2sSdZ8cTB309e4r55GsdGg
-754YMmwafqGpQqs5RrP9dYho0PGEOyArAdkjno5GRZ1bpdWxDSoAhEzjcr0BrXiw
-Pp7nZkqqAXWz9iGmoP0=
-=1qEy
------END PGP SIGNATURE-----
-
---Sig_/ioREA9uSpRy0Cyx7zawFlfK--
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
