@@ -1,97 +1,89 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: [PATCH 2/2] remote: "rename o foo" should not rename ref "origin/bar"
-Date: Wed, 31 Aug 2011 21:50:43 -0400
-Message-ID: <1314841843-19868-2-git-send-email-martin.von.zweigbergk@gmail.com>
-References: <1314841843-19868-1-git-send-email-martin.von.zweigbergk@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 01 03:51:15 2011
+From: Jeff King <peff@peff.net>
+Subject: Re: Rebase & Trailing Whitespace
+Date: Wed, 31 Aug 2011 22:31:27 -0400
+Message-ID: <20110901023127.GB31838@sigill.intra.peff.net>
+References: <CAE1pOi0rY4kRR4rvEdFhzzTgfhUczHMX=H5_9+o5aHnv4vTadw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Git Users <git@vger.kernel.org>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 01 04:31:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QywR1-0007eD-Gm
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 03:51:15 +0200
+	id 1Qyx46-0002pT-Ex
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 04:31:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757416Ab1IABvK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Aug 2011 21:51:10 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:40207 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757388Ab1IABvJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2011 21:51:09 -0400
-Received: by mail-vx0-f174.google.com with SMTP id 9so932863vxi.19
-        for <git@vger.kernel.org>; Wed, 31 Aug 2011 18:51:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=IH8sVGDO3TJIurcLDePefQIWBuZq0Lh6dMtXwmFdQck=;
-        b=Ua5r+xBsgY2zjR1mf6L0ozkO+8ij0ZSeNTs8/zW9EpqArWXdr0N2tnADSETOdx3uhL
-         XBSW1Plf8khL0ewBUtEmr8KideYhrdTqg+QPBUEJjLV0+GbOj2CQMxTXNbl55+xukGLN
-         Y9rAXKIul70Y2Oag9EQ3oh0xB6xcn8ABaNgv4=
-Received: by 10.52.28.80 with SMTP id z16mr1009121vdg.75.1314841868674;
-        Wed, 31 Aug 2011 18:51:08 -0700 (PDT)
-Received: from localhost.localdomain (modemcable094.77-37-24.mc.videotron.ca [24.37.77.94])
-        by mx.google.com with ESMTPS id j8sm107956vdv.47.2011.08.31.18.51.07
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 31 Aug 2011 18:51:08 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6.51.g07e0e
-In-Reply-To: <1314841843-19868-1-git-send-email-martin.von.zweigbergk@gmail.com>
+	id S1757458Ab1IACbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Aug 2011 22:31:31 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43541
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757388Ab1IACba (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Aug 2011 22:31:30 -0400
+Received: (qmail 9643 invoked by uid 107); 1 Sep 2011 02:32:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 31 Aug 2011 22:32:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Aug 2011 22:31:27 -0400
+Content-Disposition: inline
+In-Reply-To: <CAE1pOi0rY4kRR4rvEdFhzzTgfhUczHMX=H5_9+o5aHnv4vTadw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180516>
 
-When renaming a remote called 'o' using 'git remote rename o foo', git
-should also rename any remote-tracking branches for the remote. This
-does happen, but any remote-tracking branches starting with
-'refs/remotes/o', such as 'refs/remotes/origin/bar', will also be
-renamed (to 'refs/remotes/foorigin/bar' in this case).
+On Wed, Aug 31, 2011 at 04:55:03PM -0700, Hilco Wijbenga wrote:
 
-Fix it by simply matching one more character, up to the slash
-following the remote name.
+> hilco@centaur ~/workspaces/project-next project-next (next $)$ git rebase master
+> [...]
+> <stdin>:721810: trailing whitespace.
+> [...]
+> Note the trailing whitespace warnings. How do I find out which file(s)
+> generated these warnings? Would it be possible to add the file name
+> causing the warnings to be output? By default? (Using --verbose
+> doesn't seem to make any difference where the whitespace warnings are
+> concerned.)
 
-Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
----
- builtin/remote.c  |    2 +-
- t/t5505-remote.sh |   10 ++++++++++
- 2 files changed, 11 insertions(+), 1 deletions(-)
+You can see any whitespace warnings in your repository (and in which
+commit they were introduced) by doing something like:
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index c1763ed..127cff4 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -570,7 +570,7 @@ static int read_remote_branches(const char *refname,
- 	unsigned char orig_sha1[20];
- 	const char *symref;
- 
--	strbuf_addf(&buf, "refs/remotes/%s", rename->old);
-+	strbuf_addf(&buf, "refs/remotes/%s/", rename->old);
- 	if (!prefixcmp(refname, buf.buf)) {
- 		item = string_list_append(rename->remote_branches, xstrdup(refname));
- 		symref = resolve_ref(refname, orig_sha1, 1, &flag);
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 7b6f443..57b584c 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -651,6 +651,16 @@ test_expect_success 'rename a remote with name part of fetch spec' '
- 
- '
- 
-+test_expect_success 'rename a remote with name prefix of other remote' '
-+
-+	git clone one four.three &&
-+	(cd four.three &&
-+	 git remote add o git://example.com/repo.git &&
-+	 git remote rename o upstream &&
-+	 test "$(git rev-parse origin/master)" = "$(git rev-parse master)")
-+
-+'
-+
- cat > remotes_origin << EOF
- URL: $(pwd)/one
- Push: refs/heads/master:refs/heads/upstream
--- 
-1.7.6.51.g07e0e
+  git log --oneline --check
+
+The "--check" option is just another diff output format, so you use it
+with "log" or "diff". For example, if you want to see just whitespace
+problems that still exist in your current tree, you can diff against the
+empty tree with --check, like:
+
+  git diff --check 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+
+where "4b825dc..." is the well-known sha1 of an empty tree[1].
+
+> Furthermore, why didn't I get these or similar warnings when I
+> committed/pushed that particular commit ("Use static WAR for SWF files
+> and assets.")? I did just find "[core] whitespace = trailing-space"
+> which I will add to my .gitconfig, I suppose. So I guess what I really
+> mean to ask is, why do rebase (and merge?) behave differently from
+> commit?
+
+Because these warnings are only triggered by default when applying
+patches. And the idea of rebase is to apply patches from one place to
+another. I thought we squelched whitespace warnings for rebase these
+days (since they are somewhat pointless; you are moving around your own
+commits, not applying commits from some other contributor), but maybe I
+am misremembering. Or maybe you have an older version of git. Which
+version are you using?
+
+If you want to enforce whitespace checks during commit or push, you can
+do so with a hook. The sample "pre-commit" hook, for example, uses "diff
+--check" for just this purpose. See "git help hooks" for more
+information.
+
+-Peff
+
+[1] If you don't remember the empty tree sha1, you can always derive it
+    with:
+
+        git hash-object -t tree /dev/null
