@@ -1,134 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-checkout silently throws away the dirty status of index
- without a warning?
-Date: Thu, 1 Sep 2011 12:56:38 -0400
-Message-ID: <20110901165638.GE15018@sigill.intra.peff.net>
-References: <CAEvN+1h+mY+f3dzK7LFOwkqokOZSS-LosCzBqtYGbyjz=Dg7Zw@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 2/2 v2] (short) documentation for the testgit remote helper
+Date: Thu, 1 Sep 2011 18:59:19 +0200
+Message-ID: <CAGdFq_iqNxeRhQUfY0BVBNWqDq01i9MJ_2STC0MjiF0p=rrBGg@mail.gmail.com>
+References: <vpqd3fk1cq5.fsf@bauges.imag.fr> <1314895778-17482-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1314895778-17482-2-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Tzu-Jung Lee <roylee17@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 01 18:56:48 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Sep 01 19:00:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzAZK-0006WS-Kv
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 18:56:46 +0200
+	id 1QzAca-0007xp-4T
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 19:00:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752278Ab1IAQ4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Sep 2011 12:56:41 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36559
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751938Ab1IAQ4k (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Sep 2011 12:56:40 -0400
-Received: (qmail 21025 invoked by uid 107); 1 Sep 2011 16:57:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 01 Sep 2011 12:57:26 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Sep 2011 12:56:38 -0400
-Content-Disposition: inline
-In-Reply-To: <CAEvN+1h+mY+f3dzK7LFOwkqokOZSS-LosCzBqtYGbyjz=Dg7Zw@mail.gmail.com>
+	id S1752429Ab1IARAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Sep 2011 13:00:00 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:57015 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751545Ab1IAQ77 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Sep 2011 12:59:59 -0400
+Received: by pzk37 with SMTP id 37so3260088pzk.1
+        for <git@vger.kernel.org>; Thu, 01 Sep 2011 09:59:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=abZbwVZYjKbuQnZd24Jz1F55CMZpOPU+s2JNcXtJp9k=;
+        b=ms7Jl3NiAwUpWzyZSTshV8A/DP38FvuFnOM5h+IXjyHvABUSgJZo7J3RahI9ZdiD5Q
+         FUc8S0KUdFNZHBTybgUJYtYzJbNMdF9Km+W0yjLGx2kmQ8qlbBJ7lX2zXwgnMSNtMwLj
+         eNBlHbHTcygrbQp/2IKuU19ujq5c5JpYClt0Q=
+Received: by 10.68.59.105 with SMTP id y9mr413213pbq.26.1314896399070; Thu, 01
+ Sep 2011 09:59:59 -0700 (PDT)
+Received: by 10.68.43.9 with HTTP; Thu, 1 Sep 2011 09:59:19 -0700 (PDT)
+In-Reply-To: <1314895778-17482-2-git-send-email-Matthieu.Moy@imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180549>
 
-On Thu, Sep 01, 2011 at 11:47:59PM +0800, Tzu-Jung Lee wrote:
+Heya,
 
-> Correct me if I'm wrong:
-> 
->     git-checkout saves the changes to index and working-tree, and
-> tries to apply them to the destined commit.
->     If the changes are applicable, then git-checkout the destined
-> commit and apply the changes.
->     Otherwise, git-checkout fails with warnings and leaves the current
-> status untouched.
+On Thu, Sep 1, 2011 at 18:49, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> While it's not a command meant to be used by actual users (hence, not
+> mentionned in git(1)), this command is a very precious help for
+> remote-helpers authors.
+>
+> The best place for such technical doc is the source code, but users may
+> not find it without a link in a manpage.
+>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 
-Not exactly. "git checkout <branch>" will switch your HEAD to <branch>,
-and then try to make your index and working tree match the contents of
-<branch>, with two exceptions:
+Acked-by: Sverre Rabbelier <srabbelier@gmail.com>
 
-  1. If you have local changes in a file, but the contents of the file
-     in <branch> do not differ from what's in the current HEAD, then the
-     file will be left alone (i.e., your local changes will be
-     preserved).
+-- 
+Cheers,
 
-  2. If you have local changes in a file, and the contents of the file
-     in <branch> differ both from what's in your working tree and from
-     what's in your current HEAD, git will print an error and refuse to
-     overwrite your changes (though you can ask it to merge them with
-     "git checkout -m").
-
-So it is not about "do these changes apply", but rather that we will
-give up any time file-level merging is required (unless "-m" is
-specified).
-
-The other form, "git checkout <branch> [--] <file>", is not about
-switching branches at all, but about putting content from <branch> into
-the current index and working tree, overwriting what's there.
-
-> If the above correct. Please help me clarify if the following corner
-> case an intended or unexpected behavior.
-> [...]
->     $ git checkout -b br1
->     $ git reset HEAD^
->     Unstaged changes after reset:
->     M       aaa.txt
->     M       bbb.txt
-
-So you have changes in two commits...
-
->     $ git checkout HEAD aaa.txt
-
-And here you explicitly overwrite the changes in aaa.txt.
-
->     $ git status --short
->     M bbb.txt
-
-...leaving only the changes in bbb.txt.
-
->     $ git add bbb.txt
->     $ git status
-> 
->     # On branch br1
->     # Changes to be committed:
->     #   (use "git reset HEAD <file>..." to unstage)
->     #
->     #       modified:   bbb.txt
->     #
-
-OK, now it's staged.
-
->     $ git checkout master
->     Switched to branch 'master'
-> 
-> git silently switch to master without warning against the index are
-> "RESTORE/RESET" to clean.
-
-Yes, because the changes in your index were identical to what was in the
-destination branch. So we didn't drop any changes; they're still in the
-index and in the working tree. It's simply that when compared to your
-new HEAD, they are uninteresting.
-
->     $ git checkout br1
->     $ git status
->     # On branch br1
->     nothing to commit (working directory clean)
-
-And now when we switch to br1, you have no changes against master in
-your working tree or index, so there is no dirty state to block
-switching branches.
-
-I think git is working as intended here.  I agree it is a somewhat
-surprising corner case, but only because your changes happened to
-exactly match the difference between the two branches you are switching
-between. But it makes sense when you think about what "dirty state"
-means: it is differences between HEAD and your index and working tree.
-So we usually think of creating or removing dirty state by changing the
-working tree. But you could equally well do it by changing the HEAD
-without changing the working tree, which is what you did here.
-
--Peff
+Sverre Rabbelier
