@@ -1,70 +1,78 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] (short) documentation for the testgit remote helper
-Date: Thu, 01 Sep 2011 17:52:50 +0200
-Message-ID: <vpqd3fk1cq5.fsf@bauges.imag.fr>
-References: <1314809222-30528-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1314814498-13699-1-git-send-email-Matthieu.Moy@imag.fr>
-	<CAGdFq_grmJLoTt7JMUuoXrd02Gx8JdcEL-wa7YQ=-FkurRqfWA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-svn and mergeinfo
+Date: Thu, 01 Sep 2011 09:00:05 -0700
+Message-ID: <7vfwkgxnga.fsf@alter.siamese.dyndns.org>
+References: <20110829132052.0ad7a088@robyn.woti.com>
+ <4E5F4987.5040205@alum.mit.edu> <20110901104327.14d4dba6@robyn.woti.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 01 17:53:46 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Bryan Jacobs <bjacobs@woti.com>
+X-From: git-owner@vger.kernel.org Thu Sep 01 18:00:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qz9aK-0008T1-RL
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 17:53:45 +0200
+	id 1Qz9gh-00037C-JR
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 18:00:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932523Ab1IAPxk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Sep 2011 11:53:40 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:33189 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932514Ab1IAPxj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Sep 2011 11:53:39 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p81Fq9EK008218
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 1 Sep 2011 17:52:09 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Qz9ZS-0001mp-Nl; Thu, 01 Sep 2011 17:52:50 +0200
-In-Reply-To: <CAGdFq_grmJLoTt7JMUuoXrd02Gx8JdcEL-wa7YQ=-FkurRqfWA@mail.gmail.com>
-	(Sverre Rabbelier's message of "Thu, 1 Sep 2011 13:27:57 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 01 Sep 2011 17:52:14 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p81Fq9EK008218
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1315497135.7141@o17xP8t7YqEBmqOJK+UZJw
+	id S932529Ab1IAQAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Sep 2011 12:00:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56652 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932452Ab1IAQAL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Sep 2011 12:00:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CF34417A;
+	Thu,  1 Sep 2011 12:00:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fxpA2o5UmprPUf7d8YC245EnXPM=; b=hqgypZ
+	TVjEtjr07GyEwBsSfB2COnE5MjvlJPnukFYSgnlDh8yIg0XNzJ5fowxBqr6/l/gr
+	TqlhHFxXpsVSd/e8ypR/zuriEaJK07K6Y9SF1SfgGup11HZliD6Cr8c8QOnWDAIc
+	GNy5Wj5C7kZEppsWNYrXpNOHp+1Gzus8Yl4PA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AhGVZGhGpdxaIsfZpFTeuJoV33ZLvmKl
+	Xi1mb2mEyeBH/0BDN5S/oe4yS6G1PZu7KGIyf2DOH7pexduzl0geai15T6/FSRSq
+	CGjRiojmkeYNqe0EeFoldIxhP1wbRIL+iyCyhWcxSTp71RLu9aTRauzjxe5xCqLS
+	FMdzs+f/Ndg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 84F184179;
+	Thu,  1 Sep 2011 12:00:10 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 78E8D416B; Thu,  1 Sep 2011
+ 12:00:07 -0400 (EDT)
+In-Reply-To: <20110901104327.14d4dba6@robyn.woti.com> (Bryan Jacobs's message
+ of "Thu, 1 Sep 2011 10:43:27 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 76E2D8F4-D4B3-11E0-9365-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180536>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+Bryan Jacobs <bjacobs@woti.com> writes:
 
-> Heya,
+>> Naive question: why can't you pass a newline (properly quoted, of
+>> course) directly within the string argument to the --mergeinfo option?
 >
-> On Wed, Aug 31, 2011 at 20:14, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
->> +# To understand better the way things work, one can set the variable
->> +# "static int debug" in transport-helper.c to 1, and/or the "DEBUG"
->> +# variable in git_remote_helpers/util.py to True, and try various
->> +# commands.
->
-> Both are controlled by an environmental variable, it would be better
-> to mention these directly.
->
-> I think that for remote-testgit it is GIT_DEBUG_TESTGIT=1.
+> The only way I know of to do that in bash is to assign the
+> newline-bearing string to a variable, and then use the variable in a
+> command line option. Extremely awkward.
 
-Oops, I had missed it. Will resend.
+Hmm, I think Michael meant by "properly quoted" something like this:
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+    $ git commit -s -m 'Fix blorb
+    > 
+    > As it stands, blorb feature is totally broken for such and
+    > such reasons. Fix it by restructuring frotz and nitfol to
+    > use the same xyzzy helper function.'
+
+which is not all that awkward, even for a free-form text argument like
+commit log. In this case, you are talking about svn merge-info that is a
+lot more structured (it is much less likely to see a single-quote in there
+than my commit log message example above, for example) so...
