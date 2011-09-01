@@ -1,82 +1,77 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v6] Add a remote helper to interact with mediawiki (fetch & push)
-Date: Thu, 01 Sep 2011 07:26:05 +0200
-Message-ID: <vpq39ggomtu.fsf@bauges.imag.fr>
-References: <1314381329-8989-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1314809708-8177-1-git-send-email-Matthieu.Moy@imag.fr>
-	<CAGdFq_gu=SyjUnUS1bcjPrcPPtKVt+UjDBvBmZqosk+OuDFDHw@mail.gmail.com>
-	<vpq7h5tbia6.fsf@bauges.imag.fr>
-	<7vobz5xg7u.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Idea: "git format-patch" should get more information out of git
+Date: Thu, 01 Sep 2011 08:44:37 +0200
+Message-ID: <4E5F29D5.4060205@drmicha.warpmail.net>
+References: <4E587CC0.4090508@alum.mit.edu> <20110830152217.GA13022@sigill.intra.peff.net> <4E5D048D.4010902@drmicha.warpmail.net> <201108301939.53487.johan@herland.net> <4E5F0ACD.8050206@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
-	Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr>,
-	Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>,
-	Claire Fousse <claire.fousse@ensimag.imag.fr>,
-	David Amouyal <david.amouyal@ensimag.imag.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 01 07:26:23 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Sep 01 09:04:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QyznA-0007fr-Ly
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 07:26:21 +0200
+	id 1Qz1Jg-0000Xv-Jo
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 09:04:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751423Ab1IAF0P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Sep 2011 01:26:15 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:41585 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751342Ab1IAF0P (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Sep 2011 01:26:15 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p815PMXU021863
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 1 Sep 2011 07:25:22 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Qyzmv-0004Am-PZ; Thu, 01 Sep 2011 07:26:05 +0200
-In-Reply-To: <7vobz5xg7u.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 31 Aug 2011 17:24:05 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 01 Sep 2011 07:25:23 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p815PMXU021863
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1315459525.22486@Dw4bgZ+ErU2+5P+EVV1sNA
+	id S1755155Ab1IAHDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Sep 2011 03:03:53 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:53748 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752429Ab1IAHDw (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Sep 2011 03:03:52 -0400
+X-Greylist: delayed 1152 seconds by postgrey-1.27 at vger.kernel.org; Thu, 01 Sep 2011 03:03:52 EDT
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 6219720873;
+	Thu,  1 Sep 2011 02:44:40 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 01 Sep 2011 02:44:40 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=JSBPcoChSYW/GJ6OP+ywRD
+	n3mMM=; b=nrcLCIAnmOk/SNrdrTvaFplIr+z151DYXOIPv+Gs7eRZZ0tNz37/Z1
+	J9UeJzlv4oTV42aHfhln2WuSYpaQP43RulQf3ZmKTd2X3uQHmSIrGZLGf86NBpa+
+	jjXtPHgEWgpf/KPOG7QFvoNEvsA4HUmynunEukPuZH/hM+fwKKZbI=
+X-Sasl-enc: EFF5L3wKTqJ+IlUcVNp/lch9SpnhJdSgYTScU7SFJerA 1314859480
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 65E13A00570;
+	Thu,  1 Sep 2011 02:44:39 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
+In-Reply-To: <4E5F0ACD.8050206@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180523>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> Here:
+Michael Haggerty venit, vidit, dixit 01.09.2011 06:32:
+> On 08/30/2011 07:39 PM, Johan Herland wrote:
+>> On Tuesday 30. August 2011, Michael J Gruber wrote:
+>>> Reminds me of the ref namespace restructuring which could help
+>>> sharing notes... Oh, lots to do before git 3.0!
 >>
->> +	for my $refspec (@refsspecs) {
->> +		unless ($refspec =~ m/^(\+?)([^:]*):([^:]*)$/) {
->> +			die("Invalid refspec for push. Expected <src>:<dst> or +<src>:<dst>");
->> +		}
->> +		my ($force, $local, $remote) = ($1 eq "+", $2, $3);
->>
->> At this point, $force is a boolean saying whether there were a +, and
->> $local and $remote are as you can guess.
->
-> It may be slightly more Perl-ish to hoist the "0-or-1" outside the group
-> and rely on $1 becoming undef, like this:
->
->         my ($force, $local, $remote) = $refspec =~ /^(\+)?([^:]*):([^:]*)$/
-> 		or die(...);
+>> Indeed. I am very sorry to not have been able to properly follow up on 
+>> that proposal [...]
+> 
+> What "ref rename restructuring" are you talking about?  Can you give a
+> mailing list link?
+> 
+> (I've been working on refs lately and want to know whether your proposal
+> is relevant to my work.)
 
-Thanks, I didn't know I could do this.
+Searching for "namespace" in the subject should give you all relevant
+proposals plus the new "namespaces" which might affect you also:
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+http://permalink.gmane.org/gmane.comp.version-control.git/140681
+http://permalink.gmane.org/gmane.comp.version-control.git/165813
+http://permalink.gmane.org/gmane.comp.version-control.git/165799
+
+http://permalink.gmane.org/gmane.comp.version-control.git/176808
+
+Michael
