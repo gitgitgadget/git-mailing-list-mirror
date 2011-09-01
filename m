@@ -1,72 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] for-each-ref: add split message parts to %(contents:*).
-Date: Thu, 1 Sep 2011 14:19:05 -0400
-Message-ID: <20110901181905.GA17551@sigill.intra.peff.net>
-References: <4E5CB0D0.7000905@drmicha.warpmail.net>
- <1314781909-19252-1-git-send-email-mgorny@gentoo.org>
- <7vy5y9xkd0.fsf@alter.siamese.dyndns.org>
- <20110831232201.GA29296@sigill.intra.peff.net>
- <20110901093450.57512480@pomiocik.lan>
- <7vbov4xnfc.fsf@alter.siamese.dyndns.org>
- <20110901162222.GC15018@sigill.intra.peff.net>
- <7vwrdsw5ci.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Dropping '+' from fetch = +refs/heads/*:refs/remotes/origin/*?
+Date: Thu, 01 Sep 2011 11:25:31 -0700
+Message-ID: <7vliu8w25g.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
-	git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 01 20:19:17 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 01 20:25:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzBrA-0003zI-Dt
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 20:19:16 +0200
+	id 1QzBxO-00072l-4f
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Sep 2011 20:25:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757246Ab1IASTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Sep 2011 14:19:09 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39858
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757228Ab1IASTI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Sep 2011 14:19:08 -0400
-Received: (qmail 22171 invoked by uid 107); 1 Sep 2011 18:19:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 01 Sep 2011 14:19:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Sep 2011 14:19:05 -0400
-Content-Disposition: inline
-In-Reply-To: <7vwrdsw5ci.fsf@alter.siamese.dyndns.org>
+	id S1757229Ab1IASZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Sep 2011 14:25:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51914 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755940Ab1IASZf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Sep 2011 14:25:35 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 119E85A4B;
+	Thu,  1 Sep 2011 14:25:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=/
+	FlVa3EZSDlV1zU7VGViie5UhCc=; b=NJYdNkCaeD8eI03muy5DsJQO+acH1EHIx
+	qvStX2cC95Hj9JycbBwAdAC0LLEH01s8nifpwiXpzf8ST42nzWLM6KHhe+G7xzuv
+	t/KwoOKtPG1cYQoYU+bNC6sFNme5f7+wiFvoiYsEIbStmhmKR0dLaYxseH6DCpjq
+	/jeA6uTsXg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=w4N
+	6Cfn+MhD5E7McJepJF2fn45U4TP6DOHMfHPoTdPXxtSBgRVLt6UGo+us5bDxS/XB
+	j3NVgIdV5XjBmExsKVd7pvYmzUp+urtwFQNU05pgtonC5M+AueEXbQC0QANmRcO/
+	bB3viKsX9hRHr/rB3mzfZHa+3wlJaED3+SQ+LcMk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 029A55A4A;
+	Thu,  1 Sep 2011 14:25:34 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 579BE5A49; Thu,  1 Sep 2011
+ 14:25:33 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C79DA7D8-D4C7-11E0-84E9-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180559>
 
-On Thu, Sep 01, 2011 at 10:16:29AM -0700, Junio C Hamano wrote:
+Suggested reading:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > We could either leave %(subject) with its historical behavior, or fix it
-> > to handle multi-line subjects. Although it's technically a regression to
-> > change it, I tend to think it is simply a bug, as it doesn't match what
-> > the rest of git (like "git log --format=%s") does.
-> 
-> I think %(subject) should be updated to match %(contents:subject) as a
-> bugfix, so %(body) should be adjusted to prevent "%(subject)%(body)" from
-> duplicating lines.
+  http://git-blame.blogspot.com/2011/08/how-to-inject-malicious-commit-to-git.html
 
-OK. That makes it much easier to implement, too, I think. :)
+I am wondering if we are better off applying something along the lines of
+this patch, so that with the default configuration, users can notice if
+their upstream unexpectedly rewound their branches.
 
-> Side note. We probably would want to borrow from pretty-formats to allow
-> us to say %(subject)%(+body) or something...
+It would produce
 
-I have been meaning to take a closer look at Will Palmer's patches for
-making the pretty-formats look more like the for-each-ref formats (which
-I think would be the first step to unifying the features). But somehow
-months have slipped by, and I haven't yet.
+	[remote]
+        	url = git://.../git.git/
+                fetch = refs/heads/*:refs/remotes/origin/*
 
-But I think unifying the formats and the code is better than trying to
-port features across.
+upon cloning from my repository, and your "git fetch" will fail because
+the pu (proposed updates) branch is constantly unwinding, but that can be
+easily fixed with
 
--Peff
+
+	[remote]
+        	url = git://.../git.git/
+                fetch = refs/heads/*:refs/remotes/origin/*
+                fetch = +refs/heads/pu:refs/remotes/origin/pu
+
+as the explicit refspec trumps the wildcard one.
+
+ builtin/remote.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/remote.c b/builtin/remote.c
+index f2a9c26..081fbbf 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -116,11 +116,11 @@ static int add_branch(const char *key, const char *branchname,
+ 		const char *remotename, int mirror, struct strbuf *tmp)
+ {
+ 	strbuf_reset(tmp);
+-	strbuf_addch(tmp, '+');
+-	if (mirror)
++	if (mirror) {
++		strbuf_addch(tmp, '+');
+ 		strbuf_addf(tmp, "refs/%s:refs/%s",
+ 				branchname, branchname);
+-	else
++	} else
+ 		strbuf_addf(tmp, "refs/heads/%s:refs/remotes/%s/%s",
+ 				branchname, remotename, branchname);
+ 	return git_config_set_multivar(key, tmp->buf, "^$", 0);
