@@ -1,103 +1,90 @@
-From: Bryan Jacobs <bjacobs@woti.com>
-Subject: Re: [spf:guess,iffy] [PATCH] git-svn: teach git-svn to populate
- svn:mergeinfo
-Date: Fri, 2 Sep 2011 14:49:22 -0400
-Organization: White Oak Technologies
-Message-ID: <20110902144922.383ed0f1@robyn.woti.com>
-References: <20110902140702.066a4668@robyn.woti.com>
-	<4E612319.7030006@vilain.net>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [spf:guess,iffy] Re: [spf:guess,iffy] [PATCH] git-svn: teach
+ git-svn to populate svn:mergeinfo
+Date: Fri, 02 Sep 2011 12:01:09 -0700
+Message-ID: <4E6127F5.5070009@vilain.net>
+References: <20110902140702.066a4668@robyn.woti.com> <4E612319.7030006@vilain.net> <20110902144922.383ed0f1@robyn.woti.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Fri Sep 02 20:49:39 2011
+To: Bryan Jacobs <bjacobs@woti.com>
+X-From: git-owner@vger.kernel.org Fri Sep 02 21:01:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzYo1-0005Ue-N2
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 20:49:34 +0200
+	id 1QzYzP-0002bn-1T
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 21:01:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754710Ab1IBSt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Sep 2011 14:49:28 -0400
-Received: from mail02.woti.us ([66.92.158.6]:55349 "EHLO roscoe.woti.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754314Ab1IBSt1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Sep 2011 14:49:27 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by roscoe.woti.com (Postfix) with ESMTP id 770B3504D37F0;
-	Fri,  2 Sep 2011 14:49:25 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at woti.com
-Received: from roscoe.woti.com ([127.0.0.1])
-	by localhost (roscoe.woti.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zco8bQMGNukK; Fri,  2 Sep 2011 14:49:23 -0400 (EDT)
-Received: from robyn.woti.com (robyn.woti.com [192.168.168.187])
-	by roscoe.woti.com (Postfix) with ESMTPSA id 6D677504D37EA;
-	Fri,  2 Sep 2011 14:49:23 -0400 (EDT)
-In-Reply-To: <4E612319.7030006@vilain.net>
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; x86_64-redhat-linux-gnu)
+	id S1754818Ab1IBTBN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Sep 2011 15:01:13 -0400
+Received: from uk.vilain.net ([92.48.122.123]:52782 "EHLO uk.vilain.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754827Ab1IBTBL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Sep 2011 15:01:11 -0400
+Received: by uk.vilain.net (Postfix, from userid 1001)
+	id A8282824E; Fri,  2 Sep 2011 20:01:10 +0100 (BST)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on uk.vilain.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=unavailable version=3.3.1
+Received: from [192.168.112.205] (unknown [64.125.143.6])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by uk.vilain.net (Postfix) with ESMTPSA id C68678176;
+	Fri,  2 Sep 2011 20:01:07 +0100 (BST)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:6.0.1) Gecko/20110830 Thunderbird/6.0.1
+In-Reply-To: <20110902144922.383ed0f1@robyn.woti.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180632>
 
-On Fri, 02 Sep 2011 11:40:25 -0700
-Sam Vilain <sam@vilain.net> wrote:
+On 9/2/11 11:49 AM, Bryan Jacobs wrote:
+> I could do a pass through all the commits which are about to be sent
+> out to SVN to check if this is going to happen, yes. But I think a
+> better solution would be to change how the changes are replayed by
+> git-svn dcommit: right now, all changes are applied to the WC, then it
+> sequentially does an add+dcommit for each patch? Right? I think it might
+> be better to reset --hard to the parent, then pick each change into the
+> WC+index before committing. That way if you abort early, cleaning up
+> just consists of rebasing the stack onto the last change you sent
+> upstream.
 
-> On 9/2/11 11:07 AM, Bryan Jacobs wrote:
-> > For this particular case, it works well: svn:mergeinfo is populated
-> > in such a way that the local merge history is recreated when
-> > another git-svn user pulls down the repository. This patch thus
-> > allows to git users to exchange branching and merging development
-> > through a central SVN server without loss of fidelity and without
-> > explicitly manipulating the mergeinfo property by hand.
-> 
-> Whee!  That's what I was intending when I wrote the original change.
-> I might have written it myself back in 2008 or whenever it was, but I 
-> found I didn't actually have any SVN projects I was sending commits
-> to, let alone merges.  git-svn is a project with a continually
-> atrophying userbase :-).  Thanks for picking it up.
-> 
+That's one way to do it; in fact, if the trees match you don't need to 
+do anything complicated like cherry-pick.
 
-Glad to hear it. I think there's still work to be done, mostly because
-I'm not very familiar with the git codebase and the "right" way to do
-things, but I want this to work.
+ie, say you're committing
 
-> > r1 --- r3 -- r4
-> >   \
-> >    r2 --- E
-> >
-> > F is lost and cannot be cherry-picked back onto the WC, as any
-> > files created in E are already present but untracked locally.
-> 
-> Are r1 and r2 supposed to be on the same SVN branch?
+    r1---A---B---C---D
 
-No, different SVN branches.
+and it blows up at
 
-> 
-> Overall, I could believe that.  Perhaps it is simpler to detect those 
-> situations in advance and insist the user dcommits them
-> independently, although it appears to me that it would apply to any
-> dcommit which failed for any reason part way through.  So perhaps
-> there is a wider justification for fixing that.
+    r1--r2--r3--C---D
 
-I could do a pass through all the commits which are about to be sent
-out to SVN to check if this is going to happen, yes. But I think a
-better solution would be to change how the changes are replayed by
-git-svn dcommit: right now, all changes are applied to the WC, then it
-sequentially does an add+dcommit for each patch? Right? I think it might
-be better to reset --hard to the parent, then pick each change into the
-WC+index before committing. That way if you abort early, cleaning up
-just consists of rebasing the stack onto the last change you sent
-upstream.
+So long as the tree from the fetched r3 == the tree from B, then you can 
+just go ahead and write out new commits for C and D without doing any 
+merging (ie cherry-pick or rebase).  You could also put merge commits 
+back the way they were, too.
 
-If I get around to making git-svn put its stuff into notes, this would
-be a lot easier since you could just reset --hard back to the original
-HEAD, since none of the earlier commits would have been mangled. But of
-course everyone who already imported a repo would be SOL if the new
-version relied on that Hippocratic behavior...
+If they don't match, then something went wrong with the push really, or 
+there is something weird going on.  I'd try to avoid using cherry pick 
+automatically in situations like this.  There are too many error modes, 
+and if it only happens when you don't know what's going on, it's not a 
+good idea to try to fix that.  If it /is/ a sufficiently unlikely error 
+(ie, the trees not matching as above), then it would be better to simply 
+bomb out and provide two commands:
 
-> Sam
+* a 'git reset' command to restore to previous state (ie, before the 
+dcommit)
+* a 'git rebase' command to attempt to put the new history on top of the 
+new upstream.  Rebase doesn't work with merges of course but it still 
+should help the user figure out what to do.
+
+Another benefit of this approach is that you don't need to muck with the 
+WC + index at all, no matter what happens.
+
+Sam
