@@ -1,64 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Rebase & Trailing Whitespace
-Date: Fri, 2 Sep 2011 04:28:51 -0400
-Message-ID: <20110902082851.GA17703@sigill.intra.peff.net>
-References: <CAE1pOi0rY4kRR4rvEdFhzzTgfhUczHMX=H5_9+o5aHnv4vTadw@mail.gmail.com>
- <20110901023127.GB31838@sigill.intra.peff.net>
- <29267EE41F9343E68AAAE2C33AA40E1A@PhilipOakley>
- <20110901212618.GB16308@sigill.intra.peff.net>
- <4E6086AA.40806@drmicha.warpmail.net>
+From: David Bainbridge <david.bainbridge@ericsson.com>
+Subject: IBM Rational Team Concert and Git
+Date: Fri, 2 Sep 2011 11:26:19 +0200
+Message-ID: <3A92A63EBFD41F4196707AF266E1CDA517BAE4EBBB@ESESSCMS0361.eemea.ericsson.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	Git Users <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Sep 02 10:29:03 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 02 11:26:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzP7X-0001d3-7c
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 10:29:03 +0200
+	id 1QzQ16-0008Ve-Vk
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 11:26:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932540Ab1IBI25 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Sep 2011 04:28:57 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37531
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932514Ab1IBI2z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Sep 2011 04:28:55 -0400
-Received: (qmail 29345 invoked by uid 107); 2 Sep 2011 08:29:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Sep 2011 04:29:40 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Sep 2011 04:28:51 -0400
-Content-Disposition: inline
-In-Reply-To: <4E6086AA.40806@drmicha.warpmail.net>
+	id S933006Ab1IBJ0X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Sep 2011 05:26:23 -0400
+Received: from mailgw9.se.ericsson.net ([193.180.251.57]:63628 "EHLO
+	mailgw9.se.ericsson.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932775Ab1IBJ0W convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Sep 2011 05:26:22 -0400
+X-AuditID: c1b4fb39-b7bfdae000005125-f7-4e60a13dfb91
+Received: from esessmw0197.eemea.ericsson.se (Unknown_Domain [153.88.253.125])
+	by mailgw9.se.ericsson.net (Symantec Mail Security) with SMTP id AD.AF.20773.D31A06E4; Fri,  2 Sep 2011 11:26:21 +0200 (CEST)
+Received: from ESESSCMS0361.eemea.ericsson.se ([169.254.1.175]) by
+ esessmw0197.eemea.ericsson.se ([153.88.115.87]) with mapi; Fri, 2 Sep 2011
+ 11:26:21 +0200
+Thread-Topic: IBM Rational Team Concert and Git 
+Thread-Index: AcxpUl+fTZTUPmTZQbCS6Qn8j9HAfQ==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180604>
 
-On Fri, Sep 02, 2011 at 09:32:58AM +0200, Michael J Gruber wrote:
 
-> > Thanks. By itself, I think many readers would ask "why would I want the
-> > empty tree, so I threw in a few examples of use on the wiki, too.
-> 
-> Ugh. I mean: Thanks for the wiki entries, they're nice, but have you
-> checked git.git for whitespace errors? Time for another war on
-> whitespace? Many false positives, of course, but also true positives.
+Hi everyone,
 
-Yeah, there are a lot. Because of the potential disruption to patches in
-progress, though, we tend not to do big bulk updates of style changes.
-But it may be worth using the
+Ericsson has requested that IBM Rational provide a supported bridge to Git from IBM Rational Team Concert.
 
-  rm foo.c
-  git diff -R | git apply --whitespace=fix
+A work item has been opened at Jazz.net:
+https://jazz.net/jazz/web/projects/Rational%20Team%20Concert#action=com.ibm.team.workitem.viewWorkItem&id=159549
 
-trick if you are going to be working on foo.c. And if there are a lot,
-you can "add -p" whatever fixes are appropriate for the area you're
-working in.
+Regards
 
--Peff
+David Bainbridge
+
+DAVID BAINBRIDGE  
+CM Area Manager 
+
+Ericsson AB
+Product Line Engineering Environments
+Torshamnsgatan 23
+SE-164 80 Stockholm, Sweden
+david.bainbridge@ericsson.com
+www.ericsson.com  
+
+This Communication is Confidential. We only send and receive email on the basis of the terms set out at www.ericsson.com/email_disclaimer  
