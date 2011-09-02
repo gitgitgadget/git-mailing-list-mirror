@@ -1,54 +1,65 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] test-lib: save test counts across invocations
-Date: Fri, 2 Sep 2011 14:39:39 +0200
-Message-ID: <201109021439.39916.trast@student.ethz.ch>
-References: <8fe5381a6b69079b8c20452fd4d99a128764dd52.1314882443.git.trast@student.ethz.ch> <20110901163846.GD15018@sigill.intra.peff.net>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: IBM Rational Team Concert and Git
+Date: Fri, 2 Sep 2011 16:08:01 +0200
+Message-ID: <CAGdFq_jNTgx=+GBzFJrvez30Y+p_C30jzrYB5QCTha+bM9Nvpw@mail.gmail.com>
+References: <3A92A63EBFD41F4196707AF266E1CDA517BAE4EBBB@ESESSCMS0361.eemea.ericsson.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Sep 02 14:39:50 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: David Bainbridge <david.bainbridge@ericsson.com>
+X-From: git-owner@vger.kernel.org Fri Sep 02 16:08:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzT2B-0004qe-MJ
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 14:39:48 +0200
+	id 1QzUQK-0006wY-0M
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 16:08:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751666Ab1IBMjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Sep 2011 08:39:43 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:11521 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751286Ab1IBMjm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Sep 2011 08:39:42 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.289.1; Fri, 2 Sep
- 2011 14:39:40 +0200
-Received: from thomas.inf.ethz.ch (129.132.153.219) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.289.1; Fri, 2 Sep
- 2011 14:39:39 +0200
-User-Agent: KMail/1.13.7 (Linux/3.0.3-41-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <20110901163846.GD15018@sigill.intra.peff.net>
-X-Originating-IP: [129.132.153.219]
+	id S1752145Ab1IBOIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Sep 2011 10:08:43 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:51355 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752017Ab1IBOIm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Sep 2011 10:08:42 -0400
+Received: by qyk15 with SMTP id 15so701494qyk.19
+        for <git@vger.kernel.org>; Fri, 02 Sep 2011 07:08:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=ewipTqDAAkNPahwIoqhHnThQS1xJ7ymEBF7lBP87RSY=;
+        b=o2EvYNru0oichXu9cX78a0wEREdKz4tmKliy9lwGdPu4Gh269QAgjxlVrLsv96tGCN
+         xH4KmyfCbc8lmeCOcE0UbhkyzVO5Ty+yXKmvIQxmWZihagl8FDmvIlfvmES3xQQkS7xq
+         Wd8D2FIXlsngHlLua+0c9pZgtQMXNkvbtL5qc=
+Received: by 10.52.22.83 with SMTP id b19mr1176979vdf.33.1314972521771; Fri,
+ 02 Sep 2011 07:08:41 -0700 (PDT)
+Received: by 10.68.43.9 with HTTP; Fri, 2 Sep 2011 07:08:01 -0700 (PDT)
+In-Reply-To: <3A92A63EBFD41F4196707AF266E1CDA517BAE4EBBB@ESESSCMS0361.eemea.ericsson.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180610>
 
-Jeff King wrote:
-> Anyway, this whole thing is a cute idea, and I do love eye candy, but I
-> wonder if it's worth the complexity. All this is telling us is how far
-> into each of the scripts it is. But we have literally hundreds of test
-> scripts, all with varying numbers of tests of varying speeds, and you're
-> probably running 16 or more at one time. So it doesn't tell you what you
-> really want to know, which is: how soon will the test suite probably be
-> done running.
+Heya,
 
-I guess you're right.  Let's drop this, then.
+On Fri, Sep 2, 2011 at 11:26, David Bainbridge
+<david.bainbridge@ericsson.com> wrote:
+> Ericsson has requested that IBM Rational provide a supported bridge to Git from IBM Rational Team Concert.
+>
+> A work item has been opened at Jazz.net:
+> https://jazz.net/jazz/web/projects/Rational%20Team%20Concert#action=com.ibm.team.workitem.viewWorkItem&id=159549
+
+What does this mean? Is this something the git community can help
+with? I can't even access that page...
+
+> This Communication is Confidential. We only send and receive email
+> on the basis of the terms set out at www.ericsson.com/email_disclaimer
+
+Why are you sending a Confidential email to a public list?
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Cheers,
+
+Sverre Rabbelier
