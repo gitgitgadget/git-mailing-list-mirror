@@ -1,106 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Dropping '+' from fetch = +refs/heads/*:refs/remotes/origin/*?
-Date: Thu, 1 Sep 2011 20:00:39 -0400
-Message-ID: <20110902000039.GB9339@sigill.intra.peff.net>
-References: <7vliu8w25g.fsf@alter.siamese.dyndns.org>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [PATCH 1/2] remote: write correct fetch spec when renaming remote
+ 'remote'
+Date: Thu, 1 Sep 2011 20:02:53 -0400 (EDT)
+Message-ID: <alpine.DEB.2.00.1109011945560.7066@debian>
+References: <1314841843-19868-1-git-send-email-martin.von.zweigbergk@gmail.com> <20110901024211.GC31838@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 02 02:00:49 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Sep 02 02:03:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzHBg-0008W5-Ss
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 02:00:49 +0200
+	id 1QzHDv-0000hm-JU
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 02:03:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932666Ab1IBAAo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Sep 2011 20:00:44 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38736
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932634Ab1IBAAn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Sep 2011 20:00:43 -0400
-Received: (qmail 25606 invoked by uid 107); 2 Sep 2011 00:01:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 01 Sep 2011 20:01:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Sep 2011 20:00:39 -0400
-Content-Disposition: inline
-In-Reply-To: <7vliu8w25g.fsf@alter.siamese.dyndns.org>
+	id S932745Ab1IBADA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Sep 2011 20:03:00 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:36803 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932742Ab1IBAC7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Sep 2011 20:02:59 -0400
+Received: by vxi9 with SMTP id 9so1712088vxi.19
+        for <git@vger.kernel.org>; Thu, 01 Sep 2011 17:02:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        bh=nFkmPnd/WUrMjANynnvgIq4q4+edhSj8PFY6E+9rylE=;
+        b=AE39dcT4UVRXxQftn7PZ4yrVLgz+wEZC722m85vkFS2P/k6+OcGFrZylplpUJ2STUj
+         oG9mK1aemLl8XTE9R+olV89XNW5CrFGZuK7aAuKMWfQgguBSiltewtJwgwBDx2ijss3c
+         QT+X1pWOCEngA6acmCMItDrOXF7R6Wdtms6Gs=
+Received: by 10.52.112.201 with SMTP id is9mr441006vdb.379.1314921778370;
+        Thu, 01 Sep 2011 17:02:58 -0700 (PDT)
+Received: from [192.168.1.102] (modemcable094.77-37-24.mc.videotron.ca [24.37.77.94])
+        by mx.google.com with ESMTPS id bi11sm458033vdb.13.2011.09.01.17.02.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 01 Sep 2011 17:02:57 -0700 (PDT)
+X-X-Sender: martin@debian
+In-Reply-To: <20110901024211.GC31838@sigill.intra.peff.net>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180586>
 
-On Thu, Sep 01, 2011 at 11:25:31AM -0700, Junio C Hamano wrote:
 
-> Suggested reading:
+On Wed, 31 Aug 2011, Jeff King wrote:
+
+> On Wed, Aug 31, 2011 at 09:50:42PM -0400, Martin von Zweigbergk wrote:
 > 
->   http://git-blame.blogspot.com/2011/08/how-to-inject-malicious-commit-to-git.html
+> > Reduce the risk of changing incorrect sections of the refspec by
+> > requiring the string to be matched to have leading and trailing
+> > slashes, i.e. match "/<name>/" instead of just "<name>".
 > 
-> I am wondering if we are better off applying something along the lines of
-> this patch, so that with the default configuration, users can notice if
-> their upstream unexpectedly rewound their branches.
+> Doesn't this just mean that:
+> 
+>   git remote rename remotes foo
+> 
+> will break in the same way?
 
-Hmm. This feels like it's subtly changing the meaning of
-refs/remotes/$remote/*.
+Yes, "r", "ead" and such now work and only exactly "refs", "heads" and
+"remotes" don't work. Sorry, forgot to mention that in the commit
+message.
 
-Right now, I think of it as a local cache for whatever the remote side
-has. In other words, a way of separating the network-fetching parts of
-the workflow from the local parts. And in that sense, it is perfectly
-reasonable to overwrite with what the other side has, whether they
-rewind or not, because we are just representing what they have. And
-since we keep a reflog, it's not as if the previous state is lost to us
-locally.
+> > We could have required even a leading ":refs/remotes/", but that would
+> > mean that we would limit the types of refspecs we could help the user
+> > update.
+> 
+> Actually, I think it's better to be more conservative [...]
 
-But with this change, we are making a policy judgement about what to
-fetch. And as you noticed, it means that users need to start telling git
-about their policy (e.g., mentioning in the refspecs that pu can rewind)
-in order to keep fetch working.
+I think you are right. That's what I did (match all the way from
+"refs/...") at first, but then I thought that maybe the reason the
+matching was relaxed was to allow non-default refspecs. However, as
+you point out in the footnote to your reply to PATCH 2/2, that case is
+not working consistently anyway, so it seems safe (w.r.t. backwards
+compatibility too) to ignore it. Will switch back to matching
+":refs/remotes/$OLD".
 
-So I consider that a downside, because it's extra work for the user[1].
-What are the upsides?
 
-Is this about preventing workflow-related mistakes where people
-accidentally merge in rebased commits, creating annoying shadow
-histories?
-
-Is it about preventing malicious rewinds from infecting downstream
-repositories?
-
-If the former, then I suspect we need to give more guidance to the user
-than saying "reject, non-fast-forward". What then? Should they "fetch
--f"?  Or "pull --rebase" (actually, how do they even fetch the branch
-now for such a pull --rebase)? Or talk out-of-band to the repo owner?
-
-If the latter, then I think we should be specific about the attack
-scenarios, and what happens with and without this config. And if it's a
-security precaution, what cases doesn't it cover (e.g., initial clone is
-still vulnerable, as is a one-off pull. As are are malicious insertion
-attacks that don't involve rewinding).
-
-And then we can weigh the upsides and the downsides.
-
--Peff
-
-[1] What I really don't like is that cloning git.git is no longer:
-
-      git clone git://git.kernel.org/pub/scm/git/git.git
-
-    which is a minimal as it can be, but becomes:
-
-      git clone git://git.kernel.org/pub/scm/git/git.git
-      cd git
-      git config --add remote.origin.fetch +refs/heads/pu:refs/remotes/origin/pu
-
-    It's not that my fingers are too tired to do all that typing, but
-    rather that the first set of instructions is very easy to explain,
-    and the second one is full of magic and head-scratching about why
-    git isn't handling this magic itself.
-
-    It would be considerably nicer if the server had some way of saying
-    "I expect this branch to be rewound". Which has been discussed off
-    and on over the years, as I recall.
+Martin
