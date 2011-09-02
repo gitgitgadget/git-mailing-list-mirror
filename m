@@ -1,57 +1,62 @@
-From: Anatol Pomozov <anatol.pomozov@gmail.com>
-Subject: [PATCH] Clarify that '--tags' fetches tags only
-Date: Fri,  2 Sep 2011 14:04:46 -0700
-Message-ID: <1314997486-29996-1-git-send-email-anatol.pomozov@gmail.com>
-Cc: Anatol Pomozov <anatol.pomozov@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 02 23:05:27 2011
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: [PATCH] Clarify that '--tags' fetches tags only
+Date: Fri, 02 Sep 2011 17:18:21 -0400
+Message-ID: <1314998301.19039.117.camel@ddn-tmpdesk.its.maine.edu>
+References: <1314997486-29996-1-git-send-email-anatol.pomozov@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Anatol Pomozov <anatol.pomozov@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 02 23:18:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzavR-00069P-PZ
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 23:05:22 +0200
+	id 1Qzb8M-00038m-OX
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 23:18:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755913Ab1IBVFQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Sep 2011 17:05:16 -0400
-Received: from smtp-out.google.com ([74.125.121.67]:16255 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755787Ab1IBVFP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Sep 2011 17:05:15 -0400
-Received: from hpaq11.eem.corp.google.com (hpaq11.eem.corp.google.com [172.25.149.11])
-	by smtp-out.google.com with ESMTP id p82L5DEf016214;
-	Fri, 2 Sep 2011 14:05:13 -0700
-Received: from anatol.mtv.corp.google.com (anatol.mtv.corp.google.com [172.18.102.63])
-	by hpaq11.eem.corp.google.com with ESMTP id p82L5CDr025413;
-	Fri, 2 Sep 2011 14:05:12 -0700
-Received: by anatol.mtv.corp.google.com (Postfix, from userid 67983)
-	id D0D911E4161; Fri,  2 Sep 2011 14:05:11 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7.rc0.72.g4b5ea.dirty
-X-System-Of-Record: true
+	id S1755964Ab1IBVSg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Sep 2011 17:18:36 -0400
+Received: from beryl.its.maine.edu ([130.111.32.94]:34706 "EHLO
+	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755927Ab1IBVSg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Sep 2011 17:18:36 -0400
+Received: from [130.111.39.171] (ddn-tmpdesk.its.maine.edu [130.111.39.171])
+	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p82LILfb015265
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 2 Sep 2011 17:18:21 -0400
+In-Reply-To: <1314997486-29996-1-git-send-email-anatol.pomozov@gmail.com>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=2 Fuz1=2
+	Fuz2=2
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p82LILfb015265
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1315603106.25516@tt7P7J1eCpqcNgO6sjvSnw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180637>
 
----
- Documentation/fetch-options.txt |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+On Fri, 2011-09-02 at 14:04 -0700, Anatol Pomozov wrote:
 
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index 39d326a..37d2316 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -63,7 +63,8 @@ ifndef::git-pull[]
- 	flag lets all tags and their associated objects be
- 	downloaded. The default behavior for a remote may be
- 	specified with the remote.<name>.tagopt setting. See
--	linkgit:git-config[1].
-+	linkgit:git-config[1]. Note that if this option is specified
-+	then only tags are fetched, refs under refs/heads/* stay unchanged.
- 
- --recurse-submodules[=yes|on-demand|no]::
- 	This option controls if and under what conditions new commits of
+> -	linkgit:git-config[1].
+> +	linkgit:git-config[1]. Note that if this option is specified
+> +	then only tags are fetched, refs under refs/heads/* stay unchanged.
+
+Anatol,
+Looks like a sane change to me. You might want to check
+Documentation/SubmittingPatches in the git repository if you want Junio
+to include your patch. It is probably also worth CC-ing those whom did
+the previous work on that documentation and the tags code to make sure
+your change is correct.
+
 -- 
-1.7.7.rc0.72.g4b5ea.dirty
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
