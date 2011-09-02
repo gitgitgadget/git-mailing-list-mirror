@@ -1,98 +1,76 @@
-From: Bryan Jacobs <bjacobs@woti.com>
-Subject: Re: [spf:guess,iffy] Re: [spf:guess,iffy] [PATCH] git-svn: teach
- git-svn to populate svn:mergeinfo
-Date: Fri, 2 Sep 2011 15:42:06 -0400
-Organization: White Oak Technologies
-Message-ID: <20110902154206.331b80e9@robyn.woti.com>
-References: <20110902140702.066a4668@robyn.woti.com>
-	<4E612319.7030006@vilain.net>
-	<20110902144922.383ed0f1@robyn.woti.com>
-	<4E6127F5.5070009@vilain.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PULL] various git-svn updates
+Date: Fri, 02 Sep 2011 12:43:12 -0700
+Message-ID: <7vmxem20j3.fsf@alter.siamese.dyndns.org>
+References: <20110901220006.GA18321@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Fri Sep 02 21:42:24 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Bryan Jacobs <bjacobs@woti.com>, Sam Vilain <sam@vilain.net>,
+	H Krishnan <hetchkay@gmail.com>, Ray Chen <rchen@cs.umd.edu>,
+	git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Sep 02 21:43:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzZd8-0004T8-JG
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 21:42:23 +0200
+	id 1QzZe5-0004sr-PZ
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 21:43:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755188Ab1IBTmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Sep 2011 15:42:12 -0400
-Received: from mail02.woti.us ([66.92.158.6]:59838 "EHLO roscoe.woti.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755032Ab1IBTmI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Sep 2011 15:42:08 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by roscoe.woti.com (Postfix) with ESMTP id D74FA504D37F0;
-	Fri,  2 Sep 2011 15:42:07 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at woti.com
-Received: from roscoe.woti.com ([127.0.0.1])
-	by localhost (roscoe.woti.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tkvBBxys7R66; Fri,  2 Sep 2011 15:42:07 -0400 (EDT)
-Received: from robyn.woti.com (robyn.woti.com [192.168.168.187])
-	by roscoe.woti.com (Postfix) with ESMTPSA id 6A676504D37EA;
-	Fri,  2 Sep 2011 15:42:07 -0400 (EDT)
-In-Reply-To: <4E6127F5.5070009@vilain.net>
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; x86_64-redhat-linux-gnu)
+	id S1755159Ab1IBTnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Sep 2011 15:43:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61484 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755031Ab1IBTnP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Sep 2011 15:43:15 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 099BC5F45;
+	Fri,  2 Sep 2011 15:43:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3+byQzpaEAl20jEfKDNeU4V5uUs=; b=k/c8Ci
+	Kg+xJwI7AKzGKbeNqcTGiwix1cmEP8IrNY2y+v8YWYIQh3RQnrV9cAnnUYDJllZa
+	u1ZstET9Npvm3jdpVErsHRECE9XyCvzxs4ZmNCXrpJg0HrosXje7cbuQGkPh4Lfp
+	R6KB5AZfYaHpVK2gjeFXsW/SfNlXYQ4vmByhg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lZ3BRQQvGsPlTY29okrSKad5X+qdS8vn
+	cGPAvoqQ/tf6/i5pmqyk/nHu7OmXp83VNltNg4mF8CGNB+lH0NVgS6n/VSr0oEG1
+	7E7Rwh5T4aPPKxDByEy5VWN7OuM2FE9fSZY6BOuXEFulftjyJeGVkXHu0GjJTa+0
+	omjYXMBci8M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 00B015F44;
+	Fri,  2 Sep 2011 15:43:14 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8D8445F43; Fri,  2 Sep 2011
+ 15:43:13 -0400 (EDT)
+In-Reply-To: <20110901220006.GA18321@dcvr.yhbt.net> (Eric Wong's message of
+ "Thu, 1 Sep 2011 22:00:06 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CBBD04EC-D59B-11E0-9728-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180635>
 
-On Fri, 02 Sep 2011 12:01:09 -0700
-Sam Vilain <sam@vilain.net> wrote:
+Eric Wong <normalperson@yhbt.net> writes:
 
-> That's one way to do it; in fact, if the trees match you don't need
-> to do anything complicated like cherry-pick.
-> 
-> ie, say you're committing
-> 
->     r1---A---B---C---D
-> 
-> and it blows up at
-> 
->     r1--r2--r3--C---D
-> 
-> So long as the tree from the fetched r3 == the tree from B, then you
-> can just go ahead and write out new commits for C and D without doing
-> any merging (ie cherry-pick or rebase).  You could also put merge
-> commits back the way they were, too.
+> Please pull from "master" on git://bogomips.org/git-svn.git
+>
+>   Bryan Jacobs (1):
+>         git-svn: Teach dcommit --mergeinfo to handle multiple lines
+>
+>   Eric Wong (1):
+>         git-svn: fix fetch with moved path when using rewriteRoot
+>
+>   Ray Chen (1):
+>         git-svn: New flag to emulate empty directories
+>
+> commit 85f022e9c124ffeda31a50cab878e1418d694d87 (fix fetch with moved path)
+> is also suitable for cherry-picking into maint.  All tests pass on
+> Debian 6.0 (x86_64).
 
-When you say "write out new commits" you mean create a commit object
-with the same contents, but a different parent? Does git-svn do this
-somewhere already?
-
-> If they don't match, then something went wrong with the push really,
-> or there is something weird going on.  I'd try to avoid using cherry
-> pick automatically in situations like this.  There are too many error
-> modes, and if it only happens when you don't know what's going on,
-> it's not a good idea to try to fix that.  If it /is/ a sufficiently
-> unlikely error (ie, the trees not matching as above), then it would
-> be better to simply bomb out and provide two commands:
-> 
-> * a 'git reset' command to restore to previous state (ie, before the 
-> dcommit)
-> * a 'git rebase' command to attempt to put the new history on top of
-> the new upstream.  Rebase doesn't work with merges of course but it
-> still should help the user figure out what to do.
-> 
-> Another benefit of this approach is that you don't need to muck with
-> the WC + index at all, no matter what happens.
-
-All of the above sounds good to me. I haven't taken the time to
-understand how git-svn sends changesets upstream (I only know it mucks
-with the WC from empirical experience) so I don't know how easy it would
-be to change the methodology, though.
-
-Would this also mean we could dcommit from a dirty checkout? Having to
-stash/unstash is a nuisance.
-
-> Sam
-> 
+Thanks, pulled but not yet pushed out.
