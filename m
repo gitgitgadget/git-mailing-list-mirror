@@ -1,61 +1,129 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Dropping '+' from fetch = +refs/heads/*:refs/remotes/origin/*?
-Date: Fri, 2 Sep 2011 11:29:47 -0400
-Message-ID: <20110902152947.GB19213@sigill.intra.peff.net>
-References: <7vliu8w25g.fsf@alter.siamese.dyndns.org>
- <20110902000039.GB9339@sigill.intra.peff.net>
- <4E6088F9.5070102@drmicha.warpmail.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: rev-list --cherry-pick and context lines
+Date: Fri, 02 Sep 2011 17:32:23 +0200
+Message-ID: <4E60F707.40708@drmicha.warpmail.net>
+References: <1k6yux4.x1kexb19bkrqpM%lists@haller-berlin.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Sep 02 17:29:54 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Stefan Haller <lists@haller-berlin.de>
+X-From: git-owner@vger.kernel.org Fri Sep 02 17:32:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzVgo-0006gv-6I
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 17:29:54 +0200
+	id 1QzVjM-0008D6-DQ
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 17:32:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752855Ab1IBP3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Sep 2011 11:29:49 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50754
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752556Ab1IBP3t (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Sep 2011 11:29:49 -0400
-Received: (qmail 31223 invoked by uid 107); 2 Sep 2011 15:30:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Sep 2011 11:30:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Sep 2011 11:29:47 -0400
-Content-Disposition: inline
-In-Reply-To: <4E6088F9.5070102@drmicha.warpmail.net>
+	id S1753006Ab1IBPc0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Sep 2011 11:32:26 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:38641 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752925Ab1IBPcZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Sep 2011 11:32:25 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 3CBD320992;
+	Fri,  2 Sep 2011 11:32:25 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute3.internal (MEProxy); Fri, 02 Sep 2011 11:32:25 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=Nx6D667UNYXTJ/TfKofMIn
+	YTStg=; b=t5rMit56qC5/k6+gk2gJbEV7iFhfp23yT6c91IoCN/3yi2rF99jmBh
+	KWalfj4kW8dGULAKyblkChgSTlx6WFmn/OZSf2w0ZhWO12BpYx6VHRLzEo7puWsF
+	Bi8v6JUCOuAqou/V50KuSF8iLonLRHblZ2M/EYeHgaxvhTiPAdfXU=
+X-Sasl-enc: vpzIY4rW2x3VqcOky90sq2ZDJDL71M+o7N2vstcCsmYO 1314977544
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B8A10AE14E4;
+	Fri,  2 Sep 2011 11:32:24 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
+In-Reply-To: <1k6yux4.x1kexb19bkrqpM%lists@haller-berlin.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180615>
 
-On Fri, Sep 02, 2011 at 09:42:49AM +0200, Michael J Gruber wrote:
-
-> >     It would be considerably nicer if the server had some way of saying
-> >     "I expect this branch to be rewound". Which has been discussed off
-> >     and on over the years, as I recall.
+Stefan Haller venit, vidit, dixit 02.09.2011 12:35:
+> Consider two commits on different branches, one with this patch:
 > 
-> Hmm, that sounds like the often requested feature to have part of the
-> config distributed by "clone" as well, possibly after displaying it and
-> getting user confirmation.
+>     diff --git a/file.txt b/file.txt
+>     index 704fa27..2f7e74c 100644
+>     --- a/file.txt
+>     +++ b/file.txt
+>     @@ -1,3 +1,3 @@
+>      old_context
+>      
+>     -foo
+>     +bar
+> 
+> and the other with this patch:
+> 
+>     diff --git a/file.txt b/file.txt
+>     index f35051b..8c7de32 100644
+>     --- a/file.txt
+>     +++ b/file.txt
+>     @@ -1,3 +1,3 @@
+>      new_context
+>      
+>     -foo
+>     +bar
+> 
+> If I run "git rev-list --cherry-pick --left-right branch1...branch2", it
+> reports both commits as being genuine commits on their respective
+> branch, even though I consider their patches to be the same.
+> 
+> I guess for my purpose I would like to have patch-ids that ignore
+> context (or that use only one line of context, I'm not sure which).
+> 
+> In fact, if I do "git show <commit> -U1 | git patch-id", both commits
+> show the same id.
+> 
+> So, would it make sense to have a parameter for git-rev-list (and
+> git-cherry) that lets you specify how much context to be used for the
+> patch ids?
 
-Yeah, if distributed config existed, that would be a good place to put
-this information.
+It would be a bit like the patch below. "git log" accepts diff options already.
+But:
 
-And I personally thing a limited form[1] of distributed config is a
-sensible idea, but I'm not sure everybody else agrees.
+- Do we want the patch id generation and the patch display (-p) to use the
+  same options?
 
--Peff
+- -U1 implies -p/--patch and there is no --no-patch.
 
-[1] My idea of "limited" would be an allow-known-good list of harmless
-config keys which we would respect when they came from the remote, with
-the option for the user to whitelist or blacklist more keys if they
-wanted.
+- Which other diff options do we want to pass to the patch id
+  generation: --histogram, --patience, ...?
+
+Cheers,
+Michael
+
+----
+
+diff --git i/diff.c w/diff.c
+index fcc0078..4e82912 100644
+--- i/diff.c
++++ w/diff.c
+@@ -4103,7 +4103,7 @@ static int diff_get_patch_id(struct diff_options *options, unsigned char *sha1)
+ 		}
+ 
+ 		xpp.flags = 0;
+-		xecfg.ctxlen = 3;
++		xecfg.ctxlen = options->context;
+ 		xecfg.flags = 0;
+ 		xdi_diff_outf(&mf1, &mf2, patch_id_consume, &data,
+ 			      &xpp, &xecfg);
+diff --git i/revision.c w/revision.c
+index 072ddac..5a98ed9 100644
+--- i/revision.c
++++ w/revision.c
+@@ -601,6 +601,7 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
+ 	left_first = left_count < right_count;
+ 	init_patch_ids(&ids);
+ 	ids.diffopts.pathspec = revs->diffopt.pathspec;
++	ids.diffopts.context = revs->diffopt.context;
+ 
+ 	/* Compute patch-ids for one side */
+ 	for (p = list; p; p = p->next) {
