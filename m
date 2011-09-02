@@ -1,74 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] for-each-ref: add split message parts to %(contents:*).
-Date: Fri, 2 Sep 2011 12:39:03 -0400
-Message-ID: <20110902163903.GA21768@sigill.intra.peff.net>
-References: <20110901184815.2cd8b472@pomiocik.lan>
- <1314895801-21147-1-git-send-email-mgorny@gentoo.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Dropping '+' from fetch = +refs/heads/*:refs/remotes/origin/*?
+Date: Fri, 02 Sep 2011 09:47:07 -0700
+Message-ID: <7vsjoelwms.fsf@alter.siamese.dyndns.org>
+References: <7vliu8w25g.fsf@alter.siamese.dyndns.org>
+ <20110902000039.GB9339@sigill.intra.peff.net>
+ <4E6088F9.5070102@drmicha.warpmail.net>
+ <20110902152947.GB19213@sigill.intra.peff.net>
+ <7v4o0uncq0.fsf@alter.siamese.dyndns.org>
+ <20110902162524.GC19690@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>
-X-From: git-owner@vger.kernel.org Fri Sep 02 18:39:15 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Sep 02 18:47:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzWlt-0000LZ-N8
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 18:39:14 +0200
+	id 1QzWtj-00050E-If
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 18:47:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753397Ab1IBQjI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Sep 2011 12:39:08 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49339
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753371Ab1IBQjG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Sep 2011 12:39:06 -0400
-Received: (qmail 704 invoked by uid 107); 2 Sep 2011 16:39:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Sep 2011 12:39:52 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Sep 2011 12:39:03 -0400
-Content-Disposition: inline
-In-Reply-To: <1314895801-21147-1-git-send-email-mgorny@gentoo.org>
+	id S1753499Ab1IBQrN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Sep 2011 12:47:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62748 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753419Ab1IBQrL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Sep 2011 12:47:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F0714509;
+	Fri,  2 Sep 2011 12:47:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HiE9+pwqtgJYtiOICr7x6NkJh9k=; b=KdZK1U
+	l3nKFvv2QyRxEvZf6Nrw0tZEmcEgYFviM1q5lA6U9wSFMXAUMO8cBmrtFp3Bo5om
+	3Wkj/nGHj8WgDkG+QkqFtGMOOrcpSjq+oD6yMr5HddCn2Skw413qNxR81Yph0zKY
+	//YpYZBi862pcy4UOhSDE+N5moPJw7DCQxKXE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xM5+LBLiMnHENXo0d/5Rr2M7LzIatDbh
+	2ZtaArb+n3j2oh5njLwL4uM6FWPM7LYn8iZ4EHuIisradxX5/kpsNCr1lxZnMDDi
+	HFMriho/4mdoDiVJ1IOrm8LyhtUnAM4wchVWyDAyipuqpsHxuv5rnFwqCzzriCap
+	Zh3KxNoJ6Lg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9614B4508;
+	Fri,  2 Sep 2011 12:47:10 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 290C14506; Fri,  2 Sep 2011
+ 12:47:10 -0400 (EDT)
+In-Reply-To: <20110902162524.GC19690@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 2 Sep 2011 12:25:24 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 33740022-D583-11E0-8D76-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180623>
 
-On Thu, Sep 01, 2011 at 06:50:01PM +0200, Micha=C5=82 G=C3=B3rny wrote:
+Jeff King <peff@peff.net> writes:
 
-> -	buf =3D strchr(buf, '\n');
-> -	if (!buf) {
-> -		*body =3D "";
-> -		return; /* no body */
-> -	}
-> -	while (*buf =3D=3D '\n')
-> -		buf++; /* skip blank between subject and body */
-> -	*body =3D buf;
-> +	buf =3D format_subject(NULL, buf, NULL);
-> +
-> +	/* When having a signed tag without body, format_subject()
-> +	 * will start to eat the signature. */
-> +	if (buf > *signature)
-> +		*body =3D *signature;
-> +	else /* - 1 to get a trailing newline to strip */
-> +		*body =3D buf - 1;
+>> It coincides with my idea too, but it might be a very limited set. For
+>> example, there may be a good "suggested by upstream" default for LHS of
+>> fetch refspecs (e.g. somebody may have 47 topics published but majority of
+>> people are expected to follow only his "master" branch), but it is up to
+>> the user of that suggestion what the RHS would be.
+>
+> Yeah. That leads to synthesizing local keys based on what remote keys
+> say. Which is pretty straightforward if you are just fetching the
+> remote's config during clone, and then copying or creating local keys
+> based on that in your own .git/config (e.g., by creating full refspecs
+> with upstream's idea of the LHS, and our idea of the RHS).
+> ...
+> I do worry that could quickly get complex, and people would start
+> wanting a Turing-complete config language. :)
 
-This last line is wrong if there is no trailing newline, no? Running
-even the existing tests in t6300 against your new patch, I get:
-
-expecting success:
-  git for-each-ref --format=3D'%(subject)' refs/heads/master >actual &&
-  test_cmp expected actual
-
---- expected    2011-09-02 16:36:38.306058729 +0000
-+++ actual      2011-09-02 16:36:38.318058729 +0000
-@@ -1 +1 @@
--Initial
-+Initia
-not ok - 28 basic atom: head subject
-
--Peff
+My real point was that more often than not the settings of configuration
+variables are inherently per repository not per project, and even though
+we may hear people want shared configs, possibly in-tree, distributed as
+part of the projects, such a set-up would not be very useful, before you
+even consider merging updates but just taking them as suggested initial
+values. The choice to take, ignore, or tweak the suggestions all depend
+on the semantics of each variable, and it becomes more so once you start
+talking about merging updates.
