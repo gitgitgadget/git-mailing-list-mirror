@@ -1,105 +1,66 @@
-From: David Bainbridge <david.bainbridge@ericsson.com>
-Subject: RE: IBM Rational Team Concert and Git
-Date: Fri, 2 Sep 2011 16:22:30 +0200
-Message-ID: <3A92A63EBFD41F4196707AF266E1CDA517BAE4EDFE@ESESSCMS0361.eemea.ericsson.se>
-References: <3A92A63EBFD41F4196707AF266E1CDA517BAE4EBBB@ESESSCMS0361.eemea.ericsson.se>
- <CAGdFq_jNTgx=+GBzFJrvez30Y+p_C30jzrYB5QCTha+bM9Nvpw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Dropping '+' from fetch = +refs/heads/*:refs/remotes/origin/*?
+Date: Fri, 2 Sep 2011 11:26:50 -0400
+Message-ID: <20110902152650.GA19213@sigill.intra.peff.net>
+References: <7vliu8w25g.fsf@alter.siamese.dyndns.org>
+ <20110902000039.GB9339@sigill.intra.peff.net>
+ <4E607F27.2000405@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 02 16:22:41 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Sep 02 17:27:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzUdj-0005UB-5Q
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 16:22:39 +0200
+	id 1QzVdz-00054w-LH
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 17:27:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752417Ab1IBOWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Sep 2011 10:22:34 -0400
-Received: from mailgw9.se.ericsson.net ([193.180.251.57]:55316 "EHLO
-	mailgw9.se.ericsson.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752437Ab1IBOWe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Sep 2011 10:22:34 -0400
-X-AuditID: c1b4fb39-b7bfdae000005125-57-4e60e6a80375
-Received: from esessmw0256.eemea.ericsson.se (Unknown_Domain [153.88.253.125])
-	by mailgw9.se.ericsson.net (Symantec Mail Security) with SMTP id 78.DA.20773.8A6E06E4; Fri,  2 Sep 2011 16:22:32 +0200 (CEST)
-Received: from ESESSCMS0361.eemea.ericsson.se ([169.254.1.175]) by
- esessmw0256.eemea.ericsson.se ([10.2.3.125]) with mapi; Fri, 2 Sep 2011
- 16:22:32 +0200
-Thread-Topic: IBM Rational Team Concert and Git
-Thread-Index: AcxpedKojajTAXDbQgmHAU9NP+8kuAAABSCA
-In-Reply-To: <CAGdFq_jNTgx=+GBzFJrvez30Y+p_C30jzrYB5QCTha+bM9Nvpw@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-X-Brightmail-Tracker: AAAAAA==
+	id S1752854Ab1IBP0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Sep 2011 11:26:54 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52666
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752645Ab1IBP0x (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Sep 2011 11:26:53 -0400
+Received: (qmail 31189 invoked by uid 107); 2 Sep 2011 15:27:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Sep 2011 11:27:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Sep 2011 11:26:50 -0400
+Content-Disposition: inline
+In-Reply-To: <4E607F27.2000405@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180613>
 
-Hi Sverre,
+On Fri, Sep 02, 2011 at 09:00:55AM +0200, Johannes Sixt wrote:
 
-Sorry. I should have removed the statement about the mail being confidential. It's not confidential. It's definitely public!
+> >     It would be considerably nicer if the server had some way of saying
+> >     "I expect this branch to be rewound". Which has been discussed off
+> >     and on over the years, as I recall.
+> 
+> So, if such a feature were available, wouldn't it be nicer if the initial
+> clone set up the refspec like this:
+> 
+>   [remote "origin"]
+>         url = git://git.kernel.org/pub/scm/git/git.git
+>         fetch = +refs/heads/*:refs/remotes/origin/*
+>         fetch = refs/heads/maint:refs/remotes/origin/maint
+>         fetch = refs/heads/master:refs/remotes/origin/master
+> 
+> i.e., the non-wildcard refspec are about which branches are *not* expected
+> to be rewound rather than the other way around.
 
-You will need to register and create a Jazz.net account to be able to access the page. https://jazz.net/pub/user/register.jsp 
-Note: I am not trying to promote RTC or Jazz in any way.
+I don't see the advantage one way or the other. Doesn't it just amount
+to what the default will be? And isn't "not rewind" generally the more
+common, and hence a better default?
 
-I posted this information to this list because there may be others with an interest in adding functionality this to RTC, in which case we may have some common ground. I am not sure that the Git development community would need to be involved in this at all. So you can treat it as being for information only, if you wish ...
+Or are you saying that for backwards compatibility, it would be better
+to end up with a refspec more like what we have now? That I can see the
+advantage of.
 
-Hope this explains it.
-
-Regards
-
-David
-
-
-Ericsson
-
-DAVID BAINBRIDGE
-CM Area Manager
-
-Ericsson AB
-Product Line Engineering Environments
-Torshamnsgatan 23
-SE-164 80 Stockholm, Sweden
-david.bainbridge@ericsson.com
-www.ericsson.com
-
-
-
-We only send and receive email on the basis of the terms set out at www.ericsson.com/email_disclaimer
------Original Message-----
-From: Sverre Rabbelier [mailto:srabbelier@gmail.com] 
-Sent: den 2 september 2011 16:08
-To: David Bainbridge
-Cc: git@vger.kernel.org
-Subject: Re: IBM Rational Team Concert and Git
-
-Heya,
-
-On Fri, Sep 2, 2011 at 11:26, David Bainbridge <david.bainbridge@ericsson.com> wrote:
-> Ericsson has requested that IBM Rational provide a supported bridge to Git from IBM Rational Team Concert.
->
-> A work item has been opened at Jazz.net:
-> https://jazz.net/jazz/web/projects/Rational%20Team%20Concert#action=co
-> m.ibm.team.workitem.viewWorkItem&id=159549
-
-What does this mean? Is this something the git community can help with? I can't even access that page...
-
-> This Communication is Confidential. We only send and receive email on 
-> the basis of the terms set out at www.ericsson.com/email_disclaimer
-
-Why are you sending a Confidential email to a public list?
-
---
-Cheers,
-
-Sverre Rabbelier
+-Peff
