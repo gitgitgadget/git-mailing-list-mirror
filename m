@@ -1,82 +1,106 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Dropping '+' from fetch = +refs/heads/*:refs/remotes/origin/*?
-Date: Fri, 2 Sep 2011 12:25:24 -0400
-Message-ID: <20110902162524.GC19690@sigill.intra.peff.net>
-References: <7vliu8w25g.fsf@alter.siamese.dyndns.org>
- <20110902000039.GB9339@sigill.intra.peff.net>
- <4E6088F9.5070102@drmicha.warpmail.net>
- <20110902152947.GB19213@sigill.intra.peff.net>
- <7v4o0uncq0.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 02 18:25:34 2011
+From: lists@haller-berlin.de (Stefan Haller)
+Subject: Re: rev-list --cherry-pick and context lines
+Date: Fri, 2 Sep 2011 18:33:06 +0200
+Message-ID: <1k6zcbk.ov5qevxc1a91M%lists@haller-berlin.de>
+References: <4E60F707.40708@drmicha.warpmail.net>
+Cc: git@vger.kernel.org
+To: git@drmicha.warpmail.net (Michael J Gruber)
+X-From: git-owner@vger.kernel.org Fri Sep 02 18:33:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzWYf-00020u-0Z
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 18:25:33 +0200
+	id 1QzWgH-0005x7-RJ
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 18:33:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753259Ab1IBQZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Sep 2011 12:25:27 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41177
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752941Ab1IBQZ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Sep 2011 12:25:26 -0400
-Received: (qmail 32269 invoked by uid 107); 2 Sep 2011 16:26:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Sep 2011 12:26:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Sep 2011 12:25:24 -0400
-Content-Disposition: inline
-In-Reply-To: <7v4o0uncq0.fsf@alter.siamese.dyndns.org>
+	id S1753346Ab1IBQdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Sep 2011 12:33:11 -0400
+Received: from mail.ableton.net ([62.96.12.117]:59436 "EHLO mail.ableton.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752941Ab1IBQdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Sep 2011 12:33:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
+	h=Message-ID:Date:From:Subject:In-Reply-To:Cc:To; bh=aY4T/6bJv3QnhoCgOGj30js3+9UGKdgmd96q44+v0bE=;
+	b=LpDg5w//zhIXOeCQrMCdx6W4IS2OjOVcovP7kb+OVQIoHcd6FBFXemYTRZ0E5/1gAuQ4dq4y0C8haPV2Palr9QTQ14JxkoyzD2W3EgTb5p5iZMXWI2Mg9oF5Z+uHp7674+zBsFt2r3oD08f33GWQk8w5U0Z98LZbBvTRAdlBSAQ=;
+Received: from macbook-stk.office.ableton.com ([10.1.12.116])
+	by mail.ableton.net with esmtpsa (SSLv3:AES128-SHA:128)
+	(Exim 4.76)
+	(envelope-from <lists@haller-berlin.de>)
+	id 1QzWfw-0000fO-HZ; Fri, 02 Sep 2011 18:33:04 +0200
+In-Reply-To: <4E60F707.40708@drmicha.warpmail.net>
+User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.6.8 (x86))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180621>
 
-On Fri, Sep 02, 2011 at 09:14:15AM -0700, Junio C Hamano wrote:
+Michael J Gruber <git@drmicha.warpmail.net> wrote:
 
-> Jeff King <peff@peff.net> writes:
+> Stefan Haller venit, vidit, dixit 02.09.2011 12:35:
+> > Consider two commits on different branches, one with this patch:
+> > 
+> >     diff --git a/file.txt b/file.txt
+> >     index 704fa27..2f7e74c 100644
+> >     --- a/file.txt
+> >     +++ b/file.txt
+> >     @@ -1,3 +1,3 @@
+> >      old_context
+> >      
+> >     -foo
+> >     +bar
+> > 
+> > and the other with this patch:
+> > 
+> >     diff --git a/file.txt b/file.txt
+> >     index f35051b..8c7de32 100644
+> >     --- a/file.txt
+> >     +++ b/file.txt
+> >     @@ -1,3 +1,3 @@
+> >      new_context
+> >      
+> >     -foo
+> >     +bar
+> > 
+> > If I run "git rev-list --cherry-pick --left-right branch1...branch2", it
+> > reports both commits as being genuine commits on their respective
+> > branch, even though I consider their patches to be the same.
+> > 
+> > I guess for my purpose I would like to have patch-ids that ignore
+> > context (or that use only one line of context, I'm not sure which).
+> > 
+> > In fact, if I do "git show <commit> -U1 | git patch-id", both commits
+> > show the same id.
+> > 
+> > So, would it make sense to have a parameter for git-rev-list (and
+> > git-cherry) that lets you specify how much context to be used for the
+> > patch ids?
 > 
-> > [1] My idea of "limited" would be an allow-known-good list of harmless
-> > config keys which we would respect when they came from the remote, with
-> > the option for the user to whitelist or blacklist more keys if they
-> > wanted.
-> 
-> It coincides with my idea too, but it might be a very limited set. For
-> example, there may be a good "suggested by upstream" default for LHS of
-> fetch refspecs (e.g. somebody may have 47 topics published but majority of
-> people are expected to follow only his "master" branch), but it is up to
-> the user of that suggestion what the RHS would be.
+> It would be a bit like the patch below. "git log" accepts diff options already.
+> But:
+> [...]
 
-Yeah. That leads to synthesizing local keys based on what remote keys
-say. Which is pretty straightforward if you are just fetching the
-remote's config during clone, and then copying or creating local keys
-based on that in your own .git/config (e.g., by creating full refspecs
-with upstream's idea of the LHS, and our idea of the RHS).
+Thanks a lot.  I can't contribute much to answering your "But:"
+questions; I can only add more questions myself. :-)
 
-But it becomes hard to keep your local config in sync with updates on
-the remote end. When the remote now adds "next" to the list of
-interesting branches, by what mechanism do you fix up your local config?
-Certainly we wouldn't want to rewrite the local config without
-consulting the user, because they may have reviewed or modified it since
-it was created.
+Is there a reason why the hard-coded default is 3 in the current code?
+It seems to me that 1 would be a better choice; it would mean "patches
+are equal if their added/removed lines are the same, and they could be
+cherry-picked without conflicts."
 
-One possible solution is that the local config could dynamically depend
-on the remote config. E.g., the fetch refspec has something like a
-wildcard that matches only the branches that the remote provides to us
-via some "interesting branches" config key. Then it's OK for git to
-update the "interesting branches" key from the remote. Either the user
-is OK with respecting that (because they have left the wildcard in
-place), or not (because they have changed the refspec not to use that
-wildcard).
+Now, I'm in a situation where I'll be stuck with git 1.7.1 for quite a
+while, so no patch is going to help me.  It looks like the only way to
+get the behaviour I want is to reimplement git-rev-list --cherry-pick
+myself, feeding each patch to git-patch-id, right? (Horribly
+inefficient, but might be good enough for my purpose. Just wondering if
+I'm missing a smarter way to solve it.)
 
-I do worry that could quickly get complex, and people would start
-wanting a Turing-complete config language. :)
+Thanks,
+   Stefan
 
--Peff
+
+-- 
+Stefan Haller
+Berlin, Germany
+http://www.haller-berlin.de/
