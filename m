@@ -1,74 +1,95 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: Dropping '+' from fetch = +refs/heads/*:refs/remotes/origin/*?
-Date: Fri, 02 Sep 2011 07:55:30 +0200
-Message-ID: <vpqliu7lc8d.fsf@bauges.imag.fr>
-References: <7vliu8w25g.fsf@alter.siamese.dyndns.org>
-	<4E5FDAFE.6050004@drmicha.warpmail.net>
-	<vpqippcm4x4.fsf@bauges.imag.fr>
-	<CAJo=hJv4CkmaJuVvCA2VdO68zn4Xb9EQsdP8p1W-7B9zbvXSaQ@mail.gmail.com>
+Date: Fri, 02 Sep 2011 09:00:55 +0200
+Message-ID: <4E607F27.2000405@viscovery.net>
+References: <7vliu8w25g.fsf@alter.siamese.dyndns.org> <20110902000039.GB9339@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Sep 02 07:55:47 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Sep 02 09:01:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzMjD-0004nY-65
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 07:55:47 +0200
+	id 1QzNkU-000180-Ga
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 09:01:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758134Ab1IBFzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Sep 2011 01:55:42 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:36465 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758094Ab1IBFzl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Sep 2011 01:55:41 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p825slcs003615
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 2 Sep 2011 07:54:47 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1QzMiw-0000uQ-PZ; Fri, 02 Sep 2011 07:55:30 +0200
-In-Reply-To: <CAJo=hJv4CkmaJuVvCA2VdO68zn4Xb9EQsdP8p1W-7B9zbvXSaQ@mail.gmail.com>
-	(Shawn Pearce's message of "Thu, 1 Sep 2011 12:50:48 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 02 Sep 2011 07:54:48 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p825slcs003615
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1315547690.43116@X08ghsnhR1eltGBfGRyRbw
+	id S1751641Ab1IBHBG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Sep 2011 03:01:06 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:38482 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751101Ab1IBHBD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Sep 2011 03:01:03 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1QzNkG-0003j8-4o; Fri, 02 Sep 2011 09:00:56 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id D78AF1660F;
+	Fri,  2 Sep 2011 09:00:55 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.20) Gecko/20110804 Thunderbird/3.1.12
+In-Reply-To: <20110902000039.GB9339@sigill.intra.peff.net>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180599>
 
-Shawn Pearce <spearce@spearce.org> writes:
+Am 9/2/2011 2:00, schrieb Jeff King:
+> Right now, I think of it as a local cache for whatever the remote side
+> has. In other words, a way of separating the network-fetching parts of
+> the workflow from the local parts.
 
-> On Thu, Sep 1, 2011 at 12:35, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
->> By asking users to explicitely say "yes, I know, this branch can be
->> rewond", we also ask them to think about it before making a mistake.
->>
->> That said, enabling the check by default may also become painful. I'd
->> vote for a configuration option, defaulting to the current behavior for
->> now. Then we can try living with it for a while and see how painful it
->> is.
->
-> I suspect the vast majority of branches in the wild do not rewind
-> under normal conditions. Users who work against branches that rewind
-> (e.g. those of us basing on a topic in pu)
+This is also my interpretation. For this reason, I don't think a change is
+necessary.
 
-Err, I don't think it's about people basing their work on pu, but rather
-about anybody fetching from pu, i.e. everybody calling "git fetch" or
-"git pull" in their clone.
+> So I consider that a downside, because it's extra work for the user[1].
+> What are the upsides?
+> 
+> Is this about preventing workflow-related mistakes where people
+> accidentally merge in rebased commits, creating annoying shadow
+> histories?
+> 
+> Is it about preventing malicious rewinds from infecting downstream
+> repositories?
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+All good questions to ask.
+
+> [1] What I really don't like is that cloning git.git is no longer:
+> 
+>       git clone git://git.kernel.org/pub/scm/git/git.git
+> 
+>     which is a minimal as it can be, but becomes:
+> 
+>       git clone git://git.kernel.org/pub/scm/git/git.git
+>       cd git
+>       git config --add remote.origin.fetch +refs/heads/pu:refs/remotes/origin/pu
+> 
+>     It's not that my fingers are too tired to do all that typing, but
+>     rather that the first set of instructions is very easy to explain,
+>     and the second one is full of magic and head-scratching about why
+>     git isn't handling this magic itself.
+
+Absolutely.
+
+>     It would be considerably nicer if the server had some way of saying
+>     "I expect this branch to be rewound". Which has been discussed off
+>     and on over the years, as I recall.
+
+So, if such a feature were available, wouldn't it be nicer if the initial
+clone set up the refspec like this:
+
+  [remote "origin"]
+        url = git://git.kernel.org/pub/scm/git/git.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+        fetch = refs/heads/maint:refs/remotes/origin/maint
+        fetch = refs/heads/master:refs/remotes/origin/master
+
+i.e., the non-wildcard refspec are about which branches are *not* expected
+to be rewound rather than the other way around.
+
+-- Hannes
