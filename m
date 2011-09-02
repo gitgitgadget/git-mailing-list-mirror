@@ -1,129 +1,62 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: rev-list --cherry-pick and context lines
-Date: Fri, 02 Sep 2011 17:32:23 +0200
-Message-ID: <4E60F707.40708@drmicha.warpmail.net>
-References: <1k6yux4.x1kexb19bkrqpM%lists@haller-berlin.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] remote: "rename o foo" should not rename ref
+ "origin/bar"
+Date: Fri, 2 Sep 2011 11:55:21 -0400
+Message-ID: <20110902155521.GA19690@sigill.intra.peff.net>
+References: <1314841843-19868-1-git-send-email-martin.von.zweigbergk@gmail.com>
+ <1314841843-19868-2-git-send-email-martin.von.zweigbergk@gmail.com>
+ <20110901024617.GD31838@sigill.intra.peff.net>
+ <alpine.DEB.2.00.1109012022110.7267@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Stefan Haller <lists@haller-berlin.de>
-X-From: git-owner@vger.kernel.org Fri Sep 02 17:32:32 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 02 17:55:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzVjM-0008D6-DQ
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 17:32:32 +0200
+	id 1QzW5a-0003gH-QY
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 17:55:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753006Ab1IBPc0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Sep 2011 11:32:26 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:38641 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752925Ab1IBPcZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Sep 2011 11:32:25 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 3CBD320992;
-	Fri,  2 Sep 2011 11:32:25 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute3.internal (MEProxy); Fri, 02 Sep 2011 11:32:25 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=Nx6D667UNYXTJ/TfKofMIn
-	YTStg=; b=t5rMit56qC5/k6+gk2gJbEV7iFhfp23yT6c91IoCN/3yi2rF99jmBh
-	KWalfj4kW8dGULAKyblkChgSTlx6WFmn/OZSf2w0ZhWO12BpYx6VHRLzEo7puWsF
-	Bi8v6JUCOuAqou/V50KuSF8iLonLRHblZ2M/EYeHgaxvhTiPAdfXU=
-X-Sasl-enc: vpzIY4rW2x3VqcOky90sq2ZDJDL71M+o7N2vstcCsmYO 1314977544
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id B8A10AE14E4;
-	Fri,  2 Sep 2011 11:32:24 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
-In-Reply-To: <1k6yux4.x1kexb19bkrqpM%lists@haller-berlin.de>
+	id S1753203Ab1IBPzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Sep 2011 11:55:25 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54812
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753011Ab1IBPzZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Sep 2011 11:55:25 -0400
+Received: (qmail 31513 invoked by uid 107); 2 Sep 2011 15:56:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Sep 2011 11:56:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Sep 2011 11:55:21 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.00.1109012022110.7267@debian>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180616>
 
-Stefan Haller venit, vidit, dixit 02.09.2011 12:35:
-> Consider two commits on different branches, one with this patch:
+On Thu, Sep 01, 2011 at 08:35:01PM -0400, Martin von Zweigbergk wrote:
+
+> > To be totally correct, shouldn't this check each ref against the RHS of
+> > the remote's old refspec, and rename it according to the remote's new
+> > refspec?
 > 
->     diff --git a/file.txt b/file.txt
->     index 704fa27..2f7e74c 100644
->     --- a/file.txt
->     +++ b/file.txt
->     @@ -1,3 +1,3 @@
->      old_context
->      
->     -foo
->     +bar
-> 
-> and the other with this patch:
-> 
->     diff --git a/file.txt b/file.txt
->     index f35051b..8c7de32 100644
->     --- a/file.txt
->     +++ b/file.txt
->     @@ -1,3 +1,3 @@
->      new_context
->      
->     -foo
->     +bar
-> 
-> If I run "git rev-list --cherry-pick --left-right branch1...branch2", it
-> reports both commits as being genuine commits on their respective
-> branch, even though I consider their patches to be the same.
-> 
-> I guess for my purpose I would like to have patch-ids that ignore
-> context (or that use only one line of context, I'm not sure which).
-> 
-> In fact, if I do "git show <commit> -U1 | git patch-id", both commits
-> show the same id.
-> 
-> So, would it make sense to have a parameter for git-rev-list (and
-> git-cherry) that lets you specify how much context to be used for the
-> patch ids?
+> That's what I thought too, but was planning on leaving it for a
+> separate patch. However, after changing patch 1 to only update the
+> fetch refspecs from "refs/remotes/$OLD" to "refs/remotes/$NEW", there
+> is no other place in the fetchspec where a remote name can occur and
+> 'git remote rename' still understands it. So since we're now being
+> more conservative about updating refspecs, I guess we need to be
+> equally conservative about updating ref names.
 
-It would be a bit like the patch below. "git log" accepts diff options already.
-But:
+Yeah, I think with the change in patch 1, your patch 2 is very
+reasonable. It is admitting that "git remote" is really about tweaking
+the default remote config, and punting on config that doesn't appear to
+follow it. And doing it consistently. I don't think there's nothing
+wrong with that.
 
-- Do we want the patch id generation and the patch display (-p) to use the
-  same options?
-
-- -U1 implies -p/--patch and there is no --no-patch.
-
-- Which other diff options do we want to pass to the patch id
-  generation: --histogram, --patience, ...?
-
-Cheers,
-Michael
-
-----
-
-diff --git i/diff.c w/diff.c
-index fcc0078..4e82912 100644
---- i/diff.c
-+++ w/diff.c
-@@ -4103,7 +4103,7 @@ static int diff_get_patch_id(struct diff_options *options, unsigned char *sha1)
- 		}
- 
- 		xpp.flags = 0;
--		xecfg.ctxlen = 3;
-+		xecfg.ctxlen = options->context;
- 		xecfg.flags = 0;
- 		xdi_diff_outf(&mf1, &mf2, patch_id_consume, &data,
- 			      &xpp, &xecfg);
-diff --git i/revision.c w/revision.c
-index 072ddac..5a98ed9 100644
---- i/revision.c
-+++ w/revision.c
-@@ -601,6 +601,7 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
- 	left_first = left_count < right_count;
- 	init_patch_ids(&ids);
- 	ids.diffopts.pathspec = revs->diffopt.pathspec;
-+	ids.diffopts.context = revs->diffopt.context;
- 
- 	/* Compute patch-ids for one side */
- 	for (p = list; p; p = p->next) {
+-Peff
