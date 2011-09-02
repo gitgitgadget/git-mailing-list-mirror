@@ -1,66 +1,97 @@
-From: David Bainbridge <david.bainbridge@ericsson.com>
-Subject: IBM Rational Team Concert and Git
-Date: Fri, 2 Sep 2011 11:26:19 +0200
-Message-ID: <3A92A63EBFD41F4196707AF266E1CDA517BAE4EBBB@ESESSCMS0361.eemea.ericsson.se>
+From: Hui Wang <jason77.wang@gmail.com>
+Subject: Re: [PATCH] sha1_file: Remove relative entries limitation
+Date: Fri, 2 Sep 2011 17:49:13 +0800
+Message-ID: <4E60A699.9080302@gmail.com>
+References: <1314772896-22631-1-git-send-email-jason77.wang@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 02 11:26:29 2011
+Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: <gitster@pobox.com>, <git@vger.kernel.org>
+To: Hui Wang <jason77.wang@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 02 11:49:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzQ16-0008Ve-Vk
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 11:26:29 +0200
+	id 1QzQNJ-0000Rt-Iu
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Sep 2011 11:49:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933006Ab1IBJ0X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Sep 2011 05:26:23 -0400
-Received: from mailgw9.se.ericsson.net ([193.180.251.57]:63628 "EHLO
-	mailgw9.se.ericsson.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932775Ab1IBJ0W convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Sep 2011 05:26:22 -0400
-X-AuditID: c1b4fb39-b7bfdae000005125-f7-4e60a13dfb91
-Received: from esessmw0197.eemea.ericsson.se (Unknown_Domain [153.88.253.125])
-	by mailgw9.se.ericsson.net (Symantec Mail Security) with SMTP id AD.AF.20773.D31A06E4; Fri,  2 Sep 2011 11:26:21 +0200 (CEST)
-Received: from ESESSCMS0361.eemea.ericsson.se ([169.254.1.175]) by
- esessmw0197.eemea.ericsson.se ([153.88.115.87]) with mapi; Fri, 2 Sep 2011
- 11:26:21 +0200
-Thread-Topic: IBM Rational Team Concert and Git 
-Thread-Index: AcxpUl+fTZTUPmTZQbCS6Qn8j9HAfQ==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-X-Brightmail-Tracker: AAAAAA==
+	id S1756025Ab1IBJtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Sep 2011 05:49:09 -0400
+Received: from mail.windriver.com ([147.11.1.11]:48135 "EHLO
+	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758152Ab1IBJtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Sep 2011 05:49:07 -0400
+Received: from ALA-HCA.corp.ad.wrs.com (ala-hca [147.11.189.40])
+	by mail.windriver.com (8.14.3/8.14.3) with ESMTP id p829n2Jr027410
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Fri, 2 Sep 2011 02:49:02 -0700 (PDT)
+Received: from [128.224.163.220] (128.224.163.220) by ALA-HCA.corp.ad.wrs.com
+ (147.11.189.50) with Microsoft SMTP Server (TLS) id 14.1.255.0; Fri, 2 Sep
+ 2011 02:49:02 -0700
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+In-Reply-To: <1314772896-22631-1-git-send-email-jason77.wang@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180605>
 
+Hi Junio,
 
-Hi everyone,
+Does this patch make sense?
 
-Ericsson has requested that IBM Rational provide a supported bridge to Git from IBM Rational Team Concert.
+Regards,
+Hui Wang.
 
-A work item has been opened at Jazz.net:
-https://jazz.net/jazz/web/projects/Rational%20Team%20Concert#action=com.ibm.team.workitem.viewWorkItem&id=159549
-
-Regards
-
-David Bainbridge
-
-DAVID BAINBRIDGE  
-CM Area Manager 
-
-Ericsson AB
-Product Line Engineering Environments
-Torshamnsgatan 23
-SE-164 80 Stockholm, Sweden
-david.bainbridge@ericsson.com
-www.ericsson.com  
-
-This Communication is Confidential. We only send and receive email on the basis of the terms set out at www.ericsson.com/email_disclaimer  
+Hui Wang wrote:
+> link_alt_odb_entries() will be called recursively if alternates has
+> valid object store paths, and to avoid nesting too deep, the
+> recursive depth is limited to 5, this limitation is reasonable and
+> safe for dead-loop reference situation.
+>
+> There is another limitation in this function to only permit the 1st
+> level alternates has relative paths, but there is no foreseeable
+> greater risk using relative paths in 2nd/3rd... level alternates than
+> using absolute paths, in addition to we already have max depth 5
+> limitation, we can safely remove this limitation.
+>
+> Moreover removing this limitation will make below two usage workable.
+>
+> usage1: base-repos has relative path in the alternates
+>         %>git clone --reference base-repos src dest
+> usage2: src2 has relative path to point src1, src1 has relative path
+>     	to point src
+>         %>git clone src2 dest
+>
+> Signed-off-by: Hui Wang <jason77.wang@gmail.com>
+> ---
+>  sha1_file.c |   13 ++++---------
+>  1 files changed, 4 insertions(+), 9 deletions(-)
+>
+> diff --git a/sha1_file.c b/sha1_file.c
+> index f7c3408..4130ca0 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -332,15 +332,10 @@ static void link_alt_odb_entries(const char *alt, const char *ep, int sep,
+>  		}
+>  		while (cp < ep && *cp != sep)
+>  			cp++;
+> -		if (last != cp) {
+> -			if (!is_absolute_path(last) && depth) {
+> -				error("%s: ignoring relative alternate object store %s",
+> -						relative_base, last);
+> -			} else {
+> -				link_alt_odb_entry(last, cp - last,
+> -						relative_base, depth);
+> -			}
+> -		}
+> +		if (last != cp)
+> +			link_alt_odb_entry(last, cp - last,
+> +					relative_base, depth);
+> +
+>  		while (cp < ep && *cp == sep)
+>  			cp++;
+>  		last = cp;
+>   
