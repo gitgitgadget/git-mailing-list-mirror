@@ -1,73 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] fetch: verify we have everything we need before
- updating our ref
-Date: Fri, 02 Sep 2011 16:14:30 -0700
-Message-ID: <7v39ge1qqx.fsf@alter.siamese.dyndns.org>
-References: <7vpqjkw3nb.fsf@alter.siamese.dyndns.org>
- <1314917015-3587-1-git-send-email-gitster@pobox.com>
- <1314917015-3587-4-git-send-email-gitster@pobox.com>
- <CACsJy8C4qX=p6d1v+i7TJanACOqL9R6-pv9AOaU_CM6DNjJfyQ@mail.gmail.com>
- <7v8vq7muzi.fsf@alter.siamese.dyndns.org>
+From: Jeremy Nickurak <vger-lists@trk.nickurak.ca>
+Subject: Retrieving logs matching pattern for all time.
+Date: Fri, 2 Sep 2011 18:03:34 -0600
+Message-ID: <CA+eQo_0gZpbz399GN1b+0mq8OY3Xoo+kij=UGSjwbJcNreYBvw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 03 01:14:40 2011
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 03 02:03:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzcwZ-0005Nz-Ut
-	for gcvg-git-2@lo.gmane.org; Sat, 03 Sep 2011 01:14:40 +0200
+	id 1Qzdi5-0004Qc-A9
+	for gcvg-git-2@lo.gmane.org; Sat, 03 Sep 2011 02:03:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756680Ab1IBXOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Sep 2011 19:14:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41033 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756646Ab1IBXOc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Sep 2011 19:14:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 540F95AE4;
-	Fri,  2 Sep 2011 19:14:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=n+MpNTxzObivZkaWH6SVzS5jtrI=; b=nS+AWb
-	piF5Y8on1uEyhttfEH0ZgLCsjlLky5lGv1WzKaXyvPmzsKfytFNwWDWYZ9sgMbzu
-	czqNtv03wEoOHTY2JulFNfUEHUDNM3jrRQnyWN8pW6CO7V/q5OLEGgP6LIWws7tc
-	jSJvpudqedbVkiG85YyLCO8xl1z4WXVEZHjiA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BTUwZieuzGjbx4tDu4xYr0wZrSsNh/2w
-	N85M/WqkyWRbQEWXM4eRmhHpw/pYmLdOxNPj2N+q8QKnNo5fInqvE+LAPzEppB8u
-	fn8ZLvO11cJvHaQf4RCjNZPjxWuD8JETNXyfEM3TgNUL8i1r/fpk/OLOKJhrMgjC
-	83GxnbJd0Jo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4AE6B5AE3;
-	Fri,  2 Sep 2011 19:14:32 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D9BA85AE2; Fri,  2 Sep 2011
- 19:14:31 -0400 (EDT)
-In-Reply-To: <7v8vq7muzi.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 01 Sep 2011 21:25:05 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 50998C04-D5B9-11E0-BB2E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751928Ab1ICADg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Sep 2011 20:03:36 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:37296 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751633Ab1ICADf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Sep 2011 20:03:35 -0400
+Received: by qyk15 with SMTP id 15so989419qyk.19
+        for <git@vger.kernel.org>; Fri, 02 Sep 2011 17:03:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nickurak.ca; s=google-dkim;
+        h=mime-version:sender:x-originating-ip:date:x-google-sender-auth
+         :message-id:subject:from:to:content-type;
+        bh=KdMaEIbH4/iSnujjmzwmmOkVQro94CWg0xuX1ujLv+U=;
+        b=ErNBZnzq9VojcIA2SDaZBK80cWwWCDmvf8NRK6T24EvsXzFpQ0BSgp7IR0DiibSy7S
+         Loel/O1Ups3WTGsftUWXa7zzXJvX8gjYWBeMUFTP23Fmxkd8uM5F985lK/rlsMdCzhlA
+         95nYPdmaGWMo5fsqSWq9w0LnpVamkPV2zUABI=
+Received: by 10.229.65.1 with SMTP id g1mr1269957qci.110.1315008214505; Fri,
+ 02 Sep 2011 17:03:34 -0700 (PDT)
+Received: by 10.229.45.199 with HTTP; Fri, 2 Sep 2011 17:03:34 -0700 (PDT)
+X-Originating-IP: [128.221.197.57]
+X-Google-Sender-Auth: psRxuMrTB7zxxB53YoNF8FxHPWk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180642>
 
-Junio C Hamano <gitster@pobox.com> writes:
+I have a glob pattern of files, and I'd like to get git logs for every
+commit that touched those files. 'git log filesmatchingglob*' is
+pretty close.
 
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->
->> What about receive-pack? Does it have the same breakage?
->
-> I didn't look---you tell me ;-)
+Unfortunately, because the * is interpreted by bash, it doesn't catch
+logs for files that don't exist anymore.
 
-I looked. It needs a similar check, and I'd need to refactor the
-check_everything_connected() function a bit to take an iterator.
+Protecting the * from bash was my next thought, but that doesn't seem to help:
 
-Will send a follow-up series this weekend.
+> user@host:~$ mkdir something
+> user@host:~$ cd something
+> user@host:~/something$ git init
+> Initialized empty Git repository in /home/nickuj/something/.git/
+> user@host:~/something$ echo hello > hello.txt
+> user@host:~/something$ git add hello.txt
+> user@host:~/something$ git commit -m hello hello.txt
+> [master (root-commit) ca4b223] hello
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>  create mode 100644 hello.txt
+> user@host:~/something$ git log -- 'hel*'
+> user@host:~/something$
+
+IE, git doesn't seem to interpret globs itself in patterns.
+
+http://stackoverflow.com/questions/543346/git-list-all-the-files-that-ever-existed
+suggests a means to get a list of all files that ever existed, and I
+could certainly iterate across that, find the files that match the
+pattern, and then run git-log against that.... but it seems like a
+problem somebody's already solved more elegantly.
+
+Any thoughts?
+
+-- 
+Jeremy Nickurak
