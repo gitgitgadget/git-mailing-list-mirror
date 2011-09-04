@@ -1,88 +1,79 @@
-From: "John S. Urban" <urbanjost@comcast.net>
-Subject: Re: Lost association between TAGS and COMMITs when rebased a git(1) repository
-Date: Sun, 4 Sep 2011 16:18:30 -0400
-Message-ID: <E8AFFECA8E294A55B0E2918B205113A6@urbanjsPC>
-References: <FF0364F3D5244CA4987EDDCFE7244BF3@urbanjsPC><CACx-yZ3tav1sJnLtJOn_YugQOsM9ERi7Cc7SowunyobxxX5YdA@mail.gmail.com><CABNEGjyXLnSvjhBewNDsjW=rthRh0HY+KgC05vPNPu5QCaAgXQ@mail.gmail.com><201109042043.01159.trast@student.ethz.ch> <CABNEGjy8M-pFTOs504Q1+G_DtocJwvzDyOAsJp9cn4BOSkv1TQ@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] Documentation: "on for all" configuration of notes.rewriteRef
+Date: Sun, 4 Sep 2011 22:28:57 +0200
+Message-ID: <f415402994735a60664e1f9f85be490a68b25ed3.1315167848.git.trast@student.ethz.ch>
+References: <CABNEGjy8M-pFTOs504Q1+G_DtocJwvzDyOAsJp9cn4BOSkv1TQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "knittl" <knittl89@googlemail.com>, <git@vger.kernel.org>
-To: "Tor Arntsen" <tor@spacetec.no>,
-	"Thomas Rast" <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Sep 04 22:19:45 2011
+Content-Type: text/plain
+Cc: "John S. Urban\"" <urbanjost@comcast.net>,
+	Tor Arntsen <tor@spacetec.no>,
+	knittl <knittl89@googlemail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 04 22:29:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0JAM-0006m6-R8
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Sep 2011 22:19:43 +0200
+	id 1R0JJY-0001i7-Sq
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Sep 2011 22:29:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753331Ab1IDUT3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Sep 2011 16:19:29 -0400
-Received: from qmta11.westchester.pa.mail.comcast.net ([76.96.59.211]:37279
-	"EHLO QMTA11.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753214Ab1IDUT2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Sep 2011 16:19:28 -0400
-Received: from omta23.westchester.pa.mail.comcast.net ([76.96.62.74])
-	by QMTA11.westchester.pa.mail.comcast.net with comcast
-	id UkKD1h0011c6gX85BkKUxn; Sun, 04 Sep 2011 20:19:28 +0000
-Received: from urbanjsPC ([71.236.72.62])
-	by omta23.westchester.pa.mail.comcast.net with comcast
-	id UkKQ1h00p1LdoTr3jkKRxZ; Sun, 04 Sep 2011 20:19:25 +0000
+	id S1753398Ab1IDU3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Sep 2011 16:29:00 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:38284 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753348Ab1IDU27 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Sep 2011 16:28:59 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.289.1; Sun, 4 Sep
+ 2011 22:28:53 +0200
+Received: from localhost.localdomain (188.155.176.28) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.289.1; Sun, 4 Sep
+ 2011 22:28:58 +0200
+X-Mailer: git-send-email 1.7.7.rc0.420.g468b7
 In-Reply-To: <CABNEGjy8M-pFTOs504Q1+G_DtocJwvzDyOAsJp9cn4BOSkv1TQ@mail.gmail.com>
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Windows Mail 6.0.6001.18416
-X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6001.18645
+X-Originating-IP: [188.155.176.28]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180702>
 
-Thanks for catching how this is not the default, and that it needs set. But 
-exactly what is the value that works?
------ Original Message ----- 
-From: "Tor Arntsen" <tor@spacetec.no>
-To: "Thomas Rast" <trast@student.ethz.ch>
-Cc: "knittl" <knittl89@googlemail.com>; "John S. Urban" 
-<urbanjost@comcast.net>; <git@vger.kernel.org>
-Sent: Sunday, September 04, 2011 3:11 PM
-Subject: Re: Lost association between TAGS and COMMITs when rebased a git(1) 
-repository
+Users had problems finding a working setting for notes.rewriteRef.
+Document how to enable rewriting for all notes.
 
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+[Sorry for the spam; the first one lacks my reply blurb and the
+in-reply-to. :-( ]
 
-On Sun, Sep 4, 2011 at 8:43 PM, Thomas Rast <trast@student.ethz.ch> wrote:
-> Tor Arntsen wrote:
->> On Sun, Sep 4, 2011 at 4:30 PM, knittl <knittl89@googlemail.com> wrote:
->> >
->> > On Sun, Sep 4, 2011 at 3:32 AM, John S. Urban <urbanjost@comcast.net> 
->> > wrote:
->> > > With my first use of git(1) I created a small project with about 200
->> > > "commits". When this was complete, I needed to label each commit with
->> > > information pointing it to a section of a document. I used tags for 
->> > > this.
->> >
->> > Use git notes[1] to attach additional info to existing commits. Git
->> > notes will by default be copied when using git rebase or git commit
->> > --amend (cf. notes.rewrite.<command> config)
->>
->> Is that true? I've always lost the notes when rebasing. I just tried
->> that again now (1.7.5.4), and after a rebase the notes attached to any
->> commit that was rebased just disappeared. I've always had to hunt down
->> and re-create the notes. It would indeed be much more convenient if
->> the notes would tag along.
->
-> Yes, that support has been present since 1.7.1, but it's not enabled
-> by default: you need to configure notes.rewriteRef.
+Tor Arntsen wrote:
+> Thanks. Got it working. So it's not by default, as was suggested by
+> knittl, it has to be enabled. BTW, it's not at all obvious from the
+> manpage what it should be set to, there's no actual example. Found it
+> by trial&error plus finding a diff for a test.
 
-Thanks. Got it working. So it's not by default, as was suggested by
-knittl, it has to be enabled. BTW, it's not at all obvious from the
-manpage what it should be set to, there's no actual example. Found it
-by trial&error plus finding a diff for a test.
+Let's document it then.  This still won't help you find out about the
+option/feature in the first place, though.  Maybe we should flip the
+default to enabled?
 
--Tor
+ Documentation/config.txt |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 0ecef9d..302b2d0 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1464,7 +1464,8 @@ notes.rewriteRef::
+ 	You may also specify this configuration several times.
+ +
+ Does not have a default value; you must configure this variable to
+-enable note rewriting.
++enable note rewriting.  Set it to `refs/notes/*` to enable rewriting
++for all notes.
+ +
+ This setting can be overridden with the `GIT_NOTES_REWRITE_REF`
+ environment variable, which must be a colon separated list of refs or
+-- 
+1.7.7.rc0.420.g468b7
