@@ -1,87 +1,107 @@
-From: "Tor Arntsen" <tor@spacetec.no>
-Subject: Re: [PATCH] Documentation: "on for all" configuration of notes.rewriteRef
-Date: Sun, 04 Sep 2011 22:43:43 +0200
-Message-ID: <4E63E2FF.2070603@spacetec.no>
-References: <CABNEGjy8M-pFTOs504Q1+G_DtocJwvzDyOAsJp9cn4BOSkv1TQ@mail.gmail.com> <f415402994735a60664e1f9f85be490a68b25ed3.1315167848.git.trast@student.ethz.ch>
+From: Nix <nix@esperi.org.uk>
+Subject: [PATCH] Support sizes >=2G in various config options accepting 'g' sizes.
+Date: Sun, 04 Sep 2011 22:03:15 +0100
+Message-ID: <87obz0nhpo.fsf@spindle.srvr.nix>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "" <urbanjost@comcast.net>,
-	knittl <knittl89@googlemail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Sep 04 22:51:54 2011
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 04 23:25:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0JfV-0000el-Vy
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Sep 2011 22:51:54 +0200
+	id 1R0KBi-0003Mx-KX
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Sep 2011 23:25:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753425Ab1IDUvt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Sep 2011 16:51:49 -0400
-Received: from puck.spacetec.no ([192.51.5.29]:54986 "HELO puck.spacetec.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753165Ab1IDUvs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Sep 2011 16:51:48 -0400
-X-Greylist: delayed 440 seconds by postgrey-1.27 at vger.kernel.org; Sun, 04 Sep 2011 16:51:47 EDT
-Received: (qmail 7940 invoked from network); 4 Sep 2011 20:44:24 -0000
-Received: from citadel.spacetec.no (10.10.2.22)
-  by puck.spacetec.no with SMTP; 4 Sep 2011 20:44:24 -0000
-Received: from [10.10.1.233] (ringworld4.spacetec.no [10.10.1.233])
-	by citadel.spacetec.no; Sun, 04 Sep 2011 22:43:46 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.20) Gecko/20110820 Iceowl/1.0b2 Icedove/3.1.12
+	id S1753788Ab1IDVZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Sep 2011 17:25:05 -0400
+Received: from icebox.esperi.org.uk ([81.187.191.129]:48881 "EHLO
+	mail.esperi.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753711Ab1IDVZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Sep 2011 17:25:03 -0400
+X-Greylist: delayed 1306 seconds by postgrey-1.27 at vger.kernel.org; Sun, 04 Sep 2011 17:25:03 EDT
+Received: from esperi.org.uk (nix@spindle.srvr.nix [192.168.14.15])
+	by mail.esperi.org.uk (8.14.4/8.14.3) with ESMTP id p84L3F0l002431
+	for <git@vger.kernel.org>; Sun, 4 Sep 2011 22:03:15 +0100
+Received: (from nix@localhost)
+	by esperi.org.uk (8.14.4/8.12.11/Submit) id p84L3FFo003029;
+	Sun, 4 Sep 2011 22:03:15 +0100
+Emacs: you'll understand when you're older, dear.
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-DCC-URT-Metrics: spindle 1060; Body=1 Fuz1=1 Fuz2=1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180704>
 
+The config options core.packedGitWindowSize, core.packedGitLimit,
+core.deltaBaseCacheLimit and core.bigFileThreshold all claim
+to support suffixes up to and including 'g'.  This implies that
+they should accept sizes >=2G on 64-bit systems: certainly,
+specifying a size of 3g should not silently be translated to zero
+or transformed into a large negative value due to integer
+overflow.  However, due to use of git_config_int() rather than
+git_config_ulong(), that is exactly what happens:
 
-On 04/09/2011 22:28, Thomas Rast wrote:
-> 
-> Users had problems finding a working setting for notes.rewriteRef.
-> Document how to enable rewriting for all notes.
-> 
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-> ---
-> [Sorry for the spam; the first one lacks my reply blurb and the
-> in-reply-to. :-( ]
-> 
-> Tor Arntsen wrote:
->> Thanks. Got it working. So it's not by default, as was suggested by
->> knittl, it has to be enabled. BTW, it's not at all obvious from the
->> manpage what it should be set to, there's no actual example. Found it
->> by trial&error plus finding a diff for a test.
-> 
-> Let's document it then.  This still won't help you find out about the
-> option/feature in the first place, though.  Maybe we should flip the
-> default to enabled?
-> 
->  Documentation/config.txt |    3 ++-
->  1 files changed, 2 insertions(+), 1 deletions(-)
-> 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 0ecef9d..302b2d0 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1464,7 +1464,8 @@ notes.rewriteRef::
->  	You may also specify this configuration several times.
->  +
->  Does not have a default value; you must configure this variable to
-> -enable note rewriting.
-> +enable note rewriting.  Set it to `refs/notes/*` to enable rewriting
-> +for all notes.
->  +
->  This setting can be overridden with the `GIT_NOTES_REWRITE_REF`
->  environment variable, which must be a colon separated list of refs or
+% git config core.bigFileThreshold 2g
+% git gc --aggressive # with extra debugging code to print out
+                      # core.bigfilethreshold after parsing
+bigfilethreshold: -2147483648
+[...]
 
-Looks good to me, it would have been sufficient for me to find it 
-right away. But, as you say, it requires you to know or be told about 
-the feature in the first place.. 
-As far as I'm concerned it would be perfect if it was set to refs/notes/*
-by default, but people are using notes for all kinds of things. Maybe there
-are issues with using that default that I don't know about.
+This is probably irrelevant for core.deltaBaseCacheLimit, but
+is problematic for the other values.  (It is particularly
+problematic for core.packedGitLimit, which can't even be set to
+its default value in the config file due to this bug.)
 
--Tor
+I haven't tried to fix things on 32-bit platforms, because there
+is no real point setting any values to >2G on such platforms
+anyway, and minimal likelihood that anyone would try.  The only
+real fix possible would be a diagnostic warning of an attempt to
+set a ridiculously high value, unless we want to use 'long long'
+everywhere, which I doubt.
+
+Signed-off-by: Nick Alcock <nix@esperi.org.uk>
+---
+ config.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/config.c b/config.c
+index 4183f80..919f581 100644
+--- a/config.c
++++ b/config.c
+@@ -550,7 +550,7 @@ static int git_default_core_config(const char *var, const char *value)
+ 
+ 	if (!strcmp(var, "core.packedgitwindowsize")) {
+ 		int pgsz_x2 = getpagesize() * 2;
+-		packed_git_window_size = git_config_int(var, value);
++		packed_git_window_size = git_config_ulong(var, value);
+ 
+ 		/* This value must be multiple of (pagesize * 2) */
+ 		packed_git_window_size /= pgsz_x2;
+@@ -561,18 +561,18 @@ static int git_default_core_config(const char *var, const char *value)
+ 	}
+ 
+ 	if (!strcmp(var, "core.bigfilethreshold")) {
+-		long n = git_config_int(var, value);
++		long n = git_config_ulong(var, value);
+ 		big_file_threshold = 0 < n ? n : 0;
+ 		return 0;
+ 	}
+ 
+ 	if (!strcmp(var, "core.packedgitlimit")) {
+-		packed_git_limit = git_config_int(var, value);
++		packed_git_limit = git_config_ulong(var, value);
+ 		return 0;
+ 	}
+ 
+ 	if (!strcmp(var, "core.deltabasecachelimit")) {
+-		delta_base_cache_limit = git_config_int(var, value);
++		delta_base_cache_limit = git_config_ulong(var, value);
+ 		return 0;
+ 	}
+ 
+-- 
+1.7.6.1.138.g03ab.dirty
