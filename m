@@ -1,157 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Funnies with "git fetch"
-Date: Sun, 04 Sep 2011 12:15:27 -0700
-Message-ID: <7vliu4yv8w.fsf@alter.siamese.dyndns.org>
-References: <7vpqjkw3nb.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Heitzmann?= 
+	<frederic.heitzmann@gmail.com>
+Subject: [PATCH] git svn dcommit : new option --interactive
+Date: Sun,  4 Sep 2011 21:21:51 +0200
+Message-ID: <1315164113-26539-1-git-send-email-frederic.heitzmann@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: gitster@pobox.com, normalperson@yhbt.net, jaysoffian@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 04 21:15:39 2011
+X-From: git-owner@vger.kernel.org Sun Sep 04 21:24:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0IAJ-0001M0-Qd
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Sep 2011 21:15:36 +0200
+	id 1R0IIm-0004PL-9G
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Sep 2011 21:24:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753043Ab1IDTPc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Sep 2011 15:15:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40655 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752998Ab1IDTPa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Sep 2011 15:15:30 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CAB3031E1;
-	Sun,  4 Sep 2011 15:15:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=e9cbdSqKkC8S5+45ikuYGIKhBLw=; b=D+3MYA
-	1ETCNI8l42+bCsZsMB7krJn/pwMV3ew5vj7VevuuKrQU8QoYVhAhDjujQdmuSwDk
-	HQuqdphOf4GTjOMVVYFmpPzpaR8Zp6b+UU1fuufKol94866Tm3ANhi52bK/txH+H
-	uzUZ7gPrL2uCKSsnDeGlDh5NhDPsyKXX9HJgI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OVRFNcl4xcdYxsFRX7hipQzFDcDCrZ+Z
-	Levh7/3WBPDuseBct6MGL/Z+iQ2MjHytPl+EaxKcWM34+TCL4XL1uJgWYbCsb+U0
-	SZdhm/fGMPZNYguYp14iNP3InmJ7fer3S8+JVVCJdV7+gEbiPzVq4XNQsImhJqOG
-	3EMdJC9azx4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C317531E0;
-	Sun,  4 Sep 2011 15:15:29 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2FD0031DF; Sun,  4 Sep 2011
- 15:15:29 -0400 (EDT)
-In-Reply-To: <7vpqjkw3nb.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 01 Sep 2011 10:53:12 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 40834D24-D72A-11E0-A270-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753082Ab1IDTYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Sep 2011 15:24:07 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:36078 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752792Ab1IDTYE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Sep 2011 15:24:04 -0400
+Received: by wyh22 with SMTP id 22so3135966wyh.19
+        for <git@vger.kernel.org>; Sun, 04 Sep 2011 12:24:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=5t+7WQznGg7aXAGFLs+9VJ401Fv+drs7bbLWIfeiMtI=;
+        b=miKjsMkWPdmS3c22dFr0fagkgc2KMIEaV/C+w6oXsaeFRQG8t2bTR6nOH+NzKKX7u/
+         DfC9cTVcZpouf02jPDuLnloOyGo7ToO5EcVnCaiHnezM5k3V4kvBX8Dn+8wQh5tn98dI
+         US19uONx8HDkm6Ew10EOUvlscm2Ccb6OBylpU=
+Received: by 10.216.203.79 with SMTP id e57mr1704746weo.42.1315164243495;
+        Sun, 04 Sep 2011 12:24:03 -0700 (PDT)
+Received: from localhost.localdomain (dra38-7-88-179-84-80.fbx.proxad.net [88.179.84.80])
+        by mx.google.com with ESMTPS id et17sm5825074wbb.0.2011.09.04.12.24.00
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 04 Sep 2011 12:24:01 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.447.gb9176
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180698>
 
-Junio C Hamano <gitster@pobox.com> writes:
+I use git svn daily, at work, and it is so useful that I started using it to
+track some files which are not supposed to find their way up to the SVN
+server.
+For instance, it may be useful to 'git add & commit' some reference data
+files, refactor some code, check against the data files, git commit, ..., then discard
+commits with data files.
+This way, it is very easy to monitor the functional changes in your code.
 
-> I just did this in an empty directory.
->
->     $ git init src
->     $ cd src
->     $ echo hello >greetings ; git add . ; git commit -m greetings
->     $ S=$(git rev-parse :greetings | sed -e 's|^..|&/|')
->     $ X=$(echo bye | git hash-object -w --stdin | sed -e 's|^..|&/|')
->     $ mv -f .git/objects/$X .git/objects/$S
->
-> The tip commit _thinks_ it has "greetings" that contains "hello", but
-> somebody replaced it with a corrupt "bye" that does not match self
-> integrity.
->
->     $ git fsck
->     error: sha1 mismatch ce013625030ba8dba906f756967f9e9ca394464a
->
->     error: ce013625030ba8dba906f756967f9e9ca394464a: object corrupt or missing
->     missing blob ce013625030ba8dba906f756967f9e9ca394464a
->
-> The "hello" blob is ce0136, and the tree contained in HEAD expects "hello"
-> in that loose object file, but notices the contents do not match the
-> filename.
->
-> So far, so good. Let's see what others see when they interact with this
-> repository.
->
-> cd ../
-> git init dst
-> cd dst
-> git config receive.fsckobjects true
-> git remote add origin ../src
-> git config branch.master.remote origin
-> git config branch.master.merge refs/heads/master
-> git fetch
->     remote: Counting objects: 3, done.
->     remote: Total 3 (delta 0), reused 0 (delta 0)
->     Unpacking objects: 100% (3/3), done.
->     From ../src
->      * [new branch]      master     -> origin/master
->
-> Oops? If we run "fsck" at this point, we would notice the breakage:
-> ...
-> But the straight "fetch" did not notice anything fishy going on. Shouldn't
-> we have?  Even though we may be reasonably safe, unpack-objects should be
-> able to do better, especially under receive.fsckobjects option.
+Unfortunately, it may happen that I forget to remove useless commits, and 'git
+svn dcommit' everything ... forever.
 
-We do not have fetch.fsckobjects, and here is a quick patch to add it. I
-would also add transfer.fsckobjects to cover both with a single variable
-in a follow-up patch, but with this, it fails as expected:
+These 2 patches add a --interactive option to 'git svn dcommit', which provides
+an interactive mode, similar to git-send-email.
 
-    $ git config fetch.fsckobjects true
-    $ git fetch
-    remote: Counting objects: 3, done.
-    remote: Total 3 (delta 0), reused 0 (delta 0)
-    Unpacking objects: 100% (3/3), done.
-    error: unable to find ce013625030ba8dba906f756967f9e9ca394464a
-    fatal: object of unexpected type
-    fatal: unpack-objects failed
-
-during the transfer phase.  The "rev-list --verify-objects" addition is a
-fix to a related but independent issue, so both are probably good to have,
-but this makes it unnecessary to run fsck_object() during the update-ref
-phase.
-
- builtin/fetch-pack.c |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
-
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 412bd32..bfed536 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -16,6 +16,7 @@ static int fetch_unpack_limit = -1;
- static int unpack_limit = 100;
- static int prefer_ofs_delta = 1;
- static int no_done = 0;
-+static int fetch_fsck_objects;
- static struct fetch_pack_args args = {
- 	/* .uploadpack = */ "git-upload-pack",
- };
-@@ -734,6 +735,8 @@ static int get_pack(int xd[2], char **pack_lockfile)
- 	}
- 	if (*hdr_arg)
- 		*av++ = hdr_arg;
-+	if (fetch_fsck_objects)
-+		*av++ = "--strict";
- 	*av++ = NULL;
- 
- 	cmd.in = demux.out;
-@@ -853,6 +856,11 @@ static int fetch_pack_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "fetch.fsckobjects")) {
-+		fetch_fsck_objects = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	return git_default_config(var, value, cb);
- }
- 
+ Documentation/git-svn.txt              |    8 ++++
+ git-svn.perl                           |   71 +++++++++++++++++++++++++++++++-
+ t/t9160-git-svn-dcommit-interactive.sh |   64 ++++++++++++++++++++++++++++
+ 3 files changed, 142 insertions(+), 1 deletions(-)
