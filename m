@@ -1,108 +1,110 @@
-From: PJ Weisberg <pj@irregularexpressions.net>
-Subject: Re: Lost association between TAGS and COMMITs when rebased a git(1) repository
-Date: Sun, 4 Sep 2011 03:02:27 -0700
-Message-ID: <CAJsNXTmJo6UXYS4AXygSLq2+T8MV0Sp0KhUt_mvgMqxC_k27ig@mail.gmail.com>
-References: <FF0364F3D5244CA4987EDDCFE7244BF3@urbanjsPC>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH 1/3] remove prefix argument from pathspec_prefix
+Date: Sun,  4 Sep 2011 12:41:59 +0200
+Message-ID: <1315132921-26949-2-git-send-email-drizzd@aon.at>
+References: <7vbow7ebzw.fsf@alter.siamese.dyndns.org>
+ <1315132921-26949-1-git-send-email-drizzd@aon.at>
 Cc: git@vger.kernel.org
-To: "John S. Urban" <urbanjost@comcast.net>
-X-From: git-owner@vger.kernel.org Sun Sep 04 12:09:21 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 04 12:44:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R09dg-0002hN-QF
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Sep 2011 12:09:21 +0200
+	id 1R0ABx-0004qP-9L
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Sep 2011 12:44:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753620Ab1IDKJN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Sep 2011 06:09:13 -0400
-Received: from p3plsmtpa08-08.prod.phx3.secureserver.net ([173.201.193.109]:36540
-	"HELO p3plsmtpa08-08.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753558Ab1IDKJL convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 4 Sep 2011 06:09:11 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Sun, 04 Sep 2011 06:09:11 EDT
-Received: (qmail 12777 invoked from network); 4 Sep 2011 10:02:30 -0000
-Received: from unknown (209.85.161.46)
-  by p3plsmtpa08-08.prod.phx3.secureserver.net (173.201.193.109) with ESMTP; 04 Sep 2011 10:02:30 -0000
-Received: by fxh19 with SMTP id 19so2994402fxh.19
-        for <git@vger.kernel.org>; Sun, 04 Sep 2011 03:02:27 -0700 (PDT)
-Received: by 10.223.13.196 with SMTP id d4mr1638504faa.59.1315130547451; Sun,
- 04 Sep 2011 03:02:27 -0700 (PDT)
-Received: by 10.223.96.7 with HTTP; Sun, 4 Sep 2011 03:02:27 -0700 (PDT)
-In-Reply-To: <FF0364F3D5244CA4987EDDCFE7244BF3@urbanjsPC>
+	id S1754147Ab1IDKok (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Sep 2011 06:44:40 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:36882 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754077Ab1IDKoi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Sep 2011 06:44:38 -0400
+Received: from localhost (p5B22E851.dip.t-dialin.net [91.34.232.81])
+	by bsmtp.bon.at (Postfix) with ESMTP id 45B0B13004B;
+	Sun,  4 Sep 2011 12:44:36 +0200 (CEST)
+X-Mailer: git-send-email 1.7.6.1
+In-Reply-To: <1315132921-26949-1-git-send-email-drizzd@aon.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180675>
 
-On Sat, Sep 3, 2011 at 6:32 PM, John S. Urban <urbanjost@comcast.net> w=
-rote:
-> With my first use of git(1) I =A0created a small project with about 2=
-00
-> "commits". =A0When this was complete, I needed to label each commit w=
-ith
-> information pointing it to a section of a document. I used tags for t=
-his. So
-> far, everything was fine. I was then asked to merge two commits
-> into one. I then did a "rebase" (for the first time). I then appear t=
-o have
-> lost all association between the tags and the effected commits; as al=
-l
-> commits after
-> the ones I modified no longer see "their" tags. Was there a way to ha=
-ve kept
-> the tags associated with the original commits as they were "rebased"?
+Passing a prefix to a function that is supposed to find the prefix
+is strange. And it's really only used if the pathspec is NULL. Make
+the callers handle this case instead.
 
-When Old Biff Tannen traveled back to the year 1955 and gave his
-younger self a copy of Grays Sports Almanac, which listed the outcomes
-of every major sporting event from the years 1950-2000, the timeline
-skewed, creating an alternate reality in which he had won enough money
-through gambling to take over the town of Hill Valley.  If Marty McFly
-had kept a reflog, like Git does, he could have backtracked in his
-personal history and just not left the almanac and the time machine
-where Biff could find them.  Instead, he had to go back to 1955 and
-steal the almanac from young Biff after old Biff had given it to him.
-But this metaphor is getting silly, and alienating anyone who wasn't
-watching American movies in the late 1980s.
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+---
+ builtin/commit.c   |    5 +++--
+ builtin/ls-files.c |    2 +-
+ cache.h            |    2 +-
+ setup.c            |    4 ++--
+ 4 files changed, 7 insertions(+), 6 deletions(-)
 
-My point is that the tags are still there, and they still point to the
-same commits they always pointed to.  It's just that those commits are
-part of the original history, not the alternate history created by the
-rebase.  People say that Git can "rewrite" history, but really it
-creates a new history for the branch.  The old history is still around
-as long as there are references to it, until the garbage collector
-picks it up.
-
-Once a tag points to a commit, it isn't meant to be easy to make it
-point to a different commit.  For the same reason that you wouldn't
-release version 1.8.3 of some software, and then later make a new
-release also called 1.8.3.
-
-> Also, I have some commits with multiple tags pointing to them. It has=
- come
-> to my attention that might not be an intentional feature. I could fin=
-d
-> nothing in the documentation explicitly stating multiple tags were al=
-lowed
-> to point to a commit; but the tags seem to be unique "objects" so I
-> see no reason this should not be an expected feature?
-
-There's no reason you can't have multiple tags pointing to the same com=
-mit.
-
-> Thanks for any insights. Other than loosing association between the t=
-ags and
-> the commits with rebase (which I was hesitant to use; and am now
-> doubly so) I found git(1) to be the first version control system bett=
-er than
-> "be careful and make tar-balls of major releases"; although I am just
-> starting to get an idea of how the pieces work.
-
-It's generally accepted that rebasing commits that other people have
-had access to is a bad idea. :-)
-
--PJ
+diff --git a/builtin/commit.c b/builtin/commit.c
+index cbc9613..64fe501 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -255,8 +255,9 @@ static int list_paths(struct string_list *list, const char *with_tree,
+ 	m = xcalloc(1, i);
+ 
+ 	if (with_tree) {
+-		const char *max_prefix = pathspec_prefix(prefix, pattern);
+-		overlay_tree_on_cache(with_tree, max_prefix);
++		char *max_prefix = pathspec_prefix(pattern);
++		overlay_tree_on_cache(with_tree, max_prefix ? max_prefix : prefix);
++		free(max_prefix);
+ 	}
+ 
+ 	for (i = 0; i < active_nr; i++) {
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index e8a800d..a54c2a2 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -545,7 +545,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 		strip_trailing_slash_from_submodules();
+ 
+ 	/* Find common prefix for all pathspec's */
+-	max_prefix = pathspec_prefix(prefix, pathspec);
++	max_prefix = pathspec_prefix(pathspec);
+ 	max_prefix_len = max_prefix ? strlen(max_prefix) : 0;
+ 
+ 	/* Treat unmatching pathspec elements as errors */
+diff --git a/cache.h b/cache.h
+index 607c2ea..0ccc84d 100644
+--- a/cache.h
++++ b/cache.h
+@@ -444,7 +444,7 @@ extern void set_git_work_tree(const char *tree);
+ #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
+ 
+ extern const char **get_pathspec(const char *prefix, const char **pathspec);
+-extern const char *pathspec_prefix(const char *prefix, const char **pathspec);
++extern char *pathspec_prefix(const char **pathspec);
+ extern void setup_work_tree(void);
+ extern const char *setup_git_directory_gently(int *);
+ extern const char *setup_git_directory(void);
+diff --git a/setup.c b/setup.c
+index 27c1d47..0906790 100644
+--- a/setup.c
++++ b/setup.c
+@@ -236,13 +236,13 @@ const char **get_pathspec(const char *prefix, const char **pathspec)
+ 	return pathspec;
+ }
+ 
+-const char *pathspec_prefix(const char *prefix, const char **pathspec)
++char *pathspec_prefix(const char **pathspec)
+ {
+ 	const char **p, *n, *prev;
+ 	unsigned long max;
+ 
+ 	if (!pathspec)
+-		return prefix ? xmemdupz(prefix, strlen(prefix)) : NULL;
++		return NULL;
+ 
+ 	prev = NULL;
+ 	max = PATH_MAX;
+-- 
+1.7.6.1
