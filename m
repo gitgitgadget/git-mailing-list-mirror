@@ -1,113 +1,104 @@
-From: "John S. Urban" <urbanjost@comcast.net>
+From: "Philip Oakley" <philipoakley@iee.org>
 Subject: Re: Lost association between TAGS and COMMITs when rebased a git(1) repository
-Date: Sun, 4 Sep 2011 12:40:56 -0400
-Message-ID: <E06C306119F84928B8D84D5DEC7A024C@urbanjsPC>
-References: <FF0364F3D5244CA4987EDDCFE7244BF3@urbanjsPC> <CACx-yZ1Ce3x=ZSdm5iY3JqYjVGVs5uPnb12-tMJP7zWsGuMK_Q@mail.gmail.com>
+Date: Sun, 4 Sep 2011 18:20:10 +0100
+Organization: OPDS
+Message-ID: <1B5C619E91F7437EA844D1D3DD3E6798@PhilipOakley>
+References: <FF0364F3D5244CA4987EDDCFE7244BF3@urbanjsPC> <3c10d6593152436c9dd3a5b5773e3c79-mfwitten@gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain;
 	format=flowed;
 	charset="iso-8859-1";
 	reply-type=original
 Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Sep 04 18:41:59 2011
+Cc: <git@vger.kernel.org>
+To: "Michael Witten" <mfwitten@gmail.com>,
+	"John S. Urban" <urbanjost@comcast.net>
+X-From: git-owner@vger.kernel.org Sun Sep 04 19:20:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0Fle-0007jn-HR
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Sep 2011 18:41:58 +0200
+	id 1R0GMi-0004Hi-9U
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Sep 2011 19:20:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751545Ab1IDQly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Sep 2011 12:41:54 -0400
-Received: from qmta14.westchester.pa.mail.comcast.net ([76.96.59.212]:52548
-	"EHLO qmta14.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751320Ab1IDQlx (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Sep 2011 12:41:53 -0400
-Received: from omta18.westchester.pa.mail.comcast.net ([76.96.62.90])
-	by qmta14.westchester.pa.mail.comcast.net with comcast
-	id Ug291h0041wpRvQ5EghtF6; Sun, 04 Sep 2011 16:41:53 +0000
-Received: from urbanjsPC ([71.236.72.62])
-	by omta18.westchester.pa.mail.comcast.net with comcast
-	id Ughr1h00b1LdoTr3eghs2m; Sun, 04 Sep 2011 16:41:52 +0000
-In-Reply-To: <CACx-yZ1Ce3x=ZSdm5iY3JqYjVGVs5uPnb12-tMJP7zWsGuMK_Q@mail.gmail.com>
+	id S1752007Ab1IDRUG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Sep 2011 13:20:06 -0400
+Received: from out1.ip09ir2.opaltelecom.net ([62.24.128.245]:53175 "EHLO
+	out1.ip09ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751085Ab1IDRUE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Sep 2011 13:20:04 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgEFAJyyY05cHIaz/2dsb2JhbABBihmeTnmBQQEEAQEFCAEBLh4BASELAgMFAgEDDgQDAwklFAEECBIGBwkBDQYBEggCAQIDAYdcCAK3NYYKYASHPJVuhxI
+X-IronPort-AV: E=Sophos;i="4.68,329,1312153200"; 
+   d="scan'208";a="489268066"
+Received: from host-92-28-134-179.as13285.net (HELO PhilipOakley) ([92.28.134.179])
+  by out1.ip09ir2.opaltelecom.net with SMTP; 04 Sep 2011 18:20:01 +0100
 X-Priority: 3
 X-MSMail-Priority: Normal
-X-Mailer: Microsoft Windows Mail 6.0.6001.18416
-X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6001.18645
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6109
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180689>
 
-Thanks to all for the replies. Perhaps the tutorials should mention notes 
-more often. I used several introductory
-manuals; all of which mentioned tags and none of which mentioned notes. The 
-tags seem (in retrospect) useful when
-I want additional sign-off capabilities. If the tags are seen only as a 
-sign-off mechanism I understand why they do not
-retain their associations when you "rewrite history"; but I really would 
-like to see a --tags option on the rebase option
-that lets tags keep their associations when they are not signed, as one 
-reply suggested.
+From: "Michael Witten" <mfwitten@gmail.com>
+> On Sat, 3 Sep 2011 21:32:03 -0400, John S. Urban wrote:
+>> Also, I have some commits with multiple tags pointing to them. It has 
+>> come
+>> to my attention that might not be an intentional feature. I could find
+>> nothing in the documentation explicitly stating multiple tags were 
+>> allowed
+>> to point to a commit; but the tags seem to be unique "objects" so I
+>> see no reason this should not be an expected feature?
+>
+> Well, everybody, it sounds like John's confusion is a good example for
+> why `tag' is another TERRIBLE choice of terminology.
+>
+> See here:
+>
+>  http://article.gmane.org/gmane.comp.version-control.git/179609
+>  Message-ID: 
+> <CAMOZ1Btmk86vmp1gRuCfG7yRuc6fD3_oYBvtq2VKK9Ywu8ay0A@mail.gmail.com>
+>
+>  http://article.gmane.org/gmane.comp.version-control.git/179942
+>  Message-ID: 
+> <CAMOZ1Bti3ZtAEOtLiUYSkWE+rO_VQd09NAn58Cn4hZBu8f-aFQ@mail.gmail.com>
+> --
+In terms of things understood and misunderstood, I found that Branches and 
+Tags were reasonable terms for use within Git at the time I read about them 
+(I'm still getting to grips with git in a hostile Windows environment).
 
-Notes are definitely more appropriate for my purpose than tags, however. I 
-haven't tried them yet but will shortly.
- I hope to see that
-they show up in gitk(1) as nicely as the tags do. I've been using the line 
-mode but the reviewers are very happy with
-gitk(1) as an efficient way to review and sign changes (especially simple 
-ones).
+There were other areas of confusing (to me) terminology, such as heads, 
+tips, and refs, which are 'the same' within particular contexts. In the same 
+way the Index/Staging area can be confusing without a good visualisation.
 
-Now that I've used the basics enough to find git(1) useful I guess it's time 
-to read the complete manual before I shoot
-myself in the foot again (yeehh, like that will happen!).
+The fact that Git has both Trees, and Branches but relating to different 
+parts of the architecture can be a bit confusing, but wasn't too much of a 
+hassle.
 
-Much appreciated!
+The fact that git does merging with relative ease is one reason that brings 
+on the 'branch' problem. If merging is a major activity that is kept 
+independent of the SCM, as it often is, then branches take on a bigger 
+meaning as being proper sub-projects with all the attention that comes from 
+there. If they are simple, lightweight, easy to use, and 'discard' then the 
+concerns should reduce, unless that is, local customs keep worrying the 
+issue. Most SCM systems are built on archaic principles that pre-date 
+computers, so a new methodology has an uphill battle.
 
------ Original Message ----- 
-From: "knittl" <knittl89@googlemail.com>
-To: "John S. Urban" <urbanjost@comcast.net>
-Sent: Sunday, September 04, 2011 3:55 AM
-Subject: Re: Lost association between TAGS and COMMITs when rebased a git(1) 
-repository
+In terms of Figure 0 in Sourceforge, It doesn't fully represent the 
+information that Git would have, because the order of parentage would be 
+available, though Git doesn't mandate that branch names are remembered (but 
+is normally within merge commit messages). This means that some folks would 
+feel unhappy about the bundle of diverge/merge links in the DAG that don't 
+have Names, which is a very human concern.
 
+Overall, I'm not too unhappy with the terminology, and yes I would like 
+filter-branch to be able to copy across tags when creating a publishable 
+history - it probably just need me to understnd the right --tag-name-filter 
+<command>.
 
-On Sun, Sep 4, 2011 at 3:32 AM, John S. Urban <urbanjost@comcast.net> wrote:
-> With my first use of git(1) I created a small project with about 200
-> "commits". When this was complete, I needed to label each commit with
-> information pointing it to a section of a document. I used tags for this.
-
-Use git notes[1] to attach additional info to existing commits. Git
-notes will by default be copied when using git rebase or git commit
---amend (cf. notes.rewrite.<command> config)
-
-> So far, everything was fine. I was then asked to merge two commits
-> into one. I then did a "rebase" (for the first time). I then appear to 
-> have
-> lost all association between the tags and the effected commits; as all
-> commits after
-> the ones I modified no longer see "their" tags. Was there a way to have 
-> kept
-> the tags associated with the original commits as they were "rebased"?
-
-"Rebase" takes commits and creates new commits from those. The new
-commits are not the same as the old, although they might have
-associated the same tree or changeset.
-
-> Also, I have some commits with multiple tags pointing to them. It has come
-> to my attention that might not be an intentional feature. I could find
-> nothing in the documentation explicitly stating multiple tags were allowed
-> to point to a commit; but the tags seem to be unique "objects" so I
-> see no reason this should not be an expected feature?
-
-Tags can point to any git object (commits, trees, blobs, notes, even
-to other annotated tags).  There's nothing wrong with that.
-
-[1]: http://www.kernel.org/pub/software/scm/git/docs/git-notes.html
-
--- 
-typed with http://neo-layout.org
-myFtPhp -- visit http://myftphp.sf.net -- v. 0.4.7 released!
+Philip
