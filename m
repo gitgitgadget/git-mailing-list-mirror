@@ -1,81 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: t5800-*.sh: Intermittent test failures
-Date: Sun, 04 Sep 2011 12:06:58 -0700
-Message-ID: <7vpqjgyvn1.fsf@alter.siamese.dyndns.org>
-References: <4E417CB4.50007@ramsay1.demon.co.uk>
- <CAGdFq_jv_T-x7VGqm_j-fDfeW6TsBG95=1TWn91Yk9B3TGZdsQ@mail.gmail.com>
+From: Tor Arntsen <tor@spacetec.no>
+Subject: Re: Lost association between TAGS and COMMITs when rebased a git(1) repository
+Date: Sun, 4 Sep 2011 21:11:26 +0200
+Message-ID: <CABNEGjy8M-pFTOs504Q1+G_DtocJwvzDyOAsJp9cn4BOSkv1TQ@mail.gmail.com>
+References: <FF0364F3D5244CA4987EDDCFE7244BF3@urbanjsPC>
+	<CACx-yZ3tav1sJnLtJOn_YugQOsM9ERi7Cc7SowunyobxxX5YdA@mail.gmail.com>
+	<CABNEGjyXLnSvjhBewNDsjW=rthRh0HY+KgC05vPNPu5QCaAgXQ@mail.gmail.com>
+	<201109042043.01159.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 04 21:07:07 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: knittl <knittl89@googlemail.com>,
+	"John S. Urban" <urbanjost@comcast.net>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sun Sep 04 21:11:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0I26-0006eS-UT
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Sep 2011 21:07:07 +0200
+	id 1R0I6P-0008MZ-2v
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Sep 2011 21:11:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752884Ab1IDTHC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Sep 2011 15:07:02 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37599 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752531Ab1IDTHA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Sep 2011 15:07:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 37F5C310C;
-	Sun,  4 Sep 2011 15:07:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2IN9BJk+924HMUASMAQatRUFZXE=; b=OyRNQj
-	cUQitfGpLS70Onpg5FMwsq712YjADKQuw7w5OB5scbg+i7XUOeMyOxR+F8wRy2wC
-	CXurNxylNP0wrKnpVze1UtVZGoQSs8vTFuTe6PFX10ijqhnk5cmP/Cx0ejkgkt9i
-	Iir6RsFT1CpBUREeUDl4IOdZh5LTZ0sUpcC1o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Cp96SLCdm9ZbKh1mjlNwt7qFHy3hS+Wa
-	s95YaJOzoJZSWLWuUsSOz2pPDnvNrRd7SGho+7WKJ27qh/wjGkDxz5lJ8KMiaBOX
-	yo22Q/NalTI1SkqYTD7zPfzK9SJXnyO6XIFBB4hy/KXmUWS2iM/kz69Nr6SA5mbY
-	AHBHaI+Mg3Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E389310B;
-	Sun,  4 Sep 2011 15:07:00 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ACD18310A; Sun,  4 Sep 2011
- 15:06:59 -0400 (EDT)
-In-Reply-To: <CAGdFq_jv_T-x7VGqm_j-fDfeW6TsBG95=1TWn91Yk9B3TGZdsQ@mail.gmail.com> (Sverre
- Rabbelier's message of "Thu, 11 Aug 2011 23:39:21 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 10D5E61E-D729-11E0-836A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752956Ab1IDTL2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Sep 2011 15:11:28 -0400
+Received: from mail-iy0-f194.google.com ([209.85.210.194]:33073 "EHLO
+	mail-iy0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752775Ab1IDTL1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Sep 2011 15:11:27 -0400
+Received: by iadk27 with SMTP id k27so2014421iad.1
+        for <git@vger.kernel.org>; Sun, 04 Sep 2011 12:11:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=rtMRf1NvE/GDzZCgoN+EsJCyi4WBxnEMJh9Wqoyka2Q=;
+        b=QYLVSVJN+qy9aoqPUj2goOMgXhrcQG2ZqjN2dsghM8a/F5iAdMIz5N53ZZ0vNGc9aQ
+         tNTmHljYlolOCBIwYiBoS4vJefpM+7YkELxa82P21SXkjO9gNIVb1KoV4Q2adeiuVKhm
+         nQf9FsFgPXWNVzpuDjUmdY/GjO4MIYa8UjPOg=
+Received: by 10.42.135.66 with SMTP id o2mr2869825ict.397.1315163486834; Sun,
+ 04 Sep 2011 12:11:26 -0700 (PDT)
+Received: by 10.231.202.84 with HTTP; Sun, 4 Sep 2011 12:11:26 -0700 (PDT)
+In-Reply-To: <201109042043.01159.trast@student.ethz.ch>
+X-Google-Sender-Auth: VSdmoHLgEGwQZEsPv3sEiIUpvQ8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180696>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
-
-> Heya,
->
-> On Tue, Aug 9, 2011 at 20:30, Ramsay Jones <ramsay@ramsay1.demon.co.uk> wrote:
->> The git-fast-import is hung in the read() syscall waiting for data which will
->> never arrive. This is because the git(fast-export) process, started by the above
->> git(push), executes (producing it's data on stdout) and completes successfully
->> and exits *before* the above git-fast-import process starts.
+On Sun, Sep 4, 2011 at 8:43 PM, Thomas Rast <trast@student.ethz.ch> wro=
+te:
+> Tor Arntsen wrote:
+>> On Sun, Sep 4, 2011 at 4:30 PM, knittl <knittl89@googlemail.com> wro=
+te:
+>> >
+>> > On Sun, Sep 4, 2011 at 3:32 AM, John S. Urban <urbanjost@comcast.n=
+et> wrote:
+>> > > With my first use of git(1) I =A0created a small project with ab=
+out 200
+>> > > "commits". =A0When this was complete, I needed to label each com=
+mit with
+>> > > information pointing it to a section of a document. I used tags =
+for this.
+>> >
+>> > Use git notes[1] to attach additional info to existing commits. Gi=
+t
+>> > notes will by default be copied when using git rebase or git commi=
+t
+>> > --amend (cf. notes.rewrite.<command> config)
 >>
->> I haven't looked to see how the git(fast-export)/git-fast-import processes are
->> plumbed together, but there seems to be a synchronization problem somewhere ...
+>> Is that true? I've always lost the notes when rebasing. I just tried
+>> that again now (1.7.5.4), and after a rebase the notes attached to a=
+ny
+>> commit that was rebased just disappeared. I've always had to hunt do=
+wn
+>> and re-create the notes. It would indeed be much more convenient if
+>> the notes would tag along.
 >
-> This seems odd, before the fast-export process is even started it's
-> stdout are wired to the stdin of the helper (and thus the fast-import
-> process). What indication do you have that fast-import hasn't started
-> and that fast-export has finished?
->
-> Also, you say git remote-test everywhere, but it should be git
-> remote-testgit, typo?
+> Yes, that support has been present since 1.7.1, but it's not enabled
+> by default: you need to configure notes.rewriteRef.
 
-FWIW, I have been seeing this every once in a while.
+Thanks. Got it working. So it's not by default, as was suggested by
+knittl, it has to be enabled. BTW, it's not at all obvious from the
+manpage what it should be set to, there's no actual example. Found it
+by trial&error plus finding a diff for a test.
+
+-Tor
