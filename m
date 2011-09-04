@@ -1,89 +1,157 @@
-From: Tor Arntsen <tor@spacetec.no>
-Subject: Re: Lost association between TAGS and COMMITs when rebased a git(1) repository
-Date: Sun, 4 Sep 2011 21:11:26 +0200
-Message-ID: <CABNEGjy8M-pFTOs504Q1+G_DtocJwvzDyOAsJp9cn4BOSkv1TQ@mail.gmail.com>
-References: <FF0364F3D5244CA4987EDDCFE7244BF3@urbanjsPC>
-	<CACx-yZ3tav1sJnLtJOn_YugQOsM9ERi7Cc7SowunyobxxX5YdA@mail.gmail.com>
-	<CABNEGjyXLnSvjhBewNDsjW=rthRh0HY+KgC05vPNPu5QCaAgXQ@mail.gmail.com>
-	<201109042043.01159.trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Funnies with "git fetch"
+Date: Sun, 04 Sep 2011 12:15:27 -0700
+Message-ID: <7vliu4yv8w.fsf@alter.siamese.dyndns.org>
+References: <7vpqjkw3nb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: knittl <knittl89@googlemail.com>,
-	"John S. Urban" <urbanjost@comcast.net>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Sep 04 21:11:33 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 04 21:15:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0I6P-0008MZ-2v
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Sep 2011 21:11:33 +0200
+	id 1R0IAJ-0001M0-Qd
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Sep 2011 21:15:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752956Ab1IDTL2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Sep 2011 15:11:28 -0400
-Received: from mail-iy0-f194.google.com ([209.85.210.194]:33073 "EHLO
-	mail-iy0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752775Ab1IDTL1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Sep 2011 15:11:27 -0400
-Received: by iadk27 with SMTP id k27so2014421iad.1
-        for <git@vger.kernel.org>; Sun, 04 Sep 2011 12:11:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=rtMRf1NvE/GDzZCgoN+EsJCyi4WBxnEMJh9Wqoyka2Q=;
-        b=QYLVSVJN+qy9aoqPUj2goOMgXhrcQG2ZqjN2dsghM8a/F5iAdMIz5N53ZZ0vNGc9aQ
-         tNTmHljYlolOCBIwYiBoS4vJefpM+7YkELxa82P21SXkjO9gNIVb1KoV4Q2adeiuVKhm
-         nQf9FsFgPXWNVzpuDjUmdY/GjO4MIYa8UjPOg=
-Received: by 10.42.135.66 with SMTP id o2mr2869825ict.397.1315163486834; Sun,
- 04 Sep 2011 12:11:26 -0700 (PDT)
-Received: by 10.231.202.84 with HTTP; Sun, 4 Sep 2011 12:11:26 -0700 (PDT)
-In-Reply-To: <201109042043.01159.trast@student.ethz.ch>
-X-Google-Sender-Auth: VSdmoHLgEGwQZEsPv3sEiIUpvQ8
+	id S1753043Ab1IDTPc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Sep 2011 15:15:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40655 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752998Ab1IDTPa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Sep 2011 15:15:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CAB3031E1;
+	Sun,  4 Sep 2011 15:15:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=e9cbdSqKkC8S5+45ikuYGIKhBLw=; b=D+3MYA
+	1ETCNI8l42+bCsZsMB7krJn/pwMV3ew5vj7VevuuKrQU8QoYVhAhDjujQdmuSwDk
+	HQuqdphOf4GTjOMVVYFmpPzpaR8Zp6b+UU1fuufKol94866Tm3ANhi52bK/txH+H
+	uzUZ7gPrL2uCKSsnDeGlDh5NhDPsyKXX9HJgI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OVRFNcl4xcdYxsFRX7hipQzFDcDCrZ+Z
+	Levh7/3WBPDuseBct6MGL/Z+iQ2MjHytPl+EaxKcWM34+TCL4XL1uJgWYbCsb+U0
+	SZdhm/fGMPZNYguYp14iNP3InmJ7fer3S8+JVVCJdV7+gEbiPzVq4XNQsImhJqOG
+	3EMdJC9azx4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C317531E0;
+	Sun,  4 Sep 2011 15:15:29 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2FD0031DF; Sun,  4 Sep 2011
+ 15:15:29 -0400 (EDT)
+In-Reply-To: <7vpqjkw3nb.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 01 Sep 2011 10:53:12 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 40834D24-D72A-11E0-A270-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180697>
 
-On Sun, Sep 4, 2011 at 8:43 PM, Thomas Rast <trast@student.ethz.ch> wro=
-te:
-> Tor Arntsen wrote:
->> On Sun, Sep 4, 2011 at 4:30 PM, knittl <knittl89@googlemail.com> wro=
-te:
->> >
->> > On Sun, Sep 4, 2011 at 3:32 AM, John S. Urban <urbanjost@comcast.n=
-et> wrote:
->> > > With my first use of git(1) I =A0created a small project with ab=
-out 200
->> > > "commits". =A0When this was complete, I needed to label each com=
-mit with
->> > > information pointing it to a section of a document. I used tags =
-for this.
->> >
->> > Use git notes[1] to attach additional info to existing commits. Gi=
-t
->> > notes will by default be copied when using git rebase or git commi=
-t
->> > --amend (cf. notes.rewrite.<command> config)
->>
->> Is that true? I've always lost the notes when rebasing. I just tried
->> that again now (1.7.5.4), and after a rebase the notes attached to a=
-ny
->> commit that was rebased just disappeared. I've always had to hunt do=
-wn
->> and re-create the notes. It would indeed be much more convenient if
->> the notes would tag along.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> I just did this in an empty directory.
 >
-> Yes, that support has been present since 1.7.1, but it's not enabled
-> by default: you need to configure notes.rewriteRef.
+>     $ git init src
+>     $ cd src
+>     $ echo hello >greetings ; git add . ; git commit -m greetings
+>     $ S=$(git rev-parse :greetings | sed -e 's|^..|&/|')
+>     $ X=$(echo bye | git hash-object -w --stdin | sed -e 's|^..|&/|')
+>     $ mv -f .git/objects/$X .git/objects/$S
+>
+> The tip commit _thinks_ it has "greetings" that contains "hello", but
+> somebody replaced it with a corrupt "bye" that does not match self
+> integrity.
+>
+>     $ git fsck
+>     error: sha1 mismatch ce013625030ba8dba906f756967f9e9ca394464a
+>
+>     error: ce013625030ba8dba906f756967f9e9ca394464a: object corrupt or missing
+>     missing blob ce013625030ba8dba906f756967f9e9ca394464a
+>
+> The "hello" blob is ce0136, and the tree contained in HEAD expects "hello"
+> in that loose object file, but notices the contents do not match the
+> filename.
+>
+> So far, so good. Let's see what others see when they interact with this
+> repository.
+>
+> cd ../
+> git init dst
+> cd dst
+> git config receive.fsckobjects true
+> git remote add origin ../src
+> git config branch.master.remote origin
+> git config branch.master.merge refs/heads/master
+> git fetch
+>     remote: Counting objects: 3, done.
+>     remote: Total 3 (delta 0), reused 0 (delta 0)
+>     Unpacking objects: 100% (3/3), done.
+>     From ../src
+>      * [new branch]      master     -> origin/master
+>
+> Oops? If we run "fsck" at this point, we would notice the breakage:
+> ...
+> But the straight "fetch" did not notice anything fishy going on. Shouldn't
+> we have?  Even though we may be reasonably safe, unpack-objects should be
+> able to do better, especially under receive.fsckobjects option.
 
-Thanks. Got it working. So it's not by default, as was suggested by
-knittl, it has to be enabled. BTW, it's not at all obvious from the
-manpage what it should be set to, there's no actual example. Found it
-by trial&error plus finding a diff for a test.
+We do not have fetch.fsckobjects, and here is a quick patch to add it. I
+would also add transfer.fsckobjects to cover both with a single variable
+in a follow-up patch, but with this, it fails as expected:
 
--Tor
+    $ git config fetch.fsckobjects true
+    $ git fetch
+    remote: Counting objects: 3, done.
+    remote: Total 3 (delta 0), reused 0 (delta 0)
+    Unpacking objects: 100% (3/3), done.
+    error: unable to find ce013625030ba8dba906f756967f9e9ca394464a
+    fatal: object of unexpected type
+    fatal: unpack-objects failed
+
+during the transfer phase.  The "rev-list --verify-objects" addition is a
+fix to a related but independent issue, so both are probably good to have,
+but this makes it unnecessary to run fsck_object() during the update-ref
+phase.
+
+ builtin/fetch-pack.c |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
+
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 412bd32..bfed536 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -16,6 +16,7 @@ static int fetch_unpack_limit = -1;
+ static int unpack_limit = 100;
+ static int prefer_ofs_delta = 1;
+ static int no_done = 0;
++static int fetch_fsck_objects;
+ static struct fetch_pack_args args = {
+ 	/* .uploadpack = */ "git-upload-pack",
+ };
+@@ -734,6 +735,8 @@ static int get_pack(int xd[2], char **pack_lockfile)
+ 	}
+ 	if (*hdr_arg)
+ 		*av++ = hdr_arg;
++	if (fetch_fsck_objects)
++		*av++ = "--strict";
+ 	*av++ = NULL;
+ 
+ 	cmd.in = demux.out;
+@@ -853,6 +856,11 @@ static int fetch_pack_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "fetch.fsckobjects")) {
++		fetch_fsck_objects = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	return git_default_config(var, value, cb);
+ }
+ 
