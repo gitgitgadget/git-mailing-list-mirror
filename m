@@ -1,98 +1,66 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [RFC] Questions for "Git User's Survey 2011"
-Date: Sat, 3 Sep 2011 16:41:12 -0700
-Message-ID: <93869719-D3B6-4D82-824E-1801B9422C3D@gmail.com>
-References: <201107252233.02088.jnareb@gmail.com> <4E2DE708.8050805@cisco.com> <20110903084530.GA20905@gmail.com> <201109031100.54775.jnareb@gmail.com>
-Mime-Version: 1.0 (iPhone Mail 8C148a)
+From: "John S. Urban" <urbanjost@comcast.net>
+Subject: Lost association between TAGS and COMMITs when rebased a git(1) repository
+Date: Sat, 3 Sep 2011 21:32:03 -0400
+Message-ID: <FF0364F3D5244CA4987EDDCFE7244BF3@urbanjsPC>
+Mime-Version: 1.0
 Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Phil Hord <hordp@cisco.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 04 01:41:36 2011
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 04 03:47:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QzzqB-0005Ue-Vl
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Sep 2011 01:41:36 +0200
+	id 1R01nq-0008Vk-16
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Sep 2011 03:47:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752307Ab1ICXl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Sep 2011 19:41:28 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:36479 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751107Ab1ICXl1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 3 Sep 2011 19:41:27 -0400
-Received: by vws1 with SMTP id 1so3113911vws.19
-        for <git@vger.kernel.org>; Sat, 03 Sep 2011 16:41:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=references:in-reply-to:mime-version:content-transfer-encoding
-         :content-type:message-id:cc:x-mailer:from:subject:date:to;
-        bh=rieMkBf1foA1p0JL+LdQ8YsvojJyBGUjDeD0nZbH8rU=;
-        b=Wn/K++zxKL7Pafce0fMfUiYsjwUsYm/PIduH9DzxQ9UFXD6NRaE4wKyve42JGrBfCC
-         bYhZLpEXPVzpTAZ5ydQq3JC49R5sey1If5l/BTu6UAKseBRq74dOtI4SzEGogn2fAz3H
-         97sqMaPrK6xx5GYuGAHG+PiWgnEL4mixub5f8=
-Received: by 10.52.22.130 with SMTP id d2mr624374vdf.223.1315093286394;
-        Sat, 03 Sep 2011 16:41:26 -0700 (PDT)
-Received: from [10.54.203.33] ([166.205.139.80])
-        by mx.google.com with ESMTPS id t6sm2303837vdf.16.2011.09.03.16.41.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 03 Sep 2011 16:41:24 -0700 (PDT)
-In-Reply-To: <201109031100.54775.jnareb@gmail.com>
-X-Mailer: iPhone Mail (8C148a)
+	id S1752704Ab1IDBi7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Sep 2011 21:38:59 -0400
+Received: from qmta14.westchester.pa.mail.comcast.net ([76.96.59.212]:39676
+	"EHLO qmta14.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752474Ab1IDBi6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Sep 2011 21:38:58 -0400
+X-Greylist: delayed 363 seconds by postgrey-1.27 at vger.kernel.org; Sat, 03 Sep 2011 21:38:58 EDT
+Received: from omta15.westchester.pa.mail.comcast.net ([76.96.62.87])
+	by qmta14.westchester.pa.mail.comcast.net with comcast
+	id URUF1h0041swQuc5ERYvl4; Sun, 04 Sep 2011 01:32:55 +0000
+Received: from urbanjsPC ([71.236.72.62])
+	by omta15.westchester.pa.mail.comcast.net with comcast
+	id URYu1h0151LdoTr3bRYvT9; Sun, 04 Sep 2011 01:32:55 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Windows Mail 6.0.6001.18416
+X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6001.18645
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180668>
 
-On Sep 3, 2011, at 2:00 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+With my first use of git(1) I  created a small project with about 200 
+"commits".  When this was complete, I needed to label each commit with
+information pointing it to a section of a document. I used tags for this. So 
+far, everything was fine. I was then asked to merge two commits
+into one. I then did a "rebase" (for the first time). I then appear to have 
+lost all association between the tags and the effected commits; as all 
+commits after
+the ones I modified no longer see "their" tags. Was there a way to have kept 
+the tags associated with the original commits as they were "rebased"?
 
-> On Sat, 3 Sep 2011, David Aguilar wrote:
->> On Mon, Jul 25, 2011 at 05:58:32PM -0400, Phil Hord wrote:
->>> On 07/25/2011 04:33 PM, Jakub Narebski wrote:
->>>> === 11. What Git interfaces, implementations and frontends do you use? ===
->>>> (multiple choice, with other)
-> [...]
-> 
->>> Looking at the 2010 results, I would add these GUIs to the main list:
->>> git-gui (core)
->>> gitk (core)
->>> gitX
->>> gitg
->>> git-cola
->>> TortoiseGit
->>> SmartGit
->>> Git Extensions
->>> Giggle
->> 
->> This is a better list ;-)
-> 
-> Because of huge number of Git GUIs and tools instead of providing a long
-> list of tools to choose from, I went for free-form question:
+Also, I have some commits with multiple tags pointing to them. It has come 
+to my attention that might not be an intentional feature. I could find
+nothing in the documentation explicitly stating multiple tags were allowed 
+to point to a commit; but the tags seem to be unique "objects" so I
+see no reason this should not be an expected feature?
 
-okay, that makes sense.
+Thanks for any insights. Other than loosing association between the tags and 
+the commits with rebase (which I was hesitant to use; and am now
+doubly so) I found git(1) to be the first version control system better than 
+"be careful and make tar-balls of major releases"; although I am just
+starting to get an idea of how the pieces work.
 
-nevertheless, we are advertising cogito (deprecated) and pyrite (never made it past pre-alpha in 2008).  why? these should be removed. if you need a replacement, might I suggest git-cola? ;-)I think removing (and thus not advertising) dead tools is more important than coming up with replacements. this is on page 4/10 on the survs.com link you sent elsewhere in this thread.
-
-
->  === 13. List git tools that you use (optional) ===
->  (free form, essay)
-> 
->  Description:
->  ~~~~~~~~~~~~
->  Please include only frontends, interfaces and tools that have support
->  for Git (so e.g. EGit applies, but Eclipse doesn't).
-> 
->  Please either use comma separated list of tools, or put each tool in a
->  separate line.  That would make analysis of answers simpler.  Thanks
->  in advance.
-> 
-> Even though it is free-form question, it shouldn't be hard to analyse,
-> though it wouldn't be completely automatical.
-> -- 
-> Jakub Narebski
-> Poland
+ 
