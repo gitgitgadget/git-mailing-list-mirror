@@ -1,68 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: "Your local changes ... would be overwritten" bug
-Date: Mon, 05 Sep 2011 18:52:31 +0200
-Message-ID: <vpqty8rx774.fsf@bauges.imag.fr>
-References: <8362l73qi6.fsf@kalahari.s2.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: GitTogether 2011
+Date: Mon, 5 Sep 2011 10:57:40 -0700
+Message-ID: <CAJo=hJt1T5wPsytprSXKaCEd8yNk5tMwP75Nsb0XtpwFe07HXA@mail.gmail.com>
+References: <3A92A63EBFD41F4196707AF266E1CDA517A46A4941@ESESSCMS0361.eemea.ericsson.se>
+ <CAGdFq_i_fBh76bqmLaX_SpDwfov4Cr8FxrV+Me1owGawg5bZNQ@mail.gmail.com>
+ <CAP2yMaK_bd05v_jWdh2Xbat96OB8OuPQKOwEh8JD9TrsqmAMmA@mail.gmail.com>
+ <CAFfmPPOjzxx8ea0PpT1btyg_tTD4vgRTKGC4srNnPjCEsot9NQ@mail.gmail.com> <CAC+LNESrs5gcP-JR3LriVznCtHgPz5EUGb51iHMH-2vbTGigFw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Hannu Koivisto <azure@iki.fi>
-X-From: git-owner@vger.kernel.org Mon Sep 05 18:52:52 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Barr <davidbarr@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	David Bainbridge <david.bainbridge@ericsson.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Dave Borowitz <dborowitz@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Patrick Renaud <prenaud76@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 05 19:58:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0cPj-0007fS-JF
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 18:52:51 +0200
+	id 1R0dQw-0000Om-LB
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 19:58:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751588Ab1IEQwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Sep 2011 12:52:46 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:54626 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751308Ab1IEQwp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Sep 2011 12:52:45 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p85GpYWY031007
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 5 Sep 2011 18:51:34 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1R0cPQ-0005kn-5Z; Mon, 05 Sep 2011 18:52:32 +0200
-In-Reply-To: <8362l73qi6.fsf@kalahari.s2.org> (Hannu Koivisto's message of
-	"Mon, 05 Sep 2011 19:25:53 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 05 Sep 2011 18:51:34 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p85GpYWY031007
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1315846298.35445@PlDFTfOskP6MRM5bKq1X1A
+	id S1753242Ab1IER6F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Sep 2011 13:58:05 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:33991 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753154Ab1IER6B convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Sep 2011 13:58:01 -0400
+Received: by iabu26 with SMTP id u26so6579287iab.19
+        for <git@vger.kernel.org>; Mon, 05 Sep 2011 10:58:01 -0700 (PDT)
+Received: by 10.42.76.1 with SMTP id c1mr3777450ick.428.1315245481104; Mon, 05
+ Sep 2011 10:58:01 -0700 (PDT)
+Received: by 10.42.163.70 with HTTP; Mon, 5 Sep 2011 10:57:40 -0700 (PDT)
+In-Reply-To: <CAC+LNESrs5gcP-JR3LriVznCtHgPz5EUGb51iHMH-2vbTGigFw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180750>
 
-Hannu Koivisto <azure@iki.fi> writes:
+Sorry, I have been drowning in issues related to kernel.org this past w=
+eek.
 
-> The following script can be used to reproduce the problem:
+Google has agreed to host the event Oct. 24th and 25th in Mountain
+View, CA. We only have room for like 28 people in the space this year,
+so about 25 non-Google attendees. I haven't posted any news about this
+yet because I just got the OK Thursday or Friday morning, and have
+literally not had the time to draft a proper message to announce the
+event.
 
-[...]
+I'll see if I can get that out today.
 
-I cannot reproduce on Linux.
 
-> I'm running Cygwin git 1.7.5.1 in Windows XP.
+On Fri, Sep 2, 2011 at 06:42, Patrick Renaud <prenaud76@gmail.com> wrot=
+e:
+> Hi there.
+>>=A0Any news on the GitTogether front?
+> I'd also be interested in hearing the latest developments on this fro=
+nt.
+> We're getting near the end of the year and if this event does not tak=
+e place
+> I would use that budget for another event instead. I'm sure several o=
+ther
+> people share a similar concern, especially those who need to travel f=
+rom
+> abroad in order to attend the conference.
+> Cheers!
+>
+> --
+> -Patrick
+>
 
-Probably a dumb question (from a non-windows-user), but why not use the
-native Git for windows?
 
-What happens if you run "git status" before running the problematic "git
-checkout"? (I'm asking because "git status" refreshes the stat-cache, so
-it may change the result)
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+--=20
+Shawn.
