@@ -1,79 +1,91 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] t5541: avoid TAP test miscounting
-Date: Mon,  5 Sep 2011 16:24:06 +0200
-Message-ID: <e4e82f1267da3edfc600361de0041f618c31e30c.1315232475.git.git@drmicha.warpmail.net>
-References: <4E64DA0A.8090202@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Clemens Buchacher <drizzd@aon.at>, tobiasu@tmux.org
+From: Hannu Koivisto <azure@iki.fi>
+Subject: "Your local changes ... would be overwritten" bug
+Date: Mon, 05 Sep 2011 19:25:53 +0300
+Organization: NOYB
+Message-ID: <8362l73qi6.fsf@kalahari.s2.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 05 16:24:15 2011
+X-From: git-owner@vger.kernel.org Mon Sep 05 18:26:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0a5v-0002Mi-IB
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 16:24:15 +0200
+	id 1R0bzz-0005Px-56
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 18:26:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754091Ab1IEOYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Sep 2011 10:24:10 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:46348 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753942Ab1IEOYJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Sep 2011 10:24:09 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 225C824AA3;
-	Mon,  5 Sep 2011 10:24:09 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute3.internal (MEProxy); Mon, 05 Sep 2011 10:24:09 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=from:to:cc:subject:date:message-id
-	:in-reply-to:references; s=smtpout; bh=2CDwZzI1cFx9lT2Qr4d+n5UFi
-	Wg=; b=A31hJucvsN4FErQWt1Y72Mu5ODP7G3xzsd1f4a9fXWTEbk0NYLMoY0Dqn
-	ymhjHBo3dcbRXWS8cqPEdU0uZbsozN46hDlMUqN25+UBS8mLYnNzYNcRTTjDpyB4
-	svLK3o4ZbnhwUgXqG84Ti5atcuuj8ZHsiihzw9kjoNLI0VtyFQ=
-X-Sasl-enc: HsfawQVa2tB3ic46W39BncvhXfizsXBLVvw+wXyEpQua 1315232648
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 91D3DB02800;
-	Mon,  5 Sep 2011 10:24:08 -0400 (EDT)
-X-Mailer: git-send-email 1.7.7.rc0.328.g9d6c7
-In-Reply-To: <4E64DA0A.8090202@drmicha.warpmail.net>
+	id S1751303Ab1IEQ0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Sep 2011 12:26:10 -0400
+Received: from lo.gmane.org ([80.91.229.12]:57594 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750794Ab1IEQ0H (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Sep 2011 12:26:07 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1R0bzp-0005M9-Ez
+	for git@vger.kernel.org; Mon, 05 Sep 2011 18:26:05 +0200
+Received: from s2.org ([80.83.7.53])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 05 Sep 2011 18:26:05 +0200
+Received: from azure by s2.org with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 05 Sep 2011 18:26:05 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: s2.org
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.3 (gnu/linux)
+Cancel-Lock: sha1:N8ZofrnGiZNddZl9MwepZump/ek=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180747>
 
-lib-terminal.sh runs a test and thus increases the test count, but the
-output is lost so that TAP produces a "no plan found error".
+Greetings,
 
-Move the lib-terminal call after the lib-httpd and make TAP happy
-(though still leave me clueless).
+I have a problem where "git checkout origin/another-branch" in master
+should remove a set of files but instead I get:
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- t/t5541-http-push.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+error: Your local changes to the following files would be overwritten by checkout:
+        file1
+        file2
+        ...
+Please, commit your changes or stash them before you can switch branches.
+Aborting
 
-diff --git a/t/t5541-http-push.sh b/t/t5541-http-push.sh
-index 0dcb8df..a18265c 100755
---- a/t/t5541-http-push.sh
-+++ b/t/t5541-http-push.sh
-@@ -5,7 +5,6 @@
- 
- test_description='test smart pushing over http via http-backend'
- . ./test-lib.sh
--. "$TEST_DIRECTORY"/lib-terminal.sh
- 
- if test -n "$NO_CURL"; then
- 	skip_all='skipping test, git built without http support'
-@@ -15,6 +14,7 @@ fi
- ROOT_PATH="$PWD"
- LIB_HTTPD_PORT=${LIB_HTTPD_PORT-'5541'}
- . "$TEST_DIRECTORY"/lib-httpd.sh
-+. "$TEST_DIRECTORY"/lib-terminal.sh
- start_httpd
- 
- test_expect_success 'setup remote repository' '
+(where the files listed are those that should be removed)
+
+The problem occurs only if the checkout is not run in the top level
+directory of the repository and the files in question have execute
+bit set.  Before checkout, git status says
+
+# On branch master
+nothing to commit (working directory clean)
+
+The following script can be used to reproduce the problem:
+
+-------------------------------------------
+mkdir temp
+cd temp
+git init
+echo foo > testfile
+git add testfile
+git commit -m "test1"
+echo foo > testfile2
+chmod +x testfile2
+git add testfile2
+git commit -m "test2"
+mkdir foo
+cd foo
+git co master~1
+--------------------------------------------
+
+The problem disappears if one removes either the "chmod +x
+testfile2" line or the "cd foo" line.
+
+I'm running Cygwin git 1.7.5.1 in Windows XP.
+
 -- 
-1.7.7.rc0.328.g9d6c7
+Hannu
