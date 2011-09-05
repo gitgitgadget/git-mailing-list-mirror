@@ -1,77 +1,69 @@
-From: Naohiro Aota <naota@elisp.net>
-Subject: [PATCH] shell portability: Use sed instead of non-portable variable expansion
-Date: Mon, 05 Sep 2011 14:11:47 +0900
-Message-ID: <8762l73758.fsf@elisp.net>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: [ANNOUNCE] Git User's Survey 2011
+Date: Mon, 05 Sep 2011 14:37:48 +0900
+Message-ID: <buohb4rzh03.fsf@dhlpc061.dev.necel.com>
+References: <201109050243.21299.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: gitster@pobox.com, tarmigan+git@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 05 07:12:06 2011
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 05 07:37:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0RTX-0000qm-Jn
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 07:12:03 +0200
+	id 1R0Rsb-0007NW-Bg
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 07:37:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751234Ab1IEFL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Sep 2011 01:11:58 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:35818 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750896Ab1IEFL5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Sep 2011 01:11:57 -0400
-Received: by iabu26 with SMTP id u26so5927138iab.19
-        for <git@vger.kernel.org>; Sun, 04 Sep 2011 22:11:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:user-agent:mime-version
-         :content-type;
-        bh=9xap9F8MAAgQ0Ids8fhNkxY8wMOpTfXWQcVAQzeiuik=;
-        b=f/Ev7L8+1VHcyzayBQsrMfXpF8gGOLL35CB2p53/6umHcYQkjn8gObSkikHnRx7DEo
-         BabGEhw4hqdu4BbnriWntbuIRXaOZDcaC0nS3zooUZAYERSxxndtwU9er9RCtV7PkLul
-         5N7PpGd5TmQBEt9xgS1ODBPvu1tKFqdABlOYk=
-Received: by 10.43.49.193 with SMTP id vb1mr3327612icb.321.1315199516886;
-        Sun, 04 Sep 2011 22:11:56 -0700 (PDT)
-Received: from kaede (e0109-49-132-8-98.uqwimax.jp [49.132.8.98])
-        by mx.google.com with ESMTPS id o5sm12282913ibu.12.2011.09.04.22.11.53
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 04 Sep 2011 22:11:56 -0700 (PDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+	id S1751500Ab1IEFhw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Sep 2011 01:37:52 -0400
+Received: from relmlor2.renesas.com ([210.160.252.172]:50826 "EHLO
+	relmlor2.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750896Ab1IEFhv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Sep 2011 01:37:51 -0400
+Received: from relmlir3.idc.renesas.com ([10.200.68.153])
+ by relmlor2.idc.renesas.com ( SJSMS)
+ with ESMTP id <0LR100AF1BN1BT70@relmlor2.idc.renesas.com> for
+ git@vger.kernel.org; Mon, 05 Sep 2011 14:37:49 +0900 (JST)
+Received: from relmlac1.idc.renesas.com ([10.200.69.21])
+ by relmlir3.idc.renesas.com ( SJSMS)
+ with ESMTP id <0LR100N03BN14N40@relmlir3.idc.renesas.com> for
+ git@vger.kernel.org; Mon, 05 Sep 2011 14:37:49 +0900 (JST)
+Received: by relmlac1.idc.renesas.com (Postfix, from userid 0)
+	id 760E6800A2; Mon, 05 Sep 2011 14:37:49 +0900 (JST)
+Received: from relmlac1.idc.renesas.com (localhost [127.0.0.1])
+	by relmlac1.idc.renesas.com (Postfix) with ESMTP id 605F680086; Mon,
+ 05 Sep 2011 14:37:49 +0900 (JST)
+Received: from relmlii2.idc.renesas.com [10.200.68.66]	by
+ relmlac1.idc.renesas.com with ESMTP id QAA17331; Mon,
+ 05 Sep 2011 14:37:49 +0900
+X-IronPort-AV: E=Sophos;i="4.68,330,1312124400";   d="scan'208";a="44029952"
+Received: from unknown (HELO relay31.aps.necel.com) ([10.29.19.54])
+ by relmlii2.idc.renesas.com with ESMTP; Mon, 05 Sep 2011 14:37:49 +0900
+Received: from relay31.aps.necel.com ([10.29.19.54] [10.29.19.54])
+ by relay31.aps.necel.com with ESMTP; Mon, 05 Sep 2011 14:37:48 +0900
+Received: from dhlpc061 ([10.114.96.19] [10.114.96.19])
+ by relay31.aps.necel.com with ESMTP; Mon, 05 Sep 2011 14:37:48 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)	id C24A852E6AE; Mon,
+ 05 Sep 2011 14:37:48 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-reply-to: <201109050243.21299.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180718>
 
-Variable expansions like "${foo#bar}" or "${foo%bar}" doesn't work on
-shells like FreeBSD sh and they made the test to fail. This patch
-replace such variable expansions with sed.
+Hmmm, a cool thing about the git survey is that I learn quite a few
+new things (commands/concepts/websites) from it ...
 
-Signed-off-by: Naohiro Aota <naota@elisp.net>
----
+Especially when it comes to various documentation/help/tool resources,
+it's a nice concise list!
 
-Testing on FreeBSD failed because of this "bash-ism". After applying
-this patch, I've verified the test to pass on FreeBSD. (and it worked
-well also with GNU sed)
+-miles
 
- t/t5560-http-backend-noserver.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/t5560-http-backend-noserver.sh b/t/t5560-http-backend-noserver.sh
-index 0ad7ce0..c8237ef 100755
---- a/t/t5560-http-backend-noserver.sh
-+++ b/t/t5560-http-backend-noserver.sh
-@@ -9,8 +9,8 @@ test_have_prereq MINGW && export GREP_OPTIONS=-U
- 
- run_backend() {
- 	echo "$2" |
--	QUERY_STRING="${1#*\?}" \
--	PATH_TRANSLATED="$HTTPD_DOCUMENT_ROOT_PATH/${1%%\?*}" \
-+	QUERY_STRING=$(echo "$1"|sed -e 's/^[^?]*?\(.*\)$/\1/') \
-+	PATH_TRANSLATED="$HTTPD_DOCUMENT_ROOT_PATH/$(echo "$1"|sed -e 's/^\([^?]*\)?.*$/\1/')" \
- 	git http-backend >act.out 2>act.err
- }
- 
 -- 
-1.7.6
+The key to happiness
+ is having dreams.      [from a fortune cookie]
