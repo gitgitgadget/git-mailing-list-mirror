@@ -1,194 +1,159 @@
 From: Nix <nix@esperi.org.uk>
-Subject: [PATCH 1/2] Add strtoimax() compatibility function.
-Date: Mon,  5 Sep 2011 12:45:54 +0100
-Message-ID: <1315223155-4218-1-git-send-email-nix@esperi.org.uk>
+Subject: [PATCH 2/2] Support sizes >=2G in various config options accepting 'g' sizes.
+Date: Mon,  5 Sep 2011 12:45:55 +0100
+Message-ID: <1315223155-4218-2-git-send-email-nix@esperi.org.uk>
+References: <1315223155-4218-1-git-send-email-nix@esperi.org.uk>
 Cc: Nix <nix@esperi.org.uk>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 05 13:47:33 2011
+X-From: git-owner@vger.kernel.org Mon Sep 05 13:56:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0XeC-0002QC-M2
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 13:47:29 +0200
+	id 1R0Xmq-0006Bh-Vw
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 13:56:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752895Ab1IELqc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Sep 2011 07:46:32 -0400
-Received: from icebox.esperi.org.uk ([81.187.191.129]:49595 "EHLO
+	id S1752867Ab1IELqa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Sep 2011 07:46:30 -0400
+Received: from icebox.esperi.org.uk ([81.187.191.129]:49596 "EHLO
 	mail.esperi.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752863Ab1IELqV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Sep 2011 07:46:21 -0400
+	with ESMTP id S1752865Ab1IELqW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Sep 2011 07:46:22 -0400
 Received: from esperi.org.uk (nix@mutilate.wkstn.nix [192.168.16.20])
-	by mail.esperi.org.uk (8.14.4/8.14.3) with ESMTP id p85BkEBG005658;
-	Mon, 5 Sep 2011 12:46:14 +0100
+	by mail.esperi.org.uk (8.14.4/8.14.3) with ESMTP id p85BkIcU005664;
+	Mon, 5 Sep 2011 12:46:18 +0100
 Received: (from nix@localhost)
-	by esperi.org.uk (8.14.4/8.12.11/Submit) id p85BjwkY004251;
-	Mon, 5 Sep 2011 12:45:58 +0100
+	by esperi.org.uk (8.14.4/8.12.11/Submit) id p85Bk2iJ004253;
+	Mon, 5 Sep 2011 12:46:02 +0100
 X-Mailer: git-send-email 1.7.6.1.139.gcb612
+In-Reply-To: <1315223155-4218-1-git-send-email-nix@esperi.org.uk>
 X-DCC-STAT_FI_X86_64_VIRTUAL-Metrics: spindle 1245; Body=3 Fuz1=3 Fuz2=3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180738>
 
-Since systems that omit strtoumax() will likely omit strtomax() too,
-and likewise for strtoull() and strtoll(), we also adjust the
-compatibility #defines from NO_STRTOUMAX to NO_STRTOMAX and from
-NO_STRTOULL to NO_STRTOLL, and have them cover both the signed and
-unsigned functions.
+The config options core.packedGitWindowSize, core.packedGitLimit,
+core.deltaBaseCacheLimit, core.bigFileThreshold, pack.windowMemory and
+pack.packSizeLimit all claim to support suffixes up to and including
+'g'.  This implies that they should accept sizes >=2G on 64-bit
+systems: certainly, specifying a size of 3g should not silently be
+translated to zero or transformed into a large negative value due to
+integer overflow. However, due to use of git_config_int() rather than
+git_config_ulong(), that is exactly what happens:
+
+% git config core.bigFileThreshold 2g
+% git gc --aggressive # with extra debugging code to print out
+                      # core.bigfilethreshold after parsing
+bigfilethreshold: -2147483648
+[...]
+
+This is probably irrelevant for core.deltaBaseCacheLimit, but is
+problematic for the other values. (It is particularly problematic for
+core.packedGitLimit, which can't even be set to its default value in
+the config file due to this bug.)
+
+This fixes things for 32-bit platforms as well. They get the usual bad
+config error if an overlarge value is specified, e.g.:
+
+fatal: bad config value for 'core.bigfilethreshold' in /home/nix/.gitconfig
+
+32-bit platforms with no type larger than 'long' cannot detect this
+case and will continue to silently misbehave, but the misbehaviour
+will be somewhat different and more useful, since bigFileThreshold was
+also being mistakenly treated as a signed value when it should have
+been unsigned.
 
 Signed-off-by: Nick Alcock <nix@esperi.org.uk>
 ---
- Makefile           |   36 ++++++++++++++++++------------------
- compat/strtoimax.c |   10 ++++++++++
- compat/strtoumax.c |    2 +-
- 3 files changed, 29 insertions(+), 19 deletions(-)
- create mode 100644 compat/strtoimax.c
+ config.c |   26 ++++++++++++++++----------
+ 1 files changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 6bf7d6c..0959e07 100644
---- a/Makefile
-+++ b/Makefile
-@@ -57,9 +57,9 @@ all::
- #
- # Define NO_STRLCPY if you don't have strlcpy.
- #
--# Define NO_STRTOUMAX if you don't have strtoumax in the C library.
--# If your compiler also does not support long long or does not have
--# strtoull, define NO_STRTOULL.
-+# Define NO_STRTOMAX if you don't have both strtoimax and strtoumax in the
-+# C library.  If your compiler also does not support long long or does
-+# not have strtoll or strtoull, define NO_STRTOLL.
- #
- # Define NO_SETENV if you don't have setenv in the C library.
- #
-@@ -804,7 +804,7 @@ ifeq ($(uname_S),OSF1)
- 	# Need this for u_short definitions et al
- 	BASIC_CFLAGS += -D_OSF_SOURCE
- 	SOCKLEN_T = int
--	NO_STRTOULL = YesPlease
-+	NO_STRTOLL = YesPlease
- 	NO_NSEC = YesPlease
- endif
- ifeq ($(uname_S),Linux)
-@@ -890,7 +890,7 @@ ifeq ($(uname_S),SunOS)
- 		NO_UNSETENV = YesPlease
- 		NO_SETENV = YesPlease
- 		NO_STRLCPY = YesPlease
--		NO_STRTOUMAX = YesPlease
-+		NO_STRTOMAX = YesPlease
- 		GIT_TEST_CMP = cmp
- 	endif
- 	ifeq ($(uname_R),5.7)
-@@ -900,19 +900,19 @@ ifeq ($(uname_S),SunOS)
- 		NO_UNSETENV = YesPlease
- 		NO_SETENV = YesPlease
- 		NO_STRLCPY = YesPlease
--		NO_STRTOUMAX = YesPlease
-+		NO_STRTOMAX = YesPlease
- 		GIT_TEST_CMP = cmp
- 	endif
- 	ifeq ($(uname_R),5.8)
- 		NO_UNSETENV = YesPlease
- 		NO_SETENV = YesPlease
--		NO_STRTOUMAX = YesPlease
-+		NO_STRTOMAX = YesPlease
- 		GIT_TEST_CMP = cmp
- 	endif
- 	ifeq ($(uname_R),5.9)
- 		NO_UNSETENV = YesPlease
- 		NO_SETENV = YesPlease
--		NO_STRTOUMAX = YesPlease
-+		NO_STRTOMAX = YesPlease
- 		GIT_TEST_CMP = cmp
- 	endif
- 	INSTALL = /usr/ucb/install
-@@ -954,7 +954,7 @@ ifeq ($(uname_S),FreeBSD)
- 	ifeq ($(shell expr "$(uname_R)" : '4\.'),2)
- 		PTHREAD_LIBS = -pthread
- 		NO_UINTMAX_T = YesPlease
--		NO_STRTOUMAX = YesPlease
-+		NO_STRTOMAX = YesPlease
- 	endif
- 	PYTHON_PATH = /usr/local/bin/python
- 	HAVE_PATHS_H = YesPlease
-@@ -1092,8 +1092,8 @@ ifeq ($(uname_S),Windows)
- 	NO_MEMMEM = YesPlease
- 	# NEEDS_LIBICONV = YesPlease
- 	NO_ICONV = YesPlease
--	NO_STRTOUMAX = YesPlease
--	NO_STRTOULL = YesPlease
-+	NO_STRTOMAX = YesPlease
-+	NO_STRTOLL = YesPlease
- 	NO_MKDTEMP = YesPlease
- 	NO_MKSTEMPS = YesPlease
- 	SNPRINTF_RETURNS_BOGUS = YesPlease
-@@ -1139,7 +1139,7 @@ ifeq ($(uname_S),Interix)
- 	NO_IPV6 = YesPlease
- 	NO_MEMMEM = YesPlease
- 	NO_MKDTEMP = YesPlease
--	NO_STRTOUMAX = YesPlease
-+	NO_STRTOMAX = YesPlease
- 	NO_NSEC = YesPlease
- 	NO_MKSTEMPS = YesPlease
- 	ifeq ($(uname_R),3.5)
-@@ -1184,7 +1184,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	NO_MEMMEM = YesPlease
- 	NEEDS_LIBICONV = YesPlease
- 	OLD_ICONV = YesPlease
--	NO_STRTOUMAX = YesPlease
-+	NO_STRTOMAX = YesPlease
- 	NO_MKDTEMP = YesPlease
- 	NO_MKSTEMPS = YesPlease
- 	NO_SVN_TESTS = YesPlease
-@@ -1440,12 +1440,12 @@ ifdef NO_STRLCPY
- 	COMPAT_CFLAGS += -DNO_STRLCPY
- 	COMPAT_OBJS += compat/strlcpy.o
- endif
--ifdef NO_STRTOUMAX
--	COMPAT_CFLAGS += -DNO_STRTOUMAX
--	COMPAT_OBJS += compat/strtoumax.o
-+ifdef NO_STRTOMAX
-+	COMPAT_CFLAGS += -DNO_STRTOMAX
-+	COMPAT_OBJS += compat/strtoumax.o compat/strtoimax.o
- endif
--ifdef NO_STRTOULL
--	COMPAT_CFLAGS += -DNO_STRTOULL
-+ifdef NO_STRTOLL
-+	COMPAT_CFLAGS += -DNO_STRTOLL
- endif
- ifdef NO_STRTOK_R
- 	COMPAT_CFLAGS += -DNO_STRTOK_R
-diff --git a/compat/strtoimax.c b/compat/strtoimax.c
-new file mode 100644
-index 0000000..fca07a3
---- /dev/null
-+++ b/compat/strtoimax.c
-@@ -0,0 +1,10 @@
-+#include "../git-compat-util.h"
-+
-+intmax_t gitstrtoimax (const char *nptr, char **endptr, int base)
-+{
-+#if defined(NO_STRTOLL)
-+	return strtol(nptr, endptr, base);
-+#else
-+	return strtoll(nptr, endptr, base);
-+#endif
-+}
-diff --git a/compat/strtoumax.c b/compat/strtoumax.c
-index 5541353..7feedfd 100644
---- a/compat/strtoumax.c
-+++ b/compat/strtoumax.c
-@@ -2,7 +2,7 @@
+diff --git a/config.c b/config.c
+index 4183f80..b19df66 100644
+--- a/config.c
++++ b/config.c
+@@ -333,7 +333,7 @@ static int git_parse_file(config_fn_t fn, void *data)
+ 	die("bad config file line %d in %s", cf->linenr, cf->name);
+ }
  
- uintmax_t gitstrtoumax (const char *nptr, char **endptr, int base)
+-static int parse_unit_factor(const char *end, unsigned long *val)
++static int parse_unit_factor(const char *end, uintmax_t *val)
  {
--#if defined(NO_STRTOULL)
-+#if defined(NO_STRTOLL)
- 	return strtoul(nptr, endptr, base);
- #else
- 	return strtoull(nptr, endptr, base);
+ 	if (!*end)
+ 		return 1;
+@@ -356,11 +356,14 @@ static int git_parse_long(const char *value, long *ret)
+ {
+ 	if (value && *value) {
+ 		char *end;
+-		long val = strtol(value, &end, 0);
+-		unsigned long factor = 1;
++		intmax_t val = strtoimax(value, &end, 0);
++		uintmax_t factor = 1;
+ 		if (!parse_unit_factor(end, &factor))
+ 			return 0;
+-		*ret = val * factor;
++		val *= factor;
++		if (val > maximum_signed_value_of_type(long))
++			return 0;
++		*ret = val;
+ 		return 1;
+ 	}
+ 	return 0;
+@@ -370,9 +373,11 @@ int git_parse_ulong(const char *value, unsigned long *ret)
+ {
+ 	if (value && *value) {
+ 		char *end;
+-		unsigned long val = strtoul(value, &end, 0);
++		uintmax_t val = strtoumax(value, &end, 0);
+ 		if (!parse_unit_factor(end, &val))
+ 			return 0;
++		if (val > maximum_unsigned_value_of_type(long))
++			return 0;
+ 		*ret = val;
+ 		return 1;
+ 	}
+@@ -391,6 +396,8 @@ int git_config_int(const char *name, const char *value)
+ 	long ret = 0;
+ 	if (!git_parse_long(value, &ret))
+ 		die_bad_config(name);
++	if (ret > maximum_signed_value_of_type(int))
++		die_bad_config(name);
+ 	return ret;
+ }
+ 
+@@ -550,7 +557,7 @@ static int git_default_core_config(const char *var, const char *value)
+ 
+ 	if (!strcmp(var, "core.packedgitwindowsize")) {
+ 		int pgsz_x2 = getpagesize() * 2;
+-		packed_git_window_size = git_config_int(var, value);
++		packed_git_window_size = git_config_ulong(var, value);
+ 
+ 		/* This value must be multiple of (pagesize * 2) */
+ 		packed_git_window_size /= pgsz_x2;
+@@ -561,18 +568,17 @@ static int git_default_core_config(const char *var, const char *value)
+ 	}
+ 
+ 	if (!strcmp(var, "core.bigfilethreshold")) {
+-		long n = git_config_int(var, value);
+-		big_file_threshold = 0 < n ? n : 0;
++		big_file_threshold = git_config_ulong(var, value);
+ 		return 0;
+ 	}
+ 
+ 	if (!strcmp(var, "core.packedgitlimit")) {
+-		packed_git_limit = git_config_int(var, value);
++		packed_git_limit = git_config_ulong(var, value);
+ 		return 0;
+ 	}
+ 
+ 	if (!strcmp(var, "core.deltabasecachelimit")) {
+-		delta_base_cache_limit = git_config_int(var, value);
++		delta_base_cache_limit = git_config_ulong(var, value);
+ 		return 0;
+ 	}
+ 
 -- 
 1.7.6.1.139.gcb612
