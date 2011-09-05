@@ -1,98 +1,106 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: git 'new' alias
-Date: Mon, 5 Sep 2011 16:41:18 -0400
-Message-ID: <20110905204118.GA4221@sigill.intra.peff.net>
-References: <CACnwZYfo2E0SFfFrYzUktAZYwqgyX_J4KgFQD5kqXToGmip3Lg@mail.gmail.com>
- <vpqei00m4pf.fsf@bauges.imag.fr>
- <20110901211747.GA16308@sigill.intra.peff.net>
- <vpqipp77xpb.fsf@bauges.imag.fr>
+Subject: Re: Dropping '+' from fetch = +refs/heads/*:refs/remotes/origin/*?
+Date: Mon, 5 Sep 2011 16:47:29 -0400
+Message-ID: <20110905204729.GB4221@sigill.intra.peff.net>
+References: <7vliu8w25g.fsf@alter.siamese.dyndns.org>
+ <20110902000039.GB9339@sigill.intra.peff.net>
+ <4E6088F9.5070102@drmicha.warpmail.net>
+ <20110902152947.GB19213@sigill.intra.peff.net>
+ <7v4o0uncq0.fsf@alter.siamese.dyndns.org>
+ <20110902162524.GC19690@sigill.intra.peff.net>
+ <CAJo=hJtuUe1ajjW9dNU4JzjE+P94a42W7ZvC+iQBQTeGXVvS8Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Thiago Farina <tfransosi@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Sep 05 22:41:30 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Sep 05 22:50:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0fz0-0008Pe-3X
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 22:41:30 +0200
+	id 1R0g7k-0003oU-Lh
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 22:50:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753867Ab1IEUlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Sep 2011 16:41:24 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38768
+	id S1753874Ab1IEUrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Sep 2011 16:47:33 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38442
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753630Ab1IEUlW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Sep 2011 16:41:22 -0400
-Received: (qmail 20569 invoked by uid 107); 5 Sep 2011 20:42:09 -0000
+	id S1753630Ab1IEUrb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Sep 2011 16:47:31 -0400
+Received: (qmail 20612 invoked by uid 107); 5 Sep 2011 20:48:20 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 05 Sep 2011 16:42:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Sep 2011 16:41:18 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 05 Sep 2011 16:48:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Sep 2011 16:47:29 -0400
 Content-Disposition: inline
-In-Reply-To: <vpqipp77xpb.fsf@bauges.imag.fr>
+In-Reply-To: <CAJo=hJtuUe1ajjW9dNU4JzjE+P94a42W7ZvC+iQBQTeGXVvS8Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180760>
 
-On Mon, Sep 05, 2011 at 06:36:48PM +0200, Matthieu Moy wrote:
+On Mon, Sep 05, 2011 at 11:15:26AM -0700, Shawn O. Pearce wrote:
 
-> >   $ git config alias.one
-> >   !f() { r=$1; shift; echo $r@{1}..$r@{0} "$@"; }; f
+> > One possible solution is that the local config could dynamically depend
+> > on the remote config. E.g., the fetch refspec has something like a
+> [...]
 > 
-> (which, I've just discovered, should be written as
+> What are we trying to do here?
+
+We veered way off topic into the idea of generally pulling config from a
+remote. This was just one specific example of how it could be used, and
+what kinds of complications that might entail.
+
+> If the attacker knows Git clients always fetch rewinds, he might be
+> tempted to rewrite some part of history and serve his modified history
+> of events to clients. But the repository owner (if using a private
+> per-user repository model like the Linux kernel developers use) would
+> notice on their next push, and sound the alarm that her repository has
+> been damaged and should not be trusted.
 > 
-> [alias]
->         one = "!f() { r=$1; shift; echo $r@{1}..$r@{0} "$@"; }; f"
+> If on the other hand Git clients never fetch rewinds, the attacker
+> would just add a new commit to the tip of the history, and serve that.
+> Again, the repository owner would notice on their next push, and
+> notify people the repository is not to be trusted.
 > 
-> otherwise "git config" messes up with the ; in the line)
+> Either way, the "+" in the fetch spec has no impact on the attack. The
+> default just changes the attacker's choices slightly.
 
-Yes, it definitely needs quotes. However, you also need to
-backslash-escape the quotes inside, or you get:
+Exactly. This is what I was hinting at in my original email in this
+thread. My gut feeling is that it's not useful as a security measure,
+but I was trying to challenge people to prove me wrong by showing a case
+where the attacker can't just trivially modify his attack to get the
+same result.
 
-  $ git config alias.one
-  !f() { r=$1; shift; echo $r@{1}..$r@{0} $@; }; f
+> Maybe instead of getting a project policy from the server, we observe
+> the server's behavior over time from the client's reflog. If every
+> update to "maint" that _I_ have observed has always been a
+> fast-forward, a rewind on that branch should be a lot more verbose in
+> the fetch output than "force update". That is pretty easy to observe
+> from the reflog too, its just a scan of the records and either
+> matching the message, or checking the merge status of the old-new
+> pairs listed in the record. We don't even need to read the entire log
+> on every fetch, we could cache this data.
 
-which will accidentally split any arguments with whitespace.
+Hmm. That would probably work most of the time in practice. But it seems
+like it would be quite confusing when the heuristic is wrong (e.g.,
+Junio rewinds next once every few months, and other than that, it always
+fast forwards). On the other hand, if the failure mode of the heuristic
+is only a slightly bigger warning, then it's not that big a deal.
 
-> I now have this, which is really ugly in a config file, but does the
-> DWIMery I want:
-> 
-> 	new = "!f () { if echo \"$1\" | grep -q -e '^-' -e '^$'; then r=; else r=$1; shift; fi; git log $r@{1}..$r@{0} \"$@\"; } && f"
+> The main reason to alert the user that a branch rewound is to give
+> them a chance to correct their client if they need to. If a branch
+> normally doesn't rewind (e.g. next) but then suddenly does (e.g.
+> release cycle), but I haven't used this client in 3 weeks, its nice to
+> give me more of a "HEY STUPID FIX YOUR TOPICS" warning than just the
+> little quiet "force update" we give.
 
-Instead of piping into grep, I would do:
-
-  case "$1" in
-    ""|-*) ;;
-    *) r=$1; shift ;;
-  esac
-
-which saves a process (and is IMHO a little more obvious).
-
-As far as getting ugly for a config file, I would note that:
-
-  1. You can always drop a git-new script in your PATH. :)
-
-  2. You can backslash-escape literal newlines in config entries. It's
-     not amazingly pretty, but it can help:
-
-      [alias]
-        new = "! \
-          f() { \
-            case \"$1\" in \
-              ''|-*) ;; \
-              *) r=$1; shift ;; \
-            esac; \
-            git log $r@{1}..$r@{0} \"$@\"; \
-          }; \
-          f"
+Sure. I'm totally open to the idea of making the non-fast-forward
+warning more obvious. Suggestions for wording (though I am tempted by
+"HEY STUPID" above ;) )?
 
 -Peff
-
-PS I use a similar alias, and I have found that defaulting to "--oneline
---graph --boundary $r@{0}...@r{1}" is quite nice for seeing how you
-differ from upstream.
