@@ -1,68 +1,98 @@
-From: Mauro Carvalho Chehab <mchehab@redhat.com>
-Subject: Re: Linux 3.1-rc5
-Date: Mon, 05 Sep 2011 17:26:39 -0300
-Message-ID: <4E65307F.5020103@redhat.com>
-References: <CA+55aFxDjVJwbpP5YT4o=qud=OcxtT3Ry4HfCtW-FvNdj+RFeQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git 'new' alias
+Date: Mon, 5 Sep 2011 16:41:18 -0400
+Message-ID: <20110905204118.GA4221@sigill.intra.peff.net>
+References: <CACnwZYfo2E0SFfFrYzUktAZYwqgyX_J4KgFQD5kqXToGmip3Lg@mail.gmail.com>
+ <vpqei00m4pf.fsf@bauges.imag.fr>
+ <20110901211747.GA16308@sigill.intra.peff.net>
+ <vpqipp77xpb.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Sep 05 22:27:31 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Thiago Farina <tfransosi@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Sep 05 22:41:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0flS-0002bq-N0
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 22:27:31 +0200
+	id 1R0fz0-0008Pe-3X
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 22:41:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753842Ab1IEU1R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Sep 2011 16:27:17 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:4055 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753780Ab1IEU1Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Sep 2011 16:27:16 -0400
-Received: from int-mx02.intmail.prod.int.phx2.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id p85KQgjY002589
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Mon, 5 Sep 2011 16:26:42 -0400
-Received: from [10.11.8.165] (vpn-8-165.rdu.redhat.com [10.11.8.165])
-	by int-mx02.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id p85KQdsN031247;
-	Mon, 5 Sep 2011 16:26:40 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110812 Thunderbird/6.0
-In-Reply-To: <CA+55aFxDjVJwbpP5YT4o=qud=OcxtT3Ry4HfCtW-FvNdj+RFeQ@mail.gmail.com>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.12
+	id S1753867Ab1IEUlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Sep 2011 16:41:24 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38768
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753630Ab1IEUlW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Sep 2011 16:41:22 -0400
+Received: (qmail 20569 invoked by uid 107); 5 Sep 2011 20:42:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 05 Sep 2011 16:42:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Sep 2011 16:41:18 -0400
+Content-Disposition: inline
+In-Reply-To: <vpqipp77xpb.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180759>
 
-Em 04-09-2011 20:27, Linus Torvalds escreveu:
+On Mon, Sep 05, 2011 at 06:36:48PM +0200, Matthieu Moy wrote:
 
-> One thing to note: If you just do
+> >   $ git config alias.one
+> >   !f() { r=$1; shift; echo $r@{1}..$r@{0} "$@"; }; f
 > 
->    git pull https://github.com/torvalds/linux.git
+> (which, I've just discovered, should be written as
 > 
-> you probably won't get the tags, since it's not your origin branch. So do
+> [alias]
+>         one = "!f() { r=$1; shift; echo $r@{1}..$r@{0} "$@"; }; f"
 > 
->    git fetch --tags<...>
+> otherwise "git config" messes up with the ; in the line)
+
+Yes, it definitely needs quotes. However, you also need to
+backslash-escape the quotes inside, or you get:
+
+  $ git config alias.one
+  !f() { r=$1; shift; echo $r@{1}..$r@{0} $@; }; f
+
+which will accidentally split any arguments with whitespace.
+
+> I now have this, which is really ugly in a config file, but does the
+> DWIMery I want:
 > 
-> too, so that you get not only the actual changes, but the tag that you
-> can verify too.
-> 
+> 	new = "!f () { if echo \"$1\" | grep -q -e '^-' -e '^$'; then r=; else r=$1; shift; fi; git log $r@{1}..$r@{0} \"$@\"; } && f"
 
-It would be great if "git remote update" could also verify the tag
-signature (if present), as most of us just do a "git remote update".
+Instead of piping into grep, I would do:
 
-Maybe an extra parameter for git config remote.tagopt?
+  case "$1" in
+    ""|-*) ;;
+    *) r=$1; shift ;;
+  esac
 
-Ok, if in doubt, we can always use git tag -v <new tag>, but doing
-it automagically would help us to detect if a git tag got mangled
-by some  at the moment we update our trees, with seems to be
-a good idea.
+which saves a process (and is IMHO a little more obvious).
 
-Thanks,
-Mauro
+As far as getting ugly for a config file, I would note that:
+
+  1. You can always drop a git-new script in your PATH. :)
+
+  2. You can backslash-escape literal newlines in config entries. It's
+     not amazingly pretty, but it can help:
+
+      [alias]
+        new = "! \
+          f() { \
+            case \"$1\" in \
+              ''|-*) ;; \
+              *) r=$1; shift ;; \
+            esac; \
+            git log $r@{1}..$r@{0} \"$@\"; \
+          }; \
+          f"
+
+-Peff
+
+PS I use a similar alias, and I have found that defaulting to "--oneline
+--graph --boundary $r@{0}...@r{1}" is quite nice for seeing how you
+differ from upstream.
