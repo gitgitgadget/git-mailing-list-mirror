@@ -1,105 +1,72 @@
-From: Richard Purdie <richard.purdie@linuxfoundation.org>
-Subject: Re: Overriding ~/.gitconfig using GIT_CONFIG
-Date: Mon, 05 Sep 2011 20:29:50 +0100
-Message-ID: <1315250990.1243.14.camel@ted>
-References: <1313163498.14274.505.camel@rex>
-	 <7vr54qmodf.fsf@alter.siamese.dyndns.org>
-	 <7vmxfemnc4.fsf@alter.siamese.dyndns.org> <1313181853.14274.535.camel@rex>
-	 <20110828130555.GA56765@gmail.com> <1314620166.5939.282.camel@rex>
-	 <20110830031022.GA64106@gmail.com> <1314706381.5939.348.camel@rex>
-	 <20110830155649.GA15790@sigill.intra.peff.net>
-	 <1314729545.5939.391.camel@rex>
-	 <20110830184951.GA19204@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] push: old receive-pack does not understand --quiet
+Date: Mon, 05 Sep 2011 12:34:05 -0700
+Message-ID: <7vwrdmbx76.fsf@alter.siamese.dyndns.org>
+References: <20110903105723.GA16304@tin.tmux.org>
+ <1315067656-2846-1-git-send-email-drizzd@aon.at>
+ <1315067656-2846-4-git-send-email-drizzd@aon.at>
+ <7v62l7crpg.fsf@alter.siamese.dyndns.org>
+ <4E6494F7.7010101@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: David Aguilar <davvid@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Nguy?? n =?UTF-8?Q?Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
-	<pclouds@gmail.com>, GIT Mailing-list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Sep 05 21:30:37 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
+	tobiasu@tmux.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Sep 05 21:34:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0esP-00043X-0m
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 21:30:37 +0200
+	id 1R0evw-0005Zu-2y
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 21:34:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753495Ab1IETaW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Sep 2011 15:30:22 -0400
-Received: from 93-97-173-237.zone5.bethere.co.uk ([93.97.173.237]:55125 "EHLO
-	tim.rpsys.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753378Ab1IETaT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Sep 2011 15:30:19 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by tim.rpsys.net (8.13.6/8.13.8) with ESMTP id p85JTtmH001046;
-	Mon, 5 Sep 2011 20:29:55 +0100
-Received: from tim.rpsys.net ([127.0.0.1])
- by localhost (tim.rpsys.net [127.0.0.1]) (amavisd-new, port 10024) with LMTP
- id 00906-05; Mon,  5 Sep 2011 20:29:52 +0100 (BST)
-Received: from [192.168.1.40] (dynamic10.rpnet.com [192.168.1.40])
-	(authenticated bits=0)
-	by tim.rpsys.net (8.13.6/8.13.8) with ESMTP id p85JTofD001039
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 5 Sep 2011 20:29:50 +0100
-In-Reply-To: <20110830184951.GA19204@sigill.intra.peff.net>
-X-Mailer: Evolution 2.32.2 
-X-Virus-Scanned: amavisd-new at rpsys.net
+	id S1753526Ab1IETeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Sep 2011 15:34:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38024 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752819Ab1IETeK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Sep 2011 15:34:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F09B14DAA;
+	Mon,  5 Sep 2011 15:34:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2En2tlO3y5IgnFLfBTyQK+O5WLc=; b=HLDEP6
+	xBdT5BOD9iY0oaBWyIANQH9Mjba86OnAQggHn/gizND3kOfUAOIqa67+pnO7itJX
+	U8lyEZfbtktrFt27It0IS02ka9ZFmbJCHgjcDAyZaUYgDOYZ7Mk1FB5so3HUYdni
+	Ni0x1Mx8lDpW6RdgUqXh6Sy2ATSkeYO7geZ6c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Pv6mYPx1omfyH8fFHHFHnV391iv9UOUG
+	FAHbURvnGMmzaH8kn/sEdoNR/9XaD1EYFVdOh+IFoeIHn88UaTbggMkVYqjkvZHw
+	a4flE9noABFGJPVYMivvSVqxvydLwjA/LPdneYEF54yY7wwezI8yx+GSp8C1n+dq
+	HmOtBU7NlhM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E84AE4DA9;
+	Mon,  5 Sep 2011 15:34:07 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7BEB64DA7; Mon,  5 Sep 2011
+ 15:34:07 -0400 (EDT)
+In-Reply-To: <4E6494F7.7010101@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Mon, 05 Sep 2011 11:23:03 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 057E18D6-D7F6-11E0-B188-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180755>
 
-On Tue, 2011-08-30 at 14:49 -0400, Jeff King wrote:
-> On Tue, Aug 30, 2011 at 07:39:05PM +0100, Richard Purdie wrote:
-> 
-> > On Tue, 2011-08-30 at 11:56 -0400, Jeff King wrote:
-> > > On Tue, Aug 30, 2011 at 01:13:01PM +0100, Richard Purdie wrote:
-> > > 
-> > > > We've gone through several iterations of this but as things stand now,
-> > > > to initially clone things we're doing:
-> > > > 
-> > > > git clone --bare --mirror <url> <dir>
-> > > > 
-> > > > but if we already have some existing clone we'd update with:
-> > > > 
-> > > > git remote prune origin
-> > > > git remote rm origin
-> > > > git remote add --mirror origin <url>
-> > > > git fetch --all -t
-> > > >
-> > > > [...]
-> > > >
-> > > > So if a user has an origin remote in their .gitconfig, can we ignore it?
-> > > 
-> > > Wouldn't:
-> > > 
-> > >   git fetch --prune <url> refs/heads/*:refs/remotes/origin/*
-> > > 
-> > > do what you want, and not look at config at all?
-> > 
-> > Since this is a bare/mirror clone, wouldn't that need to be:
-> > 
-> >  git fetch --prune <url> refs/heads/*:refs/heads/*
-> 
-> Sorry, yes, I forgot about the mirroring bit.
-> 
-> > That also wouldn't fetch tags?
-> 
-> It would only do autofollowing. You could use "-t", but if you really
-> want a straight mirror, you could do:
-> 
->   git fetch --prune refs/*:refs/*
-> 
-> to get everything.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Thanks. Just to updated, I've changed the code to do this so we'll see
-how it goes...
+> Being cc'ed makes me feel guilty but I don't know what for...
 
-Cheers,
+No guilt involved. 28d836c (test: allow running the tests under "prove",
+2010-10-14) made you a good _suspect_ for having more clues than I do to
+resolve it, iow, it was asking for help, not pointing any finger.
 
-Richard
+Anyhow, thanks for a quick workaround, even though I still do not
+understand what the issue is (that is, what is wrong with the
+t/lib-terminal helper).
