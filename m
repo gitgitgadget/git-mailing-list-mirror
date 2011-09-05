@@ -1,81 +1,84 @@
-From: Nix <nix@esperi.org.uk>
-Subject: Re: [PATCH] Support sizes >=2G in various config options accepting 'g' sizes.
-Date: Mon, 05 Sep 2011 00:49:29 +0100
-Message-ID: <87fwkbool2.fsf@spindle.srvr.nix>
-References: <CA+Jd1rGjkiabc9VePMmY6+8vhiGr7MgdwSNFToMsC0oBFNL6+g@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [ANNOUNCE] Git User's Survey 2011
+Date: Mon, 5 Sep 2011 02:43:20 +0200
+Message-ID: <201109050243.21299.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Clemens Buchacher <drizzdtt@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 05 01:49:42 2011
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 05 02:45:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0MRY-0000OR-Tp
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 01:49:41 +0200
+	id 1R0NJ8-0005wX-8y
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 02:45:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752972Ab1IDXte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Sep 2011 19:49:34 -0400
-Received: from icebox.esperi.org.uk ([81.187.191.129]:48962 "EHLO
-	mail.esperi.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752767Ab1IDXtd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Sep 2011 19:49:33 -0400
-Received: from esperi.org.uk (nix@spindle.srvr.nix [192.168.14.15])
-	by mail.esperi.org.uk (8.14.4/8.14.3) with ESMTP id p84NnT2W002952;
-	Mon, 5 Sep 2011 00:49:29 +0100
-Received: (from nix@localhost)
-	by esperi.org.uk (8.14.4/8.12.11/Submit) id p84NnTOA004193;
-	Mon, 5 Sep 2011 00:49:29 +0100
-Emacs: why choose between a word processor and a Lisp interpreter when you could have neither instead?
-In-Reply-To: <CA+Jd1rGjkiabc9VePMmY6+8vhiGr7MgdwSNFToMsC0oBFNL6+g@mail.gmail.com>
-	(Clemens Buchacher's message of "Mon, 5 Sep 2011 00:20:07 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-DCC-wuwien-Metrics: spindle 1290; Body=2 Fuz1=2 Fuz2=2
+	id S1753901Ab1IEAn2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Sep 2011 20:43:28 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:56693 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753911Ab1IEAn1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Sep 2011 20:43:27 -0400
+Received: by fxh19 with SMTP id 19so3343598fxh.19
+        for <git@vger.kernel.org>; Sun, 04 Sep 2011 17:43:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:mime-version:content-disposition
+         :content-type:content-transfer-encoding:message-id;
+        bh=vBt0WlokEHjCBHEFPKu14LmgBQl0l1702444CS5YPsI=;
+        b=mCL/rEVvCZ5XIlhIpJF4XxBnv4jYct5LHgGQ4KxKUxlX5hXA+Br+E1vw5VfN4o658Z
+         lQnagP/+lJ0bqqSokgnA74lhOAfdFKD+chErZ3ezf70g1wGitCdBZc/7x6z3U+3qAgNj
+         TVgGoy078rWrxSjhDqmcE2AduxWJWsK+fI8vg=
+Received: by 10.223.85.154 with SMTP id o26mr2286855fal.72.1315183405630;
+        Sun, 04 Sep 2011 17:43:25 -0700 (PDT)
+Received: from [192.168.1.13] (abvb129.neoplus.adsl.tpnet.pl [83.8.199.129])
+        by mx.google.com with ESMTPS id c5sm3467560fai.2.2011.09.04.17.43.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 04 Sep 2011 17:43:24 -0700 (PDT)
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180706>
 
-On 4 Sep 2011, Clemens Buchacher uttered the following:
+Hello all,
 
-> On Sep 4, 2011 11:25 PM, "Nix" <nix@esperi.org.uk> wrote:
->>
->> I haven't tried to fix things on 32-bit platforms, because there
->> is no real point setting any values to >2G on such platforms
->> anyway, and minimal likelihood that anyone would try.
->
-> I absolutely would not count on that.
+We would like to ask you a few questions about your use of the Git
+version control system. This survey is mainly to understand who is
+using Git, how and why.
 
-I was just operating under the assumption that since nobody had spotted
-this in years... OK, OK, perhaps that's a bad idea.
+The results will be published to the Git wiki on the GitSurvey2011
+page (https://git.wiki.kernel.org/index.php/GitSurvey2011) and
+discussed on the git mailing list.
 
->> The only
->> real fix possible would be a diagnostic warning of an attempt to
->> set a ridiculously high value, unless we want to use 'long long'
->> everywhere, which I doubt.
->
-> I think an error message would be appropriate. Best if we die immediately
-> when that option is read.
 
-Yeah. None of the affected options impact the pack format (as, say,
-pack.depth does) so there is no danger of 32-bit users being barred from
-reading packs created by 64-bit users with high values for these
-settings.
+The survey would be open from 5 September till 3 October 2011.
 
-(We have no way of guaranteeing that we can even report this, though:
- we can only even read in a >32-bit number if NO_STRTOULL is not
- defined. Still, I agree that if we *can* report this, we should.)
 
->                           We wouldn't want e.g. clone to die when it just
-> finished downloading. And some documentation for those limits would be
-> great, while you're at it. :-)
+Please devote a few minutes of your time to fill this simple
+questionnaire, it will help a lot the git community to understand your
+needs, what you like of Git, and of course what you don't like  of it.
 
-I'll send a new patch tomorrow.
+The survey can be found here:
+  http://tinyurl.com/GitSurvey2011
+  https://www.survs.com/survey/VCAGZA8CT5
 
-... hm, pack.packsizelimit is also affected. I'll plug that too.
+There is also alternate version which does not require cookies,
+but it doesn't allow one to go back to response and edit it.
+  https://www.survs.com/survey/MRRGT8OEFV 
+
+
+P.S. At request I can open a separate channel in survey, with a separate
+survey URL, so that responses from particular site or organization could
+be separated out.
+
+Please send me a email with name of channel, and I will return with
+a separate survey URL to use.
 
 -- 
-NULL && (void)
+Git Development Community
