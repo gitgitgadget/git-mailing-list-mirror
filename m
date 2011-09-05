@@ -1,91 +1,95 @@
-From: Hannu Koivisto <azure@iki.fi>
-Subject: "Your local changes ... would be overwritten" bug
-Date: Mon, 05 Sep 2011 19:25:53 +0300
-Organization: NOYB
-Message-ID: <8362l73qi6.fsf@kalahari.s2.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: git 'new' alias
+Date: Mon, 05 Sep 2011 18:36:48 +0200
+Message-ID: <vpqipp77xpb.fsf@bauges.imag.fr>
+References: <CACnwZYfo2E0SFfFrYzUktAZYwqgyX_J4KgFQD5kqXToGmip3Lg@mail.gmail.com>
+	<vpqei00m4pf.fsf@bauges.imag.fr>
+	<20110901211747.GA16308@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 05 18:26:15 2011
+Content-Type: text/plain
+Cc: Thiago Farina <tfransosi@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Sep 05 18:37:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0bzz-0005Px-56
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 18:26:15 +0200
+	id 1R0cAm-0001TY-8d
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 18:37:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751303Ab1IEQ0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Sep 2011 12:26:10 -0400
-Received: from lo.gmane.org ([80.91.229.12]:57594 "EHLO lo.gmane.org"
+	id S1751559Ab1IEQhR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Sep 2011 12:37:17 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:47018 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750794Ab1IEQ0H (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Sep 2011 12:26:07 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1R0bzp-0005M9-Ez
-	for git@vger.kernel.org; Mon, 05 Sep 2011 18:26:05 +0200
-Received: from s2.org ([80.83.7.53])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 05 Sep 2011 18:26:05 +0200
-Received: from azure by s2.org with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 05 Sep 2011 18:26:05 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: s2.org
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.3 (gnu/linux)
-Cancel-Lock: sha1:N8ZofrnGiZNddZl9MwepZump/ek=
+	id S1751387Ab1IEQhB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Sep 2011 12:37:01 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p85GZtkG002567
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 5 Sep 2011 18:35:57 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1R0cAD-0005SS-5B; Mon, 05 Sep 2011 18:36:49 +0200
+In-Reply-To: <20110901211747.GA16308@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 1 Sep 2011 17:17:47 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 05 Sep 2011 18:35:57 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p85GZtkG002567
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1315845358.2097@9Qc5M0cM4Ydab9cIQB9NUg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180748>
 
-Greetings,
+Jeff King <peff@peff.net> writes:
 
-I have a problem where "git checkout origin/another-branch" in master
-should remove a set of files but instead I get:
+>   $ git config alias.one
+>   !f() { r=$1; shift; echo $r@{1}..$r@{0} "$@"; }; f
 
-error: Your local changes to the following files would be overwritten by checkout:
-        file1
-        file2
-        ...
-Please, commit your changes or stash them before you can switch branches.
-Aborting
+(which, I've just discovered, should be written as
 
-(where the files listed are those that should be removed)
+[alias]
+        one = "!f() { r=$1; shift; echo $r@{1}..$r@{0} "$@"; }; f"
 
-The problem occurs only if the checkout is not run in the top level
-directory of the repository and the files in question have execute
-bit set.  Before checkout, git status says
+otherwise "git config" messes up with the ; in the line)
 
-# On branch master
-nothing to commit (working directory clean)
+> which I think was the original intent (modulo me replacing "git log"
+> with "echo" for debugging, of course).
 
-The following script can be used to reproduce the problem:
+The original intent was mis-specified ;-).
 
--------------------------------------------
-mkdir temp
-cd temp
-git init
-echo foo > testfile
-git add testfile
-git commit -m "test1"
-echo foo > testfile2
-chmod +x testfile2
-git add testfile2
-git commit -m "test2"
-mkdir foo
-cd foo
-git co master~1
---------------------------------------------
+I think I originally made the alias to do
 
-The problem disappears if one removes either the "chmod +x
-testfile2" line or the "cd foo" line.
+git new               # give me new stuff on current branch
+git new origin/master # same, for origin/master
 
-I'm running Cygwin git 1.7.5.1 in Windows XP.
+and tried to enrich it to allow
+
+git new master --oneline
+
+without thinking about what
+
+git new --oneline
+
+should do (and obviously, without really testing it, I guess I had one
+version of the alias allowing each senario, and none allowing all of
+them).
+
+I now have this, which is really ugly in a config file, but does the
+DWIMery I want:
+
+	new = "!f () { if echo \"$1\" | grep -q -e '^-' -e '^$'; then r=; else r=$1; shift; fi; git log $r@{1}..$r@{0} \"$@\"; } && f"
+
+(this one has even been vaguely tested ;-) )
 
 -- 
-Hannu
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
