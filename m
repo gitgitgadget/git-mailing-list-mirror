@@ -1,69 +1,71 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [ANNOUNCE] Git User's Survey 2011
-Date: Mon, 05 Sep 2011 14:37:48 +0900
-Message-ID: <buohb4rzh03.fsf@dhlpc061.dev.necel.com>
-References: <201109050243.21299.jnareb@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] shell portability: Use sed instead of non-portable variable
+ expansion
+Date: Mon, 05 Sep 2011 09:03:30 +0200
+Message-ID: <4E647442.9000005@viscovery.net>
+References: <8762l73758.fsf@elisp.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 05 07:37:58 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com, tarmigan+git@gmail.com
+To: Naohiro Aota <naota@elisp.net>
+X-From: git-owner@vger.kernel.org Mon Sep 05 09:07:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0Rsb-0007NW-Bg
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 07:37:57 +0200
+	id 1R0THB-0007J9-IW
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 09:07:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751500Ab1IEFhw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Sep 2011 01:37:52 -0400
-Received: from relmlor2.renesas.com ([210.160.252.172]:50826 "EHLO
-	relmlor2.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750896Ab1IEFhv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Sep 2011 01:37:51 -0400
-Received: from relmlir3.idc.renesas.com ([10.200.68.153])
- by relmlor2.idc.renesas.com ( SJSMS)
- with ESMTP id <0LR100AF1BN1BT70@relmlor2.idc.renesas.com> for
- git@vger.kernel.org; Mon, 05 Sep 2011 14:37:49 +0900 (JST)
-Received: from relmlac1.idc.renesas.com ([10.200.69.21])
- by relmlir3.idc.renesas.com ( SJSMS)
- with ESMTP id <0LR100N03BN14N40@relmlir3.idc.renesas.com> for
- git@vger.kernel.org; Mon, 05 Sep 2011 14:37:49 +0900 (JST)
-Received: by relmlac1.idc.renesas.com (Postfix, from userid 0)
-	id 760E6800A2; Mon, 05 Sep 2011 14:37:49 +0900 (JST)
-Received: from relmlac1.idc.renesas.com (localhost [127.0.0.1])
-	by relmlac1.idc.renesas.com (Postfix) with ESMTP id 605F680086; Mon,
- 05 Sep 2011 14:37:49 +0900 (JST)
-Received: from relmlii2.idc.renesas.com [10.200.68.66]	by
- relmlac1.idc.renesas.com with ESMTP id QAA17331; Mon,
- 05 Sep 2011 14:37:49 +0900
-X-IronPort-AV: E=Sophos;i="4.68,330,1312124400";   d="scan'208";a="44029952"
-Received: from unknown (HELO relay31.aps.necel.com) ([10.29.19.54])
- by relmlii2.idc.renesas.com with ESMTP; Mon, 05 Sep 2011 14:37:49 +0900
-Received: from relay31.aps.necel.com ([10.29.19.54] [10.29.19.54])
- by relay31.aps.necel.com with ESMTP; Mon, 05 Sep 2011 14:37:48 +0900
-Received: from dhlpc061 ([10.114.96.19] [10.114.96.19])
- by relay31.aps.necel.com with ESMTP; Mon, 05 Sep 2011 14:37:48 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)	id C24A852E6AE; Mon,
- 05 Sep 2011 14:37:48 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-reply-to: <201109050243.21299.jnareb@gmail.com>
+	id S1750887Ab1IEHDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Sep 2011 03:03:39 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:5835 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750744Ab1IEHDh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Sep 2011 03:03:37 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1R0TDO-00007m-EN; Mon, 05 Sep 2011 09:03:30 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 305511660F;
+	Mon,  5 Sep 2011 09:03:30 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.21) Gecko/20110830 Thunderbird/3.1.13
+In-Reply-To: <8762l73758.fsf@elisp.net>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180719>
 
-Hmmm, a cool thing about the git survey is that I learn quite a few
-new things (commands/concepts/websites) from it ...
+Am 9/5/2011 7:11, schrieb Naohiro Aota:
+> Variable expansions like "${foo#bar}" or "${foo%bar}" doesn't work on
+> shells like FreeBSD sh and they made the test to fail. This patch
+> replace such variable expansions with sed.
+> 
+> Signed-off-by: Naohiro Aota <naota@elisp.net>
+> ---
+> 
+> Testing on FreeBSD failed because of this "bash-ism".
 
-Especially when it comes to various documentation/help/tool resources,
-it's a nice concise list!
+These are not bashism, but features require by POSIX.
 
--miles
+I'd rather suspect that the failures are not because FreeBSD sh does not
+have ${%} or ${#}, but rather that it interprets the meaning of the
+backslash in this case in a way different from other shells.
 
--- 
-The key to happiness
- is having dreams.      [from a fortune cookie]
+>  run_backend() {
+>  	echo "$2" |
+> -	QUERY_STRING="${1#*\?}" \
+> -	PATH_TRANSLATED="$HTTPD_DOCUMENT_ROOT_PATH/${1%%\?*}" \
+
+What happens if you write these as
+
+	QUERY_STRING=${1#*\?} \
+	PATH_TRANSLATED=$HTTPD_DOCUMENT_ROOT_PATH/${1%%\?*} \
+
+i.e., drop the double-quotes?
+
+-- Hannes
