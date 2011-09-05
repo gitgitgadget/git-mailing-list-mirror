@@ -1,83 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] shell portability: Use sed instead of non-portable
- variable expansion
-Date: Mon, 05 Sep 2011 00:45:53 -0700
-Message-ID: <7v39gbxwi6.fsf@alter.siamese.dyndns.org>
-References: <8762l73758.fsf@elisp.net> <4E647442.9000005@viscovery.net>
- <7v7h5nxxwf.fsf@alter.siamese.dyndns.org> <4E647BD5.8060609@viscovery.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] shell portability: Use sed instead of non-portable variable
+ expansion
+Date: Mon, 05 Sep 2011 09:54:25 +0200
+Message-ID: <4E648031.6050607@viscovery.net>
+References: <8762l73758.fsf@elisp.net> <7vbouzxy7g.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: Naohiro Aota <naota@elisp.net>, git@vger.kernel.org,
-	tarmigan+git@gmail.com
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Sep 05 09:46:07 2011
+	tarmigan+git@gmail.com, David Barr <davidbarr@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 05 09:54:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0Tsb-0003WT-Km
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 09:46:05 +0200
+	id 1R0U0q-0006Sb-Dz
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 09:54:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751020Ab1IEHqA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Sep 2011 03:46:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57204 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750802Ab1IEHp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Sep 2011 03:45:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 736C912D2;
-	Mon,  5 Sep 2011 03:45:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xX3ImKUoulJj4CnMWT4Xbu84PmQ=; b=SXhD8v
-	BXZOXewf42xIwL4aN0d119Ad1ptpgimdHnBNDZbHHSw58Qkx41o6WX8zs7LGtZ8g
-	SN4N7eQiMaMaC3XHu9rdRqN7LBwTsaXh3DKiAVCweHAimhebisRQrHf5oFfRBIOC
-	VFxRIlUrCg3+ab2e5l/Dkm+8Z5MsN1ygBrve8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TunFzgae0OE8ZBWpesNbguE30HmDMfPS
-	ZvbhU1mlXx90UotspO4qZiUBQndynfs62jaCTXrIs6fLr0UnDLoPSXM3Ehrq4a8P
-	NNb7vbIUierM76Fz7T6+FLP/wi0O7mPmKr9uOcdKpKXjrmcg2YcXj02TyHGHGOyW
-	dKX4Kk8Y9Nc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 69A3F12D1;
-	Mon,  5 Sep 2011 03:45:55 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E9C5A12D0; Mon,  5 Sep 2011
- 03:45:54 -0400 (EDT)
-In-Reply-To: <4E647BD5.8060609@viscovery.net> (Johannes Sixt's message of
- "Mon, 05 Sep 2011 09:35:49 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 15F5839C-D793-11E0-A441-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751167Ab1IEHyc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Sep 2011 03:54:32 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:62231 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750791Ab1IEHya (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Sep 2011 03:54:30 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1R0U0i-0003Zn-35; Mon, 05 Sep 2011 09:54:28 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 8E3541660F;
+	Mon,  5 Sep 2011 09:54:25 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.21) Gecko/20110830 Thunderbird/3.1.13
+In-Reply-To: <7vbouzxy7g.fsf@alter.siamese.dyndns.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180724>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Am 9/5/2011 9:09, schrieb Junio C Hamano:
+> By the way, t9010 uses ${#parameter} (strlen) which is bashism we forbid,
+> and it needs to be rewritten (David CC'ed).
 
-> Actually, it's the opposite: Within double-quotes, a backslash is only
-> removed when the next character has a special meaning (essentially $, `,
-> ", \), otherwise, it remains and loses its quoting ability. This means,
-> that the backslash would remain as a literal character in our patterns on
-> the right of % or #, and they would not work anymore as intended.
+Actually, no. It is perfectly valid POSIX. So we would need this patch.
 
-That's strange...
+--- 8< ---
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH] CodingGuidelines: ${#parameter} is POSIX and should be allowed
 
-I thought that VAR=<any string without $IFS character in it> would behave
-identically to VAR="<the same string as above>". You seem to be saying
-that they should act differently.
+See http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02.
 
->> If that is the case, either the above or my [?] would work it around, I
->> would think.
->
-> [?] instead of \? is certainly also worth a try.
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ Documentation/CodingGuidelines |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
 
-I obviously agree. Besides, [?] would sidestep the tricky backslash vs
-double quote issue entirely, so it would be a more robust solution to
-leave it around than "sometimes you need to avoid double-quote and some
-other times you would need double-quote" for other people to mimic writing
-tests later.
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index fe1c1e5..df0b620 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -52,8 +52,6 @@ For shell scripts specifically (not exhaustive):
+ 
+    - No shell arrays.
+ 
+-   - No strlen ${#parameter}.
+-
+    - No pattern replacement ${parameter/pattern/string}.
+ 
+  - We use Arithmetic Expansion $(( ... )).
+-- 
+1.7.7.rc0.211.g5ac7e
