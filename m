@@ -1,78 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: add option -h
-Date: Mon, 05 Sep 2011 13:08:39 -0700
-Message-ID: <7vk49mbvlk.fsf@alter.siamese.dyndns.org>
-References: <20110903170612.GA3536@ecki>
+From: Mauro Carvalho Chehab <mchehab@redhat.com>
+Subject: Re: Linux 3.1-rc5
+Date: Mon, 05 Sep 2011 17:26:39 -0300
+Message-ID: <4E65307F.5020103@redhat.com>
+References: <CA+55aFxDjVJwbpP5YT4o=qud=OcxtT3Ry4HfCtW-FvNdj+RFeQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Mon Sep 05 22:08:49 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Sep 05 22:27:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0fTM-0002l7-C2
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 22:08:48 +0200
+	id 1R0flS-0002bq-N0
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 22:27:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753761Ab1IEUIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Sep 2011 16:08:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48347 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753686Ab1IEUIl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Sep 2011 16:08:41 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21326423B;
-	Mon,  5 Sep 2011 16:08:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xRN49847PNIFGwqWQdEGaj1IWKw=; b=axwceZ
-	EuCstIi+5I3Y4ex9gBYySvZsXHnPrVt7YdPO2srydqpW57RSoB2/jdjd5LeLm+I3
-	hEncVZJWFDoyj+ipUSkuikJyBQBCvX7m+oC1vuECJ0E6+R2IP13yhlFjJhV22t6U
-	9D8vAweJ9MuaWdpT8SeyECpJNg07DpitBL3hs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pARkBno+kESnJhm2KOcaT8wWcwVKangP
-	Hot9Qzw+axD5mlrvgM8qSjdSPD22Ll3l+AAIxiN5aB36iuLtyHKCUS+GcO1t0T5b
-	UUvULO8r6AOujRK+aOcFwYWrDeXxZIPE/rW7cIW1Cjz5NaxC0/JQiFc6wyeBj41m
-	Rx046alvm/E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A771423A;
-	Mon,  5 Sep 2011 16:08:41 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9F7224239; Mon,  5 Sep 2011
- 16:08:40 -0400 (EDT)
-In-Reply-To: <20110903170612.GA3536@ecki> (Clemens Buchacher's message of
- "Sat, 3 Sep 2011 19:06:13 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D92ECD8E-D7FA-11E0-96EA-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753842Ab1IEU1R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Sep 2011 16:27:17 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:4055 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753780Ab1IEU1Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Sep 2011 16:27:16 -0400
+Received: from int-mx02.intmail.prod.int.phx2.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id p85KQgjY002589
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Mon, 5 Sep 2011 16:26:42 -0400
+Received: from [10.11.8.165] (vpn-8-165.rdu.redhat.com [10.11.8.165])
+	by int-mx02.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id p85KQdsN031247;
+	Mon, 5 Sep 2011 16:26:40 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110812 Thunderbird/6.0
+In-Reply-To: <CA+55aFxDjVJwbpP5YT4o=qud=OcxtT3Ry4HfCtW-FvNdj+RFeQ@mail.gmail.com>
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180758>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Em 04-09-2011 20:27, Linus Torvalds escreveu:
 
-> Most other git commands print a synopsis when passed -h. Make
-> send-email do the same.
->
-> Signed-off-by: Clemens Buchacher <drizzd@aon.at>
-> ...
-> +my $help;
-> +my $rc = GetOptions("help|H|h" => \$help,
+> One thing to note: If you just do
+> 
+>    git pull https://github.com/torvalds/linux.git
+> 
+> you probably won't get the tags, since it's not your origin branch. So do
+> 
+>    git fetch --tags<...>
+> 
+> too, so that you get not only the actual changes, but the tag that you
+> can verify too.
+> 
 
-I do not think what the patch aims to do is wrong per-se, but
+It would be great if "git remote update" could also verify the tag
+signature (if present), as most of us just do a "git remote update".
 
- $ git send-email --help
+Maybe an extra parameter for git config remote.tagopt?
 
-already shows the full documentation, and I find it is misleading to say
-"help|H|h" here to pretend as if a long-help is triggered with this
-command. For that matter, do we have any other place that accept -H for
-help?
+Ok, if in doubt, we can always use git tag -v <new tag>, but doing
+it automagically would help us to detect if a git tag got mangled
+by some  at the moment we update our trees, with seems to be
+a good idea.
 
-IOW, shouldn't this line be this instead?
-
-> +my $rc = GetOptions("h" => \$help,
+Thanks,
+Mauro
