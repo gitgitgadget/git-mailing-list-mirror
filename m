@@ -1,135 +1,71 @@
-From: Naohiro Aota <naota@elisp.net>
-Subject: Re: [PATCH] shell portability: Use sed instead of non-portable variable expansion
-Date: Mon, 05 Sep 2011 16:55:41 +0900
-Message-ID: <87fwkbzama.fsf@elisp.net>
-References: <8762l73758.fsf@elisp.net> <4E647442.9000005@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] shell portability: Use sed instead of non-portable
+ variable expansion
+Date: Mon, 05 Sep 2011 01:11:18 -0700
+Message-ID: <7vehzvcst5.fsf@alter.siamese.dyndns.org>
+References: <8762l73758.fsf@elisp.net>
+ <7vbouzxy7g.fsf@alter.siamese.dyndns.org> <4E648031.6050607@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com, tarmigan+git@gmail.com
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Naohiro Aota <naota@elisp.net>,
+	git@vger.kernel.org, tarmigan+git@gmail.com,
+	David Barr <davidbarr@google.com>
 To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Sep 05 09:55:56 2011
+X-From: git-owner@vger.kernel.org Mon Sep 05 10:11:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0U28-0006zU-24
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 09:55:56 +0200
+	id 1R0UH9-000496-Sl
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Sep 2011 10:11:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751278Ab1IEHzw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Sep 2011 03:55:52 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:33289 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750791Ab1IEHzu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Sep 2011 03:55:50 -0400
-Received: by iabu26 with SMTP id u26so6070916iab.19
-        for <git@vger.kernel.org>; Mon, 05 Sep 2011 00:55:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=mzip+31On2smyAbpg8WrR6W6uCNRv4zZqlknJDwr1WI=;
-        b=bMDbNL3wM4RaU5uQ5Cu7ybjp2tIJr/xaabGrohzCaCvD0LtzTuVEQ5jgfQ+7AVVTWH
-         jA+eXcmZv25iniVHttXEuhz6mtaJHRSSdzD/UJW19bQCAAm3HgyPjxU/7tN76bHceFbQ
-         e3dDkkY9lAdyKG7uKW2XcgqGGKWYtx810Fjp8=
-Received: by 10.231.63.11 with SMTP id z11mr7135120ibh.23.1315209350302;
-        Mon, 05 Sep 2011 00:55:50 -0700 (PDT)
-Received: from kaede (e0109-49-132-8-98.uqwimax.jp [49.132.8.98])
-        by mx.google.com with ESMTPS id r2sm12804643ibq.7.2011.09.05.00.55.46
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 05 Sep 2011 00:55:49 -0700 (PDT)
-In-Reply-To: <4E647442.9000005@viscovery.net> (Johannes Sixt's message of
-	"Mon, 05 Sep 2011 09:03:30 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+	id S1751508Ab1IEILX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Sep 2011 04:11:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64199 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751470Ab1IEILV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Sep 2011 04:11:21 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CDCF8155F;
+	Mon,  5 Sep 2011 04:11:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MbHmBJDsLXTbG2HRKlj5L2LZK1I=; b=OoskvN
+	nY9YFyKpCeivHgxn4JRQ0QZNJhTL5XQyOWa4GA3GjDloPT3E27ZhNmJ7Q8DJvOEE
+	nUtUXn2+ERmDs8yGAHgX79YD8bW4bAeNoaUUXuks1v7zq+Ahe3JdTLnARQN8FT1v
+	AUbj6rmgt6W+o9rPeHDxO9Y17SWbFYXfVorEw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ex7LbbU6ifk+QU2ZIBkxdNL39VcXGIyQ
+	GBsfOExzI2DkUj3OJrnDrsv/Nu8FBMo4qb2MlX+PGPTHoNWNaP9JkP4KS6GURhW3
+	K8Jzkm1PW0FHqBqfJsl1cUsaI77TSmn0E2WQvLgGpy0QTNg2+5JqNPDPeWNn0D8L
+	2NioezB8Yt8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C4FDB155E;
+	Mon,  5 Sep 2011 04:11:20 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E514A155D; Mon,  5 Sep 2011
+ 04:11:19 -0400 (EDT)
+In-Reply-To: <4E648031.6050607@viscovery.net> (Johannes Sixt's message of
+ "Mon, 05 Sep 2011 09:54:25 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A2EF8D94-D796-11E0-820A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180725>
-
-Ah, seems I was misundertanding much of things :(
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180726>
 
 Johannes Sixt <j.sixt@viscovery.net> writes:
 
-> What happens if you write these as
+> Am 9/5/2011 9:09, schrieb Junio C Hamano:
+>> By the way, t9010 uses ${#parameter} (strlen) which is bashism we forbid,
+>> and it needs to be rewritten (David CC'ed).
 >
-> 	QUERY_STRING=${1#*\?} \
-> 	PATH_TRANSLATED=$HTTPD_DOCUMENT_ROOT_PATH/${1%%\?*} \
->
-> i.e., drop the double-quotes?
+> Actually, no. It is perfectly valid POSIX. So we would need this patch.
 
-not worked, even increased the number of failure...
-
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Naohiro Aota <naota@elisp.net> writes:
->
->> Variable expansions like "${foo#bar}" or "${foo%bar}" doesn't work on
->> shells like FreeBSD sh and they made the test to fail.
->
-> Sorry, I do appreciate the effort, but a patch like this takes us in the
-> wrong direction.
->
-> While we do not allow blatant bashisms like ${parameter:offset:length}
-> (substring expansion), ${parameter/pattern/string} (pattern substitution),
-> "local" variables, "function" noiseword, and shell arrays in our shell
-> scripts, the two kinds of substitution you quoted above are purely POSIX,
-> and our coding guideline does allow them to be used in the scripts.
->
-> Even though you may be able to rewrite trivial cases easily in some
-> scripts (either tests or Porcelain), some Porcelain scripts we ship
-> (e.g. "git bisect", "git stash", "git pull", etc.) do use these POSIX
-> constructs, and we do not want to butcher them with extra forks and
-> reduced readability.
->
-> Please use $SHELL_PATH and point to a POSIX compliant shell on your
-> platform instead. "make test" should pick it up and pass it down to
-> t/Makefile to be used when it runs these test scripts.
-
-Thanks, I'll try this.
-
-> Besides, even inside t/ directory, there are many other instances of these
-> prefix/postfix substitution, not just 5560. Do the following tests pass on
-> your box without a similar patch?
->
-> $ git grep -n -e '\${[^}]*[#%]' -- t/\*.sh
-> t/t1410-reflog.sh:33:	aa=${1%??????????????????????????????????????} zz=${1#??}
-> t/t1410-reflog.sh:38:	aa=${1%??????????????????????????????????????} zz=${1#??}
-> t/t2030-unresolve-info.sh:125:	rerere_id=${rerere_id%/postimage} &&
-> t/t2030-unresolve-info.sh:151:	rerere_id=${rerere_id%/postimage} &&
-> t/t5560-http-backend-noserver.sh:12:	QUERY_STRING="${1#*\?}" \
-> t/t5560-http-backend-noserver.sh:13:	PATH_TRANSLATED="$HTTPD_DOCUMENT_ROOT_PATH/${1%%\?*}" \
-> t/t6050-replace.sh:124:     aa=${HASH2%??????????????????????????????????????} &&
-> t/t9010-svn-fe.sh:17:		printf "%s\n" "K ${#property}" &&
-> t/t9010-svn-fe.sh:19:		printf "%s\n" "V ${#value}" &&
-> t/t9010-svn-fe.sh:30:	printf "%s\n" "Text-content-length: ${#text}" &&
-> t/t9010-svn-fe.sh:31:	printf "%s\n" "Content-length: $((${#text} + 10))" &&
-> t/test-lib.sh:838:		test_results_path="$test_results_dir/${0%.sh}-$$.counts"
-> t/test-lib.sh:1047:this_test=${0##*/}
-> t/test-lib.sh:1048:this_test=${this_test%%-*}
-> t/valgrind/analyze.sh:98:				test $output = ${output%.message} &&
-
-I've tried t[0-9]{4}-*.sh and all of them passed. (t9010 had some known
-breakages) yeah, my patch was taking wrong way.
-
-> Looking at the above output, I suspect that it _might_ be that your shell
-> is almost POSIX but does not handle the backslash-quoted question mark
-> correctly or something silly like that, in which case a stupid patch like
-> the attached might be an acceptable compromise, until the shell is fixed.
->
-> diff --git a/t/t5560-http-backend-noserver.sh b/t/t5560-http-backend-noserver.sh
-> index 0ad7ce0..c8bbacc 100755
-> --- a/t/t5560-http-backend-noserver.sh
-> +++ b/t/t5560-http-backend-noserver.sh
-> @@ -9,8 +9,8 @@ test_have_prereq MINGW && export GREP_OPTIONS=-U
->  
->  run_backend() {
->  	echo "$2" |
-> -	QUERY_STRING="${1#*\?}" \
-> -	PATH_TRANSLATED="$HTTPD_DOCUMENT_ROOT_PATH/${1%%\?*}" \
-> +	QUERY_STRING="${1#*[?]}" \
-> +	PATH_TRANSLATED="$HTTPD_DOCUMENT_ROOT_PATH/${1%%[?]*}" \
->  	git http-backend >act.out 2>act.err
->  }
-
-This worked on my box. hm, then the problem should be in /bin/sh
+I know it is in POSIX, but not in the subset we allowed so far. I do not
+recall the details offhand, but we must have seen some shell that lacked
+it or something.
