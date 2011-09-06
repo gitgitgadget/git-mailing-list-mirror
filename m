@@ -1,146 +1,85 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH] send-email: add option -h
-Date: Tue, 6 Sep 2011 08:32:36 +0200
-Message-ID: <20110906063236.GA4923@ecki>
-References: <20110903170612.GA3536@ecki>
- <7vk49mbvlk.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Linux 3.1-rc5
+Date: Tue, 06 Sep 2011 09:23:39 +0200
+Message-ID: <4E65CA7B.5050803@drmicha.warpmail.net>
+References: <CA+55aFxDjVJwbpP5YT4o=qud=OcxtT3Ry4HfCtW-FvNdj+RFeQ@mail.gmail.com> <4E65307F.5020103@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 06 08:35:19 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	git@vger.kernel.org
+To: Mauro Carvalho Chehab <mchehab@redhat.com>
+X-From: linux-kernel-owner@vger.kernel.org Tue Sep 06 09:24:10 2011
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0pFe-0003vi-MK
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 08:35:19 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1R0q0u-0006kb-2F
+	for glk-linux-kernel-3@lo.gmane.org; Tue, 06 Sep 2011 09:24:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752936Ab1IFGfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Sep 2011 02:35:05 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:46453 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752869Ab1IFGfE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2011 02:35:04 -0400
-Received: from localhost (p5B22CD62.dip.t-dialin.net [91.34.205.98])
-	by bsmtp.bon.at (Postfix) with ESMTP id EAC72130062;
-	Tue,  6 Sep 2011 08:34:56 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vk49mbvlk.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: git-owner@vger.kernel.org
+	id S1753258Ab1IFHXr (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 6 Sep 2011 03:23:47 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:56302 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752936Ab1IFHXl (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 6 Sep 2011 03:23:41 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 2EC1E23B18;
+	Tue,  6 Sep 2011 03:23:41 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute3.internal (MEProxy); Tue, 06 Sep 2011 03:23:41 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=5Zn930oZNBfJwT9ohP+2Wd
+	aNhZo=; b=aIwtT8tGlCXehLQOaJeS6s60uNKhOR+VCiJEJNRdGDTGv4Mm7FjRQC
+	+CRTr3L8f9jylCmMrJhUDjevQBkwCJSUbtIlul/4ntpC8aZ782RCUfvNoaEh/w2l
+	FlmXVHwxtwjz4tYMS8xU57xBRiJgzWkYqoF6Cfkr5uO0vTJ2bOr/g=
+X-Sasl-enc: ZS6KzkKj/lW02Ap48BA1dk3dtV0YtrslZ9C7k5GqRb4l 1315293820
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 5D9598206CA;
+	Tue,  6 Sep 2011 03:23:40 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
+In-Reply-To: <4E65307F.5020103@redhat.com>
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180772>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180773>
 
-On Mon, Sep 05, 2011 at 01:08:39PM -0700, Junio C Hamano wrote:
-> Clemens Buchacher <drizzd@aon.at> writes:
+Mauro Carvalho Chehab venit, vidit, dixit 05.09.2011 22:26:
+> Em 04-09-2011 20:27, Linus Torvalds escreveu:
 > 
-> > Most other git commands print a synopsis when passed -h. Make
-> > send-email do the same.
-> >
-> > Signed-off-by: Clemens Buchacher <drizzd@aon.at>
-> > ...
-> > +my $help;
-> > +my $rc = GetOptions("help|H|h" => \$help,
+>> One thing to note: If you just do
+>>
+>>    git pull https://github.com/torvalds/linux.git
+>>
+>> you probably won't get the tags, since it's not your origin branch. So do
+>>
+>>    git fetch --tags<...>
+>>
+>> too, so that you get not only the actual changes, but the tag that you
+>> can verify too.
+>>
 > 
-> I do not think what the patch aims to do is wrong per-se, but
+> It would be great if "git remote update" could also verify the tag
+> signature (if present), as most of us just do a "git remote update".
+
+...when you should "git fetch --all" ;)
+
+> Maybe an extra parameter for git config remote.tagopt?
 > 
->  $ git send-email --help
-> 
-> already shows the full documentation, and I find it is misleading to say
-> "help|H|h" here to pretend as if a long-help is triggered with this
-> command. For that matter, do we have any other place that accept -H for
-> help?
-> 
-> IOW, shouldn't this line be this instead?
-> 
-> > +my $rc = GetOptions("h" => \$help,
+> Ok, if in doubt, we can always use git tag -v <new tag>, but doing
+> it automagically would help us to detect if a git tag got mangled
+> by some  at the moment we update our trees, with seems to be
+> a good idea.
 
-Sure. I was just copy-pasting from git-svn.perl. And in fact I
-_was_ confused by the fact that it also seemed to allow --help, but
-in fact did not handle that case any different.
+The update hook (if you want to reject falsified tags) or post-update
+hook (if you want to be warned) is the perfect place for this. It would
+be worth amending the standard update hook, me thinks, after removing
+its insisting on a project description, and maybe switching the defaults.
 
-Just found a few more places, so how about this on top?
-
--->8--
-From: Clemens Buchacher <drizzd@aon.at>
-Date: Tue, 6 Sep 2011 08:27:13 +0200
-Subject: [PATCH] use -h for synopsis and --help for manpage consistently
-
-The "git cmd --help" syntax is translated into "git help cmd" by
-git.c. Do not pretend to handle such cases in any individual
-commands.
-
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
- git-cvsserver.perl  |    4 ++--
- git-pull.sh         |    2 +-
- git-send-email.perl |    2 +-
- git-svn.perl        |    2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index 1b8bff2..6c5185e 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -109,14 +109,14 @@ my $usage =
-     "    --strict-paths      : Don't allow recursing into subdirectories\n".
-     "    --export-all        : Don't check for gitcvs.enabled in config\n".
-     "    --version, -V       : Print version information and exit\n".
--    "    --help, -h, -H      : Print usage information and exit\n".
-+    "    -h                  : Print usage information and exit\n".
-     "\n".
-     "<directory> ... is a list of allowed directories. If no directories\n".
-     "are given, all are allowed. This is an additional restriction, gitcvs\n".
-     "access still needs to be enabled by the gitcvs.enabled config option.\n".
-     "Alternately, one directory may be specified in GIT_CVSSERVER_ROOT.\n";
- 
--my @opts = ( 'help|h|H', 'version|V',
-+my @opts = ( 'h', 'version|V',
- 	     'base-path=s', 'strict-paths', 'export-all' );
- GetOptions( $state, @opts )
-     or die $usage;
-diff --git a/git-pull.sh b/git-pull.sh
-index 63da37b..f08372a 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -120,7 +120,7 @@ do
- 	--d|--dr|--dry|--dry-|--dry-r|--dry-ru|--dry-run)
- 		dry_run=--dry-run
- 		;;
--	-h|--h|--he|--hel|--help|--help-|--help-a|--help-al|--help-all)
-+	-h)
- 		usage
- 		;;
- 	*)
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 4ac6931..734356a 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -276,7 +276,7 @@ $SIG{INT}  = \&signal_handler;
- # needing, first, from the command line:
- 
- my $help;
--my $rc = GetOptions("help|H|h" => \$help,
-+my $rc = GetOptions("h" => \$help,
- 		    "sender|from=s" => \$sender,
-                     "in-reply-to=s" => \$initial_reply_to,
- 		    "subject=s" => \$initial_subject,
-diff --git a/git-svn.perl b/git-svn.perl
-index 89f83fd..a019f55 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -294,7 +294,7 @@ read_git_config(\%opts);
- if ($cmd && ($cmd eq 'log' || $cmd eq 'blame')) {
- 	Getopt::Long::Configure('pass_through');
- }
--my $rv = GetOptions(%opts, 'help|H|h' => \$_help, 'version|V' => \$_version,
-+my $rv = GetOptions(%opts, 'h' => \$_help, 'version|V' => \$_version,
-                     'minimize-connections' => \$Git::SVN::Migration::_minimize,
-                     'id|i=s' => \$Git::SVN::default_ref_id,
-                     'svn-remote|remote|R=s' => sub {
--- 
-1.7.6.1
+Michael
