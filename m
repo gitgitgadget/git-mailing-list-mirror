@@ -1,99 +1,69 @@
-From: Wang Hui <Hui.Wang@windriver.com>
-Subject: [PATCH v2 4/5] sha1_file: remove relative entries limitation
-Date: Tue, 6 Sep 2011 18:24:04 +0800
-Message-ID: <1315304645-12009-5-git-send-email-Hui.Wang@windriver.com>
-References: <1315304645-12009-1-git-send-email-Hui.Wang@windriver.com>
- <1315304645-12009-2-git-send-email-Hui.Wang@windriver.com>
- <1315304645-12009-3-git-send-email-Hui.Wang@windriver.com>
- <1315304645-12009-4-git-send-email-Hui.Wang@windriver.com>
+From: Nix <nix@esperi.org.uk>
+Subject: Re: [PATCH 2/2] Support sizes >=2G in various config options accepting 'g' sizes.
+Date: Tue, 06 Sep 2011 11:25:32 +0100
+Message-ID: <87liu2j7c3.fsf@spindle.srvr.nix>
+References: <1315223155-4218-1-git-send-email-nix@esperi.org.uk>
+	<1315223155-4218-2-git-send-email-nix@esperi.org.uk>
+	<CAGdFq_gFNHq9Cgv4F4Q6VQ=G7odfUJ5pUFWn=OYE-BfXzP=Enw@mail.gmail.com>
+	<87ty8rm6th.fsf@spindle.srvr.nix> <20110906074421.GB28490@ecki>
+	<87ty8qjaof.fsf@spindle.srvr.nix> <4E65F451.4070900@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-To: <gitster@pobox.com>, <git@vger.kernel.org>, <tali@admingilde.org>
-X-From: git-owner@vger.kernel.org Tue Sep 06 12:24:23 2011
+Cc: Clemens Buchacher <drizzd@aon.at>,
+	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Sep 06 12:25:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0spL-00044q-1K
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 12:24:23 +0200
+	id 1R0sqm-0004xO-QM
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 12:25:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754146Ab1IFKYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Sep 2011 06:24:18 -0400
-Received: from mail.windriver.com ([147.11.1.11]:61511 "EHLO
-	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754141Ab1IFKYP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2011 06:24:15 -0400
-Received: from ALA-HCA.corp.ad.wrs.com (ala-hca [147.11.189.40])
-	by mail.windriver.com (8.14.3/8.14.3) with ESMTP id p86ANuCq005036
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
-	Tue, 6 Sep 2011 03:23:56 -0700 (PDT)
-Received: from localhost.localdomain (128.224.163.220) by
- ALA-HCA.corp.ad.wrs.com (147.11.189.50) with Microsoft SMTP Server id
- 14.1.255.0; Tue, 6 Sep 2011 03:23:56 -0700
-X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <1315304645-12009-4-git-send-email-Hui.Wang@windriver.com>
+	id S1754118Ab1IFKZs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Sep 2011 06:25:48 -0400
+Received: from icebox.esperi.org.uk ([81.187.191.129]:51506 "EHLO
+	mail.esperi.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753761Ab1IFKZr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2011 06:25:47 -0400
+Received: from esperi.org.uk (nix@spindle.srvr.nix [192.168.14.15])
+	by mail.esperi.org.uk (8.14.4/8.14.3) with ESMTP id p86APWZL012041;
+	Tue, 6 Sep 2011 11:25:32 +0100
+Received: (from nix@localhost)
+	by esperi.org.uk (8.14.4/8.12.11/Submit) id p86APWM8013498;
+	Tue, 6 Sep 2011 11:25:32 +0100
+Emacs: indefensible, reprehensible, and fully extensible.
+In-Reply-To: <4E65F451.4070900@viscovery.net> (Johannes Sixt's message of
+	"Tue, 06 Sep 2011 12:22:09 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-DCC-URT-Metrics: spindle 1060; Body=4 Fuz1=4 Fuz2=4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180792>
 
-From: Hui Wang <Hui.Wang@windriver.com>
+On 6 Sep 2011, Johannes Sixt verbalised:
 
-link_alt_odb_entries() will be called recursively if alternates has
-valid object store paths, to avoid nesting too deep, the recursive
-depth is limited to 5, this limitation is reasonable and safe for
-dead-loop reference situation.
+> Why so? strtol() can report overflow:
 
-There is another limitation in this function to only permit the 1st
-level alternates has relative paths, the purpose of this limitation
-is to avoid inaccurate result when using memcmp() directly to compare
-two directory path names, e.g. "./a/b/" and "./a/c/e/../../b" should
-be the same dir, but memcmp() will report they are different dirs,
-this will introduce the same dir be added twice or dead-loop
-reference.
+... it can?!
 
-Now we have new method to compare two directories and can handle both
-absolute path and relative path comparison, in addition to we already
-have max depth 5 limitation, we can safely remove this limitation.
+>     ...
+>     If the correct value is outside the range of representable values,
+> {LONG_MIN}, {LONG_MAX}, {LLONG_MIN}, or {LLONG_MAX} shall be returned
+> (according to the sign of the value), and errno set to [ERANGE].
 
-Moreover removing this limitation will make below two usage workable.
+I've been using it for longer than I care to imagine and I've never once
+noticed that.
 
-usage1: base-repos has relative path in the alternates
-        %>git clone --reference base-repos src dest
-usage2: src2 has relative path to point src1, src1 has relative path
-	to point src
-        %>git clone src2 dest
+OK, I'll add range checking support then! following which we can detect
+config value overflow on the most pathetic platform imaginable, except
+that such a platform would probably not bother to set ERANGE properly ;}
 
-Signed-off-by: Hui Wang <Hui.Wang@windriver.com>
----
- sha1_file.c |   13 ++++---------
- 1 files changed, 4 insertions(+), 9 deletions(-)
+Fixed patch following later today ripping out the STRTOMAX renaming and
+adding proper range checking.
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 18f7fb3..98fdb0a 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -329,15 +329,10 @@ static void link_alt_odb_entries(const char *alt, const char *ep, int sep,
- 		}
- 		while (cp < ep && *cp != sep)
- 			cp++;
--		if (last != cp) {
--			if (!is_absolute_path(last) && depth) {
--				error("%s: ignoring relative alternate object store %s",
--						relative_base, last);
--			} else {
--				link_alt_odb_entry(last, cp - last,
--						relative_base, depth);
--			}
--		}
-+		if (last != cp)
-+			link_alt_odb_entry(last, cp - last,
-+					relative_base, depth);
-+
- 		while (cp < ep && *cp == sep)
- 			cp++;
- 		last = cp;
 -- 
-1.6.3.1
+NULL && (void)
