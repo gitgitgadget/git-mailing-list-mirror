@@ -1,71 +1,59 @@
-From: Nix <nix@esperi.org.uk>
-Subject: Re: [PATCH 1/2] Add strtoimax() compatibility function.
-Date: Tue, 06 Sep 2011 10:14:16 +0100
-Message-ID: <87pqjejamv.fsf@spindle.srvr.nix>
-References: <1315223155-4218-1-git-send-email-nix@esperi.org.uk>
-	<7v62l6b3bt.fsf@alter.siamese.dyndns.org>
+From: Hannu Koivisto <azure@iki.fi>
+Subject: Re: "Your local changes ... would be overwritten" bug
+Date: Tue, 06 Sep 2011 12:46:01 +0300
+Organization: NOYB
+Message-ID: <831uvu3sx2.fsf@kalahari.s2.org>
+References: <8362l73qi6.fsf@kalahari.s2.org> <20110906073436.GA28490@ecki>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 06 11:14:34 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 06 11:46:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0rjk-0000PK-Bb
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 11:14:32 +0200
+	id 1R0sEa-0008UQ-Vd
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 11:46:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753441Ab1IFJOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Sep 2011 05:14:23 -0400
-Received: from icebox.esperi.org.uk ([81.187.191.129]:51358 "EHLO
-	mail.esperi.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753709Ab1IFJOV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2011 05:14:21 -0400
-Received: from esperi.org.uk (nix@spindle.srvr.nix [192.168.14.15])
-	by mail.esperi.org.uk (8.14.4/8.14.3) with ESMTP id p869EHkJ011654;
-	Tue, 6 Sep 2011 10:14:17 +0100
-Received: (from nix@localhost)
-	by esperi.org.uk (8.14.4/8.12.11/Submit) id p869EGR2012578;
-	Tue, 6 Sep 2011 10:14:16 +0100
-Emacs: resistance is futile; you will be assimilated and byte-compiled.
-In-Reply-To: <7v62l6b3bt.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 05 Sep 2011 23:19:18 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-DCC-URT-Metrics: spindle 1060; Body=2 Fuz1=2 Fuz2=2
+	id S1754028Ab1IFJqV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Sep 2011 05:46:21 -0400
+Received: from lo.gmane.org ([80.91.229.12]:40476 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753322Ab1IFJqT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2011 05:46:19 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1R0sEU-0008Rb-Hy
+	for git@vger.kernel.org; Tue, 06 Sep 2011 11:46:18 +0200
+Received: from s2.org ([80.83.7.53])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Sep 2011 11:46:18 +0200
+Received: from azure by s2.org with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Sep 2011 11:46:18 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: s2.org
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.3 (gnu/linux)
+Cancel-Lock: sha1:Mn/ASWTWlIbV7aSwMuXePfPaPkU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180782>
 
-On 6 Sep 2011, Junio C. Hamano spake thusly:
+Clemens Buchacher <drizzd@aon.at> writes:
 
-> Nix <nix@esperi.org.uk> writes:
->
->> Since systems that omit strtoumax() will likely omit strtomax() too,
->> and likewise for strtoull() and strtoll(), we also adjust the
->> compatibility #defines from NO_STRTOUMAX to NO_STRTOMAX and from
->> NO_STRTOULL to NO_STRTOLL, and have them cover both the signed and
->> unsigned functions.
->
-> What would happen to people who know their systems lack strtoumax and have
-> happily using NO_STRTOUMAX in their config.mak already? Do their build
-> suddenly start breaking after this patch is applied and they all have to
-> adjust to the new name?
+> Could you set a breakpoint in add_rejected_path and send us the
+> backtrace? Like this:
 
-Uh. Yeah. Oops.
-
-> Even though "no strtoumax() likely means no strtoimax()" may be a good
-> heuristics, I am not sure what we would gain by renaming these Makefile
-> variables. Can't you get the same effect by making existing NO_STRTOUMAX
-> imply not having strtoimax(), and if you did so, wouldn't it be much less
-> likely that you would break existing people's build?
-
-Yes, but I thought that might be too confusing (and having four
-variables for this one case seemed ridiculous). I'm happy to rename it
-back.
+Since the binary from the package doesn't come with debug
+information, I built the latest git master (1.7.7.rc0.72.g4b5ea)
+and it turns out the problem cannot be reproduced with this version
+anymore.  I guess I should have tried that right away.  Sorry for
+the noise.
 
 -- 
-NULL && (void)
+Hannu
