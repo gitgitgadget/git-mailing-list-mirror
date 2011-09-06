@@ -1,88 +1,71 @@
 From: Nix <nix@esperi.org.uk>
-Subject: Re: [PATCH 2/2] Support sizes >=2G in various config options accepting 'g' sizes.
-Date: Tue, 06 Sep 2011 10:13:20 +0100
-Message-ID: <87ty8qjaof.fsf@spindle.srvr.nix>
+Subject: Re: [PATCH 1/2] Add strtoimax() compatibility function.
+Date: Tue, 06 Sep 2011 10:14:16 +0100
+Message-ID: <87pqjejamv.fsf@spindle.srvr.nix>
 References: <1315223155-4218-1-git-send-email-nix@esperi.org.uk>
-	<1315223155-4218-2-git-send-email-nix@esperi.org.uk>
-	<CAGdFq_gFNHq9Cgv4F4Q6VQ=G7odfUJ5pUFWn=OYE-BfXzP=Enw@mail.gmail.com>
-	<87ty8rm6th.fsf@spindle.srvr.nix> <20110906074421.GB28490@ecki>
+	<7v62l6b3bt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue Sep 06 11:13:45 2011
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 06 11:14:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0ris-0008RA-QA
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 11:13:39 +0200
+	id 1R0rjk-0000PK-Bb
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 11:14:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753791Ab1IFJNb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Sep 2011 05:13:31 -0400
-Received: from icebox.esperi.org.uk ([81.187.191.129]:51352 "EHLO
+	id S1753441Ab1IFJOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Sep 2011 05:14:23 -0400
+Received: from icebox.esperi.org.uk ([81.187.191.129]:51358 "EHLO
 	mail.esperi.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753709Ab1IFJN3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2011 05:13:29 -0400
+	with ESMTP id S1753709Ab1IFJOV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2011 05:14:21 -0400
 Received: from esperi.org.uk (nix@spindle.srvr.nix [192.168.14.15])
-	by mail.esperi.org.uk (8.14.4/8.14.3) with ESMTP id p869DKO1011646;
-	Tue, 6 Sep 2011 10:13:20 +0100
+	by mail.esperi.org.uk (8.14.4/8.14.3) with ESMTP id p869EHkJ011654;
+	Tue, 6 Sep 2011 10:14:17 +0100
 Received: (from nix@localhost)
-	by esperi.org.uk (8.14.4/8.12.11/Submit) id p869DKMj012570;
-	Tue, 6 Sep 2011 10:13:20 +0100
-Emacs: the road to Hell is paved with extensibility.
-In-Reply-To: <20110906074421.GB28490@ecki> (Clemens Buchacher's message of
-	"Tue, 6 Sep 2011 09:44:21 +0200")
+	by esperi.org.uk (8.14.4/8.12.11/Submit) id p869EGR2012578;
+	Tue, 6 Sep 2011 10:14:16 +0100
+Emacs: resistance is futile; you will be assimilated and byte-compiled.
+In-Reply-To: <7v62l6b3bt.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 05 Sep 2011 23:19:18 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-DCC-URT-Metrics: spindle 1060; Body=3 Fuz1=3 Fuz2=3
+X-DCC-URT-Metrics: spindle 1060; Body=2 Fuz1=2 Fuz2=2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180781>
 
-On 6 Sep 2011, Clemens Buchacher uttered the following:
+On 6 Sep 2011, Junio C. Hamano spake thusly:
 
-> On Mon, Sep 05, 2011 at 02:56:10PM +0100, Nix wrote:
->> 
->> Well, we're parsing longs, not ints. If sizeof(long)>sizeof(int), or we
->> have long long and sizeof(long long)>sizeof(int), then we can always
->> detect overflows when saving into the appropriate type: but if we don't
->> have long long, or if we have neither strto(u)ll() nor strto[ui]max(),
->> we could only detect overflow by looking at the raw text string and
->> checking it by hand to see if it would fit. I judged this pointless
->> extra complexity for a very rare edge case (machines with neither
->> strot(u)ll() nor strto[ui]max() are generally quite old and people
->> aren't going to be specifying sizes in gigabytes on such machines
->> anyway.)
+> Nix <nix@esperi.org.uk> writes:
 >
-> Is this also true for Windows and other platforms?
+>> Since systems that omit strtoumax() will likely omit strtomax() too,
+>> and likewise for strtoull() and strtoll(), we also adjust the
+>> compatibility #defines from NO_STRTOUMAX to NO_STRTOMAX and from
+>> NO_STRTOULL to NO_STRTOLL, and have them cover both the signed and
+>> unsigned functions.
+>
+> What would happen to people who know their systems lack strtoumax and have
+> happily using NO_STRTOUMAX in their config.mak already? Do their build
+> suddenly start breaking after this patch is applied and they all have to
+> adjust to the new name?
 
-There, uintmax_t is 'long long' and is longer than 'long', let alone
-'int', so this holds there too, or should.
+Uh. Yeah. Oops.
 
-> And I don't think it's about whether or not people are likely to
-> specify sizes in gigabytes on old machines. People are bound to
-> blindly copy configuration files from one machine to another. In
-> any case, my expectation would be for the configuration options to
-> do what I tell them, or error out if they do not make sense.
+> Even though "no strtoumax() likely means no strtoimax()" may be a good
+> heuristics, I am not sure what we would gain by renaming these Makefile
+> variables. Can't you get the same effect by making existing NO_STRTOUMAX
+> imply not having strtoimax(), and if you did so, wouldn't it be much less
+> likely that you would break existing people's build?
 
-Yeah, and we do that whenever practically possible: but fixing
-this for the case that int/long is the largest available type
-(which among other things implies that we're not using GCC or
-any other C99 compiler or any of the myriad C89 compilers that
-implmented 'long long') amounts to writing our own strtol()
-specifically for this one case, to see if the parsed number is
-too long. And that is probably a maintenance burden too far.
-
-The failure mode if you put a huge number in on such a platform is
-better than it used to be, too, especially for core.bigfilethreshold. We
-used to get a negative number that was latched to zero, which then
-disabled compression entirely (I had an 83Mb pack turn itself into an
-837Mb one when that happened). Now we get a number that, while positive,
-is less positive than we expect, but still likely up in the hundreds of
-millions.
+Yes, but I thought that might be too confusing (and having four
+variables for this one case seemed ridiculous). I'm happy to rename it
+back.
 
 -- 
 NULL && (void)
