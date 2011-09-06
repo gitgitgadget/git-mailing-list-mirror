@@ -1,74 +1,146 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Add strtoimax() compatibility function.
-Date: Mon, 05 Sep 2011 23:19:18 -0700
-Message-ID: <7v62l6b3bt.fsf@alter.siamese.dyndns.org>
-References: <1315223155-4218-1-git-send-email-nix@esperi.org.uk>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] send-email: add option -h
+Date: Tue, 6 Sep 2011 08:32:36 +0200
+Message-ID: <20110906063236.GA4923@ecki>
+References: <20110903170612.GA3536@ecki>
+ <7vk49mbvlk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Nix <nix@esperi.org.uk>
-X-From: git-owner@vger.kernel.org Tue Sep 06 08:19:36 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 06 08:35:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0p0Q-0006ba-Q4
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 08:19:35 +0200
+	id 1R0pFe-0003vi-MK
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 08:35:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752546Ab1IFGTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Sep 2011 02:19:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35067 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752200Ab1IFGTV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2011 02:19:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CA7A2CFE;
-	Tue,  6 Sep 2011 02:19:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6Hfglk8JRoXeidUVGesSVxqFbvM=; b=wDLRSt
-	AmMFkeMGQbz+vcjJqDoyYRZUbZHdzE6yrvSy++L3te5smB2PSS+RbjuuNUA186wh
-	FnwNASn99EMSKYJxxVBEPdoyDVYMdA++t1xWt+06jWcgMkJjtJQD0uE4TD4fW+eo
-	PJ/rrt6WBGs/gjIqsIxBzfozN4Jn6vmkYUpno=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VEp/M0ULBQyKRBuV5yA8nVgUiVRez68y
-	7JyuRBHSVp1dkGNCLu3YB8Ld/CrHaQJoS44/xUkLqDFdy7ubALVfKPUZ2ITmBOdx
-	q8D8uvtysOpTIRRXDc6jj7Zdf9BeZnElsucLPA7qaJeADLwG6hHQfWzPowuKjc4M
-	wR67y9rrEoM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 74D582CFD;
-	Tue,  6 Sep 2011 02:19:20 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 09C132CFC; Tue,  6 Sep 2011
- 02:19:19 -0400 (EDT)
-In-Reply-To: <1315223155-4218-1-git-send-email-nix@esperi.org.uk>
- (nix@esperi.org.uk's message of "Mon, 5 Sep 2011 12:45:54 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 27F59F42-D850-11E0-9C52-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752936Ab1IFGfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Sep 2011 02:35:05 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:46453 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752869Ab1IFGfE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2011 02:35:04 -0400
+Received: from localhost (p5B22CD62.dip.t-dialin.net [91.34.205.98])
+	by bsmtp.bon.at (Postfix) with ESMTP id EAC72130062;
+	Tue,  6 Sep 2011 08:34:56 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vk49mbvlk.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180772>
 
-Nix <nix@esperi.org.uk> writes:
+On Mon, Sep 05, 2011 at 01:08:39PM -0700, Junio C Hamano wrote:
+> Clemens Buchacher <drizzd@aon.at> writes:
+> 
+> > Most other git commands print a synopsis when passed -h. Make
+> > send-email do the same.
+> >
+> > Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+> > ...
+> > +my $help;
+> > +my $rc = GetOptions("help|H|h" => \$help,
+> 
+> I do not think what the patch aims to do is wrong per-se, but
+> 
+>  $ git send-email --help
+> 
+> already shows the full documentation, and I find it is misleading to say
+> "help|H|h" here to pretend as if a long-help is triggered with this
+> command. For that matter, do we have any other place that accept -H for
+> help?
+> 
+> IOW, shouldn't this line be this instead?
+> 
+> > +my $rc = GetOptions("h" => \$help,
 
-> Since systems that omit strtoumax() will likely omit strtomax() too,
-> and likewise for strtoull() and strtoll(), we also adjust the
-> compatibility #defines from NO_STRTOUMAX to NO_STRTOMAX and from
-> NO_STRTOULL to NO_STRTOLL, and have them cover both the signed and
-> unsigned functions.
+Sure. I was just copy-pasting from git-svn.perl. And in fact I
+_was_ confused by the fact that it also seemed to allow --help, but
+in fact did not handle that case any different.
 
-What would happen to people who know their systems lack strtoumax and have
-happily using NO_STRTOUMAX in their config.mak already? Do their build
-suddenly start breaking after this patch is applied and they all have to
-adjust to the new name?
+Just found a few more places, so how about this on top?
 
-Even though "no strtoumax() likely means no strtoimax()" may be a good
-heuristics, I am not sure what we would gain by renaming these Makefile
-variables. Can't you get the same effect by making existing NO_STRTOUMAX
-imply not having strtoimax(), and if you did so, wouldn't it be much less
-likely that you would break existing people's build?
+-->8--
+From: Clemens Buchacher <drizzd@aon.at>
+Date: Tue, 6 Sep 2011 08:27:13 +0200
+Subject: [PATCH] use -h for synopsis and --help for manpage consistently
+
+The "git cmd --help" syntax is translated into "git help cmd" by
+git.c. Do not pretend to handle such cases in any individual
+commands.
+
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+---
+ git-cvsserver.perl  |    4 ++--
+ git-pull.sh         |    2 +-
+ git-send-email.perl |    2 +-
+ git-svn.perl        |    2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 1b8bff2..6c5185e 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -109,14 +109,14 @@ my $usage =
+     "    --strict-paths      : Don't allow recursing into subdirectories\n".
+     "    --export-all        : Don't check for gitcvs.enabled in config\n".
+     "    --version, -V       : Print version information and exit\n".
+-    "    --help, -h, -H      : Print usage information and exit\n".
++    "    -h                  : Print usage information and exit\n".
+     "\n".
+     "<directory> ... is a list of allowed directories. If no directories\n".
+     "are given, all are allowed. This is an additional restriction, gitcvs\n".
+     "access still needs to be enabled by the gitcvs.enabled config option.\n".
+     "Alternately, one directory may be specified in GIT_CVSSERVER_ROOT.\n";
+ 
+-my @opts = ( 'help|h|H', 'version|V',
++my @opts = ( 'h', 'version|V',
+ 	     'base-path=s', 'strict-paths', 'export-all' );
+ GetOptions( $state, @opts )
+     or die $usage;
+diff --git a/git-pull.sh b/git-pull.sh
+index 63da37b..f08372a 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -120,7 +120,7 @@ do
+ 	--d|--dr|--dry|--dry-|--dry-r|--dry-ru|--dry-run)
+ 		dry_run=--dry-run
+ 		;;
+-	-h|--h|--he|--hel|--help|--help-|--help-a|--help-al|--help-all)
++	-h)
+ 		usage
+ 		;;
+ 	*)
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 4ac6931..734356a 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -276,7 +276,7 @@ $SIG{INT}  = \&signal_handler;
+ # needing, first, from the command line:
+ 
+ my $help;
+-my $rc = GetOptions("help|H|h" => \$help,
++my $rc = GetOptions("h" => \$help,
+ 		    "sender|from=s" => \$sender,
+                     "in-reply-to=s" => \$initial_reply_to,
+ 		    "subject=s" => \$initial_subject,
+diff --git a/git-svn.perl b/git-svn.perl
+index 89f83fd..a019f55 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -294,7 +294,7 @@ read_git_config(\%opts);
+ if ($cmd && ($cmd eq 'log' || $cmd eq 'blame')) {
+ 	Getopt::Long::Configure('pass_through');
+ }
+-my $rv = GetOptions(%opts, 'help|H|h' => \$_help, 'version|V' => \$_version,
++my $rv = GetOptions(%opts, 'h' => \$_help, 'version|V' => \$_version,
+                     'minimize-connections' => \$Git::SVN::Migration::_minimize,
+                     'id|i=s' => \$Git::SVN::default_ref_id,
+                     'svn-remote|remote|R=s' => sub {
+-- 
+1.7.6.1
