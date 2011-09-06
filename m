@@ -1,110 +1,97 @@
-From: Haitao Li <lihaitao@gmail.com>
-Subject: [PATCH] date.c: Parse timezone with colon as separator
-Date: Tue,  6 Sep 2011 22:56:36 +0800
-Message-ID: <1315320996-1997-1-git-send-email-lihaitao@gmail.com>
-Cc: Haitao Li <lihaitao@gmail.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Sep 06 17:00:04 2011
+From: mfwitten@gmail.com
+Subject: Re: Question about right-only
+Date: Tue, 06 Sep 2011 15:24:39 -0000
+Message-ID: <ec1404d75fd6461fa731f31625126884-mfwitten@gmail.com>
+References: <4E6607B2.2090000@intland.com>
+Cc: git@vger.kernel.org
+To: =?ISO-8859-2?Q?Tajti_=C1kos?= <akos.tajti@intland.com>
+X-From: git-owner@vger.kernel.org Tue Sep 06 17:32:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0x86-0007wH-KH
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 17:00:03 +0200
+	id 1R0xdi-0000p1-Gq
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 17:32:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754198Ab1IFO76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Sep 2011 10:59:58 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:64313 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754280Ab1IFO74 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2011 10:59:56 -0400
-Received: by pzk37 with SMTP id 37so10395582pzk.1
-        for <git@vger.kernel.org>; Tue, 06 Sep 2011 07:59:56 -0700 (PDT)
+	id S1755057Ab1IFPch (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Sep 2011 11:32:37 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:43159 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755019Ab1IFPcf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2011 11:32:35 -0400
+Received: by wwf5 with SMTP id 5so6357662wwf.1
+        for <git@vger.kernel.org>; Tue, 06 Sep 2011 08:32:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=B9QhAi5E4vuRA/1zoNyO11ucfmJCv+IcCVkr0grLbhc=;
-        b=Lk6PoM1RCleAlIRlssi4u22vQ8BtGLuzhmdw4UMfWAnEHgvXsCwIR91tDYONAJtx1l
-         aIA/haxapJX+dHMfXJIK04t52wbtT5PzgH4d5aqvkn247p2C/GTp/62XK5iJ3zJo5FbA
-         grbJfOAi/SpjvjoT/BjntQ75Wbv/F+S5WMY7g=
-Received: by 10.68.6.36 with SMTP id x4mr9881593pbx.219.1315321196406;
-        Tue, 06 Sep 2011 07:59:56 -0700 (PDT)
-Received: from localhost.localdomain ([114.62.57.190])
-        by mx.google.com with ESMTPS id jl4sm736481pbc.10.2011.09.06.07.59.46
+        h=from:subject:date:to:cc:message-id:in-reply-to:references;
+        bh=b5kXLteFcb98VREkONUtnFP+J33gLYHruxURlFcY/S0=;
+        b=HeFlG9X4kfOhPc7l14+cEqmbIB+DFO7rtcGJG4tBaIJcvEwevS61vQGxfCDdpBjZ/u
+         dBwDZuB2yTniYwxFC6Y5gaoJ8w1iSMcusitx1Q2RgxL9g+rKx6mCP2dHY+t7OaSFhTTr
+         xy60VfGco7a5ylSM/nrDsIwTZEFmGZpkKXjy4=
+Received: by 10.227.167.10 with SMTP id o10mr2140435wby.91.1315323154539;
+        Tue, 06 Sep 2011 08:32:34 -0700 (PDT)
+Received: from gmail.com ([109.236.85.157])
+        by mx.google.com with ESMTPS id o7sm456660wbh.8.2011.09.06.08.32.29
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 06 Sep 2011 07:59:51 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.4
+        Tue, 06 Sep 2011 08:32:33 -0700 (PDT)
+In-Reply-To: <4E6607B2.2090000@intland.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180806>
 
-Timezone designators including additional separator (`:`) are ignored.
-Actually zone designators in below formats are all valid according to
-ISO8601:2004, section 4.3.2:
-    [+-]hh, [+-]hhmm, [+-]hh:mm
+On Tue, 06 Sep 2011 13:44:50 +0200, Tajti wrote:
 
-Steps to reproduce the issue this patch fixes:
-    $ mkdir /tmp/test
-    $ cd /tmp/test
-    $ git init
-    $ echo 'timezone' > file.txt
-    $ git add .
-    $ git update-index
-    $ git write-tree
-    3e168d57e1c32a4598af134430384f0587581503
+> what does the right-only option of git-log actually do? The manual is 
+> not too verbose about it.
 
-    # Commit the tree returned above. Give a date with colon separated
-    # timezone
-    $ echo "Test commit" | \
-      TZ=UTC GIT_AUTHOR_DATE='2011-09-03T12:34:56+08:00' \
-      git commit-tree 3e168d57e1c32a4598af134430384f0587581503 | \
-      xargs git show  | grep Date
-    Date:   Sat Sep 3 12:34:56 2011 +0000
+The documentation is indeed a bit messy, so let me rearrange it for you.
 
-while the expected result is:
-    Date:   Sat Sep 3 12:34:56 2011 +0800
-                                      ^---
+>From `git help rev-parse':
 
-This patch teaches git recognizing zone designators with hours and
-minutes separated by colon, or minutes are empty.
+  r1...r2 is called symmetric difference of r1 and r2 and is
+  defined as `r1 r2 --not $(git merge-base --all r1 r2)'. It is
+  the set of commits that are reachable from either one of r1 or
+  r2 but not from both.
 
-Signed-off-by: Haitao Li <lihaitao@gmail.com>
----
- date.c |   14 ++++++++++----
- 1 files changed, 10 insertions(+), 4 deletions(-)
+Then we have this from `git help log':
 
-diff --git a/date.c b/date.c
-index 896fbb4..8a94944 100644
---- a/date.c
-+++ b/date.c
-@@ -556,15 +556,21 @@ static int match_tz(const char *date, int *offp)
- 	int min, hour;
- 	int n = end - date - 1;
- 
--	min = offset % 100;
--	hour = offset / 100;
-+	if (n == 2 && *end == ':') {
-+		hour = offset;
-+		offset = strtoul(date+4, &end, 10);
-+		min = offset % 100;
-+	} else {
-+		hour = offset / 100;
-+		min = offset % 100;
-+	}
- 
- 	/*
--	 * Don't accept any random crap.. At least 3 digits, and
-+	 * Don't accept any random crap.. At least 2 digits, and
- 	 * a valid minute. We might want to check that the minutes
- 	 * are divisible by 30 or something too.
- 	 */
--	if (min < 60 && n > 2) {
-+	if (min < 60 && n > 1) {
- 		offset = hour*60+min;
- 		if (*date == '-')
- 			offset = -offset;
--- 
-1.7.5.4
+  --left-right
+      Mark which side of a symmetric diff a commit is reachable
+      from. Commits from the left side [(r1 above)] are prefixed with
+      < and those from the right [(r2 above)] with >...
+
+which should explain what `<' and `>' mean in the following from
+`git help log':
+
+  --left-only, --right-only
+      List only commits on the respective side of a symmetric
+      range, i.e. only those which would be marked < resp. > by
+      --left-right.
+
+This is probably most useful with the following option, described
+in `git help log':
+
+  --cherry-pick
+      Omit any commit that introduces the same change as another
+      commit on the "other side" when the set of commits are
+      limited with symmetric difference.
+
+      ...
+
+      For example, --cherry-pick --right-only A...B omits those
+      commits from B which are in A or are patch-equivalent to a
+      commit in A. In other words, this lists the + commits from
+      git cherry A B. More precisely, --cherry-pick --right-only
+      --no-merges gives the exact list.
+
+That is, you often run into multiple commit objects that are unique
+because of, say, differing commit dates, but that actually introduce
+the same change to the source; this combination of options is helpful
+in weeding out commits that introduce the same change.
+
+If you're still confused, don't hesitate to poke the list some more;
+the documentation is quite lacking over all topics, so don't feel
+stupid.
