@@ -1,91 +1,104 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/5] sha1_file: remove a buggy value setting
-Date: Tue, 06 Sep 2011 09:26:53 -0700
-Message-ID: <7vpqjdab76.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v2 3/5] sha1_file: improve directories comparison method
+Date: Tue, 06 Sep 2011 09:32:21 -0700
+Message-ID: <7vliu1aay2.fsf@alter.siamese.dyndns.org>
 References: <1315304645-12009-1-git-send-email-Hui.Wang@windriver.com>
  <1315304645-12009-2-git-send-email-Hui.Wang@windriver.com>
  <1315304645-12009-3-git-send-email-Hui.Wang@windriver.com>
+ <1315304645-12009-4-git-send-email-Hui.Wang@windriver.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: <git@vger.kernel.org>, <tali@admingilde.org>
 To: Wang Hui <Hui.Wang@windriver.com>
-X-From: git-owner@vger.kernel.org Tue Sep 06 18:27:02 2011
+X-From: git-owner@vger.kernel.org Tue Sep 06 18:32:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0yUH-0004NX-LC
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 18:27:02 +0200
+	id 1R0yZb-0007FX-3j
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 18:32:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751589Ab1IFQ05 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Sep 2011 12:26:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61935 "EHLO
+	id S1751868Ab1IFQc0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Sep 2011 12:32:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64367 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750746Ab1IFQ0z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2011 12:26:55 -0400
+	id S1751804Ab1IFQcZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2011 12:32:25 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62D974316;
-	Tue,  6 Sep 2011 12:26:55 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF370448D;
+	Tue,  6 Sep 2011 12:32:23 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Bp7g44YdU7T1rmsGxJKzqdrvL6Q=; b=BGEe3D
-	8GIPdx5NBapHDL+OCjHxRYE+thAqaPHKvGd82W1j5RT8lZRNPRrfc4mt5Q3qfUgo
-	uS5fGWWNLe46htcHtLiLqQ7AVbhLotMDSFSHqmT5Bbzf/wuHRoxK0Pou8XSCMo39
-	V1MWgAwDZbGP3y1znLFBlkq961XFAWCKxMt5Y=
+	:content-type; s=sasl; bh=+IaGwzXpxhgcScsk/s2AW351eD8=; b=x796RG
+	AYKtQjtw/j0OZfgp3Gs+x2D5DWWXXzNtaWeDho0vuyhGN1ct1MsuVkdvpj2ED+sw
+	yvi97kuxGmCGtpdSydwmDIZ+4r1YMGNc10dzofETNTzl82n9VNJmt2gLZ67m2yXe
+	dW+fcU0vbQl5KQ1DiIMIlPa2Om9PFKbqMSU+M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VvCwCGrr40lX6VQ/soEB6kxw2HtniW2k
-	a4YpcWwSgeL/3ETODMmat2dDmgAu+s95xQecnnBj11eyYyY3IhG6wEuKQJ5JkKP1
-	5Ml9rV07Z5+PbxeQPCUIcNAcgkIiwnkxz0KgKWKiy/NU4hrfDdCD4uHvsbsIIYBh
-	kCz14uk/TRc=
+	:content-type; q=dns; s=sasl; b=x+adKiZxfQRtPYxKF52yk6SF1ktOQaP4
+	XzK46ZTo78XIj/fcYkAbN1AJTLsD3m3cX8VhS9AvZyDsSfs9eLssPwvk0XKcs9CW
+	rkg7wev9KGn/vRNZq7tysSL3mdn6EnyHkF87WUU0+ZeDnmlnc6xbj0/SZNtMr8UC
+	HY2ijxvkzHE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A7B44315;
-	Tue,  6 Sep 2011 12:26:55 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5154448C;
+	Tue,  6 Sep 2011 12:32:23 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DEA584314; Tue,  6 Sep 2011
- 12:26:54 -0400 (EDT)
-In-Reply-To: <1315304645-12009-3-git-send-email-Hui.Wang@windriver.com> (Wang
- Hui's message of "Tue, 6 Sep 2011 18:24:02 +0800")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 61CFA448A; Tue,  6 Sep 2011
+ 12:32:23 -0400 (EDT)
+In-Reply-To: <1315304645-12009-4-git-send-email-Hui.Wang@windriver.com> (Wang
+ Hui's message of "Tue, 6 Sep 2011 18:24:03 +0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 08C1A4F4-D8A5-11E0-9BBF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: CC8D04BE-D8A5-11E0-8106-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180813>
 
 Wang Hui <Hui.Wang@windriver.com> writes:
 
 > From: Hui Wang <Hui.Wang@windriver.com>
 >
-> The ent->base[] is a character array, it has pfxlen characters from
-> position 0 to (pfxlen-1) to contain an alt object dir name, the
-> position pfxlen should be the string terminating character '\0' and
-> is deliberately set to '\0' at the previous code line. The position
-> (pfxlen+1) is given to ent->name.
+> In the past, to check if two directory paths are same, we use memcmp()
+> to directly compare their path strings, this method can't get an
+> accurate result if paths include ".." or "." or redundant slash, e.g.
+> current dir is /, "/a/b/c", "/a/b//c/d/e/../.." and "./a/b/f/../c"
+> should be the same dir, but current method will identify they are
+> different.
+>
+> Now add a global function is_same_directory() to replace the old
+> memcmp() method, this function will change two input paths to real
+> path first, then normalized them and compare them.
 
-Correct. Do you understand why?
+I do not like this patch _at all_. While it may result in correct result
+if you _always_ make it absolute before comparing two entities, if you
+will be storing the normalized result after running the comparison anyway,
+and if you are comparing against the existing and supposedly already
+normalized entities with a new candidate, why would anybody sane would
+want to keep paying for the normalization cost at such a low level?
 
-We temporarily NUL terminate the ent->base[] so that we can give it to
-is_directory() to see if that is a directory, but the invariants for a
-alternate_object_database instance after it is properly initialized by
-this function are to have:
+IOW, you are proposing to do:
 
- - the directory name followed by a slash in the base[] array;
- - the name pointer pointing at one byte beyond the slash;
- - name[2] filled with a slash; and
- - name[41] terminated with NUL.
+	given a new candidate;
+	for existing entities:
+		normalize existing
+                normalize candiate
+                compare the above two
+                if they are equal:
+                	ignore
+	if no match found
+        	add the normalized candidate to the list
 
-Later, has_loose_object_nonlocal() calls fill_sha1_path() with the name
-pointer to fill name[0..1, 3..40] with the hexadecimal representation of
-the object name, which would result in base[] array to have the pathname
-for a loose object found in that alternate. The same thing happens in
-open_sha1_file() to read from a loose object in an alternate.
+Wouldn't it make much more sense to do this:
 
-And you are breaking one of the above invariants by removing that slash
-after the directory name. These callers of fill_sha1_path() will see the
-directory name, your NUL, two hex, slash, and 38 hex in base[].
-
-How would the code even work with your patch?
+	given a new candidate;
+        normalize it
+	for existing entities:
+                compare existing and normalized candidate
+		there is no point in normalizing the existing one!
+                if they are equal:
+                	ignore
+	if no match found
+        	add the normalized candidate to the list
