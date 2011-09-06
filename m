@@ -1,78 +1,48 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: question about interactive.singlekey
-Date: Tue, 06 Sep 2011 14:42:51 -0700
-Message-ID: <7vobyx73fo.fsf@alter.siamese.dyndns.org>
-References: <20110906205011.GC1747@kudu.in-berlin.de>
- <7vsjo9743o.fsf@alter.siamese.dyndns.org>
- <20110906213326.GD1747@kudu.in-berlin.de>
+From: =?ISO-8859-1?Q?Rodrigo_Cort=E9s?= <rcortes.ing@gmail.com>
+Subject: Tracking database changes.
+Date: Tue, 6 Sep 2011 18:55:56 -0300
+Message-ID: <CAFSYZ5RjJYHByTMPu6LiM6awGitt3WqnVrLU34mA9t7O1MVHDQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Gerrit Pape <pape@smarden.org>, Git-List <git@vger.kernel.org>
-To: Valentin Haenel <valentin@fsfe.org>
-X-From: git-owner@vger.kernel.org Tue Sep 06 23:43:01 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 06 23:58:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R13Q3-0003Yw-3M
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 23:42:59 +0200
+	id 1R13en-0001op-II
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 23:58:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751189Ab1IFVmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Sep 2011 17:42:55 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37704 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750791Ab1IFVmx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2011 17:42:53 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 397CF5DA0;
-	Tue,  6 Sep 2011 17:42:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xQEi4z4CZkQGFWPiLnzJ6h6WjzI=; b=dMSUCt
-	3s9Qd6u69RozurBElOHea6qnpGjN6KUO4wrSrW6vdXMB/dkIOnTNHUFZneO4STtp
-	qYpeeycuyWtS3XRuBbET1UZ1e6fwre8q5lYLkdzcTV9VjOZDzSahpVBQ0seQDSAH
-	MPPfl8zkIB+1nbquGFfWAmCvS3D99EdhEJOac=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Xgh56Uc3gp4+OEP6rSi1C83nlBVNQ3hy
-	oCUf5qCuf3uzKe8oZ/Q3D8gKTgNPlJqXnvUsqLo+PU0ErZw75UnFmMMZNgfhy95g
-	0XFBRF5oUIwwHanY8LwZYstHiz301rJmEF+3VNkGCxdfvicuM4MND+qG4Qu66TRO
-	wUfJXYzF5WM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 31D455D9F;
-	Tue,  6 Sep 2011 17:42:53 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BD7A05D9E; Tue,  6 Sep 2011
- 17:42:52 -0400 (EDT)
-In-Reply-To: <20110906213326.GD1747@kudu.in-berlin.de> (Valentin Haenel's
- message of "Tue, 6 Sep 2011 23:33:26 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2C862D3E-D8D1-11E0-9E9A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751999Ab1IFVz6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Sep 2011 17:55:58 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:40008 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751545Ab1IFVz5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Sep 2011 17:55:57 -0400
+Received: by yxj19 with SMTP id 19so3358029yxj.19
+        for <git@vger.kernel.org>; Tue, 06 Sep 2011 14:55:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=w2w+t/n9hgsPNHxG/IgPeOimT7C/mRlO0CTK38C81AI=;
+        b=KTro9CVPmAvh5On4TFFcaeThd8W87+kV4+3CUBNkfjn4y3036dIdDpk9h8UtwqpJAI
+         Ngt/hpq1I/CPojUahN1VstnVDpzp3qG1wmkJppw/uMRZUhtOkercoi3KlfHIrsCg78J2
+         vRCRU8RI/k94KT6+AWFHs67/YtwFY6VdJSIKo=
+Received: by 10.42.142.132 with SMTP id s4mr4668481icu.266.1315346156233; Tue,
+ 06 Sep 2011 14:55:56 -0700 (PDT)
+Received: by 10.231.145.7 with HTTP; Tue, 6 Sep 2011 14:55:56 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180841>
 
-Valentin Haenel <valentin@fsfe.org> writes:
+Is there a way to use git to track database changes?
 
->> > ... Does
->> > the 'interactive.singlekey' setting perhaps need additional libraries
->> > which were forgotten in the debian package dependencies?
->> 
->>  ...
->> so perhaps...
->> 
->>     $ apt-cache search term.*readkey
->>     libterm-readkey-perl - A perl module for simple terminal control
->
-> Bingo! Thanks! Should i send this downstream somewhere?
-
-It may make sense to add libterm-readkey-perl to Suggests, perhaps, but I
-am not a debian maintainer and I am not familiar with the policies to
-handle a minor dependencies like this.
-
-$ apt-cache show git | grep Maintainer
-Maintainer: Gerrit Pape <pape@smarden.org>
+--=20
+Rodrigo Cort=E9s Carvajal
+Ingenier=EDa El=E9ctrica
+Universidad Tecnol=F3gica de Chile
