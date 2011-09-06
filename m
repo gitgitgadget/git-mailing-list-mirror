@@ -1,74 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] date.c: Parse timezone with colon as separator
-Date: Tue, 6 Sep 2011 16:24:40 -0400
-Message-ID: <20110906202440.GD14554@sigill.intra.peff.net>
-References: <1315320996-1997-1-git-send-email-lihaitao@gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 1/2] git svn dcommit: new option --interactive.
+Date: Tue, 6 Sep 2011 13:26:01 -0700
+Message-ID: <20110906202601.GA11668@dcvr.yhbt.net>
+References: <1315164113-26539-1-git-send-email-frederic.heitzmann@gmail.com>
+ <1315164113-26539-2-git-send-email-frederic.heitzmann@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Haitao Li <lihaitao@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 06 22:24:49 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com, jaysoffian@gmail.com
+To: =?utf-8?B?RnLDqWTDqXJpYw==?= Heitzmann 
+	<frederic.heitzmann@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 06 22:26:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R12CO-000341-S2
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 22:24:49 +0200
+	id 1R12Dh-0003hO-BS
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 22:26:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755060Ab1IFUYo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Sep 2011 16:24:44 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53491
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754907Ab1IFUYm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2011 16:24:42 -0400
-Received: (qmail 28786 invoked by uid 107); 6 Sep 2011 20:25:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 06 Sep 2011 16:25:31 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Sep 2011 16:24:40 -0400
+	id S1755149Ab1IFU0E convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Sep 2011 16:26:04 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:44507 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755114Ab1IFU0C (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2011 16:26:02 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id B424921062;
+	Tue,  6 Sep 2011 20:26:01 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <1315320996-1997-1-git-send-email-lihaitao@gmail.com>
+In-Reply-To: <1315164113-26539-2-git-send-email-frederic.heitzmann@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180832>
 
-On Tue, Sep 06, 2011 at 10:56:36PM +0800, Haitao Li wrote:
+=46r=C3=A9d=C3=A9ric Heitzmann <frederic.heitzmann@gmail.com> wrote:
+> Allow the user to check the patch set before it is commited to SNV. I=
+t is then
+> possible to accept/discard one patch, accept all, or quit.
+>=20
+> This interactive mode is similar with 'git send email' behaviour. How=
+ever,
+> 'git svn dcommit' returns as soon as one patch is discarded.
+>=20
+> Part of the code was taken from git-send-email.perl
 
-> Timezone designators including additional separator (`:`) are ignored.
-> Actually zone designators in below formats are all valid according to
-> ISO8601:2004, section 4.3.2:
->     [+-]hh, [+-]hhmm, [+-]hh:mm
+> Thanks-to: Eric Wong <normalperson@yhbt.net> for the initial idea.
+> Signed-off-by: Fr=C3=A9d=C3=A9ric Heitzmann <frederic.heitzmann@gmail=
+=2Ecom>
 
-That seems like a sensible list to support, given that it is part of
-iso8601 (though I was a little surprised after reading your subject
-line, which would probably be better as "support iso8601 timezone
-formats").
+I agree with this feature, a few comments inline.
 
-> ---
->  date.c |   14 ++++++++++----
->  1 files changed, 10 insertions(+), 4 deletions(-)
+>  I would have preferred not duplicating the code snippets taken from
+>  git-send-email ('ask' function, Term related code, ...) but I prefer=
+red not
+>  to spoil Git.pm with it.
+>  Any comment on a better way to factor perl code would be appreciated=
+=2E
 
-We should probably have new tests, too. I was going to suggest squashing
-in the ones below, but your patch doesn't seem to work with the first
-one:
+We should put this into Git.pm at some point.
+(Somebody should refactor git-svn.perl into separate files too... :x)
 
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index f87abb5..9b326cd 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -40,6 +40,8 @@ check_parse 2008-02 bad
- check_parse 2008-02-14 bad
- check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 +0000'
- check_parse '2008-02-14 20:30:45 -0500' '2008-02-14 20:30:45 -0500'
-+check_parse '2008-02-14 20:30:45 -05' '2008-02-14 20:30:45 -0500'
-+check_parse '2008-02-14 20:30:45 -05:00' '2008-02-14 20:30:45 -0500'
- check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 -0500' EST5
- 
- check_approxidate() {
+>  Documentation/git-svn.txt |    8 +++++
+>  git-svn.perl              |   71 +++++++++++++++++++++++++++++++++++=
++++++++++-
+>  2 files changed, 78 insertions(+), 1 deletions(-)
 
-If I am reading your commit message correctly, that should work, right?
+Tests and feature should be the same patch
 
--Peff
+> +	return defined $default ? $default : undef
+> +		unless defined $term->IN and defined fileno($term->IN) and
+> +		       defined $term->OUT and defined fileno($term->OUT);
+
+Things to make life easier for (mainly) C programmers:
+
+* Use C-style "&&" and "||" for conditionals.  "and" and "or" are lower
+  precedence and better used for control flow (see perlop(1) manpage).
+
+* Also, use parentheses for defined(foo) to disambiguate multiple
+  conditions/statements.
+
+--=20
+Eric Wong
