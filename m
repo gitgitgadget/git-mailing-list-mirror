@@ -1,58 +1,73 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 2/2] Support sizes >=2G in various config options accepting
- 'g' sizes.
-Date: Tue, 06 Sep 2011 12:22:09 +0200
-Message-ID: <4E65F451.4070900@viscovery.net>
-References: <1315223155-4218-1-git-send-email-nix@esperi.org.uk>	<1315223155-4218-2-git-send-email-nix@esperi.org.uk>	<CAGdFq_gFNHq9Cgv4F4Q6VQ=G7odfUJ5pUFWn=OYE-BfXzP=Enw@mail.gmail.com>	<87ty8rm6th.fsf@spindle.srvr.nix> <20110906074421.GB28490@ecki> <87ty8qjaof.fsf@spindle.srvr.nix>
+From: Wang Hui <Hui.Wang@windriver.com>
+Subject: [PATCH v2 2/5] sha1_file: remove a buggy value setting
+Date: Tue, 6 Sep 2011 18:24:02 +0800
+Message-ID: <1315304645-12009-3-git-send-email-Hui.Wang@windriver.com>
+References: <1315304645-12009-1-git-send-email-Hui.Wang@windriver.com>
+ <1315304645-12009-2-git-send-email-Hui.Wang@windriver.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Clemens Buchacher <drizzd@aon.at>,
-	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
-To: Nix <nix@esperi.org.uk>
-X-From: git-owner@vger.kernel.org Tue Sep 06 12:22:20 2011
+Content-Type: text/plain
+To: <gitster@pobox.com>, <git@vger.kernel.org>, <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Tue Sep 06 12:24:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0snL-0002wo-B8
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 12:22:19 +0200
+	id 1R0sp5-0003wz-Rf
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 12:24:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754100Ab1IFKWO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Sep 2011 06:22:14 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:8654 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753551Ab1IFKWM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2011 06:22:12 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1R0snB-0002Fu-Kp; Tue, 06 Sep 2011 12:22:09 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 5287C1660F;
-	Tue,  6 Sep 2011 12:22:09 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.21) Gecko/20110830 Thunderbird/3.1.13
-In-Reply-To: <87ty8qjaof.fsf@spindle.srvr.nix>
-X-Spam-Score: -1.4 (-)
+	id S1754044Ab1IFKYD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Sep 2011 06:24:03 -0400
+Received: from mail.windriver.com ([147.11.1.11]:61490 "EHLO
+	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753299Ab1IFKYB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2011 06:24:01 -0400
+Received: from ALA-HCA.corp.ad.wrs.com (ala-hca [147.11.189.40])
+	by mail.windriver.com (8.14.3/8.14.3) with ESMTP id p86ANqXn005023
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Tue, 6 Sep 2011 03:23:52 -0700 (PDT)
+Received: from localhost.localdomain (128.224.163.220) by
+ ALA-HCA.corp.ad.wrs.com (147.11.189.50) with Microsoft SMTP Server id
+ 14.1.255.0; Tue, 6 Sep 2011 03:23:52 -0700
+X-Mailer: git-send-email 1.5.6.5
+In-Reply-To: <1315304645-12009-2-git-send-email-Hui.Wang@windriver.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180786>
 
-Am 9/6/2011 11:13, schrieb Nix:
-> ... amounts to writing our own strtol()
-> specifically for this one case, to see if the parsed number is
-> too long.
+From: Hui Wang <Hui.Wang@windriver.com>
 
-Why so? strtol() can report overflow:
+The ent->base[] is a character array, it has pfxlen characters from
+position 0 to (pfxlen-1) to contain an alt object dir name, the
+position pfxlen should be the string terminating character '\0' and
+is deliberately set to '\0' at the previous code line. The position
+(pfxlen+1) is given to ent->name.
 
-RETURN VALUE
+>From above analysis, there is no reason to set ent->base[pfxlen] to
+'/' at the end of this function, first it doesn't make sense to append
+a '/' at the end of a dir name, second if you are not lucky that the
+ent->base[pfxlen+1] is not 0, you will get a wrong alt object dir
+name.
 
-    ...
-    If the correct value is outside the range of representable values,
-{LONG_MIN}, {LONG_MAX}, {LLONG_MIN}, or {LLONG_MAX} shall be returned
-(according to the sign of the value), and errno set to [ERANGE].
+Signed-off-by: Hui Wang <Hui.Wang@windriver.com>
+---
+ sha1_file.c |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
 
--- Hannes
+diff --git a/sha1_file.c b/sha1_file.c
+index d12a675..5940d84 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -304,8 +304,6 @@ static int link_alt_odb_entry(const char * entry, int len, const char * relative
+ 	/* recursively add alternates */
+ 	read_info_alternates(ent->base, depth + 1);
+ 
+-	ent->base[pfxlen] = '/';
+-
+ 	return 0;
+ }
+ 
+-- 
+1.6.3.1
