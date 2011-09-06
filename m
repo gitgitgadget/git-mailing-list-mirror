@@ -1,71 +1,91 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCHv3 5/5] branch: allow pattern arguments
-Date: Tue, 06 Sep 2011 18:11:16 +0200
-Message-ID: <4E664624.7050209@drmicha.warpmail.net>
-References: <cover.1314367414.git.git@drmicha.warpmail.net> <0c487086643fbf0334140365f20fef62242b7dac.1314543252.git.git@drmicha.warpmail.net> <4E661BDE.1080204@elegosoft.com> <4E662C6F.7000205@drmicha.warpmail.net> <CAGdFq_jmW+VZygVj73EP_1oB5DDNp5rYZgZq+i9zf3w6BpsMYA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/5] sha1_file: remove a buggy value setting
+Date: Tue, 06 Sep 2011 09:26:53 -0700
+Message-ID: <7vpqjdab76.fsf@alter.siamese.dyndns.org>
+References: <1315304645-12009-1-git-send-email-Hui.Wang@windriver.com>
+ <1315304645-12009-2-git-send-email-Hui.Wang@windriver.com>
+ <1315304645-12009-3-git-send-email-Hui.Wang@windriver.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Michael Schubert <mschub@elegosoft.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 06 18:12:01 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, <tali@admingilde.org>
+To: Wang Hui <Hui.Wang@windriver.com>
+X-From: git-owner@vger.kernel.org Tue Sep 06 18:27:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0yFk-0004ye-Qi
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 18:12:01 +0200
+	id 1R0yUH-0004NX-LC
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 18:27:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755248Ab1IFQLY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Sep 2011 12:11:24 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:54560 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755235Ab1IFQLT (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Sep 2011 12:11:19 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id DF91324EFD;
-	Tue,  6 Sep 2011 12:11:18 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute4.internal (MEProxy); Tue, 06 Sep 2011 12:11:18 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=3Y5iKIZtuGQ36H4VmhSaVN
-	V7OOM=; b=MhrjgoXR52uaFnQugEkX5cdoGBT6Ofo8GeNkZc0PlkQjTzTHDpwsY5
-	MZRKs5SNNA2OxJ0nY7T8c0Y1htQXcbIBU3cncqGO3KkZqyQMSS3P10QSVsUC5Bk1
-	UMvpaKNvlXjYy1Xa5kZlRvTNc1Z9mTUmEO+uENI7B6MD5WKHd0LOQ=
-X-Sasl-enc: 1milUYuL8ZU0meVkhO+O2UIHMChAV3DVfVZ81bqmMcDm 1315325478
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id B44D38E0244;
-	Tue,  6 Sep 2011 12:11:17 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
-In-Reply-To: <CAGdFq_jmW+VZygVj73EP_1oB5DDNp5rYZgZq+i9zf3w6BpsMYA@mail.gmail.com>
+	id S1751589Ab1IFQ05 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Sep 2011 12:26:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61935 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750746Ab1IFQ0z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2011 12:26:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62D974316;
+	Tue,  6 Sep 2011 12:26:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Bp7g44YdU7T1rmsGxJKzqdrvL6Q=; b=BGEe3D
+	8GIPdx5NBapHDL+OCjHxRYE+thAqaPHKvGd82W1j5RT8lZRNPRrfc4mt5Q3qfUgo
+	uS5fGWWNLe46htcHtLiLqQ7AVbhLotMDSFSHqmT5Bbzf/wuHRoxK0Pou8XSCMo39
+	V1MWgAwDZbGP3y1znLFBlkq961XFAWCKxMt5Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VvCwCGrr40lX6VQ/soEB6kxw2HtniW2k
+	a4YpcWwSgeL/3ETODMmat2dDmgAu+s95xQecnnBj11eyYyY3IhG6wEuKQJ5JkKP1
+	5Ml9rV07Z5+PbxeQPCUIcNAcgkIiwnkxz0KgKWKiy/NU4hrfDdCD4uHvsbsIIYBh
+	kCz14uk/TRc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A7B44315;
+	Tue,  6 Sep 2011 12:26:55 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DEA584314; Tue,  6 Sep 2011
+ 12:26:54 -0400 (EDT)
+In-Reply-To: <1315304645-12009-3-git-send-email-Hui.Wang@windriver.com> (Wang
+ Hui's message of "Tue, 6 Sep 2011 18:24:02 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 08C1A4F4-D8A5-11E0-9BBF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180812>
 
-Sverre Rabbelier venit, vidit, dixit 06.09.2011 16:26:
-> Heya,
-> 
-> On Tue, Sep 6, 2011 at 16:21, Michael J Gruber <git@drmicha.warpmail.net> wrote:
->> Have you ever tried to delete a remote branch?
->>
->> git branch -r -d origin/maint # workee
->> git branch -r -d remotes/origin/maint # no workee
->>
->> Without -r, it doesn't work either.
-> 
-> Heh, I read this as "worktree" / "no worktree" at least 4 times.
-> 
+Wang Hui <Hui.Wang@windriver.com> writes:
 
-Yes, our require_work_tree should really be renamed to
+> From: Hui Wang <Hui.Wang@windriver.com>
+>
+> The ent->base[] is a character array, it has pfxlen characters from
+> position 0 to (pfxlen-1) to contain an alt object dir name, the
+> position pfxlen should be the string terminating character '\0' and
+> is deliberately set to '\0' at the previous code line. The position
+> (pfxlen+1) is given to ent->name.
 
-no_worktree_no_workee
+Correct. Do you understand why?
 
-The beauty of pidgin english ;)
+We temporarily NUL terminate the ent->base[] so that we can give it to
+is_directory() to see if that is a directory, but the invariants for a
+alternate_object_database instance after it is properly initialized by
+this function are to have:
 
-Michael
+ - the directory name followed by a slash in the base[] array;
+ - the name pointer pointing at one byte beyond the slash;
+ - name[2] filled with a slash; and
+ - name[41] terminated with NUL.
+
+Later, has_loose_object_nonlocal() calls fill_sha1_path() with the name
+pointer to fill name[0..1, 3..40] with the hexadecimal representation of
+the object name, which would result in base[] array to have the pathname
+for a loose object found in that alternate. The same thing happens in
+open_sha1_file() to read from a loose object in an alternate.
+
+And you are breaking one of the above invariants by removing that slash
+after the directory name. These callers of fill_sha1_path() will see the
+directory name, your NUL, two hex, slash, and 38 hex in base[].
+
+How would the code even work with your patch?
