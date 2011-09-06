@@ -1,87 +1,82 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] Makefile: abort on shells that do not support ${parameter%word} expansion
-Date: Tue,  6 Sep 2011 14:09:43 -0500
-Message-ID: <rPnr5AVZRRnklxb_Yaj0gopXRTVCT-tq7iVG-1NoXjOrHWsyuLop-co4qtQjezJ98BaKc0R71r8fMcBOijq9oCOgfBF6ticVk17DwDQzV91bcC719fGSUPDsf40AuoRfgjURcxREkMk@cipher.nrlssc.navy.mil>
-References: <7vbouzxy7g.fsf@alter.siamese.dyndns.org>
-Cc: Naohiro Aota <naota@elisp.net>, git@vger.kernel.org,
-	tarmigan+git@gmail.com, David Barr <davidbarr@google.com>,
-	Brandon Casey <drafnel@gmail.com>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Re: git-rebase skips automatically no more needed commits
+Date: Tue, 6 Sep 2011 21:28:41 +0200
+Message-ID: <CAC9WiBjrfJeJ854dkJMPwRSwuujRsYLnAd7QX7C_oU8_FdOvQA@mail.gmail.com>
+References: <CAC9WiBg9+30NjO+NKXVdBiWjR-HU2689JQqVY7Rk5+DM7MiNBg@mail.gmail.com>
+	<7v1uvta97o.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 06 21:10:24 2011
+X-From: git-owner@vger.kernel.org Tue Sep 06 21:28:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R112M-0007B9-S7
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 21:10:23 +0200
+	id 1R11KB-0008MX-8D
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 21:28:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754463Ab1IFTKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Sep 2011 15:10:15 -0400
-Received: from mail4.nrlssc.navy.mil ([128.160.11.9]:45549 "EHLO
-	mail3.nrlssc.navy.mil" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754331Ab1IFTKO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2011 15:10:14 -0400
-Received: by mail3.nrlssc.navy.mil id p86J9xxT010334; Tue, 6 Sep 2011 14:09:59 -0500
-In-Reply-To: <7vbouzxy7g.fsf@alter.siamese.dyndns.org>
-X-OriginalArrivalTime: 06 Sep 2011 19:09:55.0281 (UTC) FILETIME=[900B2410:01CC6CC8]
-X-Virus-Scanned: clamav-milter 0.97.2 at mail4
-X-Virus-Status: Clean
+	id S1754562Ab1IFT2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Sep 2011 15:28:43 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:38171 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754504Ab1IFT2m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2011 15:28:42 -0400
+Received: by vws1 with SMTP id 1so5028285vws.19
+        for <git@vger.kernel.org>; Tue, 06 Sep 2011 12:28:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ECemiHEUUaM/3YSOxzJ743OpZLyJqTz7HO9EZTjAcKg=;
+        b=mKdj/6GJyOIwcsX/t1EsX4M2PyeBTHKaGVtK+gt5waOROilhxe/GQbMyHT/xoiC0kK
+         ouW/qt7l/cnKXwxn58Zhdg6pmBaFV2FCcYUDtNisCCCsV0HzhOEF15JgaD9IIPs+fzpx
+         WU9SVln9rjnuXLqBKBs9JpVhPeOY/yzKAKrZE=
+Received: by 10.52.174.169 with SMTP id bt9mr5592597vdc.129.1315337321252;
+ Tue, 06 Sep 2011 12:28:41 -0700 (PDT)
+Received: by 10.52.110.2 with HTTP; Tue, 6 Sep 2011 12:28:41 -0700 (PDT)
+In-Reply-To: <7v1uvta97o.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180823>
 
-From: Brandon Casey <drafnel@gmail.com>
+Hello Junio,
 
-Add an entry to the please_set_SHELL_PATH_to_a_more_modern_shell target
-which tests whether the shell supports ${parameter%word} expansion.  I
-assume this one test is enough to indicate whether the shell supports the
-entire family of prefix and suffix removal syntax:
+On Tue, Sep 6, 2011 at 7:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Our assumption has always been that it is a notable event that a patch
+> that does not get filtered with internal "git cherry" (which culls patches
+> that are textually identical to those that are already merged to the
+> history you are rebasing onto) becomes totally unneeded and is safe to ask
+> for human confirmation in the form of "rebase --skip" than to ignore it
+> and give potentially incorrect result silently.
 
-   ${parameter%word}
-   ${parameter%%word}
-   ${parameter#word}
-   ${parameter##word}
+Ok then I think this "git cherry" filtering is not working in my case
+since it seems to me that commit that I cherry-picked are not
+filtered, please see below.
 
-FreeBSD, for one, has a /bin/sh that, apparently, supports $() notation but
-not the above prefix/suffix removal notation.
----
+>
+> Obviously you do not find it a notable event for some reason. We would
+> need to understand why, and if the reason is sensible, it _might_ make
+> sense to allow a user to say "git rebase --ignore-merged" or something
+> when starting the rebase.
 
-On 09/05/2011 02:09 AM, Junio C Hamano wrote:
-> Naohiro Aota <naota@elisp.net> writes:
-> 
->> Variable expansions like "${foo#bar}" or "${foo%bar}" doesn't work on
->> shells like FreeBSD sh and they made the test to fail.
-> 
-> Sorry, I do appreciate the effort, but a patch like this takes us in the
-> wrong direction.
-> 
-> While we do not allow blatant bashisms like ${parameter:offset:length}
-> (substring expansion), ${parameter/pattern/string} (pattern substitution),
-> "local" variables, "function" noiseword, and shell arrays in our shell
-> scripts, the two kinds of substitution you quoted above are purely POSIX,
-> and our coding guideline does allow them to be used in the scripts.
+My use case is the following: I'm maintaining a branch from an
+upstream project (the kernel one). While the upstream project follows
+its development cycle (including some fixes), my branch is stuck. I
+sometime want to includes (or rather backport) some commits that
+happened later in the development cycle. To do that I use "git
+cherry-pick".
 
-Perhaps we should add a test for this shell feature.
+After some period, I'm allowed to rebase to a more recent commit from
+the upstream project and  this rebase 'cancel' the previous 'git
+cherry-pick' I did. But for some reasons, git telling me "nothing
+added to commit ...", which is expected in my case, well I think,
+hence my question.
 
--Brandon
-
- Makefile |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 8d6d451..46d9c5d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1738,6 +1738,7 @@ endif
- 
- please_set_SHELL_PATH_to_a_more_modern_shell:
- 	@$$(:)
-+	@foo=bar_suffix && test bar = "$${foo%_*}"
- 
- shell_compatibility_test: please_set_SHELL_PATH_to_a_more_modern_shell
- 
+Thanks.
 -- 
-1.7.6.1
+Francis
