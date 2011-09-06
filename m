@@ -1,78 +1,73 @@
 From: Eric Wong <normalperson@yhbt.net>
 Subject: Re: [PATCH] git-svn: teach git-svn to populate svn:mergeinfo
-Date: Tue, 6 Sep 2011 13:45:58 -0700
-Message-ID: <20110906204558.GA12574@dcvr.yhbt.net>
+Date: Tue, 6 Sep 2011 13:57:50 -0700
+Message-ID: <20110906205750.GB12574@dcvr.yhbt.net>
 References: <20110902140702.066a4668@robyn.woti.com>
- <4E612319.7030006@vilain.net>
- <20110902144922.383ed0f1@robyn.woti.com>
- <4E6127F5.5070009@vilain.net>
- <20110902154206.331b80e9@robyn.woti.com>
- <4E614AE7.7090706@vilain.net>
- <20110903084947.GA16711@dcvr.yhbt.net>
- <20110906100003.4c87daba@robyn.woti.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
+Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>
 To: Bryan Jacobs <bjacobs@woti.com>
-X-From: git-owner@vger.kernel.org Tue Sep 06 22:46:04 2011
+X-From: git-owner@vger.kernel.org Tue Sep 06 22:57:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R12Wx-0004i5-Qe
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 22:46:04 +0200
+	id 1R12iT-0001lk-85
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 22:57:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755270Ab1IFUqA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Sep 2011 16:46:00 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:57129 "EHLO dcvr.yhbt.net"
+	id S1755219Ab1IFU5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Sep 2011 16:57:52 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:34669 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755242Ab1IFUp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2011 16:45:59 -0400
+	id S1754921Ab1IFU5v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2011 16:57:51 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A20B821062;
-	Tue,  6 Sep 2011 20:45:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1826C21062;
+	Tue,  6 Sep 2011 20:57:51 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <20110906100003.4c87daba@robyn.woti.com>
+In-Reply-To: <20110902140702.066a4668@robyn.woti.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180835>
 
 Bryan Jacobs <bjacobs@woti.com> wrote:
-> On Sat, 3 Sep 2011 08:49:47 +0000
-> Eric Wong <normalperson@yhbt.net> wrote:
-> > dcommit needs to continually rebase because it's possible somebody
-> > else may make a commit to the SVN repo while a git-svn user is
-> > dcommiting and cause a conflict the user would need to resolve in the
-> > working tree.
-> > 
-> > At least I think that was the reason...  There is also the
-> > "commit-diff" command in git-svn.  It was the precursor to dcommit
-> > which requires no changes to the working tree.
-> 
-> Let me see if I've got this right.
-> 
-> The goal here is to commit each x~..x for each x in A..B, aborting if
-> the SVN tree is not in state "x~" when the diff arrives.
+> +sub split_merge_info_range {
+> +	my ($range) = @_;
+> +	if ($range =~ /(\d+)-(\d+)/o) {
 
-Yes.
+No need for "/o" in regexps unless you have a (constant) variable
+expansion in there.
 
-> So why am I seeing files added in changes on alternate
-> branches ending up in the working copy when I abort before apply_diff
-> is called for the commit which merges them into the present branch?
+> +sub merge_commit_fail {
+> +	my ($gs, $linear_refs, $d) = @_;
+> +	#while (1) {
+> +	#	my $cs = shift @$linear_refs or last;
+> +	#	command_noisy(qw/cherry-pick/, $cs);
+> +	#}
+> +	#command_noisy(qw/cherry-pick -m/, '1', $d);
 
-I don't know.
+Huh?  If there's commented-out code, it must be explained or removed.
 
-In my past use of git-svn, I've _always_ stuck with linear changes and
-avoided anything non-linear.  SVN mergeinfo didn't exist when/where I
-used SVN and my only current uses of git-svn is read-only.
+> +	fatal "Aborted after failed dcommit of merge revision";
+> +}
 
+> +++ b/t/t9160-git-svn-mergeinfo-push.sh
+> @@ -0,0 +1,97 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2007, 2009 Sam Vilain
 
-Anyhow, I'm willing to accept your change since it doesn't appear to
-break anything for existing users and Sam seems to approve.
+That should be: "Copyright (c) 2011 Brian Jacobs", correct?
+
+> +test_expect_success 'check svn:mergeinfo' '
+> +	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb1)
+> +	echo "$mergeinfo"
+
+No need to echo unless you're debugging a test, right?
 
 -- 
 Eric Wong
