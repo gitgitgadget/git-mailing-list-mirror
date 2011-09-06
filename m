@@ -1,140 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] remove prefix argument from pathspec_prefix
-Date: Tue, 06 Sep 2011 12:02:39 -0700
-Message-ID: <7vmxeh8pf4.fsf@alter.siamese.dyndns.org>
-References: <7vbow7ebzw.fsf@alter.siamese.dyndns.org>
- <1315132921-26949-1-git-send-email-drizzd@aon.at>
- <1315132921-26949-2-git-send-email-drizzd@aon.at>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue Sep 06 21:02:53 2011
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH] Makefile: abort on shells that do not support ${parameter%word} expansion
+Date: Tue,  6 Sep 2011 14:09:43 -0500
+Message-ID: <rPnr5AVZRRnklxb_Yaj0gopXRTVCT-tq7iVG-1NoXjOrHWsyuLop-co4qtQjezJ98BaKc0R71r8fMcBOijq9oCOgfBF6ticVk17DwDQzV91bcC719fGSUPDsf40AuoRfgjURcxREkMk@cipher.nrlssc.navy.mil>
+References: <7vbouzxy7g.fsf@alter.siamese.dyndns.org>
+Cc: Naohiro Aota <naota@elisp.net>, git@vger.kernel.org,
+	tarmigan+git@gmail.com, David Barr <davidbarr@google.com>,
+	Brandon Casey <drafnel@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 06 21:10:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R10v6-0002wj-KK
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 21:02:53 +0200
+	id 1R112M-0007B9-S7
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 21:10:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754462Ab1IFTCp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Sep 2011 15:02:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64177 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753771Ab1IFTCo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2011 15:02:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 952E140B1;
-	Tue,  6 Sep 2011 15:02:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LtQ+AD07a0gozGT9kxpApUz7rAo=; b=r9QwMA
-	kpkmDeyO3hJfyU0rMJrtfOwh2CbdQ+yj1+91XSvorvBwfKKwmAq4FYEVmP9/VW3p
-	j1nNAb7LnoNWRggPvlxG+pWCmMew300Qqud3ByrQ5Gv7quUp9sbxgrgASs7efxPJ
-	7GStzF5DfJ/b1V7TYPk5mAOOOo++U8TLsrGAE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hym98klTj6zkSPM9Fh6KXLSTe4CD6OcX
-	RSgqBqt9UloQ3vKivxSHoLo1mXboVnLX+idwZA45lP5/R8J42QTLAWpQ4dxyqG4J
-	YVRBJhFtZMJC5J9pUhNf0M8ZOxWpsNP8IfJLqsPp5q4V75CRL/i3F48JfA+QhVtE
-	3bxRmFJLqro=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C76E40B0;
-	Tue,  6 Sep 2011 15:02:41 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0458A40AF; Tue,  6 Sep 2011
- 15:02:40 -0400 (EDT)
-In-Reply-To: <1315132921-26949-2-git-send-email-drizzd@aon.at> (Clemens
- Buchacher's message of "Sun, 4 Sep 2011 12:41:59 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CB782F80-D8BA-11E0-A0E5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754463Ab1IFTKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Sep 2011 15:10:15 -0400
+Received: from mail4.nrlssc.navy.mil ([128.160.11.9]:45549 "EHLO
+	mail3.nrlssc.navy.mil" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754331Ab1IFTKO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2011 15:10:14 -0400
+Received: by mail3.nrlssc.navy.mil id p86J9xxT010334; Tue, 6 Sep 2011 14:09:59 -0500
+In-Reply-To: <7vbouzxy7g.fsf@alter.siamese.dyndns.org>
+X-OriginalArrivalTime: 06 Sep 2011 19:09:55.0281 (UTC) FILETIME=[900B2410:01CC6CC8]
+X-Virus-Scanned: clamav-milter 0.97.2 at mail4
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180822>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+From: Brandon Casey <drafnel@gmail.com>
 
-> Passing a prefix to a function that is supposed to find the prefix
-> is strange. And it's really only used if the pathspec is NULL. Make
-> the callers handle this case instead.
->
-> Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+Add an entry to the please_set_SHELL_PATH_to_a_more_modern_shell target
+which tests whether the shell supports ${parameter%word} expansion.  I
+assume this one test is enough to indicate whether the shell supports the
+entire family of prefix and suffix removal syntax:
 
-While I find the above rationale a reasonable justification for the
-removal of a parameter from the function, it does not seem to justify why
-the type of the returned value from the function needed to be changed.
+   ${parameter%word}
+   ${parameter%%word}
+   ${parameter#word}
+   ${parameter##word}
 
-Is it because we no longer ever return "prefix" we pass in which is a
-pointer to a constant memory region to begin with?
+FreeBSD, for one, has a /bin/sh that, apparently, supports $() notation but
+not the above prefix/suffix removal notation.
+---
 
-We also didn't free() in the earlier code (because we do not know if it
-can be freed) and leaking xmemdupz() if the function didn't return the
-"prefix", but now you plugged the small leak. Isn't it something you
-should advertise?
+On 09/05/2011 02:09 AM, Junio C Hamano wrote:
+> Naohiro Aota <naota@elisp.net> writes:
+> 
+>> Variable expansions like "${foo#bar}" or "${foo%bar}" doesn't work on
+>> shells like FreeBSD sh and they made the test to fail.
+> 
+> Sorry, I do appreciate the effort, but a patch like this takes us in the
+> wrong direction.
+> 
+> While we do not allow blatant bashisms like ${parameter:offset:length}
+> (substring expansion), ${parameter/pattern/string} (pattern substitution),
+> "local" variables, "function" noiseword, and shell arrays in our shell
+> scripts, the two kinds of substitution you quoted above are purely POSIX,
+> and our coding guideline does allow them to be used in the scripts.
 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index cbc9613..64fe501 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -255,8 +255,9 @@ static int list_paths(struct string_list *list, const char *with_tree,
->  	m = xcalloc(1, i);
->  
->  	if (with_tree) {
-> -		const char *max_prefix = pathspec_prefix(prefix, pattern);
-> -		overlay_tree_on_cache(with_tree, max_prefix);
-> +		char *max_prefix = pathspec_prefix(pattern);
-> +		overlay_tree_on_cache(with_tree, max_prefix ? max_prefix : prefix);
-> +		free(max_prefix);
->  	}
->  
->  	for (i = 0; i < active_nr; i++) {
-> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-> index e8a800d..a54c2a2 100644
-> --- a/builtin/ls-files.c
-> +++ b/builtin/ls-files.c
-> @@ -545,7 +545,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
->  		strip_trailing_slash_from_submodules();
->  
->  	/* Find common prefix for all pathspec's */
-> -	max_prefix = pathspec_prefix(prefix, pathspec);
-> +	max_prefix = pathspec_prefix(pathspec);
->  	max_prefix_len = max_prefix ? strlen(max_prefix) : 0;
->  
->  	/* Treat unmatching pathspec elements as errors */
-> diff --git a/cache.h b/cache.h
-> index 607c2ea..0ccc84d 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -444,7 +444,7 @@ extern void set_git_work_tree(const char *tree);
->  #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
->  
->  extern const char **get_pathspec(const char *prefix, const char **pathspec);
-> -extern const char *pathspec_prefix(const char *prefix, const char **pathspec);
-> +extern char *pathspec_prefix(const char **pathspec);
->  extern void setup_work_tree(void);
->  extern const char *setup_git_directory_gently(int *);
->  extern const char *setup_git_directory(void);
-> diff --git a/setup.c b/setup.c
-> index 27c1d47..0906790 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -236,13 +236,13 @@ const char **get_pathspec(const char *prefix, const char **pathspec)
->  	return pathspec;
->  }
->  
-> -const char *pathspec_prefix(const char *prefix, const char **pathspec)
-> +char *pathspec_prefix(const char **pathspec)
->  {
->  	const char **p, *n, *prev;
->  	unsigned long max;
->  
->  	if (!pathspec)
-> -		return prefix ? xmemdupz(prefix, strlen(prefix)) : NULL;
-> +		return NULL;
->  
->  	prev = NULL;
->  	max = PATH_MAX;
+Perhaps we should add a test for this shell feature.
+
+-Brandon
+
+ Makefile |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 8d6d451..46d9c5d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1738,6 +1738,7 @@ endif
+ 
+ please_set_SHELL_PATH_to_a_more_modern_shell:
+ 	@$$(:)
++	@foo=bar_suffix && test bar = "$${foo%_*}"
+ 
+ shell_compatibility_test: please_set_SHELL_PATH_to_a_more_modern_shell
+ 
+-- 
+1.7.6.1
