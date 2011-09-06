@@ -1,104 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/5] sha1_file: improve directories comparison method
-Date: Tue, 06 Sep 2011 09:32:21 -0700
-Message-ID: <7vliu1aay2.fsf@alter.siamese.dyndns.org>
-References: <1315304645-12009-1-git-send-email-Hui.Wang@windriver.com>
- <1315304645-12009-2-git-send-email-Hui.Wang@windriver.com>
- <1315304645-12009-3-git-send-email-Hui.Wang@windriver.com>
- <1315304645-12009-4-git-send-email-Hui.Wang@windriver.com>
+Subject: Re: [BUG] git bisect start fails when stale bisect data is left
+ behind
+Date: Tue, 06 Sep 2011 09:38:55 -0700
+Message-ID: <7vehztaan4.fsf@alter.siamese.dyndns.org>
+References: <CAC6WLetwT9UvBY_=Nf38hhkyU1mhmdWHWqscf3ebba1WRGS1LQ@mail.gmail.com>
+ <CAP8UFD1h059dOyjszcP-qFauyho78c0RHBMQsGOPFgzZtp+7vg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, <tali@admingilde.org>
-To: Wang Hui <Hui.Wang@windriver.com>
-X-From: git-owner@vger.kernel.org Tue Sep 06 18:32:31 2011
+Cc: Joel Kaasinen <joel@zenrobotics.com>, git@vger.kernel.org
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 06 18:39:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R0yZb-0007FX-3j
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 18:32:31 +0200
+	id 1R0yfy-0002IE-OF
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Sep 2011 18:39:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751868Ab1IFQc0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Sep 2011 12:32:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64367 "EHLO
+	id S1752000Ab1IFQjA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Sep 2011 12:39:00 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34594 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751804Ab1IFQcZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2011 12:32:25 -0400
+	id S1751811Ab1IFQi6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2011 12:38:58 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF370448D;
-	Tue,  6 Sep 2011 12:32:23 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0CABB4581;
+	Tue,  6 Sep 2011 12:38:58 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+IaGwzXpxhgcScsk/s2AW351eD8=; b=x796RG
-	AYKtQjtw/j0OZfgp3Gs+x2D5DWWXXzNtaWeDho0vuyhGN1ct1MsuVkdvpj2ED+sw
-	yvi97kuxGmCGtpdSydwmDIZ+4r1YMGNc10dzofETNTzl82n9VNJmt2gLZ67m2yXe
-	dW+fcU0vbQl5KQ1DiIMIlPa2Om9PFKbqMSU+M=
+	:content-type; s=sasl; bh=aCTGL9JNW8SF25ozX3poVw1jxAA=; b=XYzsu2
+	/OJUJ4YHb6tBUVLTjUeH94dUpDuaEcQZhd3cE71TpCC3QqVH864y3t4MWY3nCVlR
+	A+k8jN16b9eaz/OYkFgeVcSjmDVjXw9Le77PWLPGUdGIm1AeYIogxXTxlbKz6BwQ
+	dCXOwbmuEHPpzL6ddHMkXoOanv8BiWqWjwUtc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=x+adKiZxfQRtPYxKF52yk6SF1ktOQaP4
-	XzK46ZTo78XIj/fcYkAbN1AJTLsD3m3cX8VhS9AvZyDsSfs9eLssPwvk0XKcs9CW
-	rkg7wev9KGn/vRNZq7tysSL3mdn6EnyHkF87WUU0+ZeDnmlnc6xbj0/SZNtMr8UC
-	HY2ijxvkzHE=
+	:content-type; q=dns; s=sasl; b=ggfyEqoZFjxTKWCXDQsl/nRqDPuHzy0m
+	2Wn3wPF/r/OLybQlDFnZyMuMqR9E9Dy1KB3cyx8CqU1wXseG7dhwsJh9NQUJmA26
+	yi9ANOxwS67ea+yxcjYKafM+IGMlFDLcWyVkhQjJelQmu8AXWOS3H+z2vG6EHYZw
+	yFnmmmBIqko=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5154448C;
-	Tue,  6 Sep 2011 12:32:23 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 02F874580;
+	Tue,  6 Sep 2011 12:38:58 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 61CFA448A; Tue,  6 Sep 2011
- 12:32:23 -0400 (EDT)
-In-Reply-To: <1315304645-12009-4-git-send-email-Hui.Wang@windriver.com> (Wang
- Hui's message of "Tue, 6 Sep 2011 18:24:03 +0800")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5C82B457F; Tue,  6 Sep 2011
+ 12:38:57 -0400 (EDT)
+In-Reply-To: <CAP8UFD1h059dOyjszcP-qFauyho78c0RHBMQsGOPFgzZtp+7vg@mail.gmail.com>
+ (Christian Couder's message of "Tue, 6 Sep 2011 09:48:34 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CC8D04BE-D8A5-11E0-8106-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B7616958-D8A6-11E0-A556-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180814>
 
-Wang Hui <Hui.Wang@windriver.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> From: Hui Wang <Hui.Wang@windriver.com>
+>> How to reproduce:
+>> $ echo foo > .git/BISECT_START
+>> $ git bisect start HEAD HEAD^
+>>
+>> Fails with "fatal: invalid reference:" on git 1.7.6.
 >
-> In the past, to check if two directory paths are same, we use memcmp()
-> to directly compare their path strings, this method can't get an
-> accurate result if paths include ".." or "." or redundant slash, e.g.
-> current dir is /, "/a/b/c", "/a/b//c/d/e/../.." and "./a/b/f/../c"
-> should be the same dir, but current method will identify they are
-> different.
+> Yeah, it looks like a very old behavior.
+> I'd suggest a simple improvement in the error message like this:
 >
-> Now add a global function is_same_directory() to replace the old
-> memcmp() method, this function will change two input paths to real
-> path first, then normalized them and compare them.
+> diff --git a/git-bisect.sh b/git-bisect.sh
+> index c21e33c..bd7155b 100755
+> --- a/git-bisect.sh
+> +++ b/git-bisect.sh
+> @@ -67,7 +67,8 @@ bisect_start() {
+>         then
+>                 # Reset to the rev from where we started.
+>                 start_head=$(cat "$GIT_DIR/BISECT_START")
+> -               git checkout "$start_head" -- || exit
+> +               git checkout "$start_head" -- ||
+> +               die "Could not checkout previous start point
+> '$start_head'. Try 'git bisect reset <branch>' first."
 
-I do not like this patch _at all_. While it may result in correct result
-if you _always_ make it absolute before comparing two entities, if you
-will be storing the normalized result after running the comparison anyway,
-and if you are comparing against the existing and supposedly already
-normalized entities with a new candidate, why would anybody sane would
-want to keep paying for the normalization cost at such a low level?
+I do not necessarily think this is a bug to begin with --- the user had a
+bad state, and bisect stopped without doing further damage.
 
-IOW, you are proposing to do:
-
-	given a new candidate;
-	for existing entities:
-		normalize existing
-                normalize candiate
-                compare the above two
-                if they are equal:
-                	ignore
-	if no match found
-        	add the normalized candidate to the list
-
-Wouldn't it make much more sense to do this:
-
-	given a new candidate;
-        normalize it
-	for existing entities:
-                compare existing and normalized candidate
-		there is no point in normalizing the existing one!
-                if they are equal:
-                	ignore
-	if no match found
-        	add the normalized candidate to the list
+The real question is what the sensible suggestion/advice the new message
+should give. It would have to involve bisect reset in the end to get rid
+of the stale bisect state, but wouldn't the user potentially lose some
+other state if s/he blindly followed the die message's suggestion and ran
+"bisect reset"?
