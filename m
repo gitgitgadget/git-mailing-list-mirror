@@ -1,78 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] GitTogether 2011 - Oct 24th/25th
-Date: Wed, 07 Sep 2011 14:00:24 -0700
-Message-ID: <7v7h5k2hlj.fsf@alter.siamese.dyndns.org>
-References: <CAJo=hJu48DiVUDexuWJpVgq__zVTfO1Xz=AgfOz6wws00b2EaQ@mail.gmail.com>
- <CAP2yMaKi7rEZU2Sh_W_413QOMWANTGEswJDoGO_YDKVMsoEwWQ@mail.gmail.com>
- <CAJo=hJvm62xPAg3v5Ay3ec-ira-i_BZ0Ej7wfdg+5r2Ls0UJQg@mail.gmail.com>
- <20110907193006.GB13364@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Scott Chacon <schacon@gmail.com>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 07 23:00:33 2011
+From: Georgi Chorbadzhiyski <gf@unixsol.org>
+Subject: [PATCH] send-mail: Add option to sleep between sending each email.
+Date: Wed,  7 Sep 2011 23:43:11 +0300
+Message-ID: <1315428191-9769-1-git-send-email-gf@unixsol.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 07 23:02:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1PEW-0004qS-5R
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 23:00:32 +0200
+	id 1R1PGf-0005uB-8v
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 23:02:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756956Ab1IGVA1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Sep 2011 17:00:27 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61880 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756938Ab1IGVA0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Sep 2011 17:00:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 06CAC3EF3;
-	Wed,  7 Sep 2011 17:00:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2j3uQlr74CdINh4JoaYCO8aRYqQ=; b=A4bIh6
-	Rm8g3rh5w/FIByDy6lYQx7L89FxivGJIuBauydPtYnUPrhWKv26VaGyDvRdF/mGA
-	s+KVMlyQq4Czs/jeuTaUjPK0VQZ2liNdbuYHJsqWoVHuXFXHsatap6hfDf6LN6S9
-	g2LkXcQpUHWGA9xrY9AJePFbEVADZ4bahf3oQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JbZHVudYQNLK7nmMDxUJQgsJ4iENNXWS
-	hN/daM4Uezc8m8yTFqEmxUpepOJDXC6/AhrmpiHcn/1uO7z4hsFqaBGms5MzEPC3
-	mWf+s1yeRciSxYat1lAN3VMrPZn5h3aqt8yHGig1q5EEQm3FOOXnF3e/Vip53+rq
-	mJpF2paYkHI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F27E93EF2;
-	Wed,  7 Sep 2011 17:00:25 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 851AF3EF1; Wed,  7 Sep 2011
- 17:00:25 -0400 (EDT)
-In-Reply-To: <20110907193006.GB13364@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 7 Sep 2011 15:30:06 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 68AB64D2-D994-11E0-A554-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756939Ab1IGVCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Sep 2011 17:02:40 -0400
+Received: from ns.unixsol.org ([193.110.159.2]:37995 "EHLO ns.unixsol.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754442Ab1IGVCj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Sep 2011 17:02:39 -0400
+X-Greylist: delayed 1158 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Sep 2011 17:02:39 EDT
+Received: (qmail 18435 invoked by uid 0); 7 Sep 2011 23:43:20 +0300
+Received: from gf.unixsol.bg (10.0.1.78)
+  by ns.unixsol.org with SMTP; 7 Sep 2011 23:43:20 +0300
+X-Mailer: git-send-email 1.7.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180909>
 
-Jeff King <peff@peff.net> writes:
+Sometimes when sending lots of changes it is not nice
+to send emails as fast as possible. Of course you can
+confirm each email after waiting couple of seconds but
+this is not optimal. This patch adds --sleep option
+to git-send-mail and corresponding sendmail.sleep config
+variable to control how much seconds to wait between
+sending each email. The default is 0 (not wait at all).
 
-> I think that's reasonable, especially as we grow. However, one of the
-> valuable things (for me, anyway) in previous GitTogethers is throwing
-> all of these people together to some degree. I'm not terribly interested
-> in day-to-day Gerrit issues, but sometimes the discussions start from
-> some minor Gerrit annoyance, and we end up realizing that the right
-> solution involves changes at a more fundamental layer, and all of git is
-> better as a result. I'd hate to lose that developer/user interaction.
+Signed-off-by: Georgi Chorbadzhiyski <gf@unixsol.org>
+---
+ Documentation/git-send-email.txt |    6 ++++++
+ git-send-email.perl              |   13 ++++++++++++-
+ 2 files changed, 18 insertions(+), 1 deletions(-)
 
-Same here, as I have been meaning to gauge interests from non-Gerrit
-people on issues identified in Gerrit land (e.g. expand-refs).
-
-> Maybe we can be segmented for part of the conference, and then bring
-> everybody together for other parts. I dunno. I guess that involves
-> predicting which parts will be useful for everybody to be together.
-
-Also we would need to predict what parts we will have to begin with ;-).
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 327233c..2ceb69f 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -298,6 +298,9 @@ Default is the value of 'sendemail.confirm' configuration value; if that
+ is unspecified, default to 'auto' unless any of the suppress options
+ have been specified, in which case default to 'compose'.
+ 
++--sleep=<seconds>::
++	How many seconds to wait between sending each email.
++
+ --dry-run::
+ 	Do everything except actually send the emails.
+ 
+@@ -349,6 +352,9 @@ sendemail.confirm::
+ 	one of 'always', 'never', 'cc', 'compose', or 'auto'. See '--confirm'
+ 	in the previous section for the meaning of these values.
+ 
++sendemail.sleep::
++	Sets how many seconds to wait between sending each email.
++
+ EXAMPLE
+ -------
+ Use gmail as the smtp server
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 98ab33a..7239fd4 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -84,6 +84,7 @@ git send-email [options] <file | directory | rev-list options >
+   Administering:
+     --confirm               <str>  * Confirm recipients before sending;
+                                      auto, cc, compose, always, or never.
++    --sleep                 <int>  * Sleep <int> seconds between sending mails.
+     --quiet                        * Output one line of info per email.
+     --dry-run                      * Don't actually send the emails.
+     --[no-]validate                * Perform patch sanity checks. Default on.
+@@ -195,7 +196,7 @@ my ($to_cmd, $cc_cmd);
+ my ($smtp_server, $smtp_server_port, @smtp_server_options);
+ my ($smtp_authuser, $smtp_encryption);
+ my ($identity, $aliasfiletype, @alias_files, $smtp_domain);
+-my ($validate, $confirm);
++my ($validate, $confirm, $sleep);
+ my (@suppress_cc);
+ my ($auto_8bit_encoding);
+ 
+@@ -230,6 +231,7 @@ my %config_settings = (
+     "envelopesender" => \$envelope_sender,
+     "multiedit" => \$multiedit,
+     "confirm"   => \$confirm,
++    "sleep" => \$sleep,
+     "from" => \$sender,
+     "assume8bitencoding" => \$auto_8bit_encoding,
+ );
+@@ -304,6 +306,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
+ 		    "suppress-cc=s" => \@suppress_cc,
+ 		    "signed-off-cc|signed-off-by-cc!" => \$signed_off_by_cc,
+ 		    "confirm=s" => \$confirm,
++		    "sleep:i" => \$sleep,
+ 		    "dry-run" => \$dry_run,
+ 		    "envelope-sender=s" => \$envelope_sender,
+ 		    "thread!" => \$thread,
+@@ -405,6 +408,9 @@ if ($confirm_unconfigured) {
+ die "Unknown --confirm setting: '$confirm'\n"
+ 	unless $confirm =~ /^(?:auto|cc|compose|always|never)/;
+ 
++# Set sleep's default value
++$sleep = 0 if (!defined $sleep);
++
+ # Debugging, print out the suppressions.
+ if (0) {
+ 	print "suppressions:\n";
+@@ -1143,6 +1149,11 @@ X-Mailer: git-send-email $gitversion
+ 		}
+ 	}
+ 
++	if (!$dry_run && $sleep) {
++		print "Sleeping: $sleep second(s).\n" if (!$quiet);
++		sleep($sleep);
++	};
++
+ 	return 1;
+ }
+ 
+-- 
+1.7.5.1
