@@ -1,78 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] push -s: skeleton
-Date: Wed, 07 Sep 2011 15:40:21 -0700
-Message-ID: <7vliu00yei.fsf@alter.siamese.dyndns.org>
-References: <7vfwk82hrt.fsf@alter.siamese.dyndns.org>
- <7vbouw2hqg.fsf@alter.siamese.dyndns.org>
- <CACsJy8Cy_Nn3EExV0D=RWtft+1pc9RBdJgpmES4AeQgYsUfU3A@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [RFC/PATCH] fetch: bigger forced-update warnings
+Date: Thu, 8 Sep 2011 00:42:45 +0200
+Message-ID: <201109080042.45980.trast@student.ethz.ch>
+References: <20110902000039.GB9339@sigill.intra.peff.net> <CAJo=hJvFSegSzTOMj824PoG=soj75JMChfRnjyz4rNgUcVM=Jw@mail.gmail.com> <20110907212042.GG13364@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Robin H. Johnson" <robbat2@gentoo.org>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 08 00:40:34 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	<git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 08 00:43:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1QnH-00076t-9v
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 00:40:31 +0200
+	id 1R1Qpo-00089G-PF
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 00:43:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757374Ab1IGWkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Sep 2011 18:40:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58333 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756985Ab1IGWkY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Sep 2011 18:40:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A0324716;
-	Wed,  7 Sep 2011 18:40:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gQ7IRRtSM28UcbNlA4/8IWHwP0Q=; b=yhWfrA
-	FFn3yTSaIzEtCSY5XRiSnl2Ybpsp1+jUi2ZRPTSrHUlLsBYd2MPcBtufuREtpW53
-	iLjmzmMgh55dhH2TpSZz0XYHoBrIKCyUzoZfHrmgANQwNWioQwygykPWYG0IUXB2
-	UElNlEpvthgjEfB/hcCARZhHHlQmQKMupcIls=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=G8kICDnFvE2vCYG46Pn4Z5BNP/KpEZU3
-	EgB4CVcwybnObSdSz+8HMViBSN88D/BHK8hzqKjNCoEZGwdHi4IRNYU12ZUyjouN
-	lsT6jc3lOKxLqGFVomZrxPSWTy6c77pthButw2d2GwfC267fBfYpSWScxyoT4Wbi
-	iB61DWwtQXI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 706DE4715;
-	Wed,  7 Sep 2011 18:40:23 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 07CC74714; Wed,  7 Sep 2011
- 18:40:22 -0400 (EDT)
-In-Reply-To: <CACsJy8Cy_Nn3EExV0D=RWtft+1pc9RBdJgpmES4AeQgYsUfU3A@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Thu, 8 Sep 2011 08:21:05 +1000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5F73534E-D9A2-11E0-A59A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757408Ab1IGWmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Sep 2011 18:42:50 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:10855 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756985Ab1IGWms (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Sep 2011 18:42:48 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.289.1; Thu, 8 Sep
+ 2011 00:42:45 +0200
+Received: from thomas.inf.ethz.ch (129.132.209.196) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.289.1; Thu, 8 Sep
+ 2011 00:42:46 +0200
+User-Agent: KMail/1.13.7 (Linux/3.0.3-41-desktop; KDE/4.6.5; x86_64; ; )
+In-Reply-To: <20110907212042.GG13364@sigill.intra.peff.net>
+X-Originating-IP: [129.132.209.196]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180925>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+Jeff King wrote:
+> On Mon, Sep 05, 2011 at 02:14:57PM -0700, Shawn O. Pearce wrote:
+> 
+> > > Right. What I mean is, what should the bigger warning look like?
+> > 
+> > Its a bikeshed. I refuse to paint bikesheds. :-)
+[...]
+> +	if (uncommon_forced_update)
+> +		warning("HEY STUPID FIX YOUR TOPICS");
 
->> ...
->>  4. A new phase to record the push certificate is introduced in the
->>    codepath after the receiving end runs receive_hook(). It is envisioned
->>    that this phase:
->>
->>    a. parses the updated-to object names, and appends the push
->>       certificate (still GPG signed) to a note attached to each of the
->>       objects that will sit at the tip of the refs;
->
-> I recall Gentoo wanted something like this (recording who pushes
-> what). Pulling Robin in if he has any comments.
+Whatever comes out of the bikeshedding, I'm going to keep a patch
+locally that refreshes the mental picture of Shawn shouting that!
 
-As the beauty of this approach is that we can update and tailor what the
-receiving end does using the information given from the server, it is a
-strange thing to do to chomp this list in the middle at a funny place
-here.
+That being said, I think there should be a multiline warning pointing
+the user at the "recovering from upstream rebase" section in
+git-rebase(1).  At least by default with an advice.* setting to
+disable it.
+
+> +       if (!prefixcmp(message, "fetch: fast-forward"))
+> +               uc->fastforward++;
+> +       else if (!prefixcmp(message, "fetch: forced-update\n"))
+> +               uc->forced++;
+
+That doesn't work: fetch puts the whole command line there.
+E.g.
+
+  git fetch altgit
+  --> fetch altgit: fast-forward
+
+  git fetch altgit next:refs/remotes/next
+  --> fetch altgit next:remotes/altgit/next: fast-forward
+
+There's also a minor subtlety here that I had to double-check first:
+the message for a branch creation is 'storing head', so the later
+check
+
+> +       return uc.fastforward && uc.forced <= 1; /* 1 for the one we just did */
+
+never triggers at the second fetch.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
