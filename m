@@ -1,60 +1,78 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: Git without morning coffee
-Date: Wed, 7 Sep 2011 20:59:08 +0000
-Message-ID: <CAMOZ1Bv1+OA77htE6DVFUGGdKvtB48ostGVHW0K-aKUZC4PmQQ@mail.gmail.com>
-References: <4E6721E3.7000207@drmicha.warpmail.net> <7vehzs47we.fsf@alter.siamese.dyndns.org>
- <CAMOZ1BstyMteutmK7tst=3t9djavY9_4vBKJgdj7rhUnE1Wr7w@mail.gmail.com> <7vy5y02qf4.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] GitTogether 2011 - Oct 24th/25th
+Date: Wed, 07 Sep 2011 14:00:24 -0700
+Message-ID: <7v7h5k2hlj.fsf@alter.siamese.dyndns.org>
+References: <CAJo=hJu48DiVUDexuWJpVgq__zVTfO1Xz=AgfOz6wws00b2EaQ@mail.gmail.com>
+ <CAP2yMaKi7rEZU2Sh_W_413QOMWANTGEswJDoGO_YDKVMsoEwWQ@mail.gmail.com>
+ <CAJo=hJvm62xPAg3v5Ay3ec-ira-i_BZ0Ej7wfdg+5r2Ls0UJQg@mail.gmail.com>
+ <20110907193006.GB13364@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 07 22:59:46 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Scott Chacon <schacon@gmail.com>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 07 23:00:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1PDk-0004Qu-E5
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 22:59:44 +0200
+	id 1R1PEW-0004qS-5R
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 23:00:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756968Ab1IGU7j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Sep 2011 16:59:39 -0400
-Received: from mail-gw0-f42.google.com ([74.125.83.42]:50342 "EHLO
-	mail-gw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756938Ab1IGU7i (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Sep 2011 16:59:38 -0400
-X-Greylist: delayed 12957 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Sep 2011 16:59:38 EDT
-Received: by gwb17 with SMTP id 17so109718gwb.1
-        for <git@vger.kernel.org>; Wed, 07 Sep 2011 13:59:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=yIteB53o5oNX7PuQhi+It/zBly/YnB0YE7NK+x7O+BA=;
-        b=iJ2MnOfB6MiZr3lIGsCn/O6UgLZ4tnkJ3DiTqyLbjzKELz9QKLy43uZlgPyg8fNZrk
-         4tEpVMt4Lu86xHxmnq2YNWSFQWGRZPtLd+kEgjYifZ0I1oBBPClGvI5qvDJIvIpCiJLg
-         Df7MDnDsjR/hvI5Eolm80UCMhrG357z76+3ck=
-Received: by 10.42.148.72 with SMTP id q8mr5455641icv.481.1315429178076; Wed,
- 07 Sep 2011 13:59:38 -0700 (PDT)
-Received: by 10.42.171.194 with HTTP; Wed, 7 Sep 2011 13:59:08 -0700 (PDT)
-In-Reply-To: <7vy5y02qf4.fsf@alter.siamese.dyndns.org>
+	id S1756956Ab1IGVA1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Sep 2011 17:00:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61880 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756938Ab1IGVA0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Sep 2011 17:00:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 06CAC3EF3;
+	Wed,  7 Sep 2011 17:00:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2j3uQlr74CdINh4JoaYCO8aRYqQ=; b=A4bIh6
+	Rm8g3rh5w/FIByDy6lYQx7L89FxivGJIuBauydPtYnUPrhWKv26VaGyDvRdF/mGA
+	s+KVMlyQq4Czs/jeuTaUjPK0VQZ2liNdbuYHJsqWoVHuXFXHsatap6hfDf6LN6S9
+	g2LkXcQpUHWGA9xrY9AJePFbEVADZ4bahf3oQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JbZHVudYQNLK7nmMDxUJQgsJ4iENNXWS
+	hN/daM4Uezc8m8yTFqEmxUpepOJDXC6/AhrmpiHcn/1uO7z4hsFqaBGms5MzEPC3
+	mWf+s1yeRciSxYat1lAN3VMrPZn5h3aqt8yHGig1q5EEQm3FOOXnF3e/Vip53+rq
+	mJpF2paYkHI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F27E93EF2;
+	Wed,  7 Sep 2011 17:00:25 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 851AF3EF1; Wed,  7 Sep 2011
+ 17:00:25 -0400 (EDT)
+In-Reply-To: <20110907193006.GB13364@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 7 Sep 2011 15:30:06 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 68AB64D2-D994-11E0-A554-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180908>
 
-On Wed, Sep 7, 2011 at 17:49, Junio C Hamano <gitster@pobox.com> wrote:
-> Michael Witten <mfwitten@gmail.com> writes:
->
->> I think it would be great if at some point you could write a detailed
->> tutorial of how you maintain git...
->
-> Is MaintNotes[*1*] taken together with Documentation/howto/maintain-git.txt
-> insufficient?
->
-> [Reference]
-> *1* http://git-blame.blogspot.com/p/note-from-maintainer.html
+Jeff King <peff@peff.net> writes:
 
-I was unaware of the `howto'; I look forward to reading it.
+> I think that's reasonable, especially as we grow. However, one of the
+> valuable things (for me, anyway) in previous GitTogethers is throwing
+> all of these people together to some degree. I'm not terribly interested
+> in day-to-day Gerrit issues, but sometimes the discussions start from
+> some minor Gerrit annoyance, and we end up realizing that the right
+> solution involves changes at a more fundamental layer, and all of git is
+> better as a result. I'd hate to lose that developer/user interaction.
+
+Same here, as I have been meaning to gauge interests from non-Gerrit
+people on issues identified in Gerrit land (e.g. expand-refs).
+
+> Maybe we can be segmented for part of the conference, and then bring
+> everybody together for other parts. I dunno. I guess that involves
+> predicting which parts will be useful for everybody to be together.
+
+Also we would need to predict what parts we will have to begin with ;-).
