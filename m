@@ -1,112 +1,179 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 2/2] push -s: skeleton
-Date: Wed, 7 Sep 2011 14:18:52 -0700
-Message-ID: <CAJo=hJtz6fa4XfC-4ghryP_nfg3sbcrE2bKauj+F7w2Z_8Ckvw@mail.gmail.com>
-References: <7vfwk82hrt.fsf@alter.siamese.dyndns.org> <7vbouw2hqg.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: [RFC/PATCH] fetch: bigger forced-update warnings
+Date: Wed, 7 Sep 2011 17:20:42 -0400
+Message-ID: <20110907212042.GG13364@sigill.intra.peff.net>
+References: <20110902000039.GB9339@sigill.intra.peff.net>
+ <4E6088F9.5070102@drmicha.warpmail.net>
+ <20110902152947.GB19213@sigill.intra.peff.net>
+ <7v4o0uncq0.fsf@alter.siamese.dyndns.org>
+ <20110902162524.GC19690@sigill.intra.peff.net>
+ <CAJo=hJtuUe1ajjW9dNU4JzjE+P94a42W7ZvC+iQBQTeGXVvS8Q@mail.gmail.com>
+ <20110905204729.GB4221@sigill.intra.peff.net>
+ <CAJo=hJtvU+ujYBMvrgVJpBdaTUq+NOsQwVFkL-A4pHv-CRPdDg@mail.gmail.com>
+ <20110905205735.GA5578@sigill.intra.peff.net>
+ <CAJo=hJvFSegSzTOMj824PoG=soj75JMChfRnjyz4rNgUcVM=Jw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 07 23:19:32 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Sep 07 23:21:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1PWr-0005Ps-NU
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 23:19:30 +0200
+	id 1R1PYL-00065B-RH
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 23:21:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757058Ab1IGVTQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Sep 2011 17:19:16 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:52389 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757053Ab1IGVTN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Sep 2011 17:19:13 -0400
-Received: by gxk21 with SMTP id 21so301042gxk.5
-        for <git@vger.kernel.org>; Wed, 07 Sep 2011 14:19:12 -0700 (PDT)
-Received: by 10.42.174.7 with SMTP id t7mr1049721icz.431.1315430352074; Wed,
- 07 Sep 2011 14:19:12 -0700 (PDT)
-Received: by 10.42.163.70 with HTTP; Wed, 7 Sep 2011 14:18:52 -0700 (PDT)
-In-Reply-To: <7vbouw2hqg.fsf@alter.siamese.dyndns.org>
+	id S1757095Ab1IGVUp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Sep 2011 17:20:45 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54497
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757089Ab1IGVUo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Sep 2011 17:20:44 -0400
+Received: (qmail 6136 invoked by uid 107); 7 Sep 2011 21:21:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 07 Sep 2011 17:21:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Sep 2011 17:20:42 -0400
+Content-Disposition: inline
+In-Reply-To: <CAJo=hJvFSegSzTOMj824PoG=soj75JMChfRnjyz4rNgUcVM=Jw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180913>
 
-On Wed, Sep 7, 2011 at 13:57, Junio C Hamano <gitster@pobox.com> wrote:
-> If a tag is GPG-signed, and if you trust the cryptographic robustness=
- of
-> the SHA-1 and GPG, you can guarantee that all the history leading to =
-the
-> signed commit is not tampered with. However, it would be both cumbers=
-ome
-> and cluttering to sign each and every commit. Especially if you striv=
-e to
-> keep your history clean by tweaking, rewriting and polishing your com=
-mits
-> before pushing the resulting history out, many commits you will creat=
-e
-> locally end up not mattering at all, and it is a waste of time to sig=
-n
-> them.
->
-> A better alternative could be to sign a "push certificate" (for the l=
-ack
-> of better name) every time you push, asserting that what commits you =
-are
-> pushing to update which refs. The basic workflow goes like this:
->
-> =A01. You push out your work with "git push -s";
+On Mon, Sep 05, 2011 at 02:14:57PM -0700, Shawn O. Pearce wrote:
 
-Yay!
+> > Right. What I mean is, what should the bigger warning look like?
+> 
+> Its a bikeshed. I refuse to paint bikesheds. :-)
 
-> And here is a skeleton to implement it. It has all the necessary prot=
-ocol
-> extensions implemented (although I do not know if we need separate
-> codepath for stateless RPC mode), but does not have subroutines to:
+Hmph. Somebody has to write the patch. :P
 
-Yea, its broken for stateless RPC. See below.
+> > Also, you suggested caching to avoid looking through the whole reflog
+> > each time. I think you could probably just sample the last 10 or so
+> > reflog entries to get an idea.
+> 
+> Good point. 10 or so last records might be representative of the
+> branch's recent behavior, which is all that matters to the user who
+> wants this warning.
 
-> +static char *receive_push_certificate(void)
-> +{
-> + =A0 =A0 =A0 struct strbuf cert =3D STRBUF_INIT;
-> + =A0 =A0 =A0 for (;;) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 char line[1000];
+Actually, because recent ones are near the end, it's much easier to say
+"look at the last 4096 bytes of reflogs" rather than "look at exactly
+10". For our purposes, it's about the same (actually 4096 is probably
+more like 18-20, depending on the exact size of each entry. But it's a
+page, so it's probably reasonable).
 
-1000 isn't enough for some certificates. Imagine pushing a Gerrit Code
-Review managed repository with 2M worth of advertisement data at once.
-You can't sign that in 1000 bytes.
+-- >8 --
+Subject: fetch: bigger forced-update warnings
 
-> @@ -326,6 +366,23 @@ int send_pack(struct send_pack_args *args,
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0safe_write(out, req_buf.buf, req_buf.l=
-en);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0packet_flush(out);
-> =A0 =A0 =A0 =A0}
-> +
-> + =A0 =A0 =A0 if (signed_push) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 char *cp, *ep;
-> +
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 sign_push_certificate(&push_cert);
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 strbuf_reset(&req_buf);
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 for (cp =3D push_cert.buf; *cp; cp =3D =
-ep) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ep =3D strchrnul(cp, '\=
-n');
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (*ep =3D=3D '\n')
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ep++;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 packet_buf_write(&req_b=
-uf, "%.*s",
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 =A0(int)(ep - cp), cp);
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* Do we need anything funky for statel=
-ess rpc? */
+The default fetch refspec allows forced-updates. We already
+print "forced update" in the status table, but it's easy to
+miss. Let's make the warning a little more prominent.
 
-Yes. Above we flushed the req_buf and send that in an HTTP request.
-You need to hoist this block above the "if (args->stateless_rpc)"
-segment.
+Some branches are expected to rewind, so the prominent
+warning would be annoying. However, git doesn't know what
+the expectation is for a particular branch. We can have it
+guess by peeking at the lost couple of reflog entries. If we
+see all fast forwards, then a new forced-update is probably
+noteworthy. If we see something that force-updates all the
+time, it's probably boring and not worth displaying the big
+warning (we keep the status table "forced update" note, of
+course).
 
---=20
-Shawn.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/fetch.c |   39 +++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 37 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 93c9938..93bfefa 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -208,6 +208,34 @@ static struct ref *get_ref_map(struct transport *transport,
+ 	return ref_map;
+ }
+ 
++struct update_counts {
++	unsigned fastforward;
++	unsigned forced;
++};
++
++static int count_updates(unsigned char *osha1, unsigned char *nsha1,
++			 const char *email, unsigned long timestamp, int tz,
++			 const char *message, void *data)
++{
++	struct update_counts *uc = data;
++	/* We could check the ancestry of osha1 and nsha1, but this is way
++	 * cheaper */
++	if (!prefixcmp(message, "fetch: fast-forward"))
++		uc->fastforward++;
++	else if (!prefixcmp(message, "fetch: forced-update\n"))
++		uc->forced++;
++	return 0;
++}
++
++static int forced_update_is_uncommon(const char *ref)
++{
++	struct update_counts uc;
++	memset(&uc, 0, sizeof(&uc));
++	if (for_each_recent_reflog_ent(ref, count_updates, 4096, &uc) < 0)
++		for_each_reflog_ent(ref, count_updates, &uc);
++	return uc.fastforward && uc.forced <= 1; /* 1 for the one we just did */
++}
++
+ #define STORE_REF_ERROR_OTHER 1
+ #define STORE_REF_ERROR_DF_CONFLICT 2
+ 
+@@ -239,7 +267,8 @@ static int s_update_ref(const char *action,
+ 
+ static int update_local_ref(struct ref *ref,
+ 			    const char *remote,
+-			    char *display)
++			    char *display,
++			    int *uncommon_forced_update)
+ {
+ 	struct commit *current = NULL, *updated;
+ 	enum object_type type;
+@@ -336,6 +365,8 @@ static int update_local_ref(struct ref *ref,
+ 			TRANSPORT_SUMMARY_WIDTH, quickref, REFCOL_WIDTH, remote,
+ 			pretty_ref,
+ 			r ? _("unable to update local ref") : _("forced update"));
++		if (!r && forced_update_is_uncommon(ref->name))
++			*uncommon_forced_update = 1;
+ 		return r;
+ 	} else {
+ 		sprintf(display, "! %-*s %-*s -> %s  %s",
+@@ -355,6 +386,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 	const char *what, *kind;
+ 	struct ref *rm;
+ 	char *url, *filename = dry_run ? "/dev/null" : git_path("FETCH_HEAD");
++	int uncommon_forced_update = 0;
+ 
+ 	fp = fopen(filename, "a");
+ 	if (!fp)
+@@ -428,7 +460,8 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 		fputc('\n', fp);
+ 
+ 		if (ref) {
+-			rc |= update_local_ref(ref, what, note);
++			rc |= update_local_ref(ref, what, note,
++					       &uncommon_forced_update);
+ 			free(ref);
+ 		} else
+ 			sprintf(note, "* %-*s %-*s -> FETCH_HEAD",
+@@ -450,6 +483,8 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 		error(_("some local refs could not be updated; try running\n"
+ 		      " 'git remote prune %s' to remove any old, conflicting "
+ 		      "branches"), remote_name);
++	if (uncommon_forced_update)
++		warning("HEY STUPID FIX YOUR TOPICS");
+ 	return rc;
+ }
+ 
+-- 
+1.7.6.10.g62f04
