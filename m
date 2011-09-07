@@ -1,145 +1,109 @@
-From: Haitao Li <lihaitao@gmail.com>
-Subject: [PATCH v2] date.c: Support iso8601 timezone formats
-Date: Wed,  7 Sep 2011 13:46:47 +0800
-Message-ID: <1315374407-30828-1-git-send-email-lihaitao@gmail.com>
-References: <1315320996-1997-1-git-send-email-lihaitao@gmail.com>
-Cc: Haitao Li <lihaitao@gmail.com>
-To: git@vger.kernel.org, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 07 08:10:52 2011
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v17 1/7] bisect: move argument parsing before state modification.
+Date: Wed, 7 Sep 2011 08:16:15 +0200
+Message-ID: <201109070816.16655.chriscool@tuxfamily.org>
+References: <1312459263-16911-1-git-send-email-jon.seymour@gmail.com> <1312459263-16911-2-git-send-email-jon.seymour@gmail.com>
+Mime-Version: 1.0
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com, j6t@kdbg.org,
+	jnareb@gmail.com, jrnieder@gmail.com
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 07 08:16:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1BLX-0002Z1-TQ
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 08:10:52 +0200
+	id 1R1BR3-0004bK-9A
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 08:16:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755516Ab1IGGKr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Sep 2011 02:10:47 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:39600 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755507Ab1IGGKp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Sep 2011 02:10:45 -0400
-Received: by pzk37 with SMTP id 37so11378090pzk.1
-        for <git@vger.kernel.org>; Tue, 06 Sep 2011 23:10:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=kWBDg7DkbZSSe7h56D7fDx4b5A+pToCYudYYWLmaXg4=;
-        b=XYaMGZVzOI0rYjoANlDpDYtuAQ3X0OS1kq4s/IT6zdFvQCJZAr5Vg2tZIR1ptDedTV
-         Zb1fg7fnmdNIoFQC3T5sOf6ycII+NwNHZMp3fLPOIdVFsaUXjF5T1GJxVDtJ8/YrRtOd
-         8fdaKPJoG6vuM/AoVHSD9wgNuv/1RuoGzuVQ4=
-Received: by 10.68.46.98 with SMTP id u2mr381262pbm.31.1315374419508;
-        Tue, 06 Sep 2011 22:46:59 -0700 (PDT)
-Received: from localhost.localdomain (cursa.dreamhost.com. [173.236.210.234])
-        by mx.google.com with ESMTPS id u2sm2709523pbq.9.2011.09.06.22.46.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 06 Sep 2011 22:46:58 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.4
-In-Reply-To: <1315320996-1997-1-git-send-email-lihaitao@gmail.com>
+	id S1755507Ab1IGGQ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Sep 2011 02:16:29 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:44115 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755511Ab1IGGQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Sep 2011 02:16:27 -0400
+Received: from style.localnet (unknown [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 2FC3AA6274;
+	Wed,  7 Sep 2011 08:16:18 +0200 (CEST)
+User-Agent: KMail/1.13.6 (Linux/2.6.38-10-generic; KDE/4.6.2; x86_64; ; )
+In-Reply-To: <1312459263-16911-2-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180854>
 
-Timezone designators including additional separator (`:`) are ignored.
-Actually zone designators in below formats are all valid according to
-ISO8601:2004, section 4.3.2:
-    [+-]hh, [+-]hhmm, [+-]hh:mm
+Hi,
 
-Steps to reproduce the issue this patch fixes:
-    $ mkdir /tmp/test
-    $ cd /tmp/test
-    $ git init
-    $ echo 'timezone' > file.txt
-    $ git add .
-    $ git update-index
-    $ git write-tree
-    3e168d57e1c32a4598af134430384f0587581503
+On Thursday 04 August 2011 14:00:57 Jon Seymour wrote:
+> Currently 'git bisect start' modifies some state prior to checking
+> that its arguments are valid.
+> 
+> This change moves argument validation before state modification
+> with the effect that state modification does not occur
+> unless argument validations succeeds.
 
-    # Commit the tree returned above. Give a date with colon separated
-    # timezone
-    $ echo "Test commit" | \
-      TZ=UTC GIT_AUTHOR_DATE='2011-09-03T12:34:56+08:00' \
-      git commit-tree 3e168d57e1c32a4598af134430384f0587581503 | \
-      xargs git show  | grep Date
-    Date:   Sat Sep 3 12:34:56 2011 +0000
+This thread:
 
-while the expected result is:
-    Date:   Sat Sep 3 12:34:56 2011 +0800
-                                      ^---
+http://thread.gmane.org/gmane.comp.version-control.git/180733/
 
-This patch teaches git recognizing zone designators with hours and
-minutes separated by colon, or minutes are empty.
+made me wonder if we introduced a bug with this patch.
 
-Signed-off-by: Haitao Li <lihaitao@gmail.com>
----
- date.c          |   32 ++++++++++++++++++++++++++------
- t/t0006-date.sh |    5 +++++
- 2 files changed, 31 insertions(+), 6 deletions(-)
+If we start bisecting like this:
 
-diff --git a/date.c b/date.c
-index 896fbb4..f970ea8 100644
---- a/date.c
-+++ b/date.c
-@@ -556,15 +556,35 @@ static int match_tz(const char *date, int *offp)
- 	int min, hour;
- 	int n = end - date - 1;
+$ git bisect start HEAD HEAD~20
+
+and then we decide that it was not optimum and we want to start again like 
+this:
+
+$ git bisect start HEAD HEAD~6
+
+then issuing the latter command might not work as it did before this patch.
  
--	min = offset % 100;
--	hour = offset / 100;
-+	/*
-+	 * ISO8601:2004(E) allows time zone designator been separated
-+	 * by a clone in the extended format
-+	 */
-+	if (*end == ':') {
-+		if (isdigit(end[1])) {
-+			hour = offset;
-+			min = strtoul(end+1, &end, 10);
-+		} else {
-+			/* Mark as invalid */
-+			n = -1;
-+		}
-+	} else {
-+		/* Only hours specified */
-+		if (n == 1 || n == 2) {
-+			hour = offset;
-+			min = 0;
-+		} else {
-+			hour = offset / 100;
-+			min = offset % 100;
-+		}
-+	}
- 
- 	/*
--	 * Don't accept any random crap.. At least 3 digits, and
--	 * a valid minute. We might want to check that the minutes
--	 * are divisible by 30 or something too.
-+	 * Don't accept any random crap.. We might want to check that
-+	 * the minutes are divisible by 15 or something too. (Offset of
-+	 * Kathmandu, Nepal is UTC+5:45)
- 	 */
--	if (min < 60 && n > 2) {
-+	if (n > 0 && min < 60 && hour < 25) {
- 		offset = hour*60+min;
- 		if (*date == '-')
- 			offset = -offset;
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index f87abb5..5235b7a 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -40,6 +40,11 @@ check_parse 2008-02 bad
- check_parse 2008-02-14 bad
- check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 +0000'
- check_parse '2008-02-14 20:30:45 -0500' '2008-02-14 20:30:45 -0500'
-+check_parse '2008-02-14 20:30:45 -0015' '2008-02-14 20:30:45 -0015'
-+check_parse '2008-02-14 20:30:45 -5' '2008-02-14 20:30:45 -0500'
-+check_parse '2008-02-14 20:30:45 -05' '2008-02-14 20:30:45 -0500'
-+check_parse '2008-02-14 20:30:45 -:30' '2008-02-14 20:30:45 +0000'
-+check_parse '2008-02-14 20:30:45 -05:00' '2008-02-14 20:30:45 -0500'
- check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 -0500' EST5
- 
- check_approxidate() {
--- 
-1.7.5.4
+Before this patch the latter command would do a "git checkout $start_head" 
+before the repeated rev=$(git rev-parse -q --verify "$arg^{commit}") to 
+convert arguments into sha1. And after this patch the order is reversed.
+
+This means that before this patch "HEAD" in the arguments to "git bisect 
+start" would refer to $start_head because the "git checkout $start_head" 
+changes HEAD. After this patch "HEAD" in the arguments to "git bisect start" 
+would refer to the current HEAD.
+
+For example before this patch, if I issue "git bisect start HEAD HEAD~8" twice 
+I get:
+
+$ git bisect start HEAD HEAD~8
+Bisecting: 15 revisions left to test after this (roughly 4 steps)
+[67c116bb26b4ee31889e5ee15d6a9d3b7e972b7b] Merge branch 'jk/pager-with-
+external-command'
+$ git bisect start HEAD HEAD~8
+Previous HEAD position was 67c116b... Merge branch 'jk/pager-with-external-
+command'
+Switched to branch 'master'
+Bisecting: 15 revisions left to test after this (roughly 4 steps)
+[67c116bb26b4ee31889e5ee15d6a9d3b7e972b7b] Merge branch 'jk/pager-with-
+external-command'
+
+so the same commit to test is checked out.
+
+After this patch I get:
+
+$ git bisect start HEAD HEAD~8
+Bisecting: 15 revisions left to test after this (roughly 4 steps)
+[67c116bb26b4ee31889e5ee15d6a9d3b7e972b7b] Merge branch 'jk/pager-with-
+external-command'
+$ git bisect start HEAD HEAD~8
+Previous HEAD position was 67c116b... Merge branch 'jk/pager-with-external-
+command'
+Switched to branch 'master'
+Bisecting: 15 revisions left to test after this (roughly 4 steps)
+[e5cfcb04e0acc5f3b51e6d69487028315b33e4c9] Merge branch 'mh/attr'
+
+so a different commit is checked out after the second "git bisect start HEAD 
+HEAD~8".
+
+Best regards,
+Christian.
