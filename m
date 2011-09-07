@@ -1,182 +1,91 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [RFC/PATCH] core.clientTimeout config for git:// fetches
-Date: Wed, 7 Sep 2011 10:15:45 +0000
-Message-ID: <20110907101545.GA9326@dcvr.yhbt.net>
+From: James Blackburn <jamesblackburn@gmail.com>
+Subject: Issue fetching tags error: unable to find eb03b... ; git fsck shows
+ no problem...
+Date: Wed, 7 Sep 2011 17:14:58 +0100
+Message-ID: <CACyv8dcTi0pG_GPvxD1zoTf6iRG81KbaY43FA-pbxYJz2UVJcQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 07 18:14:10 2011
+X-From: git-owner@vger.kernel.org Wed Sep 07 18:15:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1KlM-0006iM-R3
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 18:14:09 +0200
+	id 1R1KmM-0007Q8-18
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 18:15:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756056Ab1IGQNc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Sep 2011 12:13:32 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:52458 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755776Ab1IGQNX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Sep 2011 12:13:23 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8796B2968AB;
-	Wed,  7 Sep 2011 10:15:45 +0000 (UTC)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755403Ab1IGQPB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Sep 2011 12:15:01 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:51703 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753772Ab1IGQPA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Sep 2011 12:15:00 -0400
+Received: by vxj15 with SMTP id 15so483963vxj.19
+        for <git@vger.kernel.org>; Wed, 07 Sep 2011 09:14:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=rtorBXU3YSZDIjJr0COtdPuni56cTTMcnN91oU68D/M=;
+        b=FiHaqe6PQM2piRGZMWyH+X7Pq9dB/Ba4lOwxUH0e2rfPNWNPhtVsfhHfMQK4W5Hj7M
+         izl/OphsL3spycOKbB2ki7+FmJcWsOSg/mdSeg+UJrxw8nxFUmgqUqZwGuhhtP076Uzj
+         TJpuFEcgF1mPy4JgJVmjBzTqVv3Cj6pibDQ6k=
+Received: by 10.220.120.12 with SMTP id b12mr1939261vcr.111.1315412098994;
+ Wed, 07 Sep 2011 09:14:58 -0700 (PDT)
+Received: by 10.220.202.12 with HTTP; Wed, 7 Sep 2011 09:14:58 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180860>
 
-This allows "git fetch" to exit after a preconfigured socket
-timeout.  This is needed in case an undetected server or network
-failure occurs.
+Hi All,
 
-The default timeout is 60 seconds.
+I've got an error I can't seem to resolve. Fsck reports both my
+repositories are OK, but git fetch --tags tells me it can't find an
+object.
 
-http:// and rsync:// transports should be supported in future
-changes, too.
+bash:jamesb:xl-cbga-20:32867> git --version
+git version 1.7.6
+bash:jamesb:xl-cbga-20:32864> git remote add old_tags ../old_tags/
+bash:jamesb:xl-cbga-20:32865> git fetch old_tags
+=46rom ../old_tags
+* [new branch] =A0 =A0 =A0master =A0 =A0 -> old_tags/master
+=2E..
+bash:jamesb:xl-cbga-20:32866> git fetch --tags old_tags
+remote: Counting objects: 33613, done.
+remote: Compressing objects: 100% (11778/11778), done.
+remote: Total 33529 (delta 18473), reused 30013 (delta 15779)
+Receiving objects: 100% (33529/33529), 28.59 MiB | 8.06 MiB/s, done.
+Resolving deltas: 100% (18473/18473), completed with 17 local objects.
+error: unable to find eb03ba0f40fb2b6a3287036d851d2506e4ea4f8f
+fatal: object eb03ba0f40fb2b6a3287036d851d2506e4ea4f8f not found
 
-So far, I've only tested (by hand) with a dummy server setup
-using "nc -l $some_port".
----
+git fsck --full shows no errors in old_tags.
+git show eb03ba0f40fb2b6a3287036d851d2506e4ea4f8f in old_tags seems to =
+work:
 
-  I run "git fetch" from cron to keep mirrors up-to-date.  I've
-  noticed some cron processes running for hours/days at a time after
-  network failures.  When I straced thoses processes, I saw they were
-  stuck on read() syscalls to remote machines.
+commit eb03ba0f40fb2b6a3287036d851d2506e4ea4f8f
+Author: (no author) <(no author)@e3bda1c8-b8c7-484d-b8f9-8c0514bc73ff>
+Date: =A0 Tue Oct 10 09:44:47 2006 +0000
 
-  I'm not familiar with this code and hope there's a better way to do
-  this.  Changing wrapper.c like this in this way doesn't feel right,
-  but neither does sprinkling alarm() calls in various places.
+=A0 =A0This commit was manufactured by cvs2svn to create tag 'releases/=
+3_2_0-5'.
 
-  Using a custom GIT_PROXY_COMMAND which implements timeouts on its own
-  would also work, but I'd like to eventually have a consistent parameter
-  unified across all remote transports for consistency and ease-of-use.
+=A0 =A0git-svn-id: svn://eng-cbga-2/tools/eclipse/tags/releases/3_2_0-5=
+@39
+e3bda1c8-b8c7-484d-b8f9-8c0514bc73ff
 
-  The default 60s timeout could be too low on some slow servers
-  with big repos, maybe the default should remain zero (no timeout).
+diff --git a/org.eclipse.cdt/org.eclipse.cdt.doc.isv/reference/api/allc=
+lasses-frame.html
+b/org.eclipse.cdt/org.eclipse.cdt.doc.isv/reference/api/
+allclasses-frame.html
+=2E..
 
- connect.c |   27 +++++++++++++++++++++++++++
- wrapper.c |   47 +++++++++++++++++++++++++++++++++++++++++++++--
- 2 files changed, 72 insertions(+), 2 deletions(-)
 
-diff --git a/connect.c b/connect.c
-index ee1d4b4..c1fa1ab 100644
---- a/connect.c
-+++ b/connect.c
-@@ -320,10 +320,37 @@ static int git_tcp_connect_sock(char *host, int flags)
- 
- #endif /* NO_IPV6 */
- 
-+static int timeout_setup(const char *var, const char *value, void *cb)
-+{
-+	int *timeout = cb;
-+
-+	if (strcmp(var, "core.clienttimeout") == 0)
-+		*timeout = git_config_int(var, value);
-+
-+	return 0;
-+}
- 
- static void git_tcp_connect(int fd[2], char *host, int flags)
- {
- 	int sockfd = git_tcp_connect_sock(host, flags);
-+	struct timeval tv;
-+	int timeout = 60;
-+
-+	git_config(timeout_setup, &timeout);
-+
-+	if (timeout > 0) {
-+		socklen_t len = sizeof(struct timeval);
-+
-+		tv.tv_sec = timeout;
-+		tv.tv_usec = 0;
-+		if (setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &tv, len) < 0)
-+			die_errno("could not set socket receive timeout");
-+
-+		tv.tv_sec = timeout;
-+		tv.tv_usec = 0;
-+		if (setsockopt(sockfd, SOL_SOCKET, SO_SNDTIMEO, &tv, len) < 0)
-+			die_errno("could not set socket send timeout");
-+	}
- 
- 	fd[0] = sockfd;
- 	fd[1] = dup(sockfd);
-diff --git a/wrapper.c b/wrapper.c
-index 85f09df..09a31c6 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -109,6 +109,49 @@ void *xcalloc(size_t nmemb, size_t size)
- 	return ret;
- }
- 
-+static int io_continuable(int fd, int optname)
-+{
-+	if (errno == EINTR)
-+		return 1;
-+
-+	/*
-+	 * If fd is a socket, a socket-level timeout could've been
-+	 * set in git_tcp_connect().  Unfortunately EAGAIN alone
-+	 * isn't enough to tell us if the timeout is user-specified
-+	 * or not, so we have to try to figure it out.
-+	 */
-+	if (errno == EAGAIN) {
-+		socklen_t len = sizeof(struct timeval);
-+		struct timeval tv;
-+		int flags;
-+
-+		/*
-+		 * Let any non-blocking I/O users through.  Currently
-+		 * git does not explicitly use non-blocking I/O anywhere,
-+		 * but it could inherit a non-blocking descriptor.  We
-+		 * rely on the fact that (currently) no sockets git itself
-+		 * creates (and thus may set timeout on) also sets O_NONBLOCK.
-+		 */
-+		flags = fcntl(fd, F_GETFL);
-+		if (flags < 0)
-+			die_errno("fcntl failed to get file status flags");
-+		if (flags & O_NONBLOCK)
-+			return 1;
-+
-+		if (getsockopt(fd, SOL_SOCKET, optname, &tv, &len) < 0) {
-+			if (errno == ENOTSOCK)
-+				return 1;
-+			die_errno("getsockopt failed to get socket option");
-+		}
-+		if (tv.tv_sec > 0 || tv.tv_usec > 0)
-+			die("socket timed out");
-+
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
- /*
-  * xread() is the same a read(), but it automatically restarts read()
-  * operations with a recoverable error (EAGAIN and EINTR). xread()
-@@ -119,7 +162,7 @@ ssize_t xread(int fd, void *buf, size_t len)
- 	ssize_t nr;
- 	while (1) {
- 		nr = read(fd, buf, len);
--		if ((nr < 0) && (errno == EAGAIN || errno == EINTR))
-+		if (nr < 0 && io_continuable(fd, SO_RCVTIMEO))
- 			continue;
- 		return nr;
- 	}
-@@ -135,7 +178,7 @@ ssize_t xwrite(int fd, const void *buf, size_t len)
- 	ssize_t nr;
- 	while (1) {
- 		nr = write(fd, buf, len);
--		if ((nr < 0) && (errno == EAGAIN || errno == EINTR))
-+		if (nr < 0 && io_continuable(fd, SO_SNDTIMEO))
- 			continue;
- 		return nr;
- 	}
--- 
-Eric Wong
+Any ideas how to resolve this?
+
+Cheers,
+James
