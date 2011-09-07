@@ -1,105 +1,145 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [BUG] git bisect start fails when stale bisect data is left behind
-Date: Wed, 7 Sep 2011 06:48:20 +0200
-Message-ID: <201109070648.21211.chriscool@tuxfamily.org>
-References: <CAC6WLetwT9UvBY_=Nf38hhkyU1mhmdWHWqscf3ebba1WRGS1LQ@mail.gmail.com> <CAP8UFD1h059dOyjszcP-qFauyho78c0RHBMQsGOPFgzZtp+7vg@mail.gmail.com> <7vehztaan4.fsf@alter.siamese.dyndns.org>
+From: Kyle Neath <kneath@gmail.com>
+Subject: The imporantance of including http credential caching in 1.7.7
+Date: Tue, 6 Sep 2011 22:33:35 -0700
+Message-ID: <CAFcyEthzW1AY4uXgpsVxjyWCDXAJ6=GdWGqLFO6Acm1ovJJVaw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Joel Kaasinen <joel@zenrobotics.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 07 06:48:39 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 07 07:34:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1A3y-0001JZ-I1
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 06:48:38 +0200
+	id 1R1Alv-0006ub-Ku
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 07:34:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754690Ab1IGEsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Sep 2011 00:48:33 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:48314 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752321Ab1IGEsc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Sep 2011 00:48:32 -0400
-Received: from style.localnet (unknown [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id B5EF2A61CB;
-	Wed,  7 Sep 2011 06:48:22 +0200 (CEST)
-User-Agent: KMail/1.13.6 (Linux/2.6.38-10-generic; KDE/4.6.2; x86_64; ; )
-In-Reply-To: <7vehztaan4.fsf@alter.siamese.dyndns.org>
+	id S1753997Ab1IGFd6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Sep 2011 01:33:58 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:47844 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753874Ab1IGFd4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Sep 2011 01:33:56 -0400
+Received: by wwf5 with SMTP id 5so7071497wwf.1
+        for <git@vger.kernel.org>; Tue, 06 Sep 2011 22:33:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=RCd1/Thz7FepaqrAbc+2porr7bzw+bfHaTmKUbav5eQ=;
+        b=YN7w+PFt8DiYsxI7+Wc4AAdYNLbwHxv/FBpAKUZW67XS1ITegUFeUItE3fucVLfMis
+         kTdYeoUoMa3Wf94z4zNv2ktcWegQrbqq+iA3Bu+du5Ddaxiw09HTa9ygUsuwzwgs9IQ5
+         bDouUnLTHAX/BFPNSqqLANQJRGdx9EdekxSuk=
+Received: by 10.227.8.214 with SMTP id i22mr5866262wbi.11.1315373635162; Tue,
+ 06 Sep 2011 22:33:55 -0700 (PDT)
+Received: by 10.227.54.208 with HTTP; Tue, 6 Sep 2011 22:33:35 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180852>
 
-On Tuesday 06 September 2011 18:38:55 Junio C Hamano wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
-> >> How to reproduce:
-> >> $ echo foo > .git/BISECT_START
-> >> $ git bisect start HEAD HEAD^
-> >> 
-> >> Fails with "fatal: invalid reference:" on git 1.7.6.
-> > 
-> > Yeah, it looks like a very old behavior.
-> > I'd suggest a simple improvement in the error message like this:
-> > 
-> > diff --git a/git-bisect.sh b/git-bisect.sh
-> > index c21e33c..bd7155b 100755
-> > --- a/git-bisect.sh
-> > +++ b/git-bisect.sh
-> > @@ -67,7 +67,8 @@ bisect_start() {
-> > 
-> >         then
-> >         
-> >                 # Reset to the rev from where we started.
-> >                 start_head=$(cat "$GIT_DIR/BISECT_START")
-> > 
-> > -               git checkout "$start_head" -- || exit
-> > +               git checkout "$start_head" -- ||
-> > +               die "Could not checkout previous start point
-> > '$start_head'. Try 'git bisect reset <branch>' first."
-> 
-> I do not necessarily think this is a bug to begin with --- the user had a
-> bad state, and bisect stopped without doing further damage.
+Earlier today, Scott Chacon alerted me to this email thread:
+http://www.spinics.net/lists/git/msg164192.html (many apologies to the list, I
+am not sure how to properly reference this email or reply to it since I have
+not been subscribed until today).
 
-Yeah, in fact commit f3a186ffade15f793ea17713a10e10ec4f26ff11 (bisect: improve 
-error message when branch checkout fails, Sat Apr 4, 2009) already improved 
-the error message, but probably didn't go far enough.
+> * jk/http-auth-keyring (2011-08-03) 13 commits
+>   (merged to 'next' on 2011-08-03 at b06e80e)
+>  + credentials: add "getpass" helper
+>  + credentials: add "store" helper
+>  + credentials: add "cache" helper
+>  + docs: end-user documentation for the credential subsystem
+>  + http: use hostname in credential description
+>  + allow the user to configure credential helpers
+>  + look for credentials in config before prompting
+>  + http: use credential API to get passwords
+>  + introduce credentials API
+>  + http: retry authentication failures for all http requests
+>  + remote-curl: don't retry auth failures with dumb protocol
+>  + improve httpd auth tests
+>  + url: decode buffers that are not NUL-terminated
+>
+> Looked mostly reasonable except for the limitation that it is not clear
+> how to deal with a site at which a user needs to use different passwords
+> for different repositories. Will keep it in "next" at least for one cycle,
+> until we start hearing real-world success reports on the list.
+>
+> Not urgent; will not be in 1.7.7.
 
-> The real question is what the sensible suggestion/advice the new message
-> should give. It would have to involve bisect reset in the end to get rid
-> of the stale bisect state, but wouldn't the user potentially lose some
-> other state if s/he blindly followed the die message's suggestion and ran
-> "bisect reset"?
+This is very disheartening to hear. Of all the minor changes, bugs, and
+potential features, I believe that http credential caching is the absolute
+most important thing that git core can do to promote adoption. I've believed
+this for more than a year now and I'm incredibly disappointed that it's being
+shelved for yet another release.
 
-When using "git bisect start" with an existing $GIT_DIR/BISECT_START file, the 
-next thing we do after checking out the previous head from the BISECT_START 
-file is a call to "bisect_clean_state". So all the previous bisect state is 
-discarded except the previous head that is in $start_head.
+Over the past two years as a designer for GitHub, I've answered ~thousands of
+support requests and talked face to face with ~thousands of developers of
+varying git skill levels. Once a month our company does online git training
+for newbies - https://github.com/training/online and I've had many discussions
+about newcomer's struggles with Matthew McCullough and Scott Chacon.
+Previously, I worked at ENTP where I helped polish the very popular "Git for
+Designers" guide http://hoth.entp.com/output/git_for_designers.html based on
+feedback. I was also lead designer for GitHub for Mac - an OSX GUI aimed at
+people less familiar with the command line.
 
-If checking out the previous head fails, that probably means that the previous 
-head is bad because it has been deleted.
+I bring all of this up because I'd like to think I have a good handle on
+common problems that git newcomers or people resisting git adoption run into.
+I've been deeply involved in spreading git adoption full time for nearly 3
+years - it's something that's incredibly important to me professionally and
+personally. And the number one problem that *always* comes up is SSH key
+complexity.
 
-In this case running "git bisect reset <branch>" and then "git bisect start 
-..." is ok because there is no valuable state lost compared to the situation 
-where "git bisect start ..." succeeded in the first place.
+A lot of these problems surface themselves in people saying it's hard to setup
+git on Windows. When I push these people to explain further, it turns out that
+the problem is always setting up SSH key authentication on Windows, not
+necessarily git.
 
-Of course if checking out the previous head failed because the 
-$GIT_DIR/BISECT_START file has been corrupted, then it might be better to fix 
-the content of this file. But anyway if we are able to fix the content of the 
-file, for example by putting "foobar" in it instead of the truncated "foo" that 
-made the checkout fail, then running "git bisect reset foobar" and then "git 
-bisect start ..." would probably do the trick too.
+It's incredibly frustrating that git's biggest roadblock has nothing to do
+with version control at all, but rather network authentication. Just as I
+believe only *you* can own your availability, I believe git should do it's
+best to own authentication.
 
-It wouldn't do the trick if the $GIT_DIR/BISECT_START file also needed a 
-permission change or more free space on the disc or something like that. But 
-in this case we will get an hopefully meaningful error message when running 
-"git bisect reset foobar" or "git bisect start ..." and we would not lose 
-information.
+HTTP credential caching combined with Smart HTTP make git one hell of an
+amazing tool for newcomers and experts alike. I like to envision a world in
+which git with both these features shipped with the latest OSX install.
+Developers, designers, or anyone with an inkling for code would have exactly
+two steps to get started with any given git host:
 
-Thanks,
-Christian.
+  1. Set your git config email / username
+  2. git clone https://example.com/repository
+
+Contrast this to our current help page for OSX:
+http://help.github.com/mac-set-up-git/ or worse yet, our Windows setup page
+with all of it's yelling about what kind of SSH keys to setup:
+http://help.github.com/win-set-up-git/
+
+Please note that I am not arguing against the merits of SSH keys - for those
+developers who understand them, they're fantastic. But the reality is the
+great majority of people who interact with version control do not understand
+them at all. This results in passwordless SSH keys, confusion, and
+frustration.
+
+If another git version comes and goes without http credential caching, I fear
+we as a community have purposefully ignored the largest potential for git
+adoption currently available. This is important enough for me that I believe
+it would be in git's best interest to delay the release of 1.7.7 until this
+feature has been patched to the core team's standards.
+
+I'll summarize with a graph of my opinion of where git's potential for
+adoption lies:
+
+------------------------------------------------------------------------------
+            OPPORTUNITY FOR GIT ADOPTION ACCORDING TO KYLE NEATH
+
+                      Caching of http credentials
+                                  |
+[=====================================================================||=====]
+                                                                          |
+                                               Everything else in the universe
+
+------------------------------------------------------------------------------
+
+With hopes and butterflies,
+
+Kyle Neath
+Director of Design at GitHub
