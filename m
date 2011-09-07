@@ -1,63 +1,77 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [ANNOUNCE] Git 1.7.6.2
-Date: Wed, 7 Sep 2011 20:27:02 +0200
-Message-ID: <CAGdFq_h7RTEm5+uezSkS3pC3=h0eOnSJxDQ_PLmEdjz8iQvmNg@mail.gmail.com>
-References: <7vvct55j4h.fsf@alter.siamese.dyndns.org> <CAGdFq_gF8Uz_JTEUfb46kVii=Y0CwzCpOp5H81+HT8y=1PPUTQ@mail.gmail.com>
- <7vsjo84mx3.fsf@alter.siamese.dyndns.org> <CAGdFq_hAm4Avoi1VoFMHcnSE4oDmhEPvqJiodrLUJ5042pKzGA@mail.gmail.com>
- <7vpqjc2ors.fsf@alter.siamese.dyndns.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [ANNOUNCE] GitTogether 2011 - Oct 24th/25th
+Date: Wed, 7 Sep 2011 11:38:18 -0700
+Message-ID: <CAJo=hJvm62xPAg3v5Ay3ec-ira-i_BZ0Ej7wfdg+5r2Ls0UJQg@mail.gmail.com>
+References: <CAJo=hJu48DiVUDexuWJpVgq__zVTfO1Xz=AgfOz6wws00b2EaQ@mail.gmail.com>
+ <CAP2yMaKi7rEZU2Sh_W_413QOMWANTGEswJDoGO_YDKVMsoEwWQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 07 20:27:49 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 07 20:38:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1Mqi-0000iO-9C
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 20:27:48 +0200
+	id 1R1N1K-0006n4-A9
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 20:38:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756516Ab1IGS1n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Sep 2011 14:27:43 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:58957 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756366Ab1IGS1m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Sep 2011 14:27:42 -0400
-Received: by pzk37 with SMTP id 37so100792pzk.1
-        for <git@vger.kernel.org>; Wed, 07 Sep 2011 11:27:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=mXYfdSJV54M52tQ67zlQcNOcd6jFHp97tZu8O68NOKM=;
-        b=CobuDCN5rUaequh5PJ5za8VckJukhd0QEWpyIxqJM4M5X631CrYZPZlwId5ojons8Q
-         oZQrfl46kwPSqrA808Xe50UO3g+IhbheIa3pysHYz0m1j+NtzuuEIyrQhOhLdzW9tHcY
-         zOd/cYUhrwOwJDLyCtLyvCaEqZNhReOHF7TEI=
-Received: by 10.68.14.163 with SMTP id q3mr11378342pbc.98.1315420062049; Wed,
- 07 Sep 2011 11:27:42 -0700 (PDT)
-Received: by 10.68.59.39 with HTTP; Wed, 7 Sep 2011 11:27:02 -0700 (PDT)
-In-Reply-To: <7vpqjc2ors.fsf@alter.siamese.dyndns.org>
+	id S1756574Ab1IGSik convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Sep 2011 14:38:40 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:35936 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753903Ab1IGSik convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Sep 2011 14:38:40 -0400
+Received: by gya6 with SMTP id 6so4993557gya.19
+        for <git@vger.kernel.org>; Wed, 07 Sep 2011 11:38:39 -0700 (PDT)
+Received: by 10.43.46.69 with SMTP id un5mr5566356icb.297.1315420719095; Wed,
+ 07 Sep 2011 11:38:39 -0700 (PDT)
+Received: by 10.42.163.70 with HTTP; Wed, 7 Sep 2011 11:38:18 -0700 (PDT)
+In-Reply-To: <CAP2yMaKi7rEZU2Sh_W_413QOMWANTGEswJDoGO_YDKVMsoEwWQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180896>
 
-Heya,
-
-On Wed, Sep 7, 2011 at 20:25, Junio C Hamano <gitster@pobox.com> wrote:
-> Sverre Rabbelier <srabbelier@gmail.com> writes:
->> How would you later re-merge the series when the
->> problems it has are fixed though?
+On Wed, Sep 7, 2011 at 10:11, Scott Chacon <schacon@gmail.com> wrote:
+> On Mon, Sep 5, 2011 at 12:56 PM, Shawn Pearce <spearce@spearce.org> w=
+rote:
+>> Google is once again hosting a 2 day user/developer conference for G=
+it
+>> users and developers to get together, share experiences, and hack on
+>> interesting features. This event will be held October 24th and 25th =
+at
+>> Google's headquarters in Mountain View, CA.
+>>
+>> More details along with sign-up (as space is limited) can be found o=
+n the wiki:
+>>
+>> =A0https://git.wiki.kernel.org/index.php/GitTogether11
 >
-> Simple. I won't re-merge nor allow a fix-up series to be queued on top of
-> the failed topic.
+> It's been like 2 days and we're already overflowing. =A0I've also
+> already heard people say they didn't sign up because it was full.
+> This is unacceptable. =A0I want to drink with all of you guys.
 
-Ah, as long as the reroll has a different sha1 there is no problem,
-makes sense. Simple yet effective :)
+Indeed!  Clearly I didn't really expect this big of a response this yea=
+r.
 
--- 
-Cheers,
+> Shawn, if you can't get a bigger venue at Google, we'll rent a meetin=
+g
+> space either at the hotel that most of the mentors are staying at or =
+a
+> nearby one.
 
-Sverre Rabbelier
+As we approach 50 people, does it makes sense to be able to break the
+event down into 2 "tracks", and have 2 meeting spaces available? I
+know a number of the folks on the attendee list are Gerrit Code Review
+/ Android sorts of shops and will want to discuss topics related to
+that that aren't necessarily relevant to the GitHub users / Linux
+kernel hacking folks that are also on the list. Being able to break
+off some of those discussions might make the event more interesting
+for everyone involved.
+
+--=20
+Shawn.
