@@ -1,96 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: [PATCH 2/2] push -s: skeleton
-Date: Wed, 07 Sep 2011 15:21:12 -0700
-Message-ID: <7vpqjc0zaf.fsf@alter.siamese.dyndns.org>
-References: <7vfwk82hrt.fsf@alter.siamese.dyndns.org>
- <7vbouw2hqg.fsf@alter.siamese.dyndns.org>
- <CAJo=hJtz6fa4XfC-4ghryP_nfg3sbcrE2bKauj+F7w2Z_8Ckvw@mail.gmail.com>
+Date: Thu, 8 Sep 2011 08:21:05 +1000
+Message-ID: <CACsJy8Cy_Nn3EExV0D=RWtft+1pc9RBdJgpmES4AeQgYsUfU3A@mail.gmail.com>
+References: <7vfwk82hrt.fsf@alter.siamese.dyndns.org> <7vbouw2hqg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Sep 08 00:21:21 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	"Robin H. Johnson" <robbat2@gentoo.org>
+X-From: git-owner@vger.kernel.org Thu Sep 08 00:21:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1QUj-00084X-Hw
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 00:21:21 +0200
+	id 1R1QV4-0008F3-N6
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 00:21:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757343Ab1IGWVQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Sep 2011 18:21:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45396 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757294Ab1IGWVP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Sep 2011 18:21:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 310A35F7F;
-	Wed,  7 Sep 2011 18:21:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=F532E8kERsKdZbcTbZmwYV7pUtI=; b=KQKLFK
-	sRL874ZevV5iHHtwDdqEKxjTOav9HyR4PevxlCGOTGboJ9reR22h3x4LptC+5dGI
-	z5V4LZI1Gwms8LE3DAenucYHVzWMRZla5XfZFvh1te1nkUyRTPm4G6XwftBn3ojB
-	E6dTqah/MrkgP56R5OOv77nAe70OpH+sDzPBc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=e9vfPaGzHXuW4jUHXDO++ln4OYTxuKJm
-	gJawMZXE6WdanJc8muTinDhd9PoNKoHXuEV82dnuY72RmLwPXvNscc3J4pWfx+C6
-	LA4pg5uQzEAsN/3+VK5ika+P4RWoOImNlOQNrcBkxvD2NkEop78SPhm5MIeYyTM3
-	ZvtJc9bf5y8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 264EA5F7E;
-	Wed,  7 Sep 2011 18:21:15 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC7E25F7C; Wed,  7 Sep 2011
- 18:21:14 -0400 (EDT)
-In-Reply-To: <CAJo=hJtz6fa4XfC-4ghryP_nfg3sbcrE2bKauj+F7w2Z_8Ckvw@mail.gmail.com> (Shawn
- Pearce's message of "Wed, 7 Sep 2011 14:18:52 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B2FECB0E-D99F-11E0-B8B3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757345Ab1IGWVh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Sep 2011 18:21:37 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:62799 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757294Ab1IGWVh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Sep 2011 18:21:37 -0400
+Received: by bke5 with SMTP id 5so107794bke.19
+        for <git@vger.kernel.org>; Wed, 07 Sep 2011 15:21:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=tRb3OamaEBEKJ9akEYjFi/TcxoptMdO75+gmFZm2YI8=;
+        b=cTdlYkcaIfDD2g68zLPOz5k6kAViex3PNVKihp98DFflKS4tTolo3iYRyX6TFRl+42
+         yMMIFopfr+yOIK3O1gw2N/AygMBsiu8ODPUlygiWIq+mEWueEg1sYYgKKeCvEYsq8dIq
+         xtYmucjUIIPCy93ROykwHyIQF6f/lUUEZ4yrg=
+Received: by 10.204.150.203 with SMTP id z11mr438734bkv.237.1315434095790;
+ Wed, 07 Sep 2011 15:21:35 -0700 (PDT)
+Received: by 10.204.7.138 with HTTP; Wed, 7 Sep 2011 15:21:05 -0700 (PDT)
+In-Reply-To: <7vbouw2hqg.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180923>
 
-Shawn Pearce <spearce@spearce.org> writes:
+On Thu, Sep 8, 2011 at 6:57 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> A better alternative could be to sign a "push certificate" (for the l=
+ack
+> of better name) every time you push, asserting that what commits you =
+are
+> pushing to update which refs. The basic workflow goes like this:
+>
+> =C2=A01. You push out your work with "git push -s";
+>
+> =C2=A02. "git push", as usual, learns where the remote refs are and w=
+hich refs
+> =C2=A0 =C2=A0are to be updated with this push. It prepares a text fil=
+e in memory
+> =C2=A0 =C2=A0that looks like this using this information:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Push-Certificate-Version: 1
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Pusher: Junio C Hamano <gitster@pobox.com>=
+ 1315427886 -0700
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Update: e83c51633... d4e58965f... refs/hea=
+ds/master
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Update: 5a144a288... 7931f38a2... refs/hea=
+ds/next
+>
+> =C2=A0 =C2=A0An actual push certificate records full 40-char object n=
+ame, but it is
+> =C2=A0 =C2=A0ellided for brevity here.
+>
+> =C2=A0 =C2=A0The user then is asked to sign this push certificate usi=
+ng GPG. The
+> =C2=A0 =C2=A0result is carried to the other side (i.e. receive-pack).=
+ In the
+> =C2=A0 =C2=A0protocol exchange, this step comes immediately after the=
+ sender tells
+> =C2=A0 =C2=A0what the result of the push should be, before it sends t=
+he pack data.
+>
+> =C2=A03. The receiving end will keep the signed push certificate in c=
+ore,
+> =C2=A0 =C2=A0receives the pack data and unpacks (or stores and runs i=
+ndex-pack)
+> =C2=A0 =C2=A0as usual.
+>
+> =C2=A04. A new phase to record the push certificate is introduced in =
+the
+> =C2=A0 =C2=A0codepath after the receiving end runs receive_hook(). It=
+ is envisioned
+> =C2=A0 =C2=A0that this phase:
+>
+> =C2=A0 =C2=A0a. parses the updated-to object names, and appends the p=
+ush
+> =C2=A0 =C2=A0 =C2=A0 certificate (still GPG signed) to a note attache=
+d to each of the
+> =C2=A0 =C2=A0 =C2=A0 objects that will sit at the tip of the refs;
 
-> Yes. Above we flushed the req_buf and send that in an HTTP request.
-> You need to hoist this block above the "if (args->stateless_rpc)"
-> segment.
-
-What do you mean by "hoist"? For the req advertisement, it seems that you
-are not hoisting anything but duplicating the code, turning safe_write()
-followed by flush into packet-buf-flush and sending the result over the
-sideband. Shouldn't this new data be sent over the sideband-to-http the
-same way?
-
-Unless you do not want signed push over http, that is...
-
- builtin/send-pack.c |   10 +++++++---
- 1 files changed, 7 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index 3193f34..37e0313 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -379,9 +379,13 @@ int send_pack(struct send_pack_args *args,
- 			packet_buf_write(&req_buf, "%.*s",
- 					 (int)(ep - cp), cp);
- 		}
--		/* Do we need anything funky for stateless rpc? */
--		safe_write(out, req_buf.buf, req_buf.len);
--		packet_flush(out);
-+		if (args->stateless_rpc) {
-+			packet_buf_flush(&req_buf);
-+			send_sideband(out, -1, req_buf.buf, req_buf.len, LARGE_PACKET_MAX);
-+		} else {
-+			safe_write(out, req_buf.buf, req_buf.len);
-+			packet_flush(out);
-+		}
- 	}
- 	strbuf_release(&req_buf);
- 
+I recall Gentoo wanted something like this (recording who pushes
+what). Pulling Robin in if he has any comments.
+--=20
+Duy
