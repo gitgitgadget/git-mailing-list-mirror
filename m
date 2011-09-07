@@ -1,143 +1,120 @@
-From: James Blackburn <jamesblackburn@gmail.com>
-Subject: Re: Issue fetching tags error: unable to find eb03b... ; git fsck
- shows no problem...
-Date: Wed, 7 Sep 2011 17:30:32 +0100
-Message-ID: <CACyv8dfopPtqWxMYwx3wGipc8+v7iPJO4+Esjk51kGuN8BSwuA@mail.gmail.com>
-References: <CACyv8dcTi0pG_GPvxD1zoTf6iRG81KbaY43FA-pbxYJz2UVJcQ@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: The imporantance of including http credential caching in 1.7.7
+Date: Wed, 07 Sep 2011 14:56:03 +0200
+Message-ID: <4E6769E3.4070003@drmicha.warpmail.net>
+References: <CAFcyEthzW1AY4uXgpsVxjyWCDXAJ6=GdWGqLFO6Acm1ovJJVaw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 07 18:31:38 2011
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Kyle Neath <kneath@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 07 18:33:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1L2D-0000sp-Ko
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 18:31:34 +0200
+	id 1R1L3y-0001xI-5j
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 18:33:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752187Ab1IGQae convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Sep 2011 12:30:34 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:36203 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752426Ab1IGQad convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Sep 2011 12:30:33 -0400
-Received: by vxj15 with SMTP id 15so496077vxj.19
-        for <git@vger.kernel.org>; Wed, 07 Sep 2011 09:30:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=aWL9RE5he8HZ5OrKdjM0PjXEcokJPLferFhpHFlY0AI=;
-        b=Y7/x62lUD+mM7q9ezS4b/WbTzU6vzKs6u2PMAaNmkPn8+FORtEFCDoO+igrl9pBbBL
-         ShXT5zmnawNL3qoTPjYHf9Iw1hWUBoeDFWOTzHSck8GKicOAvpijbanGNyWkSxOapQek
-         2DwmQRryAC5hp/s/Xz5EmjMvEk3MeNXOAFp00=
-Received: by 10.52.30.35 with SMTP id p3mr531108vdh.231.1315413032495; Wed, 07
- Sep 2011 09:30:32 -0700 (PDT)
-Received: by 10.220.202.12 with HTTP; Wed, 7 Sep 2011 09:30:32 -0700 (PDT)
-In-Reply-To: <CACyv8dcTi0pG_GPvxD1zoTf6iRG81KbaY43FA-pbxYJz2UVJcQ@mail.gmail.com>
+	id S1752695Ab1IGQcR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Sep 2011 12:32:17 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:60252 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752378Ab1IGQcP (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Sep 2011 12:32:15 -0400
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 70B0A2A29A;
+	Wed,  7 Sep 2011 08:56:05 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute6.internal (MEProxy); Wed, 07 Sep 2011 08:56:05 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=t0fVUrP6V8Xh/FQLfjSHP7
+	qrmN0=; b=dCpzBzxhD7ilSxgk9ce5ZlUT6yxcihsa0D2NZoT4kf1grm9DexYRNc
+	dibCdQnoU9mEbrENgrxqgz+Ya7L+HaO4CaPDDUtxN0VZQoDsDGC57puAUcB8tsm7
+	SnQapkcBE6V4f7dg/w8Xf8iZezVAnzG6I5qLv/kCdTvBYYnaFXpJ4=
+X-Sasl-enc: PGcMtlMrK+wjg6QIeCbKUsFzK6dtbeMD/ihX3jFVdgR1 1315400165
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id E53B6B61643;
+	Wed,  7 Sep 2011 08:56:04 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
+In-Reply-To: <CAFcyEthzW1AY4uXgpsVxjyWCDXAJ6=GdWGqLFO6Acm1ovJJVaw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180864>
 
-I can get the fetch to work, by removing refs/original in the source re=
-po:
+Kyle Neath venit, vidit, dixit 07.09.2011 07:33:
+> Earlier today, Scott Chacon alerted me to this email thread:
+> http://www.spinics.net/lists/git/msg164192.html (many apologies to the list, I
+> am not sure how to properly reference this email or reply to it since I have
+> not been subscribed until today).
+> 
+>> * jk/http-auth-keyring (2011-08-03) 13 commits
+>>   (merged to 'next' on 2011-08-03 at b06e80e)
+>>  + credentials: add "getpass" helper
+>>  + credentials: add "store" helper
+>>  + credentials: add "cache" helper
+>>  + docs: end-user documentation for the credential subsystem
+>>  + http: use hostname in credential description
+>>  + allow the user to configure credential helpers
+>>  + look for credentials in config before prompting
+>>  + http: use credential API to get passwords
+>>  + introduce credentials API
+>>  + http: retry authentication failures for all http requests
+>>  + remote-curl: don't retry auth failures with dumb protocol
+>>  + improve httpd auth tests
+>>  + url: decode buffers that are not NUL-terminated
+>>
+>> Looked mostly reasonable except for the limitation that it is not clear
+>> how to deal with a site at which a user needs to use different passwords
+>> for different repositories. Will keep it in "next" at least for one cycle,
+>> until we start hearing real-world success reports on the list.
+>>
+>> Not urgent; will not be in 1.7.7.
+> 
+> This is very disheartening to hear. Of all the minor changes, bugs, and
+> potential features, I believe that http credential caching is the absolute
+> most important thing that git core can do to promote adoption. I've believed
+> this for more than a year now and I'm incredibly disappointed that it's being
+> shelved for yet another release.
+> 
+> Over the past two years as a designer for GitHub, I've answered ~thousands of
+> support requests and talked face to face with ~thousands of developers of
+> varying git skill levels. Once a month our company does online git training
+> for newbies - https://github.com/training/online and I've had many discussions
+> about newcomer's struggles with Matthew McCullough and Scott Chacon.
+> Previously, I worked at ENTP where I helped polish the very popular "Git for
+> Designers" guide http://hoth.entp.com/output/git_for_designers.html based on
+> feedback. I was also lead designer for GitHub for Mac - an OSX GUI aimed at
+> people less familiar with the command line.
 
-bash:jamesb:xl-cbga-20:32942> git fetch --tags old
-remote: Counting objects: 35469, done.
-remote: Compressing objects: 100% (11562/11562), done.
-remote: Total 33792 (delta 18883), reused 30509 (delta 16197)
-Receiving objects: 100% (33792/33792), 28.10 MiB | 8.28 MiB/s, done.
-Resolving deltas: 100% (18883/18883), completed with 443 local objects.
-error: unable to find eb03ba0f40fb2b6a3287036d851d2506e4ea4f8f
-fatal: object eb03ba0f40fb2b6a3287036d851d2506e4ea4f8f not found
+So, it's been a year or more that you've been aware of the importance of
+this issue (from your/github's perspective), and we hear about it now,
+at the end of the rc phase. I don't know whether jk/http-auth-keyring
+has been done on github payroll or during spare time. But as you can
+see, all that is missing is real-world success reports, along with the
+single-user-multiple-passwords issue which is probably answered best
+from the real-world perspective (how common is it, do we even need to
+address it now). So, given the importance this has for you and the
+company, you sure can help out with what is still left to do, can you?
 
-bash:jamesb:xl-cbga-20:32943> rm -rf ../old_tagsX/.git/refs/original/
-bash:jamesb:xl-cbga-20:32944> git fetch --tags old
-remote: Counting objects: 1404, done.
-remote: Compressing objects: 100% (570/570), done.
-remote: Total 1014 (delta 480), reused 659 (delta 233)
-Receiving objects: 100% (1014/1014), 1.66 MiB, done.
-Resolving deltas: 100% (480/480), completed with 195 local objects.
-=46rom ../old_tagsX
- * [new tag]         3.2.0-5    -> 3.2.0-5
-=2E..
+But note that the credential api is only as good a solution as the
+helpers. Do we really want all users to employ credential-store because
+it is "much simpler than ssh"? Deploying what we have now and advocating
+it as a solution for the ssh-challenged (which will happen whether we,
+you or someone else advocates it) could easily mean telling people to
+store their credentials unencrypted. The slash-dot story will be "git
+security hole", "git stores passwords unencrypted" and so on. And I
+don't care as much about the PR as about the users whom we'd be serving
+badly.
 
-bash:jamesb:xl-cbga-20:32945> git show eb03ba0f40fb2b6a3287036d851d2506=
-e4ea4f8f
-commit eb03ba0f40fb2b6a3287036d851d2506e4ea4f8f
-Author: (no author) <(no author)@e3bda1c8-b8c7-484d-b8f9-8c0514bc73ff>
-Date:   Tue Oct 10 09:44:47 2006 +0000
+So, for the ssh-challenged, we really should make sure that secure
+helpers are in their hand when the credential api hits a released
+version (or revert the insecure store helper). There's a KDE attempt on
+the list. Gnome, Win, Mac helpers anyone? Win version of the cache helper?
 
-    This commit was manufactured by cvs2svn to create tag 'releases/3_2=
-_0-5'.
-=2E..
-
-
-Note that the object was present all along!
-
-(In old_repo I had done: git filter-branch --prune-empty -- --all)
-
-I have a backup of the repo, and this is repeatable for me, is there
-an odd interaction between fetch and refs/original?
-
-Cheers,
-James
-
-
-On 7 September 2011 17:14, James Blackburn <jamesblackburn@gmail.com> w=
-rote:
-> Hi All,
->
-> I've got an error I can't seem to resolve. Fsck reports both my
-> repositories are OK, but git fetch --tags tells me it can't find an
-> object.
->
-> bash:jamesb:xl-cbga-20:32867> git --version
-> git version 1.7.6
-> bash:jamesb:xl-cbga-20:32864> git remote add old_tags ../old_tags/
-> bash:jamesb:xl-cbga-20:32865> git fetch old_tags
-> From ../old_tags
-> * [new branch] =A0 =A0 =A0master =A0 =A0 -> old_tags/master
-> ...
-> bash:jamesb:xl-cbga-20:32866> git fetch --tags old_tags
-> remote: Counting objects: 33613, done.
-> remote: Compressing objects: 100% (11778/11778), done.
-> remote: Total 33529 (delta 18473), reused 30013 (delta 15779)
-> Receiving objects: 100% (33529/33529), 28.59 MiB | 8.06 MiB/s, done.
-> Resolving deltas: 100% (18473/18473), completed with 17 local objects=
-=2E
-> error: unable to find eb03ba0f40fb2b6a3287036d851d2506e4ea4f8f
-> fatal: object eb03ba0f40fb2b6a3287036d851d2506e4ea4f8f not found
->
-> git fsck --full shows no errors in old_tags.
-> git show eb03ba0f40fb2b6a3287036d851d2506e4ea4f8f in old_tags seems t=
-o work:
->
-> commit eb03ba0f40fb2b6a3287036d851d2506e4ea4f8f
-> Author: (no author) <(no author)@e3bda1c8-b8c7-484d-b8f9-8c0514bc73ff=
->
-> Date: =A0 Tue Oct 10 09:44:47 2006 +0000
->
-> =A0 =A0This commit was manufactured by cvs2svn to create tag 'release=
-s/3_2_0-5'.
->
-> =A0 =A0git-svn-id: svn://eng-cbga-2/tools/eclipse/tags/releases/3_2_0=
--5@39
-> e3bda1c8-b8c7-484d-b8f9-8c0514bc73ff
->
-> diff --git a/org.eclipse.cdt/org.eclipse.cdt.doc.isv/reference/api/al=
-lclasses-frame.html
-> b/org.eclipse.cdt/org.eclipse.cdt.doc.isv/reference/api/
-> allclasses-frame.html
-> ...
->
->
-> Any ideas how to resolve this?
->
-> Cheers,
-> James
->
+Michael
