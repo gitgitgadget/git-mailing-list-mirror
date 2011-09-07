@@ -1,145 +1,145 @@
-From: Kyle Neath <kneath@gmail.com>
-Subject: The imporantance of including http credential caching in 1.7.7
-Date: Tue, 6 Sep 2011 22:33:35 -0700
-Message-ID: <CAFcyEthzW1AY4uXgpsVxjyWCDXAJ6=GdWGqLFO6Acm1ovJJVaw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 07 07:34:05 2011
+From: Haitao Li <lihaitao@gmail.com>
+Subject: [PATCH v2] date.c: Support iso8601 timezone formats
+Date: Wed,  7 Sep 2011 13:46:47 +0800
+Message-ID: <1315374407-30828-1-git-send-email-lihaitao@gmail.com>
+References: <1315320996-1997-1-git-send-email-lihaitao@gmail.com>
+Cc: Haitao Li <lihaitao@gmail.com>
+To: git@vger.kernel.org, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 07 08:10:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1Alv-0006ub-Ku
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 07:34:04 +0200
+	id 1R1BLX-0002Z1-TQ
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 08:10:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753997Ab1IGFd6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Sep 2011 01:33:58 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:47844 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753874Ab1IGFd4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Sep 2011 01:33:56 -0400
-Received: by wwf5 with SMTP id 5so7071497wwf.1
-        for <git@vger.kernel.org>; Tue, 06 Sep 2011 22:33:55 -0700 (PDT)
+	id S1755516Ab1IGGKr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Sep 2011 02:10:47 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:39600 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755507Ab1IGGKp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Sep 2011 02:10:45 -0400
+Received: by pzk37 with SMTP id 37so11378090pzk.1
+        for <git@vger.kernel.org>; Tue, 06 Sep 2011 23:10:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=RCd1/Thz7FepaqrAbc+2porr7bzw+bfHaTmKUbav5eQ=;
-        b=YN7w+PFt8DiYsxI7+Wc4AAdYNLbwHxv/FBpAKUZW67XS1ITegUFeUItE3fucVLfMis
-         kTdYeoUoMa3Wf94z4zNv2ktcWegQrbqq+iA3Bu+du5Ddaxiw09HTa9ygUsuwzwgs9IQ5
-         bDouUnLTHAX/BFPNSqqLANQJRGdx9EdekxSuk=
-Received: by 10.227.8.214 with SMTP id i22mr5866262wbi.11.1315373635162; Tue,
- 06 Sep 2011 22:33:55 -0700 (PDT)
-Received: by 10.227.54.208 with HTTP; Tue, 6 Sep 2011 22:33:35 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=kWBDg7DkbZSSe7h56D7fDx4b5A+pToCYudYYWLmaXg4=;
+        b=XYaMGZVzOI0rYjoANlDpDYtuAQ3X0OS1kq4s/IT6zdFvQCJZAr5Vg2tZIR1ptDedTV
+         Zb1fg7fnmdNIoFQC3T5sOf6ycII+NwNHZMp3fLPOIdVFsaUXjF5T1GJxVDtJ8/YrRtOd
+         8fdaKPJoG6vuM/AoVHSD9wgNuv/1RuoGzuVQ4=
+Received: by 10.68.46.98 with SMTP id u2mr381262pbm.31.1315374419508;
+        Tue, 06 Sep 2011 22:46:59 -0700 (PDT)
+Received: from localhost.localdomain (cursa.dreamhost.com. [173.236.210.234])
+        by mx.google.com with ESMTPS id u2sm2709523pbq.9.2011.09.06.22.46.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 06 Sep 2011 22:46:58 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.4
+In-Reply-To: <1315320996-1997-1-git-send-email-lihaitao@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180853>
 
-Earlier today, Scott Chacon alerted me to this email thread:
-http://www.spinics.net/lists/git/msg164192.html (many apologies to the list, I
-am not sure how to properly reference this email or reply to it since I have
-not been subscribed until today).
+Timezone designators including additional separator (`:`) are ignored.
+Actually zone designators in below formats are all valid according to
+ISO8601:2004, section 4.3.2:
+    [+-]hh, [+-]hhmm, [+-]hh:mm
 
-> * jk/http-auth-keyring (2011-08-03) 13 commits
->   (merged to 'next' on 2011-08-03 at b06e80e)
->  + credentials: add "getpass" helper
->  + credentials: add "store" helper
->  + credentials: add "cache" helper
->  + docs: end-user documentation for the credential subsystem
->  + http: use hostname in credential description
->  + allow the user to configure credential helpers
->  + look for credentials in config before prompting
->  + http: use credential API to get passwords
->  + introduce credentials API
->  + http: retry authentication failures for all http requests
->  + remote-curl: don't retry auth failures with dumb protocol
->  + improve httpd auth tests
->  + url: decode buffers that are not NUL-terminated
->
-> Looked mostly reasonable except for the limitation that it is not clear
-> how to deal with a site at which a user needs to use different passwords
-> for different repositories. Will keep it in "next" at least for one cycle,
-> until we start hearing real-world success reports on the list.
->
-> Not urgent; will not be in 1.7.7.
+Steps to reproduce the issue this patch fixes:
+    $ mkdir /tmp/test
+    $ cd /tmp/test
+    $ git init
+    $ echo 'timezone' > file.txt
+    $ git add .
+    $ git update-index
+    $ git write-tree
+    3e168d57e1c32a4598af134430384f0587581503
 
-This is very disheartening to hear. Of all the minor changes, bugs, and
-potential features, I believe that http credential caching is the absolute
-most important thing that git core can do to promote adoption. I've believed
-this for more than a year now and I'm incredibly disappointed that it's being
-shelved for yet another release.
+    # Commit the tree returned above. Give a date with colon separated
+    # timezone
+    $ echo "Test commit" | \
+      TZ=UTC GIT_AUTHOR_DATE='2011-09-03T12:34:56+08:00' \
+      git commit-tree 3e168d57e1c32a4598af134430384f0587581503 | \
+      xargs git show  | grep Date
+    Date:   Sat Sep 3 12:34:56 2011 +0000
 
-Over the past two years as a designer for GitHub, I've answered ~thousands of
-support requests and talked face to face with ~thousands of developers of
-varying git skill levels. Once a month our company does online git training
-for newbies - https://github.com/training/online and I've had many discussions
-about newcomer's struggles with Matthew McCullough and Scott Chacon.
-Previously, I worked at ENTP where I helped polish the very popular "Git for
-Designers" guide http://hoth.entp.com/output/git_for_designers.html based on
-feedback. I was also lead designer for GitHub for Mac - an OSX GUI aimed at
-people less familiar with the command line.
+while the expected result is:
+    Date:   Sat Sep 3 12:34:56 2011 +0800
+                                      ^---
 
-I bring all of this up because I'd like to think I have a good handle on
-common problems that git newcomers or people resisting git adoption run into.
-I've been deeply involved in spreading git adoption full time for nearly 3
-years - it's something that's incredibly important to me professionally and
-personally. And the number one problem that *always* comes up is SSH key
-complexity.
+This patch teaches git recognizing zone designators with hours and
+minutes separated by colon, or minutes are empty.
 
-A lot of these problems surface themselves in people saying it's hard to setup
-git on Windows. When I push these people to explain further, it turns out that
-the problem is always setting up SSH key authentication on Windows, not
-necessarily git.
+Signed-off-by: Haitao Li <lihaitao@gmail.com>
+---
+ date.c          |   32 ++++++++++++++++++++++++++------
+ t/t0006-date.sh |    5 +++++
+ 2 files changed, 31 insertions(+), 6 deletions(-)
 
-It's incredibly frustrating that git's biggest roadblock has nothing to do
-with version control at all, but rather network authentication. Just as I
-believe only *you* can own your availability, I believe git should do it's
-best to own authentication.
-
-HTTP credential caching combined with Smart HTTP make git one hell of an
-amazing tool for newcomers and experts alike. I like to envision a world in
-which git with both these features shipped with the latest OSX install.
-Developers, designers, or anyone with an inkling for code would have exactly
-two steps to get started with any given git host:
-
-  1. Set your git config email / username
-  2. git clone https://example.com/repository
-
-Contrast this to our current help page for OSX:
-http://help.github.com/mac-set-up-git/ or worse yet, our Windows setup page
-with all of it's yelling about what kind of SSH keys to setup:
-http://help.github.com/win-set-up-git/
-
-Please note that I am not arguing against the merits of SSH keys - for those
-developers who understand them, they're fantastic. But the reality is the
-great majority of people who interact with version control do not understand
-them at all. This results in passwordless SSH keys, confusion, and
-frustration.
-
-If another git version comes and goes without http credential caching, I fear
-we as a community have purposefully ignored the largest potential for git
-adoption currently available. This is important enough for me that I believe
-it would be in git's best interest to delay the release of 1.7.7 until this
-feature has been patched to the core team's standards.
-
-I'll summarize with a graph of my opinion of where git's potential for
-adoption lies:
-
-------------------------------------------------------------------------------
-            OPPORTUNITY FOR GIT ADOPTION ACCORDING TO KYLE NEATH
-
-                      Caching of http credentials
-                                  |
-[=====================================================================||=====]
-                                                                          |
-                                               Everything else in the universe
-
-------------------------------------------------------------------------------
-
-With hopes and butterflies,
-
-Kyle Neath
-Director of Design at GitHub
+diff --git a/date.c b/date.c
+index 896fbb4..f970ea8 100644
+--- a/date.c
++++ b/date.c
+@@ -556,15 +556,35 @@ static int match_tz(const char *date, int *offp)
+ 	int min, hour;
+ 	int n = end - date - 1;
+ 
+-	min = offset % 100;
+-	hour = offset / 100;
++	/*
++	 * ISO8601:2004(E) allows time zone designator been separated
++	 * by a clone in the extended format
++	 */
++	if (*end == ':') {
++		if (isdigit(end[1])) {
++			hour = offset;
++			min = strtoul(end+1, &end, 10);
++		} else {
++			/* Mark as invalid */
++			n = -1;
++		}
++	} else {
++		/* Only hours specified */
++		if (n == 1 || n == 2) {
++			hour = offset;
++			min = 0;
++		} else {
++			hour = offset / 100;
++			min = offset % 100;
++		}
++	}
+ 
+ 	/*
+-	 * Don't accept any random crap.. At least 3 digits, and
+-	 * a valid minute. We might want to check that the minutes
+-	 * are divisible by 30 or something too.
++	 * Don't accept any random crap.. We might want to check that
++	 * the minutes are divisible by 15 or something too. (Offset of
++	 * Kathmandu, Nepal is UTC+5:45)
+ 	 */
+-	if (min < 60 && n > 2) {
++	if (n > 0 && min < 60 && hour < 25) {
+ 		offset = hour*60+min;
+ 		if (*date == '-')
+ 			offset = -offset;
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index f87abb5..5235b7a 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -40,6 +40,11 @@ check_parse 2008-02 bad
+ check_parse 2008-02-14 bad
+ check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 +0000'
+ check_parse '2008-02-14 20:30:45 -0500' '2008-02-14 20:30:45 -0500'
++check_parse '2008-02-14 20:30:45 -0015' '2008-02-14 20:30:45 -0015'
++check_parse '2008-02-14 20:30:45 -5' '2008-02-14 20:30:45 -0500'
++check_parse '2008-02-14 20:30:45 -05' '2008-02-14 20:30:45 -0500'
++check_parse '2008-02-14 20:30:45 -:30' '2008-02-14 20:30:45 +0000'
++check_parse '2008-02-14 20:30:45 -05:00' '2008-02-14 20:30:45 -0500'
+ check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 -0500' EST5
+ 
+ check_approxidate() {
+-- 
+1.7.5.4
