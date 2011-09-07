@@ -1,65 +1,77 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: The imporantance of including http credential caching in 1.7.7
-Date: Wed, 7 Sep 2011 09:46:35 +0200
-Message-ID: <CAGdFq_h3KNuGuhhY2Zv-dHWqAY4Wq3HHBGh2f53rWzDT9PzSgQ@mail.gmail.com>
-References: <CAFcyEthzW1AY4uXgpsVxjyWCDXAJ6=GdWGqLFO6Acm1ovJJVaw@mail.gmail.com>
+From: Scott Chacon <schacon@gmail.com>
+Subject: Re: [ANNOUNCE] GitTogether 2011 - Oct 24th/25th
+Date: Wed, 7 Sep 2011 10:11:43 -0700
+Message-ID: <CAP2yMaKi7rEZU2Sh_W_413QOMWANTGEswJDoGO_YDKVMsoEwWQ@mail.gmail.com>
+References: <CAJo=hJu48DiVUDexuWJpVgq__zVTfO1Xz=AgfOz6wws00b2EaQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org
-To: Kyle Neath <kneath@gmail.com>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 07 19:13:17 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Sep 07 19:13:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1LgX-0000wu-7n
+	id 1R1LgW-0000wu-K2
 	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 19:13:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753009Ab1IGRMH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Sep 2011 13:12:07 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:46173 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751774Ab1IGRME (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Sep 2011 13:12:04 -0400
-Received: by pzk37 with SMTP id 37so17842pzk.1
-        for <git@vger.kernel.org>; Wed, 07 Sep 2011 10:12:04 -0700 (PDT)
+	id S1755301Ab1IGRLq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Sep 2011 13:11:46 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:57779 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753009Ab1IGRLo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Sep 2011 13:11:44 -0400
+Received: by ywf7 with SMTP id 7so358897ywf.19
+        for <git@vger.kernel.org>; Wed, 07 Sep 2011 10:11:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=OJE6IHBAvLP4rLgx1eaDkMqf0ZPioW5LWchCPrSoUzo=;
-        b=hAXX32ZHTcZBut/A+4jdBHbC7ksfDkhllKx6JJmHrEqesoD68mhQlmR5Vto8X4Tip+
-         6l3ob/c/6tgc2Dno6fXpa5WGNdfYrOEhQ/KVmLyPIuhqN0Tb55P5iPRgCM8wC0rcfJ8c
-         xbpX4MVlde7bW/N+wg/8aIPNsFZrZzk8kvkrI=
-Received: by 10.68.26.133 with SMTP id l5mr2705223pbg.299.1315381635053; Wed,
- 07 Sep 2011 00:47:15 -0700 (PDT)
-Received: by 10.68.59.39 with HTTP; Wed, 7 Sep 2011 00:46:35 -0700 (PDT)
-In-Reply-To: <CAFcyEthzW1AY4uXgpsVxjyWCDXAJ6=GdWGqLFO6Acm1ovJJVaw@mail.gmail.com>
+        bh=CtQ73dQ3HdSgPaQVSHabaB9HtE6w6qSu15XWdZjOLb8=;
+        b=A4oJErPST9QaFmoARvVq5821RJYJUNhBvPiXt0JXbRPscjqEVacYnAZPxCi9bRxvXX
+         Myq1dbtuOLXmZyyMIgONGlEvUBWJbXqigEHGVX1aPqRW7GDN64TSn6ejYkFfr/YKGi+X
+         GwQmos4Odg3JswxS68o3sLynrp8TAtp9GkIb4=
+Received: by 10.150.100.21 with SMTP id x21mr5080144ybb.153.1315415503690;
+ Wed, 07 Sep 2011 10:11:43 -0700 (PDT)
+Received: by 10.151.154.18 with HTTP; Wed, 7 Sep 2011 10:11:43 -0700 (PDT)
+In-Reply-To: <CAJo=hJu48DiVUDexuWJpVgq__zVTfO1Xz=AgfOz6wws00b2EaQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180874>
 
-SGV5YSwKCk9uIFdlZCwgU2VwIDcsIDIwMTEgYXQgMDc6MzMsIEt5bGUgTmVhdGggPGtuZWF0aEBn
-bWFpbC5jb20+IHdyb3RlOgo+IEknbGwgc3VtbWFyaXplIHdpdGggYSBncmFwaCBvZiBteSBvcGlu
-aW9uIG9mIHdoZXJlIGdpdCdzIHBvdGVudGlhbCBmb3IKPiBhZG9wdGlvbiBsaWVzOgo+Cj4gLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tCj4gwqAgwqAgwqAgwqAgwqAgwqBPUFBPUlRVTklUWSBGT1IgR0lU
-IEFET1BUSU9OIEFDQ09SRElORyBUTyBLWUxFIE5FQVRICj4KPiDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoENhY2hpbmcgb2YgaHR0cCBjcmVkZW50aWFscwo+IMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfAo+IFs9PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT18fD09
-PT09XQo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgfAo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIEV2ZXJ5dGhpbmcgZWxzZSBpbiB0aGUgdW5pdmVyc2UKPgo+IC0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLQoKSSwgcGVyc29uYWxseSwgZmluZCB0aGUgZ3JhcGggdmVyeSBj
-b252aW5jaW5nIDopLgoKSnVuaW8gbWVudGlvbmVkIGluIFdDIHRoYXQgaGUgd2FudHMgdG8gc2Vl
-IHNvbWUgZmVlZGJhY2sgb24gaXQncwp1c2FnZSwgcGVyaGFwcyB0aGF0IHlvdSBjYW4gaGVscCBw
-cm92aWRlIHRoaXMgYnkgcHJvdmlkaW5nIGEgZ2l0CnBhdGNoZWQgd2l0aCB0aGlzIGZ1bmN0aW9u
-YWxpdHkgdG8gc29tZSBvZiB5b3VyIHVzZXJzIGFuZCBzZWUgaG93IHRoZXkKcmVzcG9uZD8KCi0t
-IApDaGVlcnMsCgpTdmVycmUgUmFiYmVsaWVyCg==
+Hey,
+
+On Mon, Sep 5, 2011 at 12:56 PM, Shawn Pearce <spearce@spearce.org> wro=
+te:
+> Google is once again hosting a 2 day user/developer conference for Gi=
+t
+> users and developers to get together, share experiences, and hack on
+> interesting features. This event will be held October 24th and 25th a=
+t
+> Google's headquarters in Mountain View, CA.
+>
+> More details along with sign-up (as space is limited) can be found on=
+ the wiki:
+>
+> =C2=A0https://git.wiki.kernel.org/index.php/GitTogether11
+
+It's been like 2 days and we're already overflowing.  I've also
+already heard people say they didn't sign up because it was full.
+This is unacceptable.  I want to drink with all of you guys.
+
+Shawn, if you can't get a bigger venue at Google, we'll rent a meeting
+space either at the hotel that most of the mentors are staying at or a
+nearby one.  I'm looking into spaces that will accomodate closer to 50
+people and will serve us beer. :)
+
+So, everybody that wants to come just sign up and we'll make sure
+there is room for everyone.  Also, if any regular Git contributors
+need help with flights or lodging, please let me know and we'll see
+what we can do to help.
+
+Thanks,
+Scott
