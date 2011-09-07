@@ -1,69 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git without morning coffee
-Date: Wed, 07 Sep 2011 10:49:51 -0700
-Message-ID: <7vy5y02qf4.fsf@alter.siamese.dyndns.org>
-References: <4E6721E3.7000207@drmicha.warpmail.net>
- <7vehzs47we.fsf@alter.siamese.dyndns.org>
- <CAMOZ1BstyMteutmK7tst=3t9djavY9_4vBKJgdj7rhUnE1Wr7w@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v17 1/7] bisect: move argument parsing before state modification.
+Date: Wed, 07 Sep 2011 20:07:46 +0200
+Message-ID: <4E67B2F2.9070806@kdbg.org>
+References: <1312459263-16911-1-git-send-email-jon.seymour@gmail.com> <1312459263-16911-2-git-send-email-jon.seymour@gmail.com> <201109070816.16655.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 07 19:50:01 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jon Seymour <jon.seymour@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com, jnareb@gmail.com, jrnieder@gmail.com
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Wed Sep 07 20:07:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1MG7-00051j-UJ
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 19:50:00 +0200
+	id 1R1MXW-0006cf-1m
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 20:07:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752867Ab1IGRtz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Sep 2011 13:49:55 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44723 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751223Ab1IGRty (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Sep 2011 13:49:54 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B5D7A404C;
-	Wed,  7 Sep 2011 13:49:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wfl6YQW87xEz9MRdAuBruMrwVX4=; b=FcJY7S
-	baTOKxItMeyrRDTAyiyz7aKb+PQWqn5bjp7XDtjwmu+XoOuPR7xIwL3NbypPvk6a
-	CGeMUArt6tDxu05yl1Sxc9XA3c/3ug6MyeLTN3MpJpxKH/sxat79FUGIeepgUvc+
-	5BY2sCPYxASEXcjPHbLqmYClUMzokHmVQOm+E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MupXbRQ27DB8PfJJp0GUoWt7n00GaWdM
-	lQu+ghGwcakbiyxjyNWoXQ+0TmIgpqmBbiX0f+Gcv09slSKEX2aQwXdDHkjlGCi/
-	qoT7eieEoxMS1m2aB3O3KOxNQ1B993eZZpZCj28YxzNIbreRXjyuWwZRd+JBgQAX
-	W5LqZMh0iR0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC267404B;
-	Wed,  7 Sep 2011 13:49:53 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 29BE84049; Wed,  7 Sep 2011
- 13:49:53 -0400 (EDT)
-In-Reply-To: <CAMOZ1BstyMteutmK7tst=3t9djavY9_4vBKJgdj7rhUnE1Wr7w@mail.gmail.com> (Michael
- Witten's message of "Wed, 7 Sep 2011 17:23:10 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CA71834C-D979-11E0-A901-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753888Ab1IGSHw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Sep 2011 14:07:52 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:15502 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751278Ab1IGSHv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Sep 2011 14:07:51 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 5CC2E130049;
+	Wed,  7 Sep 2011 20:07:47 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id AB30E19F454;
+	Wed,  7 Sep 2011 20:07:46 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.20) Gecko/20110804 SUSE/3.1.12 Thunderbird/3.1.12
+In-Reply-To: <201109070816.16655.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180891>
 
-Michael Witten <mfwitten@gmail.com> writes:
+Am 07.09.2011 08:16, schrieb Christian Couder:
+> If we start bisecting like this:
+> 
+> $ git bisect start HEAD HEAD~20
+> 
+> and then we decide that it was not optimum and we want to start again like 
+> this:
+> 
+> $ git bisect start HEAD HEAD~6
+> 
+> then issuing the latter command might not work as it did before this patch.
+>  
+> Before this patch the latter command would do a "git checkout $start_head" 
+> before the repeated rev=$(git rev-parse -q --verify "$arg^{commit}") to 
+> convert arguments into sha1. And after this patch the order is reversed.
+> 
+> This means that before this patch "HEAD" in the arguments to "git bisect 
+> start" would refer to $start_head because the "git checkout $start_head" 
+> changes HEAD. After this patch "HEAD" in the arguments to "git bisect start" 
+> would refer to the current HEAD.
 
-> I think it would be great if at some point you could write a detailed
-> tutorial of how you maintain git...
+But isn't this an improvement? HEAD denotes the current head. After the
+first 'bisect start HEAD HEAD~20', HEAD is somewhere in the middle, not
+the original HEAD anymore; I would *expect* that a different commit is
+checked out if I just repeat the command.
 
-Is MaintNotes[*1*] taken together with Documentation/howto/maintain-git.txt
-insufficient?
+IOW, I think the new behavior is *much* better than the old behavior.
 
-[Reference]
-*1* http://git-blame.blogspot.com/p/note-from-maintainer.html
+-- Hannes
