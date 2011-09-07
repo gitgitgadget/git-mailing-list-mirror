@@ -1,113 +1,81 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: Git without morning coffee
-Date: Wed, 7 Sep 2011 17:23:10 +0000
-Message-ID: <CAMOZ1BstyMteutmK7tst=3t9djavY9_4vBKJgdj7rhUnE1Wr7w@mail.gmail.com>
-References: <4E6721E3.7000207@drmicha.warpmail.net> <7vehzs47we.fsf@alter.siamese.dyndns.org>
+From: wanghui <Hui.Wang@windriver.com>
+Subject: Re: [PATCH v2 2/5] sha1_file: remove a buggy value setting
+Date: Wed, 7 Sep 2011 17:55:00 +0800
+Message-ID: <4E673F74.9060006@windriver.com>
+References: <1315304645-12009-1-git-send-email-Hui.Wang@windriver.com> <1315304645-12009-2-git-send-email-Hui.Wang@windriver.com> <1315304645-12009-3-git-send-email-Hui.Wang@windriver.com> <7vpqjdab76.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, <tali@admingilde.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 07 19:29:24 2011
+X-From: git-owner@vger.kernel.org Wed Sep 07 19:29:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1LwB-0001mQ-K1
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 19:29:23 +0200
+	id 1R1LwC-0001mQ-6B
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 19:29:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755553Ab1IGR26 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Sep 2011 13:28:58 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:46378 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755532Ab1IGR25 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Sep 2011 13:28:57 -0400
-Received: by yie30 with SMTP id 30so5132765yie.19
-        for <git@vger.kernel.org>; Wed, 07 Sep 2011 10:28:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Js2OCje767Bu4l3dDm1nqa0y+fj/1J7wnUkglegeDjU=;
-        b=hmseyrZr6DH/xkWRUlZHBvXDql5dEM9Y6jx78dDySW5YHU1tr6w7jxcgjv+UHsCGtk
-         vVeTvqIeU8eRv/10ln+V+4NNvAQzaoK2fYVAWDLWDKfMdFs3QBNnPa4oSYHI8msDIlVB
-         FX71EVUTfL2Y0dCkAPL9cyiKVPWlR9UWvPHgE=
-Received: by 10.42.148.72 with SMTP id q8mr5336568icv.481.1315416220132; Wed,
- 07 Sep 2011 10:23:40 -0700 (PDT)
-Received: by 10.42.171.194 with HTTP; Wed, 7 Sep 2011 10:23:10 -0700 (PDT)
-In-Reply-To: <7vehzs47we.fsf@alter.siamese.dyndns.org>
+	id S1755622Ab1IGR3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Sep 2011 13:29:10 -0400
+Received: from mail.windriver.com ([147.11.1.11]:63192 "EHLO
+	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755550Ab1IGR26 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Sep 2011 13:28:58 -0400
+Received: from ALA-HCA.corp.ad.wrs.com (ala-hca [147.11.189.40])
+	by mail.windriver.com (8.14.3/8.14.3) with ESMTP id p879sjhh029344
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Wed, 7 Sep 2011 02:54:45 -0700 (PDT)
+Received: from [128.224.163.220] (128.224.163.220) by ALA-HCA.corp.ad.wrs.com
+ (147.11.189.50) with Microsoft SMTP Server (TLS) id 14.1.255.0; Wed, 7 Sep
+ 2011 02:54:45 -0700
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+In-Reply-To: <7vpqjdab76.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180881>
 
-[Sorry for the repeat, Junio]
-
-On Wed, Sep 7, 2011 at 16:46, Junio C Hamano <gitster@pobox.com> wrote:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
+Junio C Hamano wrote:
+> Wang Hui <Hui.Wang@windriver.com> writes:
 >
->> git merge ":/Merge branch 'jk/generation-numbers' into pu"
->> fatal: ':/Merge branch 'jk/generation-numbers' into pu' does not poi=
-nt
->> to a commit
->> # Huh?
+>   
+>> From: Hui Wang <Hui.Wang@windriver.com>
+>>
+>> The ent->base[] is a character array, it has pfxlen characters from
+>> position 0 to (pfxlen-1) to contain an alt object dir name, the
+>> position pfxlen should be the string terminating character '\0' and
+>> is deliberately set to '\0' at the previous code line. The position
+>> (pfxlen+1) is given to ent->name.
+>>     
 >
-> Interesting.
+> Correct. Do you understand why?
 >
->> git merge $(git rev-parse ":/Merge branch 'jk/generation-numbers' in=
-to pu")
->> error: addinfo_cache failed for path 't/t7810-grep.sh'
->> Performing inexact rename detection: 100% (91476/91476), done.
->> error: addinfo_cache failed for path 't/t7810-grep.sh'
+> We temporarily NUL terminate the ent->base[] so that we can give it to
+> is_directory() to see if that is a directory, but the invariants for a
+> alternate_object_database instance after it is properly initialized by
+> this function are to have:
 >
-> Smells like another case where merge-recursive is looking at the work=
- tree
-> when it shouldn't inside an inner merge or something.
+>  - the directory name followed by a slash in the base[] array;
+>  - the name pointer pointing at one byte beyond the slash;
+>  - name[2] filled with a slash; and
+>  - name[41] terminated with NUL.
 >
->> I mean, I'm merging a commit from origin/pu to origin/next when the
->> latter is basically contained in the former (except for some merge
->> commits).
+> Later, has_loose_object_nonlocal() calls fill_sha1_path() with the name
+> pointer to fill name[0..1, 3..40] with the hexadecimal representation of
+> the object name, which would result in base[] array to have the pathname
+> for a loose object found in that alternate. The same thing happens in
+> open_sha1_file() to read from a loose object in an alternate.
 >
-> This falls into the "side note" category, but these days 'next' and '=
-pu'
-> do not share any history beyond the tip of 'master'. Every time I upd=
-ate
-> the 'pu' branch, it is rebuilt directly on top of 'master' from scrat=
-ch by
-> merging the topics in 'next' (and at this point I make sure its tree
-> matches that of 'next') and then merging remaining topics on top of t=
-he
-> result. A topic often goes through multiple iterations of fix-ups whi=
-le in
-> 'next', and these fix-ups result in multiple incremental merges of th=
-e
-> same topic into 'next'; I do not want to see an incorrect merge when =
-such
-> a topic is merged in a single-step into 'master', and it is one way t=
-o
-> ensure the health of the merge fixup machinery (including the rerere
-> database) to attempt from-scratch-the-whole-topic-at-once merges and
-> verify the result.
+> And you are breaking one of the above invariants by removing that slash
+> after the directory name. These callers of fill_sha1_path() will see the
+> directory name, your NUL, two hex, slash, and 38 hex in base[].
 >
-> The merge you attempted will have a lot of "the history leading to th=
-e
-> current commit added/modified in a certain way and the history being
-> merged did the same modification independently" kind of conflicts tha=
-t
-> should resolve to no-op.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
+>   
+Understand now, thanks for your explanation.
+> How would the code even work with your patch?
 >
-
-I think it would be great if at some point you could write a detailed
-tutorial of how you maintain git (using example topics, example patch
-series and pull requests, and follow-along command sequences, etc.).
-Most importantly, it would be nice to see an explicit description of
-the maintenance properties you are trying to achieve with your
-workflow.
+>
+>   
