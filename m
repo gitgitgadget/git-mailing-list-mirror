@@ -1,67 +1,65 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [ANNOUNCE] GitTogether 2011 - Oct 24th/25th
-Date: Wed, 7 Sep 2011 15:30:06 -0400
-Message-ID: <20110907193006.GB13364@sigill.intra.peff.net>
-References: <CAJo=hJu48DiVUDexuWJpVgq__zVTfO1Xz=AgfOz6wws00b2EaQ@mail.gmail.com>
- <CAP2yMaKi7rEZU2Sh_W_413QOMWANTGEswJDoGO_YDKVMsoEwWQ@mail.gmail.com>
- <CAJo=hJvm62xPAg3v5Ay3ec-ira-i_BZ0Ej7wfdg+5r2Ls0UJQg@mail.gmail.com>
+Subject: Re: [PATCH 0/5] RFC: patterns for branch list
+Date: Wed, 7 Sep 2011 15:53:19 -0400
+Message-ID: <20110907195319.GC13364@sigill.intra.peff.net>
+References: <4E5607E0.1050300@drmicha.warpmail.net>
+ <cover.1314259226.git.git@drmicha.warpmail.net>
+ <20110825175301.GC519@sigill.intra.peff.net>
+ <4E5759B1.50705@drmicha.warpmail.net>
+ <7vwre0dsdy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Scott Chacon <schacon@gmail.com>, git <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Sep 07 21:30:23 2011
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
+	Michael Schubert <mschub@elegosoft.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 07 21:53:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1NpG-00005M-VF
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 21:30:23 +0200
+	id 1R1OBb-0004BE-QY
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 21:53:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755246Ab1IGTaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Sep 2011 15:30:14 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44298
+	id S1756338Ab1IGTxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Sep 2011 15:53:23 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37035
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753111Ab1IGTaN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Sep 2011 15:30:13 -0400
-Received: (qmail 4997 invoked by uid 107); 7 Sep 2011 19:30:57 -0000
+	id S1756104Ab1IGTxW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Sep 2011 15:53:22 -0400
+Received: (qmail 5169 invoked by uid 107); 7 Sep 2011 19:54:10 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 07 Sep 2011 15:30:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Sep 2011 15:30:06 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 07 Sep 2011 15:54:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Sep 2011 15:53:19 -0400
 Content-Disposition: inline
-In-Reply-To: <CAJo=hJvm62xPAg3v5Ay3ec-ira-i_BZ0Ej7wfdg+5r2Ls0UJQg@mail.gmail.com>
+In-Reply-To: <7vwre0dsdy.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180899>
 
-On Wed, Sep 07, 2011 at 11:38:18AM -0700, Shawn O. Pearce wrote:
+On Fri, Aug 26, 2011 at 09:55:37AM -0700, Junio C Hamano wrote:
 
-> As we approach 50 people, does it makes sense to be able to break the
-> event down into 2 "tracks", and have 2 meeting spaces available? I
-> know a number of the folks on the attendee list are Gerrit Code Review
-> / Android sorts of shops and will want to discuss topics related to
-> that that aren't necessarily relevant to the GitHub users / Linux
-> kernel hacking folks that are also on the list. Being able to break
-> off some of those discussions might make the event more interesting
-> for everyone involved.
+> As we use fnmatch() and not match_pathspec() for this pattern matching,
+> "git branch peff/" will not list all the topics under the peff/ hierarchy
+> (your example "git branch peff/\*" would be the way), but I would imagine
+> that we may someday want to update it to allow the leading path match
+> here. And at that point, distinction between
+> 
+> 	git branch peff  ;# to create a "peff" branch
+>         git branch peff/ ;# to list "peff/" branches, as "peff/" itself is
+>         		 ;# an invalid branch name and your auto listing
+>                          ;# heuristic kicks in
+> 
+> while it might be very useful for experts, becomes too subtle and would
+> confuse new people. We should instead require an explicit -l/--list, and
+> not use the auto listing heuristics (it is fine for -v to imply -l).
 
-I think that's reasonable, especially as we grow. However, one of the
-valuable things (for me, anyway) in previous GitTogethers is throwing
-all of these people together to some degree. I'm not terribly interested
-in day-to-day Gerrit issues, but sometimes the discussions start from
-some minor Gerrit annoyance, and we end up realizing that the right
-solution involves changes at a more fundamental layer, and all of git is
-better as a result. I'd hate to lose that developer/user interaction.
-
-Maybe we can be segmented for part of the conference, and then bring
-everybody together for other parts. I dunno. I guess that involves
-predicting which parts will be useful for everybody to be together.
-
-I assume we'll keep largely to the un-conference format, though, so
-these are issues that can be ironed out in the first hour as we see
-which topics people are interested in discussing.
+Sorry, I'm atrociously behind on reviewing this topic. But FWIW, I
+completely agree with this. Detecting invalid branch formats is much too
+subtle and error prone, and we are better off making a short and
+easy-to-type version of "--list".
 
 -Peff
