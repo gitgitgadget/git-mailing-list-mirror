@@ -1,59 +1,110 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv2 4/5] branch: introduce --list option
-Date: Wed, 7 Sep 2011 15:56:11 -0400
-Message-ID: <20110907195611.GD13364@sigill.intra.peff.net>
-References: <20110825175301.GC519@sigill.intra.peff.net>
- <0785cac235c3b45537cf161c86dde8e798c4ff3e.1314367414.git.git@drmicha.warpmail.net>
- <7vfwkodq5s.fsf@alter.siamese.dyndns.org>
- <4E5A5290.4050005@drmicha.warpmail.net>
+From: =?UTF-8?B?RnLDqWTDqXJpYyBIZWl0em1hbm4=?= 
+	<frederic.heitzmann@gmail.com>
+Subject: Re: [PATCH 1/2] git svn dcommit: new option --interactive.
+Date: Wed, 07 Sep 2011 22:02:36 +0200
+Message-ID: <4E67CDDC.1020305@gmail.com>
+References: <1315164113-26539-1-git-send-email-frederic.heitzmann@gmail.com> <1315164113-26539-2-git-send-email-frederic.heitzmann@gmail.com> <20110906202601.GA11668@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Sep 07 21:56:22 2011
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com, jaysoffian@gmail.com
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Sep 07 22:03:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1OEN-0005mQ-85
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 21:56:19 +0200
+	id 1R1OKy-0000rV-Im
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 22:03:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756365Ab1IGT4O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Sep 2011 15:56:14 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37038
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755052Ab1IGT4N (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Sep 2011 15:56:13 -0400
-Received: (qmail 5203 invoked by uid 107); 7 Sep 2011 19:57:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 07 Sep 2011 15:57:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Sep 2011 15:56:11 -0400
-Content-Disposition: inline
-In-Reply-To: <4E5A5290.4050005@drmicha.warpmail.net>
+	id S1756780Ab1IGUDC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Sep 2011 16:03:02 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:52762 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756774Ab1IGUDA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Sep 2011 16:03:00 -0400
+Received: by wyh22 with SMTP id 22so19003wyh.19
+        for <git@vger.kernel.org>; Wed, 07 Sep 2011 13:02:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=G44r0YGpgLa1LCibaNSlCYCdOFHyfarh2IsC+qtdqhk=;
+        b=DmoufsWnLKQMaq/8QOgGpm5HBczLxdrEu/1lflYVm2IwxUGIvONTGhsaxjc17mNkpV
+         om0TPwk9l+t3qkrvb2Msyu+3RKYTQtsln332fd0F3Kf9g9POVVU+7dXlZoSe/eD0nD5e
+         zciFIV1oL5iWJzOlmGQhWQC7QkOt4N6t0K8/M=
+Received: by 10.216.184.200 with SMTP id s50mr223081wem.36.1315425779205;
+        Wed, 07 Sep 2011 13:02:59 -0700 (PDT)
+Received: from [192.168.0.10] (dra38-7-88-179-84-80.fbx.proxad.net [88.179.84.80])
+        by mx.google.com with ESMTPS id ev5sm1710382wbb.11.2011.09.07.13.02.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 07 Sep 2011 13:02:58 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.21) Gecko/20110831 Thunderbird/3.1.13
+In-Reply-To: <20110906202601.GA11668@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180901>
 
-On Sun, Aug 28, 2011 at 04:37:04PM +0200, Michael J Gruber wrote:
 
-> Currently, "-m -d" is forbidden", but "-m -v" is "-m", same for "-d -v".
-> Do we want to keep it like that? Probably. I'll add the tests to 4/5.
 
-Yes, I think so. "-v" just means "be more verbose"; the fact that
-there is currently nothing to be more verbose about with "-m" and "-d"
-is irrelevant.
+Le 06/09/2011 22:26, Eric Wong a =C3=A9crit :
+> Fr=C3=A9d=C3=A9ric Heitzmann<frederic.heitzmann@gmail.com>  wrote:
+>> Allow the user to check the patch set before it is commited to SNV. =
+It is then
+>> possible to accept/discard one patch, accept all, or quit.
+>>
+>> This interactive mode is similar with 'git send email' behaviour. Ho=
+wever,
+>> 'git svn dcommit' returns as soon as one patch is discarded.
+>>
+>> Part of the code was taken from git-send-email.perl
+>> Thanks-to: Eric Wong<normalperson@yhbt.net>  for the initial idea.
+>> Signed-off-by: Fr=C3=A9d=C3=A9ric Heitzmann<frederic.heitzmann@gmail=
+=2Ecom>
+> I agree with this feature, a few comments inline.
+>
+>>   I would have preferred not duplicating the code snippets taken fro=
+m
+>>   git-send-email ('ask' function, Term related code, ...) but I pref=
+erred not
+>>   to spoil Git.pm with it.
+>>   Any comment on a better way to factor perl code would be appreciat=
+ed.
+> We should put this into Git.pm at some point.
+> (Somebody should refactor git-svn.perl into separate files too... :x)
+>
+>>   Documentation/git-svn.txt |    8 +++++
+>>   git-svn.perl              |   71 +++++++++++++++++++++++++++++++++=
++++++++++++-
+>>   2 files changed, 78 insertions(+), 1 deletions(-)
+> Tests and feature should be the same patch
+>> +	return defined $default ? $default : undef
+>> +		unless defined $term->IN and defined fileno($term->IN) and
+>> +		       defined $term->OUT and defined fileno($term->OUT);
+> Things to make life easier for (mainly) C programmers:
+>
+> * Use C-style "&&" and "||" for conditionals.  "and" and "or" are low=
+er
+>    precedence and better used for control flow (see perlop(1) manpage=
+).
+>
+> * Also, use parentheses for defined(foo) to disambiguate multiple
+>    conditions/statements.
+>
+My fault : I copied-pasted the 'ask' function from git-send-email.
+Even if I rewrite it a litlle, it should not prevent anyone to mutalize=
+=20
+some code into Git.pm.
+And, indeed, it will improve readability.
 
-It does make me a little nervous about the "'git branch -v'
-automatically means 'git branch --list -v'" patch, though. It closes the
-door in the future to us being more or less verbose about branch
-creation details (and while helpful, it creates a slight inconsistency
-in the interface).
+I wait a few days to see if anyone else has some comments and I send a=20
+V2 patch serie.
 
-If we are adding "-l" anyway, is it really necessary? It's not much
-harder to do "git branch -lv" once that is in place.
+Thanks for reviewing.
 
--Peff
+--
+=46red
