@@ -1,81 +1,73 @@
-From: wanghui <Hui.Wang@windriver.com>
-Subject: Re: [PATCH v2 2/5] sha1_file: remove a buggy value setting
-Date: Wed, 7 Sep 2011 17:55:00 +0800
-Message-ID: <4E673F74.9060006@windriver.com>
-References: <1315304645-12009-1-git-send-email-Hui.Wang@windriver.com> <1315304645-12009-2-git-send-email-Hui.Wang@windriver.com> <1315304645-12009-3-git-send-email-Hui.Wang@windriver.com> <7vpqjdab76.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git without morning coffee
+Date: Wed, 07 Sep 2011 10:35:15 -0700
+Message-ID: <7v62l445nw.fsf@alter.siamese.dyndns.org>
+References: <4E6721E3.7000207@drmicha.warpmail.net>
+ <7vehzs47we.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, <tali@admingilde.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 07 19:29:29 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Sep 07 19:35:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1LwC-0001mQ-6B
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 19:29:24 +0200
+	id 1R1M2G-0005Uk-5T
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Sep 2011 19:35:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755622Ab1IGR3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Sep 2011 13:29:10 -0400
-Received: from mail.windriver.com ([147.11.1.11]:63192 "EHLO
-	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755550Ab1IGR26 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Sep 2011 13:28:58 -0400
-Received: from ALA-HCA.corp.ad.wrs.com (ala-hca [147.11.189.40])
-	by mail.windriver.com (8.14.3/8.14.3) with ESMTP id p879sjhh029344
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
-	Wed, 7 Sep 2011 02:54:45 -0700 (PDT)
-Received: from [128.224.163.220] (128.224.163.220) by ALA-HCA.corp.ad.wrs.com
- (147.11.189.50) with Microsoft SMTP Server (TLS) id 14.1.255.0; Wed, 7 Sep
- 2011 02:54:45 -0700
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-In-Reply-To: <7vpqjdab76.fsf@alter.siamese.dyndns.org>
+	id S1755798Ab1IGRfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Sep 2011 13:35:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39393 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753634Ab1IGRfV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Sep 2011 13:35:21 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E28033D07;
+	Wed,  7 Sep 2011 13:35:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CykZLou+ZP7m1cpXY1xiAaWAyuE=; b=qhMyGI
+	LY6aNY5ATVLcykLOrjOyxtdO2+DfxW+fPfRjOXd/acc4rRzXv6+OxUd0/sE8qJy6
+	78sOQQScoB8Ly448r591csbeN1pg45rs1WIrVj0c8wyjgU+UilUnFNm9vC63b84W
+	mc1d4j2Ye1kloZAHKWDuwSnoxSgPeU5e8FQCU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CDFRR2U2HQAvWiC3eBHaVAwzfb6WWGYW
+	0fB9hTg5bEtxIs9hn4dmf156Ddgj+0weCWVdrm+W6q7u8dlOiyB4IzRlVAsn5UW4
+	BBOm/seyYwXBlIM7PT8tRBhwqy79tDmvZkJQXhdTdkARJGEWT+im7L43k6oof0/1
+	AkPVfQyHN/4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA1A43D06;
+	Wed,  7 Sep 2011 13:35:17 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 575B63D05; Wed,  7 Sep 2011
+ 13:35:17 -0400 (EDT)
+In-Reply-To: <7vehzs47we.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 07 Sep 2011 09:46:57 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C06AF2A4-D977-11E0-BE1C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180882>
 
-Junio C Hamano wrote:
-> Wang Hui <Hui.Wang@windriver.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
 >
->   
->> From: Hui Wang <Hui.Wang@windriver.com>
->>
->> The ent->base[] is a character array, it has pfxlen characters from
->> position 0 to (pfxlen-1) to contain an alt object dir name, the
->> position pfxlen should be the string terminating character '\0' and
->> is deliberately set to '\0' at the previous code line. The position
->> (pfxlen+1) is given to ent->name.
->>     
+>> git merge ":/Merge branch 'jk/generation-numbers' into pu"
+>> fatal: ':/Merge branch 'jk/generation-numbers' into pu' does not point
+>> to a commit
+>> # Huh?
 >
-> Correct. Do you understand why?
->
-> We temporarily NUL terminate the ent->base[] so that we can give it to
-> is_directory() to see if that is a directory, but the invariants for a
-> alternate_object_database instance after it is properly initialized by
-> this function are to have:
->
->  - the directory name followed by a slash in the base[] array;
->  - the name pointer pointing at one byte beyond the slash;
->  - name[2] filled with a slash; and
->  - name[41] terminated with NUL.
->
-> Later, has_loose_object_nonlocal() calls fill_sha1_path() with the name
-> pointer to fill name[0..1, 3..40] with the hexadecimal representation of
-> the object name, which would result in base[] array to have the pathname
-> for a loose object found in that alternate. The same thing happens in
-> open_sha1_file() to read from a loose object in an alternate.
->
-> And you are breaking one of the above invariants by removing that slash
-> after the directory name. These callers of fill_sha1_path() will see the
-> directory name, your NUL, two hex, slash, and 38 hex in base[].
->
->   
-Understand now, thanks for your explanation.
-> How would the code even work with your patch?
->
->
->   
+> Interesting.
+
+This is because 1c7b76b (Build in merge, 2008-07-07) grabs the name of the
+commit to be merged using peel_to_type(), which was defined in 8177631
+(expose a helper function peel_to_type()., 2007-12-24) in terms of
+get_sha1_1(). It understands $commit~$n, $commit^$n and $ref@{$nth}, but
+does not understand :/$str, $treeish:$path, and :$stage:$path.
