@@ -1,109 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] push -s: skeleton
-Date: Thu, 8 Sep 2011 16:03:43 -0400
-Message-ID: <20110908200343.GD16064@sigill.intra.peff.net>
-References: <7vfwk82hrt.fsf@alter.siamese.dyndns.org>
- <7vbouw2hqg.fsf@alter.siamese.dyndns.org>
- <robbat2-20110907T234637-463765607Z@orbis-terrarum.net>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: Git is not scalable with too many refs/*
+Date: Thu, 8 Sep 2011 12:53:39 -0700 (PDT)
+Message-ID: <1315511619144-6773496.post@n2.nabble.com>
+References: <BANLkTimEGjBMrbQpkZfWYPTZ93syiKFHdw@mail.gmail.com> <4DF6A8B6.9030301@op5.se> <20110614003029.GA31447@sigill.intra.peff.net> <7vtybtm3dl.fsf@alter.siamese.dyndns.org> <BANLkTimNoh3-Jde_-arzwBa=aUR+KK3Xhw@mail.gmail.com> <201106141202.46720.johan@herland.net> <20110614170214.GB26764@sigill.intra.peff.net> <BANLkTin0CjnM_hMaEpMroZdDhhavaoKAv00_4xBqeHj9biToVA@mail.gmail.com> <20110614194749.GA1567@sigill.intra.peff.net> <BANLkTi=GZDLu-ey1=h8LLDbWssoSpsM_jd7R-oFr+b+82Otb8g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	" Shawn O. Pearce" <spearce@spearce.org>
-To: "Robin H. Johnson" <robbat2@gentoo.org>
-X-From: git-owner@vger.kernel.org Fri Sep 09 02:03:53 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 09 02:28:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1oZV-0006dZ-6O
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 02:03:53 +0200
+	id 1R1oxE-0006ZU-Fq
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 02:28:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756659Ab1IIADr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Sep 2011 20:03:47 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58433
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756511Ab1IIADq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Sep 2011 20:03:46 -0400
-Received: (qmail 16497 invoked by uid 107); 8 Sep 2011 20:04:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 08 Sep 2011 16:04:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Sep 2011 16:03:43 -0400
-Content-Disposition: inline
-In-Reply-To: <robbat2-20110907T234637-463765607Z@orbis-terrarum.net>
+	id S1756958Ab1IIA2Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Sep 2011 20:28:16 -0400
+Received: from sam.nabble.com ([216.139.236.26]:48484 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756928Ab1IIA2O (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Sep 2011 20:28:14 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <mfick@codeaurora.org>)
+	id 1R1kfL-000391-5E
+	for git@vger.kernel.org; Thu, 08 Sep 2011 12:53:39 -0700
+In-Reply-To: <BANLkTi=GZDLu-ey1=h8LLDbWssoSpsM_jd7R-oFr+b+82Otb8g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181010>
 
-On Wed, Sep 07, 2011 at 11:55:44PM +0000, Robin H. Johnson wrote:
+Just thought that I should add some numbers to this thread as it seems that
+the later versions of git are worse off by several orders of magnitude on
+this one.  
 
-> There's a couple of related things we've been considering on the Gentoo
-> side:
-> - detached signatures of blobs (either the SHA1 of the blob or the blob
->   itself)
+We have a Gerrit repo with just under 100K refs in refs/changes/*.  When I
+fetch them all with git 1.7.6 it does not seem to complete.  Even after 5
+days, it is just under half way through the ref #s!   It appears, but I am
+not sure, that it is getting slower with time also, so it may not even
+complete after 10 days, I couldn't wait any longer.  However, the same
+command works in under 8 mins with git 1.7.3.3 on the same machine!
 
-There's not much point in signing the blob itself and not the sha1; the
-first thing any signature algorithm will do is make a fixed-size digest
-of the content anyway. So it is only useful if you don't trust sha1 as
-your digest algorithm (which maybe is a reasonable concern these
-days...).
+Syncing 100K refs:
 
-> - The signature covering the message+blob details, but NOT the chain of
->   history: this opens up the ability to cherry-pick and rebase iff there
->   are no conflicts and the blobs are identical, all while preserving the
->   signature.
+  git 1.7.6      > 8 days?
+  git 1.7.3.3   ~8mins
 
-The problem is that many of the blobs won't be identical, because
-they'll have new content from the new commits you rebased on top of. So
-_some_ blobs will be the same, but you'll end up with a half-signed
-commit. I think you're better to just re-sign the new history.
+That is quite a difference!  Have there been any obvious changes to git that
+should cause this?  If needed, I can bisect git to find out where things go
+sour, but I thought that perhaps there would be someone who already
+understands the problem and why older versions aren't nearly as bas as
+recent ones.
 
-But I'd have to see a longer description of your scheme to really
-critique it. I'm not 100% sure what your security goals are here.
+Some more things that I have tried:  after syncing the repo locally with all
+100K refs under refs/changes, I cloned it locally again and tried fetching
+locally with both git 1.7.6 and 1.7.3.3.  I got the same results as
+remotely, so it does not appear to be related to round trips.
 
-> - concerns about a pre-image attack against Git. tl;dr version:
->   1. Attacker prepares decoy file in advance, that hashes to the same as
->      the malicious file.
->   2. Attacker sends decoy in as an innocuous real commit.
->   3. Months later, the attacker breaks into the system and alters the
->      packfile to include the new malicious file.
->   4. All new clones from that point forward get the malicious version.
+The original git remote syncing takes just a bit of time, and then it
+outputs lines like these:
+ ...
+ * [new branch]      refs/changes/13/66713/2 -> refs/changes/13/66713/2
+ * [new branch]      refs/changes/13/66713/3 -> refs/changes/13/66713/3
+ * [new branch]      refs/changes/13/66713/4 -> refs/changes/13/66713/4
+ * [new branch]      refs/changes/13/66713/5 -> refs/changes/13/66713/5
+ ...
 
-Nit: I think you mean "collision attack" here. Pre-image attacks are
-matching a malicious file to what is already in the tree, but are much
-harder to execute.
+This is the part that takes forever.  The lines seem to scroll by slower and
+slower (with git 1.7.6).  In the beginning, the lines might be a screens
+worth a minute, after 5 days, about 1  a minute.  My CPU is pegged at 100%
+during this time (one core).  Since I have some good test data for this, let
+me know if I should test anything specific.
 
-But yeah, it is a potential problem. I don't keep up very well with that
-sort of news anymore, but AFAIK, we still don't have any actual
-collisions in sha1. Wikipedia seems to seem to think the best attacks
-are in the 2^50-ish range, but nobody has successfully found one. So we
-may still be a few years away from a realistic attack. If the attacks
-are anything like the MD5 attacks, the decoy and malicious files will
-need to have a bunch of random garbage in them. Which may be hard to
-disguise, depending on your repo contents.
+Thanks,
 
-I think, though, that the sane fix at that point is not to start trying
-to make per-blob signatures or anything like that, but to consider "git
-version 2" with SHA-256, or whatever ends up becoming SHA-3 next year.
-It would involve rewriting all of your history and dropping support for
-older git clients, of course, but it may be worth it at the point that
-sha1 is completely broken.
+-Martin
 
-> Re your comment on always needing to resign commits above, we'd been
-> considering post-signing commits, not when they are initially made.
-> After your commit is clean and ready to ship, you can fire the commit
-> ids into the signature tool, which can generate a detached signature
-> note for each commit.
+Employee of Qualcomm Innovation Center, Inc. which is a member of Code
+Aurora Forum
 
-Agreed. This is just an interface problem, not a cryptographic or
-technical one. However, I do think there's a subtle difference between
-the two ideas. Signing each commit individually just indicates some
-approval of particular commits. But signing a push certificate is about
-associating particular commits with particular refs (e.g., saying "move
-'master' from commit X to commit Y). I think there may be uses for both
-forms.
 
--Peff
+--
+View this message in context: http://git.661346.n2.nabble.com/Git-is-not-scalable-with-too-many-refs-tp6456443p6773496.html
+Sent from the git mailing list archive at Nabble.com.
