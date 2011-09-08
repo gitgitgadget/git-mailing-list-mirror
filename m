@@ -1,100 +1,63 @@
-From: Georgi Chorbadzhiyski <gf@unixsol.org>
-Subject: Re: [PATCH] send-mail: Add option to sleep between sending each email.
-Date: Thu, 08 Sep 2011 17:07:04 +0300
-Organization: Unix Solutions Ltd. (http://unixsol.org)
-Message-ID: <4E68CC08.4040201@unixsol.org>
-References: <1315428191-9769-1-git-send-email-gf@unixsol.org> <CALkWK0kH+pD6ymtt9oWLhT0Bftp4EvtrwTtNVw6mjX0aObb-BQ@mail.gmail.com> <vpq7h5jtngj.fsf@bauges.imag.fr> <CALkWK0nuLHpG9xqAAVL4T21N-31m7=A3_amp7Mf0Sw9jobYDRg@mail.gmail.com> <CALkWK0nt4PXfBxGcAnavUkKM6AhKpZnw1NtZsNznzmGZiguFqA@mail.gmail.com> <CALkWK0mNBG8EwysjO8uoR+fU5ZM=Pz9es3t_+s6cFgR6NSodGQ@mail.gmail.com> <vpq39g7gua3.fsf@bauges.imag.fr> <4E68CA0C.5080702@unixsol.org>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=_ns-23603-1315490824-0001-2"
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Sep 08 16:07:17 2011
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv4 0/5] mg/branch-list amendment
+Date: Thu,  8 Sep 2011 16:25:56 +0200
+Message-ID: <cover.1315491900.git.git@drmicha.warpmail.net>
+References: <4E6889DF.7030404@drmicha.warpmail.net>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 08 16:26:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1fG6-00083c-Be
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 16:07:14 +0200
+	id 1R1fYQ-0001r0-Do
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 16:26:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933055Ab1IHOHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Sep 2011 10:07:10 -0400
-Received: from ns.unixsol.org ([193.110.159.2]:57013 "EHLO ns.unixsol.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933022Ab1IHOHG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Sep 2011 10:07:06 -0400
-Received: from [10.0.1.78] ([::ffff:10.0.1.78])
-  (AUTH: CRAM-MD5 gf, SSL: TLSv1/SSLv3,256bits,AES256-SHA)
-  by ns.unixsol.org with esmtp; Thu, 08 Sep 2011 17:07:04 +0300
-  id 00140B8F.4E68CC08.00005C33
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20110712 Thunderbird/5.0
-In-Reply-To: <4E68CA0C.5080702@unixsol.org>
+	id S1750844Ab1IHO0B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Sep 2011 10:26:01 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:39928 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750744Ab1IHO0B (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Sep 2011 10:26:01 -0400
+Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 850592B1B9;
+	Thu,  8 Sep 2011 10:26:00 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute4.internal (MEProxy); Thu, 08 Sep 2011 10:26:00 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=from:to:cc:subject:date:message-id
+	:in-reply-to:references; s=smtpout; bh=KpoNxVjZjsmhkJCdYRUKqgdcK
+	sI=; b=tRNphutseygoFJ8NJQBnxEq/Rk0ddkPpWohsLpVOK7SgFl5QqNutoyc3F
+	fmqfbTbOxuifzbdWfyYV0QWW4M/3Wgwec42v1u76VYn+eLTxuRZ2eA1O5IyR8Kkn
+	+rOaauLeboRmEyFudzkVDsNCzatLdSalJIgZRzcup/8HOmu8dk=
+X-Sasl-enc: pakjWvYdUkV+YPKTSXGaa0Grzm5/zkgwWOqo24fpoi66 1315491960
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 016D9AC0CA6;
+	Thu,  8 Sep 2011 10:25:59 -0400 (EDT)
+X-Mailer: git-send-email 1.7.7.rc0.469.g9eb94
+In-Reply-To: <4E6889DF.7030404@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180972>
 
-This is a MIME-formatted message.  If you see this text it means that your
-E-mail software does not support MIME-formatted messages.
+So, this is what the top 2 commits in mg/branch-list should be replaced
+with if we don't let "-v" activate list mode, so that we can have a verbose
+option for branch creation later on, i.e.:
 
---=_ns-23603-1315490824-0001-2
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+git branch -v foo is the verbose version of git branch
 
-Around 09/08/2011 04:58 PM, Georgi Chorbadzhiyski scribbled:
-> Around 09/08/2011 02:15 PM, Matthieu Moy scribbled:
->> [1] Actually, I think there's a problem with Georgi's patch. If I read
->> correctly, the sleep is inserted within the confirmation loop, which
->> means the user will have
->>
->> send this email? yes
->> sending email
->> sleeping 10 seconds
->> send this email? yes
->> sending email
->> sleeping 10 seconds
->> ...
->>
->> while it should be
->>
->> send this email? yes
->> ok, I'll send it later
->> send this email? yes
->> ok, I'll send it later
->> sending first email ...
->> sleeping 10 seconds
->> sending second email
->> done.
->>
->> (i.e. don't force the user to wait between confirmations, and don't wait
->> after the last email)
-> 
-> In order for this to work, confirmation should be split from send_message()
-> and from a quick look this not seem very easy. Might be easier to just
-> disable the sleep if user was asked for confirmation. It'll be good to
-> not sleep after last email, but main "foreach my $t (@files) {" loop should
-> pass some hint to send_message().
+Michael J Gruber (2):
+  branch: introduce --list option
+  branch: allow pattern arguments
 
-The attached patch (apply on on top of the original) should implement the
-idea.
+ Documentation/git-branch.txt |   17 +++++++++++++----
+ builtin/branch.c             |   35 +++++++++++++++++++++++++++++------
+ t/t3200-branch.sh            |   32 ++++++++++++++++++++++++++++++++
+ t/t3203-branch-output.sh     |   28 ++++++++++++++++++++++++++++
+ 4 files changed, 102 insertions(+), 10 deletions(-)
 
 -- 
-Georgi Chorbadzhiyski
-http://georgi.unixsol.org/
-
---=_ns-23603-1315490824-0001-2
-Content-Type: text/plain; name="send-email-sleep-fix1.diff"; charset=iso-8859-1
-Content-Transfer-Encoding: base64
-Content-Disposition: inline;
- filename="send-email-sleep-fix1.diff"
-
-ZGlmZiAtLWdpdCBhL2dpdC1zZW5kLWVtYWlsLnBlcmwgYi9naXQtc2VuZC1lbWFpbC5wZXJs
-CmluZGV4IDcyMzlmZDQuLmQ0NTU5YzkgMTAwNzU1Ci0tLSBhL2dpdC1zZW5kLWVtYWlsLnBl
-cmwKKysrIGIvZ2l0LXNlbmQtZW1haWwucGVybApAQCAtMTE0OSw3ICsxMTQ5LDcgQEAgWC1N
-YWlsZXI6IGdpdC1zZW5kLWVtYWlsICRnaXR2ZXJzaW9uCiAJCX0KIAl9CiAKLQlpZiAoISRk
-cnlfcnVuICYmICRzbGVlcCkgeworCWlmICghJGRyeV9ydW4gJiYgJHNsZWVwICYmICRtZXNz
-YWdlX251bSA8IHNjYWxhciAkI2ZpbGVzICYmICRjb25maXJtIGVxICduZXZlcicpIHsKIAkJ
-cHJpbnQgIlNsZWVwaW5nOiAkc2xlZXAgc2Vjb25kKHMpLlxuIiBpZiAoISRxdWlldCk7CiAJ
-CXNsZWVwKCRzbGVlcCk7CiAJfTsK
---=_ns-23603-1315490824-0001-2--
+1.7.7.rc0.469.g9eb94
