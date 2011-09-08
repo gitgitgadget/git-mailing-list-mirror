@@ -1,60 +1,53 @@
-From: "J.H." <warthog9@eaglescrag.net>
-Subject: Re: git.kernel.org problems?
-Date: Wed, 07 Sep 2011 23:30:23 -0700
-Message-ID: <4E6860FF.6060903@eaglescrag.net>
-References: <CAH5451mouz=7Bvsk18iuB04aFwp0VS2mNYSJdmCH82iw6xU7Qw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Andrew Ardill <andrew.ardill@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 08 08:30:34 2011
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Make it easier for new contributors to come to grips with the project
+Date: Thu,  8 Sep 2011 16:47:58 +1000
+Message-ID: <1315464479-6876-1-git-send-email-andrew.ardill@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 08 08:49:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1Y8A-0003UD-4J
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 08:30:34 +0200
+	id 1R1YQ0-0001z7-6z
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 08:49:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758040Ab1IHGa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Sep 2011 02:30:28 -0400
-Received: from shards.monkeyblade.net ([198.137.202.13]:60643 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758010Ab1IHGa2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Sep 2011 02:30:28 -0400
-Received: from voot-cruiser.eaglescrag.net ([12.157.242.2])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.4/8.14.4) with ESMTP id p886UNvC015031
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Wed, 7 Sep 2011 23:30:24 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
-In-Reply-To: <CAH5451mouz=7Bvsk18iuB04aFwp0VS2mNYSJdmCH82iw6xU7Qw@mail.gmail.com>
-X-Enigmail-Version: 1.3.1
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.6 (shards.monkeyblade.net [198.137.202.13]); Wed, 07 Sep 2011 23:30:24 -0700 (PDT)
+	id S1756127Ab1IHGsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Sep 2011 02:48:30 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:49782 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755579Ab1IHGs2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Sep 2011 02:48:28 -0400
+Received: by ywf7 with SMTP id 7so394923ywf.19
+        for <git@vger.kernel.org>; Wed, 07 Sep 2011 23:48:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:message-id:x-mailer;
+        bh=B4lqV8ByyE2zlILCUfkxTKw4f6QPLrvg/1FBhEMDBeM=;
+        b=LTPXbrcW2yRR4elH2U4MI/JUejYCjcNjfQaHMql7PGWd0LigfU8cPX5CRPQ0ufE9eQ
+         gNkiUZcc/KpcV2pSERJObmdxSoUakdqMZbSuXiGpsjFfkUAHD8LBsRbGzeY+ULj2wrIy
+         WNmEAPQnkHjv6bm/u3J4revW3RgyUgmKeGjXQ=
+Received: by 10.236.181.137 with SMTP id l9mr1776288yhm.56.1315464507610;
+        Wed, 07 Sep 2011 23:48:27 -0700 (PDT)
+Received: from localhost ([59.167.165.193])
+        by mx.google.com with ESMTPS id s48sm2872297yhj.7.2011.09.07.23.48.25
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 07 Sep 2011 23:48:26 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.msysgit.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180943>
 
-There are currently known dns issues that are being worked on.
+Something that has been difficult as a developer looking to contribute
+to this project is trying to understand how everything is organised.
 
-- John 'Warthog9' Hawley
+In particular, working out what 'pu' stood for took quite a long time.
 
-On 09/07/2011 09:39 PM, Andrew Ardill wrote:
-> Anyone else getting issues connecting to git.kernel.org sites?
-> http://www.isup.me/git.kernel.org is reporting that it is up sometimes
-> and down sometimes, and I have resolved some resources fine earlier
-> (for example git.kernel.org/?p=git/git.git;a=tree;h=todo;hb=todo)
-> however everything fails for me now.
-> 
-> Any ideas?
-> 
-> Regards,
-> 
-> Andrew Ardill
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Following is a (very) simple patch to the README that will at least
+send potential contributors off in a useful direction. I know I would
+have saved much time if this note was there when I started looking.
+
+Potentially, the wiki and public website could be updated to provide
+similar links and start-up hints.
