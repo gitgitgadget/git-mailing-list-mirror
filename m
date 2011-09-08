@@ -1,58 +1,84 @@
-From: James Blackburn <jamesblackburn@gmail.com>
-Subject: git rebase fails with: Patch does not have a valid e-mail address.
-Date: Thu, 8 Sep 2011 12:47:04 +0100
-Message-ID: <CACyv8dckmRxgb9_FDTW+=1Y9bS27b3XZQCHnhjpfHiJig5p6wg@mail.gmail.com>
+From: =?ISO-8859-1?Q?Rodrigo_Cort=E9s?= <rcortes.ing@gmail.com>
+Subject: Re: Tracking database changes.
+Date: Thu, 8 Sep 2011 09:16:09 -0300
+Message-ID: <CAFSYZ5T1fhej26KfT1TtGQ6+U4=v1YxV1uTTD=poYNeQW15w5g@mail.gmail.com>
+References: <30328581.178675.1315346163453.JavaMail.trustmail@mail1.terreactive.ch>
+	<20110908121225.GC32087@victor.terreactive.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 08 13:47:13 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?ISO-8859-1?Q?Rodrigo_Cort=E9s?= <rcortes.ing@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 08 14:16:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1d4a-00046X-QA
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 13:47:13 +0200
+	id 1R1dWj-0004pv-4w
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 14:16:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758333Ab1IHLrH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Sep 2011 07:47:07 -0400
-Received: from mail-vw0-f43.google.com ([209.85.212.43]:35811 "EHLO
-	mail-vw0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758325Ab1IHLrF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Sep 2011 07:47:05 -0400
-Received: by vws10 with SMTP id 10so1046036vws.2
-        for <git@vger.kernel.org>; Thu, 08 Sep 2011 04:47:05 -0700 (PDT)
+	id S932556Ab1IHMQL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Sep 2011 08:16:11 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:41926 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932400Ab1IHMQJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Sep 2011 08:16:09 -0400
+Received: by yxp4 with SMTP id 4so391585yxp.19
+        for <git@vger.kernel.org>; Thu, 08 Sep 2011 05:16:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=X4vLjk4sErKiDsos8NnfH6ZKDSHLvy+foUruFghXrZY=;
-        b=ndWPTlerMuYegknbWcT/TllnHdwE/wMDjR3vq5pcz5uSQSaWP3vVZ5XdvRrKc6riEM
-         u1tqA8MBM7Di/sW6E7PVg+TwCuozcQSaLa3fHmPqCbO7NmFlgkn0GYsUrxABGT10a9cM
-         lCQnLRJrxg7rO0VemRJpKsedqS0rfqzT+qOv8=
-Received: by 10.52.67.168 with SMTP id o8mr554319vdt.30.1315482425022; Thu, 08
- Sep 2011 04:47:05 -0700 (PDT)
-Received: by 10.220.202.12 with HTTP; Thu, 8 Sep 2011 04:47:04 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=j2WJfgTj3pKuhIUP8T6e5Kw76i8T3D+38jxXSJXRMwA=;
+        b=bNjBNQDFSb9+SiVu9VS7I6t8e/bFLRe7nMziAatO79f9z4XYPHMAYJPJSPAFFTT5oL
+         tbVoJSRerUMhiPViWIYjAxv64krYAf33ehUYyL5s2pzwvkBx5LHVy2lEUDNORukCfxBy
+         qkv0fiU/0a6zBqUh1ghLRvc2gqGkYXd6jnHp8=
+Received: by 10.231.73.209 with SMTP id r17mr521960ibj.0.1315484169127; Thu,
+ 08 Sep 2011 05:16:09 -0700 (PDT)
+Received: by 10.231.61.82 with HTTP; Thu, 8 Sep 2011 05:16:09 -0700 (PDT)
+In-Reply-To: <20110908121225.GC32087@victor.terreactive.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180966>
 
-Hi,
+So... there is no "plugin" for git to do that work.
 
-I'm trying to rewrite some history and git's telling me:
+On Thu, Sep 8, 2011 at 9:12 AM, Victor Engmark
+<victor.engmark@terreactive.ch> wrote:
+> On Tue, Sep 06, 2011 at 06:55:56PM -0300, Rodrigo Cort=E9s wrote:
+>> Is there a way to use git to track database changes?
+>
+> 1. Export the data and/or data model with a tool like mysqldump.
+> 2. Remove output which would clutter up your diffs without adding any
+> useful information. This could include things like date and time of t=
+he
+> export and user name of the exporter.
+> 3. Commit and enjoy!
+>
+> Optionally create a cron job to export and commit automatically durin=
+g
+> off-peak hours.
+>
+> Cheers,
+> Victor
+>
+> --
+> terreActive AG
+> Kasinostrasse 30
+> CH-5001 Aarau
+> Tel: +41 62 834 00 55
+> Fax: +41 62 823 93 56
+> www.terreactive.ch
+>
+> Wir sichern Ihren Erfolg - seit 15 Jahren
+>
 
--bash:jamesb:lc-cam-025:33079> git rebase
-7f58969b933745d4cb9bb128bbd3fa8d441cdb92
-First, rewinding head to replay your work on top of it...
-Patch does not have a valid e-mail address.
 
-Now it's true there isn't an email address for the author - the author
-no longer works for the company, and the email address was removed
-during the conversion.  Therefore the repo contains "Author <>".
 
-Given git doesn't ordinarily complain about this, should this prevent
-rebase from working?
-
-Cheers,
-James
+--=20
+Rodrigo Cort=E9s Carvajal
+Ingenier=EDa El=E9ctrica
+Universidad Tecnol=F3gica de Chile
