@@ -1,114 +1,124 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 0/7] "push -s"
-Date: Thu,  8 Sep 2011 13:01:35 -0700
-Message-ID: <1315512102-19022-1-git-send-email-gitster@pobox.com>
+Subject: [PATCH v2 4/7] push -s: send signed push certificate
+Date: Thu,  8 Sep 2011 13:01:39 -0700
+Message-ID: <1315512102-19022-5-git-send-email-gitster@pobox.com>
+References: <1315512102-19022-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 09 00:57:36 2011
+X-From: git-owner@vger.kernel.org Fri Sep 09 00:57:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1nXM-0005F6-4T
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 00:57:36 +0200
+	id 1R1nXK-0005F6-4y
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 00:57:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752797Ab1IHW5A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Sep 2011 18:57:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38595 "EHLO
+	id S1752772Ab1IHW45 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Sep 2011 18:56:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38617 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751526Ab1IHW4n (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Sep 2011 18:56:43 -0400
+	id S1751681Ab1IHW4p (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Sep 2011 18:56:45 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6910C462E
-	for <git@vger.kernel.org>; Thu,  8 Sep 2011 16:01:44 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 710D0464A
+	for <git@vger.kernel.org>; Thu,  8 Sep 2011 16:01:52 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id; s=sasl; bh=OazZBbR+ioINqX6lyUbfmorggH4
-	=; b=GuGXdvx/M8YI1UiUJSNP43WZkhsJkl72GY+9wM2AMI35Xgl5Y9HjfAcRMDN
-	YWn//IWUCEobrZfFmHaDalNKD082X9+dPXk8+wv2iQV4NFXQyOBiRUvRAcgDu9Fo
-	OircTE1ezcKr9WJ6Xz4TC32n/G2PWDZb4ex/NI8D+thgQOuI=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=33/m
+	C3ui5pZNt9dWRdITibXrxls=; b=c1dotET3BicOaBN2NZsNGRYlfHEsu31n0mv2
+	nh0eBMKcXczvTH2sSVGjRuRO2y307whW2vOyC6OBDDoFfBe6SKZbu/elZ8AR9A9c
+	/8CXTTuwEdlTImPZg2Q0ado4pi4/U9vvfP8OLwr3QL+gZFVzJ+sBEs1tSkDdEoib
+	uXtUYZg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id; q=dns; s=sasl; b=HMgQJsVxbJOKYTwn0VxUkjerG775V
-	2VIXc+e9R0IPoDcB7tQ02AzFwWR6JszAVC1lTART5cYVfsyrs0xYSql8jfWD7IIX
-	YHXFD8/EeRrpkmhmv57WgdY3E/LV8n/AcHO1/oB5eAuon+Ulxaat+gRghnz+j14d
-	ikL5k/9EK1wV98=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=qrYRUD
+	V5v1y3sI2HOaMOBDGh+5c5ArepWpD+47KoGpagGZIu0fTM9/ytlN3ebXyf0/PwBE
+	+qkijg0TVFm3BiqQn4CauO0VKpKpMlPFji8XK8OotYZUZ98Nob2cwOTKVkwpUPYP
+	hyq1VgQaMpT4PGAeJTfc/z2+G4wq4MOXgUQJ0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6108F462C
-	for <git@vger.kernel.org>; Thu,  8 Sep 2011 16:01:44 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 69B884649
+	for <git@vger.kernel.org>; Thu,  8 Sep 2011 16:01:52 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DA650462B for
- <git@vger.kernel.org>; Thu,  8 Sep 2011 16:01:43 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ED9F34647 for
+ <git@vger.kernel.org>; Thu,  8 Sep 2011 16:01:51 -0400 (EDT)
 X-Mailer: git-send-email 1.7.7.rc0.188.g3793ac
-X-Pobox-Relay-ID: 6003AAC6-DA55-11E0-A1A6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+In-Reply-To: <1315512102-19022-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 64D4607C-DA55-11E0-AC1E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180987>
 
-Slightly re-rolled from last night.
+And this uses the GPG interface to sign the push certificate. The format
+of the signed certificate is very similar to a signed tag, in that the
+result is a concatenation of the payload, immediately followed by a
+detached signature.
 
- - Marked push-certificate format as version 0 while we are
-   still experimenting;
- - The push certificate records new object name and the refname;
- - Add support for an external hook "pre-receive-signature".
+This places the same constraint as an annotated tag on the push
+certificate payload; it has to be a text file and the final line
+must not be an incomplete line.
 
-One issue internally debated was if we want to list the refs that matched
-the pushing criteria but were found to be already up to date, and this can
-be argued both ways.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/send-pack.c |   29 ++++++++++++-----------------
+ 1 files changed, 12 insertions(+), 17 deletions(-)
 
- - You can say that you are making assertion that you want to have a
-   certain object at that ref, in which case you would want to include
-   them.
-
- - On the other hand, for the purpose of leaving audit-trail, if the ref
-   you tried to push already had the object you wanted to see at the tip
-   of a ref, you weren't the person who made the ref point at the object,
-   and it would be sensible not to include them.
-
-Taking the latter stance is slightly easier on the end users, because
-"Everything up-to-date" case becomes a no-op as the natural consequence,
-and we do not have to ask them to unlock their GPG key in such a case.  It
-however makes it impossible to say "Earlier I pushed that object to the
-tip of my branch but forgot to sign the push, and I want to make a signed
-push, even though I didn't add anything to my history."
-
-People who configured to push out more than one branches with "git push"
-often work on one branch, run "git push" which ends up pushing that branch
-but not other branches, then work on another branch and run "git push" to
-push out that other branch, while the branch he earlier pushed out stays
-the same since his last push. For such people, the first "push" is not
-necessarily even an assertion that he wants to have both branches pointing
-at certain commits, and from that point of view, not including the latter
-branch he hasn't worked on (and stayed up-to-date) in the push certifiate
-is a sensible thing to do.
-
-As there is no single right answer, this round of re-roll keeps the latter
-semantics to record only what you pushed out as the original series.
-
-Junio C Hamano (7):
-  send-pack: typofix error message
-  Split GPG interface into its own helper library
-  push -s: skeleton
-  push -s: send signed push certificate
-  push -s: receiving end
-  refactor run_receive_hook()
-  push -s: support pre-receive-signature hook
-
- Makefile               |    2 +
- builtin/push.c         |    1 +
- builtin/receive-pack.c |  206 +++++++++++++++++++++++++++++++++++++++++++-----
- builtin/send-pack.c    |   61 +++++++++++++-
- builtin/tag.c          |   60 ++------------
- builtin/verify-tag.c   |   35 +--------
- gpg-interface.c        |   94 ++++++++++++++++++++++
- gpg-interface.h        |   11 +++
- send-pack.h            |    1 +
- transport.c            |    4 +
- transport.h            |    4 +
- 11 files changed, 369 insertions(+), 110 deletions(-)
- create mode 100644 gpg-interface.c
- create mode 100644 gpg-interface.h
-
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index 7f4778c..f715324 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -8,6 +8,7 @@
+ #include "send-pack.h"
+ #include "quote.h"
+ #include "transport.h"
++#include "gpg-interface.h"
+ 
+ static const char send_pack_usage[] =
+ "git send-pack [--all | --mirror] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref>...]\n"
+@@ -237,25 +238,18 @@ static int sideband_demux(int in, int out, void *data)
+ 	return ret;
+ }
+ 
+-static void sign_push_certificate(struct strbuf *cert)
++/*
++ * Take the contents of cert->buf, and have the user GPG sign it, and
++ * read it back in the strbuf.
++ */
++static int sign_push_certificate(struct strbuf *cert)
+ {
+ 	/*
+-	 * Here, take the contents of cert->buf, and have the user GPG
+-	 * sign it, and read it back in the strbuf.
+-	 *
+-	 * You may want to append some extra info to cert before giving
+-	 * it to GPG, possibly via a hook.
+-	 *
+-	 * Here we upcase them just to demonstrate that the codepath
+-	 * is being exercised.
++	 * You may want to append some extra info to cert before
++	 * giving it to GPG, possibly via a hook, here.
+ 	 */
+-	char *cp;
+-	for (cp = cert->buf; *cp; cp++) {
+-		int ch = *cp;
+-		if ('a' <= ch && ch <= 'z')
+-			*cp = toupper(ch);
+-	}
+-	return;
++
++	return sign_buffer(cert, git_committer_info(IDENT_NO_DATE));
+ }
+ 
+ int send_pack(struct send_pack_args *args,
+@@ -369,7 +363,8 @@ int send_pack(struct send_pack_args *args,
+ 	if (signed_push && cmds_sent) {
+ 		char *cp, *ep;
+ 
+-		sign_push_certificate(&push_cert);
++		if (sign_push_certificate(&push_cert))
++			return error(_("failed to sign push certificate"));
+ 		strbuf_reset(&req_buf);
+ 		for (cp = push_cert.buf; *cp; cp = ep) {
+ 			ep = strchrnul(cp, '\n');
 -- 
 1.7.7.rc0.188.g3793ac
