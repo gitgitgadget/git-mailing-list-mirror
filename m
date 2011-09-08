@@ -1,70 +1,96 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] send-mail: Add option to sleep between sending each email.
-Date: Thu, 08 Sep 2011 22:50:19 +0200
-Message-ID: <vpq39g6iws4.fsf@bauges.imag.fr>
-References: <1315428191-9769-1-git-send-email-gf@unixsol.org>
-	<CALkWK0kH+pD6ymtt9oWLhT0Bftp4EvtrwTtNVw6mjX0aObb-BQ@mail.gmail.com>
-	<vpq7h5jtngj.fsf@bauges.imag.fr>
-	<7vbouvx8j5.fsf@alter.siamese.dyndns.org>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: Git Bug - diff in commit message.
+Date: Thu, 8 Sep 2011 16:26:01 +0000
+Message-ID: <CAMOZ1BtbpbG+19G6Hfau_2_F5L3Ad+x-Payd9aKajJxU_V_tyA@mail.gmail.com>
+References: <1315493353942-6772145.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Georgi Chorbadzhiyski <gf@unixsol.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 09 01:18:14 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: anikey <arty.anikey@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 09 01:19:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1nrJ-0005wG-Jt
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 01:18:13 +0200
+	id 1R1nsa-0006Ph-1l
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 01:19:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753354Ab1IHXSI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Sep 2011 19:18:08 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:56685 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752994Ab1IHXSG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Sep 2011 19:18:06 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p88KnB8J001075
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 8 Sep 2011 22:49:11 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1R1lYB-0006QL-P3; Thu, 08 Sep 2011 22:50:19 +0200
-In-Reply-To: <7vbouvx8j5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 08 Sep 2011 10:12:46 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 08 Sep 2011 22:51:01 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p88KnB8J001075
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1316119862.5049@SZiWMlefGj0J6bkK6RETrA
+	id S1754073Ab1IHXTX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Sep 2011 19:19:23 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:55381 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753162Ab1IHXSy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Sep 2011 19:18:54 -0400
+Received: by gxk21 with SMTP id 21so546878gxk.5
+        for <git@vger.kernel.org>; Thu, 08 Sep 2011 16:18:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=2V/ub7X5pcuCS7JfZ3qnz/7SLAzWBjTbREQKIxyAvfE=;
+        b=IV3SGUjcatgXTEmtdDnKSJnVE9QNJGuen9HtWvSFT6ImZgwUi/wW5NoBTV+ERJSTBF
+         Qa0K9FD1ORT7b22qFU30iqOdyZPwVqU05ysBoR4uhTKKPFJJTW0Cqbb18HGg/Lai9HW6
+         7wdRX0oIvlHUEgI9y8yYN0oG88sYKr3zwgaaE=
+Received: by 10.42.162.70 with SMTP id w6mr346349icx.280.1315499191109; Thu,
+ 08 Sep 2011 09:26:31 -0700 (PDT)
+Received: by 10.42.171.194 with HTTP; Thu, 8 Sep 2011 09:26:01 -0700 (PDT)
+In-Reply-To: <1315493353942-6772145.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181002>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Thu, Sep 8, 2011 at 14:49, anikey <arty.anikey@gmail.com> wrote:
+> Hi, peops. I'm pretty much sure that's a bug.
 >
->> There have been discussion (and IIRC a patch) proposing this already in
->> the past. One advantage of sleeping a bit between each email is that it
->> increase the chances for the receiver to receive the emails in the right
->> order.
+> What I did was putting git diff (i needed to tell people that for my =
+changes
+> to start working they needed to aplly message-inline patch to some co=
+de
+> which was not under git) in commit message. Like adding:
 >
-> Huh? Even in the presense of MTAs in the middle that are free to reorder
-> messages?
+> diff --git a/app/controllers/settings_controller.rb
+> b/app/controllers/settings_controller.rb
+> index 937da74..0e8440d 100644
+> --- a/app/controllers/settings_controller.rb
+> +++ b/app/controllers/settings_controller.rb
+> @@ -42,7 +42,7 @@ class SettingsController < ApplicationController
+> =C2=A0 end
+>
+> =C2=A0 def snmp_mibs
+> - =C2=A0 =C2=A0render layout: 'ext3'
+> + =C2=A0 =C2=A0render layout: 'ext3_2'
+> =C2=A0 end
+>
+> =C2=A0 def cfg_auth_keys(auth_type=3D:all)
+>
+> though the commit itself didn't contain that change. So while `git re=
+base
+> some_branch_name` I started getting:
+>
+> First, rewinding head to replay your work on top of it...
+> Applying: My cool patch.
+> fatal: sha1 information is lacking or useless
+> (app/controllers/settings_controller.rb).
+> Repository lacks necessary blobs to fall back on 3-way merge.
+> Cannot fall back to three-way merge.
+> Patch failed at 0001 My cool patch.
+>
+> When you have resolved this problem run "git rebase --continue".
+> If you would prefer to skip this patch, instead run "git rebase --ski=
+p".
+> To restore the original branch and stop rebasing run "git rebase --ab=
+ort".
 
-I didn't say it _ensures_ reception in the right order. I said it
-increases the chances.
+Ha!
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+It would appear that `git rebase' is in fact producing patches with
+`git format-patch' and then applying the resulting patches with `git
+am', which gets confused by your inline diff; this can be clearly seen
+in the `git-rebase--am[.sh]' file.
+
+Perhaps `git rebase' should be reimplemented to use `git cherry-pick',
+or does that suffer from the same problem?
