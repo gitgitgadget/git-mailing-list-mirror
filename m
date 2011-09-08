@@ -1,116 +1,74 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: The imporantance of including http credential caching in 1.7.7
-Date: Thu, 08 Sep 2011 15:17:03 +0200
-Message-ID: <4E68C04F.9060804@drmicha.warpmail.net>
-References: <CAFcyEthzW1AY4uXgpsVxjyWCDXAJ6=GdWGqLFO6Acm1ovJJVaw@mail.gmail.com> <4E6769E3.4070003@drmicha.warpmail.net> <CAFcyEthuf49_kOmoLmoSSbNJN+iOBpicP4-eFAV5wL5_RffwGg@mail.gmail.com>
+From: Georgi Chorbadzhiyski <gf@unixsol.org>
+Subject: Re: [PATCH] send-mail: Add option to sleep between sending each email.
+Date: Thu, 08 Sep 2011 16:58:36 +0300
+Organization: Unix Solutions Ltd. (http://unixsol.org)
+Message-ID: <4E68CA0C.5080702@unixsol.org>
+References: <1315428191-9769-1-git-send-email-gf@unixsol.org> <CALkWK0kH+pD6ymtt9oWLhT0Bftp4EvtrwTtNVw6mjX0aObb-BQ@mail.gmail.com> <vpq7h5jtngj.fsf@bauges.imag.fr> <CALkWK0nuLHpG9xqAAVL4T21N-31m7=A3_amp7Mf0Sw9jobYDRg@mail.gmail.com> <CALkWK0nt4PXfBxGcAnavUkKM6AhKpZnw1NtZsNznzmGZiguFqA@mail.gmail.com> <CALkWK0mNBG8EwysjO8uoR+fU5ZM=Pz9es3t_+s6cFgR6NSodGQ@mail.gmail.com> <vpq39g7gua3.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Kyle Neath <kneath@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 08 15:17:13 2011
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Sep 08 15:58:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1eTh-00046Z-3M
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 15:17:13 +0200
+	id 1R1f87-00034j-6k
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 15:58:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932746Ab1IHNRH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Sep 2011 09:17:07 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:56166 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932708Ab1IHNRF (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Sep 2011 09:17:05 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 0B99428FE9;
-	Thu,  8 Sep 2011 09:17:05 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute1.internal (MEProxy); Thu, 08 Sep 2011 09:17:05 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=xTAZISQc6elOECsx1jR5EI
-	9qlwA=; b=PC5QXQTZ0Jbcgif/kH6UHR9X2sEPrxc+q+xtLDAlFqLOXKtKuRbYcn
-	dgZjg97nH2RGBUVWcPSjmGryN+zP3IGR0FL7mIQ+WQbj8jDOilRH6jscRVDGdS/o
-	dzqB/XKt079qzP6cA0OcqqRDG+IPCxO4OJFBZl6ZBqm8qT2O3kzXI=
-X-Sasl-enc: QokE6DgWU44LdOuArsd/aKqMcHFz7SCBtVlHnbTLJaaj 1315487824
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6900A78044E;
-	Thu,  8 Sep 2011 09:17:04 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
-In-Reply-To: <CAFcyEthuf49_kOmoLmoSSbNJN+iOBpicP4-eFAV5wL5_RffwGg@mail.gmail.com>
+	id S932996Ab1IHN6j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Sep 2011 09:58:39 -0400
+Received: from ns.unixsol.org ([193.110.159.2]:38323 "EHLO ns.unixsol.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932879Ab1IHN6i (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Sep 2011 09:58:38 -0400
+Received: from [10.0.1.78] ([::ffff:10.0.1.78])
+  (AUTH: CRAM-MD5 gf, SSL: TLSv1/SSLv3,256bits,AES256-SHA)
+  by ns.unixsol.org with esmtp; Thu, 08 Sep 2011 16:58:37 +0300
+  id 00140B8F.4E68CA0D.00004439
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20110712 Thunderbird/5.0
+In-Reply-To: <vpq39g7gua3.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180970>
 
-Kyle Neath venit, vidit, dixit 07.09.2011 22:14:
-> Junio C Hamano <gitster@pobox.com> wrote:
->> If this were a new, insignificant, and obscure feature in a piece of
->> software with mere 20k users, it may be OK to release a new version with
->> the feature in an uncooked shape.
+Around 09/08/2011 02:15 PM, Matthieu Moy scribbled:
+> [1] Actually, I think there's a problem with Georgi's patch. If I read
+> correctly, the sleep is inserted within the confirmation loop, which
+> means the user will have
 > 
-> For the sake of my paycheck, I should certainly hope not! I'm not at all
-> suggesting we merge what we have in. However, I do think this feature is
-> important enough to delay the release. I trust in the judgement of the core
-> members to know when something is ready for inclusion in master.
+> send this email? yes
+> sending email
+> sleeping 10 seconds
+> send this email? yes
+> sending email
+> sleeping 10 seconds
+> ...
 > 
-> Michael J Gruber <git@drmicha.warpmail.net> wrote:
->> So, it's been a year or more that you've been aware of the importance of
->> this issue (from your/github's perspective), and we hear about it now,
->> at the end of the rc phase.
+> while it should be
 > 
-> I apologize if it sounds like that. I've been discussing this situation with
-> many people (including Jeff King) for a very long time now, and it was my
-> understanding that the credential caching was done and simply waiting for a
-> new release. This is the first I've heard that it will not be included in
-> 1.7.7, so I'm voicing my opinion now. Admittedly, late in the game - and I
-> apologize for that.
+> send this email? yes
+> ok, I'll send it later
+> send this email? yes
+> ok, I'll send it later
+> sending first email ...
+> sleeping 10 seconds
+> sending second email
+> done.
+> 
+> (i.e. don't force the user to wait between confirmations, and don't wait
+> after the last email)
 
-OK, I've calmed down :)
+In order for this to work, confirmation should be split from send_message()
+and from a quick look this not seem very easy. Might be easier to just
+disable the sleep if user was asked for confirmation. It'll be good to
+not sleep after last email, but main "foreach my $t (@files) {" loop should
+pass some hint to send_message().
 
-> I'd be happy to help in any capacity I can. Unfortunately I'm no C hacker, and
-> I've accepted that as a character flaw (it's something I'm working on). I'm
-> afraid I can't be of much help with the actual code. What I can provide is an
-> alternate viewpoint to the core team. A viewpoint of someone who's spent 3
-> years trying to make git easier for newcomers.
-
-It would be interesting to know what we can rely on in the user group
-you're thinking about (which I called ssh-challenged). Setting up ssh
-keys is too complicated. Can we require a working gpg setup? They do
-want to check sigs, don't they?
-
-What I have in mind is a very simple, but secure version of Jeff's
-credential-store, respectively his example, somewhat like:
-
----%<---
-STORAGE=$HOME/.credentials
-
-for i in "$@"; do
-	case "$i" in
-	--unique=*)
-		unique=${i#--unique=} ;;
-	esac
-done
-
-key=$(git config get credential.gpgkey) # or error out
-
-if ! test -e "$STORAGE/$unique"; then
-	mkdir -m 0700 "$STORAGE"
-	git credential-getpass "$@" | gpg -ear $key >"$STORAGE/$unique"
-fi
-
-gpg <"$STORAGE/$unique"
----%<---
-
-Or that in C, probably using Junio's gpg-lib. That would be secure and
-useful *if* we can rely on people having a convenient gpg setup
-(gpg-agent or such).
-
-So: What credential store/password wallet/etc. can we rely on for this
-group? Is gpg fair game?
-
-Michael
+-- 
+Georgi Chorbadzhiyski
+http://georgi.unixsol.org/
