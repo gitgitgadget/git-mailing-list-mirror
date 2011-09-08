@@ -1,57 +1,78 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Add interactive patch menu help scrolled away if hunk is long
-Date: Thu, 8 Sep 2011 16:43:29 +0200
-Message-ID: <CAGdFq_h-ueqnnaEB9Li+=qfdydRjFoP1v+cEc6A_hnc5oHBfDA@mail.gmail.com>
-References: <loom.20110907T143944-529@post.gmane.org>
+From: anikey <arty.anikey@gmail.com>
+Subject: Git Bug - diff in commit message.
+Date: Thu, 8 Sep 2011 07:49:13 -0700 (PDT)
+Message-ID: <1315493353942-6772145.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Sergio Callegari <sergio.callegari@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 08 16:44:16 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 08 16:49:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1fpv-0004Ev-GA
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 16:44:15 +0200
+	id 1R1fur-00071V-4x
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 16:49:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751837Ab1IHOoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Sep 2011 10:44:10 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:36032 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751474Ab1IHOoJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Sep 2011 10:44:09 -0400
-Received: by pzk37 with SMTP id 37so1239361pzk.1
-        for <git@vger.kernel.org>; Thu, 08 Sep 2011 07:44:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=3OeU+cC83f2Tf15oqw1b1Bpp+NUEgLVfZn+55craZg8=;
-        b=VRLwSeCbNEGXQE8pcbghNJuPHWVkmWJrvFmS1J37uszcITONuO63OdaKyiHuCoaa+P
-         VZy7RVJwfwR8yBdjtwOsjDJacXGOK7ycNfSgNOHeEET/y3K+tSNeK+IXTAYO/67kZX+Y
-         wtygT3rDqTaXPAnwDCqXMPn73zF8jAHni9d3k=
-Received: by 10.68.38.103 with SMTP id f7mr1125166pbk.500.1315493049077; Thu,
- 08 Sep 2011 07:44:09 -0700 (PDT)
-Received: by 10.68.59.39 with HTTP; Thu, 8 Sep 2011 07:43:29 -0700 (PDT)
-In-Reply-To: <loom.20110907T143944-529@post.gmane.org>
+	id S1752032Ab1IHOtQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Sep 2011 10:49:16 -0400
+Received: from sam.nabble.com ([216.139.236.26]:40943 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751966Ab1IHOtP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Sep 2011 10:49:15 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <arty.anikey@gmail.com>)
+	id 1R1fuj-00082x-Ug
+	for git@vger.kernel.org; Thu, 08 Sep 2011 07:49:13 -0700
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180976>
 
-Heya,
+Hi, peops. I'm pretty much sure that's a bug.
 
-On Wed, Sep 7, 2011 at 14:43, Sergio Callegari
-<sergio.callegari@gmail.com> wrote:
-> Probably it would be better not to reprint the hunk when '?' is selected.
+What I did was putting git diff (i needed to tell people that for my changes
+to start working they needed to aplly message-inline patch to some code
+which was not under git) in commit message. Like adding:
 
-Seconded! I was trying to explain git add -i to someone and typed '?'
-three times in a row wondering why it wasn't working.
+diff --git a/app/controllers/settings_controller.rb
+b/app/controllers/settings_controller.rb
+index 937da74..0e8440d 100644
+--- a/app/controllers/settings_controller.rb
++++ b/app/controllers/settings_controller.rb
+@@ -42,7 +42,7 @@ class SettingsController < ApplicationController
+   end
+ 
+   def snmp_mibs
+-    render layout: 'ext3'
++    render layout: 'ext3_2'
+   end
+ 
+   def cfg_auth_keys(auth_type=:all)
 
--- 
-Cheers,
+though the commit itself didn't contain that change. So while `git rebase
+some_branch_name` I started getting:
 
-Sverre Rabbelier
+First, rewinding head to replay your work on top of it...
+Applying: My cool patch.
+fatal: sha1 information is lacking or useless
+(app/controllers/settings_controller.rb).
+Repository lacks necessary blobs to fall back on 3-way merge.
+Cannot fall back to three-way merge.
+Patch failed at 0001 My cool patch.
+
+When you have resolved this problem run "git rebase --continue".
+If you would prefer to skip this patch, instead run "git rebase --skip".
+To restore the original branch and stop rebasing run "git rebase --abort".
+
+I wasn't able to figure out what was wrong for a very long time, when things
+came to my mind.
+
+Thanks.
+
+--
+View this message in context: http://git.661346.n2.nabble.com/Git-Bug-diff-in-commit-message-tp6772145p6772145.html
+Sent from the git mailing list archive at Nabble.com.
