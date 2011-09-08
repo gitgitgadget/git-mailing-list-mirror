@@ -1,88 +1,344 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 1/2] remote: write correct fetch spec when renaming
- remote 'remote'
-Date: Wed, 07 Sep 2011 20:43:01 -0700
-Message-ID: <7vzkifzol6.fsf@alter.siamese.dyndns.org>
-References: <1314924634-12235-1-git-send-email-martin.von.zweigbergk@gmail.com>
- <7vaaah6zx0.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.2.00.1109062136350.12564@debian>
+Subject: [PATCH 3/2] Split GPG interface into its own helper library
+Date: Wed, 07 Sep 2011 21:37:24 -0700
+Message-ID: <7vk49jzm0h.fsf@alter.siamese.dyndns.org>
+References: <7vfwk82hrt.fsf@alter.siamese.dyndns.org>
+ <7vbouw2hqg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 08 05:43:26 2011
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 08 06:38:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1VWM-0007Z2-6Q
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 05:43:22 +0200
+	id 1R1WO5-0008CP-6e
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 06:38:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932185Ab1IHDnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Sep 2011 23:43:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65255 "EHLO
+	id S1751962Ab1IHEin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Sep 2011 00:38:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49565 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932154Ab1IHDnH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Sep 2011 23:43:07 -0400
+	id S1751493Ab1IHEim (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Sep 2011 00:38:42 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62D9E596C;
-	Wed,  7 Sep 2011 23:43:03 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4FB3054B2;
+	Thu,  8 Sep 2011 00:38:41 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=m+kbi4jth2RjjSFNWpr3xV9ddbs=; b=WWg7pj
-	FRt46DQNMmwXA+XblxdaWmtbPzM+ZsXB5hn9/EWyr7nrMcdw220Gv8y4vvd2kH5H
-	itRjlZD0AhiHRmocCLR4jpy8D4n3gGKaOtkOmzdY99UXjOEzt0XqVDo86xJl2wuq
-	RRBgJqRhKTd5ZqVy3te1lEdb3r07CuYcgdoPg=
+	:subject:date:references:message-id:mime-version:content-type;
+	 s=sasl; bh=zodTZsKTjNU5pNQb1PKVjSYnwrU=; b=RZLMSvKf/JEuLQH626/8
+	iGt7Kgdf9UcvRHSxj5QT4qr+9IHfivb0w74fAQIELPZhBYdKCC5zYG6h4MWPUq/2
+	6QNPlHKh5o7q92bf8rCrXMyoQiEqo94zYiNXv4mCZzo8pJnhle/OR/lLqy6wfqP1
+	xjGBCLpABZsNI/Q5ycD6ykc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Swig7GGwfoRRhe0GMNBvTK3OC2K5GNXw
-	uJ6IcxcTaEr7Mo+n3e6n3KJkQmEHmxXzHXazfF7jZ5k+j0fAal9KILxStuciEUl+
-	wdxZPXDbvF5PAW53KUJ78mJpg1diDvEDGUzWfm95Zy6PNr4V4UXSNUM9+UqcBIaH
-	tKZhs9HXySM=
+	:subject:date:references:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=bIuyNq/QS3B4J6/gM2d9g1uyXuWG02JX1plshc613nxCdX
+	yJzXHFhVWQotc2b7XTfxTi63o+F0/IgeOdYo0GKk3k+AgRAUF20K6G/jC+DoKwof
+	Sh64zh/KqWJ7ADtq1ZQ6ZFpBLq5c/Wk0mS4iKkB86xI/UoNNZnZfpClbKkcX0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 599CF596B;
-	Wed,  7 Sep 2011 23:43:03 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 46EAA54B1;
+	Thu,  8 Sep 2011 00:38:41 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B501F5968; Wed,  7 Sep 2011
- 23:43:02 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.00.1109062136350.12564@debian> (Martin von
- Zweigbergk's message of "Wed, 7 Sep 2011 21:40:57 -0400 (EDT)")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7589A54AE; Thu,  8 Sep 2011
+ 00:38:40 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A77DAEC6-D9CC-11E0-88A8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6CEDAF38-D9D4-11E0-A210-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180937>
 
-Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
+This moves existing code from builtin/tag.c (for signing) and
+builtin/verify-tag.c (for verifying) to a new gpg-interface.c file to
+provide a more generic library interface.
 
-> same pattern both when updating refspecs and when renaming refs. Of
-> course, we can never be certain that a ref "refs/remotes/origin/foo"
-> is really related to the remote called "origin". The user could have
-> simply created the ref manually. Is that what you are getting at?
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Makefile             |    2 +
+ builtin/tag.c        |   60 ++++----------------------------
+ builtin/verify-tag.c |   35 ++-----------------
+ gpg-interface.c      |   94 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ gpg-interface.h      |   11 ++++++
+ 5 files changed, 117 insertions(+), 85 deletions(-)
+ create mode 100644 gpg-interface.c
+ create mode 100644 gpg-interface.h
 
-You have two separate and independent code that are not linked together
-but should logically be.
-
-One updates fetch refspec whose RHS is "refs/remotes/$OLD/<anything>" to
-"refs/remotes/$NEW/<the same thing>". If you do not find any such fetch
-refspec, then you do not update these configuration variables, which is
-good.
-
-Later in the same mv() function, the other one renames refs/remotes/$OLD/
-to refs/remotes/$NEW/, even when you did not find any fetch refspec that
-stores under "refs/remotes/$OLD/<anything>" in the earlier logic.
-
-Now, these actual refs may have been placed manually by the user. They may
-have been placed by an old config that the user may have edited. You
-simply do not know.
-
-But you know one thing. You _do_ know is that these refs did _not_ come
-from any "[remote "$OLD"] fetch = ..." configuration, and by inference, it
-will not come from any "[remote "$NEW"] fetch = ...", in other words, they
-do not have any relation with the "$NEW" remote. So I do not see a good
-reason to move them from refs/remotes/$OLD/ to refs/remotes/$NEW/. That
-was what I was pointing out.
+diff --git a/Makefile b/Makefile
+index 8d6d451..2183223 100644
+--- a/Makefile
++++ b/Makefile
+@@ -530,6 +530,7 @@ LIB_H += exec_cmd.h
+ LIB_H += fsck.h
+ LIB_H += gettext.h
+ LIB_H += git-compat-util.h
++LIB_H += gpg-interface.h
+ LIB_H += graph.h
+ LIB_H += grep.h
+ LIB_H += hash.h
+@@ -620,6 +621,7 @@ LIB_OBJS += entry.o
+ LIB_OBJS += environment.o
+ LIB_OBJS += exec_cmd.o
+ LIB_OBJS += fsck.o
++LIB_OBJS += gpg-interface.o
+ LIB_OBJS += graph.o
+ LIB_OBJS += grep.o
+ LIB_OBJS += hash.o
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 667515e..e9d36fa 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -14,6 +14,7 @@
+ #include "parse-options.h"
+ #include "diff.h"
+ #include "revision.h"
++#include "gpg-interface.h"
+ 
+ static const char * const git_tag_usage[] = {
+ 	"git tag [-a|-s|-u <key-id>] [-f] [-m <msg>|-F <file>] <tagname> [<head>]",
+@@ -208,60 +209,13 @@ static int verify_tag(const char *name, const char *ref,
+ 
+ static int do_sign(struct strbuf *buffer)
+ {
+-	struct child_process gpg;
+-	const char *args[4];
+-	char *bracket;
+-	int len;
+-	int i, j;
++	const char *key;
+ 
+-	if (!*signingkey) {
+-		if (strlcpy(signingkey, git_committer_info(IDENT_ERROR_ON_NO_NAME),
+-				sizeof(signingkey)) > sizeof(signingkey) - 1)
+-			return error(_("committer info too long."));
+-		bracket = strchr(signingkey, '>');
+-		if (bracket)
+-			bracket[1] = '\0';
+-	}
+-
+-	/* When the username signingkey is bad, program could be terminated
+-	 * because gpg exits without reading and then write gets SIGPIPE. */
+-	signal(SIGPIPE, SIG_IGN);
+-
+-	memset(&gpg, 0, sizeof(gpg));
+-	gpg.argv = args;
+-	gpg.in = -1;
+-	gpg.out = -1;
+-	args[0] = "gpg";
+-	args[1] = "-bsau";
+-	args[2] = signingkey;
+-	args[3] = NULL;
+-
+-	if (start_command(&gpg))
+-		return error(_("could not run gpg."));
+-
+-	if (write_in_full(gpg.in, buffer->buf, buffer->len) != buffer->len) {
+-		close(gpg.in);
+-		close(gpg.out);
+-		finish_command(&gpg);
+-		return error(_("gpg did not accept the tag data"));
+-	}
+-	close(gpg.in);
+-	len = strbuf_read(buffer, gpg.out, 1024);
+-	close(gpg.out);
+-
+-	if (finish_command(&gpg) || !len || len < 0)
+-		return error(_("gpg failed to sign the tag"));
+-
+-	/* Strip CR from the line endings, in case we are on Windows. */
+-	for (i = j = 0; i < buffer->len; i++)
+-		if (buffer->buf[i] != '\r') {
+-			if (i != j)
+-				buffer->buf[j] = buffer->buf[i];
+-			j++;
+-		}
+-	strbuf_setlen(buffer, j);
+-
+-	return 0;
++	if (*signingkey)
++		key = signingkey;
++	else
++		key = git_committer_info(IDENT_ERROR_ON_NO_NAME|IDENT_NO_DATE);
++	return sign_buffer(buffer, key);
+ }
+ 
+ static const char tag_template[] =
+diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
+index 3134766..8b4f742 100644
+--- a/builtin/verify-tag.c
++++ b/builtin/verify-tag.c
+@@ -11,6 +11,7 @@
+ #include "run-command.h"
+ #include <signal.h>
+ #include "parse-options.h"
++#include "gpg-interface.h"
+ 
+ static const char * const verify_tag_usage[] = {
+ 		"git verify-tag [-v|--verbose] <tag>...",
+@@ -19,42 +20,12 @@ static const char * const verify_tag_usage[] = {
+ 
+ static int run_gpg_verify(const char *buf, unsigned long size, int verbose)
+ {
+-	struct child_process gpg;
+-	const char *args_gpg[] = {"gpg", "--verify", "FILE", "-", NULL};
+-	char path[PATH_MAX];
+-	size_t len;
+-	int fd, ret;
++	int len;
+ 
+-	fd = git_mkstemp(path, PATH_MAX, ".git_vtag_tmpXXXXXX");
+-	if (fd < 0)
+-		return error("could not create temporary file '%s': %s",
+-						path, strerror(errno));
+-	if (write_in_full(fd, buf, size) < 0)
+-		return error("failed writing temporary file '%s': %s",
+-						path, strerror(errno));
+-	close(fd);
+-
+-	/* find the length without signature */
+ 	len = parse_signature(buf, size);
+ 	if (verbose)
+ 		write_in_full(1, buf, len);
+-
+-	memset(&gpg, 0, sizeof(gpg));
+-	gpg.argv = args_gpg;
+-	gpg.in = -1;
+-	args_gpg[2] = path;
+-	if (start_command(&gpg)) {
+-		unlink(path);
+-		return error("could not run gpg.");
+-	}
+-
+-	write_in_full(gpg.in, buf, len);
+-	close(gpg.in);
+-	ret = finish_command(&gpg);
+-
+-	unlink_or_warn(path);
+-
+-	return ret;
++	return verify_signed_buffer(buf, size, len);
+ }
+ 
+ static int verify_tag(const char *name, int verbose)
+diff --git a/gpg-interface.c b/gpg-interface.c
+new file mode 100644
+index 0000000..b83cca1
+--- /dev/null
++++ b/gpg-interface.c
+@@ -0,0 +1,94 @@
++/*
++ * Copyright (c) 2011, Google Inc.
++ */
++#include "cache.h"
++#include "run-command.h"
++#include "strbuf.h"
++#include "gpg-interface.h"
++#include "sigchain.h"
++
++int sign_buffer(struct strbuf *buffer, const char *signing_key)
++{
++	struct child_process gpg;
++	const char *args[4];
++	ssize_t len;
++	int i, j;
++
++	memset(&gpg, 0, sizeof(gpg));
++	gpg.argv = args;
++	gpg.in = -1;
++	gpg.out = -1;
++	args[0] = "gpg";
++	args[1] = "-bsau";
++	args[2] = signing_key;
++	args[3] = NULL;
++
++	if (start_command(&gpg))
++		return error(_("could not run gpg."));
++
++	/*
++	 * When the username signingkey is bad, program could be terminated
++	 * because gpg exits without reading and then write gets SIGPIPE.
++	 */
++	sigchain_push(SIGPIPE, SIG_IGN);
++
++	if (write_in_full(gpg.in, buffer->buf, buffer->len) != buffer->len) {
++		close(gpg.in);
++		close(gpg.out);
++		finish_command(&gpg);
++		return error(_("gpg did not accept the data"));
++	}
++	close(gpg.in);
++	len = strbuf_read(buffer, gpg.out, 1024);
++	close(gpg.out);
++
++	sigchain_pop(SIGPIPE);
++
++	if (finish_command(&gpg) || !len || len < 0)
++		return error(_("gpg failed to sign the data"));
++
++	/* Strip CR from the line endings, in case we are on Windows. */
++	for (i = j = 0; i < buffer->len; i++)
++		if (buffer->buf[i] != '\r') {
++			if (i != j)
++				buffer->buf[j] = buffer->buf[i];
++			j++;
++		}
++	strbuf_setlen(buffer, j);
++
++	return 0;
++}
++
++int verify_signed_buffer(const char *buf, size_t total, size_t payload)
++{
++	struct child_process gpg;
++	const char *args_gpg[] = {"gpg", "--verify", "FILE", "-", NULL};
++	char path[PATH_MAX];
++	int fd, ret;
++
++	fd = git_mkstemp(path, PATH_MAX, ".git_vtag_tmpXXXXXX");
++	if (fd < 0)
++		return error("could not create temporary file '%s': %s",
++			     path, strerror(errno));
++	if (write_in_full(fd, buf, total) < 0)
++		return error("failed writing temporary file '%s': %s",
++			     path, strerror(errno));
++	close(fd);
++
++	memset(&gpg, 0, sizeof(gpg));
++	gpg.argv = args_gpg;
++	gpg.in = -1;
++	args_gpg[2] = path;
++	if (start_command(&gpg)) {
++		unlink(path);
++		return error("could not run gpg.");
++	}
++
++	write_in_full(gpg.in, buf, payload);
++	close(gpg.in);
++	ret = finish_command(&gpg);
++
++	unlink_or_warn(path);
++
++	return ret;
++}
+diff --git a/gpg-interface.h b/gpg-interface.h
+new file mode 100644
+index 0000000..7689357
+--- /dev/null
++++ b/gpg-interface.h
+@@ -0,0 +1,11 @@
++#ifndef GPG_INTERFACE_H
++#define GPG_INTERFACE_H
++
++/*
++ * Copyright (c) 2011, Google Inc.
++ */
++
++extern int sign_buffer(struct strbuf *buffer, const char *signing_key);
++extern int verify_signed_buffer(const char *buffer, size_t total, size_t payload);
++
++#endif
+-- 
+1.7.7.rc0.188.g3793ac
