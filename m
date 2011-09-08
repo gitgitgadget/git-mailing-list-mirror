@@ -1,78 +1,76 @@
-From: anikey <arty.anikey@gmail.com>
-Subject: Git Bug - diff in commit message.
-Date: Thu, 8 Sep 2011 07:49:13 -0700 (PDT)
-Message-ID: <1315493353942-6772145.post@n2.nabble.com>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: The imporantance of including http credential caching in 1.7.7
+Date: Thu, 8 Sep 2011 11:02:11 -0400
+Message-ID: <CAEBDL5VAFaWYctJotxTA8ajy_0KtR8H_4SoDHK29Ofd65mYdKw@mail.gmail.com>
+References: <CAFcyEthzW1AY4uXgpsVxjyWCDXAJ6=GdWGqLFO6Acm1ovJJVaw@mail.gmail.com>
+	<4E6769E3.4070003@drmicha.warpmail.net>
+	<CAFcyEthuf49_kOmoLmoSSbNJN+iOBpicP4-eFAV5wL5_RffwGg@mail.gmail.com>
+	<4E68C04F.9060804@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 08 16:49:21 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Kyle Neath <kneath@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Sep 08 17:02:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1fur-00071V-4x
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 16:49:21 +0200
+	id 1R1g7Q-0005yQ-BJ
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 17:02:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752032Ab1IHOtQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Sep 2011 10:49:16 -0400
-Received: from sam.nabble.com ([216.139.236.26]:40943 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751966Ab1IHOtP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Sep 2011 10:49:15 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <arty.anikey@gmail.com>)
-	id 1R1fuj-00082x-Ug
-	for git@vger.kernel.org; Thu, 08 Sep 2011 07:49:13 -0700
+	id S1752736Ab1IHPCN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Sep 2011 11:02:13 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:46126 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752472Ab1IHPCM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Sep 2011 11:02:12 -0400
+Received: by vxi9 with SMTP id 9so264297vxi.19
+        for <git@vger.kernel.org>; Thu, 08 Sep 2011 08:02:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=k2DFyncT8HBjuukmYNzFTYx7Aj+c+jagfXg/4XPcsDw=;
+        b=vEj9U46ioNu3nA79wheNfQldsK3kifWantgThVEdMJ+mutW7z3V81olvS5OUyQemcU
+         NfP9+I2BNKafiLiztmStHnsi5Gug30hE++Tkp1/m5XPTodWAENE/khdEpg0UG/q7ldib
+         Oi5yNFcE8Fy2+KO4e6gyAqXmv1fbcVtYqBP0E=
+Received: by 10.52.68.137 with SMTP id w9mr817236vdt.258.1315494131424; Thu,
+ 08 Sep 2011 08:02:11 -0700 (PDT)
+Received: by 10.52.160.196 with HTTP; Thu, 8 Sep 2011 08:02:11 -0700 (PDT)
+In-Reply-To: <4E68C04F.9060804@drmicha.warpmail.net>
+X-Google-Sender-Auth: puJpSu-N_5s5My_JRhaNX5FSr4A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180977>
 
-Hi, peops. I'm pretty much sure that's a bug.
+On Thu, Sep 8, 2011 at 9:17 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+[snip]
+> It would be interesting to know what we can rely on in the user group
+> you're thinking about (which I called ssh-challenged). Setting up ssh
+> keys is too complicated. Can we require a working gpg setup? They do
+> want to check sigs, don't they?
 
-What I did was putting git diff (i needed to tell people that for my changes
-to start working they needed to aplly message-inline patch to some code
-which was not under git) in commit message. Like adding:
+I don't think you can require a working gpg setup (at least for not
+addressing the ssh-challenged group).
 
-diff --git a/app/controllers/settings_controller.rb
-b/app/controllers/settings_controller.rb
-index 937da74..0e8440d 100644
---- a/app/controllers/settings_controller.rb
-+++ b/app/controllers/settings_controller.rb
-@@ -42,7 +42,7 @@ class SettingsController < ApplicationController
-   end
- 
-   def snmp_mibs
--    render layout: 'ext3'
-+    render layout: 'ext3_2'
-   end
- 
-   def cfg_auth_keys(auth_type=:all)
+[snip]
+> Or that in C, probably using Junio's gpg-lib. That would be secure and
+> useful *if* we can rely on people having a convenient gpg setup
+> (gpg-agent or such).
+>
+> So: What credential store/password wallet/etc. can we rely on for this
+> group? Is gpg fair game?
 
-though the commit itself didn't contain that change. So while `git rebase
-some_branch_name` I started getting:
+I think there probably need to be providers for using Keychain under
+the Mac, gnome-keyring and kwallet under Linux, and probably something
+using the wincrypt API under Windows.  I don't think there's a
+one-store-fits-all solution here, unfortunately. :-(
 
-First, rewinding head to replay your work on top of it...
-Applying: My cool patch.
-fatal: sha1 information is lacking or useless
-(app/controllers/settings_controller.rb).
-Repository lacks necessary blobs to fall back on 3-way merge.
-Cannot fall back to three-way merge.
-Patch failed at 0001 My cool patch.
+I'm actually tempted try and work on a couple of those myself.
 
-When you have resolved this problem run "git rebase --continue".
-If you would prefer to skip this patch, instead run "git rebase --skip".
-To restore the original branch and stop rebasing run "git rebase --abort".
-
-I wasn't able to figure out what was wrong for a very long time, when things
-came to my mind.
-
-Thanks.
-
---
-View this message in context: http://git.661346.n2.nabble.com/Git-Bug-diff-in-commit-message-tp6772145p6772145.html
-Sent from the git mailing list archive at Nabble.com.
+-John
