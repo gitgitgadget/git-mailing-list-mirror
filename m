@@ -1,53 +1,76 @@
-From: Andrew Ardill <andrew.ardill@gmail.com>
-Subject: Make it easier for new contributors to come to grips with the project
-Date: Thu,  8 Sep 2011 16:47:58 +1000
-Message-ID: <1315464479-6876-1-git-send-email-andrew.ardill@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 08 08:49:02 2011
+From: Jeff King <peff@peff.net>
+Subject: Re: git push output goes into stderr
+Date: Thu, 8 Sep 2011 03:07:06 -0400
+Message-ID: <20110908070706.GA1454@sigill.intra.peff.net>
+References: <CAPgpnMQuck_aPU0ciaGgj-C8rno7jbzZ7wZ4unU8CqA0eaiYQw@mail.gmail.com>
+ <7v8vq3ztym.fsf@alter.siamese.dyndns.org>
+ <20110906074916.GC28490@ecki>
+ <20110907215716.GJ13364@sigill.intra.peff.net>
+ <CAMK1S_gro=THLkc_wrHSLwUVaJp9k-zRDuFDQpOGaiyBTHiDnQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Clemens Buchacher <drizzd@aon.at>,
+	Junio C Hamano <gitster@pobox.com>,
+	Lynn Lin <lynn.xin.lin@gmail.com>, git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 08 09:07:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1YQ0-0001z7-6z
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 08:49:00 +0200
+	id 1R1Yhs-0001Ls-A0
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 09:07:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756127Ab1IHGsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Sep 2011 02:48:30 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:49782 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755579Ab1IHGs2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Sep 2011 02:48:28 -0400
-Received: by ywf7 with SMTP id 7so394923ywf.19
-        for <git@vger.kernel.org>; Wed, 07 Sep 2011 23:48:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:message-id:x-mailer;
-        bh=B4lqV8ByyE2zlILCUfkxTKw4f6QPLrvg/1FBhEMDBeM=;
-        b=LTPXbrcW2yRR4elH2U4MI/JUejYCjcNjfQaHMql7PGWd0LigfU8cPX5CRPQ0ufE9eQ
-         gNkiUZcc/KpcV2pSERJObmdxSoUakdqMZbSuXiGpsjFfkUAHD8LBsRbGzeY+ULj2wrIy
-         WNmEAPQnkHjv6bm/u3J4revW3RgyUgmKeGjXQ=
-Received: by 10.236.181.137 with SMTP id l9mr1776288yhm.56.1315464507610;
-        Wed, 07 Sep 2011 23:48:27 -0700 (PDT)
-Received: from localhost ([59.167.165.193])
-        by mx.google.com with ESMTPS id s48sm2872297yhj.7.2011.09.07.23.48.25
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 07 Sep 2011 23:48:26 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6.msysgit.0
+	id S1758075Ab1IHHHN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Sep 2011 03:07:13 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37583
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755856Ab1IHHHM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Sep 2011 03:07:12 -0400
+Received: (qmail 10473 invoked by uid 107); 8 Sep 2011 07:07:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 08 Sep 2011 03:07:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Sep 2011 03:07:06 -0400
+Content-Disposition: inline
+In-Reply-To: <CAMK1S_gro=THLkc_wrHSLwUVaJp9k-zRDuFDQpOGaiyBTHiDnQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180944>
 
-Something that has been difficult as a developer looking to contribute
-to this project is trying to understand how everything is organised.
+On Thu, Sep 08, 2011 at 11:12:48AM +0530, Sitaram Chamarty wrote:
 
-In particular, working out what 'pu' stood for took quite a long time.
+> > But with a program whose main function is to perform an action, lik=
+e
+> > "git push", I think there are really two ways to look at it:
+> >
+> > =C2=A01. There is no main output; any progress or status update is =
+just
+> > =C2=A0 =C2=A0 diagnostic chat, and should go to stderr.
+> >
+> > =C2=A02. The main output is the status report; it goes to stdout, a=
+nd
+> > =C2=A0 =C2=A0 progress updates go to stderr.
+>=20
+> I always thought if you write stuff to stdout the remote client gets
+> confused because it is executing to a defined protocol and suddenly
+> sees unexpected input in the middle.
+>=20
+> Bit if *you* are saying this (output random stuff to STDOUT) can
+> happen if we want it to, clearly I was wrong...
 
-Following is a (very) simple patch to the README that will at least
-send potential contributors off in a useful direction. I know I would
-have saved much time if this note was there when I started looking.
+=46or the remote side, yes, we have to be sure not to pollute stdout,
+because that's where the protocol is going.. But the status table is
+generated on the client side, so stdout is just connected to the user's
+terminal there.
 
-Potentially, the wiki and public website could be updated to provide
-similar links and start-up hints.
+We already generate --porcelain status output from push on stdout (and
+again, that makes sense to me philosophically, because the user is
+asking push to generate the output). So it's clearly not a big deal.
+It's just a matter of taste.
+
+-Peff
