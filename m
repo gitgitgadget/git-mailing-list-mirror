@@ -1,102 +1,60 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: [PATCH 2/2] push -s: skeleton
-Date: Wed, 7 Sep 2011 23:55:44 +0000
-Message-ID: <robbat2-20110907T234637-463765607Z@orbis-terrarum.net>
-References: <7vfwk82hrt.fsf@alter.siamese.dyndns.org>
- <7vbouw2hqg.fsf@alter.siamese.dyndns.org>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH v17 1/7] bisect: move argument parsing before state modification.
+Date: Thu, 8 Sep 2011 11:23:25 +1000
+Message-ID: <CAH3AnrpNSNsz77kBsGQxprXh3bdNUzrWyFwtq_up0hetwikhMA@mail.gmail.com>
+References: <1312459263-16911-1-git-send-email-jon.seymour@gmail.com>
+	<1312459263-16911-2-git-send-email-jon.seymour@gmail.com>
+	<201109070816.16655.chriscool@tuxfamily.org>
+	<4E67B2F2.9070806@kdbg.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="pvezYHf7grwyp3Bc"
-Cc: "	Shawn O. Pearce" <spearce@spearce.org>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 08 01:55:56 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
+	gitster@pobox.com, jnareb@gmail.com, jrnieder@gmail.com
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Thu Sep 08 03:23:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1RyD-0001Kn-KR
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 01:55:54 +0200
+	id 1R1TL2-0005oV-Q3
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 03:23:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757520Ab1IGXzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Sep 2011 19:55:48 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:52624 "EHLO smtp.gentoo.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757517Ab1IGXzs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Sep 2011 19:55:48 -0400
-Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.gentoo.org (Postfix) with ESMTPS id 4A97B1B400D
-	for <git@vger.kernel.org>; Wed,  7 Sep 2011 23:55:45 +0000 (UTC)
-Received: (qmail 627 invoked by uid 10000); 7 Sep 2011 23:55:44 -0000
-Content-Disposition: inline
-In-Reply-To: <7vbouw2hqg.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757762Ab1IHBX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Sep 2011 21:23:27 -0400
+Received: from mail-vw0-f43.google.com ([209.85.212.43]:41136 "EHLO
+	mail-vw0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757722Ab1IHBX0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Sep 2011 21:23:26 -0400
+Received: by vws10 with SMTP id 10so395103vws.2
+        for <git@vger.kernel.org>; Wed, 07 Sep 2011 18:23:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=jq+qAYQ8kNfBJgmKPSxgAxgNtHAYayY6p5mx55aQJro=;
+        b=p2IHrAx5d8DIpxxr6J2ohgZxAEATgTSOkVMGK+kO8ObyOdT43EA13RMfgKpNUICBq9
+         4bLS6GGdsI8Gic8dN5xRnExUYqlOJH/zf3JwNREAuu68blH1bNzITi4y9LF5qYOcqJmv
+         6UvQlS9m5ZsenT0OUfeqEopFpNQZ7+GEcbARg=
+Received: by 10.52.75.230 with SMTP id f6mr75782vdw.276.1315445005363; Wed, 07
+ Sep 2011 18:23:25 -0700 (PDT)
+Received: by 10.52.106.137 with HTTP; Wed, 7 Sep 2011 18:23:25 -0700 (PDT)
+In-Reply-To: <4E67B2F2.9070806@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180931>
 
+On Thu, Sep 8, 2011 at 4:07 AM, Johannes Sixt <j6t@kdbg.org> wrote:
+> Am 07.09.2011 08:16, schrieb Christian Couder:
 
---pvezYHf7grwyp3Bc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> IOW, I think the new behavior is *much* better than the old behavior.
+>
 
-On Wed, Sep 07, 2011 at 01:57:27PM -0700,  Junio C Hamano wrote:
-> If a tag is GPG-signed, and if you trust the cryptographic robustness of
-> the SHA-1 and GPG, you can guarantee that all the history leading to the
-> signed commit is not tampered with. However, it would be both cumbersome
-> and cluttering to sign each and every commit. Especially if you strive to
-> keep your history clean by tweaking, rewriting and polishing your commits
-> before pushing the resulting history out, many commits you will create
-> locally end up not mattering at all, and it is a waste of time to sign
-> them.
-Thanks to pcloud for including me on the thread. I do find the idea of
-these push-certificates very interesting and useful, but I think they
-will do best to augment signed commits, not replace them.
+There is perhaps no surprise that I agree with Hannes. Certainly, it
+seemed saner to me to do argument validation before state update. [
+Also, the earlier iterations of the --no-checkout series needed the
+new behaviour. Not sure if that is still true, but I suspect it is ].
 
-There's a couple of related things we've been considering on the Gentoo
-side:
-- detached signatures of blobs (either the SHA1 of the blob or the blob
-  itself)
-- The signature covering the message+blob details, but NOT the chain of
-  history: this opens up the ability to cherry-pick and rebase iff there
-  are no conflicts and the blobs are identical, all while preserving the
-  signature.
-- concerns about a pre-image attack against Git. tl;dr version:
-  1. Attacker prepares decoy file in advance, that hashes to the same as
-     the malicious file.
-  2. Attacker sends decoy in as an innocuous real commit.
-  3. Months later, the attacker breaks into the system and alters the
-     packfile to include the new malicious file.
-  4. All new clones from that point forward get the malicious version.
-
-Re your comment on always needing to resign commits above, we'd been
-considering post-signing commits, not when they are initially made.
-After your commit is clean and ready to ship, you can fire the commit
-ids into the signature tool, which can generate a detached signature
-note for each commit.
-
---=20
-Robin Hugh Johnson
-Gentoo Linux: Developer, Trustee & Infrastructure Lead
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
-
---pvezYHf7grwyp3Bc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.18 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iEYEARECAAYFAk5oBIAACgkQPpIsIjIzwiw0BACgzAoCObm+HfozYDsIVBOt3/WQ
-BIkAn2x+Atj24uVsjOyOiGC78eOywlxI
-=9CQ7
------END PGP SIGNATURE-----
-
---pvezYHf7grwyp3Bc--
+jon.
