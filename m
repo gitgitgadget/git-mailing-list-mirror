@@ -1,118 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/2] push -s: receiving end
-Date: Thu, 08 Sep 2011 09:43:40 -0700
-Message-ID: <7vvct3x9vn.fsf@alter.siamese.dyndns.org>
-References: <7vfwk82hrt.fsf@alter.siamese.dyndns.org>
- <7vehzrzm0e.fsf@alter.siamese.dyndns.org>
- <7v7h5jzj8o.fsf_-_@alter.siamese.dyndns.org>
- <201109081131.58362.johan@herland.net>
+Subject: Re: Git Bug - diff in commit message.
+Date: Thu, 08 Sep 2011 10:27:14 -0700
+Message-ID: <7v39g7x7v1.fsf@alter.siamese.dyndns.org>
+References: <1315493353942-6772145.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Sep 09 01:01:59 2011
+Cc: git@vger.kernel.org
+To: anikey <arty.anikey@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 09 01:02:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1nbY-00077n-Rv
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 01:01:57 +0200
+	id 1R1nbo-0007Gg-DU
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 01:02:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756745Ab1IHXBv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Sep 2011 19:01:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41438 "EHLO
+	id S1754102Ab1IHXB4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Sep 2011 19:01:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41460 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756686Ab1IHXBk (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1756688Ab1IHXBk (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 8 Sep 2011 19:01:40 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0454B5D56;
-	Thu,  8 Sep 2011 12:43:43 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B11546F4;
+	Thu,  8 Sep 2011 13:27:16 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/wM8wg+cdOnAK+PSNZfTbAKZ/Wg=; b=REosux
-	Yscl9+u4jlD/N0M9NNv8uM/aiGOdwz1m62jzJWYwD/cOta6PwiCtYJ5srPrjN8T8
-	3GEowMkT1qZFxxV9V0iHC+517u2ZlC5HLorr4mOqZn7aXrmJhGpjNCSplU38MPaH
-	OFfv6x1m6O4QbZoZZJwjlvW2hqpGzPEYOp0ao=
+	:content-type; s=sasl; bh=qgYk3yeZ20dAlgyWWFbRXWfYcU8=; b=NHJ+gf
+	I9G/ryZLU0fXebwqB0earq3o9LpxzKSLtqMXsgBu0AzuXzUkhADt5J+csVQ3XU2B
+	KKHfSfReqREcALGKbXz8gLEEw9F4T8HJgDNLnEHVDgfq0cDw8PKlwBcRF6f+K5eL
+	SUke0lnQCzFVEtOalj/wzN25mOApHwOqQezVA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qPBhwoU2ZN66sa0Mepb+8CZx2bMKQ8a+
-	hXGxEhdSu3SpmbOawRvROkl3aFBmlNvOQsl2RBsKmkBNCBXK3EaLTcC8SZB0O2BE
-	c9klDmsi5Wl5AW2oMpGOebgfCKLxQpJX8uGhqt38qWCot755OvwdxQUmVyXjGQao
-	rI8LwUONt3c=
+	:content-type; q=dns; s=sasl; b=OK2xa5K67+XfdDHnXkulk3Sy4X/LuG68
+	hN15Nbq2c/aw2jVpebX5ltZ/3fT/wXHKzyLG2nxYylNweCNyGPEaL4TLIbzDEcwF
+	Gq9vaj37gBOPyKAuOX8BexQ4AzjkXMi7nA69VjT6/Qp5/b3DMUL/csDvZAMeEPwK
+	tmXU/2Gn8HA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EFB155D55;
-	Thu,  8 Sep 2011 12:43:42 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 53D4146F3;
+	Thu,  8 Sep 2011 13:27:16 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 63FC75D53; Thu,  8 Sep 2011
- 12:43:42 -0400 (EDT)
-In-Reply-To: <201109081131.58362.johan@herland.net> (Johan Herland's message
- of "Thu, 8 Sep 2011 11:31:58 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C222646F2; Thu,  8 Sep 2011
+ 13:27:15 -0400 (EDT)
+In-Reply-To: <1315493353942-6772145.post@n2.nabble.com> (anikey's message of
+ "Thu, 8 Sep 2011 07:49:13 -0700 (PDT)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B6192434-DA39-11E0-BD9A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: CBCC0520-DA3F-11E0-943A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180994>
 
-Johan Herland <johan@herland.net> writes:
+anikey <arty.anikey@gmail.com> writes:
 
->> +static void get_note_text(struct strbuf *buf, struct notes_tree *t,
->> +			  const unsigned char *object)
->> +{
->> +	const unsigned char *sha1 = get_note(t, object);
->> +	char *text;
->> +	unsigned long len;
->> +	enum object_type type;
->> +
->> +	if (!sha1)
->> +		return;
->> +	text = read_sha1_file(sha1, &type, &len);
->> +	if (text && len && type == OBJ_BLOB)
->> +		strbuf_add(buf, text, len);
->> +	free(text);
->> +}
->> +
->
-> What about adding this function to notes.h as a convenience to other 
-> users of the notes API?
+> Hi, peops. I'm pretty much sure that's a bug.
 
-I actually was hoping to hear that I do not have to do this "check
-existing and concatenate", and should let the add_note() function
-run its default combine_notes method to do the concatenation.
+I am not Peops, but will try to help ;-).
 
-I found a few things I wasn't quite sure in the notes/notes-merge API, by
-the way.
+As "rebase" is essentially "format-patch" output piped into "am",
+unindented diff in a random place inside the commit message will be
+indistingushable from the beginning of the patch. You cannot have an
+unadulterated "diff" output in your commit message for this reason, and
+this is not likely to change.
 
- - The combine_notes callback is run when a note is inserted into the
-   in-core notes tree. I felt that this is way too early if you want to
-   avoid racing with another process (and the patch tries to wrap
-   create-notes-commit with lock-ref/write-ref-sha1 pair), but perhaps
-   this is to deal with a case where the calling program calls add_notes()
-   on the same object multiple times.
+Often what people do is to indent them, as the reason they quote patch in
+the message is to make it serve as a supporting material. Incidentally,
+that makes the resulting commit log message easier to read as well; e.g.
 
- - create_notes_commit() dies under a few conditions, but some callers
-   that are recording advisory/optional notes might want to get an error
-   and continue.
+        Fix bloop bug
 
-I think ideally this patch should handle notes like the following, which
-is not quite how I coded it:
+        An earlier commit had this patch that is quite bogus.
 
- - initialize in-core notes tree;
+            diff --git a/bloop.php b/bloop.php
+            index 937da74..0e8440d 100644
+            --- a/bloop.php
+            +++ b/bloop.php
+            @@ -42,7 +42,7 @@
+            ...
 
- - add bunch of notes, without regard to the existing ones, to in-core
-   notes tree by calling add_notes();
+        The assignment to frotz in the above hunk should happen after
+        nitfol variable is initialized.
 
- - lock the notes ref and read the "parent"; we may want to add "wait and
-   retry for a few times until we get the lock" support at lockfile API
-   level, but doing it at the application level would be fine.
+        This patch fixes it.
 
- - call create-notes-commit, which in turn merges the in-core
-   notes with what collides with those already in "parent" by
-   calling the combine-notes callback, merges and re-balances
-   the notes tree, and makes a notes commit object;
-
- - update the notes ref with that notes commit, releasing the lock on
-   the ref.
+        Signed-off-by: Cont Ributer <contributor@example.com>
