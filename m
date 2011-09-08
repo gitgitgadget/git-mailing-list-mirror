@@ -1,74 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 1/7] send-pack: typofix error message
-Date: Thu,  8 Sep 2011 13:01:36 -0700
-Message-ID: <1315512102-19022-2-git-send-email-gitster@pobox.com>
-References: <1315512102-19022-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] push -s: skeleton
+Date: Thu, 08 Sep 2011 15:19:54 -0700
+Message-ID: <7v7h5iwub9.fsf@alter.siamese.dyndns.org>
+References: <7vfwk82hrt.fsf@alter.siamese.dyndns.org>
+ <7vbouw2hqg.fsf@alter.siamese.dyndns.org>
+ <20110908193555.GC16064@sigill.intra.peff.net>
+ <7vy5xywyk8.fsf@alter.siamese.dyndns.org>
+ <20110908210217.GA32522@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Jeff King <peff@peff.net>
 X-From: git-owner@vger.kernel.org Fri Sep 09 00:56:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1nWc-0004sj-IN
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 00:56:50 +0200
+	id 1R1nWd-0004sj-48
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 00:56:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752749Ab1IHW4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Sep 2011 18:56:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38545 "EHLO
+	id S1752737Ab1IHW4q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Sep 2011 18:56:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38551 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751829Ab1IHW4m (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752731Ab1IHW4m (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 8 Sep 2011 18:56:42 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B7274632
-	for <git@vger.kernel.org>; Thu,  8 Sep 2011 16:01:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=lMzN
-	3VhjzrHwJm7wczFJWeRmTwQ=; b=NGhwqTP5osjybgIkIL3+VQKn82Rf48WspAl4
-	Pjuq1dvsnza/U6BkemD4sFe5kbfwgeFXNmy0+CML3MWQPc6WoZzyjLMTb5L2QG+X
-	cj8lBlAiTIGIj2fvrXx9QAZ8BFbnfCBi2lS4Da77cLYZam7V6wcxQILTQUJVgMwW
-	fVh2Pq8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=By1vEy
-	8oMZnol+J2vcc52G20kPycIg26LdgNttdTMeqlIkriC8+CYRvAP/6r/l6OWUc1Nq
-	FengPxDxrsoJE5HS5NgU3HPl0kakXoLvSIXnQp0hf2LJ5iqkqlVLEjBA3rvNDvyg
-	4bTGTixvs4v3TFE39YSiXizeGrrPlVqIL1eCc=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 15FCB41E6;
+	Thu,  8 Sep 2011 18:19:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=By0+9Wql9dyVSFvi92y1cGJF2Y0=; b=gmrSUg
+	rcUgeCs7SDjI50p0DgsmdIf5gYQPMx6D/8eRDFABtcPWaTKdet4F7/0LP7nUgixH
+	ymcZEDUo240QM6PdbLnNHhj3zP8BlJxEv0ZWsA/1VgEuin0EGG1WvNNOu7OdlVCP
+	xtkZqRs2HK45Ffn6g/TpoZ8JmFFfPNDKo7MIs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=j3pk/JHiIY4GB0nqz1htaA80BrN03Md8
+	I5o+liwR94eiSRjbi7KjU5zY84IdzmbLztjoFKvXcw9pumGd9aCe/maizLnw0vD+
+	zDy4ieaXPEZdxK5/vbFR2QP5Sy7UlTX0DFTRryN+VNSURVyMUyUqEwXxzdSntgSm
+	VoOPTYraIrg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2418E4631
-	for <git@vger.kernel.org>; Thu,  8 Sep 2011 16:01:46 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D1E341E5;
+	Thu,  8 Sep 2011 18:19:57 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B1EA04630 for
- <git@vger.kernel.org>; Thu,  8 Sep 2011 16:01:45 -0400 (EDT)
-X-Mailer: git-send-email 1.7.7.rc0.188.g3793ac
-In-Reply-To: <1315512102-19022-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 611B6E26-DA55-11E0-920D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6EE6D41E4; Thu,  8 Sep 2011
+ 18:19:56 -0400 (EDT)
+In-Reply-To: <20110908210217.GA32522@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 8 Sep 2011 17:02:17 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AEC412DC-DA68-11E0-8A9E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180980>
 
-The message identifies the process as receive-pack when it cannot fork the
-sideband demultiplexer. We are actually a send-pack.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/send-pack.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> Yeah, it is a potential problem, but it just seems wrong to put too much
+> policy work onto the server.
 
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index c1f6ddd..87833f4 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -334,7 +334,7 @@ int send_pack(struct send_pack_args *args,
- 		demux.data = fd;
- 		demux.out = -1;
- 		if (start_async(&demux))
--			die("receive-pack: unable to fork off sideband demultiplexer");
-+			die("send-pack: unable to fork off sideband demultiplexer");
- 		in = demux.out;
- 	}
- 
--- 
-1.7.7.rc0.188.g3793ac
+My take on it is somewhat different. The only thing in the end result we
+want to see is that the pushed commits are annotated with GPG signatures
+in the notes tree, and there is no reason for us to cast in stone that
+there has to be any significance in the commit history of the notes tree.
+
+In a busy hosting site that has many branches being pushed simultaneously,
+it is entirely plausible that the server side may just want to store each
+received push certificate in a new flat file in a filesystem, and have
+asynchronous process sweep the new certificates to update the notes tree,
+possibly creating a single notes tree commit that records updates by
+multiple pushes, for performance purposes, in its implementation of
+record_signed_push() in receive-pack.
+
+If you forced the clients to also prepare notes and push the notes tree to
+the server, you are forcing the ordering in the history of the notes, and
+closing the door for such a server implementation. I would consider it an
+unnecessary and/or premature policy decision.
