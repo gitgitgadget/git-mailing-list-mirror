@@ -1,166 +1,341 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 6/7] refactor run_receive_hook()
-Date: Thu,  8 Sep 2011 13:01:41 -0700
-Message-ID: <1315512102-19022-7-git-send-email-gitster@pobox.com>
+Subject: [PATCH v2 2/7] Split GPG interface into its own helper library
+Date: Thu,  8 Sep 2011 13:01:37 -0700
+Message-ID: <1315512102-19022-3-git-send-email-gitster@pobox.com>
 References: <1315512102-19022-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 09 00:57:34 2011
+X-From: git-owner@vger.kernel.org Fri Sep 09 00:57:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1nXJ-0005F6-L7
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 00:57:33 +0200
+	id 1R1nXK-0005F6-Ks
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 00:57:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752333Ab1IHW4u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Sep 2011 18:56:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38549 "EHLO
+	id S1752780Ab1IHW46 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Sep 2011 18:56:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38611 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751450Ab1IHW4m (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Sep 2011 18:56:42 -0400
+	id S1751829Ab1IHW4o (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Sep 2011 18:56:44 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 18E5C4657
-	for <git@vger.kernel.org>; Thu,  8 Sep 2011 16:01:57 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4AB484643
+	for <git@vger.kernel.org>; Thu,  8 Sep 2011 16:01:48 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=oGDh
-	9eFEXo82FNfqcPO8991aStU=; b=dcKfQDMtdWIv/+xjBG8DwgaQCz7G04k3hBHn
-	rZwu9zW1SL5Dq8NKkrxT1l2dL0/ShKVZqYChcIP6V4OVoTjegzuWaKmo7WiQTGq7
-	a/ZJlzVl9Dv5lvXixCPJKQcZN8eRBNRkDnLBDB091F51CSFnvWDSBygWS4rlNvqz
-	q5P9LkA=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=kROt
+	iYlcp4qgPTqr8GR6mJ4d4ew=; b=gp6ShrOxmVKs0VeJ+w8xB0LLfKx7FtyzPso8
+	PpWMjaecNnfN8+3qW7GsYLj7F2OIXd2gvY8Kx5qFAS6nxe18WCWf8bULIn3E8lDZ
+	SmfS5UyBJKKAwWcYW62Y7rbQCJ1uH+Th4T81ar5bgdEWjGx6keSvrhruJff1e8pU
+	8dXFSG4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=biyaGQ
-	8XL7bV3vJo6SrN3FfmJwgC8D19V0qXyiG5UCkBFzjKxMcrkUDvBeNvgzfqifTKmF
-	XVDeWC4qbcP2p+fJ7N1U7xHutARTPchG0JWZsNqt2MK2sal6Q5coZT25QlhtJjqb
-	qV/RU9MoSZFrB7dU6qGBpfEtw8Q93Mu2a5kg0=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=NPPYZl
+	2u0XOveReDscimejhR2OlbMlJU2SBhuwLUOPuQgQKJrQDyPT4/rXySAxlURCZ1Cf
+	5ko26bfQZ0egsDGrnuZGUj9sR/7W4P18caYQ2B8Fh6f5yi9e9wJxbyyYkIKgwPpr
+	X6B76mGhtUhs8XMVHv9adRLlgNdhLrYQoIHdY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F7A94656
-	for <git@vger.kernel.org>; Thu,  8 Sep 2011 16:01:57 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4351D4642
+	for <git@vger.kernel.org>; Thu,  8 Sep 2011 16:01:48 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C0BC24654 for
- <git@vger.kernel.org>; Thu,  8 Sep 2011 16:01:55 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 768004640 for
+ <git@vger.kernel.org>; Thu,  8 Sep 2011 16:01:47 -0400 (EDT)
 X-Mailer: git-send-email 1.7.7.rc0.188.g3793ac
 In-Reply-To: <1315512102-19022-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 671AB304-DA55-11E0-B465-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 62279100-DA55-11E0-8AF9-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180984>
 
-Running a hook has to make complex set-up to establish web of
-communication between child process and multiplexer, which is common
-regardless of what kind of data is fed to the hook. Refactor the parts
-that is specific to the data fed to the particular set of hooks from the
-part that runs the hook, so that the code can be reused to drive hooks
-that take different kind of data.
+This mostly moves existing code from builtin/tag.c (for signing)
+and builtin/verify-tag.c (for verifying) to a new gpg-interface.c
+file to provide a more generic library interface.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/receive-pack.c |   71 +++++++++++++++++++++++++++++++++++-------------
- 1 files changed, 52 insertions(+), 19 deletions(-)
+ Makefile             |    2 +
+ builtin/tag.c        |   60 ++++----------------------------
+ builtin/verify-tag.c |   35 ++-----------------
+ gpg-interface.c      |   94 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ gpg-interface.h      |   11 ++++++
+ 5 files changed, 117 insertions(+), 85 deletions(-)
+ create mode 100644 gpg-interface.c
+ create mode 100644 gpg-interface.h
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 344660e..939b867 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -212,21 +212,15 @@ static int copy_to_sideband(int in, int out, void *arg)
- 	return 0;
- }
+diff --git a/Makefile b/Makefile
+index 8d6d451..2183223 100644
+--- a/Makefile
++++ b/Makefile
+@@ -530,6 +530,7 @@ LIB_H += exec_cmd.h
+ LIB_H += fsck.h
+ LIB_H += gettext.h
+ LIB_H += git-compat-util.h
++LIB_H += gpg-interface.h
+ LIB_H += graph.h
+ LIB_H += grep.h
+ LIB_H += hash.h
+@@ -620,6 +621,7 @@ LIB_OBJS += entry.o
+ LIB_OBJS += environment.o
+ LIB_OBJS += exec_cmd.o
+ LIB_OBJS += fsck.o
++LIB_OBJS += gpg-interface.o
+ LIB_OBJS += graph.o
+ LIB_OBJS += grep.o
+ LIB_OBJS += hash.o
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 667515e..e9d36fa 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -14,6 +14,7 @@
+ #include "parse-options.h"
+ #include "diff.h"
+ #include "revision.h"
++#include "gpg-interface.h"
  
--static int run_receive_hook(struct command *commands, const char *hook_name)
-+typedef int (*feed_fn)(void *, const char **, size_t *);
-+static int run_and_feed_hook(const char *hook_name, feed_fn feed, void *feed_state)
+ static const char * const git_tag_usage[] = {
+ 	"git tag [-a|-s|-u <key-id>] [-f] [-m <msg>|-F <file>] <tagname> [<head>]",
+@@ -208,60 +209,13 @@ static int verify_tag(const char *name, const char *ref,
+ 
+ static int do_sign(struct strbuf *buffer)
  {
--	static char buf[sizeof(commands->old_sha1) * 2 + PATH_MAX + 4];
--	struct command *cmd;
- 	struct child_process proc;
- 	struct async muxer;
- 	const char *argv[2];
--	int have_input = 0, code;
--
--	for (cmd = commands; !have_input && cmd; cmd = cmd->next) {
--		if (!cmd->error_string)
--			have_input = 1;
+-	struct child_process gpg;
+-	const char *args[4];
+-	char *bracket;
+-	int len;
+-	int i, j;
++	const char *key;
+ 
+-	if (!*signingkey) {
+-		if (strlcpy(signingkey, git_committer_info(IDENT_ERROR_ON_NO_NAME),
+-				sizeof(signingkey)) > sizeof(signingkey) - 1)
+-			return error(_("committer info too long."));
+-		bracket = strchr(signingkey, '>');
+-		if (bracket)
+-			bracket[1] = '\0';
 -	}
-+	int code;
- 
--	if (!have_input || access(hook_name, X_OK) < 0)
-+	if (access(hook_name, X_OK) < 0)
- 		return 0;
- 
- 	argv[0] = hook_name;
-@@ -254,15 +248,13 @@ static int run_receive_hook(struct command *commands, const char *hook_name)
- 		return code;
- 	}
- 
--	for (cmd = commands; cmd; cmd = cmd->next) {
--		if (!cmd->error_string) {
--			size_t n = snprintf(buf, sizeof(buf), "%s %s %s\n",
--				sha1_to_hex(cmd->old_sha1),
--				sha1_to_hex(cmd->new_sha1),
--				cmd->ref_name);
--			if (write_in_full(proc.in, buf, n) != n)
--				break;
+-
+-	/* When the username signingkey is bad, program could be terminated
+-	 * because gpg exits without reading and then write gets SIGPIPE. */
+-	signal(SIGPIPE, SIG_IGN);
+-
+-	memset(&gpg, 0, sizeof(gpg));
+-	gpg.argv = args;
+-	gpg.in = -1;
+-	gpg.out = -1;
+-	args[0] = "gpg";
+-	args[1] = "-bsau";
+-	args[2] = signingkey;
+-	args[3] = NULL;
+-
+-	if (start_command(&gpg))
+-		return error(_("could not run gpg."));
+-
+-	if (write_in_full(gpg.in, buffer->buf, buffer->len) != buffer->len) {
+-		close(gpg.in);
+-		close(gpg.out);
+-		finish_command(&gpg);
+-		return error(_("gpg did not accept the tag data"));
+-	}
+-	close(gpg.in);
+-	len = strbuf_read(buffer, gpg.out, 1024);
+-	close(gpg.out);
+-
+-	if (finish_command(&gpg) || !len || len < 0)
+-		return error(_("gpg failed to sign the tag"));
+-
+-	/* Strip CR from the line endings, in case we are on Windows. */
+-	for (i = j = 0; i < buffer->len; i++)
+-		if (buffer->buf[i] != '\r') {
+-			if (i != j)
+-				buffer->buf[j] = buffer->buf[i];
+-			j++;
 -		}
-+	while (1) {
-+		const char *buf;
-+		size_t n;
-+		if (feed(feed_state, &buf, &n))
-+			break;
-+		if (write_in_full(proc.in, buf, n) != n)
-+			break;
- 	}
- 	close(proc.in);
- 	if (use_sideband)
-@@ -270,6 +262,47 @@ static int run_receive_hook(struct command *commands, const char *hook_name)
- 	return finish_command(&proc);
+-	strbuf_setlen(buffer, j);
+-
+-	return 0;
++	if (*signingkey)
++		key = signingkey;
++	else
++		key = git_committer_info(IDENT_ERROR_ON_NO_NAME|IDENT_NO_DATE);
++	return sign_buffer(buffer, key);
  }
  
-+struct receive_hook_feed_state {
-+	struct command *cmd;
-+	struct strbuf buf;
-+};
+ static const char tag_template[] =
+diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
+index 3134766..8b4f742 100644
+--- a/builtin/verify-tag.c
++++ b/builtin/verify-tag.c
+@@ -11,6 +11,7 @@
+ #include "run-command.h"
+ #include <signal.h>
+ #include "parse-options.h"
++#include "gpg-interface.h"
+ 
+ static const char * const verify_tag_usage[] = {
+ 		"git verify-tag [-v|--verbose] <tag>...",
+@@ -19,42 +20,12 @@ static const char * const verify_tag_usage[] = {
+ 
+ static int run_gpg_verify(const char *buf, unsigned long size, int verbose)
+ {
+-	struct child_process gpg;
+-	const char *args_gpg[] = {"gpg", "--verify", "FILE", "-", NULL};
+-	char path[PATH_MAX];
+-	size_t len;
+-	int fd, ret;
++	int len;
+ 
+-	fd = git_mkstemp(path, PATH_MAX, ".git_vtag_tmpXXXXXX");
+-	if (fd < 0)
+-		return error("could not create temporary file '%s': %s",
+-						path, strerror(errno));
+-	if (write_in_full(fd, buf, size) < 0)
+-		return error("failed writing temporary file '%s': %s",
+-						path, strerror(errno));
+-	close(fd);
+-
+-	/* find the length without signature */
+ 	len = parse_signature(buf, size);
+ 	if (verbose)
+ 		write_in_full(1, buf, len);
+-
+-	memset(&gpg, 0, sizeof(gpg));
+-	gpg.argv = args_gpg;
+-	gpg.in = -1;
+-	args_gpg[2] = path;
+-	if (start_command(&gpg)) {
+-		unlink(path);
+-		return error("could not run gpg.");
+-	}
+-
+-	write_in_full(gpg.in, buf, len);
+-	close(gpg.in);
+-	ret = finish_command(&gpg);
+-
+-	unlink_or_warn(path);
+-
+-	return ret;
++	return verify_signed_buffer(buf, size, len);
+ }
+ 
+ static int verify_tag(const char *name, int verbose)
+diff --git a/gpg-interface.c b/gpg-interface.c
+new file mode 100644
+index 0000000..b83cca1
+--- /dev/null
++++ b/gpg-interface.c
+@@ -0,0 +1,94 @@
++/*
++ * Copyright (c) 2011, Google Inc.
++ */
++#include "cache.h"
++#include "run-command.h"
++#include "strbuf.h"
++#include "gpg-interface.h"
++#include "sigchain.h"
 +
-+static int feed_receive_hook(void *state_, const char **bufp, size_t *sizep)
++int sign_buffer(struct strbuf *buffer, const char *signing_key)
 +{
-+	struct receive_hook_feed_state *state = state_;
-+	struct command *cmd = state->cmd;
++	struct child_process gpg;
++	const char *args[4];
++	ssize_t len;
++	int i, j;
 +
-+	while (cmd && cmd->error_string)
-+		cmd = cmd->next;
-+	if (!cmd)
-+		return -1; /* EOF */
-+	strbuf_reset(&state->buf);
-+	strbuf_addf(&state->buf, "%s %s %s\n",
-+		    sha1_to_hex(cmd->old_sha1), sha1_to_hex(cmd->new_sha1),
-+		    cmd->ref_name);
-+	state->cmd = cmd->next;
-+	if (bufp) {
-+		*bufp = state->buf.buf;
-+		*sizep = state->buf.len;
++	memset(&gpg, 0, sizeof(gpg));
++	gpg.argv = args;
++	gpg.in = -1;
++	gpg.out = -1;
++	args[0] = "gpg";
++	args[1] = "-bsau";
++	args[2] = signing_key;
++	args[3] = NULL;
++
++	if (start_command(&gpg))
++		return error(_("could not run gpg."));
++
++	/*
++	 * When the username signingkey is bad, program could be terminated
++	 * because gpg exits without reading and then write gets SIGPIPE.
++	 */
++	sigchain_push(SIGPIPE, SIG_IGN);
++
++	if (write_in_full(gpg.in, buffer->buf, buffer->len) != buffer->len) {
++		close(gpg.in);
++		close(gpg.out);
++		finish_command(&gpg);
++		return error(_("gpg did not accept the data"));
 +	}
++	close(gpg.in);
++	len = strbuf_read(buffer, gpg.out, 1024);
++	close(gpg.out);
++
++	sigchain_pop(SIGPIPE);
++
++	if (finish_command(&gpg) || !len || len < 0)
++		return error(_("gpg failed to sign the data"));
++
++	/* Strip CR from the line endings, in case we are on Windows. */
++	for (i = j = 0; i < buffer->len; i++)
++		if (buffer->buf[i] != '\r') {
++			if (i != j)
++				buffer->buf[j] = buffer->buf[i];
++			j++;
++		}
++	strbuf_setlen(buffer, j);
++
 +	return 0;
 +}
 +
-+static int run_receive_hook(struct command *commands, const char *hook_name)
++int verify_signed_buffer(const char *buf, size_t total, size_t payload)
 +{
-+	struct receive_hook_feed_state state;
-+	int status;
++	struct child_process gpg;
++	const char *args_gpg[] = {"gpg", "--verify", "FILE", "-", NULL};
++	char path[PATH_MAX];
++	int fd, ret;
 +
-+	strbuf_init(&state.buf, 0);
-+	state.cmd = commands;
-+	if (feed_receive_hook(&state, NULL, NULL))
-+		return 0;
-+	state.cmd = commands;
-+	status = run_and_feed_hook(hook_name, feed_receive_hook, &state);
-+	strbuf_release(&state.buf);
-+	return status;
++	fd = git_mkstemp(path, PATH_MAX, ".git_vtag_tmpXXXXXX");
++	if (fd < 0)
++		return error("could not create temporary file '%s': %s",
++			     path, strerror(errno));
++	if (write_in_full(fd, buf, total) < 0)
++		return error("failed writing temporary file '%s': %s",
++			     path, strerror(errno));
++	close(fd);
++
++	memset(&gpg, 0, sizeof(gpg));
++	gpg.argv = args_gpg;
++	gpg.in = -1;
++	args_gpg[2] = path;
++	if (start_command(&gpg)) {
++		unlink(path);
++		return error("could not run gpg.");
++	}
++
++	write_in_full(gpg.in, buf, payload);
++	close(gpg.in);
++	ret = finish_command(&gpg);
++
++	unlink_or_warn(path);
++
++	return ret;
 +}
+diff --git a/gpg-interface.h b/gpg-interface.h
+new file mode 100644
+index 0000000..7689357
+--- /dev/null
++++ b/gpg-interface.h
+@@ -0,0 +1,11 @@
++#ifndef GPG_INTERFACE_H
++#define GPG_INTERFACE_H
 +
- static int run_update_hook(struct command *cmd)
- {
- 	static const char update_hook[] = "hooks/update";
++/*
++ * Copyright (c) 2011, Google Inc.
++ */
++
++extern int sign_buffer(struct strbuf *buffer, const char *signing_key);
++extern int verify_signed_buffer(const char *buffer, size_t total, size_t payload);
++
++#endif
 -- 
 1.7.7.rc0.188.g3793ac
