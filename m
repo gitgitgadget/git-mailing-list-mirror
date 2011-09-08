@@ -1,75 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-mail: Add option to sleep between sending each
- email.
-Date: Thu, 08 Sep 2011 10:12:46 -0700
-Message-ID: <7vbouvx8j5.fsf@alter.siamese.dyndns.org>
-References: <1315428191-9769-1-git-send-email-gf@unixsol.org>
- <CALkWK0kH+pD6ymtt9oWLhT0Bftp4EvtrwTtNVw6mjX0aObb-BQ@mail.gmail.com>
- <vpq7h5jtngj.fsf@bauges.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: The imporantance of including http credential caching in 1.7.7
+Date: Thu, 8 Sep 2011 15:10:53 -0400
+Message-ID: <20110908191053.GA16064@sigill.intra.peff.net>
+References: <CAFcyEthzW1AY4uXgpsVxjyWCDXAJ6=GdWGqLFO6Acm1ovJJVaw@mail.gmail.com>
+ <4E6769E3.4070003@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Georgi Chorbadzhiyski <gf@unixsol.org>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Sep 09 01:07:02 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Kyle Neath <kneath@gmail.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Sep 09 01:11:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1ngS-0000zM-AL
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 01:07:00 +0200
+	id 1R1nkL-0002qR-PI
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 01:11:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753468Ab1IHXGq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Sep 2011 19:06:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44801 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753163Ab1IHXGj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Sep 2011 19:06:39 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EEB5543A0;
-	Thu,  8 Sep 2011 13:12:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1SZl1cO448ZBfkWb+UD8dHcs3/c=; b=t6Jute
-	PDNnv67IaZHjURLQlslW/8r7GHMbWXm2W6iHF4FKoVkEfIRsWpMQEqjSIlr1w/k4
-	LPhraine56FSA9UdYpPbYnQzL+4zugJ5nCOyGaBGJhDBzAyQ2F2qeZIcT8wJBzk7
-	a3mdf8FctiTXlsuwvpr123NwHM+OVJ8ANcCes=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wQyqWM5QhRLYmeha105c+/tY1FcSqNx8
-	bXV7TIbqJ+3G0qadFNb0BWqAcdxK6TtDEuSk5eZ2oOV9jJnsFmUxwBkfL5G4u+bW
-	3EnQEc7TXWkZ3DrWvwjnZIFIfateOmMQOwDGnSvYcgeaqe85X6grO+wlxIZJgwrv
-	hx4vzg1zSYU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E64604392;
-	Thu,  8 Sep 2011 13:12:49 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A263438C; Thu,  8 Sep 2011
- 13:12:49 -0400 (EDT)
-In-Reply-To: <vpq7h5jtngj.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Thu, 08 Sep 2011 11:03:56 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C77208F0-DA3D-11E0-8ACA-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751236Ab1IHXK5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Sep 2011 19:10:57 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34669
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750744Ab1IHXK4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Sep 2011 19:10:56 -0400
+Received: (qmail 16328 invoked by uid 107); 8 Sep 2011 19:11:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 08 Sep 2011 15:11:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Sep 2011 15:10:53 -0400
+Content-Disposition: inline
+In-Reply-To: <4E6769E3.4070003@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180998>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Wed, Sep 07, 2011 at 02:56:03PM +0200, Michael J Gruber wrote:
 
-> There have been discussion (and IIRC a patch) proposing this already in
-> the past. One advantage of sleeping a bit between each email is that it
-> increase the chances for the receiver to receive the emails in the right
-> order.
+> So, it's been a year or more that you've been aware of the importance
+> of this issue (from your/github's perspective), and we hear about it
+> now, at the end of the rc phase. I don't know whether
+> jk/http-auth-keyring has been done on github payroll or during spare
+> time.
 
-Huh? Even in the presense of MTAs in the middle that are free to reorder
-messages?
+To be absolutely clear here, this feature was 100% paid for by GitHub
+(which isn't to say that I don't think it's a good idea. On the
+contrary, I think it's awesome; but GitHub money is what provided the
+time for me to work on it).
 
-IIRC, "git send-email" does its best to force ordering by assigning
-monotonically increasing timestamps on the Date: field, so that the
-recipients can sort the messages based on it, in addition to the
-In-Reply-To field to help threading. I personally do not think there is
-anything more than that that should done in the program.
+When I started at GitHub in January, I was given a giant list of things
+that GitHub felt would make core git better, but that they hadn't the
+personnel to improve. And I was told to use my own judgement in adding
+or removing items from the list based on what I thought git needed, and
+to prioritize as I saw fit. The fact that it took six months for me to
+come up with credential patches is because that's how long it took me t=
+o
+figure out what I wanted to write, and to clear my backlog of other git
+tasks.
+
+So I think the wheels have been turning on this for quite a while from
+GitHub's perspective.
+
+At the same time, I agree very much with Junio; releasing something wit=
+h
+a bad API and then having to fix it later is much worse than delaying
+the release of a feature by a little bit. And we have very little data
+on whether the API is "right" at this point. Initially I was concerned
+that there wasn't going to be enough interest while the patches were in
+'next', and that we would have to make a release in order to get people
+interested enough in writing helpers. But right after I said that, Luka=
+s
+Sandstr=C3=B6m showed up with a kdewallet helper. And Ted Zlatanov is w=
+orking
+on something for the freedesktop secrets API.
+
+And already there's been some discussion that perhaps the current
+interface isn't quite what we want and is going to need tweaking.
+So we are moving forward, and I still hope that we can target the next
+release of "master" in 8-10 weeks. But this time with more confidence
+that what's being released is actually right.
+
+In the meantime, the best thing we can do to push it forward is to writ=
+e
+helpers. I implemented some basic ones that should work anywhere, but
+aren't as nice as integration with existing keychains. Some people are
+working on Linux ones. The single best thing GitHub can do to push this
+forward right now is to provide a well-written OS X Keychain helper, an=
+d
+to provide feedback on whether git's end of the API is good enough.
+
+-Peff
