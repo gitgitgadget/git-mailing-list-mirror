@@ -1,60 +1,73 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH v17 1/7] bisect: move argument parsing before state modification.
-Date: Thu, 8 Sep 2011 11:23:25 +1000
-Message-ID: <CAH3AnrpNSNsz77kBsGQxprXh3bdNUzrWyFwtq_up0hetwikhMA@mail.gmail.com>
-References: <1312459263-16911-1-git-send-email-jon.seymour@gmail.com>
-	<1312459263-16911-2-git-send-email-jon.seymour@gmail.com>
-	<201109070816.16655.chriscool@tuxfamily.org>
-	<4E67B2F2.9070806@kdbg.org>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [PATCHv2 1/2] remote: write correct fetch spec when renaming
+ remote 'remote'
+Date: Wed, 7 Sep 2011 21:40:57 -0400 (EDT)
+Message-ID: <alpine.DEB.2.00.1109062136350.12564@debian>
+References: <1314924634-12235-1-git-send-email-martin.von.zweigbergk@gmail.com> <7vaaah6zx0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	gitster@pobox.com, jnareb@gmail.com, jrnieder@gmail.com
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Sep 08 03:23:34 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 08 03:41:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1TL2-0005oV-Q3
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 03:23:33 +0200
+	id 1R1Tc4-0003OR-JV
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 03:41:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757762Ab1IHBX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Sep 2011 21:23:27 -0400
-Received: from mail-vw0-f43.google.com ([209.85.212.43]:41136 "EHLO
-	mail-vw0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757722Ab1IHBX0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Sep 2011 21:23:26 -0400
-Received: by vws10 with SMTP id 10so395103vws.2
-        for <git@vger.kernel.org>; Wed, 07 Sep 2011 18:23:25 -0700 (PDT)
+	id S1757854Ab1IHBlB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Sep 2011 21:41:01 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:41122 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757849Ab1IHBlB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Sep 2011 21:41:01 -0400
+Received: by vxj15 with SMTP id 15so244770vxj.19
+        for <git@vger.kernel.org>; Wed, 07 Sep 2011 18:40:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=jq+qAYQ8kNfBJgmKPSxgAxgNtHAYayY6p5mx55aQJro=;
-        b=p2IHrAx5d8DIpxxr6J2ohgZxAEATgTSOkVMGK+kO8ObyOdT43EA13RMfgKpNUICBq9
-         4bLS6GGdsI8Gic8dN5xRnExUYqlOJH/zf3JwNREAuu68blH1bNzITi4y9LF5qYOcqJmv
-         6UvQlS9m5ZsenT0OUfeqEopFpNQZ7+GEcbARg=
-Received: by 10.52.75.230 with SMTP id f6mr75782vdw.276.1315445005363; Wed, 07
- Sep 2011 18:23:25 -0700 (PDT)
-Received: by 10.52.106.137 with HTTP; Wed, 7 Sep 2011 18:23:25 -0700 (PDT)
-In-Reply-To: <4E67B2F2.9070806@kdbg.org>
+        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        bh=mBz7QJLEKz9GpHRs1zXg4v60yWRTI8gcgK1p60cwzng=;
+        b=nhlVWblCxIlyVM0VSglZg5X1ygnFp4NtP/xkOHo+0Yfgp1WRyJ559JBzSNQ7r6j8Sg
+         IKbLobRkUWnlptrWj1825KsdQswOFRcbSuwhYn/560klzalRNQwAuhzRxd5ZbmXDzXUT
+         Qnhd1tuiddJZ8EzBw+MmVMjikBfllDRUEbmqY=
+Received: by 10.52.68.177 with SMTP id x17mr99850vdt.148.1315446059769;
+        Wed, 07 Sep 2011 18:40:59 -0700 (PDT)
+Received: from [192.168.1.102] (modemcable094.77-37-24.mc.videotron.ca [24.37.77.94])
+        by mx.google.com with ESMTPS id ch2sm1550522vdc.19.2011.09.07.18.40.58
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 07 Sep 2011 18:40:58 -0700 (PDT)
+X-X-Sender: martin@debian
+In-Reply-To: <7vaaah6zx0.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180932>
 
-On Thu, Sep 8, 2011 at 4:07 AM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 07.09.2011 08:16, schrieb Christian Couder:
+On Tue, 6 Sep 2011, Junio C Hamano wrote:
 
-> IOW, I think the new behavior is *much* better than the old behavior.
->
+> It is somewhat bothering that we do not say "we didn't do any magic" here
+> when we did not move the tracking branch specifications, but that is not a
+> new problem, so I am OK with this change.
 
-There is perhaps no surprise that I agree with Hannes. Certainly, it
-seemed saner to me to do argument validation before state update. [
-Also, the earlier iterations of the --no-checkout series needed the
-new behaviour. Not sure if that is still true, but I suspect it is ].
+If I understand you correctly, this is the same concern that Jeff had
+and that I tried to address in patch 3/2.
 
-jon.
+> I however suspect that you would want to keep the record of what you
+> changed here, so that the renaming of actual refs done in [PATCH 2/2] is
+> limited to those that you updated the specifications for, no?
+
+Sorry, I don't think I really understand. Are you worried that we
+might rename too many refs, i.e. unrelated ones? We match exactly the
+same pattern both when updating refspecs and when renaming refs. Of
+course, we can never be certain that a ref "refs/remotes/origin/foo"
+is really related to the remote called "origin". The user could have
+simply created the ref manually. Is that what you are getting at?
+
+
+Martin
