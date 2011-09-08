@@ -1,77 +1,75 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCHv2 4/5] branch: introduce --list option
-Date: Thu, 08 Sep 2011 11:24:47 +0200
-Message-ID: <4E6889DF.7030404@drmicha.warpmail.net>
-References: <20110825175301.GC519@sigill.intra.peff.net> <0785cac235c3b45537cf161c86dde8e798c4ff3e.1314367414.git.git@drmicha.warpmail.net> <7vfwkodq5s.fsf@alter.siamese.dyndns.org> <4E5A5290.4050005@drmicha.warpmail.net> <20110907195611.GD13364@sigill.intra.peff.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] send-mail: Add option to sleep between sending each email.
+Date: Thu, 8 Sep 2011 14:58:56 +0530
+Message-ID: <CALkWK0nuLHpG9xqAAVL4T21N-31m7=A3_amp7Mf0Sw9jobYDRg@mail.gmail.com>
+References: <1315428191-9769-1-git-send-email-gf@unixsol.org>
+ <CALkWK0kH+pD6ymtt9oWLhT0Bftp4EvtrwTtNVw6mjX0aObb-BQ@mail.gmail.com> <vpq7h5jtngj.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 08 11:25:02 2011
+Cc: Georgi Chorbadzhiyski <gf@unixsol.org>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Sep 08 11:29:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1aqz-0004vZ-8O
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 11:25:01 +0200
+	id 1R1avD-0006ny-0W
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Sep 2011 11:29:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932506Ab1IHJYz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Sep 2011 05:24:55 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:46179 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932351Ab1IHJYy (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Sep 2011 05:24:54 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 512662A7EE;
-	Thu,  8 Sep 2011 05:24:49 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute1.internal (MEProxy); Thu, 08 Sep 2011 05:24:49 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=jxVeMYAQBKmru67VFQWdcY
-	T2gYw=; b=eDnsE69ocBLtvSqWcn0ZkjVJx4cCvUKC0/VJgYNyMJxJMvgD8tqq3K
-	XVUSaqCeWFi92JeVEisB9johIvwfUpB+m1IlWjByHc728pVlBnDVaLz/OKf2L5A/
-	sZeXfW6iLu93dFWQsbucKgz0wVBsZTVrkYHBXJCugsLAjk7CiL3vU=
-X-Sasl-enc: UoDXx/Ft4vgUPpn8TBnoegWHXhou2m4JiAfM+p/YOLNN 1315473889
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id ADE56412A0D;
-	Thu,  8 Sep 2011 05:24:48 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
-In-Reply-To: <20110907195611.GD13364@sigill.intra.peff.net>
+	id S932531Ab1IHJ3S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Sep 2011 05:29:18 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:43741 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932511Ab1IHJ3R (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Sep 2011 05:29:17 -0400
+Received: by wyh22 with SMTP id 22so456149wyh.19
+        for <git@vger.kernel.org>; Thu, 08 Sep 2011 02:29:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=nrAm9gInfgjBNo38enNaTbb0iw9iceoZsUudWn4in64=;
+        b=akNFglPA0HllQ1RqXjOu4Z3KdKqpxA6h+B1zyanQ9+6U4c95MRLoiSejE4qlORYGL2
+         mDuyjMbstBv/pKD4dFXZpfEEw7aQcq5mJRmYivgNc29z5Oq99VByRwJSjdnkOYV5Zf1+
+         y0W44P0wCl+ZPei9+lH9s+RhO8vGpSmZkBAOg=
+Received: by 10.216.167.5 with SMTP id h5mr469942wel.96.1315474156168; Thu, 08
+ Sep 2011 02:29:16 -0700 (PDT)
+Received: by 10.216.51.135 with HTTP; Thu, 8 Sep 2011 02:28:56 -0700 (PDT)
+In-Reply-To: <vpq7h5jtngj.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180958>
 
-Jeff King venit, vidit, dixit 07.09.2011 21:56:
-> On Sun, Aug 28, 2011 at 04:37:04PM +0200, Michael J Gruber wrote:
-> 
->> Currently, "-m -d" is forbidden", but "-m -v" is "-m", same for "-d -v".
->> Do we want to keep it like that? Probably. I'll add the tests to 4/5.
-> 
-> Yes, I think so. "-v" just means "be more verbose"; the fact that
-> there is currently nothing to be more verbose about with "-m" and "-d"
-> is irrelevant.
-> 
-> It does make me a little nervous about the "'git branch -v'
-> automatically means 'git branch --list -v'" patch, though. It closes the
-> door in the future to us being more or less verbose about branch
-> creation details (and while helpful, it creates a slight inconsistency
-> in the interface).
-> 
-> If we are adding "-l" anyway, is it really necessary? It's not much
-> harder to do "git branch -lv" once that is in place.
+Hi Matthieu and Georgi,
 
-Well, it will take a while to (re-)take "-l". For the sake of
-consistency I wouldn't mind making "--verbose" strictly a "modifier" for
-whatever mode/subcommand of the command is going on, even though it
-would mean having to type "-v --list" for a long time. In general,
--v/--verbose should always be like that, but is not (e.g. tag -v).
+Matthieu Moy writes:
+> There have been discussion (and IIRC a patch) proposing this already in
+> the past. One advantage of sleeping a bit between each email is that it
+> increase the chances for the receiver to receive the emails in the right
+> order.
 
-This is in next now but no harm would be done changing it now.
+Ah, it looks like I missed the earlier discussion/ patch- sorry.  Yes,
+I've also wondered what to do about the order in which patches appear
+in reply to the cover letter- I was of the opinion that it was a minor
+inconvenience that we have to put up with that until SMTP servers
+learn to fix these things.  Slowing things down a little bit for now
+until they catch up is probably a good idea.
 
-Michael
+Georgi Chorbadzhiyski writes:
+> See for example this: http://mailman.videolan.org/pipermail/dvblast-devel/2011-August/thread.html
+> The thread named: [dvblast-devel] [PATCH 0/4] Post git migration changes
+> See how 1,3,4/4 are not detected to be part of the thread even when
+> all headers are set correctly by git-send-email.
+
+This is a far more serious problem.  For this, I was toying with the
+idea of special cover-letter handling in git-send-email.  My idea was
+that it should essentially send the cover letter, wait for a second
+and then send all the other emails concurrently.  Sure, slowing the
+entire process down would work too, but it's not so elegant.
+
+Thanks.
+
+-- Ram
