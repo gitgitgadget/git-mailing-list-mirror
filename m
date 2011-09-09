@@ -1,94 +1,73 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: can Git encrypt/decrypt .gpg on push/fetch?
-Date: Fri, 09 Sep 2011 15:36:29 +0200
-Message-ID: <4E6A165D.5010703@drmicha.warpmail.net>
-References: <87lityxbg7.fsf@lifelogs.com> <CAGhXAGSw3y=cjAHXtwycDifoBPr13AkYtLHRRXejRKue0vkz7A@mail.gmail.com>
+From: Ted Zlatanov <tzz@lifelogs.com>
+Subject: Re: The imporantance of including http credential caching in 1.7.7
+Date: Fri, 9 Sep 2011 08:33:24 -0500
+Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
+ Cienfuegos
+Message-ID: <877h5hx2l7.fsf@lifelogs.com>
+References: <CAFcyEthzW1AY4uXgpsVxjyWCDXAJ6=GdWGqLFO6Acm1ovJJVaw@mail.gmail.com>
+	<4E6769E3.4070003@drmicha.warpmail.net>
+	<20110908191053.GA16064@sigill.intra.peff.net>
+	<4E69C8F0.9070204@drmicha.warpmail.net> <87pqjaxbrm.fsf@lifelogs.com>
+	<CAEBDL5VtVZcmQnj2CH7XzZ0YV_X61gO69-dXriGiYsAqk=NLPg@mail.gmail.com>
+	<CABPQNSbrjNR73GxE4xXFPqaVSUOaa5Drt4Je+zGY82rzajQxuw@mail.gmail.com>
+	<CAEBDL5UymsgsQnE9t121omGkR3Zw9BsFqOinTshxEN4WDcOdeA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: tzz@lifelogs.com, git@vger.kernel.org
-To: Aneesh Bhasin <contact.aneesh@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 09 15:36:39 2011
+Content-Type: text/plain
+Cc: <kusmabite@gmail.com>, <git@vger.kernel.org>,
+	Kyle Neath <kneath@gmail.com>, Jeff King <peff@peff.net>
+To: John Szakmeister <john@szakmeister.net>
+X-From: git-owner@vger.kernel.org Fri Sep 09 15:36:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R21G0-0003SQ-4w
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 15:36:36 +0200
+	id 1R21GK-0003gf-Hz
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 15:36:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759058Ab1IINge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Sep 2011 09:36:34 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:50630 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759053Ab1IINgb (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Sep 2011 09:36:31 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 60467295A2;
-	Fri,  9 Sep 2011 09:36:31 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute3.internal (MEProxy); Fri, 09 Sep 2011 09:36:31 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=yzZrsuwBzudSCAMuPExGVL
-	IbPC0=; b=ba85ozGF2G2P9JQWy8vQBx3YJfAIDPnfP0B8s7MFMNtXN7MuiLyY2t
-	1oNK+FWR8n9bIjcpDMwhTEyFn5kqDEJqpIpa5E6zkCraKCGR5cSM0ix2aVAlgC2A
-	mjlg7UpHPsTAcoJoohOcoMJ8w7CuSuA/wXOQgtAedplGyNfSjQMHo=
-X-Sasl-enc: nB1Q4FJKqlq4DEUrzDQnSgTHytNMaANmIRK4eg5S7gcA 1315575391
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id B9A0BB4062A;
-	Fri,  9 Sep 2011 09:36:30 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
-In-Reply-To: <CAGhXAGSw3y=cjAHXtwycDifoBPr13AkYtLHRRXejRKue0vkz7A@mail.gmail.com>
+	id S933386Ab1IINgu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Sep 2011 09:36:50 -0400
+Received: from cer-mailmxol2.jumptrading.com ([208.78.214.25]:63151 "EHLO
+	cer-mailmxol2.jumptrading.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759060Ab1IINgt (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Sep 2011 09:36:49 -0400
+X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Sep 2011 09:36:49 EDT
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgoHAGwVak7AqF0N/2dsb2JhbABBnGiEaQOHM4FSAQEFeRALDRQlDwEEDSgBEw4Fh3q4BIZuBIdtkGkWhFKHMg
+Received: from unknown (HELO chiexchange02.w2k.jumptrading.com) ([192.168.93.13])
+  by cer-mailmxol2.jumptrading.com with ESMTP; 09 Sep 2011 13:33:31 +0000
+Received: from internalsmtp.w2k.jumptrading.com (10.2.4.29) by
+ chiexchange02.w2k.jumptrading.com (10.2.4.71) with Microsoft SMTP Server id
+ 8.2.176.0; Fri, 9 Sep 2011 08:33:30 -0500
+Received: from tzlatanov-ubuntu-desktop.jumptrading.com ([10.2.14.81]) by
+ internalsmtp.w2k.jumptrading.com with Microsoft SMTPSVC(6.0.3790.1830);	 Fri,
+ 9 Sep 2011 08:33:30 -0500
+X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
+Mail-Copies-To: never
+Gmane-Reply-To-List: yes
+In-Reply-To: <CAEBDL5UymsgsQnE9t121omGkR3Zw9BsFqOinTshxEN4WDcOdeA@mail.gmail.com>
+	(John Szakmeister's message of "Fri, 9 Sep 2011 06:54:15 -0400")
+User-Agent: Gnus/5.110018 (No Gnus v0.18) Emacs/24.0.50 (gnu/linux)
+X-OriginalArrivalTime: 09 Sep 2011 13:33:30.0274 (UTC) FILETIME=[1014C020:01CC6EF5]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181064>
 
-Aneesh Bhasin venit, vidit, dixit 09.09.2011 12:50:
-> Hi Ted,
-> 
-> 
-> 2011/9/9 Ted Zlatanov <tzz@lifelogs.com>
->>
->> I need to store some encrypted files in Git but for some clients with
->> the right GPG keys, decrypt them on checkout (possibly also encrypt them
->> back on commit, but that's not as important).
->>
->> diff doesn't have to work, this is just for convenience.  Can Git do
->> this (matching only .gpg files) or do I need my own command to run after
->> the checkout/fetch and before commit?  It seems pretty out of Git's
->> scope but perhaps others have done this before.
->>
-> 
-> Have you looked at git hooks (e.g. here : http://progit.org/book/ch7-3.html).
-> 
-> You could do the encryption/decryption in pre-commit and post-checkout
-> hooks scripts respectively...
+On Fri, 9 Sep 2011 06:54:15 -0400 John Szakmeister <john@szakmeister.net> wrote: 
 
-I'd recommend textconv for diffing and clean/smudge for plaintext
-checkout. That is, there are two convenient versions:
+JS> On Fri, Sep 9, 2011 at 6:48 AM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+JS> [snip]
+>> Actually, it seems recent Windows versions does have a credential
+>> manager, including an API:
+>> 
+>> http://www.yanzzee.com/2009/09/windows-keychain.html
+>> http://msdn.microsoft.com/en-us/library/aa374731(v=VS.85).aspx#credentials_management_functions
 
-A) Keep blobs and checkout encrypted
-- Use an editor which can encrypt/decrypt on the fly (e.g. vim)
-- Use "*.gpg diff=gpg" in your attributes and
-[diff "gpg"]
-        textconv = gpg -d
-  in your config to have cleartext diffs. Use cachetextconv with caution ;)
+JS> Yay!  It's about time they grew that feature. :-)
 
-B) Keep blobs encrypted, checkout decrypted
-- Use Use "*.gpg filter=gpg" in your attributes and
-[filter "gpg"]
-	smudge = gpg -d
-	clean = gpg -e -r yourgpgkey
-  in your config.
+That could work.  I hope a Windows developer can take a look.  That
+leaves VMS credential support... Come on guys!
 
-I use A on a regular basis. B is untested (but patterned after a similar
-gzip filter I use). You may or may not have better results with "gpg -ea".
-
-On clients without the keys, you can simply leave out the diff or filter
-config resp. set them to "cat".
-
-Michael
+Ted
