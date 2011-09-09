@@ -1,59 +1,96 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Fri, 09 Sep 2011 17:59:20 +0200
-Message-ID: <4E6A37D8.8050400@web.de>
-References: <4DF6A8B6.9030301@op5.se> <20110614003029.GA31447@sigill.intra.peff.net> <7vtybtm3dl.fsf@alter.siamese.dyndns.org> <BANLkTimNoh3-Jde_-arzwBa=aUR+KK3Xhw@mail.gmail.com> <201106141202.46720.johan@herland.net> <20110614170214.GB26764@sigill.intra.peff.net> <BANLkTin0CjnM_hMaEpMroZdDhhavaoKAv00_4xBqeHj9biToVA@mail.gmail.com> <20110614194749.GA1567@sigill.intra.peff.net> <BANLkTi=GZDLu-ey1=h8LLDbWssoSpsM_jd7R-oFr+b+82Otb8g@mail.gmail.com> <1315511619144-6773496.post@n2.nabble.com> <1315529522448-6774328.post@n2.nabble.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git Bug - diff in commit message.
+Date: Fri, 09 Sep 2011 09:00:08 -0700
+Message-ID: <7vpqj9vh87.fsf@alter.siamese.dyndns.org>
+References: <1315493353942-6772145.post@n2.nabble.com>
+ <CAMOZ1BtbpbG+19G6Hfau_2_F5L3Ad+x-Payd9aKajJxU_V_tyA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Martin Fick <mfick@codeaurora.org>
-X-From: git-owner@vger.kernel.org Fri Sep 09 18:00:08 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: anikey <arty.anikey@gmail.com>, git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 09 18:00:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R23Ut-0003rg-0k
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 18:00:07 +0200
+	id 1R23V7-0003zU-QU
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 18:00:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759301Ab1IIQAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Sep 2011 12:00:00 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:41091 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758537Ab1IIQAA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Sep 2011 12:00:00 -0400
-Received: from smtp04.web.de  ( [172.20.0.225])
-	by fmmailgate02.web.de (Postfix) with ESMTP id C8D3E1AAA76CD;
-	Fri,  9 Sep 2011 17:59:20 +0200 (CEST)
-Received: from [79.247.248.31] (helo=[192.168.178.43])
-	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1R23U8-0000Rg-00; Fri, 09 Sep 2011 17:59:20 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
-In-Reply-To: <1315529522448-6774328.post@n2.nabble.com>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1+1BmOysgb4t4zaX9VWfmQBRsyeU7ffxpXbu01c
-	yLwEVEBXQf4yBLXUxLeWS7TNrvlszjhp1MHV/+x72yFH77xDtO
-	hyL96/Fa64vMrVJNZiTQ==
+	id S1759328Ab1IIQAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Sep 2011 12:00:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33734 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753546Ab1IIQAN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Sep 2011 12:00:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 933094558;
+	Fri,  9 Sep 2011 12:00:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=etfcrKxLh/aHHL6UB7WjqqGPl4c=; b=lhoOcp
+	ibFBIPNdIKn9t4fC9AB0U0VI2kVhbtanUCE7H1k4mW9d9wJ7T05tTNRgA/+F/If/
+	fZL6c56IHMzbXFBBSmyZhWdH6mo9KUoDoJMQ5HK7sZ2woQbXlXCyKvqIaoBb8Q0U
+	zbwns6DqwHaD5V5K/B6cYDHqhiwJDF4Fi/lMo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VRzUkH5qobWb+VCAPIzWCRpwxQDq1/EH
+	ercc0/ZOjn2mqlJX2Wngd3tkYq9MPFzWXIDAS1Vp/RAI04Pg7sSe3tRwJj4TsxB1
+	8oN15ZmqVpb4HBJPZzUbS4KHrgYZ9nn2rtfdyUUkV/1Cni7IjZ0jWBZVV54nLXXW
+	yfuXWeeK/BU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A8F14557;
+	Fri,  9 Sep 2011 12:00:12 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0F70F4554; Fri,  9 Sep 2011
+ 12:00:10 -0400 (EDT)
+In-Reply-To: <CAMOZ1BtbpbG+19G6Hfau_2_F5L3Ad+x-Payd9aKajJxU_V_tyA@mail.gmail.com> (Michael
+ Witten's message of "Thu, 8 Sep 2011 16:26:01 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CC07177E-DAFC-11E0-9D05-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181085>
 
-Am 09.09.2011 02:52, schrieb Martin Fick:
-> An update, I bisected it down to this commit:
-> 
->   88a21979c5717e3f37b9691e90b6dbf2b94c751a
-> 
->    fetch/pull: recurse into submodules when necessary
-> 
-> Since this can be disabled with the --no-recurse-submodules switch, I tried
-> that and indeed, even with the latest 1.7.7rc it becomes fast (~8mins)
-> again. The strange part about this is that the repository does not have any
-> submodules. Anyway, I hope that this can be useful to others since it is a
-> workaround which speed things up enormously. Let me know if you have any
-> other tests that you want me to perform,
+Michael Witten <mfwitten@gmail.com> writes:
 
-Thanks for nailing that one down. I'm currently looking into bringing back
-decent performance here.
+> It would appear that `git rebase' is in fact producing patches with
+> `git format-patch' and then applying the resulting patches with `git
+> am', which gets confused by your inline diff; this can be clearly seen
+> in the `git-rebase--am[.sh]' file.
+>
+> Perhaps `git rebase' should be reimplemented to use `git cherry-pick',
+> or does that suffer from the same problem?
+
+I think it just is a simple matter of this one-liner.  We were already
+bending backwards to preserve the original message by not parsing and
+running stripspace the message in the output from mailinfo, and instead
+using the log message from the original, but were still using the patch
+text that came from mailinfo that was split incorrectly because it was
+fooled by the diff in the commit log message.
+
+In the longer term, I think "git-rebase--am.sh" should be rewritten to
+have format-patch avoid the cost of actually generating the patch text,
+and the "mailinfo" call that comes above the context shown in this patch
+should be made conditional---when using "am" for rebasing we do not really
+care anything but the commit object names, and everything else is figured
+out from the commit this codepath.
+
+ git-am.sh |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/git-am.sh b/git-am.sh
+index 016b505..9a4cb2d 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -632,6 +632,7 @@ To restore the original branch and stop patching run \"\$cmdline --abort\"."
+ 			sed -e '1,/^$/d' >"$dotest/msg-clean"
+ 			echo "$commit" > "$dotest/original-commit"
+ 			get_author_ident_from_commit "$commit" > "$dotest/author-script"
++			git diff-tree --root --binary -m --first-parent "$commit" >"$dotest/patch"
+ 		else
+ 			{
+ 				sed -n '/^Subject/ s/Subject: //p' "$dotest/info"
