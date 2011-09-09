@@ -1,69 +1,78 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Fri, 09 Sep 2011 18:03:31 +0200
-Message-ID: <4E6A38D3.3010900@web.de>
-References: <BANLkTimEGjBMrbQpkZfWYPTZ93syiKFHdw@mail.gmail.com> <4DF6A8B6.9030301@op5.se> <20110614003029.GA31447@sigill.intra.peff.net> <7vtybtm3dl.fsf@alter.siamese.dyndns.org> <BANLkTimNoh3-Jde_-arzwBa=aUR+KK3Xhw@mail.gmail.com> <201106141202.46720.johan@herland.net> <20110614170214.GB26764@sigill.intra.peff.net> <BANLkTin0CjnM_hMaEpMroZdDhhavaoKAv00_4xBqeHj9biToVA@mail.gmail.com> <20110614194749.GA1567@sigill.intra.peff.net> <BANLkTi=GZDLu-ey1=h8LLDbWssoSpsM_jd7R-oFr+b+82Otb8g@mail.gmail.com> <1315511619144-6773496.post@n2.nabble.com> <4E6A19AD.80100@alum.mit.edu>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: git repository size / compression
+Date: Fri, 9 Sep 2011 12:05:03 -0400
+Message-ID: <CAEBDL5U5-1nBGbWtb6+CfBrESoy8+p0Qqw1t1n_5EKFmpq9NhA@mail.gmail.com>
+References: <CALFxCvzVjC+u=RDkDCQp0QqPETsv8ROE8tY=37tmMWxmQoJOEw@mail.gmail.com>
+	<1315556595.2019.11.camel@bee.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Martin Fick <mfick@codeaurora.org>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Sep 09 18:03:42 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: neubyr <neubyr@gmail.com>, git@vger.kernel.org
+To: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Fri Sep 09 18:05:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R23YJ-0005zJ-AJ
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 18:03:39 +0200
+	id 1R23Zp-0006pS-Om
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 18:05:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759333Ab1IIQDe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Sep 2011 12:03:34 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:36991 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759080Ab1IIQDd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Sep 2011 12:03:33 -0400
-Received: from smtp04.web.de  ( [172.20.0.225])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 492F61993845F;
-	Fri,  9 Sep 2011 18:03:32 +0200 (CEST)
-Received: from [79.247.248.31] (helo=[192.168.178.43])
-	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1R23YC-0001k7-00; Fri, 09 Sep 2011 18:03:32 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
-In-Reply-To: <4E6A19AD.80100@alum.mit.edu>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX184KDur3YcD6wkjpRDTkZekQAp2d7mmeTRywZKa
-	F/CcQ/mPmTm4q0JGCR7V2lIYm6KPG4+5Ma/VOkzjjlIq//bqx+
-	zihGuNAzgFXFl7f4pdMQ==
+	id S1758900Ab1IIQFF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Sep 2011 12:05:05 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:58830 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751548Ab1IIQFE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Sep 2011 12:05:04 -0400
+Received: by vxi9 with SMTP id 9so1207552vxi.19
+        for <git@vger.kernel.org>; Fri, 09 Sep 2011 09:05:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=oJMMdTGRVZiZZdblU9peT5u56GCpvzFea9x8rFyBVck=;
+        b=ELUhKyIN5tJG6O/huXwHUt1bWnXU5LuTOG+OfSKb0RovA+WxKXVojlGX7AsHBdM8gm
+         Dpx+ptOb/FXwxuXa0y8yfXGOsr5269ZoQRZS6YsHotI65GcskF+MiJwiryO9aEESBChI
+         qAfjPTUem1TPGd66py049tlGrmJsbd5O/dtfQ=
+Received: by 10.52.112.163 with SMTP id ir3mr599911vdb.124.1315584303941; Fri,
+ 09 Sep 2011 09:05:03 -0700 (PDT)
+Received: by 10.52.160.196 with HTTP; Fri, 9 Sep 2011 09:05:03 -0700 (PDT)
+In-Reply-To: <1315556595.2019.11.camel@bee.lab.cmartin.tk>
+X-Google-Sender-Auth: UlEt21zRx7LrhhZ5PC6PeTrXMos
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181089>
 
-Am 09.09.2011 15:50, schrieb Michael Haggerty:
-> On 09/08/2011 09:53 PM, Martin Fick wrote:
->> Just thought that I should add some numbers to this thread as it seems that
->> the later versions of git are worse off by several orders of magnitude on
->> this one.  
->>
->> We have a Gerrit repo with just under 100K refs in refs/changes/*.  When I
->> fetch them all with git 1.7.6 it does not seem to complete.  Even after 5
->> days, it is just under half way through the ref #s! [...]
-> 
-> I recently reported very slow performance when doing a "git
-> filter-branch" involving only about 1000 tags, with hints of O(N^3)
-> scaling [1].  That could certainly explain enormous runtimes for 100k refs.
-> 
-> References are cached in git in a single linked list, so it is easy to
-> imagine O(N^2) all over the place (which is bad enough for 100k
-> references).  I am working on improving the situation by reorganizing
-> how the reference cache is stored in memory, but progress is slow.
-> 
-> I'm not sure whether your problem is related.  For example, it is not
-> obvious to me why the commit that you cite (88a21979) would make the
-> reference problem so dramatically worse.
+On Fri, Sep 9, 2011 at 4:23 AM, Carlos Mart=C3=ADn Nieto <cmn@elego.de>=
+ wrote:
+[snip]
+>> Subversion repo/server:
+>> {{{
+>> $ du -h -d 1
+>> =C2=A012K =C2=A0 =C2=A0./conf
+>> 1.2M =C2=A0 =C2=A0./db
+>> =C2=A036K =C2=A0 =C2=A0./hooks
+>> 8.0K =C2=A0 =C2=A0./locks
+>> 1.2M =C2=A0 =C2=A0.
+>> }}}
+>
+> I don't know how the repository is stored in Subversion, but it may a=
+lso
+> be compressed. You may be able to reduced your git repository size by
+> (re)generating packs with 'git repack' and doing some cleanups with '=
+git
+> gc', but the repository size is not often a concern.
 
-88a21979 is the reason, as since then a "git rev-list <sha1> --not --all" is
-run for *every* updated ref to find out all new commits fetched for that ref.
-And if you have 100K of them ...
+It is stored compressed in Subversion, and it also generates deltas
+against previous versions.  IIRC, the delta algorithm in an xdelta
+based one, and then the data is run through compression.  Subversion
+will at times choose to self-compress the file, instead of doing a
+delta and compressing.  IIRC, there is some heuristics in there for
+determining when to do that, but I forget the exact method.
+
+HTH!
+
+-John
