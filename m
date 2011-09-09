@@ -1,99 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] date.c: Support iso8601 timezone formats
-Date: Fri, 09 Sep 2011 13:46:49 -0700
-Message-ID: <7vipp1tpdy.fsf@alter.siamese.dyndns.org>
-References: <1315320996-1997-1-git-send-email-lihaitao@gmail.com>
- <1315563033-9476-1-git-send-email-lihaitao@gmail.com>
- <7vhb4lvflb.fsf@alter.siamese.dyndns.org>
- <7vd3f9ve9m.fsf@alter.siamese.dyndns.org>
+Subject: Re: RFD: leveraging GitHub's asciidoc rendering for our
+ Documentation/
+Date: Fri, 09 Sep 2011 13:50:15 -0700
+Message-ID: <7vehzptp88.fsf@alter.siamese.dyndns.org>
+References: <4E6A23DB.1040606@drmicha.warpmail.net>
+ <7v4o0lvcq3.fsf@alter.siamese.dyndns.org>
+ <20110909190547.GF28480@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Haitao Li <lihaitao@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 09 22:46:59 2011
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Sep 09 22:50:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R27yT-0005Kt-GC
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 22:46:57 +0200
+	id 1R281p-00070q-P9
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 22:50:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759925Ab1IIUqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Sep 2011 16:46:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62036 "EHLO
+	id S933788Ab1IIUuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Sep 2011 16:50:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63218 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759922Ab1IIUqv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Sep 2011 16:46:51 -0400
+	id S933750Ab1IIUuT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Sep 2011 16:50:19 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 153175F32;
-	Fri,  9 Sep 2011 16:46:51 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D19EB5FC3;
+	Fri,  9 Sep 2011 16:50:18 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=weKu+TXGQQXYOn5Wt2fgNGrIoqk=; b=xtDlis
-	OfGqmFhcVM8FAdgytu4UvuknRgCzDTK45ZKG0ZJvddsaJmlXJ89/+H8BkI/253MM
-	GryIpS0AwJeNwAhB9YZf7EbAv58MbCcjdMoOVyAVMTNtxtL9Ng4jmtUYeOWRH1oG
-	77NO0lOVTnZrZRij6nw2P0R2kSRDCFlf5GdJw=
+	:content-type; s=sasl; bh=sNdquTYs3Bhw9NJAXaOtIOpbZjs=; b=WCDBDv
+	Qn2z3103Afdj5r10DF4KyFaBbnS/hFyURU7y4thgj4Ec9ZGc3HUNTa+ej5DRQLlE
+	nLsxAAB/QQoDug/Gb5kKXrSknDT7A4W+7QVGu1oI1O8fOsxjoiFEgXhz5gW8p0uh
+	s4TP+EXiV0KWhY/fD6aINmbmdlgUB+xeqWls0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EOGmnqmARupAB21eGbGgSkNtS9Yx5DSU
-	QaKIYVY2JCZVo/sgQYxLfDGJofrKk3K7KpKOWn//kIXju86uLTqktfABZprIatN1
-	cCues1yemmfbjJwrgk9Yff05O9a+bF0mQ7fvDTk4CZFOdJpF4fQ6KnJCC/ujbtNe
-	jiGV477lIb4=
+	:content-type; q=dns; s=sasl; b=K1XY0uPD0vyaEVlCp33YhKlZm5UpKjS0
+	OwKJU3EjPZjpvUfa9m810NRFuq6GoCqlS4RRnuNipjiVtNYwWEiSN/K3Fxh+DAww
+	Vlv3z9FS4SH7JVhKabyw3Y/TcwK4cFy05yVUeo71m/RE39EdXZ7R7HBC2BuTxi7q
+	SmOcRfMjggQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0DA3E5F31;
-	Fri,  9 Sep 2011 16:46:51 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C86605FC2;
+	Fri,  9 Sep 2011 16:50:18 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6A7BC5F30; Fri,  9 Sep 2011
- 16:46:50 -0400 (EDT)
-In-Reply-To: <7vd3f9ve9m.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 09 Sep 2011 10:04:05 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6801F5FBF; Fri,  9 Sep 2011
+ 16:50:17 -0400 (EDT)
+In-Reply-To: <20110909190547.GF28480@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 9 Sep 2011 15:05:47 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D7A71322-DB24-11E0-9173-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 53072BE2-DB25-11E0-A06C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181124>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Also, I do not quite understand why the match_tz() logic needs to be that
-> long.
->
-> Wouldn't something like this patch (on top of yours) easier to follow?
->
->  date.c |   50 +++++++++++++++++++++-----------------------------
->  1 files changed, 21 insertions(+), 29 deletions(-)
->
-> diff --git a/date.c b/date.c
-> index f8722c1..6079b1a 100644
-> --- a/date.c
-> +++ b/date.c
-> @@ -551,44 +551,36 @@ static int match_digit(const char *date, struct tm *tm, int *offset, int *tm_gmt
->  
->  static int match_tz(const char *date, int *offp)
->  {
-> +	int min;
+> How frequently do you build the html branch? I always assumed it was
+> once in a while (every push?), not for every commit.
 
-Micronit; this should be "int min = 0", as parsing of "hh" form relies on
-the if/elseif/else cascade to parse only the hour part and leaving min to
-the original value.
+I don't ;-)
 
->  	char *end;
-> +	int hour = strtoul(date + 1, &end, 10);
-> +	int n = end - (date + 1);
->  
-> +	if (n == 4) {
-> +		/* hhmm */
-> +		min = hour % 100;
-> +		hour = hour / 100;
-> +	} else if (n != 2) {
-> +		min = 99; /* random crap */
-> +	} else if (*end == ':') {
-> +		/* hh:mm? */
-> +		min = strtoul(end + 1, &end, 10);
-> +		if (end - (date + 1) != 5)
-> +			min = 99; /* random crap */
->  	}
+Every time "master" is updated to the official distribution point, i.e.,
+kernel.org (which currently is down). A post-update hook runs there,
+fetches the "master" branch commit into a separate repository, rebuilds
+the documentation, updates "html" and "man" branches and pushes the
+results back to that distribution point repository.
+
+The mirrors will pick the result up after all that happens (or they may
+lag but they will eventually catch up).
