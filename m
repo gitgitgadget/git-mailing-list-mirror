@@ -1,89 +1,94 @@
-From: Ted Zlatanov <tzz@lifelogs.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: can Git encrypt/decrypt .gpg on push/fetch?
-Date: Fri, 09 Sep 2011 08:27:52 -0500
-Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
- Cienfuegos
-Message-ID: <87ipp1x2uf.fsf@lifelogs.com>
-References: <87lityxbg7.fsf@lifelogs.com>
-	<CAGhXAGSw3y=cjAHXtwycDifoBPr13AkYtLHRRXejRKue0vkz7A@mail.gmail.com>
-Reply-To: git@vger.kernel.org
+Date: Fri, 09 Sep 2011 15:36:29 +0200
+Message-ID: <4E6A165D.5010703@drmicha.warpmail.net>
+References: <87lityxbg7.fsf@lifelogs.com> <CAGhXAGSw3y=cjAHXtwycDifoBPr13AkYtLHRRXejRKue0vkz7A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 09 15:28:18 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: tzz@lifelogs.com, git@vger.kernel.org
+To: Aneesh Bhasin <contact.aneesh@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 09 15:36:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R217y-0007v8-Af
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 15:28:18 +0200
+	id 1R21G0-0003SQ-4w
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 15:36:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933658Ab1IIN2N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Sep 2011 09:28:13 -0400
-Received: from lo.gmane.org ([80.91.229.12]:39975 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933424Ab1IIN2M (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Sep 2011 09:28:12 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1R217p-0007qz-F7
-	for git@vger.kernel.org; Fri, 09 Sep 2011 15:28:09 +0200
-Received: from 38.98.147.133 ([38.98.147.133])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 09 Sep 2011 15:28:09 +0200
-Received: from tzz by 38.98.147.133 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 09 Sep 2011 15:28:09 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-Mail-Followup-To: git@vger.kernel.org
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 38.98.147.133
-X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
-Mail-Copies-To: never
-User-Agent: Gnus/5.110018 (No Gnus v0.18) Emacs/24.0.50 (gnu/linux)
-Cancel-Lock: sha1:TXiGHwuJ4y5xdqWCNkvWOZM1LHc=
+	id S1759058Ab1IINge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Sep 2011 09:36:34 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:50630 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759053Ab1IINgb (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Sep 2011 09:36:31 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 60467295A2;
+	Fri,  9 Sep 2011 09:36:31 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute3.internal (MEProxy); Fri, 09 Sep 2011 09:36:31 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=yzZrsuwBzudSCAMuPExGVL
+	IbPC0=; b=ba85ozGF2G2P9JQWy8vQBx3YJfAIDPnfP0B8s7MFMNtXN7MuiLyY2t
+	1oNK+FWR8n9bIjcpDMwhTEyFn5kqDEJqpIpa5E6zkCraKCGR5cSM0ix2aVAlgC2A
+	mjlg7UpHPsTAcoJoohOcoMJ8w7CuSuA/wXOQgtAedplGyNfSjQMHo=
+X-Sasl-enc: nB1Q4FJKqlq4DEUrzDQnSgTHytNMaANmIRK4eg5S7gcA 1315575391
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B9A0BB4062A;
+	Fri,  9 Sep 2011 09:36:30 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
+In-Reply-To: <CAGhXAGSw3y=cjAHXtwycDifoBPr13AkYtLHRRXejRKue0vkz7A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181063>
 
-On Fri, 9 Sep 2011 16:20:10 +0530 Aneesh Bhasin <contact.aneesh@gmail.c=
-om> wrote:=20
-
-AB> 2011/9/9 Ted Zlatanov <tzz@lifelogs.com>
->>=20
->> I need to store some encrypted files in Git but for some clients wit=
-h
->> the right GPG keys, decrypt them on checkout (possibly also encrypt =
-them
+Aneesh Bhasin venit, vidit, dixit 09.09.2011 12:50:
+> Hi Ted,
+> 
+> 
+> 2011/9/9 Ted Zlatanov <tzz@lifelogs.com>
+>>
+>> I need to store some encrypted files in Git but for some clients with
+>> the right GPG keys, decrypt them on checkout (possibly also encrypt them
 >> back on commit, but that's not as important).
->>=20
->> diff doesn't have to work, this is just for convenience. =A0Can Git =
-do
->> this (matching only .gpg files) or do I need my own command to run a=
-fter
->> the checkout/fetch and before commit? =A0It seems pretty out of Git'=
-s
+>>
+>> diff doesn't have to work, this is just for convenience.  Can Git do
+>> this (matching only .gpg files) or do I need my own command to run after
+>> the checkout/fetch and before commit?  It seems pretty out of Git's
 >> scope but perhaps others have done this before.
->>=20
+>>
+> 
+> Have you looked at git hooks (e.g. here : http://progit.org/book/ch7-3.html).
+> 
+> You could do the encryption/decryption in pre-commit and post-checkout
+> hooks scripts respectively...
 
-AB> Have you looked at git hooks (e.g. here : http://progit.org/book/ch=
-7-3.html).
+I'd recommend textconv for diffing and clean/smudge for plaintext
+checkout. That is, there are two convenient versions:
 
-AB> You could do the encryption/decryption in pre-commit and post-check=
-out
-AB> hooks scripts respectively...
+A) Keep blobs and checkout encrypted
+- Use an editor which can encrypt/decrypt on the fly (e.g. vim)
+- Use "*.gpg diff=gpg" in your attributes and
+[diff "gpg"]
+        textconv = gpg -d
+  in your config to have cleartext diffs. Use cachetextconv with caution ;)
 
-Yes, thank you.  I was wondering if there could be further support so
-they are checked out in a binary form on the server side if you don't
-have the keys but in text form if you do.  So for instance "git log -p"
-will DTRT on a client with the keys but not on a client without them.
-This could require deep Git changes so I'm wondering if it's even
-theoretically possible.
+B) Keep blobs encrypted, checkout decrypted
+- Use Use "*.gpg filter=gpg" in your attributes and
+[filter "gpg"]
+	smudge = gpg -d
+	clean = gpg -e -r yourgpgkey
+  in your config.
 
-Thanks
-Ted
+I use A on a regular basis. B is untested (but patterned after a similar
+gzip filter I use). You may or may not have better results with "gpg -ea".
+
+On clients without the keys, you can simply leave out the diff or filter
+config resp. set them to "cat".
+
+Michael
