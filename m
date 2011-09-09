@@ -1,74 +1,145 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: Re: git-p4.skipSubmitEdit
-Date: Fri, 9 Sep 2011 10:05:09 +0000 (UTC)
-Message-ID: <loom.20110909T115356-849@post.gmane.org>
-References: <1315514452.10046.0.camel@uncle-pecos>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 09 12:05:45 2011
+From: Haitao Li <lihaitao@gmail.com>
+Subject: [PATCH v3] date.c: Support iso8601 timezone formats
+Date: Fri,  9 Sep 2011 18:10:33 +0800
+Message-ID: <1315563033-9476-1-git-send-email-lihaitao@gmail.com>
+References: <1315320996-1997-1-git-send-email-lihaitao@gmail.com>
+Cc: Haitao Li <lihaitao@gmail.com>, git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Sep 09 12:11:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1xxr-0001YN-W8
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 12:05:40 +0200
+	id 1R1y36-0003w4-GS
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 12:11:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933253Ab1IIKF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Sep 2011 06:05:29 -0400
-Received: from lo.gmane.org ([80.91.229.12]:41060 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933080Ab1IIKFZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Sep 2011 06:05:25 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1R1xxc-0001Qu-IN
-	for git@vger.kernel.org; Fri, 09 Sep 2011 12:05:24 +0200
-Received: from 111.216.54.77.rev.vodafone.pt ([77.54.216.111])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 09 Sep 2011 12:05:24 +0200
-Received: from vitor.hda by 111.216.54.77.rev.vodafone.pt with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 09 Sep 2011 12:05:24 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 77.54.216.111 (Mozilla/5.0 (Linux; U; Android 3.2; en-gb; Transformer TF101 Build/HTJ85B) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13)
+	id S933168Ab1IIKK7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Sep 2011 06:10:59 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:34194 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757532Ab1IIKK6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Sep 2011 06:10:58 -0400
+Received: by pzk37 with SMTP id 37so2447002pzk.1
+        for <git@vger.kernel.org>; Fri, 09 Sep 2011 03:10:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=imIvi80MLOmWggzCPSGaSzX8AU0nIJDGmVp2TMeuSAU=;
+        b=klPu9pYGY2/MrCpW5etAN62UTBMRVXYMajxsde3WSyNzoKQXTUqJPFKPc0Ik/taUqk
+         ildKQ8fhzv9SlLMNXlBZr9uXt/bTE7PFfiWOESFZFBfxfN1PdK00K+U44kb8fl0hGsgq
+         9Zv3ipO1Qn0YiQdDgConM/SAGk1C7Iv9og/SI=
+Received: by 10.68.155.148 with SMTP id vw20mr2613589pbb.114.1315563058514;
+        Fri, 09 Sep 2011 03:10:58 -0700 (PDT)
+Received: from localhost.localdomain (cursa.dreamhost.com. [173.236.210.234])
+        by mx.google.com with ESMTPS id h5sm19162497pbq.11.2011.09.09.03.10.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 09 Sep 2011 03:10:56 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.4
+In-Reply-To: <1315320996-1997-1-git-send-email-lihaitao@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181042>
 
-L. A. Linden Levy <alevy <at> mobitv.com> writes:
+Timezone designators including additional separator (`:`) are ignored.
+Actually zone designators in below formats are all valid according to
+ISO8601:2004, section 4.3.2:
+    [+-]hh, [+-]hhmm, [+-]hh:mm
 
-> 
-> Hi All,
-> 
-> I have been using git-p4 for a while and it has allowed me to completely
-> change the way I develop and still be able to use perforce which my
-> company has for its main VCS. One thing that was driving me nuts was
-> that "git p4 submit" cycles through all of my individual commits and
-> asks me if I want to change them. The way I develop I often am checking
-> in 20 to 50 different small commits each with a descriptive git comment.
-> I felt like I was doing double duty by having emacs open on every commit
-> into perforce. So I modified git-p4 to have an option to skip the
-> editor. This option coupled with git-p4.skipSubmitEditCheck will make
-> the submission non-interactive for "git p4 submit".
+Steps to reproduce the issue this patch fixes:
+    $ mkdir /tmp/test
+    $ cd /tmp/test
+    $ git init
+    $ echo 'timezone' > file.txt
+    $ git add .
+    $ git update-index
+    $ git write-tree
+    3e168d57e1c32a4598af134430384f0587581503
 
-Hi Loren,
+    # Commit the tree returned above. Give a date with colon separated
+    # timezone
+    $ echo "Test commit" | \
+      TZ=UTC GIT_AUTHOR_DATE='2011-09-03T12:34:56+08:00' \
+      git commit-tree 3e168d57e1c32a4598af134430384f0587581503 | \
+      xargs git show  | grep Date
+    Date:   Sat Sep 3 12:34:56 2011 +0000
 
-This option was already included in a recent commit. The name that was
-used is "skipSubmitEditCheck". Please make sure you are using the most
-recent version of the script.
+while the expected result is:
+    Date:   Sat Sep 3 12:34:56 2011 +0800
+                                      ^---
 
-But don't let this discourage you from submitting patches. Just makesure
-you clone git's repository and apply your patch over "maint" or "master"
-branches. For more details on how to submit patches you can read
-Documentation/SubmittingPatches.
+This patch teaches git recognizing zone designators with hours and
+minutes separated by colon, or minutes are empty.
 
-Vitor
+Signed-off-by: Haitao Li <lihaitao@gmail.com>
+---
+ date.c          |   32 ++++++++++++++++++++++++++------
+ t/t0006-date.sh |    5 +++++
+ 2 files changed, 31 insertions(+), 6 deletions(-)
+
+diff --git a/date.c b/date.c
+index 896fbb4..f8722c1 100644
+--- a/date.c
++++ b/date.c
+@@ -556,15 +556,35 @@ static int match_tz(const char *date, int *offp)
+ 	int min, hour;
+ 	int n = end - date - 1;
+ 
+-	min = offset % 100;
+-	hour = offset / 100;
++	/*
++	 * ISO8601:2004(E) allows time zone designator been separated
++	 * by a clone in the extended format
++	 */
++	if (*end == ':') {
++		if (isdigit(end[1])) {
++			hour = offset;
++			min = strtoul(end+1, &end, 10);
++		} else {
++			/* Mark as invalid */
++			n = -1;
++		}
++	} else {
++		if (n == 1 || n == 2) {
++			/* Only hours specified */
++			hour = offset;
++			min = 0;
++		} else {
++			hour = offset / 100;
++			min = offset % 100;
++		}
++	}
+ 
+ 	/*
+-	 * Don't accept any random crap.. At least 3 digits, and
+-	 * a valid minute. We might want to check that the minutes
+-	 * are divisible by 30 or something too.
++	 * Don't accept any random crap.. We might want to check that
++	 * the minutes are divisible by 15 or something too. (Offset of
++	 * Kathmandu, Nepal is UTC+5:45)
+ 	 */
+-	if (min < 60 && n > 2) {
++	if (n > 0 && min < 60) {
+ 		offset = hour*60+min;
+ 		if (*date == '-')
+ 			offset = -offset;
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index f87abb5..5235b7a 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -40,6 +40,11 @@ check_parse 2008-02 bad
+ check_parse 2008-02-14 bad
+ check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 +0000'
+ check_parse '2008-02-14 20:30:45 -0500' '2008-02-14 20:30:45 -0500'
++check_parse '2008-02-14 20:30:45 -0015' '2008-02-14 20:30:45 -0015'
++check_parse '2008-02-14 20:30:45 -5' '2008-02-14 20:30:45 -0500'
++check_parse '2008-02-14 20:30:45 -05' '2008-02-14 20:30:45 -0500'
++check_parse '2008-02-14 20:30:45 -:30' '2008-02-14 20:30:45 +0000'
++check_parse '2008-02-14 20:30:45 -05:00' '2008-02-14 20:30:45 -0500'
+ check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 -0500' EST5
+ 
+ check_approxidate() {
+-- 
+1.7.5.4
