@@ -1,70 +1,74 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: The imporantance of including http credential caching in 1.7.7
-Date: Fri, 9 Sep 2011 14:34:24 -0400
-Message-ID: <20110909183424.GD28480@sigill.intra.peff.net>
-References: <CAFcyEthzW1AY4uXgpsVxjyWCDXAJ6=GdWGqLFO6Acm1ovJJVaw@mail.gmail.com>
- <4E6769E3.4070003@drmicha.warpmail.net>
- <20110908191053.GA16064@sigill.intra.peff.net>
- <4E69C8F0.9070204@drmicha.warpmail.net>
+Subject: Re: can Git encrypt/decrypt .gpg on push/fetch?
+Date: Fri, 9 Sep 2011 14:42:29 -0400
+Message-ID: <20110909184229.GE28480@sigill.intra.peff.net>
+References: <87lityxbg7.fsf@lifelogs.com>
+ <CAGhXAGSw3y=cjAHXtwycDifoBPr13AkYtLHRRXejRKue0vkz7A@mail.gmail.com>
+ <4E6A165D.5010703@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Kyle Neath <kneath@gmail.com>, git@vger.kernel.org
+Cc: Aneesh Bhasin <contact.aneesh@gmail.com>, tzz@lifelogs.com,
+	git@vger.kernel.org
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Sep 09 20:34:33 2011
+X-From: git-owner@vger.kernel.org Fri Sep 09 20:42:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R25uK-0001TK-Mv
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 20:34:33 +0200
+	id 1R2629-0005K3-PX
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 20:42:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759792Ab1IISe1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Sep 2011 14:34:27 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57866
+	id S1759347Ab1IISmb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Sep 2011 14:42:31 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41916
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759787Ab1IISe0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Sep 2011 14:34:26 -0400
-Received: (qmail 383 invoked by uid 107); 9 Sep 2011 18:35:17 -0000
+	id S1758646Ab1IISmb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Sep 2011 14:42:31 -0400
+Received: (qmail 482 invoked by uid 107); 9 Sep 2011 18:43:21 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 09 Sep 2011 14:35:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Sep 2011 14:34:24 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 09 Sep 2011 14:43:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Sep 2011 14:42:29 -0400
 Content-Disposition: inline
-In-Reply-To: <4E69C8F0.9070204@drmicha.warpmail.net>
+In-Reply-To: <4E6A165D.5010703@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181104>
 
-On Fri, Sep 09, 2011 at 10:06:08AM +0200, Michael J Gruber wrote:
+On Fri, Sep 09, 2011 at 03:36:29PM +0200, Michael J Gruber wrote:
 
-> > So I think the wheels have been turning on this for quite a while from
-> > GitHub's perspective.
+> A) Keep blobs and checkout encrypted
+> - Use an editor which can encrypt/decrypt on the fly (e.g. vim)
+> - Use "*.gpg diff=gpg" in your attributes and
+> [diff "gpg"]
+>         textconv = gpg -d
+>   in your config to have cleartext diffs. Use cachetextconv with caution ;)
+
+I use something like this for my password store, though I use:
+
+  textconv = gpg -qd --no-tty
+
+to keep things as clean as possible. Running gpg-agent is a must, of
+course.
+
+The wallet itself is just a gpg-encrypted YAML file, with a few scripts
+grep within the hierarchy. I'm happy to share the code if anybody is
+interested. I've also written firefox hooks to fill website form fields,
+but that code is a little gross.
+
+> B) Keep blobs encrypted, checkout decrypted
+> - Use Use "*.gpg filter=gpg" in your attributes and
+> [filter "gpg"]
+> 	smudge = gpg -d
+> 	clean = gpg -e -r yourgpgkey
+>   in your config.
 > 
-> Thanks for clarifying. While it should make no difference for the
-> acceptance of patches, it's great to see GitHub invest into scratching
-> their Git itches, and thus contribute back. That's how open source works
-> as a business model :)
+> I use A on a regular basis. B is untested (but patterned after a similar
+> gzip filter I use). You may or may not have better results with "gpg -ea".
 
-Yes. I don't often enough mention how awesome GitHub is for funding me
-and giving me a free hand to improve git. They're doing everything
-right. So let me mention it here one more time. :)
-
-> > In the meantime, the best thing we can do to push it forward is to write
-> > helpers. I implemented some basic ones that should work anywhere, but
-> > aren't as nice as integration with existing keychains. Some people are
-> > working on Linux ones. The single best thing GitHub can do to push this
-> > forward right now is to provide a well-written OS X Keychain helper, and
-> > to provide feedback on whether git's end of the API is good enough.
-> 
-> ... and one for Git on Windows? It seems we're lacking both Win and OS X
-> developers here.
-
-I mentioned OS X because of Kyle's mention of the GitHub for Mac client.
-But yes, I do think in the long term we want something similar on
-Windows. GitHub recently hired a developer with some Windows experience;
-I'll try to see if he's interested in writing a credential helper.
+Yeah, I think that would work but have never tried it either.
 
 -Peff
