@@ -1,122 +1,103 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH] fetch: skip on-demand checking when no submodules are configured
-Date: Fri, 09 Sep 2011 20:22:03 +0200
-Message-ID: <4E6A594B.9030108@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: The imporantance of including http credential caching in 1.7.7
+Date: Fri, 9 Sep 2011 14:27:14 -0400
+Message-ID: <20110909182714.GC28480@sigill.intra.peff.net>
+References: <CAFcyEthzW1AY4uXgpsVxjyWCDXAJ6=GdWGqLFO6Acm1ovJJVaw@mail.gmail.com>
+ <4E6769E3.4070003@drmicha.warpmail.net>
+ <CAFcyEthuf49_kOmoLmoSSbNJN+iOBpicP4-eFAV5wL5_RffwGg@mail.gmail.com>
+ <4E68C04F.9060804@drmicha.warpmail.net>
+ <CAEBDL5VAFaWYctJotxTA8ajy_0KtR8H_4SoDHK29Ofd65mYdKw@mail.gmail.com>
+ <20110908191842.GB16064@sigill.intra.peff.net>
+ <4E69C8DC.7060008@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Martin Fick <mfick@codeaurora.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 09 20:22:22 2011
+Content-Type: text/plain; charset=utf-8
+Cc: John Szakmeister <john@szakmeister.net>,
+	Kyle Neath <kneath@gmail.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Sep 09 20:27:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R25iX-0003rw-QG
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 20:22:22 +0200
+	id 1R25nP-0006Qv-AX
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 20:27:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759562Ab1IISWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Sep 2011 14:22:16 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:59784 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759380Ab1IISWP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Sep 2011 14:22:15 -0400
-Received: from smtp04.web.de  ( [172.20.0.225])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 7E6651AAA96B0;
-	Fri,  9 Sep 2011 20:22:14 +0200 (CEST)
-Received: from [79.247.251.94] (helo=[192.168.178.43])
-	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1R25iQ-0001ib-00; Fri, 09 Sep 2011 20:22:14 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1/JN6vK1OfDjoslxaf4fYZQuugzIC5FqmRvgn6k
-	xYGReUPKWfa1cu8cXOegGzXTf+B8Uwqch7HGvUTvYP+tdy9P0K
-	7HyKuLkX5/8ehlyKe1VA==
+	id S1759617Ab1IIS1R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Sep 2011 14:27:17 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59842
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752466Ab1IIS1R (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Sep 2011 14:27:17 -0400
+Received: (qmail 32767 invoked by uid 107); 9 Sep 2011 18:28:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 09 Sep 2011 14:28:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Sep 2011 14:27:14 -0400
+Content-Disposition: inline
+In-Reply-To: <4E69C8DC.7060008@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181102>
 
-It makes no sense to do the - possibly very expensive - call to "rev-list
-<new-ref-sha1> --not --all" in check_for_new_submodule_commits() when
-there aren't any submodules configured.
+On Fri, Sep 09, 2011 at 10:05:48AM +0200, Michael J Gruber wrote:
 
-Leave check_for_new_submodule_commits() early when no name <-> path
-mappings for submodules are found in the configuration. To make that work
-reading the configuration had to be moved further up in cmd_fetch(), as
-doing that after the actual fetch of the superproject was too late.
+> > Agreed. Anything harder than ssh keys is right out the window, because
+> > they're always the alternative these people could be using (but can't or
+> > don't want to).
+> 
+> Sue, the question was: What is easy enough? I hoped that people would be
+> using gpg to check signed tags, and that there might be a simple,
+> convenient gnupg installer for Win and Mac which ties into the
+> respective wallet systems or provides one they use already.
 
-Reported-by: Martin Fick <mfick@codeaurora.org>
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+I suspect most people aren't checking signed tags. And even if they did
+have gpg installed, most people aren't going to want a new password
+wallet.  They're going to want integration with what they're already
+using.
 
-This achieves the first goal: Don't let people pay a performance penalty
-when they don't even use submodules. On Michael's test repo from [1] the
-time for a full fetch went down from 142 seconds (current master) to one
-second which is - not surprisingly - the same as using current master
-with the --no-recurse-submodules option.
+Which isn't to say that a gpg-based wallet is wrong, it's just that I
+don't think it's filling the role that really needs filled. If you want
+to make such a wallet helper, you're welcome to. But it doesn't
+necessarily need to be a part of git core, and if it's not, then maybe
+it's worth looking at the zillion other password wallet programs that
+exist.
 
-Now back to the drawing board to fix the performance regression for those
-people who are using submodules ...
+FWIW, I keep my passwords in a gpg-encrypted file and wrote a 10-line
+shell script helper to do lookups for git. :)
 
-[1] http://comments.gmane.org/gmane.comp.version-control.git/177103
+> > We could make our own gpg-based password wallet system, but I think it's
+> > a really bad idea, for two reasons:
+> > 
+> >   1. It's reinventing the wheel. Which is bad enough as it is, but is
+> >      doubly bad with security-related code, because it's very easy to
+> >      screw something up when you're writing a lot of new code.
+> 
+> So please let's not deploy credential-store...
 
- builtin/fetch.c |   15 +++++++++------
- submodule.c     |    4 ++++
- 2 files changed, 13 insertions(+), 6 deletions(-)
+I'm tempted to agree. But I also think it represents a nice lowest
+common denominator. No hassle, no setup, but no security either. And
+there are situations where that's appropriate (e.g., for unattended
+cron operation, it's not much different than an unencrypted ssh key on
+disk). My compromise was to put a big warning at the top of the
+documentation. Maybe that's not enough, though.
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 93c9938..e422ced 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -941,6 +941,15 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_fetch_options, builtin_fetch_usage, 0);
+And as far as reinventing the wheel with security code, I don't think
+git-credential-store counts. It's not secure at all, so there's very
+little to screw up. :)
 
-+	if (recurse_submodules != RECURSE_SUBMODULES_OFF) {
-+		if (recurse_submodules_default) {
-+			int arg = parse_fetch_recurse_submodules_arg("--recurse-submodules-default", recurse_submodules_default);
-+			set_config_fetch_recurse_submodules(arg);
-+		}
-+		gitmodules_config();
-+		git_config(submodule_config, NULL);
-+	}
-+
- 	if (all) {
- 		if (argc == 1)
- 			die(_("fetch --all does not take a repository argument"));
-@@ -976,12 +985,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	if (!result && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
- 		const char *options[10];
- 		int num_options = 0;
--		if (recurse_submodules_default) {
--			int arg = parse_fetch_recurse_submodules_arg("--recurse-submodules-default", recurse_submodules_default);
--			set_config_fetch_recurse_submodules(arg);
--		}
--		gitmodules_config();
--		git_config(submodule_config, NULL);
- 		add_options_to_argv(&num_options, options);
- 		result = fetch_populated_submodules(num_options, options,
- 						    submodule_prefix,
-diff --git a/submodule.c b/submodule.c
-index 7a76edf..ad86534 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -481,6 +481,10 @@ void check_for_new_submodule_commits(unsigned char new_sha1[20])
- 	const char *argv[] = {NULL, NULL, "--not", "--all", NULL};
- 	int argc = ARRAY_SIZE(argv) - 1;
+> On 1.+2.: The idea/hope was to use an existing wallet system which
+> people use for gnupg already to store their passphrase. If that is not
+> used then my suggestion does not help much (the issue of widespread
+> deployment), though it still is a secure version of credential-store for
+> those who want a desktop-independent secure credential store.
 
-+	/* No need to check if there are no submodules configured */
-+	if (!config_name_for_path.nr)
-+		return;
-+
- 	init_revisions(&rev, NULL);
- 	argv[1] = xstrdup(sha1_to_hex(new_sha1));
- 	setup_revisions(argc, argv, &rev, NULL);
--- 
-1.7.7.rc0.189.gf9175
+Yeah, if there is an existing wallet system based around gpg, then
+absolutely there should be a helper for it. But I don't know that there
+is such a widely deployed system. And the helper for it doesn't need to
+ship with git-core; anybody who uses their wallet system is free to
+write and distribute the helper.
+
+-Peff
