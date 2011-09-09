@@ -1,106 +1,90 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 0/6] Improved infrastructure for refname normalization
-Date: Fri, 09 Sep 2011 17:33:37 +0200
-Message-ID: <4E6A31D1.5020404@alum.mit.edu>
-References: <1315568778-3592-1-git-send-email-mhagger@alum.mit.edu> <4E6A1D7D.6050602@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] push -s: skeleton
+Date: Fri, 9 Sep 2011 11:34:41 -0400
+Message-ID: <20110909153441.GB28480@sigill.intra.peff.net>
+References: <7vfwk82hrt.fsf@alter.siamese.dyndns.org>
+ <7vbouw2hqg.fsf@alter.siamese.dyndns.org>
+ <20110908193555.GC16064@sigill.intra.peff.net>
+ <7vy5xywyk8.fsf@alter.siamese.dyndns.org>
+ <20110908210217.GA32522@sigill.intra.peff.net>
+ <7v7h5iwub9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	cmn@elego.de
-To: gitzilla@gmail.com
-X-From: git-owner@vger.kernel.org Fri Sep 09 17:34:05 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 09 17:34:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R235h-0007W2-1k
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 17:34:05 +0200
+	id 1R236P-0007rc-1n
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 17:34:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759265Ab1IIPd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Sep 2011 11:33:59 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:58765 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755226Ab1IIPd6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Sep 2011 11:33:58 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p89FXcnd014000
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 9 Sep 2011 17:33:38 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.21) Gecko/20110831 Lightning/1.0b2 Thunderbird/3.1.13
-In-Reply-To: <4E6A1D7D.6050602@gmail.com>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1759113Ab1IIPeo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Sep 2011 11:34:44 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50961
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753728Ab1IIPen (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Sep 2011 11:34:43 -0400
+Received: (qmail 31280 invoked by uid 107); 9 Sep 2011 15:35:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 09 Sep 2011 11:35:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Sep 2011 11:34:41 -0400
+Content-Disposition: inline
+In-Reply-To: <7v7h5iwub9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181079>
 
-On 09/09/2011 04:06 PM, A Large Angry SCM wrote:
-> On 09/09/2011 07:46 AM, Michael Haggerty wrote:
->> As a prerequisite to storing references caches hierarchically (itself
->> needed for performance reasons), here is a patch series to help us get
->> refname normalization under control.
->>
->> The problem is that some UI accepts unnormalized reference names (like
->> "/foo/bar" or "foo///bar" instead of "foo/bar") and passes them on to
->> library routines without normalizing them.  The library, on the other
->> hand, assumes that the refnames are normalized.  Sometimes (mostly in
->> the case of loose references) unnormalized refnames happen to work,
->> but in other cases (like packed references or when looking up refnames
->> in the cache) they silently fail.  Given that refnames are sometimes
->> treated as path names, there is a chance that some security-relevant
->> bugs are lurking in this area, if not in git proper then in scripts
->> that interact with git.
+On Thu, Sep 08, 2011 at 03:19:54PM -0700, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
 > 
-> Why can't the library do the normalization instead of expecting every
-> other component that deals with reference names having to do it for the
-> library?
-
-The library could do the normalization, but
-
-1. It would probably cost a lot of redundant checks as reference names
-pass in and out of the library and back in again
-
-2. Normalization requires copying or overwriting the incoming string, so
-each time a refname crosses the library perimeter there might have to be
-an extra memory allocation with the associated headaches of dealing with
-the ownership of the memory.
-
-3. The library doesn't encapsulate all uses of reference names; for
-example, for_each_ref() invokes a callback function with the refname as
-an argument.  The callback function is free to do a strcmp() of the
-refname (normalized by the library) with some arbitrary string that it
-got from the command line.  Either the caller has to do the
-normalization itself (i.e., outside of the library) or the library has
-to learn how to do every possible filtering operation with refnames.
-
->> * Forbid ".lock" at the end of any refname component, as directories
->>    with such names can conflict with attempts to create lock files for
->>    other refnames.
+> > Yeah, it is a potential problem, but it just seems wrong to put too much
+> > policy work onto the server.
 > 
-> I find this overly restrictive. If you need to create a lock based on a
-> reference name or component, use a name for the lock object that starts
-> with one of the characters that reference names or components are
-> already forbidden from starting with.
+> My take on it is somewhat different. The only thing in the end result we
+> want to see is that the pushed commits are annotated with GPG signatures
+> in the notes tree, and there is no reason for us to cast in stone that
+> there has to be any significance in the commit history of the notes tree.
 
-I agree; this is unpleasantly restrictive.
+Hmm. Is order really irrelevant? If you push a commit to master, moving
+it from X to Y, then push-rewind it back to X, then push a new commit Z,
+how do I cryptographically determine the correct final state of master?
 
-But please remember that refnames already cannot end in ".lock"
-("foo/bar.lock" is already forbidden; this change also prohibits
-"foo.lock/bar").
+I'll see two push-certs, one going X..Y and one X..Z. They'll have
+timestamps, which can be used for ordering. But what if the first and
+third actions above are done by different people. Now you're trusting
+that their clocks are synced to order them properly.
 
-However, your suggested solution would cause problems if two versions of
-git are running on the same machine.  An old version of git would not
-know to respect the new version's lock files.  ISTM that this would be
-too dangerous.  Suggestions welcome.
+Note that simply keeping an unsigned but ordered notes history doesn't
+solve this problem, either; you'd probably want a parent pointer in your
+push cert saying "and this is the previous push cert I am based on".
 
-Michael
+And maybe this is a use case we don't care about. Maybe it's enough for
+the push-cert to say "at some point in time, I thought it was a good
+idea to push these commits into master; signed, me".
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+But I'm not really clear on exactly what the security goals are. The
+series you sent looks interesting, but I haven't seen the verification
+side of these signatures. What are they going to be used for? What
+guarantees are we attempting to provide? For that matter, what is our
+threat model? What are attackers capable of?
+
+> In a busy hosting site that has many branches being pushed simultaneously,
+> it is entirely plausible that the server side may just want to store each
+> received push certificate in a new flat file in a filesystem, and have
+> asynchronous process sweep the new certificates to update the notes tree,
+> possibly creating a single notes tree commit that records updates by
+> multiple pushes, for performance purposes, in its implementation of
+> record_signed_push() in receive-pack.
+
+OK, I see. It is not "the server can do whatever it likes with the
+information" as much as "the server can do whatever it likes, but at the
+very least should eventually create a notes tree of a given form".
+
+-Peff
