@@ -1,84 +1,72 @@
-From: neubyr <neubyr@gmail.com>
-Subject: git repository size / compression
-Date: Thu, 8 Sep 2011 21:37:42 -0500
-Message-ID: <CALFxCvzVjC+u=RDkDCQp0QqPETsv8ROE8tY=37tmMWxmQoJOEw@mail.gmail.com>
+From: Kyle Moffett <kyle@moffetthome.net>
+Subject: Re: git rebase fails with: Patch does not have a valid e-mail address.
+Date: Fri, 9 Sep 2011 00:45:14 -0400
+Message-ID: <CAGZ=bqJc-Yqp_hDNsfpqq-DPafrh0sDKbSfgTGgR9GGHEwiuug@mail.gmail.com>
+References: <CACyv8dckmRxgb9_FDTW+=1Y9bS27b3XZQCHnhjpfHiJig5p6wg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 09 04:37:51 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: James Blackburn <jamesblackburn@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 09 06:45:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1qyU-0008CC-4f
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 04:37:50 +0200
+	id 1R1syD-0007J4-Sr
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 06:45:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932658Ab1IIChp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Sep 2011 22:37:45 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:41224 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757691Ab1IICho (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Sep 2011 22:37:44 -0400
-Received: by wwf5 with SMTP id 5so604788wwf.1
-        for <git@vger.kernel.org>; Thu, 08 Sep 2011 19:37:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=vJFVSAdrOZL0tPYHnIUVyStJ3bkhkG8OrTv0xcgBi4Y=;
-        b=egNLAmUVcxZwiPhK/3AT3g91JizzfBNcv4iWx6Hwn0oeGGM6DnmXDWK2uWIF/j00Dz
-         LztruaptGWhbYIvSSdfDKk7GJTAdWetcXBKPDr0OSR2cYetmE3qJthDLjd+oiFbrBoYJ
-         limBRTtu2oQTJHr0lsiB/nhUnCHOyx7Wh9DlA=
-Received: by 10.227.202.70 with SMTP id fd6mr1447458wbb.114.1315535862788;
- Thu, 08 Sep 2011 19:37:42 -0700 (PDT)
-Received: by 10.227.145.210 with HTTP; Thu, 8 Sep 2011 19:37:42 -0700 (PDT)
+	id S1752461Ab1IIEpg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Sep 2011 00:45:36 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:48195 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751794Ab1IIEpf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Sep 2011 00:45:35 -0400
+Received: by wyh22 with SMTP id 22so1240477wyh.19
+        for <git@vger.kernel.org>; Thu, 08 Sep 2011 21:45:34 -0700 (PDT)
+Received: by 10.216.221.224 with SMTP id r74mr1468843wep.99.1315543534226;
+ Thu, 08 Sep 2011 21:45:34 -0700 (PDT)
+Received: by 10.216.28.133 with HTTP; Thu, 8 Sep 2011 21:45:14 -0700 (PDT)
+In-Reply-To: <CACyv8dckmRxgb9_FDTW+=1Y9bS27b3XZQCHnhjpfHiJig5p6wg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181026>
 
-I have a test git repository with just two files in it. One of the
-file in it has a set of two lines that is repeated n times.
-e.g.:
-{{{
-$ for i in {1..5}; do cat ./lexico.txt >> lexico1.txt &&  cat
-./lexico.txt >> lexico1.txt && mv ./lexico1.txt ./lexico.txt;  done
-}}}
+On Thu, Sep 8, 2011 at 07:47, James Blackburn <jamesblackburn@gmail.com=
+> wrote:
+> I'm trying to rewrite some history and git's telling me:
+>
+> -bash:jamesb:lc-cam-025:33079> git rebase
+> 7f58969b933745d4cb9bb128bbd3fa8d441cdb92
+> First, rewinding head to replay your work on top of it...
+> Patch does not have a valid e-mail address.
+>
+> Now it's true there isn't an email address for the author - the autho=
+r
+> no longer works for the company, and the email address was removed
+> during the conversion. =C2=A0Therefore the repo contains "Author <>".
 
-I ran above command few times and performed commit after each run. Now
-disk usage of this repository directory is mentioned below. The 419M
-is working directory size and 2.7M is git repository/database size.
+I can't really speak directly on the "rebase" issue, but...
 
-{{{
-$ du -h -d 1 .
-2.7M    ./.git
-419M    .
+You probably don't want to remove the email address from the repository
+during a rewrite.  When I was converting some old CVS repositories for
+my company I very intentionally looked up all of our old user emails to
+be able to convert them reliably (even though most of the addresses at
+that point did not work).  Even for the users where I could not find a
+functional address I would just pick something reasonable based on the
+username convention at the time.
 
-}}}
+In cases where you can't accurately attribute the commit (IE: username
+of "root" or "cvs" or something), you probably want to rewrite it using=
+ an
+internal mailing list address.  For example, if the kernel had been in =
+a
+CVS repository with commits by "root", I would probably rewrite those
+to be created by:
+  Linux Kernel Developers <lkml@vger.kernel.org>
 
-Is it because of the compression performed by git before storing data
-(or before sending commit)??
-
-Following were results with subversion:
-
-Subversion client (redundant(?) copy exists in .svn/text-base/
-directory, hence double size in client):
-{{{
-$ du -h -d 1
-416M    ./.svn
-832M    .
-}}}
-
-Subversion repo/server:
-{{{
-$ du -h -d 1
- 12K    ./conf
-1.2M    ./db
- 36K    ./hooks
-8.0K    ./locks
-1.2M    .
-}}}
-
---
-neuby.r
+Cheers,
+Kyle Moffett
