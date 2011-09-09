@@ -1,96 +1,72 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git Bug - diff in commit message.
-Date: Fri, 09 Sep 2011 09:00:08 -0700
-Message-ID: <7vpqj9vh87.fsf@alter.siamese.dyndns.org>
-References: <1315493353942-6772145.post@n2.nabble.com>
- <CAMOZ1BtbpbG+19G6Hfau_2_F5L3Ad+x-Payd9aKajJxU_V_tyA@mail.gmail.com>
+Subject: Re: [PATCHv2 4/5] branch: introduce --list option
+Date: Fri, 09 Sep 2011 09:02:34 -0700
+Message-ID: <7vlitxvh45.fsf@alter.siamese.dyndns.org>
+References: <20110825175301.GC519@sigill.intra.peff.net>
+ <0785cac235c3b45537cf161c86dde8e798c4ff3e.1314367414.git.git@drmicha.warpmail.net> <7vfwkodq5s.fsf@alter.siamese.dyndns.org> <4E5A5290.4050005@drmicha.warpmail.net> <20110907195611.GD13364@sigill.intra.peff.net> <4E6889DF.7030404@drmicha.warpmail.net> <7vr53qwxtz.fsf@alter.siamese.dyndns.org> <7vmxeewx7f.fsf@alter.siamese.dyndns.org> <4E69B832.9030503@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: anikey <arty.anikey@gmail.com>, git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 09 18:00:24 2011
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Sep 09 18:02:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R23V7-0003zU-QU
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 18:00:22 +0200
+	id 1R23XO-0005RS-0p
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 18:02:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759328Ab1IIQAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Sep 2011 12:00:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33734 "EHLO
+	id S1759331Ab1IIQCh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Sep 2011 12:02:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34615 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753546Ab1IIQAN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Sep 2011 12:00:13 -0400
+	id S1758453Ab1IIQCg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Sep 2011 12:02:36 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 933094558;
-	Fri,  9 Sep 2011 12:00:12 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 359B445D9;
+	Fri,  9 Sep 2011 12:02:36 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=etfcrKxLh/aHHL6UB7WjqqGPl4c=; b=lhoOcp
-	ibFBIPNdIKn9t4fC9AB0U0VI2kVhbtanUCE7H1k4mW9d9wJ7T05tTNRgA/+F/If/
-	fZL6c56IHMzbXFBBSmyZhWdH6mo9KUoDoJMQ5HK7sZ2woQbXlXCyKvqIaoBb8Q0U
-	zbwns6DqwHaD5V5K/B6cYDHqhiwJDF4Fi/lMo=
+	:content-type; s=sasl; bh=8+BrdMoCySbRt6u/EtM1EVNgvJk=; b=RivoXj
+	mYpIq5KrdJDcIlVj5zd6Ya+uK8OcPdWyvoPct/tOHJjor4ORgbVMkEKKF63C+soq
+	XLGgmiZ8/wKuKEYaAVP7Rb+NGPVwWXvogeEvAPCUOB6pXquGXH0B3Tf7NRnRKc1U
+	8GyNLYcQgPGiJ4AgD7leXEw+po055VAVwF1Pw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VRzUkH5qobWb+VCAPIzWCRpwxQDq1/EH
-	ercc0/ZOjn2mqlJX2Wngd3tkYq9MPFzWXIDAS1Vp/RAI04Pg7sSe3tRwJj4TsxB1
-	8oN15ZmqVpb4HBJPZzUbS4KHrgYZ9nn2rtfdyUUkV/1Cni7IjZ0jWBZVV54nLXXW
-	yfuXWeeK/BU=
+	:content-type; q=dns; s=sasl; b=c7Jsiugfpn0N2NK+t17ttE6e+GXxnrux
+	R+58XYMw5YLqx0hFSN9MJuAjGW+7gEPQ6QwHNNfZReBIRwZlm5VMjeyTbApknvyw
+	vbmn1HnKhR74tTJHETXl06qwF/SDN57DaqZUN0NLlK1+WlmThi240bk3vtmynYkZ
+	tbjRj7rYIEY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A8F14557;
-	Fri,  9 Sep 2011 12:00:12 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2DEB945D7;
+	Fri,  9 Sep 2011 12:02:36 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0F70F4554; Fri,  9 Sep 2011
- 12:00:10 -0400 (EDT)
-In-Reply-To: <CAMOZ1BtbpbG+19G6Hfau_2_F5L3Ad+x-Payd9aKajJxU_V_tyA@mail.gmail.com> (Michael
- Witten's message of "Thu, 8 Sep 2011 16:26:01 +0000")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 97A7545D6; Fri,  9 Sep 2011
+ 12:02:35 -0400 (EDT)
+In-Reply-To: <4E69B832.9030503@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Fri, 09 Sep 2011 08:54:42 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CC07177E-DAFC-11E0-9D05-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 2230D0A4-DAFD-11E0-A7F4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181086>
 
-Michael Witten <mfwitten@gmail.com> writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> It would appear that `git rebase' is in fact producing patches with
-> `git format-patch' and then applying the resulting patches with `git
-> am', which gets confused by your inline diff; this can be clearly seen
-> in the `git-rebase--am[.sh]' file.
+> Junio C Hamano venit, vidit, dixit 08.09.2011 23:17:
+>> Ah, nevermind.
+>> 
+>> As the series is already in 'next', here is what I came up with.
 >
-> Perhaps `git rebase' should be reimplemented to use `git cherry-pick',
-> or does that suffer from the same problem?
+> I thought you'll rebuild next anyways after 1.7.7, but either way it's
+> fine. Thanks for holding this series in next long enough to really cook
+> it (and Jeff for revisiting it), it's much better now, keeping the
+> (undocumented, but expected) behavior of "git branch -v foo".
 
-I think it just is a simple matter of this one-liner.  We were already
-bending backwards to preserve the original message by not parsing and
-running stripspace the message in the output from mailinfo, and instead
-using the log message from the original, but were still using the patch
-text that came from mailinfo that was split incorrectly because it was
-fooled by the diff in the commit log message.
+Thank *you* for all the work.
 
-In the longer term, I think "git-rebase--am.sh" should be rewritten to
-have format-patch avoid the cost of actually generating the patch text,
-and the "mailinfo" call that comes above the context shown in this patch
-should be made conditional---when using "am" for rebasing we do not really
-care anything but the commit object names, and everything else is figured
-out from the commit this codepath.
-
- git-am.sh |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/git-am.sh b/git-am.sh
-index 016b505..9a4cb2d 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -632,6 +632,7 @@ To restore the original branch and stop patching run \"\$cmdline --abort\"."
- 			sed -e '1,/^$/d' >"$dotest/msg-clean"
- 			echo "$commit" > "$dotest/original-commit"
- 			get_author_ident_from_commit "$commit" > "$dotest/author-script"
-+			git diff-tree --root --binary -m --first-parent "$commit" >"$dotest/patch"
- 		else
- 			{
- 				sed -n '/^Subject/ s/Subject: //p' "$dotest/info"
+I recall Peff had some comments on your new tests last night, by the way.
