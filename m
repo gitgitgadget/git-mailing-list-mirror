@@ -1,86 +1,128 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: The imporantance of including http credential caching in 1.7.7
-Date: Fri, 09 Sep 2011 17:12:39 +0900
-Message-ID: <buopqjaw2vc.fsf@dhlpc061.dev.necel.com>
-References: <CAFcyEthzW1AY4uXgpsVxjyWCDXAJ6=GdWGqLFO6Acm1ovJJVaw@mail.gmail.com>
- <4E6769E3.4070003@drmicha.warpmail.net>
- <CAFcyEthuf49_kOmoLmoSSbNJN+iOBpicP4-eFAV5wL5_RffwGg@mail.gmail.com>
- <4E68C04F.9060804@drmicha.warpmail.net>
- <CAEBDL5VAFaWYctJotxTA8ajy_0KtR8H_4SoDHK29Ofd65mYdKw@mail.gmail.com>
- <20110908191842.GB16064@sigill.intra.peff.net>
- <4E69C8DC.7060008@drmicha.warpmail.net>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: git repository size / compression
+Date: Fri, 09 Sep 2011 10:23:13 +0200
+Message-ID: <1315556595.2019.11.camel@bee.lab.cmartin.tk>
+References: <CALFxCvzVjC+u=RDkDCQp0QqPETsv8ROE8tY=37tmMWxmQoJOEw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, John Szakmeister <john@szakmeister.net>,
-	Kyle Neath <kneath@gmail.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Sep 09 10:12:54 2011
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-ZnvhipWoJRm7YYvTyAjU"
+Cc: git@vger.kernel.org
+To: neubyr <neubyr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 09 10:23:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1wCj-0002Mi-II
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 10:12:53 +0200
+	id 1R1wMv-0006cH-Dt
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 10:23:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758565Ab1IIIMp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Sep 2011 04:12:45 -0400
-Received: from relmlor1.renesas.com ([210.160.252.171]:61253 "EHLO
-	relmlor1.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757534Ab1IIIMm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Sep 2011 04:12:42 -0400
-Received: from relmlir4.idc.renesas.com ([10.200.68.154])
- by relmlor1.idc.renesas.com ( SJSMS)
- with ESMTP id <0LR800ES8XH5IC40@relmlor1.idc.renesas.com> for
- git@vger.kernel.org; Fri, 09 Sep 2011 17:12:41 +0900 (JST)
-Received: from relmlac4.idc.renesas.com ([10.200.69.24])
- by relmlir4.idc.renesas.com ( SJSMS)
- with ESMTP id <0LR8006BZXH4KT30@relmlir4.idc.renesas.com> for
- git@vger.kernel.org; Fri, 09 Sep 2011 17:12:41 +0900 (JST)
-Received: by relmlac4.idc.renesas.com (Postfix, from userid 0)
-	id 30A7348070; Fri, 09 Sep 2011 17:12:41 +0900 (JST)
-Received: from relmlac4.idc.renesas.com (localhost [127.0.0.1])
-	by relmlac4.idc.renesas.com (Postfix) with ESMTP id 2EE7C4808F; Fri,
- 09 Sep 2011 17:12:41 +0900 (JST)
-Received: from relmlii2.idc.renesas.com [10.200.68.66]	by
- relmlac4.idc.renesas.com with ESMTP id TAH20350; Fri,
- 09 Sep 2011 17:12:41 +0900
-X-IronPort-AV: E=Sophos;i="4.68,355,1312124400";   d="scan'208";a="44923352"
-Received: from unknown (HELO relay31.aps.necel.com) ([10.29.19.54])
- by relmlii2.idc.renesas.com with ESMTP; Fri, 09 Sep 2011 17:12:40 +0900
-Received: from relay31.aps.necel.com ([10.29.19.54] [10.29.19.54])
- by relay31.aps.necel.com with ESMTP; Fri, 09 Sep 2011 17:12:41 +0900
-Received: from dhlpc061 ([10.114.96.156] [10.114.96.156])
- by relay31.aps.necel.com with ESMTP; Fri, 09 Sep 2011 17:12:40 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)	id 6288A52E21F; Fri,
- 09 Sep 2011 17:12:40 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-reply-to: <4E69C8DC.7060008@drmicha.warpmail.net>
+	id S1758644Ab1IIIXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Sep 2011 04:23:18 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:43530 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757534Ab1IIIXQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Sep 2011 04:23:16 -0400
+Received: from [130.149.85.236] (dhcp236.dcaiti.tu-berlin.de [130.149.85.236])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id B21C146156;
+	Fri,  9 Sep 2011 10:22:58 +0200 (CEST)
+In-Reply-To: <CALFxCvzVjC+u=RDkDCQp0QqPETsv8ROE8tY=37tmMWxmQoJOEw@mail.gmail.com>
+X-Mailer: Evolution 3.0.3- 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181033>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
->> Agreed. Anything harder than ssh keys is right out the window,
->> because they're always the alternative these people could be using
->> (but can't or don't want to).
->
-> Sue, the question was: What is easy enough? I hoped that people
-> would be using gpg to check signed tags, and that there might be a
-> simple, convenient gnupg installer for Win and Mac which ties into
-> the respective wallet systems or provides one they use already.
 
-I wouldn't be surprised if many people just don't check signed tags at
-all -- if the repositories they're using even have them in the first
-place -- particularly amongst the audience in question.
+--=-ZnvhipWoJRm7YYvTyAjU
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
--miles
+On Thu, 2011-09-08 at 21:37 -0500, neubyr wrote:
+> I have a test git repository with just two files in it. One of the
+> file in it has a set of two lines that is repeated n times.
+> e.g.:
+> {{{
+> $ for i in {1..5}; do cat ./lexico.txt >> lexico1.txt &&  cat
+> ./lexico.txt >> lexico1.txt && mv ./lexico1.txt ./lexico.txt;  done
+> }}}
+>=20
 
--- 
-What the fuck do white people have to be blue about!?  Banana Republic ran
-out of Khakis?  The Espresso Machine is jammed?  Hootie and The Blowfish
-are breaking up??!  Shit, white people oughtta understand, their job is to
-GIVE people the blues, not to get them!  -- George Carlin
+So you've just created some data that can be compressed quite
+efficiently.
+
+> I ran above command few times and performed commit after each run. Now
+> disk usage of this repository directory is mentioned below. The 419M
+> is working directory size and 2.7M is git repository/database size.
+>=20
+> {{{
+> $ du -h -d 1 .
+> 2.7M    ./.git
+> 419M    .
+>=20
+> }}}
+>=20
+> Is it because of the compression performed by git before storing data
+> (or before sending commit)??
+>=20
+
+Yes. Git stores its objects (the commit, the snapshot of the files,
+etc.) compressed. When these objects are stored in a pack, the size can
+be further reduced by storing some objects as deltas which describe the
+difference between itself and some other object in the object-db.
+
+> Following were results with subversion:
+>=20
+> Subversion client (redundant(?) copy exists in .svn/text-base/
+> directory, hence double size in client):
+> {{{
+> $ du -h -d 1
+> 416M    ./.svn
+> 832M    .
+> }}}
+
+Subversion stores the "pristines" (which is the status of the files in
+the latest revision) inside the .svn directory. I wouldn't call this
+copy redundant, though, as it allows you to run diff locally. The
+pristines are stored uncompressed, which is why you half of the space is
+taken up by the .svn directory.
+
+>=20
+> Subversion repo/server:
+> {{{
+> $ du -h -d 1
+>  12K    ./conf
+> 1.2M    ./db
+>  36K    ./hooks
+> 8.0K    ./locks
+> 1.2M    .
+> }}}
+
+I don't know how the repository is stored in Subversion, but it may also
+be compressed. You may be able to reduced your git repository size by
+(re)generating packs with 'git repack' and doing some cleanups with 'git
+gc', but the repository size is not often a concern.
+
+   cmn
+
+
+
+--=-ZnvhipWoJRm7YYvTyAjU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAABAgAGBQJOaczyAAoJEHKRP1jG7ZzT4+EIAJABPl2shyAssuS3YwQcWIxx
+2TVaz2rp/3UOWmttr81DIaYr9TX9gilk6SiCNC4Fh8YJIYRVzmtDyxYtovL0CUEi
+kzfuOlh+2p365wCqLoftwJj5YrXwOPBlGdB708ZdxAsVB9X3KJNI8j3fl/nnaK1X
+JDG/Y/qJbzKKs7ujmFnfP6i+gvVN2PLFgN0s6M8yg8O+liZsf2UCPZRXfKeuEq9S
+oXpZCcPG/IkqN9eEH3QnV+AMG/wLvfBXwPuu73YjoRf9VvxChDGWy8agorHwCd8w
+MapOLyPP6xejmF2CaG3f+BisTrN10sQm+BmI85OYR9gmbOmupme4rbHZBa6yAgo=
+=3AlF
+-----END PGP SIGNATURE-----
+
+--=-ZnvhipWoJRm7YYvTyAjU--
