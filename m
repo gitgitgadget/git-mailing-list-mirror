@@ -1,92 +1,86 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Miles Bader <miles@gnu.org>
 Subject: Re: The imporantance of including http credential caching in 1.7.7
-Date: Fri, 09 Sep 2011 10:06:08 +0200
-Message-ID: <4E69C8F0.9070204@drmicha.warpmail.net>
-References: <CAFcyEthzW1AY4uXgpsVxjyWCDXAJ6=GdWGqLFO6Acm1ovJJVaw@mail.gmail.com> <4E6769E3.4070003@drmicha.warpmail.net> <20110908191053.GA16064@sigill.intra.peff.net>
+Date: Fri, 09 Sep 2011 17:12:39 +0900
+Message-ID: <buopqjaw2vc.fsf@dhlpc061.dev.necel.com>
+References: <CAFcyEthzW1AY4uXgpsVxjyWCDXAJ6=GdWGqLFO6Acm1ovJJVaw@mail.gmail.com>
+ <4E6769E3.4070003@drmicha.warpmail.net>
+ <CAFcyEthuf49_kOmoLmoSSbNJN+iOBpicP4-eFAV5wL5_RffwGg@mail.gmail.com>
+ <4E68C04F.9060804@drmicha.warpmail.net>
+ <CAEBDL5VAFaWYctJotxTA8ajy_0KtR8H_4SoDHK29Ofd65mYdKw@mail.gmail.com>
+ <20110908191842.GB16064@sigill.intra.peff.net>
+ <4E69C8DC.7060008@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Kyle Neath <kneath@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Sep 09 10:06:43 2011
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, John Szakmeister <john@szakmeister.net>,
+	Kyle Neath <kneath@gmail.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Sep 09 10:12:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1w6k-000845-6v
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 10:06:42 +0200
+	id 1R1wCj-0002Mi-II
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 10:12:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758576Ab1IIIGf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Sep 2011 04:06:35 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:58150 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758461Ab1IIIGL (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Sep 2011 04:06:11 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 969732ACC8;
-	Fri,  9 Sep 2011 04:06:10 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute3.internal (MEProxy); Fri, 09 Sep 2011 04:06:10 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=RO6LGrvxmrsMjRfhIy5Kwq
-	gVL0o=; b=tGI5o0hvqEfes8bbUma/xGrayxMHq7UYSXVmaUWmesbXb3UG/T0Gjg
-	VHyU2pjEuaN1DCw4eIyyiHWos4gWFmhQeePjMO2DYkJCfbGDjmL/1q4AaOGO8uL6
-	/M/DyJBe6WOpp5jxy003kd0ror7oUTbagbMcZDtDX/sMxEYygEfk0=
-X-Sasl-enc: q8OH2cXpS1DdUAAbPx3GLTmESkl+5AFo7lfvpefEaRx2 1315555570
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id D5CB0760270;
-	Fri,  9 Sep 2011 04:06:09 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
-In-Reply-To: <20110908191053.GA16064@sigill.intra.peff.net>
+	id S1758565Ab1IIIMp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Sep 2011 04:12:45 -0400
+Received: from relmlor1.renesas.com ([210.160.252.171]:61253 "EHLO
+	relmlor1.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757534Ab1IIIMm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Sep 2011 04:12:42 -0400
+Received: from relmlir4.idc.renesas.com ([10.200.68.154])
+ by relmlor1.idc.renesas.com ( SJSMS)
+ with ESMTP id <0LR800ES8XH5IC40@relmlor1.idc.renesas.com> for
+ git@vger.kernel.org; Fri, 09 Sep 2011 17:12:41 +0900 (JST)
+Received: from relmlac4.idc.renesas.com ([10.200.69.24])
+ by relmlir4.idc.renesas.com ( SJSMS)
+ with ESMTP id <0LR8006BZXH4KT30@relmlir4.idc.renesas.com> for
+ git@vger.kernel.org; Fri, 09 Sep 2011 17:12:41 +0900 (JST)
+Received: by relmlac4.idc.renesas.com (Postfix, from userid 0)
+	id 30A7348070; Fri, 09 Sep 2011 17:12:41 +0900 (JST)
+Received: from relmlac4.idc.renesas.com (localhost [127.0.0.1])
+	by relmlac4.idc.renesas.com (Postfix) with ESMTP id 2EE7C4808F; Fri,
+ 09 Sep 2011 17:12:41 +0900 (JST)
+Received: from relmlii2.idc.renesas.com [10.200.68.66]	by
+ relmlac4.idc.renesas.com with ESMTP id TAH20350; Fri,
+ 09 Sep 2011 17:12:41 +0900
+X-IronPort-AV: E=Sophos;i="4.68,355,1312124400";   d="scan'208";a="44923352"
+Received: from unknown (HELO relay31.aps.necel.com) ([10.29.19.54])
+ by relmlii2.idc.renesas.com with ESMTP; Fri, 09 Sep 2011 17:12:40 +0900
+Received: from relay31.aps.necel.com ([10.29.19.54] [10.29.19.54])
+ by relay31.aps.necel.com with ESMTP; Fri, 09 Sep 2011 17:12:41 +0900
+Received: from dhlpc061 ([10.114.96.156] [10.114.96.156])
+ by relay31.aps.necel.com with ESMTP; Fri, 09 Sep 2011 17:12:40 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)	id 6288A52E21F; Fri,
+ 09 Sep 2011 17:12:40 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-reply-to: <4E69C8DC.7060008@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181032>
 
-Jeff King venit, vidit, dixit 08.09.2011 21:10:
-> On Wed, Sep 07, 2011 at 02:56:03PM +0200, Michael J Gruber wrote:
-> 
->> So, it's been a year or more that you've been aware of the importance
->> of this issue (from your/github's perspective), and we hear about it
->> now, at the end of the rc phase. I don't know whether
->> jk/http-auth-keyring has been done on github payroll or during spare
->> time.
-> 
-> To be absolutely clear here, this feature was 100% paid for by GitHub
-> (which isn't to say that I don't think it's a good idea. On the
-> contrary, I think it's awesome; but GitHub money is what provided the
-> time for me to work on it).
-> 
-> When I started at GitHub in January, I was given a giant list of things
-> that GitHub felt would make core git better, but that they hadn't the
-> personnel to improve. And I was told to use my own judgement in adding
-> or removing items from the list based on what I thought git needed, and
-> to prioritize as I saw fit. The fact that it took six months for me to
-> come up with credential patches is because that's how long it took me to
-> figure out what I wanted to write, and to clear my backlog of other git
-> tasks.
-> 
-> So I think the wheels have been turning on this for quite a while from
-> GitHub's perspective.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
+>> Agreed. Anything harder than ssh keys is right out the window,
+>> because they're always the alternative these people could be using
+>> (but can't or don't want to).
+>
+> Sue, the question was: What is easy enough? I hoped that people
+> would be using gpg to check signed tags, and that there might be a
+> simple, convenient gnupg installer for Win and Mac which ties into
+> the respective wallet systems or provides one they use already.
 
-Thanks for clarifying. While it should make no difference for the
-acceptance of patches, it's great to see GitHub invest into scratching
-their Git itches, and thus contribute back. That's how open source works
-as a business model :)
+I wouldn't be surprised if many people just don't check signed tags at
+all -- if the repositories they're using even have them in the first
+place -- particularly amongst the audience in question.
 
-...
-> In the meantime, the best thing we can do to push it forward is to write
-> helpers. I implemented some basic ones that should work anywhere, but
-> aren't as nice as integration with existing keychains. Some people are
-> working on Linux ones. The single best thing GitHub can do to push this
-> forward right now is to provide a well-written OS X Keychain helper, and
-> to provide feedback on whether git's end of the API is good enough.
+-miles
 
-... and one for Git on Windows? It seems we're lacking both Win and OS X
-developers here.
-
-... continuing in the other subthread...
+-- 
+What the fuck do white people have to be blue about!?  Banana Republic ran
+out of Khakis?  The Espresso Machine is jammed?  Hootie and The Blowfish
+are breaking up??!  Shit, white people oughtta understand, their job is to
+GIVE people the blues, not to get them!  -- George Carlin
