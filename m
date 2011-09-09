@@ -1,145 +1,85 @@
-From: Haitao Li <lihaitao@gmail.com>
-Subject: [PATCH v3] date.c: Support iso8601 timezone formats
-Date: Fri,  9 Sep 2011 18:10:33 +0800
-Message-ID: <1315563033-9476-1-git-send-email-lihaitao@gmail.com>
-References: <1315320996-1997-1-git-send-email-lihaitao@gmail.com>
-Cc: Haitao Li <lihaitao@gmail.com>, git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Sep 09 12:11:05 2011
+From: Ted Zlatanov <tzz@lifelogs.com>
+Subject: Re: The imporantance of including http credential caching in 1.7.7
+Date: Fri, 09 Sep 2011 05:15:09 -0500
+Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
+ Cienfuegos
+Message-ID: <87pqjaxbrm.fsf@lifelogs.com>
+References: <CAFcyEthzW1AY4uXgpsVxjyWCDXAJ6=GdWGqLFO6Acm1ovJJVaw@mail.gmail.com>
+	<4E6769E3.4070003@drmicha.warpmail.net>
+	<20110908191053.GA16064@sigill.intra.peff.net>
+	<4E69C8F0.9070204@drmicha.warpmail.net>
+Reply-To: git@vger.kernel.org
+Mime-Version: 1.0
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 09 12:15:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1y36-0003w4-GS
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 12:11:04 +0200
+	id 1R1y7e-0005zm-5O
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 12:15:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933168Ab1IIKK7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Sep 2011 06:10:59 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:34194 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757532Ab1IIKK6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Sep 2011 06:10:58 -0400
-Received: by pzk37 with SMTP id 37so2447002pzk.1
-        for <git@vger.kernel.org>; Fri, 09 Sep 2011 03:10:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=imIvi80MLOmWggzCPSGaSzX8AU0nIJDGmVp2TMeuSAU=;
-        b=klPu9pYGY2/MrCpW5etAN62UTBMRVXYMajxsde3WSyNzoKQXTUqJPFKPc0Ik/taUqk
-         ildKQ8fhzv9SlLMNXlBZr9uXt/bTE7PFfiWOESFZFBfxfN1PdK00K+U44kb8fl0hGsgq
-         9Zv3ipO1Qn0YiQdDgConM/SAGk1C7Iv9og/SI=
-Received: by 10.68.155.148 with SMTP id vw20mr2613589pbb.114.1315563058514;
-        Fri, 09 Sep 2011 03:10:58 -0700 (PDT)
-Received: from localhost.localdomain (cursa.dreamhost.com. [173.236.210.234])
-        by mx.google.com with ESMTPS id h5sm19162497pbq.11.2011.09.09.03.10.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 09 Sep 2011 03:10:56 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.4
-In-Reply-To: <1315320996-1997-1-git-send-email-lihaitao@gmail.com>
+	id S933269Ab1IIKPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Sep 2011 06:15:35 -0400
+Received: from lo.gmane.org ([80.91.229.12]:58261 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758667Ab1IIKPc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Sep 2011 06:15:32 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1R1y7P-0005uE-6D
+	for git@vger.kernel.org; Fri, 09 Sep 2011 12:15:31 +0200
+Received: from 38.98.147.133 ([38.98.147.133])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 09 Sep 2011 12:15:31 +0200
+Received: from tzz by 38.98.147.133 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 09 Sep 2011 12:15:31 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+Mail-Followup-To: git@vger.kernel.org
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 38.98.147.133
+X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
+Mail-Copies-To: never
+User-Agent: Gnus/5.110018 (No Gnus v0.18) Emacs/24.0.50 (gnu/linux)
+Cancel-Lock: sha1:ll16fx+faneYC+tGGW57ldJJ9CM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181043>
 
-Timezone designators including additional separator (`:`) are ignored.
-Actually zone designators in below formats are all valid according to
-ISO8601:2004, section 4.3.2:
-    [+-]hh, [+-]hhmm, [+-]hh:mm
+On Fri, 09 Sep 2011 10:06:08 +0200 Michael J Gruber <git@drmicha.warpmail.net> wrote: 
 
-Steps to reproduce the issue this patch fixes:
-    $ mkdir /tmp/test
-    $ cd /tmp/test
-    $ git init
-    $ echo 'timezone' > file.txt
-    $ git add .
-    $ git update-index
-    $ git write-tree
-    3e168d57e1c32a4598af134430384f0587581503
+>> In the meantime, the best thing we can do to push it forward is to write
+>> helpers. I implemented some basic ones that should work anywhere, but
+>> aren't as nice as integration with existing keychains. Some people are
+>> working on Linux ones. The single best thing GitHub can do to push this
+>> forward right now is to provide a well-written OS X Keychain helper, and
+>> to provide feedback on whether git's end of the API is good enough.
 
-    # Commit the tree returned above. Give a date with colon separated
-    # timezone
-    $ echo "Test commit" | \
-      TZ=UTC GIT_AUTHOR_DATE='2011-09-03T12:34:56+08:00' \
-      git commit-tree 3e168d57e1c32a4598af134430384f0587581503 | \
-      xargs git show  | grep Date
-    Date:   Sat Sep 3 12:34:56 2011 +0000
+MJG> ... and one for Git on Windows? It seems we're lacking both Win and OS X
+MJG> developers here.
 
-while the expected result is:
-    Date:   Sat Sep 3 12:34:56 2011 +0800
-                                      ^---
+Windows doesn't have a standard keychain service, does it?
 
-This patch teaches git recognizing zone designators with hours and
-minutes separated by colon, or minutes are empty.
+The OS X Keychain helper should be pretty easy in terms of the system
+calls (he says after a quick Google search), the hard part IMHO is
+figuring out the right way to store credentials in it.  There are
+several ways to structure the schema.
 
-Signed-off-by: Haitao Li <lihaitao@gmail.com>
----
- date.c          |   32 ++++++++++++++++++++++++++------
- t/t0006-date.sh |    5 +++++
- 2 files changed, 31 insertions(+), 6 deletions(-)
+For modern Linux systems it's best to target the Secrets API, which is
+DBUS and XML-based and works with both the KDE and GNOME keychains.  I
+only know about it what I have learned from Michael Albinus' interface
+in the Emacs source tree, but it certainly seems capable enough.  This
+is what Jeff King was alluding to, I think, about what I'm working on.
+I have not been able to work on it so far, not for lack of trying.
 
-diff --git a/date.c b/date.c
-index 896fbb4..f8722c1 100644
---- a/date.c
-+++ b/date.c
-@@ -556,15 +556,35 @@ static int match_tz(const char *date, int *offp)
- 	int min, hour;
- 	int n = end - date - 1;
- 
--	min = offset % 100;
--	hour = offset / 100;
-+	/*
-+	 * ISO8601:2004(E) allows time zone designator been separated
-+	 * by a clone in the extended format
-+	 */
-+	if (*end == ':') {
-+		if (isdigit(end[1])) {
-+			hour = offset;
-+			min = strtoul(end+1, &end, 10);
-+		} else {
-+			/* Mark as invalid */
-+			n = -1;
-+		}
-+	} else {
-+		if (n == 1 || n == 2) {
-+			/* Only hours specified */
-+			hour = offset;
-+			min = 0;
-+		} else {
-+			hour = offset / 100;
-+			min = offset % 100;
-+		}
-+	}
- 
- 	/*
--	 * Don't accept any random crap.. At least 3 digits, and
--	 * a valid minute. We might want to check that the minutes
--	 * are divisible by 30 or something too.
-+	 * Don't accept any random crap.. We might want to check that
-+	 * the minutes are divisible by 15 or something too. (Offset of
-+	 * Kathmandu, Nepal is UTC+5:45)
- 	 */
--	if (min < 60 && n > 2) {
-+	if (n > 0 && min < 60) {
- 		offset = hour*60+min;
- 		if (*date == '-')
- 			offset = -offset;
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index f87abb5..5235b7a 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -40,6 +40,11 @@ check_parse 2008-02 bad
- check_parse 2008-02-14 bad
- check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 +0000'
- check_parse '2008-02-14 20:30:45 -0500' '2008-02-14 20:30:45 -0500'
-+check_parse '2008-02-14 20:30:45 -0015' '2008-02-14 20:30:45 -0015'
-+check_parse '2008-02-14 20:30:45 -5' '2008-02-14 20:30:45 -0500'
-+check_parse '2008-02-14 20:30:45 -05' '2008-02-14 20:30:45 -0500'
-+check_parse '2008-02-14 20:30:45 -:30' '2008-02-14 20:30:45 +0000'
-+check_parse '2008-02-14 20:30:45 -05:00' '2008-02-14 20:30:45 -0500'
- check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 -0500' EST5
- 
- check_approxidate() {
--- 
-1.7.5.4
+My #1 target is to implement a GPG-based credential helper using a
+netrc-style file.  I believe that would be the most useful one, though
+not the easiest one to set up for inexperienced users.
+
+Ted
