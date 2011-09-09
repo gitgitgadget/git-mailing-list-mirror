@@ -1,101 +1,136 @@
-From: Ted Zlatanov <tzz@lifelogs.com>
-Subject: Re: can Git encrypt/decrypt .gpg on push/fetch?
-Date: Fri, 9 Sep 2011 08:52:21 -0500
-Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
- Cienfuegos
-Message-ID: <87ehzpvn56.fsf@lifelogs.com>
-References: <87lityxbg7.fsf@lifelogs.com>
-	<CAGhXAGSw3y=cjAHXtwycDifoBPr13AkYtLHRRXejRKue0vkz7A@mail.gmail.com>
-	<4E6A165D.5010703@drmicha.warpmail.net>
+From: neubyr <neubyr@gmail.com>
+Subject: Re: git repository size / compression
+Date: Fri, 9 Sep 2011 09:04:07 -0500
+Message-ID: <CALFxCvxmPN_O_3xpkrGUYtdkVfz5nr7eaucMrAYQ3uvi820FBg@mail.gmail.com>
+References: <CALFxCvzVjC+u=RDkDCQp0QqPETsv8ROE8tY=37tmMWxmQoJOEw@mail.gmail.com>
+	<1315556595.2019.11.camel@bee.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Aneesh Bhasin <contact.aneesh@gmail.com>, <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Sep 09 15:52:36 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Fri Sep 09 16:04:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R21VR-0003eo-Hr
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 15:52:33 +0200
+	id 1R21gr-0001LL-OZ
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 16:04:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758828Ab1IINw2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Sep 2011 09:52:28 -0400
-Received: from cer-mailmxol2.jumptrading.com ([208.78.214.25]:49605 "EHLO
-	cer-mailmxol2.jumptrading.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751855Ab1IINw1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Sep 2011 09:52:27 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AtcGAPAYak7AqF0N/2dsb2JhbABBoVEDhzOBUgEBBXkQCw0UJQ8BBEkOBYd6t3mGbgSHbZBpFowE
-Received: from unknown (HELO chiexchange02.w2k.jumptrading.com) ([192.168.93.13])
-  by cer-mailmxol2.jumptrading.com with ESMTP; 09 Sep 2011 13:52:27 +0000
-Received: from internalsmtp.w2k.jumptrading.com (10.2.4.29) by
- chiexchange02.w2k.jumptrading.com (10.2.4.71) with Microsoft SMTP Server id
- 8.2.176.0; Fri, 9 Sep 2011 08:52:26 -0500
-Received: from tzlatanov-ubuntu-desktop.jumptrading.com ([10.2.14.81]) by
- internalsmtp.w2k.jumptrading.com with Microsoft SMTPSVC(6.0.3790.1830);	 Fri,
- 9 Sep 2011 08:52:26 -0500
-X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
-Mail-Copies-To: never
-Gmane-Reply-To-List: yes
-In-Reply-To: <4E6A165D.5010703@drmicha.warpmail.net> (Michael J. Gruber's
-	message of "Fri, 09 Sep 2011 15:36:29 +0200")
-User-Agent: Gnus/5.110018 (No Gnus v0.18) Emacs/24.0.50 (gnu/linux)
-X-OriginalArrivalTime: 09 Sep 2011 13:52:26.0513 (UTC) FILETIME=[B5551010:01CC6EF7]
+	id S1758836Ab1IIOEN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Sep 2011 10:04:13 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:50462 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756640Ab1IIOEJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Sep 2011 10:04:09 -0400
+Received: by wyh22 with SMTP id 22so1600543wyh.19
+        for <git@vger.kernel.org>; Fri, 09 Sep 2011 07:04:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=154Yn3fatKUu9rgProjAvrnvx00BF28Q8+jcTodVBp0=;
+        b=l+3++o2yF8e4gf3pdcQotILvJiifb1jmkeXqCX7TSYTfxEmGf8vB6O3gnhwdu3N+Lt
+         04Y/JBofavY+Y71remgpsg7UZRZ54vq9tZV5anSbXvd+lDWW7psUa6Bl+quVGoXp4WIQ
+         t9BkGqTVZPZezGiefBi/snfvQC6NOTe/Hdiuc=
+Received: by 10.227.202.70 with SMTP id fd6mr2018786wbb.114.1315577047886;
+ Fri, 09 Sep 2011 07:04:07 -0700 (PDT)
+Received: by 10.227.145.210 with HTTP; Fri, 9 Sep 2011 07:04:07 -0700 (PDT)
+In-Reply-To: <1315556595.2019.11.camel@bee.lab.cmartin.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181068>
 
-On Fri, 09 Sep 2011 15:36:29 +0200 Michael J Gruber <git@drmicha.warpmail.net> wrote: 
+On Fri, Sep 9, 2011 at 3:23 AM, Carlos Mart=EDn Nieto <cmn@elego.de> wr=
+ote:
+> On Thu, 2011-09-08 at 21:37 -0500, neubyr wrote:
+>> I have a test git repository with just two files in it. One of the
+>> file in it has a set of two lines that is repeated n times.
+>> e.g.:
+>> {{{
+>> $ for i in {1..5}; do cat ./lexico.txt >> lexico1.txt && =A0cat
+>> ./lexico.txt >> lexico1.txt && mv ./lexico1.txt ./lexico.txt; =A0don=
+e
+>> }}}
+>>
+>
+> So you've just created some data that can be compressed quite
+> efficiently.
+>
+>> I ran above command few times and performed commit after each run. N=
+ow
+>> disk usage of this repository directory is mentioned below. The 419M
+>> is working directory size and 2.7M is git repository/database size.
+>>
+>> {{{
+>> $ du -h -d 1 .
+>> 2.7M =A0 =A0./.git
+>> 419M =A0 =A0.
+>>
+>> }}}
+>>
+>> Is it because of the compression performed by git before storing dat=
+a
+>> (or before sending commit)??
+>>
+>
+> Yes. Git stores its objects (the commit, the snapshot of the files,
+> etc.) compressed. When these objects are stored in a pack, the size c=
+an
+> be further reduced by storing some objects as deltas which describe t=
+he
+> difference between itself and some other object in the object-db.
+>
 
-MJG> Aneesh Bhasin venit, vidit, dixit 09.09.2011 12:50:
->> Hi Ted,
->> 
->> 
->> 2011/9/9 Ted Zlatanov <tzz@lifelogs.com>
->>> 
->>> I need to store some encrypted files in Git but for some clients with
->>> the right GPG keys, decrypt them on checkout (possibly also encrypt them
->>> back on commit, but that's not as important).
->>> 
->>> diff doesn't have to work, this is just for convenience.  Can Git do
->>> this (matching only .gpg files) or do I need my own command to run after
->>> the checkout/fetch and before commit?  It seems pretty out of Git's
->>> scope but perhaps others have done this before.
->>> 
->> 
->> Have you looked at git hooks (e.g. here : http://progit.org/book/ch7-3.html).
->> 
->> You could do the encryption/decryption in pre-commit and post-checkout
->> hooks scripts respectively...
+Does git store deltas for some files? I thought it uses snapshots
+(exact copy of staged files) only.
 
-MJG> I'd recommend textconv for diffing and clean/smudge for plaintext
-MJG> checkout. That is, there are two convenient versions:
 
-MJG> A) Keep blobs and checkout encrypted
-MJG> - Use an editor which can encrypt/decrypt on the fly (e.g. vim)
-MJG> - Use "*.gpg diff=gpg" in your attributes and
-MJG> [diff "gpg"]
-MJG>         textconv = gpg -d
-MJG>   in your config to have cleartext diffs. Use cachetextconv with caution ;)
+>> Following were results with subversion:
+>>
+>> Subversion client (redundant(?) copy exists in .svn/text-base/
+>> directory, hence double size in client):
+>> {{{
+>> $ du -h -d 1
+>> 416M =A0 =A0./.svn
+>> 832M =A0 =A0.
+>> }}}
+>
+> Subversion stores the "pristines" (which is the status of the files i=
+n
+> the latest revision) inside the .svn directory. I wouldn't call this
+> copy redundant, though, as it allows you to run diff locally. The
+> pristines are stored uncompressed, which is why you half of the space=
+ is
+> taken up by the .svn directory.
+>
+>>
+>> Subversion repo/server:
+>> {{{
+>> $ du -h -d 1
+>> =A012K =A0 =A0./conf
+>> 1.2M =A0 =A0./db
+>> =A036K =A0 =A0./hooks
+>> 8.0K =A0 =A0./locks
+>> 1.2M =A0 =A0.
+>> }}}
+>
+> I don't know how the repository is stored in Subversion, but it may a=
+lso
+> be compressed. You may be able to reduced your git repository size by
+> (re)generating packs with 'git repack' and doing some cleanups with '=
+git
+> gc', but the repository size is not often a concern.
+>
+> =A0 cmn
+>
+>
+>
 
-MJG> B) Keep blobs encrypted, checkout decrypted
-MJG> - Use Use "*.gpg filter=gpg" in your attributes and
-MJG> [filter "gpg"]
-MJG> 	smudge = gpg -d
-MJG> 	clean = gpg -e -r yourgpgkey
-MJG>   in your config.
+that's helpful. thanks.
 
-MJG> I use A on a regular basis. B is untested (but patterned after a similar
-MJG> gzip filter I use). You may or may not have better results with "gpg -ea".
-
-MJG> On clients without the keys, you can simply leave out the diff or filter
-MJG> config resp. set them to "cat".
-
-That's really helpful, thank you Aneesh and Michael.  Exactly what I was
-hoping to achieve.
-
-Ted
+--
+neuby.r
