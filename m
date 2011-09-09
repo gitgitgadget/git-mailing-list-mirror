@@ -1,60 +1,59 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Chances of getting gitk series merged
-Date: Thu, 8 Sep 2011 21:08:57 -0400 (EDT)
-Message-ID: <alpine.DEB.2.00.1109082055560.12564@debian>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Git is not scalable with too many refs/*
+Date: Fri, 9 Sep 2011 03:13:56 +0200
+Message-ID: <201109090313.56898.trast@student.ethz.ch>
+References: <4DF6A8B6.9030301@op5.se> <1315529522448-6774328.post@n2.nabble.com> <201109090305.15896.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Fri Sep 09 03:09:08 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Martin Fick <mfick@codeaurora.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Fri Sep 09 03:14:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R1pac-0003sm-K3
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 03:09:06 +0200
+	id 1R1pg7-0005zs-9h
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 03:14:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757310Ab1IIBJC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Sep 2011 21:09:02 -0400
-Received: from mail-vw0-f43.google.com ([209.85.212.43]:56870 "EHLO
-	mail-vw0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757112Ab1IIBJA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Sep 2011 21:09:00 -0400
-Received: by vws10 with SMTP id 10so683914vws.2
-        for <git@vger.kernel.org>; Thu, 08 Sep 2011 18:08:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:x-x-sender:to:cc:subject:message-id:user-agent
-         :mime-version:content-type;
-        bh=T4x594CUSMwGtslDe72YIIu68G+NrsAQ1gstTSh3gUo=;
-        b=UzZiHfnGAXjNx8hkjO9HxSzWaPCW+IxugrJoW+hCcGxOS/PTzFAI3uxmQB0Ci2mGJl
-         IQRAZMCiShoTAdbPFDaCMaIe6SAAA4E+fsBzhtcZiGMQ8a9Nr2wgLYNvHeNsnUJbqPHA
-         u7ZftojfcGkTilwPPCGJKyAPVqHLDlr/x1pjc=
-Received: by 10.52.23.20 with SMTP id i20mr151336vdf.356.1315530539614;
-        Thu, 08 Sep 2011 18:08:59 -0700 (PDT)
-Received: from [192.168.1.102] (modemcable094.77-37-24.mc.videotron.ca [24.37.77.94])
-        by mx.google.com with ESMTPS id jo8sm3821633vdb.20.2011.09.08.18.08.58
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 08 Sep 2011 18:08:58 -0700 (PDT)
-X-X-Sender: martin@debian
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1758011Ab1IIBOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Sep 2011 21:14:42 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:28551 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758112Ab1IIBN6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Sep 2011 21:13:58 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.289.1; Fri, 9 Sep
+ 2011 03:13:55 +0200
+Received: from thomas.inf.ethz.ch (188.155.176.28) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.289.1; Fri, 9 Sep
+ 2011 03:13:56 +0200
+User-Agent: KMail/1.13.7 (Linux/3.0.4-43-desktop; KDE/4.6.5; x86_64; ; )
+In-Reply-To: <201109090305.15896.trast@student.ethz.ch>
+X-Originating-IP: [188.155.176.28]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181017>
 
-Hi Paul,
+Thomas Rast wrote:
+> +       const char *argv[] = {NULL, NULL, "--not", "--all", NULL};
+> +       int argc = ARRAY_SIZE(argv) - 1;
+> +
+> +       init_revisions(&rev, NULL);
+> 
+> which means that the --all needs to walk all commits reachable from
+> all refs and flag them as uninteresting.
 
-I was happy to see in another thread that you are still here. If I
-understand correctly, you are the maintainer of gitk, meaning that all
-gitk patches go through you and then Junio pulls from you. I have this
-series [1] that I sent in out in April that I would like to get
-merged. Could you have a look at it?
+Scratch that, it "only" needs to mark every tip commit and then walk
+them back to about where the interesting commits end.
 
-Thanks,
-Martin
+In any case, since the uninteresting set only gets larger, it should
+be possible to reuse the same revision walker.
 
-
- [1] http://thread.gmane.org/gmane.comp.version-control.git/170853
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
