@@ -1,79 +1,83 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: Re: RFD: leveraging GitHub's asciidoc rendering for our Documentation/
-Date: Fri, 9 Sep 2011 08:45:52 -0700
-Message-ID: <CAP2yMaJ+UBHZp0U=QWOZbnbbOuq8vNoJODWtxZPb1sKXTC_UEg@mail.gmail.com>
-References: <4E6A23DB.1040606@drmicha.warpmail.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Git is not scalable with too many refs/*
+Date: Fri, 09 Sep 2011 17:51:04 +0200
+Message-ID: <4E6A35E8.8060502@alum.mit.edu>
+References: <BANLkTimEGjBMrbQpkZfWYPTZ93syiKFHdw@mail.gmail.com> <4DF6A8B6.9030301@op5.se> <20110614003029.GA31447@sigill.intra.peff.net> <7vtybtm3dl.fsf@alter.siamese.dyndns.org> <BANLkTimNoh3-Jde_-arzwBa=aUR+KK3Xhw@mail.gmail.com> <201106141202.46720.johan@herland.net> <20110614170214.GB26764@sigill.intra.peff.net> <BANLkTin0CjnM_hMaEpMroZdDhhavaoKAv00_4xBqeHj9biToVA@mail.gmail.com> <20110614194749.GA1567@sigill.intra.peff.net> <BANLkTi=GZDLu-ey1=h8LLDbWssoSpsM_jd7R-oFr+b+82Otb8g@mail.gmail.com> <1315511619144-6773496.post@n2.nabble.com> <4E6A19AD.80100@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Sep 09 17:46:10 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Martin Fick <mfick@codeaurora.org>
+X-From: git-owner@vger.kernel.org Fri Sep 09 17:51:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R23HC-0005Al-DZ
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 17:45:58 +0200
+	id 1R23Mo-0008AO-Go
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 17:51:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759122Ab1IIPpx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Sep 2011 11:45:53 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:61231 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751729Ab1IIPpw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Sep 2011 11:45:52 -0400
-Received: by ywf7 with SMTP id 7so1725558ywf.19
-        for <git@vger.kernel.org>; Fri, 09 Sep 2011 08:45:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=QyYzKP6ivmIFCIsSWT9DIN2tNPBzv8CILtyXzcLeNvg=;
-        b=bYCrGV6wyGZrPmIUA6w1EL5XZ6IEDNYrgzAdS4u+LGbr1IwPPrbtFb1WlnS0QAVuxJ
-         dzvOM96upTCepDuu/BSeTOQ4QP3nCUPF8Yg5hyu/nE5IzRXItuesoaIvVq9wex7Fe2yQ
-         HkWw/7yE2oTW2jhBr7uSCM28IOXe+YNS5MkwQ=
-Received: by 10.151.5.21 with SMTP id h21mr2361625ybi.438.1315583152387; Fri,
- 09 Sep 2011 08:45:52 -0700 (PDT)
-Received: by 10.151.154.18 with HTTP; Fri, 9 Sep 2011 08:45:52 -0700 (PDT)
-In-Reply-To: <4E6A23DB.1040606@drmicha.warpmail.net>
+	id S1759325Ab1IIPvT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Sep 2011 11:51:19 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:58807 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758478Ab1IIPvK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Sep 2011 11:51:10 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p89Fp4ms014914
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 9 Sep 2011 17:51:04 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.21) Gecko/20110831 Lightning/1.0b2 Thunderbird/3.1.13
+In-Reply-To: <4E6A19AD.80100@alum.mit.edu>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181081>
 
-Hey,
+I have answered some of my own questions:
 
-On Fri, Sep 9, 2011 at 7:34 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> which has all the renaming (*.txt -> *.asciidoc) and Makefile and script
-> changes, but is missing some include changes (because include breaks
-> anyway, see below).
+On 09/09/2011 03:50 PM, Michael Haggerty wrote:
+> 3. Try using the --no-replace-objects option (I assume that it can be
+> used like "git --no-replace-objects fetch ...").  In my case this option
+> made a dramatic improvement in the runtimes.
 
-I can change this so we can render .asc if that's less ugly.  I've
-been meaning to do this for a while, but I don't think I ever
-incorporated it.
+This does not seem to help much.
 
->
-> Our own customisation is not loaded (of course) so that, e.g., the
-> linkgit macro does not work; and the include statement makes GitHub's
-> parser unhappy and choke.
->
-> Does anybody feel this is worth pursuing?
->
-> + Nicer blob view
-> + Simpler way to judge documentation changes
-> - Need to get our asciidoc config in there
-> - GitHub's parser neeeds to learn include
+> 4. Try a test using a repository generated something like the test
+> script that I posted in [1].  If it also gives pathologically bad
+> performance, then it can serve as a test case to use while we debug the
+> problem.
 
-If this is interesting to people, I can help out.  However, you can
-also fix rendering issues, as long as they don't introduce security
-issues (which 'include' and macros can do) by fixing it here:
+Yes, a simple test repo like that created by the script is enough to
+reproduce the problem.  The slowdown becomes very obvious after only a
+few hundred references.
 
-https://github.com/github/markup
+Curiously, "git clone" is very fast under the same circumstances that
+"git fetch" is excruciatingly slow.
 
-That is the rendering engine we use.  If you make it work how you want
-and it's safe and you send us a pull request, we'll happily take fixes
-to the asciidoc renderer.
+According to strace, git seems to be repopulating the ref cache after
+each new ref is created (it walks through the whole refs subdirectory
+and reads every file).  Apparently the ref cache is being discarded
+completely whenever a ref is added (which can and should be fixed) and
+then being reloaded for some reason (though single refs can be inspected
+much faster without reading the cache).  This situation should be
+improved by the hierarchical refcache changes that I'm working on plus
+smarter updating (rather than discarding) of the cache when a new
+reference is created.
 
-Scott
+Some earlier speculation in this thread was that that slowdowns might be
+caused by "pessimal" ordering of revisions in the walker queue.  But my
+test repository shards the references in such a way that the lexical
+order of the refnames does not correspond to the topological order of
+the commits.  So that can't be the whole story.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
