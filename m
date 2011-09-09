@@ -1,72 +1,62 @@
-From: robert mena <robert.mena@gmail.com>
-Subject: Branching strategies
-Date: Fri, 9 Sep 2011 19:01:11 -0400
-Message-ID: <CAAZ43xaFzJWzPsqhP0QDRTP0Ea-dMpCpr1vDiujFFn94j+SRCQ@mail.gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [ANNOUNCE] GitTogether 2011 - Oct 24th/25th
+Date: Fri, 9 Sep 2011 16:10:04 -0700
+Message-ID: <CAJo=hJtjAjH-5XPjmcmtuY26=7NQMMjeuQmAWan7xgrhjffgTw@mail.gmail.com>
+References: <CAJo=hJu48DiVUDexuWJpVgq__zVTfO1Xz=AgfOz6wws00b2EaQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 10 01:02:45 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 10 01:10:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R2A5r-0001Sf-MY
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Sep 2011 01:02:44 +0200
+	id 1R2ADR-00048q-89
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Sep 2011 01:10:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934023Ab1IIXC3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Sep 2011 19:02:29 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:42778 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933979Ab1IIXBM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Sep 2011 19:01:12 -0400
-Received: by fxd22 with SMTP id 22so1097784fxd.19
-        for <git@vger.kernel.org>; Fri, 09 Sep 2011 16:01:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=4AlUNvlcQJrxfGOFu1ypwRu1W8J6POyxrenaEAaODL0=;
-        b=ZQj+Kxzco94veTyPqXRLfSJ5zZeVx3ZYW9nkejfvBl96CLNVmKDpgSvjsCTFBjjFjs
-         vU/hvyUbaLx45WSZg3KDugW6QoZADM/L9YdKtqOawl9XthXT3RHbuGkQmrX3dKkY2dYj
-         G3+eKO0EPyx+V4QNOEii5QXpbbgwJBBOL7/zE=
-Received: by 10.223.39.10 with SMTP id d10mr318281fae.136.1315609271128; Fri,
- 09 Sep 2011 16:01:11 -0700 (PDT)
-Received: by 10.223.105.147 with HTTP; Fri, 9 Sep 2011 16:01:11 -0700 (PDT)
+	id S1759956Ab1IIXKZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Sep 2011 19:10:25 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:56824 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759945Ab1IIXKZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Sep 2011 19:10:25 -0400
+Received: by ywf7 with SMTP id 7so2059902ywf.19
+        for <git@vger.kernel.org>; Fri, 09 Sep 2011 16:10:24 -0700 (PDT)
+Received: by 10.42.162.74 with SMTP id w10mr925946icx.163.1315609824081; Fri,
+ 09 Sep 2011 16:10:24 -0700 (PDT)
+Received: by 10.42.163.70 with HTTP; Fri, 9 Sep 2011 16:10:04 -0700 (PDT)
+In-Reply-To: <CAJo=hJu48DiVUDexuWJpVgq__zVTfO1Xz=AgfOz6wws00b2EaQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181130>
 
-Hi,
+On Mon, Sep 5, 2011 at 12:56, Shawn Pearce <spearce@spearce.org> wrote:
+> Google is once again hosting a 2 day user/developer conference for Gi=
+t
+> users and developers to get together, share experiences, and hack on
+> interesting features. This event will be held October 24th and 25th a=
+t
+> Google's headquarters in Mountain View, CA.
+>
+> More details along with sign-up (as space is limited) can be found on=
+ the wiki:
+>
+> =A0https://git.wiki.kernel.org/index.php/GitTogether11
 
-I have a project where I have to do a continuous integration, adding
-features/making changes on a daily basis.  Some changes are one liners
-with no functionality just, for example, textual changes or a new
-button.   Some are actual features or bug fixes.
+Lets try this one more time. Google has found us a much bigger space.
+We can now host a lot more people. :-)
 
-So today my developers do their business and publish the changes in a
-beta site where the customer or the qa takes a look.  The problem is
-a standard one.  Sometimes features stay already developed (waiting
-for review) for a long time and other changes/features get approved
-first.
+Since git.wiki.kernel.org is having issues, I've moved the sign-up list=
+:
 
-Since some of those can touch the same files how can I make this a
-little bit better (manageable)?
+  https://docs.google.com/a/google.com/spreadsheet/embeddedform?formkey=
+=3DdGVTN3M1ZnpTalVFSkVhUUJyRE5mQWc6MQ&ndplr=3D1
 
-I am considering doing feature branches.   The customer requests to
-add feature A I open a bug tracking issue and create a branch 1276
-corresponding to the bug id.
+Please re-register, and be sure to join the mailing list.
 
-In my simply view I'd have a master/live branch and every time I need
-to create a new branch I do it from here.  When the developer is happy
-he merges his branch with a beta branch where the Q&A/customer review
-is done.
-
-When this review gets an OK he merges his feature branch with the live
-one, redo the tests and publish.
-
-I'd really appreciate feedback for this specially for the weak points
-and known problems of my approach with alternatives :)
-
-Regards.
+--=20
+Shawn.
