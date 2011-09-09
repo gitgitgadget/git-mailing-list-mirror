@@ -1,78 +1,58 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: t0300-credentials: poll failed: invalid argument
-Date: Fri, 9 Sep 2011 16:13:13 +0200
-Message-ID: <201109091613.13137.trast@student.ethz.ch>
-References: <5C993C44-D045-4344-95C1-94D3E6DB0316@silverinsanity.com> <01E9C05C-A19D-45B0-B15D-DA6B911C11A9@silverinsanity.com> <20110829174309.GA11524@sigill.intra.peff.net>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: git repository size / compression
+Date: Fri, 9 Sep 2011 16:25:41 +0200
+Message-ID: <CAGdFq_iZSRuvNP6Z+Gao+TSVwDaEAREjCKYgiPVAXeSWbzq2EA@mail.gmail.com>
+References: <CALFxCvzVjC+u=RDkDCQp0QqPETsv8ROE8tY=37tmMWxmQoJOEw@mail.gmail.com>
+ <1315556595.2019.11.camel@bee.lab.cmartin.tk> <CALFxCvxmPN_O_3xpkrGUYtdkVfz5nr7eaucMrAYQ3uvi820FBg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Brian Gernhardt <benji@silverinsanity.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Sep 09 16:13:22 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
+	git@vger.kernel.org
+To: neubyr <neubyr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 09 16:26:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R21pZ-0006N6-Na
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 16:13:22 +0200
+	id 1R222E-0004zN-RY
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 16:26:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757175Ab1IIONQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Sep 2011 10:13:16 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:11325 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754536Ab1IIONP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Sep 2011 10:13:15 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.289.1; Fri, 9 Sep
- 2011 16:13:11 +0200
-Received: from thomas.inf.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.289.1; Fri, 9 Sep
- 2011 16:13:13 +0200
-User-Agent: KMail/1.13.7 (Linux/3.0.4-43-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <20110829174309.GA11524@sigill.intra.peff.net>
-X-Originating-IP: [129.132.153.233]
+	id S1759100Ab1IIO0W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Sep 2011 10:26:22 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:60227 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758785Ab1IIO0V (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Sep 2011 10:26:21 -0400
+Received: by pzk37 with SMTP id 37so2699540pzk.1
+        for <git@vger.kernel.org>; Fri, 09 Sep 2011 07:26:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=lZpFJs7b7JLG1P1KWv8hJkZ0jXuJzvxoN7DNbZ+yMPk=;
+        b=cgMcZAxFQwfa4YZz5DVeNrvU0D+RvqmrDN9ECP8r4KjB2CoTWL2ziWJQs5yYZ9ItVb
+         KtUWazxGRbMbY5qmsbXDb06MAl3U8X8/5DM0TCnXY3LLWIghFo+fQUKtlVauium4VH/8
+         Q8rtQlgPjYkOn0hfQjGO3HUwGOVRneifN78CU=
+Received: by 10.68.23.97 with SMTP id l1mr2994284pbf.232.1315578381060; Fri,
+ 09 Sep 2011 07:26:21 -0700 (PDT)
+Received: by 10.68.59.39 with HTTP; Fri, 9 Sep 2011 07:25:41 -0700 (PDT)
+In-Reply-To: <CALFxCvxmPN_O_3xpkrGUYtdkVfz5nr7eaucMrAYQ3uvi820FBg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181071>
 
-Jeff King wrote:
-> On Mon, Aug 29, 2011 at 01:28:05PM -0400, Brian Gernhardt wrote:
-> 
-> > > Ugh, sorry, this is my fault. The check_expiration() function can return
-> > > a totally bogus value before we actually get any credentials.
-> > > 
-> > > Does this patch fix it for you?
-> > 
-> > Yes it does!  Surprisingly enough, non-bogus parameters keeps poll
-> > from erroring with EINVAL.  Funny that.  ;-)
-> 
-> Great. I'm working on a few more patches on top of that topic, so I'll
-> add it to my list to send out in the next day or so.
+Heya,
 
-I'm still seeing this with current pu (from repo.or.cz), but only on
-OS X
+On Fri, Sep 9, 2011 at 16:04, neubyr <neubyr@gmail.com> wrote:
+> Does git store deltas for some files? I thought it uses snapshots
+> (exact copy of staged files) only.
 
-  $ uname -a
-  Darwin mackeller.inf.ethz.ch 11.1.0 Darwin Kernel Version 11.1.0: Tue Jul 26 16:07:11 PDT 2011; root:xnu-1699.22.81~1/RELEASE_X86_64 x86_64
-
-Where "this" is:
-
-  --- expect-stderr       2011-09-09 14:12:13.000000000 +0000
-  +++ stderr      2011-09-09 14:12:13.000000000 +0000
-  @@ -1,2 +1,3 @@
-   askpass: Username:
-   askpass: Password:
-  +fatal: poll failed: Invalid argument
-
-for each of the tests 15--19.  Is it supposed to be fixed?
-
-I don't have time to look into it without knowing what to search for,
-but if you want me to test anything on that OS X just ask.
+In packs, yes, it will try to delta objects as efficient as possible.
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Cheers,
+
+Sverre Rabbelier
