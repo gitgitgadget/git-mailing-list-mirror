@@ -1,78 +1,94 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: git repository size / compression
-Date: Fri, 9 Sep 2011 12:05:03 -0400
-Message-ID: <CAEBDL5U5-1nBGbWtb6+CfBrESoy8+p0Qqw1t1n_5EKFmpq9NhA@mail.gmail.com>
-References: <CALFxCvzVjC+u=RDkDCQp0QqPETsv8ROE8tY=37tmMWxmQoJOEw@mail.gmail.com>
-	<1315556595.2019.11.camel@bee.lab.cmartin.tk>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: RFD: leveraging GitHub's asciidoc rendering for our Documentation/
+Date: Fri, 09 Sep 2011 18:05:24 +0200
+Message-ID: <4E6A3944.8000403@drmicha.warpmail.net>
+References: <4E6A23DB.1040606@drmicha.warpmail.net> <CAP2yMaJ+UBHZp0U=QWOZbnbbOuq8vNoJODWtxZPb1sKXTC_UEg@mail.gmail.com> <4E6A378E.6020704@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: neubyr <neubyr@gmail.com>, git@vger.kernel.org
-To: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Fri Sep 09 18:05:17 2011
+Content-Transfer-Encoding: 7bit
+Cc: Scott Chacon <schacon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Sep 09 18:05:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R23Zp-0006pS-Om
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 18:05:14 +0200
+	id 1R23a9-0006yq-B9
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 18:05:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758900Ab1IIQFF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Sep 2011 12:05:05 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:58830 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751548Ab1IIQFE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Sep 2011 12:05:04 -0400
-Received: by vxi9 with SMTP id 9so1207552vxi.19
-        for <git@vger.kernel.org>; Fri, 09 Sep 2011 09:05:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=oJMMdTGRVZiZZdblU9peT5u56GCpvzFea9x8rFyBVck=;
-        b=ELUhKyIN5tJG6O/huXwHUt1bWnXU5LuTOG+OfSKb0RovA+WxKXVojlGX7AsHBdM8gm
-         Dpx+ptOb/FXwxuXa0y8yfXGOsr5269ZoQRZS6YsHotI65GcskF+MiJwiryO9aEESBChI
-         qAfjPTUem1TPGd66py049tlGrmJsbd5O/dtfQ=
-Received: by 10.52.112.163 with SMTP id ir3mr599911vdb.124.1315584303941; Fri,
- 09 Sep 2011 09:05:03 -0700 (PDT)
-Received: by 10.52.160.196 with HTTP; Fri, 9 Sep 2011 09:05:03 -0700 (PDT)
-In-Reply-To: <1315556595.2019.11.camel@bee.lab.cmartin.tk>
-X-Google-Sender-Auth: UlEt21zRx7LrhhZ5PC6PeTrXMos
+	id S1753796Ab1IIQF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Sep 2011 12:05:28 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:37449 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752443Ab1IIQF1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Sep 2011 12:05:27 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 719FC28F39;
+	Fri,  9 Sep 2011 12:05:26 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute3.internal (MEProxy); Fri, 09 Sep 2011 12:05:26 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=PQBHhoFE1ngKvSPcuMOCKu
+	sH6cw=; b=CMi+ZARsdwiYIFyNcCMB9epaiG+LHBoonqXgPQYhO//59ogLtZSPBV
+	Pq+UdsAhWrbfQliu7GIlqyTbAE+CdhKgGJvsCA7nlz5n3iJt4tjLO+Y1gLD/s4sH
+	tIcetk30Zt+F0aSbLhv0syezDiDp8cKFKFLA0Z+y8I06xi6f2+wwk=
+X-Sasl-enc: LB6gtKP8SYa9AStIZSBS/pbfuew4401glA77rYf+/POM 1315584326
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B0FD09C0690;
+	Fri,  9 Sep 2011 12:05:25 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
+In-Reply-To: <4E6A378E.6020704@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181090>
 
-On Fri, Sep 9, 2011 at 4:23 AM, Carlos Mart=C3=ADn Nieto <cmn@elego.de>=
- wrote:
-[snip]
->> Subversion repo/server:
->> {{{
->> $ du -h -d 1
->> =C2=A012K =C2=A0 =C2=A0./conf
->> 1.2M =C2=A0 =C2=A0./db
->> =C2=A036K =C2=A0 =C2=A0./hooks
->> 8.0K =C2=A0 =C2=A0./locks
->> 1.2M =C2=A0 =C2=A0.
->> }}}
->
-> I don't know how the repository is stored in Subversion, but it may a=
-lso
-> be compressed. You may be able to reduced your git repository size by
-> (re)generating packs with 'git repack' and doing some cleanups with '=
-git
-> gc', but the repository size is not often a concern.
+Michael Haggerty venit, vidit, dixit 09.09.2011 17:58:
+> On 09/09/2011 05:45 PM, Scott Chacon wrote:
+>> On Fri, Sep 9, 2011 at 7:34 AM, Michael J Gruber
+>> <git@drmicha.warpmail.net> wrote:
+>>> which has all the renaming (*.txt -> *.asciidoc) and Makefile and script
+>>> changes, but is missing some include changes (because include breaks
+>>> anyway, see below).
+>>
+>> I can change this so we can render .asc if that's less ugly.  I've
+>> been meaning to do this for a while, but I don't think I ever
+>> incorporated it.
+> 
+> What about letting the project set a gitattribute that tells github how
+> to render particular files?  It would not require files to be renamed,
+> and it would be more flexible.
+> 
+> OTOH it would not be possible to apply gitattributes (or file renamings)
+> to old revisions, so the history would continue to be rendered naively.
+>  But here's an additional idea: github could provide web access to the
+> equivalent of $GIT_DIR/info/attributes (a project-wide .gitattributes
+> file), which would allow the rendering of files in historical revisions
+> to be customized and would also allow github rendering behavior to be
+> defined even in projects that do not want github-specific tags in the
+> .gitattributes files in their project.
+> 
+> Michael
 
-It is stored compressed in Subversion, and it also generates deltas
-against previous versions.  IIRC, the delta algorithm in an xdelta
-based one, and then the data is run through compression.  Subversion
-will at times choose to self-compress the file, instead of doing a
-delta and compressing.  IIRC, there is some heuristics in there for
-determining when to do that, but I forget the exact method.
+I don't think that the naming is a problem. In fact, we have .txt files
+which are asciidoc and some which are not, so renaming the former is an
+improvement in itself.
 
-HTH!
+Also, I don't mean to replace our prerendered html. Just a nicer source
+view for documentation source.
 
--John
+Since this is about source view, we might not even want to execute an
+include - but we don't want the rendering to stop where there is one either.
+
+Besides linkgit and things like apostrophe, all our asciidoc marcos are
+workarounds for docbook, and thus a non-issue for html rendering.
+
+Don't know where the parser gets stuck. Maybe cwd is not where one
+thinks it is, and safe mode spoils the party.
+
+Michael
