@@ -1,158 +1,83 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: git repository size / compression
-Date: Fri, 09 Sep 2011 16:28:54 +0200
-Message-ID: <1315578547.4377.2.camel@centaur.lab.cmartin.tk>
-References: <CALFxCvzVjC+u=RDkDCQp0QqPETsv8ROE8tY=37tmMWxmQoJOEw@mail.gmail.com>
-	 <1315556595.2019.11.camel@bee.lab.cmartin.tk>
-	 <CALFxCvxmPN_O_3xpkrGUYtdkVfz5nr7eaucMrAYQ3uvi820FBg@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: RFD: leveraging GitHub's asciidoc rendering for our Documentation/
+Date: Fri, 09 Sep 2011 16:34:03 +0200
+Message-ID: <4E6A23DB.1040606@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-6rb1OnJVJK+bskvpzkq6"
-Cc: git@vger.kernel.org
-To: neubyr <neubyr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 09 16:29:21 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 09 16:34:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R2253-0006X8-B6
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 16:29:21 +0200
+	id 1R229o-0000gz-Dr
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Sep 2011 16:34:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759345Ab1IIO3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Sep 2011 10:29:15 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:43303 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759240Ab1IIO3I (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Sep 2011 10:29:08 -0400
-Received: from [192.168.0.2] (g226037176.adsl.alicedsl.de [92.226.37.176])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 87AC746156;
-	Fri,  9 Sep 2011 16:28:50 +0200 (CEST)
-In-Reply-To: <CALFxCvxmPN_O_3xpkrGUYtdkVfz5nr7eaucMrAYQ3uvi820FBg@mail.gmail.com>
-X-Mailer: Evolution 3.0.3- 
+	id S1759018Ab1IIOeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Sep 2011 10:34:09 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:49077 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759083Ab1IIOeG (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Sep 2011 10:34:06 -0400
+Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 4543025200
+	for <git@vger.kernel.org>; Fri,  9 Sep 2011 10:34:06 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute4.internal (MEProxy); Fri, 09 Sep 2011 10:34:06 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to
+	:subject:content-type:content-transfer-encoding; s=smtpout; bh=F
+	18weCQliwntM9iBLLKKkdfi1Vo=; b=qoqaAxAKFOK6T5vPSUVuh/1FE1L0Sbasf
+	BruSN4Kce08ljcouYBsBfzca38IwTi0rG1x3Wkd7HZvd1KGFZ7I4pwsKE0hTLWeO
+	5TZDOF3aLwsAlEIXm+KlIju1sv95aiz8A/i6aqOVdUasZjeOd3VZA7DpvKFLbwPg
+	74xMU8WX0U=
+X-Sasl-enc: rDopdXTWwQ9WtpvQ3Ggpf0ETgxijMHzJWB59Y1te/nk1 1315578845
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 93E8876032C
+	for <git@vger.kernel.org>; Fri,  9 Sep 2011 10:34:05 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181073>
 
+Hi there,
 
---=-6rb1OnJVJK+bskvpzkq6
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I've been looking more to GitHub lately and was wondering whether it is
+worth to leverage their automatic asciidoc rendering for our asciidoc
+files. I have put up a test tree at
 
-On Fri, 2011-09-09 at 09:04 -0500, neubyr wrote:
-> On Fri, Sep 9, 2011 at 3:23 AM, Carlos Mart=C3=ADn Nieto <cmn@elego.de> w=
-rote:
-> > On Thu, 2011-09-08 at 21:37 -0500, neubyr wrote:
-> >> I have a test git repository with just two files in it. One of the
-> >> file in it has a set of two lines that is repeated n times.
-> >> e.g.:
-> >> {{{
-> >> $ for i in {1..5}; do cat ./lexico.txt >> lexico1.txt &&  cat
-> >> ./lexico.txt >> lexico1.txt && mv ./lexico1.txt ./lexico.txt;  done
-> >> }}}
-> >>
-> >
-> > So you've just created some data that can be compressed quite
-> > efficiently.
-> >
-> >> I ran above command few times and performed commit after each run. Now
-> >> disk usage of this repository directory is mentioned below. The 419M
-> >> is working directory size and 2.7M is git repository/database size.
-> >>
-> >> {{{
-> >> $ du -h -d 1 .
-> >> 2.7M    ./.git
-> >> 419M    .
-> >>
-> >> }}}
-> >>
-> >> Is it because of the compression performed by git before storing data
-> >> (or before sending commit)??
-> >>
-> >
-> > Yes. Git stores its objects (the commit, the snapshot of the files,
-> > etc.) compressed. When these objects are stored in a pack, the size can
-> > be further reduced by storing some objects as deltas which describe the
-> > difference between itself and some other object in the object-db.
-> >
->=20
-> Does git store deltas for some files? I thought it uses snapshots
-> (exact copy of staged files) only.
+https://github.com/gitigit/git/tree/githubtest
 
-Yes and no. The data model for git is to always store snapshots, and it
-always expects to have the full files available. In a packfile, however,
-in order to save space, some objects are stored as deltas to other
-objects in the same file.
+which has all the renaming (*.txt -> *.asciidoc) and Makefile and script
+changes, but is missing some include changes (because include breaks
+anyway, see below).
 
-http://progit.org/book/ch9-4.html
+The simple renaming already gives a rendered display of blobs for
+simpler asciidoc files like release notes
 
->=20
->=20
-> >> Following were results with subversion:
-> >>
-> >> Subversion client (redundant(?) copy exists in .svn/text-base/
-> >> directory, hence double size in client):
-> >> {{{
-> >> $ du -h -d 1
-> >> 416M    ./.svn
-> >> 832M    .
-> >> }}}
-> >
-> > Subversion stores the "pristines" (which is the status of the files in
-> > the latest revision) inside the .svn directory. I wouldn't call this
-> > copy redundant, though, as it allows you to run diff locally. The
-> > pristines are stored uncompressed, which is why you half of the space i=
-s
-> > taken up by the .svn directory.
-> >
-> >>
-> >> Subversion repo/server:
-> >> {{{
-> >> $ du -h -d 1
-> >>  12K    ./conf
-> >> 1.2M    ./db
-> >>  36K    ./hooks
-> >> 8.0K    ./locks
-> >> 1.2M    .
-> >> }}}
-> >
-> > I don't know how the repository is stored in Subversion, but it may als=
-o
-> > be compressed. You may be able to reduced your git repository size by
-> > (re)generating packs with 'git repack' and doing some cleanups with 'gi=
-t
-> > gc', but the repository size is not often a concern.
-> >
-> >   cmn
-> >
-> >
-> >
->=20
-> that's helpful. thanks.
->=20
-> --
-> neuby.r
->=20
+https://github.com/gitigit/git/blob/githubtest/Documentation/RelNotes/1.7.7.asciidoc
 
+and api documentation
 
+https://github.com/gitigit/git/blob/githubtest/Documentation/technical/api-credentials.asciidoc
 
---=-6rb1OnJVJK+bskvpzkq6
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
+For the man pages, there are several problems as can be seen here:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+https://github.com/gitigit/git/blob/githubtest/Documentation/git-blame.asciidoc
 
-iQEcBAABAgAGBQJOaiKmAAoJEHKRP1jG7ZzTFTQH/3xpeeSZq8MXg+35ADZkW8sy
-ZqEN3iK2HnHKUC7na/AqgpigC3aAM8IrRhIN74PV0J+qCKTKm+T7AXBFXHQQ1Jyb
-DSbJ51ArlCPRiZhAUd9vIKgYdJQHbJZSCMbRrSNHzLbSC+53F8AguKEqUPQahw7x
-SUDjqwjQqLTJ2mgZDU2wruaWk46etz5pdXkEPTEmoRreENITDRKgGNgfCH3d1gkl
-Nq7bU8TnoVm+OBQZ22ZO1VQlqxxlP3FbaKQuceXaOUSSjfWQI/zn5Af927Ohn/DZ
-QayK4VSQFA28ZP/bitGv7SqXrYD9Grm77oPpKp9rl7YttoAXNmcMFnS2K5EBv2A=
-=3KqZ
------END PGP SIGNATURE-----
+Our own customisation is not loaded (of course) so that, e.g., the
+linkgit macro does not work; and the include statement makes GitHub's
+parser unhappy and choke.
 
---=-6rb1OnJVJK+bskvpzkq6--
+Does anybody feel this is worth pursuing?
+
++ Nicer blob view
++ Simpler way to judge documentation changes
+- Need to get our asciidoc config in there
+- GitHub's parser neeeds to learn include
+
+Michael
