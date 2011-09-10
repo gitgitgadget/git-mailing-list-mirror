@@ -1,116 +1,106 @@
 From: Haitao Li <lihaitao@gmail.com>
 Subject: Re: [PATCH v3] date.c: Support iso8601 timezone formats
-Date: Sat, 10 Sep 2011 16:06:50 +0800
-Message-ID: <CABk5KLgyk_MRd6DLkdaK2s_5pxLQNipKmLJtCjNO2TaLLEr6UA@mail.gmail.com>
+Date: Sat, 10 Sep 2011 16:29:06 +0800
+Message-ID: <CABk5KLi-Q+qWokZFJGF+uDvkxGJVvFO4y38H8B1sO6SnHOWYpA@mail.gmail.com>
 References: <1315320996-1997-1-git-send-email-lihaitao@gmail.com>
  <1315563033-9476-1-git-send-email-lihaitao@gmail.com> <7vhb4lvflb.fsf@alter.siamese.dyndns.org>
+ <7vd3f9ve9m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: base64
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 10 10:07:50 2011
+X-From: git-owner@vger.kernel.org Sat Sep 10 10:29:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R2IbO-0001m0-1z
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Sep 2011 10:07:50 +0200
+	id 1R2Iwb-0001JV-5P
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Sep 2011 10:29:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755667Ab1IJIHP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Sep 2011 04:07:15 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:40804 "EHLO
+	id S1758479Ab1IJI33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Sep 2011 04:29:29 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:61208 "EHLO
 	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754890Ab1IJIHL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Sep 2011 04:07:11 -0400
-Received: by vxi9 with SMTP id 9so1676731vxi.19
-        for <git@vger.kernel.org>; Sat, 10 Sep 2011 01:07:10 -0700 (PDT)
+	with ESMTP id S1754934Ab1IJI30 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Sep 2011 04:29:26 -0400
+Received: by vxi9 with SMTP id 9so1682567vxi.19
+        for <git@vger.kernel.org>; Sat, 10 Sep 2011 01:29:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=BrKevJPPAR/jw2hQZe8L6RPvBXmUQVkKY25E5TRjKz8=;
-        b=Ku5o+CRs4jzQYj5nLuQzNtCz6pJvFHvoN0r5nubKR4/CrDYNq2k6Ig3ROZgzFrkGho
-         LgJt4l7CHJJagzyRkQ7olej7jcBfOsHGdTChmQR0g85TbnAFHSE1p6gT+DwSU8mQo2n8
-         3mrTUSJJ6l8kqkQwKsXjA+GFn3ulBXAUAMBqQ=
-Received: by 10.52.178.164 with SMTP id cz4mr388426vdc.467.1315642030132; Sat,
- 10 Sep 2011 01:07:10 -0700 (PDT)
-Received: by 10.52.159.129 with HTTP; Sat, 10 Sep 2011 01:06:50 -0700 (PDT)
-In-Reply-To: <7vhb4lvflb.fsf@alter.siamese.dyndns.org>
+        bh=d2GNvJzP9fNzqyouuFZg5wovyFfScSVFilh9GK72fig=;
+        b=jg7cNyLA0kSdmuTOoOdhIM/c/6dfYI24cCrw8a2WdLAt3ozN9DsDrf9yrWl61pR5Q9
+         wL2aRGnre4XRshvMLRmU0WRxyVsVEfnCR+ukDEP8/hEoBIgWmxtAlFB++U0l9MwLtVE4
+         Y/0llRBdHJCPNTafNi9i6+pTlu49PEKZQNvpk=
+Received: by 10.52.93.1 with SMTP id cq1mr450625vdb.400.1315643366070; Sat, 10
+ Sep 2011 01:29:26 -0700 (PDT)
+Received: by 10.52.159.129 with HTTP; Sat, 10 Sep 2011 01:29:06 -0700 (PDT)
+In-Reply-To: <7vd3f9ve9m.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181150>
 
-On Sat, Sep 10, 2011 at 12:35 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Haitao Li <lihaitao@gmail.com> writes:
->
->> Timezone designators including additional separator (`:`) are ignore=
-d.
->> Actually zone designators in below formats are all valid according t=
-o
->> ISO8601:2004, section 4.3.2:
->> =C2=A0 =C2=A0 [+-]hh, [+-]hhmm, [+-]hh:mm
->
-> Thanks for a re-roll.
->
->> This patch teaches git recognizing zone designators with hours and
->> minutes separated by colon, or minutes are empty.
->
-> The last sentence above makes it sound as if you are accepting
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0"2011-09-17 12:34:56 +09:"
->
-> but I suspect that is not what you intend to allow. =C2=A0Perhaps "we=
- allowed
-> hh and hhmm and this teaches Git to recognize hh:mm format as well"?
->
-Yes, this is a better one. Sorry for my English, and thanks for the sug=
-gestion.
-
->> diff --git a/t/t0006-date.sh b/t/t0006-date.sh
->> index f87abb5..5235b7a 100755
->> --- a/t/t0006-date.sh
->> +++ b/t/t0006-date.sh
->> @@ -40,6 +40,11 @@ check_parse 2008-02 bad
->> =C2=A0check_parse 2008-02-14 bad
->> =C2=A0check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 +0000'
->> =C2=A0check_parse '2008-02-14 20:30:45 -0500' '2008-02-14 20:30:45 -=
-0500'
->> +check_parse '2008-02-14 20:30:45 -0015' '2008-02-14 20:30:45 -0015'
->> +check_parse '2008-02-14 20:30:45 -5' '2008-02-14 20:30:45 -0500'
->> +check_parse '2008-02-14 20:30:45 -05' '2008-02-14 20:30:45 -0500'
->> +check_parse '2008-02-14 20:30:45 -:30' '2008-02-14 20:30:45 +0000'
->> +check_parse '2008-02-14 20:30:45 -05:00' '2008-02-14 20:30:45 -0500=
-'
->> =C2=A0check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 -0500' =
-EST5
->
-> The above are from Peff, no? =C2=A0We should credit him for tests in =
-the
-> proposed log message.
-
-Yes, we should credit Peff. Sorry for not knowing log message is used f=
-or this.
-
->
-> Because the three formats 8601 specifies are "hh", "hhmm", or "hh:mm"
-> after +/-, among the above new tests, it appears to me that zone
-> designators "-5" and "-:30" should yield "bad", instead of being acce=
-pted.
-
-Yes, the spec clearly states 2 digits are mandatory. "-5" should be
-regarded as invalid here.
-
-The above test *ignores* ":30" by setting offset to "+0000", this is
-to conform to how it works previously, less than 3 digits in offset
-are ignored. I agree it's better to *reject* them instead.
-
-> The same for "+09:" I mentioned above, which is not in the new test.
->
-Will add.
-
-Thanks again for the suggestions!
+Pgo+IEFsc28sIEkgZG8gbm90IHF1aXRlIHVuZGVyc3RhbmQgd2h5IHRoZSBtYXRjaF90eigpIGxv
+Z2ljIG5lZWRzIHRvIGJlIHRoYXQKPiBsb25nLgo+Cj4gV291bGRuJ3Qgc29tZXRoaW5nIGxpa2Ug
+dGhpcyBwYXRjaCAob24gdG9wIG9mIHlvdXJzKSBlYXNpZXIgdG8gZm9sbG93PwoKSSB3YXMgd3Jv
+bmcgYWJvdXQgYWNjZXB0aW5nIG9uZSBkaWdpdCBpbiBob3VycyBvciBtaW51dGVzLiBBbmQgeWVz
+CnlvdXIgdmVyc2lvbiBpcyBjb25jaXNlciBhbmQgZWFzaWVyIHRvIGZvbGxvdy4gVGhhbmtzIQoK
+Pgo+IMKgZGF0ZS5jIHwgwqAgNTAgKysrKysrKysrKysrKysrKysrKysrLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0KPiDCoDEgZmlsZXMgY2hhbmdlZCwgMjEgaW5zZXJ0aW9ucygrKSwgMjkg
+ZGVsZXRpb25zKC0pCj4KPiBkaWZmIC0tZ2l0IGEvZGF0ZS5jIGIvZGF0ZS5jCj4gaW5kZXggZjg3
+MjJjMS4uNjA3OWIxYSAxMDA2NDQKPiAtLS0gYS9kYXRlLmMKPiArKysgYi9kYXRlLmMKPiBAQCAt
+NTUxLDQ0ICs1NTEsMzYgQEAgc3RhdGljIGludCBtYXRjaF9kaWdpdChjb25zdCBjaGFyICpkYXRl
+LCBzdHJ1Y3QgdG0gKnRtLCBpbnQgKm9mZnNldCwgaW50ICp0bV9nbXQKPgo+IMKgc3RhdGljIGlu
+dCBtYXRjaF90eihjb25zdCBjaGFyICpkYXRlLCBpbnQgKm9mZnApCj4gwqB7Cj4gKyDCoCDCoCDC
+oCBpbnQgbWluOwo+IMKgIMKgIMKgIMKgY2hhciAqZW5kOwo+IC0gwqAgwqAgwqAgaW50IG9mZnNl
+dCA9IHN0cnRvdWwoZGF0ZSsxLCAmZW5kLCAxMCk7Cj4gLSDCoCDCoCDCoCBpbnQgbWluLCBob3Vy
+Owo+IC0gwqAgwqAgwqAgaW50IG4gPSBlbmQgLSBkYXRlIC0gMTsKPiArIMKgIMKgIMKgIGludCBo
+b3VyID0gc3RydG91bChkYXRlICsgMSwgJmVuZCwgMTApOwo+ICsgwqAgwqAgwqAgaW50IG4gPSBl
+bmQgLSAoZGF0ZSArIDEpOwo+Cj4gLSDCoCDCoCDCoCAvKgo+IC0gwqAgwqAgwqAgwqAqIElTTzg2
+MDE6MjAwNChFKSBhbGxvd3MgdGltZSB6b25lIGRlc2lnbmF0b3IgYmVlbiBzZXBhcmF0ZWQKPiAt
+IMKgIMKgIMKgIMKgKiBieSBhIGNsb25lIGluIHRoZSBleHRlbmRlZCBmb3JtYXQKPiAtIMKgIMKg
+IMKgIMKgKi8KPiAtIMKgIMKgIMKgIGlmICgqZW5kID09ICc6Jykgewo+IC0gwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgaWYgKGlzZGlnaXQoZW5kWzFdKSkgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgaG91ciA9IG9mZnNldDsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIG1pbiA9IHN0cnRvdWwoZW5kKzEsICZlbmQsIDEwKTsKPiAtIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIH0gZWxzZSB7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCAvKiBN
+YXJrIGFzIGludmFsaWQgKi8KPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIG4g
+PSAtMTsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0KPiAtIMKgIMKgIMKgIH0gZWxzZSB7Cj4g
+LSDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAobiA9PSAxIHx8IG4gPT0gMikgewo+IC0gwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgLyogT25seSBob3VycyBzcGVjaWZpZWQgKi8KPiAt
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGhvdXIgPSBvZmZzZXQ7Cj4gLSDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBtaW4gPSAwOwo+IC0gwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgfSBlbHNlIHsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGhvdXIg
+PSBvZmZzZXQgLyAxMDA7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBtaW4g
+PSBvZmZzZXQgJSAxMDA7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9Cj4gKyDCoCDCoCDCoCBp
+ZiAobiA9PSA0KSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCAvKiBoaG1tICovCj4gKyDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCBtaW4gPSBob3VyICUgMTAwOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgaG91ciA9IGhvdXIgLyAxMDA7Cj4gKyDCoCDCoCDCoCB9IGVsc2UgaWYgKG4gIT0gMikgewo+
+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgbWluID0gOTk7IC8qIHJhbmRvbSBjcmFwICovCj4gKyDC
+oCDCoCDCoCB9IGVsc2UgaWYgKCplbmQgPT0gJzonKSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCAvKiBoaDptbT8gKi8KPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIG1pbiA9IHN0cnRvdWwoZW5k
+ICsgMSwgJmVuZCwgMTApOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKGVuZCAtIChkYXRl
+ICsgMSkgIT0gNSkKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIG1pbiA9IDk5
+OyAvKiByYW5kb20gY3JhcCAqLwo+IMKgIMKgIMKgIMKgfQo+Cj4gwqAgwqAgwqAgwqAvKgo+IC0g
+wqAgwqAgwqAgwqAqIERvbid0IGFjY2VwdCBhbnkgcmFuZG9tIGNyYXAuLiBXZSBtaWdodCB3YW50
+IHRvIGNoZWNrIHRoYXQKPiAtIMKgIMKgIMKgIMKgKiB0aGUgbWludXRlcyBhcmUgZGl2aXNpYmxl
+IGJ5IDE1IG9yIHNvbWV0aGluZyB0b28uIChPZmZzZXQgb2YKPiArIMKgIMKgIMKgIMKgKiBEb24n
+dCBhY2NlcHQgYW55IHJhbmRvbSBjcmFwLiBFdmVuIHRob3VnaCBzb21lIHBsYWNlcyBoYXZlCj4g
+KyDCoCDCoCDCoCDCoCogb2Zmc2V0IGxhcmdlciB0aGFuIDEyIGhvdXJzIChlLmcuIFBhY2lmaWMv
+S2lyaXRpbWF0aSBpcyBhdAo+ICsgwqAgwqAgwqAgwqAqIFVUQysxNCksIHRoZXJlIGlzIHNvbWV0
+aGluZyB3cm9uZyBpZiBob3VyIHBhcnQgaXMgbXVjaAo+ICsgwqAgwqAgwqAgwqAqIGxhcmdlciB0
+aGFuIHRoYXQuIFdlIG1pZ2h0IGFsc28gd2FudCB0byBjaGVjayB0aGF0IHRoZQo+ICsgwqAgwqAg
+wqAgwqAqIG1pbnV0ZXMgYXJlIGRpdmlzaWJsZSBieSAxNSBvciBzb21ldGhpbmcgdG9vLiAoT2Zm
+c2V0IG9mCj4gwqAgwqAgwqAgwqAgKiBLYXRobWFuZHUsIE5lcGFsIGlzIFVUQys1OjQ1KQo+IMKg
+IMKgIMKgIMKgICovCj4gLSDCoCDCoCDCoCBpZiAobiA+IDAgJiYgbWluIDwgNjApIHsKPiAtIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIG9mZnNldCA9IGhvdXIqNjArbWluOwo+ICsgwqAgwqAgwqAgaWYg
+KG1pbiA8IDYwICYmIGhvdXIgPCAyNCkgewo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaW50IG9m
+ZnNldCA9IGhvdXIgKiA2MCArIG1pbjsKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGlmICgqZGF0
+ZSA9PSAnLScpCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBvZmZzZXQgPSAt
+b2Zmc2V0Owo+IC0KPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCpvZmZwID0gb2Zmc2V0Owo+IMKg
+IMKgIMKgIMKgfQo+IMKgIMKgIMKgIMKgcmV0dXJuIGVuZCAtIGRhdGU7Cj4K
