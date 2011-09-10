@@ -1,67 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/4] Signed push
-Date: Sat, 10 Sep 2011 09:30:29 -0700
-Message-ID: <7vehzopdga.fsf@alter.siamese.dyndns.org>
-References: <1315512102-19022-1-git-send-email-gitster@pobox.com>
- <1315600904-17032-1-git-send-email-gitster@pobox.com>
- <7vipp1otyp.fsf@alter.siamese.dyndns.org>
- <CAGdFq_hWVPCEeJKKccp4Wc-j+XMSFXqRf6VYd7ngLER8RhODRQ@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [RFC/PATCH] t9159-*.sh: Don't use the svn '@<rev>' syntax
+Date: Sat, 10 Sep 2011 18:40:10 +0100
+Message-ID: <4E6BA0FA.9070103@ramsay1.demon.co.uk>
+References: <4E21D295.7020600@ramsay1.demon.co.uk> <7vvcuy82kn.fsf@alter.siamese.dyndns.org> <4E269AB6.8070207@drmicha.warpmail.net> <4E27098B.906@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 10 18:34:53 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Wong <normalperson@yhbt.net>,
+	GIT Mailing-list <git@vger.kernel.org>, mhagger@alum.mit.edu
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Sat Sep 10 19:44:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R2QW4-0004Yx-Hz
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Sep 2011 18:34:52 +0200
+	id 1R2RbF-0007AT-2Q
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Sep 2011 19:44:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933440Ab1IJQad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Sep 2011 12:30:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35972 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933370Ab1IJQac (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Sep 2011 12:30:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 743815AAB;
-	Sat, 10 Sep 2011 12:30:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=v88IJQh6FLmi52VXDg7OunVhIlE=; b=CePYSo
-	GkCSyA9684GXoVF8bF9w56W74fEstO3A6LhKugi3Fgosfs16/k/PkLzuOCcOTjrY
-	ZCPs+2C9OcFwZLGbcNCHrcLmvyKz/KuIz5rcUjwfIGMyIfDeEn7tbJNuN7OCdc4E
-	9bIaheaNKGzTpdTdxw0bMZjj9BqaeK6WBbY1o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pt92ryeTZ3j6B9GkcwJXr1jIqXxzEo2+
-	KFI49ITm5cNN7p8vbf9NOfeyQHoSS4ebRGvoVMGYaIAdGD0LPWQpTi9Sq4zWINQm
-	7fNfsW5O9jfaidmFDI/loUJrIPiON0Md5ir4afo7qc+dWGgzxpiseNJGXQ3la9WM
-	O1puuewe/eQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B45D5AAA;
-	Sat, 10 Sep 2011 12:30:31 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 051DA5AA3; Sat, 10 Sep 2011
- 12:30:30 -0400 (EDT)
-In-Reply-To: <CAGdFq_hWVPCEeJKKccp4Wc-j+XMSFXqRf6VYd7ngLER8RhODRQ@mail.gmail.com> (Sverre
- Rabbelier's message of "Sat, 10 Sep 2011 17:17:14 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 33385A66-DBCA-11E0-A227-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933725Ab1IJRoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Sep 2011 13:44:08 -0400
+Received: from anchor-post-3.mail.demon.net ([195.173.77.134]:44213 "EHLO
+	anchor-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933486Ab1IJRoH (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Sep 2011 13:44:07 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-3.mail.demon.net with esmtp (Exim 4.69)
+	id 1R2Rb3-0003rY-ml; Sat, 10 Sep 2011 17:44:06 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <4E27098B.906@vilain.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181158>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+Sam Vilain wrote:
+> On 20/07/11 10:07, Michael J Gruber wrote:
+>> path@REV are so-called peg revisions, introduced in svn 1.1, and denote
+>> "I mean the file named path in REV" (as opposed to "the file named path
+>> now and maybe differently back then"). It (now) defaults to BASE (for
+>> worktree) resp. HEAD (for URLs). A bit like our rename detection.
+>>
+>> -r REV specifies the operative revision. After resolving the
+>> name/location using the pegrev, the version at the resolved path at the
+>> oprative version is operated on.
+>>
+>> svn 1.5.0 (June 2008) introduced peg revisions to "svn copy", so I
+>> assume our people were following svn trunk and adjusting in 2007 already
+>> (to r22964). There were some fixes to "svn copy" with peg later on.
+>>
+>> I do not understand the above commit message at all; and I did not find
+>> anything about how "svn copy -r REV" acted in svn 1.4. I would assume
+>> "operative revision", and the above commit message seems to imply that
+>> peg defaulted to REV here (not HEAD) and that that changed in 1.5.0, but
+>> that is a wild guess (svnbook 1.4 does not so anything).
+> 
+> What happened is that I noticed that the code stopped working after svn
+> 1.5 was released.  Previously I wrote it to detect the merge properties
+> as left by SVK and the experimental/contrib python script for merging. 
+> I was testing at times using trunk SVN versions.  You could probably
+> figure it out by running ffab6268^ with svn 1.4.x vs svn 1.5.x if you
+> cared.  My comment tries to explain what you describe above, but without
+> the correct terms.  I could see via experimentation what the difference
+> was between "-r N" and '/path@N', and that the behaviour changed in svn
+> 1.5.  Apologies for not explaining this thoroughly enough in the
+> submitted description!
 
-> I think this is also some further motivation to have a
+Hmm, I was hoping that someone would say something like:
 
-Did you miss that I already mentioned that workaround?  It does not _fix_
-the fundamental breakage, which is that you are _forcing_ the sending side
-to keep copies, though.
+   "This test does not depend on the difference between the peg revision
+and the operative revision, because the history represented in the test
+repo is so simple that there *is* no difference, so Acked By: ... "
+
+But, since that didn't happen, maybe the patch given below would be more
+acceptable? (I personally prefer the original patch ...)
+
+Given that I didn't quite follow Sam's explanation, I still don't know
+if t9104-git-svn-follow-parent.sh needs to be changed (again, this test
+*passes* for me), so ... :-P
+
+ATB,
+Ramsay Jones
+
+-- >8 --
+Subject: [PATCH] t9159-*.sh: Add an svn version check
+
+
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+ t/t9159-git-svn-no-parent-mergeinfo.sh |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
+
+diff --git a/t/t9159-git-svn-no-parent-mergeinfo.sh b/t/t9159-git-svn-no-parent-mergeinfo.sh
+index 85120b7..69e4815 100755
+--- a/t/t9159-git-svn-no-parent-mergeinfo.sh
++++ b/t/t9159-git-svn-no-parent-mergeinfo.sh
+@@ -2,6 +2,14 @@
+ test_description='git svn handling of root commits in merge ranges'
+ . ./lib-git-svn.sh
+ 
++svn_ver="$(svn --version --quiet)"
++case $svn_ver in
++0.* | 1.[0-4].*)
++	skip_all="skipping git-svn test - SVN too old ($svn_ver)"
++	test_done
++	;;
++esac
++
+ test_expect_success 'test handling of root commits in merge ranges' '
+ 	mkdir -p init/trunk init/branches init/tags &&
+ 	echo "r1" > init/trunk/file.txt &&
+-- 
+1.7.6
