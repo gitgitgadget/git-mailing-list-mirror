@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 5/7] Add a library function normalize_refname()
-Date: Sat, 10 Sep 2011 08:50:41 +0200
-Message-ID: <1315637443-14012-6-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 4/7] Change check_ref_format() to take a flags argument
+Date: Sat, 10 Sep 2011 08:50:40 +0200
+Message-ID: <1315637443-14012-5-git-send-email-mhagger@alum.mit.edu>
 References: <1315637443-14012-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Junio C Hamano <gitster@pobox.com>, cmn@elego.de,
 	A Large Angry SCM <gitzilla@gmail.com>,
@@ -13,19 +13,19 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R2HPd-0001xv-9o
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Sep 2011 08:51:37 +0200
+	id 1R2HPe-0001xv-As
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Sep 2011 08:51:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756771Ab1IJGvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Sep 2011 02:51:09 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:33348 "EHLO
+	id S1758198Ab1IJGvZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Sep 2011 02:51:25 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:33359 "EHLO
 	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755660Ab1IJGvH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Sep 2011 02:51:07 -0400
+	with ESMTP id S1755657Ab1IJGvJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Sep 2011 02:51:09 -0400
 X-Envelope-From: mhagger@alum.mit.edu
 Received: from michael.fritz.box (p54BEAB10.dip.t-dialin.net [84.190.171.16])
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p8A6ol8v024666;
-	Sat, 10 Sep 2011 08:50:51 +0200
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p8A6ol8u024666;
+	Sat, 10 Sep 2011 08:50:50 +0200
 X-Mailer: git-send-email 1.7.6.8.gd2879
 In-Reply-To: <1315637443-14012-1-git-send-email-mhagger@alum.mit.edu>
 X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
@@ -33,271 +33,571 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181147>
 
-Implement check_ref_format() using the new function.  Also use it to
-replace collapse_slashes() in check-ref-format.c.
+Change check_ref_format() to take a flags argument that indicates what
+is acceptable in the reference name (analogous to --allow-onelevel and
+--refspec-pattern).  This is more convenient for callers and also
+fixes a failure in the test suite (and likely elsewhere in the code)
+by enabling "onelevel" and "refspec-pattern" to be allowed
+independently of each other.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/check-ref-format.c  |   41 ++++-------------
- refs.c                      |  109 +++++++++++++++++++++++++++----------------
- refs.h                      |   24 +++++++---
- t/t1402-check-ref-format.sh |    3 +
- 4 files changed, 98 insertions(+), 79 deletions(-)
+ builtin/check-ref-format.c  |   21 +----------------
+ builtin/checkout.c          |    2 +-
+ builtin/fetch-pack.c        |    2 +-
+ builtin/receive-pack.c      |    2 +-
+ builtin/replace.c           |    2 +-
+ builtin/show-ref.c          |    2 +-
+ builtin/tag.c               |    4 +-
+ connect.c                   |    2 +-
+ environment.c               |    2 +-
+ fast-import.c               |    7 +-----
+ notes-merge.c               |    5 ++-
+ pack-refs.c                 |    2 +-
+ refs.c                      |   42 +++++++++++++++------------------
+ refs.h                      |   17 +++++++++----
+ remote.c                    |   53 +++++++++++-------------------------------
+ sha1_name.c                 |    4 +-
+ t/t1402-check-ref-format.sh |    6 +----
+ transport.c                 |   15 ++---------
+ walker.c                    |    2 +-
+ 19 files changed, 67 insertions(+), 125 deletions(-)
 
 diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
-index c639400..4c202af 100644
+index 6bb9377..c639400 100644
 --- a/builtin/check-ref-format.c
 +++ b/builtin/check-ref-format.c
-@@ -11,28 +11,6 @@ static const char builtin_check_ref_format_usage[] =
- "git check-ref-format [--print] [options] <refname>\n"
- "   or: git check-ref-format --branch <branchname-shorthand>";
- 
--/*
-- * Remove leading slashes and replace each run of adjacent slashes in
-- * src with a single slash, and write the result to dst.
-- *
-- * This function is similar to normalize_path_copy(), but stripped down
-- * to meet check_ref_format's simpler needs.
-- */
--static void collapse_slashes(char *dst, const char *src)
--{
--	char ch;
--	char prev = '/';
--
--	while ((ch = *src++) != '\0') {
--		if (prev == '/' && ch == prev)
--			continue;
--
--		*dst++ = ch;
--		prev = ch;
--	}
--	*dst = '\0';
--}
--
- static int check_ref_format_branch(const char *arg)
- {
- 	struct strbuf sb = STRBUF_INIT;
-@@ -45,12 +23,15 @@ static int check_ref_format_branch(const char *arg)
- 	return 0;
- }
- 
--static void refname_format_print(const char *arg)
-+static int check_ref_format_print(const char *arg, int flags)
- {
--	char *refname = xmalloc(strlen(arg) + 1);
-+	int refnamelen = strlen(arg) + 1;
-+	char *refname = xmalloc(refnamelen);
- 
--	collapse_slashes(refname, arg);
-+	if (normalize_refname(refname, refnamelen, arg, flags))
-+		return 1;
+@@ -53,9 +53,6 @@ static void refname_format_print(const char *arg)
  	printf("%s\n", refname);
-+	return 0;
  }
  
+-#define REFNAME_ALLOW_ONELEVEL 1
+-#define REFNAME_REFSPEC_PATTERN 2
+-
  int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
-@@ -79,12 +60,8 @@ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
- 	}
+ {
+ 	int i;
+@@ -83,24 +80,8 @@ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
  	if (! (i == argc - 1))
  		usage(builtin_check_ref_format_usage);
--
--	if (check_ref_format(argv[i], flags))
--		return 1;
--
+ 
+-	switch (check_ref_format(argv[i])) {
+-	case CHECK_REF_FORMAT_OK:
+-		break;
+-	case CHECK_REF_FORMAT_ERROR:
++	if (check_ref_format(argv[i], flags))
+ 		return 1;
+-	case CHECK_REF_FORMAT_ONELEVEL:
+-		if (!(flags & REFNAME_ALLOW_ONELEVEL))
+-			return 1;
+-		else
+-			break;
+-	case CHECK_REF_FORMAT_WILDCARD:
+-		if (!(flags & REFNAME_REFSPEC_PATTERN))
+-			return 1;
+-		else
+-			break;
+-	default:
+-		die("internal error: unexpected value from check_ref_format()");
+-	}
+ 
  	if (print)
--		refname_format_print(argv[i]);
--
--	return 0;
-+		return check_ref_format_print(argv[i], flags);
-+	else
-+		return !!check_ref_format(argv[i], flags);
+ 		refname_format_print(argv[i]);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 3bb6525..2882116 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -882,7 +882,7 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 	new->name = arg;
+ 	setup_branch_path(new);
+ 
+-	if (check_ref_format(new->path) == CHECK_REF_FORMAT_OK &&
++	if (!check_ref_format(new->path, 0) &&
+ 	    resolve_ref(new->path, branch_rev, 1, NULL))
+ 		hashcpy(rev, branch_rev);
+ 	else
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 412bd32..411aa7d 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -544,7 +544,7 @@ static void filter_refs(struct ref **refs, int nr_match, char **match)
+ 	for (ref = *refs; ref; ref = next) {
+ 		next = ref->next;
+ 		if (!memcmp(ref->name, "refs/", 5) &&
+-		    check_ref_format(ref->name + 5))
++		    check_ref_format(ref->name + 5, 0))
+ 			; /* trash */
+ 		else if (args.fetch_all &&
+ 			 (!args.depth || prefixcmp(ref->name, "refs/tags/") )) {
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index ae164da..4e880ef 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -356,7 +356,7 @@ static const char *update(struct command *cmd)
+ 	struct ref_lock *lock;
+ 
+ 	/* only refs/... are allowed */
+-	if (prefixcmp(name, "refs/") || check_ref_format(name + 5)) {
++	if (prefixcmp(name, "refs/") || check_ref_format(name + 5, 0)) {
+ 		rp_error("refusing to create funny ref '%s' remotely", name);
+ 		return "funny refname";
+ 	}
+diff --git a/builtin/replace.c b/builtin/replace.c
+index fe3a647..15f0e5e 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -94,7 +94,7 @@ static int replace_object(const char *object_ref, const char *replace_ref,
+ 		     "refs/replace/%s",
+ 		     sha1_to_hex(object)) > sizeof(ref) - 1)
+ 		die("replace ref name too long: %.*s...", 50, ref);
+-	if (check_ref_format(ref))
++	if (check_ref_format(ref, 0))
+ 		die("'%s' is not a valid ref name.", ref);
+ 
+ 	if (!resolve_ref(ref, prev, 1, NULL))
+diff --git a/builtin/show-ref.c b/builtin/show-ref.c
+index 45f0340..375a14b 100644
+--- a/builtin/show-ref.c
++++ b/builtin/show-ref.c
+@@ -145,7 +145,7 @@ static int exclude_existing(const char *match)
+ 			if (strncmp(ref, match, matchlen))
+ 				continue;
+ 		}
+-		if (check_ref_format(ref)) {
++		if (check_ref_format(ref, 0)) {
+ 			warning("ref '%s' ignored", ref);
+ 			continue;
+ 		}
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 667515e..7aceaab 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -407,12 +407,12 @@ static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
+ static int strbuf_check_tag_ref(struct strbuf *sb, const char *name)
+ {
+ 	if (name[0] == '-')
+-		return CHECK_REF_FORMAT_ERROR;
++		return -1;
+ 
+ 	strbuf_reset(sb);
+ 	strbuf_addf(sb, "refs/tags/%s", name);
+ 
+-	return check_ref_format(sb->buf);
++	return check_ref_format(sb->buf, 0);
  }
+ 
+ int cmd_tag(int argc, const char **argv, const char *prefix)
+diff --git a/connect.c b/connect.c
+index ee1d4b4..292a9e2 100644
+--- a/connect.c
++++ b/connect.c
+@@ -22,7 +22,7 @@ static int check_ref(const char *name, int len, unsigned int flags)
+ 	len -= 5;
+ 
+ 	/* REF_NORMAL means that we don't want the magic fake tag refs */
+-	if ((flags & REF_NORMAL) && check_ref_format(name) < 0)
++	if ((flags & REF_NORMAL) && check_ref_format(name, 0))
+ 		return 0;
+ 
+ 	/* REF_HEADS means that we want regular branch heads */
+diff --git a/environment.c b/environment.c
+index e96edcf..8acbb87 100644
+--- a/environment.c
++++ b/environment.c
+@@ -106,7 +106,7 @@ static char *expand_namespace(const char *raw_namespace)
+ 		if (strcmp((*c)->buf, "/") != 0)
+ 			strbuf_addf(&buf, "refs/namespaces/%s", (*c)->buf);
+ 	strbuf_list_free(components);
+-	if (check_ref_format(buf.buf) != CHECK_REF_FORMAT_OK)
++	if (check_ref_format(buf.buf, 0))
+ 		die("bad git namespace path \"%s\"", raw_namespace);
+ 	strbuf_addch(&buf, '/');
+ 	return strbuf_detach(&buf, NULL);
+diff --git a/fast-import.c b/fast-import.c
+index 742e7da..4d55ee6 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -722,13 +722,8 @@ static struct branch *new_branch(const char *name)
+ 
+ 	if (b)
+ 		die("Invalid attempt to create duplicate branch: %s", name);
+-	switch (check_ref_format(name)) {
+-	case 0: break; /* its valid */
+-	case CHECK_REF_FORMAT_ONELEVEL:
+-		break; /* valid, but too few '/', allow anyway */
+-	default:
++	if (check_ref_format(name, REFNAME_ALLOW_ONELEVEL))
+ 		die("Branch name doesn't conform to GIT standards: %s", name);
+-	}
+ 
+ 	b = pool_calloc(1, sizeof(struct branch));
+ 	b->name = pool_strdup(name);
+diff --git a/notes-merge.c b/notes-merge.c
+index e1aaf43..bb8d7c8 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -570,7 +570,8 @@ int notes_merge(struct notes_merge_options *o,
+ 	/* Dereference o->local_ref into local_sha1 */
+ 	if (!resolve_ref(o->local_ref, local_sha1, 0, NULL))
+ 		die("Failed to resolve local notes ref '%s'", o->local_ref);
+-	else if (!check_ref_format(o->local_ref) && is_null_sha1(local_sha1))
++	else if (!check_ref_format(o->local_ref, 0) &&
++		is_null_sha1(local_sha1))
+ 		local = NULL; /* local_sha1 == null_sha1 indicates unborn ref */
+ 	else if (!(local = lookup_commit_reference(local_sha1)))
+ 		die("Could not parse local commit %s (%s)",
+@@ -583,7 +584,7 @@ int notes_merge(struct notes_merge_options *o,
+ 		 * Failed to get remote_sha1. If o->remote_ref looks like an
+ 		 * unborn ref, perform the merge using an empty notes tree.
+ 		 */
+-		if (!check_ref_format(o->remote_ref)) {
++		if (!check_ref_format(o->remote_ref, 0)) {
+ 			hashclr(remote_sha1);
+ 			remote = NULL;
+ 		} else {
+diff --git a/pack-refs.c b/pack-refs.c
+index 1290570..bc0032d 100644
+--- a/pack-refs.c
++++ b/pack-refs.c
+@@ -72,7 +72,7 @@ static void try_remove_empty_parents(char *name)
+ 	for (i = 0; i < 2; i++) { /* refs/{heads,tags,...}/ */
+ 		while (*p && *p != '/')
+ 			p++;
+-		/* tolerate duplicate slashes; see check_ref_format() */
++		/* tolerate duplicate slashes; see normalize_refname() */
+ 		while (*p == '/')
+ 			p++;
+ 	}
 diff --git a/refs.c b/refs.c
-index a206a4c..372350e 100644
+index fd29d89..a206a4c 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -872,55 +872,84 @@ static inline int bad_ref_char(int ch)
+@@ -872,10 +872,9 @@ static inline int bad_ref_char(int ch)
  	return 0;
  }
  
--int check_ref_format(const char *ref, int flags)
-+int normalize_refname(char *dst, int dstlen, const char *ref, int flags)
- {
--	int ch, level, last;
--	const char *cp = ref;
--
--	level = 0;
--	while (1) {
--		while ((ch = *cp++) == '/')
--			; /* tolerate duplicated slashes */
--		if (!ch)
--			/* should not end with slashes */
--			return -1;
-+	int ch, last, component_len, component_count = 0;
-+	const char *cp = ref, *component;
- 
--		/* we are at the beginning of the path component */
--		if (ch == '.')
--			return -1;
--		if (bad_ref_char(ch)) {
--			if ((flags & REFNAME_REFSPEC_PATTERN) && ch == '*' &&
--				(!*cp || *cp == '/'))
--				/* Accept one wildcard as a full refname component. */
--				flags &= ~REFNAME_REFSPEC_PATTERN;
--			else
--				return -1;
--		}
-+	ch = *cp;
-+	do {
-+		while (ch == '/')
-+			ch = *++cp; /* tolerate leading and repeated slashes */
- 
--		last = ch;
--		/* scan the rest of the path component */
--		while ((ch = *cp++) != 0) {
--			if (bad_ref_char(ch))
--				return -1;
--			if (ch == '/')
--				break;
-+		/*
-+		 * We are at the start of a path component.  Record
-+		 * its start for later reference.  If we are copying
-+		 * to dst, use the copy there, because we might be
-+		 * overwriting ref; otherwise, use the copy from the
-+		 * input string.
-+		 */
-+		component = dst ? dst : cp;
-+		component_len = 0;
-+		last = '\0';
-+		while (1) {
-+			if (ch != 0 && bad_ref_char(ch)) {
-+				if ((flags & REFNAME_REFSPEC_PATTERN) &&
-+					ch == '*' &&
-+					component_len == 0 &&
-+					(cp[1] == 0 || cp[1] == '/')) {
-+					/* Accept one wildcard as a full refname component. */
-+					flags &= ~REFNAME_REFSPEC_PATTERN;
-+				} else {
-+					/* Illegal character in refname */
-+					return -1;
-+				}
-+			}
- 			if (last == '.' && ch == '.')
-+				/* Refname must not contain "..". */
- 				return -1;
- 			if (last == '@' && ch == '{')
-+				/* Refname must not contain "@{". */
- 				return -1;
-+			if (dst) {
-+				if (dstlen-- <= 0)
-+					/* Output array was too small. */
-+					return -1;
-+				*dst++ = ch;
-+			}
-+			if (ch == 0 || ch == '/')
-+				break;
-+			++component_len;
- 			last = ch;
-+			ch = *++cp;
- 		}
--		level++;
--		if (!ch) {
--			if (ref <= cp - 2 && cp[-2] == '.')
--				return -1;
--			if (level < 2 && !(flags & REFNAME_ALLOW_ONELEVEL))
--				return -1;
--			if (has_extension(ref, ".lock"))
--				return -1;
--			return 0;
--		}
--	}
-+
-+		/* We are at the end of a path component. */
-+		++component_count;
-+		if (component_len == 0)
-+			/* Either ref was zero length or it ended with slash. */
-+			return -1;
-+
-+		if (component[0] == '.')
-+			/* Components must not start with '.'. */
-+			return -1;
-+	} while (ch != 0);
-+
-+	if (last == '.')
-+		/* Refname must not end with '.'. */
-+		return -1;
-+	if (component_len >= 5 && !memcmp(&component[component_len - 5], ".lock", 5))
-+		/* Refname must not end with ".lock". */
-+		return -1;
-+	if (!(flags & REFNAME_ALLOW_ONELEVEL) && component_count < 2)
-+		/* Refname must have at least two components. */
-+		return -1;
-+	return 0;
-+}
-+
+-int check_ref_format(const char *ref)
 +int check_ref_format(const char *ref, int flags)
-+{
-+	return normalize_refname(NULL, 0, ref, flags);
+ {
+ 	int ch, level, last;
+-	int ret = CHECK_REF_FORMAT_OK;
+ 	const char *cp = ref;
+ 
+ 	level = 0;
+@@ -884,41 +883,42 @@ int check_ref_format(const char *ref)
+ 			; /* tolerate duplicated slashes */
+ 		if (!ch)
+ 			/* should not end with slashes */
+-			return CHECK_REF_FORMAT_ERROR;
++			return -1;
+ 
+ 		/* we are at the beginning of the path component */
+ 		if (ch == '.')
+-			return CHECK_REF_FORMAT_ERROR;
++			return -1;
+ 		if (bad_ref_char(ch)) {
+-			if (ch == '*' && (!*cp || *cp == '/') &&
+-			    ret == CHECK_REF_FORMAT_OK)
+-				ret = CHECK_REF_FORMAT_WILDCARD;
++			if ((flags & REFNAME_REFSPEC_PATTERN) && ch == '*' &&
++				(!*cp || *cp == '/'))
++				/* Accept one wildcard as a full refname component. */
++				flags &= ~REFNAME_REFSPEC_PATTERN;
+ 			else
+-				return CHECK_REF_FORMAT_ERROR;
++				return -1;
+ 		}
+ 
+ 		last = ch;
+ 		/* scan the rest of the path component */
+ 		while ((ch = *cp++) != 0) {
+ 			if (bad_ref_char(ch))
+-				return CHECK_REF_FORMAT_ERROR;
++				return -1;
+ 			if (ch == '/')
+ 				break;
+ 			if (last == '.' && ch == '.')
+-				return CHECK_REF_FORMAT_ERROR;
++				return -1;
+ 			if (last == '@' && ch == '{')
+-				return CHECK_REF_FORMAT_ERROR;
++				return -1;
+ 			last = ch;
+ 		}
+ 		level++;
+ 		if (!ch) {
+ 			if (ref <= cp - 2 && cp[-2] == '.')
+-				return CHECK_REF_FORMAT_ERROR;
+-			if (level < 2)
+-				return CHECK_REF_FORMAT_ONELEVEL;
++				return -1;
++			if (level < 2 && !(flags & REFNAME_ALLOW_ONELEVEL))
++				return -1;
+ 			if (has_extension(ref, ".lock"))
+-				return CHECK_REF_FORMAT_ERROR;
+-			return ret;
++				return -1;
++			return 0;
+ 		}
+ 	}
+ }
+@@ -1103,7 +1103,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *ref, const unsigned char
+ struct ref_lock *lock_ref_sha1(const char *ref, const unsigned char *old_sha1)
+ {
+ 	char refpath[PATH_MAX];
+-	if (check_ref_format(ref))
++	if (check_ref_format(ref, 0))
+ 		return NULL;
+ 	strcpy(refpath, mkpath("refs/%s", ref));
+ 	return lock_ref_sha1_basic(refpath, old_sha1, 0, NULL);
+@@ -1111,13 +1111,9 @@ struct ref_lock *lock_ref_sha1(const char *ref, const unsigned char *old_sha1)
+ 
+ struct ref_lock *lock_any_ref_for_update(const char *ref, const unsigned char *old_sha1, int flags)
+ {
+-	switch (check_ref_format(ref)) {
+-	default:
++	if (check_ref_format(ref, REFNAME_ALLOW_ONELEVEL))
+ 		return NULL;
+-	case 0:
+-	case CHECK_REF_FORMAT_ONELEVEL:
+-		return lock_ref_sha1_basic(ref, old_sha1, flags, NULL);
+-	}
++	return lock_ref_sha1_basic(ref, old_sha1, flags, NULL);
  }
  
- const char *prettify_refname(const char *name)
+ static struct lock_file packlock;
 diff --git a/refs.h b/refs.h
-index b248ce6..8a15f83 100644
+index dfb086e..b248ce6 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -101,14 +101,24 @@ extern int for_each_reflog(each_ref_fn, void *);
- #define REFNAME_REFSPEC_PATTERN 2
- 
- /*
-- * Return 0 iff ref has the correct format for a refname according to
-- * the rules described in Documentation/git-check-ref-format.txt.  If
-- * REFNAME_ALLOW_ONELEVEL is set in flags, then accept one-level
-- * reference names.  If REFNAME_REFSPEC_PATTERN is set in flags, then
-- * allow a "*" wildcard character in place of one of the name
-- * components.
-+ * Check that ref is a valid refname according to the rules described
-+ * in Documentation/git-check-ref-format.txt and normalize it by
-+ * stripping out superfluous "/" characters.  If dst != NULL, write
-+ * the normalized refname to dst, which must be an allocated character
-+ * array with length dstlen (typically at least as long as ref).  dst
-+ * may point at the same memory as ref.  Return 0 iff the refname was
-+ * OK and fit into dst.  If REFNAME_ALLOW_ONELEVEL is set in flags,
-+ * then accept one-level reference names.  If REFNAME_REFSPEC_PATTERN
-+ * is set in flags, then allow a "*" wildcard characters in place of
-+ * one of the name components.
+@@ -97,11 +97,18 @@ int for_each_recent_reflog_ent(const char *ref, each_reflog_ent_fn fn, long, voi
   */
--extern int check_ref_format(const char *target, int flags);
-+extern int normalize_refname(char *dst, int dstlen, const char *ref, int flags);
+ extern int for_each_reflog(each_ref_fn, void *);
+ 
+-#define CHECK_REF_FORMAT_OK 0
+-#define CHECK_REF_FORMAT_ERROR (-1)
+-#define CHECK_REF_FORMAT_ONELEVEL (-2)
+-#define CHECK_REF_FORMAT_WILDCARD (-3)
+-extern int check_ref_format(const char *target);
++#define REFNAME_ALLOW_ONELEVEL 1
++#define REFNAME_REFSPEC_PATTERN 2
 +
 +/*
-+ * Return 0 iff ref has the correct format for a refname.  See
-+ * normalize_refname() for details.
++ * Return 0 iff ref has the correct format for a refname according to
++ * the rules described in Documentation/git-check-ref-format.txt.  If
++ * REFNAME_ALLOW_ONELEVEL is set in flags, then accept one-level
++ * reference names.  If REFNAME_REFSPEC_PATTERN is set in flags, then
++ * allow a "*" wildcard character in place of one of the name
++ * components.
 + */
-+extern int check_ref_format(const char *ref, int flags);
++extern int check_ref_format(const char *target, int flags);
  
  extern const char *prettify_refname(const char *refname);
  extern char *shorten_unambiguous_ref(const char *ref, int strict);
+diff --git a/remote.c b/remote.c
+index b8ecfa5..7059885 100644
+--- a/remote.c
++++ b/remote.c
+@@ -493,23 +493,6 @@ static void read_config(void)
+ }
+ 
+ /*
+- * We need to make sure the remote-tracking branches are well formed, but a
+- * wildcard refspec in "struct refspec" must have a trailing slash. We
+- * temporarily drop the trailing '/' while calling check_ref_format(),
+- * and put it back.  The caller knows that a CHECK_REF_FORMAT_ONELEVEL
+- * error return is Ok for a wildcard refspec.
+- */
+-static int verify_refname(char *name, int is_glob)
+-{
+-	int result;
+-
+-	result = check_ref_format(name);
+-	if (is_glob && result == CHECK_REF_FORMAT_WILDCARD)
+-		result = CHECK_REF_FORMAT_OK;
+-	return result;
+-}
+-
+-/*
+  * This function frees a refspec array.
+  * Warning: code paths should be checked to ensure that the src
+  *          and dst pointers are always freeable pointers as well
+@@ -532,13 +515,13 @@ static void free_refspecs(struct refspec *refspec, int nr_refspec)
+ static struct refspec *parse_refspec_internal(int nr_refspec, const char **refspec, int fetch, int verify)
+ {
+ 	int i;
+-	int st;
+ 	struct refspec *rs = xcalloc(sizeof(*rs), nr_refspec);
+ 
+ 	for (i = 0; i < nr_refspec; i++) {
+ 		size_t llen;
+ 		int is_glob;
+ 		const char *lhs, *rhs;
++		int flags;
+ 
+ 		is_glob = 0;
+ 
+@@ -576,6 +559,7 @@ static struct refspec *parse_refspec_internal(int nr_refspec, const char **refsp
+ 
+ 		rs[i].pattern = is_glob;
+ 		rs[i].src = xstrndup(lhs, llen);
++		flags = REFNAME_ALLOW_ONELEVEL | (is_glob ? REFNAME_REFSPEC_PATTERN : 0);
+ 
+ 		if (fetch) {
+ 			/*
+@@ -585,26 +569,20 @@ static struct refspec *parse_refspec_internal(int nr_refspec, const char **refsp
+ 			 */
+ 			if (!*rs[i].src)
+ 				; /* empty is ok */
+-			else {
+-				st = verify_refname(rs[i].src, is_glob);
+-				if (st && st != CHECK_REF_FORMAT_ONELEVEL)
+-					goto invalid;
+-			}
++			else if (check_ref_format(rs[i].src, flags))
++				goto invalid;
+ 			/*
+ 			 * RHS
+ 			 * - missing is ok, and is same as empty.
+ 			 * - empty is ok; it means not to store.
+ 			 * - otherwise it must be a valid looking ref.
+ 			 */
+-			if (!rs[i].dst) {
++			if (!rs[i].dst)
+ 				; /* ok */
+-			} else if (!*rs[i].dst) {
++			else if (!*rs[i].dst)
+ 				; /* ok */
+-			} else {
+-				st = verify_refname(rs[i].dst, is_glob);
+-				if (st && st != CHECK_REF_FORMAT_ONELEVEL)
+-					goto invalid;
+-			}
++			else if (check_ref_format(rs[i].dst, flags))
++				goto invalid;
+ 		} else {
+ 			/*
+ 			 * LHS
+@@ -616,8 +594,7 @@ static struct refspec *parse_refspec_internal(int nr_refspec, const char **refsp
+ 			if (!*rs[i].src)
+ 				; /* empty is ok */
+ 			else if (is_glob) {
+-				st = verify_refname(rs[i].src, is_glob);
+-				if (st && st != CHECK_REF_FORMAT_ONELEVEL)
++				if (check_ref_format(rs[i].src, flags))
+ 					goto invalid;
+ 			}
+ 			else
+@@ -630,14 +607,12 @@ static struct refspec *parse_refspec_internal(int nr_refspec, const char **refsp
+ 			 * - otherwise it must be a valid looking ref.
+ 			 */
+ 			if (!rs[i].dst) {
+-				st = verify_refname(rs[i].src, is_glob);
+-				if (st && st != CHECK_REF_FORMAT_ONELEVEL)
++				if (check_ref_format(rs[i].src, flags))
+ 					goto invalid;
+ 			} else if (!*rs[i].dst) {
+ 				goto invalid;
+ 			} else {
+-				st = verify_refname(rs[i].dst, is_glob);
+-				if (st && st != CHECK_REF_FORMAT_ONELEVEL)
++				if (check_ref_format(rs[i].dst, flags))
+ 					goto invalid;
+ 			}
+ 		}
+@@ -1427,8 +1402,8 @@ int get_fetch_map(const struct ref *remote_refs,
+ 
+ 	for (rmp = &ref_map; *rmp; ) {
+ 		if ((*rmp)->peer_ref) {
+-			int st = check_ref_format((*rmp)->peer_ref->name + 5);
+-			if (st && st != CHECK_REF_FORMAT_ONELEVEL) {
++			if (check_ref_format((*rmp)->peer_ref->name + 5,
++				REFNAME_ALLOW_ONELEVEL)) {
+ 				struct ref *ignore = *rmp;
+ 				error("* Ignoring funny ref '%s' locally",
+ 				      (*rmp)->peer_ref->name);
+@@ -1620,7 +1595,7 @@ static int one_local_ref(const char *refname, const unsigned char *sha1, int fla
+ 	int len;
+ 
+ 	/* we already know it starts with refs/ to get here */
+-	if (check_ref_format(refname + 5))
++	if (check_ref_format(refname + 5, 0))
+ 		return 0;
+ 
+ 	len = strlen(refname) + 1;
+diff --git a/sha1_name.c b/sha1_name.c
+index ff5992a..975ec3b 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -972,9 +972,9 @@ int strbuf_check_branch_ref(struct strbuf *sb, const char *name)
+ {
+ 	strbuf_branchname(sb, name);
+ 	if (name[0] == '-')
+-		return CHECK_REF_FORMAT_ERROR;
++		return -1;
+ 	strbuf_splice(sb, 0, 0, "refs/heads/", 11);
+-	return check_ref_format(sb->buf);
++	return check_ref_format(sb->buf, 0);
+ }
+ 
+ /*
 diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
-index d7e8d90..b0b773b 100755
+index 795301d..d7e8d90 100755
 --- a/t/t1402-check-ref-format.sh
 +++ b/t/t1402-check-ref-format.sh
-@@ -42,6 +42,7 @@ invalid_ref 'heads/foo..bar'
- invalid_ref 'heads/foo?bar'
- valid_ref 'foo./bar'
- invalid_ref 'heads/foo.lock'
-+invalid_ref 'heads///foo.lock'
- valid_ref 'heads/foo@bar'
- invalid_ref 'heads/v@{ation'
- invalid_ref 'heads/foo\bar'
-@@ -155,5 +156,7 @@ invalid_ref_normalized '/foo'
- invalid_ref_normalized 'heads/foo/../bar'
- invalid_ref_normalized 'heads/./foo'
- invalid_ref_normalized 'heads\foo'
-+invalid_ref_normalized 'heads/foo.lock'
-+invalid_ref_normalized 'heads///foo.lock'
+@@ -84,11 +84,7 @@ valid_ref "$ref" '--refspec-pattern --allow-onelevel'
  
- test_done
+ ref='*'
+ invalid_ref "$ref"
+-
+-#invalid_ref "$ref" --allow-onelevel
+-test_expect_failure "ref name '$ref' is invalid with options --allow-onelevel" \
+-	"test_must_fail git check-ref-format --allow-onelevel '$ref'"
+-
++invalid_ref "$ref" --allow-onelevel
+ invalid_ref "$ref" --refspec-pattern
+ valid_ref "$ref" '--refspec-pattern --allow-onelevel'
+ 
+diff --git a/transport.c b/transport.c
+index fa279d5..225d9b8 100644
+--- a/transport.c
++++ b/transport.c
+@@ -754,18 +754,9 @@ void transport_verify_remote_names(int nr_heads, const char **heads)
+ 			continue;
+ 
+ 		remote = remote ? (remote + 1) : local;
+-		switch (check_ref_format(remote)) {
+-		case 0: /* ok */
+-		case CHECK_REF_FORMAT_ONELEVEL:
+-			/* ok but a single level -- that is fine for
+-			 * a match pattern.
+-			 */
+-		case CHECK_REF_FORMAT_WILDCARD:
+-			/* ok but ends with a pattern-match character */
+-			continue;
+-		}
+-		die("remote part of refspec is not a valid name in %s",
+-		    heads[i]);
++		if (check_ref_format(remote, REFNAME_ALLOW_ONELEVEL|REFNAME_REFSPEC_PATTERN))
++			die("remote part of refspec is not a valid name in %s",
++				heads[i]);
+ 	}
+ }
+ 
+diff --git a/walker.c b/walker.c
+index dce7128..e5d8eb2 100644
+--- a/walker.c
++++ b/walker.c
+@@ -190,7 +190,7 @@ static int interpret_target(struct walker *walker, char *target, unsigned char *
+ {
+ 	if (!get_sha1_hex(target, sha1))
+ 		return 0;
+-	if (!check_ref_format(target)) {
++	if (!check_ref_format(target, 0)) {
+ 		struct ref *ref = alloc_ref(target);
+ 		if (!walker->fetch_ref(walker, ref)) {
+ 			hashcpy(sha1, ref->old_sha1);
 -- 
 1.7.6.8.gd2879
