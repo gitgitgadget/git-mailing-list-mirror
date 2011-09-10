@@ -1,106 +1,69 @@
-From: Haitao Li <lihaitao@gmail.com>
-Subject: Re: [PATCH v3] date.c: Support iso8601 timezone formats
-Date: Sat, 10 Sep 2011 16:29:06 +0800
-Message-ID: <CABk5KLi-Q+qWokZFJGF+uDvkxGJVvFO4y38H8B1sO6SnHOWYpA@mail.gmail.com>
-References: <1315320996-1997-1-git-send-email-lihaitao@gmail.com>
- <1315563033-9476-1-git-send-email-lihaitao@gmail.com> <7vhb4lvflb.fsf@alter.siamese.dyndns.org>
- <7vd3f9ve9m.fsf@alter.siamese.dyndns.org>
+From: Bastien Sevajol <sevajol.bastien@gmail.com>
+Subject: .gitignore don't ignore a file
+Date: Sat, 10 Sep 2011 12:29:45 +0200
+Message-ID: <4E6B3C19.4040908@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 10 10:29:45 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 10 12:29:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R2Iwb-0001JV-5P
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Sep 2011 10:29:45 +0200
+	id 1R2Ko7-0003gO-Si
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Sep 2011 12:29:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758479Ab1IJI33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Sep 2011 04:29:29 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:61208 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754934Ab1IJI30 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Sep 2011 04:29:26 -0400
-Received: by vxi9 with SMTP id 9so1682567vxi.19
-        for <git@vger.kernel.org>; Sat, 10 Sep 2011 01:29:26 -0700 (PDT)
+	id S1759125Ab1IJK27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Sep 2011 06:28:59 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:32993 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759112Ab1IJK26 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Sep 2011 06:28:58 -0400
+Received: by fxd22 with SMTP id 22so1426020fxd.19
+        for <git@vger.kernel.org>; Sat, 10 Sep 2011 03:28:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=d2GNvJzP9fNzqyouuFZg5wovyFfScSVFilh9GK72fig=;
-        b=jg7cNyLA0kSdmuTOoOdhIM/c/6dfYI24cCrw8a2WdLAt3ozN9DsDrf9yrWl61pR5Q9
-         wL2aRGnre4XRshvMLRmU0WRxyVsVEfnCR+ukDEP8/hEoBIgWmxtAlFB++U0l9MwLtVE4
-         Y/0llRBdHJCPNTafNi9i6+pTlu49PEKZQNvpk=
-Received: by 10.52.93.1 with SMTP id cq1mr450625vdb.400.1315643366070; Sat, 10
- Sep 2011 01:29:26 -0700 (PDT)
-Received: by 10.52.159.129 with HTTP; Sat, 10 Sep 2011 01:29:06 -0700 (PDT)
-In-Reply-To: <7vd3f9ve9m.fsf@alter.siamese.dyndns.org>
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=Mi1VZ0+CJtfHjntyuLnB1n1cLVXm4BuPx2cqpvG5ZX0=;
+        b=RuRtpG3+bT+fr8OrR+EdkPoXWn+OSCPH+qcitKn/2fpgolKncww/l7jwwX/LwAwzH3
+         IdqoeEaJSETwYHtmVkuIDl2jLzDz1Dyk8JvUAISSgXkriELTzAclT/xKJlLIHi9zLKB7
+         ZXwqgCwGwTsSP6GeLrJUxvZPTF7pmcIQpfI2M=
+Received: by 10.223.48.208 with SMTP id s16mr674116faf.75.1315650537676;
+        Sat, 10 Sep 2011 03:28:57 -0700 (PDT)
+Received: from [192.168.0.11] (lns-bzn-49f-62-147-167-221.adsl.proxad.net [62.147.167.221])
+        by mx.google.com with ESMTPS id c2sm4259714faf.16.2011.09.10.03.28.55
+        (version=SSLv3 cipher=OTHER);
+        Sat, 10 Sep 2011 03:28:56 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.21) Gecko/20110831 Thunderbird/3.1.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181151>
 
-Pgo+IEFsc28sIEkgZG8gbm90IHF1aXRlIHVuZGVyc3RhbmQgd2h5IHRoZSBtYXRjaF90eigpIGxv
-Z2ljIG5lZWRzIHRvIGJlIHRoYXQKPiBsb25nLgo+Cj4gV291bGRuJ3Qgc29tZXRoaW5nIGxpa2Ug
-dGhpcyBwYXRjaCAob24gdG9wIG9mIHlvdXJzKSBlYXNpZXIgdG8gZm9sbG93PwoKSSB3YXMgd3Jv
-bmcgYWJvdXQgYWNjZXB0aW5nIG9uZSBkaWdpdCBpbiBob3VycyBvciBtaW51dGVzLiBBbmQgeWVz
-CnlvdXIgdmVyc2lvbiBpcyBjb25jaXNlciBhbmQgZWFzaWVyIHRvIGZvbGxvdy4gVGhhbmtzIQoK
-Pgo+IMKgZGF0ZS5jIHwgwqAgNTAgKysrKysrKysrKysrKysrKysrKysrLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0KPiDCoDEgZmlsZXMgY2hhbmdlZCwgMjEgaW5zZXJ0aW9ucygrKSwgMjkg
-ZGVsZXRpb25zKC0pCj4KPiBkaWZmIC0tZ2l0IGEvZGF0ZS5jIGIvZGF0ZS5jCj4gaW5kZXggZjg3
-MjJjMS4uNjA3OWIxYSAxMDA2NDQKPiAtLS0gYS9kYXRlLmMKPiArKysgYi9kYXRlLmMKPiBAQCAt
-NTUxLDQ0ICs1NTEsMzYgQEAgc3RhdGljIGludCBtYXRjaF9kaWdpdChjb25zdCBjaGFyICpkYXRl
-LCBzdHJ1Y3QgdG0gKnRtLCBpbnQgKm9mZnNldCwgaW50ICp0bV9nbXQKPgo+IMKgc3RhdGljIGlu
-dCBtYXRjaF90eihjb25zdCBjaGFyICpkYXRlLCBpbnQgKm9mZnApCj4gwqB7Cj4gKyDCoCDCoCDC
-oCBpbnQgbWluOwo+IMKgIMKgIMKgIMKgY2hhciAqZW5kOwo+IC0gwqAgwqAgwqAgaW50IG9mZnNl
-dCA9IHN0cnRvdWwoZGF0ZSsxLCAmZW5kLCAxMCk7Cj4gLSDCoCDCoCDCoCBpbnQgbWluLCBob3Vy
-Owo+IC0gwqAgwqAgwqAgaW50IG4gPSBlbmQgLSBkYXRlIC0gMTsKPiArIMKgIMKgIMKgIGludCBo
-b3VyID0gc3RydG91bChkYXRlICsgMSwgJmVuZCwgMTApOwo+ICsgwqAgwqAgwqAgaW50IG4gPSBl
-bmQgLSAoZGF0ZSArIDEpOwo+Cj4gLSDCoCDCoCDCoCAvKgo+IC0gwqAgwqAgwqAgwqAqIElTTzg2
-MDE6MjAwNChFKSBhbGxvd3MgdGltZSB6b25lIGRlc2lnbmF0b3IgYmVlbiBzZXBhcmF0ZWQKPiAt
-IMKgIMKgIMKgIMKgKiBieSBhIGNsb25lIGluIHRoZSBleHRlbmRlZCBmb3JtYXQKPiAtIMKgIMKg
-IMKgIMKgKi8KPiAtIMKgIMKgIMKgIGlmICgqZW5kID09ICc6Jykgewo+IC0gwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgaWYgKGlzZGlnaXQoZW5kWzFdKSkgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgaG91ciA9IG9mZnNldDsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIG1pbiA9IHN0cnRvdWwoZW5kKzEsICZlbmQsIDEwKTsKPiAtIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIH0gZWxzZSB7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCAvKiBN
-YXJrIGFzIGludmFsaWQgKi8KPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIG4g
-PSAtMTsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0KPiAtIMKgIMKgIMKgIH0gZWxzZSB7Cj4g
-LSDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAobiA9PSAxIHx8IG4gPT0gMikgewo+IC0gwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgLyogT25seSBob3VycyBzcGVjaWZpZWQgKi8KPiAt
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGhvdXIgPSBvZmZzZXQ7Cj4gLSDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBtaW4gPSAwOwo+IC0gwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgfSBlbHNlIHsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGhvdXIg
-PSBvZmZzZXQgLyAxMDA7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBtaW4g
-PSBvZmZzZXQgJSAxMDA7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9Cj4gKyDCoCDCoCDCoCBp
-ZiAobiA9PSA0KSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCAvKiBoaG1tICovCj4gKyDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCBtaW4gPSBob3VyICUgMTAwOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgaG91ciA9IGhvdXIgLyAxMDA7Cj4gKyDCoCDCoCDCoCB9IGVsc2UgaWYgKG4gIT0gMikgewo+
-ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgbWluID0gOTk7IC8qIHJhbmRvbSBjcmFwICovCj4gKyDC
-oCDCoCDCoCB9IGVsc2UgaWYgKCplbmQgPT0gJzonKSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCAvKiBoaDptbT8gKi8KPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIG1pbiA9IHN0cnRvdWwoZW5k
-ICsgMSwgJmVuZCwgMTApOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKGVuZCAtIChkYXRl
-ICsgMSkgIT0gNSkKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIG1pbiA9IDk5
-OyAvKiByYW5kb20gY3JhcCAqLwo+IMKgIMKgIMKgIMKgfQo+Cj4gwqAgwqAgwqAgwqAvKgo+IC0g
-wqAgwqAgwqAgwqAqIERvbid0IGFjY2VwdCBhbnkgcmFuZG9tIGNyYXAuLiBXZSBtaWdodCB3YW50
-IHRvIGNoZWNrIHRoYXQKPiAtIMKgIMKgIMKgIMKgKiB0aGUgbWludXRlcyBhcmUgZGl2aXNpYmxl
-IGJ5IDE1IG9yIHNvbWV0aGluZyB0b28uIChPZmZzZXQgb2YKPiArIMKgIMKgIMKgIMKgKiBEb24n
-dCBhY2NlcHQgYW55IHJhbmRvbSBjcmFwLiBFdmVuIHRob3VnaCBzb21lIHBsYWNlcyBoYXZlCj4g
-KyDCoCDCoCDCoCDCoCogb2Zmc2V0IGxhcmdlciB0aGFuIDEyIGhvdXJzIChlLmcuIFBhY2lmaWMv
-S2lyaXRpbWF0aSBpcyBhdAo+ICsgwqAgwqAgwqAgwqAqIFVUQysxNCksIHRoZXJlIGlzIHNvbWV0
-aGluZyB3cm9uZyBpZiBob3VyIHBhcnQgaXMgbXVjaAo+ICsgwqAgwqAgwqAgwqAqIGxhcmdlciB0
-aGFuIHRoYXQuIFdlIG1pZ2h0IGFsc28gd2FudCB0byBjaGVjayB0aGF0IHRoZQo+ICsgwqAgwqAg
-wqAgwqAqIG1pbnV0ZXMgYXJlIGRpdmlzaWJsZSBieSAxNSBvciBzb21ldGhpbmcgdG9vLiAoT2Zm
-c2V0IG9mCj4gwqAgwqAgwqAgwqAgKiBLYXRobWFuZHUsIE5lcGFsIGlzIFVUQys1OjQ1KQo+IMKg
-IMKgIMKgIMKgICovCj4gLSDCoCDCoCDCoCBpZiAobiA+IDAgJiYgbWluIDwgNjApIHsKPiAtIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIG9mZnNldCA9IGhvdXIqNjArbWluOwo+ICsgwqAgwqAgwqAgaWYg
-KG1pbiA8IDYwICYmIGhvdXIgPCAyNCkgewo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaW50IG9m
-ZnNldCA9IGhvdXIgKiA2MCArIG1pbjsKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGlmICgqZGF0
-ZSA9PSAnLScpCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBvZmZzZXQgPSAt
-b2Zmc2V0Owo+IC0KPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCpvZmZwID0gb2Zmc2V0Owo+IMKg
-IMKgIMKgIMKgfQo+IMKgIMKgIMKgIMKgcmV0dXJuIGVuZCAtIGRhdGU7Cj4K
+Hello !
+I don't understand why my gitingnore don't want to ignore a file.
+I have this in my gitignore:
+
+> app/cache/
+> app/logs/
+> app/logs/dev.log
+> app/logs/prog.log
+> app/logs/test.log
+> *.log
+> *.*~
+> nbproject
+
+i've try with app/logs/.gitignore with this:
+
+> dev.log
+
+But, git don't ignore app/logs/dev.log :/
+
+Do you now why ?
+thank's =)
+
+bux.
