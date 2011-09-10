@@ -1,117 +1,134 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [RFC/PATCH] t9159-*.sh: Don't use the svn '@<rev>' syntax
-Date: Sat, 10 Sep 2011 18:40:10 +0100
-Message-ID: <4E6BA0FA.9070103@ramsay1.demon.co.uk>
-References: <4E21D295.7020600@ramsay1.demon.co.uk> <7vvcuy82kn.fsf@alter.siamese.dyndns.org> <4E269AB6.8070207@drmicha.warpmail.net> <4E27098B.906@vilain.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	GIT Mailing-list <git@vger.kernel.org>, mhagger@alum.mit.edu
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Sat Sep 10 19:44:18 2011
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: [PATCH 4/2] remote: only update remote-tracking branch if updating refspec
+Date: Sat, 10 Sep 2011 15:39:23 -0400
+Message-ID: <1315683563-11416-1-git-send-email-martin.von.zweigbergk@gmail.com>
+References: <7vr53rx9r6.fsf@alter.siamese.dyndns.org>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 10 21:39:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R2RbF-0007AT-2Q
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Sep 2011 19:44:17 +0200
+	id 1R2TP3-0003DQ-Md
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Sep 2011 21:39:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933725Ab1IJRoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Sep 2011 13:44:08 -0400
-Received: from anchor-post-3.mail.demon.net ([195.173.77.134]:44213 "EHLO
-	anchor-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933486Ab1IJRoH (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Sep 2011 13:44:07 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-3.mail.demon.net with esmtp (Exim 4.69)
-	id 1R2Rb3-0003rY-ml; Sat, 10 Sep 2011 17:44:06 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <4E27098B.906@vilain.net>
+	id S933882Ab1IJTjc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Sep 2011 15:39:32 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:63764 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933848Ab1IJTjc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Sep 2011 15:39:32 -0400
+Received: by qyk30 with SMTP id 30so908832qyk.19
+        for <git@vger.kernel.org>; Sat, 10 Sep 2011 12:39:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=zgcN/A7rR2iKGPtwEj8WuXx/8sGFuBtbpmbEV1IkRbk=;
+        b=R6BUwV88GyTnMknIsWwcVqkeM/jeN6C0knB5ROoTShyTVUnRnmYs82lcTwQYVR49eT
+         bhMQ6BuBAz3SxubA1vOWYke9AZ7GnDOQFBSnWutktGSnr3SWdXTT7CZtCtzlNoox9zbI
+         PqRecdeNeR/G4qE/rw2Qj2uNLEa57uyxsz1nc=
+Received: by 10.229.24.132 with SMTP id v4mr511427qcb.193.1315683571240;
+        Sat, 10 Sep 2011 12:39:31 -0700 (PDT)
+Received: from localhost.localdomain (modemcable094.77-37-24.mc.videotron.ca. [24.37.77.94])
+        by mx.google.com with ESMTPS id z1sm3220901qao.1.2011.09.10.12.39.29
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 10 Sep 2011 12:39:30 -0700 (PDT)
+X-Mailer: git-send-email 1.7.7.rc0.317.gd0afe
+In-Reply-To: <7vr53rx9r6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181159>
 
-Sam Vilain wrote:
-> On 20/07/11 10:07, Michael J Gruber wrote:
->> path@REV are so-called peg revisions, introduced in svn 1.1, and denote
->> "I mean the file named path in REV" (as opposed to "the file named path
->> now and maybe differently back then"). It (now) defaults to BASE (for
->> worktree) resp. HEAD (for URLs). A bit like our rename detection.
->>
->> -r REV specifies the operative revision. After resolving the
->> name/location using the pegrev, the version at the resolved path at the
->> oprative version is operated on.
->>
->> svn 1.5.0 (June 2008) introduced peg revisions to "svn copy", so I
->> assume our people were following svn trunk and adjusting in 2007 already
->> (to r22964). There were some fixes to "svn copy" with peg later on.
->>
->> I do not understand the above commit message at all; and I did not find
->> anything about how "svn copy -r REV" acted in svn 1.4. I would assume
->> "operative revision", and the above commit message seems to imply that
->> peg defaulted to REV here (not HEAD) and that that changed in 1.5.0, but
->> that is a wild guess (svnbook 1.4 does not so anything).
-> 
-> What happened is that I noticed that the code stopped working after svn
-> 1.5 was released.  Previously I wrote it to detect the merge properties
-> as left by SVK and the experimental/contrib python script for merging. 
-> I was testing at times using trunk SVN versions.  You could probably
-> figure it out by running ffab6268^ with svn 1.4.x vs svn 1.5.x if you
-> cared.  My comment tries to explain what you describe above, but without
-> the correct terms.  I could see via experimentation what the difference
-> was between "-r N" and '/path@N', and that the behaviour changed in svn
-> 1.5.  Apologies for not explaining this thoroughly enough in the
-> submitted description!
+'git remote rename' will only update the remote's fetch refspec if it
+looks like a default one. If the remote has no default fetch refspec,
+as in
 
-Hmm, I was hoping that someone would say something like:
+[remote "origin"]
+    url = git://git.kernel.org/pub/scm/git/git.git
+    fetch = +refs/heads/*:refs/remotes/upstream/*
 
-   "This test does not depend on the difference between the peg revision
-and the operative revision, because the history represented in the test
-repo is so simple that there *is* no difference, so Acked By: ... "
+we would not update the fetch refspec and even if there is a ref
+called "refs/remotes/origin/master", we should not rename it, since it
+was not created by fetching from the remote.
 
-But, since that didn't happen, maybe the patch given below would be more
-acceptable? (I personally prefer the original patch ...)
-
-Given that I didn't quite follow Sam's explanation, I still don't know
-if t9104-git-svn-follow-parent.sh needs to be changed (again, this test
-*passes* for me), so ... :-P
-
-ATB,
-Ramsay Jones
-
--- >8 --
-Subject: [PATCH] t9159-*.sh: Add an svn version check
-
-
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 ---
- t/t9159-git-svn-no-parent-mergeinfo.sh |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
 
-diff --git a/t/t9159-git-svn-no-parent-mergeinfo.sh b/t/t9159-git-svn-no-parent-mergeinfo.sh
-index 85120b7..69e4815 100755
---- a/t/t9159-git-svn-no-parent-mergeinfo.sh
-+++ b/t/t9159-git-svn-no-parent-mergeinfo.sh
-@@ -2,6 +2,14 @@
- test_description='git svn handling of root commits in merge ranges'
- . ./lib-git-svn.sh
+Some questions on style:
+
+1. Should I wrap the statement in "else" block in braces when "then"
+   block has braces? I couldn't find anything conclusive by looking at
+   existing code.
+
+2. Is it ok (as I did) to return from the function prematurely even
+   though it is not an error case? This will of course make the
+   function more brittle when it comes to adding code at the end of
+   it. Would you prefer to invert the condition and put the remainder
+   of the function inside the "then" block? Or even to extract the
+   code into a new function?
+
+ builtin/remote.c  |   10 +++++++---
+ t/t5505-remote.sh |    3 ++-
+ 2 files changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 61326cb..b25dfb4 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -625,7 +625,7 @@ static int mv(int argc, const char **argv)
+ 		old_remote_context = STRBUF_INIT;
+ 	struct string_list remote_branches = STRING_LIST_INIT_NODUP;
+ 	struct rename_info rename;
+-	int i;
++	int i, refspec_updated = 0;
  
-+svn_ver="$(svn --version --quiet)"
-+case $svn_ver in
-+0.* | 1.[0-4].*)
-+	skip_all="skipping git-svn test - SVN too old ($svn_ver)"
-+	test_done
-+	;;
-+esac
+ 	if (argc != 3)
+ 		usage_with_options(builtin_remote_rename_usage, options);
+@@ -667,12 +667,13 @@ static int mv(int argc, const char **argv)
+ 		strbuf_reset(&buf2);
+ 		strbuf_addstr(&buf2, oldremote->fetch_refspec[i]);
+ 		ptr = strstr(buf2.buf, old_remote_context.buf);
+-		if (ptr)
++		if (ptr) {
++			refspec_updated = 1;
+ 			strbuf_splice(&buf2,
+ 				      ptr-buf2.buf + strlen(":refs/remotes/"),
+ 				      strlen(rename.old), rename.new,
+ 				      strlen(rename.new));
+-		else
++		} else
+ 			warning("Not updating non-default fetch respec\n"
+ 				"\t%s\n"
+ 				"\tPlease update the configuration manually if necessary.",
+@@ -695,6 +696,9 @@ static int mv(int argc, const char **argv)
+ 		}
+ 	}
+ 
++	if (!refspec_updated)
++		return 0;
 +
- test_expect_success 'test handling of root commits in merge ranges' '
- 	mkdir -p init/trunk init/branches init/tags &&
- 	echo "r1" > init/trunk/file.txt &&
+ 	/*
+ 	 * First remove symrefs, then rename the rest, finally create
+ 	 * the new symrefs.
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 15186c8..e8af615 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -637,7 +637,8 @@ test_expect_success 'rename does not update a non-default fetch refspec' '
+ 	(cd four.one &&
+ 	 git config remote.origin.fetch +refs/heads/*:refs/heads/origin/* &&
+ 	 git remote rename origin upstream &&
+-	 test "$(git config remote.upstream.fetch)" = "+refs/heads/*:refs/heads/origin/*")
++	 test "$(git config remote.upstream.fetch)" = "+refs/heads/*:refs/heads/origin/*" &&
++	 git rev-parse -q origin/master)
+ 
+ '
+ 
 -- 
-1.7.6
+1.7.7.rc0.317.gd0afe
