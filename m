@@ -1,125 +1,116 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git credential helper design [was: What's cooking in git.git
- (Aug 2011, #07; Wed, 24)]
-Date: Sat, 10 Sep 2011 02:53:32 -0400
-Message-ID: <20110910065332.GA10935@sigill.intra.peff.net>
-References: <7vk4a2mjx6.fsf@alter.siamese.dyndns.org>
- <20110825202057.GB6165@sigill.intra.peff.net>
- <7vhb55i11i.fsf@alter.siamese.dyndns.org>
- <20110831023801.GB3340@sigill.intra.peff.net>
- <CAEBDL5XnoCtiKQB8jRxvueWc9zy-yzC+MxgTLmP1amY+U=7aOw@mail.gmail.com>
+From: Haitao Li <lihaitao@gmail.com>
+Subject: Re: [PATCH v3] date.c: Support iso8601 timezone formats
+Date: Sat, 10 Sep 2011 16:06:50 +0800
+Message-ID: <CABk5KLgyk_MRd6DLkdaK2s_5pxLQNipKmLJtCjNO2TaLLEr6UA@mail.gmail.com>
+References: <1315320996-1997-1-git-send-email-lihaitao@gmail.com>
+ <1315563033-9476-1-git-send-email-lihaitao@gmail.com> <7vhb4lvflb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Lukas =?utf-8?Q?Sandstr=C3=B6m?= <luksan@gmail.com>,
-	Ted Zlatanov <tzz@lifelogs.com>, git@vger.kernel.org
-To: John Szakmeister <john@szakmeister.net>
-X-From: git-owner@vger.kernel.org Sat Sep 10 08:53:40 2011
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 10 10:07:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R2HRb-0002h0-Pf
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Sep 2011 08:53:40 +0200
+	id 1R2IbO-0001m0-1z
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Sep 2011 10:07:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754729Ab1IJGxf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Sep 2011 02:53:35 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:32981
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754685Ab1IJGxe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Sep 2011 02:53:34 -0400
-Received: (qmail 6267 invoked by uid 107); 10 Sep 2011 06:54:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 10 Sep 2011 02:54:24 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Sep 2011 02:53:32 -0400
-Content-Disposition: inline
-In-Reply-To: <CAEBDL5XnoCtiKQB8jRxvueWc9zy-yzC+MxgTLmP1amY+U=7aOw@mail.gmail.com>
+	id S1755667Ab1IJIHP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Sep 2011 04:07:15 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:40804 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754890Ab1IJIHL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Sep 2011 04:07:11 -0400
+Received: by vxi9 with SMTP id 9so1676731vxi.19
+        for <git@vger.kernel.org>; Sat, 10 Sep 2011 01:07:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=BrKevJPPAR/jw2hQZe8L6RPvBXmUQVkKY25E5TRjKz8=;
+        b=Ku5o+CRs4jzQYj5nLuQzNtCz6pJvFHvoN0r5nubKR4/CrDYNq2k6Ig3ROZgzFrkGho
+         LgJt4l7CHJJagzyRkQ7olej7jcBfOsHGdTChmQR0g85TbnAFHSE1p6gT+DwSU8mQo2n8
+         3mrTUSJJ6l8kqkQwKsXjA+GFn3ulBXAUAMBqQ=
+Received: by 10.52.178.164 with SMTP id cz4mr388426vdc.467.1315642030132; Sat,
+ 10 Sep 2011 01:07:10 -0700 (PDT)
+Received: by 10.52.159.129 with HTTP; Sat, 10 Sep 2011 01:06:50 -0700 (PDT)
+In-Reply-To: <7vhb4lvflb.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181149>
 
-On Fri, Sep 09, 2011 at 05:55:38AM -0400, John Szakmeister wrote:
-
-> A little feedback here: I do look into my keychain on Mac OS X.  I
-> tend to keep most of my credentials in a separate keychain that gets
-> whenever my computer sleeps or the screen saver kicks on.  So that
-> blob ends up being user-visible to some degree.  Could I munge it int=
+On Sat, Sep 10, 2011 at 12:35 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Haitao Li <lihaitao@gmail.com> writes:
+>
+>> Timezone designators including additional separator (`:`) are ignore=
+d.
+>> Actually zone designators in below formats are all valid according t=
 o
-> something else?  Sure.  But I do wonder if it might be better to make
-> it something closer to what the user expects to see.
+>> ISO8601:2004, section 4.3.2:
+>> =C2=A0 =C2=A0 [+-]hh, [+-]hhmm, [+-]hh:mm
+>
+> Thanks for a re-roll.
+>
+>> This patch teaches git recognizing zone designators with hours and
+>> minutes separated by colon, or minutes are empty.
+>
+> The last sentence above makes it sound as if you are accepting
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0"2011-09-17 12:34:56 +09:"
+>
+> but I suspect that is not what you intend to allow. =C2=A0Perhaps "we=
+ allowed
+> hh and hhmm and this teaches Git to recognize hh:mm format as well"?
+>
+Yes, this is a better one. Sorry for my English, and thanks for the sug=
+gestion.
 
-Sure, I agree. I guess my question is: what does the user expect to see=
-?
+>> diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+>> index f87abb5..5235b7a 100755
+>> --- a/t/t0006-date.sh
+>> +++ b/t/t0006-date.sh
+>> @@ -40,6 +40,11 @@ check_parse 2008-02 bad
+>> =C2=A0check_parse 2008-02-14 bad
+>> =C2=A0check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 +0000'
+>> =C2=A0check_parse '2008-02-14 20:30:45 -0500' '2008-02-14 20:30:45 -=
+0500'
+>> +check_parse '2008-02-14 20:30:45 -0015' '2008-02-14 20:30:45 -0015'
+>> +check_parse '2008-02-14 20:30:45 -5' '2008-02-14 20:30:45 -0500'
+>> +check_parse '2008-02-14 20:30:45 -05' '2008-02-14 20:30:45 -0500'
+>> +check_parse '2008-02-14 20:30:45 -:30' '2008-02-14 20:30:45 +0000'
+>> +check_parse '2008-02-14 20:30:45 -05:00' '2008-02-14 20:30:45 -0500=
+'
+>> =C2=A0check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 -0500' =
+EST5
+>
+> The above are from Peff, no? =C2=A0We should credit him for tests in =
+the
+> proposed log message.
 
-> > =C2=A0https://foo@example.com/specific-repo.git
-> >
-> > if the user wants a repo-specific authentication context.
->=20
-> Or pass that the information via --domain and --path parameters.  It'=
-d
-> be nice to keep most credential backends from having to parse urls.
-> Not that its hard, just cumbersome.  But the keychain implementation
-> and the gnome-keyring implementation could both benefit from having
-> the pieces broken out separately.  Likewise, it's probably not
-> difficult to parse it out of the token if we needed to.
+Yes, we should credit Peff. Sorry for not knowing log message is used f=
+or this.
 
-Perhaps it's worth providing the information in two forms: parsed and
-broken out by individual pieces, and as a more opaque blob. Then system=
-s
-which care can use the pieces, and systems which are trying to be as
-simple as possible can use the blob.
+>
+> Because the three formats 8601 specifies are "hh", "hhmm", or "hh:mm"
+> after +/-, among the above new tests, it appears to me that zone
+> designators "-5" and "-:30" should yield "bad", instead of being acce=
+pted.
 
-That still leaves the question of how the user specifies policy about
-which parts of the blob are relevant. That is, how do they say that onl=
-y
-the "domain" portion of the hostname is relevant? Or that the path is o=
-r
-is not relevant?
+Yes, the spec clearly states 2 digits are mandatory. "-5" should be
+regarded as invalid here.
 
-I was really hoping for the user to be able to specify this at the git
-level, to give each storage helper roughly the same feature set.
+The above test *ignores* ":30" by setting offset to "+0000", this is
+to conform to how it works previously, less than 3 digits in offset
+are ignored. I agree it's better to *reject* them instead.
 
-Maybe it would be enough to do something like:
+> The same for "+09:" I mentioned above, which is not in the new test.
+>
+Will add.
 
-  1. Assemble all of the parts (protocol, username (if any), hostname,
-     path) into a canonicalized URL representing the authentication
-     context.
-
-  2. Look for git config matching the context URL, and allow
-     transformations (e.g., match and replace the whole thing, or even
-     regexp-style substitution).
-
-  3. Break the resulting context URL back into constituent parts.
-
-  4. Give the helper the context URL, and the broken down parts from
-     (3). It chooses which to use.
-
-> One thing that crossed my mind while looking at this: what happens
-> when a command is meant to be non-interactive?  Looking at the
-> kdewallet implementation, it appears that not only is the credential
-> helper intended to help do the lookup, but also ask the user for a
-> password, if it doesn't find anything.  That doesn't seem like it
-> would play well in a non-interactive environment.  Additionally, the
-> act of looking up the entry could pop up a dialog in most
-> keychain-like applications.  Is there a need to be sensitive to the
-> fact that we may be run non-interactively?
-
-I think this is somewhat outside the boundaries of what git can provide=
-=2E
-We don't know whether we are interactive or not; we can only make
-guesses based on things like whether there is a terminal available. The
-helper should be able to make an even better guess, because it can ask
-for system-specific things (e.g., a Linux one might check whether
-$DISPLAY is set before trying to pop up a dialog). And helpers are free
-to simply return nothing. Even though most people will only configure a
-single helper, there is actually a stack, and git will try the next one=
-,
-and so on until it gets an answer (or if it hits the end without an
-answer, will complain).
-
--Peff
+Thanks again for the suggestions!
