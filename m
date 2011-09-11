@@ -1,79 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Support empty blob in fsck --lost-found
-Date: Sun, 11 Sep 2011 18:10:41 -0700
-Message-ID: <7vmxeabm5q.fsf@alter.siamese.dyndns.org>
-References: <A3964281-B24B-46C0-AE73-0CCB4C12556F@bjhargrave.com>
- <7vty8iolnj.fsf@alter.siamese.dyndns.org>
- <348F09EE-5EE2-4F3E-B1B1-6FD34BDBD117@bjhargrave.com>
+From: "Mr. Daniel Tsai" <danieltsai0@aol.com>
+Subject: Business transaction.
+Date: Sun, 11 Sep 2011 16:35:53 +0200
+Message-ID: <20110911143555.3F55B4276C1_E6CC74BF@radon.cen.brad.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: BJ Hargrave <bj@bjhargrave.com>
-X-From: git-owner@vger.kernel.org Mon Sep 12 03:12:18 2011
+Content-Type: text/plain;
+	charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+To: danieltsai0@aol.com
+X-From: git-owner@vger.kernel.org Mon Sep 12 04:13:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R2v4K-0005EA-QY
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Sep 2011 03:12:17 +0200
+	id 1R2w1L-0008Qa-6F
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Sep 2011 04:13:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751586Ab1ILBKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Sep 2011 21:10:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51089 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751167Ab1ILBKo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Sep 2011 21:10:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 84A334CCE;
-	Sun, 11 Sep 2011 21:10:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Fpnw7OdHk4vxVJWHfoda8k28b40=; b=C6Gx4r
-	Y+ypwvvG74D9H3VL61tAtLF18bq3AGaRh6S6TH6wAS11Yipn6QTKhrDhadub6UAu
-	ycPFGiGYJFo8CBdsTfyrM5QnHM8dLlwxIz5j/uWuf+9wvNZ/aWqAzvJZSq4x4euH
-	hE+Fy21UHbbyb03fO0Oeims/B2e+Gzrp+sKz8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=O9NXX9Z7U8jsyz1vZ+KHxYyq6G05y6XN
-	yJGcGP7vk4RcB427k+ujh8Tvt5dcozkMdwyLIgGdCUIWDmlzmFwhNUjBcQhQ5YhN
-	UtBTdQnwsR6JnZIgmRr609DWd0hjOnEks4HAe+9cUtjExp3vr0qFAjTyt7K6JU3G
-	db9ioLWR1+U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D09C4CCC;
-	Sun, 11 Sep 2011 21:10:43 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ED0744CCB; Sun, 11 Sep 2011
- 21:10:42 -0400 (EDT)
-In-Reply-To: <348F09EE-5EE2-4F3E-B1B1-6FD34BDBD117@bjhargrave.com> (BJ
- Hargrave's message of "Sun, 11 Sep 2011 17:43:32 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 09678D48-DCDC-11E0-902F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753387Ab1ILCNC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Sep 2011 22:13:02 -0400
+Received: from hydrogen.cen.brad.ac.uk ([143.53.238.3]:35468 "EHLO
+	hydrogen.cen.brad.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752975Ab1ILCNB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Sep 2011 22:13:01 -0400
+X-Greylist: delayed 27856 seconds by postgrey-1.27 at vger.kernel.org; Sun, 11 Sep 2011 22:13:01 EDT
+Received: from radon.cen.brad.ac.uk (radon.cen.brad.ac.uk [143.53.238.18])
+	by hydrogen.cen.brad.ac.uk (Postfix) with ESMTPS id 23EE5BA46A;
+	Sun, 11 Sep 2011 15:36:01 +0100 (BST)
+Received: from radon.cen.brad.ac.uk (localhost.localdomain [127.0.0.1])
+	by localhost (Email Security Appliance) with SMTP id ABCB24276D2_E6CC750B;
+	Sun, 11 Sep 2011 14:36:00 +0000 (GMT)
+Received: from User (unknown [90.170.113.125])
+	by radon.cen.brad.ac.uk (Sophos Email Appliance) with ESMTP id 3F55B4276C1_E6CC74BF;
+	Sun, 11 Sep 2011 14:35:55 +0000 (GMT)
+X-Priority: 1
+X-MSMail-Priority: High
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+X-SEA-Spam: Gauge=XXXXXXXXXX, Probability=100%, Report='
+ URI_CLASS_SCAM_MAILTO 8, FRAUD_RCVD_FROM_USER_CYRILLIC 5.5, FRAUD_X3_RCVD_FM_USER 2, FRAUD_X3 1.667, FRAUD_X4 1.667, FRAUD_X5 1.667, FRAUD_X6 1.667, FRAUD_FORGED_MUA 1, HK_TLD 0.5, X_MSMAIL_PRIORITY_HIGH 0.343, FORGED_FROM_AOL 0.1, CHARSET_CYRILLIC_NO_CYRILLIC 0.05, FROM_SAME_AS_TO 0.05, BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1000_LESS 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_300_399 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS 0, CHARSET_W1251_NOT_CYRILLIC 0, ECARD_KNOWN_DOMAINS 0, FORGED_MUA_OUTLOOK 0, HI_MY_NAME_IS 0, PRIORITY_HIGH 0, USER_AGENT_OE 0, __ANY_URI 0, __AOL_FROM 0, __CHARSET_IS_CP1251 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __FRAUD_BODY_WEBMAIL 0, __FRAUD_CONTACT 0, __FRAUD_CONTACT_ADDY_B 0, __FRAUD_INTRO 0, __FRAUD_MONEY 0, __FRAUD_MONEY_VALUE 0, __FRAUD_PROPOSE 0, __FRAUD_WEBM
+ AIL 0, __FRAUD_WEBMAIL_FROM 0, __FROM_AOL 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181203>
+X-Spam-Report: 7.7 points;
+ *  1.5 MILLION_USD BODY: Talks about millions of dollars
+ * -0.7 BAYES_20 BODY: Bayesian spam probability is 5 to 20%
+ *      [score: 0.1576]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?90.170.113.125>]
+ *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
+ *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181204>
 
-BJ Hargrave <bj@bjhargrave.com> writes:
+Hello my friend. My name is Daniel Tsai and
 
-> On Sep 11, 2011, at 16:43 , Junio C Hamano wrote:
->
->> Funny.
->> 
->> I am sure we fixed a similar breakage elsewhere a few years ago, by
->> swapping the size and nmemb to the calls (i.e. instead of writing one
->> block of "size" bytes, you could write "size" blocks of 1-byte) and making
->> sure fwrite() reports the number of items. IOW
->> 
->> 	if (buf && fwrite(buf, 1, size, f) != size)
->> 		die_errno("Could not write '%s'", filename);
->> 
->
-> Do you want me to resubmit the patch using this technique instead of the size > 0 check?
+I live in Hong Kong. I want you to be my
 
-Not really.
+partner in a business transaction of 44.5Million USD.
 
-I am not sure when/why we would try to write an empty blob out to begin
-with...
+If you are interested for more details,
+
+you MUST reply me to my private email address:
+
+danieltsai11@yahoo.com.hk or danieltsai95@aol.com
+
+when I get your message, I will tell you what
+
+to do next. Thank you.
+
+Mr. Daniel Tsai
