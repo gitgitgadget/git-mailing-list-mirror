@@ -1,90 +1,81 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH 1/3] sparse: Fix some "symbol not declared" warnings
-Date: Sun, 11 Sep 2011 20:38:39 +0100
-Message-ID: <4E6D0E3F.3090304@ramsay1.demon.co.uk>
+Subject: [PATCH 2/3] Fix some "variable might be used uninitialized" warnings
+Date: Sun, 11 Sep 2011 20:39:32 +0100
+Message-ID: <4E6D0E74.1020801@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: GIT Mailing-list <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 11 21:44:59 2011
+X-From: git-owner@vger.kernel.org Sun Sep 11 21:45:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R2pxY-0005Cj-Jj
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Sep 2011 21:44:56 +0200
+	id 1R2pxe-0005Fj-AA
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Sep 2011 21:45:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754248Ab1IKTow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Sep 2011 15:44:52 -0400
-Received: from lon1-post-3.mail.demon.net ([195.173.77.150]:36409 "EHLO
+	id S1754265Ab1IKTo4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Sep 2011 15:44:56 -0400
+Received: from lon1-post-3.mail.demon.net ([195.173.77.150]:36422 "EHLO
 	lon1-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754088Ab1IKTow (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2011 15:44:52 -0400
+	by vger.kernel.org with ESMTP id S1754088Ab1IKToy (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2011 15:44:54 -0400
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
 	by lon1-post-3.mail.demon.net with esmtp (Exim 4.69)
-	id 1R2pww-00044Z-e2; Sun, 11 Sep 2011 19:44:50 +0000
+	id 1R2pxU-00049R-fg; Sun, 11 Sep 2011 19:44:53 +0000
 User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181188>
 
 
-In particular, sparse issues the "symbol 'a_symbol' was not declared.
-Should it be static?" warning for the following symbols:
+In particular, gcc complains as follows:
 
-    submodule.c:321:5: 'submodule_needs_pushing'
-    submodule.c:355:5: 'push_submodule'
-    builtin/revert.c:662:20: 'commit_list_append'
+        CC tree-walk.o
+    tree-walk.c: In function `traverse_trees':
+    tree-walk.c:347: warning: 'e' might be used uninitialized in this \
+        function
 
-These symbols only require file scope, so we simply add the static
-modifier to their declarations.
+        CC builtin/revert.o
+    builtin/revert.c: In function `verify_opt_mutually_compatible':
+    builtin/revert.c:113: warning: 'opt2' might be used uninitialized in \
+        this function
 
 Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 ---
- builtin/revert.c |    4 ++--
- submodule.c      |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ builtin/revert.c |    2 +-
+ tree-walk.c      |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/revert.c b/builtin/revert.c
-index 5e97622..5f1cee8 100644
+index 5f1cee8..30538a1 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -659,8 +659,8 @@ static void read_and_refresh_cache(struct replay_opts *opts)
-  *     assert(commit_list_count(list) == 2);
-  *     return list;
-  */
--struct commit_list **commit_list_append(struct commit *commit,
--					struct commit_list **next)
-+static struct commit_list **commit_list_append(struct commit *commit,
-+						struct commit_list **next)
- {
- 	struct commit_list *new = xmalloc(sizeof(struct commit_list));
- 	new->item = commit;
-diff --git a/submodule.c b/submodule.c
-index 38d9877..5a02890 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -318,7 +318,7 @@ static int has_remote(const char *refname, const unsigned char *sha1, int flags,
- 	return 1;
- }
+@@ -110,7 +110,7 @@ static void verify_opt_compatible(const char *me, const char *base_opt, ...)
  
--int submodule_needs_pushing(const char *path, const unsigned char sha1[20], void *data)
-+static int submodule_needs_pushing(const char *path, const unsigned char sha1[20], void *data)
+ static void verify_opt_mutually_compatible(const char *me, ...)
  {
- 	int *needs_pushing = data;
+-	const char *opt1, *opt2;
++	const char *opt1, *opt2 = NULL;
+ 	va_list ap;
  
-@@ -352,7 +352,7 @@ int submodule_needs_pushing(const char *path, const unsigned char sha1[20], void
- 	return 1;
- }
+ 	va_start(ap, me);
+diff --git a/tree-walk.c b/tree-walk.c
+index 808bb55..a8d8a66 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -344,7 +344,7 @@ int traverse_trees(int n, struct tree_desc *t, struct traverse_info *info)
+ 		unsigned long mask, dirmask;
+ 		const char *first = NULL;
+ 		int first_len = 0;
+-		struct name_entry *e;
++		struct name_entry *e = NULL;
+ 		int len;
  
--int push_submodule(const char *path, const unsigned char sha1[20], void *data)
-+static int push_submodule(const char *path, const unsigned char sha1[20], void *data)
- {
- 	if (add_submodule_odb(path) || !lookup_commit_reference(sha1))
- 		return 1;
+ 		for (i = 0; i < n; i++) {
 -- 
 1.7.6
