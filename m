@@ -1,59 +1,58 @@
-From: BJ Hargrave <bj@bjhargrave.com>
-Subject: Re: [PATCH] Support empty blob in fsck --lost-found
-Date: Sun, 11 Sep 2011 17:43:32 -0400
-Message-ID: <348F09EE-5EE2-4F3E-B1B1-6FD34BDBD117@bjhargrave.com>
-References: <A3964281-B24B-46C0-AE73-0CCB4C12556F@bjhargrave.com> <7vty8iolnj.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1084)
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] Makefile: Make dependency directory creation less
+ noisy
+Date: Sun, 11 Sep 2011 14:45:30 -0700
+Message-ID: <7vvcsylpmt.fsf@alter.siamese.dyndns.org>
+References: <4E6D0EA2.5080406@ramsay1.demon.co.uk>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 11 23:43:42 2011
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Sun Sep 11 23:45:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R2roU-0005v7-0Q
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Sep 2011 23:43:42 +0200
+	id 1R2rqM-0006I1-7C
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Sep 2011 23:45:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755228Ab1IKVng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Sep 2011 17:43:36 -0400
-Received: from mail-gw0-f42.google.com ([74.125.83.42]:45007 "EHLO
-	mail-gw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754734Ab1IKVng convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2011 17:43:36 -0400
-Received: by gwb17 with SMTP id 17so3407445gwb.1
-        for <git@vger.kernel.org>; Sun, 11 Sep 2011 14:43:35 -0700 (PDT)
-Received: by 10.236.200.195 with SMTP id z43mr22126525yhn.127.1315777415287;
-        Sun, 11 Sep 2011 14:43:35 -0700 (PDT)
-Received: from macbookpro2.hargrave.local (106.27.205.68.cfl.res.rr.com [68.205.27.106])
-        by mx.google.com with ESMTPS id y79sm8788028yhg.23.2011.09.11.14.43.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 11 Sep 2011 14:43:34 -0700 (PDT)
-In-Reply-To: <7vty8iolnj.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1084)
+	id S1755255Ab1IKVpe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Sep 2011 17:45:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39930 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751496Ab1IKVpd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Sep 2011 17:45:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 06D724489;
+	Sun, 11 Sep 2011 17:45:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=ok+uYl
+	zGbbDmYPGikVx8EokcQ1R+bWqZ8A1Kn5pGftW5Wyo6L69Xgk1Muq3jzQNjFhW4S7
+	7tfYvZTZh2OLTuwIaJ8PzdViByzL8cAVmM01RLKGaUB6oXbPxId0Omf+TNirFprz
+	K2ppPq67YxbQHpampmmoSN5Ucovlaxfvmijpc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=C29fJs6prc1b9u/XcGt7+G9uUZEK6edb
+	CgIvDHnpWF1AFI1wW4Ck1N/8ZR/SRsTMfT0rTB/CE5BgML8VIngAqQlrvHh9vg5V
+	EavyYJIQxeFgHk8T1Z63Fr+sZfs5YWyv8kNmpt3Mr7pFhtyJafPipDAN+6oDh0N/
+	ClF0jc/qEaM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F32E94488;
+	Sun, 11 Sep 2011 17:45:31 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8A110447E; Sun, 11 Sep 2011
+ 17:45:31 -0400 (EDT)
+In-Reply-To: <4E6D0EA2.5080406@ramsay1.demon.co.uk> (Ramsay Jones's message
+ of "Sun, 11 Sep 2011 20:40:18 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5F3C3A74-DCBF-11E0-87C2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181199>
 
-
-On Sep 11, 2011, at 16:43 , Junio C Hamano wrote:
-
-> Funny.
-> 
-> I am sure we fixed a similar breakage elsewhere a few years ago, by
-> swapping the size and nmemb to the calls (i.e. instead of writing one
-> block of "size" bytes, you could write "size" blocks of 1-byte) and making
-> sure fwrite() reports the number of items. IOW
-> 
-> 	if (buf && fwrite(buf, 1, size, f) != size)
-> 		die_errno("Could not write '%s'", filename);
-> 
-
-Do you want me to resubmit the patch using this technique instead of the size > 0 check?
--- 
-
-BJ
+Thanks.
