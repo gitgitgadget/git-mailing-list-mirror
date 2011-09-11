@@ -1,77 +1,87 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH] SubmittingPathces: remove Cogito reference
-Date: Sun, 11 Sep 2011 14:38:10 +0200
-Message-ID: <1315744690-6477-1-git-send-email-srabbelier@gmail.com>
-Cc: Sverre Rabbelier <srabbelier@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"Git List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Sep 11 14:39:21 2011
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: "git archive" seems to be broken wrt zip files
+Date: Sun, 11 Sep 2011 15:14:36 +0200
+Message-ID: <m239g3i5kz.fsf@igel.home>
+References: <CA+55aFx43OxExGNrJs+AyKNtdr+KCZZoE=iaQTz8uHoUSrQv0w@mail.gmail.com>
+	<20110911062206.GA29620@sigill.intra.peff.net>
+	<20110911062740.GA8018@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Sep 11 15:15:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R2jJf-00056C-UZ
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Sep 2011 14:39:20 +0200
+	id 1R2jsO-0007kh-CW
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Sep 2011 15:15:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760064Ab1IKMjD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Sep 2011 08:39:03 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:46852 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754386Ab1IKMjB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Sep 2011 08:39:01 -0400
-Received: by eyx24 with SMTP id 24so2018952eyx.19
-        for <git@vger.kernel.org>; Sun, 11 Sep 2011 05:39:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=DYWlzl7aertyQ3rhk9SnwPQwRNlAd8RC3EKEKsPXoXI=;
-        b=CclfUk6A3gEBq8GZFT/POnEibS/uz7JnKIuTPdikFpRfQfntp3V/lhXTzsltS3YGYH
-         eHe5/krUbp21fPZ8I7qXuCCwQMvFSNGvNO8tVEIPNFajsFc7z4szjRDxQygVan+UVInK
-         q2Iyqutkl7VXI1tdYI+ZmOwLggMu3/YzEf5eQ=
-Received: by 10.14.11.39 with SMTP id 39mr1302575eew.35.1315744740248;
-        Sun, 11 Sep 2011 05:39:00 -0700 (PDT)
-Received: from localhost.localdomain ([188.142.63.148])
-        by mx.google.com with ESMTPS id q50sm15840820eef.9.2011.09.11.05.38.58
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 11 Sep 2011 05:38:59 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6.1.724.g9519c
+	id S1754440Ab1IKNOr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Sep 2011 09:14:47 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:45082 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754047Ab1IKNOq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Sep 2011 09:14:46 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 8C4CB188B58F;
+	Sun, 11 Sep 2011 15:14:38 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id E17501C0024C;
+	Sun, 11 Sep 2011 15:14:38 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id BNYk3DQZHeSL; Sun, 11 Sep 2011 15:14:38 +0200 (CEST)
+Received: from igel.home (ppp-88-217-122-177.dynamic.mnet-online.de [88.217.122.177])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Sun, 11 Sep 2011 15:14:38 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id B0091CA296; Sun, 11 Sep 2011 15:14:37 +0200 (CEST)
+X-Yow: If I am elected no one will ever have to do their laundry again!
+In-Reply-To: <20110911062740.GA8018@sigill.intra.peff.net> (Jeff King's
+	message of "Sun, 11 Sep 2011 02:27:40 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181173>
 
-Removing Cogito leaves just git and StGit, which is a rather
-incomplete list of git diff tools available. Sidestep the problem
-of deciding what tools to mention by not mentioning any.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
----
+> IOW, the zip file looks right. I wonder if this is actually a bug in
+> "unzip".
 
-  Reading `git log -p --reverse Documentation/SubmittingPatches` [0]
-  I noticed the Cogito reference was never removed. In the light of
-  the recent discussion about removing Cogito from the GitSurvey I
-  figured now might be a good time to remove this reference as well.
+It is.  This only happens if you have more then 16k entries and when one
+of the 16k entry infos is reused it happend to be previously used for a
+symlink entry.
 
-  [0] https://plus.google.com/115991361267198418069/posts/NPa7vQYeMnm
+Here's a patch for unzip60 for reference:
 
- Documentation/SubmittingPatches |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 938eccf..0dbf2c9 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -134,8 +134,7 @@ Another thing: NULL pointers shall be written as NULL, not as 0.
+--- process.c
++++ process.c
+@@ -1751,6 +1751,12 @@ int process_cdir_file_hdr(__G)    /* ret
+         = (G.crec.general_purpose_bit_flag & (1 << 11)) == (1 << 11);
+ #endif
  
- (2) Generate your patch using git tools out of your commits.
++#ifdef SYMLINKS
++    /* Initialize the symlink flag, may be set by the platform-specific
++       mapattr function.  */
++    G.pInfo->symlink = 0;
++#endif
++
+     return PK_COOL;
  
--git based diff tools (git, Cogito, and StGIT included) generate
--unidiff which is the preferred format.
-+git based diff tools generate unidiff which is the preferred format.
- 
- You do not have to be afraid to use -M option to "git diff" or
- "git format-patch", if your patch involves file renames.  The
+ } /* end function process_cdir_file_hdr() */
+
+Andreas.
+
 -- 
-1.7.6.1.724.g9519c
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
