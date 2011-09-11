@@ -1,62 +1,96 @@
-From: Zganyaiko Dmitry <zdo.str@gmail.com>
-Subject: Git new-feature-branch best practices
-Date: Sun, 11 Sep 2011 22:31:15 +0300
-Message-ID: <1315769475.2560.39.camel@mamburu>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: t5800-*.sh: Intermittent test failures
+Date: Sun, 11 Sep 2011 20:14:36 +0100
+Message-ID: <4E6D089C.4090006@ramsay1.demon.co.uk>
+References: <4E417CB4.50007@ramsay1.demon.co.uk> <CAGdFq_jv_T-x7VGqm_j-fDfeW6TsBG95=1TWn91Yk9B3TGZdsQ@mail.gmail.com> <7vpqjgyvn1.fsf@alter.siamese.dyndns.org> <4E68FE73.4000005@ramsay1.demon.co.uk> <20110908182055.GA16500@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 11 21:36:09 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Sep 11 21:42:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R2pp3-0002fX-B9
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Sep 2011 21:36:09 +0200
+	id 1R2pvd-0004aj-Vg
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Sep 2011 21:42:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760364Ab1IKTbU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Sep 2011 15:31:20 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:34028 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760342Ab1IKTbT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Sep 2011 15:31:19 -0400
-Received: by fxe4 with SMTP id 4so188103fxe.19
-        for <git@vger.kernel.org>; Sun, 11 Sep 2011 12:31:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:content-type:date:message-id:mime-version:x-mailer
-         :content-transfer-encoding;
-        bh=wzmrIlu5iJJKElOWL+5FjnLeRtXLWsOK3pPITCc8/DY=;
-        b=S0FTtSPGJ6DSyj7lNQP2kHkvN2uEcmne8GdvE7NfBCDtjDkJFtLO+ubDljcxgXhanq
-         hesGTVXu93Wp1P410LU75Ywe3RUX1kmgYRDPsyLefaX0at01BMGSD0duVUO1NDU6x4YA
-         UPZQkOTMobt7UFqWKq0Sh+WC/Wwlj41lzJT3g=
-Received: by 10.223.49.209 with SMTP id w17mr1383772faf.8.1315769478546;
-        Sun, 11 Sep 2011 12:31:18 -0700 (PDT)
-Received: from [46.173.65.253] ([46.173.65.253])
-        by mx.google.com with ESMTPS id q23sm7236166fae.1.2011.09.11.12.31.13
-        (version=SSLv3 cipher=OTHER);
-        Sun, 11 Sep 2011 12:31:17 -0700 (PDT)
-X-Mailer: Evolution 2.30.3 
+	id S1760361Ab1IKTmt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Sep 2011 15:42:49 -0400
+Received: from lon1-post-3.mail.demon.net ([195.173.77.150]:36245 "EHLO
+	lon1-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754862Ab1IKTms (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2011 15:42:48 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by lon1-post-3.mail.demon.net with esmtp (Exim 4.69)
+	id 1R2pvB-0003QU-fY; Sun, 11 Sep 2011 19:42:47 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <20110908182055.GA16500@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181182>
 
-Hi all! I have a question about using branches.
+Jeff King wrote:
+> On Thu, Sep 08, 2011 at 06:42:11PM +0100, Ramsay Jones wrote:
+> 
+>> When I run the tests with "make test >test-out", I see a failure rate of about
+>> 1 in 10. If I then set the debug environment variables (GIT_TRANSPORT_HELPER_DEBUG,
+>> GIT_TRANSLOOP_DEBUG and GIT_DEBUG_TESTGIT) and run the test script directly (-v),
+>> then the failure rate goes up to about 1 in 3.
+> 
+> Hmm. I can't reproduce a failure here, but I do get some weirdness. My
+> recipe is:
 
-For example, I make branch for some experimental feature. After some
-time I have completed this feature. I'll checkout previous branch and
-merge this new feature's branch to it.
+Ah, sorry, ... I didn't make myself clear then, because ...
 
-And there is my question. If I know that this feature was implemented
-very good and _will not be changed lately_, should I remove this new
-feature branch (because it will be unused)?
+> -- >8 --
+> cat >foo.sh <<\EOF
+> #!/bin/sh
+> 
+> exec >$1.out 2>&1
+> 
+> n=0
+> while test $n -lt 100; do
+> 	n=$(($n+1))
+> 	GIT_TRANSPORT_HELPER_DEBUG=1 \
+> 	GIT_TRANSLOOP_DEBUG=1 \
+> 	GIT_DEBUG_TESTGIT=1 \
+> 	./t5800-remote-helpers.sh --root=/run/shm/git-tests-$1 -v || {
+> 		echo FAIL $n
+> 		exit 1
+> 	}
+> 	echo OK $n
+> done
+> EOF
+> 
+> # try to keep an 8-core machine busy
+> for i in `seq 1 16`; do
+>   sh foo.sh $i &
+> done
+> -- 8< --
+> 
+> I never see a test failure, but a few of the 16 end up hanging. The
+> process tree for the hanged tests look like:
+> 
+>   t5800-remote-helper
+>     git push
+>       git-remote-testgit
+>         git fast-import
+>           git-fast-import
+> 
+> All of them are blocked on wait(), except for the final fast-import,
+> which is blocked trying to read() from stdin.
 
-Is there some best practice what to do in my case?
+... these hangs *are* the failures of which I speak!  Yes, the script
+doesn't get to declare a failure, but AFAIAC a hanging test (and it
+isn't the same test # each time) is a failing test. :-D
 
-So, should I remove a branch for some new feature after its
-implementation if I sure that I will not edit this feature's code later?
-
-May be, there is answer for my question already and I missed it?
+ATB,
+Ramsay Jones
