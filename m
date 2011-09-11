@@ -1,67 +1,109 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: "git archive" seems to be broken wrt zip files
-Date: Sun, 11 Sep 2011 17:38:59 +0200
-Message-ID: <4E6CD613.9020303@lsrfire.ath.cx>
-References: <CA+55aFx43OxExGNrJs+AyKNtdr+KCZZoE=iaQTz8uHoUSrQv0w@mail.gmail.com> <20110911062206.GA29620@sigill.intra.peff.net> <20110911062740.GA8018@sigill.intra.peff.net> <m239g3i5kz.fsf@igel.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sun Sep 11 17:39:17 2011
+From: BJ Hargrave <bj@bjhargrave.com>
+Subject: [PATCH] Support empty blob in fsck --lost-found
+Date: Sun, 11 Sep 2011 11:40:28 -0400
+Message-ID: <A3964281-B24B-46C0-AE73-0CCB4C12556F@bjhargrave.com>
+Mime-Version: 1.0 (Apple Message framework v1084)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 11 17:40:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R2m7n-0003yJ-Pm
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Sep 2011 17:39:16 +0200
+	id 1R2m97-0004Nk-Mz
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Sep 2011 17:40:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754815Ab1IKPjJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Sep 2011 11:39:09 -0400
-Received: from india601.server4you.de ([85.25.151.105]:53362 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754114Ab1IKPjI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Sep 2011 11:39:08 -0400
-Received: from [192.168.2.104] (p4FFD8F06.dip.t-dialin.net [79.253.143.6])
-	by india601.server4you.de (Postfix) with ESMTPSA id 99A902F8034;
-	Sun, 11 Sep 2011 17:39:06 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
-In-Reply-To: <m239g3i5kz.fsf@igel.home>
+	id S1754857Ab1IKPkd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Sep 2011 11:40:33 -0400
+Received: from mail-gw0-f42.google.com ([74.125.83.42]:60872 "EHLO
+	mail-gw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754114Ab1IKPkc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Sep 2011 11:40:32 -0400
+Received: by gwb17 with SMTP id 17so3218617gwb.1
+        for <git@vger.kernel.org>; Sun, 11 Sep 2011 08:40:31 -0700 (PDT)
+Received: by 10.236.9.105 with SMTP id 69mr21726627yhs.41.1315755631777;
+        Sun, 11 Sep 2011 08:40:31 -0700 (PDT)
+Received: from macbookpro2.hargrave.local (106.27.205.68.cfl.res.rr.com [68.205.27.106])
+        by mx.google.com with ESMTPS id z24sm11785536yhj.5.2011.09.11.08.40.29
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 11 Sep 2011 08:40:30 -0700 (PDT)
+X-Mailer: Apple Mail (2.1084)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181175>
 
-Am 11.09.2011 15:14, schrieb Andreas Schwab:
-> Jeff King <peff@peff.net> writes:
->=20
->> IOW, the zip file looks right. I wonder if this is actually a bug in
->> "unzip".
->=20
-> It is.  This only happens if you have more then 16k entries and when =
-one
-> of the 16k entry infos is reused it happend to be previously used for=
- a
-> symlink entry.
->=20
-> Here's a patch for unzip60 for reference:
+fsck --lost-found died when attempting to write out the empty blob.
+Avoid calling fwrite when the blob size is zero since the call to
+fwrite returns 0 objects written which fails the check and caused
+fsck to die.
 
-Oh, thanks, now I can stop scratching my head while trying to find my
-way around unzip's source and its amazing OS compatibility code.
+Signed-off-by: BJ Hargrave <bj@bjhargrave.com>
+---
+ builtin/fsck.c        |    7 ++++---
+ t/t1420-lost-found.sh |   13 ++++++++-----
+ 2 files changed, 12 insertions(+), 8 deletions(-)
 
-On Windows (the main target for ZIP file support in git archive), 7-Zip=
-,
-the unzip from msysgit and the native ZIP support extract the archive
-without any issues (except for 13 files whose names only differ
-upper/lower case of some chars to 13 other files), by the way.  Since
-they lack symlink support, the target path of
-arch/microblaze/boot/dts/system.dts is simply written to a regular file=
-,
-though.
-
-Ren=E9
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 5ae0366..ad6d713 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -232,9 +232,10 @@ static void check_unreachable_object(struct object *obj)
+ 				char *buf = read_sha1_file(obj->sha1,
+ 						&type, &size);
+ 				if (buf) {
+-					if (fwrite(buf, size, 1, f) != 1)
+-						die_errno("Could not write '%s'",
+-							  filename);
++					if (size > 0)
++						if (fwrite(buf, size, 1, f) != 1)
++							die_errno("Could not write '%s'",
++								  filename);
+ 					free(buf);
+ 				}
+ 			} else
+diff --git a/t/t1420-lost-found.sh b/t/t1420-lost-found.sh
+index dc9e402..02323c9 100755
+--- a/t/t1420-lost-found.sh
++++ b/t/t1420-lost-found.sh
+@@ -8,7 +8,7 @@ test_description='Test fsck --lost-found'
+ 
+ test_expect_success setup '
+ 	git config core.logAllRefUpdates 0 &&
+-	: > file1 &&
++	echo x > file1 &&
+ 	git add file1 &&
+ 	test_tick &&
+ 	git commit -m initial &&
+@@ -18,18 +18,21 @@ test_expect_success setup '
+ 	test_tick &&
+ 	git commit -m second &&
+ 	echo 3 > file3 &&
+-	git add file3
++	: > file4 &&
++	git add file3 file4
+ '
+ 
+ test_expect_success 'lost and found something' '
+ 	git rev-parse HEAD > lost-commit &&
+-	git rev-parse :file3 > lost-other &&
++	git rev-parse :file3 > lost-other3 &&
++	git rev-parse :file4 > lost-other4 &&
+ 	test_tick &&
+ 	git reset --hard HEAD^ &&
+ 	git fsck --lost-found &&
+-	test 2 = $(ls .git/lost-found/*/* | wc -l) &&
++	test 3 = $(ls .git/lost-found/*/* | wc -l) &&
+ 	test -f .git/lost-found/commit/$(cat lost-commit) &&
+-	test -f .git/lost-found/other/$(cat lost-other)
++	test -f .git/lost-found/other/$(cat lost-other3) &&
++	test -f .git/lost-found/other/$(cat lost-other4)
+ '
+ 
+ test_done
+-- 
+1.7.6.2
