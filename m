@@ -1,109 +1,79 @@
-From: BJ Hargrave <bj@bjhargrave.com>
-Subject: [PATCH] Support empty blob in fsck --lost-found
-Date: Sun, 11 Sep 2011 11:40:28 -0400
-Message-ID: <A3964281-B24B-46C0-AE73-0CCB4C12556F@bjhargrave.com>
-Mime-Version: 1.0 (Apple Message framework v1084)
+From: Ted Ts'o <tytso@mit.edu>
+Subject: Re: [PATCH v3 0/4] Signed push
+Date: Sun, 11 Sep 2011 11:51:46 -0400
+Message-ID: <20110911155146.GA15820@thunk.org>
+References: <1315512102-19022-1-git-send-email-gitster@pobox.com>
+ <1315600904-17032-1-git-send-email-gitster@pobox.com>
+ <7vipp1otyp.fsf@alter.siamese.dyndns.org>
+ <CAGdFq_hWVPCEeJKKccp4Wc-j+XMSFXqRf6VYd7ngLER8RhODRQ@mail.gmail.com>
+ <7vehzopdga.fsf@alter.siamese.dyndns.org>
+ <20110910192225.GA5397@thunk.org>
+ <7v4o0jq2fx.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 11 17:40:38 2011
+Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 11 17:52:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R2m97-0004Nk-Mz
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Sep 2011 17:40:38 +0200
+	id 1R2mL2-0008Rz-Rb
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Sep 2011 17:52:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754857Ab1IKPkd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Sep 2011 11:40:33 -0400
-Received: from mail-gw0-f42.google.com ([74.125.83.42]:60872 "EHLO
-	mail-gw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754114Ab1IKPkc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Sep 2011 11:40:32 -0400
-Received: by gwb17 with SMTP id 17so3218617gwb.1
-        for <git@vger.kernel.org>; Sun, 11 Sep 2011 08:40:31 -0700 (PDT)
-Received: by 10.236.9.105 with SMTP id 69mr21726627yhs.41.1315755631777;
-        Sun, 11 Sep 2011 08:40:31 -0700 (PDT)
-Received: from macbookpro2.hargrave.local (106.27.205.68.cfl.res.rr.com [68.205.27.106])
-        by mx.google.com with ESMTPS id z24sm11785536yhj.5.2011.09.11.08.40.29
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 11 Sep 2011 08:40:30 -0700 (PDT)
-X-Mailer: Apple Mail (2.1084)
+	id S1754885Ab1IKPvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Sep 2011 11:51:48 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:58715 "EHLO
+	test.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754843Ab1IKPvr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Sep 2011 11:51:47 -0400
+Received: from root (helo=tytso-glaptop.cam.corp.google.com)
+	by test.thunk.org with local-esmtp (Exim 4.69)
+	(envelope-from <tytso@thunk.org>)
+	id 1R2mJs-0000vj-1F; Sun, 11 Sep 2011 15:51:44 +0000
+Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1R2mJu-0004OF-CI; Sun, 11 Sep 2011 11:51:46 -0400
+Content-Disposition: inline
+In-Reply-To: <7v4o0jq2fx.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on test.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181176>
 
-fsck --lost-found died when attempting to write out the empty blob.
-Avoid calling fwrite when the blob size is zero since the call to
-fwrite returns 0 objects written which fails the check and caused
-fsck to die.
+On Sat, Sep 10, 2011 at 06:42:58PM -0700, Junio C Hamano wrote:
+> Perhaps we shouldn't worry about tag namespace contamination to make
+> things easier and simpler and stop using notes tree?
 
-Signed-off-by: BJ Hargrave <bj@bjhargrave.com>
----
- builtin/fsck.c        |    7 ++++---
- t/t1420-lost-found.sh |   13 ++++++++-----
- 2 files changed, 12 insertions(+), 8 deletions(-)
+With the appropriate conventions, such as using a tag name such as
+signed-<email>-<timestamp>" we can at least avoid name conflicts, at
+least for all practical purposes.
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 5ae0366..ad6d713 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -232,9 +232,10 @@ static void check_unreachable_object(struct object *obj)
- 				char *buf = read_sha1_file(obj->sha1,
- 						&type, &size);
- 				if (buf) {
--					if (fwrite(buf, size, 1, f) != 1)
--						die_errno("Could not write '%s'",
--							  filename);
-+					if (size > 0)
-+						if (fwrite(buf, size, 1, f) != 1)
-+							die_errno("Could not write '%s'",
-+								  filename);
- 					free(buf);
- 				}
- 			} else
-diff --git a/t/t1420-lost-found.sh b/t/t1420-lost-found.sh
-index dc9e402..02323c9 100755
---- a/t/t1420-lost-found.sh
-+++ b/t/t1420-lost-found.sh
-@@ -8,7 +8,7 @@ test_description='Test fsck --lost-found'
- 
- test_expect_success setup '
- 	git config core.logAllRefUpdates 0 &&
--	: > file1 &&
-+	echo x > file1 &&
- 	git add file1 &&
- 	test_tick &&
- 	git commit -m initial &&
-@@ -18,18 +18,21 @@ test_expect_success setup '
- 	test_tick &&
- 	git commit -m second &&
- 	echo 3 > file3 &&
--	git add file3
-+	: > file4 &&
-+	git add file3 file4
- '
- 
- test_expect_success 'lost and found something' '
- 	git rev-parse HEAD > lost-commit &&
--	git rev-parse :file3 > lost-other &&
-+	git rev-parse :file3 > lost-other3 &&
-+	git rev-parse :file4 > lost-other4 &&
- 	test_tick &&
- 	git reset --hard HEAD^ &&
- 	git fsck --lost-found &&
--	test 2 = $(ls .git/lost-found/*/* | wc -l) &&
-+	test 3 = $(ls .git/lost-found/*/* | wc -l) &&
- 	test -f .git/lost-found/commit/$(cat lost-commit) &&
--	test -f .git/lost-found/other/$(cat lost-other)
-+	test -f .git/lost-found/other/$(cat lost-other3) &&
-+	test -f .git/lost-found/other/$(cat lost-other4)
- '
- 
- test_done
--- 
-1.7.6.2
+There is the additional problem that "git tag -l" gets painful.  At
+least for me, though, it's already mostly useless:
+
+   % git tag -l | grep ^v[23] | wc -l
+   858
+
+I can work around this with git aliases that filter out certain
+prefixes that I normally don't care about, but maybe that's something
+that should be directly supported in git-tag with some git-config
+parameters.
+
+The final issue that I'd worry about with using tags is performance.
+If we have hundreds of thousands or millions of tags of the form
+signed-<email>-<timestamp>, is this going to be a problem?  This does
+seem like something that could be worked around --- in the worst case
+there could just be a locally maintained reverse index from git commit
+id's to tag names.  (Although as I recall Linus objected to having
+something like this for time skews, so maybe he'd object to this too.)
+
+	       	    	     	       	     	  - Ted
