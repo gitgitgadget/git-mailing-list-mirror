@@ -1,68 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] sparse: Fix some "symbol not declared" warnings
-Date: Sun, 11 Sep 2011 17:06:03 -0700
-Message-ID: <7vr53mbp5g.fsf@alter.siamese.dyndns.org>
-References: <4E6D0E3F.3090304@ramsay1.demon.co.uk>
- <7vobyqn4jh.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] Support empty blob in fsck --lost-found
+Date: Sun, 11 Sep 2011 18:10:41 -0700
+Message-ID: <7vmxeabm5q.fsf@alter.siamese.dyndns.org>
+References: <A3964281-B24B-46C0-AE73-0CCB4C12556F@bjhargrave.com>
+ <7vty8iolnj.fsf@alter.siamese.dyndns.org>
+ <348F09EE-5EE2-4F3E-B1B1-6FD34BDBD117@bjhargrave.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 12 02:06:14 2011
+Cc: git@vger.kernel.org
+To: BJ Hargrave <bj@bjhargrave.com>
+X-From: git-owner@vger.kernel.org Mon Sep 12 03:12:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R2u2P-0007y3-MB
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Sep 2011 02:06:14 +0200
+	id 1R2v4K-0005EA-QY
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Sep 2011 03:12:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751975Ab1ILAGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Sep 2011 20:06:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63730 "EHLO
+	id S1751586Ab1ILBKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Sep 2011 21:10:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51089 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751675Ab1ILAGG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Sep 2011 20:06:06 -0400
+	id S1751167Ab1ILBKo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Sep 2011 21:10:44 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 190CB4251;
-	Sun, 11 Sep 2011 20:06:05 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 84A334CCE;
+	Sun, 11 Sep 2011 21:10:43 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=T2RSdcLfZTdzIKPfOikvb8MAInk=; b=xBove4
-	Rmv0mzXhffdyYeqOdpFK3dFz5WBiMeE6A0hWWjzSWT7HP3tcnCUY9Kur4fRnLzuB
-	LrovLPVol53UK7Z5XHgZPzZx7NvxbRW6gooaHBprdchgsEY/Cn5QLS5VY5isijqy
-	au9xaGvArFph5H1GEeqek2zlIN0gVqDrXbdgo=
+	:content-type; s=sasl; bh=Fpnw7OdHk4vxVJWHfoda8k28b40=; b=C6Gx4r
+	Y+ypwvvG74D9H3VL61tAtLF18bq3AGaRh6S6TH6wAS11Yipn6QTKhrDhadub6UAu
+	ycPFGiGYJFo8CBdsTfyrM5QnHM8dLlwxIz5j/uWuf+9wvNZ/aWqAzvJZSq4x4euH
+	hE+Fy21UHbbyb03fO0Oeims/B2e+Gzrp+sKz8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Hxz7Mmx6NriRudK3dnDsoAfWfLtRmk+I
-	tAQvLm1IGPbvBqUs/ybwZiqrIC4t5BTkBnCFhDsmmmQRpM76PLoYfT8sXSXTiAFl
-	iL2qNrI2utyAm78MJuiLLvZsk1E7LuzOxWC4Oq1IeIpvI8ABhPx6XsHjnyCSAnLe
-	d5I6Ifb48QQ=
+	:content-type; q=dns; s=sasl; b=O9NXX9Z7U8jsyz1vZ+KHxYyq6G05y6XN
+	yJGcGP7vk4RcB427k+ujh8Tvt5dcozkMdwyLIgGdCUIWDmlzmFwhNUjBcQhQ5YhN
+	UtBTdQnwsR6JnZIgmRr609DWd0hjOnEks4HAe+9cUtjExp3vr0qFAjTyt7K6JU3G
+	db9ioLWR1+U=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 107BF424F;
-	Sun, 11 Sep 2011 20:06:05 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D09C4CCC;
+	Sun, 11 Sep 2011 21:10:43 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9FCB2424E; Sun, 11 Sep 2011
- 20:06:04 -0400 (EDT)
-In-Reply-To: <7vobyqn4jh.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 11 Sep 2011 14:38:10 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ED0744CCB; Sun, 11 Sep 2011
+ 21:10:42 -0400 (EDT)
+In-Reply-To: <348F09EE-5EE2-4F3E-B1B1-6FD34BDBD117@bjhargrave.com> (BJ
+ Hargrave's message of "Sun, 11 Sep 2011 17:43:32 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 01BF7352-DCD3-11E0-A7D5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 09678D48-DCDC-11E0-902F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181203>
 
-Junio C Hamano <gitster@pobox.com> writes:
+BJ Hargrave <bj@bjhargrave.com> writes:
 
-> There are many others that can be identified by running the attached
-> script after you build your git. I'll follow this message up with three
-> consolidated patches, but the latter two needs to be split into smaller
-> pieces to be either queued on top (for topics in next) or squashed into
-> (for topics in pu), which I am not going to do myself today (hint, hint).
+> On Sep 11, 2011, at 16:43 , Junio C Hamano wrote:
+>
+>> Funny.
+>> 
+>> I am sure we fixed a similar breakage elsewhere a few years ago, by
+>> swapping the size and nmemb to the calls (i.e. instead of writing one
+>> block of "size" bytes, you could write "size" blocks of 1-byte) and making
+>> sure fwrite() reports the number of items. IOW
+>> 
+>> 	if (buf && fwrite(buf, 1, size, f) != size)
+>> 		die_errno("Could not write '%s'", filename);
+>> 
+>
+> Do you want me to resubmit the patch using this technique instead of the size > 0 check?
 
-Well, I lied ;-)  I've separated things out, queued fix-ups at the tips of
-branches, and pushed out the integration result to the public repositories
-(other than k.org that seems to be still down).
+Not really.
+
+I am not sure when/why we would try to write an empty blob out to begin
+with...
