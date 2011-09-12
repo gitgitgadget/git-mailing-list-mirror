@@ -1,255 +1,583 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] fetch: avoid quadratic loop checking for updated submodules
-Date: Mon, 12 Sep 2011 15:56:52 -0400
-Message-ID: <20110912195652.GA27850@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking in git.git (Sep 2011, #04; Mon, 12)
+Date: Mon, 12 Sep 2011 13:16:58 -0700
+Message-ID: <7v4o0h7byd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	git-dev@github.com
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Sep 12 21:57:02 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 12 22:17:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3Ccn-0000IS-Ek
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Sep 2011 21:57:01 +0200
+	id 1R3CwJ-0008Sc-JW
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Sep 2011 22:17:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754243Ab1ILT4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Sep 2011 15:56:55 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56719
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753792Ab1ILT4z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Sep 2011 15:56:55 -0400
-Received: (qmail 17984 invoked by uid 107); 12 Sep 2011 19:57:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 Sep 2011 15:57:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Sep 2011 15:56:52 -0400
-Content-Disposition: inline
+	id S1754484Ab1ILURG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Sep 2011 16:17:06 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53628 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754300Ab1ILURC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Sep 2011 16:17:02 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 02A245806;
+	Mon, 12 Sep 2011 16:17:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=7
+	KAybdJRgcPe14h6Jq+eksUmPPA=; b=u94ec5JXKCEBzWKfTNZKlKQZlGCAQwty6
+	l204qFfRt4SHG144nXO0vWArVOOiqS4u70y6mZuwMycRq/g1QUcEI9tQgJfBIP4z
+	Mz9A+Y1Qns+5iO2a0+0vgoaQht+wgkFUcxjaGHol4amcFN5OoajLck8sVMfk5Wmk
+	g9tusIzo5Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=v1J
+	faOzDN72r9iIv42Gw/SlQ7x+LF5ix4GkkLcFYoHHWH+t0OL8Oa3b99L8bVM04CBs
+	8Q4ip/7rOtDNfwolVdrrCdXU+phNq77Xx5HHH18BvDoVC6EOFHbOYwLGkBwoATmQ
+	ovp9poBC8zLD3tJNtbs5NF5OyD05RQ89sRLcR4Uw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E86C25805;
+	Mon, 12 Sep 2011 16:17:00 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C40715802; Mon, 12 Sep 2011
+ 16:16:59 -0400 (EDT)
+X-master-at: 5738c9c21e53356ab5020912116e7f82fd2d428f
+X-next-at: f7b2633f782e177423b9f0a0fb76c4f5ae0d8364
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2B9743D6-DD7C-11E0-B985-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181236>
 
-Recent versions of git can be slow to fetch repositories with a
-large number of refs (or when they already have a large
-number of refs). For example, GitHub makes pull-requests
-available as refs, which can lead to a large number of
-available refs. This slowness goes away when submodule
-recursion is turned off:
+Here are the topics that have been cooking.  Commits prefixed with '-' are
+only in 'pu' while commits prefixed with '+' are in 'next'.
 
-  $ git ls-remote git://github.com/rails/rails.git | wc -l
-  3034
+The tip of 'master' is tagged as 1.7.7-rc1. Unfortunately k.org seems to
+be still down, so there will be no pre-built rpms nor pre-formatted manual
+or documentation pages.
 
-  [this takes ~10 seconds of CPU time to complete]
-  git fetch --recurse-submodules=no \
-    git://github.com/rails/rails.git "refs/*:refs/*"
+I've tentatively uploaded a release candidate tarball at:
 
-  [this still isn't done after 10 _minutes_ of pegging the CPU]
-  git fetch \
-    git://github.com/rails/rails.git "refs/*:refs/*"
+    http://code.google.com/p/git-core/downloads/list
+  
+and its SHA-1 checksum is:
 
-You can produce a quicker and simpler test case like this:
+80dfcce410d2f36ffed4c8b48c8c896a45159e41  git-1.7.7.rc1.tar.gz
 
-  doit() {
-    head=`git rev-parse HEAD`
-    for i in `seq 1 $1`; do
-      echo $head refs/heads/ref$i
-    done >.git/packed-refs
-    echo "==> $1"
-    rm -rf dest
-    git init -q --bare dest &&
-      (cd dest && time git.compile fetch -q .. refs/*:refs/*)
-  }
+Here are the repositories that have my integration branches:
 
-  rm -rf repo
-  git init -q repo && cd repo &&
-  >file && git add file && git commit -q -m one
+With maint, master, next, pu and todo:
 
-  doit 100
-  doit 200
-  doit 400
-  doit 800
-  doit 1600
-  doit 3200
+	url = git://repo.or.cz/alt-git.git
+	url = https://code.google.com/p/git-core/
 
-Which yields timings like:
+With only maint and master:
 
-  # refs  seconds of CPU
-     100            0.06
-     200            0.24
-     400            0.95
-     800            3.39
-    1600           13.66
-    3200           54.09
+	url = git://git.sourceforge.jp/gitroot/git-core/git.git
+	url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
 
-Notice that although the number of refs doubles in each
-trial, the CPU time spent quadruples.
+With all the topics and integration branches:
 
-The problem is that the submodule recursion code works
-something like:
+	url = https://github.com/gitster/git
 
-  - for each ref we fetch
-    - for each commit in git rev-list $new_sha1 --not --all
-      - add modified submodules to list
-  - fetch any newly referenced submodules
+--------------------------------------------------
+[New Topics]
 
-But that means if we fetch N refs, we start N revision
-walks. Worse, because we use "--all", the number of refs we
-must process that constitute "--all" keeps growing, too. And
-you end up doing O(N^2) ref resolutions.
+* ph/format-patch-no-color (2011-09-12) 1 commit
+ - format-patch: ignore ui.color
 
-Instead, this patch structures the code like this:
+This fix for the recent regression probably should be in 1.7.7 final.
+Will merge to "master" soonish.
 
-  - for each sha1 we already have
-    - add $old_sha1 to list $old
-  - for each ref we fetch
-    - add $new_sha1 to list $new
-  - for each commit in git rev-list $new --not $old
-    - add modified submodules to list
-  - fetch any newly referenced submodules
+--------------------------------------------------
+[Graduated to "master"]
 
-This yields timings like:
+* jl/maint-fetch-submodule-check-fix (2011-09-09) 1 commit
+ + fetch: skip on-demand checking when no submodules are configured
 
-  # refs  seconds of CPU
-  100               0.00
-  200               0.04
-  400               0.04
-  800               0.10
-  1600              0.21
-  3200              0.39
+* jn/remote-helpers-doc (2011-09-01) 3 commits
+ + (short) documentation for the testgit remote helper
+ + Documentation/git-remote-helpers: explain how import works with multiple refs
+ + Documentation/remote-helpers: explain capabilities first
 
-Note that the amount of effort doubles as the number of refs
-doubles. Similarly, the fetch of rails.git takes about as
-much time as it does with --recurse-submodules=no.
+--------------------------------------------------
+[Stalled]
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- submodule.c |   76 +++++++++++++++++++++++++++++++++++++++++++++++++++++++----
- 1 files changed, 71 insertions(+), 5 deletions(-)
+* jk/default-attr (2011-08-26) 1 commit
+ - attr: map builtin userdiff drivers to well-known extensions
 
-diff --git a/submodule.c b/submodule.c
-index 7a76edf..00aeb71 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -8,12 +8,17 @@
- #include "diffcore.h"
- #include "refs.h"
- #include "string-list.h"
-+#include "sha1-array.h"
- 
- static struct string_list config_name_for_path;
- static struct string_list config_fetch_recurse_submodules_for_name;
- static struct string_list config_ignore_for_name;
- static int config_fetch_recurse_submodules = RECURSE_SUBMODULES_ON_DEMAND;
- static struct string_list changed_submodule_paths;
-+static int initialized_fetch_ref_tips;
-+static struct sha1_array ref_tips_before_fetch;
-+static struct sha1_array ref_tips_after_fetch;
-+
- /*
-  * The following flag is set if the .gitmodules file is unmerged. We then
-  * disable recursion for all submodules where .git/config doesn't have a
-@@ -474,16 +479,71 @@ static void submodule_collect_changed_cb(struct diff_queue_struct *q,
- 	}
- }
- 
-+static int add_sha1_to_array(const char *ref, const unsigned char *sha1,
-+			     int flags, void *data)
-+{
-+	sha1_array_append(data, sha1);
-+	return 0;
-+}
-+
- void check_for_new_submodule_commits(unsigned char new_sha1[20])
- {
-+	if (!initialized_fetch_ref_tips) {
-+		for_each_ref(add_sha1_to_array, &ref_tips_before_fetch);
-+		initialized_fetch_ref_tips = 1;
-+	}
-+
-+	sha1_array_append(&ref_tips_after_fetch, new_sha1);
-+}
-+
-+struct argv_array {
-+	const char **argv;
-+	unsigned int argc;
-+	unsigned int alloc;
-+};
-+
-+static void init_argv(struct argv_array *array)
-+{
-+	array->argv = NULL;
-+	array->argc = 0;
-+	array->alloc = 0;
-+}
-+
-+static void push_argv(struct argv_array *array, const char *value)
-+{
-+	ALLOC_GROW(array->argv, array->argc + 2, array->alloc);
-+	array->argv[array->argc++] = xstrdup(value);
-+	array->argv[array->argc] = NULL;
-+}
-+
-+static void clear_argv(struct argv_array *array)
-+{
-+	int i;
-+	for (i = 0; i < array->argc; i++)
-+		free((char **)array->argv[i]);
-+	free(array->argv);
-+	init_argv(array);
-+}
-+
-+static void add_sha1_to_argv(const unsigned char sha1[20], void *data)
-+{
-+	push_argv(data, sha1_to_hex(sha1));
-+}
-+
-+static void calculate_changed_submodule_paths() {
- 	struct rev_info rev;
- 	struct commit *commit;
--	const char *argv[] = {NULL, NULL, "--not", "--all", NULL};
--	int argc = ARRAY_SIZE(argv) - 1;
-+	struct argv_array argv;
- 
- 	init_revisions(&rev, NULL);
--	argv[1] = xstrdup(sha1_to_hex(new_sha1));
--	setup_revisions(argc, argv, &rev, NULL);
-+	init_argv(&argv);
-+	push_argv(&argv, "--"); /* argv[0] program name */
-+	sha1_array_for_each_unique(&ref_tips_after_fetch,
-+				   add_sha1_to_argv, &argv);
-+	push_argv(&argv, "--not");
-+	sha1_array_for_each_unique(&ref_tips_before_fetch,
-+				   add_sha1_to_argv, &argv);
-+	setup_revisions(argv.argc, argv.argv, &rev, NULL);
- 	if (prepare_revision_walk(&rev))
- 		die("revision walk setup failed");
- 
-@@ -507,7 +567,11 @@ void check_for_new_submodule_commits(unsigned char new_sha1[20])
- 			parent = parent->next;
- 		}
- 	}
--	free((char *)argv[1]);
-+
-+	clear_argv(&argv);
-+	sha1_array_clear(&ref_tips_before_fetch);
-+	sha1_array_clear(&ref_tips_after_fetch);
-+	initialized_fetch_ref_tips = 0;
- }
- 
- int fetch_populated_submodules(int num_options, const char **options,
-@@ -541,6 +605,8 @@ int fetch_populated_submodules(int num_options, const char **options,
- 	cp.git_cmd = 1;
- 	cp.no_stdin = 1;
- 
-+	calculate_changed_submodule_paths();
-+
- 	for (i = 0; i < active_nr; i++) {
- 		struct strbuf submodule_path = STRBUF_INIT;
- 		struct strbuf submodule_git_dir = STRBUF_INIT;
--- 
-1.7.6.10.g62f04
+Not urgent; I fixed up the test breakage just for fun.
+
+* nd/maint-autofix-tag-in-head (2011-08-26) 3 commits
+ - Accept tags in HEAD or MERGE_HEAD
+ - merge: remove global variable head[]
+ - merge: keep stash[] a local variable
+
+Probably needs a re-roll to aim a bit higher.
+Not urgent; will not be in 1.7.7.
+
+* tr/doc-note-rewrite (2011-09-05) 1 commit
+ - Documentation: "on for all" configuration of notes.rewriteRef
+
+It was questioned if the new text suggests a sane and safe thing to do.
+
+* jk/add-i-hunk-filter (2011-07-27) 5 commits
+  (merged to 'next' on 2011-08-11 at 8ff9a56)
+ + add--interactive: add option to autosplit hunks
+ + add--interactive: allow negatation of hunk filters
+ + add--interactive: allow hunk filtering on command line
+ + add--interactive: factor out regex error handling
+ + add--interactive: refactor patch mode argument processing
+
+Needs documentation updates, tests, and integration with the higher level
+callers, e.g. "git add -p".
+
+* jh/receive-count-limit (2011-05-23) 10 commits
+ - receive-pack: Allow server to refuse pushes with too many objects
+ - pack-objects: Estimate pack size; abort early if pack size limit is exceeded
+ - send-pack/receive-pack: Allow server to refuse pushing too large packs
+ - pack-objects: Allow --max-pack-size to be used together with --stdout
+ - send-pack/receive-pack: Allow server to refuse pushes with too many commits
+ - pack-objects: Teach new option --max-commit-count, limiting #commits in pack
+ - receive-pack: Prepare for addition of the new 'limit-*' family of capabilities
+ - Tighten rules for matching server capabilities in server_supports()
+ - send-pack: Attempt to retrieve remote status even if pack-objects fails
+ - Update technical docs to reflect side-band-64k capability in receive-pack
+
+Would need another round to separate per-pack and per-session limits.
+
+* jm/mergetool-pathspec (2011-06-22) 2 commits
+ - mergetool: Don't assume paths are unmerged
+ - mergetool: Add tests for filename with whitespace
+
+I think this is a good idea, but it probably needs a re-roll.
+Cf. $gmane/176254, 176255, 166256
+
+* jk/generation-numbers (2011-09-11) 8 commits
+ - metadata-cache.c: make two functions static
+ - limit "contains" traversals based on commit generation
+ - check commit generation cache validity against grafts
+ - pretty: support %G to show the generation number of a commit
+ - commit: add commit_generation function
+ - add metadata-cache infrastructure
+ - decorate: allow storing values instead of pointers
+ - Merge branch 'jk/tag-contains-ab' (early part) into HEAD
+
+The initial "tag --contains" de-pessimization without need for generation
+numbers is already in; backburnered.
+
+* sr/transport-helper-fix-rfc (2011-07-19) 2 commits
+ - t5800: point out that deleting branches does not work
+ - t5800: document inability to push new branch with old content
+
+* po/cygwin-backslash (2011-08-05) 2 commits
+ - On Cygwin support both UNIX and DOS style path-names
+ - git-compat-util: add generic find_last_dir_sep that respects is_dir_sep
+
+--------------------------------------------------
+[Cooking]
+
+* hl/iso8601-more-zone-formats (2011-09-09) 2 commits
+ - fixup? simplification and tightening
+ - date.c: Support iso8601 timezone formats
+
+Not urgent.
+Will squash them into one and push them forward to "next", though.
+
+* jc/signed-push (2011-09-09) 7 commits
+ . push -s: support pre-receive-signature hook
+ . push -s: receiving end
+ . push -s: send signed push certificate
+ . push -s: skeleton
+ . refactor run_receive_hook()
+ - Split GPG interface into its own helper library
+ - send-pack: typofix error message
+ (this branch is tangled with jc/signed-push-3.)
+
+This was the v2 that updated notes tree on the receiving end.
+
+* jc/signed-push-3 (2011-09-09) 4 commits
+ - push -s: signed push
+ - rename "match_refs()" to "match_push_refs()"
+ - Split GPG interface into its own helper library
+ - send-pack: typofix error message
+ (this branch is tangled with jc/signed-push.)
+
+This is the third edition, that moves the preparation of the notes tree to
+the sending end.
+
+* jc/run-receive-hook-cleanup (2011-09-09) 1 commit
+ - refactor run_receive_hook()
+
+This is a remnant in the jc/signed-push topic that has become unnecessary
+for the purpose of jc/signed-push-3, but is retained for its clean-up
+value.
+
+The corresponding one will be dropped when rebuilding the jc/signed-push
+topic on top of this topic later.
+
+* jk/for-each-ref (2011-09-08) 5 commits
+ - for-each-ref: add split message parts to %(contents:*).
+ - for-each-ref: handle multiline subjects like --pretty
+ - for-each-ref: refactor subject and body placeholder parsing
+ - t6300: add more body-parsing tests
+ - t7004: factor out gpg setup
+
+Not urgent.
+Looked more or less reasonable, though.
+
+* wh/normalize-alt-odb-path (2011-09-07) 1 commit
+ - sha1_file: normalize alt_odb path before comparing and storing
+
+Not urgent.
+Looked more or less reasonable, though.
+
+* fk/use-kwset-pickaxe-grep-f (2011-09-11) 2 commits
+ - obstack.c: Fix some sparse warnings
+ - sparse: Fix an "Using plain integer as NULL pointer" warning
+
+In general we would prefer to see these fixed at the upstream first, but
+we have essentially forked from them at their last GPLv2 versions...
+
+* jc/make-static (2011-09-11) 2 commits
+  (merged to 'next' on 2011-09-11 at 2acb0af)
+ + vcs-svn: remove unused functions and make some static
+ + make-static: master
+
+I am not sure about the droppage of a few unused functions in the topmost
+patch.
+
+* rj/quietly-create-dep-dir (2011-09-11) 1 commit
+ - Makefile: Make dependency directory creation less noisy
+
+Not urgent.
+Will merge to "next", though.
+
+* js/cred-macos-x-keychain (2011-09-11) 1 commit
+ - contrib: add a credential helper for Mac OS X's keychain
+ (this branch uses jk/http-auth-keyring.)
+
+Welcome addition to build our confidence in the jk/http-auth-keyring topic.
+Will merge to "next".
+
+* mh/check-ref-format (2011-09-11) 8 commits
+ - Add tools to avoid the use of unnormalized refnames.
+ - Do not allow ".lock" at the end of any refname component
+ - Add a library function normalize_refname()
+ - Change check_ref_format() to take a flags argument
+ - fixup asciidoc formatting
+ - git check-ref-format: add options --allow-onelevel and --refspec-pattern
+ - Change bad_ref_char() to return a boolean value
+ - t1402: add some more tests
+
+Another reroll coming.
+
+* mz/remote-rename (2011-09-11) 4 commits
+ - remote: only update remote-tracking branch if updating refspec
+ - remote rename: warn when refspec was not updated
+ - remote: "rename o foo" should not rename ref "origin/bar"
+ - remote: write correct fetch spec when renaming remote 'remote'
+
+* rj/maint-t9159-svn-rev-notation (2011-09-11) 1 commit
+ - t9159-*.sh: Add an svn version check
+
+Ack/Nack from people involved in git-svn?
+
+* cb/common-prefix-unification (2011-09-11) 4 commits
+ - dir.c: make common_prefix_len() static
+ - rename pathspec_prefix() to common_prefix() and move to dir.[ch]
+ - consolidate pathspec_prefix and common_prefix
+ - remove prefix argument from pathspec_prefix
+
+Will merge to "next" after squashing the tip one into "consolidate" patch.
+
+* cb/send-email-help (2011-09-05) 1 commit
+ - send-email: add option -h
+
+I think we should further amend to drop the fully-spelled "help" that will
+be intercepted by "git" wrapper before moving this forward.
+
+A separate set of patches to remove the hidden fully-spelled "help" from
+other commands would be nice to have as companion patches as well.
+
+* jc/fetch-pack-fsck-objects (2011-09-04) 3 commits
+ - test: fetch/receive with fsckobjects
+ - transfer.fsckobjects: unify fetch/receive.fsckobjects
+ - fetch.fsckobjects: verify downloaded objects
+
+We had an option to verify the sent objects before accepting a push but
+lacked the corresponding option when fetching. In the light of the recent
+k.org incident, a change like this would be a good addition.
+
+Will merge to "next" to cook for more.
+
+* jc/fetch-verify (2011-09-01) 3 commits
+ - fetch: verify we have everything we need before updating our ref
+ - rev-list --verify-object
+ - list-objects: pass callback data to show_objects()
+ (this branch uses jc/traverse-commit-list; is tangled with jc/receive-verify.)
+
+During a fetch, we verify that the pack stream is self consistent,
+but did not verify that the refs that are updated are consistent with
+objects contained in the packstream, and this adds such a check.
+
+Will merge to "next" to cook for more.
+
+* jc/receive-verify (2011-09-09) 6 commits
+ - receive-pack: check connectivity before concluding "git push"
+ - check_everything_connected(): libify
+ - check_everything_connected(): refactor to use an iterator
+ - fetch: verify we have everything we need before updating our ref
+ - rev-list --verify-object
+ - list-objects: pass callback data to show_objects()
+ (this branch uses jc/traverse-commit-list; is tangled with jc/fetch-verify.)
+
+While accepting a push, we verify that the pack stream is self consistent,
+but did not verify that the refs the push updates are consistent with
+objects contained in the packstream, and this adds such a check.
+
+Will merge to "next" to cook for more.
+
+* jc/request-pull-show-head (2011-09-06) 1 commit
+ - State what commit to expect in request-pull
+
+Will merge to "next".
+
+* jn/maint-http-error-message (2011-09-06) 2 commits
+ - http: avoid empty error messages for some curl errors
+ - http: remove extra newline in error message
+
+Will merge to "next".
+
+* bk/ancestry-path (2011-08-25) 3 commits
+  (merged to 'next' on 2011-09-02 at d05ba5d)
+ + revision: do not include sibling history in --ancestry-path output
+ + revision: keep track of the end-user input from the command line
+ + rev-list: Demonstrate breakage with --ancestry-path --all
+
+The topic came up a bit too late in the cycle.
+Will cook for a while.
+
+* mg/branch-list (2011-09-08) 6 commits
+  (merged to 'next' on 2011-09-11 at 20a9cdb)
+ + branch: -v does not automatically imply --list
+  (merged to 'next' on 2011-09-02 at b818eae)
+ + branch: allow pattern arguments
+ + branch: introduce --list option
+ + git-branch: introduce missing long forms for the options
+ + git-tag: introduce long forms for the options
+ + t6040: test branch -vv
+
+Not urgent; the topic came up a bit too late in the cycle.
+
+* mm/rebase-i-exec-edit (2011-08-26) 2 commits
+  (merged to 'next' on 2011-09-02 at e75b1b9)
+ + rebase -i: notice and warn if "exec $cmd" modifies the index or the working tree
+ + rebase -i: clean error message for --continue after failed exec
+
+Not urgent; the topic came up a bit too late in the cycle.
+
+* hv/submodule-merge-search (2011-08-26) 5 commits
+ - submodule: Search for merges only at end of recursive merge
+ - allow multiple calls to submodule merge search for the same path
+ - submodule: Demonstrate known breakage during recursive merge
+ - push: Don't push a repository with unpushed submodules
+  (merged to 'next' on 2011-08-24 at 398e764)
+ + push: teach --recurse-submodules the on-demand option
+ (this branch is tangled with fg/submodule-auto-push.)
+
+Not urgent; the topic came up a bit too late in the cycle.  The second
+from the bottom one needs to be replaced with a properly written commit
+log message.
+
+* mm/mediawiki-as-a-remote (2011-09-01) 2 commits
+ - git-remote-mediawiki: allow push to set MediaWiki metadata
+ - Add a remote helper to interact with mediawiki (fetch & push)
+
+Fun.
+Not urgent; the topic came up a bit too late in the cycle.
+
+* bc/unstash-clean-crufts (2011-08-27) 4 commits
+  (merged to 'next' on 2011-09-02 at 7bfd66f)
+ + git-stash: remove untracked/ignored directories when stashed
+ + t/t3905: add missing '&&' linkage
+ + git-stash.sh: fix typo in error message
+ + t/t3905: use the name 'actual' for test output, swap arguments to test_cmp
+
+Not urgent; the topic came up a bit too late in the cycle.
+
+* da/make-auto-header-dependencies (2011-08-30) 1 commit
+  (merged to 'next' on 2011-09-02 at e04a4af)
+ + Makefile: Improve compiler header dependency check
+ (this branch uses fk/make-auto-header-dependencies.)
+
+Not urgent; will not be in 1.7.7.
+
+* gb/am-hg-patch (2011-08-29) 1 commit
+  (merged to 'next' on 2011-09-02 at 3edfe4c)
+ + am: preliminary support for hg patches
+
+Not urgent; the topic came up a bit too late in the cycle.
+
+* jc/diff-index-unpack (2011-08-29) 3 commits
+  (merged to 'next' on 2011-09-02 at 4206bd9)
+ + diff-index: pass pathspec down to unpack-trees machinery
+ + unpack-trees: allow pruning with pathspec
+ + traverse_trees(): allow pruning with pathspec
+
+Will cook for a while.
+
+* nm/grep-object-sha1-lock (2011-08-30) 1 commit
+  (merged to 'next' on 2011-09-02 at 336f57d)
+ + grep: Fix race condition in delta_base_cache
+
+Not urgent; the topic came up a bit too late in the cycle.
+
+* tr/mergetool-valgrind (2011-08-30) 1 commit
+  (merged to 'next' on 2011-09-02 at f5f2c61)
+ + Symlink mergetools scriptlets into valgrind wrappers
+
+Not urgent; the topic came up a bit too late in the cycle.
+
+* fg/submodule-auto-push (2011-09-11) 2 commits
+  (merged to 'next' on 2011-09-11 at 3fc86f7)
+ + submodule.c: make two functions static
+  (merged to 'next' on 2011-08-24 at 398e764)
+ + push: teach --recurse-submodules the on-demand option
+ (this branch is tangled with hv/submodule-merge-search.)
+
+What the topic aims to achieve may make sense, but the implementation
+looked somewhat suboptimal.
+
+* jc/traverse-commit-list (2011-08-22) 3 commits
+  (merged to 'next' on 2011-08-24 at df50dd7)
+ + revision.c: update show_object_with_name() without using malloc()
+ + revision.c: add show_object_with_name() helper function
+ + rev-list: fix finish_object() call
+ (this branch is used by jc/fetch-verify and jc/receive-verify.)
+
+Not urgent; will not be in 1.7.7.
+
+* fk/make-auto-header-dependencies (2011-08-18) 1 commit
+  (merged to 'next' on 2011-08-24 at 3da2c25)
+ + Makefile: Use computed header dependencies if the compiler supports it
+ (this branch is used by da/make-auto-header-dependencies.)
+
+Not urgent; will not be in 1.7.7.
+
+* mh/iterate-refs (2011-09-11) 7 commits
+ - refs.c: make create_cached_refs() static
+ - Retain caches of submodule refs
+ - Store the submodule name in struct cached_refs
+ - Allocate cached_refs objects dynamically
+ - Change the signature of read_packed_refs()
+ - Access reference caches only through new function get_cached_refs()
+ - Extract a function clear_cached_refs()
+
+I did not see anything fundamentally wrong with this series, but it was
+unclear what the benefit of these changes are.  If the series were to read
+parts of the ref hierarchy (like refs/heads/) lazily, the story would
+have been different, though.
+
+Not urgent; will not be in 1.7.7.
+
+* hv/submodule-update-none (2011-08-11) 2 commits
+  (merged to 'next' on 2011-08-24 at 5302fc1)
+ + add update 'none' flag to disable update of submodule by default
+ + submodule: move update configuration variable further up
+
+Not urgent; will not be in 1.7.7.
+
+* jc/lookup-object-hash (2011-08-11) 6 commits
+  (merged to 'next' on 2011-08-24 at 5825411)
+ + object hash: replace linear probing with 4-way cuckoo hashing
+ + object hash: we know the table size is a power of two
+ + object hash: next_size() helper for readability
+ + pack-objects --count-only
+ + object.c: remove duplicated code for object hashing
+ + object.c: code movement for readability
+
+I do not think there is anything fundamentally wrong with this series, but
+the risk of breakage far outweighs observed performance gain in one
+particular workload. Will keep it in 'next' at least for one cycle.
+
+Not urgent; will not be in 1.7.7.
+
+* fg/submodule-git-file-git-dir (2011-08-22) 2 commits
+  (merged to 'next' on 2011-08-23 at 762194e)
+ + Move git-dir for submodules
+ + rev-parse: add option --resolve-git-dir <path>
+
+I do not think there is anything fundamentally wrong with this series, but
+the risk of breakage outweighs any benefit for having this new
+feature. Will keep it in 'next' at least for one cycle.
+
+Not urgent; will not be in 1.7.7.
+
+* jk/http-auth-keyring (2011-09-11) 14 commits
+  (merged to 'next' on 2011-09-11 at 491ce6a)
+ + credentials: make credential_fill_gently() static
+  (merged to 'next' on 2011-08-03 at b06e80e)
+ + credentials: add "getpass" helper
+ + credentials: add "store" helper
+ + credentials: add "cache" helper
+ + docs: end-user documentation for the credential subsystem
+ + http: use hostname in credential description
+ + allow the user to configure credential helpers
+ + look for credentials in config before prompting
+ + http: use credential API to get passwords
+ + introduce credentials API
+ + http: retry authentication failures for all http requests
+ + remote-curl: don't retry auth failures with dumb protocol
+ + improve httpd auth tests
+ + url: decode buffers that are not NUL-terminated
+ (this branch is used by js/cred-macos-x-keychain.)
+
+Looked mostly reasonable except for the limitation that it is not clear
+how to deal with a site at which a user needs to use different passwords 
+for different repositories. Will keep it in "next" at least for one cycle,
+until we start hearing real-world success reports on the list.
+
+Not urgent; will not be in 1.7.7.
+
+* rr/revert-cherry-pick-continue (2011-09-11) 19 commits
+  (merged to 'next' on 2011-09-11 at 7d78054)
+ + builtin/revert.c: make commit_list_append() static
+  (merged to 'next' on 2011-08-24 at 712c115)
+ + revert: Propagate errors upwards from do_pick_commit
+ + revert: Introduce --continue to continue the operation
+ + revert: Don't implicitly stomp pending sequencer operation
+ + revert: Remove sequencer state when no commits are pending
+ + reset: Make reset remove the sequencer state
+ + revert: Introduce --reset to remove sequencer state
+ + revert: Make pick_commits functionally act on a commit list
+ + revert: Save command-line options for continuing operation
+ + revert: Save data for continuing after conflict resolution
+ + revert: Don't create invalid replay_opts in parse_args
+ + revert: Separate cmdline parsing from functional code
+ + revert: Introduce struct to keep command-line options
+ + revert: Eliminate global "commit" variable
+ + revert: Rename no_replay to record_origin
+ + revert: Don't check lone argument in get_encoding
+ + revert: Simplify and inline add_message_to_msg
+ + config: Introduce functions to write non-standard file
+ + advice: Introduce error_resolve_conflict
+
+Will keep it in 'next' at least for one cycle.
+Not urgent; will not be in 1.7.7.
+
+--------------------------------------------------
+[Discarded]
+
+* jk/pager-with-alias (2011-08-19) 1 commit
+ . support pager.* for aliases
+
+* cb/maint-quiet-push (2011-09-05) 4 commits
+ . t5541: avoid TAP test miscounting
+ . push: old receive-pack does not understand --quiet
+ . fix push --quiet via http
+ . tests for push --quiet
+
+Dropped for rerolling after 1.7.7 cycle.
