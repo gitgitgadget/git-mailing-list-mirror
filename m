@@ -1,93 +1,220 @@
-From: Pang Yan Han <pangyanhan@gmail.com>
-Subject: [PATCH/RFCv2 2/2] format-patch: produce non colorized patches when ui.color=always
-Date: Tue, 13 Sep 2011 01:46:41 +0800
-Message-ID: <1315849601-26497-3-git-send-email-pangyanhan@gmail.com>
-References: <1315849601-26497-1-git-send-email-pangyanhan@gmail.com>
-Cc: gitster@pobox.com, peff@peff.net, martin.von.zweigbergk@gmail.com,
-	sdaoden@googlemail.com, ib@wupperonline.de,
-	Pang Yan Han <pangyanhan@gmail.com>
+From: luis <luis@tandvsolns.co.uk>
+Subject: windows git problem
+Date: Mon, 12 Sep 2011 18:35:10 +0100
+Organization: Test and Verification Solutions
+Message-ID: <4E6E42CE.80405@tandvsolns.co.uk>
+Mime-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="------------030305030901050900030305"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 12 19:49:46 2011
+X-From: git-owner@vger.kernel.org Mon Sep 12 19:54:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3Adc-00088J-Uj
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Sep 2011 19:49:45 +0200
+	id 1R3Aho-0001OJ-75
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Sep 2011 19:54:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752835Ab1ILRtk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Sep 2011 13:49:40 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:38982 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751618Ab1ILRtk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Sep 2011 13:49:40 -0400
-Received: by mail-qy0-f181.google.com with SMTP id 7so348573qyk.19
-        for <git@vger.kernel.org>; Mon, 12 Sep 2011 10:49:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=He26UOZmV8qQ8C4Ik8gIxPhAQvSE/JN/6O1u8jPeRyg=;
-        b=LE0h6iaHdZ6UBEBUhEQLTx4Nd5DZpyf7s3+jRxBAJ87Pg4Bn9ZrsO9202hEvOnnzIy
-         Ey9j4LQpXYeFerNew6rSJjfDuD6zOq41bLFPVXB/7BTesZTueC3tF8PMKKbPRShSUMiI
-         TuAS9vQBwlY5hNNNgdWYeJHr0Ry0oh58n0PjU=
-Received: by 10.224.204.136 with SMTP id fm8mr837493qab.364.1315849779530;
-        Mon, 12 Sep 2011 10:49:39 -0700 (PDT)
-Received: from localhost (bb219-74-111-93.singnet.com.sg. [219.74.111.93])
-        by mx.google.com with ESMTPS id gx6sm5338034qab.20.2011.09.12.10.49.35
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 12 Sep 2011 10:49:39 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7.rc0.190.g713ddd
-In-Reply-To: <1315849601-26497-1-git-send-email-pangyanhan@gmail.com>
+	id S1752819Ab1ILRx7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Sep 2011 13:53:59 -0400
+Received: from mx.123-reg.co.uk ([94.136.40.61]:55150 "EHLO mailex.mailcore.me"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751618Ab1ILRx6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Sep 2011 13:53:58 -0400
+X-Greylist: delayed 1126 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Sep 2011 13:53:58 EDT
+Received: from vlan50.pact.srf.ac.uk ([193.37.225.201] helo=[10.0.50.140])
+	by mail11.atlas.pipex.net with esmtpa (Exim 4.71)
+	(envelope-from <luis@tandvsolns.co.uk>)
+	id 1R3APW-0002BX-A1
+	for git@vger.kernel.org; Mon, 12 Sep 2011 18:35:10 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110809 Thunderbird/6.0
+X-Mailcore-Auth: 10092836
+X-Mailcore-Domain: 680355
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181229>
 
-commit c9bfb953 (want_color: automatically fallback to color.ui,
-2011-08-17) introduced a regression where format-patch produces colorized
-patches when color.ui is set to "always".
+This is a multi-part message in MIME format.
+--------------030305030901050900030305
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-In f3aafa4 (Disable color detection during format-patch, 2006-07-09),
-git_format_config was taught to intercept diff.color to avoid passing it
-down to git_log_config and later, git_diff_ui_config.
+Hi Guys,
 
-Teach git_format_config to intercept color.ui in the same way.
+I recently run into a funny git situation.
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Pang Yan Han <pangyanhan@gmail.com>
----
- builtin/log.c                  |    3 ++-
- t/t4051-format-patch-config.sh |    2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+I had a directory under git control named "someName", with a bunch of 
+files inside. This was committed and working for some time.
+I then added a file name "somename", and under linux, that worked OK.
+However when I checked out the project under windows (either clone or 
+pull) one or the other would disappear and it would be staged as removed.
 
-diff --git a/builtin/log.c b/builtin/log.c
-index d760ee0..99f8c4c 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -608,7 +608,8 @@ static int git_format_config(const char *var, const char *value, void *cb)
- 		string_list_append(&extra_cc, value);
- 		return 0;
- 	}
--	if (!strcmp(var, "diff.color") || !strcmp(var, "color.diff")) {
-+	if (!strcmp(var, "diff.color") || !strcmp(var, "color.diff") ||
-+		!strcmp(var, "color.ui")) {
- 		return 0;
- 	}
- 	if (!strcmp(var, "format.numbered")) {
-diff --git a/t/t4051-format-patch-config.sh b/t/t4051-format-patch-config.sh
-index cea9c7d..35b349e 100755
---- a/t/t4051-format-patch-config.sh
-+++ b/t/t4051-format-patch-config.sh
-@@ -13,7 +13,7 @@ test_expect_success setup '
- 	git commit -m "commit2"
- '
- 
--test_expect_failure 'format patch with ui.color=always generates non colorized patch' '
-+test_expect_success 'format patch with ui.color=always generates non colorized patch' '
- 	git config color.ui always &&
- 	git format-patch -1 &&
- 	mv 0001-commit2.patch actual &&
+The surprising bit for me was not so much that windows could not cope 
+with the case sensitivity, but that git would stage the changes!
+
+I have attached a new git project with the problem that should help show 
+the issue.
+If you clone from this repo on a windows box you should be able to see it
+
+BTW, I'm using git v 1.7.4.1
+
 -- 
-1.7.7.rc0.190.gb47b6
+Luis Gutierrez
+Test and Verification Solutions (TVS)
+skype: luis.tandv
+
+
+--------------030305030901050900030305
+Content-Type: application/x-gzip;
+ name="bugdemo.tar.gz"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="bugdemo.tar.gz"
+
+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
+
+--------------030305030901050900030305--
