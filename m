@@ -1,49 +1,62 @@
-From: Alexey Shumkin <zapped@mail.ru>
-Subject: Re: Git new-feature-branch best practices
-Date: Mon, 12 Sep 2011 08:02:46 +0000 (UTC)
-Message-ID: <loom.20110912T100134-606@post.gmane.org>
-References: <1315769475.2560.39.camel@mamburu>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2011, #03; Sun, 11)
+Date: Mon, 12 Sep 2011 10:16:11 +0200
+Message-ID: <CAGdFq_jDrVeO99K4oujs4-7tRL9TbNS26_=wknNcGEecc505Tg@mail.gmail.com>
+References: <7vwrde9t6h.fsf@alter.siamese.dyndns.org> <vpqehzm6wrt.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 12 10:03:11 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Sep 12 10:17:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R31Tz-0004Ad-BH
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Sep 2011 10:03:11 +0200
+	id 1R31hR-0008T5-H3
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Sep 2011 10:17:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751737Ab1ILIDD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Sep 2011 04:03:03 -0400
-Received: from lo.gmane.org ([80.91.229.12]:42979 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751824Ab1ILIDC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Sep 2011 04:03:02 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1R31Tm-00044y-CP
-	for git@vger.kernel.org; Mon, 12 Sep 2011 10:02:58 +0200
-Received: from 212.34.37.3 ([212.34.37.3])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 12 Sep 2011 10:02:58 +0200
-Received: from zapped by 212.34.37.3 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 12 Sep 2011 10:02:58 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 212.34.37.3 (Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.220 Safari/535.1)
+	id S1752263Ab1ILIQx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Sep 2011 04:16:53 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:60329 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751987Ab1ILIQw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Sep 2011 04:16:52 -0400
+Received: by ywb5 with SMTP id 5so558458ywb.19
+        for <git@vger.kernel.org>; Mon, 12 Sep 2011 01:16:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=cNTQj5gdi+klI1wnKPK2AhRrfUPQ4wOhe+MBG95BYao=;
+        b=FbJakVVY/RutaWegu+o6OshZrLR2euBywzaOvOJMTeR/qgAjLNzPmTVrntr6JoAufV
+         okZkhKdeoxn+lng7VL4wviBBsQuv7NcgemKzesS9aoYXeeb7MmI2+U5HcYIvd/IXOvMI
+         YG8aJNMXnfpHS4oxf3CBm37vxZCiRqDq24ceY=
+Received: by 10.68.14.163 with SMTP id q3mr1159969pbc.98.1315815411076; Mon,
+ 12 Sep 2011 01:16:51 -0700 (PDT)
+Received: by 10.68.59.39 with HTTP; Mon, 12 Sep 2011 01:16:11 -0700 (PDT)
+In-Reply-To: <vpqehzm6wrt.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181214>
 
+Heya,
 
-take a look 
-http://comments.gmane.org/gmane.comp.version-control.git/181129
+On Mon, Sep 12, 2011 at 09:32, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> I agree it's not urgent, but this serie doesn't touch the code itself,
+> so it should be pretty harmless. It fixes some relatively important
+> documentation issues, and a nice side effect of putting them in a
+> release soon would be to update the doc available at
+> http://www.kernel.org/pub/software/scm/git/docs/git-remote-helpers.html
+> (when kernel.org is not down).
+
+Agreed. Do we have a different policy for documentation cooking than
+code though?
+
+-- 
+Cheers,
+
+Sverre Rabbelier
