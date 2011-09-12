@@ -1,72 +1,78 @@
-From: "Mr. Daniel Tsai" <danieltsai0@aol.com>
-Subject: Business transaction.
-Date: Sun, 11 Sep 2011 16:35:53 +0200
-Message-ID: <20110911143555.3F55B4276C1_E6CC74BF@radon.cen.brad.ac.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/7] Improved infrastructure for refname normalization
+Date: Sun, 11 Sep 2011 21:28:07 -0700
+Message-ID: <7vehzmbd0o.fsf@alter.siamese.dyndns.org>
+References: <1315637443-14012-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
-To: danieltsai0@aol.com
-X-From: git-owner@vger.kernel.org Mon Sep 12 04:13:17 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, cmn@elego.de,
+	A Large Angry SCM <gitzilla@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Sep 12 06:31:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R2w1L-0008Qa-6F
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Sep 2011 04:13:15 +0200
+	id 1R2yBA-0002AF-0J
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Sep 2011 06:31:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753387Ab1ILCNC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Sep 2011 22:13:02 -0400
-Received: from hydrogen.cen.brad.ac.uk ([143.53.238.3]:35468 "EHLO
-	hydrogen.cen.brad.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752975Ab1ILCNB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Sep 2011 22:13:01 -0400
-X-Greylist: delayed 27856 seconds by postgrey-1.27 at vger.kernel.org; Sun, 11 Sep 2011 22:13:01 EDT
-Received: from radon.cen.brad.ac.uk (radon.cen.brad.ac.uk [143.53.238.18])
-	by hydrogen.cen.brad.ac.uk (Postfix) with ESMTPS id 23EE5BA46A;
-	Sun, 11 Sep 2011 15:36:01 +0100 (BST)
-Received: from radon.cen.brad.ac.uk (localhost.localdomain [127.0.0.1])
-	by localhost (Email Security Appliance) with SMTP id ABCB24276D2_E6CC750B;
-	Sun, 11 Sep 2011 14:36:00 +0000 (GMT)
-Received: from User (unknown [90.170.113.125])
-	by radon.cen.brad.ac.uk (Sophos Email Appliance) with ESMTP id 3F55B4276C1_E6CC74BF;
-	Sun, 11 Sep 2011 14:35:55 +0000 (GMT)
-X-Priority: 1
-X-MSMail-Priority: High
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-X-SEA-Spam: Gauge=XXXXXXXXXX, Probability=100%, Report='
- URI_CLASS_SCAM_MAILTO 8, FRAUD_RCVD_FROM_USER_CYRILLIC 5.5, FRAUD_X3_RCVD_FM_USER 2, FRAUD_X3 1.667, FRAUD_X4 1.667, FRAUD_X5 1.667, FRAUD_X6 1.667, FRAUD_FORGED_MUA 1, HK_TLD 0.5, X_MSMAIL_PRIORITY_HIGH 0.343, FORGED_FROM_AOL 0.1, CHARSET_CYRILLIC_NO_CYRILLIC 0.05, FROM_SAME_AS_TO 0.05, BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1000_LESS 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_300_399 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS 0, CHARSET_W1251_NOT_CYRILLIC 0, ECARD_KNOWN_DOMAINS 0, FORGED_MUA_OUTLOOK 0, HI_MY_NAME_IS 0, PRIORITY_HIGH 0, USER_AGENT_OE 0, __ANY_URI 0, __AOL_FROM 0, __CHARSET_IS_CP1251 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __FRAUD_BODY_WEBMAIL 0, __FRAUD_CONTACT 0, __FRAUD_CONTACT_ADDY_B 0, __FRAUD_INTRO 0, __FRAUD_MONEY 0, __FRAUD_MONEY_VALUE 0, __FRAUD_PROPOSE 0, __FRAUD_WEBM
- AIL 0, __FRAUD_WEBMAIL_FROM 0, __FROM_AOL 
+	id S1750846Ab1ILE2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Sep 2011 00:28:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64103 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750797Ab1ILE2L (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Sep 2011 00:28:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DDE274556;
+	Mon, 12 Sep 2011 00:28:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9zPS5/Q0ViQvlQwyxfr3tfkQjZU=; b=xVxlJd
+	+KZp1gyYxeOY/smaBwzBZ3b3Z+JlQOxKiZWWVJWvEiMn21d0Vzhi7tiCvGkLClKq
+	m8qewxlL4zi7NImJf1cmOH5Gq6DoKir9ZJR0AXN5SEludaqXR4Y/iMM63dJLA9oc
+	ikP2iEG84G/Srhr4MzY10L3Or64h3+/eVVOzU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ar6of666rGLUb/VKcZXjm/7OZvRob6/b
+	RZ6G+D3iQ2ZcQbagDvqEHvtvv5q1huazNHmiWgi/hmSLQTdCxrlFf+jb07lGKiy1
+	92QDmBWPJD8eGnwi1DX2guNiyCo//Jz6VRz+INZQdLAXV8XoMjei/G3s9CFdyoBy
+	lzJD1Wi8aek=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D4DDC4555;
+	Mon, 12 Sep 2011 00:28:09 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 674374554; Mon, 12 Sep 2011
+ 00:28:09 -0400 (EDT)
+In-Reply-To: <1315637443-14012-1-git-send-email-mhagger@alum.mit.edu>
+ (Michael Haggerty's message of "Sat, 10 Sep 2011 08:50:36 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9E70D4E2-DCF7-11E0-9EC0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 7.7 points;
- *  1.5 MILLION_USD BODY: Talks about millions of dollars
- * -0.7 BAYES_20 BODY: Bayesian spam probability is 5 to 20%
- *      [score: 0.1576]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?90.170.113.125>]
- *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
- *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181205>
 
-Hello my friend. My name is Daniel Tsai and
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-I live in Hong Kong. I want you to be my
+> Patch series re-roll:
 
-partner in a business transaction of 44.5Million USD.
+Thanks for working on this. I very much like the general direction of the
+series, the strategy to avoid wholesale audit of the callers and marking
+the places that needs fixing with "_unsafe()".
 
-If you are interested for more details,
+There were a few minor things that looked worth mentioning while
+reviewing, though.
 
-you MUST reply me to my private email address:
+ - (style) You seem to be fond of pre-increment a lot, but in general our
+   codebase prefers post-increment especially when the end result does not
+   make any difference, e.g.
 
-danieltsai11@yahoo.com.hk or danieltsai95@aol.com
+	for (i = 1; ...; ++i) {
+        	...
 
-when I get your message, I will tell you what
-
-to do next. Thank you.
-
-Mr. Daniel Tsai
+ - (series structure) It might make the series progress easier to follow
+   if you introduced check_ref_format_unsafe() in the same commit where
+   you change check_ref_format() to take flags parameter.
