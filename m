@@ -1,76 +1,97 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 0/7] Improved infrastructure for refname normalization
-Date: Mon, 12 Sep 2011 17:11:30 +0200
-Message-ID: <4E6E2122.8000201@alum.mit.edu>
-References: <1315637443-14012-1-git-send-email-mhagger@alum.mit.edu> <7vehzmbd0o.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, cmn@elego.de,
-	A Large Angry SCM <gitzilla@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 12 17:12:13 2011
+From: Pang Yan Han <pangyanhan@gmail.com>
+Subject: [PATCH/RFC 0/2] format-patch: produce non colorized patches when color.ui=always
+Date: Mon, 12 Sep 2011 23:56:54 +0800
+Message-ID: <1315843016-10959-1-git-send-email-pangyanhan@gmail.com>
+Cc: gitster@pobox.com, peff@peff.net, martin.von.zweigbergk@gmail.com,
+	sdaoden@googlemail.com, ib@wupperonline.de,
+	Pang Yan Han <pangyanhan@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 12 17:59:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R38B8-0007Ts-L8
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Sep 2011 17:12:11 +0200
+	id 1R38uh-0003Zs-Hd
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Sep 2011 17:59:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757857Ab1ILPME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Sep 2011 11:12:04 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:44757 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757475Ab1ILPMD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Sep 2011 11:12:03 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p8CFBVGY003818
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 12 Sep 2011 17:11:31 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.21) Gecko/20110831 Lightning/1.0b2 Thunderbird/3.1.13
-In-Reply-To: <7vehzmbd0o.fsf@alter.siamese.dyndns.org>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1758225Ab1ILP7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Sep 2011 11:59:08 -0400
+Received: from mail-qw0-f42.google.com ([209.85.216.42]:59656 "EHLO
+	mail-qw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758077Ab1ILP7H (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Sep 2011 11:59:07 -0400
+Received: by qwi4 with SMTP id 4so3717594qwi.1
+        for <git@vger.kernel.org>; Mon, 12 Sep 2011 08:59:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=jDhAEixrahzAvkan+HI5s5pt1eaNankkqSpiD/k8xn8=;
+        b=nm1luTUKXGtk9SDKivcHX/TIqaj7xs+mkYunwUZJzFT3mmQa76CuBj7NASZH3JYpmH
+         Na/NOqwVHkZiazvwZAYPnJHYASWAGI0iVgq1CuarAp9h7qWMrz3gSQmiWui138uwwBOK
+         uOSvZuTtCSTFLaR0N/NXyk9g56PpvQdg9aoGk=
+Received: by 10.224.78.146 with SMTP id l18mr4071140qak.81.1315843146578;
+        Mon, 12 Sep 2011 08:59:06 -0700 (PDT)
+Received: from localhost (bb219-74-111-93.singnet.com.sg. [219.74.111.93])
+        by mx.google.com with ESMTPS id el2sm12902421qab.2.2011.09.12.08.59.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 12 Sep 2011 08:59:05 -0700 (PDT)
+X-Mailer: git-send-email 1.7.7.rc0.190.gee9b6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181218>
 
-On 09/12/2011 06:28 AM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> There were a few minor things that looked worth mentioning while
-> reviewing, though.
-> 
->  - (style) You seem to be fond of pre-increment a lot, but in general our
->    codebase prefers post-increment especially when the end result does not
->    make any difference, e.g.
-> 
-> 	for (i = 1; ...; ++i) {
->         	...
+Hi list,
 
-OK, changed.
+commit c9bfb953 (want_color: automatically fallback to color.ui) introduced
+a regression which causes format-patch to produce colorized patches when
+color.ui is set to "always".
 
->  - (series structure) It might make the series progress easier to follow
->    if you introduced check_ref_format_unsafe() in the same commit where
->    you change check_ref_format() to take flags parameter.
+Since patches are ultimately intended for machine consumption, having color
+codes present in them is undesirable.
 
-OK.  I'll take the opportunity to rename the functions to
-check_refname_format*(), to make it more obvious that they only concern
-themselves with the refnames and not the references themselves.
 
-I discovered a bug in my code for handling refnames without
-normalization; I will also fix that in v3.
+My understanding of the codebase is very limited. I've looked into builtin/log.c
+and the call chain which causes format-patch to produce colorized output is:
 
-OTOH I am again having serious doubts that trying to support
-unnormalized refnames is a good idea.  I will write more when I have
-time to argue my case.
+git_format_config
+  |_ git_log_config
+       |_ git_diff_ui_config
+	        |_ git_color_config
+			     |_ git_config_colorbool
 
-Michael
+which causes git_use_color_default to be set to 1 when color.ui is set to
+"always".
+
+I believe that I can assume that the parsing done in git_diff_ui_config is
+related to the [<common diff options>] based on git format-patch manpage?
+
+I've introduced a color_disable function in color.c which changes
+git_use_color_default to 0. This is the simplest solution I can see without
+heavily touching the stuff in the call chain above since they might be
+needed for format-patch.
+
+I understand that this is very hacky but well, I'm really looking for ways
+to contribute to Git and this seems like one.
+
+Any advice on how this can be better solved is deeply appreciated.
+
+Thanks.
+
+
+Pang Yan Han (2):
+  format-patch: demonstrate that color.ui=always produces colorized
+    patches
+  format-patch: produce non colorized patches when ui.color=always
+
+ builtin/log.c                 |    1 +
+ color.c                       |    5 +++++
+ color.h                       |    1 +
+ t/t4051-format-patch-color.sh |   23 +++++++++++++++++++++++
+ 4 files changed, 30 insertions(+), 0 deletions(-)
+ create mode 100755 t/t4051-format-patch-color.sh
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.7.7.rc0.190.g816e
