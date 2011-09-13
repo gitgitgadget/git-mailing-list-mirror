@@ -1,98 +1,65 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [RFC/PATCH] t9159-*.sh: Don't use the svn '@<rev>' syntax
-Date: Tue, 13 Sep 2011 07:57:26 +0000
-Message-ID: <20110913075726.GA15066@dcvr.yhbt.net>
-References: <4E21D295.7020600@ramsay1.demon.co.uk>
- <7vvcuy82kn.fsf@alter.siamese.dyndns.org>
- <4E269AB6.8070207@drmicha.warpmail.net>
- <4E27098B.906@vilain.net>
- <4E6BA0FA.9070103@ramsay1.demon.co.uk>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: What's cooking in git.git (Sep 2011, #04; Mon, 12)
+Date: Tue, 13 Sep 2011 03:51:53 -0400
+Message-ID: <CAEBDL5VDsc49wj6GiQ0ZaSZ0eBy_iTd73zhgqhLfOLFhnqC-5A@mail.gmail.com>
+References: <7v4o0h7byd.fsf@alter.siamese.dyndns.org>
+	<7vk49d5t8u.fsf@alter.siamese.dyndns.org>
+	<4E6E928A.6080003@sunshineco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sam Vilain <sam@vilain.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>, mhagger@alum.mit.edu
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue Sep 13 09:57:39 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org, Boaz Harrosh <bharrosh@panasas.com>,
+	Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Alexey Shumkin <zapped@mail.ru>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Sep 13 09:57:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3Ns8-0000VG-Tu
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Sep 2011 09:57:37 +0200
+	id 1R3NsQ-0000ZX-Fk
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Sep 2011 09:57:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755308Ab1IMH52 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Sep 2011 03:57:28 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:34917 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755188Ab1IMH51 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Sep 2011 03:57:27 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC1CF1F432;
-	Tue, 13 Sep 2011 07:57:26 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <4E6BA0FA.9070103@ramsay1.demon.co.uk>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755312Ab1IMH5r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Sep 2011 03:57:47 -0400
+Received: from mail-vw0-f52.google.com ([209.85.212.52]:34046 "EHLO
+	mail-vw0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755188Ab1IMH5q convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Sep 2011 03:57:46 -0400
+Received: by vws16 with SMTP id 16so588291vws.11
+        for <git@vger.kernel.org>; Tue, 13 Sep 2011 00:57:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=OrM3Jmsh9ptB+cLHjv+EKi6kgby0rC3ckNJ9o5Vf5fA=;
+        b=JyZ/vGMhvrXMN9hz65Tq+xIjrpo2HqEsyVlc5JMHualEa7wR607JDMYPqoCAZBt5y3
+         Vv482wrLy63wfXSzRMR7wGxm70FvL5q4SpEBPwMOHZW0k8ezU7jd9kvXzdESWMEprmwP
+         CPdUV6VJqk8RQV74aq1hhjHR2cCyBdb3hSiVI=
+Received: by 10.52.112.163 with SMTP id ir3mr1109486vdb.124.1315900313371;
+ Tue, 13 Sep 2011 00:51:53 -0700 (PDT)
+Received: by 10.52.160.196 with HTTP; Tue, 13 Sep 2011 00:51:53 -0700 (PDT)
+In-Reply-To: <4E6E928A.6080003@sunshineco.com>
+X-Google-Sender-Auth: lb3dysXQ1ntam9lQvyr9jkPE7Ng
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181273>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> wrote:
-> Hmm, I was hoping that someone would say something like:
-> 
->    "This test does not depend on the difference between the peg revision
-> and the operative revision, because the history represented in the test
-> repo is so simple that there *is* no difference, so Acked By: ... "
+On Mon, Sep 12, 2011 at 7:15 PM, Eric Sunshine <sunshine@sunshineco.com=
+> wrote:
+[snip]
+> Shouldn't the last entry be?
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0"*.m diff=3Dobjc",
 
-Unfortunately, I remain perpetually confused w.r.t peg revisions vs "-r"
-and how it's handled differently between different SVN versions.
+Or maybe not there at all?  We tend to do quite a bit with Matlab, and
+Matlab scripts also end in ".m".  Unfortunately, it bears little
+resemblance to Objective-C.
 
-> But, since that didn't happen, maybe the patch given below would be more
-> acceptable? (I personally prefer the original patch ...)
-
-I'm much more comfortable with your below patch as it won't break
-on newer (and increasingly more widely-used) versions.
-
-> Given that I didn't quite follow Sam's explanation, I still don't know
-> if t9104-git-svn-follow-parent.sh needs to be changed (again, this test
-> *passes* for me), so ... :-P
-
-> Subject: [PATCH] t9159-*.sh: Add an svn version check
-
-How about something along the lines of:
-
-  Subject: [PATCH] t9159-*.sh: skip for mergeinfo test for svn <= 1.4
-
-  t9159 relies on the command-line syntax of svn >= 1.5.
-  Given the declining install base of older svn versions,
-  it is not worth our time to support older svn syntax.
-
-  Acked-by: Eric Wong <normalperson@yhbt.net>
-  Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-
-?
-
-> diff --git a/t/t9159-git-svn-no-parent-mergeinfo.sh b/t/t9159-git-svn-no-parent-mergeinfo.sh
-> index 85120b7..69e4815 100755
-> --- a/t/t9159-git-svn-no-parent-mergeinfo.sh
-> +++ b/t/t9159-git-svn-no-parent-mergeinfo.sh
-> @@ -2,6 +2,14 @@
->  test_description='git svn handling of root commits in merge ranges'
->  . ./lib-git-svn.sh
->  
-> +svn_ver="$(svn --version --quiet)"
-> +case $svn_ver in
-> +0.* | 1.[0-4].*)
-> +	skip_all="skipping git-svn test - SVN too old ($svn_ver)"
-> +	test_done
-> +	;;
-> +esac
-> +
->  test_expect_success 'test handling of root commits in merge ranges' '
->  	mkdir -p init/trunk init/branches init/tags &&
->  	echo "r1" > init/trunk/file.txt &&
-> -- 
+-John
