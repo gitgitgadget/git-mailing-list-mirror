@@ -1,132 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git checkout --orphan skips reflogging
-Date: Tue, 13 Sep 2011 16:04:07 -0700
-Message-ID: <7vaaa8vyc8.fsf@alter.siamese.dyndns.org>
-References: <CA+gfSn-tVgj=FYiVGK7kmH4gpnXF3HUbs+f=DfRey6GrpadVYg@mail.gmail.com>
+From: Michal Sojka <sojka@os.inf.tu-dresden.de>
+Subject: Re: [PATCH v4] gitk: Allow commit editing
+Date: Wed, 14 Sep 2011 01:11:24 +0200
+Message-ID: <87litsf36r.fsf@steelpick.2x.cz>
+References: <87obzlwpx0.fsf@steelpick.2x.cz> <1313756753-26498-1-git-send-email-sojka@os.inf.tu-dresden.de> <20110825031420.GB3465@sigill.intra.peff.net> <87bovdvdhd.fsf@steelpick.2x.cz> <20110825173018.GA519@sigill.intra.peff.net> <87fwknaveh.fsf@steelpick.2x.cz> <20110908205945.GB8091@bloggs.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Dmitry Ivankov <divanorama@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 14 01:05:19 2011
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Wed Sep 14 01:11:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3c2Z-0000Fs-4w
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 01:05:19 +0200
+	id 1R3c8b-0002CK-KX
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 01:11:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933011Ab1IMXEL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Sep 2011 19:04:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58673 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932984Ab1IMXEK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Sep 2011 19:04:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A78C24AB6;
-	Tue, 13 Sep 2011 19:04:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=JKLwT6nqSsZfOjSl0hrX6SCjJog=; b=hGJDNYP68wc5DflDagBn
-	t7wEgvu+GEcuVIRAQw3sEfSIEiwcn2bF1nqKibghBee5WpKLRpydi2a7pg0yBNKV
-	V9iFLyqDgq+CRL61l/senh8G/EA8lUE/h/IFhNBfUGtrbiH73r/ISDIBk4+Nzvgi
-	i+UTaW+FO8QUSPVRlk6EQHQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=o5tlOOVofBedOs8c82kuM7i7SJyHkeuw/tPQ2d1WX6eNpT
-	1ZniieA4+wxzi6DHTQXtFUe/otkrau2w1T3yxqSnDwB8g9v/vsmYlRjrjQLtJvik
-	k/ZJci5bPuoLQJhtpf0t4JsqOB9lrwiJ+xeQHnqBnbEA/Q+k3xfFW+LtJh40U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E6934AB4;
-	Tue, 13 Sep 2011 19:04:09 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1982B4AB2; Tue, 13 Sep 2011
- 19:04:09 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AFEF2FBE-DE5C-11E0-AEDF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933042Ab1IMXL3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Sep 2011 19:11:29 -0400
+Received: from max.feld.cvut.cz ([147.32.192.36]:54900 "EHLO max.feld.cvut.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932988Ab1IMXL2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Sep 2011 19:11:28 -0400
+Received: from localhost (unknown [192.168.200.4])
+	by max.feld.cvut.cz (Postfix) with ESMTP id 402E43CFE77;
+	Wed, 14 Sep 2011 01:11:27 +0200 (CEST)
+X-Virus-Scanned: IMAP AMAVIS
+Received: from max.feld.cvut.cz ([192.168.200.1])
+	by localhost (styx.feld.cvut.cz [192.168.200.4]) (amavisd-new, port 10044)
+	with ESMTP id St2Rtba-dTcA; Wed, 14 Sep 2011 01:11:26 +0200 (CEST)
+Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
+	by max.feld.cvut.cz (Postfix) with ESMTP id C23543CFE76;
+	Wed, 14 Sep 2011 01:11:25 +0200 (CEST)
+Received: from steelpick.2x.cz (cable-86-56-4-108.cust.telecolumbus.net [86.56.4.108])
+	(Authenticated sender: sojkam1)
+	by imap.feld.cvut.cz (Postfix) with ESMTPSA id 29DFEFA003;
+	Wed, 14 Sep 2011 01:11:25 +0200 (CEST)
+Received: from wsh by steelpick.2x.cz with local (Exim 4.76)
+	(envelope-from <sojka@os.inf.tu-dresden.de>)
+	id 1R3c8S-0000JD-Bg; Wed, 14 Sep 2011 01:11:24 +0200
+In-Reply-To: <20110908205945.GB8091@bloggs.ozlabs.ibm.com>
+User-Agent: Notmuch/0.8-38-g2f99445 (http://notmuchmail.org) Emacs/23.3.1 (x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181321>
 
-Dmitry Ivankov <divanorama@gmail.com> writes:
+On Thu, 08 Sep 2011, Paul Mackerras wrote:
+> On Sat, Aug 27, 2011 at 02:31:02PM +0200, Michal Sojka wrote:
+> > Here is a new version with the micro-optimization.
+> > 
+> > Another minor change is that this patch now applies to gitk repo
+> > (http://git.kernel.org/pub/scm/gitk/gitk.git) instead of the main git
+> > repo.
+> > 
+> > -Michal
+> > 
+> > --8<---------------cut here---------------start------------->8---
+> > I often use gitk to review patches before pushing them out and I would
+> > like to have an easy way to edit commits. The current approach with
+> > copying the commitid, switching to terminal, invoking git rebase -i,
+> > editing the commit and switching back to gitk is a way too complicated
+> > just for changing a single letter in the commit message or removing a
+> > debug printf().
+> > 
+> > This patch adds "Edit this commit" item to gitk's context menu which
+> > invokes interactive rebase in a non-interactive way :-). git gui is
+> > used to actually edit the commit.
+> > 
+> > Besides editing the commit message, splitting of commits, as described
+> > in git-rebase(1), is also supported.
+> > 
+> > The user is warned if the commit to be edited is contained in another
+> > ref besides the current branch and the stash (e.g. in a remote
+> > branch). Additionally, error box is displayed if the user attempts to
+> > edit a commit not contained in the current branch.
+> 
+> I have to say that this patch makes me pretty nervous.  I can see the
+> attractiveness of the feature, but I don't like making gitk
+> unresponsive for a potentially long time, i.e. until git gui exits.
+> It may not be clear to users that the reason gitk isn't responding is
+> because some other git gui window is still running.
 
-> In short, git checkout --orphan doesn't write
-> HEAD_sha1 -> 00000
-> entry to logs/HEAD, while git-comit will write
-> 00000 -> new_orphan_HEAD_sha1
-> entry. And then reflog backward walk will stop on 000 -> entry and
-> won't see earlier history.
-
-Funny. From the point of view of the _current_ branch, it sort of makes
-sense to stop the traversal at that point, but I agree for HEAD reflog
-that records branch switching, the traversal should not stop.
-
-I am not sure if recording 0{40} after --orphan is the right thing to do
-either (for that matter, I do not necessarily think running --orphan is a
-sane thing to do, but that is a separate issue).
-
-> Isn't  it also a bug in reflog walking that we rely on each old_sha1
-> being new_sha1 of a previous entry?
-
-I am not all that familiar with the reflog walking (which is admittedly a
-bolted-on hack that injects commits with fake ancestry) code, but I think
-it assumes the old sha1 field on the current entry matches the new sha1
-field on the previous entry, and we could change it to be a bit more
-robust.
-
-The attached patch _may_ (I didn't even compile test it) remove the
-dependency on osha1[] and make the code consistently use nsha1[], but I
-think stopping at the 0{40} is pretty much fundamental in the revision
-walking machinery the reflog walking code is piggy-backing on, and I do
-not think this patch would change that.
-
- reflog-walk.c |   17 ++++++++++++-----
- 1 files changed, 12 insertions(+), 5 deletions(-)
-
-diff --git a/reflog-walk.c b/reflog-walk.c
-index 5d81d39..261d300 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -211,6 +211,13 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
- 	return 0;
- }
+I understand this. See below for a possible solution.
  
-+static struct reflog_info *peek_reflog_ent(struct commit_reflog *clog)
-+{
-+	if (clog->recno < 0)
-+		return NULL;
-+	return &clog->reflogs->items[clog->recno];
-+}
-+
- void fake_reflog_parent(struct reflog_walk_info *info, struct commit *commit)
- {
- 	struct commit_info *commit_info =
-@@ -223,20 +230,20 @@ void fake_reflog_parent(struct reflog_walk_info *info, struct commit *commit)
- 		return;
- 
- 	commit_reflog = commit_info->util;
--	if (commit_reflog->recno < 0) {
-+	reflog = peek_reflog_ent(commit_reflog);
-+	if (!reflog) {
- 		commit->parents = NULL;
- 		return;
- 	}
--
--	reflog = &commit_reflog->reflogs->items[commit_reflog->recno];
- 	info->last_commit_reflog = commit_reflog;
- 	commit_reflog->recno--;
--	commit_info->commit = (struct commit *)parse_object(reflog->osha1);
--	if (!commit_info->commit) {
-+	reflog = peek_reflog_ent(commit_reflog);
-+	if (!reflog) {
- 		commit->parents = NULL;
- 		return;
- 	}
- 
-+	commit_info->commit = (struct commit *)parse_object(reflog->nsha1);
- 	commit->parents = xcalloc(sizeof(struct commit_list), 1);
- 	commit->parents->item = commit_info->commit;
- }
+> Also, if some subsequent commit no longer applies because of the
+> changes you make to a commit, it's going to abort the rebase
+> completely and thus lose the changes you made.  That could be
+> annoying.
+
+Agreed. A solution could be to create a ref called for example
+refs/gitk/failed-rebase and then abort the rebase together with
+displaying the error message explaining what happened. The edited commit
+would remain visible and a user can manually cherry pick remaining
+commits and then reset the original branch to this failed-rebase ref.
+
+> I usually do this by starting a new branch just before the commit I
+> want to change and then use a combination of the cherry-pick menu item
+> and git commit --amend.  Maybe something to make that simpler for
+> users would be good, i.e. automate it a bit but still have it be a
+> step-by-step process if necessary.  Part of the problem of course is
+> that neither gitk nor git gui are really designed to be an editing
+> environment.
+
+So what about the following:
+
+1) When user selects "Edit commit", git rebase -i is called, git citool
+   is started on background and things will be set up (I do not know yet
+   how exactly) so that same callback is called when git citool exits.
+
+2) gitk updates the list of commits and marks the current (detached)
+   head by a tag (colored box) saying that there is rebase in progress.
+   The same tag would appear if gitk is executed manually during
+   interactive rebase.
+
+3) When git citool exits (or when you explicitly select something from
+   rebase tag's context menu), rebase would continue.
+
+> In fact you really want an edit/compile/test environment so you don't
+> introduce new bugs.
+
+Another possibility would be to allow only editing of the commit
+message. Then you don't need compile/test steps and the rebase should
+not fail due to conflicts.
+
+I do not think I would like this limitation, but it would certainly be
+better then nothing.
+
+-Michal
