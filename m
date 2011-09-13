@@ -1,128 +1,77 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] t3200: test branch creation with -v
-Date: Tue, 13 Sep 2011 14:12:52 +0200
-Message-ID: <4E6F48C4.3030407@drmicha.warpmail.net>
-References: <20110909193033.GA31184@sigill.intra.peff.net> <49578782dd114220aa2562b5bd29755fc2bdd0fa.1315597137.git.git@drmicha.warpmail.net> <20110909194357.GA31446@sigill.intra.peff.net> <4E6B6647.7090802@drmicha.warpmail.net> <20110913035724.GA4828@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: What's cooking in git.git (Sep 2011, #04; Mon, 12)
+Date: Tue, 13 Sep 2011 11:04:06 -0400
+Message-ID: <4E6F70E6.2070602@sunshineco.com>
+References: <7v4o0h7byd.fsf@alter.siamese.dyndns.org> <7vk49d5t8u.fsf@alter.siamese.dyndns.org> <4E6E928A.6080003@sunshineco.com> <CAEBDL5VDsc49wj6GiQ0ZaSZ0eBy_iTd73zhgqhLfOLFhnqC-5A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Sep 13 14:13:03 2011
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org, Boaz Harrosh <bharrosh@panasas.com>,
+	Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Alexey Shumkin <zapped@mail.ru>
+To: John Szakmeister <john@szakmeister.net>
+X-From: git-owner@vger.kernel.org Tue Sep 13 17:04:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3RrJ-0003nf-8Z
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Sep 2011 14:13:01 +0200
+	id 1R3UXI-0005Yk-6t
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Sep 2011 17:04:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753216Ab1IMMM4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Sep 2011 08:12:56 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:43119 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753147Ab1IMMMz (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Sep 2011 08:12:55 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 5DE222B158;
-	Tue, 13 Sep 2011 08:12:55 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute3.internal (MEProxy); Tue, 13 Sep 2011 08:12:55 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=gRAgUXnhZkpJ7ezodXWWXV
-	2RMQc=; b=eoxYKR9lAeS80YYK1JsC780/khrJ0vSGtoQNVafye52+M56LrEHiBW
-	qqYhfJkLHIdZwtlZ03MGHvWNTmJu1OTovcU6h19ShEcWALtcSh3RfTwmBCTLDkYW
-	swyYTt8fuHRf5vXZlsbzSO5DmBCI6KH18N/OflQaIFo/apoBjs9n4=
-X-Sasl-enc: MdnxtCTx4VpfMzR+71hiH48Yxwi4MeBLfJpeKdpmizin 1315915974
-Received: from localhost.localdomain (p4FC616C4.dip0.t-ipconnect.de [79.198.22.196])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 71A329C0A61;
-	Tue, 13 Sep 2011 08:12:54 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0.2) Gecko/20110906 Thunderbird/6.0.2
-In-Reply-To: <20110913035724.GA4828@sigill.intra.peff.net>
+	id S1754701Ab1IMPEY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Sep 2011 11:04:24 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:52402 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754346Ab1IMPEY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Sep 2011 11:04:24 -0400
+Received: by qyk7 with SMTP id 7so516779qyk.19
+        for <git@vger.kernel.org>; Tue, 13 Sep 2011 08:04:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=Kzx13i7R9Z5UbzAq7CUhj/uhn/fFsYTY/01PM3YjtGI=;
+        b=X9/1pKgH61zPS2PdBui60jp/GGHYthZoUKVsM+3YqL8kM0DWCkZzPO4zx9hUbx3hcB
+         PanOiS7ZaVKQ77ZUU/eLoZlycAzrRfyk7W0rv7KuMUxXtcQ2duebPWTNRpP9VKS55oOY
+         komwcNx5s8kTzxiD1Qj1jUUHIKRZXBA4gMZDI=
+Received: by 10.229.188.207 with SMTP id db15mr936969qcb.231.1315926251765;
+        Tue, 13 Sep 2011 08:04:11 -0700 (PDT)
+Received: from [192.168.1.1] (user-0c936tj.cable.mindspring.com. [24.145.155.179])
+        by mx.google.com with ESMTPS id v6sm1761191qaz.7.2011.09.13.08.04.07
+        (version=SSLv3 cipher=OTHER);
+        Tue, 13 Sep 2011 08:04:08 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.0; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
+In-Reply-To: <CAEBDL5VDsc49wj6GiQ0ZaSZ0eBy_iTd73zhgqhLfOLFhnqC-5A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181285>
 
-Jeff King venit, vidit, dixit 13.09.2011 05:57:
-> On Sat, Sep 10, 2011 at 03:29:43PM +0200, Michael J Gruber wrote:
-> 
->> Jeff King venit, vidit, dixit 09.09.2011 21:43:
->>> On Fri, Sep 09, 2011 at 09:40:59PM +0200, Michael J Gruber wrote:
->>>
->>>> +test_expect_success 'git branch -v t should work' ' +	git branch
->>>> -v t && +	test .git/refs/heads/t &&
->>>
->>> test -f ?
->>>
->>> Also, don't we have test_path_is_file which yields slightly prettier 
->>> output (and maybe some portability benefits; I don't remember)?
->>>
->>>> +	git branch -d t && +	test ! -f .git/refs/heads/t
->>>
->>> Ditto for 'test_path_is_missing' here.
->>>
->>> -Peff
+On 9/13/2011 3:51 AM, John Szakmeister wrote:
+> On Mon, Sep 12, 2011 at 7:15 PM, Eric Sunshine<sunshine@sunshineco.com>  wrote:
+> [snip]
+>> Shouldn't the last entry be?
 >>
->> Well, I tried to follow the surrounding style. That t3200 could benefit
->> from some attention, though, which I did not want to mix in with the
->> issue at hand.
-> 
-> The "test_path_is_file" thing is style. But not using "test -f" is just
-> wrong; you are testing "is .git/refs/heads/t an empty string?" which is
-> useless.
-> 
-> You want this on top of what's in mg/branch-list:
+>>         "*.m diff=objc",
+>
+> Or maybe not there at all?  We tend to do quite a bit with Matlab, and
+> Matlab scripts also end in ".m".  Unfortunately, it bears little
+> resemblance to Objective-C.
 
-Yes, sorry. How did I miss that?
+This default mapping is provided as a convenience only. Users can edit 
+.gitattributes as needed. If we assume that the number of Macintosh and 
+iOS (iPhone, iPad, iPod Touch) programmers heavily outweighs the number 
+of Matlab users, then the convenience of having .m in the default list 
+may be justified.
 
-I'd prefer your style anyway, but also prefer changing t3200 in one go.
+It also is reasonable to ask if the "*.m diff=objc" mapping actually 
+produces an inferior diff hunk-header[1] for Matlab files than when 
+"diff=objc" is not present.
 
-> 
-> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-> index c466b20..b513115 100755
-> --- a/t/t3200-branch.sh
-> +++ b/t/t3200-branch.sh
-> @@ -100,14 +100,14 @@ test_expect_success 'git branch -m q r/q should fail when r exists' '
->  
->  test_expect_success 'git branch -v -d t should work' '
->  	git branch t &&
-> -	test .git/refs/heads/t &&
-> +	test -f .git/refs/heads/t &&
->  	git branch -v -d t &&
->  	test ! -f .git/refs/heads/t
->  '
->  
->  test_expect_success 'git branch -v -m t s should work' '
->  	git branch t &&
-> -	test .git/refs/heads/t &&
-> +	test -f .git/refs/heads/t &&
->  	git branch -v -m t s &&
->  	test ! -f .git/refs/heads/t &&
->  	test -f .git/refs/heads/s &&
-> @@ -116,7 +116,7 @@ test_expect_success 'git branch -v -m t s should work' '
->  
->  test_expect_success 'git branch -m -d t s should fail' '
->  	git branch t &&
-> -	test .git/refs/heads/t &&
-> +	test -f .git/refs/heads/t &&
->  	test_must_fail git branch -m -d t s &&
->  	git branch -d t &&
->  	test ! -f .git/refs/heads/t
-> @@ -124,7 +124,7 @@ test_expect_success 'git branch -m -d t s should fail' '
->  
->  test_expect_success 'git branch --list -d t should fail' '
->  	git branch t &&
-> -	test .git/refs/heads/t &&
-> +	test -f .git/refs/heads/t &&
->  	test_must_fail git branch --list -d t &&
->  	git branch -d t &&
->  	test ! -f .git/refs/heads/t
-> 
-> I suspect you didn't notice the bogosity before because those are just
-> confirming the precondition that "git branch" actually created the file.
-> 
-> -Peff
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/180103/
+
+-- ES
