@@ -1,105 +1,122 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] fetch: avoid quadratic loop checking for updated
- submodules
-Date: Tue, 13 Sep 2011 18:17:45 -0400
-Message-ID: <20110913221745.GB24549@sigill.intra.peff.net>
-References: <20110912195652.GA27850@sigill.intra.peff.net>
- <7vr53l5u7h.fsf@alter.siamese.dyndns.org>
- <20110912224934.GA28994@sigill.intra.peff.net>
- <4E6FAB46.30508@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Sep 14 00:18:20 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 1/2] fetch: allow asking for an explicit commit object by
+ name
+Date: Tue, 13 Sep 2011 15:28:15 -0700
+Message-ID: <1315952896-17258-2-git-send-email-gitster@pobox.com>
+References: <7vaaa8xufi.fsf@alter.siamese.dyndns.org>
+ <1315952896-17258-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 14 00:28:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3bJ5-0000hH-OT
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 00:18:20 +0200
+	id 1R3bSt-0004eG-Lc
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 00:28:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932942Ab1IMWRs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Sep 2011 18:17:48 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33175
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932935Ab1IMWRr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Sep 2011 18:17:47 -0400
-Received: (qmail 2278 invoked by uid 107); 13 Sep 2011 22:18:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 13 Sep 2011 18:18:40 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Sep 2011 18:17:45 -0400
-Content-Disposition: inline
-In-Reply-To: <4E6FAB46.30508@web.de>
+	id S932967Ab1IMW2W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Sep 2011 18:28:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46599 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932958Ab1IMW2U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Sep 2011 18:28:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 57B6043EB
+	for <git@vger.kernel.org>; Tue, 13 Sep 2011 18:28:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=xnQU
+	J4EyABLsTTFNwoN5vCkDpsE=; b=ic0OB1x2YjLeHpdoX11ZqiS/AeUCFrmURquq
+	2YwUuJDaWhHD6T/wN6hTxZejR3JdDiC2jHR+OvdSzlxDtDDzAnC1TsjoYPF1hT6T
+	dprDMFPH2XLR0FJcOsvCIkF+bIoZ09MuBFO5+4JGxCQISm7cWevceqm9Vf7GthUN
+	sS94PTk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=DyjQpE
+	9HW4BQH6zjOy+Sys1jhUuIYpuCD2VTD/Q1UZlf4EPvw1xVqCiBrS+fc/LBcL9W78
+	NtqfK128s6qwpqbFFkDsOuWReRAAFgBgSlMUhm/eANPBdN8CyXH3JhP7jXXG+H2O
+	QcTi0Rsu1rkGfhXXigszKCG6US3sv8P/JPFZM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 500D743EA
+	for <git@vger.kernel.org>; Tue, 13 Sep 2011 18:28:20 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9D2D843E5 for
+ <git@vger.kernel.org>; Tue, 13 Sep 2011 18:28:19 -0400 (EDT)
+X-Mailer: git-send-email 1.7.7.rc1.1.g1e5814
+In-Reply-To: <1315952896-17258-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: AEC137A4-DE57-11E0-B30F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181317>
 
-On Tue, Sep 13, 2011 at 09:13:10PM +0200, Jens Lehmann wrote:
+This teaches "git fetch" (hence "git pull") to accept an explicit commit
+object name in the LHS of the refspec, as long as the named commit is at
+the tip of an advertised ref. E.g.
 
-> The real world use case I have for that is that when a bug introduced by
-> a new submodule commit is detected later on, the superproject's fix
-> records an older submodule commit to remove the problematic change from
-> the superproject. But the submodule's branch isn't rewound (as that is
-> most probably master) but a fix is applied on top of it. Then that one
-> gets tested and - if it was found ok - recorded in the superproject.
+    $ git pull origin 5738c9c21e53356ab5020912116e7f82fd2d428f
+    $ git fetch origin 5738c9c21e53356ab5020912116e7f82fd2d428f:refs/remotes/origin
 
-OK, that makes sense. It is a "rewind" from the perspective of the
-superproject, but there is never a fork; because the submodule didn't
-rewind, when we do get a new submodule state in the superproject, it
-will be a fast forward from the old state.
+would behave exactly as if you asked
 
-That is a reasonable use case.
+    $ git pull origin refs/heads/master
+    $ git fetch origin refs/heads/master:refs/remotes/origin
 
-It's still probably a minority case, and we have to pay for the full
-traversal each time, which is annoying. But now that it's turned off by
-default if you don't have any submodules, I'm less concerned about the
-performance impact. And superproject repositories are probably not going
-to have the same number of commits as submodule repositories, so it may
-be less of an issue.
+when the output from "git ls-remote origin" said the remote side has the
+commit object whose name is 5738c9c21e53356ab5020912116e7f82fd2d428f at
+the tip of refs/heads/master branch ref.
 
-One thing that could make it slightly less expensive (but I wouldn't
-worry about implementing until it becomes an issue): you do a full diff
-and collect any changed GITLINK entries, and then compare the paths we
-get with the submodule config. Couldn't you instead do something like
-this:
+This does not allow asking for a random object that may or may not exist
+in the repository (this has been a longstanding security feature).
 
-  - let S = set of submodule paths that we care about, from the config
-  - start the "git rev-list $new --not $old" traversal, as we do now
-  - for each commit
-    - diff using a pathspec of S
-    - for each changed entry
-      - add it to the set of changed submodules
-      - remove it from S
-    - if S is empty, break
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ remote.c |   25 +++++++++++++++++++++++--
+ 1 files changed, 23 insertions(+), 2 deletions(-)
 
-That has two advantages:
-
-  1. We limit the diff by pathspec, which means we can avoid looking at
-     irrelevant parts of the tree (we don't do this yet, but hopefully
-     we will in the future).
-
-  2. You can break out of the traversal early if you already know you
-     have changes in each submodule of interest.
-
-> Changes like this could be overlooked if you only compare "before" and
-> "after" instead of traversing, leading to not fetching a submodule which
-> does have new commits that are used in the newly fetched superproject's
-> commits. I'd like to have on-demand fetch keep the correct solution of
-> traversing unless we have good reasons against it, especially as teaching
-> checkout & friends to recursively update submodules too depends on all
-> needed commits being present.
-
-Out of curiosity, what happens if we don't have such a commit? I know
-you said that your policy is never to rewind a submodule's commit that
-has been published in a superproject, and I think that's the only sane
-thing to do. But it's not enforced by git itself, and I wonder how badly
-we break if it does happen (i.e., I'm hoping the answer is "you can't
-diff or checkout superproject revisions that reference the missing bit"
-and not "git log crashes when it gets to that point in history").
-
--Peff
+diff --git a/remote.c b/remote.c
+index ca42a12..76c2943 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1387,6 +1387,25 @@ struct ref *get_remote_ref(const struct ref *remote_refs, const char *name)
+ 	return copy_ref(ref);
+ }
+ 
++/*
++ * Allow fetching an explicitly-named commit from the command line,
++ * but only if it exactly matches the commit at the tip of one of the
++ * advertised refs.
++ */
++static struct ref *get_remote_commit(const struct ref *remote_refs, const char *hex)
++{
++	const struct ref *ref;
++	unsigned char sha1[20];
++
++	if (get_sha1_hex(hex, sha1) || hex[40])
++		return NULL;
++
++	for (ref = remote_refs; ref; ref = ref->next)
++		if (!strchr(ref->name, '^') && !hashcmp(sha1, ref->old_sha1))
++			return copy_ref(ref);
++	return NULL;
++}
++
+ static struct ref *get_local_ref(const char *name)
+ {
+ 	if (!name || name[0] == '\0')
+@@ -1416,8 +1435,10 @@ int get_fetch_map(const struct ref *remote_refs,
+ 		const char *name = refspec->src[0] ? refspec->src : "HEAD";
+ 
+ 		ref_map = get_remote_ref(remote_refs, name);
+-		if (!missing_ok && !ref_map)
+-			die("Couldn't find remote ref %s", name);
++		if (!ref_map)
++			ref_map = get_remote_commit(remote_refs, name);
++		if (!ref_map && !missing_ok)
++			die("Couldn't find remote ref that matches %s", name);
+ 		if (ref_map) {
+ 			ref_map->peer_ref = get_local_ref(refspec->dst);
+ 			if (ref_map->peer_ref && refspec->force)
+-- 
+1.7.7.rc1.1.g1e5814
