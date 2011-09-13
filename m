@@ -1,60 +1,64 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: windows git problem
-Date: Tue, 13 Sep 2011 20:30:51 +1000
-Message-ID: <CACsJy8Cy0nFuAVzfN9sGgd3wiQ1HE2ASW7vqY5PGt4bH4BCvtg@mail.gmail.com>
-References: <4E6E42CE.80405@tandvsolns.co.uk> <CAMOZ1Bs6tGGJ8eZja0OaqtzK0imKt_NtiWOTgpLCaisvEXh2Rw@mail.gmail.com>
- <4E6E5000.3040203@tandvsolns.co.uk> <CACsJy8B4RY4Yst9TPhNCOj8AUziFa+O+2Msen9Bt=QHo5SW=sA@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: What's cooking in git.git (Sep 2011, #04; Mon, 12)
+Date: Tue, 13 Sep 2011 14:05:14 +0200
+Message-ID: <4E6F46FA.90400@drmicha.warpmail.net>
+References: <7v4o0h7byd.fsf@alter.siamese.dyndns.org> <7v1uvl2wd1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
-To: luis <luis@tandvsolns.co.uk>
-X-From: git-owner@vger.kernel.org Tue Sep 13 12:31:35 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Sam Vilain <sam.vilain@catalyst.net.nz>,
+	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 13 14:05:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3QH8-0005lb-Dd
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Sep 2011 12:31:34 +0200
+	id 1R3Rk5-0000jJ-4X
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Sep 2011 14:05:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752351Ab1IMKbY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Sep 2011 06:31:24 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:42546 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752336Ab1IMKbW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Sep 2011 06:31:22 -0400
-Received: by bkbzt4 with SMTP id zt4so379591bkb.19
-        for <git@vger.kernel.org>; Tue, 13 Sep 2011 03:31:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=AjmcwYvKyilOem/hfPgbqjYn+hJdER0ScvaStnM8CPM=;
-        b=Hgj6+kc6lvzGIBjOPcm8W0Kspr16mwZ6eS83sj/hHpcPArWvR81xK1pq5QUWbvj6cW
-         mqc9eASrdiEIJ/B052qS8BmvM0ouMq6H40gkBaDuIx/2lb5SDiv7CtCK6kyz/fbDExP1
-         deFPwS5q21JjKVGVesttKH7ckwMi6zsokkMAg=
-Received: by 10.204.146.132 with SMTP id h4mr531139bkv.287.1315909881173; Tue,
- 13 Sep 2011 03:31:21 -0700 (PDT)
-Received: by 10.204.7.4 with HTTP; Tue, 13 Sep 2011 03:30:51 -0700 (PDT)
-In-Reply-To: <CACsJy8B4RY4Yst9TPhNCOj8AUziFa+O+2Msen9Bt=QHo5SW=sA@mail.gmail.com>
+	id S1753264Ab1IMMFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Sep 2011 08:05:20 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:57141 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752933Ab1IMMFT (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Sep 2011 08:05:19 -0400
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id EAC192B384;
+	Tue, 13 Sep 2011 08:05:17 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute5.internal (MEProxy); Tue, 13 Sep 2011 08:05:17 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=FvGtsDq2yIdXhYozg2aWcJ
+	pBd5U=; b=jqK8tpsR/1S6kljBhLxSzv1ErFn6XpcmK2vldSzKAXXwIHRBD3QAiG
+	/K4PyBRrZQrV2p/vjlW/+wh5EJ299p3R5MsUn2PfyyyDZEVZNLLhh+MXu+vqZku6
+	ocEGdpKUVszyCCk0eRsTwStTJFzyj/tmey8AJ+mU+wmiBaK3w6YUM=
+X-Sasl-enc: OBcOsUXztmc64YCm7XftKHXnU6RRZzaCpbJ+ucuAUabL 1315915517
+Received: from localhost.localdomain (vpn-136-057.rz.uni-augsburg.de [137.250.136.57])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B6648660131;
+	Tue, 13 Sep 2011 08:05:16 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0.2) Gecko/20110906 Thunderbird/6.0.2
+In-Reply-To: <7v1uvl2wd1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181283>
 
-On Tue, Sep 13, 2011 at 8:10 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> On Tue, Sep 13, 2011 at 4:31 AM, luis <luis@tandvsolns.co.uk> wrote:
->> Exactly!
->>
->> so the next time someone (in windows) does a commit, they remove the file or
->> the folder contents!
->
-> May be this commit dc1ae70 (Support case folding for git add when
-> core.ignorecase=true).
+Junio C Hamano venit, vidit, dixit 13.09.2011 00:58:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> * rj/maint-t9159-svn-rev-notation (2011-09-11) 1 commit
+>>  - t9159-*.sh: Add an svn version check
+> 
+> Ack/Nack from people involved in git-svn and/or the patch, please?
 
-I take it back. add_to_index() is mostly called by git-add. A checkout
-fills the index with unpack-trees, which does not seem to be
-case-insensitive to me.
--- 
-Duy
+Not much time due to conference this week. Don't we have a version check
+somewhere else in the tests already? (I may be mixing it up with git-svn
+proper.) We should not dupe that and anyways libify or define a
+prerequisite.
+
+Michael
