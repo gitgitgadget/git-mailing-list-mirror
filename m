@@ -1,80 +1,61 @@
-From: Chris Li <git@chrisli.org>
-Subject: [PATCH] git-p4: import utf16 file properly
-Date: Tue, 13 Sep 2011 14:33:14 -0700
-Message-ID: <CANeU7QndA0yv1OzU3vta5B8r8nCRdBSqTy0Rboc_bbpst+1pcw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/7] create argv_array API
+Date: Tue, 13 Sep 2011 17:50:26 -0400
+Message-ID: <20110913215026.GA26743@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Pete Wyckoff <pw@padd.com>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 13 23:33:31 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 13 23:51:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3abe-0000ff-NC
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Sep 2011 23:33:27 +0200
+	id 1R3asz-0007N6-D2
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Sep 2011 23:51:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932910Ab1IMVdR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Sep 2011 17:33:17 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:53057 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932835Ab1IMVdP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Sep 2011 17:33:15 -0400
-Received: by ywb5 with SMTP id 5so871039ywb.19
-        for <git@vger.kernel.org>; Tue, 13 Sep 2011 14:33:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type;
-        bh=NOIyZ1nWhmEqCGyEblD/3Q+RIIhGBxW9Ukp6Df+/7IM=;
-        b=Py4FHIOpJrxZEbnesx+J0PZxySUzkNFSjndEmR94yniEcIL3NIeiv/xKiVhAKQRtHN
-         OWW9HXCpUcORBGpGgQSArHo3AuDFzGBpM98ZtA4TCrzSepWXW1ydQtK2IsPkAJ1MAtlv
-         HEjhg7P7R02K37a3xaW+iyoQqnioOVzv84EPk=
-Received: by 10.68.11.42 with SMTP id n10mr2700720pbb.185.1315949594511; Tue,
- 13 Sep 2011 14:33:14 -0700 (PDT)
-Received: by 10.143.76.16 with HTTP; Tue, 13 Sep 2011 14:33:14 -0700 (PDT)
-X-Google-Sender-Auth: qOU1n5NWHp0U8eLO-NN1wRnwHoU
+	id S932864Ab1IMVu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Sep 2011 17:50:28 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37173
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932836Ab1IMVu2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Sep 2011 17:50:28 -0400
+Received: (qmail 1830 invoked by uid 107); 13 Sep 2011 21:51:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 13 Sep 2011 17:51:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Sep 2011 17:50:26 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181307>
 
-The current git-p4 does not handle utf16 files properly.
-The "p4 print" command, when output to stdout, converts the
-utf16 file into utf8. That effectively imported the utf16 file
-as utf8 for git. In other words, git-p4 import a different
-file compare to file check out by perforce. This breakes my
-windows build in the company project.
+On Tue, Sep 13, 2011 at 10:34:58AM -0700, Junio C Hamano wrote:
 
-The fix is simple, just ask perforce to print the depot
-file into a real file. This way perforce will not performe
-the utf16 to utf8 conversion. Git can import the exact same
-file as perforce checkout.
----
- contrib/fast-import/git-p4 |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+> > Will do. Junio, do you want me to re-roll the quadratic fix, or just
+> > build the refactoring on top?
+> 
+> The latter would be fine and it probably is not even urgent.
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 6b9de9e..5fb1ac7 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -1239,6 +1239,11 @@ class P4Sync(Command, P4UserMap):
-             contents = map(lambda text:
-re.sub(r'(?i)\$(Id|Header):[^$]*\$',r'$\1$', text), contents)
-         elif file['type'] in ('text+k', 'ktext', 'kxtext',
-'unicode+k', 'binary+k'):
-             contents = map(lambda text:
-re.sub(r'\$(Id|Header|Author|Date|DateTime|Change|File|Revision):[^$\n]*\$',r'$\1$',
-text), contents)
-+        elif file['type'] == 'utf16':
-+             tmpFile = tempfile.NamedTemporaryFile()
-+             p4CmdList("print -o %s %s"%(tmpFile.name, file['depotFile']))
-+             contents = [ open(tmpFile.name).read() ]
-+             tmpFile.close()
+I went ahead and did it now, while it is still in my head. The first two
+patches are unrelated fixups I noticed while working on it. The third is
+the refactoring, and then the rest use it in various places. They're
+certainly not urgent, and the final one borders on code churn, so they
+may not all be worth applying.  But I don't think they conflict with
+anything in 'next', so now might be a good time.
 
-         self.gitStream.write("M %s inline %s\n" % (mode, relPath))
+These are on top of what you have in jk/maint-fetch-submodule-check-fix.
 
--- 
-1.7.6
+  [1/7]: add sha1_array API docs
+  [2/7]: quote.h: fix bogus comment
+  [3/7]: refactor argv_array into generic code
+  [4/7]: quote: provide sq_dequote_to_argv_array
+  [5/7]: bisect: use argv_array API
+  [6/7]: checkout: use argv_array API
+  [7/7]: run_hook: use argv_array API
+
+-Peff
