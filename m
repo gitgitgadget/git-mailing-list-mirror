@@ -1,86 +1,86 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [Survey] Signed push
-Date: Wed, 14 Sep 2011 21:58:42 +1000
-Message-ID: <CACsJy8Dwu2U-7eEZU-VYmcrA7JwtvUkJS5SywXjZWoE1twchhQ@mail.gmail.com>
-References: <7vaaa8xufi.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johanh@opera.com>
+Subject: Re: Fwd: [Survey] Signed push
+Date: Wed, 14 Sep 2011 14:28:52 +0200
+Organization: Opera Software ASA
+Message-ID: <201109141428.53163.johanh@opera.com>
+References: <7vaaa8xufi.fsf@alter.siamese.dyndns.org> <4E7085E6.3060509@alum.mit.edu> <vpqfwjzxu6i.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 14 13:59:20 2011
+Content-Type: Text/Plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 14 14:41:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3o7a-0005fU-El
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 13:59:18 +0200
+	id 1R3omm-0000br-GR
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 14:41:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932338Ab1INL7O convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Sep 2011 07:59:14 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:65363 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932269Ab1INL7N convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2011 07:59:13 -0400
-Received: by bkbzt4 with SMTP id zt4so1467961bkb.19
-        for <git@vger.kernel.org>; Wed, 14 Sep 2011 04:59:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=AEATP1Da0/yetEXOn0/fdlfU9dG/Ac/cwjwtSRvu6gk=;
-        b=OHFj99dz2dFyCdIeW3VuYi/3NZmAqXavGdMtni7xkydm6I+AANNWrWV77jlvOaGkmE
-         C3HRkaugHPDvenPcOxc3N2cqCQjqMtVNpxLGoje0VDimL6X9To3W8EG8LreHKm9WFbKj
-         jMkE4F9Jig9tasxivTicu2p3iSVGHaa1AwY28=
-Received: by 10.204.139.6 with SMTP id c6mr1581970bku.391.1316001552252; Wed,
- 14 Sep 2011 04:59:12 -0700 (PDT)
-Received: by 10.204.7.4 with HTTP; Wed, 14 Sep 2011 04:58:42 -0700 (PDT)
-In-Reply-To: <7vaaa8xufi.fsf@alter.siamese.dyndns.org>
+	id S932402Ab1INMlo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Sep 2011 08:41:44 -0400
+Received: from smtp.opera.com ([213.236.208.81]:46705 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932381Ab1INMln (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2011 08:41:43 -0400
+X-Greylist: delayed 756 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Sep 2011 08:41:43 EDT
+Received: from johanh.localnet (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p8ECSrcH003243
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 14 Sep 2011 12:28:53 GMT
+User-Agent: KMail/1.13.7 (Linux/2.6.38-ARCH; KDE/4.6.3; x86_64; ; )
+In-Reply-To: <vpqfwjzxu6i.fsf@bauges.imag.fr>
+X-Face: yd/RLXZ@3u;&:C1I$AEH?\d18w+mK:]sZDl52'=Pa{>%,97])P+G2Z<An\_s-+5]S5USYj
+	ZV9-'+"}0!v$zY.4.~5V*'(.9b`>|'YyP1]1%Ge/"bi}Z9PaqbK.9K"yXj#v-CuX,i&.8]
+	)yTm>+T04D
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181355>
 
-On Wed, Sep 14, 2011 at 2:45 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> 1. Improved pull requests.
->
-> ...
->
-> An alternative that I am considering is to let the requester say this
-> instead:
->
-> =C2=A0 =C2=A0are available in the git repository at:
-> =C2=A0 =C2=A0 =C2=A0git://git.kernel.org/pub/flobar.git/ 5738c9c21e53=
-356ab5020912116e7f82fd2d428f
->
-> without adding the extra line.
->
-> That is, to allow fetching the history up to an explicitly named comm=
-it
-> object. This would only involve a change to fetch-pack at the receivi=
-ng
-> end; just match the commit object name given from the command line ag=
-ainst
-> the ls-remote response and ask upload-pack to give the history leadin=
-g to
-> it. The released versions of Git already will happily oblige, as long=
- as
-> the commit object named in the request message still sits at the tip =
-of
-> the intended branch.
->
-> Do you think it is worthwhile to pursue this alternative?
+On Wednesday 14. September 2011, Matthieu Moy wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> > I wish that one could annotate a branch (e.g., at creation) and
+> > have the annotation follow the branch around.  This would be a
+> > useful place to record *why* you created the branch, your plans
+> > for it, etc.  The annotation should be modifiable, because often a
+> > branch evolves in unforeseen ways during its lifetime.  Anybody
+> > could read the annotation to get a quick idea of what kind of work
+> > is in progress.
+> 
+> Would the notes mechanism be able to annotate ref names instead of
+> commit sha1?
 
-Stupid question, if we agree to go with signed push, can we also sign
-pull requests and verify them when we pull? I suppose most of the
-time, pulling can be done automatically by extracting pull url from
-the request. This would make pull/push both signed.
+This has been discussed on the list before, but I'm too lazy to dig up a 
+reference, so:
 
-BTW, there's a third way (rsync is obsolete) to carry changes away in
-human-unreadable way: bundles. Should we also sign the bundles too (I
-guess we could just do the same as in signed push).
---=20
-Duy
+The notes mechanism can in principle annotate anything that has a SHA1 
+sum. The notes tree is really only a key->value mapping using SHA1s as 
+keys and Git objects (typically blobs) as values.
+
+HOWEVER, "git notes prune" will assume that the SHA1 keys are supposed 
+to identify existing git objects, and will delete any note whose SHA1 
+key does not identify a reachable git object.
+
+Hence, if you promise to never run "git notes prune" on 
+refs/notes/branch-descriptions, you could use that ref to store your 
+branch descriptions keyed by the SHA1 of your branch name.
+
+The obvious deficiency with this scheme is that if your branch name is 
+different in some repos, the branch description will be lost in those 
+repos unless you rewrite the refs/notes/branch-descriptions notes tree 
+accordingly.
+
+
+...Johan
+
+-- 
+Johan Herland, <johanh@opera.com>
+Core Developer, Opera Software ASA
