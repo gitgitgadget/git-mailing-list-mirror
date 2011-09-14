@@ -1,90 +1,79 @@
-From: Andrew Lutomirski <luto@mit.edu>
-Subject: Re: [Survey] Signed push
-Date: Wed, 14 Sep 2011 13:49:31 -0700
-Message-ID: <CAObL_7Er5mMuNaNgLDptBHw-zrqEeHHqXkC+TNf9G81_+NmFKw@mail.gmail.com>
-References: <7vaaa8xufi.fsf@alter.siamese.dyndns.org> <4E7101F3.1090204@mit.edu>
- <7vwrdasvr7.fsf@alter.siamese.dyndns.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: Fwd: [Survey] Signed push
+Date: Wed, 14 Sep 2011 13:52:48 -0700
+Message-ID: <4E711420.9080409@vilain.net>
+References: <7vaaa8xufi.fsf@alter.siamese.dyndns.org> <CA+55aFxAQTR3sT7gekAD4qih8J+z-qwri7ZmNCPUd811xgci6w@mail.gmail.com> <CA+55aFy0b+eozmzbKD4RXcJ7e3WCpf7BV1n1qXHOeEwSHZKOXw@mail.gmail.com> <7vobynui8a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 14 22:49:57 2011
+X-From: git-owner@vger.kernel.org Wed Sep 14 22:52:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3wP7-00034z-88
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 22:49:57 +0200
+	id 1R3wS1-0004S3-B2
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 22:52:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933321Ab1INUtw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Sep 2011 16:49:52 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:40831 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933235Ab1INUtw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2011 16:49:52 -0400
-Received: by ywb5 with SMTP id 5so1749246ywb.19
-        for <git@vger.kernel.org>; Wed, 14 Sep 2011 13:49:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=oVNQ7hjVTPMmVQEbJ7oTyMePfuYai5b1C2Diqv5UWdo=;
-        b=WrZiIHgsUyf73Q9IoPkPD8wsM/CnWKRmkCztHTLIZLRFO/FWgPr7UyEZXKJkSpfYWh
-         Qxbo7zJEktBRZL2mA9PhS1R0cwcyoGkucU/XnNciHUaKP988aHxQmnXE81YJxt6Gp7HX
-         S6QolFvZJ2M2aHc8qZkM5XGHYjes0xoalIO3E=
-Received: by 10.68.1.233 with SMTP id 9mr534518pbp.370.1316033391046; Wed, 14
- Sep 2011 13:49:51 -0700 (PDT)
-Received: by 10.68.52.129 with HTTP; Wed, 14 Sep 2011 13:49:31 -0700 (PDT)
-In-Reply-To: <7vwrdasvr7.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: -6TXWmwRwP3Z1U24PpUih9sNQ5U
+	id S933304Ab1INUww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Sep 2011 16:52:52 -0400
+Received: from uk.vilain.net ([92.48.122.123]:38499 "EHLO uk.vilain.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933235Ab1INUww (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2011 16:52:52 -0400
+Received: by uk.vilain.net (Postfix, from userid 1001)
+	id 723A5824D; Wed, 14 Sep 2011 21:52:51 +0100 (BST)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on uk.vilain.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00,
+	WEIRD_PORT autolearn=unavailable version=3.3.1
+Received: from [192.168.112.205] (unknown [64.125.143.6])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by uk.vilain.net (Postfix) with ESMTPSA id D25F38176;
+	Wed, 14 Sep 2011 21:52:49 +0100 (BST)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
+In-Reply-To: <7vobynui8a.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181399>
 
-On Wed, Sep 14, 2011 at 1:40 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Andy Lutomirski <luto@MIT.EDU> writes:
->
->>> An alternative that I am considering is to let the requester say th=
-is
->>> instead:
->>>
->>> =A0 =A0 are available in the git repository at:
->>> =A0 =A0 =A0 git://git.kernel.org/pub/flobar.git/ 5738c9c21e53356ab5=
-020912116e7f82fd2d428f
->>>
->>> without adding the extra line.
->>>
->>> That is, to allow fetching the history up to an explicitly named co=
-mmit
->>> object. This would only involve a change to fetch-pack at the recei=
-ving
->>> end; just match the commit object name given from the command line =
-against
->>> the ls-remote response and ask upload-pack to give the history lead=
-ing to
->>> it....
->>
->> I would love this feature on the pull/fetch interface, but for a
->> completely different reason. =A0Sometimes I want to pull a particula=
-r
->> object (usually a commit, but sometimes just a tree or blob) from
->> *myself*, and having to stick it on a branch is annoying.
->
-> I am afraind that it is not going to happen; see
->
-> =A0 =A0http://article.gmane.org/gmane.comp.version-control.git/181317
->
-> for a rationale.
+[re-send as text-only.  sorry, new system]
+
+On 9/14/11 10:49 AM, Junio C Hamano wrote:
+>> The extra line in the pull request is cheap - it's not like we need to
+>> >  ration them. The above format, in contrast, requires that the person
+>> >  doing the*pull*  have a recent enough git client, otherwise the merge
+>> >  commit message will be just horrible.
+> In a re-roll patch I've added ";# branch-name" at the end of that line for
+> people with older git, but existing git wouldn't allow you to fetch anything
+> but refs so you won't risk getting "just horrible" merge message;-)
 >
 
-Do you mean that it's a security feature?  What if a .git/config
-option existed to allow this use?  Or even a git upload-pack option
-that turned it *on* and was stripped by git-shell?
+If the system is watertight enough, then you could have verified pushes 
+ONLY under some new refspace, like:
 
---Andy
+refs/forks/forkid/branch
+
+"forkid" is set up when you choose to "follow" someone's pushes.  ie, 
+you say something like:
+
+git fork follow linustorvalds@osdl.org 
+<http://pgp.mit.edu:11371/pks/lookup?op=vindex&search=0x17762C4676E21CBB>
+
+"torvalds@osdl.org" here representing a PGP key ID search string.  It 
+could be instead, "0x17762c4676e21cbb"
+
+And then the "refs/forks/linus/xxx" space gets populated as signed 
+pushes are seen on the network (perhaps when fetching from a pull 
+request, or perhaps via a service).  A configuration option can be set 
+to warn if you are not merging a signed branch.  If the new "pull 
+request/push" object is a distinct object type or tag object, then it 
+could be the destination of the 'refs/forks/...' ref, and the branch 
+desription and hence the default merge message be retrieved from that.
+
+Sam
