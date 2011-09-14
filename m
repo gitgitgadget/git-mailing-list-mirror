@@ -1,63 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/7] refactor argv_array into generic code
-Date: Wed, 14 Sep 2011 19:18:04 -0400
-Message-ID: <20110914231804.GB5611@sigill.intra.peff.net>
-References: <20110913215026.GA26743@sigill.intra.peff.net>
- <20110913215757.GC24490@sigill.intra.peff.net>
- <CAP8UFD1vxP9ABgJpM99hxDWWLeGO_QW7QLVFq1f-teu1fiCftA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] credential-osxkeychain: load Security framework
+ dynamically
+Date: Wed, 14 Sep 2011 16:18:07 -0700
+Message-ID: <7vhb4esogg.fsf@alter.siamese.dyndns.org>
+References: <1316023117-84755-1-git-send-email-jaysoffian@gmail.com>
+ <1316040926-89429-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 15 01:18:14 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	John Szakmeister <john@szakmeister.net>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 15 01:18:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3yib-0007ni-9s
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 01:18:13 +0200
+	id 1R3yih-0007oa-4U
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 01:18:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751178Ab1INXSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Sep 2011 19:18:09 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37952
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750945Ab1INXSG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2011 19:18:06 -0400
-Received: (qmail 15380 invoked by uid 107); 14 Sep 2011 23:18:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Sep 2011 19:18:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Sep 2011 19:18:04 -0400
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD1vxP9ABgJpM99hxDWWLeGO_QW7QLVFq1f-teu1fiCftA@mail.gmail.com>
+	id S1751066Ab1INXSO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Sep 2011 19:18:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36887 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751190Ab1INXSK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2011 19:18:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62FC5475D;
+	Wed, 14 Sep 2011 19:18:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kRBMjr61QJWEDrGwF8R4k4rEPyI=; b=l/FSvo
+	F106N0SewqirA8H8cRcMAh+jThSWs7sBuG7KuxWtab1rqYIPeJ2DtTZ1QNgaJ/U9
+	tp+Q6u2XbH2sXr249mYg7PJ5YY8VMVTlzX6d8m6wuSj7ipk5Pryi6lDfrfa6N4CG
+	QbWHoYhbiayJRGi62NjaaWxrpXDpQP++GAYMM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WQ2AxDd1EmvxKVzo00UJ/HEjA89gfgo3
+	yZ84lAUyhs2qhem69iDJfzgwwlXPAydGy7zfX3O6onskTpJ5OKIBgAdA8HikixPl
+	9ZdKXvL8B0n5ZMxn3KkuPXsxIW57eVE453yATv7zMGV3u5PHoGpa8jUHzQ5fT0S9
+	WFvS3D7/pnw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59B83475C;
+	Wed, 14 Sep 2011 19:18:09 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E1EC9475B; Wed, 14 Sep 2011
+ 19:18:08 -0400 (EDT)
+In-Reply-To: <1316040926-89429-1-git-send-email-jaysoffian@gmail.com> (Jay
+ Soffian's message of "Wed, 14 Sep 2011 18:55:26 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CEEB65EC-DF27-11E0-B442-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181410>
 
-On Wed, Sep 14, 2011 at 07:54:48AM +0200, Christian Couder wrote:
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-> In sha1-array you called the "push" function "sha1_array_append"
-> instead of "sha1_array_push", so I wonder why here you call them
-> "*_push*" instead of "*_append*"?
+> Something like this. I'm going to pause here for feedback. Is the (not yet
+> existant) followup commit referenced above allowing git-credential-osxkeychain
+> to be a hard link to git a worthwhile endeavor? Or would a better approach be
+> to make git-credential-osxkeychain.c not use any git code?
 
-I dunno. It just seemed natural to write "push" in the context of argv.
-Maybe too much perl (push, pop, shift, unshift).
+Most definitely the latter, I would think.
 
-argv_array_append does make sense. One could argue that
-sha1_array_append actually doesn't. True, it does append to the end of
-the array, but after writing the docs for it yesterday, I realized that
-it less of an array, and more of a set container. Because the point of
-using it is the optimized lookup/unique function, which is going to sort
-it. The array is really just an implementation detail.
+The whole point of making the Git credential code talk with a defined
+interface with external programs is so that these keychain helpers can be
+written independently from the rest of Git.
 
-So arguably it should be "struct sha1_set", and "sha1_set_insert" or
-something. I'm not sure if it's really worth changing (because this is
-C, our data structures tend to be a little leaky, anyway, and you _can_
-use sha1_array as an ordered list if you want; just don't call the
-lookup or sorting functions).
+If the reason why your keychain helper benefits from linking with the rest
+of Git is because some pieces of information you need in order to respond
+to the requests from credential interface is hard to get if your helper is
+built as an independent program, that is a sign that we are not exposing
+enough information to scripts, iow, the failure in the design of the
+credential interface. If that is the case (and I doubt it is), we would
+need to fix the interface (either the credential interface, or perhaps
+"git config") so that such an independent program does not have to peek
+inside the internals of Git.
 
--Peff
+If the reason is because you want to reuse some generic C API we have that
+are not necessarily tied to Git (e.g. strbuf, string-list, etc.), on the
+other hand, please resist the temptation to do so. It would not help your
+program to serve as an example of independent external keychain helpers,
+i.e. a demonstration of how simple to write them.
