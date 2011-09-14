@@ -1,65 +1,96 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Fwd: [Survey] Signed push
-Date: Wed, 14 Sep 2011 16:30:10 -0700
-Message-ID: <CA+55aFxFnAjpSAd+uB25BuZXBJGvN59qNMmF3fzvky8XK_DP0A@mail.gmail.com>
-References: <7vaaa8xufi.fsf@alter.siamese.dyndns.org> <vpqfwjzxu6i.fsf@bauges.imag.fr>
- <CA+55aFyGRM132OzoJR7wZ8wETvxrFWSmSMjMJnVOKP+6vys-Sw@mail.gmail.com>
- <201109141814.04752.johan@herland.net> <E9E05FA85D0F4461BAE9ECAFE25CD84E@PhilipOakley>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Helping on Git development
+Date: Wed, 14 Sep 2011 16:34:38 -0700
+Message-ID: <7vd3f2snox.fsf@alter.siamese.dyndns.org>
+References: <CAOz-D1JW8RSR8kVWhT7v-DCbWayU8KhbePJwWrWvJwbmueRezQ@mail.gmail.com>
+ <CAOz-D1+77JZRXa57GLz=vZyrcGs4Ojj6Wa0cSD4QcEkMP3PPsA@mail.gmail.com>
+ <CAH5451me+MDe34Boak=UDjH9T_WAnO6wxa6pW+JHOoGADoNfkQ@mail.gmail.com>
+ <7vehzjugdz.fsf@alter.siamese.dyndns.org>
+ <20110914231427.GA5611@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johan Herland <johan@herland.net>, Git List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Thu Sep 15 01:30:43 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Andrew Ardill <andrew.ardill@gmail.com>,
+	Eduardo D'Avila <erdavila@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 15 01:34:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3yug-0002ve-UO
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 01:30:43 +0200
+	id 1R3yyb-0004By-NC
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 01:34:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751694Ab1INXae (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Sep 2011 19:30:34 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:46131 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751647Ab1INXab (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2011 19:30:31 -0400
-Received: by wyh22 with SMTP id 22so2167913wyh.19
-        for <git@vger.kernel.org>; Wed, 14 Sep 2011 16:30:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=tfBr93bzFLa8tlkwOZgVzmg6UYu50/8sZ6zb7iR237Q=;
-        b=xySjBOV/RdAZM5W76agYayB0L4oRSGuqilp85yhYQxQXaPN5fcsxhxDltKLTZcfNuD
-         Nd9mCoBggD2n4wyLSjWizMDNaVHIbc/z/YaWeajFe+nA1BL9cEPTl7kThXFh4+HLCFYW
-         8YQe5vUkS3fymfbmeoDs98Xrh0sW9IOUwzhH8=
-Received: by 10.216.9.139 with SMTP id 11mr356563wet.106.1316043030076; Wed,
- 14 Sep 2011 16:30:30 -0700 (PDT)
-Received: by 10.216.174.8 with HTTP; Wed, 14 Sep 2011 16:30:10 -0700 (PDT)
-In-Reply-To: <E9E05FA85D0F4461BAE9ECAFE25CD84E@PhilipOakley>
-X-Google-Sender-Auth: mEdqdLSbJZxx8XjEKTImsfRjsOI
+	id S1751681Ab1INXel (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Sep 2011 19:34:41 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43424 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751503Ab1INXek (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2011 19:34:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 052894A6D;
+	Wed, 14 Sep 2011 19:34:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=w5r5Y/AGjA1xTiWSoL2JTFp6wHE=; b=uS6/ND
+	Z8o7wb7FYx1rjwgqYqlyUJXGA9LAYnE4qeXTvyvfXBnCz4p7J7Np74fM6gnJKOjA
+	bdC4Kdy+17x5/kWJxoHvoR2xYRXRJv2jqfindls+UcijSVNvxO8TSc7mR9LvtgRQ
+	qqpmSE/J89XEGidmr1OBbr+55hnp4O55b2a0E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dQDGSrLaGyZzx9SUQ69Tgp+lQzOSSz/O
+	g1Z/wtprHrLPGTa8RpctjBQbR83wzPCfytmo5CCrWmQonUhgE6HX6pLZeG6tgP65
+	ulaILQlJBnTuDr7tEMvz2jL9jpenANgeDVz3GeDApnsUo7mTQDoSwnBSR+pdK6+z
+	gaJN4ux2PQc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F07D74A6C;
+	Wed, 14 Sep 2011 19:34:39 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A5614A6B; Wed, 14 Sep 2011
+ 19:34:39 -0400 (EDT)
+In-Reply-To: <20110914231427.GA5611@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 14 Sep 2011 19:14:27 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1D59468E-DF2A-11E0-B496-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181413>
 
-On Wed, Sep 14, 2011 at 3:51 PM, Philip Oakley <philipoakley@iee.org> wrote:
+Jeff King <peff@peff.net> writes:
+
+> On Wed, Sep 14, 2011 at 11:29:28AM -0700, Junio C Hamano wrote:
 >
-> Is one option to store the branch description (if any) on line two of the
-> <branch name> file in .git\refs\heads.
+>> As to contributing to the project, right now, I think we have enough
+>> people who want to write code and documentation for Git, but what we lack
+>> are bandwidth to (this is not meant to be an exhaustive list):
+>
+> Is there such a thing as enough coders? :)
 
-Or even on line one.
+Ever heard of the Mythical Man-Month ;-)?
 
-We already basically do that for the magic FETCH_HEAD branch, and use
-it to populate the merge commit. Extending that kind of thing to all
-branches might be a nice idea.
+I thought it was clear from my message but probably I wasn't clear enough,
+so let's make it clear. I didn't mean to ay "we have enough -- we need no
+more -- we reject new applicants".
 
-Of course, then the question becomes "what about packed refs"? Do you
-just leave the unpacked ref in place for those?
+I was simply saying that there already are many people who scratch his own
+real itch, and we are short of the bandwidth to review them all. It would
+not help the project at all to add more people who scratch some random
+non-itches that nobody is actually interested in (e.g. an entry in an
+unmaintained "bug tracker" that may list irrelevant and stale non issues).
 
-                          Linus
+>   2. Read the list. People will report bugs. Try reproducing them,
+>      bisecting them, creating minimal test cases, narrowing the issues
+>      down to certain configurations or a certain bit of code, etc.
+>      Sometimes that will lead you to propose a solution. Sometimes
+>      you'll just add to the discussion, and then somebody with more
+>      familiarity can pick up the topic from there. But you'll have
+>      helped them by doing some of the work, and you'll have learned more
+>      about how git works.
+
+Yes. In the earlier steps in the above, you may find out that the report
+was actually not a bug at all (e.g. old issue that has long been fixed,
+pebcak, or wrong expectation), but even in such a case, reporting your
+finding would help others.
