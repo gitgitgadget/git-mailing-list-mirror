@@ -1,95 +1,85 @@
-From: Andy Lutomirski <luto@MIT.EDU>
-Subject: Re: [Survey] Signed push
-Date: Wed, 14 Sep 2011 12:35:15 -0700
-Message-ID: <4E7101F3.1090204@mit.edu>
-References: <7vaaa8xufi.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 7/7] run_hook: use argv_array API
+Date: Wed, 14 Sep 2011 13:01:25 -0700
+Message-ID: <7vd3f2uc4q.fsf@alter.siamese.dyndns.org>
+References: <20110913215026.GA26743@sigill.intra.peff.net>
+ <20110913215824.GG24490@sigill.intra.peff.net>
+ <7vty8ft0oc.fsf@alter.siamese.dyndns.org>
+ <20110914185658.GA21352@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org, linux-kernel@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-kernel-owner@vger.kernel.org Wed Sep 14 21:35:41 2011
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 14 22:01:37 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1R3vFF-0002rK-9k
-	for glk-linux-kernel-3@lo.gmane.org; Wed, 14 Sep 2011 21:35:41 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1R3veJ-0006VH-6C
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 22:01:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933069Ab1INTf0 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 14 Sep 2011 15:35:26 -0400
-Received: from DMZ-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.37]:61072 "EHLO
-	dmz-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932890Ab1INTfX (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 14 Sep 2011 15:35:23 -0400
-X-AuditID: 12074425-b7bf1ae000000a2a-68-4e7101c04bd4
-Received: from mailhub-auth-2.mit.edu ( [18.7.62.36])
-	by dmz-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 72.DE.02602.0C1017E4; Wed, 14 Sep 2011 15:34:24 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id p8EJZJOe025628;
-	Wed, 14 Sep 2011 15:35:19 -0400
-Received: from midnight.luto.us ([38.106.48.243])
-	(authenticated bits=0)
-        (User authenticated as luto@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p8EJZF3T025306
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 14 Sep 2011 15:35:17 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0.2) Gecko/20110906 Thunderbird/6.0.2
-In-Reply-To: <7vaaa8xufi.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYrdT0T3AWOhn8POUiUXXlW4mi4beK8wW
-	l3fNYbN41PeW3YHF48SM3yweFy8pe3zeJBfAHMVlk5Kak1mWWqRvl8CVceqZVEEnb8XNdYvZ
-	Gxg3cHUxcnJICJhIfJn9iwXCFpO4cG89G4gtJLCPUeLTz7ouRi4gewOjxPF/jcwQzkYmiVf7
-	+sCqeAXUJC79bWUCsVkEVCVmvvrKCGKzCahIdCx9ABYXFQiTODXvDjNEvaDEyZlPwLaJAPVO
-	bDsEZjML5Emc+LQZrEZYQFHizqKNzBBXmErM3nEXaA4HB6eAmcTD17wQ5ToS7/oeMEPY8hLb
-	385hnsAoOAvJhllIymYhKVvAyLyKUTYlt0o3NzEzpzg1Wbc4OTEvL7VI10IvN7NELzWldBMj
-	OKxdVHcwTjikdIhRgINRiYc34nuBnxBrYllxZe4hRkkOJiVRXmNgVAjxJeWnVGYkFmfEF5Xm
-	pBYfYpTgYFYS4RV6DVTOm5JYWZValA+TkuZgURLnfb3DwU9IID2xJDU7NbUgtQgmK8PBoSTB
-	mwEyVLAoNT21Ii0zpwQhzcTBCTKcB2h4LkgNb3FBYm5xZjpE/hSjLse3qbeOMwqx5OXnpUqJ
-	89qBFAmAFGWU5sHNgaWjV4ziQG8J86aAVPEAUxncpFdAS5iAlijPBvmguCQRISXVwOhW7x1k
-	kflqiZvVcifOa1dOhl8/eCLChsmq9nPrmhJXoRSuDXMSV7J8ExbUuVy42UZYxLs8Op/9wceH
-	Ig9qTfb/lX/89d/j+Qsrgheo/nz8/vffxTcuGPx888Fu7x+FY3r50ZG/z989Fxf6 
-Sender: linux-kernel-owner@vger.kernel.org
+	id S932992Ab1INUBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Sep 2011 16:01:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61894 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932611Ab1INUB3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2011 16:01:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B82B740B8;
+	Wed, 14 Sep 2011 16:01:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2eRAYXIcGSSCs9Ockz8it64sSN0=; b=Inu1ys
+	Hw1Sb717gZg7u8/+q4UGohEmv5/XHTEXUQ5mNra+wtKfU2JtnvR9iHBr6sCqPWL9
+	1pmhSBhEvC8Jij3XSfOJHxIfrKb6kdGCo9G3DAE8PA6Z+YpWFTSxeuIL9TItDsOs
+	mmdLgYsmwnixYUZbsXRKRyxgyvdFkxjbvcHlI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=p1qOID79ZyNLl5W2T0qZ05GDozO87T2O
+	czG2QznqvPN8QFSSeewDna1ALGsm1W9F8n1G7O6x5U2yn787zRaUtOK0R2jODu3l
+	elussWXQiE/YX2m99mKX6Ju4IvwAEMV3dpbP7E+je4kQrIwfeMwjP/wVWbKCbFvW
+	Sinu7qGoQ4w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 967E840B6;
+	Wed, 14 Sep 2011 16:01:27 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1E45440B5; Wed, 14 Sep 2011
+ 16:01:27 -0400 (EDT)
+In-Reply-To: <20110914185658.GA21352@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 14 Sep 2011 14:56:58 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 547F8B5A-DF0C-11E0-B97E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181394>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181395>
 
-On 09/13/2011 09:45 AM, Junio C Hamano wrote:
-> 
-> An alternative that I am considering is to let the requester say this
-> instead:
-> 
->     are available in the git repository at:
->       git://git.kernel.org/pub/flobar.git/ 5738c9c21e53356ab5020912116e7f82fd2d428f
-> 
-> without adding the extra line.
-> 
-> That is, to allow fetching the history up to an explicitly named commit
-> object. This would only involve a change to fetch-pack at the receiving
-> end; just match the commit object name given from the command line against
-> the ls-remote response and ask upload-pack to give the history leading to
-> it. The released versions of Git already will happily oblige, as long as
-> the commit object named in the request message still sits at the tip of
-> the intended branch.
+Jeff King <peff@peff.net> writes:
 
-I would love this feature on the pull/fetch interface, but for a
-completely different reason.  Sometimes I want to pull a particular
-object (usually a commit, but sometimes just a tree or blob) from
-*myself*, and having to stick it on a branch is annoying.
+> On Wed, Sep 14, 2011 at 11:54:11AM -0700, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > @@ -609,26 +610,23 @@ int finish_async(struct async *async)
+>> >  int run_hook(const char *index_file, const char *name, ...)
+>> >  {
+>> >  	struct child_process hook;
+>> > -	const char **argv = NULL, *env[2];
+>> > +	struct argv_array argv = ARGV_ARRAY_INIT;
+>> > +	const char *p, *env[2];
+>> 
+>> Given that in argv-array.h you define it as
+>> 
+>>     #define ARGV_ARRAY_INIT { empty_argv, 0, 0 };
+>> 
+>> the above will introduce decl-after-stmt.
+>
+> Oops. Can you squash in removing the semicolon from the macro
+> definition?
 
-One use-case is when applying a patch in git's extended format.  If I
-know where it came from, I ought to be able to pull the blobs it depends
-on to enable three-way merge.  I think that this is essentially
-impossible remotely right now.
-
-Of course, merging with the result of the pull will result in terrible
-automatically-generated messages, but it's easy to fix that up manually.
-
-This is one thing that I think Mercurial handles better than git.  (And
-apologies for the noise if I've missed a way to do this with current
-git.  I've looked, but maybe I missed some magic way to do this.)
-
---Andy
+Yes, I did. Thanks.
