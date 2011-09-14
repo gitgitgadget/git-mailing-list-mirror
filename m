@@ -1,70 +1,63 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Helping on Git development
-Date: Wed, 14 Sep 2011 19:14:27 -0400
-Message-ID: <20110914231427.GA5611@sigill.intra.peff.net>
-References: <CAOz-D1JW8RSR8kVWhT7v-DCbWayU8KhbePJwWrWvJwbmueRezQ@mail.gmail.com>
- <CAOz-D1+77JZRXa57GLz=vZyrcGs4Ojj6Wa0cSD4QcEkMP3PPsA@mail.gmail.com>
- <CAH5451me+MDe34Boak=UDjH9T_WAnO6wxa6pW+JHOoGADoNfkQ@mail.gmail.com>
- <7vehzjugdz.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 3/7] refactor argv_array into generic code
+Date: Wed, 14 Sep 2011 19:18:04 -0400
+Message-ID: <20110914231804.GB5611@sigill.intra.peff.net>
+References: <20110913215026.GA26743@sigill.intra.peff.net>
+ <20110913215757.GC24490@sigill.intra.peff.net>
+ <CAP8UFD1vxP9ABgJpM99hxDWWLeGO_QW7QLVFq1f-teu1fiCftA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Andrew Ardill <andrew.ardill@gmail.com>,
-	Eduardo D'Avila <erdavila@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 15 01:14:44 2011
+	Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 15 01:18:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3yfD-0006fW-Lo
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 01:14:44 +0200
+	id 1R3yib-0007ni-9s
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 01:18:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751147Ab1INXO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Sep 2011 19:14:29 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57444
+	id S1751178Ab1INXSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Sep 2011 19:18:09 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37952
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750945Ab1INXO2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2011 19:14:28 -0400
-Received: (qmail 15341 invoked by uid 107); 14 Sep 2011 23:15:21 -0000
+	id S1750945Ab1INXSG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2011 19:18:06 -0400
+Received: (qmail 15380 invoked by uid 107); 14 Sep 2011 23:18:59 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Sep 2011 19:15:21 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Sep 2011 19:14:27 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Sep 2011 19:18:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Sep 2011 19:18:04 -0400
 Content-Disposition: inline
-In-Reply-To: <7vehzjugdz.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <CAP8UFD1vxP9ABgJpM99hxDWWLeGO_QW7QLVFq1f-teu1fiCftA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181409>
 
-On Wed, Sep 14, 2011 at 11:29:28AM -0700, Junio C Hamano wrote:
+On Wed, Sep 14, 2011 at 07:54:48AM +0200, Christian Couder wrote:
 
-> As to contributing to the project, right now, I think we have enough
-> people who want to write code and documentation for Git, but what we lack
-> are bandwidth to (this is not meant to be an exhaustive list):
+> In sha1-array you called the "push" function "sha1_array_append"
+> instead of "sha1_array_push", so I wonder why here you call them
+> "*_push*" instead of "*_append*"?
 
-Is there such a thing as enough coders? :)
+I dunno. It just seemed natural to write "push" in the context of argv.
+Maybe too much perl (push, pop, shift, unshift).
 
-Two things that got me started on git, and that I think are still
-relevant today:
+argv_array_append does make sense. One could argue that
+sha1_array_append actually doesn't. True, it does append to the end of
+the array, but after writing the docs for it yesterday, I realized that
+it less of an array, and more of a set container. Because the point of
+using it is the optimized lookup/unique function, which is going to sort
+it. The array is really just an implementation detail.
 
-  1. Scratch your own itch. Surely git doesn't do something that you
-     wish it did. Or did it faster. Or whatever. Try to dig up past
-     discussions on the list to make sure you're not doing something
-     that has already been tried and rejected, and then start hacking.
-     Your patches may be terrible at first, but I think there are people
-     willing to guide you if you actually have running code.
-
-  2. Read the list. People will report bugs. Try reproducing them,
-     bisecting them, creating minimal test cases, narrowing the issues
-     down to certain configurations or a certain bit of code, etc.
-     Sometimes that will lead you to propose a solution. Sometimes
-     you'll just add to the discussion, and then somebody with more
-     familiarity can pick up the topic from there. But you'll have
-     helped them by doing some of the work, and you'll have learned more
-     about how git works.
+So arguably it should be "struct sha1_set", and "sha1_set_insert" or
+something. I'm not sure if it's really worth changing (because this is
+C, our data structures tend to be a little leaky, anyway, and you _can_
+use sha1_array as an ordered list if you want; just don't call the
+lookup or sorting functions).
 
 -Peff
