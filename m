@@ -1,72 +1,70 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] credential-osxkeychain: load Security framework
- dynamically
-Date: Wed, 14 Sep 2011 19:08:16 -0400
-Message-ID: <20110914230816.GA5754@sigill.intra.peff.net>
-References: <1316023117-84755-1-git-send-email-jaysoffian@gmail.com>
- <1316040926-89429-1-git-send-email-jaysoffian@gmail.com>
+Subject: Re: Helping on Git development
+Date: Wed, 14 Sep 2011 19:14:27 -0400
+Message-ID: <20110914231427.GA5611@sigill.intra.peff.net>
+References: <CAOz-D1JW8RSR8kVWhT7v-DCbWayU8KhbePJwWrWvJwbmueRezQ@mail.gmail.com>
+ <CAOz-D1+77JZRXa57GLz=vZyrcGs4Ojj6Wa0cSD4QcEkMP3PPsA@mail.gmail.com>
+ <CAH5451me+MDe34Boak=UDjH9T_WAnO6wxa6pW+JHOoGADoNfkQ@mail.gmail.com>
+ <7vehzjugdz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	John Szakmeister <john@szakmeister.net>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 15 01:13:08 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Andrew Ardill <andrew.ardill@gmail.com>,
+	Eduardo D'Avila <erdavila@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 15 01:14:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3yde-0006FI-T5
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 01:13:07 +0200
+	id 1R3yfD-0006fW-Lo
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 01:14:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751107Ab1INXIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Sep 2011 19:08:18 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44225
+	id S1751147Ab1INXO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Sep 2011 19:14:29 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57444
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750945Ab1INXIS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2011 19:08:18 -0400
-Received: (qmail 15268 invoked by uid 107); 14 Sep 2011 23:09:10 -0000
+	id S1750945Ab1INXO2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2011 19:14:28 -0400
+Received: (qmail 15341 invoked by uid 107); 14 Sep 2011 23:15:21 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Sep 2011 19:09:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Sep 2011 19:08:16 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Sep 2011 19:15:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Sep 2011 19:14:27 -0400
 Content-Disposition: inline
-In-Reply-To: <1316040926-89429-1-git-send-email-jaysoffian@gmail.com>
+In-Reply-To: <7vehzjugdz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181408>
 
-On Wed, Sep 14, 2011 at 06:55:26PM -0400, Jay Soffian wrote:
+On Wed, Sep 14, 2011 at 11:29:28AM -0700, Junio C Hamano wrote:
 
-> Something like this. I'm going to pause here for feedback. Is the (not yet
-> existant) followup commit referenced above allowing git-credential-osxkeychain
-> to be a hard link to git a worthwhile endeavor? Or would a better approach be
-> to make git-credential-osxkeychain.c not use any git code?
+> As to contributing to the project, right now, I think we have enough
+> people who want to write code and documentation for Git, but what we lack
+> are bandwidth to (this is not meant to be an exhaustive list):
 
-To be honest, I was surprised to see you linking against git. I had
-always envisioned OS-specific helpers as living outside of the git.git
-repo.  That's why I provided git-credential-getpass; it should be the
-only part of git that helpers really want to reuse.
+Is there such a thing as enough coders? :)
 
-What are you getting from git that is useful? From my skim of your
-patch, it looks like xmalloc/die, parse_options, and credential_getpass.
+Two things that got me started on git, and that I think are still
+relevant today:
 
-The first can be replaced with a few trivial lines of code. The second
-is overkill, I think. The helper code will always hand you the
-"--option=value" form, and I always intended it to stay that way
-(whether that is well documented, I'm not sure). But a simple loop with
-strncmps would be fine.
+  1. Scratch your own itch. Surely git doesn't do something that you
+     wish it did. Or did it faster. Or whatever. Try to dig up past
+     discussions on the list to make sure you're not doing something
+     that has already been tried and rejected, and then start hacking.
+     Your patches may be terrible at first, but I think there are people
+     willing to guide you if you actually have running code.
 
-The hardest part is credential_getpass. You can call "git
-credential-getpass", but you'll have to read the output yourself (though
-it's quite simple to parse; see read_credential_response).
-
-I'm not a fan of cutting and pasting code, and this will add a number of
-lines to your C program. But I feel like keeping the build completely
-separate from core git is probably a good boundary (especially because
-this will not be getting built or tested all the time, as most of the
-core code is).
+  2. Read the list. People will report bugs. Try reproducing them,
+     bisecting them, creating minimal test cases, narrowing the issues
+     down to certain configurations or a certain bit of code, etc.
+     Sometimes that will lead you to propose a solution. Sometimes
+     you'll just add to the discussion, and then somebody with more
+     familiarity can pick up the topic from there. But you'll have
+     helped them by doing some of the work, and you'll have learned more
+     about how git works.
 
 -Peff
