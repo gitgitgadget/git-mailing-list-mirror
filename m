@@ -1,88 +1,102 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Fwd: [Survey] Signed push
-Date: Wed, 14 Sep 2011 21:46:54 +1000
-Message-ID: <CACsJy8DKbkryuFo0uHnPUvpkui7+Vm4bS_ki5F7mNx=5UoGGsA@mail.gmail.com>
-References: <7vaaa8xufi.fsf@alter.siamese.dyndns.org> <CA+55aFxAQTR3sT7gekAD4qih8J+z-qwri7ZmNCPUd811xgci6w@mail.gmail.com>
- <CA+55aFy0b+eozmzbKD4RXcJ7e3WCpf7BV1n1qXHOeEwSHZKOXw@mail.gmail.com>
- <4E7085E6.3060509@alum.mit.edu> <vpqfwjzxu6i.fsf@bauges.imag.fr>
+From: Dmitry Ivankov <divanorama@gmail.com>
+Subject: Re: git checkout --orphan skips reflogging
+Date: Wed, 14 Sep 2011 17:55:40 +0600
+Message-ID: <CA+gfSn8fHYEdQHzamyWqQ0zCvMCTdnVnJM_dxaq9D_hjq7x1zQ@mail.gmail.com>
+References: <CA+gfSn-tVgj=FYiVGK7kmH4gpnXF3HUbs+f=DfRey6GrpadVYg@mail.gmail.com>
+	<7vaaa8vyc8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Sep 14 13:47:41 2011
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 14 13:55:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3nwL-0000an-3e
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 13:47:41 +0200
+	id 1R3o4A-00045G-J2
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 13:55:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932331Ab1INLr0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Sep 2011 07:47:26 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:45429 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932287Ab1INLrZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2011 07:47:25 -0400
-Received: by bkbzt4 with SMTP id zt4so1458658bkb.19
-        for <git@vger.kernel.org>; Wed, 14 Sep 2011 04:47:24 -0700 (PDT)
+	id S932335Ab1INLzm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Sep 2011 07:55:42 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:55291 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932315Ab1INLzl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2011 07:55:41 -0400
+Received: by qwj8 with SMTP id 8so49459qwj.19
+        for <git@vger.kernel.org>; Wed, 14 Sep 2011 04:55:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=Nm72qfJdprt/JjC2MSZc2UuhqhQyy/i2oYKIWxXxbsE=;
-        b=pdJTDyQs1w8kgm/b7ZKep4OHv48475E9D5p3m8pQBOIqz9sJGf0EqpJjkHB0zvlAnR
-         RKkPwbNyOtRlOKuxJdsztMP/6QfPFqZniAwOxaE5GMSwX8o/MvGAoyKAtMGymyeClKJi
-         qliTk6t8yp0EgvmhNF3RqtZQKt2Sd6x4Uc9/0=
-Received: by 10.204.133.8 with SMTP id d8mr3004848bkt.235.1316000844177; Wed,
- 14 Sep 2011 04:47:24 -0700 (PDT)
-Received: by 10.204.7.4 with HTTP; Wed, 14 Sep 2011 04:46:54 -0700 (PDT)
-In-Reply-To: <vpqfwjzxu6i.fsf@bauges.imag.fr>
+        bh=tzSipRCHr4IiMjHuu79N6fzDY5QdFuDnW3VAJTCbNzM=;
+        b=i+BS4cJStTs78sANPMeKw7Tn5CG+422BGcyA5kWCHzp9Wdc2BrYX+ZFRmZKAnRTOOo
+         SSAE4xO8rwf6HOBzJAY8Hq9+ZKuD71Oga0qE1oBRiWG9lZ3XS05MEbvYsvzry9q0s7nK
+         elGcpVGIfsgq4FnQTCnzNgfSIRX3PP7xI03vA=
+Received: by 10.229.70.130 with SMTP id d2mr1925539qcj.130.1316001340907; Wed,
+ 14 Sep 2011 04:55:40 -0700 (PDT)
+Received: by 10.229.224.17 with HTTP; Wed, 14 Sep 2011 04:55:40 -0700 (PDT)
+In-Reply-To: <7vaaa8vyc8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181353>
 
-On Wed, Sep 14, 2011 at 9:03 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Wed, Sep 14, 2011 at 5:04 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Dmitry Ivankov <divanorama@gmail.com> writes:
 >
->> I wish that one could annotate a branch (e.g., at creation) and have=
- the
->> annotation follow the branch around. =C2=A0This would be a useful pl=
-ace to
->> record *why* you created the branch, your plans for it, etc. =C2=A0T=
-he
->> annotation should be modifiable, because often a branch evolves in
->> unforeseen ways during its lifetime. =C2=A0Anybody could read the an=
-notation
->> to get a quick idea of what kind of work is in progress.
+>> In short, git checkout --orphan doesn't write
+>> HEAD_sha1 -> 00000
+>> entry to logs/HEAD, while git-comit will write
+>> 00000 -> new_orphan_HEAD_sha1
+>> entry. And then reflog backward walk will stop on 000 -> entry and
+>> won't see earlier history.
 >
-> Would the notes mechanism be able to annotate ref names instead of
-> commit sha1?
+> Funny. From the point of view of the _current_ branch, it sort of mak=
+es
+> sense to stop the traversal at that point, but I agree for HEAD reflo=
+g
+> that records branch switching, the traversal should not stop.
+>
+> I am not sure if recording 0{40} after --orphan is the right thing to=
+ do
+> either (for that matter, I do not necessarily think running --orphan =
+is a
+> sane thing to do, but that is a separate issue).
+In fact, my purpose is more like finding out what branches I were recen=
+tly
+on, most of the time even what branches I've updated recently. So, bein=
+g
+able to see chronologically (by ref modification time) ordered list of =
+refs
+may be a better way (than git log -g --decorate).
 
-Speaking from someone who has few experience with git-notes, no I
-don't think current git-notes can do that. But similar mechanism can
-be added, targeting ref instead of sha-1. But the question is, is
-branch description local or public?
-
-Branch description sounds local to me. I just record a branch's
-purpose and status (the latter is more important to me). If it's
-local, we just need to extend ref format to store extra text in
-addition to SHA-1.
-
-If it's public, perhaps if we have a good way to:
- - convert arbitrary text to a ref (maybe just converting spaces to hyp=
-hens)
- - specify a ref without writing the whole ref name (reminds me of
-short sha-1 vs full sha-1)
-
-then we could use branch name as branch description. The default merge
-commit messages can be updated to convert back branch name (which is
-also the branch description) to human-readable text.
---=20
-Duy
+>> Isn't =A0it also a bug in reflog walking that we rely on each old_sh=
+a1
+>> being new_sha1 of a previous entry?
+>
+> I am not all that familiar with the reflog walking (which is admitted=
+ly a
+> bolted-on hack that injects commits with fake ancestry) code, but I t=
+hink
+> it assumes the old sha1 field on the current entry matches the new sh=
+a1
+> field on the previous entry, and we could change it to be a bit more
+> robust.
+>
+> The attached patch _may_ (I didn't even compile test it) remove the
+> dependency on osha1[] and make the code consistently use nsha1[], but=
+ I
+> think stopping at the 0{40} is pretty much fundamental in the revisio=
+n
+> walking machinery the reflog walking code is piggy-backing on, and I =
+do
+> not think this patch would change that.
+The patch compiles fine, and walks past osha1 =3D=3D 0{40}. Probably os=
+ha1
+becomes completely hidden from the walking machinery, and since nsha1 i=
+s
+never 0{40} (for now) whole history is walked.
