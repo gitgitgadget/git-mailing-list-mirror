@@ -1,72 +1,163 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Fwd: [Survey] Signed push
-Date: Wed, 14 Sep 2011 17:42:25 +0200
-Message-ID: <vpqhb4f5dwe.fsf@bauges.imag.fr>
-References: <7vaaa8xufi.fsf@alter.siamese.dyndns.org>
-	<CA+55aFxAQTR3sT7gekAD4qih8J+z-qwri7ZmNCPUd811xgci6w@mail.gmail.com>
-	<CA+55aFy0b+eozmzbKD4RXcJ7e3WCpf7BV1n1qXHOeEwSHZKOXw@mail.gmail.com>
-	<4E7085E6.3060509@alum.mit.edu> <vpqfwjzxu6i.fsf@bauges.imag.fr>
-	<CA+55aFyGRM132OzoJR7wZ8wETvxrFWSmSMjMJnVOKP+6vys-Sw@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [RFC] Questions for "Git User's Survey 2011"
+Date: Wed, 14 Sep 2011 19:14:13 +0300
+Message-ID: <CAMP44s2ZSKx3jDZOSX7EM2bYtuUvvEctZYw6R3wNWQEbCeX4Rw@mail.gmail.com>
+References: <201107252233.02088.jnareb@gmail.com>
+	<CAMP44s0N6pCUe_nop66yTwWitP6LhJXsnaVNwYH46OaxRbdVKg@mail.gmail.com>
+	<201109031738.11678.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Sep 14 17:42:47 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 14 18:14:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3rbq-0000cx-E0
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 17:42:46 +0200
+	id 1R3s6T-0000II-9G
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 18:14:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756817Ab1INPml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Sep 2011 11:42:41 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:49790 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754004Ab1INPml (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2011 11:42:41 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p8EFewEr031182
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 14 Sep 2011 17:40:58 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1R3rbV-0002Vv-MD; Wed, 14 Sep 2011 17:42:25 +0200
-In-Reply-To: <CA+55aFyGRM132OzoJR7wZ8wETvxrFWSmSMjMJnVOKP+6vys-Sw@mail.gmail.com>
-	(Linus Torvalds's message of "Wed, 14 Sep 2011 08:27:35 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 14 Sep 2011 17:40:59 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p8EFewEr031182
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1316619659.71027@7Oaz20vrL4GU3eRh2CRymA
+	id S1752947Ab1INQOU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Sep 2011 12:14:20 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:49215 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752605Ab1INQOT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2011 12:14:19 -0400
+Received: by bkbzt4 with SMTP id zt4so1679063bkb.19
+        for <git@vger.kernel.org>; Wed, 14 Sep 2011 09:14:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=kQqYMHQXTMzRXX75HLJAacknxn/klZeco/8/tTQGZOU=;
+        b=BZ3/Uq6YES7J7/izA2HNWcPTzsa9psSTujS2yYD6hxsbCV2bFVHhWw3eDzFlsyyNSj
+         /i3MocOJeCh6AStw1G3ZY9mRroBZOTfCY3UYyj7aL1mCMfRNVeIjGfrm/bED1pdeQBiX
+         VAI7CkHK545XFvq2ksJvq6ENZlYECFLnJbtKE=
+Received: by 10.204.156.4 with SMTP id u4mr31444bkw.68.1316016853606; Wed, 14
+ Sep 2011 09:14:13 -0700 (PDT)
+Received: by 10.204.40.194 with HTTP; Wed, 14 Sep 2011 09:14:13 -0700 (PDT)
+In-Reply-To: <201109031738.11678.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181365>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
-
-> On Wed, Sep 14, 2011 at 4:03 AM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
+On Sat, Sep 3, 2011 at 6:38 PM, Jakub Narebski <jnareb@gmail.com> wrote=
+:
+> On Sat, 3 Sep 2011, Felipe Contreras wrote:
+>> 2011/7/25 Jakub Narebski <jnareb@gmail.com>:
+>
+>> > I am planning doing annual Git User's Survey, and I'd like to ask =
+for
+>> > feedback.
 >>
->> Would the notes mechanism be able to annotate ref names instead of
->> commit sha1?
+>> Do you have an updated version somewhere?
 >
-> That would be a horrible, horrible notion.
+> You can preview test version of survey at
 >
-> It's quite common to have multiple branches with the same SHA1. 
+> =C2=A0https://www.survs.com/survey/VEBXFGJ9B0
+>
+> Note that all answers in this test channel will be deleted!
+>
+> Up to date version was sent to git mailing list as
+>
+> =C2=A0[RFCv2] Questions for "Git User's Survey 2011"
+> =C2=A0http://article.gmane.org/gmane.comp.version-control.git/180643
+>
+> and can be found on Git Wiki:
+>
+> =C2=A0http://git.wiki.kernel.org/index.php/GitSurvey2011
+>
+>
+> P.S. If I remember correctly you wanted some question about "staging =
+area"
+> terminology, or something like that. =C2=A0Do you have concrete propo=
+sal for
+> question and list of answers?
+>
+> I was thinking about
+>
+> =C2=A0xx. How do you include changes in new commit?
+> =C2=A0(multiple choice, with other)
+>
+> =C2=A0[ ] commit -a
+> =C2=A0[ ] commit <file>
+> =C2=A0[ ] commit -i <file>
+> =C2=A0[ ] git add
+> =C2=A0[ ] git stage
+> =C2=A0[ ] git update-index
+> =C2=A0[ ] incremental add / commit
+> =C2=A0[ ] other, please specify __________________________
+>
+> (it is not in current version of survey, but can be added before it s=
+tarts
+> for real)... though it is only small subset of "stage" vs "the index"
+> terminology. =C2=A0If you have something better...
 
-That's why my question was about annotating ref _names_, yes. As Johan
-Herland pointed out, this would be possible in theory, but not really in
-practice.
+I am just looking at this. You should send regular updates to the
+survey, right after the initial batch of feedback, not one day before.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+=46irst of all, "changes in new commit" doesn't sound right, should be
+either "a new commit", or "new commits".
+
+Second, you should have added what I said:
+
++ stage / partial or interactive commits (e.g. git add -u/-i/-p, git
+diff --cached)
+
+Nowhere in the survey does it as for 'git diff --cached' or anything
+that acts on the stage.
+
+So now we have your question, plus this:
+ + interactive commit / per-hunk comitting / partial commit
+
+But that's not good enough.
+
+People might think 'git add -u/-i/-p' is not related to a commit.
+Also, we still don't know if people use --cached --keep-index, or any
+of those. If instead of 'git add/stage' you had 'git add/stage
+-u/-i/-p' That would have been better, and no, incremental add /commit
+doesn't really fit, for example, I usually do 'git add -p; git
+commit', so it's not really incremental.
+
+I think we should stop beating around the bushes, and ask what we want =
+to ask:
+
+ =3D=3D Do you use the stage/cache/index? =3D=3D
+
+If you don't want to ask that question directly, or you think people
+might not understand the question, we should be listing all the
+commands that use the stage, and make sure they are handled in the
+survey:
+
+ X git diff --cached
+ X git grep --cached
+ X git rm --cached
+ X git stash apply/pop --index
+ X git stash (save) --[no-]keep-index
+ X git add <tracked_file>
+ X git add -p
+ X git add -i
+ X git add -u
+ X git commit -p
+ X git commit --interactive (not the same as git commit -i)
+
+It turns out none of them are explicitly asked in the survey. In order
+to do that, this is the only option I see:
+
+ + interactive commits (e.g. git commit -p/--interactive)
+ + stage (e.g. git add -p/-i/-u, git add <tracked_file))
+ + stage commands (e.g. git * --cached, git stash * --index/--[no-]keep=
+-index)
+
+Or at the very least what I suggested initially:
+ + stage / partial or interactive commits (e.g. git add -u/-i/-p, git
+* --cached)
+
+Cheers.
+
+--=20
+=46elipe Contreras
