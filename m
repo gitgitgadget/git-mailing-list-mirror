@@ -1,93 +1,50 @@
-From: Ted Ts'o <tytso@mit.edu>
-Subject: Re: Fwd: [Survey] Signed push
-Date: Wed, 14 Sep 2011 08:56:21 -0400
-Message-ID: <20110914125621.GE16815@dhcp-172-31-195-159.cam.corp.google.com>
-References: <7vaaa8xufi.fsf@alter.siamese.dyndns.org>
- <4E7085E6.3060509@alum.mit.edu>
- <vpqfwjzxu6i.fsf@bauges.imag.fr>
- <201109141428.53163.johanh@opera.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH] fetch: avoid quadratic loop checking for updated submodules
+Date: Wed, 14 Sep 2011 09:20:25 -0400
+Message-ID: <4E70AA19.6060701@xiplink.com>
+References: <20110912195652.GA27850@sigill.intra.peff.net> <7vr53l5u7h.fsf@alter.siamese.dyndns.org> <20110912224934.GA28994@sigill.intra.peff.net> <4E6FAB46.30508@web.de> <20110913221745.GB24549@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johan Herland <johanh@opera.com>
-X-From: git-owner@vger.kernel.org Wed Sep 14 14:56:33 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 14 15:20:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3p0z-00086o-Af
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 14:56:33 +0200
+	id 1R3pOZ-00045w-6T
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 15:20:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756373Ab1INM41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Sep 2011 08:56:27 -0400
-Received: from li9-11.members.linode.com ([67.18.176.11]:41914 "EHLO
-	test.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756345Ab1INM40 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2011 08:56:26 -0400
-Received: from root (helo=tytso-glaptop.cam.corp.google.com)
-	by test.thunk.org with local-esmtp (Exim 4.69)
-	(envelope-from <tytso@thunk.org>)
-	id 1R3p0o-0005Au-Ub; Wed, 14 Sep 2011 12:56:23 +0000
-Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
-	(envelope-from <tytso@thunk.org>)
-	id 1R3p0n-000595-St; Wed, 14 Sep 2011 08:56:21 -0400
-Content-Disposition: inline
-In-Reply-To: <201109141428.53163.johanh@opera.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on test.thunk.org); SAEximRunCond expanded to false
+	id S932616Ab1INNUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Sep 2011 09:20:50 -0400
+Received: from smtp172.iad.emailsrvr.com ([207.97.245.172]:58458 "EHLO
+	smtp172.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932406Ab1INNUu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2011 09:20:50 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp27.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id 7B75C118587;
+	Wed, 14 Sep 2011 09:20:49 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp27.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 43C4311844B;
+	Wed, 14 Sep 2011 09:20:49 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.21) Gecko/20110831 Thunderbird/3.1.13
+In-Reply-To: <20110913221745.GB24549@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181357>
 
-On Wed, Sep 14, 2011 at 02:28:52PM +0200, Johan Herland wrote:
-> On Wednesday 14. September 2011, Matthieu Moy wrote:
-> > Michael Haggerty <mhagger@alum.mit.edu> writes:
-> > > I wish that one could annotate a branch (e.g., at creation) and
-> > > have the annotation follow the branch around.  This would be a
-> > > useful place to record *why* you created the branch, your plans
-> > > for it, etc.  The annotation should be modifiable, because often a
-> > > branch evolves in unforeseen ways during its lifetime.  Anybody
-> > > could read the annotation to get a quick idea of what kind of work
-> > > is in progress.
-> > 
-> HOWEVER, "git notes prune" will assume that the SHA1 keys are supposed 
-> to identify existing git objects, and will delete any note whose SHA1 
-> key does not identify a reachable git object.
+On 11-09-13 06:17 PM, Jeff King wrote:
 > 
-> Hence, if you promise to never run "git notes prune" on 
-> refs/notes/branch-descriptions, you could use that ref to store your 
-> branch descriptions keyed by the SHA1 of your branch name.
+> And superproject repositories are probably not going
+> to have the same number of commits as submodule repositories, so it may
+> be less of an issue.
 
-It seems like notes is the wrong place to encode this.  If people
-really want this, what if there was a convention where there could be
-a separate branch head: ref/heads/META
+Just a side note:  I don't think this is a safe assumption.  It's certainly
+not the case in our repo, where the submodules are infrequently updated.
 
-which contained a directory structure like this:
-
-<e-mail>/key			# The developer's GPG key
-<e-mail>/<tree>/URL		# URL of developer's tree named <tree>
-<e-mail>/<tree>/description	# Descrition of <tree>
-<e-mail>/<tree>/branch/<branch-name>	# A description of that branch
-
-etc.
-
-Since it's a separate branch head, the contents can be pushed around
-and merged very easily, and there's no danger of the information
-getting lost via a garbage collection or prune operation.
-
-If there was an association between a local branch and <e-mail>/<tree>
-that it was tracking, then either a modified git core or porcelein
-command could get the information from the META tree.  It would also
-make it easy to fetch a developer's GPG key without having to go to
-outside GPG key servers, which is a minor benefit (although maybe
-that's not worth it).
-
-	     	   	   	      	 - Ted
+		M.
