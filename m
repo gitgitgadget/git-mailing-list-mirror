@@ -1,79 +1,89 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Fwd: [Survey] Signed push
-Date: Wed, 14 Sep 2011 13:52:48 -0700
-Message-ID: <4E711420.9080409@vilain.net>
-References: <7vaaa8xufi.fsf@alter.siamese.dyndns.org> <CA+55aFxAQTR3sT7gekAD4qih8J+z-qwri7ZmNCPUd811xgci6w@mail.gmail.com> <CA+55aFy0b+eozmzbKD4RXcJ7e3WCpf7BV1n1qXHOeEwSHZKOXw@mail.gmail.com> <7vobynui8a.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Sep 2011, #04; Mon, 12)
+Date: Wed, 14 Sep 2011 13:57:38 -0700
+Message-ID: <7vsjnysuyl.fsf@alter.siamese.dyndns.org>
+References: <7v4o0h7byd.fsf@alter.siamese.dyndns.org>
+ <7vipox2wd6.fsf@alter.siamese.dyndns.org>
+ <D3CA81F2-647B-4AD0-A4FC-4C22772FD791@JonathonMah.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 14 22:52:58 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Dan McGee <dpmcgee@gmail.com>, David Aguilar <davvid@gmail.com>,
+	git@vger.kernel.org
+To: Jonathon Mah <me@JonathonMah.com>
+X-From: git-owner@vger.kernel.org Wed Sep 14 22:57:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3wS1-0004S3-B2
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 22:52:57 +0200
+	id 1R3wWg-0006cU-RN
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 22:57:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933304Ab1INUww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Sep 2011 16:52:52 -0400
-Received: from uk.vilain.net ([92.48.122.123]:38499 "EHLO uk.vilain.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933235Ab1INUww (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2011 16:52:52 -0400
-Received: by uk.vilain.net (Postfix, from userid 1001)
-	id 723A5824D; Wed, 14 Sep 2011 21:52:51 +0100 (BST)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on uk.vilain.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00,
-	WEIRD_PORT autolearn=unavailable version=3.3.1
-Received: from [192.168.112.205] (unknown [64.125.143.6])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by uk.vilain.net (Postfix) with ESMTPSA id D25F38176;
-	Wed, 14 Sep 2011 21:52:49 +0100 (BST)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
-In-Reply-To: <7vobynui8a.fsf@alter.siamese.dyndns.org>
+	id S933311Ab1INU5m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Sep 2011 16:57:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50238 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933235Ab1INU5l (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2011 16:57:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C78294DA8;
+	Wed, 14 Sep 2011 16:57:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Lfm2WOhFUB7hkVmCjf4XeSTOdbA=; b=FPYPZI
+	OP2gd4xLH/mbwOQw5ms61jy/uF4lPUYYjFOOeA8h9rbFvcafK3AYGzMbhlxu0Zr/
+	rI4LUe0OL439O9PNSGNQQ7Xuy5XcJMAfuieYTrM7emHj4wxGIWVNUbcIaakIu2T9
+	Szp6wa1TV7MGgeEF6n4wX6JHH0spnmBVXfI80=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Btueikl0y/laGkGdOc0oeoZVPWuzGmrf
+	gMNH9H8axg3TdyO4R6Cf7n1NFXeO0pPidvm7JF25y9H9kPOh+XC45t4FOvjjDFLg
+	atgE6idVV2CEDQR6T+DGVXSKO7cE7zekUmrsiQuA4aGbcJsf0LOFFzqgyplB8S8p
+	x9feE0MjciU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BFD224DA7;
+	Wed, 14 Sep 2011 16:57:39 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 541744DA6; Wed, 14 Sep 2011
+ 16:57:39 -0400 (EDT)
+In-Reply-To: <D3CA81F2-647B-4AD0-A4FC-4C22772FD791@JonathonMah.com> (Jonathon
+ Mah's message of "Tue, 13 Sep 2011 19:34:18 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2E7F72D2-DF14-11E0-917D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181400>
 
-[re-send as text-only.  sorry, new system]
+Jonathon Mah <me@JonathonMah.com> writes:
 
-On 9/14/11 10:49 AM, Junio C Hamano wrote:
->> The extra line in the pull request is cheap - it's not like we need to
->> >  ration them. The above format, in contrast, requires that the person
->> >  doing the*pull*  have a recent enough git client, otherwise the merge
->> >  commit message will be just horrible.
-> In a re-roll patch I've added ";# branch-name" at the end of that line for
-> people with older git, but existing git wouldn't allow you to fetch anything
-> but refs so you won't risk getting "just horrible" merge message;-)
+> On 2011-09-12, at 14:59, Junio C Hamano wrote:
 >
+>>> [Stalled]
+>>> 
+>>> * jm/mergetool-pathspec (2011-06-22) 2 commits
+>>> - mergetool: Don't assume paths are unmerged
+>>> - mergetool: Add tests for filename with whitespace
+>> 
+>> What's the plan for this series? Do we still want to pursue it within the
+>> timeframe for the next round?
+>> 
+>> Is there any mergetool/difftool expert who volunteers to help moving this
+>> topic forward?
+>
+> I'd love this to stay alive. As I've mentioned before, my relationship
+> with shell is tenuous. My biggest problem is...
 
-If the system is watertight enough, then you could have verified pushes 
-ONLY under some new refspace, like:
+Hopefully volunteers can help moving this forward with "coding".
 
-refs/forks/forkid/branch
+  http://thread.gmane.org/gmane.comp.version-control.git/176215
+  http://thread.gmane.org/gmane.comp.version-control.git/176216
 
-"forkid" is set up when you choose to "follow" someone's pushes.  ie, 
-you say something like:
+There were issues with the patches that were _not_ about the coding but
+about the documentation and design.
 
-git fork follow linustorvalds@osdl.org 
-<http://pgp.mit.edu:11371/pks/lookup?op=vindex&search=0x17762C4676E21CBB>
-
-"torvalds@osdl.org" here representing a PGP key ID search string.  It 
-could be instead, "0x17762c4676e21cbb"
-
-And then the "refs/forks/linus/xxx" space gets populated as signed 
-pushes are seen on the network (perhaps when fetching from a pull 
-request, or perhaps via a service).  A configuration option can be set 
-to warn if you are not merging a signed branch.  If the new "pull 
-request/push" object is a distinct object type or tag object, then it 
-could be the destination of the 'refs/forks/...' ref, and the branch 
-desription and hence the default merge message be retrieved from that.
-
-Sam
+Topics with a stale version in 'pu' that are stalled are not even alive--
+they are zombies that need to be wiped at some point, or replaced with
+updated series, whichever comes first.
