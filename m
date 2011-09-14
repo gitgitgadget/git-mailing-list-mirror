@@ -1,80 +1,83 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
 Subject: Re: [PATCH] fetch: avoid quadratic loop checking for updated submodules
-Date: Wed, 14 Sep 2011 20:26:05 +0200
-Message-ID: <4E70F1BD.70804@web.de>
-References: <20110912195652.GA27850@sigill.intra.peff.net> <7vwrdd5x61.fsf@alter.siamese.dyndns.org> <4E6FB05C.6010202@web.de>
+Date: Wed, 14 Sep 2011 20:27:48 +0200
+Message-ID: <4E70F224.2080401@web.de>
+References: <20110912195652.GA27850@sigill.intra.peff.net> <7vr53l5u7h.fsf@alter.siamese.dyndns.org> <20110912224934.GA28994@sigill.intra.peff.net> <4E6FAB46.30508@web.de> <20110913221745.GB24549@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, git-dev@github.com,
-	Martin Fick <mfick@codeaurora.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 14 20:26:18 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 14 20:28:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3uA1-0004XN-UY
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 20:26:14 +0200
+	id 1R3uBl-0005Tm-Ss
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 20:28:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757298Ab1INS0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Sep 2011 14:26:08 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:39036 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757261Ab1INS0H (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2011 14:26:07 -0400
-Received: from smtp02.web.de  ( [172.20.0.184])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 3330E1AB30064;
-	Wed, 14 Sep 2011 20:26:06 +0200 (CEST)
+	id S1757287Ab1INS15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Sep 2011 14:27:57 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:43931 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757261Ab1INS14 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2011 14:27:56 -0400
+Received: from smtp06.web.de  ( [172.20.5.172])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 7237D19732957;
+	Wed, 14 Sep 2011 20:27:48 +0200 (CEST)
 Received: from [79.247.251.231] (helo=[192.168.178.43])
-	by smtp02.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1R3u9t-0002UB-00; Wed, 14 Sep 2011 20:26:05 +0200
+	by smtp06.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1R3uBY-0005Ij-00; Wed, 14 Sep 2011 20:27:48 +0200
 User-Agent: Mozilla/5.0 (X11; Linux i686; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
-In-Reply-To: <4E6FB05C.6010202@web.de>
+In-Reply-To: <20110913221745.GB24549@sigill.intra.peff.net>
 X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX18yNOBQV6ElVDxDtnvhR9R+iabaAcazT0GvxgG9
-	oPYwdWbPxcPq4icYfsk0eaB2xBa6K/e4S14vxE3IRW86jIa8m3
-	kOD/iuQOoLu5uz4B03WA==
+X-Provags-ID: V01U2FsdGVkX18kKhWEfSG3CJrQIQC0wKJl7nWDca/+mtf6DypV
+	r+AvHEmi7zWUqDs/FapvfYJlBOxEmZ51ZoCuRPpnVZfPylHVt+
+	/U1sQ5MxoRgWzbheJOkA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181373>
 
-Am 13.09.2011 21:34, schrieb Jens Lehmann:
-> Am 12.09.2011 22:21, schrieb Junio C Hamano:
->> Jeff King <peff@peff.net> writes:
->>
->>> Instead, this patch structures the code like this:
->>
->> Yup, I agree that's the right way to do the other half of the issue.
+Am 14.09.2011 00:17, schrieb Jeff King:
+> One thing that could make it slightly less expensive (but I wouldn't
+> worry about implementing until it becomes an issue): you do a full diff
+> and collect any changed GITLINK entries, and then compare the paths we
+> get with the submodule config. Couldn't you instead do something like
+> this:
 > 
-> Ack from me too! I tested it on the repo with 3k refs and the time went
-> down from 142s to 1s (when applied to 3793ac56b4, as later versions of
-> master contain my other half which would skip Peff's code).
+>   - let S = set of submodule paths that we care about, from the config
+>   - start the "git rev-list $new --not $old" traversal, as we do now
+>   - for each commit
+>     - diff using a pathspec of S
+>     - for each changed entry
+>       - add it to the set of changed submodules
+>       - remove it from S
+>     - if S is empty, break
 > 
-> On current master including my other half this takes 0.90s, while running
-> with Peff's code on top of 3793ac56b4 it takes .96s. That is 6 hundreds
-> of a second (7%) extra for not having to worry if one must run "git fetch
-> --recurse-submodules" or not.
+> That has two advantages:
+> 
+>   1. We limit the diff by pathspec, which means we can avoid looking at
+>      irrelevant parts of the tree (we don't do this yet, but hopefully
+>      we will in the future).
+> 
+>   2. You can break out of the traversal early if you already know you
+>      have changes in each submodule of interest.
 
-Just for the record: Martin Fick was so kind to run Peff's fix (without my
-half) on his 100k refs repo that showed this regression. Here are the results
-of some test runs:
+I think this would work for the functionality which is implemented right
+now. But with Frederik's gitfile work I hope to enable git to support
+submodules being moved around in the work tree rather soonish. Then we
+would be blind for any changes in the new location. Until it hurts us
+I'd prefer to stay with the correct version, even if it is a bit slower.
 
- 1.7.7.rc0.189.gab72a
+> Out of curiosity, what happens if we don't have such a commit? I know
+> you said that your policy is never to rewind a submodule's commit that
+> has been published in a superproject, and I think that's the only sane
+> thing to do. But it's not enforced by git itself, and I wonder how badly
+> we break if it does happen (i.e., I'm hoping the answer is "you can't
+> diff or checkout superproject revisions that reference the missing bit"
+> and not "git log crashes when it gets to that point in history").
 
-    10m8.133s  9m7.971s  8m16.600s 13m57.821s
-     8m34.974s 8m41.527s
-
-
- 1.7.7.rc0.189.gab72a  --no-recurse-submodules
-
-    10m43.833s  7m41.283s 8m17.889s  8m4.549s
-    8m12.668s  7m59.180s
-
-The fastest runs are 8% apart, which is pretty much the same slowdown as in
-the 3k ref repo. Looks like we do have O(n) now :-)
+No worries, nothing bad happens in that case.
