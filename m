@@ -1,113 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Helping on Git development
-Date: Wed, 14 Sep 2011 11:29:28 -0700
-Message-ID: <7vehzjugdz.fsf@alter.siamese.dyndns.org>
-References: <CAOz-D1JW8RSR8kVWhT7v-DCbWayU8KhbePJwWrWvJwbmueRezQ@mail.gmail.com>
- <CAOz-D1+77JZRXa57GLz=vZyrcGs4Ojj6Wa0cSD4QcEkMP3PPsA@mail.gmail.com>
- <CAH5451me+MDe34Boak=UDjH9T_WAnO6wxa6pW+JHOoGADoNfkQ@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Fwd: [Survey] Signed push
+Date: Wed, 14 Sep 2011 11:36:39 -0700
+Message-ID: <CA+55aFyUxmPWdG1j-0t9h9g9=1MmLt7w8fdmz+dZjS=1aDgWiA@mail.gmail.com>
+References: <7vaaa8xufi.fsf@alter.siamese.dyndns.org> <CA+55aFxAQTR3sT7gekAD4qih8J+z-qwri7ZmNCPUd811xgci6w@mail.gmail.com>
+ <CA+55aFy0b+eozmzbKD4RXcJ7e3WCpf7BV1n1qXHOeEwSHZKOXw@mail.gmail.com>
+ <4E7085E6.3060509@alum.mit.edu> <CA+55aFw08zEeWovDPRGCM2f-xCuamJogFzigka4=mfcpJbZpsA@mail.gmail.com>
+ <7vk49bui4f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Eduardo D'Avila" <erdavila@gmail.com>, git@vger.kernel.org
-To: Andrew Ardill <andrew.ardill@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 14 20:29:45 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 14 20:37:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3uDO-00064K-9E
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 20:29:42 +0200
+	id 1R3uKa-0000r8-GD
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 20:37:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757320Ab1INS3e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Sep 2011 14:29:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57642 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757261Ab1INS3d (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2011 14:29:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EC5624E27;
-	Wed, 14 Sep 2011 14:29:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MXRM43/a7n6gcxvETsIQ5+POTzs=; b=eUk8Un
-	TU2RfAJVH55dQCR2bn/4sv1t/s4XAPqBi5fNqu4pTzV3hC0if98hUFtvBVqU/Egm
-	AikOfoF4Q6fpFaavmTKvTuG4LOf2QGdysdHSa34YRnjsE2vkxxqciP35nHDPEv5D
-	ZfF+hlIcBHpiH2oLKXbIFijv9bTgGdbc1CzQg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ndrhMJRnqMweeNyRo12X9BH1qB/39j7C
-	vg9Gd4inxoUxvIK227WFRMXbxt6ituNiwttkSE5r41nfs6dL4b1DQ5qieGWfJdTc
-	I3FssXTe7xDBOHHibyiqsnne9C1ePMwRTzrYzG/lTKepgVvyYFhSYxL8YCZYKHhX
-	Op0Fdsqu0zg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E3DA84E1C;
-	Wed, 14 Sep 2011 14:29:32 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6348B4E1B; Wed, 14 Sep 2011
- 14:29:32 -0400 (EDT)
-In-Reply-To: <CAH5451me+MDe34Boak=UDjH9T_WAnO6wxa6pW+JHOoGADoNfkQ@mail.gmail.com> (Andrew
- Ardill's message of "Wed, 14 Sep 2011 15:16:32 +1000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7D786516-DEFF-11E0-A539-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757305Ab1INShB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Sep 2011 14:37:01 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:62445 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755834Ab1INShA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2011 14:37:00 -0400
+Received: by wwf22 with SMTP id 22so2594522wwf.1
+        for <git@vger.kernel.org>; Wed, 14 Sep 2011 11:36:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=6sPnY/Q7cBk44lytX2RGHW4pAfbmf+6cF7h/c04m5vU=;
+        b=Ek+7EC5Mjh1Qnf358pzVOqvjWLq+yBpRmb9P3wn11khQMhiA9zACH8s2+4d0+OWuZn
+         FzkjgLbNO/j35bfZxu2fhKm/mqx9S6MDt6NI7LrmW7QcgqTTJU3Uazu2e/2tWbpqSp9N
+         eexloYLsRrIRvebiWsnhTCBZRqxs/tOVIJSEM=
+Received: by 10.216.171.72 with SMTP id q50mr152268wel.76.1316025419109; Wed,
+ 14 Sep 2011 11:36:59 -0700 (PDT)
+Received: by 10.216.174.8 with HTTP; Wed, 14 Sep 2011 11:36:39 -0700 (PDT)
+In-Reply-To: <7vk49bui4f.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: VLsVBKgTEv842XAFWAcQfMsRm-c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181377>
 
-Andrew Ardill <andrew.ardill@gmail.com> writes:
-
-> On 14 September 2011 13:05, Eduardo D'Avila <erdavila@gmail.com> wrote:
->> Hi,
->>
->> I have being using Git for some time now and I am very satisfied with it.
->> Now I'm considering giving back by helping on its development.
->> Is there any bug listing which I can check if there is some point I can help?
->> Any suggestions on other ways to help are also welcomed. :-)
+On Wed, Sep 14, 2011 at 10:52 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
 >
-> Hi Eduardo, as stated in the README,
+>> Now people do "git merge" in scripts etc, so we can't fix it ;-(
 >
-> The messages titled "A note from the maintainer", "What's in git.git
-> (stable)" and "What's cooking in git.git (topics)" and the discussion
-> following them on the mailing list give a good reference for project
-> status, development direction and remaining tasks.
+> Yes you can, by teaching "git merge -e" to open an editor ;-).
 >
-> Additionally, I think the README should include something like
->
-> If you are looking to contribute to the project, a good place to start
-> is http://git-blame.blogspot.com/p/note-from-maintainer.html and in
-> Documentation/howto/maintain-git.txt
+> In the meantime, "commit --amend" is your friend.
 
-I am moderately averse to hardcoding that URL that is guaranteed not to
-survive the maintainer change in our README file. The howto/maintain-git
-document mentions the periodical "A note from the maintainer" posting to
-the list that has the same text, which is a more appropriate reference.
+The problem with both of those are human: because it's extra work,
+it's not going to get done.
 
-As to contributing to the project, right now, I think we have enough
-people who want to write code and documentation for Git, but what we lack
-are bandwidth to (this is not meant to be an exhaustive list):
+In contrast, if it's extra work to *avoid* editing the merge message,
+people probably would see the editor pop up, and start adding a few
+small notes.
 
- - review the patches on the list and help perfecting them;
+That's why "default behavior" matters so much. It's not that it's not
+*possible* to edit a merge message, it's that nobody ever does!
 
- - distilling random wishes from the end user community while winnowing
-   chaffs that are unrealistic or do not fit well with the grand scheme of
-   things, to come up with a concrete proposal and a patch series to move
-   the discussions forward in a productive way;
-
- - "on boarding" new contributors, helping them to become a useful member
-   of the community, teaching how to write a good bug report and how to
-   sell a new feature (i.e. "the perfect patch");
-
- - dig list archives to point people at age-old discussions to non-issues
-   that have long been resolved to squelch noise; and
-
- - remind original submitter, people who were involved in the discussion,
-   and people who should have been involved but who weren't, of a worthy
-   but stalled topics from time to time.
-
-The first two need to come from more experienced folks whose judgement I
-can trust (iow, not a newbie task). Others are "project secretary" tasks
-that can be helped by anybody who is good at tracking things, perhaps
-except for the last one that needs a good taste when judging which topic
-is worthy of reminders.
+                        Linus
