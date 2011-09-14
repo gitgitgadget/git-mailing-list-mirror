@@ -1,72 +1,68 @@
-From: Jonathon Mah <me@JonathonMah.com>
-Subject: Re: What's cooking in git.git (Sep 2011, #04; Mon, 12)
-Date: Tue, 13 Sep 2011 19:34:18 -0700
-Message-ID: <D3CA81F2-647B-4AD0-A4FC-4C22772FD791@JonathonMah.com>
-References: <7v4o0h7byd.fsf@alter.siamese.dyndns.org> <7vipox2wd6.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1244.3)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Dan McGee <dpmcgee@gmail.com>, David Aguilar <davvid@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 14 04:34:47 2011
+From: Joshua Stoutenburg <jehoshua02@gmail.com>
+Subject: Setting up Git Server
+Date: Tue, 13 Sep 2011 19:46:47 -0700
+Message-ID: <CAOZxsTqFfOR+Eb3rqz5hZSJRTe=a1N-CEM--GGGGO2yayT-HLA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 14 04:46:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3fJC-0005dy-Qj
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 04:34:43 +0200
+	id 1R3fV2-0000Cn-Gp
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 04:46:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754059Ab1INCed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Sep 2011 22:34:33 -0400
-Received: from ipmail06.adl6.internode.on.net ([150.101.137.145]:11831 "EHLO
-	ipmail06.adl6.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753681Ab1INCec convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Sep 2011 22:34:32 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApIBAKwQcE5M5FL2/2dsb2JhbAAMNapDAQEEAToxBwcFCwtGVwYTh3e2a4YOYASHbZhKhEg
-Received: from adsl-76-228-82-246.dsl.pltn13.sbcglobal.net (HELO [10.0.1.129]) ([76.228.82.246])
-  by ipmail06.adl6.internode.on.net with ESMTP; 14 Sep 2011 12:04:23 +0930
-In-Reply-To: <7vipox2wd6.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1244.3)
+	id S1754417Ab1INCqt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Sep 2011 22:46:49 -0400
+Received: from mail-ew0-f52.google.com ([209.85.215.52]:37899 "EHLO
+	mail-ew0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754389Ab1INCqt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Sep 2011 22:46:49 -0400
+Received: by ewy28 with SMTP id 28so762637ewy.11
+        for <git@vger.kernel.org>; Tue, 13 Sep 2011 19:46:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=BH7FntJLSAP08zPt7f9yEBVpihswOZEvqa5TIKc3C7M=;
+        b=qwoNhhoFmvQF8bHU2URrAj0CnT/vxlmkZfBcJOzfzf3qBEdvOj38JF56ABUvSEUadN
+         y7pkSeartH8+drvRNcIigsay0UBkmSJiVhzyJXVCn22ljeBNZb8DpssnEiIHqvcAG0iT
+         5XpC2uorBhIr1SdPN2RjHynIrGPCA72UYj2vM=
+Received: by 10.213.16.141 with SMTP id o13mr683322eba.91.1315968407780; Tue,
+ 13 Sep 2011 19:46:47 -0700 (PDT)
+Received: by 10.213.16.195 with HTTP; Tue, 13 Sep 2011 19:46:47 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181335>
 
-On 2011-09-12, at 14:59, Junio C Hamano wrote:
+Looking for some guidance in setting up a git server customized to my
+specific needs. =A0Could anybody walk me through the process?
 
->> [Stalled]
->> 
->> * jm/mergetool-pathspec (2011-06-22) 2 commits
->> - mergetool: Don't assume paths are unmerged
->> - mergetool: Add tests for filename with whitespace
->> 
->> I think this is a good idea, but it probably needs a re-roll.
->> Cf. $gmane/176254, 176255, 166256
-> 
-> What's the plan for this series? Do we still want to pursue it within the
-> timeframe for the next round?
-> 
-> Is there any mergetool/difftool expert who volunteers to help moving this
-> topic forward?
+I have a VirtualBox VM server on which I want to set up a cluster of VM=
+s
+each one for a different purpose -- experimentation, web hosting, and,
+of course, git.
 
+I'm using Ubuntu 10.04 LTS for the operating system. =A0I have a single
+public ip address.
 
-I'd love this to stay alive. As I've mentioned before, my relationship with shell is tenuous. My biggest problem is I don't have a mental model of how quoting works, so I end up writing tests and performing trial-and-error until it works.
+I will want to access the git server over the internet. =A0I want to
+easily control git users, groups, and permissions apart from the linux
+user system, specifying who can access what repositories.
 
+I don't mind CLI, as opposed to GUI, as long as it is well explained,
+and it is the most efficient way to do it.
 
-On 2011-06-22, at 14:33, Junio C Hamano wrote:
+After setting up the server, I'd also like some guidance setting up
+individual workstations (*nix and Winblows) to use git in the Eclipse
+IDE.
 
-> Why do you need a loop here in the else clause, instead of just a single:
-> 
-> 	files=$(git ls-files -u -- "$@" |...)
+You're guidance greatly appreciated.
 
-See above (the dumb loop isn't necessary; your suggestion is much better). Should I bother re-submitting with just this change?
-
-
-
-Jonathon Mah
-me@JonathonMah.com
+I'd gladly put together a step-by-step guide as we figure it out for
+other users looking to do the same.
