@@ -1,75 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] make-static: master
-Date: Wed, 14 Sep 2011 12:03:36 -0700
-Message-ID: <7vlitrt08n.fsf@alter.siamese.dyndns.org>
-References: <4E6D0E3F.3090304@ramsay1.demon.co.uk>
- <7vhb4in4j7.fsf@alter.siamese.dyndns.org>
- <4E6FDE71.9050606@ramsay1.demon.co.uk>
- <7v62kwvwe9.fsf@alter.siamese.dyndns.org> <4E704EA2.8060307@viscovery.net>
+Subject: Re: git bundler service
+Date: Wed, 14 Sep 2011 12:13:23 -0700
+Message-ID: <7vhb4fszsc.fsf@alter.siamese.dyndns.org>
+References: <4E70F6E8.80408@dbservice.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Sep 14 21:03:45 2011
+Cc: git@vger.kernel.org
+To: Tomas Carnecky <tom@dbservice.com>
+X-From: git-owner@vger.kernel.org Wed Sep 14 21:13:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3ukL-0004sA-0d
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 21:03:45 +0200
+	id 1R3utr-00012m-1l
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 21:13:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932870Ab1INTDk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Sep 2011 15:03:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39057 "EHLO
+	id S1757397Ab1INTN2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Sep 2011 15:13:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42809 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932462Ab1INTDj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2011 15:03:39 -0400
+	id S1757306Ab1INTN2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2011 15:13:28 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2DE8F554F;
-	Wed, 14 Sep 2011 15:03:38 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 648545724;
+	Wed, 14 Sep 2011 15:13:26 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=voTrruRkLxs7DrPGxV/OKFuvrR0=; b=m9OUcm
-	2sx1sS+hwlXQDmLEesl6SiQHN9CQsu7ddpQg3R+g8/bzDC95XaiidvtsCphmIDJO
-	WJVUmYCrLmTB+EgOzZb4AD301IOGaS/r8njcfHqTWdkIZUiSftenklDWDlB8RU9U
-	wPATuBYiSJobMzcfN+xjlzJuROSMVrqWb7p2M=
+	:content-type; s=sasl; bh=DyIHfwo6cxnS0TkGVptH388O3pY=; b=H5qWoh
+	GlX5v8wzZCli6OZmE17P8b4AIB4JED4oVsqx5QNVnviFpVQbHhJG5pyFeBBUz0cj
+	eyaN+lwofA5Js1zc4Yv9nPh/8F6rJdWqkdns0oQCFZvMCkt1lX58RnHUy2hGH+Mb
+	EPoa1J4ue/kwFTGf1NkLE2I2j1Sz3os2mR6Ik=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OTafCaSPdhX5Zxrk9DnrQAe5o8UXRT48
-	qZtlaz0dv17yxFM+PgKTOaDfh1akEVQNk9hUhIEB7ZbNeeu6nu0QDckPdkeG7Tkf
-	oc9MRaQ6RCojggqe+X1EaA4xDbs86IR+yGh4Sno7DUFWZSgAIZavDBKC2B7k0eKR
-	NPeUkIQ3zvM=
+	:content-type; q=dns; s=sasl; b=LKM5t8EUnhpIsBofBSTObEKBf+WvGhje
+	jqbSdUMwd+8tt19wlnQoJCYT4t/um+easQlLJXNb2dLqzl4BXDNximN2zPL87+a/
+	CZ/bFiejc4NBNIeHzlQtCAgiDZP7IXOPMDopeJQVa+pnEhQyNoUUGp1NcwsiXUO1
+	K3kWqlPUdbU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2553D554E;
-	Wed, 14 Sep 2011 15:03:38 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CCD25723;
+	Wed, 14 Sep 2011 15:13:26 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ADFD5554D; Wed, 14 Sep 2011
- 15:03:37 -0400 (EDT)
-In-Reply-To: <4E704EA2.8060307@viscovery.net> (Johannes Sixt's message of
- "Wed, 14 Sep 2011 08:50:10 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9465A5722; Wed, 14 Sep 2011
+ 15:13:24 -0400 (EDT)
+In-Reply-To: <4E70F6E8.80408@dbservice.com> (Tomas Carnecky's message of
+ "Wed, 14 Sep 2011 20:48:08 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 40913772-DF04-11E0-B080-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 9E6242B4-DF05-11E0-A7D7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181387>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Tomas Carnecky <tom@dbservice.com> writes:
 
-> Am 9/14/2011 1:46, schrieb Junio C Hamano:
->> This kind of breakage report was exactly what I was looking for by
->> merging it early to 'next'. Hopefully no other (function / platform) combo
->> has such dependencies...
->
-> There is! prepare_git_cmd is used from the Windows section in run-command.c.
-> Therefore, the following hunks of the patch should be reverted.
+> I do a fair amount of end-user support in our official IRC channel and
+> every now and then someone with a really slow or unreliable internet
+> connection stumbles over the fact that git can't resume clones. In the
+> past I would real quick clone the repo and make a bundle for them (if
+> the repo was public). Now I made a service out of it:
+> https://bundler.caurea.org/. The site is really simple: you enter a
+> git url and after a while you'll be able to download the
+> bundle.
 
-Sorry, I do not think it should just be "reverted".
+Interesting, as I was talking with others on a related solution to a
+similar issue of priming the well for large clones.
 
-Instead, a new comment should be added to explain why it needs to be
-exposed, which was the _whole_ point of the message you are replying to,
-in which I showed how it should be done by an example.
+The basic idea is to allow a site automatically to redirect fresh-clone
+clients to a URL to HTTP reachable mirror network, and force them to grab
+a bundle, extract it and then re-contact the server for only incremental
+updates relative to the bundle (and of course that exchange would happen
+inside the updated client without end-user intervention).
