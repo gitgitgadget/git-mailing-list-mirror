@@ -1,82 +1,65 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] contrib: add a credential helper for Mac OS X's keychain
-Date: Wed, 14 Sep 2011 09:31:42 -0400
-Message-ID: <CAG+J_Dw-vf7FtyT-vPpj-LHBo0rCBJi39bHh=8vWjc52QBMM2A@mail.gmail.com>
-References: <1315683874-95583-1-git-send-email-jaysoffian@gmail.com>
-	<CAEBDL5UprYM0=SgNQrsY8_aCGf+pxKc1NP0AFjJy8igzt3vDZQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <junio@kernel.org>,
-	Jeff King <peff@peff.net>
-To: John Szakmeister <john@szakmeister.net>
-X-From: git-owner@vger.kernel.org Wed Sep 14 15:31:49 2011
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: t0300-credentials: poll failed: invalid argument
+Date: Wed, 14 Sep 2011 10:24:01 -0400
+Message-ID: <C9FED2AA-15CB-4850-B3DA-F4FC12F06EB4@silverinsanity.com>
+References: <5C993C44-D045-4344-95C1-94D3E6DB0316@silverinsanity.com> <20110829174309.GA11524@sigill.intra.peff.net> <201109091613.13137.trast@student.ethz.ch> <201109141015.58333.trast@student.ethz.ch>
+Mime-Version: 1.0 (Apple Message framework v1244.3)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Sep 14 16:24:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3pZ6-0001aM-N4
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 15:31:49 +0200
+	id 1R3qNt-0001sL-Fc
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 16:24:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932742Ab1INNbn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Sep 2011 09:31:43 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:61769 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932735Ab1INNbn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2011 09:31:43 -0400
-Received: by gwb15 with SMTP id 15so1541829gwb.19
-        for <git@vger.kernel.org>; Wed, 14 Sep 2011 06:31:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=p/WBvvm/CfIH0NsQVhhKpVXYG5Pur2Lmit9QAaLLNOU=;
-        b=mgqnQZa/Kw6KOzOdgaKlUhGowQ9UHeWFcC6fsEOB/cW7AcPf1BV9y0mFCZRCV/q0XK
-         kYPpqnKW0bEh0w9PtE3VVeMG/XT+UdcuRrbBXajArC7nsSr7Zz0nksUHAkn/L/NTngct
-         m0kKi0vOJoHOJEZb0qZd+uLjxSgewBL6BUG5k=
-Received: by 10.236.190.200 with SMTP id e48mr40910763yhn.59.1316007102498;
- Wed, 14 Sep 2011 06:31:42 -0700 (PDT)
-Received: by 10.147.32.18 with HTTP; Wed, 14 Sep 2011 06:31:42 -0700 (PDT)
-In-Reply-To: <CAEBDL5UprYM0=SgNQrsY8_aCGf+pxKc1NP0AFjJy8igzt3vDZQ@mail.gmail.com>
+	id S1751114Ab1INOYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Sep 2011 10:24:12 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:49675 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750837Ab1INOYL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2011 10:24:11 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 536421FFC166; Wed, 14 Sep 2011 14:24:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.1 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [129.21.210.224] (bcg2784.student.rit.edu [129.21.210.224])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id DEE441FFC100;
+	Wed, 14 Sep 2011 14:23:59 +0000 (UTC)
+In-Reply-To: <201109141015.58333.trast@student.ethz.ch>
+X-Mailer: Apple Mail (2.1244.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181360>
 
-On Wed, Sep 14, 2011 at 4:01 AM, John Szakmeister <john@szakmeister.net=
-> wrote:
->> +def add_internet_password(protocol, hostname, username, password):
->> + =C2=A0 =C2=A0# We do this over a pipe so that we can provide the p=
-assword more
->> + =C2=A0 =C2=A0# securely than as an argument which would show up in=
- ps output.
->> + =C2=A0 =C2=A0# Unfortunately this is possibly less robust since th=
-e security man
->> + =C2=A0 =C2=A0# page does not document how to quote arguments. Empr=
-ically it seems
->> + =C2=A0 =C2=A0# that using the double-quote, escaping \ and " works=
- properly.
->
-> I'm not sure this comment is correct... it looks like you're passing
-> the password on the command line...
->
->> + =C2=A0 =C2=A0username =3D username.replace('\\', '\\\\').replace('=
-"', '\\"')
->> + =C2=A0 =C2=A0password =3D password.replace('\\', '\\\\').replace('=
-"', '\\"')
->> + =C2=A0 =C2=A0command =3D ' '.join([
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0'add-internet-password', '-U',
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0'-r', protocol,
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0'-s', hostname,
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0'-a "%s"' % username,
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0'-w "%s"' % password,
->
-> ...right here. :-(
 
-Nope, you snipped out too much context. That command is turned into a
-string and then sent to /usr/bin/security on its stdin. It is
-absolutely not passed on the command-line.
+On Sep 14, 2011, at 4:15 AM, Thomas Rast wrote:
 
-j.
+> Thomas Rast wrote:
+>>  $ uname -a
+>>  Darwin mackeller.inf.ethz.ch 11.1.0 Darwin Kernel Version 11.1.0: Tue Jul 26 16:07:11 PDT 2011; root:xnu-1699.22.81~1/RELEASE_X86_64 x86_64
+> [...]
+>>  --- expect-stderr       2011-09-09 14:12:13.000000000 +0000
+>>  +++ stderr      2011-09-09 14:12:13.000000000 +0000
+>>  @@ -1,2 +1,3 @@
+>>   askpass: Username:
+>>   askpass: Password:
+>>  +fatal: poll failed: Invalid argument
+>> 
+>> for each of the tests 15--19.  Is it supposed to be fixed?
+> 
+> Ping?
+
+Jeff's patch did fix this for me, but it never appears to have made it into git.git.  He mentioned something about re-rolling it along with some other fixes...  *hint, hint*
+
+~~ Brian
