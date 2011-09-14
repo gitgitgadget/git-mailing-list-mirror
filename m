@@ -1,55 +1,59 @@
-From: Philippe Vaucher <philippe.vaucher@gmail.com>
-Subject: Re: Setting up Git Server
-Date: Wed, 14 Sep 2011 10:09:59 +0200
-Message-ID: <CAGK7Mr7H7w+wi=BVws91DEN6XhPKcia7Qe_86L-RHDwnP1vBpQ@mail.gmail.com>
-References: <CAOZxsTqFfOR+Eb3rqz5hZSJRTe=a1N-CEM--GGGGO2yayT-HLA@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: t0300-credentials: poll failed: invalid argument
+Date: Wed, 14 Sep 2011 10:15:58 +0200
+Message-ID: <201109141015.58333.trast@student.ethz.ch>
+References: <5C993C44-D045-4344-95C1-94D3E6DB0316@silverinsanity.com> <20110829174309.GA11524@sigill.intra.peff.net> <201109091613.13137.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Joshua Stoutenburg <jehoshua02@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 14 10:10:36 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Brian Gernhardt <benji@silverinsanity.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 14 10:16:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3kYG-0001Rd-2M
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 10:10:36 +0200
+	id 1R3kdd-0003Vu-2D
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Sep 2011 10:16:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752875Ab1INIKb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Sep 2011 04:10:31 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:37902 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752672Ab1INIK3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2011 04:10:29 -0400
-Received: by qyk30 with SMTP id 30so3572044qyk.19
-        for <git@vger.kernel.org>; Wed, 14 Sep 2011 01:10:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ArRrCdXLoJ4y3xdhPseUBZlqm2PzJ+YeoHgOHGnutto=;
-        b=u7YjkI3Wnez1r8nRZtTMxUcSnT+fZl3U711PV82cvrlOEktX72qdoQlvZHGC4Nb3dz
-         rAUC3so6xR0/uH4e3evoIjPpPhXb79ImUAabdzPUrmEhcDbMf4nFTuHi7qMnCa9a8L6m
-         X5wF9fQ2tBRq494kxBQZD260n6uNGbXcrqqAk=
-Received: by 10.229.247.70 with SMTP id mb6mr4414930qcb.121.1315987829207;
- Wed, 14 Sep 2011 01:10:29 -0700 (PDT)
-Received: by 10.229.185.204 with HTTP; Wed, 14 Sep 2011 01:09:59 -0700 (PDT)
-In-Reply-To: <CAOZxsTqFfOR+Eb3rqz5hZSJRTe=a1N-CEM--GGGGO2yayT-HLA@mail.gmail.com>
+	id S1753255Ab1INIQB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Sep 2011 04:16:01 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:36750 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753181Ab1INIQA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2011 04:16:00 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.289.1; Wed, 14 Sep
+ 2011 10:15:53 +0200
+Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.339.1; Wed, 14 Sep
+ 2011 10:15:58 +0200
+User-Agent: KMail/1.13.7 (Linux/3.0.4-43-desktop; KDE/4.6.5; x86_64; ; )
+In-Reply-To: <201109091613.13137.trast@student.ethz.ch>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181345>
 
-> I will want to access the git server over the internet. =A0I want to
-> easily control git users, groups, and permissions apart from the linu=
-x
-> user system, specifying who can access what repositories.
+Thomas Rast wrote:
+>   $ uname -a
+>   Darwin mackeller.inf.ethz.ch 11.1.0 Darwin Kernel Version 11.1.0: Tue Jul 26 16:07:11 PDT 2011; root:xnu-1699.22.81~1/RELEASE_X86_64 x86_64
+[...]
+>   --- expect-stderr       2011-09-09 14:12:13.000000000 +0000
+>   +++ stderr      2011-09-09 14:12:13.000000000 +0000
+>   @@ -1,2 +1,3 @@
+>    askpass: Username:
+>    askpass: Password:
+>   +fatal: poll failed: Invalid argument
+> 
+> for each of the tests 15--19.  Is it supposed to be fixed?
 
-Have a look at gitolite (https://github.com/sitaramc/gitolite).
-It's not very hard to setup and then it's pretty easy to work with. It
-can also be integrated with stuffs like redmine.
+Ping?
 
-Philippe
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
