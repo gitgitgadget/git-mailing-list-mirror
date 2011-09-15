@@ -1,115 +1,102 @@
-From: Joshua Stoutenburg <jehoshua02@gmail.com>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <carlos@cmartin.tk>
 Subject: Re: Anybody home?
-Date: Thu, 15 Sep 2011 02:42:45 -0700
-Message-ID: <CAOZxsTrxPZ1V+_W=trRpOTJ9emh8msreGOyAYm_1hs0zXaOd1w@mail.gmail.com>
+Date: Thu, 15 Sep 2011 11:43:56 +0200
+Message-ID: <1316079837.2019.18.camel@bee.lab.cmartin.tk>
 References: <CAOZxsTq1crC0zeMpFGMafG8HXu168gkK2-KDnpwLoamRLJshjg@mail.gmail.com>
-	<4E71A5FF.5040807@viscovery.net>
-	<201109150948.09040.trast@student.ethz.ch>
+	 <4E71A5FF.5040807@viscovery.net>
+	 <CAOZxsTqGt=gYr3t7e5Ma4z6W9wt_JxrgsNSGFGVbtk2rc3LZ9w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-1SV1JCPPo3Lkz+0nHKtp"
 Cc: Johannes Sixt <j.sixt@viscovery.net>,
 	Git List <git@vger.kernel.org>
 To: Joshua Stoutenburg <jehoshua02@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 15 11:42:55 2011
+X-From: git-owner@vger.kernel.org Thu Sep 15 11:44:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R48T8-0002Eo-3V
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 11:42:54 +0200
+	id 1R48UF-0002dO-Af
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 11:44:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932318Ab1IOJmt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Sep 2011 05:42:49 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:44162 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932088Ab1IOJms convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2011 05:42:48 -0400
-Received: by eya28 with SMTP id 28so225330eya.19
-        for <git@vger.kernel.org>; Thu, 15 Sep 2011 02:42:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=g7SEMwbza4rTWqw5bRUx/e+da9gebVWETv4mgf2mYCI=;
-        b=lmy1zI3Rebzuqbb63Hv/x1EhOttD2B6s8BStOMvMriLyX5a7KCYFv2AQWKGqgZuXSl
-         juMqg6uFqcHzkaHjhsWC31OsUE0DVxmdslUO7frhKdlOjZbbHq2B6DckrKs9FFrRZzak
-         G/fwn1iY/QhhYdcp6ZBGhbs5RmcpffR++k/K0=
-Received: by 10.213.26.135 with SMTP id e7mr320936ebc.129.1316079765651; Thu,
- 15 Sep 2011 02:42:45 -0700 (PDT)
-Received: by 10.213.16.195 with HTTP; Thu, 15 Sep 2011 02:42:45 -0700 (PDT)
-In-Reply-To: <201109150948.09040.trast@student.ethz.ch>
+	id S932322Ab1IOJn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Sep 2011 05:43:59 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:44251 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932088Ab1IOJn6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2011 05:43:58 -0400
+Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 66EAE460AC;
+	Thu, 15 Sep 2011 11:43:39 +0200 (CEST)
+In-Reply-To: <CAOZxsTqGt=gYr3t7e5Ma4z6W9wt_JxrgsNSGFGVbtk2rc3LZ9w@mail.gmail.com>
+X-Mailer: Evolution 3.0.3- 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181452>
 
-On Thu, Sep 15, 2011 at 12:48 AM, Thomas Rast <trast@student.ethz.ch> w=
-rote:
-> Johannes Sixt wrote:
->> Even when you want to exchange your commits between two or three mac=
-hines,
->> all you need is ssh access. There is no *git server* necessary. git =
-is not
->> svn. ;-)
->
-> I'd even put this somewhat more bluntly. =A0My two-step advice on
-> switching from svn to git is:
->
-> 1) forget *everything* you know from SVN
-> 2) learn git as usual
->
-> I don't hang out on IRC as much any more, so maybe it got better. =A0=
-But
-> 90%[*] of SVN convert's problems seem to stem from some preconceived
-> notions they carried over from SVN.
->
-> Such as, "HEAD is the newest commit". =A0Or the whole centralized
-> vs. distributed you mentioned.
->
->
->
-> [*] 78% of all statistics were made up on the spot
->
+
+--=-1SV1JCPPo3Lkz+0nHKtp
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, 2011-09-15 at 02:01 -0700, Joshua Stoutenburg wrote:
+> > Reading your exchanges elsewhere in this thread, I think you missed tha=
+t
+> > you don't need a git server at all just to *use* git.
+> >
+> > Even when you want to exchange your commits between two or three machin=
+es,
+> > all you need is ssh access. There is no *git server* necessary. git is =
+not
+> > svn. ;-)
+> >
+> > I thought I'd just mention this to help you streamline your search.
+> >
+> > -- Hannes
+> >
+>=20
+> I read the first four and a half chapters from the Pro Git book pdf.
+> So I think I understood that much.
+>=20
+> But in my situation, I do need a server so that other developers can
+> access anytime over the internet.
+
+If the code shouldn't be made public, then you should take a look at
+gitolite[0]. Otherwise, you can just host it on gitorious.org or
+github.com
+
+[0] https://github.com/sitaramc/gitolite
+
+   cmn
+
+>=20
+> I should have mentioned that.
 > --
-> Thomas Rast
-> trast@{inf,student}.ethz.ch
->
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>=20
 
-How can I "learn git as usual"?
 
-I don't think I was on Subversion long enough to permanently damage my
-brain.  Only a few months (actually . . . that's probably enough).  I
-never used it's branching, tagging or merging features.  Commit and
-revert were the only that I used.  Regardless, I'm happy to forget
-everything I know about Subversion.
 
-I've watched Linus Torvalds tech talk on git:
-http://www.youtube.com/watch?v=3D4XpnKHJAok8
-I also read four and a half chapters of Pro Git pdf:
-http://progit.org/ebook/progit.pdf
-I read and understood git for computer scientists:
-http://eagain.net/articles/git-for-computer-scientists/
+--=-1SV1JCPPo3Lkz+0nHKtp
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
 
-So I have a pretty good understanding why git is THE superior source
-code management choice.  And I have a basic understanding of how git
-works.  I know how to install a *nix server and can survive on the
-CLI.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-Here's where I think I'm having some troubles, and maybe you can help
-me identify any others:
+iQEcBAABAgAGBQJOccjcAAoJEHKRP1jG7ZzTPLkH/1bWrwgdlzlB6hLoNbdR2Za8
+LEOlKuOC0CSXHKOZMZa/nnbfes2bvPi+4bpDCVK9QJDWTZNFVevBay6Uj8t2JEer
+Pf/bwVQIxfXTUWJDIHGRQffvVvxFdzNcEbBwdCFyU8CflUkoIjgKHdyrH9WjKWGF
+9proqcYIOrU55KF7ool79GmKC04xvtWEe15Ct3vsaZuX8Zwj2wIiy7Ar6rbv38At
+ZTrPzcTm2iUjWDiQdJF1FrKR3219bWTA4vKjcpDYAa7eQj8GZ8okKDjZEmpg5Jqu
+EWhBBySoJjt9nslgMiicn2LoiL2hQTU7eQwhYlUw4rTbxRUSQjrJToq8cUAj/QE=
+=DoB8
+-----END PGP SIGNATURE-----
 
-I got confused in Chapter 5 of the Pro Git pdf book, trying to discern
-what needs to be done on the server, and what needs to be done on the
-work station.  The chapter seems to jump around a bit, and doesn't
-follow a linear pattern.  Maybe I need to read it more carefully?
-
-Also, I'm not clear on the best way to manage large numbers of git
-users (like 12-24), who also may have permissions to other services as
-well (ftp, databases, email, etc).  I have some hesitancy creating
-each one manually on the CLI.
-
-=46inally, I'm not sure how to "learn git as usual".  Point me in the
-right direction, please.
+--=-1SV1JCPPo3Lkz+0nHKtp--
