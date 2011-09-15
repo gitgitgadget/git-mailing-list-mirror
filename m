@@ -1,91 +1,102 @@
-From: =?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>
-Subject: Re: [PATCH] for-each-ref: add split message parts to %(contents:*).
-Date: Thu, 15 Sep 2011 10:18:15 +0200
-Organization: Gentoo
-Message-ID: <20110915101815.172fb47a@pomiocik.lan>
-References: <20110901184815.2cd8b472@pomiocik.lan>
-	<1314895801-21147-1-git-send-email-mgorny@gentoo.org>
-	<20110902163903.GA21768@sigill.intra.peff.net>
-	<20110902193931.42593338@pomiocik.lan>
-	<20110902175323.GA29761@sigill.intra.peff.net>
-	<20110907174044.GA11341@sigill.intra.peff.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] t6019: avoid refname collision on case-insensitive systems
+Date: Thu, 15 Sep 2011 10:34:31 +0200
+Message-ID: <02451a2849fc8f1cab7983b6c8c629ebb6a1aaa9.1316075573.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=PGP-SHA256;
- boundary="Sig_/IHoEq1YxKCLFuDllGJTgp65"; protocol="application/pgp-signature"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 15 10:16:26 2011
+Content-Type: text/plain
+Cc: Brad King <brad.king@kitware.com>, <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 15 10:34:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R477R-00030w-TI
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 10:16:26 +0200
+	id 1R47P5-0001d3-Bm
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 10:34:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754071Ab1IOIQT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Sep 2011 04:16:19 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:35826 "EHLO smtp.gentoo.org"
+	id S1753352Ab1IOIee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Sep 2011 04:34:34 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:24302 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751162Ab1IOIQS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2011 04:16:18 -0400
-Received: from pomiocik.lan (213-238-104-87.adsl.inetia.pl [213.238.104.87])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: mgorny)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id CE85B1B4019;
-	Thu, 15 Sep 2011 08:16:15 +0000 (UTC)
-In-Reply-To: <20110907174044.GA11341@sigill.intra.peff.net>
-X-Mailer: Claws Mail 3.7.10 (GTK+ 2.24.6; x86_64-pc-linux-gnu)
+	id S1752076Ab1IOIee (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2011 04:34:34 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.339.1; Thu, 15 Sep
+ 2011 10:34:31 +0200
+Received: from localhost.localdomain (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.339.1; Thu, 15 Sep
+ 2011 10:34:32 +0200
+X-Mailer: git-send-email 1.7.7.rc1.366.ge210a6
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181447>
 
---Sig_/IHoEq1YxKCLFuDllGJTgp65
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+The criss-cross tests kept failing for me because of collisions of 'a'
+with 'A' etc.  Prefix the lowercase refnames with an extra letter to
+disambiguate.
 
-On Wed, 7 Sep 2011 13:40:44 -0400
-Jeff King <peff@peff.net> wrote:
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
 
-> On Fri, Sep 02, 2011 at 01:53:23PM -0400, Jeff King wrote:
->=20
-> > But there may be other corner cases.  I need to read through the
-> > code more carefully, which I should have time to do later today.
->=20
-> This ended up a little trickier than I expected, but I think the
-> series below is what we should do. I tried to add extensive tests,
-> but let me know if you can think of any other corner cases.
->=20
->   [1/5]: t7004: factor out gpg setup
->   [2/5]: t6300: add more body-parsing tests
->   [3/5]: for-each-ref: refactor subject and body placeholder parsing
->   [4/5]: for-each-ref: handle multiline subjects like --pretty
->   [5/5]: for-each-ref: add split message parts to %(contents:*).
+This fixes the tests on OS X.  Together with Peff's fix to the poll
+issue, it now tests clean again.
 
-Thanks, it works great for me.
 
-I tried multi-line subject + signature too and that works fine.
+ t/t6019-rev-list-ancestry-path.sh |   19 +++++++++++--------
+ 1 files changed, 11 insertions(+), 8 deletions(-)
 
---=20
-Best regards,
-Micha=C5=82 G=C3=B3rny
-
---Sig_/IHoEq1YxKCLFuDllGJTgp65
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Disposition: attachment; filename=signature.asc
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.18 (GNU/Linux)
-
-iJwEAQEIAAYFAk5xtMgACgkQfXuS5UK5QB2JSgQApNLxrulpBWUn2ExYa5d9Bclm
-IVHuEXkhPqS9RYNkxaiHkmM5xCt5f4ZGV4Iu+IBNoZ4Pw68NeYuFoa99Gf7UiVkf
-+7+2hHNUtW/vNQGv/+oOu2I8N40tWQPrc4c6rqCo+xr3SUMxmCqJ1cmSMECnUwMu
-aUoqjm0Vn2Tkh4UXEJQ=
-=otPc
------END PGP SIGNATURE-----
-
---Sig_/IHoEq1YxKCLFuDllGJTgp65--
+diff --git a/t/t6019-rev-list-ancestry-path.sh b/t/t6019-rev-list-ancestry-path.sh
+index 738af73..39b4cb0 100755
+--- a/t/t6019-rev-list-ancestry-path.sh
++++ b/t/t6019-rev-list-ancestry-path.sh
+@@ -75,33 +75,36 @@ test_expect_success 'rev-list --ancestry-patch D..M -- M.t' '
+ # a   X
+ #  \ / \
+ #   c---cb
++#
++# All refnames prefixed with 'x' to avoid confusion with the tags
++# generated by test_commit on case-insensitive systems.
+ test_expect_success 'setup criss-cross' '
+ 	mkdir criss-cross &&
+ 	(cd criss-cross &&
+ 	 git init &&
+ 	 test_commit A &&
+-	 git checkout -b b master &&
++	 git checkout -b xb master &&
+ 	 test_commit B &&
+-	 git checkout -b c master &&
++	 git checkout -b xc master &&
+ 	 test_commit C &&
+-	 git checkout -b bc b -- &&
+-	 git merge c &&
+-	 git checkout -b cb c -- &&
+-	 git merge b &&
++	 git checkout -b xbc xb -- &&
++	 git merge xc &&
++	 git checkout -b xcb xc -- &&
++	 git merge xb &&
+ 	 git checkout master)
+ '
+ 
+ # no commits in bc descend from cb
+ test_expect_success 'criss-cross: rev-list --ancestry-path cb..bc' '
+ 	(cd criss-cross &&
+-	 git rev-list --ancestry-path cb..bc > actual &&
++	 git rev-list --ancestry-path xcb..xbc > actual &&
+ 	 test -z "$(cat actual)")
+ '
+ 
+ # no commits in repository descend from cb
+ test_expect_success 'criss-cross: rev-list --ancestry-path --all ^cb' '
+ 	(cd criss-cross &&
+-	 git rev-list --ancestry-path --all ^cb > actual &&
++	 git rev-list --ancestry-path --all ^xcb > actual &&
+ 	 test -z "$(cat actual)")
+ '
+ 
+-- 
+1.7.7.rc1.366.ge210a6
