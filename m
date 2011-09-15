@@ -1,149 +1,80 @@
-From: David Michael Barr <davidbarr@google.com>
-Subject: Fwd: vcs-svn and friends
-Date: Thu, 15 Sep 2011 11:53:53 +1000
-Message-ID: <CAFfmPPOBZ6cXG51mDHbj2VRDzjvH46Q7=_LvUWeMq0SGR40S1g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 15 03:54:03 2011
+From: Brandon Casey <drafnel@gmail.com>
+Subject: [PATCH 0/4] Honor core.ignorecase for attribute patterns
+Date: Wed, 14 Sep 2011 20:59:35 -0500
+Message-ID: <1316051979-19671-1-git-send-email-drafnel@gmail.com>
+References: <5XXEFw0WjtXKd9dpXSxpkskCcgVyG9Db1_zzVSEBNey-kpXSBbmQfYaxZ2Szg6Pbck6hZZTQ5hHzBwG4rhKYXshrdmveEFLPZ9W0V8P_lw@cipher.nrlssc.navy.mil>
+Cc: git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
+	bharrosh@panasas.com, trast@student.ethz.ch, zapped@mail.ru
+To: peff@peff.net
+X-From: git-owner@vger.kernel.org Thu Sep 15 04:00:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R419O-0005aN-UW
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 03:54:03 +0200
+	id 1R41FR-0007Af-J2
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 04:00:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753148Ab1IOBx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Sep 2011 21:53:58 -0400
-Received: from smtp-out.google.com ([216.239.44.51]:59576 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752937Ab1IOBx5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2011 21:53:57 -0400
-Received: from hpaq1.eem.corp.google.com (hpaq1.eem.corp.google.com [172.25.149.1])
-	by smtp-out.google.com with ESMTP id p8F1ruH9013177
-	for <git@vger.kernel.org>; Wed, 14 Sep 2011 18:53:56 -0700
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
-	t=1316051636; bh=+ZxHPzZZbVHOrmg09gasdZPs868=;
-	h=MIME-Version:Date:Message-ID:Subject:From:To:Cc:Content-Type;
-	b=THAO8fuhTMYl9QjTgLxNwQEK6E8NQDd8Ruszpk4iptRLGClNv24tqak8JcFPA5KxA
-	 y/At9aIdma/JKdsXodaQA==
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=dkim-signature:mime-version:date:message-id:subject:from:to:cc:
-	content-type:x-system-of-record;
-	b=Q7km3lE6BXoT6wa3OGA77JzkwfxnOlCfO0zog7BXgsDm4G9acoLRVHe7fqWnqJ7fN
-	W8UzwzTBhUJ6k5KWV3ylw==
-Received: from qyk33 (qyk33.prod.google.com [10.241.83.161])
-	by hpaq1.eem.corp.google.com with ESMTP id p8F1rsu0031747
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 14 Sep 2011 18:53:55 -0700
-Received: by qyk33 with SMTP id 33so2226796qyk.10
-        for <git@vger.kernel.org>; Wed, 14 Sep 2011 18:53:53 -0700 (PDT)
+	id S1753293Ab1IOCAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Sep 2011 22:00:09 -0400
+Received: from mail-gx0-f170.google.com ([209.85.161.170]:44916 "EHLO
+	mail-gx0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752950Ab1IOCAI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2011 22:00:08 -0400
+Received: by gxk27 with SMTP id 27so2967235gxk.1
+        for <git@vger.kernel.org>; Wed, 14 Sep 2011 19:00:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=beta;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=yUwuDc3+gcD/jhpLAA4K2z6nyG1rELBcJb8bqPN5EnM=;
-        b=l1gpIE3/qbCRxblyK5A/xOxPO82YrotnzlkvsiR/fRJuzmW3cbw3kNnciFlgU+egb/
-         wd3LeU6v0Vx9iOiKKm0g==
-Received: by 10.229.68.87 with SMTP id u23mr471406qci.8.1316051633606;
-        Wed, 14 Sep 2011 18:53:53 -0700 (PDT)
-Received: by 10.229.68.87 with SMTP id u23mr471397qci.8.1316051633283; Wed, 14
- Sep 2011 18:53:53 -0700 (PDT)
-Received: by 10.229.8.13 with HTTP; Wed, 14 Sep 2011 18:53:53 -0700 (PDT)
-X-System-Of-Record: true
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=M47TD80PN7Qz/eHbHJHbCj//PqCo1cj4yPG6Bos6Y6E=;
+        b=UU2yGMr/gw3wNzl01ACxD2XldSapA92hxVJFhTik5uhk/sojkld7RK/mLXhUSO73qw
+         dtMm+2mrm2Ov2seQYW3s0ENhis4PQkF1Wiso8jWe0CllcjQJ+Ns+aEEcw0IskY3x31rU
+         s7ADnctOoLu1wXRyzzWl2oxp3J/EfhN8gVM1Q=
+Received: by 10.236.37.134 with SMTP id y6mr2849440yha.113.1316052007435;
+        Wed, 14 Sep 2011 19:00:07 -0700 (PDT)
+Received: from localhost.localdomain ([96.19.140.155])
+        by mx.google.com with ESMTPS id e61sm2291412yhm.2.2011.09.14.19.00.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 14 Sep 2011 19:00:06 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6
+In-Reply-To: <5XXEFw0WjtXKd9dpXSxpkskCcgVyG9Db1_zzVSEBNey-kpXSBbmQfYaxZ2Szg6Pbck6hZZTQ5hHzBwG4rhKYXshrdmveEFLPZ9W0V8P_lw@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181421>
 
-Hi,
+On 09/13/2011 11:22 AM, Brandon Casey wrote:
+> On 09/13/2011 11:05 AM, Jeff King wrote:
+>> On Tue, Sep 13, 2011 at 10:15:15AM -0500, Brandon Casey wrote:
+>>
+>>> ...and I see there is already an fnmatch_icase() in dir.c which adds
+>>> FNM_CASEFOLD when the global var ignore_case is set.  So, maybe it's as
+>>> easy as:
+>>> [...]
+>>> -               return (fnmatch(pattern, basename, 0) == 0);
+>>> +               return (fnmatch_icase(pattern, basename, 0) == 0);
+>>
+>> OK, wow. That's exactly the level of easy I was hoping for. Do you want
+>> to roll that up into a patch with some tests?
+>
+> I haven't even tested that it runs. :)  No, I was hoping someone
+> who was more interested would finish it, and maybe even test on
+> an affected system.
 
-Thanks to the work of Dmitry, we now have a simple front-end
-that exercises the yet unmerged changes to vcs-svn that Jonathan
-and I authored a few months ago. I think there's still some work
-to be done before we can bless an integrated branch for inclusion.
-I'd like to bring attention to just how far we have diverged; see the
-email below.
+Ok, I lied.  Here's a series that needs testing by people on a  
+case-insensitive filesystem and some comments.
 
---
-David Barr
+The first three patches are just housekeeping and can be accepted 
+independently of the fourth patch which is marked WIP.
 
----------- Forwarded message ----------
-From: David Michael Barr <davidbarr@google.com>
-Date: Thu, Sep 15, 2011 at 11:37 AM
-Subject: Re: vcs-svn and friends
-To: Dmitry Ivankov <divanorama@gmail.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>
+The last patch implements the case-insensitive matching of attribute
+patterns, but I discovered that bad things can happen if git_config()
+is called more than once.  Details are in the patch email.
 
+-Brandon
 
-We now have 56 interesting commits pending:
-
-vcs-svn: add fast_export_note to create notes
-vcs-svn,svn-fe: add --incremental option
-vcs-svn,svn-fe: allow to disable 'progress' lines
-vcs-svn,svn-fe: convert REPORT_FILENO to an option
-vcs-svn,svn-fe: allow to specify dump destination ref
-vcs-svn: move commit parameters logic to svndump.c
-vcs-svn: make svndump_init parameters a struct
-svn-fe,test-svn-fe: use parse-options
-fast-import: allow top directory as an argument for some commands
-fast-import: be saner with temporary trees
-svn-fe: reuse import-marks in remote-svn-alpha
-svn-fe: import incrementally in svn-remote-alpha
-svn-fe: write svnrev notes in remote-svn-alpha
-svn-fe: use proper refspec in remote-svn-alpha
-svn-fe: use svn-fe --no-progress in remote-svn-alpha
-svn-fe: add a test for remote-svn-alpha
-svn-fe: allow svnadmin instead of svnrdump in remote-svn-alpha
-svn-fe: avoid error on no-op imports in remote-svn-alpha
-svn-fe: add man target to Makefile
-svn-fe: use svnrdump --quiet in remote-svn-alpha
-vcs-svn: reset first_commit_done in fast_export_init
-svn-fe: use tabs to indent in remote helper script
-svn-fe: do not rely on /bin/env utility to launch remote helper
-Add alpha version of remote-svn helper
-Arrange a backflow pipe from fast-importer to remote helper stdin
-vcs-svn: do not initialize report_buffer twice
-vcs-svn: avoid hangs from corrupt deltas
-vcs-svn: guard against overflow when computing preimage length
-vcs-svn: cap number of bytes read from sliding view
-test-svn-fe: split off "test-svn-fe -d" into a separate function
-vcs-svn: implement text-delta handling
-vcs-svn: let deltas use data from preimage
-vcs-svn: let deltas use data from postimage
-vcs-svn: verify that deltas consume all inline data
-vcs-svn: implement copyfrom_data delta instruction
-vcs-svn: read instructions from deltas
-vcs-svn: read inline data from deltas
-vcs-svn: read the preimage when applying deltas
-vcs-svn: parse svndiff0 window header
-vcs-svn: skeleton of an svn delta parser
-vcs-svn: make buffer_read_binary API more convenient
-vcs-svn: learn to maintain a sliding view of a file
-Makefile: list one vcs-svn/xdiff object or header per line
-vcs-svn: avoid using ls command twice
-vcs-svn: drop obj_pool
-vcs-svn: drop treap
-vcs-svn: drop string_pool
-vcs-svn: pass paths through to fast-import
-vcs-svn: use mark from previous import for parent commit
-vcs-svn: handle filenames with dq correctly
-vcs-svn: quote paths correctly for ls command
-vcs-svn: eliminate repo_tree structure
-vcs-svn: add a comment before each commit
-vcs-svn: save marks for imported commits
-vcs-svn: use higher mark numbers for blobs
-vcs-svn: set up channel to read fast-import cat-blob response
-
-There are a lot of svn-fe tests failing on my integration branch.
-One upside is that gph/master..db/svn-fe-pu only contains
-relevant commits. I think a little more polish is needed before
-we can suggest a pull to jch. In particular, I think we should
-include remote-svn-alpha and the test should work out of the
-box.
-
---
-David Barr
+[PATCH 1/4] attr.c: avoid inappropriate access to strbuf "buf"
+[PATCH 2/4] cleanup: use internal memory allocation wrapper
+[PATCH 3/4] builtin/mv.c: plug miniscule memory leak
+[PATCH 4/4] attr.c: respect core.ignorecase when matching attribute
