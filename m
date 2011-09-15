@@ -1,121 +1,121 @@
-From: David Michael Barr <davidbarr@google.com>
-Subject: Re: git gc exit with out of memory, malloc failed error
-Date: Thu, 15 Sep 2011 12:20:16 +1000
-Message-ID: <CAFfmPPP58J90758TRB2sAj-Wr5HB=rQtaJipKovsHXyTcswuJQ@mail.gmail.com>
-References: <CAGAhT3mbGB-0q3EKh5MrGqB59wUea7NfaaY18DvnL3qimwh9QA@mail.gmail.com>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: git-rebase skips automatically no more needed commits
+Date: Wed, 14 Sep 2011 22:19:39 -0400 (EDT)
+Message-ID: <alpine.DEB.2.00.1109122139110.12564@debian>
+References: <CAC9WiBg9+30NjO+NKXVdBiWjR-HU2689JQqVY7Rk5+DM7MiNBg@mail.gmail.com> <7v1uvta97o.fsf@alter.siamese.dyndns.org> <CAC9WiBjrfJeJ854dkJMPwRSwuujRsYLnAd7QX7C_oU8_FdOvQA@mail.gmail.com> <4E676F6A.3060906@drmicha.warpmail.net>
+ <CAC9WiBi_bkLNJZckq2fr3eb6ie+KVfauE_PyA3GcaW5Ga-isFw@mail.gmail.com> <7vk49k48q4.fsf@alter.siamese.dyndns.org> <CAC9WiBjMUg3SUOP9AJw6qCKrGVLs6Qy_O2fQa_SHX30NkjAEdw@mail.gmail.com> <alpine.DEB.2.00.1109080753460.12564@debian>
+ <CAC9WiBiMYUfaPtrXyW=W7qaZnJqLeFO-B3od7X4u8wUrb8hfUA@mail.gmail.com> <alpine.DEB.2.00.1109082123300.12564@debian> <CAC9WiBhApjEr-NYm9NkyXaZPNCivoJ65c=xx2bg5Li60kfZMTQ@mail.gmail.com> <alpine.DEB.2.00.1109090900301.12564@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Alexander Kostikov <alex.kostikov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 15 04:20:26 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Francis Moreau <francis.moro@gmail.com>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 15 04:25:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R41Yu-00047a-QQ
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 04:20:25 +0200
+	id 1R41e7-0005KJ-D9
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 04:25:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753547Ab1IOCUT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Sep 2011 22:20:19 -0400
-Received: from smtp-out.google.com ([216.239.44.51]:7539 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753448Ab1IOCUS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2011 22:20:18 -0400
-Received: from wpaz9.hot.corp.google.com (wpaz9.hot.corp.google.com [172.24.198.73])
-	by smtp-out.google.com with ESMTP id p8F2KIw4023378
-	for <git@vger.kernel.org>; Wed, 14 Sep 2011 19:20:18 -0700
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
-	t=1316053218; bh=ZlxoTYGy5OR6gaGuSH7bNRbL6bw=;
-	h=MIME-Version:In-Reply-To:References:Date:Message-ID:Subject:From:
-	 To:Cc:Content-Type:Content-Transfer-Encoding;
-	b=FGa3PnmYtUfXW+BfK2QWwcOSRfJt5mJP/lEGbWUkHI3MDR4abQUQUWIKAxJvNpm73
-	 kx1lsP9rAYx6SKqQzKB+g==
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=dkim-signature:mime-version:in-reply-to:references:date:
-	message-id:subject:from:to:cc:content-type:
-	content-transfer-encoding:x-system-of-record;
-	b=QLPzZ3p4jitG31/ZjD7G1eFBfEVDuZd5AJjv6cGN1IIoG1tBXFZq65u1aNabhl/8/
-	KwFqN/raVpJgFpswgqaOQ==
-Received: from qwi4 (qwi4.prod.google.com [10.241.195.4])
-	by wpaz9.hot.corp.google.com with ESMTP id p8F2KGwJ022560
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 14 Sep 2011 19:20:17 -0700
-Received: by qwi4 with SMTP id 4so2910173qwi.15
-        for <git@vger.kernel.org>; Wed, 14 Sep 2011 19:20:16 -0700 (PDT)
+	id S1753790Ab1IOCZk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Sep 2011 22:25:40 -0400
+Received: from mail-vw0-f45.google.com ([209.85.212.45]:49483 "EHLO
+	mail-vw0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753500Ab1IOCZj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2011 22:25:39 -0400
+X-Greylist: delayed 355 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Sep 2011 22:25:39 EDT
+Received: by vws17 with SMTP id 17so3800035vws.4
+        for <git@vger.kernel.org>; Wed, 14 Sep 2011 19:25:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=beta;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=7bBbmywGvdol+WLrg/P4AUzX/jG+19sVj0wo0ca6Epc=;
-        b=s5thwhI9rnzkH5lcc3N5A8jrX9o4FEGISZmQ6b0x84Vn5BGzIj8YgaE+1BOj28jyOY
-         3N0UIeIlIkwD1gB81/nA==
-Received: by 10.229.68.87 with SMTP id u23mr486394qci.8.1316053216675;
-        Wed, 14 Sep 2011 19:20:16 -0700 (PDT)
-Received: by 10.229.68.87 with SMTP id u23mr486384qci.8.1316053216164; Wed, 14
- Sep 2011 19:20:16 -0700 (PDT)
-Received: by 10.229.8.13 with HTTP; Wed, 14 Sep 2011 19:20:16 -0700 (PDT)
-In-Reply-To: <CAGAhT3mbGB-0q3EKh5MrGqB59wUea7NfaaY18DvnL3qimwh9QA@mail.gmail.com>
-X-System-Of-Record: true
+        d=gmail.com; s=gamma;
+        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        bh=mhXTOXppGOA/w0H3Dg+YZreSKtmDH6fUpk38WR49meU=;
+        b=xAW+vg/Z4PWenEYrcnSCl1Zh8ZUp6CpHJXa2yBN0MUPQ//4iu7/lo18oGWPie3hIzC
+         mOYnq8+JK/niBrhlNKLzB7hwcc4KQb6Hpz5MZ1JXq/Q5YTlKviR2b+Bh31VuQuSkOBsC
+         HjNncvOCthlZ19v5CyDe8bzjgjk1aBGZycb7Q=
+Received: by 10.52.38.200 with SMTP id i8mr460696vdk.355.1316053183529;
+        Wed, 14 Sep 2011 19:19:43 -0700 (PDT)
+Received: from [192.168.1.102] (modemcable094.77-37-24.mc.videotron.ca. [24.37.77.94])
+        by mx.google.com with ESMTPS id bd20sm4120359vdc.8.2011.09.14.19.19.41
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 14 Sep 2011 19:19:41 -0700 (PDT)
+X-X-Sender: martin@debian
+In-Reply-To: <alpine.DEB.2.00.1109090900301.12564@debian>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181427>
 
-On Thu, Sep 15, 2011 at 11:33 AM, Alexander Kostikov
-<alex.kostikov@gmail.com> wrote:
-> I'm new to git and I'm getting the following out of memory error on g=
-it gc:
->
-> $ git gc
-> Counting objects: 80818, done.
-> Delta compression using up to 8 threads.
-> fatal: Out of memory, malloc failed (tried to allocate 24359675 bytes=
-)
-> error: failed to run repack
->
-> The only advice I found in the internet suggested to run repack with
-> --window-memory parameter specified. But this call also fails:
->
-> $ git repack -adf --window-memory=3D0
-> Counting objects: 80818, done.
-> Delta compression using up to 8 threads.
-> warning: suboptimal pack - out of memory
-> fatal: Out of memory, malloc failed (tried to allocate 24356363 bytes=
-)
->
-> How do I cleanup my repository?
->
-> $ git version
-> git version 1.7.6.msysgit.0
->
-> OS: Windows Server 2008 R2 SP1 (x64)
-> Physical memory: 24 GB
-> The commands listed were executed under x64 console process.
->
-> --
-> Thanks,
-> Alexander Kostikov
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+On Fri, 9 Sep 2011, Martin von Zweigbergk wrote:
 
-Hi,
+> On Fri, 9 Sep 2011, Francis Moreau wrote:
+> 
+> > please let me know when you submitting your work, I'm interested to see it.
+> 
+> Will do. It's not really that much work [...]
 
-My understanding is that msysgit is a 32-bit build.
-So if your existing pack is ~2GB, repack will fail.
-Also, I think that setting window-memory to 0
-means no limit, which is not what you want.
-One value I have seen suggested is 256m.
-In my experience, peak memory consumption of
-repack is proportional to the value of --window,
-so you might want to try tweaking that.
-There are quite a few config parameters that
-affect the memory consumption of repack.
+It seems to be a little less straight-forward than I had first
+expected.
 
---=20
-David Barr
+We want to get all commits in $oldbase..$branch that do not share
+patch-id with commits in $oldbase..$newbase. These are the commits
+prefixed by '+' in 'git cherry $newbase $branch $oldbase'. However,
+just getting the list of commits is not enough, because we currently
+don't explicitly provide a list of commits to create patches from, but
+instead run something like 'git format-patch --ignore-if-in-upstream
+--stdout | git am --rebasing'.
+
+I can see a few different solutions.
+
+ 1. Teach git-format-patch a --stdin option that makes it read the
+    list of commits from the command line. git-format-patch currently
+    itself walks the history, so I'm not sure how such an option
+    should interact with current option. The options should probably
+    be mutually exclusive.
+
+ 2. Somehow modify git-rebase--am.sh not to depend on format-patch. In
+    [1], Junio mentions rewriting git-rebase--am.sh "to have
+    format-patch avoid the cost of actually generating the patch text"
+    and "when using "am" for rebasing we do not really care anything
+    but the commit object names". If all we need is the commit name,
+    why would we not use cherry-pick/sequencer instead of git-am?
+    Sorry if this makes no sense; I'm not familiar with the git-am
+    code.
+
+ 3. If I'm reading the code correctly, 'git cherry $upstream $branch
+    $limit' does one walk to find patch-ids for "$upstream
+    ^$branch". It then walks "$branch ^$upstream ^$limit" and removes
+    the commits that have the same patch-id as a commit found in the
+    first walk. Since format-patch uses the revision walking
+    machinery, we could make it possible to ask git-rev-list directly
+    what git-cherry does, i.e. to ask for "commits in a..b that don't
+    share patch-id with commits in c..d". We could even make it more
+    generic by allowing queries like "commits in
+    $rev_list_expression_1 that don't share patch-id with commits in
+    $rev_list_expression_2".
+
+I'm not sure which option is better. Option 1 seems easiest to
+implement. Option 3 seems a bit harder, but may bring more value. I'm
+just not sure if teaching rev-list about patch-ids is generally useful
+or if it would feel more like a hack for this specific case. Option 2
+is less clear to me and I would probably need more input before
+implementing, but I trust Junio that it would be a good long-term
+solution.
+
+I will be moving soon and I don't know how much time I will have to
+implement any of this. Still, I would be happy to hear your
+opinions. Maybe I'm just missing something and there is even a simple
+solution to my problem.
+
+
+Martin
+
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/180976/focus=181085
