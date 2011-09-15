@@ -1,56 +1,131 @@
-From: Joshua Stoutenburg <jehoshua02@gmail.com>
-Subject: Re: Anybody home?
-Date: Wed, 14 Sep 2011 22:37:27 -0700
-Message-ID: <CAOZxsTq+9HuCDgTyj=3KQdbgPbqmZbvf_6jCp4e=n6ig_aZRrw@mail.gmail.com>
-References: <CAOZxsTq1crC0zeMpFGMafG8HXu168gkK2-KDnpwLoamRLJshjg@mail.gmail.com>
-	<CAMOZ1BtpzsxGLzrZs2YbNP174mm3vfLCteencKSepDR329jjBQ@mail.gmail.com>
-	<CAOZxsTrsi5mNdm8OgvfXyYwj1T4Vw3HfQGN-5Dsb+QnX0nz4ag@mail.gmail.com>
-	<CAOZxsTr+mC9cajGa21d1sqKBEB+sUhsBOHoTuVj1D+6uTFTL6g@mail.gmail.com>
-	<CAGAhT3mo0qqU9WMgfM1vKjwMtjeb55LRG1QfEYhq7JwsBSGSEw@mail.gmail.com>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: Helping on Git development
+Date: Thu, 15 Sep 2011 16:24:22 +1000
+Message-ID: <CAH5451n=yEYYb0jO85+5_0dkuupQA2_WLvnH-fwPESS1GWy4Sg@mail.gmail.com>
+References: <CAOz-D1JW8RSR8kVWhT7v-DCbWayU8KhbePJwWrWvJwbmueRezQ@mail.gmail.com>
+ <CAOz-D1+77JZRXa57GLz=vZyrcGs4Ojj6Wa0cSD4QcEkMP3PPsA@mail.gmail.com>
+ <CAH5451me+MDe34Boak=UDjH9T_WAnO6wxa6pW+JHOoGADoNfkQ@mail.gmail.com>
+ <7vehzjugdz.fsf@alter.siamese.dyndns.org> <20110914231427.GA5611@sigill.intra.peff.net>
+ <7vd3f2snox.fsf@alter.siamese.dyndns.org> <20110915000851.GA6238@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Michael Witten <mfwitten@gmail.com>, Git List <git@vger.kernel.org>
-To: Alexander Kostikov <alex.kostikov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 15 07:37:37 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"Eduardo D'Avila" <erdavila@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 15 08:24:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R44dj-0008SW-Ec
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 07:37:35 +0200
+	id 1R45NR-0006C7-A6
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 08:24:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754336Ab1IOFhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Sep 2011 01:37:31 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:46298 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754311Ab1IOFha (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2011 01:37:30 -0400
-Received: by eya28 with SMTP id 28so172166eya.19
-        for <git@vger.kernel.org>; Wed, 14 Sep 2011 22:37:29 -0700 (PDT)
+	id S1754624Ab1IOGYo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Sep 2011 02:24:44 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:57070 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754403Ab1IOGYn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2011 02:24:43 -0400
+Received: by fxe4 with SMTP id 4so319530fxe.19
+        for <git@vger.kernel.org>; Wed, 14 Sep 2011 23:24:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=xhbILyZgVkTSxAawIabNkff81aVmQbchjETICQRcfrk=;
-        b=RftYp6RsE4hvweUeqC5sEB7tTS4xdBkdH0G6JeTR0jb9XNe48BRVofcEbZOPCllNiY
-         6ECryV6EoA7NNakg6M25HrPB/ClPUWvzoZdOSEFpbMpF90M2NhlwrlmgMH1R7QMwOQqa
-         Ncx6y7nkxlD/VzgOgyySjTJDvhyuFhpcmCqVY=
-Received: by 10.213.26.135 with SMTP id e7mr253309ebc.129.1316065047547; Wed,
- 14 Sep 2011 22:37:27 -0700 (PDT)
-Received: by 10.213.16.195 with HTTP; Wed, 14 Sep 2011 22:37:27 -0700 (PDT)
-In-Reply-To: <CAGAhT3mo0qqU9WMgfM1vKjwMtjeb55LRG1QfEYhq7JwsBSGSEw@mail.gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=qD/aWM8vMv7CgHJFY3XbK+WJTOZRD2pS9aZWg5lsXz8=;
+        b=pINNoJrjtdtz6RUQo92aRCehEa258rdQoynuNSsonb0+J4aC1bnte+/keowfTgJN8S
+         sDyisVF0lXcmaOMKJDxpwIHxRWxDO429wKQCYV9XjxJIurIQV+BPRuXZYNY7QtvePSyd
+         slMlyuP/fBoiXqPb1M7vppctVD7gX6KLYFvVA=
+Received: by 10.223.95.148 with SMTP id d20mr733473fan.59.1316067882316; Wed,
+ 14 Sep 2011 23:24:42 -0700 (PDT)
+Received: by 10.152.1.161 with HTTP; Wed, 14 Sep 2011 23:24:22 -0700 (PDT)
+In-Reply-To: <20110915000851.GA6238@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181442>
 
-On Wed, Sep 14, 2011 at 10:19 PM, Alexander Kostikov
-<alex.kostikov@gmail.com> wrote:
-> If you don't mind spending $12 on documentation here is IMHO very good guide
-> to git - http://peepcode.com/products/git-internals-pdf
-> It contains some videos as well.
+On 15 September 2011 10:08, Jeff King <peff@peff.net> wrote:
+> On Wed, Sep 14, 2011 at 04:34:38PM -0700, Junio C Hamano wrote:
+>
+>> > Is there such a thing as enough coders? :)
+>>
+>> Ever heard of the Mythical Man-Month ;-)?
+>
+> I thought git was a silver bullet. :)
+>
+>> I was simply saying that there already are many people who scratch h=
+is
+>> own real itch, and we are short of the bandwidth to review them all.
+>> It would not help the project at all to add more people who scratch
+>> some random non-itches that nobody is actually interested in (e.g. a=
+n
+>> entry in an unmaintained "bug tracker" that may list irrelevant and
+>> stale non issues).
+>
+> Yeah, that may be. But I don't look at it as "we have enough
+> itch-scratchers, so we don't need more". I see it as survival of the
+> fittest. You may post a patch series that needs a lot of help, but
+> nobody else cares, and it dies off. Or your series may be interesting
+> enough that it draws attention, to the detriment of somebody else's
+> series (which may take longer to get reviewed and merged). But natura=
+l
+> selection only works if we have a diverse population to select from.
+>
+> The downside, of course, is that somebody may end up wasting time goi=
+ng
+> down a fruitless road. But for a new contributor, hopefully they lear=
+n
+> something in the process.
+>
+>> > =C2=A0 2. Read the list. People will report bugs. Try reproducing =
+them,
+>> [...]
+>>
+>> Yes. In the earlier steps in the above, you may find out that the
+>> report was actually not a bug at all (e.g. old issue that has long
+>> been fixed, pebcak, or wrong expectation), but even in such a case,
+>> reporting your finding would help others.
+>
+> Very much agreed. I think big organizations like mozilla have people =
+who
+> do nothing but bug triage. We are not that big, but it has proven to =
+be
+> one area that is easy to break out and distribute to other people.
+>
+> -Peff
+>
 
-I'll definitely check it out.  Not really looking for videos though.
-I like things that are quiet, skim-able, and searchable.
+Does git even have an issue tracker? I have not seen one anywhere.
+
+>> If you are looking to contribute to the project, a good place to sta=
+rt
+>> is http://git-blame.blogspot.com/p/note-from-maintainer.html and in
+>> Documentation/howto/maintain-git.txt
+>
+> I am moderately averse to hardcoding that URL that is guaranteed not =
+to
+> survive the maintainer change in our README file. The howto/maintain-=
+git
+> document mentions the periodical "A note from the maintainer" posting=
+ to
+> the list that has the same text, which is a more appropriate referenc=
+e.
+
+Would a link to the wiki be more appropriate? Perhaps even a 'getting
+started' page that collates information like this?
+
+At the moment, while it is easy enough to find the information needed
+to understand how the project fits together if you know where to look,
+there isn't any concise summation of roles and pain points. The note
+from the maintainer goes over the procedures fairly well, and the
+what's cooking gives a good idea of what features are being worked on,
+but it seems a little disconnected.
+
+When kernel.org comes back online I may have a go at creating such a
+page. Any thoughts?
+
+Andrew
