@@ -1,83 +1,81 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <carlos@cmartin.tk>
-Subject: Re: Anybody home?
-Date: Thu, 15 Sep 2011 13:34:44 +0200
-Message-ID: <1316086486.2019.20.camel@bee.lab.cmartin.tk>
-References: <CAOZxsTq1crC0zeMpFGMafG8HXu168gkK2-KDnpwLoamRLJshjg@mail.gmail.com>
-	 <4E71A5FF.5040807@viscovery.net>
-	 <CAOZxsTqGt=gYr3t7e5Ma4z6W9wt_JxrgsNSGFGVbtk2rc3LZ9w@mail.gmail.com>
-	 <1316079837.2019.18.camel@bee.lab.cmartin.tk>
-	 <buoty8e3wjq.fsf@dhlpc061.dev.necel.com>
+From: Joshua Stoutenburg <jehoshua02@gmail.com>
+Subject: zealous git convert determined to set up git server
+Date: Thu, 15 Sep 2011 04:38:36 -0700
+Message-ID: <CAOZxsTqtW=DD7zFwQLjknJR8g0nnh0WPUPna6_np4bVoGnSntQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-AfS/olTkt5RfBcdUqSRI"
-Cc: Joshua Stoutenburg <jehoshua02@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Git List <git@vger.kernel.org>
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Sep 15 13:35:00 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 15 13:38:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4ADV-0004l6-V0
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 13:34:54 +0200
+	id 1R4AHC-0006DS-UT
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 13:38:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933188Ab1IOLes (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Sep 2011 07:34:48 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:49041 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933075Ab1IOLer (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2011 07:34:47 -0400
-Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 700F1460AC;
-	Thu, 15 Sep 2011 13:34:28 +0200 (CEST)
-In-Reply-To: <buoty8e3wjq.fsf@dhlpc061.dev.necel.com>
-X-Mailer: Evolution 3.0.3- 
+	id S933271Ab1IOLii convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Sep 2011 07:38:38 -0400
+Received: from mail-ew0-f43.google.com ([209.85.215.43]:64983 "EHLO
+	mail-ew0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933075Ab1IOLih convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2011 07:38:37 -0400
+Received: by ewy20 with SMTP id 20so1712785ewy.2
+        for <git@vger.kernel.org>; Thu, 15 Sep 2011 04:38:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=k/iOWsFmiSMLyirLdLNyO15ZYTymGKC0j88qQGaaDgE=;
+        b=KO463ABW+GPukeFZp+D0fe/iuU5hvWNuLWAFWTGupc8dSu/14CSQ5Bsh0DghmLPYEO
+         nEt/KanQMdAkqxUVXCNwZw2cn4pKQVpdgVM7JSIEOlUUMThTS9TYKfz5so61c1rEiLZl
+         CHKbGRAIwtcJaiDCacnNAtxB6sfeD4/x9KBaY=
+Received: by 10.213.16.141 with SMTP id o13mr378526eba.91.1316086716531; Thu,
+ 15 Sep 2011 04:38:36 -0700 (PDT)
+Received: by 10.213.16.195 with HTTP; Thu, 15 Sep 2011 04:38:36 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181461>
 
+Breaking away from previous conversation "Anybody home?"
 
---=-AfS/olTkt5RfBcdUqSRI
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+2011/9/15 Jakub Narebski <jnareb@gmail.com>:
+> I think that either "Pro Git" book, or "The Git Community Book"
+> would be a best source to learn about setting-up git server.
+>
+> I think the simplest solution for git hosting management would be to
+> use gitolite (there are other git repository management software:
+> Gitosis, SCM Manager, Gitblit).
+>
+> If you want to host something like GitHub, there are open source
+> solutions too: Gitorious, InDefero, Girocco + gitweb,...
+>
+> HTH
+> --
+> Jakub Nar=C4=99bski
+>
+>
 
-On Thu, 2011-09-15 at 19:54 +0900, Miles Bader wrote:
-> Carlos Mart=C3=ADn Nieto <carlos@cmartin.tk> writes:
-> > If the code shouldn't be made public, then you should take a look at
-> > gitolite[0]. Otherwise, you can just host it on gitorious.org or
-> > github.com
->=20
-> Hmm, of course if you're willing to pay, github will also host private
+I totally didn't see "The Git Community Book".  There's no link for it
+where I was looking: http://git-scm.com/documentation
 
-Indeed, if you give them a bit of money they'll take care of everything
-and you can have your private code there.
+As for setting up a work station, I found a pretty good guide at GitHub=
+:
+Windows: http://help.github.com/win-set-up-git/
+Linux: http://help.github.com/linux-set-up-git/
 
-> code (maybe useful if your devs love teh shiny......).
+Question 1: With both "Pro Git" and "The Git Community Book", has
+anybody noticed any major discrepancies between the pdf and online
+versions?  I'd like to place the pdf versions on my mobile device for
+travel reading.
 
-Teh Shiny is powerful :)
+Question 2: It seems gitolite is the popular choice for git user
+management.  Any reason why?
 
-   cmn
-
-
---=-AfS/olTkt5RfBcdUqSRI
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAABAgAGBQJOceLUAAoJEHKRP1jG7ZzTJpQH+wZLRVA8PzJHdZOAE5zKzxXP
-6OKZeqYmHxLtQJYX7mpJLwzde3DkggpXqQ37k/Q/o9TxgpPDgKK9Pq9dVvUEzhBu
-u7ig1tAylskTh/H4fO6DiBellrj+toe9AosRELNnfFvI97gbmg6PzLf+iZFE5xe6
-8fVIFcb111x8ObKEqlIkkGqWPmyNRtP5C8pqdvgoSiCEuyxMnzWBWLQOa+BNsSu5
-k2Yx0VU1PjZsDAv2wCA0LSoevd58lTTYftCsEFXld1WfD8gVj9q9wPKagjMGhtLi
-wdsY9AVMZivcpQ9IlGcCFnmRu/3BIXbD5Io5Kgq6cKUM0iOAVGN3L1ugVwxveiU=
-=R4hE
------END PGP SIGNATURE-----
-
---=-AfS/olTkt5RfBcdUqSRI--
+Question 3: So, Gitorious is more than just a repository hosting
+website?  It's also an open source repository hosting platform, which
+powers the Gitorious website?  That's pretty cool.
