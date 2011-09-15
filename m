@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 06/22] Do not allow ".lock" at the end of any refname component
-Date: Thu, 15 Sep 2011 23:10:27 +0200
-Message-ID: <1316121043-29367-7-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v3 02/22] git check-ref-format: add options --allow-onelevel and --refspec-pattern
+Date: Thu, 15 Sep 2011 23:10:23 +0200
+Message-ID: <1316121043-29367-3-git-send-email-mhagger@alum.mit.edu>
 References: <1316121043-29367-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Junio C Hamano <gitster@pobox.com>, cmn@elego.de,
 	A Large Angry SCM <gitzilla@gmail.com>,
@@ -15,119 +15,310 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4JDD-0005wW-Rv
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 23:11:12 +0200
+	id 1R4JDD-0005wW-42
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 23:11:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934971Ab1IOVLG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Sep 2011 17:11:06 -0400
-Received: from mail.berlin.jpk.com ([212.222.128.130]:40085 "EHLO
-	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934967Ab1IOVLE (ORCPT <rfc822;git@vger.kernel.org>);
+	id S934968Ab1IOVLE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Thu, 15 Sep 2011 17:11:04 -0400
+Received: from mail.berlin.jpk.com ([212.222.128.130]:40055 "EHLO
+	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934775Ab1IOVLA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2011 17:11:00 -0400
 Received: from michael.berlin.jpk.com ([192.168.100.152])
 	by mail.berlin.jpk.com with esmtp (Exim 4.50)
-	id 1R4J8l-00019o-2f; Thu, 15 Sep 2011 23:06:35 +0200
+	id 1R4J8e-00019o-HN; Thu, 15 Sep 2011 23:06:28 +0200
 X-Mailer: git-send-email 1.7.6.8.gd2879
 In-Reply-To: <1316121043-29367-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181497>
 
-Allowing any refname component to end with ".lock" is looking for
-trouble; for example,
+Also add tests of the new options.  (Actually, one big reason to add
+the new options is to make it easy to test check_ref_format(), though
+the options should also be useful to other scripts.)
 
-    $ git br foo.lock/bar
-    $ git br foo
-    fatal: Unable to create '[...]/.git/refs/heads/foo.lock': File exists.
-
-Therefore, do not allow any refname component to end with ".lock".
+Interpret the result of check_ref_format() based on which types of
+refnames are allowed.  However, because check_ref_format() can only
+return a single value, one test case is still broken.  Specifically,
+the case "git check-ref-format --onelevel '*'" incorrectly succeeds
+because check_ref_format() returns CHECK_REF_FORMAT_ONELEVEL for this
+refname even though the refname is also CHECK_REF_FORMAT_WILDCARD.
+The type of check that leads to this failure is used elsewhere in
+"real" code and could lead to bugs; it will be fixed over the next few
+commits.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
-
-This change was discussed on the mailing list [1].  It is regrettable
-that we can't change the name of the lock files to something that
-cannot appear in a reference name (like .refname.lock), but such a
-change would cause problems if two versions of git are simultaneously
-accessing the same repository.
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/181051/focus=181069
-
- Documentation/git-check-ref-format.txt |    4 +---
- refs.c                                 |    4 ++--
- t/t1402-check-ref-format.sh            |    8 ++++----
- 3 files changed, 7 insertions(+), 9 deletions(-)
+ Documentation/git-check-ref-format.txt |   29 +++++++++--
+ builtin/check-ref-format.c             |   56 +++++++++++++++++---
+ t/t1402-check-ref-format.sh            |   88 +++++++++++++++++++++++++++++---
+ 3 files changed, 152 insertions(+), 21 deletions(-)
 
 diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
-index dcb8cc3..9114751 100644
+index c9fdf84..dcb8cc3 100644
 --- a/Documentation/git-check-ref-format.txt
 +++ b/Documentation/git-check-ref-format.txt
-@@ -28,7 +28,7 @@ git imposes the following rules on how references are named:
+@@ -8,8 +8,8 @@ git-check-ref-format - Ensures that a reference name is well formed
+ SYNOPSIS
+ --------
+ [verse]
+-'git check-ref-format' <refname>
+-'git check-ref-format' --print <refname>
++'git check-ref-format' [--print]
++       [--[no-]allow-onelevel] [--refspec-pattern] <refname>
+ 'git check-ref-format' --branch <branchname-shorthand>
  
- . They can include slash `/` for hierarchical (directory)
-   grouping, but no slash-separated component can begin with a
--  dot `.`.
-+  dot `.` or end with the sequence `.lock`.
+ DESCRIPTION
+@@ -32,14 +32,18 @@ git imposes the following rules on how references are named:
  
  . They must contain at least one `/`. This enforces the presence of a
    category like `heads/`, `tags/` etc. but the actual names are not
-@@ -47,8 +47,6 @@ git imposes the following rules on how references are named:
+-  restricted.
++  restricted.  If the `--allow-onelevel` option is used, this rule
++  is waived.
+ 
+ . They cannot have two consecutive dots `..` anywhere.
+ 
+ . They cannot have ASCII control characters (i.e. bytes whose
+   values are lower than \040, or \177 `DEL`), space, tilde `~`,
+-  caret `{caret}`, colon `:`, question-mark `?`, asterisk `*`,
+-  or open bracket `[` anywhere.
++  caret `{caret}`, or colon `:` anywhere.
++
++. They cannot have question-mark `?`, asterisk `{asterisk}`, or open
++  bracket `[` anywhere.  See the `--refspec-pattern` option below for
++  an exception to this rule.
  
  . They cannot end with a slash `/` nor a dot `.`.
  
--. They cannot end with the sequence `.lock`.
--
- . They cannot contain a sequence `@{`.
+@@ -78,6 +82,21 @@ were on.  This option should be used by porcelains to accept this
+ syntax anywhere a branch name is expected, so they can act as if you
+ typed the branch name.
  
- . They cannot contain a `\`.
-diff --git a/refs.c b/refs.c
-index 5259724..5a0bd0f 100644
---- a/refs.c
-+++ b/refs.c
-@@ -898,6 +898,8 @@ static int check_refname_component(const char *ref)
- 		return -1; /* Component has zero length. */
- 	if (ref[0] == '.')
- 		return -1; /* Component starts with '.'. */
-+	if (cp - ref >= 5 && !memcmp(cp - 5, ".lock", 5))
-+		return -1; /* Refname ends with ".lock". */
- 	return cp - ref;
++OPTIONS
++-------
++--allow-onelevel::
++--no-allow-onelevel::
++	Controls whether one-level refnames are accepted (i.e.,
++	refnames that do not contain multiple `/`-separated
++	components).  The default is `--no-allow-onelevel`.
++
++--refspec-pattern::
++	Interpret <refname> as a reference name pattern for a refspec
++	(as used with remote repositories).  If this option is
++	enabled, <refname> is allowed to contain a single `{asterisk}`
++	in place of a one full pathname component (e.g.,
++	`foo/{asterisk}/bar` but not `foo/bar{asterisk}`).
++
+ EXAMPLES
+ --------
+ 
+diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
+index 0723cf2..7295954 100644
+--- a/builtin/check-ref-format.c
++++ b/builtin/check-ref-format.c
+@@ -8,7 +8,7 @@
+ #include "strbuf.h"
+ 
+ static const char builtin_check_ref_format_usage[] =
+-"git check-ref-format [--print] <refname>\n"
++"git check-ref-format [--print] [options] <refname>\n"
+ "   or: git check-ref-format --branch <branchname-shorthand>";
+ 
+ /*
+@@ -45,27 +45,65 @@ static int check_ref_format_branch(const char *arg)
+ 	return 0;
  }
  
-@@ -931,8 +933,6 @@ int check_refname_format(const char *ref, int flags)
+-static int check_ref_format_print(const char *arg)
++static void refname_format_print(const char *arg)
+ {
+ 	char *refname = xmalloc(strlen(arg) + 1);
  
- 	if (ref[component_len - 1] == '.')
- 		return -1; /* Refname ends with '.'. */
--	if (component_len >= 5 && !memcmp(&ref[component_len - 5], ".lock", 5))
--		return -1; /* Refname ends with ".lock". */
- 	if (!(flags & REFNAME_ALLOW_ONELEVEL) && component_count < 2)
- 		return -1; /* Refname has only one component. */
- 	return 0;
+-	if (check_ref_format(arg))
+-		return 1;
+ 	collapse_slashes(refname, arg);
+ 	printf("%s\n", refname);
+-	return 0;
+ }
+ 
++#define REFNAME_ALLOW_ONELEVEL 1
++#define REFNAME_REFSPEC_PATTERN 2
++
+ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
+ {
++	int i;
++	int print = 0;
++	int flags = 0;
++
+ 	if (argc == 2 && !strcmp(argv[1], "-h"))
+ 		usage(builtin_check_ref_format_usage);
+ 
+ 	if (argc == 3 && !strcmp(argv[1], "--branch"))
+ 		return check_ref_format_branch(argv[2]);
+-	if (argc == 3 && !strcmp(argv[1], "--print"))
+-		return check_ref_format_print(argv[2]);
+-	if (argc != 2)
++
++	for (i = 1; i < argc && argv[i][0] == '-'; i++) {
++		if (!strcmp(argv[i], "--print"))
++			print = 1;
++		else if (!strcmp(argv[i], "--allow-onelevel"))
++			flags |= REFNAME_ALLOW_ONELEVEL;
++		else if (!strcmp(argv[i], "--no-allow-onelevel"))
++			flags &= ~REFNAME_ALLOW_ONELEVEL;
++		else if (!strcmp(argv[i], "--refspec-pattern"))
++			flags |= REFNAME_REFSPEC_PATTERN;
++		else
++			usage(builtin_check_ref_format_usage);
++	}
++	if (! (i == argc - 1))
+ 		usage(builtin_check_ref_format_usage);
+-	return !!check_ref_format(argv[1]);
++
++	switch (check_ref_format(argv[i])) {
++	case CHECK_REF_FORMAT_OK:
++		break;
++	case CHECK_REF_FORMAT_ERROR:
++		return 1;
++	case CHECK_REF_FORMAT_ONELEVEL:
++		if (!(flags & REFNAME_ALLOW_ONELEVEL))
++			return 1;
++		else
++			break;
++	case CHECK_REF_FORMAT_WILDCARD:
++		if (!(flags & REFNAME_REFSPEC_PATTERN))
++			return 1;
++		else
++			break;
++	default:
++		die("internal error: unexpected value from check_ref_format()");
++	}
++
++	if (print)
++		refname_format_print(argv[i]);
++
++	return 0;
+ }
 diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
-index 1cad88f..419788f 100755
+index dc43171..f551eef 100755
 --- a/t/t1402-check-ref-format.sh
 +++ b/t/t1402-check-ref-format.sh
-@@ -43,8 +43,8 @@ invalid_ref 'heads/foo?bar'
- valid_ref 'foo./bar'
- invalid_ref 'heads/foo.lock'
- invalid_ref 'heads///foo.lock'
--valid_ref 'foo.lock/bar'
--valid_ref 'foo.lock///bar'
-+invalid_ref 'foo.lock/bar'
-+invalid_ref 'foo.lock///bar'
- valid_ref 'heads/foo@bar'
- invalid_ref 'heads/v@{ation'
- invalid_ref 'heads/foo\bar'
-@@ -160,7 +160,7 @@ invalid_ref_normalized 'heads/./foo'
- invalid_ref_normalized 'heads\foo'
- invalid_ref_normalized 'heads/foo.lock'
- invalid_ref_normalized 'heads///foo.lock'
--valid_ref_normalized 'foo.lock/bar' 'foo.lock/bar'
--valid_ref_normalized 'foo.lock///bar' 'foo.lock/bar'
-+invalid_ref_normalized 'foo.lock/bar'
-+invalid_ref_normalized 'foo.lock///bar'
+@@ -5,25 +5,38 @@ test_description='Test git check-ref-format'
+ . ./test-lib.sh
  
- test_done
+ valid_ref() {
+-	test_expect_success "ref name '$1' is valid" \
+-		"git check-ref-format '$1'"
++	if test "$#" = 1
++	then
++		test_expect_success "ref name '$1' is valid" \
++			"git check-ref-format '$1'"
++	else
++		test_expect_success "ref name '$1' is valid with options $2" \
++			"git check-ref-format $2 '$1'"
++	fi
+ }
+ invalid_ref() {
+-	test_expect_success "ref name '$1' is not valid" \
+-		"test_must_fail git check-ref-format '$1'"
++	if test "$#" = 1
++	then
++		test_expect_success "ref name '$1' is invalid" \
++			"test_must_fail git check-ref-format '$1'"
++	else
++		test_expect_success "ref name '$1' is invalid with options $2" \
++			"test_must_fail git check-ref-format $2 '$1'"
++	fi
+ }
+ 
+ invalid_ref ''
+ invalid_ref '/'
+-valid_ref 'heads/foo'
+-invalid_ref 'foo'
++invalid_ref '/' --allow-onelevel
+ valid_ref 'foo/bar/baz'
+ valid_ref 'refs///heads/foo'
+ invalid_ref 'heads/foo/'
+ valid_ref '/heads/foo'
+ valid_ref '///heads/foo'
+-invalid_ref '/foo'
+ invalid_ref './foo'
++invalid_ref './foo/bar'
++invalid_ref 'foo/./bar'
++invalid_ref 'foo/bar/.'
+ invalid_ref '.refs/foo'
+ invalid_ref 'heads/foo..bar'
+ invalid_ref 'heads/foo?bar'
+@@ -38,6 +51,67 @@ invalid_ref 'heads/foo\bar'
+ invalid_ref "$(printf 'heads/foo\t')"
+ invalid_ref "$(printf 'heads/foo\177')"
+ valid_ref "$(printf 'heads/fu\303\237')"
++invalid_ref 'heads/*foo/bar' --refspec-pattern
++invalid_ref 'heads/foo*/bar' --refspec-pattern
++invalid_ref 'heads/f*o/bar' --refspec-pattern
++
++ref='foo'
++invalid_ref "$ref"
++valid_ref "$ref" --allow-onelevel
++invalid_ref "$ref" --refspec-pattern
++valid_ref "$ref" '--refspec-pattern --allow-onelevel'
++
++ref='foo/bar'
++valid_ref "$ref"
++valid_ref "$ref" --allow-onelevel
++valid_ref "$ref" --refspec-pattern
++valid_ref "$ref" '--refspec-pattern --allow-onelevel'
++
++ref='foo/*'
++invalid_ref "$ref"
++invalid_ref "$ref" --allow-onelevel
++valid_ref "$ref" --refspec-pattern
++valid_ref "$ref" '--refspec-pattern --allow-onelevel'
++
++ref='*/foo'
++invalid_ref "$ref"
++invalid_ref "$ref" --allow-onelevel
++valid_ref "$ref" --refspec-pattern
++valid_ref "$ref" '--refspec-pattern --allow-onelevel'
++
++ref='foo/*/bar'
++invalid_ref "$ref"
++invalid_ref "$ref" --allow-onelevel
++valid_ref "$ref" --refspec-pattern
++valid_ref "$ref" '--refspec-pattern --allow-onelevel'
++
++ref='*'
++invalid_ref "$ref"
++
++#invalid_ref "$ref" --allow-onelevel
++test_expect_failure "ref name '$ref' is invalid with options --allow-onelevel" \
++	"test_must_fail git check-ref-format --allow-onelevel '$ref'"
++
++invalid_ref "$ref" --refspec-pattern
++valid_ref "$ref" '--refspec-pattern --allow-onelevel'
++
++ref='foo/*/*'
++invalid_ref "$ref" --refspec-pattern
++invalid_ref "$ref" '--refspec-pattern --allow-onelevel'
++
++ref='*/foo/*'
++invalid_ref "$ref" --refspec-pattern
++invalid_ref "$ref" '--refspec-pattern --allow-onelevel'
++
++ref='*/*/foo'
++invalid_ref "$ref" --refspec-pattern
++invalid_ref "$ref" '--refspec-pattern --allow-onelevel'
++
++ref='/foo'
++invalid_ref "$ref"
++valid_ref "$ref" --allow-onelevel
++invalid_ref "$ref" --refspec-pattern
++valid_ref "$ref" '--refspec-pattern --allow-onelevel'
+ 
+ test_expect_success "check-ref-format --branch @{-1}" '
+ 	T=$(git write-tree) &&
 -- 
 1.7.6.8.gd2879
