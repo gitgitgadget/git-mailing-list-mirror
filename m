@@ -1,60 +1,66 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
+From: Thomas Rast <trast@student.ethz.ch>
 Subject: Re: Anybody home?
-Date: Thu, 15 Sep 2011 09:15:11 +0200
-Message-ID: <4E71A5FF.5040807@viscovery.net>
-References: <CAOZxsTq1crC0zeMpFGMafG8HXu168gkK2-KDnpwLoamRLJshjg@mail.gmail.com>
+Date: Thu, 15 Sep 2011 09:48:08 +0200
+Message-ID: <201109150948.09040.trast@student.ethz.ch>
+References: <CAOZxsTq1crC0zeMpFGMafG8HXu168gkK2-KDnpwLoamRLJshjg@mail.gmail.com> <4E71A5FF.5040807@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Git List <git@vger.kernel.org>
 To: Joshua Stoutenburg <jehoshua02@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 15 09:15:44 2011
+X-From: git-owner@vger.kernel.org Thu Sep 15 09:48:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R46Ah-0006DN-3c
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 09:15:43 +0200
+	id 1R46gC-00018K-8N
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 09:48:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754681Ab1IOHPP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Sep 2011 03:15:15 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:46604 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754629Ab1IOHPO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2011 03:15:14 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1R46AC-00030p-LQ; Thu, 15 Sep 2011 09:15:12 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 2C0ED1660F;
-	Thu, 15 Sep 2011 09:15:12 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.22) Gecko/20110902 Thunderbird/3.1.14
-In-Reply-To: <CAOZxsTq1crC0zeMpFGMafG8HXu168gkK2-KDnpwLoamRLJshjg@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1755023Ab1IOHsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Sep 2011 03:48:11 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:20190 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754858Ab1IOHsK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2011 03:48:10 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.339.1; Thu, 15 Sep
+ 2011 09:48:07 +0200
+Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.339.1; Thu, 15 Sep
+ 2011 09:48:09 +0200
+User-Agent: KMail/1.13.7 (Linux/3.0.4-43-desktop; KDE/4.6.5; x86_64; ; )
+In-Reply-To: <4E71A5FF.5040807@viscovery.net>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181445>
 
-Am 9/15/2011 6:24, schrieb Joshua Stoutenburg:
-> Hey guys, I'm pretty stoked about git -- coming from subversion.
-> 
-> I'm having a hard time understanding clearly how to set up a git
-> server and configure my local machine to pull and push to it.
-> 
-> I've been reading the git book pdf.  But I think I must have missed
-> something.  I feel stranded.
+Johannes Sixt wrote:
+> Even when you want to exchange your commits between two or three machines,
+> all you need is ssh access. There is no *git server* necessary. git is not
+> svn. ;-)
 
-Reading your exchanges elsewhere in this thread, I think you missed that
-you don't need a git server at all just to *use* git.
+I'd even put this somewhat more bluntly.  My two-step advice on
+switching from svn to git is:
 
-Even when you want to exchange your commits between two or three machines,
-all you need is ssh access. There is no *git server* necessary. git is not
-svn. ;-)
+1) forget *everything* you know from SVN
+2) learn git as usual
 
-I thought I'd just mention this to help you streamline your search.
+I don't hang out on IRC as much any more, so maybe it got better.  But
+90%[*] of SVN convert's problems seem to stem from some preconceived
+notions they carried over from SVN.
 
--- Hannes
+Such as, "HEAD is the newest commit".  Or the whole centralized
+vs. distributed you mentioned.
+
+
+
+[*] 78% of all statistics were made up on the spot
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
