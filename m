@@ -1,56 +1,64 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 2/5] credential-cache: fix expiration calculation corner cases
-Date: Thu, 15 Sep 2011 10:37:11 +0200
-Message-ID: <201109151037.12248.trast@student.ethz.ch>
-References: <20110914191704.GA23201@sigill.intra.peff.net> <20110914191757.GB28267@sigill.intra.peff.net>
+From: Joshua Stoutenburg <jehoshua02@gmail.com>
+Subject: Re: Anybody home?
+Date: Thu, 15 Sep 2011 02:01:06 -0700
+Message-ID: <CAOZxsTqGt=gYr3t7e5Ma4z6W9wt_JxrgsNSGFGVbtk2rc3LZ9w@mail.gmail.com>
+References: <CAOZxsTq1crC0zeMpFGMafG8HXu168gkK2-KDnpwLoamRLJshjg@mail.gmail.com>
+	<4E71A5FF.5040807@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Brian Gernhardt <benji@silverinsanity.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 15 10:37:21 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Sep 15 11:01:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R47Rg-0002mO-Su
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 10:37:21 +0200
+	id 1R47oo-0003Aj-JS
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 11:01:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755281Ab1IOIhO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Sep 2011 04:37:14 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:23931 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755180Ab1IOIhN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2011 04:37:13 -0400
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.339.1; Thu, 15 Sep
- 2011 10:37:10 +0200
-Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.339.1; Thu, 15 Sep
- 2011 10:37:12 +0200
-User-Agent: KMail/1.13.7 (Linux/3.0.4-43-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <20110914191757.GB28267@sigill.intra.peff.net>
-X-Originating-IP: [129.132.153.233]
+	id S1755502Ab1IOJBJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Sep 2011 05:01:09 -0400
+Received: from mail-ew0-f43.google.com ([209.85.215.43]:43435 "EHLO
+	mail-ew0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755428Ab1IOJBI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2011 05:01:08 -0400
+Received: by ewy20 with SMTP id 20so1616573ewy.2
+        for <git@vger.kernel.org>; Thu, 15 Sep 2011 02:01:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=chnwD8X5wbB1NnsFM31bSsHsVKiAvAIBbsmSh2C5Sx4=;
+        b=OgQu2/OC8ewBtw3zAe0mXHPcXzE34E6sX+CqyR81OngBkw6PlGJpL8f/9/WADv2sx7
+         N0XG74AeC5iMNOCOjrD2RO4B3yMwpwcId6Ltl+QRsqwf2L2wixskoMSlPoiXP1P6YuEQ
+         tLKqULuqDTojAFwbK8oFUxQ6QW14+5y7G0AVY=
+Received: by 10.213.21.194 with SMTP id k2mr328468ebb.53.1316077266574; Thu,
+ 15 Sep 2011 02:01:06 -0700 (PDT)
+Received: by 10.213.16.195 with HTTP; Thu, 15 Sep 2011 02:01:06 -0700 (PDT)
+In-Reply-To: <4E71A5FF.5040807@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181449>
 
-Jeff King wrote:
-> However, there is a corner case: when we first start up, we
-> have no credentials, and are waiting for a client to
-> provide us with one. In this case, we ended up handing
-> complete junk for the timeout argument to poll(). On some
-> systems, this caused us to just wait a long time for the
-> client (which usually showed up within a second or so). On
-> OS X, however, the system quite reasonably complained about
-> our junk value with EINVAL.
+> Reading your exchanges elsewhere in this thread, I think you missed that
+> you don't need a git server at all just to *use* git.
+>
+> Even when you want to exchange your commits between two or three machines,
+> all you need is ssh access. There is no *git server* necessary. git is not
+> svn. ;-)
+>
+> I thought I'd just mention this to help you streamline your search.
+>
+> -- Hannes
+>
 
-Tested, works now.  Thanks!
+I read the first four and a half chapters from the Pro Git book pdf.
+So I think I understood that much.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+But in my situation, I do need a server so that other developers can
+access anytime over the internet.
+
+I should have mentioned that.
