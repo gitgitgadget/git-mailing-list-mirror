@@ -1,78 +1,81 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: Re: Anybody home?
-Date: Thu, 15 Sep 2011 08:04:10 -0700
-Message-ID: <CAP2yMaJcKnghtxxDNVYk=00KQ-ZOGEwACHRTU15tGnOuk3R4Hw@mail.gmail.com>
-References: <CAOZxsTq1crC0zeMpFGMafG8HXu168gkK2-KDnpwLoamRLJshjg@mail.gmail.com>
-	<4E71A5FF.5040807@viscovery.net>
-	<CAOZxsTqGt=gYr3t7e5Ma4z6W9wt_JxrgsNSGFGVbtk2rc3LZ9w@mail.gmail.com>
+From: Jean-Baptiste Quenot <jbq@caraldi.com>
+Subject: Re: [tig] Feeding specific revisions to tig
+Date: Thu, 15 Sep 2011 17:10:09 +0200
+Message-ID: <CAK6bCawiae55q_+E4pWDs_v6V0RLhU97zrw9P1N5j-eCrVSh9w@mail.gmail.com>
+References: <ae63f8b50806041152v11a2997y9411c5ea3ebc9598@mail.gmail.com>
+ <20080604192916.GB17327@sigill.intra.peff.net> <ae63f8b50806041304i20de789ej492681f4b9306934@mail.gmail.com>
+ <20080604230858.GA27136@sigill.intra.peff.net> <2c6b72b30808060406u10d7b332g22ea28fe5470ddb1@mail.gmail.com>
+ <20080808211916.GA30583@sigill.intra.peff.net> <2c6b72b30808100216j2c719bf2yb7dfba651db901e3@mail.gmail.com>
+ <ae63f8b50904230755p12170753qf3fc273b48afe4d4@mail.gmail.com> <2c6b72b30904270321t3d73e2c5o5e3ac8d4b627e5ab@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Git List <git@vger.kernel.org>
-To: Joshua Stoutenburg <jehoshua02@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 15 17:04:18 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jonas Fonseca <jonas.fonseca@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 15 17:11:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4DU9-0006w4-9u
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 17:04:17 +0200
+	id 1R4Dac-0001yz-Ix
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 17:10:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933979Ab1IOPEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Sep 2011 11:04:12 -0400
-Received: from mail-gw0-f52.google.com ([74.125.83.52]:42662 "EHLO
-	mail-gw0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933899Ab1IOPEL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2011 11:04:11 -0400
-Received: by gwb1 with SMTP id 1so1403418gwb.11
-        for <git@vger.kernel.org>; Thu, 15 Sep 2011 08:04:10 -0700 (PDT)
+	id S1756362Ab1IOPKw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Sep 2011 11:10:52 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:48376 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753389Ab1IOPKv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2011 11:10:51 -0400
+Received: by wwf22 with SMTP id 22so3810016wwf.1
+        for <git@vger.kernel.org>; Thu, 15 Sep 2011 08:10:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=G4IUApI+rEAWzTBsKOfEanJ/7z1TZGMLOikceZKQMFM=;
-        b=Q2icYZwCF6vwFAdRG4jI0RpQ3VxeKVf7NIr8akpExyapgrliVRWHGCeaUlPdtSPH5E
-         6977yYMpNPAsoCch7kj3wvRCnlF8rjyT+d1nB6lxS0E0VX0IO4Rx7w4OjCp1DS66ev1Z
-         su36gVc+NpZrOsu7z9YO/BONQK7/kzz+VXaZM=
-Received: by 10.150.157.19 with SMTP id f19mr1300833ybe.324.1316099050393;
- Thu, 15 Sep 2011 08:04:10 -0700 (PDT)
-Received: by 10.151.154.18 with HTTP; Thu, 15 Sep 2011 08:04:10 -0700 (PDT)
-In-Reply-To: <CAOZxsTqGt=gYr3t7e5Ma4z6W9wt_JxrgsNSGFGVbtk2rc3LZ9w@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=z0Ctbw1yeFuEOd6i31vnGpyPAcLPPQI0d716jwt3pUc=;
+        b=AvZiXlj/w6g+mtVEBnOS6Q0Nn9QKZIr1jrcIHlx/rdrW5KahmhGijJ7kmXCHktKnQh
+         uqL9LbD+y7eNhzpbhhuR1GlW2LOrsOb0HbE2UrxrUyNdc9Rdm+5YlPMdN5YLcKWXcANQ
+         zI9lUgbWYIMNNoeUKkjPalSRlcRawnL2re/mM=
+Received: by 10.227.145.139 with SMTP id d11mr197321wbv.60.1316099450069; Thu,
+ 15 Sep 2011 08:10:50 -0700 (PDT)
+Received: by 10.180.96.9 with HTTP; Thu, 15 Sep 2011 08:10:09 -0700 (PDT)
+In-Reply-To: <2c6b72b30904270321t3d73e2c5o5e3ac8d4b627e5ab@mail.gmail.com>
+X-Google-Sender-Auth: AGDrDcV3WSeUjuivG8ETEOix5mY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181470>
 
-Hey,
-
-On Thu, Sep 15, 2011 at 2:01 AM, Joshua Stoutenburg
-<jehoshua02@gmail.com> wrote:
->> Reading your exchanges elsewhere in this thread, I think you missed that
->> you don't need a git server at all just to *use* git.
->>
->> Even when you want to exchange your commits between two or three machines,
->> all you need is ssh access. There is no *git server* necessary. git is not
->> svn. ;-)
->>
->> I thought I'd just mention this to help you streamline your search.
->>
->> -- Hannes
->>
+2009/4/27 Jonas Fonseca <jonas.fonseca@gmail.com>:
+> Sorry for the slow reply ...
 >
-> I read the first four and a half chapters from the Pro Git book pdf.
-> So I think I understood that much.
+> On Thu, Apr 23, 2009 at 16:55, Jean-Baptiste Quenot <jbq@caraldi.com>=
+ wrote:
+>> Restarting this old thread again. =A0Starting from 0.13 the
+>> *tignowalk()* hack does not work anymore. =A0What's the preferred wa=
+y to
+>> feed specific revisions using stdin now?
 >
-> But in my situation, I do need a server so that other developers can
-> access anytime over the internet.
+> I don't know if it is preferred, but it works. First add a git alias:
 >
-> I should have mentioned that.
+> [alias]
+> =A0 =A0 =A0 =A0tignowalk-helper =3D !git rev-list --pretty=3Draw --no=
+-walk --stdin<
+>
+> Then modify tignowalk by replacing the line calling tig to say:
+>
+> TIG_MAIN_CMD=3D"git tignowalk-helper $tmp" tig </dev/tty
+>
+> ... and it should work. Maybe more git alias functionality can
+> simplify the hack.
 
-I guess I'm confused.  The fourth chapter of the Pro Git book is
-entirely about setting up your own Git server, including basically
-step by step instructions on Gitolite and Gitosis, in addition to
-simply running your own ssh-based server plus gitweb.  It is like 20
-pages long - how is this not exactly what you're asking for?
+Restarting this thread again... it seems like every new version of tig
+breaks this usecase :-)
 
-Scott
+Any idea how to feed specific revisions to tig 0.18?  The trick does
+not work anymore, as support for TIG_MAIN_CMD was dropped.
+--=20
+Jean-Baptiste Quenot
