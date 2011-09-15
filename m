@@ -1,92 +1,83 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] credential-osxkeychain: load Security framework dynamically
-Date: Wed, 14 Sep 2011 19:56:42 -0400
-Message-ID: <CAG+J_Dxenu7GDsTzUCCQiYg38Vto8CtD8ODX1J9mA8o1n2_YJA@mail.gmail.com>
-References: <1316023117-84755-1-git-send-email-jaysoffian@gmail.com>
-	<1316040926-89429-1-git-send-email-jaysoffian@gmail.com>
-	<20110914230816.GA5754@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Helping on Git development
+Date: Wed, 14 Sep 2011 20:08:51 -0400
+Message-ID: <20110915000851.GA6238@sigill.intra.peff.net>
+References: <CAOz-D1JW8RSR8kVWhT7v-DCbWayU8KhbePJwWrWvJwbmueRezQ@mail.gmail.com>
+ <CAOz-D1+77JZRXa57GLz=vZyrcGs4Ojj6Wa0cSD4QcEkMP3PPsA@mail.gmail.com>
+ <CAH5451me+MDe34Boak=UDjH9T_WAnO6wxa6pW+JHOoGADoNfkQ@mail.gmail.com>
+ <7vehzjugdz.fsf@alter.siamese.dyndns.org>
+ <20110914231427.GA5611@sigill.intra.peff.net>
+ <7vd3f2snox.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	John Szakmeister <john@szakmeister.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 15 01:56:50 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Andrew Ardill <andrew.ardill@gmail.com>,
+	Eduardo D'Avila <erdavila@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 15 02:09:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R3zJw-0001RV-Gn
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 01:56:48 +0200
+	id 1R3zVm-0004iq-8E
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 02:09:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752028Ab1INX4o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Sep 2011 19:56:44 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:42189 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751277Ab1INX4n convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2011 19:56:43 -0400
-Received: by gyg10 with SMTP id 10so1833947gyg.19
-        for <git@vger.kernel.org>; Wed, 14 Sep 2011 16:56:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=qjIrgEj0s3BJza0ta5GDlkd/iYZLGT8C5oGdEe2IW7w=;
-        b=Ro5jPh99H9oJQOXJhvUzaM/NQ3+VHpnlemQB2ORbXM/Mcz53RCU1oMVspZQNQNE3h4
-         aX1QAyXZx4EHog1sjrOGSlv8xv4LxCKBAoC/yvOXjxY+xrxIUpxhvc5E5slfkgC+OSAQ
-         /fwV1de+0HGh8KSm6CwCMRhs0fTN7DwdOoTM0=
-Received: by 10.236.173.129 with SMTP id v1mr2713752yhl.25.1316044602476; Wed,
- 14 Sep 2011 16:56:42 -0700 (PDT)
-Received: by 10.147.32.18 with HTTP; Wed, 14 Sep 2011 16:56:42 -0700 (PDT)
-In-Reply-To: <20110914230816.GA5754@sigill.intra.peff.net>
+	id S1751194Ab1IOAIy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Sep 2011 20:08:54 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55999
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750916Ab1IOAIx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2011 20:08:53 -0400
+Received: (qmail 15977 invoked by uid 107); 15 Sep 2011 00:09:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Sep 2011 20:09:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Sep 2011 20:08:51 -0400
+Content-Disposition: inline
+In-Reply-To: <7vd3f2snox.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181416>
 
-On Wed, Sep 14, 2011 at 7:08 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Sep 14, 2011 at 06:55:26PM -0400, Jay Soffian wrote:
->
-> To be honest, I was surprised to see you linking against git. I had
-> always envisioned OS-specific helpers as living outside of the git.gi=
-t
-> repo. =C2=A0That's why I provided git-credential-getpass; it should b=
-e the
-> only part of git that helpers really want to reuse.
+On Wed, Sep 14, 2011 at 04:34:38PM -0700, Junio C Hamano wrote:
 
-Okay, I think I was led astray by the fact that
-credential-{cache,store}.c (at least the latter of which is meant as
-nothing more than an example helper right?) links with git.
+> > Is there such a thing as enough coders? :)
+> 
+> Ever heard of the Mythical Man-Month ;-)?
 
-> What are you getting from git that is useful? From my skim of your
-> patch, it looks like xmalloc/die, parse_options, and credential_getpa=
-ss.
+I thought git was a silver bullet. :)
 
-Correct.
+> I was simply saying that there already are many people who scratch his
+> own real itch, and we are short of the bandwidth to review them all.
+> It would not help the project at all to add more people who scratch
+> some random non-itches that nobody is actually interested in (e.g. an
+> entry in an unmaintained "bug tracker" that may list irrelevant and
+> stale non issues).
 
-> The first can be replaced with a few trivial lines of code. The secon=
-d
-> is overkill, I think. The helper code will always hand you the
-> "--option=3Dvalue" form, and I always intended it to stay that way
-> (whether that is well documented, I'm not sure). But a simple loop wi=
-th
-> strncmps would be fine.
->
-> The hardest part is credential_getpass. You can call "git
-> credential-getpass", but you'll have to read the output yourself (tho=
-ugh
-> it's quite simple to parse; see read_credential_response).
->
-> I'm not a fan of cutting and pasting code, and this will add a number=
- of
-> lines to your C program. But I feel like keeping the build completely
-> separate from core git is probably a good boundary (especially becaus=
-e
-> this will not be getting built or tested all the time, as most of the
-> core code is).
+Yeah, that may be. But I don't look at it as "we have enough
+itch-scratchers, so we don't need more". I see it as survival of the
+fittest. You may post a patch series that needs a lot of help, but
+nobody else cares, and it dies off. Or your series may be interesting
+enough that it draws attention, to the detriment of somebody else's
+series (which may take longer to get reviewed and merged). But natural
+selection only works if we have a diverse population to select from.
 
-Okay.
+The downside, of course, is that somebody may end up wasting time going
+down a fruitless road. But for a new contributor, hopefully they learn
+something in the process.
 
-j.
+> >   2. Read the list. People will report bugs. Try reproducing them,
+> [...]
+> 
+> Yes. In the earlier steps in the above, you may find out that the
+> report was actually not a bug at all (e.g. old issue that has long
+> been fixed, pebcak, or wrong expectation), but even in such a case,
+> reporting your finding would help others.
+
+Very much agreed. I think big organizations like mozilla have people who
+do nothing but bug triage. We are not that big, but it has proven to be
+one area that is easy to break out and distribute to other people.
+
+-Peff
