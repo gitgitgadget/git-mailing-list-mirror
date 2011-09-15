@@ -1,60 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Helping on Git development
-Date: Thu, 15 Sep 2011 13:21:47 -0400
-Message-ID: <20110915172147.GA20396@sigill.intra.peff.net>
-References: <CAOz-D1JW8RSR8kVWhT7v-DCbWayU8KhbePJwWrWvJwbmueRezQ@mail.gmail.com>
- <CAOz-D1+77JZRXa57GLz=vZyrcGs4Ojj6Wa0cSD4QcEkMP3PPsA@mail.gmail.com>
- <CAH5451me+MDe34Boak=UDjH9T_WAnO6wxa6pW+JHOoGADoNfkQ@mail.gmail.com>
- <7vehzjugdz.fsf@alter.siamese.dyndns.org>
- <20110914231427.GA5611@sigill.intra.peff.net>
- <7vd3f2snox.fsf@alter.siamese.dyndns.org>
- <20110915000851.GA6238@sigill.intra.peff.net>
- <CAH5451n=yEYYb0jO85+5_0dkuupQA2_WLvnH-fwPESS1GWy4Sg@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: vcs-svn and firends
+Date: Thu, 15 Sep 2011 12:45:39 -0500
+Message-ID: <20110915174539.GB19450@elie>
+References: <CAFfmPPMPYRgfEpN0aWcgVHt1oonp0OxvgD+SKteKjnsBv4WjmA@mail.gmail.com>
+ <CA+gfSn98tWxkTnXEg8eZmLA-bYuN2xQHiqQnOYRBbaEvd+35KA@mail.gmail.com>
+ <CAFfmPPOPkSOSsQk_T5_m7Oa2TBBqA4L_aANS8QF5rEtXnDY+sg@mail.gmail.com>
+ <CA+gfSn8+5ot4hJg_m-YYxeeqHPx2OBPLYBVpUh01oBwSJ37ncw@mail.gmail.com>
+ <CAFfmPPMfZBiEhz3rBdUaa=MHjEnKxqh_KQaAiZ=fVN5aXOcfYg@mail.gmail.com>
+ <CA+gfSn9TU1mfAifL=1CDdq_cz7M7BgNLDuPAtzbMSf04WB-K3w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Eduardo D'Avila <erdavila@gmail.com>
-To: Andrew Ardill <andrew.ardill@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 15 19:21:57 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: David Michael Barr <davidbarr@google.com>, git@vger.kernel.org
+To: Dmitry Ivankov <divanorama@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 15 19:45:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4FdL-0000Zq-JM
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 19:21:55 +0200
+	id 1R4G0S-0003ya-O1
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 19:45:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934213Ab1IORVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Sep 2011 13:21:50 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35554
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756529Ab1IORVu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2011 13:21:50 -0400
-Received: (qmail 23085 invoked by uid 107); 15 Sep 2011 17:22:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Sep 2011 13:22:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Sep 2011 13:21:47 -0400
+	id S934267Ab1IORpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Sep 2011 13:45:44 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:65238 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934241Ab1IORpn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2011 13:45:43 -0400
+Received: by iaqq3 with SMTP id q3so1385044iaq.19
+        for <git@vger.kernel.org>; Thu, 15 Sep 2011 10:45:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=qJFanubeBRHrZRr04Tdf6yA1+oS1lBAD1VHeuRUW+gQ=;
+        b=IrPuUQ0ABtAOy83XY1lYI5HHf7tJve2AouupKsO+ACDyVIg9r5qauYPK8NaSMpALX0
+         ewVOOSffwbr0FoBrSyEs8aYNEVhRoVNS+PhV0JuXevvpWjk+X5RKOjJJse6zGeINYh0i
+         ca+Og2MVokydMqjtO4NI4KYmR3q6JMQScoKto=
+Received: by 10.231.5.67 with SMTP id 3mr2229618ibu.98.1316108743081;
+        Thu, 15 Sep 2011 10:45:43 -0700 (PDT)
+Received: from elie (99-120-124-35.lightspeed.cicril.sbcglobal.net. [99.120.124.35])
+        by mx.google.com with ESMTPS id o5sm5603106ibu.12.2011.09.15.10.45.41
+        (version=SSLv3 cipher=OTHER);
+        Thu, 15 Sep 2011 10:45:41 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <CAH5451n=yEYYb0jO85+5_0dkuupQA2_WLvnH-fwPESS1GWy4Sg@mail.gmail.com>
+In-Reply-To: <CA+gfSn9TU1mfAifL=1CDdq_cz7M7BgNLDuPAtzbMSf04WB-K3w@mail.gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181480>
 
-On Thu, Sep 15, 2011 at 04:24:22PM +1000, Andrew Ardill wrote:
+Dmitry Ivankov wrote:
 
-> Does git even have an issue tracker? I have not seen one anywhere.
+> A very quick view suggests that they could be reorganized, if it's okay.
+> For example:
+> - squash optifying REPORT_FILENO with it's addition.
+> - drop changes to repo_tree.c that were later erased
+> ...I bet there are more
+>
+> Does it make sense or we should better not rewrite the history?
 
-No. The general philosophy so far has been that the mailing list serves
-the same purpose, and that if messages go by without comment on the
-list, it's probably because they weren't that interesting to people
-(i.e., in a bug tracker, they would have also sat untouched).
+All else being equal, it is better not to rewrite history, especially
+when there are multiple series building on a commit (as is the case
+for most commits in the
 
-That being said, the mailing list is free-form, which can make it harder
-to search and analyze. Something that organizes the information like a
-bug tracker could be useful, but only if somebody (or somebodies) is
-dedicated to keeping the information up to date and free of cruft.
+ git://repo.or.cz/git/jrn.git svn-fe
 
--Peff
+branch, just like Junio's "master" branch).
+
+Cheers,
+Jonathan
