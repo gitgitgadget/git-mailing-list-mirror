@@ -1,85 +1,66 @@
-From: Joshua Stoutenburg <jehoshua02@gmail.com>
-Subject: Re: Anybody home?
-Date: Thu, 15 Sep 2011 05:01:36 -0700
-Message-ID: <CAOZxsToPY4k4CTsqUxX5t6uTHZXbbTAG7Ty3TjxoeGgj3Jn2gA@mail.gmail.com>
-References: <CAOZxsTq1crC0zeMpFGMafG8HXu168gkK2-KDnpwLoamRLJshjg@mail.gmail.com>
-	<4E71A5FF.5040807@viscovery.net>
-	<CAOZxsTqGt=gYr3t7e5Ma4z6W9wt_JxrgsNSGFGVbtk2rc3LZ9w@mail.gmail.com>
-	<1316079837.2019.18.camel@bee.lab.cmartin.tk>
-	<buoty8e3wjq.fsf@dhlpc061.dev.necel.com>
-	<1316086486.2019.20.camel@bee.lab.cmartin.tk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <carlos@cmartin.tk>
-X-From: git-owner@vger.kernel.org Thu Sep 15 14:01:46 2011
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: [PATCH] Un-static gitmkstemps
+Date: Thu, 15 Sep 2011 08:21:00 -0400
+Message-ID: <1316089260-76049-1-git-send-email-brian@gernhardtsoftware.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 15 14:21:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4AdW-00087S-8V
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 14:01:46 +0200
+	id 1R4AwR-0000a0-6p
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 14:21:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933383Ab1IOMBm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Sep 2011 08:01:42 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:37728 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933125Ab1IOMBl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2011 08:01:41 -0400
-Received: by eya28 with SMTP id 28so277754eya.19
-        for <git@vger.kernel.org>; Thu, 15 Sep 2011 05:01:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=taDzoEgPesOKh0K+x5zxTtVA0I6ufo1SHAmJKxKWrlM=;
-        b=N1RasjIloxhr00DA3S7ja+jXsGLMhFSVvgkXNTCQJAuTKu4tRQzNghRaZywLfpj6co
-         8MyEEXrM8w2AMJRMndSpVXC9RRWlj/kd8RZuHtv9Viwb4qnSIQcVe5nfZcg+7NjdqY3k
-         Bcud4eplh4Uc56UZG9JSJKSF6yOT8s5Rx8CxE=
-Received: by 10.213.21.194 with SMTP id k2mr396151ebb.53.1316088099246; Thu,
- 15 Sep 2011 05:01:39 -0700 (PDT)
-Received: by 10.213.16.195 with HTTP; Thu, 15 Sep 2011 05:01:36 -0700 (PDT)
-In-Reply-To: <1316086486.2019.20.camel@bee.lab.cmartin.tk>
+	id S933457Ab1IOMVE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Sep 2011 08:21:04 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:43183 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933388Ab1IOMVD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2011 08:21:03 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id CF7EA1FFC166; Thu, 15 Sep 2011 12:20:59 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.6 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from localhost.localdomain (unknown [129.21.210.224])
+	by silverinsanity.com (Postfix) with ESMTPA id 1F0691FFC100;
+	Thu, 15 Sep 2011 12:20:59 +0000 (UTC)
+X-Mailer: git-send-email 1.7.7.rc0.309.g13ed2.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181463>
 
-On Thu, Sep 15, 2011 at 4:34 AM, Carlos Mart=EDn Nieto <carlos@cmartin.=
-tk> wrote:
-> On Thu, 2011-09-15 at 19:54 +0900, Miles Bader wrote:
->> Carlos Mart=EDn Nieto <carlos@cmartin.tk> writes:
->> > If the code shouldn't be made public, then you should take a look =
-at
->> > gitolite[0]. Otherwise, you can just host it on gitorious.org or
->> > github.com
->>
->> Hmm, of course if you're willing to pay, github will also host priva=
-te
->
-> Indeed, if you give them a bit of money they'll take care of everythi=
-ng
-> and you can have your private code there.
->
->> code (maybe useful if your devs love teh shiny......).
->
-> Teh Shiny is powerful :)
->
-> =A0 cmn
->
->
+It may not be used in most builds, but it's used via a #ifdef in
+git-compat-util.h  Also, making it static makes a -Wall compile fail
+since it's not used in the file without NO_MKSTEMPS.
 
-Unfamiliar with the term "Teh Shiny". Had to look it up.  Found this:
-http://www.claassen.net/geek/blog/2009/09/teh-shiny.html
+Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
+---
 
-I think I have a tendency to avoid "Teh Shiny" because it ruins all the=
- fun.
+ Either this, or it should be removed from git-compat-util and wrapped in
+ an #ifdef.  (The only current user is git_mkstemps), but since it's
+ referenced in a header file, I figured it shouldn't be static.
 
-I think I could easily figure out how to host my own repos, save some
-money, and have my own "Teh Shiny".
+ wrapper.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-If I didn't care about saving money, and had a project that needed a
-repo immediately, I'd probably give in and pay a little.
+diff --git a/wrapper.c b/wrapper.c
+index 390a7ae..1c41488 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -310,7 +310,7 @@ int git_mkstemp_mode(char *pattern, int mode)
+ 	return git_mkstemps_mode(pattern, 0, mode);
+ }
+ 
+-static int gitmkstemps(char *pattern, int suffix_len)
++int gitmkstemps(char *pattern, int suffix_len)
+ {
+ 	return git_mkstemps_mode(pattern, suffix_len, 0600);
+ }
+-- 
+1.7.7.rc0.309.g13ed2.dirty
