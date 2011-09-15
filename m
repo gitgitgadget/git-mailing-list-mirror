@@ -1,107 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <carlos@cmartin.tk>
 Subject: Re: Anybody home?
-Date: Thu, 15 Sep 2011 04:04:49 -0700 (PDT)
-Message-ID: <m3y5xqrro0.fsf@localhost.localdomain>
+Date: Thu, 15 Sep 2011 13:34:44 +0200
+Message-ID: <1316086486.2019.20.camel@bee.lab.cmartin.tk>
 References: <CAOZxsTq1crC0zeMpFGMafG8HXu168gkK2-KDnpwLoamRLJshjg@mail.gmail.com>
-	<CAMOZ1BtpzsxGLzrZs2YbNP174mm3vfLCteencKSepDR329jjBQ@mail.gmail.com>
-	<CAOZxsTrsi5mNdm8OgvfXyYwj1T4Vw3HfQGN-5Dsb+QnX0nz4ag@mail.gmail.com>
+	 <4E71A5FF.5040807@viscovery.net>
+	 <CAOZxsTqGt=gYr3t7e5Ma4z6W9wt_JxrgsNSGFGVbtk2rc3LZ9w@mail.gmail.com>
+	 <1316079837.2019.18.camel@bee.lab.cmartin.tk>
+	 <buoty8e3wjq.fsf@dhlpc061.dev.necel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-4
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Witten <mfwitten@gmail.com>, Git List <git@vger.kernel.org>
-To: Joshua Stoutenburg <jehoshua02@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 15 13:10:15 2011
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-AfS/olTkt5RfBcdUqSRI"
+Cc: Joshua Stoutenburg <jehoshua02@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Git List <git@vger.kernel.org>
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Sep 15 13:35:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R49pe-0002xA-Qp
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 13:10:15 +0200
+	id 1R4ADV-0004l6-V0
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 13:34:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933226Ab1IOLKI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Sep 2011 07:10:08 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:49117 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933075Ab1IOLKG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2011 07:10:06 -0400
-Received: by eya28 with SMTP id 28so259393eya.19
-        for <git@vger.kernel.org>; Thu, 15 Sep 2011 04:10:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=ZoS2u5QDhk/dHUq+w0KRaLtrbBrPEZct1W6knG5W810=;
-        b=crMOBhHDmuoFE/KUkNPNLcNNdnsEQs06LFh23sZLGi9KqP5qr6MPU7mKn4G5rprFrN
-         N18jdp/4vqnhJWD2PNWlWnpEwAwk6Y/hFlBGFxk/4QXBP6n9VW0T1y0LZUpaCPDmAtI+
-         jGa87BKjjzFnxAC6jkqYU9iVChGAmOg7Fslcg=
-Received: by 10.213.16.135 with SMTP id o7mr361327eba.126.1316084690654;
-        Thu, 15 Sep 2011 04:04:50 -0700 (PDT)
-Received: from localhost.localdomain (abwn193.neoplus.adsl.tpnet.pl. [83.8.237.193])
-        by mx.google.com with ESMTPS id v9sm7946813eej.5.2011.09.15.04.04.48
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 15 Sep 2011 04:04:49 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p8FB6aB2026629;
-	Thu, 15 Sep 2011 13:06:41 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p8FB6N7t026625;
-	Thu, 15 Sep 2011 13:06:23 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <CAOZxsTrsi5mNdm8OgvfXyYwj1T4Vw3HfQGN-5Dsb+QnX0nz4ag@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S933188Ab1IOLes (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Sep 2011 07:34:48 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:49041 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933075Ab1IOLer (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2011 07:34:47 -0400
+Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 700F1460AC;
+	Thu, 15 Sep 2011 13:34:28 +0200 (CEST)
+In-Reply-To: <buoty8e3wjq.fsf@dhlpc061.dev.necel.com>
+X-Mailer: Evolution 3.0.3- 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181460>
 
-Couldn't you pick up less descriptive subject ;-) ?
 
-Joshua Stoutenburg <jehoshua02@gmail.com> writes:
-> On Wed, Sep 14, 2011 at 9:48 PM, Michael Witten <mfwitten@gmail.com> =
-wrote:
->> On Thu, Sep 15, 2011 at 04:24, Joshua Stoutenburg <jehoshua02@gmail.=
-com> wrote:
+--=-AfS/olTkt5RfBcdUqSRI
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
->>> I'm having a hard time understanding clearly how to set up a git
->>> server and configure my local machine to pull and push to it.
-
-> There seems to be a plethora of documentation on git from various sou=
-rces.
+On Thu, 2011-09-15 at 19:54 +0900, Miles Bader wrote:
+> Carlos Mart=C3=ADn Nieto <carlos@cmartin.tk> writes:
+> > If the code shouldn't be made public, then you should take a look at
+> > gitolite[0]. Otherwise, you can just host it on gitorious.org or
+> > github.com
 >=20
-> See what I mean:
->     http://git-scm.com/documentation
->     http://progit.org/book/
->     http://gitref.org/
->     http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html
->     http://www.kernel.org/pub/software/scm/git/docs/everyday.html
->     http://git-scm.com/course/svn.html
->     http://hoth.entp.com/output/git_for_designers.html
->     http://eagain.net/articles/git-for-computer-scientists/
->     http://www.kernel.org/pub/software/scm/git/docs/user-manual.html
->     http://www-cs-students.stanford.edu/~blynn/gitmagic/
->     http://help.github.com/
->     http://www.kernel.org/pub/software/scm/git/docs/
->     http://refcardz.dzone.com/refcardz/getting-started-git
->=20
-> Which source makes the least amount of assumptions and offers all the
-> juicy details for configuring git on the server, and git on the local
-> machine, without any fluff?
->=20
-> I'm looking for a solid guide. Not a novel. Not a pamphlet.
+> Hmm, of course if you're willing to pay, github will also host private
 
-I think that either "Pro Git" book, or "The Git Community Book"
-would be a best source to learn about setting-up git server.
+Indeed, if you give them a bit of money they'll take care of everything
+and you can have your private code there.
 
-I think the simplest solution for git hosting management would be to
-use gitolite (there are other git repository management software:
-Gitosis, SCM Manager, Gitblit).
+> code (maybe useful if your devs love teh shiny......).
 
-If you want to host something like GitHub, there are open source
-solutions too: Gitorious, InDefero, Girocco + gitweb,...
+Teh Shiny is powerful :)
 
-HTH
---=20
-Jakub Nar=EAbski
+   cmn
+
+
+--=-AfS/olTkt5RfBcdUqSRI
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAABAgAGBQJOceLUAAoJEHKRP1jG7ZzTJpQH+wZLRVA8PzJHdZOAE5zKzxXP
+6OKZeqYmHxLtQJYX7mpJLwzde3DkggpXqQ37k/Q/o9TxgpPDgKK9Pq9dVvUEzhBu
+u7ig1tAylskTh/H4fO6DiBellrj+toe9AosRELNnfFvI97gbmg6PzLf+iZFE5xe6
+8fVIFcb111x8ObKEqlIkkGqWPmyNRtP5C8pqdvgoSiCEuyxMnzWBWLQOa+BNsSu5
+k2Yx0VU1PjZsDAv2wCA0LSoevd58lTTYftCsEFXld1WfD8gVj9q9wPKagjMGhtLi
+wdsY9AVMZivcpQ9IlGcCFnmRu/3BIXbD5Io5Kgq6cKUM0iOAVGN3L1ugVwxveiU=
+=R4hE
+-----END PGP SIGNATURE-----
+
+--=-AfS/olTkt5RfBcdUqSRI--
