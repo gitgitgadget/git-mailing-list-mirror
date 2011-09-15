@@ -1,246 +1,121 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: [PATCH 4/4] attr.c: respect core.ignorecase when matching attribute patterns
-Date: Wed, 14 Sep 2011 20:59:39 -0500
-Message-ID: <1316051979-19671-5-git-send-email-drafnel@gmail.com>
-References: <5XXEFw0WjtXKd9dpXSxpkskCcgVyG9Db1_zzVSEBNey-kpXSBbmQfYaxZ2Szg6Pbck6hZZTQ5hHzBwG4rhKYXshrdmveEFLPZ9W0V8P_lw@cipher.nrlssc.navy.mil>
- <1316051979-19671-1-git-send-email-drafnel@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
-	bharrosh@panasas.com, trast@student.ethz.ch, zapped@mail.ru,
-	Brandon Casey <drafnel@gmail.com>
-To: peff@peff.net
-X-From: git-owner@vger.kernel.org Thu Sep 15 04:01:13 2011
+From: David Michael Barr <davidbarr@google.com>
+Subject: Re: git gc exit with out of memory, malloc failed error
+Date: Thu, 15 Sep 2011 12:20:16 +1000
+Message-ID: <CAFfmPPP58J90758TRB2sAj-Wr5HB=rQtaJipKovsHXyTcswuJQ@mail.gmail.com>
+References: <CAGAhT3mbGB-0q3EKh5MrGqB59wUea7NfaaY18DvnL3qimwh9QA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Alexander Kostikov <alex.kostikov@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 15 04:20:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R41GK-0007Xs-Ul
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 04:01:13 +0200
+	id 1R41Yu-00047a-QQ
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 04:20:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753447Ab1IOCBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Sep 2011 22:01:08 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:54642 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752950Ab1IOCBH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2011 22:01:07 -0400
-Received: by mail-gy0-f174.google.com with SMTP id 10so1875627gyg.19
-        for <git@vger.kernel.org>; Wed, 14 Sep 2011 19:01:06 -0700 (PDT)
+	id S1753547Ab1IOCUT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Sep 2011 22:20:19 -0400
+Received: from smtp-out.google.com ([216.239.44.51]:7539 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753448Ab1IOCUS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2011 22:20:18 -0400
+Received: from wpaz9.hot.corp.google.com (wpaz9.hot.corp.google.com [172.24.198.73])
+	by smtp-out.google.com with ESMTP id p8F2KIw4023378
+	for <git@vger.kernel.org>; Wed, 14 Sep 2011 19:20:18 -0700
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
+	t=1316053218; bh=ZlxoTYGy5OR6gaGuSH7bNRbL6bw=;
+	h=MIME-Version:In-Reply-To:References:Date:Message-ID:Subject:From:
+	 To:Cc:Content-Type:Content-Transfer-Encoding;
+	b=FGa3PnmYtUfXW+BfK2QWwcOSRfJt5mJP/lEGbWUkHI3MDR4abQUQUWIKAxJvNpm73
+	 kx1lsP9rAYx6SKqQzKB+g==
+DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
+	h=dkim-signature:mime-version:in-reply-to:references:date:
+	message-id:subject:from:to:cc:content-type:
+	content-transfer-encoding:x-system-of-record;
+	b=QLPzZ3p4jitG31/ZjD7G1eFBfEVDuZd5AJjv6cGN1IIoG1tBXFZq65u1aNabhl/8/
+	KwFqN/raVpJgFpswgqaOQ==
+Received: from qwi4 (qwi4.prod.google.com [10.241.195.4])
+	by wpaz9.hot.corp.google.com with ESMTP id p8F2KGwJ022560
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Wed, 14 Sep 2011 19:20:17 -0700
+Received: by qwi4 with SMTP id 4so2910173qwi.15
+        for <git@vger.kernel.org>; Wed, 14 Sep 2011 19:20:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=qW2Q5Q9EFkKXqpxU2cy0kdOen0Js1ycvKQzmUoGkxAg=;
-        b=FaeAEF5Urb4JhuvlMrb7aLNogF83/wkj6/veLAduFk3T9Ue87jyH5rz5cSBs9aM+fl
-         RK5YVJIwZ68rb42e5+Z/hpsyWkubkg1lx2WZSp4COqkUJFfehCUce2FSKbJU8AuawIyx
-         B9Vpk/hY0UmnZOnQfXEhlR1xSA/nLzHXr1NGo=
-Received: by 10.236.37.134 with SMTP id y6mr2852933yha.113.1316052066662;
-        Wed, 14 Sep 2011 19:01:06 -0700 (PDT)
-Received: from localhost.localdomain ([96.19.140.155])
-        by mx.google.com with ESMTPS id e61sm2291412yhm.2.2011.09.14.19.01.04
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 14 Sep 2011 19:01:05 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6
-In-Reply-To: <1316051979-19671-1-git-send-email-drafnel@gmail.com>
+        d=google.com; s=beta;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=7bBbmywGvdol+WLrg/P4AUzX/jG+19sVj0wo0ca6Epc=;
+        b=s5thwhI9rnzkH5lcc3N5A8jrX9o4FEGISZmQ6b0x84Vn5BGzIj8YgaE+1BOj28jyOY
+         3N0UIeIlIkwD1gB81/nA==
+Received: by 10.229.68.87 with SMTP id u23mr486394qci.8.1316053216675;
+        Wed, 14 Sep 2011 19:20:16 -0700 (PDT)
+Received: by 10.229.68.87 with SMTP id u23mr486384qci.8.1316053216164; Wed, 14
+ Sep 2011 19:20:16 -0700 (PDT)
+Received: by 10.229.8.13 with HTTP; Wed, 14 Sep 2011 19:20:16 -0700 (PDT)
+In-Reply-To: <CAGAhT3mbGB-0q3EKh5MrGqB59wUea7NfaaY18DvnL3qimwh9QA@mail.gmail.com>
+X-System-Of-Record: true
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181426>
 
-When core.ignorecase is true, the file globs configured in the
-.gitattributes file should be matched case-insensitively against the paths
-in the working directory.
+On Thu, Sep 15, 2011 at 11:33 AM, Alexander Kostikov
+<alex.kostikov@gmail.com> wrote:
+> I'm new to git and I'm getting the following out of memory error on g=
+it gc:
+>
+> $ git gc
+> Counting objects: 80818, done.
+> Delta compression using up to 8 threads.
+> fatal: Out of memory, malloc failed (tried to allocate 24359675 bytes=
+)
+> error: failed to run repack
+>
+> The only advice I found in the internet suggested to run repack with
+> --window-memory parameter specified. But this call also fails:
+>
+> $ git repack -adf --window-memory=3D0
+> Counting objects: 80818, done.
+> Delta compression using up to 8 threads.
+> warning: suboptimal pack - out of memory
+> fatal: Out of memory, malloc failed (tried to allocate 24356363 bytes=
+)
+>
+> How do I cleanup my repository?
+>
+> $ git version
+> git version 1.7.6.msysgit.0
+>
+> OS: Windows Server 2008 R2 SP1 (x64)
+> Physical memory: 24 GB
+> The commands listed were executed under x64 console process.
+>
+> --
+> Thanks,
+> Alexander Kostikov
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>
 
----
+Hi,
 
-Two points:
+My understanding is that msysgit is a 32-bit build.
+So if your existing pack is ~2GB, repack will fail.
+Also, I think that setting window-memory to 0
+means no limit, which is not what you want.
+One value I have seen suggested is 256m.
+In my experience, peak memory consumption of
+repack is proportional to the value of --window,
+so you might want to try tweaking that.
+There are quite a few config parameters that
+affect the memory consumption of repack.
 
-1)
-I think these two changes of fnmatch to fnmatch_icase should be all
-that is necessary.  There are a number of uses of strncmp where the
-"origin" path of an attribute entry is compared to the prefix of a file
-path, but since the attribute stack is built from the same path string
-that it is being compared against, we shouldn't have to do
-strncmp_icase everywhere.  The case of the two strings should
-necessarily match.
-
-This needs some testing by someone on a case-insensitive filesystem.
-
-Also, notice some of the new tests are marked with a CASE_INSENSITIVE_FS
-pre-requisite.  I tested on a USB thumb drive, but it would be nice if
-someone tested on a platform that is natively case-insensitive.  Maybe
-CASE_INSENSITIVE_FS should be moved to test-lib.sh, and t0005(others?)
-should be updated to use it?
-
-
-2)
-The bad news, this breaks t8005.  The breakage is caused by
-git_attr_config calling git_default_config, and stomping on the
-git_log_output_encoding set by setup_revisions() when it parsed the
- --encoding command line option.
-
-What happens is cmd_blame() calls git_config() which parses the config
-files and sets up the global config variables like
-git_log_output_encoding, then later blame calls setup_revisions() which
-parses the command line option --encoding and overrides the value in
-git_log_output_encoding, then, even later, userdiff looks up an
-attribute on a path and calls git_check_attr() which calls git_config
-_again_, which resets git_log_output_encoding to the value in the config
-file (stomping on the value set by --encoding on the git blame command
-line).
-
-Since fnmatch_icase depends on the ignore_case global variable being set
-correctly, the obvious thing for me to do was to allow
-git_default_config to call git_default_core_config and parse the
-core.ignorecase config option.  So I modified git_attr_config so it fell
-back to git_default_config.  But that can have the undesired side effect
-described above.
-
-It's easy to work around this issue.  I could just parse core.ignorecase
-in git_attr_config() and set ignore_case myself like:
-
-   if (!strcmp(var, "core.ignorecase")) {
-           ignore_case = git_config_bool(var, value);
-           return 0;
-   }
-
-The big question is whether it should be safe to call git_config()
-multiple times?  Right now, it is not.  We also don't protect against
-git_config() being called multiple times either.
-
-I suspect that setup_revisions() is not the only place where a command
-line option overrides a global config variable and it would be a big
-can of worms to try to fix them all.
-
-Thoughts?
-
----
- attr.c                |    7 +++--
- t/t0003-attributes.sh |   60 ++++++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 63 insertions(+), 4 deletions(-)
-
-diff --git a/attr.c b/attr.c
-index 3359b39..b8ed7cf 100644
---- a/attr.c
-+++ b/attr.c
-@@ -11,6 +11,7 @@
- #include "cache.h"
- #include "exec_cmd.h"
- #include "attr.h"
-+#include "dir.h"
- 
- const char git_attr__true[] = "(builtin)true";
- const char git_attr__false[] = "\0(builtin)false";
-@@ -499,7 +500,7 @@ static int git_attr_config(const char *var, const char *value, void *dummy)
- 	if (!strcmp(var, "core.attributesfile"))
- 		return git_config_pathname(&attributes_file, var, value);
- 
--	return 0;
-+	return git_default_config(var, value, dummy);
- }
- 
- static void bootstrap_attr_stack(void)
-@@ -643,7 +644,7 @@ static int path_matches(const char *pathname, int pathlen,
- 		/* match basename */
- 		const char *basename = strrchr(pathname, '/');
- 		basename = basename ? basename + 1 : pathname;
--		return (fnmatch(pattern, basename, 0) == 0);
-+		return (fnmatch_icase(pattern, basename, 0) == 0);
- 	}
- 	/*
- 	 * match with FNM_PATHNAME; the pattern has base implicitly
-@@ -657,7 +658,7 @@ static int path_matches(const char *pathname, int pathlen,
- 		return 0;
- 	if (baselen != 0)
- 		baselen++;
--	return fnmatch(pattern, pathname + baselen, FNM_PATHNAME) == 0;
-+	return fnmatch_icase(pattern, pathname + baselen, FNM_PATHNAME) == 0;
- }
- 
- static int macroexpand_one(int attr_nr, int rem);
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index ae2f1da..47a70c4 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -9,7 +9,7 @@ attr_check () {
- 	path="$1"
- 	expect="$2"
- 
--	git check-attr test -- "$path" >actual 2>err &&
-+	git $3 check-attr test -- "$path" >actual 2>err &&
- 	echo "$path: test: $2" >expect &&
- 	test_cmp expect actual &&
- 	test_line_count = 0 err
-@@ -27,6 +27,7 @@ test_expect_success 'setup' '
- 		echo "onoff test -test"
- 		echo "offon -test test"
- 		echo "no notest"
-+		echo "A/e/F test=A/e/F"
- 	) >.gitattributes &&
- 	(
- 		echo "g test=a/g" &&
-@@ -93,6 +94,63 @@ test_expect_success 'attribute test' '
- 
- '
- 
-+test_expect_success 'attribute matching is case sensitive when core.ignorecase=0' '
-+
-+	test_must_fail attr_check F f "-c core.ignorecase=0" &&
-+	test_must_fail attr_check a/F f "-c core.ignorecase=0" &&
-+	test_must_fail attr_check a/c/F f "-c core.ignorecase=0" &&
-+	test_must_fail attr_check a/G a/g "-c core.ignorecase=0" &&
-+	test_must_fail attr_check a/B/g a/b/g "-c core.ignorecase=0" &&
-+	test_must_fail attr_check a/b/G a/b/g "-c core.ignorecase=0" &&
-+	test_must_fail attr_check a/b/H a/b/h "-c core.ignorecase=0" &&
-+	test_must_fail attr_check a/b/D/g "a/b/d/*" "-c core.ignorecase=0" &&
-+	test_must_fail attr_check oNoFf unset "-c core.ignorecase=0" &&
-+	test_must_fail attr_check oFfOn set "-c core.ignorecase=0" &&
-+	attr_check NO unspecified "-c core.ignorecase=0" &&
-+	test_must_fail attr_check a/b/D/NO "a/b/d/*" "-c core.ignorecase=0" &&
-+	attr_check a/b/d/YES a/b/d/* "-c core.ignorecase=0" &&
-+	test_must_fail attr_check a/E/f "A/e/F" "-c core.ignorecase=0"
-+
-+'
-+
-+test_expect_success 'attribute matching is case insensitive when core.ignorecase=1' '
-+
-+	attr_check F f "-c core.ignorecase=1" &&
-+	attr_check a/F f "-c core.ignorecase=1" &&
-+	attr_check a/c/F f "-c core.ignorecase=1" &&
-+	attr_check a/G a/g "-c core.ignorecase=1" &&
-+	attr_check a/B/g a/b/g "-c core.ignorecase=1" &&
-+	attr_check a/b/G a/b/g "-c core.ignorecase=1" &&
-+	attr_check a/b/H a/b/h "-c core.ignorecase=1" &&
-+	attr_check a/b/D/g "a/b/d/*" "-c core.ignorecase=1" &&
-+	attr_check oNoFf unset "-c core.ignorecase=1" &&
-+	attr_check oFfOn set "-c core.ignorecase=1" &&
-+	attr_check NO unspecified "-c core.ignorecase=1" &&
-+	attr_check a/b/D/NO "a/b/d/*" "-c core.ignorecase=1" &&
-+	attr_check a/b/d/YES unspecified "-c core.ignorecase=1" &&
-+	attr_check a/E/f "A/e/F" "-c core.ignorecase=1"
-+
-+'
-+
-+test_expect_success 'check whether FS is case-insensitive' '
-+	mkdir junk &&
-+	echo good >junk/CamelCase &&
-+	echo bad >junk/camelcase &&
-+	if test "$(cat junk/CamelCase)" != good
-+	then
-+		test_set_prereq CASE_INSENSITIVE_FS
-+	fi
-+'
-+
-+test_expect_success CASE_INSENSITIVE_FS 'additional case insensitivity tests' '
-+	test_must_fail attr_check a/B/D/g "a/b/d/*" "-c core.ignorecase=0" &&
-+	test_must_fail attr_check A/B/D/NO "a/b/d/*" "-c core.ignorecase=0" &&
-+	attr_check A/b/h a/b/h "-c core.ignorecase=0" &&
-+	attr_check A/b/h a/b/h "-c core.ignorecase=1" &&
-+	attr_check a/B/D/g "a/b/d/*" "-c core.ignorecase=1" &&
-+	attr_check A/B/D/NO "a/b/d/*" "-c core.ignorecase=1"
-+'
-+
- test_expect_success 'unnormalized paths' '
- 
- 	attr_check ./f f &&
--- 
-1.7.6
+--=20
+David Barr
