@@ -1,78 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Problems with format-patch UTF-8 and a missing second empty line
-Date: Thu, 15 Sep 2011 15:01:32 -0400
-Message-ID: <20110915190132.GA17027@sigill.intra.peff.net>
-References: <CAHz1FYgPuMHLC+f2mFqD73=NGXQSStRPDOsiCy-HtaWKbHu7NQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] grep --no-index: don't use git standard exclusions
+Date: Thu, 15 Sep 2011 12:44:08 -0700
+Message-ID: <7vmxe5pp4n.fsf@alter.siamese.dyndns.org>
+References: <2f376e61802a1a38c67698d5ec263d1807b1fcee.1316110876.git.bert.wesarg@googlemail.com> <7b3551dd84a2bfec78c8db1d14dd2d0e6dda35f6.1316110876.git.bert.wesarg@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Ingo Ruhnke <grumbel@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 15 21:01:40 2011
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 15 21:44:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4HBs-0004v3-2o
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 21:01:40 +0200
+	id 1R4HrG-0000Xf-AY
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 21:44:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756627Ab1IOTBf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Sep 2011 15:01:35 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50358
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754761Ab1IOTBe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2011 15:01:34 -0400
-Received: (qmail 24799 invoked by uid 107); 15 Sep 2011 19:02:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Sep 2011 15:02:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Sep 2011 15:01:32 -0400
-Content-Disposition: inline
-In-Reply-To: <CAHz1FYgPuMHLC+f2mFqD73=NGXQSStRPDOsiCy-HtaWKbHu7NQ@mail.gmail.com>
+	id S934654Ab1IOToS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Sep 2011 15:44:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33433 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934532Ab1IOToO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2011 15:44:14 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A2BF95EB5;
+	Thu, 15 Sep 2011 15:44:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZhaN+MkDi3pQIzJJ66+eg9QZEhI=; b=TH6tpV
+	2erfWId9W+NdRuiy9ypt3CqbGCwSzURBhEuae70G38hJLVcnWQlLaIpMLfOHJyHo
+	blh07AKsl66YROMRmtGnT8erE558Pbdd1Wm/IpqhSHQ5B5gpDQ3hRkXoTK7Lb/ef
+	vb8+nkoNSKUavOTqapfTDC8NLAeJZHmegdc9I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=K3Wsy6rxopWhEf8CnsD7ZBfSz/Kx1UHU
+	PCrOfpoFalbKCuOiGGBGwPdks1XOWofrj65Rvpcc7CDoYSqAEVgcUurA9J8Otho5
+	EfrUY1pecu1b6N9Ol43EwCXzqftPMbfnHDLTTd3Sl0Xp/Vaj8ynE8uBoPaMwOTmG
+	jgYJwNXCozE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 99A695EB4;
+	Thu, 15 Sep 2011 15:44:12 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2C4095EB3; Thu, 15 Sep 2011
+ 15:44:12 -0400 (EDT)
+In-Reply-To: <7b3551dd84a2bfec78c8db1d14dd2d0e6dda35f6.1316110876.git.bert.wesarg@googlemail.com> (Bert Wesarg's message of "Thu, 15 Sep 2011 20:26:03 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 16095C3A-DFD3-11E0-90D5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181488>
 
-On Thu, Sep 15, 2011 at 11:45:15AM +0200, Ingo Ruhnke wrote:
+Bert Wesarg <bert.wesarg@googlemail.com> writes:
 
-> Creating a patch of a commit including UTF-8 and no empty second line=
-,
-> like this:
+> On Wed, Jul 20, 2011 at 22:57, Junio C Hamano <gitster@pobox.com> wrote:
+>>  - Since 3081623 (grep --no-index: allow use of "git grep" outside a git
+>>   repository, 2010-01-15) and 59332d1 (Resurrect "git grep --no-index",
+>>   2010-02-06), "grep --no-index" incorrectly paid attention to the
+>>   exclude patterns. We shouldn't have, and we'd fix that bug.
+>
+> Fix this bug.
 
-I already responded about the bug with utf8-encoded subjects, but let m=
-e
-address the second half of your mail, too:
+On a busy list like this, it is brutal to withhold the better clues you
+certainly had when you wrote this message that would help people to locate
+the original message you are quoting, and instead forcing everybody to go
+back 5000 messages in the archive to find it. E.g.
 
-> Here the newline between ABC\nABC gets stripped out and replaced with
-> a space when transferring the commit with format-patch from one
-> repository to another.
+    http://article.gmane.org/gmane.comp.version-control.git/177548
+    http://mid.gmane.org/7vzkk86577.fsf@alter.siamese.dyndns.org
 
-This is by design. Git commit messages are intended to have a
-single-line subject, followed by a blank line, followed by more
-elaboration. A multi-line subject is treated as a single line that has
-been line-broken, and is subject to being reflowed onto a single line.
-This is done to help with commits imported from other version control
-systems which don't follow this pattern (the other option is truncating
-the subject and putting the other lines into the "body", but that often
-ends up quite unreadable).
+Or perhaps have
 
-If you really want to retain the newlines across "format-patch | am",
-use the "-k" option of both to preserve the subject (I don't recall the
-details, but I think you need a more recent version of git for
-format-patch to correctly encode this, but "am" can be from any
-version).
+    References: <7vzkk86577.fsf@alter.siamese.dyndns.org>
 
-> Another small issue is that the filename of the patch will strip out
-> any UTF-8 characters, Thus a commit message of "123=C3=84=C3=B6=C3=BC=
-456" will result
-> in "0001-123-456.patch".
+in the header.
 
-Yes, it's an attempt to strip out characters that some filesystems migh=
-t
-not support well. We could probably enable high-bit characters with a
-config option (maybe even just using core.quotepath).
+As to the patch, I think this addresses only one fourth of the issue
+identified in that discussion (it is a good starting point, though).
 
--Peff
+With this change, it would now make sense to teach --[no-]exclude-standard
+to "git grep", and "--exclude-standard" is immediately useful when used
+with "--no-index". When we add "git grep --untracked-too" (which lets us
+search in the working tree), people can add "--no-exclude-standard" to the
+command line to say "I want to find the needle even from an ignored file".
+
+Thanks.
