@@ -1,66 +1,91 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: Anybody home?
-Date: Thu, 15 Sep 2011 09:48:08 +0200
-Message-ID: <201109150948.09040.trast@student.ethz.ch>
-References: <CAOZxsTq1crC0zeMpFGMafG8HXu168gkK2-KDnpwLoamRLJshjg@mail.gmail.com> <4E71A5FF.5040807@viscovery.net>
+From: =?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>
+Subject: Re: [PATCH] for-each-ref: add split message parts to %(contents:*).
+Date: Thu, 15 Sep 2011 10:18:15 +0200
+Organization: Gentoo
+Message-ID: <20110915101815.172fb47a@pomiocik.lan>
+References: <20110901184815.2cd8b472@pomiocik.lan>
+	<1314895801-21147-1-git-send-email-mgorny@gentoo.org>
+	<20110902163903.GA21768@sigill.intra.peff.net>
+	<20110902193931.42593338@pomiocik.lan>
+	<20110902175323.GA29761@sigill.intra.peff.net>
+	<20110907174044.GA11341@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Git List <git@vger.kernel.org>
-To: Joshua Stoutenburg <jehoshua02@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 15 09:48:17 2011
+Content-Type: multipart/signed; micalg=PGP-SHA256;
+ boundary="Sig_/IHoEq1YxKCLFuDllGJTgp65"; protocol="application/pgp-signature"
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 15 10:16:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R46gC-00018K-8N
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 09:48:16 +0200
+	id 1R477R-00030w-TI
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 10:16:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755023Ab1IOHsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Sep 2011 03:48:11 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:20190 "EHLO edge10.ethz.ch"
+	id S1754071Ab1IOIQT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Sep 2011 04:16:19 -0400
+Received: from smtp.gentoo.org ([140.211.166.183]:35826 "EHLO smtp.gentoo.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754858Ab1IOHsK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2011 03:48:10 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.339.1; Thu, 15 Sep
- 2011 09:48:07 +0200
-Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.339.1; Thu, 15 Sep
- 2011 09:48:09 +0200
-User-Agent: KMail/1.13.7 (Linux/3.0.4-43-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <4E71A5FF.5040807@viscovery.net>
-X-Originating-IP: [129.132.153.233]
+	id S1751162Ab1IOIQS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2011 04:16:18 -0400
+Received: from pomiocik.lan (213-238-104-87.adsl.inetia.pl [213.238.104.87])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: mgorny)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id CE85B1B4019;
+	Thu, 15 Sep 2011 08:16:15 +0000 (UTC)
+In-Reply-To: <20110907174044.GA11341@sigill.intra.peff.net>
+X-Mailer: Claws Mail 3.7.10 (GTK+ 2.24.6; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181446>
 
-Johannes Sixt wrote:
-> Even when you want to exchange your commits between two or three machines,
-> all you need is ssh access. There is no *git server* necessary. git is not
-> svn. ;-)
+--Sig_/IHoEq1YxKCLFuDllGJTgp65
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-I'd even put this somewhat more bluntly.  My two-step advice on
-switching from svn to git is:
+On Wed, 7 Sep 2011 13:40:44 -0400
+Jeff King <peff@peff.net> wrote:
 
-1) forget *everything* you know from SVN
-2) learn git as usual
+> On Fri, Sep 02, 2011 at 01:53:23PM -0400, Jeff King wrote:
+>=20
+> > But there may be other corner cases.  I need to read through the
+> > code more carefully, which I should have time to do later today.
+>=20
+> This ended up a little trickier than I expected, but I think the
+> series below is what we should do. I tried to add extensive tests,
+> but let me know if you can think of any other corner cases.
+>=20
+>   [1/5]: t7004: factor out gpg setup
+>   [2/5]: t6300: add more body-parsing tests
+>   [3/5]: for-each-ref: refactor subject and body placeholder parsing
+>   [4/5]: for-each-ref: handle multiline subjects like --pretty
+>   [5/5]: for-each-ref: add split message parts to %(contents:*).
 
-I don't hang out on IRC as much any more, so maybe it got better.  But
-90%[*] of SVN convert's problems seem to stem from some preconceived
-notions they carried over from SVN.
+Thanks, it works great for me.
 
-Such as, "HEAD is the newest commit".  Or the whole centralized
-vs. distributed you mentioned.
+I tried multi-line subject + signature too and that works fine.
 
+--=20
+Best regards,
+Micha=C5=82 G=C3=B3rny
 
+--Sig_/IHoEq1YxKCLFuDllGJTgp65
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Disposition: attachment; filename=signature.asc
 
-[*] 78% of all statistics were made up on the spot
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.18 (GNU/Linux)
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+iJwEAQEIAAYFAk5xtMgACgkQfXuS5UK5QB2JSgQApNLxrulpBWUn2ExYa5d9Bclm
+IVHuEXkhPqS9RYNkxaiHkmM5xCt5f4ZGV4Iu+IBNoZ4Pw68NeYuFoa99Gf7UiVkf
++7+2hHNUtW/vNQGv/+oOu2I8N40tWQPrc4c6rqCo+xr3SUMxmCqJ1cmSMECnUwMu
+aUoqjm0Vn2Tkh4UXEJQ=
+=otPc
+-----END PGP SIGNATURE-----
+
+--Sig_/IHoEq1YxKCLFuDllGJTgp65--
