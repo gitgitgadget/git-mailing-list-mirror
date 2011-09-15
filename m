@@ -1,78 +1,68 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [Survey] Signed push
-Date: Thu, 15 Sep 2011 13:50:50 -0400
-Message-ID: <20110915175050.GA20495@sigill.intra.peff.net>
-References: <7vaaa8xufi.fsf@alter.siamese.dyndns.org>
- <CACsJy8Dwu2U-7eEZU-VYmcrA7JwtvUkJS5SywXjZWoE1twchhQ@mail.gmail.com>
- <20110914210512.GA20294@elie>
- <CACsJy8BEES2j8K1v23RQQS=R1vRm1SVizBGFzq0wsDcMvC6Fjw@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Honor core.ignorecase for attribute patterns
+Date: Thu, 15 Sep 2011 14:12:58 -0400
+Message-ID: <20110915181258.GA1227@sigill.intra.peff.net>
+References: <5XXEFw0WjtXKd9dpXSxpkskCcgVyG9Db1_zzVSEBNey-kpXSBbmQfYaxZ2Szg6Pbck6hZZTQ5hHzBwG4rhKYXshrdmveEFLPZ9W0V8P_lw@cipher.nrlssc.navy.mil>
+ <1316051979-19671-1-git-send-email-drafnel@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 15 19:50:58 2011
+Cc: git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
+	bharrosh@panasas.com, trast@student.ethz.ch, zapped@mail.ru
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 15 20:13:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4G5R-0006fC-LC
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 19:50:57 +0200
+	id 1R4GQs-00008Y-H4
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 20:13:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934272Ab1IORux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Sep 2011 13:50:53 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41307
+	id S934377Ab1IOSNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Sep 2011 14:13:00 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51970
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934040Ab1IORuw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2011 13:50:52 -0400
-Received: (qmail 23273 invoked by uid 107); 15 Sep 2011 17:51:46 -0000
+	id S934271Ab1IOSNA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2011 14:13:00 -0400
+Received: (qmail 24216 invoked by uid 107); 15 Sep 2011 18:13:53 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Sep 2011 13:51:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Sep 2011 13:50:50 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Sep 2011 14:13:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Sep 2011 14:12:58 -0400
 Content-Disposition: inline
-In-Reply-To: <CACsJy8BEES2j8K1v23RQQS=R1vRm1SVizBGFzq0wsDcMvC6Fjw@mail.gmail.com>
+In-Reply-To: <1316051979-19671-1-git-send-email-drafnel@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181483>
 
-On Thu, Sep 15, 2011 at 08:42:40AM +1000, Nguyen Thai Ngoc Duy wrote:
+On Wed, Sep 14, 2011 at 08:59:35PM -0500, Brandon Casey wrote:
 
-> Yes, I think we can do that already. It's just more convenient to
-> teach "git fetch/pull" to take pull requests and automatically verify
-> them. Some repositories may also want to enforce signing and we can do
-> that by setting config file and fetch/pull refuses if pull requests
-> are not signed. We can also store the sign as git notes, just like in
-> git-push (extra work if it has to be done manually).
+> > I haven't even tested that it runs. :)  No, I was hoping someone
+> > who was more interested would finish it, and maybe even test on
+> > an affected system.
+> 
+> Ok, I lied.  Here's a series that needs testing by people on a
+> case-insensitive filesystem and some comments.
 
-Isn't there a human element in the verification? I.e., I see a pull
-request, and we can computationally verify that it is signed by some
-key. Now assuming GPG's web of trust works, that binds that key to an
-email address and a real name. But how is that bound to the repository
-you are actually fetching from (or more appropriately, that the commits
-mentioned are appropriate to be pulled)?
+Thanks. I was trying to decide if I was interested enough to work on it,
+but procrastination wins again.
 
-That is a policy that the human must decide upon seeing "Oh, a pull
-request from developer X; I should pull that into my local branch Y",
-and which they do implicitly when they manually run the pull command
-mentioned in the email.
+I'm not sure I understand why you need a case-insensitive file system
+for the final set of tests. If we have a case-sensitive system, we can
+force the filesystem to show us whatever cases we want, and check
+against them with both core.ignorecase off and on[1]. What are these
+tests checking that requires the actual behavior of a case-insensitive
+filesystem?
 
-Another way to think of it is that verifying the identity of the sender
-(which GPG does) is only one step. You also need an ACL saying that the
-sender is worth pulling from.
-
-So either:
-
-  1. The human is still in the loop, in which case having git-pull
-     verify the sender's identity hasn't really done anything (because
-     probably their MUA already told them it was really from the
-     purported sender, and then they made the ACL decision in their head
-     before deciding to pull from you).
-
-  2. The human is not in the loop, and nothing is checking that ACL.
+I'm sure there is something subtle that I'm missing. Can you explain it
+either here or in the commit message?
 
 -Peff
+
+[1] Actually, I wondered at first if the other tests needed to be marked
+for only case-sensitive systems, since we can't rely on the behavior of
+insensitive ones (e.g., are they case-preserving, always downcasing,
+etc). But looking at t0003, we don't seem to actually create the files
+in the filesystem at all.
