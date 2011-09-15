@@ -1,69 +1,78 @@
-From: P Rouleau <prouleau72@gmail.com>
-Subject: Re: Setting up Git Server
-Date: Thu, 15 Sep 2011 12:11:05 +0000 (UTC)
-Message-ID: <loom.20110915T140243-187@post.gmane.org>
-References: <CAOZxsTqFfOR+Eb3rqz5hZSJRTe=a1N-CEM--GGGGO2yayT-HLA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [Survey] Signed push
+Date: Thu, 15 Sep 2011 13:50:50 -0400
+Message-ID: <20110915175050.GA20495@sigill.intra.peff.net>
+References: <7vaaa8xufi.fsf@alter.siamese.dyndns.org>
+ <CACsJy8Dwu2U-7eEZU-VYmcrA7JwtvUkJS5SywXjZWoE1twchhQ@mail.gmail.com>
+ <20110914210512.GA20294@elie>
+ <CACsJy8BEES2j8K1v23RQQS=R1vRm1SVizBGFzq0wsDcMvC6Fjw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 15 19:50:15 2011
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 15 19:50:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4G4k-0006DZ-Kn
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 19:50:14 +0200
+	id 1R4G5R-0006fC-LC
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 19:50:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934095Ab1IORuH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Sep 2011 13:50:07 -0400
-Received: from lo.gmane.org ([80.91.229.12]:38983 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934054Ab1IORuH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2011 13:50:07 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1R4G4a-00068J-IR
-	for git@vger.kernel.org; Thu, 15 Sep 2011 19:50:04 +0200
-Received: from modemcable176.18-203-24.mc.videotron.ca ([24.203.18.176])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 15 Sep 2011 19:50:04 +0200
-Received: from prouleau72 by modemcable176.18-203-24.mc.videotron.ca with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 15 Sep 2011 19:50:04 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 24.203.18.176 (Opera/9.80 (Windows NT 6.0; U; en) Presto/2.9.168 Version/11.51)
+	id S934272Ab1IORux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Sep 2011 13:50:53 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41307
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934040Ab1IORuw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2011 13:50:52 -0400
+Received: (qmail 23273 invoked by uid 107); 15 Sep 2011 17:51:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Sep 2011 13:51:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Sep 2011 13:50:50 -0400
+Content-Disposition: inline
+In-Reply-To: <CACsJy8BEES2j8K1v23RQQS=R1vRm1SVizBGFzq0wsDcMvC6Fjw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181482>
 
-Joshua Stoutenburg <jehoshua02 <at> gmail.com> writes:
+On Thu, Sep 15, 2011 at 08:42:40AM +1000, Nguyen Thai Ngoc Duy wrote:
 
->=20
-> Looking for some guidance in setting up a git server customized to my
-> specific needs. =C2=A0Could anybody walk me through the process?
->=20
-> I have a VirtualBox VM server on which I want to set up a cluster of =
-VMs
-> each one for a different purpose -- experimentation, web hosting, and=
-,
-> of course, git.
->=20
-> I'm using Ubuntu 10.04 LTS for the operating system. =C2=A0I have a s=
-ingle
-> public ip address.
+> Yes, I think we can do that already. It's just more convenient to
+> teach "git fetch/pull" to take pull requests and automatically verify
+> them. Some repositories may also want to enforce signing and we can do
+> that by setting config file and fetch/pull refuses if pull requests
+> are not signed. We can also store the sign as git notes, just like in
+> git-push (extra work if it has to be done manually).
 
-As you are using VMs, you should have a look at Turnkey-Linux
-(http://turnkey-linux.com/). They offer ready-to-use linux appliances,=20
-which are based on Ubuntu.=20
+Isn't there a human element in the verification? I.e., I see a pull
+request, and we can computationally verify that it is signed by some
+key. Now assuming GPG's web of trust works, that binds that key to an
+email address and a real name. But how is that bound to the repository
+you are actually fetching from (or more appropriately, that the commits
+mentioned are appropriate to be pulled)?
 
-There is two for code revision which already include git, hg and subver=
-sion.
-There is also others appliances made to be web server.
+That is a policy that the human must decide upon seeing "Oh, a pull
+request from developer X; I should pull that into my local branch Y",
+and which they do implicitly when they manually run the pull command
+mentioned in the email.
+
+Another way to think of it is that verifying the identity of the sender
+(which GPG does) is only one step. You also need an ACL saying that the
+sender is worth pulling from.
+
+So either:
+
+  1. The human is still in the loop, in which case having git-pull
+     verify the sender's identity hasn't really done anything (because
+     probably their MUA already told them it was really from the
+     purported sender, and then they made the ACL decision in their head
+     before deciding to pull from you).
+
+  2. The human is not in the loop, and nothing is checking that ACL.
+
+-Peff
