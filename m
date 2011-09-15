@@ -1,51 +1,56 @@
-From: Brad King <brad.king@kitware.com>
-Subject: Re: [PATCH] t6019: avoid refname collision on case-insensitive systems
-Date: Thu, 15 Sep 2011 08:45:50 -0400
-Message-ID: <4E71F37E.4030106@kitware.com>
-References: <02451a2849fc8f1cab7983b6c8c629ebb6a1aaa9.1316075573.git.trast@student.ethz.ch>
+From: Ted Ts'o <tytso@mit.edu>
+Subject: Re: Anybody home?
+Date: Thu, 15 Sep 2011 08:55:10 -0400
+Message-ID: <20110915125510.GF15782@thunk.org>
+References: <CAOZxsTq1crC0zeMpFGMafG8HXu168gkK2-KDnpwLoamRLJshjg@mail.gmail.com>
+ <CAMOZ1BtpzsxGLzrZs2YbNP174mm3vfLCteencKSepDR329jjBQ@mail.gmail.com>
+ <CAOZxsTrsi5mNdm8OgvfXyYwj1T4Vw3HfQGN-5Dsb+QnX0nz4ag@mail.gmail.com>
+ <CAOZxsTr+mC9cajGa21d1sqKBEB+sUhsBOHoTuVj1D+6uTFTL6g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Sep 15 14:46:08 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Witten <mfwitten@gmail.com>, Git List <git@vger.kernel.org>
+To: Joshua Stoutenburg <jehoshua02@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 15 14:55:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4BKR-00042k-TO
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 14:46:08 +0200
+	id 1R4BTN-0008RV-AC
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 14:55:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933531Ab1IOMqA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Sep 2011 08:46:00 -0400
-Received: from na3sys009aog102.obsmtp.com ([74.125.149.69]:54969 "HELO
-	na3sys009aog102.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S933504Ab1IOMp7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2011 08:45:59 -0400
-Received: from mail-gy0-f169.google.com ([209.85.160.169]) (using TLSv1) by na3sys009aob102.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKTnHzhEW3m0KU6jTb3fhzZ9LZrvKvMpBr@postini.com; Thu, 15 Sep 2011 05:45:59 PDT
-Received: by mail-gy0-f169.google.com with SMTP id 6so2464298gya.0
-        for <git@vger.kernel.org>; Thu, 15 Sep 2011 05:45:56 -0700 (PDT)
-Received: by 10.150.144.21 with SMTP id r21mr1137557ybd.125.1316090756726;
-        Thu, 15 Sep 2011 05:45:56 -0700 (PDT)
-Received: from [192.168.100.107] (cpe-74-67-54-254.nycap.res.rr.com [74.67.54.254])
-        by mx.google.com with ESMTPS id u13sm15014107anf.14.2011.09.15.05.45.53
-        (version=SSLv3 cipher=OTHER);
-        Thu, 15 Sep 2011 05:45:54 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
-In-Reply-To: <02451a2849fc8f1cab7983b6c8c629ebb6a1aaa9.1316075573.git.trast@student.ethz.ch>
+	id S933640Ab1IOMzO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Sep 2011 08:55:14 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:58719 "EHLO
+	test.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933473Ab1IOMzN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2011 08:55:13 -0400
+Received: from root (helo=tytso-glaptop.cam.corp.google.com)
+	by test.thunk.org with local-esmtp (Exim 4.69)
+	(envelope-from <tytso@thunk.org>)
+	id 1R4BTE-0006DF-I3; Thu, 15 Sep 2011 12:55:12 +0000
+Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1R4BTC-0002Pe-6w; Thu, 15 Sep 2011 08:55:10 -0400
+Content-Disposition: inline
+In-Reply-To: <CAOZxsTr+mC9cajGa21d1sqKBEB+sUhsBOHoTuVj1D+6uTFTL6g@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on test.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181465>
 
-On 9/15/2011 4:34 AM, Thomas Rast wrote:
-> The criss-cross tests kept failing for me because of collisions of 'a'
-> with 'A' etc.  Prefix the lowercase refnames with an extra letter to
-> disambiguate.
+On Wed, Sep 14, 2011 at 10:06:58PM -0700, Joshua Stoutenburg wrote:
+> Also, I noticed the entire kernel.org website is down.  Any idea how
+> long it's been like that or when/if it will come back up?  What's
+> Linus up to?
 
-Thanks.
+It's down for maintenance after a security breach.
 
--Brad
+     https://lwn.net/Articles/458099/
+
+						- Ted
