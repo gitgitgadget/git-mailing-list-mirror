@@ -1,87 +1,115 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <carlos@cmartin.tk>
-Subject: Re: git gc exit with out of memory, malloc failed error
-Date: Thu, 15 Sep 2011 11:16:13 +0200
-Message-ID: <1316078174.2019.15.camel@bee.lab.cmartin.tk>
-References: <CAGAhT3mbGB-0q3EKh5MrGqB59wUea7NfaaY18DvnL3qimwh9QA@mail.gmail.com>
-	 <CA+sFfMcfy=GCFrCjonQXvXRQu=hLjDvQViJJ75xqa72Gb23MgQ@mail.gmail.com>
-	 <CA+sFfMdXLkSE_RXB28TSx0JpPVjwe1Rf+03TkiT2YJjYH7m9MQ@mail.gmail.com>
+From: Joshua Stoutenburg <jehoshua02@gmail.com>
+Subject: Re: Anybody home?
+Date: Thu, 15 Sep 2011 02:42:45 -0700
+Message-ID: <CAOZxsTrxPZ1V+_W=trRpOTJ9emh8msreGOyAYm_1hs0zXaOd1w@mail.gmail.com>
+References: <CAOZxsTq1crC0zeMpFGMafG8HXu168gkK2-KDnpwLoamRLJshjg@mail.gmail.com>
+	<4E71A5FF.5040807@viscovery.net>
+	<201109150948.09040.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-MwHSGJYJIKKs8ZOn37y0"
-Cc: git@vger.kernel.org, Alexander Kostikov <alex.kostikov@gmail.com>
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 15 11:16:21 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Git List <git@vger.kernel.org>
+To: Joshua Stoutenburg <jehoshua02@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 15 11:42:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R483R-0000Xm-0L
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 11:16:21 +0200
+	id 1R48T8-0002Eo-3V
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 11:42:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755770Ab1IOJQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Sep 2011 05:16:16 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:57727 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755752Ab1IOJQP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2011 05:16:15 -0400
-Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 38636460AC;
-	Thu, 15 Sep 2011 11:15:56 +0200 (CEST)
-In-Reply-To: <CA+sFfMdXLkSE_RXB28TSx0JpPVjwe1Rf+03TkiT2YJjYH7m9MQ@mail.gmail.com>
-X-Mailer: Evolution 3.0.3- 
+	id S932318Ab1IOJmt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Sep 2011 05:42:49 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:44162 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932088Ab1IOJms convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2011 05:42:48 -0400
+Received: by eya28 with SMTP id 28so225330eya.19
+        for <git@vger.kernel.org>; Thu, 15 Sep 2011 02:42:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=g7SEMwbza4rTWqw5bRUx/e+da9gebVWETv4mgf2mYCI=;
+        b=lmy1zI3Rebzuqbb63Hv/x1EhOttD2B6s8BStOMvMriLyX5a7KCYFv2AQWKGqgZuXSl
+         juMqg6uFqcHzkaHjhsWC31OsUE0DVxmdslUO7frhKdlOjZbbHq2B6DckrKs9FFrRZzak
+         G/fwn1iY/QhhYdcp6ZBGhbs5RmcpffR++k/K0=
+Received: by 10.213.26.135 with SMTP id e7mr320936ebc.129.1316079765651; Thu,
+ 15 Sep 2011 02:42:45 -0700 (PDT)
+Received: by 10.213.16.195 with HTTP; Thu, 15 Sep 2011 02:42:45 -0700 (PDT)
+In-Reply-To: <201109150948.09040.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181451>
 
+On Thu, Sep 15, 2011 at 12:48 AM, Thomas Rast <trast@student.ethz.ch> w=
+rote:
+> Johannes Sixt wrote:
+>> Even when you want to exchange your commits between two or three mac=
+hines,
+>> all you need is ssh access. There is no *git server* necessary. git =
+is not
+>> svn. ;-)
+>
+> I'd even put this somewhat more bluntly. =A0My two-step advice on
+> switching from svn to git is:
+>
+> 1) forget *everything* you know from SVN
+> 2) learn git as usual
+>
+> I don't hang out on IRC as much any more, so maybe it got better. =A0=
+But
+> 90%[*] of SVN convert's problems seem to stem from some preconceived
+> notions they carried over from SVN.
+>
+> Such as, "HEAD is the newest commit". =A0Or the whole centralized
+> vs. distributed you mentioned.
+>
+>
+>
+> [*] 78% of all statistics were made up on the spot
+>
+> --
+> Thomas Rast
+> trast@{inf,student}.ethz.ch
+>
 
---=-MwHSGJYJIKKs8ZOn37y0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+How can I "learn git as usual"?
 
-On Wed, 2011-09-14 at 21:29 -0500, Brandon Casey wrote:
-> [resend since gmail's Rich formatting was enabled]
->=20
-> On Wed, Sep 14, 2011 at 8:33 PM, Alexander Kostikov
-> <alex.kostikov@gmail.com> wrote:
-> >
-> > I'm new to git and I'm getting the following out of memory error on git=
- gc:
-> >
-> > $ git gc
-> > Counting objects: 80818, done.
-> > Delta compression using up to 8 threads.
-> > fatal: Out of memory, malloc failed (tried to allocate 24359675 bytes)
-> > error: failed to run repack
->=20
-> Try reducing the number of threads that are used.  You must have some
-> pretty large objects if you have 24GB and ran out of memory.  The
+I don't think I was on Subversion long enough to permanently damage my
+brain.  Only a few months (actually . . . that's probably enough).  I
+never used it's branching, tagging or merging features.  Commit and
+revert were the only that I used.  Regardless, I'm happy to forget
+everything I know about Subversion.
 
-IIRC the 32-bit Windows builds limit each user process to 2GB. If
-msysgit is built in 32-bit mode, it's possible (probable even, in order
-to remain backwards-compatible) that it's hitting this limit, rather
-than the physical limit of the machine. If it's using 8 threads, it
-means that there are 256MB available for each thread.
+I've watched Linus Torvalds tech talk on git:
+http://www.youtube.com/watch?v=3D4XpnKHJAok8
+I also read four and a half chapters of Pro Git pdf:
+http://progit.org/ebook/progit.pdf
+I read and understood git for computer scientists:
+http://eagain.net/articles/git-for-computer-scientists/
 
-   cmn
+So I have a pretty good understanding why git is THE superior source
+code management choice.  And I have a basic understanding of how git
+works.  I know how to install a *nix server and can survive on the
+CLI.
 
---=-MwHSGJYJIKKs8ZOn37y0
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
+Here's where I think I'm having some troubles, and maybe you can help
+me identify any others:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+I got confused in Chapter 5 of the Pro Git pdf book, trying to discern
+what needs to be done on the server, and what needs to be done on the
+work station.  The chapter seems to jump around a bit, and doesn't
+follow a linear pattern.  Maybe I need to read it more carefully?
 
-iQEcBAABAgAGBQJOccJdAAoJEHKRP1jG7ZzTCGoIAI7ATxyBlNzIyJvImKB+Ej+v
-m531LDW8XpHZnMSKBiUWXS4CLCcYpc7iAsweJgW1rqdugMcihfiryFmVHgJv8xzn
-cauU6usMTj6ZIon8REfJRmrGsXgHF8JzdpgkxZZF454y9K8MdBRSLEvehoiv9jaP
-B5ogqEn7Vn8AkaLzHsHl3kbiNdhWOQBDl18U8DI6Xv8vWm4MuOM7S1PdZ4Vguwv3
-U0ZRNNhVe8NLFHKFa8pfJScdvMYb3CvX2tQtLMXoDxgEMNmwfDA22R9rsIPm+q31
-PpVePxp0Pqhg++M5pYnQQNuxnHC0vwn/l5wR7NPvyMvowqw3/U/GV2UVZgGLsGQ=
-=Qdm1
------END PGP SIGNATURE-----
+Also, I'm not clear on the best way to manage large numbers of git
+users (like 12-24), who also may have permissions to other services as
+well (ftp, databases, email, etc).  I have some hesitancy creating
+each one manually on the CLI.
 
---=-MwHSGJYJIKKs8ZOn37y0--
+=46inally, I'm not sure how to "learn git as usual".  Point me in the
+right direction, please.
