@@ -1,553 +1,108 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH] contrib: add a pair of credential helpers for Mac OS X's keychain
-Date: Wed, 14 Sep 2011 22:51:53 -0400
-Message-ID: <1316055113-2353-1-git-send-email-jaysoffian@gmail.com>
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	John Szakmeister <john@szakmeister.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 15 04:59:02 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-rebase skips automatically no more needed commits
+Date: Wed, 14 Sep 2011 20:41:11 -0700
+Message-ID: <7vwrdaqxpk.fsf@alter.siamese.dyndns.org>
+References: <CAC9WiBg9+30NjO+NKXVdBiWjR-HU2689JQqVY7Rk5+DM7MiNBg@mail.gmail.com>
+ <7v1uvta97o.fsf@alter.siamese.dyndns.org>
+ <CAC9WiBjrfJeJ854dkJMPwRSwuujRsYLnAd7QX7C_oU8_FdOvQA@mail.gmail.com>
+ <4E676F6A.3060906@drmicha.warpmail.net>
+ <CAC9WiBi_bkLNJZckq2fr3eb6ie+KVfauE_PyA3GcaW5Ga-isFw@mail.gmail.com>
+ <7vk49k48q4.fsf@alter.siamese.dyndns.org>
+ <CAC9WiBjMUg3SUOP9AJw6qCKrGVLs6Qy_O2fQa_SHX30NkjAEdw@mail.gmail.com>
+ <alpine.DEB.2.00.1109080753460.12564@debian>
+ <CAC9WiBiMYUfaPtrXyW=W7qaZnJqLeFO-B3od7X4u8wUrb8hfUA@mail.gmail.com>
+ <alpine.DEB.2.00.1109082123300.12564@debian>
+ <CAC9WiBhApjEr-NYm9NkyXaZPNCivoJ65c=xx2bg5Li60kfZMTQ@mail.gmail.com>
+ <alpine.DEB.2.00.1109090900301.12564@debian>
+ <alpine.DEB.2.00.1109122139110.12564@debian>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Francis Moreau <francis.moro@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 15 05:41:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R42AG-0004g2-JK
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 04:59:01 +0200
+	id 1R42pL-0006BM-1O
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 05:41:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753997Ab1IOC6z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Sep 2011 22:58:55 -0400
-Received: from mail-vw0-f45.google.com ([209.85.212.45]:61247 "EHLO
-	mail-vw0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753932Ab1IOC6y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2011 22:58:54 -0400
-X-Greylist: delayed 407 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Sep 2011 22:58:53 EDT
-Received: by vws17 with SMTP id 17so3845592vws.4
-        for <git@vger.kernel.org>; Wed, 14 Sep 2011 19:58:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=CMvMeEZQbPKZgOwG2YfqPe6zcBwGqR99BoeoS1FWEdM=;
-        b=cFPvvnBe0P/hpH/6j0rFHJgeihA3hTgOzA4KkX3HhTgSPGsOLpXgeAQLoQYfJ3i0uQ
-         nolADGiUjDR+aLEWmdt4wReGArvj4dezDFtfhg5VUzDS5DbcJbfKzldcTqckS5L0xqRk
-         ElUZtACDYMW47CKieTWSbzRlNhP0H0kKcdKXY=
-Received: by 10.52.96.35 with SMTP id dp3mr510898vdb.321.1316055125659;
-        Wed, 14 Sep 2011 19:52:05 -0700 (PDT)
-Received: from localhost (cpe-174-097-218-168.nc.res.rr.com. [174.97.218.168])
-        by mx.google.com with ESMTPS id ef8sm1777965vdc.24.2011.09.14.19.52.04
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 14 Sep 2011 19:52:05 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7.rc1.1.g011e1
+	id S1754173Ab1IODlQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Sep 2011 23:41:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62560 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754112Ab1IODlP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2011 23:41:15 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 74B575621;
+	Wed, 14 Sep 2011 23:41:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yZSdeMPHu0aDDcZD/vN6HBv2nSc=; b=oRGwjs
+	FjAfg1xjbw8HJKOHr2KSHJX6xXKW9kHjfpvlUFdI9AY2TTFU0uZOtl/nGDN5beEl
+	rVnm/NSmkOG1kQFgJH+f2mIQyxP8Jag2xPnI2+4xbIKtxII90NArW8oKc1521qOU
+	kXMDhkZg5cAtoesDfCtfY1x689YOmuQwVH4C4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oDo/u4CtKVN/BDrzwd1UDDva3Ogum9fJ
+	6Xxebh5qh4Y12Dr3dM4BmXm4iqCp5cU3U2Nzwijd4DX/rJYTh9W3etBRzlb3LBqY
+	ERtbwCJQ1ptYbCi6u4SoouFCM2oTqW7ZPwgRMbhhZxTdJ2JBq5mVTz+MYeUINf6p
+	nxgs4yePEPs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 69BD65620;
+	Wed, 14 Sep 2011 23:41:13 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C3BFC561F; Wed, 14 Sep 2011
+ 23:41:12 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.00.1109122139110.12564@debian> (Martin von
+ Zweigbergk's message of "Wed, 14 Sep 2011 22:19:39 -0400 (EDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8ED7EBF4-DF4C-11E0-86BA-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181431>
 
-This credential helper adds, searches, and removes entries from
-the Mac OS X keychain. The C version links against the Security
-framework and is probably the best choice for daily use.
+Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
 
-A python version is also included primarily as a more readable
-example and uses the /usr/bin/security CLI to access the keychain.
+>  2. Somehow modify git-rebase--am.sh not to depend on format-patch. In
+>     [1], Junio mentions rewriting git-rebase--am.sh "to have
+>     format-patch avoid the cost of actually generating the patch text"
+>     and "when using "am" for rebasing we do not really care anything
+>     but the commit object names". If all we need is the commit name,
+>     why would we not use cherry-pick/sequencer instead of git-am?
 
-Tested with 10.6.8.
+What I said is "all 'am' need to use from its input while rebasing is the
+commit object name"; that is very different from "we have only commit
+object name so we must use cherry-pick" or "because we have commit object
+name, we can afford to use cherry-pick".
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
-Here's a C version that no longer links to git. I also kept the original
-Python version as an example. I decided not to call out to
-'git credential-gitpass' as it was simple enough to manage /dev/tty
-and there's no portability issues since this is OS X specific.
+Look for $rebasing in git-am.sh and notice that:
 
- contrib/credential-osxkeychain/Makefile            |   14 +
- .../git-credential-osxkeychain.c                   |  300 ++++++++++++++++++++
- .../git-credential-osxkeychain.py                  |  148 ++++++++++
- 3 files changed, 462 insertions(+), 0 deletions(-)
- create mode 100644 contrib/credential-osxkeychain/Makefile
- create mode 100644 contrib/credential-osxkeychain/git-credential-osxkeychain.c
- create mode 100755 contrib/credential-osxkeychain/git-credential-osxkeychain.py
+ - We run get-author-ident-from-commit on $commit to keep the authorship
+   information in $dotest/author-script for later use, instead of letting
+   them read from $dotest/info prepared by "mailinfo".
 
-diff --git a/contrib/credential-osxkeychain/Makefile b/contrib/credential-osxkeychain/Makefile
-new file mode 100644
-index 0000000000..a0a7074cc6
---- /dev/null
-+++ b/contrib/credential-osxkeychain/Makefile
-@@ -0,0 +1,14 @@
-+all:: git-credential-osxkeychain
-+
-+CC = gcc
-+RM = rm -f
-+CFLAGS = -O2 -Wall
-+
-+git-credential-osxkeychain: git-credential-osxkeychain.o
-+	$(CC) -o $@ $< -Wl,-framework -Wl,Security
-+
-+git-credential-osxkeychain.o: git-credential-osxkeychain.c
-+	$(CC) -c $(CFLAGS) $<
-+
-+clean:
-+	$(RM) git-credential-osxkeychain git-credential-osxkeychain.o
-diff --git a/contrib/credential-osxkeychain/git-credential-osxkeychain.c b/contrib/credential-osxkeychain/git-credential-osxkeychain.c
-new file mode 100644
-index 0000000000..2f611f7348
---- /dev/null
-+++ b/contrib/credential-osxkeychain/git-credential-osxkeychain.c
-@@ -0,0 +1,300 @@
-+/* Copyright 2011 Jay Soffian. All rights reserved.
-+ * FreeBSD License.
-+ *
-+ * A git credential helper that interfaces with the Mac OS X keychain
-+ * via the Security framework.
-+ */
-+#include <fcntl.h>
-+#include <stdio.h>
-+#include <string.h>
-+#include <stdlib.h>
-+#include <termios.h>
-+#include <Security/Security.h>
-+
-+static void die(const char *err, ...)
-+{
-+	char msg[4096];
-+	va_list params;
-+	va_start(params, err);
-+	vsnprintf(msg, sizeof(msg), err, params);
-+	fprintf(stderr, "%s\n", msg);
-+	va_end(params);
-+	exit(1);
-+}
-+
-+void *xmalloc(size_t size)
-+{
-+	void *ret = malloc(size);
-+	if (!ret)
-+		die("Out of memory");
-+	return ret;
-+}
-+
-+void *xstrdup(const char *s1)
-+{
-+	void *ret = strdup(s1);
-+	if (!ret)
-+		die("Out of memory");
-+	return ret;
-+}
-+
-+void emit_user_pass(char *username, char *password)
-+{
-+	if (username)
-+		printf("username=%s\n", username);
-+	if (password)
-+		printf("password=%s\n", password);
-+}
-+
-+typedef enum { USERNAME, PASSWORD } prompt_type;
-+
-+void prompt(FILE *file, const char *what, const char *desc)
-+{
-+	if (desc)
-+		fprintf(file, "%s for '%s': ", what, desc);
-+	else
-+		fprintf(file, "%s: ", what);
-+}
-+
-+char *prompt_tty(prompt_type what, char *description)
-+{
-+	struct termios old;
-+	struct termios new;
-+	char buf[128];
-+	int buf_len;
-+	int fd = open("/dev/tty", O_RDWR|O_NOCTTY);
-+	FILE *tty = fdopen(fd, "w+");
-+	if (what == USERNAME) {
-+		prompt(tty, "Username", description);
-+	}
-+	else {
-+		prompt(tty, "Password", description);
-+		tcgetattr(fd, &old);
-+		memcpy(&new, &old, sizeof(struct termios));
-+		new.c_lflag &= ~ECHO;
-+		tcsetattr(fd, TCSADRAIN, &new);
-+	}
-+	if (!fgets(buf, sizeof(buf), tty)) {
-+		fprintf(tty, "\n");
-+		fclose(tty);
-+		return NULL;
-+	}
-+	if (what == PASSWORD) {
-+		tcsetattr(fd, TCSADRAIN, &old);
-+		fprintf(tty, "\n");
-+	}
-+	fclose(tty);
-+	buf_len = strlen(buf);
-+	if (buf[buf_len-1] == '\n')
-+		buf[buf_len-1] = '\0';
-+	return xstrdup(buf);
-+}
-+
-+char *username_from_keychain_item(SecKeychainItemRef item)
-+{
-+	OSStatus status;
-+	SecKeychainAttributeList list;
-+	SecKeychainAttribute attr;
-+	list.count = 1;
-+	list.attr = &attr;
-+	attr.tag = kSecAccountItemAttr;
-+	char *username;
-+
-+	status = SecKeychainItemCopyContent(item, NULL, &list, NULL, NULL);
-+	if (status != noErr)
-+		return NULL;
-+	username = xmalloc(attr.length + 1);
-+	strncpy(username, attr.data, attr.length);
-+	username[attr.length] = '\0';
-+	SecKeychainItemFreeContent(&list, NULL);
-+	return username;
-+}
-+
-+int find_internet_password(SecProtocolType protocol,
-+			   char *hostname,
-+			   char *username)
-+{
-+	void *password_buf;
-+	UInt32 password_len;
-+	OSStatus status;
-+	char *password;
-+	int free_username = 0;
-+	SecKeychainItemRef item;
-+
-+	status = SecKeychainFindInternetPassword(
-+			NULL,
-+			strlen(hostname), hostname,
-+			0, NULL,
-+			username ? strlen(username) : 0, username,
-+			0, NULL,
-+			0,
-+			protocol,
-+			kSecAuthenticationTypeDefault,
-+			&password_len, &password_buf,
-+			&item);
-+	if (status != noErr)
-+		return -1;
-+
-+	password = xmalloc(password_len + 1);
-+	strncpy(password, password_buf, password_len);
-+	password[password_len] = '\0';
-+	SecKeychainItemFreeContent(NULL, password_buf);
-+	if (!username) {
-+		username = username_from_keychain_item(item);
-+		free_username = 1;
-+	}
-+	emit_user_pass(username, password);
-+	if (free_username)
-+		free(username);
-+	free(password);
-+	return 0;
-+}
-+
-+void delete_internet_password(SecProtocolType protocol,
-+			      char *hostname,
-+			      char *username)
-+{
-+	OSStatus status;
-+	SecKeychainItemRef item;
-+
-+	status = SecKeychainFindInternetPassword(
-+			NULL,
-+			strlen(hostname), hostname,
-+			0, NULL,
-+			username ? strlen(username) : 0, username,
-+			0, NULL,
-+			0,
-+			protocol,
-+			kSecAuthenticationTypeDefault,
-+			0, NULL,
-+			&item);
-+	if (status != noErr)
-+		return;
-+	SecKeychainItemDelete(item);
-+}
-+
-+void add_internet_password(SecProtocolType protocol,
-+			   char *hostname,
-+			   char *username,
-+			   char *password,
-+			   char *comment)
-+{
-+	const char *label_format = "%s (%s)";
-+	char *label;
-+	OSStatus status;
-+	SecKeychainItemRef item;
-+	SecKeychainAttributeList list;
-+	SecKeychainAttribute attr;
-+	list.count = 1;
-+	list.attr = &attr;
-+	status = SecKeychainAddInternetPassword(
-+			NULL,
-+			strlen(hostname), hostname,
-+			0, NULL,
-+			strlen(username), username,
-+			0, NULL,
-+			0,
-+			protocol,
-+			kSecAuthenticationTypeDefault,
-+			strlen(password), password,
-+			&item);
-+	if (status != noErr)
-+		return;
-+
-+	/* set the comment */
-+	attr.tag = kSecCommentItemAttr;
-+	attr.data = comment;
-+	attr.length = strlen(comment);
-+	SecKeychainItemModifyContent(item, &list, 0, NULL);
-+
-+	/* override the label */
-+	label = xmalloc(strlen(hostname) + strlen(username) +
-+			strlen(label_format));
-+	sprintf(label, label_format, hostname, username);
-+	attr.tag = kSecLabelItemAttr;
-+	attr.data = label;
-+	attr.length = strlen(label);
-+	SecKeychainItemModifyContent(item, &list, 0, NULL);
-+}
-+
-+int main(int argc, const char **argv)
-+{
-+	const char *usage =
-+		"Usage: git credential-osxkeychain --unique=TOKEN [options]\n"
-+		"Options:\n"
-+		"    --description=DESCRIPTION\n"
-+		"    --username=USERNAME\n"
-+		"    --reject";
-+	char *description = NULL, *username = NULL, *unique = NULL;
-+	char *hostname, *password;
-+	int i, free_username = 0, reject = 0;
-+	SecProtocolType protocol = 0;
-+
-+	for (i = 1; i < argc; i++) {
-+		const char *arg = argv[i];
-+		if (!strncmp(arg, "--description=", 14)) {
-+			description = (char *) arg + 14;
-+		}
-+		else if (!strncmp(arg, "--username=", 11)) {
-+			username = (char *) arg + 11;
-+		}
-+		else if (!strncmp(arg, "--unique=", 9)) {
-+			unique = (char *) arg + 9;
-+		}
-+		else if (!strcmp(arg, "--reject")) {
-+			reject = 1;
-+		}
-+		else if (!strcmp(arg, "--help")) {
-+			die(usage);
-+		}
-+		else
-+			die("Unrecognized argument `%s'; try --help", arg);
-+	}
-+
-+	if (!unique)
-+		die("Must specify --unique=TOKEN; try --help");
-+
-+	hostname = strchr(unique, ':');
-+	if (!hostname)
-+		die("Invalid token `%s'", unique);
-+	*hostname++ = '\0';
-+
-+	/* "GitHub for Mac" compatibility */
-+	if (!strcmp(hostname, "github.com"))
-+		hostname = "github.com/mac";
-+
-+	if (!strcmp(unique, "https")) {
-+		protocol = kSecProtocolTypeHTTPS;
-+	} else if (!strcmp(unique, "http")) {
-+		protocol = kSecProtocolTypeHTTP;
-+	}
-+	else
-+		die("Unrecognized protocol `%s'", unique);
-+
-+	/* if this is a rejection delete the existing creds */
-+	if (reject) {
-+		delete_internet_password(protocol, hostname, username);
-+		return 0;
-+	}
-+
-+	/* otherwise look for a matching keychain item */
-+	if (!find_internet_password(protocol, hostname, username))
-+		return 0;
-+
-+	/* no keychain item found, prompt the user and store the result */
-+	if (!username) {
-+		if (!(username = prompt_tty(USERNAME, description)))
-+			return 0;
-+		free_username = 1;
-+	}
-+	if (!(password = prompt_tty(PASSWORD, description)))
-+		return 0;
-+
-+	add_internet_password(protocol, hostname, username, password,
-+			      description ? description : "default");
-+	emit_user_pass(username, password);
-+	if (free_username)
-+		free(username);
-+	free(password);
-+	return 0;
-+}
-diff --git a/contrib/credential-osxkeychain/git-credential-osxkeychain.py b/contrib/credential-osxkeychain/git-credential-osxkeychain.py
-new file mode 100755
-index 0000000000..ae5ec00d68
---- /dev/null
-+++ b/contrib/credential-osxkeychain/git-credential-osxkeychain.py
-@@ -0,0 +1,148 @@
-+#!/usr/bin/python
-+# Copyright 2011 Jay Soffian. All rights reserved.
-+# FreeBSD License.
-+"""
-+A git credential helper that interfaces with the Mac OS X keychain via
-+/usr/bin/security.
-+"""
-+
-+import os
-+import re
-+import sys
-+import termios
-+from getpass import _raw_input
-+from optparse import OptionParser
-+from subprocess import Popen, PIPE
-+
-+USERNAME = 'USERNAME'
-+PASSWORD = 'PASSWORD'
-+PROMPTS = dict(USERNAME='Username', PASSWORD='Password')
-+
-+def prompt_tty(what, desc):
-+    """Prompt on TTY for username or password with optional description"""
-+    prompt = '%s%s: ' % (PROMPTS[what], " for '%s'" % desc if desc else '')
-+    # Borrowed mostly from getpass.py
-+    fd = os.open('/dev/tty', os.O_RDWR|os.O_NOCTTY)
-+    tty = os.fdopen(fd, 'w+', 1)
-+    if what == USERNAME:
-+        return _raw_input(prompt, tty, tty)
-+    old = termios.tcgetattr(fd) # a copy to save
-+    new = old[:]
-+    new[3] &= ~termios.ECHO  # 3 == 'lflags'
-+    try:
-+        termios.tcsetattr(fd, termios.TCSADRAIN, new)
-+        return _raw_input(prompt, tty, tty)
-+    finally:
-+        termios.tcsetattr(fd, termios.TCSADRAIN, old)
-+        tty.write('\n')
-+
-+def emit_user_pass(username, password):
-+    if username:
-+        print 'username=' + username
-+    if password:
-+        print 'password=' + password
-+
-+def make_security_args(command, protocol, hostname, username):
-+    args = ['/usr/bin/security', command]
-+    # tlfd is 'dflt' backwards - obvious /usr/bin/security bug
-+    # but allows us to ignore matching saved web forms.
-+    args.extend(['-t', 'tlfd'])
-+    args.extend(['-r', protocol])
-+    if hostname:
-+        args.extend(['-s', hostname])
-+    if username:
-+        args.extend(['-a', username])
-+    return args
-+
-+def find_internet_password(protocol, hostname, username):
-+    args = make_security_args('find-internet-password',
-+                              protocol, hostname, username)
-+    args.append('-g') # asks for password on stderr
-+    p = Popen(args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-+    # grok stdout for username
-+    out, err = p.communicate()
-+    if p.returncode != 0:
-+        return
-+    for line in out.splitlines(): # pylint:disable-msg=E1103
-+        m = re.search(r'^\s+"acct"<blob>=[^"]*"(.*)"$', line)
-+        if m:
-+            username = m.group(1)
-+            break
-+    # grok stderr for password
-+    m = re.search(r'^password:[^"]*"(.*)"$', err)
-+    if not m:
-+        return
-+    emit_user_pass(username, m.group(1))
-+    return True
-+
-+def delete_internet_password(protocol, hostname, username):
-+    args = make_security_args('delete-internet-password',
-+                              protocol, hostname, username)
-+    p = Popen(args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-+    p.communicate()
-+
-+def add_internet_password(protocol, hostname, username, password):
-+    # We do this over a pipe so that we can provide the password more
-+    # securely than as an argument which would show up in ps output.
-+    # Unfortunately this is possibly less robust since the security man
-+    # page does not document how to quote arguments. Emprically it seems
-+    # that using the double-quote, escaping \ and " works properly.
-+    username = username.replace('\\', '\\\\').replace('"', '\\"')
-+    password = password.replace('\\', '\\\\').replace('"', '\\"')
-+    command = ' '.join([
-+        'add-internet-password', '-U',
-+        '-r', protocol,
-+        '-s', hostname,
-+        '-a "%s"' % username,
-+        '-w "%s"' % password,
-+        '-j default',
-+        '-l "%s (%s)"' % (hostname, username),
-+    ]) + '\n'
-+    args = ['/usr/bin/security', '-i']
-+    p = Popen(args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-+    p.communicate(command)
-+
-+def main():
-+    p = OptionParser()
-+    p.add_option('--description')
-+    p.add_option('--reject', action='store_true')
-+    p.add_option('--unique', dest='token', help='REQUIRED OPTION')
-+    p.add_option('--username')
-+    opts, _ = p.parse_args()
-+
-+    if not opts.token:
-+        p.error('--unique option required')
-+    if not ':' in opts.token:
-+        print >> sys.stderr, "Invalid token: '%s'" % opts.token
-+        return 1
-+    protocol, hostname = opts.token.split(':', 1)
-+    if protocol not in ('http', 'https'):
-+        print >> sys.stderr, "Unsupported protocol: '%s'" % protocol
-+        return 1
-+    if protocol == 'https':
-+        protocol = 'htps'
-+
-+    # "GitHub for Mac" compatibility
-+    if hostname == 'github.com':
-+        hostname = 'github.com/mac'
-+
-+    # if this is a rejection delete the existing creds
-+    if opts.reject:
-+        delete_internet_password(protocol, hostname, opts.username)
-+        return 0
-+
-+    # otherwise look for creds
-+    if find_internet_password(protocol, hostname, opts.username):
-+        return 0
-+
-+    # creds not found, so prompt the user then store the creds
-+    username = opts.username
-+    if username is None:
-+        username = prompt_tty(USERNAME, opts.description)
-+    password = prompt_tty(PASSWORD, opts.description)
-+    add_internet_password(protocol, hostname, username, password)
-+    emit_user_pass(username, password)
-+    return 0
-+
-+if __name__ == '__main__':
-+    sys.exit(main())
--- 
-1.7.7.rc1.1.g011e1
+ - My "fixing it would be just the matter of doing this" patch in a
+   separate thread we had recently ("mailinfo" would obviously have
+   trouble telling where the message ends whilerebasing a change with
+   patch text in the commit log message) adds a similar logic to extract
+   the patch text out of $commit in the same place as above, to override
+   what "mailinfo" prepares in $dotest/patch.
+
+ - Even with the above two differences from the normal "separate the
+   metainfo and patch from the mailbox, and use them" codepath, $rebasing
+   codepath uses the same "git apply && git write-tree && git commit-tree"
+   flow.
+
+Use of "apply && write-tree && commit-tree" is to avoid the merge overhead
+of using cherry-pick, and historically, it used to matter a lot, because
+starting merge-recursive was very slow (it was a Python script). Even
+though we have merge-recursive rewritten in C these days, it probably
+still matters, especially for large-ish projects, because merge will trash
+the cached-tree information in the index, making write-tree inefficient.
