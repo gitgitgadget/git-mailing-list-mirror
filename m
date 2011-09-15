@@ -1,56 +1,61 @@
-From: Ted Ts'o <tytso@mit.edu>
-Subject: Re: Anybody home?
-Date: Thu, 15 Sep 2011 08:55:10 -0400
-Message-ID: <20110915125510.GF15782@thunk.org>
-References: <CAOZxsTq1crC0zeMpFGMafG8HXu168gkK2-KDnpwLoamRLJshjg@mail.gmail.com>
- <CAMOZ1BtpzsxGLzrZs2YbNP174mm3vfLCteencKSepDR329jjBQ@mail.gmail.com>
- <CAOZxsTrsi5mNdm8OgvfXyYwj1T4Vw3HfQGN-5Dsb+QnX0nz4ag@mail.gmail.com>
- <CAOZxsTr+mC9cajGa21d1sqKBEB+sUhsBOHoTuVj1D+6uTFTL6g@mail.gmail.com>
+From: Dmitry Ivankov <divanorama@gmail.com>
+Subject: Re: Fwd: vcs-svn and friends
+Date: Thu, 15 Sep 2011 19:00:04 +0600
+Message-ID: <CA+gfSn9KVN2iDCevd0s+TjYHNupDez8NiKZycP3pgBCkYiraFQ@mail.gmail.com>
+References: <CAFfmPPOBZ6cXG51mDHbj2VRDzjvH46Q7=_LvUWeMq0SGR40S1g@mail.gmail.com>
+	<20110915100106.GB2328@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Witten <mfwitten@gmail.com>, Git List <git@vger.kernel.org>
-To: Joshua Stoutenburg <jehoshua02@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 15 14:55:22 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Michael Barr <davidbarr@google.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 15 15:01:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4BTN-0008RV-AC
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 14:55:21 +0200
+	id 1R4BZC-0002pj-6h
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 15:01:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933640Ab1IOMzO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Sep 2011 08:55:14 -0400
-Received: from li9-11.members.linode.com ([67.18.176.11]:58719 "EHLO
-	test.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933473Ab1IOMzN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2011 08:55:13 -0400
-Received: from root (helo=tytso-glaptop.cam.corp.google.com)
-	by test.thunk.org with local-esmtp (Exim 4.69)
-	(envelope-from <tytso@thunk.org>)
-	id 1R4BTE-0006DF-I3; Thu, 15 Sep 2011 12:55:12 +0000
-Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
-	(envelope-from <tytso@thunk.org>)
-	id 1R4BTC-0002Pe-6w; Thu, 15 Sep 2011 08:55:10 -0400
-Content-Disposition: inline
-In-Reply-To: <CAOZxsTr+mC9cajGa21d1sqKBEB+sUhsBOHoTuVj1D+6uTFTL6g@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on test.thunk.org); SAEximRunCond expanded to false
+	id S933738Ab1IONAH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Sep 2011 09:00:07 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:57000 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933716Ab1IONAF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2011 09:00:05 -0400
+Received: by qyk30 with SMTP id 30so5135107qyk.19
+        for <git@vger.kernel.org>; Thu, 15 Sep 2011 06:00:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=HPIWU/8BzyBwfXEcj3IZwZ4uu+sqP7snAkRW4zSBI4s=;
+        b=aAOeFquAn3Afg7M9JodMl1OyKBua5+rT/cwn+flwNJIbUTxMZss0UWqpytV9oimwG0
+         HIvRLGu1+svNHt++CCHUv/XEuciLIfE3IL7rtgpZlWDSmXm6FxF0lS6lwV1vSa0GrydW
+         2IGM2qg8Fi7NRflA1HIYTyx2BlPkOD4vq/Y4w=
+Received: by 10.229.67.159 with SMTP id r31mr897086qci.92.1316091604782; Thu,
+ 15 Sep 2011 06:00:04 -0700 (PDT)
+Received: by 10.229.224.17 with HTTP; Thu, 15 Sep 2011 06:00:04 -0700 (PDT)
+In-Reply-To: <20110915100106.GB2328@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181466>
 
-On Wed, Sep 14, 2011 at 10:06:58PM -0700, Joshua Stoutenburg wrote:
-> Also, I noticed the entire kernel.org website is down.  Any idea how
-> long it's been like that or when/if it will come back up?  What's
-> Linus up to?
+> =A0- 3bba32e9 ("fast-import: allow top directory as an argument for s=
+ome
+> =A0 commands"): I'm not sure what the motivation is --- is this just
+> =A0 about the principle of least surprise, or did it come up in pract=
+ice
+> =A0 somewhere?
+(to ease one's reading, commands are ls, copy and move top directory)
 
-It's down for maintenance after a security breach.
-
-     https://lwn.net/Articles/458099/
-
-						- Ted
+Haven't seen them in practice. It seemed possible with svn import: if t=
+here were
+no branches at start, and then someone did svn mv . trunk. But it
+turns out that my
+svn client doesn't allow such move. So more like a least surprise purpo=
+se.
