@@ -1,81 +1,85 @@
 From: Joshua Stoutenburg <jehoshua02@gmail.com>
-Subject: zealous git convert determined to set up git server
-Date: Thu, 15 Sep 2011 04:38:36 -0700
-Message-ID: <CAOZxsTqtW=DD7zFwQLjknJR8g0nnh0WPUPna6_np4bVoGnSntQ@mail.gmail.com>
+Subject: Re: Anybody home?
+Date: Thu, 15 Sep 2011 05:01:36 -0700
+Message-ID: <CAOZxsToPY4k4CTsqUxX5t6uTHZXbbTAG7Ty3TjxoeGgj3Jn2gA@mail.gmail.com>
+References: <CAOZxsTq1crC0zeMpFGMafG8HXu168gkK2-KDnpwLoamRLJshjg@mail.gmail.com>
+	<4E71A5FF.5040807@viscovery.net>
+	<CAOZxsTqGt=gYr3t7e5Ma4z6W9wt_JxrgsNSGFGVbtk2rc3LZ9w@mail.gmail.com>
+	<1316079837.2019.18.camel@bee.lab.cmartin.tk>
+	<buoty8e3wjq.fsf@dhlpc061.dev.necel.com>
+	<1316086486.2019.20.camel@bee.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 15 13:38:43 2011
+To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <carlos@cmartin.tk>
+X-From: git-owner@vger.kernel.org Thu Sep 15 14:01:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4AHC-0006DS-UT
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 13:38:43 +0200
+	id 1R4AdW-00087S-8V
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 14:01:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933271Ab1IOLii convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Sep 2011 07:38:38 -0400
-Received: from mail-ew0-f43.google.com ([209.85.215.43]:64983 "EHLO
-	mail-ew0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933075Ab1IOLih convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2011 07:38:37 -0400
-Received: by ewy20 with SMTP id 20so1712785ewy.2
-        for <git@vger.kernel.org>; Thu, 15 Sep 2011 04:38:36 -0700 (PDT)
+	id S933383Ab1IOMBm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Sep 2011 08:01:42 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:37728 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933125Ab1IOMBl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2011 08:01:41 -0400
+Received: by eya28 with SMTP id 28so277754eya.19
+        for <git@vger.kernel.org>; Thu, 15 Sep 2011 05:01:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=k/iOWsFmiSMLyirLdLNyO15ZYTymGKC0j88qQGaaDgE=;
-        b=KO463ABW+GPukeFZp+D0fe/iuU5hvWNuLWAFWTGupc8dSu/14CSQ5Bsh0DghmLPYEO
-         nEt/KanQMdAkqxUVXCNwZw2cn4pKQVpdgVM7JSIEOlUUMThTS9TYKfz5so61c1rEiLZl
-         CHKbGRAIwtcJaiDCacnNAtxB6sfeD4/x9KBaY=
-Received: by 10.213.16.141 with SMTP id o13mr378526eba.91.1316086716531; Thu,
- 15 Sep 2011 04:38:36 -0700 (PDT)
-Received: by 10.213.16.195 with HTTP; Thu, 15 Sep 2011 04:38:36 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=taDzoEgPesOKh0K+x5zxTtVA0I6ufo1SHAmJKxKWrlM=;
+        b=N1RasjIloxhr00DA3S7ja+jXsGLMhFSVvgkXNTCQJAuTKu4tRQzNghRaZywLfpj6co
+         8MyEEXrM8w2AMJRMndSpVXC9RRWlj/kd8RZuHtv9Viwb4qnSIQcVe5nfZcg+7NjdqY3k
+         Bcud4eplh4Uc56UZG9JSJKSF6yOT8s5Rx8CxE=
+Received: by 10.213.21.194 with SMTP id k2mr396151ebb.53.1316088099246; Thu,
+ 15 Sep 2011 05:01:39 -0700 (PDT)
+Received: by 10.213.16.195 with HTTP; Thu, 15 Sep 2011 05:01:36 -0700 (PDT)
+In-Reply-To: <1316086486.2019.20.camel@bee.lab.cmartin.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181462>
 
-Breaking away from previous conversation "Anybody home?"
-
-2011/9/15 Jakub Narebski <jnareb@gmail.com>:
-> I think that either "Pro Git" book, or "The Git Community Book"
-> would be a best source to learn about setting-up git server.
+On Thu, Sep 15, 2011 at 4:34 AM, Carlos Mart=EDn Nieto <carlos@cmartin.=
+tk> wrote:
+> On Thu, 2011-09-15 at 19:54 +0900, Miles Bader wrote:
+>> Carlos Mart=EDn Nieto <carlos@cmartin.tk> writes:
+>> > If the code shouldn't be made public, then you should take a look =
+at
+>> > gitolite[0]. Otherwise, you can just host it on gitorious.org or
+>> > github.com
+>>
+>> Hmm, of course if you're willing to pay, github will also host priva=
+te
 >
-> I think the simplest solution for git hosting management would be to
-> use gitolite (there are other git repository management software:
-> Gitosis, SCM Manager, Gitblit).
+> Indeed, if you give them a bit of money they'll take care of everythi=
+ng
+> and you can have your private code there.
 >
-> If you want to host something like GitHub, there are open source
-> solutions too: Gitorious, InDefero, Girocco + gitweb,...
+>> code (maybe useful if your devs love teh shiny......).
 >
-> HTH
-> --
-> Jakub Nar=C4=99bski
+> Teh Shiny is powerful :)
+>
+> =A0 cmn
 >
 >
 
-I totally didn't see "The Git Community Book".  There's no link for it
-where I was looking: http://git-scm.com/documentation
+Unfamiliar with the term "Teh Shiny". Had to look it up.  Found this:
+http://www.claassen.net/geek/blog/2009/09/teh-shiny.html
 
-As for setting up a work station, I found a pretty good guide at GitHub=
-:
-Windows: http://help.github.com/win-set-up-git/
-Linux: http://help.github.com/linux-set-up-git/
+I think I have a tendency to avoid "Teh Shiny" because it ruins all the=
+ fun.
 
-Question 1: With both "Pro Git" and "The Git Community Book", has
-anybody noticed any major discrepancies between the pdf and online
-versions?  I'd like to place the pdf versions on my mobile device for
-travel reading.
+I think I could easily figure out how to host my own repos, save some
+money, and have my own "Teh Shiny".
 
-Question 2: It seems gitolite is the popular choice for git user
-management.  Any reason why?
-
-Question 3: So, Gitorious is more than just a repository hosting
-website?  It's also an open source repository hosting platform, which
-powers the Gitorious website?  That's pretty cool.
+If I didn't care about saving money, and had a project that needed a
+repo immediately, I'd probably give in and pay a little.
