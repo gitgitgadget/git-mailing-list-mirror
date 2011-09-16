@@ -1,67 +1,51 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] ls-remote: a lone "-h" is asking for help
-Date: Fri, 16 Sep 2011 22:34:24 +0200
-Message-ID: <CAGdFq_jc4YDaD+NL6_+buCrOt2yAK+-_MDOJQU5qnS13P65CzQ@mail.gmail.com>
-References: <7vobykfj7g.fsf@alter.siamese.dyndns.org> <CAGdFq_h474OrLzP+CHj_eSdSp53n8x7jz1ORT16dOhvRdQMP+g@mail.gmail.com>
- <7vehzgfffw.fsf@alter.siamese.dyndns.org> <CAGdFq_hug3zNwvDZ3c8iG-F8jJSuxsuFghMWtWTmUTdfTrWiqg@mail.gmail.com>
- <7v1uvgfcur.fsf@alter.siamese.dyndns.org>
+From: Andreas Krey <a.krey@gmx.de>
+Subject: Re: zealous git convert determined to set up git server
+Date: Fri, 16 Sep 2011 22:40:32 +0200
+Message-ID: <20110916204032.GA13922@inner.h.iocl.org>
+References: <CAOZxsTqtW=DD7zFwQLjknJR8g0nnh0WPUPna6_np4bVoGnSntQ@mail.gmail.com> <CAMK1S_jK2w8v4ushsZztQ0QY-eZq8axso-DpmCCvA=Gp7iXkBg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 16 22:35:14 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 16 22:40:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4f7w-0003jg-Qo
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 22:35:13 +0200
+	id 1R4fDG-0006MP-0Z
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 22:40:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755284Ab1IPUfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Sep 2011 16:35:07 -0400
-Received: from mail-gw0-f42.google.com ([74.125.83.42]:45716 "EHLO
-	mail-gw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755256Ab1IPUfG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2011 16:35:06 -0400
-Received: by gwb17 with SMTP id 17so4928116gwb.1
-        for <git@vger.kernel.org>; Fri, 16 Sep 2011 13:35:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=gpARS+TywcYMor9K13w0FRyJYZV3i+zFTCS4Roo4N2s=;
-        b=tvKRSXXsaxjmqz41lCf5vMg335OxqxjAut3ARjBsZN1tdECb/r+dD/3mU0OuM9GDl6
-         bUxhUDJxRntdcipdGZepmJpC/nZhftNaC+eu5iRNmgYWfjZEQw+m0X4Oyk/WDetU57k5
-         2+CE6vFpBsqPaEULQJpailkn1gtoQIwpowsE0=
-Received: by 10.68.23.97 with SMTP id l1mr3315612pbf.232.1316205304088; Fri,
- 16 Sep 2011 13:35:04 -0700 (PDT)
-Received: by 10.68.59.39 with HTTP; Fri, 16 Sep 2011 13:34:24 -0700 (PDT)
-In-Reply-To: <7v1uvgfcur.fsf@alter.siamese.dyndns.org>
+	id S1755310Ab1IPUkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Sep 2011 16:40:37 -0400
+Received: from continuum.iocl.org ([217.140.74.2]:42208 "EHLO
+	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751759Ab1IPUkh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2011 16:40:37 -0400
+Received: (from krey@localhost)
+	by continuum.iocl.org (8.11.3/8.9.3) id p8GKeWw16484;
+	Fri, 16 Sep 2011 22:40:32 +0200
+Content-Disposition: inline
+In-Reply-To: <CAMK1S_jK2w8v4ushsZztQ0QY-eZq8axso-DpmCCvA=Gp7iXkBg@mail.gmail.com>
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181553>
 
-Heya,
+On Fri, 16 Sep 2011 22:30:35 +0000, Sitaram Chamarty wrote:
+...
+> Well it *is* pretty darn powerful (I'm the author; allow me some
+> preening!) but I believe the real reason is that it is the most
+> *transparent* solution.
 
-On Fri, Sep 16, 2011 at 22:31, Junio C Hamano <gitster@pobox.com> wrote:
-> I am not opposed to. We should do the usual "start from warning and then
-> deprecate" dance, but I do not think we would want to have a "I want the
-> old behaviour, please keep it" configuration, especially if we are talking
-> about a big version bump like 2.0.
->
-> The first step would look something like this, on top of the previous
-> patch.
+It well looks so, but I have a question: It seems that it assumes a
+flat set of *.git repos. Unfortunately my current setup has the repos
+in a hierarchy, like area/sub/repo.git, and I don't want everyone to
+change their local repo configs. Is it possible to keep it like that
+(and consequently have 'repo area/sub/repo' lines) when putting it
+under gitolite control?
 
-Makes sense.
-
-I remember some sort of "this is for post 1.7.x" section in what's
-cooking at some point. Should we have some way to queue patches like
-this, or would someone have to resend after the appropriate release?
-
--- 
-Cheers,
-
-Sverre Rabbelier
+Andreas
