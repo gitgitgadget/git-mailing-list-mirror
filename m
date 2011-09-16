@@ -1,164 +1,114 @@
-From: Alexey Shumkin <zapped@mail.ru>
-Subject: =?UTF-8?q?=5BPATCH=5D=20send-email=3A=20Honor=20multi-part=20email=20messages?=
-Date: Sat, 17 Sep 2011 02:32:48 +0400
-Message-ID: <1316212368-334-1-git-send-email-zapped@mail.ru>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: zealous git convert determined to set up git server
+Date: Sat, 17 Sep 2011 00:39:22 +0200
+Message-ID: <201109170039.22954.jnareb@gmail.com>
+References: <CAOZxsTqtW=DD7zFwQLjknJR8g0nnh0WPUPna6_np4bVoGnSntQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alexey Shumkin <zapped@mail.ru>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 17 00:33:45 2011
+Cc: Git List <git@vger.kernel.org>
+To: Joshua Stoutenburg <jehoshua02@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 17 00:39:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4gye-0001PB-9L
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Sep 2011 00:33:44 +0200
+	id 1R4h4I-0003WY-Mz
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Sep 2011 00:39:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932449Ab1IPWde convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Sep 2011 18:33:34 -0400
-Received: from smtp3.mail.ru ([94.100.176.131]:48995 "EHLO smtp3.mail.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932426Ab1IPWdc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2011 18:33:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
-	h=Sender:Content-Transfer-Encoding:Content-Type:MIME-Version:Message-Id:Date:Subject:Cc:To:From; bh=tDfhKcAD2PtulMcVdj97bK6L5zz2LNF78aQA18FA9zw=;
-	b=u9g4qZODWUk2tMY5VQZ9J/EN7CtLzjqcFRtfKWMbzY+iBCMNlvOiSGevJ6zD8tPu1CkDJvSK83sKZ8d5oszAEf3KrIp26zK0n+NSUMWdSMeN1puCZm6Lwpjmu1i5PeiE;
-Received: from [91.77.45.252] (port=35556 helo=zappedws)
-	by smtp3.mail.ru with asmtp 
-	id 1R4gyQ-0007Je-00; Sat, 17 Sep 2011 02:33:30 +0400
-Received: from Alex by zappedws with local (Exim 4.76)
-	(envelope-from <zapped@mail.ru>)
-	id 1R4gxz-00006F-Vj; Sat, 17 Sep 2011 02:33:04 +0400
-X-Mailer: git-send-email 1.7.6.3.4.gf71f
-X-Spam: Not detected
-X-Mras: Ok
+	id S1754800Ab1IPWj3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Sep 2011 18:39:29 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:45899 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752581Ab1IPWj3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Sep 2011 18:39:29 -0400
+Received: by fxe4 with SMTP id 4so2120877fxe.19
+        for <git@vger.kernel.org>; Fri, 16 Sep 2011 15:39:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=raGBkrlUQPv/2oYOZNY2Hcc/SI8eXYhBEgZ+zGBKz7M=;
+        b=lvXJLwHeOyFoIwVMvOLgXMysQglztayr04wmWCX8Fh1ZMrOzBUM1dYEN1dPGwGfZUH
+         wRHVHlNqFiekzxJHUghIb5g3hSmhDVJQH/A0wfqy0CyLbL8DvB0AQ9/dvPW5kHXsUTHF
+         7Ct1pwybMqfYsA5CcfwdwEqctzrPuZmjmMVm4=
+Received: by 10.223.36.153 with SMTP id t25mr1474774fad.148.1316212767589;
+        Fri, 16 Sep 2011 15:39:27 -0700 (PDT)
+Received: from [192.168.1.13] (abvu156.neoplus.adsl.tpnet.pl. [83.8.218.156])
+        by mx.google.com with ESMTPS id r3sm12137819fam.26.2011.09.16.15.39.25
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 16 Sep 2011 15:39:26 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <CAOZxsTqtW=DD7zFwQLjknJR8g0nnh0WPUPna6_np4bVoGnSntQ@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181564>
 
-"git format-patch --attach/--inline" generates multi-part messages.
-Every part of such messages can contain non-ASCII characters with its o=
-wn
-"Content-Type" and "Content-Transfer-Encoding" headers.
-But git-send-mail script interprets a patch-file as one-part message
-and does not recognize multi-part messages.
-So already quoted printable email subject may be encoded as quoted prin=
-table
-again. Due to this bug email subject looks corrupted in email clients.
+Joshua Stoutenburg wrote:
+> 2011/9/15 Jakub Narebski <jnareb@gmail.com>:
 
-Signed-off-by: Alexey Shumkin <zapped@mail.ru>
----
- git-send-email.perl   |    5 +++
- t/t9001-send-email.sh |   66 +++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 2 files changed, 71 insertions(+), 0 deletions(-)
+> > I think that either "Pro Git" book, or "The Git Community Book"
+> > would be a best source to learn about setting-up git server.
+> >
+> > I think the simplest solution for git hosting management would be t=
+o
+> > use gitolite (there are other git repository management software:
+> > Gitosis, SCM Manager, Gitblit).
+> >
+> > If you want to host something like GitHub, there are open source
+> > solutions too: Gitorious, InDefero, Girocco + gitweb,...
+> >
+> > HTH
+> > --
+> > Jakub Nar=C4=99bski
+> >
+> >
+>=20
+> I totally didn't see "The Git Community Book".  There's no link for i=
+t
+> where I was looking: http://git-scm.com/documentation
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 98ab33a..1abf4a4 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1403,12 +1403,17 @@ sub file_has_nonascii {
+I think that link to "Git Community Book" (http://book.git-scm.com) on =
+Git
+Documentation page (http://git-scm.com/documentation) got replaced by t=
+he
+link to "Pro Git" book; I guess becaue the former is not finished and i=
+t
+doesn't look like it would be finished soon.
+
+[...]
+> Question 2: It seems gitolite is the popular choice for git user
+> management.  Any reason why?
+
+=46rom Gitosis and Gitolite, both git repository management tools, Gito=
+sis
+requires setuptools beside Python, and looks like it is not developed
+anymore, while Gitolite (which started as rewrite of Gitosis in Perl)
+requires only Perl and is actively developed.
+
+Nb. even Gitosis author recommends Gitolite:
+http://scie.nti.st/2007/11/14/hosting-git-repositories-the-easy-and-sec=
+ure-way
+
+  Update (12-12-2010): For additional features not present in gitosis,
+  check out gitolite.
 =20
- sub body_or_subject_has_nonascii {
- 	my $fn =3D shift;
-+	my $multipart =3D 0;
- 	open(my $fh, '<', $fn)
- 		or die "unable to open $fn: $!\n";
- 	while (my $line =3D <$fh>) {
- 		last if $line =3D~ /^$/;
-+		if ($line =3D~ /^Content-Type:\s*multipart\/mixed.*$/) {
-+			$multipart =3D 1;
-+		}
- 		return 1 if $line =3D~ /^Subject.*[^[:ascii:]]/;
- 	}
-+	return 0 if $multipart;
- 	while (my $line =3D <$fh>) {
- 		return 1 if $line =3D~ /[^[:ascii:]]/;
- 	}
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 579ddb7..151ad35 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -1168,4 +1168,70 @@ test_expect_success $PREREQ '--force sends cover=
- letter template anyway' '
- 	test -n "$(ls msgtxt*)"
- '
-=20
-+test_expect_success $PREREQ 'setup multi-part message' '
-+cat >multi-part-email-using-8bit <<EOF
-+From fe6ecc66ece37198fe5db91fa2fc41d9f4fe5cc4 Mon Sep 17 00:00:00 2001
-+Message-Id: <bogus-message-id@example.com>
-+From: author@example.com
-+Date: Sat, 12 Jun 2010 15:53:58 +0200
-+Subject: [PATCH] =3D?UTF-8?q?=3DD0=3D94=3DD0=3DBE=3DD0=3DB1=3DD0=3DB0=3D=
-D0=3DB2=3DD0=3DBB=3DD0=3DB5=3DD0=3DBD=3D20?=3D
-+ =3D?UTF-8?q?=3DD1=3D84=3DD0=3DB0=3DD0=3DB9=3DD0=3DBB?=3D
-+MIME-Version: 1.0
-+Content-Type: multipart/mixed; boundary=3D"------------123"
-+
-+This is a multi-part message in MIME format.
-+--------------1.7.6.3.4.gf71f
-+Content-Type: text/plain; charset=3DUTF-8; format=3Dfixed
-+Content-Transfer-Encoding: 8bit
-+
-+This is a message created with "git format-patch --attach=3D123"
-+---
-+ master   |    1 +
-+ =D1=84=D0=B0=D0=B9=D0=BB |    1 +
-+ 2 files changed, 2 insertions(+), 0 deletions(-)
-+ create mode 100644 master
-+ create mode 100644 =D1=84=D0=B0=D0=B9=D0=BB
-+
-+
-+--------------123
-+Content-Type: text/x-patch; name=3D"0001-.patch"
-+Content-Transfer-Encoding: 8bit
-+Content-Disposition: attachment; filename=3D"0001-.patch"
-+
-+diff --git a/master b/master
-+new file mode 100644
-+index 0000000..1f7391f
-+--- /dev/null
-++++ b/master
-+@@ -0,0 +1 @@
-++master
-+diff --git a/=D1=84=D0=B0=D0=B9=D0=BB b/=D1=84=D0=B0=D0=B9=D0=BB
-+new file mode 100644
-+index 0000000..44e5cfe
-+--- /dev/null
-++++ b/=D1=84=D0=B0=D0=B9=D0=BB
-+@@ -0,0 +1 @@
-++=D1=81=D0=BE=D0=B4=D0=B5=D1=80=D0=B6=D0=B8=D0=BC=D0=BE=D0=B5 =D1=84=D0=
-=B0=D0=B9=D0=BB=D0=B0
-+
-+--------------123--
-+EOF
-+'
-+
-+test_expect_success $PREREQ 'setup expect' '
-+cat >expected <<EOF
-+Subject: [PATCH] =3D?UTF-8?q?=3DD0=3D94=3DD0=3DBE=3DD0=3DB1=3DD0=3DB0=3D=
-D0=3DB2=3DD0=3DBB=3DD0=3DB5=3DD0=3DBD=3D20?=3D =3D?UTF-8?q?=3DD1=3D84=3D=
-D0=3DB0=3DD0=3DB9=3DD0=3DBB?=3D
-+EOF
-+'
-+
-+test_expect_success $PREREQ '--attach/--inline also treats subject' '
-+	clean_fake_sendmail &&
-+	echo bogus |
-+	git send-email --from=3Dauthor@example.com --to=3Dnobody@example.com =
-\
-+			--smtp-server=3D"$(pwd)/fake.sendmail" \
-+			--8bit-encoding=3DUTF-8 \
-+			multi-part-email-using-8bit >stdout &&
-+	grep "Subject" msgtxt1 >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
+> Question 3: So, Gitorious is more than just a repository hosting
+> website?  It's also an open source repository hosting platform, which
+> powers the Gitorious website?  That's pretty cool.
+
+Yes, GitHub:FI (this one proprietary), Gitorious (powering gitorious.or=
+g),
+InDefero, Gitblit and Girocco + gitweb (the last one powering http://re=
+po.or.cz)
+are all full-fledged git hosting sites, with web interface to view and
+manage repositories.
+
 --=20
-1.7.6.3.4.gf71f
+Jakub Narebski
+Poland
