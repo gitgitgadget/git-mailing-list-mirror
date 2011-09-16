@@ -1,74 +1,88 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re* [PATCH 4/4] Add documentation for ref namespaces
-Date: Fri, 16 Sep 2011 09:20:04 -0700
-Message-ID: <7v1uvgh32j.fsf@alter.siamese.dyndns.org>
-References: <7vsjrna2x2.fsf@alter.siamese.dyndns.org>
- <1307470885-4018-1-git-send-email-jamey@minilop.net>
- <1307470885-4018-5-git-send-email-jamey@minilop.net>
- <CACBZZX4bow8vwrwSL5uRJQtAgeg10_K+5ss8u-HvCHOn3+0Tuw@mail.gmail.com>
- <7vaaa5pc8q.fsf_-_@alter.siamese.dyndns.org>
- <20110916034051.GH3144@oh.minilop.net>
+Subject: Re: [PATCH] gitweb: Strip non-printable characters from syntax
+ highlighter output
+Date: Fri, 16 Sep 2011 09:32:16 -0700
+Message-ID: <7vwrd8fnxr.fsf@alter.siamese.dyndns.org>
+References: <1314053923-13122-1-git-send-email-cfuhrman@panix.com>
+ <7v8vqfdf0l.fsf@alter.siamese.dyndns.org>
+ <201108270006.19289.jnareb@gmail.com> <201109161441.58946.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org, Josh Triplett <josh@joshtriplett.org>
-To: Jamey Sharp <jamey@minilop.net>
-X-From: git-owner@vger.kernel.org Fri Sep 16 18:20:19 2011
+Cc: "Christopher M. Fuhrman" <cfuhrman@panix.com>, git@vger.kernel.org,
+	Christopher Wilson <cwilson@cdwilson.us>,
+	Sylvain Rabot <sylvain@abstraction.fr>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 16 18:32:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4b9F-0008VU-Lf
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 18:20:17 +0200
+	id 1R4bL6-0006LE-Gt
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 18:32:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751930Ab1IPQUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Sep 2011 12:20:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57269 "EHLO
+	id S1754768Ab1IPQcW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Sep 2011 12:32:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62728 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751332Ab1IPQUJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2011 12:20:09 -0400
+	id S1752581Ab1IPQcU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2011 12:32:20 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 777E45974;
-	Fri, 16 Sep 2011 12:20:07 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E93A65C0B;
+	Fri, 16 Sep 2011 12:32:19 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=t7SdvrHAhr2Nmt45CEs6+jPZhgg=; b=AtpHhe
-	8Pm0ptVf8On8cMkKKVBDANwSrF2n3liI4ReD183Y3k8B51PO8qXpU/v3VMs/JXE5
-	2Cak9QJjMYTsVEmj78zcT8iKiVTC4yf9cdi8XcuM6rWZIfs1ndpJsnaZy1qbQzug
-	RxER3jWmuEjTINuov4KbswA0eDEnV2ieNjaKI=
+	:content-type; s=sasl; bh=0tSKsn77DcZwKElEYAcINIcsb5E=; b=M7Dbbz
+	0RrqN+wy/SJnCIZFKZgTd+CE2LZZmiqRsEyB9TXwDNBcc4A/bWSDZutbnv3WbvrW
+	D/0mqvnCf6Rk8XEs0fx0T+KAeeh21IUK1q0f8aKD/gdsAL+CtQBOFmjtvCI+iW70
+	Z6fbKUQWm05OEgoUNdZC1saGjfEk2Up0VUpo0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GEzb2aCPBHxVf8nTo4GaedvQczgRg5PH
-	MvkhZss6kicgTt4obQimvq3D0P4MulhP7fGmZ0/gDE5IMGkI7xTKthZfe6TNuEcz
-	PUj747CrqSH2EAfiOmulsB211p5T11uWpSAcdLP6tATQCs2/IX06Wl/ahsWD8MdI
-	QqSpmPUgcaE=
+	:content-type; q=dns; s=sasl; b=a95cNWgavRCP2Ev/Q6+76G0WDeGY9AO8
+	PmGa+SrXuACYIAexYx+3fOEN+7cGstr1sFYkkepMguVAJY7urWIiuvmCfHwdkqSH
+	kvgmdhs3huY+AsA7z655J+dCuo5Qb+3BaYnqaqod5ogLGSXfegHoqWvFY1fZsfFW
+	42+TIS3C40s=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D0345972;
-	Fri, 16 Sep 2011 12:20:07 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E022B5C0A;
+	Fri, 16 Sep 2011 12:32:19 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 07BBB5971; Fri, 16 Sep 2011
- 12:20:05 -0400 (EDT)
-In-Reply-To: <20110916034051.GH3144@oh.minilop.net> (Jamey Sharp's message of
- "Thu, 15 Sep 2011 22:40:51 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 728C55C09; Fri, 16 Sep 2011
+ 12:32:19 -0400 (EDT)
+In-Reply-To: <201109161441.58946.jnareb@gmail.com> (Jakub Narebski's message
+ of "Fri, 16 Sep 2011 14:41:57 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BD2E728C-E07F-11E0-8F6D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7256CFBE-E081-11E0-9E39-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181538>
 
-Jamey Sharp <jamey@minilop.net> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Assuming that you're happy with this level of detail, and that the
-> AsciiDoc syntax is correct (I'm not familiar enough with it), I'm happy
-> with the patch you propose---
+> The commit message is from Christopher, but I have replaced his solution
+> of stripping non-printable characters via col(1) program by having gitweb
+> strip characters not allowed in XML.
 >
-> Reviewed-by: Jamey Sharp <jamey@minilop.net>
+> Christopher, could you check that it fixes your issue?
 
 Thanks.
+
+Micronit:
+
+> +# Sanitize for use in XHTML + application/xml+xhtm (valid XML 1.0)
+> +sub sanitize {
+> +	my $str = shift;
+> +
+> +	return undef unless defined $str;
+
+Given that the _whole_ point of this subroutine is to make $str safe for
+printing, wouldn't you want to either (1) die, declaring that feeding an
+undef to this subroutine is a programming error, or (2) return an empty
+string?
+
+Given that the input to this function is from the result of feeding $line
+to untabify, which relies on $line being defined, and that $line comes
+from "while (my $line = <$fd>)" (and then chomp $line), it may be Ok for
+this subroutine to make the same assumption as untabify makes.
