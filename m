@@ -1,139 +1,66 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Strip non-printable characters from syntax highlighter output
-Date: Fri, 16 Sep 2011 14:41:57 +0200
-Message-ID: <201109161441.58946.jnareb@gmail.com>
-References: <1314053923-13122-1-git-send-email-cfuhrman@panix.com> <7v8vqfdf0l.fsf@alter.siamese.dyndns.org> <201108270006.19289.jnareb@gmail.com>
+From: Stephen Bash <bash@genarts.com>
+Subject: Re: [PATCH/RFC] add lame win32 credential-helper
+Date: Fri, 16 Sep 2011 08:59:48 -0400 (EDT)
+Message-ID: <23805783.18971.1316177988773.JavaMail.root@mail.hq.genarts.com>
+References: <CABPQNSZjGzyxJKWRDDWxRj_SLdC1Y_9TxnAMOA+b-Pw3+X-E7w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Christopher Wilson <cwilson@cdwilson.us>,
-	Sylvain Rabot <sylvain@abstraction.fr>
-To: Junio C Hamano <gitster@pobox.com>,
-	"Christopher M. Fuhrman" <cfuhrman@panix.com>
-X-From: git-owner@vger.kernel.org Fri Sep 16 14:42:16 2011
+Cc: git@vger.kernel.org, jaysoffian@gmail.com, gitster@pobox.com,
+	Jeff King <peff@peff.net>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Fri Sep 16 15:00:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4XkF-0006eA-Ok
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 14:42:16 +0200
+	id 1R4Y1S-0006KF-46
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 15:00:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753902Ab1IPMmK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Sep 2011 08:42:10 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:63252 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753800Ab1IPMmJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2011 08:42:09 -0400
-Received: by fxe4 with SMTP id 4so1624616fxe.19
-        for <git@vger.kernel.org>; Fri, 16 Sep 2011 05:42:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=FJrxObiSnuoB8xiX6mthSGBU2sh4qONKDiNrpCs1Zv8=;
-        b=twdciW35iKkVeJWkGxDWIuZwcjAu+k8hyVHagn7CEDUH5cZYaUM64qqly5heq3f6/o
-         Wbo0uY9uc+GMpEI5eluQSIqtaymcLlfVl6c2wFwmQrguRzV2DjSudKb+WFleGy7MPs2/
-         P+dLq2ztEKjXztnIWbJ4Y20DEoQDnYh63A+wc=
-Received: by 10.223.34.70 with SMTP id k6mr1345871fad.31.1316176927742;
-        Fri, 16 Sep 2011 05:42:07 -0700 (PDT)
-Received: from [192.168.1.13] (abvu156.neoplus.adsl.tpnet.pl. [83.8.218.156])
-        by mx.google.com with ESMTPS id l8sm2957151fai.16.2011.09.16.05.42.05
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 16 Sep 2011 05:42:06 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201108270006.19289.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1754520Ab1IPM75 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Sep 2011 08:59:57 -0400
+Received: from hq.genarts.com ([173.9.65.1]:43121 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754429Ab1IPM74 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2011 08:59:56 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 1A3D8EA28D1;
+	Fri, 16 Sep 2011 08:59:55 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id TB6n6ByvhPQa; Fri, 16 Sep 2011 08:59:48 -0400 (EDT)
+Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
+	by mail.hq.genarts.com (Postfix) with ESMTP id CFAC3EA28D0;
+	Fri, 16 Sep 2011 08:59:48 -0400 (EDT)
+In-Reply-To: <CABPQNSZjGzyxJKWRDDWxRj_SLdC1Y_9TxnAMOA+b-Pw3+X-E7w@mail.gmail.com>
+X-Mailer: Zimbra 6.0.10_GA_2692 (ZimbraWebClient - SAF3 (Mac)/6.0.10_GA_2692)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181532>
 
-The current code, as is, passes control characters, such as form-feed
-(^L) to highlight which then passes it through to the browser.  User
-agents (web browsers) that support 'application/xhtml+xml' usually
-require that web pages declared as XHTML and with this mimetype are
-well-formed XML.  Unescaped control characters cannot appear within a
-contents of a valid XML document.
+----- Original Message -----
+> From: "Erik Faye-Lund" <kusmabite@gmail.com>
+> To: "Jeff King" <peff@peff.net>
+> Cc: git@vger.kernel.org, jaysoffian@gmail.com, gitster@pobox.com
+> Sent: Thursday, September 15, 2011 5:48:30 PM
+> Subject: Re: [PATCH/RFC] add lame win32 credential-helper
+> 
+> > If it's too hard to adapt it to whatever IPC
+> > mechanism would be appropriate on Windows, we can just leave it out
+> > on that platform.
+> >
+> > But the core code in git itself should be pretty straight forward.
+> 
+> I didn't mean that it was impossible to port, just that it didn't compile
+> as-is. I haven't looked into fixing up the code so it compiles on Windows
+> again myself. And I'm not really planning to; I have little git-time
+> these days, and little knowledge of how unix-sockets works...
 
-This will cause the browser to display one of the following warnings:
+This may be common knowledge, but from our brief experiment with them last fall, Windows Named Pipes are fairly similar to Unix Domain Sockets (not named FIFOs as one would expect...).  We didn't quite get a perfect replacement using preprocessor macros, but I think you can get pretty close (we eventually dumped the idea in favor of straight TCP sockets that behave the same on all our platforms of interest).
 
-* Safari v5.1 (6534.50) & Google Chrome v13.0.782.112:
-
-   This page contains the following errors:
-
-   error on line 657 at column 38: PCDATA invalid Char value 12
-   Below is a rendering of the page up to the first error.
-
-* Mozilla Firefox 3.6.19 & Mozilla Firefox 5.0:
-
-   XML Parsing Error: not well-formed
-   Location:
-   http://path/to/git/repo/blah/blah
-
-Both errors were generated by gitweb.perl v1.7.3.4 w/ highlight 2.7
-using arch/ia64/kernel/unwind.c from the Linux kernel.
-
-When syntax highlighter is not used, control characters are replaced
-by esc_html(), but with syntax highlighter they were passed through to
-browser (to_utf8() doesn't remove control characters).
-
-Introduce sanitize() subroutine which strips forbidden characters, but
-does not perform HTML escaping, and use it in git_blob() to sanitize
-syntax highlighter output for XHTML.
-
-Note that excluding "\t" (U+0009), "\n" (U+000A) and "\r" (U+000D) is
-not strictly necessary, atleast for currently the only callsite: "\t"
-tabs are replaced by spaces by untabify(), "\n" is stripped from each
-line before processing it, and replacing "\r" could be considered
-improvement.
-
-Originally-by: Christopher M. Fuhrman <cfuhrman@panix.com>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-The commit message is from Christopher, but I have replaced his solution
-of stripping non-printable characters via col(1) program by having gitweb
-strip characters not allowed in XML.
-
-Christopher, could you check that it fixes your issue?
-
- gitweb/gitweb.perl |   14 +++++++++++++-
- 1 files changed, 13 insertions(+), 1 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 70a576a..c28b847 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1517,6 +1517,17 @@ sub esc_path {
- 	return $str;
- }
- 
-+# Sanitize for use in XHTML + application/xml+xhtm (valid XML 1.0)
-+sub sanitize {
-+	my $str = shift;
-+
-+	return undef unless defined $str;
-+
-+	$str = to_utf8($str);
-+	$str =~ s|([[:cntrl:]])|($1 =~ /[\t\n\r]/ ? $1 : quot_cec($1))|eg;
-+	return $str;
-+}
-+
- # Make control characters "printable", using character escape codes (CEC)
- sub quot_cec {
- 	my $cntrl = shift;
-@@ -6484,7 +6495,8 @@ sub git_blob {
- 			$nr++;
- 			$line = untabify($line);
- 			printf qq!<div class="pre"><a id="l%i" href="%s#l%i" class="linenr">%4i</a> %s</div>\n!,
--			       $nr, esc_attr(href(-replay => 1)), $nr, $nr, $syntax ? to_utf8($line) : esc_html($line, -nbsp=>1);
-+			       $nr, esc_attr(href(-replay => 1)), $nr, $nr,
-+			       $syntax ? sanitize($line) : esc_html($line, -nbsp=>1);
- 		}
- 	}
- 	close $fd
--- 
-1.7.6
+HTH,
+Stephen
