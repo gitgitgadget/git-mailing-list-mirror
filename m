@@ -1,105 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
 Subject: Re: [PATCH] ls-remote: a lone "-h" is asking for help
-Date: Fri, 16 Sep 2011 13:31:40 -0700
-Message-ID: <7v1uvgfcur.fsf@alter.siamese.dyndns.org>
-References: <7vobykfj7g.fsf@alter.siamese.dyndns.org>
- <CAGdFq_h474OrLzP+CHj_eSdSp53n8x7jz1ORT16dOhvRdQMP+g@mail.gmail.com>
- <7vehzgfffw.fsf@alter.siamese.dyndns.org>
- <CAGdFq_hug3zNwvDZ3c8iG-F8jJSuxsuFghMWtWTmUTdfTrWiqg@mail.gmail.com>
+Date: Fri, 16 Sep 2011 22:34:24 +0200
+Message-ID: <CAGdFq_jc4YDaD+NL6_+buCrOt2yAK+-_MDOJQU5qnS13P65CzQ@mail.gmail.com>
+References: <7vobykfj7g.fsf@alter.siamese.dyndns.org> <CAGdFq_h474OrLzP+CHj_eSdSp53n8x7jz1ORT16dOhvRdQMP+g@mail.gmail.com>
+ <7vehzgfffw.fsf@alter.siamese.dyndns.org> <CAGdFq_hug3zNwvDZ3c8iG-F8jJSuxsuFghMWtWTmUTdfTrWiqg@mail.gmail.com>
+ <7v1uvgfcur.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 16 22:31:51 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 16 22:35:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4f4g-0002PR-3r
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 22:31:50 +0200
+	id 1R4f7w-0003jg-Qo
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 22:35:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755144Ab1IPUbp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Sep 2011 16:31:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58186 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753463Ab1IPUbo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2011 16:31:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C38C5320;
-	Fri, 16 Sep 2011 16:31:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aoqdUy3OG/mO/83R2xXyxjwtXBI=; b=wUbeIK
-	s/gVbk34jSfT7Se+uUWwwlE5eMhYiTEJMfCOE3j+u6LBV62v16HSnC4PUzyS7k54
-	URuFTo0A7wZtcXm4JiKJd3bMzl2gL07HEihMqrItD8DKVIHVyiny/3ZPtP54GMm7
-	0+hwx6aktuD8/t19aCkM7GXqGKhPgakLRqs40=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YvCxXhbFT1sVDuub7+BZYx2sJDPpqq7I
-	N9x7J5OgQp7OAgtoSDxTZBPgDO8lAuKof525cQ39YNiGHlhrNbi3NfzJaAee0vSB
-	7RepLHLaGv6G9A2mUikvLeBfyeUSV9i6JicVmCy4SvyCYxCST+lvZybWk5JuN5AD
-	6vNM1OSr39g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 03547531F;
-	Fri, 16 Sep 2011 16:31:43 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7912E531B; Fri, 16 Sep 2011
- 16:31:41 -0400 (EDT)
-In-Reply-To: <CAGdFq_hug3zNwvDZ3c8iG-F8jJSuxsuFghMWtWTmUTdfTrWiqg@mail.gmail.com> (Sverre
- Rabbelier's message of "Fri, 16 Sep 2011 21:44:59 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E2C5EFB6-E0A2-11E0-9298-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755284Ab1IPUfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Sep 2011 16:35:07 -0400
+Received: from mail-gw0-f42.google.com ([74.125.83.42]:45716 "EHLO
+	mail-gw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755256Ab1IPUfG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2011 16:35:06 -0400
+Received: by gwb17 with SMTP id 17so4928116gwb.1
+        for <git@vger.kernel.org>; Fri, 16 Sep 2011 13:35:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=gpARS+TywcYMor9K13w0FRyJYZV3i+zFTCS4Roo4N2s=;
+        b=tvKRSXXsaxjmqz41lCf5vMg335OxqxjAut3ARjBsZN1tdECb/r+dD/3mU0OuM9GDl6
+         bUxhUDJxRntdcipdGZepmJpC/nZhftNaC+eu5iRNmgYWfjZEQw+m0X4Oyk/WDetU57k5
+         2+CE6vFpBsqPaEULQJpailkn1gtoQIwpowsE0=
+Received: by 10.68.23.97 with SMTP id l1mr3315612pbf.232.1316205304088; Fri,
+ 16 Sep 2011 13:35:04 -0700 (PDT)
+Received: by 10.68.59.39 with HTTP; Fri, 16 Sep 2011 13:34:24 -0700 (PDT)
+In-Reply-To: <7v1uvgfcur.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181552>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+Heya,
 
-> On Fri, Sep 16, 2011 at 21:35, Junio C Hamano <gitster@pobox.com> wrote:
->> Sverre Rabbelier <srabbelier@gmail.com> writes:
->>> Should we really have "-h" as a short for anything other than "--help"
->>> in the first place?
-> ...
-> Does git 2.0 count?
+On Fri, Sep 16, 2011 at 22:31, Junio C Hamano <gitster@pobox.com> wrote:
+> I am not opposed to. We should do the usual "start from warning and then
+> deprecate" dance, but I do not think we would want to have a "I want the
+> old behaviour, please keep it" configuration, especially if we are talking
+> about a big version bump like 2.0.
+>
+> The first step would look something like this, on top of the previous
+> patch.
 
-I am not opposed to. We should do the usual "start from warning and then
-deprecate" dance, but I do not think we would want to have a "I want the
-old behaviour, please keep it" configuration, especially if we are talking
-about a big version bump like 2.0.
+Makes sense.
 
-The first step would look something like this, on top of the previous
-patch.
+I remember some sort of "this is for post 1.7.x" section in what's
+cooking at some point. Should we have some way to queue patches like
+this, or would someone have to resend after the appropriate release?
 
- builtin/ls-remote.c |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
+-- 
+Cheers,
 
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index 41c88a9..dabe21e 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -28,6 +28,12 @@ static int tail_match(const char **pattern, const char *path)
- 	return 0;
- }
- 
-+static void warn_h_deprecation(void)
-+{
-+	warning("Using -h as synonym for --heads is deprecated");
-+	warning("and will be removed in future versions of Git.");
-+}
-+
- int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- {
- 	int i;
-@@ -64,6 +70,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 			}
- 			if (!strcmp("--heads", arg) || !strcmp("-h", arg)) {
- 				flags |= REF_HEADS;
-+				if (!arg[2])
-+					warn_h_deprecation();
- 				continue;
- 			}
- 			if (!strcmp("--refs", arg)) {
+Sverre Rabbelier
