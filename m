@@ -1,391 +1,164 @@
-From: Jonathon Mah <me@JonathonMah.com>
-Subject: [PATCH] mergetool: Use args as pathspec to unmerged files
-Date: Thu, 15 Sep 2011 19:12:10 -0700
-Message-ID: <C5AD8BFC-DA48-4CE9-B821-D0076825F33C@JonathonMah.com>
-References: <7v4o0h7byd.fsf@alter.siamese.dyndns.org> <7vipox2wd6.fsf@alter.siamese.dyndns.org> <D3CA81F2-647B-4AD0-A4FC-4C22772FD791@JonathonMah.com> <7vsjnysuyl.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1244.3)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Dan McGee <dpmcgee@gmail.com>, David Aguilar <davvid@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 16 04:13:45 2011
+From: Jamey Sharp <jamey@minilop.net>
+Subject: Re: Re* [PATCH 4/4] Add documentation for ref namespaces
+Date: Thu, 15 Sep 2011 22:40:51 -0500
+Message-ID: <20110916034051.GH3144@oh.minilop.net>
+References: <7vsjrna2x2.fsf@alter.siamese.dyndns.org>
+ <1307470885-4018-1-git-send-email-jamey@minilop.net>
+ <1307470885-4018-5-git-send-email-jamey@minilop.net>
+ <CACBZZX4bow8vwrwSL5uRJQtAgeg10_K+5ss8u-HvCHOn3+0Tuw@mail.gmail.com>
+ <7vaaa5pc8q.fsf_-_@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="WRT3RXLOp/bBMgTI"
+Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org, Josh Triplett <josh@joshtriplett.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 16 05:46:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4Nvz-0004nD-Q1
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 04:13:44 +0200
+	id 1R4PNr-0001o7-Sq
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 05:46:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751556Ab1IPCMm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Sep 2011 22:12:42 -0400
-Received: from ipmail04.adl6.internode.on.net ([150.101.137.141]:29033 "EHLO
-	ipmail04.adl6.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751453Ab1IPCMl convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2011 22:12:41 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApIBAKKvck5M5FL2/2dsb2JhbAAMNaolAQU6OgUQUVcZvRyGFGAEh2+YWoRI
-Received: from adsl-76-228-82-246.dsl.pltn13.sbcglobal.net (HELO [10.0.1.93]) ([76.228.82.246])
-  by ipmail04.adl6.internode.on.net with ESMTP; 16 Sep 2011 11:42:16 +0930
-In-Reply-To: <7vsjnysuyl.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1244.3)
+	id S1751874Ab1IPDk4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Sep 2011 23:40:56 -0400
+Received: from mail-gw0-f42.google.com ([74.125.83.42]:48341 "EHLO
+	mail-gw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751780Ab1IPDkz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2011 23:40:55 -0400
+Received: by gwb17 with SMTP id 17so4013116gwb.1
+        for <git@vger.kernel.org>; Thu, 15 Sep 2011 20:40:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=minilop.net; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=KLoh4cUKEaHFtvKuOKFbhm+zFxsVRYKLxbFqBr0Q+5g=;
+        b=BVKgTShs8TovQQPQSG4BHA19/wjEh0azojcVyqhRrYtF8yC0iv7srlFT3NXCCfM9Xv
+         7jKpgkvtPcD6GInKWycdNBUbWaD+ubtJlDcbUDtHd/xnqQeeOl4/ING/eoJ0ArxDOrdE
+         jFu7LmhSlDZbE/MYfOOaBw/sJkMUY27LvlEVQ=
+Received: by 10.150.170.4 with SMTP id s4mr341201ybe.379.1316144454784;
+        Thu, 15 Sep 2011 20:40:54 -0700 (PDT)
+Received: from oh.minilop.net (adsl-76-239-16-239.dsl.emhril.sbcglobal.net [76.239.16.239])
+        by mx.google.com with ESMTPS id k12sm20209208anc.19.2011.09.15.20.40.52
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 15 Sep 2011 20:40:54 -0700 (PDT)
+Received: from jamey by oh.minilop.net with local (Exim 4.76)
+	(envelope-from <jamey@oh.minilop.net>)
+	id 1R4PIJ-0005ec-Ok; Thu, 15 Sep 2011 22:40:51 -0500
+Content-Disposition: inline
+In-Reply-To: <7vaaa5pc8q.fsf_-_@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181525>
 
-Mergetool now treats its path arguments as a pathspec (like other git
-subcommands), restricting action to the given files and directories.
-Files matching the pathspec are filtered so mergetool only acts on
-unmerged paths; previously it would assume each path argument was in an
-unresolved state, and get confused when it couldn't check out their
-other stages.
 
-Running "git mergetool subdir" will prompt to resolve all conflicted
-blobs under subdir.
+--WRT3RXLOp/bBMgTI
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Jonathon Mah <me@JonathonMah.com>
----
-With Junio's change, I'm happy with the code in git-mergetool.sh.
-I've tried to clarify the commit message since the first submission.
+On Thu, Sep 15, 2011 at 05:22:29PM -0700, Junio C Hamano wrote:
+> =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
+>=20
+> > On Tue, Jun 7, 2011 at 20:21, Jamey Sharp <jamey@minilop.net> wrote:
+> >
+> >> Document the namespace mechanism in a new gitnamespaces(7) page.
+> >> Reference it from receive-pack and upload-pack.
+> >
+> > This breaks the build on older asciidoc versions, the fix is to do
+> > what I did in f5008f56d5aba06598e1c6272f4f55b4ee4bb016.
+>=20
+> Earlier I sent out a tongue-in-cheek "like this" that had a completely
+> bogus SYNOPSIS section that is unusable in a released version of Git,
+> hoping that somebody who _care_ more about the feature that the page
+> describes would give us a better wording, but unfortunately it never
+> happened.
 
- Documentation/git-mergetool.txt |    7 ++--
- git-mergetool.sh                |   76 ++++++++++++++------------------------
- t/t7610-mergetool.sh            |   58 ++++++++++++++++++++---------
- 3 files changed, 72 insertions(+), 69 deletions(-)
+I'm afraid your wit was too subtle for me, as I believed your proposal
+was serious and would be applied as-is. I assumed AsciiDoc was going to
+magically omit the bogus synopsis, somehow. Perhaps it should detect
+when people are making fun of it, and ignore them then?
 
-diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
-index 3470910..2a49de7 100644
---- a/Documentation/git-mergetool.txt
-+++ b/Documentation/git-mergetool.txt
-@@ -17,9 +17,10 @@ Use `git mergetool` to run one of several merge utilities to resolve
- merge conflicts.  It is typically run after 'git merge'.
- 
- If one or more <file> parameters are given, the merge tool program will
--be run to resolve differences on each file.  If no <file> names are
--specified, 'git mergetool' will run the merge tool program on every file
--with merge conflicts.
-+be run to resolve differences on each file (skipping those without
-+conflicts).  Specifying a directory will include all unresolved files in
-+that path.  If no <file> names are specified, 'git mergetool' will run
-+the merge tool program on every file with merge conflicts.
- 
- OPTIONS
- -------
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 3c157bc..12a2706 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -342,64 +342,44 @@ merge_keep_temporaries="$(git config --bool mergetool.keepTemporaries || echo fa
- 
- last_status=0
- rollup_status=0
--rerere=false
--
--files_to_merge() {
--    if test "$rerere" = true
--    then
--	git rerere remaining
--    else
--	git ls-files -u | sed -e 's/^[^	]*	//' | sort -u
--    fi
--}
--
-+files=
- 
- if test $# -eq 0 ; then
-     cd_to_toplevel
- 
-     if test -e "$GIT_DIR/MERGE_RR"
-     then
--	rerere=true
-+	files=$(git rerere remaining)
-+    else
-+	files=$(git ls-files -u | sed -e 's/^[^	]*	//' | sort -u)
-     fi
-+else
-+    files=$(git ls-files -u -- "$@" | sed -e 's/^[^	]*	//' | sort -u)
-+fi
- 
--    files=$(files_to_merge)
--    if test -z "$files" ; then
--	echo "No files need merging"
--	exit 0
--    fi
-+if test -z "$files" ; then
-+    echo "No files need merging"
-+    exit 0
-+fi
- 
--    # Save original stdin
--    exec 3<&0
-+# Save original stdin
-+exec 3<&0
- 
--    printf "Merging:\n"
--    printf "$files\n"
-+printf "Merging:\n"
-+printf "$files\n"
- 
--    files_to_merge |
--    while IFS= read i
--    do
--	if test $last_status -ne 0; then
--	    prompt_after_failed_merge <&3 || exit 1
--	fi
--	printf "\n"
--	merge_file "$i" <&3
--	last_status=$?
--	if test $last_status -ne 0; then
--	    rollup_status=1
--	fi
--    done
--else
--    while test $# -gt 0; do
--	if test $last_status -ne 0; then
--	    prompt_after_failed_merge || exit 1
--	fi
--	printf "\n"
--	merge_file "$1"
--	last_status=$?
--	if test $last_status -ne 0; then
--	    rollup_status=1
--	fi
--	shift
--    done
--fi
-+IFS='
-+'; for i in $files
-+do
-+    if test $last_status -ne 0; then
-+	prompt_after_failed_merge <&3 || exit 1
-+    fi
-+    printf "\n"
-+    merge_file "$i" <&3
-+    last_status=$?
-+    if test $last_status -ne 0; then
-+	rollup_status=1
-+    fi
-+done
- 
- exit $rollup_status
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index cbc08e3..4aab2a7 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -16,6 +16,7 @@ Testing basic merge tool invocation'
- test_expect_success 'setup' '
-     git config rerere.enabled true &&
-     echo master >file1 &&
-+    echo master spaced >"spaced name" &&
-     echo master file11 >file11 &&
-     echo master file12 >file12 &&
-     echo master file13 >file13 &&
-@@ -30,13 +31,14 @@ test_expect_success 'setup' '
- 	git commit -m "Add foo"
-     ) &&
-     git submodule add git://example.com/submod submod &&
--    git add file1 file1[1-4] subdir/file3 .gitmodules submod &&
-+    git add file1 "spaced name" file1[1-4] subdir/file3 .gitmodules submod &&
-     git commit -m "add initial versions" &&
- 
-     git checkout -b branch1 master &&
-     git submodule update -N &&
-     echo branch1 change >file1 &&
-     echo branch1 newfile >file2 &&
-+    echo branch1 spaced >"spaced name" &&
-     echo branch1 change file11 >file11 &&
-     echo branch1 change file13 >file13 &&
-     echo branch1 sub >subdir/file3 &&
-@@ -47,7 +49,7 @@ test_expect_success 'setup' '
- 	git commit -m "Add bar on branch1" &&
- 	git checkout -b submod-branch1
-     ) &&
--    git add file1 file11 file13 file2 subdir/file3 submod &&
-+    git add file1 "spaced name" file11 file13 file2 subdir/file3 submod &&
-     git rm file12 &&
-     git commit -m "branch1 changes" &&
- 
-@@ -55,6 +57,7 @@ test_expect_success 'setup' '
-     git submodule update -N &&
-     echo master updated >file1 &&
-     echo master new >file2 &&
-+    echo master updated spaced >"spaced name" &&
-     echo master updated file12 >file12 &&
-     echo master updated file14 >file14 &&
-     echo master new sub >subdir/file3 &&
-@@ -65,7 +68,7 @@ test_expect_success 'setup' '
- 	git commit -m "Add bar on master" &&
- 	git checkout -b submod-master
-     ) &&
--    git add file1 file12 file14 file2 subdir/file3 submod &&
-+    git add file1 "spaced name" file12 file14 file2 subdir/file3 submod &&
-     git rm file11 &&
-     git commit -m "master updates" &&
- 
-@@ -78,8 +81,8 @@ test_expect_success 'custom mergetool' '
-     git checkout -b test1 branch1 &&
-     git submodule update -N &&
-     test_must_fail git merge master >/dev/null 2>&1 &&
--    ( yes "" | git mergetool file1 >/dev/null 2>&1 ) &&
--    ( yes "" | git mergetool file2 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool file1 file1 ) &&
-+    ( yes "" | git mergetool file2 "spaced name" >/dev/null 2>&1 ) &&
-     ( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file12 >/dev/null 2>&1 ) &&
-@@ -97,6 +100,7 @@ test_expect_success 'mergetool crlf' '
-     test_must_fail git merge master >/dev/null 2>&1 &&
-     ( yes "" | git mergetool file1 >/dev/null 2>&1 ) &&
-     ( yes "" | git mergetool file2 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool "spaced name" >/dev/null 2>&1 ) &&
-     ( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file12 >/dev/null 2>&1 ) &&
-@@ -126,7 +130,7 @@ test_expect_success 'mergetool on file in parent dir' '
-     (
- 	cd subdir &&
- 	( yes "" | git mergetool ../file1 >/dev/null 2>&1 ) &&
--	( yes "" | git mergetool ../file2 >/dev/null 2>&1 ) &&
-+	( yes "" | git mergetool ../file2 ../spaced\ name >/dev/null 2>&1 ) &&
- 	( yes "d" | git mergetool ../file11 >/dev/null 2>&1 ) &&
- 	( yes "d" | git mergetool ../file12 >/dev/null 2>&1 ) &&
- 	( yes "l" | git mergetool ../submod >/dev/null 2>&1 ) &&
-@@ -180,6 +184,24 @@ test_expect_success 'mergetool skips resolved paths when rerere is active' '
-     git reset --hard
- '
- 
-+test_expect_success 'mergetool takes partial path' '
-+    git config rerere.enabled false &&
-+    git checkout -b test12 branch1 &&
-+    git submodule update -N &&
-+    test_must_fail git merge master &&
-+
-+    #shouldnt need these lines
-+    #( yes "d" | git mergetool file11 >/dev/null 2>&1 ) &&
-+    #( yes "d" | git mergetool file12 >/dev/null 2>&1 ) &&
-+    #( yes "l" | git mergetool submod >/dev/null 2>&1 ) &&
-+    #( yes "" | git mergetool file1 file2 >/dev/null 2>&1 ) &&
-+
-+    ( yes "" | git mergetool subdir ) &&
-+
-+    test "$(cat subdir/file3)" = "master new sub" &&
-+    git reset --hard
-+'
-+
- test_expect_success 'deleted vs modified submodule' '
-     git checkout -b test6 branch1 &&
-     git submodule update -N &&
-@@ -189,7 +211,7 @@ test_expect_success 'deleted vs modified submodule' '
-     git checkout -b test6.a test6 &&
-     test_must_fail git merge master &&
-     test -n "$(git ls-files -u)" &&
--    ( yes "" | git mergetool file1 file2 subdir/file3 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
-     ( yes "r" | git mergetool submod ) &&
-     rmdir submod && mv submod-movedaside submod &&
-@@ -205,7 +227,7 @@ test_expect_success 'deleted vs modified submodule' '
-     git submodule update -N &&
-     test_must_fail git merge master &&
-     test -n "$(git ls-files -u)" &&
--    ( yes "" | git mergetool file1 file2 subdir/file3 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
-     ( yes "l" | git mergetool submod ) &&
-     test ! -e submod &&
-@@ -218,7 +240,7 @@ test_expect_success 'deleted vs modified submodule' '
-     git submodule update -N &&
-     test_must_fail git merge test6 &&
-     test -n "$(git ls-files -u)" &&
--    ( yes "" | git mergetool file1 file2 subdir/file3 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
-     ( yes "r" | git mergetool submod ) &&
-     test ! -e submod &&
-@@ -233,7 +255,7 @@ test_expect_success 'deleted vs modified submodule' '
-     git submodule update -N &&
-     test_must_fail git merge test6 &&
-     test -n "$(git ls-files -u)" &&
--    ( yes "" | git mergetool file1 file2 subdir/file3 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
-     ( yes "l" | git mergetool submod ) &&
-     test "$(cat submod/bar)" = "master submodule" &&
-@@ -256,7 +278,7 @@ test_expect_success 'file vs modified submodule' '
-     git checkout -b test7.a branch1 &&
-     test_must_fail git merge master &&
-     test -n "$(git ls-files -u)" &&
--    ( yes "" | git mergetool file1 file2 subdir/file3 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
-     ( yes "r" | git mergetool submod ) &&
-     rmdir submod && mv submod-movedaside submod &&
-@@ -271,7 +293,7 @@ test_expect_success 'file vs modified submodule' '
-     git checkout -b test7.b test7 &&
-     test_must_fail git merge master &&
-     test -n "$(git ls-files -u)" &&
--    ( yes "" | git mergetool file1 file2 subdir/file3 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
-     ( yes "l" | git mergetool submod ) &&
-     git submodule update -N &&
-@@ -286,7 +308,7 @@ test_expect_success 'file vs modified submodule' '
-     git submodule update -N &&
-     test_must_fail git merge test7 &&
-     test -n "$(git ls-files -u)" &&
--    ( yes "" | git mergetool file1 file2 subdir/file3 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
-     ( yes "r" | git mergetool submod ) &&
-     test -d submod.orig &&
-@@ -301,7 +323,7 @@ test_expect_success 'file vs modified submodule' '
-     git submodule update -N &&
-     test_must_fail git merge test7 &&
-     test -n "$(git ls-files -u)" &&
--    ( yes "" | git mergetool file1 file2 subdir/file3 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
-     ( yes "l" | git mergetool submod ) &&
-     test "$(cat submod/bar)" = "master submodule" &&
-@@ -388,7 +410,7 @@ test_expect_success 'directory vs modified submodule' '
-     test "$(cat submod/file16)" = "not a submodule" &&
-     rm -rf submod.orig &&
- 
--    git reset --hard &&
-+    git reset --hard >/dev/null 2>&1 &&
-     test_must_fail git merge master &&
-     test -n "$(git ls-files -u)" &&
-     test ! -e submod.orig &&
-@@ -400,7 +422,7 @@ test_expect_success 'directory vs modified submodule' '
-     ( cd submod && git clean -f && git reset --hard ) &&
-     git submodule update -N &&
-     test "$(cat submod/bar)" = "master submodule" &&
--    git reset --hard && rm -rf submod-movedaside &&
-+    git reset --hard >/dev/null 2>&1 && rm -rf submod-movedaside &&
- 
-     git checkout -b test11.c master &&
-     git submodule update -N &&
-@@ -410,7 +432,7 @@ test_expect_success 'directory vs modified submodule' '
-     git submodule update -N &&
-     test "$(cat submod/bar)" = "master submodule" &&
- 
--    git reset --hard &&
-+    git reset --hard >/dev/null 2>&1 &&
-     git submodule update -N &&
-     test_must_fail git merge test11 &&
-     test -n "$(git ls-files -u)" &&
-@@ -418,7 +440,7 @@ test_expect_success 'directory vs modified submodule' '
-     ( yes "r" | git mergetool submod ) &&
-     test "$(cat submod/file16)" = "not a submodule" &&
- 
--    git reset --hard master &&
-+    git reset --hard master >/dev/null 2>&1 &&
-     ( cd submod && git clean -f && git reset --hard ) &&
-     git submodule update -N
- '
--- 
-1.7.5.4
+Your rationale for giving a more specific synopsis is sound, although:
+1) git http-backend also supports the environment variable because it's
+inherited by the underlying upload-pack and receive-pack; and 2) the
+environment variable is an alternative to a general git command-line
+option. How much detail do you want in a synopsis?
+
+Assuming that you're happy with this level of detail, and that the
+AsciiDoc syntax is correct (I'm not familiar enough with it), I'm happy
+with the patch you propose---
+
+Reviewed-by: Jamey Sharp <jamey@minilop.net>
+
+> So here is a more realistic replacement, so that we won't have to suffer
+> by complaints from people with older AsciiDoc saying "the release does not
+> build". If we were to include this in 1.7.7 final, we now need to make
+> sure we won't to have to hear from people with newer AsciiDoc saying "why
+> do we have nonsense in SYNOPSIS section", so your help is needed here.
+>=20
+> I explicitly avoided saying:
+>=20
+> 	[verse]
+> 	export GIT_NAMESPACE=3D<namespace>
+>=20
+> as nothing other than the selected transports seems to pay attention to
+> this environment variable.
+>=20
+> -- >8 --
+> Subject: [PATCH] Documentation/gitnamespaces.txt: cater to older asciidoc
+>=20
+> Older asciidoc (e.g. 8.2.5 on Centos 5.5) is unhappy if a manpage does not
+> have a SYNOPSIS section. Show a sample (and a possibly bogus) command line
+> of running two commands that pay attention to this environment variable
+> with a customized value.
+>=20
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/gitnamespaces.txt |    7 +++++++
+>  1 files changed, 7 insertions(+), 0 deletions(-)
+>=20
+> diff --git a/Documentation/gitnamespaces.txt b/Documentation/gitnamespace=
+s.txt
+> index ed8924e..c6713cf 100644
+> --- a/Documentation/gitnamespaces.txt
+> +++ b/Documentation/gitnamespaces.txt
+> @@ -5,6 +5,13 @@ NAME
+>  ----
+>  gitnamespaces - Git namespaces
+> =20
+> +SYNOPSIS
+> +--------
+> +[verse]
+> +GIT_NAMESPACE=3D<namespace> 'git upload-pack'
+> +GIT_NAMESPACE=3D<namespace> 'git receive-pack'
+> +
+> +
+>  DESCRIPTION
+>  -----------
+> =20
+> --=20
+> 1.7.7.rc1.3.g559357
+>=20
+
+--WRT3RXLOp/bBMgTI
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iEYEARECAAYFAk5yxUEACgkQp1aplQ4I9mXBpwCcC4ALf3nKqj4V1YUn3LZC3VQc
+HaoAoIIJ00uL8MCMjKoSec88IXHTbrVD
+=wzIf
+-----END PGP SIGNATURE-----
+
+--WRT3RXLOp/bBMgTI--
