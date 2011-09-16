@@ -1,59 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Disambiguate duplicate t9160* tests
-Date: Fri, 16 Sep 2011 13:41:04 -0700
-Message-ID: <7vty8cdxun.fsf@alter.siamese.dyndns.org>
-References: <1316202903-5085-1-git-send-email-frederic.heitzmann@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH/RFC] bash: add --word-diff option to diff [AND
+ --set-upstream TO push] auto-completion
+Date: Fri, 16 Sep 2011 15:47:22 -0500
+Message-ID: <20110916204722.GD4683@elie>
+References: <4E6F720A.3020103@yahoo.com.br>
+ <20110913165847.GB11076@elie>
+ <4E6FA541.7000100@yahoo.com.br>
+ <20110913191448.GC14917@elie>
+ <20110913232941.GC2078@goldbirke>
+ <20110913233712.GE2078@goldbirke>
+ <4E737199.1000107@yahoo.com.br>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, bjacobs@woti.com, rchen@cs.umd.edu
-To: =?utf-8?B?RnLDqWTDqXJpYw==?= Heitzmann 
-	<frederic.heitzmann@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 16 22:41:16 2011
+Cc: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@fzi.de>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Rodrigo Rosenfeld Rosas <lbocseg@yahoo.com.br>
+X-From: git-owner@vger.kernel.org Fri Sep 16 22:47:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4fDl-0006kb-Di
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 22:41:13 +0200
+	id 1R4fJr-0000x1-D7
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 22:47:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755375Ab1IPUlI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Sep 2011 16:41:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62415 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755313Ab1IPUlH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2011 16:41:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5BBFA555E;
-	Fri, 16 Sep 2011 16:41:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=v8Fe2d
-	46rw/tE2Nnczs+fZ51BpKALQoB1KjHKf6fb4Ear0ZINMdnVDpyVvKUdmM+c2Ch0W
-	/jxlcsjbhzRcbpdVCZZbdPSzwPM8iNh5TDlg/EjnuWyr0r7JlVCOtIcyS93OykRM
-	jblMNEo/mpoaAEG5r6pKKhYLjghVoFcmcgSLE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MLugIQ51McJ+buRgVDN4wUPOBbQc5ad1
-	q1/19WWkyByRwMHUToQXZRlJ8Zteq2p/+zhmRwhkr+0bo7TctjiTEMJAhtSelmXf
-	KvcStmkjB3y82GGYw+7wKdYHxNfNBETVD6jo4O4VExI4Lo+tnm82HF6na64/kUaS
-	FW4siaHrYEI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 536D0555C;
-	Fri, 16 Sep 2011 16:41:06 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E04BF555B; Fri, 16 Sep 2011
- 16:41:05 -0400 (EDT)
-In-Reply-To: <1316202903-5085-1-git-send-email-frederic.heitzmann@gmail.com>
- (=?utf-8?B?IkZyw6lkw6lyaWM=?= Heitzmann"'s message of "Fri, 16 Sep 2011
- 21:55:03 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 33320CB8-E0A4-11E0-9D1C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755441Ab1IPUr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Sep 2011 16:47:26 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:47981 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755313Ab1IPUr0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2011 16:47:26 -0400
+Received: by ywb5 with SMTP id 5so3190981ywb.19
+        for <git@vger.kernel.org>; Fri, 16 Sep 2011 13:47:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=aGYWw+r8SKZ4TtGN7SZz8h1ekgv+dg+kcJPreVIpXm8=;
+        b=GFG98zQnTddafTUw+aoSt3Ky0a+cdR/5Ym3EPc0K2CTfsvDQtEFQkzQhmkIlF+5kFB
+         MzUzx86DdHRixuZjI3BX5woeCQSTNka7bYCsU90UToRI07YRkQWKXa4VAc3j/cf7bC11
+         iBqW9JpxRO5ck0kYjj9JGYWDX1S2GmNaqtP44=
+Received: by 10.42.115.198 with SMTP id l6mr3398565icq.132.1316206045311;
+        Fri, 16 Sep 2011 13:47:25 -0700 (PDT)
+Received: from elie (99-120-124-35.lightspeed.cicril.sbcglobal.net. [99.120.124.35])
+        by mx.google.com with ESMTPS id gs23sm10914323ibb.1.2011.09.16.13.47.24
+        (version=SSLv3 cipher=OTHER);
+        Fri, 16 Sep 2011 13:47:24 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4E737199.1000107@yahoo.com.br>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181555>
 
-Thanks.
+Rodrigo Rosenfeld Rosas wrote:
+
+> While on the topic, it would also be interesting to add "--set-upstream" to
+> "git push" autocompletion. Don't you agree?
+
+Yes, of course.
