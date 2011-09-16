@@ -1,85 +1,135 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH/RFC] add lame win32 credential-helper
-Date: Thu, 15 Sep 2011 23:48:30 +0200
-Message-ID: <CABPQNSZjGzyxJKWRDDWxRj_SLdC1Y_9TxnAMOA+b-Pw3+X-E7w@mail.gmail.com>
-References: <1316118324-6164-1-git-send-email-kusmabite@gmail.com> <20110915214026.GA18623@sigill.intra.peff.net>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re* [PATCH 4/4] Add documentation for ref namespaces
+Date: Thu, 15 Sep 2011 17:22:29 -0700
+Message-ID: <7vaaa5pc8q.fsf_-_@alter.siamese.dyndns.org>
+References: <7vsjrna2x2.fsf@alter.siamese.dyndns.org>
+ <1307470885-4018-1-git-send-email-jamey@minilop.net>
+ <1307470885-4018-5-git-send-email-jamey@minilop.net>
+ <CACBZZX4bow8vwrwSL5uRJQtAgeg10_K+5ss8u-HvCHOn3+0Tuw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, jaysoffian@gmail.com, gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 15 23:49:18 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org, Josh Triplett <josh@joshtriplett.org>
+To: Jamey Sharp <jamey@minilop.net>
+X-From: git-owner@vger.kernel.org Fri Sep 16 02:22:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4Jo5-00055G-S0
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Sep 2011 23:49:18 +0200
+	id 1R4MCV-00023p-Pa
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 02:22:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935189Ab1IOVtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Sep 2011 17:49:11 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:63863 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935181Ab1IOVtK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2011 17:49:10 -0400
-Received: by pzk32 with SMTP id 32so4971070pzk.19
-        for <git@vger.kernel.org>; Thu, 15 Sep 2011 14:49:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=jQvVIiW1weAgLTTWTnidCghZiVL99+28TCBUtKG6HgY=;
-        b=fn/FLpMrv+WoZvkp1p2dIf2RbCEgiaX8+Oy5H6bMUTgHB9CCyZQePIjKsKXmpIKvKb
-         Q6JG3DacHA9n8OpbKHPKotjT8kQgzieLaQ/tmOaPTl672rhddc+8QhMdHgr6EPA5d0PZ
-         RHO9JNhrFTSjnhaqokzL8eVveu4vZ1tHzpJME=
-Received: by 10.68.12.103 with SMTP id x7mr2463810pbb.188.1316123350125; Thu,
- 15 Sep 2011 14:49:10 -0700 (PDT)
-Received: by 10.68.42.169 with HTTP; Thu, 15 Sep 2011 14:48:30 -0700 (PDT)
-In-Reply-To: <20110915214026.GA18623@sigill.intra.peff.net>
+	id S1750795Ab1IPAWd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Sep 2011 20:22:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60207 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750711Ab1IPAWd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2011 20:22:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E92E546F;
+	Thu, 15 Sep 2011 20:22:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=8Sflg8VDmJBl
+	q4jR7UFd7ZKUf3w=; b=wkmn4nB8CK27bWye2PyHu4NS+RBbruFhCPk6JymXAG6p
+	UDtAPRFAZFSHn1fh7Y4+NqWCMR7eSj2CjKLVDuiXQzN4SfM+QLVnI2VBSAtlF818
+	FW+xMOq3qh8UEy+p/SsAdVmbfusGf4ndUNGQxhEaYYv7/s7KEGaJt6NJXH/YlMc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=gBxp9B
+	OWrDNXmNeYc08KIoQulRo9Qfmq3Di1Wg6yKdEXBvwlPvaM1/4gLt/aHarwQnRD9V
+	Wey7soSj/IEijYr2y0y7LVe0v3crfsRYUhKVXCsprN27PxPxl6VkYIlVkJxZct41
+	SmuoxwRXOQrNqoVPGWQVpGhkIvnDf+ORTgb0s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2A72546E;
+	Thu, 15 Sep 2011 20:22:30 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6D6E0546D; Thu, 15 Sep 2011
+ 20:22:30 -0400 (EDT)
+In-Reply-To: <CACBZZX4bow8vwrwSL5uRJQtAgeg10_K+5ss8u-HvCHOn3+0Tuw@mail.gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 23 Aug
+ 2011 12:38:04 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F7002D6A-DFF9-11E0-A411-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181522>
 
-On Thu, Sep 15, 2011 at 11:40 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Sep 15, 2011 at 10:25:24PM +0200, Erik Faye-Lund wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+
+> On Tue, Jun 7, 2011 at 20:21, Jamey Sharp <jamey@minilop.net> wrote:
 >
->> Not that it's useful yet, since the core-git code for the
->> credential-helper support doesn't compile on Windows. So
->> it's not fully tested, I've only read the interface
->> documentation and experimented with it from the command
->> line.
+>> Document the namespace mechanism in a new gitnamespaces(7) page.
+>> Reference it from receive-pack and upload-pack.
 >
-> Which parts of the credential-helper code don't compile? I wouldn't be
-> surprised if the cache helper doesn't work (because it uses unix domain
-> sockets for communication).
+> This breaks the build on older asciidoc versions, the fix is to do
+> what I did in f5008f56d5aba06598e1c6272f4f55b4ee4bb016.
 
-That's exactly it:
+Earlier I sent out a tongue-in-cheek "like this" that had a completely
+bogus SYNOPSIS section that is unusable in a released version of Git,
+hoping that somebody who _care_ more about the feature that the page
+describes would give us a better wording, but unfortunately it never
+happened.
 
-unix-socket.c:12: warning: 'struct sockaddr_un' declared inside parameter list
-unix-socket.c:12: warning: its scope is only this definition or declaration, whi
-ch is probably not what you want
-unix-socket.c: In function 'unix_sockaddr_init':
-unix-socket.c:15: error: dereferencing pointer to incomplete type
-unix-socket.c:17: error: dereferencing pointer to incomplete type
-unix-socket.c:18: error: dereferencing pointer to incomplete type
-unix-socket.c:19: error: dereferencing pointer to incomplete type
-unix-socket.c: In function 'unix_stream_connect':
-unix-socket.c:25: error: storage size of 'sa' isn't known
-unix-socket.c: In function 'unix_stream_listen':
-unix-socket.c:39: error: storage size of 'sa' isn't known
-make: *** [unix-socket.o] Error 1
-make: *** Waiting for unfinished jobs....
+So here is a more realistic replacement, so that we won't have to suffe=
+r
+by complaints from people with older AsciiDoc saying "the release does =
+not
+build". If we were to include this in 1.7.7 final, we now need to make
+sure we won't to have to hear from people with newer AsciiDoc saying "w=
+hy
+do we have nonsense in SYNOPSIS section", so your help is needed here.
 
-> If it's too hard to adapt it to whatever IPC
-> mechanism would be appropriate on Windows, we can just leave it out on
-> that platform.
->
-> But the core code in git itself should be pretty straight forward.
+I explicitly avoided saying:
 
-I didn't mean that it was impossible to port, just that it didn't compile
-as-is. I haven't looked into fixing up the code so it compiles on Windows
-again myself. And I'm not really planning to; I have little git-time these
-days, and little knowledge of how unix-sockets works...
+	[verse]
+	export GIT_NAMESPACE=3D<namespace>
+
+as nothing other than the selected transports seems to pay attention to
+this environment variable.
+
+-- >8 --
+Subject: [PATCH] Documentation/gitnamespaces.txt: cater to older asciid=
+oc
+
+Older asciidoc (e.g. 8.2.5 on Centos 5.5) is unhappy if a manpage does =
+not
+have a SYNOPSIS section. Show a sample (and a possibly bogus) command l=
+ine
+of running two commands that pay attention to this environment variable
+with a customized value.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/gitnamespaces.txt |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/gitnamespaces.txt b/Documentation/gitnamespa=
+ces.txt
+index ed8924e..c6713cf 100644
+--- a/Documentation/gitnamespaces.txt
++++ b/Documentation/gitnamespaces.txt
+@@ -5,6 +5,13 @@ NAME
+ ----
+ gitnamespaces - Git namespaces
+=20
++SYNOPSIS
++--------
++[verse]
++GIT_NAMESPACE=3D<namespace> 'git upload-pack'
++GIT_NAMESPACE=3D<namespace> 'git receive-pack'
++
++
+ DESCRIPTION
+ -----------
+=20
+--=20
+1.7.7.rc1.3.g559357
