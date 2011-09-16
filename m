@@ -1,119 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mergetool: Use args as pathspec to unmerged files
-Date: Fri, 16 Sep 2011 13:17:10 -0700
-Message-ID: <7vaaa4fdix.fsf@alter.siamese.dyndns.org>
-References: <7v4o0h7byd.fsf@alter.siamese.dyndns.org>
- <7vipox2wd6.fsf@alter.siamese.dyndns.org>
- <D3CA81F2-647B-4AD0-A4FC-4C22772FD791@JonathonMah.com>
- <7vsjnysuyl.fsf@alter.siamese.dyndns.org>
- <C5AD8BFC-DA48-4CE9-B821-D0076825F33C@JonathonMah.com>
+Subject: Re: [PATCH] gitweb: Strip non-printable characters from syntax
+ highlighter output
+Date: Fri, 16 Sep 2011 13:24:11 -0700
+Message-ID: <7v62ksfd78.fsf@alter.siamese.dyndns.org>
+References: <1314053923-13122-1-git-send-email-cfuhrman@panix.com>
+ <201109161441.58946.jnareb@gmail.com>
+ <7vwrd8fnxr.fsf@alter.siamese.dyndns.org>
+ <201109162058.51132.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Dan McGee <dpmcgee@gmail.com>,
-	David Aguilar <davvid@gmail.com>
-To: Jonathon Mah <me@JonathonMah.com>
-X-From: git-owner@vger.kernel.org Fri Sep 16 22:17:29 2011
+Cc: "Christopher M. Fuhrman" <cfuhrman@panix.com>, git@vger.kernel.org,
+	Christopher Wilson <cwilson@cdwilson.us>,
+	Sylvain Rabot <sylvain@abstraction.fr>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 16 22:24:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4eqm-000403-Fy
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 22:17:28 +0200
+	id 1R4exO-0007OS-TX
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 22:24:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755267Ab1IPURO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Sep 2011 16:17:14 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51220 "EHLO
+	id S1754831Ab1IPUYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Sep 2011 16:24:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54612 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754413Ab1IPURN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2011 16:17:13 -0400
+	id S1753692Ab1IPUYN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2011 16:24:13 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A789450C1;
-	Fri, 16 Sep 2011 16:17:12 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 898E251EC;
+	Fri, 16 Sep 2011 16:24:13 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=juPvi97RGO3sJFibjcZRsGtZOAw=; b=C7BteT
-	/wQnhPRTtLTryl7QKINJjUOJ43RgTSqinMT4KwDErgXn9xf6bLFdYmxGFTi16sjD
-	hWG9qPfGHcEIPrVbwdlEPkNdYBkOV7UsMZNYs++Es1O6mt/3450lgj10/eFS+ni+
-	sq6CnK/SbLbi/1kW1/squzAE1D1lZDs6JlJK4=
+	:content-type; s=sasl; bh=Arf5CiJ3AFHLPzxzTLuaMa2bsMQ=; b=WQt1aR
+	ipX/arjDmcAuGWMXT9SAplOZf/Xh/C9DQzQbRdslqlVV92bdz6h0Xbb3APk6REvm
+	3LfjS9U0g/nAZQUSRo57cvzjU+obCm4IV1Ylqjsn93Q5/qTWTFr1lxMEVVIZszZ6
+	dHDsw86k3pNIVAP7sr+/UOyhnVwzb2DTrgKBc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PfifIg8Cu4IiOQvDDQfmqWN1q6MZxpvz
-	V/Vmw5oz6oNWJrxIn6LjSZp/qObUVGajbDJwswEo+S8rm/KhnJTYzekrknm7+7mH
-	PJlzVs63Ll4FomEUHOPQgXil7oF8+og/haYubAajOid2aHK/Yj6jXdolrFM1ah0t
-	m9kiPwU7Vyc=
+	:content-type; q=dns; s=sasl; b=UDSNk3v4isoh9GjSfJpFOcmTSSwz0fPJ
+	DIfNmVjAS6cE3XfM1jmFcfoKqaK5DCwVb/UhCiJmWkkM9GhYl9ISOZYOmdlOiq1y
+	2LdvpYoKuC7V7tI5KWnC/Cej8Cmp436/mdqMmZw3lBTFcLOYLNXfLdGcSJ7YpkwZ
+	CA4tKMvUI04=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E77F50BF;
-	Fri, 16 Sep 2011 16:17:12 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 80A6951EB;
+	Fri, 16 Sep 2011 16:24:13 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 280FA50BE; Fri, 16 Sep 2011
- 16:17:12 -0400 (EDT)
-In-Reply-To: <C5AD8BFC-DA48-4CE9-B821-D0076825F33C@JonathonMah.com> (Jonathon
- Mah's message of "Thu, 15 Sep 2011 19:12:10 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1683451E9; Fri, 16 Sep 2011
+ 16:24:12 -0400 (EDT)
+In-Reply-To: <201109162058.51132.jnareb@gmail.com> (Jakub Narebski's message
+ of "Fri, 16 Sep 2011 20:58:49 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DC9C9C22-E0A0-11E0-AF89-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D7813F3A-E0A1-11E0-B190-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181550>
 
-Jonathon Mah <me@JonathonMah.com> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Mergetool now treats its path arguments as a pathspec (like other git
-> subcommands), restricting action to the given files and directories.
-> Files matching the pathspec are filtered so mergetool only acts on
-> unmerged paths; previously it would assume each path argument was in an
-> unresolved state, and get confused when it couldn't check out their
-> other stages.
+> So actually now I see that while this line is good to have in esc_html(),
+> it is not really necessary in sanitize().
 >
-> Running "git mergetool subdir" will prompt to resolve all conflicted
-> blobs under subdir.
->
-> Signed-off-by: Jonathon Mah <me@JonathonMah.com>
+> But anyway we don't want to replace undef with an empty string; undef is
+> (usually) an error, and we want to catch it, not to hide it.
 
-It looks like this simplifies the code quote a bit and make the result
-easier to follow ;-)  Nicely done.
-
-As nobody reads from a pipe in while loop and runs merge_file or prompt
-inside, there no longer is a reason to redirect the original standard
-input and make it available, hence we could perhaps add this patch on top
-of your change.
-
-Ack from mergetool/difftool folks?
-
-Thanks.
-
- git-mergetool.sh |   10 ++++------
- 1 files changed, 4 insertions(+), 6 deletions(-)
-
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 83551c7..0a06bde 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -362,20 +362,18 @@ if test -z "$files" ; then
-     exit 0
- fi
- 
--# Save original stdin
--exec 3<&0
--
- printf "Merging:\n"
- printf "$files\n"
- 
- IFS='
--'; for i in $files
-+'
-+for i in $files
- do
-     if test $last_status -ne 0; then
--	prompt_after_failed_merge <&3 || exit 1
-+	prompt_after_failed_merge || exit 1
-     fi
-     printf "\n"
--    merge_file "$i" <&3
-+    merge_file "$i"
-     last_status=$?
-     if test $last_status -ne 0; then
- 	rollup_status=1
+Heh, get off your high horse---whoever wrote such a caller that calls the
+subroutine and uses its result without checking it against undef is not
+qualified to make such a statement. I do not think letting "perl -w"
+notice and complain about an attempt to concatenate undef with string
+counts as "catching" it.
