@@ -1,90 +1,99 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git branch --set-upstream regression in master
-Date: Fri, 16 Sep 2011 16:14:51 -0700
-Message-ID: <7v39fwdqqc.fsf@alter.siamese.dyndns.org>
+Date: Fri, 16 Sep 2011 16:52:19 -0700
+Message-ID: <7vy5xocafg.fsf@alter.siamese.dyndns.org>
 References: <CAG+J_DyxNpPevwfrJVkv3GBmv0tEXgW2LZtdHgarFoXb9Qqghw@mail.gmail.com>
- <7v7h58dri4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git <git@vger.kernel.org>, conrad.irwin@gmail.com
 To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 17 01:15:05 2011
+X-From: git-owner@vger.kernel.org Sat Sep 17 01:52:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4hca-0006tN-Nz
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Sep 2011 01:15:01 +0200
+	id 1R4iCq-0001jO-DH
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Sep 2011 01:52:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755837Ab1IPXO4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Sep 2011 19:14:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33473 "EHLO
+	id S932076Ab1IPXwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Sep 2011 19:52:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50290 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755695Ab1IPXOz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2011 19:14:55 -0400
+	id S1750925Ab1IPXwW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2011 19:52:22 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9422C5247;
-	Fri, 16 Sep 2011 19:14:53 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 69D5C596A;
+	Fri, 16 Sep 2011 19:52:21 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lLCqnX5urUs5Dg+ktJb721q2+FU=; b=aFuPnA
-	vWLBRmJdmL5S/PxuVG2kpss0wJGEAa08KsTv8O7tPiDcjJgd3aAvDMTyfWMd04IC
-	7UaduieoZVxrk2Nnkvk43/UhB4gLI/DZc5NLmGlgJ9Qwjh9Cr1Qk/WryMrdfZBmJ
-	GkIjhhmXgg7qWAY+VbgNMQIURHy7BqrFxs+YE=
+	:content-type; s=sasl; bh=enoBcBqnXAD+xCaRWljkm8zfml4=; b=vY5sCJ
+	nHsiBVq4jtb7wBknFRaecj7V4hGXsM7kJdgbEGeQewOCoEqBh5PI+/uzzQleA/YF
+	Wf5+HIIUOQEgellgi7aBJbA2XIAQzsekdHfJzI8keki7dOJCeqbn5/qFy0YBEnyA
+	vHqgJetOdZHKSKDQK9tDfWKGMNRGl7RenMyN4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qfkX8WnciSszrxjqfuaDm7exuVkBa1JA
-	YgpvxFI6Y6K0hFe0ztjVH3LfBl1nJTqJM2pCtXsLF2hOm/12EqaO6x0Usf0R8N70
-	SfpxEzZtic6fYhswGzUwslZR1jN+cExYhZZ89WjW2gwQutdyOnip3iCkWzHQZkRC
-	Kza036cBTE0=
+	:content-type; q=dns; s=sasl; b=mrrwB+MDbmFhDLoML0od0GJIlGPYxDDJ
+	bFJIJjgENzrgeJXm2B68sQTn9IMVCFfk9RQGZo6bREfH1/cuZrLi9vDFnXzzVPv3
+	gXBXktPMVH7YXwXoMXBWDwKHnRg7Fh0R4reO5VYrDioZuWPH+bFayDB5tZuQ20Qx
+	jPEdBYjXsaE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A55B5246;
-	Fri, 16 Sep 2011 19:14:53 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C9E45969;
+	Fri, 16 Sep 2011 19:52:21 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8530C5245; Fri, 16 Sep 2011
- 19:14:52 -0400 (EDT)
-In-Reply-To: <7v7h58dri4.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 16 Sep 2011 15:58:11 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 648E55968; Fri, 16 Sep 2011
+ 19:52:20 -0400 (EDT)
+In-Reply-To: <CAG+J_DyxNpPevwfrJVkv3GBmv0tEXgW2LZtdHgarFoXb9Qqghw@mail.gmail.com> (Jay
+ Soffian's message of "Fri, 16 Sep 2011 17:43:41 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AEB1AE92-E0B9-11E0-A9CC-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: EA86D69A-E0BE-11E0-90E5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181567>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-> I took a brief look at --set-upstream codepath, and I have to say that the
-> implementation is totally broken with respect to an existing branch.
+> This used to be possible on the checked out branch:
 >
-> Given
+>   $ git branch --set-upstream origin/master master
 >
-> 	$ git branch master --set-upstream origin/master
->
-> it passes the exact same codepath as
->
-> 	$ git branch master origin/master
->
-> uses, only with a different "track" flag, no?  That is, it calls a
-> function that is meant to _create_ branch "master" from given branch point
-> "origin/master", namely create_branch().  And then create_branch(),
-> contrary to its name, is littered with "dont_change_ref" special case to
-> work it around, depending on the value of "track".
+> Now it gives "fatal: Cannot force update the current branch."
+> broken.
 
-So here is a quick-and-dirty patch, which may or may not compile or pass
-tests.
+Let's do this. I would be happy if I can include it in -rc2 with Tested-by:
+or something ;-)
 
+-- >8 --
+Subject: [PATCH] branch --set-upstream: regression fix
+
+The "git branch" command, while not in listing mode, calls create_branch()
+even when the target branch already exists, and it does so even when it is
+not interested in updating the value of the branch (i.e. the name of the
+commit object that sits at the tip of the existing branch). This happens
+when the command is run with "--set-upstream" option.
+
+The earlier safety-measure to prevent "git branch -f $branch $commit" from
+updating the currently checked out branch did not take it into account,
+and we no longer can update the tracking information of the current branch.
+
+Minimally fix this regression by telling the validation code if it is
+called to really update the value of a potentially existing branch, or if
+the caller merely is interested in updating auxiliary aspects of a branch.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
  branch.c           |   21 ++++++++++++---------
  branch.h           |   12 +++++++++++-
  builtin/branch.c   |    2 +-
  builtin/checkout.c |    3 ++-
- 4 files changed, 26 insertions(+), 12 deletions(-)
+ t/t3200-branch.sh  |   13 +++++++++++++
+ 5 files changed, 39 insertions(+), 12 deletions(-)
 
 diff --git a/branch.c b/branch.c
-index 478d825..fecedd3 100644
+index 1fe3078..4338a90 100644
 --- a/branch.c
 +++ b/branch.c
 @@ -135,23 +135,25 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
@@ -156,7 +165,7 @@ index 01544e2..1285158 100644
  /*
   * Remove information about the state of working on the current
 diff --git a/builtin/branch.c b/builtin/branch.c
-index aa705a0..f49596f 100644
+index 40f885c..5fb3d85 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
 @@ -566,7 +566,7 @@ static void rename_branch(const char *oldname, const char *newname, int force)
@@ -169,10 +178,10 @@ index aa705a0..f49596f 100644
  	strbuf_addf(&logmsg, "Branch: renamed %s to %s",
  		 oldref.buf, newref.buf);
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 3bb6525..5e356a6 100644
+index ddefec0..909a334 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -1073,7 +1073,8 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+@@ -1072,7 +1072,8 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
  	if (opts.new_branch) {
  		struct strbuf buf = STRBUF_INIT;
  
@@ -182,3 +191,27 @@ index 3bb6525..5e356a6 100644
  
  		strbuf_release(&buf);
  	}
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index cb6458d..7633930 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -554,4 +554,17 @@ test_expect_success 'attempt to delete a branch merged to its base' '
+ 	test_must_fail git branch -d my10
+ '
+ 
++test_expect_success 'use set-upstream on the current branch' '
++	git checkout master &&
++	git --bare init myupstream.git &&
++	git push myupstream.git master:refs/heads/frotz &&
++	git remote add origin myupstream.git &&
++	git fetch &&
++	git branch --set-upstream master origin/frotz &&
++
++	test "z$(git config branch.master.remote)" = "zorigin" &&
++	test "z$(git config branch.master.merge)" = "zrefs/heads/frotz"
++
++'
++
+ test_done
+-- 
+1.7.7.rc1.4.g26e426
