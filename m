@@ -1,90 +1,62 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Problem with submodule merge
-Date: Fri, 16 Sep 2011 16:57:25 +0200
-Message-ID: <20110916145724.GA2782@book.hvoigt.net>
-References: <4E734582.6030704@morey-chaisemartin.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] check_expirations: don't copy over same element
+Date: Fri, 16 Sep 2011 11:47:18 -0400
+Message-ID: <20110916154718.GA13740@sigill.intra.peff.net>
+References: <a6397f7f28a5adcd34aeac98cca6500e336698aa.1316173346.git.trast@student.ethz.ch>
+ <29010bf6134beb20efca498e7b4f7a9d9bdb21a6.1316173346.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
-X-From: git-owner@vger.kernel.org Fri Sep 16 16:57:33 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Brian Gernhardt <benji@silverinsanity.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Sep 16 17:47:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4Zr9-000582-O1
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 16:57:32 +0200
+	id 1R4adV-0006eZ-Hb
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 17:47:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755206Ab1IPO50 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Sep 2011 10:57:26 -0400
-Received: from darksea.de ([83.133.111.250]:45103 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755179Ab1IPO5Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2011 10:57:25 -0400
-Received: (qmail 16548 invoked from network); 16 Sep 2011 16:57:23 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 16 Sep 2011 16:57:23 +0200
+	id S1755242Ab1IPPrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Sep 2011 11:47:24 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46010
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752811Ab1IPPrY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2011 11:47:24 -0400
+Received: (qmail 364 invoked by uid 107); 16 Sep 2011 15:48:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 16 Sep 2011 11:48:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Sep 2011 11:47:18 -0400
 Content-Disposition: inline
-In-Reply-To: <4E734582.6030704@morey-chaisemartin.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+In-Reply-To: <29010bf6134beb20efca498e7b4f7a9d9bdb21a6.1316173346.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181535>
 
-Hi,
+On Fri, Sep 16, 2011 at 01:51:35PM +0200, Thomas Rast wrote:
 
-this looks like you have hit a codepath where the submodules object
-database is not added to the object database. I am not sure why.
+> diff --git a/credential-cache--daemon.c b/credential-cache--daemon.c
+> index d6769b1..128c5ce 100644
+> --- a/credential-cache--daemon.c
+> +++ b/credential-cache--daemon.c
+> @@ -77,7 +77,8 @@ static int check_expirations(void)
+>  			free(entries[i].item.unique);
+>  			free(entries[i].item.username);
+>  			free(entries[i].item.password);
+> -			memcpy(&entries[i], &entries[entries_nr], sizeof(*entries));
+> +			if (i != entries_nr)
+> +				memcpy(&entries[i], &entries[entries_nr], sizeof(*entries));
 
-Could you try my patch that moves the merge search into a forked process:
+Thanks. I even remember while writing this loop considering the case of
+(i == entries_nr), but decided it didn't need special-casing. But I
+obviously forgot about memcpy.
 
-3dcb369b allow multiple calls to submodule merge search for the same path
+Both this and the prior patch are:
 
-That should solve the issue as a side effect. Its currently in Junio's
-pu branch.
+Acked-by: Jeff King <peff@peff.net>
 
-Cheers Heiko
-
-On Fri, Sep 16, 2011 at 02:48:02PM +0200, Nicolas Morey-Chaisemartin wrote:
-> Hi,
-> 
-> We have meet an issue few times at work with submodule merge.
-> I'm running git 1.7.7-rc1 build from master on FC15 x86_64 but I've seen the issue on other ditro with older (stable) versions
-> 
-> I still haven't figured out exactly when it happends but here are the symptoms:
-> 
-> 1) I commited some updates for a submodule in our integration repo.
-> 2) I pulled a remote branch of the integration repo which had an update on the same submodule (but different SHAs)
-> 3) When the merge driver try to find a following commit for the submodule, I get some (sometimes many) error messages about refs that point to invalid objects:
-> 
-> [nmorey@sat:SigmaCToolchain (user/nmorey/dev/0.3.0 *%>)]$ git merge origin/prerelease/0.3-0 
-> error: refs/heads/user/nmorey/master does not point to a valid object!
-> error: refs/remotes/origin/dev/cpp does not point to a valid object!
-> error: refs/remotes/origin/dev/scuk does not point to a valid object!
-> error: refs/remotes/origin/dev/sys_agents does not point to a valid object!
-> error: refs/remotes/origin/user/bbodin/cea does not point to a valid object!
-> error: refs/remotes/origin/user/borgogoz/master does not point to a valid object!
-> warning: Failed to merge submodule db (merge following commits not found)
-> Auto-merging db
-> CONFLICT (submodule): Merge conflict in db
-> Automatic merge failed; fix conflicts and then commit the result.
-> 
-> 
-> I checked and the object really exists in the submodule but is in a pack.
-> 
-> >From checking the strace, git looks for a the object in db/.git/objects/... whch does not exists
-> And from what I could figure it, the issue seems to be coming from  find_pack_entry which does not return 1 so git goes looking for loose object
-> and cannot find any (as expected).
-> This is not a big issue as it just outputs errors about refs and does not block the user but it gets quite scary when there are a few hundreds of them !
-> 
-> 
-> I kept a tarball of the repo so I can provide more info/logs/trace if needed.
-> 
-> Nicolas
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-Peff
