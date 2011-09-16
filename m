@@ -1,76 +1,84 @@
-From: "Christopher M. Fuhrman" <cfuhrman@panix.com>
-Subject: Re: [PATCH] gitweb: Strip non-printable characters from syntax
- highlighter output
-Date: Fri, 16 Sep 2011 11:11:01 -0700 (PDT)
-Message-ID: <alpine.NEB.2.01.1109161050080.2073@vc75.vc.panix.com>
-References: <1314053923-13122-1-git-send-email-cfuhrman@panix.com> <7v8vqfdf0l.fsf@alter.siamese.dyndns.org> <201108270006.19289.jnareb@gmail.com> <201109161441.58946.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] ls-remote: a lone "-h" is asking for help
+Date: Fri, 16 Sep 2011 11:14:27 -0700
+Message-ID: <7vobykfj7g.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christopher Wilson <cwilson@cdwilson.us>,
-	Sylvain Rabot <sylvain@abstraction.fr>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 16 20:11:11 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 16 20:14:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4csY-0002Tr-FN
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 20:11:10 +0200
+	id 1R4cvt-00044t-EW
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 20:14:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755438Ab1IPSLE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Sep 2011 14:11:04 -0400
-Received: from mailbackend.panix.com ([166.84.1.89]:42076 "EHLO
-	mailbackend.panix.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753963Ab1IPSLD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2011 14:11:03 -0400
-Received: from vc75.vc.panix.com (vc75.vc.panix.com [166.84.7.75])
-	by mailbackend.panix.com (Postfix) with ESMTP id E15B934213;
-	Fri, 16 Sep 2011 14:11:01 -0400 (EDT)
-X-X-Sender: cfuhrman@vc75.vc.panix.com
-In-Reply-To: <201109161441.58946.jnareb@gmail.com>
-User-Agent: Alpine 2.01 (NEB 1266 2009-07-14)
-X-OpenPGP-Key-ID: F37818CF
+	id S1755234Ab1IPSOc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Sep 2011 14:14:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56826 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753401Ab1IPSOc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2011 14:14:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F03B555C6;
+	Fri, 16 Sep 2011 14:14:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=s
+	J8OzF4O1bjmEgCEgrZChh62eHw=; b=X12vLslGcMavBNHwyWGg8tHeT8GhG3NyK
+	nyNTMPe9QaueBkc+P+j7VLIHrBEAreyQUmMhwn9fyaS40k1C9Rd4TgL8aH2gF6RQ
+	vquaAH7WfrEEgsFhD80oaF4UFciQ0N1tY/pEeGBqqIKGrm+e2k4V47JLxauLr6oU
+	7St4xOvLCw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=Gig
+	C5aZeKnSZOjA7UDY6H+3cu9DZIfncyy6n/bZdTDHUAVH1K0hFwe3khMUndVHkN7k
+	4oCboOXbjE5PJrLeNzQXkdqwbJddzZodpANZ2s+o7dwAJzzD1VyHy/NfDN0MC0lG
+	STIGZ2WfFcETERuBmOVMDrkDWYXtoUeLq6OO8yZM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E7FD655C4;
+	Fri, 16 Sep 2011 14:14:29 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7DAC455C3; Fri, 16 Sep 2011
+ 14:14:29 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B8214692-E08F-11E0-8CFC-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181541>
 
-Howdy,
+What should happen if you run this command?
 
-On Fri, 16 Sep 2011 at 5:41am, Jakub Narebski wrote:
+	$ git ls-remote -h
 
-> The commit message is from Christopher, but I have replaced his solution
-> of stripping non-printable characters via col(1) program by having gitweb
-> strip characters not allowed in XML.
->
-> Christopher, could you check that it fixes your issue?
+It does not give a short-help for the command. Instead because "-h" is a
+synonym for "--heads", it runs "git ls-remote --heads", and because there
+is no remote specified on the command line, we run it against the default
+"origin" remote, hence end up doing the same as
 
-After applying the patch, I tested it successfully against the following
-files:
+	$ git ls-remote --heads origin
 
- * linux.git : arch/ia64/kernel/unwind.c
- * git.git   : t/t3902-quoted.sh
+Fix this counter-intuitive behaviour by special casing a lone "-h" that
+does not have anything else on the command line and calling usage().
 
-Furthermore, I'm pleased to report that non en_US.UTF8 characters (e.g.,
-Chinese hanzi) as found in t3902-quoted.sh are displayed properly when
-highlight is enabled.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/ls-remote.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-Tested Web Browsers:
-
- * Safari (5.1 (6534.50)
- * Firefox 6.0.2 under Mac OS X Snow Leopard
- * Google Chrome 13.0.782.220 under OpenSuSE 11.4
-
->
->  gitweb/gitweb.perl |   14 +++++++++++++-
->  1 files changed, 13 insertions(+), 1 deletions(-)
->
-
-Cheers!
-
--- 
-Chris Fuhrman
-cfuhrman@panix.com
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index 1022309..41c88a9 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -43,6 +43,9 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 	struct transport *transport;
+ 	const struct ref *ref;
+ 
++	if (argc == 2 && !strcmp("-h", argv[1]))
++		usage(ls_remote_usage);
++
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 
