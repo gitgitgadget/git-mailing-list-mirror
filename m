@@ -1,61 +1,76 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: zealous git convert determined to set up git server
-Date: Fri, 16 Sep 2011 22:30:35 +0530
-Message-ID: <CAMK1S_jK2w8v4ushsZztQ0QY-eZq8axso-DpmCCvA=Gp7iXkBg@mail.gmail.com>
-References: <CAOZxsTqtW=DD7zFwQLjknJR8g0nnh0WPUPna6_np4bVoGnSntQ@mail.gmail.com>
+From: "Christopher M. Fuhrman" <cfuhrman@panix.com>
+Subject: Re: [PATCH] gitweb: Strip non-printable characters from syntax
+ highlighter output
+Date: Fri, 16 Sep 2011 11:11:01 -0700 (PDT)
+Message-ID: <alpine.NEB.2.01.1109161050080.2073@vc75.vc.panix.com>
+References: <1314053923-13122-1-git-send-email-cfuhrman@panix.com> <7v8vqfdf0l.fsf@alter.siamese.dyndns.org> <201108270006.19289.jnareb@gmail.com> <201109161441.58946.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>, Git List <git@vger.kernel.org>
-To: Joshua Stoutenburg <jehoshua02@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 16 19:00:45 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christopher Wilson <cwilson@cdwilson.us>,
+	Sylvain Rabot <sylvain@abstraction.fr>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 16 20:11:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4bmN-0003OS-Ee
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 19:00:43 +0200
+	id 1R4csY-0002Tr-FN
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 20:11:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755204Ab1IPRAh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Sep 2011 13:00:37 -0400
-Received: from mail-vw0-f42.google.com ([209.85.212.42]:53573 "EHLO
-	mail-vw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751683Ab1IPRAg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Sep 2011 13:00:36 -0400
-Received: by vwl1 with SMTP id 1so7361861vwl.1
-        for <git@vger.kernel.org>; Fri, 16 Sep 2011 10:00:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=A/B6anv68BGEgyX/X7s4kE6Qaf2hcnMeaGIdrl9H+UA=;
-        b=dhg39xYJnk2vhv2NUxZDUPO2cnA0N+q6HROVWoKVaxWWizPcQQ5DVvdLYTMpOTzbMt
-         WsXS5lVQ42IomK3UTdXSWH+4a8BE27By8aUPBXMbHMo3uLMuixnZYZmUyE1ZYy3sRh4o
-         x+3bx2EOo/Rkt8K+DzoSDmPo5Df9890xkvL/Y=
-Received: by 10.52.89.165 with SMTP id bp5mr974138vdb.339.1316192435645; Fri,
- 16 Sep 2011 10:00:35 -0700 (PDT)
-Received: by 10.52.161.197 with HTTP; Fri, 16 Sep 2011 10:00:35 -0700 (PDT)
-In-Reply-To: <CAOZxsTqtW=DD7zFwQLjknJR8g0nnh0WPUPna6_np4bVoGnSntQ@mail.gmail.com>
+	id S1755438Ab1IPSLE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Sep 2011 14:11:04 -0400
+Received: from mailbackend.panix.com ([166.84.1.89]:42076 "EHLO
+	mailbackend.panix.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753963Ab1IPSLD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2011 14:11:03 -0400
+Received: from vc75.vc.panix.com (vc75.vc.panix.com [166.84.7.75])
+	by mailbackend.panix.com (Postfix) with ESMTP id E15B934213;
+	Fri, 16 Sep 2011 14:11:01 -0400 (EDT)
+X-X-Sender: cfuhrman@vc75.vc.panix.com
+In-Reply-To: <201109161441.58946.jnareb@gmail.com>
+User-Agent: Alpine 2.01 (NEB 1266 2009-07-14)
+X-OpenPGP-Key-ID: F37818CF
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181540>
 
-On Thu, Sep 15, 2011 at 5:08 PM, Joshua Stoutenburg
-<jehoshua02@gmail.com> wrote:
+Howdy,
 
-> Question 2: It seems gitolite is the popular choice for git user
-> management. =C2=A0Any reason why?
+On Fri, 16 Sep 2011 at 5:41am, Jakub Narebski wrote:
 
-Well it *is* pretty darn powerful (I'm the author; allow me some
-preening!) but I believe the real reason is that it is the most
-*transparent* solution.
+> The commit message is from Christopher, but I have replaced his solution
+> of stripping non-printable characters via col(1) program by having gitweb
+> strip characters not allowed in XML.
+>
+> Christopher, could you check that it fixes your issue?
 
-The other contendors *all* involve web-based setup/management, and
-often include things like wikis, issue tracking, graphical views on
-the web, commenting on commits, code review (in case of gerrit), etc.
-etc.  Gitolite is the only system where the end user (developer) may
-not even realise it's installed unless he runs up against an access
-restriction.
+After applying the patch, I tested it successfully against the following
+files:
+
+ * linux.git : arch/ia64/kernel/unwind.c
+ * git.git   : t/t3902-quoted.sh
+
+Furthermore, I'm pleased to report that non en_US.UTF8 characters (e.g.,
+Chinese hanzi) as found in t3902-quoted.sh are displayed properly when
+highlight is enabled.
+
+Tested Web Browsers:
+
+ * Safari (5.1 (6534.50)
+ * Firefox 6.0.2 under Mac OS X Snow Leopard
+ * Google Chrome 13.0.782.220 under OpenSuSE 11.4
+
+>
+>  gitweb/gitweb.perl |   14 +++++++++++++-
+>  1 files changed, 13 insertions(+), 1 deletions(-)
+>
+
+Cheers!
+
+-- 
+Chris Fuhrman
+cfuhrman@panix.com
