@@ -1,65 +1,60 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: git branch --set-upstream regression in master
-Date: Fri, 16 Sep 2011 17:43:41 -0400
-Message-ID: <CAG+J_DyxNpPevwfrJVkv3GBmv0tEXgW2LZtdHgarFoXb9Qqghw@mail.gmail.com>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: zealous git convert determined to set up git server
+Date: Sat, 17 Sep 2011 01:22:36 +0300
+Message-ID: <20110916222236.GA9038@LK-Perkele-VI.localdomain>
+References: <CAOZxsTqtW=DD7zFwQLjknJR8g0nnh0WPUPna6_np4bVoGnSntQ@mail.gmail.com>
+ <CAMK1S_jK2w8v4ushsZztQ0QY-eZq8axso-DpmCCvA=Gp7iXkBg@mail.gmail.com>
+ <20110916204032.GA13922@inner.h.iocl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	conrad.irwin@gmail.com
-X-From: git-owner@vger.kernel.org Fri Sep 16 23:43:50 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Sitaram Chamarty <sitaramc@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Sep 17 00:32:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4gCJ-0007iz-2z
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 23:43:47 +0200
+	id 1R4gx8-0000m1-Is
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Sep 2011 00:32:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932313Ab1IPVnm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Sep 2011 17:43:42 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:35638 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932274Ab1IPVnl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2011 17:43:41 -0400
-Received: by yxm8 with SMTP id 8so3218042yxm.19
-        for <git@vger.kernel.org>; Fri, 16 Sep 2011 14:43:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=ZhxkelBgX6U+oxnm4hvbIocwfOgvEVwbBfRIvD1P2os=;
-        b=JZ70Ok8kKU+k+ZgJ5R/F2RiuwuPOZUK4gFczhFbgofI7r4F0b3GdQfd+6OusDVUzp7
-         6ymCNtKcCRDg/GSqJZu/7pJ9Zre5+HuVpwC8h+cUAPB4NwHo0gX+XoYfvg/Cl7rHK2sf
-         muOCxb0OoUo3bgFhQt4wrtbJ0I+8PeTX4mVjY=
-Received: by 10.236.173.129 with SMTP id v1mr18303782yhl.25.1316209421187;
- Fri, 16 Sep 2011 14:43:41 -0700 (PDT)
-Received: by 10.147.32.18 with HTTP; Fri, 16 Sep 2011 14:43:41 -0700 (PDT)
+	id S1755794Ab1IPWcF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Sep 2011 18:32:05 -0400
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:32875 "EHLO
+	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755161Ab1IPWcE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2011 18:32:04 -0400
+X-Greylist: delayed 563 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Sep 2011 18:32:03 EDT
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id 0C45218D142;
+	Sat, 17 Sep 2011 01:22:39 +0300 (EEST)
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A0611507710; Sat, 17 Sep 2011 01:22:39 +0300
+Received: from LK-Perkele-VI (a88-112-55-20.elisa-laajakaista.fi [88.112.55.20])
+	by emh06.mail.saunalahti.fi (Postfix) with ESMTP id E067CE51A4;
+	Sat, 17 Sep 2011 01:22:35 +0300 (EEST)
+Content-Disposition: inline
+In-Reply-To: <20110916204032.GA13922@inner.h.iocl.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181562>
 
-This used to be possible on the checked out branch:
+On Fri, Sep 16, 2011 at 10:40:32PM +0200, Andreas Krey wrote:
+> 
+> It well looks so, but I have a question: It seems that it assumes a
+> flat set of *.git repos. Unfortunately my current setup has the repos
+> in a hierarchy, like area/sub/repo.git, and I don't want everyone to
+> change their local repo configs. Is it possible to keep it like that
+> (and consequently have 'repo area/sub/repo' lines) when putting it
+> under gitolite control?
 
-  $ git branch master --set-upstream origin/master
+It is possible to have '/' in repository name in Gitolite. Heck,
+most repos I have in Gitolite have '/' in their names...
 
-Now it gives "fatal: Cannot force update the current branch." which is
-broken. You should be able to setup/change the tracking information on
-the checked out branch.
-
-It's apparently due to ci/forbid-unwanted-current-branch-update.
-
-Sorry I don't have time to contribute a patch at the moment.
-
-(BTW, --set-upstream still needs to be fixed so that these mean the same thing:
-
-  $ git branch master --set-upstream origin/master
-  $ git branch --set-upstream origin/master master
-
-and to just allow:
-
-  $ git branch --set-upstream origin/master
-
-w/o having to specify the checked-out branch.)
-
-j.
+-Ilari
