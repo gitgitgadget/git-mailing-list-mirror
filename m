@@ -1,107 +1,213 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Strip non-printable characters from syntax highlighter output
-Date: Fri, 16 Sep 2011 20:58:49 +0200
-Message-ID: <201109162058.51132.jnareb@gmail.com>
-References: <1314053923-13122-1-git-send-email-cfuhrman@panix.com> <201109161441.58946.jnareb@gmail.com> <7vwrd8fnxr.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3] request-pull: state what commit to expect
+Date: Fri, 16 Sep 2011 12:04:54 -0700
+Message-ID: <7viposfgvd.fsf_-_@alter.siamese.dyndns.org>
+References: <7vaaa8xufi.fsf@alter.siamese.dyndns.org>
+ <CA+55aFxAQTR3sT7gekAD4qih8J+z-qwri7ZmNCPUd811xgci6w@mail.gmail.com>
+ <CA+55aFy0b+eozmzbKD4RXcJ7e3WCpf7BV1n1qXHOeEwSHZKOXw@mail.gmail.com>
+ <7vobynui8a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Christopher M. Fuhrman" <cfuhrman@panix.com>, git@vger.kernel.org,
-	Christopher Wilson <cwilson@cdwilson.us>,
-	Sylvain Rabot <sylvain@abstraction.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 16 20:59:06 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 16 21:05:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4dcu-0000E4-8R
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 20:59:04 +0200
+	id 1R4dij-00038J-6M
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 21:05:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932108Ab1IPS67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Sep 2011 14:58:59 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:34325 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754037Ab1IPS66 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2011 14:58:58 -0400
-Received: by fxe4 with SMTP id 4so1956917fxe.19
-        for <git@vger.kernel.org>; Fri, 16 Sep 2011 11:58:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=x3pYGOjRxnzrCdb6qwxhsI4rLzlhhnhLSyo4C92UxZU=;
-        b=KIGehgodEOsX4QxYiMGYU4JZNOfU0ut2vpl8cIfGuK/HEz1A4eO6Qa9UjiQHfTrYe/
-         3J1uL4bhlDcSbCg49xysLIi74C+9WxuYAvvFHevigbX60gpj/5XID8EbwOKD9yP4w6mB
-         gcmaxoxVi+luNha/WRHL15NndDY07osjifMz8=
-Received: by 10.223.18.73 with SMTP id v9mr358917faa.70.1316199537714;
-        Fri, 16 Sep 2011 11:58:57 -0700 (PDT)
-Received: from [192.168.1.13] (abvu156.neoplus.adsl.tpnet.pl. [83.8.218.156])
-        by mx.google.com with ESMTPS id r3sm11524990fam.26.2011.09.16.11.58.55
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 16 Sep 2011 11:58:56 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vwrd8fnxr.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1755875Ab1IPTE7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Sep 2011 15:04:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49757 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752731Ab1IPTE6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2011 15:04:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7604F4146;
+	Fri, 16 Sep 2011 15:04:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=loOuuf+QX+1ERj1SzEDUvPeVfMI=; b=q62AJZ
+	yBbm4YUqpTWG58l8YXnIdPWpcy1GLLWaGdDo+qBOyQfo+P6wg2k6iu04DfIDsHZH
+	Kss5AQH+ENsAoaRpmDo+ZGpbGVZf+jttNaDTHIq9hbTYvZGG70wBqpG0Q4YpRVb3
+	JujMyz6CjEYhSX7hu5GCra3GfTjWn8LvlvK6I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=R4/aN4NAwWLlBZVHN0ZWBRiqv0ErSoqm
+	Ifjco4x4aj6c921WSQRxpYVVgA2f3bD09x9UAo1vT8NhCtNA8Q2skFC6DnG/iJQI
+	QUtIykXU1S0cHhjM6uWMHgHein+cccWmX828yQhtbg47HPIABWDto2NGu5OpdtnB
+	WtkQYRRfS5k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6CBC34145;
+	Fri, 16 Sep 2011 15:04:57 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BCDE2413F; Fri, 16 Sep 2011
+ 15:04:56 -0400 (EDT)
+In-Reply-To: <7vobynui8a.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 14 Sep 2011 10:49:41 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C48471BE-E096-11E0-AB84-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181544>
 
-On Fri, 16 Sep 2011, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Micronit:
-> 
-> > +# Sanitize for use in XHTML + application/xml+xhtm (valid XML 1.0)
-> > +sub sanitize {
-> > +	my $str = shift;
-> > +
-> > +	return undef unless defined $str;
-> 
-> Given that the _whole_ point of this subroutine is to make $str safe for
-> printing, wouldn't you want to either (1) die, declaring that feeding an
-> undef to this subroutine is a programming error, or (2) return an empty
-> string?
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+>
+>> I think that would probably be a good idea, although I'd actually
+>> prefer you to be more verbose, and more human-friendly, and actually
+>> talk about the commit in a readable way. Get rid of the *horrible*
+>> BRANCH-NOT-VERIFIED message...
+>>
+>>  Top commit 1f51b001cccf: "Merge branches 'cns3xxx/fixes',
+>>  'omap/fixes' and 'davinci/fixes' into fixes"
+>>
+>>  and at *that* point you might have a "UNVERIFIED" notice for people
+>> to check if they forgot to push.
+>
+> That UNVERIFIED thing was neither my favorite nor my idea, and I'd happily
+> rip it out in any second ;-)
 
-Well, that
+So this is the third round.
 
-	return undef unless defined $str;
+-- >8 --
+The message gives a detailed explanation of the commit the requester based
+the changes on, but lacks information that is necessary for the person who
+performs a fetch & merge in order to verify that the correct branch was
+fetched when responding to the pull request.
 
-line is copy'n'paste (as is most of sanitize() body) from esc_html().
-This line was added in 1df4876 (gitweb: Protect escaping functions against
-calling on undef, 2010-02-07) with the following explanation
+Add a few more lines to describe the commit at the tip expected to be
+fetched to the same level of detail as the base commit.
 
-    This is a bit of future-proofing esc_html and friends: when called
-    with undefined value they would now would return undef... which would
-    probably mean that error would still occur, but closer to the source
-    of problem.
-    
-    This means that we can safely use
-      esc_html(shift) || "Internal Server Error"
-    in die_error() instead of
-      esc_html(shift || "Internal Server Error")
+Also update the warning message slightly when the script notices that the
+commit may not have been pushed.
 
-So actually now I see that while this line is good to have in esc_html(),
-it is not really necessary in sanitize().
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-But anyway we don't want to replace undef with an empty string; undef is
-(usually) an error, and we want to catch it, not to hide it.
+A UI wart that we cannot fix without breaking backward compatibility is
+that the "end" parameter (which defaults to HEAD and is assigned to $head
+variable in the script) the requestor uses from the command line names a
+commit (often the name of a local branch), but for the purpose of telling
+which ref to pull from the public repository, that is a _wrong_ thing to
+give to the recipient.
+
+Because the act of generating a request-pull message and the act of
+pushing to the public repository are not linked in any way, the script
+does not know _how_ the requestor caused (or intends to cause) the commit
+to sit at the tip of which branch. There is no guarantee that a lazy "git
+push" that relies on the configured refspec will be (or have been) used,
+so even parsing the output from "git push -n --porcelain -v $there" would
+not tell the script which branch the commit to be pulled is to be pushed
+out to, or if the branch is consistent with the request message.
+
+The use of "git ls-remote" in the script and picking one of the refs that
+matches the commit object at random from its output is unsatisfactory, but
+that is unfortunately the best this script could do without correcting the
+design mistake and redefining what the "end" parameter means.
+
+If we can break the backward compatibility and redefine that the "end"
+parameter now means the name of the branch at the public repository, it
+would make the operation a lot more robust.  We could then:
+
+ - $branch is what is given by the end user (it is an error not to give
+   the "end" parameter);
+ - run "git ls-remote $url $head" to find $headrev;
+ - generate the message and shortlog using the information obtained from
+   $url; and
+ - get rid of "did you forget to push" message.
+
+We could allow adding yet another argument which names a commit object
+locally, and make sure if the $headrev observed by ls-remote does not
+match it.
+
+---
+ git-request-pull.sh     |   34 +++++++++++++++++++---------------
+ t/t5150-request-pull.sh |    6 ++++++
+ 2 files changed, 25 insertions(+), 15 deletions(-)
+
+diff --git a/git-request-pull.sh b/git-request-pull.sh
+index afb75e8..438e7eb 100755
+--- a/git-request-pull.sh
++++ b/git-request-pull.sh
+@@ -35,7 +35,7 @@ do
+ 	shift
+ done
  
-> Given that the input to this function is from the result of feeding $line
-> to untabify, which relies on $line being defined, and that $line comes
-> from "while (my $line = <$fd>)" (and then chomp $line), it may be Ok for
-> this subroutine to make the same assumption as untabify makes.
-
-Right.
-
-Passing undef to sanitize() is usually an error, and we don't want to hide
-it.  We want for gitweb test to detect it.
-
+-base=$1 url=$2 head=${3-HEAD}
++base=$1 url=$2 head=${3-HEAD} status=0
+ 
+ test -n "$base" && test -n "$url" || usage
+ baserev=$(git rev-parse --verify "$base"^0) &&
+@@ -51,25 +51,29 @@ find_matching_branch="/^$headrev	"'refs\/heads\//{
+ }'
+ branch=$(git ls-remote "$url" | sed -n -e "$find_matching_branch")
+ url=$(git ls-remote --get-url "$url")
+-if test -z "$branch"
+-then
+-	echo "warn: No branch of $url is at:" >&2
+-	git log --max-count=1 --pretty='tformat:warn:   %h: %s' $headrev >&2
+-	echo "warn: Are you sure you pushed $head there?" >&2
+-	echo >&2
+-	echo >&2
+-	branch=..BRANCH.NOT.VERIFIED..
+-	status=1
+-fi
+ 
+ git show -s --format='The following changes since commit %H:
+ 
+   %s (%ci)
+ 
+-are available in the git repository at:' $baserev &&
+-echo "  $url $branch" &&
+-echo &&
++are available in the git repository at:
++' $baserev &&
++echo "  $url${branch+ $branch}" &&
++git show -s --format='
++for you to fetch changes up to %H:
++
++  %s (%ci)
++
++----------------------------------------------------------------' $headrev &&
+ 
+ git shortlog ^$baserev $headrev &&
+-git diff -M --stat --summary $patch $merge_base..$headrev || exit
++git diff -M --stat --summary $patch $merge_base..$headrev || status=1
++
++if test -z "$branch"
++then
++	echo "warn: No branch of $url is at:" >&2
++	git show -s --format='warn:   %h: %s' $headrev >&2
++	echo "warn: Are you sure you pushed '$head' there?" >&2
++	status=1
++fi
+ exit $status
+diff --git a/t/t5150-request-pull.sh b/t/t5150-request-pull.sh
+index 9cc0a42..5bd1682 100755
+--- a/t/t5150-request-pull.sh
++++ b/t/t5150-request-pull.sh
+@@ -193,8 +193,14 @@ test_expect_success 'pull request format' '
+ 	  SUBJECT (DATE)
+ 
+ 	are available in the git repository at:
++
+ 	  URL BRANCH
+ 
++	for you to fetch changes up to OBJECT_NAME:
++
++	  SUBJECT (DATE)
++
++	----------------------------------------------------------------
+ 	SHORTLOG
+ 
+ 	DIFFSTAT
 -- 
-Jakub Narebski
-Poland
+1.7.7.rc1.3.g559357
