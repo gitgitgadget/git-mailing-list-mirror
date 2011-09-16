@@ -1,74 +1,139 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH 2/2] check_expirations: don't copy over same element
-Date: Fri, 16 Sep 2011 13:51:35 +0200
-Message-ID: <29010bf6134beb20efca498e7b4f7a9d9bdb21a6.1316173346.git.trast@student.ethz.ch>
-References: <a6397f7f28a5adcd34aeac98cca6500e336698aa.1316173346.git.trast@student.ethz.ch>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Strip non-printable characters from syntax highlighter output
+Date: Fri, 16 Sep 2011 14:41:57 +0200
+Message-ID: <201109161441.58946.jnareb@gmail.com>
+References: <1314053923-13122-1-git-send-email-cfuhrman@panix.com> <7v8vqfdf0l.fsf@alter.siamese.dyndns.org> <201108270006.19289.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
-	Brian Gernhardt <benji@silverinsanity.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Sep 16 13:51:46 2011
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Christopher Wilson <cwilson@cdwilson.us>,
+	Sylvain Rabot <sylvain@abstraction.fr>
+To: Junio C Hamano <gitster@pobox.com>,
+	"Christopher M. Fuhrman" <cfuhrman@panix.com>
+X-From: git-owner@vger.kernel.org Fri Sep 16 14:42:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4WxO-0001mg-3O
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 13:51:46 +0200
+	id 1R4XkF-0006eA-Ok
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Sep 2011 14:42:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753396Ab1IPLvk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Sep 2011 07:51:40 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:34918 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753353Ab1IPLvj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2011 07:51:39 -0400
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.339.1; Fri, 16 Sep
- 2011 13:51:35 +0200
-Received: from localhost.localdomain (129.132.153.233) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.339.1; Fri, 16 Sep
- 2011 13:51:36 +0200
-X-Mailer: git-send-email 1.7.7.rc1.366.ge210a6
-In-Reply-To: <a6397f7f28a5adcd34aeac98cca6500e336698aa.1316173346.git.trast@student.ethz.ch>
-X-Originating-IP: [129.132.153.233]
+	id S1753902Ab1IPMmK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Sep 2011 08:42:10 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:63252 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753800Ab1IPMmJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2011 08:42:09 -0400
+Received: by fxe4 with SMTP id 4so1624616fxe.19
+        for <git@vger.kernel.org>; Fri, 16 Sep 2011 05:42:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=FJrxObiSnuoB8xiX6mthSGBU2sh4qONKDiNrpCs1Zv8=;
+        b=twdciW35iKkVeJWkGxDWIuZwcjAu+k8hyVHagn7CEDUH5cZYaUM64qqly5heq3f6/o
+         Wbo0uY9uc+GMpEI5eluQSIqtaymcLlfVl6c2wFwmQrguRzV2DjSudKb+WFleGy7MPs2/
+         P+dLq2ztEKjXztnIWbJ4Y20DEoQDnYh63A+wc=
+Received: by 10.223.34.70 with SMTP id k6mr1345871fad.31.1316176927742;
+        Fri, 16 Sep 2011 05:42:07 -0700 (PDT)
+Received: from [192.168.1.13] (abvu156.neoplus.adsl.tpnet.pl. [83.8.218.156])
+        by mx.google.com with ESMTPS id l8sm2957151fai.16.2011.09.16.05.42.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 16 Sep 2011 05:42:06 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <201108270006.19289.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181531>
 
-The credentials expiry loop looks at a credential, and if it's
-expired, frees it and memcpy()s the last credential in the now free
-place.
+The current code, as is, passes control characters, such as form-feed
+(^L) to highlight which then passes it through to the browser.  User
+agents (web browsers) that support 'application/xhtml+xml' usually
+require that web pages declared as XHTML and with this mimetype are
+well-formed XML.  Unescaped control characters cannot appear within a
+contents of a valid XML document.
 
-This results in a memcpy() with source=destination, which technically
-yields undefined behaviour.  Instead of turning it into a memmove,
-don't copy anything if we deleted the last entry.
+This will cause the browser to display one of the following warnings:
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+* Safari v5.1 (6534.50) & Google Chrome v13.0.782.112:
+
+   This page contains the following errors:
+
+   error on line 657 at column 38: PCDATA invalid Char value 12
+   Below is a rendering of the page up to the first error.
+
+* Mozilla Firefox 3.6.19 & Mozilla Firefox 5.0:
+
+   XML Parsing Error: not well-formed
+   Location:
+   http://path/to/git/repo/blah/blah
+
+Both errors were generated by gitweb.perl v1.7.3.4 w/ highlight 2.7
+using arch/ia64/kernel/unwind.c from the Linux kernel.
+
+When syntax highlighter is not used, control characters are replaced
+by esc_html(), but with syntax highlighter they were passed through to
+browser (to_utf8() doesn't remove control characters).
+
+Introduce sanitize() subroutine which strips forbidden characters, but
+does not perform HTML escaping, and use it in git_blob() to sanitize
+syntax highlighter output for XHTML.
+
+Note that excluding "\t" (U+0009), "\n" (U+000A) and "\r" (U+000D) is
+not strictly necessary, atleast for currently the only callsite: "\t"
+tabs are replaced by spaces by untabify(), "\n" is stripped from each
+line before processing it, and replacing "\r" could be considered
+improvement.
+
+Originally-by: Christopher M. Fuhrman <cfuhrman@panix.com>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
+The commit message is from Christopher, but I have replaced his solution
+of stripping non-printable characters via col(1) program by having gitweb
+strip characters not allowed in XML.
 
-Valgrind complained.  Sorry for not running it earlier when we were
-discussing the poll issue...
+Christopher, could you check that it fixes your issue?
 
+ gitweb/gitweb.perl |   14 +++++++++++++-
+ 1 files changed, 13 insertions(+), 1 deletions(-)
 
- credential-cache--daemon.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/credential-cache--daemon.c b/credential-cache--daemon.c
-index d6769b1..128c5ce 100644
---- a/credential-cache--daemon.c
-+++ b/credential-cache--daemon.c
-@@ -77,7 +77,8 @@ static int check_expirations(void)
- 			free(entries[i].item.unique);
- 			free(entries[i].item.username);
- 			free(entries[i].item.password);
--			memcpy(&entries[i], &entries[entries_nr], sizeof(*entries));
-+			if (i != entries_nr)
-+				memcpy(&entries[i], &entries[entries_nr], sizeof(*entries));
- 			/*
- 			 * Stick around 30 seconds in case a new credential
- 			 * shows up (e.g., because we just removed a failed
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 70a576a..c28b847 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1517,6 +1517,17 @@ sub esc_path {
+ 	return $str;
+ }
+ 
++# Sanitize for use in XHTML + application/xml+xhtm (valid XML 1.0)
++sub sanitize {
++	my $str = shift;
++
++	return undef unless defined $str;
++
++	$str = to_utf8($str);
++	$str =~ s|([[:cntrl:]])|($1 =~ /[\t\n\r]/ ? $1 : quot_cec($1))|eg;
++	return $str;
++}
++
+ # Make control characters "printable", using character escape codes (CEC)
+ sub quot_cec {
+ 	my $cntrl = shift;
+@@ -6484,7 +6495,8 @@ sub git_blob {
+ 			$nr++;
+ 			$line = untabify($line);
+ 			printf qq!<div class="pre"><a id="l%i" href="%s#l%i" class="linenr">%4i</a> %s</div>\n!,
+-			       $nr, esc_attr(href(-replay => 1)), $nr, $nr, $syntax ? to_utf8($line) : esc_html($line, -nbsp=>1);
++			       $nr, esc_attr(href(-replay => 1)), $nr, $nr,
++			       $syntax ? sanitize($line) : esc_html($line, -nbsp=>1);
+ 		}
+ 	}
+ 	close $fd
 -- 
-1.7.7.rc1.366.ge210a6
+1.7.6
