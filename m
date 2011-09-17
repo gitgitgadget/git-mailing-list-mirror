@@ -1,117 +1,94 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [RFC/PATCH] Configurable hyperlinking in gitk
-Date: Sat, 17 Sep 2011 22:01:11 +1200
-Message-ID: <4E746FE7.4060608@gmail.com>
-References: <20110917022903.GA2445@unpythonic.net> <4E7467B7.1090201@gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] Prevent users from adding the file that has all-zero SHA-1
+Date: Sat, 17 Sep 2011 21:39:34 +1000
+Message-ID: <1316259574-1291-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff Epler <jepler@unpythonic.net>
-X-From: git-owner@vger.kernel.org Sat Sep 17 12:01:06 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 17 13:39:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R4rho-000518-BY
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Sep 2011 12:01:04 +0200
+	id 1R4tFS-0006lX-6T
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Sep 2011 13:39:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750846Ab1IQKA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Sep 2011 06:00:58 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:49673 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750781Ab1IQKA5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Sep 2011 06:00:57 -0400
-Received: by pzk1 with SMTP id 1so4614942pzk.1
-        for <git@vger.kernel.org>; Sat, 17 Sep 2011 03:00:57 -0700 (PDT)
+	id S1751546Ab1IQLjp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Sep 2011 07:39:45 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:59815 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751260Ab1IQLjo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Sep 2011 07:39:44 -0400
+Received: by iaqq3 with SMTP id q3so3202834iaq.19
+        for <git@vger.kernel.org>; Sat, 17 Sep 2011 04:39:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=zaBFqgs4yX8Dxkh4C9BWTIuAMux6QixsQWE6SgbpRVQ=;
-        b=ZMApmjswhLpDyuKHKsa8s8gugtAxz2u2Aa52/fUJZuf1jpXk+Snfcl9vqrLHZuSS8R
-         HOUj4idHvtGQi+AK9m0DcfAUGDHlmyfgl/KScXc3y7TC5RiC0a+CsD63c4tu/aWLdyqz
-         wCnI/m6erOlx8ns7z8oLVhVK4gHVDhYksyBJA=
-Received: by 10.68.64.101 with SMTP id n5mr658280pbs.279.1316253657276;
-        Sat, 17 Sep 2011 03:00:57 -0700 (PDT)
-Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPS id i3sm42504266pbg.10.2011.09.17.03.00.54
-        (version=SSLv3 cipher=OTHER);
-        Sat, 17 Sep 2011 03:00:56 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.2.20) Gecko/20110804 SUSE/3.1.12 Thunderbird/3.1.12
-In-Reply-To: <4E7467B7.1090201@gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=UpJvFO2U7piqoWgs+oM1XLaeDGA7Rta6lfRvkjs3dfo=;
+        b=X3cAmbtGi24Ugj5EN1hgJpQz0Bg7rkjl0qouDQWGDlbnxAVIowFDuE5d9PcUe7B5Q9
+         Rc+bWu5vobBBL6sND380n5AHtHk7zkZfHpJZuCDTBajJ+xeXoPGEEd5eZ3ZwNwkxtoWq
+         ScW75cysbc4NVAyhL3qn5g2DptBZwqednPWMo=
+Received: by 10.42.115.198 with SMTP id l6mr798710icq.132.1316259584146;
+        Sat, 17 Sep 2011 04:39:44 -0700 (PDT)
+Received: from pclouds@gmail.com (220-244-161-237.static.tpgi.com.au. [220.244.161.237])
+        by mx.google.com with ESMTPS id o5sm14186749ibu.12.2011.09.17.04.39.40
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 17 Sep 2011 04:39:42 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 17 Sep 2011 21:39:36 +1000
+X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181575>
 
-On 17/09/11 21:26, Chris Packham wrote:
-> Hi,
-> 
-> On 17/09/11 14:29, Jeff Epler wrote:
->> Some time ago I hardcoded this into gitk for $DAY_JOB and find it very
->> useful.  I made it configurable in the hopes that it might be adopted
->> upstream. (unfortunately, the configurable version is radically
->> different from the original hard-coded version, so I can't say this
->> has had much testing yet)
-> 
-> This is definitely something folks at my $dayjob would be interested in.
-> We've already done some customisation of gitweb to do something similar.
-> I'm not actually sure what the changes where or how configurable they
-> are. I'll see if I can dig them out on Monday someone else might want to
-> polish them into something suitable (I might do it myself if I get some
-> tuits).
-> 
->> The definition of the allowed regular expression in the docs
->> probably needs some refinement.  Basically, they have to also be REs
->> that can be concatenated with the "|" character, which is not true
->> of REs that begin with the *** flavor selector (which I had not
->> heard of before rereading `man re_syntax` just now) or (?xyz)
->> embedded options.  Or maybe there's an efficient alternate approach
->> to scanning for the next non-overlapping match among several
->> patterns that doesn't involve concatenating the patterns.
->>
->> I'm not sure about the "one line" restriction; at first I thought
->> that everything was fed to 'appendwithlinks' in arbitrary chunks,
->> but not I see that they are mostly logical chunks (and probably only
->> the comment, not the headers or commit descriptors, will have
->> anything to linkify).  The problem again seems to be how to succinctly
->> describe what is permitted.
-> 
-> For my use case the one line restriction is fine. We tend to put the bug
-> number in the headline anyway.
-> 
-> Sometimes when a commit fixes multiple bugs we put all the bug numbers
-> in separated by commas. I don't know Tcl well enough to tell if your
-> code supports that or not.
-> 
->> There are probably better names for the configuration options, too.
-> 
-> It'd be nice if the config variables weren't gitk specific. .re and .sub
-> could be applied to gitweb and maybe other git viewers outside of
-> gig.git might decide to use them. My bikeshedding suggestion would be to
-> just drop the gitk prefix and have linkify.re and linkify.sub.
+This particular SHA-1 has special meaning to git, very much like NULL
+in C. If a user adds a file that has this SHA-1, unexpected things can
+happen.
 
-That should be linkify.<name>.re and linkify.<name>.sub
+Granted, the chance is probably near zero because the content must
+also start with valid blob header. But extra safety does not harm.
 
->> Suggestions?  Problems?  Successes?
-> 
-> Re-compiling now. I won't be able to actually test it properly until I'm
-> back in the office but I can at least check that the links are generated.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Another way than die() is to detect this situation and update header a
+ little to give different SHA-1 (for example a leading 0 in object
+ size in header). Older git versions may not be happy with such an
+ approach.
 
-Slight complication. The URL of our bug tracker has an ampersand '&' in
-it. Tcl's substitution does what one might expect and puts the matched
-text where the '&' is. I've tried using url friendly %26 but something
-eats the %. I've also tried backslashes to no avail.
+ The same check can be added to commit, tree, tag creation and fsck.
+ Maybe I'm too paranoid.
 
-To answer my own question since I started writing this email I've found
-that using %% works (only the first one gets eaten). Not sure if that's
-expected behaviour or not (printf escaping maybe?).
+ By the way, are any other SHA-1s sensitive to git like this one?
 
-Also since I've been playing around I've tried a commit with multiple
-bug numbers on one line and that works as expected.
+ sha1_file.c |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-Thanks
-Chris
+diff --git a/sha1_file.c b/sha1_file.c
+index 064a330..76be0dd 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2748,6 +2748,11 @@ int index_fd(unsigned char *sha1, int fd, struct=
+ stat *st,
+ 	else
+ 		ret =3D index_stream(sha1, fd, size, type, path, flags);
+ 	close(fd);
++	if (!ret && is_null_sha1(sha1))
++		die(_("You are very unluckly.\n"
++		      "You cannot add '%s' because this particular SHA-1 is used int=
+ernally by git.\n"
++		      "Any chance you can modify this file just a little to give dif=
+ferent SHA-1?"),
++		    path);
+ 	return ret;
+ }
+=20
+--=20
+1.7.3.1.256.g2539c.dirty
