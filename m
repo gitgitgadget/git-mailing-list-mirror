@@ -1,60 +1,74 @@
-From: Jean Sacren <sakiwit@gmail.com>
-Subject: Pull From Mirrored Repository
-Date: Sun, 18 Sep 2011 08:45:15 -0600
-Message-ID: <20110918144514.GL15295@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: git web--browse error handling URL with & in it (Was Re: [RFC/PATCH] Configurable hyperlinking in gitk)
+Date: Sun, 18 Sep 2011 16:46:35 +0200
+Message-ID: <201109181646.36821.chriscool@tuxfamily.org>
+References: <20110917022903.GA2445@unpythonic.net> <4E753C04.1070202@gmail.com> <20110918032933.GA17977@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 18 16:45:42 2011
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Chris Packham <judge.packham@gmail.com>,
+	Jeff Epler <jepler@unpythonic.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Sep 18 16:46:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5Icm-00034Q-NF
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 16:45:41 +0200
+	id 1R5Idx-0003Uq-SN
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 16:46:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752865Ab1IROpg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Sep 2011 10:45:36 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:51162 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750780Ab1IROpf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Sep 2011 10:45:35 -0400
-Received: by pzk1 with SMTP id 1so8090006pzk.1
-        for <git@vger.kernel.org>; Sun, 18 Sep 2011 07:45:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition;
-        bh=mNY6ZfOSvAwJgWIHMP9DDePE6sRq9nVmTE4fMIW/ZVY=;
-        b=L8CKtb93F0CRIodFyoPOfkq7bWOxsPMjARTdBi6GNtj45WHO1XnZiDEEsaTYvCqJEV
-         xHKDADO7v162TQPsFJJuZKBEpZqDsa9/Hk6wz6dZref87aJWJo1TNWito9oLXrgjR/5E
-         5i2cvBvsGUVnN1YwX6C9dSsE8tSiQiQxY6yuY=
-Received: by 10.68.17.169 with SMTP id p9mr2736142pbd.195.1316357135118;
-        Sun, 18 Sep 2011 07:45:35 -0700 (PDT)
-Received: from localhost ([67.214.237.222])
-        by mx.google.com with ESMTPS id f8sm56691849pbc.3.2011.09.18.07.45.32
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 18 Sep 2011 07:45:33 -0700 (PDT)
-Content-Disposition: inline
+	id S1753207Ab1IROqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Sep 2011 10:46:49 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:40063 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750780Ab1IROqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Sep 2011 10:46:49 -0400
+Received: from style.localnet (unknown [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 42450A621E;
+	Sun, 18 Sep 2011 16:46:39 +0200 (CEST)
+User-Agent: KMail/1.13.6 (Linux/2.6.38-10-generic; KDE/4.6.2; x86_64; ; )
+In-Reply-To: <20110918032933.GA17977@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181611>
 
-After pull from a mirrored repository, git status shows
+Hi,
 
-# On branch master
-# Your branch is ahead of 'origin/master' by [NUMBER] commits.
-#
-nothing to commit (working directory clean)
+On Sunday 18 September 2011 05:29:34 Jeff King wrote:
+> On Sun, Sep 18, 2011 at 12:32:04PM +1200, Chris Packham wrote:
+> > Update: it's the call to eval that causes the problem
+> > 
+> >   eval kfmclient newTab https://internalhost/code\&stuff/bugs.php?id=foo
+> >   [1] 14728
+> >   bash: stuff/bugs.php?id=foo: No such file or directory
+> 
+> Hmm. The offending lines look like:
+> 
+>   eval "$browser_path" "$@" &
+> 
+> Normally in git we treat user-configured commands as shell snippets,
+> meaning the user is responsible for any quoting. But in this script, we
+> seem to run:
+> 
+>   type "$browser_path"
+> 
+> several times. Which implies that "$browser_path" must be the actual
+> executable. In which case, I would think that:
+> 
+>   "$browser_path" "$@" &
+> 
+> would be the right thing. And indeed, that is what the firefox arm of
+> the case statement does. But chrome, konqueror, and others use eval.
 
-
-How to bring 'origin/master' update without syncing with the original
-repository?
+Yeah, I don't remember why I sometimes used 'eval "$browser_path" "$@"' when I 
+wrote this code. Sorry!
+ 
+> Unrelated, but it also looks like $browser_path is used unquoted in the
+> firefox case (see inside the vers=$(...)).
 
 Thanks,
-
--- 
-Jean Sacren
+Christian.
