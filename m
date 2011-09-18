@@ -1,89 +1,88 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/3] fast-import: die if we produce too many
- (MAX_PACK_ID) packs
-Date: Sun, 18 Sep 2011 14:17:41 -0500
-Message-ID: <20110918191741.GD2308@elie>
-References: <1316372508-7173-1-git-send-email-divanorama@gmail.com>
- <1316372508-7173-2-git-send-email-divanorama@gmail.com>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: Maint-only commits
+Date: Sun, 18 Sep 2011 21:11:20 +0200
+Message-ID: <20110918191120.GA6334@nibiru.local>
+References: <10397477.30610.1305580263246.JavaMail.root@mail.hq.genarts.com> <6416457.30612.1305580526325.JavaMail.root@mail.hq.genarts.com>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <davidbarr@google.com>
-To: Dmitry Ivankov <divanorama@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 18 21:18:25 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 18 21:19:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5Msc-00063D-Bc
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 21:18:18 +0200
+	id 1R5Mtc-0006Rf-0z
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 21:19:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756584Ab1IRTRq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Sep 2011 15:17:46 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:63143 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755856Ab1IRTRp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Sep 2011 15:17:45 -0400
-Received: by iaqq3 with SMTP id q3so4483835iaq.19
-        for <git@vger.kernel.org>; Sun, 18 Sep 2011 12:17:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Kdgz1/mrHBP0JEylBIIaJjdd0mGcPotOWsCXQF4Xus0=;
-        b=IwjqFoRmbHHUhGoD7pOJdGz8p1frjVF+0mm01DDtGTVZCAyCTGFauru0BaYsfRpHd+
-         8c+NctrO86tBLVxCgvtmcTlXnyr33liKYIEj5qLPpVBNGbGnQRhkDYxnBbXRsq2r28Nh
-         deCBp3Cs7F6x/Iz0f1ns58O9Eu5VjC1hLWUjQ=
-Received: by 10.42.145.137 with SMTP id f9mr3153274icv.128.1316373465054;
-        Sun, 18 Sep 2011 12:17:45 -0700 (PDT)
-Received: from elie (99-120-124-35.lightspeed.cicril.sbcglobal.net. [99.120.124.35])
-        by mx.google.com with ESMTPS id el2sm21835040ibb.10.2011.09.18.12.17.43
-        (version=SSLv3 cipher=OTHER);
-        Sun, 18 Sep 2011 12:17:43 -0700 (PDT)
+	id S1756594Ab1IRTTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Sep 2011 15:19:13 -0400
+Received: from caprica.metux.de ([82.165.128.25]:44609 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755856Ab1IRTTN (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Sep 2011 15:19:13 -0400
+X-Greylist: delayed 348 seconds by postgrey-1.27 at vger.kernel.org; Sun, 18 Sep 2011 15:19:12 EDT
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id p8IJ6DR5018935
+	for <git@vger.kernel.org>; Sun, 18 Sep 2011 21:06:14 +0200
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id p8IJ61Sq018822
+	for git@vger.kernel.org; Sun, 18 Sep 2011 21:06:01 +0200
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id p8IJBKCo004549
+	for git@vger.kernel.org; Sun, 18 Sep 2011 21:11:20 +0200
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <1316372508-7173-2-git-send-email-divanorama@gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+In-Reply-To: <6416457.30612.1305580526325.JavaMail.root@mail.hq.genarts.com>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181627>
 
-Dmitry Ivankov wrote:
+* Stephen Bash <bash@genarts.com> wrote:
+> Hi all-
+> 
+> In my office we've recently run into three separate fixes 
+> required on our maintenance branch that should not be 
+> included in master (our normal workflow is to make changes 
+> on maint, tag, release, and then merge to master).  Normally 
+> these "maint only" fixes are interspersed with commits that 
+> should go back into master.  In the past the "maint only" 
+> commits were rare, so I'd carefully use "merge -s ours" 
+> to avoid including the "maint only" changes in master.  
+> But now I'm wondering if there's a better process/workflow? 
 
-> In fast-import pack_id is 16-bit with MAX_PACK_ID reserved to identify
-> pre-existing objects. It is unlikely to wrap under reasonable settings
-> but still things in fast-import will break once it happens.
->
-> Add a check and immediate die() as the simplest reaction to being unable
-> to continue the import.
+Of course, there is: use topic branches and rebase.
 
-Makes a lot of sense.  A few possible minor clarity improvements:
 
- - missing commas after "In fast-import" and before "with MAX_PACK_ID
-   reserved"
- - "pre-existing objects": it would be clearer to say something like
-   "objects this fast-import process instance did not write out to a
-   packfile", like the comment before gfi_unpack_entry() does
- - I suppose "under reasonable settings" means "with a reasonable
-   max-pack-size setting"?
- - "things will break" is a bit vague.
- - "immediate" -> "immediately"
+Assuming you've found a bug in maint, which is also still
+in master.
 
-Maybe:
+#1: for off a topic branch (for that bug) from maint
+#2: fix the bug there
+#3: rebase to latest maint (if changed meanwhile) and test carefully
+#4: (ff-)merge your bugfix branch to maint
+#5: rebase bugfix branch to master (maybe incremental, if they
+    went too far away from another) and test carefully
+#6: (ff-)merge bugfix branch to master
+#7: drop that topic branch, as you're done now.
 
-	In fast-import, pack_id is a 16-bit unsigned integer, with MAX_PACK_ID
-	(2^16 - 1) reserved for use by objects that are not in a packfile that
-	this fast-import process instance wrote.  It is unusual for pack_id to
-	hit MAX_PACK_ID with a reasonable --max-pack-size setting, but when it
-	does, the pack_id stored in each "struct object_entry" wraps and
-	fast-import gets utterly confused.
 
-	Add a check and immediately die() so the operator can at least see what
-	went wrong instead of experiencing an unexplained broken import.
+cu
+-- 
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
 
-With or without that clarification,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks!  A test would still be nice, if someone has time to write one.
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
