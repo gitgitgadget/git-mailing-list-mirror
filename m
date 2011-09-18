@@ -1,90 +1,80 @@
-From: Andrew Ardill <andrew.ardill@gmail.com>
-Subject: Re: Pull From Mirrored Repository
-Date: Mon, 19 Sep 2011 01:15:47 +1000
-Message-ID: <CAH5451m1WJ0H9G8uHbCqZ5acO-xEynGKjMk=6g75buJy1S7iSw@mail.gmail.com>
-References: <20110918144514.GL15295@mail.gmail.com>
+From: Mikael Magnusson <mikachu@gmail.com>
+Subject: Re: [PATCH] Prevent users from adding the file that has all-zero SHA-1
+Date: Sun, 18 Sep 2011 19:06:06 +0200
+Message-ID: <CAHYJk3TRHu0whbdPQXzs2ELpoiEqZPxeWmz_V4HQzj5XfAJDBA@mail.gmail.com>
+References: <1316259574-1291-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jean Sacren <sakiwit@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 18 17:16:15 2011
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 18 19:06:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5J6M-0006df-Mn
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 17:16:15 +0200
+	id 1R5Koo-000787-Pw
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 19:06:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754874Ab1IRPQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Sep 2011 11:16:09 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:54165 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754573Ab1IRPQI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Sep 2011 11:16:08 -0400
-Received: by fxe4 with SMTP id 4so3147420fxe.19
-        for <git@vger.kernel.org>; Sun, 18 Sep 2011 08:16:07 -0700 (PDT)
+	id S1755552Ab1IRRGJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Sep 2011 13:06:09 -0400
+Received: from mail-vw0-f42.google.com ([209.85.212.42]:63823 "EHLO
+	mail-vw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755653Ab1IRRGI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Sep 2011 13:06:08 -0400
+Received: by vwl1 with SMTP id 1so10038614vwl.1
+        for <git@vger.kernel.org>; Sun, 18 Sep 2011 10:06:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=PF6Qu1/FjdytNXB7PUxYjpfhWCpNtIQciz8BiF3Y4Q0=;
-        b=fCCpT3MZLhXqLX/gW4yXAsurWBhqnFcR6eyK+mVeDpdw7Xne+pX/mf1N0yeNLLeUCa
-         9Wj3CszSg5W2CbZVInNz1Izdlq8BKD8GackHSMRabU/WBAmb/063xInqlUh3kR6ghVbb
-         YgUJAlEQbVm0Du8lpac+HQItcjZTwG8LN4lEc=
-Received: by 10.223.95.148 with SMTP id d20mr3292500fan.59.1316358967395; Sun,
- 18 Sep 2011 08:16:07 -0700 (PDT)
-Received: by 10.152.37.66 with HTTP; Sun, 18 Sep 2011 08:15:47 -0700 (PDT)
-In-Reply-To: <20110918144514.GL15295@mail.gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=lpwTYyV4oHxxdYXgq9tRYfpzqlReJ0+JpiUQPFGKwVo=;
+        b=gHKZZJTPe4HFen44cinMzzyWGzThOcf7BqBoTDlxXQkDnAlAgu1QblAYNKQGypfzHN
+         Nq5pNzeYRM3ourJscGz/hoIsQC3Grb/HvGDMKaaObCVQWsNM+bjJ3tsXfNaSF2ZKQixq
+         t+I+LlzQTI/tfEMod4BwG++YIbXBHBvNAE3aA=
+Received: by 10.52.34.80 with SMTP id x16mr458824vdi.88.1316365566811; Sun, 18
+ Sep 2011 10:06:06 -0700 (PDT)
+Received: by 10.52.157.72 with HTTP; Sun, 18 Sep 2011 10:06:06 -0700 (PDT)
+In-Reply-To: <1316259574-1291-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181615>
 
-On 19 September 2011 00:45, Jean Sacren <sakiwit@gmail.com> wrote:
-> After pull from a mirrored repository, git status shows
+2011/9/17 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>=
+:
+> This particular SHA-1 has special meaning to git, very much like NULL
+> in C. If a user adds a file that has this SHA-1, unexpected things ca=
+n
+> happen.
 >
-> # On branch master
-> # Your branch is ahead of 'origin/master' by [NUMBER] commits.
-> #
-> nothing to commit (working directory clean)
+> Granted, the chance is probably near zero because the content must
+> also start with valid blob header. But extra safety does not harm.
 >
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  Another way than die() is to detect this situation and update header=
+ a
+>  little to give different SHA-1 (for example a leading 0 in object
+>  size in header). Older git versions may not be happy with such an
+>  approach.
 >
-> How to bring 'origin/master' update without syncing with the original
-> repository?
+>  The same check can be added to commit, tree, tag creation and fsck.
+>  Maybe I'm too paranoid.
 >
+>  By the way, are any other SHA-1s sensitive to git like this one?
 
-Am I correct in thinking that you have done the following:
+Bad things will happen if you get an object with the same hash as any
+already existing one, and AFAIK, there are no checks for this. I don't
+think there's much point in treating 000...0 more specially than
+HEAD^0 for example. The only two hashes that mean something in an
+empty repo I guess are this one and the empty tree hash though.
 
-$ git clone original-server/repo.git
-$ cd repo
-$ git pull mirror-server/repo.git
-$ git status
-# On branch master
-# Your branch is ahead of 'origin/master' by [NUMBER] commits.
-#
-nothing to commit (working directory clean)
+PS there's a typo in your error message, "unluckly".
 
-and now you want the remote ref 'origin/master' to point to the same
-thing as 'mirror/master' (assuming that you create the ref for the
-mirror)?
-
-This can be done (by editing the file .git/refs/remotes/origin/master
-and specifying the correct sha1) however this is probably not the best
-idea. It is best for git to know the actual state of the remote the
-last time you synced with it so that it can act intelligently the next
-time you sync with it.
-
-If you intend to sync with the mirror, you might as well set it as the
-upstream ref of you master branch. That way you will not get the 'Your
-branch is ahead' message when you pull new updates (unless you have
-local changes, of course).
-This can be done by:
-$ git checkout master
-$ git branch --set-upstream mirror
-
-This assumes that you have already added mirror as a remote ref.
-
-Regards,
-Andrew
+--=20
+Mikael Magnusson
