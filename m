@@ -1,74 +1,89 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: git web--browse error handling URL with & in it (Was Re:
- [RFC/PATCH] Configurable hyperlinking in gitk)
-Date: Sat, 17 Sep 2011 23:29:34 -0400
-Message-ID: <20110918032933.GA17977@sigill.intra.peff.net>
-References: <20110917022903.GA2445@unpythonic.net>
- <4E7467B7.1090201@gmail.com>
- <20110917134527.GA28463@unpythonic.net>
- <4E752E32.2010208@gmail.com>
- <4E753BB9.7030804@gmail.com>
- <4E753C04.1070202@gmail.com>
+Subject: Re: Merging back from master but keeping a subtree
+Date: Sat, 17 Sep 2011 23:37:19 -0400
+Message-ID: <20110918033719.GB17977@sigill.intra.peff.net>
+References: <87y5xn8v6z.fsf@dod.no>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Jeff Epler <jepler@unpythonic.net>, git@vger.kernel.org
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 18 05:29:52 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 18 05:37:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R584m-0002ze-6X
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 05:29:52 +0200
+	id 1R58C6-00058l-5P
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 05:37:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753410Ab1IRD3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Sep 2011 23:29:36 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46286
+	id S1756295Ab1IRDhW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Sep 2011 23:37:22 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50899
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753271Ab1IRD3g (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Sep 2011 23:29:36 -0400
-Received: (qmail 11183 invoked by uid 107); 18 Sep 2011 03:30:30 -0000
+	id S1753603Ab1IRDhV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Sep 2011 23:37:21 -0400
+Received: (qmail 11226 invoked by uid 107); 18 Sep 2011 03:38:15 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 17 Sep 2011 23:30:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 17 Sep 2011 23:29:34 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 17 Sep 2011 23:38:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 17 Sep 2011 23:37:19 -0400
 Content-Disposition: inline
-In-Reply-To: <4E753C04.1070202@gmail.com>
+In-Reply-To: <87y5xn8v6z.fsf@dod.no>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181601>
 
-On Sun, Sep 18, 2011 at 12:32:04PM +1200, Chris Packham wrote:
+On Sat, Sep 17, 2011 at 09:49:40AM +0200, Steinar Bang wrote:
 
-> Update: it's the call to eval that causes the problem
+> I have a long lived branch that changes a directory and its
+> subdirectory, ie. 
+>  top/middle/mydirectory
 > 
->   eval kfmclient newTab https://internalhost/code\&stuff/bugs.php?id=foo
->   [1] 14728
->   bash: stuff/bugs.php?id=foo: No such file or directory
+> Now I want to merge in an updated remoterepo/master and keep everything
+> from that master, except for mydirectory and its subdirectory, where I
+> would like to keep everything from my branch.
 
-Hmm. The offending lines look like:
+Git should generally do that automatically, unless both sides are
+changing mydirectory. In which case it will produce conflicts.
 
-  eval "$browser_path" "$@" &
+Are you sure you really want to just throw out what the other side did
+in mydirectory?
 
-Normally in git we treat user-configured commands as shell snippets,
-meaning the user is responsible for any quoting. But in this script, we
-seem to run:
+> I tried a regular merge, and used
+>  git checkout --ours
+>  git add
+> and 
+>  git checkout --theirs
+>  git add
+> as appropriate on all conflicts.
+> 
+> But the result didn't build, and the build errors don't make much sense,
+> so I think they are caused by "successful" merges giving bad results.
 
-  type "$browser_path"
+If git was able to auto-merge some files, then they will not be marked
+as conflicts in the index. And "git checkout --ours" is about looking in
+the index for conflicted entries, and then selecting one side.
 
-several times. Which implies that "$browser_path" must be the actual
-executable. In which case, I would think that:
+I think what you want instead is to do is (assuming you really want to
+throw out their side):
 
-  "$browser_path" "$@" &
+  1. Start a merge between them and us:
 
-would be the right thing. And indeed, that is what the firefox arm of
-the case statement does. But chrome, konqueror, and others use eval.
+       git merge --no-commit remoterepo/master
 
-Unrelated, but it also looks like $browser_path is used unquoted in the
-firefox case (see inside the vers=$(...)).
+  2. Throw out whatever the merge came up with and make it look like
+     their tree:
+
+       git checkout remoterepo/master -- top
+
+  3. Now overwrite their version of mydirectory with what was in your
+     branch:
+
+       git checkout HEAD -- top/middle/mydirectory
+
+  4. Commit the resulting tree:
+
+       git commit
 
 -Peff
