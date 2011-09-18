@@ -1,86 +1,79 @@
-From: Ronan Keryell <Ronan.Keryell@hpc-project.com>
-Subject: Re: git subtree merging with a SVN remote?
-Date: Sun, 18 Sep 2011 11:00:26 -0700
-Message-ID: <87ipop4tol.fsf@an-dro.info.enstb.org>
-References: <j550cl$218$1@dough.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-web--browse: invoke kfmclient directly
+Date: Sun, 18 Sep 2011 14:38:47 -0400
+Message-ID: <20110918183846.GA31176@sigill.intra.peff.net>
+References: <20110918032933.GA17977@sigill.intra.peff.net>
+ <1316341224-4359-1-git-send-email-judge.packham@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Manuel Reimer <Manuel.Spam@nurfuerspam.de>
-X-From: git-owner@vger.kernel.org Sun Sep 18 20:10:20 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, chriscool@tuxfamily.org, jepler@unpythonic.net
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 18 20:42:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5Lon-0005gk-TB
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 20:10:18 +0200
+	id 1R5MK0-0001Ms-KW
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 20:42:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756027Ab1IRSKF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Sep 2011 14:10:05 -0400
-Received: from service.cri.ensmp.fr ([86.65.170.33]:49393 "EHLO
-	arnac.cri.ensmp.fr" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755815Ab1IRSKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Sep 2011 14:10:04 -0400
-X-Greylist: delayed 571 seconds by postgrey-1.27 at vger.kernel.org; Sun, 18 Sep 2011 14:10:04 EDT
-Received: from an-dro.info.enstb.org (hendaye.cri.ensmp.fr [10.2.14.177])
-	by arnac.cri.ensmp.fr (Postfix) with ESMTP id 25D692003A1;
-	Sun, 18 Sep 2011 20:00:26 +0200 (CEST)
-In-Reply-To: <j550cl$218$1@dough.gmane.org> (Manuel Reimer's message of "Sun,
-	18 Sep 2011 16:44:33 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+	id S1756066Ab1IRSit (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Sep 2011 14:38:49 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57048
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755997Ab1IRSit (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Sep 2011 14:38:49 -0400
+Received: (qmail 16644 invoked by uid 107); 18 Sep 2011 18:39:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 18 Sep 2011 14:39:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 18 Sep 2011 14:38:47 -0400
+Content-Disposition: inline
+In-Reply-To: <1316341224-4359-1-git-send-email-judge.packham@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181618>
 
->>>>> On Sun, 18 Sep 2011 16:44:33 +0200, Manuel Reimer <Manuel.Spam@nurfuerspam.de> said:
+On Sun, Sep 18, 2011 at 10:20:24PM +1200, Chris Packham wrote:
 
-    Manuel> Hello, I want to use "subtree merging" to get stuff from an
-    Manuel> external SVN repo into my project.
+> Instead of using eval which causes problems when a URL contains an
+> appropriately escaped ampersand (\&).
 
-    Manuel> Is it possible to do this directly using the external SVN
-    Manuel> server or should I set up a GIT mirror of this SVN repo?
+I think this probably should just remove all of the evals. I don't see
+how any of them is doing any good, and they're actively breaking URLs
+that need quoting.
 
-I guess you can move *manually* the files from the SVN repository into
-the git repository directly. :-)
+Hmm. Actually, the one for custom browser commands might need it,
+because that one is expected to be a shell snippet. I suspect the
+simplest thing is to do something like:
 
-More seriously, if you want to automate things, you have to go through a
-git svn clone process.
+  eval "$browser_cmd \"\$@\""
 
-    Manuel> Is this "subtree merging" a pure local thing or do I push
-    Manuel> some information about this to the central GIT server?
+The other option would be to actually shell-quote each argument, which
+is a pain to do in the shell (but is what C git does).
 
-Since the concept of central git server is a pure convention, you can
-rely only on your local git repository only.
+> For what it's worth I've included a testcase that detects my problem. I'm not
+> sure if the testcase is really worth it because the test library suppresses X
+> applications and even if it didn't the testcase is fairly trivial and might
+> just annoy people by opening web-browsers (and it snaps up the last t99xx
+> prefix).
 
-For a compiler project, I use these kinds of tricks to subtree 5
-upstream svn projects with the ability to apply on top of them some
-local commits, for example to avoid some upstream errors (it has just
-happened last Friday :-( ).
+Ick, yeah. Actually starting real browsers interacts too much with the
+world outside of the test scripts. The results will be annoying (new
+browser windows) and cause non-deterministic test results.
 
-Having all this operational is a little bit tedious, so I've developed
-scripts to have all the infrastructure running and easy to be updated.
+If you want to make a test, I think you would do better with something
+like:
 
-You may read
-http://download.par4all.org/doc/organization/par4all_organization.htdoc/par4all_organization.html#x1-240007
-or the PDF version and look at the p4a_git command I use to run this process:
-https://git.hpc-project.com/cgit/par4all/tree/src/dev/p4a_git?h=p4a-own
-https://git.hpc-project.com/cgit/par4all/tree/src/dev/p4a_git_lib.bash?h=p4a-own
-and there are also some scripts around in the same directory to
-bootstrap the infrastructure.
+  echo someurl_with_&_in_it >expect &&
+  git config browser.custom.cmd echo &&
+  git web--browse --browser=custom someurl_with_&_in_it >actual &&
+  test_cmp expect actual
 
-If you want to look at the resulting project history, study the p4a
-branch from the Par4All project.
+That won't test that we are invoking kfmclient correctly, obviously, but
+you can confirm at least that URLs are making it through to the browser
+script intact.
 
-I've found this very powerful and efficient... once it is correctly
-set up. :-)
-
-I hope that helps,
--- 
-  Ronan KERYELL                      |\/  Cell:   +33 613 143 766
-  HPC Project, Inc.                  |/)  Ronan.Keryell@hpc-project.com
-  5201 Great America Parkway #3241   K    skype:keryell
-  Santa Clara, CA 95054              |\   http://hpc-project.com
-  USA                                | \
+-Peff
