@@ -1,82 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: fast-import wishlist (Re: [RFC] fast-import: note deletion command)
-Date: Sun, 18 Sep 2011 16:03:36 -0500
-Message-ID: <20110918210336.GH2308@elie>
-References: <CA+gfSn9sdTzQghqQp6hcO-9kN9mPx2JLRig79Rgx2FqGWXXp=A@mail.gmail.com>
- <20110918203506.GG2308@elie>
- <CAGdFq_hpA95Kj4eMr4e1duuXTpr+OkkwF4K5bTapXEi9UjWcSA@mail.gmail.com>
- <CA+gfSn9CsL4tz30B62mDzALdyy1RTFiRT4a1zdJ8pR8aTdcpXA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	David Barr <davidbarr@google.com>,
+From: Dmitry Ivankov <divanorama@gmail.com>
+Subject: [PATCH/RFC 0/2] fast-import: commit from null_sha1
+Date: Mon, 19 Sep 2011 03:20:44 +0600
+Message-ID: <1316380846-15845-1-git-send-email-divanorama@gmail.com>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Johan Herland <johan@herland.net>
-To: Dmitry Ivankov <divanorama@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 18 23:03:45 2011
+	David Barr <davidbarr@google.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 18 23:14:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5OWe-0003Hk-DB
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 23:03:44 +0200
+	id 1R5OhO-0007FT-Bw
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 23:14:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932325Ab1IRVDk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Sep 2011 17:03:40 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:45311 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932082Ab1IRVDj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Sep 2011 17:03:39 -0400
-Received: by iaqq3 with SMTP id q3so4557141iaq.19
-        for <git@vger.kernel.org>; Sun, 18 Sep 2011 14:03:39 -0700 (PDT)
+	id S932517Ab1IRVOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Sep 2011 17:14:34 -0400
+Received: from mail-wy0-f170.google.com ([74.125.82.170]:38777 "EHLO
+	mail-wy0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932366Ab1IRVOd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Sep 2011 17:14:33 -0400
+Received: by wyg8 with SMTP id 8so8299412wyg.1
+        for <git@vger.kernel.org>; Sun, 18 Sep 2011 14:14:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=GmBzNeDKMH2obU57cJzXWW8KgeZcNM6G/s7l/8KT7lk=;
-        b=g0DLchyHtCzea6vsq8DsR4IibL6Kb5W7ZGNwmbRL7ZRpG1xcS4tO6JRg3lSqypLXJg
-         Kw/KG9BtP2BLRSdMo1/6y2B0WDrkVNnRCvS++WVkxfnicGkCFqtzBlQJhbc7Rc96kq+1
-         AasZpwBPSAzH0MevMiN+quGiTsoGWzxqqDZgk=
-Received: by 10.42.133.65 with SMTP id g1mr3262588ict.8.1316379818988;
-        Sun, 18 Sep 2011 14:03:38 -0700 (PDT)
-Received: from elie (99-120-124-35.lightspeed.cicril.sbcglobal.net. [99.120.124.35])
-        by mx.google.com with ESMTPS id n14sm22269723ibi.4.2011.09.18.14.03.38
-        (version=SSLv3 cipher=OTHER);
-        Sun, 18 Sep 2011 14:03:38 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CA+gfSn9CsL4tz30B62mDzALdyy1RTFiRT4a1zdJ8pR8aTdcpXA@mail.gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=JtKlCOFuA/LvjccvjPbcuOalMAbXLV+4N9tqCeHkdA8=;
+        b=bG/esftw68GJs8Lv2YM268MPonocDUPEETd/yeruBni77O9SMf1UdICAB9VsDvpyas
+         DXXBssweAqcVJ6R5a271JksVmoUnlv6+uTVukeXFWHxQ6Axk1d4xPJRWrcnpVHEU8rrX
+         xX4PvBVC6jeGiaLpoLkFyF9uZoso1YI/7QRTI=
+Received: by 10.227.201.133 with SMTP id fa5mr856596wbb.91.1316380472152;
+        Sun, 18 Sep 2011 14:14:32 -0700 (PDT)
+Received: from localhost.localdomain (117360277.convex.ru. [79.172.62.237])
+        by mx.google.com with ESMTPS id gd6sm22990486wbb.1.2011.09.18.14.14.30
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 18 Sep 2011 14:14:31 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181639>
 
-Dmitry Ivankov wrote:
-> On Mon, Sep 19, 2011 at 2:39 AM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+Not so sure how null_sha1 parent should be treated in fast-import.
+Absent parent is represented as null_sha1 to the user in reflog,
+but isn't allowed as an argument for porcelain nor shows in most
+plumbing commands afaik.
 
->> Is this perhaps a good moment to also think about branch deletion?
+These patches make fast-import treat
+    commit refs/heads/master
+    ...
+    from `null_sha1`
+like any other missing parent sha1 - reject such input.
 
-It might be a good temporal moment, but it's not quite the right
-thread for it. :)  If someone wants to maintain a fast-import wishlist
-in a wiki somewhere, it sounds like it could be useful to some people
-(I prefer to read patches and stories about particular use cases,
-myself :)).
+Note: if we'll want this input to be valid, some other adjustments
+to fast-import logic may be needed for consistency.
 
->> That came up earlier as well, and thinking about that might give us
->> some insights in how to deal with deletions uniformly.
->
-> Also maybe marks deletion, getting mark sha1,  resetting a mark with
-> explicit sha1. But most probably not tags deletion.
->
-> And going much further on commands, following look nice to have:
-> - 'ls' storing result to a mark (to allow us not to compute sha1/store
->   object if we don't want to)
-> - marks namespaces (to keep ls mark separately, mark deletion will
->   do too, if it's only a single temporary mark). Maybe like ::nr:mark.
+Dmitry Ivankov (2):
+  fast-import: add 'commit from 0{40}' failing test
+  fast-import: fix 'from 0{40}' test
 
-Regards,
-Jonathan
+ fast-import.c          |   17 ++++++-----------
+ t/t9300-fast-import.sh |   12 ++++++++++++
+ 2 files changed, 18 insertions(+), 11 deletions(-)
+
+-- 
+1.7.3.4
