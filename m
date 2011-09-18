@@ -1,80 +1,86 @@
-From: Mikael Magnusson <mikachu@gmail.com>
-Subject: Re: [PATCH] Prevent users from adding the file that has all-zero SHA-1
-Date: Sun, 18 Sep 2011 19:06:06 +0200
-Message-ID: <CAHYJk3TRHu0whbdPQXzs2ELpoiEqZPxeWmz_V4HQzj5XfAJDBA@mail.gmail.com>
-References: <1316259574-1291-1-git-send-email-pclouds@gmail.com>
+From: Ronan Keryell <Ronan.Keryell@hpc-project.com>
+Subject: Re: git subtree merging with a SVN remote?
+Date: Sun, 18 Sep 2011 11:00:26 -0700
+Message-ID: <87ipop4tol.fsf@an-dro.info.enstb.org>
+References: <j550cl$218$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 18 19:06:15 2011
+To: Manuel Reimer <Manuel.Spam@nurfuerspam.de>
+X-From: git-owner@vger.kernel.org Sun Sep 18 20:10:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5Koo-000787-Pw
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 19:06:15 +0200
+	id 1R5Lon-0005gk-TB
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 20:10:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755552Ab1IRRGJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Sep 2011 13:06:09 -0400
-Received: from mail-vw0-f42.google.com ([209.85.212.42]:63823 "EHLO
-	mail-vw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755653Ab1IRRGI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Sep 2011 13:06:08 -0400
-Received: by vwl1 with SMTP id 1so10038614vwl.1
-        for <git@vger.kernel.org>; Sun, 18 Sep 2011 10:06:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=lpwTYyV4oHxxdYXgq9tRYfpzqlReJ0+JpiUQPFGKwVo=;
-        b=gHKZZJTPe4HFen44cinMzzyWGzThOcf7BqBoTDlxXQkDnAlAgu1QblAYNKQGypfzHN
-         Nq5pNzeYRM3ourJscGz/hoIsQC3Grb/HvGDMKaaObCVQWsNM+bjJ3tsXfNaSF2ZKQixq
-         t+I+LlzQTI/tfEMod4BwG++YIbXBHBvNAE3aA=
-Received: by 10.52.34.80 with SMTP id x16mr458824vdi.88.1316365566811; Sun, 18
- Sep 2011 10:06:06 -0700 (PDT)
-Received: by 10.52.157.72 with HTTP; Sun, 18 Sep 2011 10:06:06 -0700 (PDT)
-In-Reply-To: <1316259574-1291-1-git-send-email-pclouds@gmail.com>
+	id S1756027Ab1IRSKF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Sep 2011 14:10:05 -0400
+Received: from service.cri.ensmp.fr ([86.65.170.33]:49393 "EHLO
+	arnac.cri.ensmp.fr" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755815Ab1IRSKE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Sep 2011 14:10:04 -0400
+X-Greylist: delayed 571 seconds by postgrey-1.27 at vger.kernel.org; Sun, 18 Sep 2011 14:10:04 EDT
+Received: from an-dro.info.enstb.org (hendaye.cri.ensmp.fr [10.2.14.177])
+	by arnac.cri.ensmp.fr (Postfix) with ESMTP id 25D692003A1;
+	Sun, 18 Sep 2011 20:00:26 +0200 (CEST)
+In-Reply-To: <j550cl$218$1@dough.gmane.org> (Manuel Reimer's message of "Sun,
+	18 Sep 2011 16:44:33 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181616>
 
-2011/9/17 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>=
-:
-> This particular SHA-1 has special meaning to git, very much like NULL
-> in C. If a user adds a file that has this SHA-1, unexpected things ca=
-n
-> happen.
->
-> Granted, the chance is probably near zero because the content must
-> also start with valid blob header. But extra safety does not harm.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  Another way than die() is to detect this situation and update header=
- a
->  little to give different SHA-1 (for example a leading 0 in object
->  size in header). Older git versions may not be happy with such an
->  approach.
->
->  The same check can be added to commit, tree, tag creation and fsck.
->  Maybe I'm too paranoid.
->
->  By the way, are any other SHA-1s sensitive to git like this one?
+>>>>> On Sun, 18 Sep 2011 16:44:33 +0200, Manuel Reimer <Manuel.Spam@nurfuerspam.de> said:
 
-Bad things will happen if you get an object with the same hash as any
-already existing one, and AFAIK, there are no checks for this. I don't
-think there's much point in treating 000...0 more specially than
-HEAD^0 for example. The only two hashes that mean something in an
-empty repo I guess are this one and the empty tree hash though.
+    Manuel> Hello, I want to use "subtree merging" to get stuff from an
+    Manuel> external SVN repo into my project.
 
-PS there's a typo in your error message, "unluckly".
+    Manuel> Is it possible to do this directly using the external SVN
+    Manuel> server or should I set up a GIT mirror of this SVN repo?
 
---=20
-Mikael Magnusson
+I guess you can move *manually* the files from the SVN repository into
+the git repository directly. :-)
+
+More seriously, if you want to automate things, you have to go through a
+git svn clone process.
+
+    Manuel> Is this "subtree merging" a pure local thing or do I push
+    Manuel> some information about this to the central GIT server?
+
+Since the concept of central git server is a pure convention, you can
+rely only on your local git repository only.
+
+For a compiler project, I use these kinds of tricks to subtree 5
+upstream svn projects with the ability to apply on top of them some
+local commits, for example to avoid some upstream errors (it has just
+happened last Friday :-( ).
+
+Having all this operational is a little bit tedious, so I've developed
+scripts to have all the infrastructure running and easy to be updated.
+
+You may read
+http://download.par4all.org/doc/organization/par4all_organization.htdoc/par4all_organization.html#x1-240007
+or the PDF version and look at the p4a_git command I use to run this process:
+https://git.hpc-project.com/cgit/par4all/tree/src/dev/p4a_git?h=p4a-own
+https://git.hpc-project.com/cgit/par4all/tree/src/dev/p4a_git_lib.bash?h=p4a-own
+and there are also some scripts around in the same directory to
+bootstrap the infrastructure.
+
+If you want to look at the resulting project history, study the p4a
+branch from the Par4All project.
+
+I've found this very powerful and efficient... once it is correctly
+set up. :-)
+
+I hope that helps,
+-- 
+  Ronan KERYELL                      |\/  Cell:   +33 613 143 766
+  HPC Project, Inc.                  |/)  Ronan.Keryell@hpc-project.com
+  5201 Great America Parkway #3241   K    skype:keryell
+  Santa Clara, CA 95054              |\   http://hpc-project.com
+  USA                                | \
