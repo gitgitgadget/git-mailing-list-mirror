@@ -1,89 +1,76 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Branch deletion (Re: [RFC] fast-import: note deletion command)
-Date: Sun, 18 Sep 2011 23:55:29 +0200
-Message-ID: <CAGdFq_gCVBi1JOsyM=+SVU6HFew_7yaJWaZ-3=AnmDeRkBxntQ@mail.gmail.com>
-References: <CA+gfSn9sdTzQghqQp6hcO-9kN9mPx2JLRig79Rgx2FqGWXXp=A@mail.gmail.com>
- <20110918203506.GG2308@elie> <CAGdFq_hpA95Kj4eMr4e1duuXTpr+OkkwF4K5bTapXEi9UjWcSA@mail.gmail.com>
- <20110918211836.GI2308@elie> <CAGdFq_gH=u1BU6k3Z23Lo9mOSE4Rq-6nWU0EE91CQNpxksGw5w@mail.gmail.com>
- <20110918214954.GL2308@elie>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Dmitry Ivankov <divanorama@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	David Barr <davidbarr@google.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Johan Herland <johan@herland.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 18 23:56:18 2011
+Subject: [PATCH] SubmittingPatches: Remove diff tool examples
+Date: Mon, 19 Sep 2011 00:11:41 +0200
+Message-ID: <1316383901-17580-1-git-send-email-srabbelier@gmail.com>
+Cc: Sverre Rabbelier <srabbelier@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 19 00:20:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5PLW-0007Gs-CH
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 23:56:18 +0200
+	id 1R5Pin-0006Z5-IB
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Sep 2011 00:20:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932761Ab1IRV4K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Sep 2011 17:56:10 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:55357 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932255Ab1IRV4J convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Sep 2011 17:56:09 -0400
-Received: by pzk1 with SMTP id 1so8982791pzk.1
-        for <git@vger.kernel.org>; Sun, 18 Sep 2011 14:56:09 -0700 (PDT)
+	id S932778Ab1IRWUH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Sep 2011 18:20:07 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:53958 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932707Ab1IRWUG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Sep 2011 18:20:06 -0400
+Received: by eya28 with SMTP id 28so1352868eya.19
+        for <git@vger.kernel.org>; Sun, 18 Sep 2011 15:20:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=k24NOMO/voKBFHE6+3ZzM5jkBZm06cnwJ1njT15qbno=;
-        b=tJUtq1UF/fF4nezyML6LEs1ghW3PXKYFzVC76gOD7wSjOMw+YwKaPuJFxmuFU4si8D
-         yuYoWtMu+kyjODXWNyK1f7ZxnElBYT7Adz2574t2javK2cO3eIVyv+AUYhWUjIVEqa0S
-         rkxaI6WuARTmYVWB+LRXNZNMZAJWQaGqdCnfU=
-Received: by 10.68.14.163 with SMTP id q3mr3091224pbc.98.1316382969108; Sun,
- 18 Sep 2011 14:56:09 -0700 (PDT)
-Received: by 10.68.59.39 with HTTP; Sun, 18 Sep 2011 14:55:29 -0700 (PDT)
-In-Reply-To: <20110918214954.GL2308@elie>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=qB0XM84hM14CLETUOwGGZeVmvajwoVbL/jMu73/smm8=;
+        b=DRJ7U3xiVZYsJlxjwnaLFvOh79NMEVf4GehczyHY2GLgW8xCRiKVamYpTHp48tFNQz
+         d9dleQEivxrdH9Tpcq7XsQIP3M4Ofzo/gE/JDdz3vs0lyprjEUy06Z/vza/18GOV9Tgr
+         YxrP+N1THx2mDtYFzAV0yr48hmFYTOQmk4S64=
+Received: by 10.213.114.136 with SMTP id e8mr510022ebq.43.1316383952253;
+        Sun, 18 Sep 2011 15:12:32 -0700 (PDT)
+Received: from localhost.localdomain ([188.142.63.148])
+        by mx.google.com with ESMTPS id x45sm40006125eeh.11.2011.09.18.15.12.30
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 18 Sep 2011 15:12:31 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.1.724.g9519c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181654>
 
-Heya,
+Since Cogito is long deprecated, it is somewhat awkward to leave it
+as example. Removing Cogito leaves just git and StGit, which is a
+rather incomplete list of git diff tools available. Sidestep the
+problem of deciding what tools to mention by not mentioning any.
 
-On Sun, Sep 18, 2011 at 23:49, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> By the way, what does the "export" command do in the following
-> situation?
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git push origin something-big:master
->
-> Does it assume the remote-tracking branch for master reflects what's
-> available on the other end and send a stream for
-> origin/master..something-big, or does it send the entire history of
-> something-big?
+Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
+---
 
-We have a test case for this actually. It goes like this:
+  This uses the subject Ramkumar suggested. Since the subject no
+  longer references Cogito, I've added a reference to the reason
+  for this removal as the first line of the description.
 
-checking known breakage:
-	(cd clone &&
-	 git push origin new-name:new-refspec
-	) &&
-	compare_refs clone HEAD server refs/heads/new-refspec
+ Documentation/SubmittingPatches |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
 
-Everything up-to-date
-fatal: Needed a single revision
-not ok 16 - push new branch with old:new refspec # TODO known breakage
-
-
-In other words, we don't handle it at all. What we do handle a case
-similar to what you say, where we have already pushed part of the
-history of some-branch, and in that case we do indeed only push the
-needed objects.
-
---=20
-Cheers,
-
-Sverre Rabbelier
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 938eccf..0dbf2c9 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -134,8 +134,7 @@ Another thing: NULL pointers shall be written as NULL, not as 0.
+ 
+ (2) Generate your patch using git tools out of your commits.
+ 
+-git based diff tools (git, Cogito, and StGIT included) generate
+-unidiff which is the preferred format.
++git based diff tools generate unidiff which is the preferred format.
+ 
+ You do not have to be afraid to use -M option to "git diff" or
+ "git format-patch", if your patch involves file renames.  The
+-- 
+1.7.6.1.724.g9519c
