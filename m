@@ -1,99 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 4/4] Accept tags in HEAD or MERGE_HEAD
-Date: Sun, 18 Sep 2011 14:51:31 -0700
-Message-ID: <7vsjntbjto.fsf@alter.siamese.dyndns.org>
-References: <1316260665-1728-1-git-send-email-pclouds@gmail.com>
- <1316260665-1728-4-git-send-email-pclouds@gmail.com>
+From: Dmitry Ivankov <divanorama@gmail.com>
+Subject: Re: Branch deletion (Re: [RFC] fast-import: note deletion command)
+Date: Mon, 19 Sep 2011 03:54:17 +0600
+Message-ID: <CA+gfSn_e3yY9eQ6O1zMdTituZMAv+a0AtF4cKrEOvBwY63pihA@mail.gmail.com>
+References: <CA+gfSn9sdTzQghqQp6hcO-9kN9mPx2JLRig79Rgx2FqGWXXp=A@mail.gmail.com>
+	<20110918203506.GG2308@elie>
+	<CAGdFq_hpA95Kj4eMr4e1duuXTpr+OkkwF4K5bTapXEi9UjWcSA@mail.gmail.com>
+	<20110918211836.GI2308@elie>
+	<CAGdFq_gH=u1BU6k3Z23Lo9mOSE4Rq-6nWU0EE91CQNpxksGw5w@mail.gmail.com>
+	<20110918214954.GL2308@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 18 23:51:40 2011
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	David Barr <davidbarr@google.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Johan Herland <johan@herland.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 18 23:54:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5PH0-0005Y6-G4
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 23:51:38 +0200
+	id 1R5PJe-0006UC-Oh
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 23:54:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932675Ab1IRVve convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Sep 2011 17:51:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50876 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932255Ab1IRVvd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Sep 2011 17:51:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A99542D9;
-	Sun, 18 Sep 2011 17:51:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=e5oOk43bd7O4ffoq472Z9Dy5L
-	FY=; b=avpocClKeNslUP69kmkixscJvj7DDSB6eZESaFG0iqMygxDj4EmDP5C1a
-	ZkYB1qb6HcrU4u8tCGlwdtBxhmUS0YNPll8HcQ5z9NRWaMrlHLJyJ1+XUc0T/UGV
-	U27hjEer+OKR1in4NReTVz8GJiHdtjAhSwF/WMb5MYoXTZGi3s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=vzYr1fOU6Lf73NmJ9y7
-	TL/bQD5/khc61gIGHnqGOXcJawlWql71vxeRrfQ58k2j0f6sunNxT2G/gUwkuKMS
-	UqsuXWNiz9DlNxTMSaQ13NDNOzgjKogB5wApAg0uLSl7xi+lcE0o9vy2NBv20fbr
-	85yEo/rYS7nD3HAOFgbxapGA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 423F842D8;
-	Sun, 18 Sep 2011 17:51:33 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA9C542D7; Sun, 18 Sep 2011
- 17:51:32 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5F74D15A-E240-11E0-81A3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932688Ab1IRVyT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Sep 2011 17:54:19 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:60150 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932255Ab1IRVyS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Sep 2011 17:54:18 -0400
+Received: by qyk30 with SMTP id 30so2194790qyk.19
+        for <git@vger.kernel.org>; Sun, 18 Sep 2011 14:54:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=7sbpGbYKjwMvZ82UfjsKguS+KzsshUtxyWrEH2klis0=;
+        b=IRoxbUnHV6s3ppEdbZ2V0ywqH4uu71zizneBKR08ibuHFM/KWtiRSCqvWvGTJIT97j
+         FzczS1jTNBewcrbUKlUBiQXx4B+khKqgtFTGDNBtD4QGmUnnCoo/TGXiTVyeuo52Mim9
+         o0GPS8LKLyzkQlMJ86G1w9cXH1zoExvaV2yEM=
+Received: by 10.229.69.206 with SMTP id a14mr1418731qcj.54.1316382857395; Sun,
+ 18 Sep 2011 14:54:17 -0700 (PDT)
+Received: by 10.229.224.17 with HTTP; Sun, 18 Sep 2011 14:54:17 -0700 (PDT)
+In-Reply-To: <20110918214954.GL2308@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181652>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
-
-> HEAD and MERGE_HEAD (among other branch tips) should never hold a
-> tag. That can only be caused by broken tools and is cumbersome to fix
-> by an end user with:
+On Mon, Sep 19, 2011 at 3:49 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Sverre Rabbelier wrote:
 >
->   $ git update-ref HEAD $(git rev-parse HEAD^{commit})
+>> The problem currently is that when
+>> you try to "git push origin :experimental-branch", there is no way f=
+or
+>> the transport-helper code to tell the helper to delete the ref.
 >
-> which may look like a magic to a new person.
-> ...
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+> Ah! =A0Thanks for explaining.
+>
+> It also occurs to me that
+>
+> =A0 =A0 =A0 =A0reset refs/heads/experimental-branch
+>
+> =A0 =A0 =A0 =A0... rest of the fast-import stream comes here ...
+>
+> could be used as an especially non-self-explanatory way to express
+> this kind of thing. :) =A0No idea whether that works already.
+     feature force
+     reset refs/heads/experimental-branch
+Will be close. It'll overwrite the branch if any commits are done to
+it. But will
+keep it as is in case it's not touched in the rest of the fast-import s=
+tream.
 
-Nicely done.
-
-Just a few micronits.
-
-> diff --git a/commit.h b/commit.h
-> ...
-> +/*
-> + * Look sha1 up for a commit, defer if needed. If dereference occurs=
-,
-
-That's s/defer/deref/;
-
-> + * update "sha1" for consistency with retval->object.sha1. Also warn
-> + * users this case because it is expected that sha1 points directly =
-to
-> + * a commit.
-> + */
-> +struct commit *lookup_commit_or_die(const unsigned char *sha1, const=
- char *ref_name);
-
-This no longer updates sha1 now it is a pointer to a const arena.
-I'll update this part as follows, and queue the result.
-
-/*
- * Look up object named by "sha1", dereference tag as necessary,=20
- * get a commit and return it. If "sha1" does not dereference to
- * a commit, use ref_name to report an error and die.
- */
-
-Thanks.
+> A deleteref command and deleteref feature documented to be meant for
+> this purpose sound handy to me.
+>
+> By the way, what does the "export" command do in the following
+> situation?
+>
+> =A0 =A0 =A0 =A0git push origin something-big:master
+>
+> Does it assume the remote-tracking branch for master reflects what's
+> available on the other end and send a stream for
+> origin/master..something-big, or does it send the entire history of
+> something-big?
+>
