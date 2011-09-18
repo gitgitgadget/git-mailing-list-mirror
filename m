@@ -1,102 +1,94 @@
-From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: Re: [PATCH 3/3] fast-import: rename object_count to pack_object_count
-Date: Mon, 19 Sep 2011 01:51:27 +0600
-Message-ID: <CA+gfSn8aOWPm=xmTE9WzuXsQY0EfYypFxRAyVb-x3_kmhNUb-Q@mail.gmail.com>
-References: <1316372508-7173-1-git-send-email-divanorama@gmail.com>
-	<1316372508-7173-4-git-send-email-divanorama@gmail.com>
-	<20110918193205.GF2308@elie>
+From: Jean Sacren <sakiwit@gmail.com>
+Subject: Re: Pull From Mirrored Repository
+Date: Sun, 18 Sep 2011 14:06:33 -0600
+Message-ID: <20110918200633.GN15295@mail.gmail.com>
+References: <20110918144514.GL15295@mail.gmail.com>
+ <CAH5451m1WJ0H9G8uHbCqZ5acO-xEynGKjMk=6g75buJy1S7iSw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <davidbarr@google.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 18 21:51:33 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 18 22:07:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5NOn-0001RE-AS
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 21:51:33 +0200
+	id 1R5Ndk-0007OD-7q
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 22:07:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932409Ab1IRTv3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Sep 2011 15:51:29 -0400
-Received: from mail-qw0-f42.google.com ([209.85.216.42]:33089 "EHLO
-	mail-qw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932273Ab1IRTv2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Sep 2011 15:51:28 -0400
-Received: by qwi4 with SMTP id 4so12522849qwi.1
-        for <git@vger.kernel.org>; Sun, 18 Sep 2011 12:51:27 -0700 (PDT)
+	id S932447Ab1IRUGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Sep 2011 16:06:55 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:43529 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932273Ab1IRUGy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Sep 2011 16:06:54 -0400
+Received: by pzk1 with SMTP id 1so8756233pzk.1
+        for <git@vger.kernel.org>; Sun, 18 Sep 2011 13:06:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=doxqtQFrBKcxHrj1HTllXkkee+6XNWooxulcl4eNWjY=;
-        b=yGGKl5RoP4tQTYOwKuguuk02qyjhFcwNGmpEBmxLyERBdojSAry5iUNx69LlIu7Rmc
-         oz3vOJcKQNfZTjFnagMyusEzDR8YMkbiRL4cAYtZXITW7gpOn0zvqODAlUWUjyEKM4GM
-         3aknhuSt6qoxovj497uJY2Yq6C53pEC7nVTYE=
-Received: by 10.229.69.206 with SMTP id a14mr1357336qcj.54.1316375487602; Sun,
- 18 Sep 2011 12:51:27 -0700 (PDT)
-Received: by 10.229.224.17 with HTTP; Sun, 18 Sep 2011 12:51:27 -0700 (PDT)
-In-Reply-To: <20110918193205.GF2308@elie>
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to;
+        bh=ODgO24wDFZRpfceelV3F3+T3ZuWJEshBMuO9bcerkpM=;
+        b=wuBb253EhkDvnSNvQBeueTnX2WSYczpi+S6EZ3E41fh0qmvuTE3+YLQEYuAADA2xk/
+         oaZS1VFy9mUMaIsqGDGOB/MZtM9NKuR7WACiJXJD8oRnEglXGzs4Fsm0po2LRX0WRkxh
+         aneptPpy4xNzyYPR4freWTMPHB7Mo6PmSV5a4=
+Received: by 10.68.33.225 with SMTP id u1mr2853856pbi.498.1316376413890;
+        Sun, 18 Sep 2011 13:06:53 -0700 (PDT)
+Received: from localhost ([67.214.237.222])
+        by mx.google.com with ESMTPS id u10sm59261441pbr.12.2011.09.18.13.06.51
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 18 Sep 2011 13:06:52 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAH5451m1WJ0H9G8uHbCqZ5acO-xEynGKjMk=6g75buJy1S7iSw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181633>
 
-On Mon, Sep 19, 2011 at 1:32 AM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Dmitry Ivankov wrote:
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Date: Mon, 19 Sep 2011 01:15:47 +1000
 >
->> object_count is used to count objects that'll go to the current pack=
-=2E
->> While object_count_by_* are used to count total amount of objects an=
-d
->> are not used to determine if current packfile is empty.
->>
->> Rename (and move declaration) object_count to pack_object_count to
->> avoid possible confusion.
->
-> No strong opinion on this one. =A0I guess the important thing is that
-> you are moving the declaration to the group of declarations labelled =
-as
->
-> =A0 =A0 =A0 =A0/* The .pack file being generated */
->
-> . =A0Is it important to rename the variable while at it (which will
-> disrupt other patches in flight using that variable if they exist)?
-Not that important. Maybe a huge comment will do more and better.
-object_count++ still appears near object_count_by_type[type]++, but
-hopefully one will look for their declarations and thus avoid the confu=
-sion.
+> Am I correct in thinking that you have done the following:
+> 
+> $ git clone original-server/repo.git
+> $ cd repo
+> $ git pull mirror-server/repo.git
 
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -290,7 +290,6 @@ static uintmax_t object_count_by_type[1 << TYPE_BIT=
-S];
- static uintmax_t duplicate_count_by_type[1 << TYPE_BITS];
- static uintmax_t delta_count_by_type[1 << TYPE_BITS];
- static uintmax_t delta_count_attempts_by_type[1 << TYPE_BITS];
--static unsigned long object_count;
- static unsigned long branch_count;
- static unsigned long branch_load_count;
- static int failure;
-@@ -310,8 +309,16 @@ static unsigned int atom_cnt;
- static struct atom_str **atom_table;
+Essentially that's what I did.
 
- /* The .pack file being generated */
-+/*
-+ * objects that are being written to the current pack
-+ * all *must* have current pack_id in struct object_entry.
-+ * And object_count *must* be a count of object_entry's
-+ * having current pack_id. This data is used to create
-+ * index file once current pack_file is finished.
-+ */
- static struct pack_idx_option pack_idx_opts;
- static unsigned int pack_id;
-+static unsigned long object_count;
- static struct sha1file *pack_file;
- static struct packed_git *pack_data;
- static struct packed_git **all_packs;
+> and now you want the remote ref 'origin/master' to point to the same
+> thing as 'mirror/master' (assuming that you create the ref for the
+> mirror)?
+
+The idea is to update the local tree from multiple sites so long as one
+of them is still running. And the update shall make no difference
+whether it is from the master site or not.
+
+> This can be done (by editing the file .git/refs/remotes/origin/master
+> and specifying the correct sha1) however this is probably not the best
+> idea. It is best for git to know the actual state of the remote the
+> last time you synced with it so that it can act intelligently the next
+> time you sync with it.
+
+It turns out to be more of a bug with git. After a successful pull from
+a master or mirror site, the SHA1 shall be updated among all the master
+files in .git/refs/remotes/origin or .git/refs/remotes/[WHATEVER_MIRROR]
+as the tip of the local tree is updated.
+
+> If you intend to sync with the mirror, you might as well set it as the
+> upstream ref of you master branch. That way you will not get the 'Your
+> branch is ahead' message when you pull new updates (unless you have
+> local changes, of course).
+> This can be done by:
+> $ git checkout master
+> $ git branch --set-upstream mirror
+
+This is a nice hack, but we want all the changes stay with the master
+branch. It's easier to use one master branch for tracking all updates
+from the upstream.
+
+Thank you for all your help!
+
+-- 
+Jean Sacren
