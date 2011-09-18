@@ -1,7 +1,7 @@
 From: Pete Wyckoff <pw@padd.com>
 Subject: [PATCH 2/5] git-p4: handle utf16 filetype properly
-Date: Sat, 17 Sep 2011 21:28:31 -0400
-Message-ID: <20110918012831.GB4619@arf.padd.com>
+Date: Sat, 17 Sep 2011 21:29:53 -0400
+Message-ID: <20110918012953.GC4619@arf.padd.com>
 References: <20110918012634.GA4578@arf.padd.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -9,33 +9,33 @@ Cc: Vitor Antunes <vitor.hda@gmail.com>,
 	Luke Diamand <luke@diamand.org>, Chris Li <git@chrisli.org>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 18 03:28:40 2011
+X-From: git-owner@vger.kernel.org Sun Sep 18 03:30:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R56BT-0006Sd-7q
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 03:28:39 +0200
+	id 1R56Cs-0006lY-NI
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 03:30:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756128Ab1IRB2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Sep 2011 21:28:34 -0400
-Received: from honk.padd.com ([74.3.171.149]:50733 "EHLO honk.padd.com"
+	id S1753022Ab1IRB37 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Sep 2011 21:29:59 -0400
+Received: from honk.padd.com ([74.3.171.149]:50739 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756030Ab1IRB2e (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Sep 2011 21:28:34 -0400
+	id S1752328Ab1IRB37 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Sep 2011 21:29:59 -0400
 Received: from arf.padd.com (unknown [50.55.131.180])
-	by honk.padd.com (Postfix) with ESMTPSA id AD993BFC;
-	Sat, 17 Sep 2011 18:28:33 -0700 (PDT)
+	by honk.padd.com (Postfix) with ESMTPSA id 5B652BFC;
+	Sat, 17 Sep 2011 18:29:58 -0700 (PDT)
 Received: by arf.padd.com (Postfix, from userid 7770)
-	id 186B031448; Sat, 17 Sep 2011 21:28:31 -0400 (EDT)
+	id A80DD31448; Sat, 17 Sep 2011 21:29:53 -0400 (EDT)
 Content-Disposition: inline
 In-Reply-To: <20110918012634.GA4578@arf.padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181595>
 
 One of the filetypes that p4 supports is utf16.  Its behavior is
 odd in this case.  The data delivered through "p4 -G print" is
