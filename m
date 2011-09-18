@@ -1,105 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] Add a credential-helper for KDE
-Date: Sun, 18 Sep 2011 14:49:54 -0400
-Message-ID: <20110918184954.GB31176@sigill.intra.peff.net>
-References: <4E594B5A.6070902@gmail.com>
- <20110831014237.GA2519@sigill.intra.peff.net>
- <4E7605CA.7020204@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH] Configurable hyperlinking in gitk
+Date: Sun, 18 Sep 2011 11:50:30 -0700 (PDT)
+Message-ID: <m3hb49sn26.fsf@localhost.localdomain>
+References: <20110917022903.GA2445@unpythonic.net>
+	<4E7467B7.1090201@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-4
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Lukas =?utf-8?Q?Sandstr=C3=B6m?= <luksan@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 18 20:50:04 2011
+Cc: Jeff Epler <jepler@unpythonic.net>, git@vger.kernel.org
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 18 20:50:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5MRF-00047L-1T
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 20:50:01 +0200
+	id 1R5MRu-0004MS-9J
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 20:50:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756207Ab1IRSt4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Sep 2011 14:49:56 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47046
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755680Ab1IRStz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Sep 2011 14:49:55 -0400
-Received: (qmail 16778 invoked by uid 107); 18 Sep 2011 18:50:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 18 Sep 2011 14:50:50 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 18 Sep 2011 14:49:54 -0400
-Content-Disposition: inline
-In-Reply-To: <4E7605CA.7020204@gmail.com>
+	id S932171Ab1IRSug convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Sep 2011 14:50:36 -0400
+Received: from mail-wy0-f170.google.com ([74.125.82.170]:41755 "EHLO
+	mail-wy0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932136Ab1IRSuc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Sep 2011 14:50:32 -0400
+Received: by wyg8 with SMTP id 8so8209005wyg.1
+        for <git@vger.kernel.org>; Sun, 18 Sep 2011 11:50:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=7jubzSzOAoQQLe4de3zghlKpHZtfhGMOLDl7UsaYRJY=;
+        b=IpNKKzpTiDU+yZFoSLgkJ/5pI+32sSfUcrOhVeCfB60fV9vp+0WODUZT+hycbaRX91
+         Mx4Tff0eKsq/Cu1W6nzhkg2AvLBmwIRj73GPYBgC90IAY2q9Fk8r6xlvA9sP0LyMEf0O
+         zzJCz7z9rhHilsLOrIQqTzQSf1i/9Tm4KrCf8=
+Received: by 10.227.206.136 with SMTP id fu8mr1811215wbb.109.1316371831242;
+        Sun, 18 Sep 2011 11:50:31 -0700 (PDT)
+Received: from localhost.localdomain (abvm199.neoplus.adsl.tpnet.pl. [83.8.210.199])
+        by mx.google.com with ESMTPS id fa7sm22420948wbb.26.2011.09.18.11.50.29
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 18 Sep 2011 11:50:30 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p8IInu2A030209;
+	Sun, 18 Sep 2011 20:50:10 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p8IInbZp030205;
+	Sun, 18 Sep 2011 20:49:37 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <4E7467B7.1090201@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181621>
 
-On Sun, Sep 18, 2011 at 04:52:58PM +0200, Lukas Sandstr=C3=B6m wrote:
+Chris Packham <judge.packham@gmail.com> writes:
+> On 17/09/11 14:29, Jeff Epler wrote:
 
-> Right. Multiple usernames per "unique" context is supported in this v=
-ersion.
-> I looked at the git-credential-storage helper when I wrote the first =
-patch,
-> which didn't have obvious support for multiple usernames per unique c=
-ontext.
+> > Some time ago I hardcoded this into gitk for $DAY_JOB and find it v=
+ery
+> > useful.  I made it configurable in the hopes that it might be adopt=
+ed
+> > upstream. (unfortunately, the configurable version is radically
+> > different from the original hard-coded version, so I can't say this
+> > has had much testing yet)
+>=20
+> This is definitely something folks at my $dayjob would be interested =
+in.
+> We've already done some customisation of gitweb to do something simil=
+ar.
+> I'm not actually sure what the changes where or how configurable they
+> are. I'll see if I can dig them out on Monday someone else might want=
+ to
+> polish them into something suitable (I might do it myself if I get so=
+me
+> tuits).
 
-Yeah, sorry about that. The -cache helper is much more fully fleshed ou=
-t
-(though I have improved the -store helper in the past few days to handl=
-e
-multiple usernames better).
+That would be nice.  So called "committags" support was long planned
+for gitweb, and even some preliminary work exists...
+=20
+> > There are probably better names for the configuration options, too.
+>=20
+> It'd be nice if the config variables weren't gitk specific. .re and .=
+sub
+> could be applied to gitweb and maybe other git viewers outside of
+> gig.git might decide to use them. My bikeshedding suggestion would be=
+ to
+> just drop the gitk prefix and have linkify.re and linkify.sub.
 
-> Keeping the username outside the token is probably a good thing, but =
-perhaps it
-> should be clarified in the api-docs that multiple usernames has to be=
- supported.
+Perhaps more descriptive name, i.e.
 
-OK, I'll try to write up a clarification.
+  linkify.<name>.regexp
+  linkify.<name>.subst
 
-> Also; what about rejecting credentials. This code currently deletes j=
-ust a=20
-> username/password pair if a username is specified, and all credential=
-s associated
-> with the token if only --unique and --reject is specified. Is this co=
-rrect/expected
-> behavior?
+would be better?
 
-Yes, that's what I think should happen, and what both of my helpers do.
-In practice, I don't think it will be called that way by git, which
-will always be rejecting a username we just tried. But I wanted to leav=
-e
-things flexible in case a user wants to manually remove a credential
-from a store.
+I guess that regexp is an extended regular expression, isn't it?
 
-> When I first wrote the helper I tried to immediately ask for a new pa=
-ssword if a
-> credential was rejected, but this didn't work with the HTTP auth code=
-, since it
-> doesn't retry the auth with the new credentials after a reject. I thi=
-nk it would
-> be better if we asked for a new password instead of just saying "auth=
- failed" and=20
-> having the user retry the fetch/pull when the stored credentials are =
-incorrect.
-
-Yeah, I had a patch early on to retry authentication a few times before
-exiting, but I wondered how helpful it was. It's usually pretty easy to
-retry your command again via shell history, and sometimes looping on
-asking for authentication can be annoying (because things like askpass
-will actually grab the keyboard focus).
-
-So I dunno what is best. I don't consider it a big deal, but maybe
-others do.
-
-Even if we did do the retry from git, the helper shouldn't ask
-immediately for the new credential inside a --reject. It should wait to
-be invoked again asking for the password. I know this may be an extra
-fork/exec/startup cycle, but it keeps the interface to the helper simpl=
-e
-and flexible.
-
--Peff
+--=20
+Jakub Nar=EAbski
