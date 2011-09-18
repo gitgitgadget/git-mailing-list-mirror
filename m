@@ -1,71 +1,254 @@
-From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: Re: [PATCH/RFC 0/2] fast-import: commit from null_sha1
-Date: Mon, 19 Sep 2011 03:40:43 +0600
-Message-ID: <CA+gfSn_WG_S+QJK5O_4D62KV78-77QO_gyy7PeFGRJYW4cQu8A@mail.gmail.com>
-References: <1316380846-15845-1-git-send-email-divanorama@gmail.com>
-	<20110918213050.GJ2308@elie>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] git-p4 tests: refactor, split out common functions
+Date: Sun, 18 Sep 2011 14:48:43 -0700
+Message-ID: <7v7h55cyis.fsf@alter.siamese.dyndns.org>
+References: <20110918012634.GA4578@arf.padd.com>
+ <20110918012713.GA4619@arf.padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <davidbarr@google.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 18 23:40:49 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Vitor Antunes <vitor.hda@gmail.com>,
+	Luke Diamand <luke@diamand.org>, Chris Li <git@chrisli.org>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Sun Sep 18 23:49:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5P6X-000888-1J
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 23:40:49 +0200
+	id 1R5PEV-0004UU-05
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 23:49:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932639Ab1IRVko convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Sep 2011 17:40:44 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:58208 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932255Ab1IRVko convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Sep 2011 17:40:44 -0400
-Received: by qyk30 with SMTP id 30so2188080qyk.19
-        for <git@vger.kernel.org>; Sun, 18 Sep 2011 14:40:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Vhsj7exdq9Rgjj1uCeUUHG2WiYRQl+HbmNZG3DX93vE=;
-        b=FkUSA1c+N5xz00DP885P1JvG9nO6uvQT/MtxspHFPKx9ikooo8dFaf/4OBgEysNfQ4
-         WLKsxAzRYITrwqZITlI/GhIoWzxEcM/8v5pJq6bT7bKEcydQ2+HNjntu2pUnIVQGnOY9
-         +BzdCF5U+iMEAjp03Z/P1v8QNbFmqHZkfXoWY=
-Received: by 10.229.232.213 with SMTP id jv21mr1426821qcb.206.1316382043592;
- Sun, 18 Sep 2011 14:40:43 -0700 (PDT)
-Received: by 10.229.224.17 with HTTP; Sun, 18 Sep 2011 14:40:43 -0700 (PDT)
-In-Reply-To: <20110918213050.GJ2308@elie>
+	id S932649Ab1IRVst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Sep 2011 17:48:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50108 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932255Ab1IRVss (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Sep 2011 17:48:48 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12E6D42A0;
+	Sun, 18 Sep 2011 17:48:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Tjy5rMRRySESt+UhP/EoWSk/JBA=; b=i1cCit
+	DWrZqxIEpUfUqjOvWJUmWQRsuhlm/omK6MC/Zqdw7QjK1y8cX/W4dEdpq5/q4h8F
+	9OEliIfL3cJHH08Fi0hNLIEWD+tyY2/h6ZRTCS8sKp3lK4u89Tb8wTnp0O3TlFDi
+	PoLh3+422+0NPQAGtjLxR/8Jj0BGADyNg1Oi0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mMMDdsrRFEWj3RjiuzmEQmQUAnjq7X69
+	zvTWMLSehLo4YGBu0pPFXEbxM+cIxuqqTaqochHZd9goDdVvoPAHgACD2681npUt
+	EVbeJW++xGG2G6dCBNewfVUfsoZbGAJajxoGUCljvBnMaP86XimOFmpqvvxJZG31
+	RDH49yqcHyo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A086429F;
+	Sun, 18 Sep 2011 17:48:46 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 36FF0429E; Sun, 18 Sep 2011
+ 17:48:45 -0400 (EDT)
+In-Reply-To: <20110918012713.GA4619@arf.padd.com> (Pete Wyckoff's message of
+ "Sat, 17 Sep 2011 21:27:13 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FB8ED564-E23F-11E0-BEDB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181648>
 
-On Mon, Sep 19, 2011 at 3:30 AM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Dmitry Ivankov wrote:
->
->> These patches make fast-import treat
->> =A0 =A0 commit refs/heads/master
->> =A0 =A0 ...
->> =A0 =A0 from `null_sha1`
->> like any other missing parent sha1 - reject such input.
->
-> Are you sure the existing support for "from 0{40}" is not deliberate
-> and that no one is relying on it?
-It is hard to guess. There is no test for it in t/t9300-fast-import.sh,=
- no
-mention in the Documentation, but sometimes a user can see null_sha1
-from git. I hope that it pops up only when something is read to simplif=
-y
-the format and never accepted in 'write' commands or as an argument.
+Pete Wyckoff <pw@padd.com> writes:
 
-> =A0If and only if you are, then this
-> seems like a good idea (a single patch that both makes the behavior
-> change and adds a test for it should be easier to review).
+> Introduce a library for functions that are common to
+> multiple git-p4 test files.
 >
+> Separate the tests related to detecting p4 branches
+> into their own file, and add a few more.
+>
+> Signed-off-by: Pete Wyckoff <pw@padd.com>
+> ---
+>  t/lib-git-p4.sh          |   55 ++++++++++++
+>  t/t9800-git-p4.sh        |  108 ++---------------------
+>  t/t9801-git-p4-branch.sh |  221 ++++++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 283 insertions(+), 101 deletions(-)
+>  create mode 100644 t/lib-git-p4.sh
+>  create mode 100755 t/t9801-git-p4-branch.sh
+
+I take that you meant "coding style" by "generic test beauty" in the cover
+letter, so here are some minor nitpicks.
+
+> diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
+> new file mode 100644
+> index 0000000..dbc1499
+> --- /dev/null
+> +++ b/t/lib-git-p4.sh
+> @@ -0,0 +1,55 @@
+> +#
+> +# Library code for git-p4 tests
+> +#
+> +
+> +. ./test-lib.sh
+> +
+> +( p4 -h && p4d -h ) >/dev/null 2>&1 || {
+> +	skip_all='skipping git-p4 tests; no p4 or p4d'
+> +	test_done
+> +}
+> +
+> +GITP4=$GIT_BUILD_DIR/contrib/fast-import/git-p4
+> +P4DPORT=10669
+
+What happens when tests are run in parallel (make -j or prove --jobs) and
+9800 and 9801 are run at the same time?
+
+> +export P4PORT=localhost:$P4DPORT
+> +export P4CLIENT=client
+> +
+> +db="$TRASH_DIRECTORY/db"
+> +cli="$TRASH_DIRECTORY/cli"
+> +git="$TRASH_DIRECTORY/git"
+> +
+> +start_p4d()
+> +{
+
+Prevalent style in t/ and scripted part of Git in general is to begin a
+shell function like this, with SP on both sides of () and opening brace
+on the same line.
+
+	start_p4d () {
+
+> +	mkdir -p "$db" &&
+> +	p4d -q -d -r "$db" -p $P4DPORT &&
+> +	mkdir -p "$cli" &&
+> +	mkdir -p "$git" &&
+> +	cd "$cli" &&
+> +	p4 client -i <<-EOF
+> +	Client: client
+> +	Description: client
+> +	Root: $cli
+> +	View: //depot/... //client/...
+> +	EOF
+> +}
+> +
+> +kill_p4d()
+> +{
+> +	pid=`pgrep -f p4d` &&
+> +	test -n "$pid" &&
+
+It is unfortunate that you have to use pgrep. I am unfamiliar with p4, but
+do you have any control how p4d is started during this test? If the first
+use of client automagically starts p4d without your control, that would be
+harder to arrange, but the point I am getting at is that if you know when
+you start p4d yourself and that is the only p4d process you use, you
+should be keep its pid in $TRASH_DIRECTORY somewhere and replace these
+with
+
+	pid=$(cat "$TRASH_DIRECTORY/p4d_pid") &&
+        kill -0 "$pid"
+
+to see if that daemon is still alive. 
+
+You call kill_p4d at the very beginning of t9800; what instance of p4d are
+you trying to kill? Who could have started it? For you to be able to kill
+(and nobody sane would be running the test suite as "root", I hope), it
+would be your process, but would it be possible that you are doing some
+other important thing using p4 that is not related to git-p4 development
+or testing at all, perhaps listening to a port different from 10669? Would
+it be necessary to kill that other p4d to run these tests in a predicatable
+and reproducible environment?
+
+I would very much more prefer if at the very beginning you started p4d at
+the port assigned for the test and fail the test if it cannot start for
+whatever reason. Perhaps the reason you cannot start a p4d is because a
+stale p4d instance is hanging around from previous round of test, and if
+that is the case, then that is the bug we need to fix in the _previous_
+test, not something we want to sweep under the rug by killing it during
+this round of test.
+
+> +	for i in {1..5} ; do
+
+That {1..5} does not pass POSIX shells, such as /bin/dash.
+
+	for i in 1 2 3 4 5
+	do
+		...
+
+> +	    test_debug "ps wl `echo $pid`" &&
+> +	    kill $pid 2>/dev/null &&
+> +	    pgrep -f p4d >/dev/null || break &&
+
+You are saying "all of these things would hold true if we attempt to kill
+it and it still is alive" with the chain of "&&" up to that last pgrep,
+and then with "||", you say "otherwise we do not have to keep sending the
+signal to it anymore". But the extra "&&" after "break" is unneeded and
+misleading.
+
+> +	    sleep 0.2
+
+That 0.2 does not look like a non-negative decimal interger like POSIX
+wants to have.
+
+> +	done &&
+> +	rm -rf "$db" &&
+> +	rm -rf "$cli"
+> +}
+> +
+> +cleanup_git() {
+> +	cd "$TRASH_DIRECTORY" &&
+> +	rm -rf "$git" &&
+> +	mkdir "$git"
+> +}
+> diff --git a/t/t9800-git-p4.sh b/t/t9800-git-p4.sh
+> index 01ba041..bb89b63 100755
+> --- a/t/t9800-git-p4.sh
+> +++ b/t/t9800-git-p4.sh
+> @@ -2,40 +2,16 @@
+>  
+>  test_description='git-p4 tests'
+>  
+> -. ./test-lib.sh
+> +. ./lib-git-p4.sh
+>  
+> +test_expect_success 'start p4d' '
+> +	kill_p4d || : &&
+> +	start_p4d &&
+> +	cd "$TRASH_DIRECTORY"
+>  '
+
+Don't "chdir" around in the test, and worse yet hide some "cd" in helper
+functions. The seemingly unnecessary "cd $TRASH_DIRECTORY" at the end,
+which may not even happen if start_p4d fails, is because start_p4d has a
+hidden "cd" somewhere (which in turn may or may not run depending on where
+in the && chain you have a failure).
+
+One way to keep the test cleaner is to do the helper functions like the
+following, so that the callers do not have to worry about where they end
+up with:
+
+	start_p4d () {
+		mkdir -p "$db" "$cli" "$git" &&
+                p4d -q -d -r "$db" -p "$P4DPORT" &&
+		(
+			cd "$cli" &&
+			p4 client -i <<-EOF
+			...
+			EOF
+		)
+	}
+
+>  test_expect_success 'add p4 files' '
+>  	cd "$cli" &&
+>  	echo file1 >file1 &&
+>  	p4 add file1 &&
+>  	p4 submit -d "file1" &&
+>  ...
+>  	cd "$TRASH_DIRECTORY"
+>  '
+
+The same issue here.
+
+	test_expect_success 'add p4 files' '
+		(
+			cd "$cli" &&
+			echo file1 >file1 &&
+			...
+		)
+	'
