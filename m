@@ -1,93 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/3] fast-import: rename object_count to pack_object_count
-Date: Sun, 18 Sep 2011 16:40:10 -0500
-Message-ID: <20110918214010.GK2308@elie>
-References: <1316372508-7173-1-git-send-email-divanorama@gmail.com>
- <1316372508-7173-4-git-send-email-divanorama@gmail.com>
- <20110918193205.GF2308@elie>
- <CA+gfSn8aOWPm=xmTE9WzuXsQY0EfYypFxRAyVb-x3_kmhNUb-Q@mail.gmail.com>
+From: Dmitry Ivankov <divanorama@gmail.com>
+Subject: Re: [PATCH/RFC 0/2] fast-import: commit from null_sha1
+Date: Mon, 19 Sep 2011 03:40:43 +0600
+Message-ID: <CA+gfSn_WG_S+QJK5O_4D62KV78-77QO_gyy7PeFGRJYW4cQu8A@mail.gmail.com>
+References: <1316380846-15845-1-git-send-email-divanorama@gmail.com>
+	<20110918213050.GJ2308@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <davidbarr@google.com>
-To: Dmitry Ivankov <divanorama@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 18 23:40:21 2011
+	David Barr <davidbarr@google.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 18 23:40:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5P64-0007xs-Bz
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 23:40:20 +0200
+	id 1R5P6X-000888-1J
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Sep 2011 23:40:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932584Ab1IRVkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Sep 2011 17:40:15 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:52492 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932255Ab1IRVkO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Sep 2011 17:40:14 -0400
-Received: by iaqq3 with SMTP id q3so4582293iaq.19
-        for <git@vger.kernel.org>; Sun, 18 Sep 2011 14:40:13 -0700 (PDT)
+	id S932639Ab1IRVko convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Sep 2011 17:40:44 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:58208 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932255Ab1IRVko convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Sep 2011 17:40:44 -0400
+Received: by qyk30 with SMTP id 30so2188080qyk.19
+        for <git@vger.kernel.org>; Sun, 18 Sep 2011 14:40:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ITYhximMjsKhsBY0nLYVVBIt8Y4YiYuR6I+Wnz3n1r8=;
-        b=sNmQHc+Bpf1fRlKlBPuU00KyPhuKO32j0cSO1s2vCjClDNQvtBko6V/FuMn3wKa092
-         zjTD71lre/t627/mRaHcN6UBCm/4hO32lNrpawD+sjqB/jMSpXq+cYTWm73cBweVU3Fk
-         bPN5zrFbLxvgRlNMR+gFB1kVmSZGVOn3lcwp8=
-Received: by 10.42.155.137 with SMTP id u9mr3210587icw.31.1316382013631;
-        Sun, 18 Sep 2011 14:40:13 -0700 (PDT)
-Received: from elie (99-120-124-35.lightspeed.cicril.sbcglobal.net. [99.120.124.35])
-        by mx.google.com with ESMTPS id j2sm22378087ibx.11.2011.09.18.14.40.12
-        (version=SSLv3 cipher=OTHER);
-        Sun, 18 Sep 2011 14:40:13 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CA+gfSn8aOWPm=xmTE9WzuXsQY0EfYypFxRAyVb-x3_kmhNUb-Q@mail.gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Vhsj7exdq9Rgjj1uCeUUHG2WiYRQl+HbmNZG3DX93vE=;
+        b=FkUSA1c+N5xz00DP885P1JvG9nO6uvQT/MtxspHFPKx9ikooo8dFaf/4OBgEysNfQ4
+         WLKsxAzRYITrwqZITlI/GhIoWzxEcM/8v5pJq6bT7bKEcydQ2+HNjntu2pUnIVQGnOY9
+         +BzdCF5U+iMEAjp03Z/P1v8QNbFmqHZkfXoWY=
+Received: by 10.229.232.213 with SMTP id jv21mr1426821qcb.206.1316382043592;
+ Sun, 18 Sep 2011 14:40:43 -0700 (PDT)
+Received: by 10.229.224.17 with HTTP; Sun, 18 Sep 2011 14:40:43 -0700 (PDT)
+In-Reply-To: <20110918213050.GJ2308@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181647>
 
-Dmitry Ivankov wrote:
+On Mon, Sep 19, 2011 at 3:30 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Dmitry Ivankov wrote:
+>
+>> These patches make fast-import treat
+>> =A0 =A0 commit refs/heads/master
+>> =A0 =A0 ...
+>> =A0 =A0 from `null_sha1`
+>> like any other missing parent sha1 - reject such input.
+>
+> Are you sure the existing support for "from 0{40}" is not deliberate
+> and that no one is relying on it?
+It is hard to guess. There is no test for it in t/t9300-fast-import.sh,=
+ no
+mention in the Documentation, but sometimes a user can see null_sha1
+from git. I hope that it pops up only when something is read to simplif=
+y
+the format and never accepted in 'write' commands or as an argument.
 
-> --- a/fast-import.c
-> +++ b/fast-import.c
-[...]
-> @@ -310,8 +309,16 @@ static unsigned int atom_cnt;
->  static struct atom_str **atom_table;
-> 
->  /* The .pack file being generated */
-> +/*
-> + * objects that are being written to the current pack
-> + * all *must* have current pack_id in struct object_entry.
-> + * And object_count *must* be a count of object_entry's
-> + * having current pack_id. This data is used to create
-> + * index file once current pack_file is finished.
-> + */
->  static struct pack_idx_option pack_idx_opts;
->  static unsigned int pack_id;
-> +static unsigned long object_count;
->  static struct sha1file *pack_file;
-
-Closer.  Now I am tempted to nitpick and say that this should be
-a single comment, formatted in complete sentences, and written to
-be descriptive rather than normative when possible (since norms
-will inevitably change over time, and future readers should not
-have an excuse to be afraid to adjust the comment to match code
-changes).
-
-	/*
-	 * The .pack file being generated
-	 *
-	 * Objects that are being written to the current pack store the
-	 * current value of "pack_id" in struct object_entry.
-	 * "object_count" counts the object_entrys with the current
-	 * pack_id.  These values are used to create the pack index
-	 * file when the current pack is finished.
-	 */
-	static struct pack_idx_option pack_idx_opts;
-	static unsigned int pack_id;
-	...
+> =A0If and only if you are, then this
+> seems like a good idea (a single patch that both makes the behavior
+> change and adds a test for it should be easier to review).
+>
