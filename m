@@ -1,63 +1,65 @@
-From: Klaus Robert Suetterlin <robert@mpe.mpg.de>
-Subject: Re: gitk: 'j' and 'k' keyboard shortcuts backward
-Date: Tue, 20 Sep 2011 00:05:30 +0200
-Message-ID: <70BFF542-0D85-43AF-9293-AB7988C5AB92@mpe.mpg.de>
-References: <CA+Jd1rFzOOxL+-JVeovTiOwM5cmyyis65Y1+xiDmG=tkJ3b2Xw@mail.gmail.com> <20110919164950.GB2861@elie> <20110919180449.GA2677@ecki>
-Mime-Version: 1.0 (iPhone Mail 8C148)
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Paul Mackerras <paulus@samba.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue Sep 20 00:48:45 2011
+From: Jeff King <peff@peff.net>
+Subject: Re: how to remove unreachable objects?
+Date: Mon, 19 Sep 2011 18:52:19 -0400
+Message-ID: <20110919225219.GD4056@sigill.intra.peff.net>
+References: <20110919110831.ewq03vnqos4w8cs8@webmail.edis.at>
+ <20110919195335.GA31930@sigill.intra.peff.net>
+ <20110919201804.GB31930@sigill.intra.peff.net>
+ <7vsjns8b6m.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: dieter@schoen.or.at, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 20 00:52:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5mdp-0002eq-7X
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 00:48:45 +0200
+	id 1R5mhN-0004MP-Lv
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 00:52:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750811Ab1ISWsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Sep 2011 18:48:40 -0400
-Received: from mpemail.mpe.mpg.de ([130.183.137.110]:55215 "EHLO
-	mpemail.mpe.mpg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750698Ab1ISWsk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2011 18:48:40 -0400
-X-Greylist: delayed 2576 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Sep 2011 18:48:40 EDT
-Received: from 178-26-29-181-dynip.superkabel.de ([178.26.29.181] helo=[192.168.1.100])
-	by mpemail.mpe.mpg.de with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.69)
-	(envelope-from <robert@mpe.mpg.de>)
-	id 1R5lyA-0001rN-8q; Tue, 20 Sep 2011 00:05:42 +0200
-In-Reply-To: <20110919180449.GA2677@ecki>
-X-Mailer: iPhone Mail (8C148)
-X-Authenticated-Id: robert
+	id S1750901Ab1ISWwV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Sep 2011 18:52:21 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37789
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750806Ab1ISWwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Sep 2011 18:52:21 -0400
+Received: (qmail 10903 invoked by uid 107); 19 Sep 2011 22:57:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 19 Sep 2011 18:57:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Sep 2011 18:52:19 -0400
+Content-Disposition: inline
+In-Reply-To: <7vsjns8b6m.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181718>
 
-Fine with me, too.
+On Mon, Sep 19, 2011 at 02:38:41PM -0700, Junio C Hamano wrote:
 
---Robert S.
-
-
-
-Am 19.09.2011 um 20:04 schrieb Clemens Buchacher <drizzd@aon.at>:
-
-> On Mon, Sep 19, 2011 at 11:49:50AM -0500, Jonathan Nieder wrote:
->> 
->> How about this patch?
->> 
->> -- >8 --
->> Subject: gitk: Make vi-style keybindings more vi-like
+> Yeah, I've been thinking about making it an error to give refs to fsck, as
+> I do not think the use cases for feature justifies the possible confusion
+> it may cause.
+>
+> One possible use case might be when your repository is corrupt, and does
+> not pass "git fsck" (without any argument).  In such a case, if you are
+> lucky and your disk corrupted objects only reachable from a recent topic
+> branch, you might find that this command:
 > 
-> Fine by me.
+> 	$ git fsck master next ...list other topics here...
 > 
-> Clemens
+> still succeeds, so that you can figure out which topic makes such a
+> limited fsck fail when it is listed on the command line, judge its
+> importance and resurrect what you can from there, before nuking it to
+> bring the repository back in health so that you can recreate the topic.
+
+Does that work? I had the impression from the documentation that the
+arguments are purely about the reachability analysis, and that the
+actual corruption/correctness checks actually look through the object db
+directly, making sure each object is well-formed. Skimming cmd_fsck
+seems to confirm that.
+
+-Peff
