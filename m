@@ -1,78 +1,97 @@
-From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: [PATCH 5/8] fast-import: tiny optimization in read_marks
-Date: Mon, 19 Sep 2011 07:27:34 +0600
-Message-ID: <1316395657-6991-6-git-send-email-divanorama@gmail.com>
-References: <1316395657-6991-1-git-send-email-divanorama@gmail.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <davidbarr@google.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
+From: Junio C Hamano <junio@pobox.com>
+Subject: [ANNOUNCE] Git 1.7.7.rc2
+Date: Sun, 18 Sep 2011 23:15:01 -0700
+Message-ID: <7vfwjtawii.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 19 03:21:57 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+X-From: linux-kernel-owner@vger.kernel.org Mon Sep 19 08:15:26 2011
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5SYX-0007it-0w
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Sep 2011 03:21:57 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1R5X8U-0001nK-QO
+	for glk-linux-kernel-3@lo.gmane.org; Mon, 19 Sep 2011 08:15:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756722Ab1ISBVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Sep 2011 21:21:44 -0400
-Received: from mail-wy0-f170.google.com ([74.125.82.170]:46718 "EHLO
-	mail-wy0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752301Ab1ISBV2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Sep 2011 21:21:28 -0400
-Received: by mail-wy0-f170.google.com with SMTP id 8so8452393wyg.1
-        for <git@vger.kernel.org>; Sun, 18 Sep 2011 18:21:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=lIRLEPMGz21tXk1MRUb0GfODxT3Wieom6HPzoqNQ48U=;
-        b=imEw+e00DyApV2bLv9DAi039rEW6ftEYz7FTCe/auG867KGDLH/2MvK2DSLsD7+vtN
-         xs3sWAq4P8oSNdWgp5xoXXGfXiW/cmaofJQoFiNy6T1C4oWhC0XSVg4s20gT6HL7xXtO
-         sBobkXJ/GdPG3NGS+E6pZvVbb4Rhz217kQ0+4=
-Received: by 10.216.158.3 with SMTP id p3mr2031939wek.1.1316395288242;
-        Sun, 18 Sep 2011 18:21:28 -0700 (PDT)
-Received: from localhost.localdomain (117360277.convex.ru. [79.172.62.237])
-        by mx.google.com with ESMTPS id fa3sm23640766wbb.3.2011.09.18.18.21.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 18 Sep 2011 18:21:27 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.4
-In-Reply-To: <1316395657-6991-1-git-send-email-divanorama@gmail.com>
-Sender: git-owner@vger.kernel.org
+	id S1752554Ab1ISGPI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 19 Sep 2011 02:15:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45088 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751071Ab1ISGPH convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 19 Sep 2011 02:15:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C46E1EB6;
+	Mon, 19 Sep 2011 02:15:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:cc:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=CFon8PrUvJCJvI2HAEmZVHrtv
+	vg=; b=LXX2oMy12yWTos8MSiLqtahxEMDIfxleNIqrKFZ7eaFDEg99ahkBLg+Iw
+	OdaGC7Jq4ueNzkCMQ6D+bBQFSQ5WlSwnVpTLS96+X2AhBYK8D6jef5IV7/ycrsO6
+	jzEVaeDhWFteBh5A9I89CKd8qO9Zzv3CqY/wqq9pfp+sVzqk6I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:cc:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=DWbHznm9poLJ/nJq6F3
+	Y7owF/Z8maADTkB/PIwVqzzX9Di5TtJElwou4Bf6nCHZqNLksP1g1oUwTE/2lQTP
+	bZEp4lKlx6iJd4SUsqoyM8HT68oWaNnxz4ianjakOKszCb16iP/SnqDJQyQmRlFe
+	AZDEU4Wt+tKv8/217ODZ6pmc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 636991EB5;
+	Mon, 19 Sep 2011 02:15:04 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 908C81EB4; Mon, 19 Sep 2011
+ 02:15:03 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B6798D06-E286-11E0-989C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181664>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181665>
 
-read_marks calls find_object and then insert_object if nothing is found.
+A release candidate Git 1.7.7.rc2 is available but unfortunately not at
+the usual places. Even so (rather, exactly because it is in unusual
+places, so we are likely to have smaller number of casual observers who
+grab and build them), please test it to help us make the upcoming relea=
+se
+as solid as we could.
 
-Reduce it to just insert_object and a check if it was found or inserted.
+A release candidate tarball is found at:
 
-Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
----
- fast-import.c |    6 ++----
- 1 files changed, 2 insertions(+), 4 deletions(-)
+    http://code.google.com/p/git-core/downloads/list
+ =20
+and its SHA-1 checksum is:
 
-diff --git a/fast-import.c b/fast-import.c
-index 3c2a067..dd3dcd5 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1852,11 +1852,9 @@ static void read_marks(void)
- 		if (!mark || end == line + 1
- 			|| *end != ' ' || get_sha1(end + 1, sha1))
- 			die("corrupt mark line: %s", line);
--		e = find_object(sha1);
--		if (!e) {
--			e = insert_object(sha1);
-+		e = insert_object(sha1);
-+		if (!e->idx.offset)
- 			resolve_sha1_object(e);
--		}
- 		insert_mark(mark, e);
- 	}
- 	fclose(f);
--- 
-1.7.3.4
+1e0e035148df279af689131273570a7dde45950b  git-1.7.7.rc2.tar.gz
+
+Also the following public repositories all have a copy of the v1.7.7-rc=
+2
+tag and the master branch that the tag points at:
+
+	url =3D git://repo.or.cz/alt-git.git
+	url =3D https://code.google.com/p/git-core/
+	url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
+	url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+	url =3D https://github.com/gitster/git
+
+----------------------------------------------------------------
+
+Changes since v1.7.7-rc1 are as follows:
+
+Bryan Jacobs (1):
+      git-svn: teach git-svn to populate svn:mergeinfo
+
+=46r=C3=A9d=C3=A9ric Heitzmann (1):
+      Disambiguate duplicate t9160* tests
+
+Junio C Hamano (2):
+      branch --set-upstream: regression fix
+      Git 1.7.7-rc2
+
+Pang Yan Han (1):
+      format-patch: ignore ui.color
