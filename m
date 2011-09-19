@@ -1,59 +1,137 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t4014: remove Message-Id/timestamp before comparing
- patches
-Date: Mon, 19 Sep 2011 13:15:26 -0700
-Message-ID: <7vr53c9tlt.fsf@alter.siamese.dyndns.org>
-References: <6b2cb6ebec907342a02d56a36ddc58715efabc00.1316414731.git.trast@student.ethz.ch> <20110919191545.GD26115@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: how to remove unreachable objects?
+Date: Mon, 19 Sep 2011 16:18:04 -0400
+Message-ID: <20110919201804.GB31930@sigill.intra.peff.net>
+References: <20110919110831.ewq03vnqos4w8cs8@webmail.edis.at>
+ <20110919195335.GA31930@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Pang Yan Han <pangyanhan@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Sep 19 22:15:38 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: dieter@schoen.or.at
+X-From: git-owner@vger.kernel.org Mon Sep 19 22:18:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5kFd-0000hm-Mn
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Sep 2011 22:15:38 +0200
+	id 1R5kI8-0002Yd-P4
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Sep 2011 22:18:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755513Ab1ISUPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Sep 2011 16:15:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39119 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754792Ab1ISUPc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2011 16:15:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 65567527A;
-	Mon, 19 Sep 2011 16:15:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jp2cxJ3Ehk+QqpU7h09AomAS47E=; b=V+jjR0
-	6IrtBMNSIcCopPrY3z9qObc5pjklYO9URb5BqxAKpsPryhECavO4V9usbBJ5vyXy
-	oPVHQYUJgjTHJRXvn6vqNTmJDpbXe2CjMySzIjXCxVVNqTwBee4Qg0wl3h5X5H7I
-	lLR88/ZcN540tMUERLOjbiPF+QcsfQI4Zr3Ss=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xDExSdJyjnPeNluGs6q4AyXBBylpgT70
-	WmGLk7EzGWJxpkr+3zPOHMyn44lfYZRCrghVeZdTp1w456WRydc5xJ230KsLCzkc
-	m7r7PY5I1KeEfygf0uLVTSRh8DVucMTAK0lBbAVDFiMy/bAItup9iOZ2h62J5LyT
-	dOh5B3FC7Vs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5BE8C5279;
-	Mon, 19 Sep 2011 16:15:31 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E70C25277; Mon, 19 Sep 2011
- 16:15:30 -0400 (EDT)
-In-Reply-To: <20110919191545.GD26115@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 19 Sep 2011 15:15:45 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1F853C76-E2FC-11E0-9008-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755608Ab1ISUSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Sep 2011 16:18:07 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37593
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754792Ab1ISUSG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Sep 2011 16:18:06 -0400
+Received: (qmail 8490 invoked by uid 107); 19 Sep 2011 20:23:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 19 Sep 2011 16:23:04 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Sep 2011 16:18:04 -0400
+Content-Disposition: inline
+In-Reply-To: <20110919195335.GA31930@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181701>
 
-Thanks, your fix makes a lot more sense.
+On Mon, Sep 19, 2011 at 03:53:36PM -0400, Jeff King wrote:
+
+> > git fsck --unreachable HEAD \
+> >                     $(git for-each-ref --format="%(objectname)" refs/heads)
+> 
+> And this shows it as unreachable, because you are asking git to only
+> look at the branch tips and HEAD (by default, it looks at all refs and
+> reflogs).
+> 
+> I suspect you copied this straight from the git-fsck manpage. That
+> advice is a bit outdated, I think. It blames (in some form) all the way
+> back to the original documentation added in c64b9b8 (2005-05-05, only a
+> few weeks after git was born). A few weeks later, fsck learned to
+> default to looking at all refs (1024932, 2005-05-18). And then other
+> sane defaults like reflogs got tacked on later (reflogs came around the
+> 1.4.x era, in 2006).
+
+So we should probably do something like this:
+
+-- >8 --
+Subject: [PATCH] docs: brush up obsolete bits of git-fsck manpage
+
+After the description and options, the fsck manpage contains
+some discussion about what it does. Over time, this
+discussion has become somewhat obsolete, both in content and
+formatting. In particular:
+
+  1. There are many options now, so starting the discussion
+     with "It tests..." makes it unclear whether we are
+     talking about the last option, or about the tool in
+     general. Let's start a new "discussion" section and
+     make our antecedent more clear.
+
+  2. It gave an example for --unreachable using for-each-ref
+     to mention all of the heads, saying that it will do "a
+     _lot_ of verification". This is hopelessly out-of-date,
+     as giving no arguments will check much more (reflogs,
+     the index, non-head refs).
+
+  3. It goes on to mention tests "to be added" (like tree
+     object sorting). We now have these tests.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I was tempted to just drop this section entirely. It's mostly redundant
+with the DESCRIPTION section, and any extra details could be folded in
+there. The most useful bit is the "what do you do when there is
+corruption". But that should perhaps get its own section, if somebody
+feels like writing something more detailed (I thought we had a guide
+somewhere, but I couldn't find it).
+
+ Documentation/git-fsck.txt |   26 ++++++++------------------
+ 1 files changed, 8 insertions(+), 18 deletions(-)
+
+diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
+index a2a508d..55b33d7 100644
+--- a/Documentation/git-fsck.txt
++++ b/Documentation/git-fsck.txt
+@@ -72,30 +72,20 @@ index file, all SHA1 references in .git/refs/*, and all reflogs (unless
+ 	a blob, the contents are written into the file, rather than
+ 	its object name.
+ 
+-It tests SHA1 and general object sanity, and it does full tracking of
+-the resulting reachability and everything else. It prints out any
+-corruption it finds (missing or bad objects), and if you use the
+-'--unreachable' flag it will also print out objects that exist but
+-that aren't reachable from any of the specified head nodes.
+-
+-So for example
+-
+-	git fsck --unreachable HEAD \
+-		$(git for-each-ref --format="%(objectname)" refs/heads)
++DISCUSSION
++----------
+ 
+-will do quite a _lot_ of verification on the tree. There are a few
+-extra validity tests to be added (make sure that tree objects are
+-sorted properly etc), but on the whole if 'git fsck' is happy, you
+-do have a valid tree.
++git-fsck tests SHA1 and general object sanity, and it does full tracking
++of the resulting reachability and everything else. It prints out any
++corruption it finds (missing or bad objects), and if you use the
++'--unreachable' flag it will also print out objects that exist but that
++aren't reachable from any of the specified head nodes (or the default
++set, as mentioned above).
+ 
+ Any corrupt objects you will have to find in backups or other archives
+ (i.e., you can just remove them and do an 'rsync' with some other site in
+ the hopes that somebody else has the object you have corrupted).
+ 
+-Of course, "valid tree" doesn't mean that it wasn't generated by some
+-evil person, and the end result might be crap. git is a revision
+-tracking system, not a quality assurance system ;)
+-
+ Extracted Diagnostics
+ ---------------------
+ 
+-- 
+1.7.7.rc1.3.gb95be
