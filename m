@@ -1,125 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t4014: remove Message-Id/timestamp before comparing
- patches
-Date: Mon, 19 Sep 2011 15:15:45 -0400
-Message-ID: <20110919191545.GD26115@sigill.intra.peff.net>
-References: <6b2cb6ebec907342a02d56a36ddc58715efabc00.1316414731.git.trast@student.ethz.ch>
+From: gitlist <gitlist@myword.co.uk>
+Subject: Re: Branching strategies
+Date: Mon, 19 Sep 2011 19:51:01 +0100
+Message-ID: <4E778F15.9050705@myword.co.uk>
+References: <CAAZ43xaFzJWzPsqhP0QDRTP0Ea-dMpCpr1vDiujFFn94j+SRCQ@mail.gmail.com> <CAH5451kn5WD4+S3_SGMarGyoUs6NA6Xvz9Pb8Wdpt9v0nY+Uow@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Pang Yan Han <pangyanhan@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Sep 19 21:15:55 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 19 21:21:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5jJq-0003L9-LF
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Sep 2011 21:15:54 +0200
+	id 1R5jPM-0007AL-Fi
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Sep 2011 21:21:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756807Ab1ISTPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Sep 2011 15:15:48 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37533
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756511Ab1ISTPr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2011 15:15:47 -0400
-Received: (qmail 8044 invoked by uid 107); 19 Sep 2011 19:20:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 19 Sep 2011 15:20:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Sep 2011 15:15:45 -0400
-Content-Disposition: inline
-In-Reply-To: <6b2cb6ebec907342a02d56a36ddc58715efabc00.1316414731.git.trast@student.ethz.ch>
+	id S1756778Ab1ISTVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Sep 2011 15:21:31 -0400
+Received: from mail3.anu.net ([83.96.156.167]:37678 "EHLO mail3.anu.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750874Ab1ISTVb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Sep 2011 15:21:31 -0400
+X-Greylist: delayed 1828 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Sep 2011 15:21:30 EDT
+Received: from Roddie-Grants-MacBook-Pro.local (cpc3-warw13-2-0-cust132.3-2.cable.virginmedia.com [86.17.75.133])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail3.anu.net (Postfix) with ESMTP id 331853199E4
+	for <git@vger.kernel.org>; Mon, 19 Sep 2011 20:51:02 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
+In-Reply-To: <CAH5451kn5WD4+S3_SGMarGyoUs6NA6Xvz9Pb8Wdpt9v0nY+Uow@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181694>
 
-On Mon, Sep 19, 2011 at 08:45:43AM +0200, Thomas Rast wrote:
+On 10/09/2011 02:18, Andrew Ardill wrote:
+> On 10 September 2011 09:01, robert mena<robert.mena@gmail.com>  wrote:
+>> Hi,
+>>
+>>  <snip>
+>> Since some of those can touch the same files how can I make this a
+>> little bit better (manageable)?
+>>
 
-> The test introduced in 787570c (format-patch: ignore ui.color,
-> 2011-09-13) has a race condition: if the two format-patch invocations
-> do not ask for the current time in the same second, their Message-Id
-> headers will disagree.
-> 
-> Normally this would be a pretty unlikely occurrence.  However, under
-> valgrind format-patch runs so slowly that the race triggers every
-> time, with a time difference of 2-3s on my hardware.
-> 
-> To avoid this problem, replace the contents of the Message-Id header
-> with a dummy before comparing.
+> A very interesting read is
+> http://nvie.com/posts/a-successful-git-branching-model/
+>
+> It may not be perfect for you, however it does discuss some very
+> interesting issues, particularly how workflow is just as important as
+> the branching model.
 
-Hmph. I was confused at first reading this, because git format-patch
-doesn't produce message-ids. Usually.
 
-But it does if you turn on threading, which obviously requires it. And
-earlier tests set format.thread without bothering to clean up after
-themselves.
+I came across the nvie post some time and it was very useful, but it 
+doesn't address handling of feature branches, especially where there is 
+overlap.
 
-So perhaps this is a better solution:
+I have a website where people can register. They can also buy things. If 
+they haven't registered when they come to checkout, the checkout process 
+includes registration. Users can also create "sponsorship" pages where 
+they ask friends to sponsor them in a marathon etc. If someone setting 
+up a sponsorship page is not already registered, it's included in the 
+process.
 
--- >8 --
-Subject: [PATCH] t4014: clean up format.thread config after each test
+So there are three strands (to avoid using the word "branch") - 
+registration, buying, and sponsorship - which end up affecting the same 
+bits of code. Registration was done a year ago but recently needed 
+updating; buying was started some months ago but got held up; 
+sponsorship started recently, has been completed, and has "overtaken" 
+buying.
 
-The threading tests turn on format.thread, but never clean
-up after themselves, meaning that later tests will also have
-format.thread set.
+How should I use branches in this scenario? Or if I've got the concept 
+wrong, how should I change my workflow?
 
-This is more annoying than most leftover config, too,
-because not only does it impact the results of other tests,
-but it does so non-deterministically. Threading requires the
-generation of message-ids, which incorporate the current
-time, meaning a slow-running test script may generate
-different results from run to run.
+Thanks
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This uses the test_color helper I introduced recently in d960c47. This
-should be OK, because ph/format-patch-no-color (which introduces the
-problem) is built on top of jk/color-and-pager (which introduces
-test_config).
-
-There are several other places in the script that could use the same
-cleanup, but I didn't bother as they are more complex (e.g., using
-"--add" to build up multi-value header config) and don't actually cause
-problems (because they're deterministic, and don't clutter the output in
-a meaningful way)
-
- t/t4014-format-patch.sh |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 7e405d7..6797512 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -457,22 +457,22 @@ test_expect_success 'thread deep cover-letter in-reply-to' '
- '
- 
- test_expect_success 'thread via config' '
--	git config format.thread true &&
-+	test_config format.thread true &&
- 	check_threading expect.thread master
- '
- 
- test_expect_success 'thread deep via config' '
--	git config format.thread deep &&
-+	test_config format.thread deep &&
- 	check_threading expect.deep master
- '
- 
- test_expect_success 'thread config + override' '
--	git config format.thread deep &&
-+	test_config format.thread deep &&
- 	check_threading expect.thread --thread master
- '
- 
- test_expect_success 'thread config + --no-thread' '
--	git config format.thread deep &&
-+	test_config format.thread deep &&
- 	check_threading expect.no-threading --no-thread master
- '
- 
--- 
-1.7.7.rc1.3.gb95be
+Roddie Grant
