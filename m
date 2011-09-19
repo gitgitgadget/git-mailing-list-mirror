@@ -1,153 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Where is information of "git read-tree" stored?
-Date: Mon, 19 Sep 2011 15:09:22 -0700
-Message-ID: <7vobyg89rh.fsf@alter.siamese.dyndns.org>
-References: <loom.20110919T103707-867@post.gmane.org>
- <7vzki0a0yd.fsf@alter.siamese.dyndns.org> <j586pb$emh$1@dough.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-web--browse: invoke kfmclient directly
+Date: Mon, 19 Sep 2011 18:23:25 -0400
+Message-ID: <20110919222325.GA4056@sigill.intra.peff.net>
+References: <20110918032933.GA17977@sigill.intra.peff.net>
+ <1316341224-4359-1-git-send-email-judge.packham@gmail.com>
+ <20110918183846.GA31176@sigill.intra.peff.net>
+ <7vvcso9zzi.fsf@alter.siamese.dyndns.org>
+ <20110919182049.GA26115@sigill.intra.peff.net>
+ <7v62ko9scw.fsf@alter.siamese.dyndns.org>
+ <20110919204448.GA3562@sigill.intra.peff.net>
+ <7v1uvc9qhz.fsf@alter.siamese.dyndns.org>
+ <m2bougtdc2.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Manuel Reimer <Manuel.Spam@nurfuerspam.de>
-X-From: git-owner@vger.kernel.org Tue Sep 20 00:09:35 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Chris Packham <judge.packham@gmail.com>, git@vger.kernel.org,
+	chriscool@tuxfamily.org, jepler@unpythonic.net
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Tue Sep 20 00:23:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5m1s-0002YG-8D
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 00:09:32 +0200
+	id 1R5mFU-0000St-Pc
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 00:23:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932429Ab1ISWJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Sep 2011 18:09:27 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50704 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755169Ab1ISWJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2011 18:09:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AE38E5F0F;
-	Mon, 19 Sep 2011 18:09:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Fvs9zGZRbP/eel7NwAzdk8abRBI=; b=NpEBkE
-	cZQ3fYQEyvOmpH2gA2otIPMaIS1u6qYnNjsddujaACWN8bwvReW3mLMbbnRWZDZ7
-	LAAF/ZHAtQi9opKzjs6BxxWNiaN8HUzg6HCYZoisuMMQwfWh4dpcHrA3jWnnWo4O
-	6c051sMbb2+pkJFqfho1H/c+x1LpvvIZakhXk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=x1QwchcshzQegWgP+Raz7VzqVH7o8jND
-	DXIf5yGIUSMOCt+FAZ+gnL0IWTHk5KRbnLrA2D+qmv42K6dchs6llEpVCcGSXdpX
-	niE3JmMbvlJSQSjYtbKFrPQBFwVy3kxZtehrggwVcLJE9Ed5/EgfbLpIqGVcJhRS
-	PAMSa98Bh+Q=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A6B265F0E;
-	Mon, 19 Sep 2011 18:09:24 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 066E35F0C; Mon, 19 Sep 2011
- 18:09:23 -0400 (EDT)
-In-Reply-To: <j586pb$emh$1@dough.gmane.org> (Manuel Reimer's message of "Mon,
- 19 Sep 2011 21:52:10 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 085A6BC4-E30C-11E0-BAD0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932883Ab1ISWXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Sep 2011 18:23:30 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37750
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932774Ab1ISWX1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Sep 2011 18:23:27 -0400
+Received: (qmail 10516 invoked by uid 107); 19 Sep 2011 22:28:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 19 Sep 2011 18:28:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Sep 2011 18:23:25 -0400
+Content-Disposition: inline
+In-Reply-To: <m2bougtdc2.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181714>
 
-Manuel Reimer <Manuel.Spam@nurfuerspam.de> writes:
+On Mon, Sep 19, 2011 at 11:46:37PM +0200, Andreas Schwab wrote:
 
->> That "how to" may be badly written and this may have been unclear to you
->> but the first four steps are to be done _only once_ to set things up, and
->> after that you need to run only the fifth step whenever you want to update
->> from the Bproject. Could you suggest a better wording to update the doc?
->
-> As long as I don't understand what's going on here, I can't suggest
-> how to improve the documentation.
->
->> The very first "subtree merge" (the one that is recorded with the commit
->> after the read-tree) records all paths from Bproject renamed to elsewhere
->> in the merge result (you can view it with "git show -M
->> $that_merge_commit")
->
-> Tried that, but the stuff, I saw on screen, doesn't make clear how GIT
-> knew about what to do here.
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Thinking about it a bit more, I suspect that we should just let the 'eval'
+> > grab value out of the $browser_cmd variable, i.e.
+> >
+> > 	eval '$browser_cmd "$@"'
+> >
+> > no?
+> 
+> That's a Useless Use of Eval and 100% equivalent to this:
+> 
+> $browser_cmd "$@"
 
-To a certain degree, the point of a tool is that the user does not need to
-know about the details, but if you are interested...
+Yeah. Doing:
 
-Suppose you have this tree structure in your "original" project:
+  eval '$browser_cmd'
 
-        Documentation/README.txt
-        hello.c
-	Makefile
+will do the whitespace-breaking we want, but it won't interpret actual
+shell magic characters, which we need in order to be compatible with
+other parts of git (which typically use "sh -c ..."). E.g.:
 
-and then somebody else has this structure in his project (in your case, it
-may happen to be stored in SVN but once it is slurped in a git repository,
-it does not matter):
+  foo=worked
+  browser_cmd='echo $foo'
+  # fail
+  $browser_cmd
+  # fail
+  eval '$browser_cmd'
+  # works
+  eval "$browser_cmd"
 
-        goodbye.c
-	Makefile
-
-Further suppose that you would want to end up with this tree structure:
-
-        Documentation/README.txt
-	Makefile
-        hello.c
-        imported/Makefile
-        imported/goodbye.c
-
-i.e. you would want to move stuff that came from the other project in imported/
-hierarchy.  There may be many other files, and even subdirectories, in the
-other project, but they all are shifted one level down and placed in imported/
-hierarchy.
-
-The first four steps of the howto is to create such a final tree structure
-and make a merge commit out of that tree.
-
-After you update your project (which now has both the original files such
-as hello.c etc., may have added new files, and may even have updated stuff
-inside imported/ hierarchy) and the other side updated their project (e.g.
-it may have updated goodbye.c whose change you would want to carry over to
-your imported/goodbye.c, or it may have added a new file welcome.c, which
-you would want to import as imported/welcome.c), you would invoke "pull -s
-subtree", which in turn runs "merge -s subtree".
-
-The subtree strategy first compares the shapes of two trees being merged,
-and tries to find how much they have to be shifted to match.  Your tree
-may now have:
-
-        Documentation/README.txt
-	Makefile
-	hello.h (added)
-        hello.c
-        imported/Makefile
-        imported/goodbye.c
-
-while the other side may now have:
-
-        goodbye.c
-	Makefile
-	welcome.c
-
-The subtree strategy notices that by prefixing "imported/" in front of the
-paths, the tree from the other side will match the shape of the subtree
-you have under "imported/". Thus it can pair:
-
-	their "goodbye.c" with your "imported/goodbye.c"
-        their "Makefile" with your "imported/Makefile"
-        their "welcome.c" with your "imported/welcome.c"
-
-and merge the changes. The common ancestor commit of this merge will be
-the initial merge you made with the first 4-step, so the three-way merge
-logic would notice that there wasn't "welcome.c" in the beginning, they
-added that path, while you did not do anything to the path that
-corresponds to it (namely, "imported/welcome.c"), so the new "welcome.c"
-file from the other project would simply be copied as "imported/welcome.c"
-to your tree, and the change they made to "goodbye.c" and your changes you
-made to your "imported/goodbye.c" will be merged and result is recorded in
-your "imported/goodbye.c".
-
-If "compares the shape and figures out how much to shift" makes you feel
-uneasy (and it probably should), you can give an explicit directory prefix 
-as the backend option "subtree" (see "git merge help" for details).
+-Peff
