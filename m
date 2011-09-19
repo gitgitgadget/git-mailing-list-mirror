@@ -1,63 +1,95 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: how to remove unreachable objects?
-Date: Mon, 19 Sep 2011 22:36:47 +0200
-Message-ID: <m239fsuv4w.fsf@igel.home>
-References: <20110919110831.ewq03vnqos4w8cs8@webmail.edis.at>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-mergetool--lib.sh: make check_unchanged return 1 on
+ invalid read
+Date: Mon, 19 Sep 2011 13:37:44 -0700
+Message-ID: <7vaaa09skn.fsf@alter.siamese.dyndns.org>
+References: <1316462592-27255-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: dieter@schoen.or.at
-X-From: git-owner@vger.kernel.org Mon Sep 19 22:36:56 2011
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 19 22:37:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5kaF-0007OO-8a
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Sep 2011 22:36:55 +0200
+	id 1R5kb9-00086A-D3
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Sep 2011 22:37:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932097Ab1ISUgu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Sep 2011 16:36:50 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:56028 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753682Ab1ISUgu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2011 16:36:50 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 7E9031C0F590;
-	Mon, 19 Sep 2011 22:36:48 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
-	by mail.m-online.net (Postfix) with ESMTP id 6B3E61C0008D;
-	Mon, 19 Sep 2011 22:36:48 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
-	with ESMTP id JmNj953ViJ5E; Mon, 19 Sep 2011 22:36:48 +0200 (CEST)
-Received: from igel.home (ppp-93-104-154-188.dynamic.mnet-online.de [93.104.154.188])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Mon, 19 Sep 2011 22:36:47 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 9C1E7CA296; Mon, 19 Sep 2011 22:36:47 +0200 (CEST)
-X-Yow: I've got to get these SNACK CAKES to NEWARK by DAWN!!
-In-Reply-To: <20110919110831.ewq03vnqos4w8cs8@webmail.edis.at>
-	(dieter@schoen.or.at's message of "Mon, 19 Sep 2011 11:08:31 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+	id S932169Ab1ISUhr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Sep 2011 16:37:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47638 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753682Ab1ISUhq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Sep 2011 16:37:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E03757E8;
+	Mon, 19 Sep 2011 16:37:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HG2j/7yZ4AIlx/47q8k/us0hRVQ=; b=goM+jr
+	FtgObF/Ujt9denukCXo4ywA6cC6R2ARng06DJPw4U96pv/hyrJ7S3uIAcV86EZAk
+	GuK7tHOVF95PWf67gHFqTaAbe0h9KGU2YiqE061smN3pBozUYIDUKOz5a2lxPxS3
+	ZJ58/gXYfbm+GZsoQWMW9JpBoad0VrQ3Lob+0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=trH813MHm2LAcLZYfwNJiHn9uvflvQRH
+	eGNeFYcpIEVNPEBcC+bpPqzkH6y2QpYcGv9lMTHfdRSvAR0aUqYD7B1ssjgxR5F2
+	8Zj9xWNxHqTL9LHQXHhkwMe8qiN5IS4EmTCsKH1keLiqjccLvJbAAZsi9KW9UzU9
+	JLNr0VH666g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 365C157E7;
+	Mon, 19 Sep 2011 16:37:46 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9A5E357E3; Mon, 19 Sep 2011
+ 16:37:45 -0400 (EDT)
+In-Reply-To: <1316462592-27255-1-git-send-email-jaysoffian@gmail.com> (Jay
+ Soffian's message of "Mon, 19 Sep 2011 16:03:12 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3B0E21B2-E2FF-11E0-8255-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181703>
 
-dieter@schoen.or.at writes:
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-> if you look at the output of this script then you see that git knows  
-> that there
-> are unreachable/dangling objects, but they remain.
+> Else when the user hits ctrl-c at the "Was the merge successful?
+> [y/n]" prompt, mergetool goes into an infinite loop asking
+> for input.
+>
+> Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
 
-You also need to prune the reflog of HEAD.
+We still seem to miss one "read" unchecked in resolve_symlink_merge(),
+even with this patch.
 
-Andreas.
+>  git-mergetool--lib.sh |    6 +++++-
+>  1 files changed, 5 insertions(+), 1 deletions(-)
+>
+> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+> index 8fc65d0400..0eb424484c 100644
+> --- a/git-mergetool--lib.sh
+> +++ b/git-mergetool--lib.sh
+> @@ -21,7 +21,11 @@ check_unchanged () {
+>  		do
+>  			echo "$MERGED seems unchanged."
+>  			printf "Was the merge successful? [y/n] "
+> -			read answer
+> +			if ! read answer
+> +			then
+> +				status=1
+> +				break
+> +			fi
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+I suspect that it would be more consistent with 6b44577 (mergetool: check
+return value from read, 2011-07-01), which this patch is a follow-up to,
+to do:
+
+	read answer || return 1
+
+here.
+
+Thanks.
