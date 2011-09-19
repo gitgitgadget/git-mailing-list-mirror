@@ -1,117 +1,98 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH/RFCv4 1/4] Documentation: Preparation for gitweb manpages
-Date: Mon, 19 Sep 2011 18:37:03 -0500
-Message-ID: <20110919233703.GF6343@elie>
-References: <1316352884-26193-1-git-send-email-jnareb@gmail.com>
- <1316352884-26193-2-git-send-email-jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Drew Northup <drew.northup@maine.edu>,
-	John 'Warthog9' Hawley <warthog9@kernel.org>,
-	admin@repo.or.cz
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 20 01:37:17 2011
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH] git-mergetool: check return value from read
+Date: Mon, 19 Sep 2011 19:40:52 -0400
+Message-ID: <1316475652-35188-1-git-send-email-jaysoffian@gmail.com>
+References: <7vaaa09skn.fsf@alter.siamese.dyndns.org>
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	David Aguilar <davvid@gmail.com>,
+	Junio C Hamano <junio@kernel.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 20 01:41:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5nOm-0005s3-F7
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 01:37:16 +0200
+	id 1R5nSR-0007LV-9Q
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 01:41:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756878Ab1ISXhJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Sep 2011 19:37:09 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:64817 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751590Ab1ISXhI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2011 19:37:08 -0400
-Received: by iaqq3 with SMTP id q3so5842438iaq.19
-        for <git@vger.kernel.org>; Mon, 19 Sep 2011 16:37:07 -0700 (PDT)
+	id S1756892Ab1ISXk6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Sep 2011 19:40:58 -0400
+Received: from mail-vw0-f52.google.com ([209.85.212.52]:41576 "EHLO
+	mail-vw0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751666Ab1ISXk5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Sep 2011 19:40:57 -0400
+Received: by vws10 with SMTP id 10so49421vws.11
+        for <git@vger.kernel.org>; Mon, 19 Sep 2011 16:40:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=HQNIGC/fYvvNz9emaivcPkOhgTFg02Ty1yRp4IP4fss=;
-        b=L/aOI0JB1SQSFz0T31/s3yEvZs2FtKfvJ/YSrc0JH3C5G8DhkGxzsiR+g1PxcQN5l7
-         dEePVwM9V8GL6iW28pUHRfaxt1XNc5MSNZPJQVmWyBym4t8Opb1H89mLFdKq3P6X7Ake
-         cfWxslPkDNLX0dHKXhcGVctdfHO+BEeUCHGkY=
-Received: by 10.231.83.194 with SMTP id g2mr167155ibl.57.1316475427571;
-        Mon, 19 Sep 2011 16:37:07 -0700 (PDT)
-Received: from elie (99-120-124-35.lightspeed.cicril.sbcglobal.net. [99.120.124.35])
-        by mx.google.com with ESMTPS id by18sm15968762ibb.1.2011.09.19.16.37.05
-        (version=SSLv3 cipher=OTHER);
-        Mon, 19 Sep 2011 16:37:06 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1316352884-26193-2-git-send-email-jnareb@gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=loPEfbrOvA+iP8mMGhtrFDRHBipn74YevKkGFPBriVo=;
+        b=sJ0x0Jy2Mr+ba6WR4PXf4e+jj8iPqINFAwX6awmm0V9aHdSbVg5q5thUoWtE0nRLX7
+         Ls0ZDoqJfki6+ghiSup3IhEEI1did36AOYb/sn2Sdp90sshhFjFoOGuiOWFP4eT5Fz6p
+         JT9DF2nb58WEVNjlCN0RaiY4/ba5z2WWluQ/4=
+Received: by 10.52.175.233 with SMTP id cd9mr88881vdc.152.1316475656934;
+        Mon, 19 Sep 2011 16:40:56 -0700 (PDT)
+Received: from localhost (cpe-174-097-218-168.nc.res.rr.com. [174.97.218.168])
+        by mx.google.com with ESMTPS id ch14sm16171241vdb.9.2011.09.19.16.40.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 19 Sep 2011 16:40:56 -0700 (PDT)
+X-Mailer: git-send-email 1.7.7.rc2.2.gdf97720
+In-Reply-To: <7vaaa09skn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181720>
 
-Jakub Narebski wrote:
+Mostly fixed already by 6b44577 (mergetool: check return value
+from read, 2011-07-01). Catch two uses it missed.
 
-> Gitweb documentation currently consist of gitweb/README, gitweb/INSTALL
-> and comments in gitweb source code.  This is harder to find, use and
-> browse that manpages ("man gitweb" or "git help gitweb") and HTML
-> documentation ("git help --web gitweb").
-
-Language nits: s/consist/consists/; s/that manpages/than manpages/.  I
-completely agree.
-
-> The goal is to move documentation out of gitweb/README to gitweb.txt and
-> gitweb.conf.txt manpages, reducing its size 10x from around 500 to
-> around 50 lines (two pages), and move information not related drectly to
-> building and installing gitweb out of gitweb/INSTALL there.
-
-I guess you mean this patch prepares for or is part of a larger
-project or series with that goal?  Wording nits: s/and move
-information/and to move information/; s/drectly/directly/; s/ there//.
- 
-> The idea is to have gitweb manpage sources reside in AsciiDoc format
-> in Documentation/ directory, like for gitk and git-gui.  Alternate
-> solution would be to have gitweb documentation in gitweb/ directory,
-> perhaps in POD format (see perlpod(1)).
-
-Language nits: missing "the" before "Documentation/ directory" and
-"gitweb manpage sources"; missing "An" before "Alternate solution".
-I guess this is the most controversial aspect of the patch; your idea
-seems sane enough to me.
-
-> This patch adds infrastructure for easy generating gitweb-related
-> manpages.  It adds currently empty 'gitweb-doc' target to
-> Documentation/Makefile, and 'doc' proxy target to gitweb's Makefile.
-
-Language nits: s/easy/easily/; missing "a" before "currently empty
-'gitweb-doc' target" and "'doc' proxy target".
-
-> This way to build gitweb documentation one can use
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+---
+On Mon, Sep 19, 2011 at 4:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> We still seem to miss one "read" unchecked in resolve_symlink_merge(),
+> even with this patch.
+> [...]
+> I suspect that it would be more consistent with 6b44577 (mergetool: check
+> return value from read, 2011-07-01), which this patch is a follow-up to,
+> to do:
 >
->   make -C gitweb doc
+> 	read answer || return 1
 >
-> or
->
->   cd gitweb; make doc
+> here.
 
-Language nit: a comma after "This way" would disambiguate.
+Thanks, sorry I missed that.
 
-Does "make -CDocumentation man html" build the gitweb documentation,
-too (and "make install-doc" install it)?
+ git-mergetool--lib.sh |    2 +-
+ git-mergetool.sh      |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-[...]
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -170,6 +170,9 @@ info: git.info gitman.info
->  
->  pdf: user-manual.pdf
->  
-> +GITWEB_DOC = $(filter gitweb.%,$(DOC_HTML) $(DOC_MAN1) $(DOC_MAN5) $(DOC_MAN7))
-> +gitweb-doc: $(GITWEB_DOC)
-
-Looks like no, alas.
-
-Except for that detail, this looks good.
-
-Thanks,
-Jonathan
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index 8fc65d0400..ed630b208a 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -21,7 +21,7 @@ check_unchanged () {
+ 		do
+ 			echo "$MERGED seems unchanged."
+ 			printf "Was the merge successful? [y/n] "
+-			read answer
++			read answer || return 1
+ 			case "$answer" in
+ 			y*|Y*) status=0; break ;;
+ 			n*|N*) status=1; break ;;
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 3c157bcd26..b6d463f0d0 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -72,7 +72,7 @@ describe_file () {
+ resolve_symlink_merge () {
+     while true; do
+ 	printf "Use (l)ocal or (r)emote, or (a)bort? "
+-	read ans
++	read ans || return 1
+ 	case "$ans" in
+ 	    [lL]*)
+ 		git checkout-index -f --stage=2 -- "$MERGED"
+-- 
+1.7.7.rc2.2.gdf97720
