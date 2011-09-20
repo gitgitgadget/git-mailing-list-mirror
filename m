@@ -1,79 +1,59 @@
-From: Alexey Shumkin <zapped@mail.ru>
-Subject: Re: [PATCH] send-email: Honor multi-part email messages
-Date: Wed, 21 Sep 2011 00:19:25 +0400
-Message-ID: <20110921001925.03a83d3a@zappedws>
-References: <1316507347-6693-1-git-send-email-zapped@mail.ru>
-	<7v1uvb6mn9.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH/RFCv4 1/4] Documentation: Preparation for gitweb manpages
+Date: Tue, 20 Sep 2011 15:19:53 -0500
+Message-ID: <20110920201953.GA11464@elie>
+References: <1316352884-26193-1-git-send-email-jnareb@gmail.com>
+ <1316352884-26193-2-git-send-email-jnareb@gmail.com>
+ <20110919233703.GF6343@elie>
+ <201109202211.06899.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 20 22:19:37 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Drew Northup <drew.northup@maine.edu>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 20 22:20:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R66n2-0008OM-TS
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 22:19:37 +0200
+	id 1R66nZ-0000Af-VD
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 22:20:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751635Ab1ITUTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Sep 2011 16:19:32 -0400
-Received: from smtp13.mail.ru ([94.100.176.90]:45906 "EHLO smtp13.mail.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751375Ab1ITUTc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Sep 2011 16:19:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
-	h=Content-Transfer-Encoding:Content-Type:Mime-Version:References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date; bh=z746nyVVxEXSD6tzYfu51LdJ2l1hiN5eQuOH9X/mLK0=;
-	b=B02ANeVXjSngRw93Y1nELT7dbWiLGFroEKQ6HZPc29/wV3bejonfCVJWJM/y69gvnaYY+wVlMUcdHFueQqo0oF2QcHGA90lcVg0ZDCEWFZkw0f8rIulprFbA0zH7uw2c;
-Received: from [91.77.15.134] (port=46847 helo=zappedws)
-	by smtp13.mail.ru with psmtp 
-	id 1R66mv-0008U0-00; Wed, 21 Sep 2011 00:19:29 +0400
-In-Reply-To: <7v1uvb6mn9.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
-X-Spam: Not detected
+	id S1751808Ab1ITUUE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Sep 2011 16:20:04 -0400
+Received: from mail-gw0-f47.google.com ([74.125.83.47]:40703 "EHLO
+	mail-gw0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750871Ab1ITUUD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2011 16:20:03 -0400
+X-Greylist: delayed 57180 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Sep 2011 16:20:03 EDT
+Received: by gwaa2 with SMTP id a2so983459gwa.6
+        for <git@vger.kernel.org>; Tue, 20 Sep 2011 13:20:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=5cnq7v6hPnQDJd72iw5m8BVUMLvatnux7QLvEe7x2Po=;
+        b=UP22rV6mlScTwDfC47X6wbZ7OzNVVSMWCHqmiwcb7b3YI1SrDiDvlL7laIgGwdY8s5
+         Gg04/7gLCVzhHupvUIkQw4a09ZxrXkdk0kYp4KUhIqWtzezO0AT/EVb9vI3Gk/F6TJSU
+         4sUI81XbAQYfY+GqsNzLwA/ZVDNDu0C6DOpYU=
+Received: by 10.231.82.131 with SMTP id b3mr1952735ibl.74.1316550001893;
+        Tue, 20 Sep 2011 13:20:01 -0700 (PDT)
+Received: from elie (99-120-124-35.lightspeed.cicril.sbcglobal.net. [99.120.124.35])
+        by mx.google.com with ESMTPS id ee29sm3498752ibb.9.2011.09.20.13.20.00
+        (version=SSLv3 cipher=OTHER);
+        Tue, 20 Sep 2011 13:20:00 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <201109202211.06899.jnareb@gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181792>
 
-> Alexey Shumkin <zapped@mail.ru> writes:
-> 
-> > diff --git a/git-send-email.perl b/git-send-email.perl
-> > index 98ab33a..1abf4a4 100755
-> > --- a/git-send-email.perl
-> > +++ b/git-send-email.perl
-> > @@ -1403,12 +1403,17 @@ sub file_has_nonascii {
-> >  
-> >  sub body_or_subject_has_nonascii {
-> >  	my $fn = shift;
-> > +	my $multipart = 0;
-> >  	open(my $fh, '<', $fn)
-> >  		or die "unable to open $fn: $!\n";
-> >  	while (my $line = <$fh>) {
-> >  		last if $line =~ /^$/;
-> > +		if ($line
-> > =~ /^Content-Type:\s*multipart\/mixed.*$/) {
-> > +			$multipart = 1;
-> > +		}
-> >  		return 1 if $line =~ /^Subject.*[^[:ascii:]]/;
-> >  	}
-> > +	return 0 if $multipart;
-> 
-> Looks as if you can lose the extra variable and return 0 immediately
-> when you find a line with that Content-Type inside the loop.
-Well, as I understand "current" algorithm:
-1. It assumes that file is one-part email message
-2. Function searches non-ASCII characters in Subject header
-3. If none then it looks non-ASCII characters at message body
+Jakub Narebski wrote:
 
-my changes are to skip looking at message body of a multi-part
-message as it has parts with their own Content-Type headers
+> I hope that this version is more clear:
 
-The said above in details:
-1. To set flag when we meet Content-Type: multipart/mixed header
-2. After we processed all headers and did not found non-ASCII characters
-in a Subject we take a look at this flag and exit with 0
-if it is a multi-part message
+Yep, it doesn't leave me confused any more.  Thanks, this looks good
+(and sorry for my carelessness in reading the patch before).
