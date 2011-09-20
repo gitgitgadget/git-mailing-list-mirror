@@ -1,48 +1,54 @@
 From: Stefan Naewe <stefan.naewe@gmail.com>
-Subject: [PATCH v2] Documentation/git-update-index: refer to 'ls-files'
-Date: Tue, 20 Sep 2011 14:32:14 +0200
-Message-ID: <1316521934-21410-1-git-send-email-stefan.naewe@gmail.com>
+Subject: [PATCH v3] Documentation/git-update-index: refer to 'ls-files'
+Date: Tue, 20 Sep 2011 15:11:33 +0200
+Message-ID: <1316524293-23458-1-git-send-email-stefan.naewe@gmail.com>
 Cc: Stefan Naewe <stefan.naewe@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 20 14:32:25 2011
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 20 15:11:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5zUu-0003NS-GP
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 14:32:24 +0200
+	id 1R6077-0000PB-JB
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 15:11:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753090Ab1ITMcU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Sep 2011 08:32:20 -0400
-Received: from mail96.atlas.de ([194.156.172.86]:53395 "EHLO mail96.atlas.de"
+	id S1750890Ab1ITNLs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Sep 2011 09:11:48 -0400
+Received: from mail96.atlas.de ([194.156.172.86]:27426 "EHLO mail96.atlas.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751981Ab1ITMcT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Sep 2011 08:32:19 -0400
+	id S1750803Ab1ITNLs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2011 09:11:48 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by mail96.atlas.de (Postfix) with ESMTP id 070CE1007C;
-	Tue, 20 Sep 2011 14:32:19 +0200 (CEST)
+	by mail96.atlas.de (Postfix) with ESMTP id 2E609100A1;
+	Tue, 20 Sep 2011 15:11:47 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at lxsrv96.atlas.de
 Received: from mail96.atlas.de ([127.0.0.1])
 	by localhost (lxsrv96.atlas.de [127.0.0.1]) (amavisd-new, port 10124)
-	with ESMTP id QSwUv-Ojo770; Tue, 20 Sep 2011 14:32:18 +0200 (CEST)
+	with ESMTP id akITjWdxrJLJ; Tue, 20 Sep 2011 15:11:47 +0200 (CEST)
 Received: from mgsrv01.atlas.de (mailrelay-atlas.atlas.de [10.200.101.16])
 	by mail96.atlas.de (Postfix) with ESMTP;
-	Tue, 20 Sep 2011 14:32:18 +0200 (CEST)
+	Tue, 20 Sep 2011 15:11:46 +0200 (CEST)
 Received: from as100897.atlas.de (as100897.atlas.de [141.200.51.220])
-	by mgsrv01.atlas.de (Postfix) with ESMTP id AB5CF27190;
-	Tue, 20 Sep 2011 14:32:18 +0200 (CEST)
+	by mgsrv01.atlas.de (Postfix) with ESMTP id C35F12718E;
+	Tue, 20 Sep 2011 15:11:46 +0200 (CEST)
 Received: by as100897.atlas.de (Postfix, from userid 1000)
-	id 942C714088; Tue, 20 Sep 2011 14:32:18 +0200 (CEST)
+	id AC7D014088; Tue, 20 Sep 2011 15:11:46 +0200 (CEST)
 X-Mailer: git-send-email 1.7.7.rc2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181763>
+
+'ls-files' refers to 'update-index' to show how the 'assume unchanged'
+bit can be seen. This makes the connection 'bi-directional'.
 
 Signed-off-by: Stefan Naewe <stefan.naewe@gmail.com>
 ---
+
+ The commit message in v2 of this got truncated somehow.
+
  Documentation/git-update-index.txt |    5 ++++-
  1 files changed, 4 insertions(+), 1 deletions(-)
 
