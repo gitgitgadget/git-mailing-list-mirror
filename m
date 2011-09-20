@@ -1,70 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-mergetool: check return value from read
-Date: Mon, 19 Sep 2011 17:41:07 -0700
-Message-ID: <7vboug82qk.fsf@alter.siamese.dyndns.org>
-References: <7vaaa09skn.fsf@alter.siamese.dyndns.org>
- <1316475652-35188-1-git-send-email-jaysoffian@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: how to remove unreachable objects?
+Date: Mon, 19 Sep 2011 20:51:59 -0400
+Message-ID: <20110920005159.GA1674@coredump.intra.peff.net>
+References: <20110919110831.ewq03vnqos4w8cs8@webmail.edis.at>
+ <20110919195335.GA31930@sigill.intra.peff.net>
+ <20110919201804.GB31930@sigill.intra.peff.net>
+ <7vsjns8b6m.fsf@alter.siamese.dyndns.org>
+ <20110919225219.GD4056@sigill.intra.peff.net>
+ <7vfwjs82sc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 20 02:41:17 2011
+Content-Type: text/plain; charset=utf-8
+Cc: dieter@schoen.or.at, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 20 02:52:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5oOh-00062F-3R
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 02:41:15 +0200
+	id 1R5oZE-0001oE-Br
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 02:52:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752028Ab1ITAlK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Sep 2011 20:41:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46371 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751626Ab1ITAlJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2011 20:41:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 06C195616;
-	Mon, 19 Sep 2011 20:41:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WwSbBwPuahDxkHPUo2Nogv4MMIY=; b=rVYc86
-	Ogfe20NYA0kUzNC5LBaMi+o8ef6bITum2+rGEbHuVcwSL5RaqzM2otuWGBkFYFhF
-	NbC2XBN6+ZZ1jojQDI8m/LV5s0A15qFtttSs7MZeoIdTasLHn1PqrjwSyg4yBUTm
-	loP8/W3D90iWxQdbU4jFT8hwaWbPd0F3gkTUk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=l/Oy2sorEZuOp8mS8sWQgzjN8EXD4tFz
-	hQjI1xDvtQA3D/GueeI5JkghBrgbPwp8jLV0Al3U6c8+xa1c4OuQfteH7o3IPr0B
-	eAxHV9QFfHpAVJTHFGhuHLt35gP+Ai2idTnaTz+X+2TdDu2py4PxX3rBbCmViKPc
-	O1M4XeV/nYM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F295C5615;
-	Mon, 19 Sep 2011 20:41:08 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8669A5611; Mon, 19 Sep 2011
- 20:41:08 -0400 (EDT)
-In-Reply-To: <1316475652-35188-1-git-send-email-jaysoffian@gmail.com> (Jay
- Soffian's message of "Mon, 19 Sep 2011 19:40:52 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3B12896A-E321-11E0-8019-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752323Ab1ITAwC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Sep 2011 20:52:02 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37899
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751987Ab1ITAwB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Sep 2011 20:52:01 -0400
+Received: (qmail 11866 invoked by uid 107); 20 Sep 2011 00:56:59 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with (AES128-SHA encrypted) ESMTPSA; Mon, 19 Sep 2011 20:56:59 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Sep 2011 20:51:59 -0400
+Content-Disposition: inline
+In-Reply-To: <7vfwjs82sc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181727>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+On Mon, Sep 19, 2011 at 05:40:03PM -0700, Junio C Hamano wrote:
 
->> I suspect that it would be more consistent with 6b44577 (mergetool: check
->> return value from read, 2011-07-01), which this patch is a follow-up to,
->> to do:
->>
->> 	read answer || return 1
->>
->> here.
->
-> Thanks, sorry I missed that.
+> > Does that work? I had the impression from the documentation that the
+> > arguments are purely about the reachability analysis, and that the
+> > actual corruption/correctness checks actually look through the object db
+> > directly, making sure each object is well-formed. Skimming cmd_fsck
+> > seems to confirm that.
+> 
+> You are right that you may see "corrupt object" for unreachable from the
+> tips in the object store, but I was talking more about verifying
+> everything that is needed for reachability analysis from the given tips
+> can be read, iow, "missing object" errors, lack of which would mean you
+> can salvage everything reachable from the refs involved in the traversal.
 
-Thank _you_ for spotting these unchecked "read"s.  Will queue.
+True. Though one could also do that with "git log", and it would be much
+cheaper (since each trial you run with git-fsck is going to actually
+fsck the object db, which is expensive).
+
+I can't help but think the right solution there is something like:
+
+  1. If the corrupted or missing object is a blob or tree, figure out
+     which commits reference it with something like:
+
+       a. Create a set B of bad objects (blobs or trees).
+
+       b. For each tree in the object db, open and see if it contains
+          any elements of B. If so, add the tree to another set, B'.
+
+       c. If B' is empty, done. Otherwise, add elements from B' to B and
+          goto step (b).
+
+       d. For each commit in the object db, open and check the tree
+          pointer. If it points to an element of B, then the commit is
+          bad.
+
+  2. If the object is a commit, or if you arrived at a set of bad
+     commits through step (1), then use "branch --contains" on the
+     bad commits.
+
+which is algorithmically efficient (though probably slow if you had to
+cat-file each tree). It might be a handy special command, though (I have
+seen people ask for "which part of history references this blob" on
+occasion). I've never bothered writing it because I've never had a
+corrupt object. :)
+
+Anyway, that is perhaps not relevant to your point. But I do think that
+fsck with arguments is more likely to confuse someone than to actually
+be part of a productive use-case. I have no problem with deprecating or
+removing it.
+
+-Peff
