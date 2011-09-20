@@ -1,164 +1,48 @@
-From: Alexey Shumkin <zapped@mail.ru>
-Subject: =?UTF-8?q?=5BPATCH=5D=20send-email=3A=20Honor=20multi-part=20email=20messages?=
-Date: Tue, 20 Sep 2011 12:29:07 +0400
-Message-ID: <1316507347-6693-1-git-send-email-zapped@mail.ru>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] t4014: remove Message-Id/timestamp before comparing patches
+Date: Tue, 20 Sep 2011 10:43:41 +0200
+Message-ID: <201109201043.41267.trast@student.ethz.ch>
+References: <6b2cb6ebec907342a02d56a36ddc58715efabc00.1316414731.git.trast@student.ethz.ch> <20110919191545.GD26115@sigill.intra.peff.net> <7vr53c9tlt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alexey Shumkin <zapped@mail.ru>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 20 10:29:46 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Pang Yan Han <pangyanhan@gmail.com>, <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 20 10:43:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5vi2-000148-Nv
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 10:29:43 +0200
+	id 1R5vvg-0007Wb-Qk
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 10:43:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754469Ab1ITI3d convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Sep 2011 04:29:33 -0400
-Received: from smtp3.mail.ru ([94.100.176.131]:51096 "EHLO smtp3.mail.ru"
+	id S1752442Ab1ITIno (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Sep 2011 04:43:44 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:42060 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754357Ab1ITI33 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Sep 2011 04:29:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
-	h=Sender:Content-Transfer-Encoding:Content-Type:MIME-Version:Message-Id:Date:Subject:Cc:To:From; bh=tDfhKcAD2PtulMcVdj97bK6L5zz2LNF78aQA18FA9zw=;
-	b=fx/vS9qjcNxEx6W4MfkM0d76su0om6cvFEvaaiwX+EJx15GGmwStcLmrS4ne5GGLDyTGZhEBVPfj3bX80LydTq086+dtgtnTi0UPGfIFfj614jQGacbQKTpFh3M+oW7P;
-Received: from [91.77.19.104] (port=37225 helo=zappedws)
-	by smtp3.mail.ru with asmtp 
-	id 1R5vhm-0000Ho-00; Tue, 20 Sep 2011 12:29:27 +0400
-Received: from Alex by zappedws with local (Exim 4.76)
-	(envelope-from <zapped@mail.ru>)
-	id 1R5vhW-0001l6-HO; Tue, 20 Sep 2011 12:29:10 +0400
-X-Mailer: git-send-email 1.7.6.3.4.gf71f
-X-Spam: Not detected
-X-Mras: Ok
+	id S1751681Ab1ITInn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2011 04:43:43 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.339.1; Tue, 20 Sep
+ 2011 10:43:28 +0200
+Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.339.1; Tue, 20 Sep
+ 2011 10:43:41 +0200
+User-Agent: KMail/1.13.7 (Linux/3.0.4-43-desktop; KDE/4.6.5; x86_64; ; )
+In-Reply-To: <7vr53c9tlt.fsf@alter.siamese.dyndns.org>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181744>
 
-"git format-patch --attach/--inline" generates multi-part messages.
-Every part of such messages can contain non-ASCII characters with its o=
-wn
-"Content-Type" and "Content-Transfer-Encoding" headers.
-But git-send-mail script interprets a patch-file as one-part message
-and does not recognize multi-part messages.
-So already quoted printable email subject may be encoded as quoted prin=
-table
-again. Due to this bug email subject looks corrupted in email clients.
+Junio C Hamano wrote:
+> Thanks, your fix makes a lot more sense.
 
-Signed-off-by: Alexey Shumkin <zapped@mail.ru>
----
- git-send-email.perl   |    5 +++
- t/t9001-send-email.sh |   66 +++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 2 files changed, 71 insertions(+), 0 deletions(-)
+Agreed.  Thanks!
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 98ab33a..1abf4a4 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1403,12 +1403,17 @@ sub file_has_nonascii {
-=20
- sub body_or_subject_has_nonascii {
- 	my $fn =3D shift;
-+	my $multipart =3D 0;
- 	open(my $fh, '<', $fn)
- 		or die "unable to open $fn: $!\n";
- 	while (my $line =3D <$fh>) {
- 		last if $line =3D~ /^$/;
-+		if ($line =3D~ /^Content-Type:\s*multipart\/mixed.*$/) {
-+			$multipart =3D 1;
-+		}
- 		return 1 if $line =3D~ /^Subject.*[^[:ascii:]]/;
- 	}
-+	return 0 if $multipart;
- 	while (my $line =3D <$fh>) {
- 		return 1 if $line =3D~ /[^[:ascii:]]/;
- 	}
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 579ddb7..151ad35 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -1168,4 +1168,70 @@ test_expect_success $PREREQ '--force sends cover=
- letter template anyway' '
- 	test -n "$(ls msgtxt*)"
- '
-=20
-+test_expect_success $PREREQ 'setup multi-part message' '
-+cat >multi-part-email-using-8bit <<EOF
-+From fe6ecc66ece37198fe5db91fa2fc41d9f4fe5cc4 Mon Sep 17 00:00:00 2001
-+Message-Id: <bogus-message-id@example.com>
-+From: author@example.com
-+Date: Sat, 12 Jun 2010 15:53:58 +0200
-+Subject: [PATCH] =3D?UTF-8?q?=3DD0=3D94=3DD0=3DBE=3DD0=3DB1=3DD0=3DB0=3D=
-D0=3DB2=3DD0=3DBB=3DD0=3DB5=3DD0=3DBD=3D20?=3D
-+ =3D?UTF-8?q?=3DD1=3D84=3DD0=3DB0=3DD0=3DB9=3DD0=3DBB?=3D
-+MIME-Version: 1.0
-+Content-Type: multipart/mixed; boundary=3D"------------123"
-+
-+This is a multi-part message in MIME format.
-+--------------1.7.6.3.4.gf71f
-+Content-Type: text/plain; charset=3DUTF-8; format=3Dfixed
-+Content-Transfer-Encoding: 8bit
-+
-+This is a message created with "git format-patch --attach=3D123"
-+---
-+ master   |    1 +
-+ =D1=84=D0=B0=D0=B9=D0=BB |    1 +
-+ 2 files changed, 2 insertions(+), 0 deletions(-)
-+ create mode 100644 master
-+ create mode 100644 =D1=84=D0=B0=D0=B9=D0=BB
-+
-+
-+--------------123
-+Content-Type: text/x-patch; name=3D"0001-.patch"
-+Content-Transfer-Encoding: 8bit
-+Content-Disposition: attachment; filename=3D"0001-.patch"
-+
-+diff --git a/master b/master
-+new file mode 100644
-+index 0000000..1f7391f
-+--- /dev/null
-++++ b/master
-+@@ -0,0 +1 @@
-++master
-+diff --git a/=D1=84=D0=B0=D0=B9=D0=BB b/=D1=84=D0=B0=D0=B9=D0=BB
-+new file mode 100644
-+index 0000000..44e5cfe
-+--- /dev/null
-++++ b/=D1=84=D0=B0=D0=B9=D0=BB
-+@@ -0,0 +1 @@
-++=D1=81=D0=BE=D0=B4=D0=B5=D1=80=D0=B6=D0=B8=D0=BC=D0=BE=D0=B5 =D1=84=D0=
-=B0=D0=B9=D0=BB=D0=B0
-+
-+--------------123--
-+EOF
-+'
-+
-+test_expect_success $PREREQ 'setup expect' '
-+cat >expected <<EOF
-+Subject: [PATCH] =3D?UTF-8?q?=3DD0=3D94=3DD0=3DBE=3DD0=3DB1=3DD0=3DB0=3D=
-D0=3DB2=3DD0=3DBB=3DD0=3DB5=3DD0=3DBD=3D20?=3D =3D?UTF-8?q?=3DD1=3D84=3D=
-D0=3DB0=3DD0=3DB9=3DD0=3DBB?=3D
-+EOF
-+'
-+
-+test_expect_success $PREREQ '--attach/--inline also treats subject' '
-+	clean_fake_sendmail &&
-+	echo bogus |
-+	git send-email --from=3Dauthor@example.com --to=3Dnobody@example.com =
-\
-+			--smtp-server=3D"$(pwd)/fake.sendmail" \
-+			--8bit-encoding=3DUTF-8 \
-+			multi-part-email-using-8bit >stdout &&
-+	grep "Subject" msgtxt1 >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
---=20
-1.7.6.3.4.gf71f
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
