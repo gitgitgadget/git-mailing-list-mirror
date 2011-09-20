@@ -1,86 +1,59 @@
-From: Joshua Jensen <jjensen@workspacewhiz.com>
-Subject: Re: Git 1.7.6: Sparse checkouts do not work with directory exclusions
-Date: Tue, 20 Sep 2011 09:22:47 -0600
-Message-ID: <4E78AFC7.4050102@workspacewhiz.com>
-References: <4E77BC36.7060005@workspacewhiz.com> <CACsJy8CDtswtPJVt-T911_1y0WqShonvcCbXhFtWu2zjEqLa4A@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Possible timestamp problems with diff-files?
+Date: Tue, 20 Sep 2011 13:54:58 -0400
+Message-ID: <20110920175458.GA3776@sigill.intra.peff.net>
+References: <4E786B5D.40601@syntevo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 20 17:22:11 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Marc Strapetz <marc.strapetz@syntevo.com>
+X-From: git-owner@vger.kernel.org Tue Sep 20 19:55:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R629B-0001Ku-Q3
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 17:22:10 +0200
+	id 1R64XU-0004iV-JH
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 19:55:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750976Ab1ITPWD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Sep 2011 11:22:03 -0400
-Received: from hsmail.qwknetllc.com ([208.71.137.138]:43647 "EHLO
-	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750818Ab1ITPWC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Sep 2011 11:22:02 -0400
-Received: (qmail 28841 invoked by uid 399); 20 Sep 2011 09:21:57 -0600
-Received: from unknown (HELO ?192.168.1.11?) (jjensen@workspacewhiz.com@50.8.110.77)
-  by hsmail.qwknetllc.com with ESMTPAM; 20 Sep 2011 09:21:57 -0600
-X-Originating-IP: 50.8.110.77
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
-In-Reply-To: <CACsJy8CDtswtPJVt-T911_1y0WqShonvcCbXhFtWu2zjEqLa4A@mail.gmail.com>
+	id S1752275Ab1ITRzO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Sep 2011 13:55:14 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38335
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750814Ab1ITRzA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2011 13:55:00 -0400
+Received: (qmail 21025 invoked by uid 107); 20 Sep 2011 17:59:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 20 Sep 2011 13:59:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Sep 2011 13:54:58 -0400
+Content-Disposition: inline
+In-Reply-To: <4E786B5D.40601@syntevo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181774>
 
------ Original Message -----
-From: Nguyen Thai Ngoc Duy
-Date: 9/20/2011 4:09 AM
-> On Tue, Sep 20, 2011 at 8:03 AM, Joshua Jensen
-> <jjensen@workspacewhiz.com>  wrote:
->> Sometime after Git 1.7.3.2, sparse checkouts stopped working for me.  My
->> sparse-checkout file looks something like:
->>
->> *
->> !DirA/
->> !DirB/
->> DirC/
-> Confirmed. It got me wonder why the negated pattern tests did not
-> catch this. Turns out this works:
->
-> /*
-> !DirA/
-> !DirB/
-> DirC
->
-> This is my theory why yours does not work: negated patterns !DirA and
-> !DirB excludes both directories, but git still descends in them
-> because you may have other patterns that re-include parts of
-> DirA/DirB, for example:
->
-> DirA/DirD
-> !DirA
->
-> When it's in DirA/DirB, "*" tells git to match everything (equivalent
-> "DirA/*" and "DirB/*"), so it matches all entries in DirA/DirB again,
-> essentially reverting "!DirA" and "!DirB" effects.
->
-> By using "/*" instead of "*", we tell git to just match entries at top
-> level, not all levels.
->
-> I think it makes sense, but it's a bit tricky.
-I can confirm this fix works for me, but it is certainly tricky.  IMO, 
-it should either be documented or some kind of fix should be added to a 
-future version of Git to allow * by itself to work again.
+On Tue, Sep 20, 2011 at 12:30:53PM +0200, Marc Strapetz wrote:
 
->> and describe why those lines were removed?
-> Quotes from 9e08273: "The commit provided a workaround for matching
-> directories in index. But it is no longer needed."
-Yeah, I saw that, but it made little sense to me, especially since it 
-seems to break a behavior that worked before.
+> For our Git client, we are invoking
+> 
+> git diff-files--quiet --ignore-submodules
+> 
+> immediately after a commit of *all* changes. Hence, the expected exit
+> code would be 0 (because there are no changes). A user has now reported
+> that for commits with many changes, exit code is sometimes 1. For the
+> last incident, the commit was started at 15:24:11,820 and finished at
+> 15:24:12,329, diff-files was invoked at 15:24:12,455 and failed with
+> exit code 1 at 15:24:21,394. A subsequent diff-files succeeded, so I'm
+> wondering now, if that could be a timestamp problem (maybe related to
+> the Index)?
 
-Thanks!
+diff-files is scriptable plumbing, which means it is up to the script
+writer to decide exactly when the index should be refreshed with respect
+to the working tree files (because doing so could be kind of expensive,
+as it needs to stat every file in the working tree). Have you tried
+running "git update-index --refresh" just before your diff-files?
 
-Josh
+-Peff
