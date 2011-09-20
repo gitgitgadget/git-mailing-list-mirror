@@ -1,69 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: maybe I missed the announcement, but...
-Date: Tue, 20 Sep 2011 12:51:57 -0700
-Message-ID: <7vipon56w2.fsf@alter.siamese.dyndns.org>
-References: <8639frs3bf.fsf@red.stonehenge.com>
- <1316528864.8701.17.camel@centaur.lab.cmartin.tk>
- <86pqivqnzw.fsf@red.stonehenge.com>
+From: Alexey Shumkin <zapped@mail.ru>
+Subject: Re: [PATCH] format-patch: cover letter does not respect
+ i18n.commitencoding
+Date: Tue, 20 Sep 2011 23:55:05 +0400
+Message-ID: <20110920235505.26fb6501@zappedws>
+References: <1316507177-6403-1-git-send-email-zapped@mail.ru>
+	<7v62kn6mqi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	git@vger.kernel.org
-To: merlyn@stonehenge.com (Randal L. Schwartz)
-X-From: git-owner@vger.kernel.org Tue Sep 20 21:52:05 2011
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 20 21:55:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R66MP-0003KK-91
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 21:52:05 +0200
+	id 1R66Pc-0005BI-Bu
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 21:55:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750823Ab1ITTwA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Sep 2011 15:52:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43571 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750763Ab1ITTv7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2011 15:51:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 43C9C40B0;
-	Tue, 20 Sep 2011 15:51:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=V2wj1ifdHKF7
-	AccNZlur93/iyYY=; b=YgTztrUpj6Awul0KltjWCS+Yvhm0aipPPoxlHRmb5pru
-	3bDkKQ0+97rCpIApPsypmwi/JZRv+XFlHYPvf5obZrUTj9pfNHzW8gE6KNo0BAhV
-	ZoDeKKz+//vQELR1RNiYx5a219hvgBd4kXbg12IA+Ya0q3zjAq1hJsrrFtUrNvg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=K1c1ed
-	xE9NebLI7/YzBvdaUIMt1Ms2xa7tkWKUlT6uycQCJywKoJJDUrba/Ju7cLi/ii/o
-	kMTFZbKItTZjGKZWkpjGVp3atio9lEpcwQ7/7Dm6UKH+fYRIiNEY6hENzp3CL0DC
-	4b51f8LIqZHIhHQlebJCQueDKzwPF58GD1WtQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B70040AF;
-	Tue, 20 Sep 2011 15:51:59 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C68D640AD; Tue, 20 Sep 2011
- 15:51:58 -0400 (EDT)
-In-Reply-To: <86pqivqnzw.fsf@red.stonehenge.com> (Randal L. Schwartz's
- message of "Tue, 20 Sep 2011 07:36:51 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 003C6D5A-E3C2-11E0-9311-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751096Ab1ITTzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Sep 2011 15:55:17 -0400
+Received: from smtp15.mail.ru ([94.100.176.133]:46392 "EHLO smtp15.mail.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750932Ab1ITTzQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2011 15:55:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
+	h=Content-Transfer-Encoding:Content-Type:Mime-Version:References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date; bh=ZrcRR0zkmQw0NdtcTFZ91Ty52STZnizjAKX4KlnKNKM=;
+	b=iPqb1HFbHUXteTG042ag9CxcHR89KECrzD+WDgcYYd6pl8ZezdnFsDRQqG5s5fRGwJTMRvSx5hRVkbylU3SFtI1SKiAz2rFKh7dshfJo5my+t/PaKMUeb++D6CnAKbVX;
+Received: from [91.77.15.134] (port=20490 helo=zappedws)
+	by smtp15.mail.ru with psmtp 
+	id 1R66PS-00022U-00; Tue, 20 Sep 2011 23:55:14 +0400
+In-Reply-To: <7v62kn6mqi.fsf@alter.siamese.dyndns.org>
+X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
+X-Spam: Not detected
+X-Mras: Ok
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181787>
 
-merlyn@stonehenge.com (Randal L. Schwartz) writes:
+> Alexey Shumkin <zapped@mail.ru> writes:
+> 
+> > diff --git a/builtin/log.c b/builtin/log.c
+> > index 5c2af59..6a4050c 100644
+> > --- a/builtin/log.c
+> > +++ b/builtin/log.c
+> > @@ -769,7 +769,7 @@ static void make_cover_letter(struct rev_info
+> > *rev, int use_stdout, struct shortlog log;
+> >  	struct strbuf sb = STRBUF_INIT;
+> >  	int i;
+> > -	const char *encoding = "UTF-8";
+> > +	const char *encoding =  get_commit_output_encoding();
+> 
+> Hmm, I have a feeling that this should use log output encoding. Am I
+> mistaken?
+Oooh! I made a mistake. I'm sorry
 
->>>>>> "Carlos" =3D=3D Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
->
-> Carlos> From Junio's latest "What's cooking"[0]
->
-> Ahh, the famous "buried lead". :)
+get_log_output_encoding must be used instead, yes
 
-Did I do anything wrong to "bury" it?
+> The i18n.commitencoding variable is about the internal representation
+> in the object [*1*] that is to be converted from the encoding of the
+> original e-mail message which could be different.
+> i18n.logoutputencoding is to externalize it [*2*].
+> 
+> [Footnotes]
+> 
+> *1* f1f909e (mailinfo: Use i18n.commitencoding, 2005-11-27)
+> *2* a731ec5 (t3901: test "format-patch | am" pipe with i18n,
+> 2007-01-13)
+> 
