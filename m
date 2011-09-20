@@ -1,99 +1,67 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [RFC/PATCHv2] git-web--browse: avoid the use of eval
-Date: Tue, 20 Sep 2011 21:04:46 +1200
-Message-ID: <4E78572E.6030105@gmail.com>
-References: <20110918183846.GA31176@sigill.intra.peff.net> <1316424415-11156-1-git-send-email-judge.packham@gmail.com> <20110919183408.GB26115@sigill.intra.peff.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2] post-receive-email: explicitly set Content-Type header
+Date: Tue, 20 Sep 2011 11:32:54 +0200
+Message-ID: <4E785DC6.80105@viscovery.net>
+References: <1316505154-3904-1-git-send-email-zapped@mail.ru> <1316506023-5098-1-git-send-email-zapped@mail.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	chriscool@tuxfamily.org, jepler@unpythonic.net
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Sep 20 11:04:43 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Alexey Shumkin <zapped@mail.ru>
+X-From: git-owner@vger.kernel.org Tue Sep 20 11:33:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5wFu-0000pN-OA
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 11:04:43 +0200
+	id 1R5whQ-0005qV-I7
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 11:33:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755089Ab1ITJEh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Sep 2011 05:04:37 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:36914 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754763Ab1ITJEf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Sep 2011 05:04:35 -0400
-Received: by gyg10 with SMTP id 10so176377gyg.19
-        for <git@vger.kernel.org>; Tue, 20 Sep 2011 02:04:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=YPIVvFpiR88na9d3pXqw87TLhRGvBMy77VBAy9pFAAM=;
-        b=RyyVgCx7mOP3nl0kjpUT9bDHJvYNP/MPkhRRjfQj1KW5esykxcCZuFd/6HP92oWmCm
-         wC35KL+f71o3IjOqq1wYSDVNspn5RXTU/YjDTUEYlTTIWOzCAqEWBGncB4evMb4BZd6o
-         jDcvZW157mzs26qs5MD8Zatv4KTlOk6J0jEgY=
-Received: by 10.101.125.9 with SMTP id c9mr426977ann.109.1316509475377;
-        Tue, 20 Sep 2011 02:04:35 -0700 (PDT)
-Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPS id g17sm9651763ana.15.2011.09.20.02.04.30
-        (version=SSLv3 cipher=OTHER);
-        Tue, 20 Sep 2011 02:04:34 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.2.20) Gecko/20110804 SUSE/3.1.12 Thunderbird/3.1.12
-In-Reply-To: <20110919183408.GB26115@sigill.intra.peff.net>
+	id S1754616Ab1ITJdC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Sep 2011 05:33:02 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:49110 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751401Ab1ITJdB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2011 05:33:01 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1R5whC-0007WQ-SS; Tue, 20 Sep 2011 11:32:55 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 8962C1660F;
+	Tue, 20 Sep 2011 11:32:54 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.22) Gecko/20110902 Thunderbird/3.1.14
+In-Reply-To: <1316506023-5098-1-git-send-email-zapped@mail.ru>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181746>
 
-On 20/09/11 06:34, Jeff King wrote:
-> On Mon, Sep 19, 2011 at 09:26:55PM +1200, Chris Packham wrote:
-> 
->> Using eval causes problems when the URL contains an appropriately
->> escaped ampersand (\&). Dropping eval from the built-in browser
->> invocation avoids the problem.
->>
->> Cc: peff@peff.net
->> Cc: chriscool@tuxfamily.org
->> Cc: jepler@unpythonic.net
-> 
-> Although other projects do use "cc" in the commit message, I think we
-> don't usually bother adding this noise in the git project. The cc
-> headers in your email are enough.
+Am 9/20/2011 10:07, schrieb Alexey Shumkin:
+> Some email clients (e.g. claws-mail) incorrectly display
+> message body when there is no Content-Type header and charset
+> explicitly defined.
+> So, set explicitly Content-Type header and charset
+> can be defined with hooks.emailcharset config variable.
 
-That's more for git send-email's benefit than anything else. I'm working
-on a laptop with a touchpad (and a cat) so the less switching between
-editor and MUA the better. Any better suggestions for tracking Cc's for
-git send-email?
+Please write full sentences with complete punctuation and capitalization.
+Perhaps you meant to say:
 
->> I've replaced my tests With the test suggested by Peff (should I be
->> giving him credit in the copyright line or something?).
-> 
-> For a minor bit of help, usually mentioning the person in the commit
-> message (with a "Helped-by", or indicating which parts they contributed
-> to) is plenty. Personally, I don't even care much about that. My
-> contributions to git are thoroughly documented in the commit history and
-> the mailing list at this point. :)
-> 
-> I also find the "Copyright ..." lines in the files to be overkill, too.
-> They end up becoming out-of-date as other people work on the file. The
-> commit history is the best way to get the right answer, and a comment in
-> the file is at best redundant with what's there. But that is just my
-> opinion; I don't know that we have a particular policy for such
-> things[1].
-> 
-> -Peff
-> 
-> [1] Once upon a time, I think I saw the advice that every file should
-> have a copyright notice and mention the license at the top of the file,
-> but I don't know that it has ever been tested in court. I suppose the
-> distributed tarballs of a particular version would lack the copyright
-> attribution, but in that case, my solution would be to generate it from
-> the commit history at packaging time.
+  Some email clients (e.g. claws-mail) display the message body
+  incorrectly when the charset is not defined explicitly in a
+  Content-Type header. Insert a Content-Type header in the message.
 
-The example in t/README has has a copyright notice which is why I put
-one in but I don't consider the test (or the fix itself) to actually be
-copyrightable. If I wasn't creating a new file I wouldn't have bothered
-putting anything in (other than the testcase).
+  The charset can be defined with the config variable
+  hooks.emailcharset.
+
+> +# hooks.emailcharset
+> +#   The charset used in Content-Type header. UTF-8, if not specified.
+
+How can you be sure that the output produced by git log etc. that are used
+in the script are in the encoding specified by this variable? IOW,
+wouldn't log.outputencoding be the better choice to use in the
+Content-Type header?
+
+-- Hannes
