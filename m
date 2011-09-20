@@ -1,94 +1,69 @@
-From: Shumkin Alexey <zapped@mail.ru>
-Subject: Re: [PATCH v2] post-receive-email: explicitly set Content-Type header
-Date: Tue, 20 Sep 2011 14:42:56 +0400
-Message-ID: <20110920104256.GA11656@zapped.homeip.net>
-References: <1316505154-3904-1-git-send-email-zapped@mail.ru>
- <1316506023-5098-1-git-send-email-zapped@mail.ru>
- <4E785DC6.80105@viscovery.net>
-Reply-To: zapped@mail.ru
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Worktree vs. working copy
+Date: Tue, 20 Sep 2011 20:48:58 +1000
+Message-ID: <CACsJy8AtO3EhgscLVjmqzyRAo+Q=d7ABg0VaJ4N7oqCpmKVzuA@mail.gmail.com>
+References: <1316505022.13996.12.camel@bee.lab.cmartin.tk> <4E786D7A.8020503@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Sep 20 12:43:32 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
+	git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Sep 20 12:49:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5xnX-0005P3-Fu
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 12:43:31 +0200
+	id 1R5xtR-0008DF-2w
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 12:49:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755331Ab1ITKn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Sep 2011 06:43:26 -0400
-Received: from smtp12.mail.ru ([94.100.176.89]:51111 "EHLO smtp12.mail.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755194Ab1ITKn0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Sep 2011 06:43:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
-	h=Sender:In-Reply-To:Content-Type:MIME-Version:References:Reply-To:Message-ID:Subject:Cc:To:From:Date; bh=llhHcYuPWXc1dlp5F20F+C6K4tP56+wHIhM7wUYFYqE=;
-	b=D/y/9uNV5lMWeIKYKp9/2C8xCJ67Kd06bAWlCXlev7U8hDGhu6ovhE0AJW1EVItRvFXsd/UTCR95bUbQqfHjYLTk3E9UzbxUJBkbLjCzsIIXTCZfMgNW1VeCtFUjKGx2;
-Received: from [91.77.19.104] (port=38933 helo=zappedws)
-	by smtp12.mail.ru with asmtp 
-	id 1R5xnQ-00076t-00; Tue, 20 Sep 2011 14:43:24 +0400
-Received: from Alex by zappedws with local (Exim 4.76)
-	(envelope-from <zapped@mail.ru>)
-	id 1R5xmy-000341-Qu; Tue, 20 Sep 2011 14:42:56 +0400
-Content-Disposition: inline
-In-Reply-To: <4E785DC6.80105@viscovery.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Spam: Not detected
-X-Mras: Ok
+	id S1755578Ab1ITKtb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Sep 2011 06:49:31 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:50275 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751409Ab1ITKt3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2011 06:49:29 -0400
+Received: by bkbzt4 with SMTP id zt4so338503bkb.19
+        for <git@vger.kernel.org>; Tue, 20 Sep 2011 03:49:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=rp5Zppca3umgKVQ/LDh38DvpJJeI2luymD5K849lsMw=;
+        b=dE3oEpblwK2c+rTaaCyqcpFN5GvVw/jCe4cTybTnwI3j1/9f09WI2RaYAbJ8wGxa9C
+         dpr9L5JNc5SAS47f+3Pq2xzH6R8hLSdthH5B/ZoF5JiFjMSVVq9UFqLSL346JrGO0UGZ
+         pQM82xiQPqyV7N+Nty7vls3n6ZNZBDK0yVxrw=
+Received: by 10.204.133.8 with SMTP id d8mr456922bkt.235.1316515768375; Tue,
+ 20 Sep 2011 03:49:28 -0700 (PDT)
+Received: by 10.204.7.1 with HTTP; Tue, 20 Sep 2011 03:48:58 -0700 (PDT)
+In-Reply-To: <4E786D7A.8020503@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181753>
 
-[ resent to mailing list ]
-On Tue, Sep 20, 2011 at 11:32:54AM +0200, Johannes Sixt wrote:
-> Am 9/20/2011 10:07, schrieb Alexey Shumkin:
-> > Some email clients (e.g. claws-mail) incorrectly display
-> > message body when there is no Content-Type header and charset
-> > explicitly defined.
-> > So, set explicitly Content-Type header and charset
-> > can be defined with hooks.emailcharset config variable.
-> 
-> Please write full sentences with complete punctuation and capitalization.
-> Perhaps you meant to say:
-> 
->   Some email clients (e.g. claws-mail) display the message body
->   incorrectly when the charset is not defined explicitly in a
->   Content-Type header. Insert a Content-Type header in the message.
-> 
->   The charset can be defined with the config variable
->   hooks.emailcharset.
-Thanks for the correction. English is not my native language
-(although it is not for you, too, I guess :) ).
-I read it and take on ear fine but I have no enough practice to write on it.
+On Tue, Sep 20, 2011 at 8:39 PM, Michael Haggerty <mhagger@alum.mit.edu=
+> wrote:
+> On 09/20/2011 09:50 AM, Carlos Mart=C3=ADn Nieto wrote:
+>> I've noticed that in some places in git.git, the term 'working copy'=
+ is
+>> used. Mostly it's in git-cvsserver which I guess it's fine, but the
+>> git-config man page talks about the 'working copy' in three places.
+>>
+>> =C2=A0 =C2=A0 $ git grep 'worktree' | wc -l
+>> =C2=A0 =C2=A0 412
+>> =C2=A0 =C2=A0 $ git grep 'working copy' | grep -v ^git-cvsserver | =C2=
+=A0wc -l
+>> =C2=A0 =C2=A0 32
+>
+> Please note that the string "worktree" mostly appears in code
+> (presumably as variable names) and in the names of options. =C2=A0In =
+text,
+> "working tree" is far more common..
 
-> > +# hooks.emailcharset
-> > +#   The charset used in Content-Type header. UTF-8, if not
-> > specified.
-> 
-> How can you be sure that the output produced by git log etc. that are
-> used in the script are in the encoding specified by this variable?
-> IOW, wouldn't log.outputencoding be the better choice to use in the
-> Content-Type header?
-Yes, you're right, we cannot be sure in UTF-8 encoding of output
-and using i18n.logoutputencoding would be a better choice
-instead of new config variable.
-
-But at the present
-1. post-send-mail uses description file of a repo
-2. gitweb also uses this file and AFAIK it assumes one to be in UTF-8
-  (I do not know whether it can be changed there but I tested gitweb once long
-    time ago)
-3. So if i18n.logoutputencoding is not UTF-8 we get a message composed
-	with mixed encodings. This fact oblidge us to encode headers
-	(as quoted printable at least) and synchronize body message that contain
-	repo description (in UTF-8) and diffstat (in i18n.logoutputencoding).
-	This is a more complicated task for a shell script
-	than just specifying Content-Type header (may be git-send-email suits here?)
-
-So that was a quick solution for me :)
+And probably the oldest. It was mentioned in the first version of git
+glossary back in 2005, da13981, [PATCH] Add GIT glossary.
+--=20
+Duy
