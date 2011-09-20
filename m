@@ -1,93 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: how to remove unreachable objects?
-Date: Mon, 19 Sep 2011 20:51:59 -0400
-Message-ID: <20110920005159.GA1674@coredump.intra.peff.net>
-References: <20110919110831.ewq03vnqos4w8cs8@webmail.edis.at>
- <20110919195335.GA31930@sigill.intra.peff.net>
- <20110919201804.GB31930@sigill.intra.peff.net>
- <7vsjns8b6m.fsf@alter.siamese.dyndns.org>
- <20110919225219.GD4056@sigill.intra.peff.net>
- <7vfwjs82sc.fsf@alter.siamese.dyndns.org>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: [PATCH] git-mergetool: check return value from read
+Date: Tue, 20 Sep 2011 11:20:22 +1000
+Message-ID: <CAH5451mt9mhRDQBYhUn=dO-SMyyhDNcv7nXfdsk-HKY3pMj77Q@mail.gmail.com>
+References: <7vaaa09skn.fsf@alter.siamese.dyndns.org> <1316475652-35188-1-git-send-email-jaysoffian@gmail.com>
+ <7vboug82qk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: dieter@schoen.or.at, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
+	David Aguilar <davvid@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 20 02:52:09 2011
+X-From: git-owner@vger.kernel.org Tue Sep 20 03:20:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5oZE-0001oE-Br
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 02:52:08 +0200
+	id 1R5p14-00045D-Ep
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 03:20:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752323Ab1ITAwC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Sep 2011 20:52:02 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37899
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751987Ab1ITAwB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2011 20:52:01 -0400
-Received: (qmail 11866 invoked by uid 107); 20 Sep 2011 00:56:59 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with (AES128-SHA encrypted) ESMTPSA; Mon, 19 Sep 2011 20:56:59 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Sep 2011 20:51:59 -0400
-Content-Disposition: inline
-In-Reply-To: <7vfwjs82sc.fsf@alter.siamese.dyndns.org>
+	id S1752403Ab1ITBUo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Sep 2011 21:20:44 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:48908 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752275Ab1ITBUo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2011 21:20:44 -0400
+Received: by fxe4 with SMTP id 4so48159fxe.19
+        for <git@vger.kernel.org>; Mon, 19 Sep 2011 18:20:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=RYw8S9EKMQ8bYNZBuGHacxjH59xz7hG0hzI5GFlZkT0=;
+        b=xIGECu2mvQYwZsbZ3riAI67ka9PsThBbtz7JJ6RgpeUdcvSW8aUEHMoxwMQQI79LBH
+         kMzicDycLKrW5bjVEUyW89kAkhxGh8l0/KqSoKOSYCM5cWzFXkmn8iSlRbGoyd39NpPt
+         El1XcS1y+F1SG39OcF50S28s7p4At30pBJa9Q=
+Received: by 10.223.49.139 with SMTP id v11mr350367faf.21.1316481642270; Mon,
+ 19 Sep 2011 18:20:42 -0700 (PDT)
+Received: by 10.152.37.66 with HTTP; Mon, 19 Sep 2011 18:20:22 -0700 (PDT)
+In-Reply-To: <7vboug82qk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181728>
 
-On Mon, Sep 19, 2011 at 05:40:03PM -0700, Junio C Hamano wrote:
+On 20 September 2011 10:41, Junio C Hamano <gitster@pobox.com> wrote:
+> Jay Soffian <jaysoffian@gmail.com> writes:
+>
+>>> I suspect that it would be more consistent with 6b44577 (mergetool:=
+ check
+>>> return value from read, 2011-07-01), which this patch is a follow-u=
+p to,
+>>> to do:
+>>>
+>>> =C2=A0 =C2=A0 =C2=A0read answer || return 1
+>>>
+>>> here.
+>>
+>> Thanks, sorry I missed that.
+>
+> Thank _you_ for spotting these unchecked "read"s. =C2=A0Will queue.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
+>
 
-> > Does that work? I had the impression from the documentation that the
-> > arguments are purely about the reachability analysis, and that the
-> > actual corruption/correctness checks actually look through the object db
-> > directly, making sure each object is well-formed. Skimming cmd_fsck
-> > seems to confirm that.
-> 
-> You are right that you may see "corrupt object" for unreachable from the
-> tips in the object store, but I was talking more about verifying
-> everything that is needed for reachability analysis from the given tips
-> can be read, iow, "missing object" errors, lack of which would mean you
-> can salvage everything reachable from the refs involved in the traversal.
-
-True. Though one could also do that with "git log", and it would be much
-cheaper (since each trial you run with git-fsck is going to actually
-fsck the object db, which is expensive).
-
-I can't help but think the right solution there is something like:
-
-  1. If the corrupted or missing object is a blob or tree, figure out
-     which commits reference it with something like:
-
-       a. Create a set B of bad objects (blobs or trees).
-
-       b. For each tree in the object db, open and see if it contains
-          any elements of B. If so, add the tree to another set, B'.
-
-       c. If B' is empty, done. Otherwise, add elements from B' to B and
-          goto step (b).
-
-       d. For each commit in the object db, open and check the tree
-          pointer. If it points to an element of B, then the commit is
-          bad.
-
-  2. If the object is a commit, or if you arrived at a set of bad
-     commits through step (1), then use "branch --contains" on the
-     bad commits.
-
-which is algorithmically efficient (though probably slow if you had to
-cat-file each tree). It might be a handy special command, though (I have
-seen people ask for "which part of history references this blob" on
-occasion). I've never bothered writing it because I've never had a
-corrupt object. :)
-
-Anyway, that is perhaps not relevant to your point. But I do think that
-fsck with arguments is more likely to confuse someone than to actually
-be part of a productive use-case. I have no problem with deprecating or
-removing it.
-
--Peff
+I got hit by the ctrl+c bug while using mergetool just the other day.
+Thanks for the fix :)
