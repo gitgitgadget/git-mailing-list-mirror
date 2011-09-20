@@ -1,94 +1,136 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [ANNOUNCE] Git User's Survey 2011
-Date: Tue, 20 Sep 2011 17:04:55 +0200
-Message-ID: <201109201704.56363.jnareb@gmail.com>
-References: <201109050243.21299.jnareb@gmail.com> <201109192110.30763.jnareb@gmail.com> <4E78A667.8050805@drmicha.warpmail.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git checkout under 1.7.6 does not properly list untracked files
+ and aborts
+Date: Tue, 20 Sep 2011 17:10:26 +0200
+Message-ID: <4E78ACE2.60306@drmicha.warpmail.net>
+References: <4E6A7167.6070408@workspacewhiz.com> <4E779BA4.8070109@workspacewhiz.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Sep 20 17:05:16 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Joshua Jensen <jjensen@workspacewhiz.com>
+X-From: git-owner@vger.kernel.org Tue Sep 20 17:10:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R61sp-0008Ln-Dl
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 17:05:15 +0200
+	id 1R61y0-0003LG-In
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 17:10:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752403Ab1ITPFH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Sep 2011 11:05:07 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:40951 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752082Ab1ITPFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Sep 2011 11:05:06 -0400
-Received: by fxe4 with SMTP id 4so595455fxe.19
-        for <git@vger.kernel.org>; Tue, 20 Sep 2011 08:05:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=lTY1/+mSXGcJvDX8X+3VEYTPIxfkAYJeLekAtuSKni0=;
-        b=VcFmD8Am7GccIf2K0rLZGEIv/Y/2dRjYOCcrd8mAatn3hW3KL8EdlwycCPC9MW2Np/
-         p3lId3qNayBRTEfz9wl4w+/iAshOFZE/VG5CMTe5Osaw6SOI7Gv8LdrRRajwbA016BE3
-         h6W5YCbsj2kq0Kp6ms5Rd6HTCSgR4aOy+pkIU=
-Received: by 10.223.71.155 with SMTP id h27mr498378faj.126.1316531105319;
-        Tue, 20 Sep 2011 08:05:05 -0700 (PDT)
-Received: from [192.168.1.13] (abvd239.neoplus.adsl.tpnet.pl. [83.8.201.239])
-        by mx.google.com with ESMTPS id n1sm1619826fad.20.2011.09.20.08.05.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 20 Sep 2011 08:05:04 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4E78A667.8050805@drmicha.warpmail.net>
-Content-Disposition: inline
+	id S1751700Ab1ITPKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Sep 2011 11:10:30 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:44365 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750757Ab1ITPK3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2011 11:10:29 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id D03E42D99;
+	Tue, 20 Sep 2011 11:10:28 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 20 Sep 2011 11:10:28 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=IbeLSloSTAmKflPxdF016P
+	CmZcE=; b=ajDeKclbrsMotlW0t/7Kd2eVWZGPhtoDMOk7GFlTc/smxlF5DxBYce
+	4D8eaiA0amf+ENad8w8xkQxWSifTYJQ4nNy19h7JFl9Wuh7wtN8kYJfymUNfPDj1
+	hpErDEzqnk03uyE9vsUM8kTFXFACYj9ATlHpWjRZiraEXvpY1ialY=
+X-Sasl-enc: xKsmsVlYQXsHG1TV2v60QQis8EPZ5JDdnHqX/efNFnlR 1316531428
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 535209213DE;
+	Tue, 20 Sep 2011 11:10:28 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0.2) Gecko/20110906 Thunderbird/6.0.2
+In-Reply-To: <4E779BA4.8070109@workspacewhiz.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181772>
 
-Dnia wtorek 20. wrze=B6nia 2011 16:42, Michael J Gruber napisa=B3:
-> Jakub Narebski venit, vidit, dixit 19.09.2011 21:10:
-> > On Mon, 5 Sep 2011, Michael J Gruber wrote:
+Joshua Jensen venit, vidit, dixit 19.09.2011 21:44:
+> ----- Original Message -----
+> From: Joshua Jensen
+> Date: 9/9/2011 2:04 PM
+>> This may be an msysGit 1.7.6 issue, as that is what I am using.  It 
+>> also occurs in msysGit 1.7.5, but I am almost certain it did not 
+>> happen in msysGit 1.7.2.
+>>
+>> Given an untracked file in the working directory that has been added 
+>> to an alternate branch, when switching to that alternate branch, 'git 
+>> checkout' exits with an error code but does not print anything to the 
+>> console.  It should print an untracked file error.
+>>
+>> I have been trying to track this down in code.  The point where the 
+>> error messages are printed, display_error_msgs, is never hit.
+> Okay, so I've tracked this down, but I am unsure what the correct fix is.
+> 
+> In unpack-trees.c's unpack_trees() function, there are some lines that read:
+> 
+>      if (ce->ce_flags & CE_ADDED &&
+>          verify_absent(ce, ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN, o))
+>              return -1;
+> 
+> If the 'return -1' is changed to 'goto return_failed', then a proper 
+> error message appears:
+> 
+>      error: The following untracked working tree files would be 
+> overwritten by checkout:
+>          one/file/listed/here.txt
+>      Please move or remove them before you can switch branches.
+>      Aborting
+> 
+> The thing is, there are multiple files that would be overwritten by 
+> checkout, and I believe an older version of Git showed me the entire 
+> list before aborting.
+> 
+> What would be the proper fix here?  What am I doing wrong?
 
-> > > I've made a few last minute minor edits on the wiki (language-wis=
-e) and
-> > > linked to it from identi.ca, twitter and g+. Hope that's alright.
-[...]
-> > Unfortunately when I had free time and got to correcting the survey=
-,
-> > Git Wiki was down already, and it stays unfortunately down till now=
-=2E
-> > When it is up, I'll review your corrections and fix survey
-> > appropriately... well, if it will get up before survey closing.
->=20
-> Those were only about the intro paragraph on the wiki, not about the
-> content of the survey. Don't worry ;)
+Can you provide a simple test case, such as this one:
 
-You had me worry (especially that I got one minor language-wise fixup,
-"commit" -> "a commit")... ;-)
+---%<---
+#!/bin/sh
 
-> > > Let the results come in!
-> >=20
-> > 3500+ responses and counting...
-> >=20
->=20
-> Yeah!
+rm -Rf utest || exit 1
+mkdir utest || exit 1
+cd utest || exit 1
+git init
+echo tracked >a
+git add a
+git commit -m a a
+git branch side
+echo tracked >b
+git add b
+git commit -m b
+cat b
+git checkout side
+cat b
+echo untracked >b
+cat b
+git checkout master
+cat b
+---%<---
 
-And that even without GitHub announcing it (yes, I send request, and
-resent it yesterday via email rather than GitHub IM system), or
-announcement on Git Homepage (Scott is hard to reach...).
-=20
-> Michael
->=20
-> P.S.: I don't remember what year I filled in my first survey. Can we
-> have an answer "3+" next time...
+With 1.7.6 and current next this gives (Linux):
 
-Well, there is "I don't remember, but I have participated in the past"
-answer... and you can select it _in addition_ to marking years that
-you are sure about.
+Initialized empty Git repository in /tmp/t/utest/.git/
+[master (root-commit) b462c80] a
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 a
+[master 22d8f2f] b
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 b
+tracked
+Switched to branch 'side'
+cat: b: No such file or directory
+untracked
+error: The following untracked working tree files would be overwritten
+by checkout:
+        b
+Please move or remove them before you can switch branches.
+Aborting
+untracked
 
---=20
-Jakub Nar=EAbski
+Does this test reproduce your problem on msysgit?
+
+Michael
