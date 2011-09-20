@@ -1,82 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git patch-id fails on long lines
-Date: Tue, 20 Sep 2011 16:18:08 -0400
-Message-ID: <20110920201808.GA18310@sigill.intra.peff.net>
-References: <1316541771-sup-9996@pimlott.net>
+From: Alexey Shumkin <zapped@mail.ru>
+Subject: Re: [PATCH] send-email: Honor multi-part email messages
+Date: Wed, 21 Sep 2011 00:19:25 +0400
+Message-ID: <20110921001925.03a83d3a@zappedws>
+References: <1316507347-6693-1-git-send-email-zapped@mail.ru>
+	<7v1uvb6mn9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git <git@vger.kernel.org>
-To: Andrew Pimlott <andrew@pimlott.net>
-X-From: git-owner@vger.kernel.org Tue Sep 20 22:18:19 2011
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 20 22:19:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R66lk-0007jZ-2O
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 22:18:16 +0200
+	id 1R66n2-0008OM-TS
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 22:19:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751332Ab1ITUSL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Sep 2011 16:18:11 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38443
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750823Ab1ITUSK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Sep 2011 16:18:10 -0400
-Received: (qmail 23593 invoked by uid 107); 20 Sep 2011 20:23:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 20 Sep 2011 16:23:08 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Sep 2011 16:18:08 -0400
-Content-Disposition: inline
-In-Reply-To: <1316541771-sup-9996@pimlott.net>
+	id S1751635Ab1ITUTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Sep 2011 16:19:32 -0400
+Received: from smtp13.mail.ru ([94.100.176.90]:45906 "EHLO smtp13.mail.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751375Ab1ITUTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2011 16:19:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
+	h=Content-Transfer-Encoding:Content-Type:Mime-Version:References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date; bh=z746nyVVxEXSD6tzYfu51LdJ2l1hiN5eQuOH9X/mLK0=;
+	b=B02ANeVXjSngRw93Y1nELT7dbWiLGFroEKQ6HZPc29/wV3bejonfCVJWJM/y69gvnaYY+wVlMUcdHFueQqo0oF2QcHGA90lcVg0ZDCEWFZkw0f8rIulprFbA0zH7uw2c;
+Received: from [91.77.15.134] (port=46847 helo=zappedws)
+	by smtp13.mail.ru with psmtp 
+	id 1R66mv-0008U0-00; Wed, 21 Sep 2011 00:19:29 +0400
+In-Reply-To: <7v1uvb6mn9.fsf@alter.siamese.dyndns.org>
+X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
+X-Spam: Not detected
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181791>
 
-On Tue, Sep 20, 2011 at 11:07:42AM -0700, Andrew Pimlott wrote:
-
-> In patch-id.c, get_one_patchid uses a fixed 1000-char buffer to read a line.[1]
-> This causes incorrect results on longer lines.  Pasted below is a git commit
-> (from git show) that demonstrates the problem.  The result of running git
-> patch-id on this commit is:
+> Alexey Shumkin <zapped@mail.ru> writes:
 > 
-> 9220f380851be9cab1a760430e3be096dcbee8c6 9b96b6fde8f7df791a1490ae18e1fa75fbab3262
-> 74b8ede07628a574fd586624e0c77a4b6c9967e0 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+> > diff --git a/git-send-email.perl b/git-send-email.perl
+> > index 98ab33a..1abf4a4 100755
+> > --- a/git-send-email.perl
+> > +++ b/git-send-email.perl
+> > @@ -1403,12 +1403,17 @@ sub file_has_nonascii {
+> >  
+> >  sub body_or_subject_has_nonascii {
+> >  	my $fn = shift;
+> > +	my $multipart = 0;
+> >  	open(my $fh, '<', $fn)
+> >  		or die "unable to open $fn: $!\n";
+> >  	while (my $line = <$fh>) {
+> >  		last if $line =~ /^$/;
+> > +		if ($line
+> > =~ /^Content-Type:\s*multipart\/mixed.*$/) {
+> > +			$multipart = 1;
+> > +		}
+> >  		return 1 if $line =~ /^Subject.*[^[:ascii:]]/;
+> >  	}
+> > +	return 0 if $multipart;
+> 
+> Looks as if you can lose the extra variable and return 0 immediately
+> when you find a line with that Content-Type inside the loop.
+Well, as I understand "current" algorithm:
+1. It assumes that file is one-part email message
+2. Function searches non-ASCII characters in Subject header
+3. If none then it looks non-ASCII characters at message body
 
-Hmm, yeah.  My initial impression "eh, so what, it will just add the
-line contents to the sha1 patch-id in two separate hunks". But we
-actually treat lines magically based on their beginnings, and it
-seems we accidentally think the "aaa" is the start of the next commit
-header.
+my changes are to skip looking at message body of a multi-part
+message as it has parts with their own Content-Type headers
 
-I think this can be trivially converted to use strbuf_getwholeline,
-something like this (completely untested):
-
-diff --git a/builtin/patch-id.c b/builtin/patch-id.c
-index f821eb3..99ba2ca 100644
---- a/builtin/patch-id.c
-+++ b/builtin/patch-id.c
-@@ -58,11 +58,12 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
- 
- static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx)
- {
--	static char line[1000];
-+	static struct strbuf line_buf = STRBUF_INIT;
- 	int patchlen = 0, found_next = 0;
- 	int before = -1, after = -1;
- 
--	while (fgets(line, sizeof(line), stdin) != NULL) {
-+	while (strbuf_getwholeline(&line_buf, stdin, '\n') != EOF) {
-+		char *line = line_buf.buf;
- 		char *p = line;
- 		int len;
- 
-
-That just reuses the same heap-allocated buffer over and over, and then
-eventually leaks it at the end (but then the program exits anyway). You
-could get fancier and actually pass in the strbuf from generate_id_list,
-and then release it when we're done.
-
--Peff
+The said above in details:
+1. To set flag when we meet Content-Type: multipart/mixed header
+2. After we processed all headers and did not found non-ASCII characters
+in a Subject we take a look at this flag and exit with 0
+if it is a multi-part message
