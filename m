@@ -1,75 +1,56 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] contrib/hooks: adapt default Debian install location for
-	contrib hooks
-Date: Tue, 20 Sep 2011 11:19:14 +0000
-Message-ID: <20110920111914.17913.qmail@d29ca435be5a3d.315fe32.mid.smarden.org>
+From: =?ISO-8859-15?Q?Stefan_N=E4we?= <stefan.naewe@atlas-elektronik.com>
+Subject: How to see 'assume-unchanged' information
+Date: Tue, 20 Sep 2011 13:36:51 +0200
+Message-ID: <4E787AD3.2000208@atlas-elektronik.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 20 13:26:12 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 20 13:45:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5ySo-0002o0-U7
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 13:26:11 +0200
+	id 1R5ylo-0004SA-31
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 13:45:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754417Ab1ITLZ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Sep 2011 07:25:58 -0400
-Received: from a.ns.smarden.org ([109.68.224.7]:53518 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754028Ab1ITLZ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Sep 2011 07:25:57 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Sep 2011 07:25:56 EDT
-Received: (qmail 17914 invoked by uid 1000); 20 Sep 2011 11:19:14 -0000
-Content-Disposition: inline
+	id S1755435Ab1ITLpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Sep 2011 07:45:43 -0400
+Received: from mail96.atlas.de ([194.156.172.86]:10503 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753351Ab1ITLpm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2011 07:45:42 -0400
+X-Greylist: delayed 530 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Sep 2011 07:45:42 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by mail96.atlas.de (Postfix) with ESMTP id 0F85510091
+	for <git@vger.kernel.org>; Tue, 20 Sep 2011 13:36:52 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at lxsrv96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (lxsrv96.atlas.de [127.0.0.1]) (amavisd-new, port 10124)
+	with ESMTP id CY2Kkst7Bmaj for <git@vger.kernel.org>;
+	Tue, 20 Sep 2011 13:36:51 +0200 (CEST)
+Received: from mgsrv01.atlas.de (mailrelay-atlas.atlas.de [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP
+	for <git@vger.kernel.org>; Tue, 20 Sep 2011 13:36:51 +0200 (CEST)
+Received: from [141.200.19.108] (as112671.atlas.de [141.200.19.108])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id 845192718B
+	for <git@vger.kernel.org>; Tue, 20 Sep 2011 13:36:51 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181757>
 
-Placing the contrib hooks into /usr/share/doc/ wasn't a good idea in the
-first place.  According to the Debian policy they should be located in
-/usr/share/git-core/, so let's put them there.
+Hi there.
 
-Thanks to Bill Allombert for reporting this through
- http://bugs.debian.org/640949
+Is it somehow possible to see which files have the 'assume unchanged'
+bit set ?
 
-Signed-off-by: Gerrit Pape <pape@smarden.org>
----
- contrib/hooks/post-receive-email     |    4 ++--
- templates/hooks--post-receive.sample |    2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-index fa6d41a..ba077c1 100755
---- a/contrib/hooks/post-receive-email
-+++ b/contrib/hooks/post-receive-email
-@@ -11,11 +11,11 @@
- # will have put this somewhere standard.  You should make this script
- # executable then link to it in the repository you would like to use it in.
- # For example, on debian the hook is stored in
--# /usr/share/doc/git-core/contrib/hooks/post-receive-email:
-+# /usr/share/git-core/contrib/hooks/post-receive-email:
- #
- #  chmod a+x post-receive-email
- #  cd /path/to/your/repository.git
--#  ln -sf /usr/share/doc/git-core/contrib/hooks/post-receive-email hooks/post-receive
-+#  ln -sf /usr/share/git-core/contrib/hooks/post-receive-email hooks/post-receive
- #
- # This hook script assumes it is enabled on the central repository of a
- # project, with all users pushing only to it and not between each other.  It
-diff --git a/templates/hooks--post-receive.sample b/templates/hooks--post-receive.sample
-index 7a83e17..e48346e 100755
---- a/templates/hooks--post-receive.sample
-+++ b/templates/hooks--post-receive.sample
-@@ -12,4 +12,4 @@
- # see contrib/hooks/ for a sample, or uncomment the next line and
- # rename the file to "post-receive".
- 
--#. /usr/share/doc/git-core/contrib/hooks/post-receive-email
-+#. /usr/share/git-core/contrib/hooks/post-receive-email
+Thx,
+  Stefan
 -- 
-1.7.5.4
+----------------------------------------------------------------
+/dev/random says: To be, or not to be, those are the parameters.
+python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6e696b2e636f6d'.decode('hex')"
