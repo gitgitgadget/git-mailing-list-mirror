@@ -1,33 +1,36 @@
 From: Alexey Shumkin <zapped@mail.ru>
-Subject: [PATCH] format-patch: cover letter does not respect i18n.commitencoding
-Date: Tue, 20 Sep 2011 12:26:17 +0400
-Message-ID: <1316507177-6403-1-git-send-email-zapped@mail.ru>
+Subject: =?UTF-8?q?=5BPATCH=5D=20send-email=3A=20Honor=20multi-part=20email=20messages?=
+Date: Tue, 20 Sep 2011 12:29:07 +0400
+Message-ID: <1316507347-6693-1-git-send-email-zapped@mail.ru>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Alexey Shumkin <zapped@mail.ru>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 20 10:26:36 2011
+X-From: git-owner@vger.kernel.org Tue Sep 20 10:29:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5vez-0007za-G5
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 10:26:33 +0200
+	id 1R5vi2-000148-Nv
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 10:29:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754169Ab1ITI02 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Sep 2011 04:26:28 -0400
-Received: from smtp17.mail.ru ([94.100.176.154]:51304 "EHLO smtp17.mail.ru"
+	id S1754469Ab1ITI3d convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Sep 2011 04:29:33 -0400
+Received: from smtp3.mail.ru ([94.100.176.131]:51096 "EHLO smtp3.mail.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754028Ab1ITI00 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Sep 2011 04:26:26 -0400
+	id S1754357Ab1ITI33 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2011 04:29:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
-	h=Sender:Message-Id:Date:Subject:Cc:To:From; bh=kb7ETk8lywD/HrpEUhP1JmbqWFgkknVpryWmZcBuq8g=;
-	b=jxLxmQsA0d4VwSPF+oanKCPpgdGsXqATzmPM9o/zhIJ85nrD12pfK9vNyXAT0rR0ExLKQ5sw+CzYCKiq78lSAhDseyGILSI+V8Tkv9aesPT8PWN26DaXB3YNyJjgZ3Ym;
-Received: from [91.77.19.104] (port=35126 helo=zappedws)
-	by smtp17.mail.ru with asmtp 
-	id 1R5vep-0002TF-00; Tue, 20 Sep 2011 12:26:23 +0400
+	h=Sender:Content-Transfer-Encoding:Content-Type:MIME-Version:Message-Id:Date:Subject:Cc:To:From; bh=tDfhKcAD2PtulMcVdj97bK6L5zz2LNF78aQA18FA9zw=;
+	b=fx/vS9qjcNxEx6W4MfkM0d76su0om6cvFEvaaiwX+EJx15GGmwStcLmrS4ne5GGLDyTGZhEBVPfj3bX80LydTq086+dtgtnTi0UPGfIFfj614jQGacbQKTpFh3M+oW7P;
+Received: from [91.77.19.104] (port=37225 helo=zappedws)
+	by smtp3.mail.ru with asmtp 
+	id 1R5vhm-0000Ho-00; Tue, 20 Sep 2011 12:29:27 +0400
 Received: from Alex by zappedws with local (Exim 4.76)
 	(envelope-from <zapped@mail.ru>)
-	id 1R5vem-0001fx-4b; Tue, 20 Sep 2011 12:26:20 +0400
+	id 1R5vhW-0001l6-HO; Tue, 20 Sep 2011 12:29:10 +0400
 X-Mailer: git-send-email 1.7.6.3.4.gf71f
 X-Spam: Not detected
 X-Mras: Ok
@@ -35,95 +38,127 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181743>
 
-When we write a cover letter it is naturally enough to suppose
-that we use the same encoding as we do commits in. So make
-"format-patch --cover-letter" to use i18n.commitencoding setting
-in "Content-Type" header of a cover letter instead of hard-coded "UTF-8".
-Especially as cover letter contains shortlog and diffstat of patches
-which can contain author names and file names in i18n.commitencoding.
+"git format-patch --attach/--inline" generates multi-part messages.
+Every part of such messages can contain non-ASCII characters with its o=
+wn
+"Content-Type" and "Content-Transfer-Encoding" headers.
+But git-send-mail script interprets a patch-file as one-part message
+and does not recognize multi-part messages.
+So already quoted printable email subject may be encoded as quoted prin=
+table
+again. Due to this bug email subject looks corrupted in email clients.
 
 Signed-off-by: Alexey Shumkin <zapped@mail.ru>
 ---
- builtin/log.c |    4 ++--
- log-tree.c    |   10 ++++++----
- log-tree.h    |    3 ++-
- 3 files changed, 10 insertions(+), 7 deletions(-)
+ git-send-email.perl   |    5 +++
+ t/t9001-send-email.sh |   66 +++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 2 files changed, 71 insertions(+), 0 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 5c2af59..6a4050c 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -769,7 +769,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
- 	struct shortlog log;
- 	struct strbuf sb = STRBUF_INIT;
- 	int i;
--	const char *encoding = "UTF-8";
-+	const char *encoding =  get_commit_output_encoding();
- 	struct diff_options opts;
- 	int need_8bit_cte = 0;
- 	struct commit *commit = NULL;
-@@ -806,7 +806,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 98ab33a..1abf4a4 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1403,12 +1403,17 @@ sub file_has_nonascii {
+=20
+ sub body_or_subject_has_nonascii {
+ 	my $fn =3D shift;
++	my $multipart =3D 0;
+ 	open(my $fh, '<', $fn)
+ 		or die "unable to open $fn: $!\n";
+ 	while (my $line =3D <$fh>) {
+ 		last if $line =3D~ /^$/;
++		if ($line =3D~ /^Content-Type:\s*multipart\/mixed.*$/) {
++			$multipart =3D 1;
++		}
+ 		return 1 if $line =3D~ /^Subject.*[^[:ascii:]]/;
  	}
- 
- 	log_write_email_headers(rev, head, &pp.subject, &pp.after_subject,
--				&need_8bit_cte);
-+				&need_8bit_cte, get_commit_output_encoding());
- 
- 	for (i = 0; !need_8bit_cte && i < nr; i++)
- 		if (has_non_ascii(list[i]->buffer))
-diff --git a/log-tree.c b/log-tree.c
-index 39913d7..403aede 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -284,7 +284,8 @@ void get_patch_filename(struct commit *commit, int nr, const char *suffix,
- void log_write_email_headers(struct rev_info *opt, struct commit *commit,
- 			     const char **subject_p,
- 			     const char **extra_headers_p,
--			     int *need_8bit_cte_p)
-+			     int *need_8bit_cte_p,
-+			     const char *encoding)
- {
- 	const char *subject = NULL;
- 	const char *extra_headers = opt->extra_headers;
-@@ -340,11 +341,12 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
- 			 "format.\n"
- 			 "--%s%s\n"
- 			 "Content-Type: text/plain; "
--			 "charset=UTF-8; format=fixed\n"
-+			 "charset=%s; format=fixed\n"
- 			 "Content-Transfer-Encoding: 8bit\n\n",
- 			 extra_headers ? extra_headers : "",
- 			 mime_boundary_leader, opt->mime_boundary,
--			 mime_boundary_leader, opt->mime_boundary);
-+			 mime_boundary_leader, opt->mime_boundary,
-+			 encoding);
- 		extra_headers = subject_buffer;
- 
- 		get_patch_filename(opt->numbered_files ? NULL : commit, opt->nr,
-@@ -433,7 +435,7 @@ void show_log(struct rev_info *opt)
- 
- 	if (opt->commit_format == CMIT_FMT_EMAIL) {
- 		log_write_email_headers(opt, commit, &ctx.subject, &extra_headers,
--					&ctx.need_8bit_cte);
-+					&ctx.need_8bit_cte, get_commit_output_encoding());
- 	} else if (opt->commit_format != CMIT_FMT_USERFORMAT) {
- 		fputs(diff_get_color_opt(&opt->diffopt, DIFF_COMMIT), stdout);
- 		if (opt->commit_format != CMIT_FMT_ONELINE)
-diff --git a/log-tree.h b/log-tree.h
-index 5c4cf7c..ce0acf7 100644
---- a/log-tree.h
-+++ b/log-tree.h
-@@ -17,7 +17,8 @@ void show_decorations(struct rev_info *opt, struct commit *commit);
- void log_write_email_headers(struct rev_info *opt, struct commit *commit,
- 			     const char **subject_p,
- 			     const char **extra_headers_p,
--			     int *need_8bit_cte_p);
-+			     int *need_8bit_cte_p,
-+			     const char *encoding);
- void load_ref_decorations(int flags);
- 
- #define FORMAT_PATCH_NAME_MAX 64
--- 
++	return 0 if $multipart;
+ 	while (my $line =3D <$fh>) {
+ 		return 1 if $line =3D~ /[^[:ascii:]]/;
+ 	}
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 579ddb7..151ad35 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -1168,4 +1168,70 @@ test_expect_success $PREREQ '--force sends cover=
+ letter template anyway' '
+ 	test -n "$(ls msgtxt*)"
+ '
+=20
++test_expect_success $PREREQ 'setup multi-part message' '
++cat >multi-part-email-using-8bit <<EOF
++From fe6ecc66ece37198fe5db91fa2fc41d9f4fe5cc4 Mon Sep 17 00:00:00 2001
++Message-Id: <bogus-message-id@example.com>
++From: author@example.com
++Date: Sat, 12 Jun 2010 15:53:58 +0200
++Subject: [PATCH] =3D?UTF-8?q?=3DD0=3D94=3DD0=3DBE=3DD0=3DB1=3DD0=3DB0=3D=
+D0=3DB2=3DD0=3DBB=3DD0=3DB5=3DD0=3DBD=3D20?=3D
++ =3D?UTF-8?q?=3DD1=3D84=3DD0=3DB0=3DD0=3DB9=3DD0=3DBB?=3D
++MIME-Version: 1.0
++Content-Type: multipart/mixed; boundary=3D"------------123"
++
++This is a multi-part message in MIME format.
++--------------1.7.6.3.4.gf71f
++Content-Type: text/plain; charset=3DUTF-8; format=3Dfixed
++Content-Transfer-Encoding: 8bit
++
++This is a message created with "git format-patch --attach=3D123"
++---
++ master   |    1 +
++ =D1=84=D0=B0=D0=B9=D0=BB |    1 +
++ 2 files changed, 2 insertions(+), 0 deletions(-)
++ create mode 100644 master
++ create mode 100644 =D1=84=D0=B0=D0=B9=D0=BB
++
++
++--------------123
++Content-Type: text/x-patch; name=3D"0001-.patch"
++Content-Transfer-Encoding: 8bit
++Content-Disposition: attachment; filename=3D"0001-.patch"
++
++diff --git a/master b/master
++new file mode 100644
++index 0000000..1f7391f
++--- /dev/null
+++++ b/master
++@@ -0,0 +1 @@
+++master
++diff --git a/=D1=84=D0=B0=D0=B9=D0=BB b/=D1=84=D0=B0=D0=B9=D0=BB
++new file mode 100644
++index 0000000..44e5cfe
++--- /dev/null
+++++ b/=D1=84=D0=B0=D0=B9=D0=BB
++@@ -0,0 +1 @@
+++=D1=81=D0=BE=D0=B4=D0=B5=D1=80=D0=B6=D0=B8=D0=BC=D0=BE=D0=B5 =D1=84=D0=
+=B0=D0=B9=D0=BB=D0=B0
++
++--------------123--
++EOF
++'
++
++test_expect_success $PREREQ 'setup expect' '
++cat >expected <<EOF
++Subject: [PATCH] =3D?UTF-8?q?=3DD0=3D94=3DD0=3DBE=3DD0=3DB1=3DD0=3DB0=3D=
+D0=3DB2=3DD0=3DBB=3DD0=3DB5=3DD0=3DBD=3D20?=3D =3D?UTF-8?q?=3DD1=3D84=3D=
+D0=3DB0=3DD0=3DB9=3DD0=3DBB?=3D
++EOF
++'
++
++test_expect_success $PREREQ '--attach/--inline also treats subject' '
++	clean_fake_sendmail &&
++	echo bogus |
++	git send-email --from=3Dauthor@example.com --to=3Dnobody@example.com =
+\
++			--smtp-server=3D"$(pwd)/fake.sendmail" \
++			--8bit-encoding=3DUTF-8 \
++			multi-part-email-using-8bit >stdout &&
++	grep "Subject" msgtxt1 >actual &&
++	test_cmp expected actual
++'
++
+ test_done
+--=20
 1.7.6.3.4.gf71f
