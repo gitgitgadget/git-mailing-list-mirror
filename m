@@ -1,82 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] format-patch: cover letter does not respect
- i18n.commitencoding
-Date: Tue, 20 Sep 2011 12:24:21 -0700
-Message-ID: <7v62kn6mqi.fsf@alter.siamese.dyndns.org>
-References: <1316507177-6403-1-git-send-email-zapped@mail.ru>
+Subject: Re: [PATCH] send-email: Honor multi-part email messages
+Date: Tue, 20 Sep 2011 12:26:18 -0700
+Message-ID: <7v1uvb6mn9.fsf@alter.siamese.dyndns.org>
+References: <1316507347-6693-1-git-send-email-zapped@mail.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Alexey Shumkin <zapped@mail.ru>
-X-From: git-owner@vger.kernel.org Tue Sep 20 21:24:31 2011
+X-From: git-owner@vger.kernel.org Tue Sep 20 21:26:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R65vi-0007TR-GB
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 21:24:30 +0200
+	id 1R65xa-0008Q4-P8
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 21:26:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750974Ab1ITTYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Sep 2011 15:24:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33452 "EHLO
+	id S1751154Ab1ITT0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Sep 2011 15:26:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34097 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750806Ab1ITTYZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Sep 2011 15:24:25 -0400
+	id S1750832Ab1ITT0V (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2011 15:26:21 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B20259B2;
-	Tue, 20 Sep 2011 15:24:23 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD3E75A05;
+	Tue, 20 Sep 2011 15:26:20 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PMPImVhz4oyrnD/0JcPK/JLD6eY=; b=KY0YKp
-	5CnOr3du15gVJofAtgL3Z/U5y+mUGBVlkh3pSpiD3+X8hxOzqQfJdYySvhwujqUx
-	mibHF9LYws/iYFT/Wj1M8SMv+Jhiin3VgrONbBf/EAhFWPIP9Uc8BKwx7VMINiM7
-	e2tcrdcO6N7M3kw/J7mS75sMv5Z6g0+srDmOg=
+	:content-type; s=sasl; bh=MTur6NM5qi/RxfnL5cte073REw0=; b=rZIUFn
+	s5qnzcsqSPYi8OjLnaXxHVQyLv7AoyCcL7xscPbpchk/ppW1VUKmdacNdg61pgfG
+	nK7m2wGHzww7UnwlA78jwdT7q0itvpBNBoevxVd3XFUlfrGf8oplwC1iwuanqbm1
+	0xPgP+zsBKLVmiPbOE8IbRByvGAbqXE+nJ8zU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=djHmpPJfHg81jxpvG7MdSNGd5tIqdsuK
-	tYGL76xxSYZStD98WWNulZJRnkEhqQY/11in280pJezhJ1qWtSTT9Ae25hHo536p
-	el//Ip9P8fcuvDwTPce9ZqgKhg6Mj2l5cTxb/3kE+fRloNnDxxklOjjw9XX6mR+M
-	yr9HaOUEJFM=
+	:content-type; q=dns; s=sasl; b=x5gXEfgMg2a1RQ6An6ygCmlRIt2lWIL7
+	z5eA0xfUlu8joDDleNm8SjJnUx9vSl2bNH/X2RN34RqaDeCS3444iuuOfWXb2hV8
+	wwsuxmD7fAtlJq3PZfE5KZT811onTXhj3Ia86tz2Zng/DEZxWNLdhFuTOEL7LBco
+	pfKCGuF4XCM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 915B759B1;
-	Tue, 20 Sep 2011 15:24:23 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B49725A04;
+	Tue, 20 Sep 2011 15:26:20 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 210E459AF; Tue, 20 Sep 2011
- 15:24:23 -0400 (EDT)
-In-Reply-To: <1316507177-6403-1-git-send-email-zapped@mail.ru> (Alexey
- Shumkin's message of "Tue, 20 Sep 2011 12:26:17 +0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2AFBB5A02; Tue, 20 Sep 2011
+ 15:26:20 -0400 (EDT)
+In-Reply-To: <1316507347-6693-1-git-send-email-zapped@mail.ru> (Alexey
+ Shumkin's message of "Tue, 20 Sep 2011 12:29:07 +0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 256008D4-E3BE-11E0-AC10-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6B22F23C-E3BE-11E0-B0BD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181781>
 
 Alexey Shumkin <zapped@mail.ru> writes:
 
-> diff --git a/builtin/log.c b/builtin/log.c
-> index 5c2af59..6a4050c 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -769,7 +769,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
->  	struct shortlog log;
->  	struct strbuf sb = STRBUF_INIT;
->  	int i;
-> -	const char *encoding = "UTF-8";
-> +	const char *encoding =  get_commit_output_encoding();
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 98ab33a..1abf4a4 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -1403,12 +1403,17 @@ sub file_has_nonascii {
+>  
+>  sub body_or_subject_has_nonascii {
+>  	my $fn = shift;
+> +	my $multipart = 0;
+>  	open(my $fh, '<', $fn)
+>  		or die "unable to open $fn: $!\n";
+>  	while (my $line = <$fh>) {
+>  		last if $line =~ /^$/;
+> +		if ($line =~ /^Content-Type:\s*multipart\/mixed.*$/) {
+> +			$multipart = 1;
+> +		}
+>  		return 1 if $line =~ /^Subject.*[^[:ascii:]]/;
+>  	}
+> +	return 0 if $multipart;
 
-Hmm, I have a feeling that this should use log output encoding. Am I
-mistaken?
+Looks as if you can lose the extra variable and return 0 immediately when
+you find a line with that Content-Type inside the loop.
 
-The i18n.commitencoding variable is about the internal representation in
-the object [*1*] that is to be converted from the encoding of the original
-e-mail message which could be different. i18n.logoutputencoding is to
-externalize it [*2*].
-
-[Footnotes]
-
-*1* f1f909e (mailinfo: Use i18n.commitencoding, 2005-11-27)
-*2* a731ec5 (t3901: test "format-patch | am" pipe with i18n, 2007-01-13)
+What am I missing?
