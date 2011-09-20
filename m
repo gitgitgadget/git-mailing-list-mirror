@@ -1,67 +1,95 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2] post-receive-email: explicitly set Content-Type header
-Date: Tue, 20 Sep 2011 11:32:54 +0200
-Message-ID: <4E785DC6.80105@viscovery.net>
-References: <1316505154-3904-1-git-send-email-zapped@mail.ru> <1316506023-5098-1-git-send-email-zapped@mail.ru>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Git 1.7.6: Sparse checkouts do not work with directory exclusions
+Date: Tue, 20 Sep 2011 20:09:42 +1000
+Message-ID: <CACsJy8CDtswtPJVt-T911_1y0WqShonvcCbXhFtWu2zjEqLa4A@mail.gmail.com>
+References: <4E77BC36.7060005@workspacewhiz.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Alexey Shumkin <zapped@mail.ru>
-X-From: git-owner@vger.kernel.org Tue Sep 20 11:33:11 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Joshua Jensen <jjensen@workspacewhiz.com>
+X-From: git-owner@vger.kernel.org Tue Sep 20 12:10:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5whQ-0005qV-I7
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 11:33:08 +0200
+	id 1R5xHa-0006Mv-Ft
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 12:10:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754616Ab1ITJdC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Sep 2011 05:33:02 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:49110 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751401Ab1ITJdB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Sep 2011 05:33:01 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1R5whC-0007WQ-SS; Tue, 20 Sep 2011 11:32:55 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 8962C1660F;
-	Tue, 20 Sep 2011 11:32:54 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.22) Gecko/20110902 Thunderbird/3.1.14
-In-Reply-To: <1316506023-5098-1-git-send-email-zapped@mail.ru>
-X-Spam-Score: -1.4 (-)
+	id S1752442Ab1ITKKZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Sep 2011 06:10:25 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:57486 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751887Ab1ITKKZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2011 06:10:25 -0400
+Received: by bkbzt4 with SMTP id zt4so310202bkb.19
+        for <git@vger.kernel.org>; Tue, 20 Sep 2011 03:10:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=SsaOA1plRuX+fHeCo8t7IQLiKfPFruywofntlGyGItA=;
+        b=l8KsDPBVvo0QLaPay7IknPK/CoTH+FNb8myOJFRT+rilBL9D7dn5WBIzHRA3E9v6TZ
+         8VGkuVXhYXX73U36iHmzKBUSOHJeFr6QRmf3c3mEm70K3/sXcI8mHHm7A4iTIZ3LTHu3
+         D8L+0WeqwNAyAo89Q19KbwFzbhXBR9y3D0Z64=
+Received: by 10.204.133.193 with SMTP id g1mr410789bkt.131.1316513412155; Tue,
+ 20 Sep 2011 03:10:12 -0700 (PDT)
+Received: by 10.204.7.1 with HTTP; Tue, 20 Sep 2011 03:09:42 -0700 (PDT)
+In-Reply-To: <4E77BC36.7060005@workspacewhiz.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181747>
 
-Am 9/20/2011 10:07, schrieb Alexey Shumkin:
-> Some email clients (e.g. claws-mail) incorrectly display
-> message body when there is no Content-Type header and charset
-> explicitly defined.
-> So, set explicitly Content-Type header and charset
-> can be defined with hooks.emailcharset config variable.
+On Tue, Sep 20, 2011 at 8:03 AM, Joshua Jensen
+<jjensen@workspacewhiz.com> wrote:
+> Sometime after Git 1.7.3.2, sparse checkouts stopped working for me. =
+=C2=A0My
+> sparse-checkout file looks something like:
+>
+> *
+> !DirA/
+> !DirB/
+> DirC/
+>
+> I have restored some lines of code that were removed in November 2010=
+=2E =C2=A0This
+> resolves the sparse checkout issue for me, but my guess is the soluti=
+on is
+> not implemented properly.
+>
+> Can anyone confirm the issue
 
-Please write full sentences with complete punctuation and capitalization.
-Perhaps you meant to say:
+Confirmed. It got me wonder why the negated pattern tests did not
+catch this. Turns out this works:
 
-  Some email clients (e.g. claws-mail) display the message body
-  incorrectly when the charset is not defined explicitly in a
-  Content-Type header. Insert a Content-Type header in the message.
+/*
+!DirA/
+!DirB/
+DirC
 
-  The charset can be defined with the config variable
-  hooks.emailcharset.
+This is my theory why yours does not work: negated patterns !DirA and
+!DirB excludes both directories, but git still descends in them
+because you may have other patterns that re-include parts of
+DirA/DirB, for example:
 
-> +# hooks.emailcharset
-> +#   The charset used in Content-Type header. UTF-8, if not specified.
+DirA/DirD
+!DirA
 
-How can you be sure that the output produced by git log etc. that are used
-in the script are in the encoding specified by this variable? IOW,
-wouldn't log.outputencoding be the better choice to use in the
-Content-Type header?
+When it's in DirA/DirB, "*" tells git to match everything (equivalent
+"DirA/*" and "DirB/*"), so it matches all entries in DirA/DirB again,
+essentially reverting "!DirA" and "!DirB" effects.
 
--- Hannes
+By using "/*" instead of "*", we tell git to just match entries at top
+level, not all levels.
+
+I think it makes sense, but it's a bit tricky.
+
+> and describe why those lines were removed?
+
+Quotes from 9e08273: "The commit provided a workaround for matching
+directories in index. But it is no longer needed."
+--=20
+Duy
