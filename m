@@ -1,64 +1,76 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Worktree vs. working copy
-Date: Tue, 20 Sep 2011 16:26:08 +0530
-Message-ID: <CALkWK0mHQZEPKk3Dy3RSp70thcsw3x6RSvUxTuPVzzRjgsM8-A@mail.gmail.com>
-References: <1316505022.13996.12.camel@bee.lab.cmartin.tk>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2] post-receive-email: explicitly set Content-Type header
+Date: Tue, 20 Sep 2011 13:10:49 +0200
+Message-ID: <4E7874B9.2060909@viscovery.net>
+References: <1316505154-3904-1-git-send-email-zapped@mail.ru> <1316506023-5098-1-git-send-email-zapped@mail.ru> <4E785DC6.80105@viscovery.net> <20110920104256.GA11656@zapped.homeip.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>
-To: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Tue Sep 20 12:56:36 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: zapped@mail.ru
+X-From: git-owner@vger.kernel.org Tue Sep 20 13:11:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5y0B-0003cE-KN
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 12:56:35 +0200
+	id 1R5yE9-0002W9-7r
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 13:11:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751696Ab1ITK4b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Sep 2011 06:56:31 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:61796 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751094Ab1ITK4a convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2011 06:56:30 -0400
-Received: by wyg34 with SMTP id 34so369326wyg.19
-        for <git@vger.kernel.org>; Tue, 20 Sep 2011 03:56:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=GYdJfJFgYvIUz+PQnK5A5OuAuhEEYHImHIx8hjlopJg=;
-        b=VKpAt3OvhpklXwHTBWXRz2M+uLgZ7y+QJKH7iXYdBjfoZqf38ZFz2BGH2P0bYIaBQF
-         YInPJUsxHFZnTBbqZtLSsKM/wwav4d43gxW8M45F9nNZ8YkCdzjD0crqXoeQlNcbsdqI
-         Q7/47fSQ/cED7Ym7se9digVdyGfWpPcOmKQSM=
-Received: by 10.216.80.69 with SMTP id j47mr675178wee.102.1316516189108; Tue,
- 20 Sep 2011 03:56:29 -0700 (PDT)
-Received: by 10.216.51.207 with HTTP; Tue, 20 Sep 2011 03:56:08 -0700 (PDT)
-In-Reply-To: <1316505022.13996.12.camel@bee.lab.cmartin.tk>
+	id S1751696Ab1ITLKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Sep 2011 07:10:55 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:19350 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751123Ab1ITLKz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2011 07:10:55 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1R5yDy-0003WT-29; Tue, 20 Sep 2011 13:10:50 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id CA15C1660F;
+	Tue, 20 Sep 2011 13:10:49 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.22) Gecko/20110902 Thunderbird/3.1.14
+In-Reply-To: <20110920104256.GA11656@zapped.homeip.net>
+X-Enigmail-Version: 1.1.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181755>
 
-Hi Carlos,
+Am 9/20/2011 12:42, schrieb Shumkin Alexey:
+> On Tue, Sep 20, 2011 at 11:32:54AM +0200, Johannes Sixt wrote:
+>> Am 9/20/2011 10:07, schrieb Alexey Shumkin:
+>>> +# hooks.emailcharset
+>>> +#   The charset used in Content-Type header. UTF-8, if not
+>>> specified.
+>>
+>> How can you be sure that the output produced by git log etc. that are
+>> used in the script are in the encoding specified by this variable?
+>> IOW, wouldn't log.outputencoding be the better choice to use in the
+>> Content-Type header?
+> Yes, you're right, we cannot be sure in UTF-8 encoding of output
+> and using i18n.logoutputencoding would be a better choice
+> instead of new config variable.
+> 
+> But at the present
+> 1. post-send-mail uses description file of a repo
+> 2. gitweb also uses this file and AFAIK it assumes one to be in UTF-8
+>   (I do not know whether it can be changed there but I tested gitweb once long
+>     time ago)
+> 3. So if i18n.logoutputencoding is not UTF-8 we get a message composed
+> 	with mixed encodings. This fact oblidge us to encode headers
+> 	(as quoted printable at least) and synchronize body message that contain
+> 	repo description (in UTF-8) and diffstat (in i18n.logoutputencoding).
+> 	This is a more complicated task for a shell script
+> 	than just specifying Content-Type header (may be git-send-email suits here?)
 
-Carlos Mart=C3=ADn Nieto writes:
-> [...]
-> =C2=A0 =C2=A0$ git grep 'worktree' | wc -l
-> =C2=A0 =C2=A0412
-> =C2=A0 =C2=A0$ git grep 'working copy' | grep -v ^git-cvsserver | =C2=
-=A0wc -l
-> =C2=A0 =C2=A032
-> [...]
+In this case, it may make sense to have a separate setting, but you should
+call git like this:
 
-You might like to refer to a related discussion [1].
+   git -c "i18n.logoutputencoding=$emailcharset" show ...
+   git -c "i18n.logoutputencoding=$emailcharset" rev-list --pretty ...
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/159287/focu=
-s=3D160083
-
--- Ram
+-- Hannes
