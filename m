@@ -1,76 +1,81 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Worktree vs. working copy
-Date: Tue, 20 Sep 2011 09:50:08 +0200
-Message-ID: <1316505022.13996.12.camel@bee.lab.cmartin.tk>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-oGckTu67cOr9uisPRhak"
+From: Alexey Shumkin <zapped@mail.ru>
+Subject: [PATCH] post-receive-email: explicitly set Content-Type header
+Date: Tue, 20 Sep 2011 11:52:34 +0400
+Message-ID: <1316505154-3904-1-git-send-email-zapped@mail.ru>
+Cc: Junio C Hamano <gitster@pobox.com>, Alexey Shumkin <zapped@mail.ru>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 20 09:50:30 2011
+X-From: git-owner@vger.kernel.org Tue Sep 20 09:52:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5v65-0007WD-LB
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 09:50:29 +0200
+	id 1R5v8T-0000Gz-2N
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 09:52:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753144Ab1ITHuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Sep 2011 03:50:24 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:53252 "EHLO kimmy.cmartin.tk"
+	id S1753729Ab1ITHww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Sep 2011 03:52:52 -0400
+Received: from smtp10.mail.ru ([94.100.176.152]:41383 "EHLO smtp10.mail.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750986Ab1ITHuY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Sep 2011 03:50:24 -0400
-Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id B68DA4617B
-	for <git@vger.kernel.org>; Tue, 20 Sep 2011 09:50:02 +0200 (CEST)
-X-Mailer: Evolution 3.0.3- 
+	id S1750986Ab1ITHww (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2011 03:52:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
+	h=Sender:Message-Id:Date:Subject:Cc:To:From; bh=1xPmNDWIR9rGI9FV0IxMvmNhve0HZiUJAreUK7w3aHY=;
+	b=lfROIqQYEoa/x4e7o39zJiycUDJgYgTbwRw6foDHrNEWn3QHHhy23R4SpR4IOsxHpmHFxCI8r0YjnJjBcmmZxi+6Uq4UR6sPAl8qdZzLCwuLGwW1w9PKrRdLky/vPoUP;
+Received: from [91.77.19.104] (port=13316 helo=zappedws)
+	by smtp10.mail.ru with asmtp 
+	id 1R5v8L-00005S-00; Tue, 20 Sep 2011 11:52:49 +0400
+Received: from Alex by zappedws with local (Exim 4.76)
+	(envelope-from <zapped@mail.ru>)
+	id 1R5v8H-00011d-BX; Tue, 20 Sep 2011 11:52:45 +0400
+X-Mailer: git-send-email 1.7.6.3.4.gf71f
+X-Spam: Not detected
+X-Mras: Ok
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181737>
 
+Some email clients (e.g. claws-mail) incorrectly display
+message body when there is no Content-Type header and charset
+explicitly defined.
+So, set explicitly Content-Type headrer and charset
+can be defined with hooks.emailcharset config variable.
 
---=-oGckTu67cOr9uisPRhak
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Alexey Shumkin <zapped@mail.ru>
+---
+ contrib/hooks/post-receive-email |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-Hello,
-
-I've noticed that in some places in git.git, the term 'working copy' is
-used. Mostly it's in git-cvsserver which I guess it's fine, but the
-git-config man page talks about the 'working copy' in three places.
-
-    $ git grep 'worktree' | wc -l
-    412
-    $ git grep 'working copy' | grep -v ^git-cvsserver |  wc -l
-    32
-
-Most of the references to a 'working copy' are in Git.pm, and the
-git-gui glossary treats them as the same thing.
-
-Is there some sort of official position, or rough agreement that we
-should use woktree instead of working copy? The latter term IMHO implies
-a centralised system, where an user gets a copy.
-
-   cmn
-
---=-oGckTu67cOr9uisPRhak
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAABAgAGBQJOeEWxAAoJEHKRP1jG7ZzTp3QH/2vrV+wJGnScSfKHdmwZWV5+
-KhP75YB3EVo8qI3BwajGhXjgiAYCgwpwSfl3C3stZE5RUO17ESr1aCWkXw0jy2e+
-Z3eQXvIDfvkyQYan+TV/2mIQ293jbiAlI8FHXeEIUPEy4QJ42vL6T/aj2kQwEPui
-H39RoGwniYk5GbNBEXKbAkWQKdMzghe7TLY3ntE/bDZp/+h6Qe4/Sa/d7RJaNO3V
-TCua20EgrR3SL99rS77FNNgr3TE07xSvG1NwNJYUNrUcF85BYmNQ5Twabx7u5yjN
-wlvl6kgbADbxqksL2jeMMue0zg0CpHBtZakScDR9kfdKjyp/3BDnf5l8J0Sm/aM=
-=Odls
------END PGP SIGNATURE-----
-
---=-oGckTu67cOr9uisPRhak--
+diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+index 21989fc..64d7c2f 100755
+--- a/contrib/hooks/post-receive-email
++++ b/contrib/hooks/post-receive-email
+@@ -60,6 +60,8 @@
+ #   email body. If not specified, there is no limit.
+ #   Lines beyond the limit are suppressed and counted, and a final
+ #   line is added indicating the number of suppressed lines.
++# hooks.emailcharset
++#   The charset used in Content-Type header. UTF-8, if not specified.
+ #
+ # Notes
+ # -----
+@@ -229,6 +231,7 @@ generate_email_header()
+ 	cat <<-EOF
+ 	To: $recipients
+ 	Subject: ${emailprefix}$projectdesc $refname_type $short_refname ${change_type}d. $describe
++	Content-Type: text/plain; charset=$emailcharset
+ 	X-Git-Refname: $refname
+ 	X-Git-Reftype: $refname_type
+ 	X-Git-Oldrev: $oldrev
+@@ -723,6 +726,7 @@ envelopesender=$(git config hooks.envelopesender)
+ emailprefix=$(git config hooks.emailprefix || echo '[SCM] ')
+ custom_showrev=$(git config hooks.showrev)
+ maxlines=$(git config hooks.emailmaxlines)
++emailcharset=$(git config hooks.emailcharset || echo 'UTF-8')
+ 
+ # --- Main loop
+ # Allow dual mode: run from the command line just like the update hook, or
+-- 
+1.7.6.3.4.gf71f
