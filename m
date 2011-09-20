@@ -1,85 +1,67 @@
 From: Alexey Shumkin <zapped@mail.ru>
-Subject: [PATCH v2] post-receive-email: explicitly set Content-Type header
-Date: Tue, 20 Sep 2011 12:07:03 +0400
-Message-ID: <1316506023-5098-1-git-send-email-zapped@mail.ru>
-References: <1316505154-3904-1-git-send-email-zapped@mail.ru>
+Subject: [PATCH v3 0/2] pretty: user format ignores i18n.logOutputEncoding setting
+Date: Tue, 20 Sep 2011 12:20:16 +0400
+Message-ID: <1316506818-5968-1-git-send-email-zapped@mail.ru>
+References: <7v1uvptjhr.fsf@alter.siamese.dyndns.org>
 Cc: Alexey Shumkin <zapped@mail.ru>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 20 10:07:34 2011
+X-From: git-owner@vger.kernel.org Tue Sep 20 10:20:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5vMb-0007Cu-RQ
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 10:07:34 +0200
+	id 1R5vZH-00050W-7c
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 10:20:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753995Ab1ITIHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Sep 2011 04:07:25 -0400
-Received: from smtp1.mail.ru ([94.100.176.129]:46749 "EHLO smtp1.mail.ru"
+	id S1754463Ab1ITIUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Sep 2011 04:20:33 -0400
+Received: from smtp9.mail.ru ([94.100.176.54]:60232 "EHLO smtp9.mail.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753890Ab1ITIHW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Sep 2011 04:07:22 -0400
+	id S1754406Ab1ITIUc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2011 04:20:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
-	h=Sender:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From; bh=CH0K04bhLROFXpNeF+BAtZBmw4q8jgNcWwk4kmWl+X8=;
-	b=PTIzCtH1VP959EXM+3Du0x59LAoaqJZpoM74HwtfaTqWCwNwb/z7Jb2u30gaZhqSLbqguXl0N6cioqB/Sf/Da7+OE62aTl2m3IYljRN977+h87CuOZcjHvfFXy3JaAEG;
-Received: from [91.77.19.104] (port=45329 helo=zappedws)
-	by smtp1.mail.ru with asmtp 
-	id 1R5vMO-0006EJ-00; Tue, 20 Sep 2011 12:07:20 +0400
+	h=Sender:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From; bh=Kyrl7xXgiEAd418tKZqh5h1d1oy+FJ1K7LvgGr0sufA=;
+	b=XUHqao0v6dJkQ5UaZ0gVQudEhtXlhltc820xCARNr+zaWzR3WDjS1XHOSl5t/hymnsoOEszgHuxbJcTP6As7U5sPJ3ayJDhlM08TIDTedQO88ViAk2Z2d5fFHjpTKlkY;
+Received: from [91.77.19.104] (port=53939 helo=zappedws)
+	by smtp9.mail.ru with asmtp 
+	id 1R5vZ8-0002Nr-00; Tue, 20 Sep 2011 12:20:30 +0400
 Received: from Alex by zappedws with local (Exim 4.76)
 	(envelope-from <zapped@mail.ru>)
-	id 1R5vMI-0001Kw-0r; Tue, 20 Sep 2011 12:07:14 +0400
+	id 1R5vZ2-0001ZF-4V; Tue, 20 Sep 2011 12:20:24 +0400
 X-Mailer: git-send-email 1.7.6.3.4.gf71f
-In-Reply-To: <1316505154-3904-1-git-send-email-zapped@mail.ru>
+In-Reply-To: <7v1uvptjhr.fsf@alter.siamese.dyndns.org>
 X-Spam: Not detected
 X-Mras: Ok
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181739>
 
-Some email clients (e.g. claws-mail) incorrectly display
-message body when there is no Content-Type header and charset
-explicitly defined.
-So, set explicitly Content-Type header and charset
-can be defined with hooks.emailcharset config variable.
+>>You seem to have inherited bad grammar from some example; I wonder
+>>where... ;-)
+I rephrased... I made an attempt to as least ;)
 
-Signed-off-by: Alexey Shumkin <zapped@mail.ru>
----
- [resent: Fixed typo in commit message]
+>>Format it this way instead if you want to use multi-line:
+>>	echo "..." |
+>>    iconv ... |
+>>    xargs ...
+done
 
- contrib/hooks/post-receive-email |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+Alexey Shumkin (2):
+  pretty: Add failing tests: user format ignores i18n.logOutputEncoding
+    setting
+  pretty: user format ignores i18n.logOutputEncoding setting
 
-diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-index 21989fc..64d7c2f 100755
---- a/contrib/hooks/post-receive-email
-+++ b/contrib/hooks/post-receive-email
-@@ -60,6 +60,8 @@
- #   email body. If not specified, there is no limit.
- #   Lines beyond the limit are suppressed and counted, and a final
- #   line is added indicating the number of suppressed lines.
-+# hooks.emailcharset
-+#   The charset used in Content-Type header. UTF-8, if not specified.
- #
- # Notes
- # -----
-@@ -229,6 +231,7 @@ generate_email_header()
- 	cat <<-EOF
- 	To: $recipients
- 	Subject: ${emailprefix}$projectdesc $refname_type $short_refname ${change_type}d. $describe
-+	Content-Type: text/plain; charset=$emailcharset
- 	X-Git-Refname: $refname
- 	X-Git-Reftype: $refname_type
- 	X-Git-Oldrev: $oldrev
-@@ -723,6 +726,7 @@ envelopesender=$(git config hooks.envelopesender)
- emailprefix=$(git config hooks.emailprefix || echo '[SCM] ')
- custom_showrev=$(git config hooks.showrev)
- maxlines=$(git config hooks.emailmaxlines)
-+emailcharset=$(git config hooks.emailcharset || echo 'UTF-8')
- 
- # --- Main loop
- # Allow dual mode: run from the command line just like the update hook, or
+ builtin/rev-list.c               |    1 +
+ builtin/shortlog.c               |    1 +
+ log-tree.c                       |    1 +
+ submodule.c                      |    3 +
+ t/t4041-diff-submodule-option.sh |   56 ++++++------
+ t/t4205-log-pretty-formats.sh    |   22 ++++-
+ t/t6006-rev-list-format.sh       |  192 +++++++++++++++++++++++---------------
+ 7 files changed, 170 insertions(+), 106 deletions(-)
+
 -- 
 1.7.6.3.4.gf71f
