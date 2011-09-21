@@ -1,75 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: mac osx
-Date: Tue, 20 Sep 2011 16:29:27 -0700
-Message-ID: <7vliti4wtk.fsf@alter.siamese.dyndns.org>
-References: <loom.20110921T002437-246@post.gmane.org>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: [PATCH 2/3] branch: teach --edit-description option
+Date: Wed, 21 Sep 2011 10:15:20 +1000
+Message-ID: <CAH5451nai988=jB8cgFcUaQZWWUyALC-tOSV_jdLX0r_2UfbPw@mail.gmail.com>
+References: <7vaaa8xufi.fsf@alter.siamese.dyndns.org> <CA+55aFxAQTR3sT7gekAD4qih8J+z-qwri7ZmNCPUd811xgci6w@mail.gmail.com>
+ <CA+55aFy0b+eozmzbKD4RXcJ7e3WCpf7BV1n1qXHOeEwSHZKOXw@mail.gmail.com>
+ <7vobynui8a.fsf@alter.siamese.dyndns.org> <7viposfgvd.fsf_-_@alter.siamese.dyndns.org>
+ <7vy5xi4y3m.fsf@alter.siamese.dyndns.org> <7vty864y24.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: tom smitts <tomsmitts@ymail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 21 01:29:39 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 21 02:15:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R69kt-0005Qr-7S
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Sep 2011 01:29:35 +0200
+	id 1R6ATb-0004VG-Ky
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Sep 2011 02:15:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752178Ab1ITX3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Sep 2011 19:29:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56602 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751932Ab1ITX3a (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Sep 2011 19:29:30 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B6375560D;
-	Tue, 20 Sep 2011 19:29:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hs7LIttZkWFAmd4TJdrJpLl/APU=; b=CSkzMw
-	y21IbFvYtXm5tZaIGGahZJgJ//weJJ5gkPFbxe81gxFUn/vldftLvqmjVq4vDMA6
-	nolX7TkMvLuzmZfc1dpM2kymTyrIucdS1bqGWFW07/7s+ubLpWQkivLpFZ2EZ77C
-	lblmsxMlEsVfahUBW89kv21LLRxa1wOcxcBbQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=buYgv/EQEbNe3yadQyhwRllwFkK8oOpC
-	k2jaUNvQLUUuzj0mF9r57ozsZNIygHGKIOu+RnDySMklcJBAWP2zLB1VLHLeRzFt
-	Yz+kCKkJ1/YrlTiJ8bbMMWL1LGe0O4XlA+l4qSWzSDZ3BlD1NUHEOQzGJmjv3hGy
-	d5jp2bjJgLk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AE1A7560C;
-	Tue, 20 Sep 2011 19:29:29 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3C833560B; Tue, 20 Sep 2011
- 19:29:29 -0400 (EDT)
-In-Reply-To: <loom.20110921T002437-246@post.gmane.org> (tom smitts's message
- of "Tue, 20 Sep 2011 22:40:35 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 62E6BCD0-E3E0-11E0-BF50-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752559Ab1IUAPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Sep 2011 20:15:42 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:49644 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752107Ab1IUAPl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2011 20:15:41 -0400
+Received: by fxe4 with SMTP id 4so1039497fxe.19
+        for <git@vger.kernel.org>; Tue, 20 Sep 2011 17:15:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=8jJlX0zGLPtHg7U4CiPZxH3RpWJnZuysSxwL8N4kWqY=;
+        b=ov90qqjlea/KPQczDeyU7fbFqpEXhq96PgsCnF1Q+tbfQpZVXebH9kCBGVP2ULvJJo
+         ir6sDcuYDBIEowybsSQO6djZ6f49gnJOKs/eE8+xC60hYdxVAm2UtpAtvOekJvUtw4m5
+         xqlpraxGtthz8GRbH0kMHd/zRF4UjVwENEonc=
+Received: by 10.223.64.66 with SMTP id d2mr2168358fai.116.1316564140357; Tue,
+ 20 Sep 2011 17:15:40 -0700 (PDT)
+Received: by 10.152.37.66 with HTTP; Tue, 20 Sep 2011 17:15:20 -0700 (PDT)
+In-Reply-To: <7vty864y24.fsf_-_@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181808>
 
-tom smitts <tomsmitts@ymail.com> writes:
+On 21 September 2011 09:02, Junio C Hamano <gitster@pobox.com> wrote:
+> Using branch.$name.description as the configuration key, give users a
+> place to write about what the purpose of the branch is and things like
+> that, so that various subsystems, e.g. "push -s", "request-pull", and
+> "format-patch --cover-letter", can later be taught to use this
+> information.
+>
+> The "-m" option similar to "commit/tag" is deliberately omitted, as the
+> whole point of branch description is about giving descriptive information
+> (the name of the branch itself is a better place for information that fits
+> on a single-line).
 
-> Do the git maintainers really think any mac users have
-> a clue which git install package to download?
+I understand your reasoning here, however is there a way to allow
+setting the branch description in, for example, a script?
 
-Not a clue.
+Additionally I can imagine it would be useful to be able to set the
+branch description from another tool, what is the recommended way of
+doing that? Should tools modify the config directly??
 
-> You put some arcane chipset designation in the package
-> name!  Why make mac installers at all?
-
-No, I don't, I do not make mac installers.
-
-Unfortunately I do not know which one of "Git maintainers" make installers
-for Macintosh. Hopefully the guilty-party would respond, or perhaps the
-person who make installers do not live on this list, in which case the
-complaint needs to be redirected to the person and off of this mailing
-list.
-
-Thanks.
+Regards,
+Andrew
