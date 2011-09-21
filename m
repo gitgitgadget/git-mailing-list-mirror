@@ -1,70 +1,112 @@
-From: Jay Soffian <jaysoffian@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: How to use git attributes to configure server-side checks?
-Date: Wed, 21 Sep 2011 16:02:35 -0400
-Message-ID: <CAG+J_DyxGW8MSYaRj2-fepFDeQDTsuy1S0VDgsu7u2CY+ZCZDQ@mail.gmail.com>
+Date: Wed, 21 Sep 2011 13:17:05 -0700
+Message-ID: <7vy5xh1whq.fsf@alter.siamese.dyndns.org>
 References: <4E7A3BDE.3040301@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git discussion list <git@vger.kernel.org>
 To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Sep 21 22:02:44 2011
+X-From: git-owner@vger.kernel.org Wed Sep 21 22:17:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6T0D-0005E9-JT
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Sep 2011 22:02:41 +0200
+	id 1R6TEM-0004PE-81
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Sep 2011 22:17:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751708Ab1IUUCg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Sep 2011 16:02:36 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:60328 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751077Ab1IUUCf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2011 16:02:35 -0400
-Received: by ywb5 with SMTP id 5so1461609ywb.19
-        for <git@vger.kernel.org>; Wed, 21 Sep 2011 13:02:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Npe81jNSSwX99PBo9hGuCIBseaCor5XcJuSb0SJZ/q4=;
-        b=vhIP2MWiLdmIaKYH3/gmI/P+U0r3VV9knh1DVO9m3wrMm+KCNCmUVDDETxDXtMeQyU
-         rTdMVl0BD9xf3WLrh3XKaSbRaeI3vLwzNoFs7W2Pld8zjHHIIpcGBYX5/wmqM3AkOFgO
-         ckgsr9/c4hc/5x17IscwwGDNwGr8gor64t+pE=
-Received: by 10.146.60.29 with SMTP id i29mr1280642yaa.26.1316635355075; Wed,
- 21 Sep 2011 13:02:35 -0700 (PDT)
-Received: by 10.147.32.18 with HTTP; Wed, 21 Sep 2011 13:02:35 -0700 (PDT)
-In-Reply-To: <4E7A3BDE.3040301@alum.mit.edu>
+	id S1753084Ab1IUURN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Sep 2011 16:17:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51438 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752258Ab1IUURL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Sep 2011 16:17:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EAC4647A;
+	Wed, 21 Sep 2011 16:17:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ur+1Qs+d7hLsrk8j52T6gRfzalc=; b=kR8C+N
+	ky20ghjTelkdspnx+aSx590uGEva/1+LGNR4rvIvtkt6NTwpHDI/cjKG2bwYZaBc
+	yrNzGEh8liEUqJZ32z7zvLymnbf0ilutOQjUoAfA4w/wMIrOD9M06Dq+XcP6nh5j
+	wmJDmUmzxbxOQnBbiGbG5efjEgQ7s3Dg4vZV8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aZOVwHH+IkikY/K7giXKvKmnjFJDBVeL
+	H9shy0VtGGsskR9NoeOdMFFEJV7YSoudm878mL8/vSLdXr7Tx+fkVdNqBhS0SHMt
+	Yg46fmsC22ZArXZkkUR2WHDBewrxeqwpEK1gUUGOkDyYhWmkCKlYFmXGpIdEQxPX
+	x3iaPPfBlcw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3ED0C6479;
+	Wed, 21 Sep 2011 16:17:07 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BC13F6478; Wed, 21 Sep 2011
+ 16:17:06 -0400 (EDT)
+In-Reply-To: <4E7A3BDE.3040301@alum.mit.edu> (Michael Haggerty's message of
+ "Wed, 21 Sep 2011 21:32:46 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AD762804-E48E-11E0-B0CD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181860>
 
-On Wed, Sep 21, 2011 at 3:32 PM, Michael Haggerty <mhagger@alum.mit.edu=
-> wrote:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
+
 > I was thinking of using git attributes to configure a server-side
 > "update" hook that does some basic sanity checking before accepting a
-> push. =C2=A0I thought I could do something like
+> push.  I thought I could do something like
 >
 > ~/.gitattributes:
-> =C2=A0 =C2=A0*.c whitespace
+>     *.c whitespace
 >
 > ~/crappy-vendor-code/.gitattributes:
-> =C2=A0 =C2=A0# This code doesn't conform to our standards; disable ch=
-eck:
-> =C2=A0 =C2=A0*.c -whitespace
+>     # This code doesn't conform to our standards; disable check:
+>     *.c -whitespace
 >
-> This would allow fine-grained specification of which checks are appli=
-ed
+> This would allow fine-grained specification of which checks are applied
 > to which files, and ensure that the hook configuration is kept
 > synchronized with changes to the content.
+>
+> What I can't figure out is how a server-side update hook can inquire
+> about the gitattributes that were associated with a file *in a
+> particular commit*, as opposed to in the current working tree.  I would
+> like to ask questions like "was the "whitespace" attribute set on file F
+> in commit C?"
+>
+> I see that there is an (undocumented) API involving
+> git_attr_set_direction() that seems to let gitattributes to be read out
+> of the index instead of the working tree.  But I am still confused:
 
-I do this by running diff --check. I'm actually doing it via Jenkins +
-Gerrit, but it's done against a bare repo, so the idea should work
-just the same via a git hook. Here's the code I run in Jenkins in case
-it's at all helpful - https://gist.github.com/6b230f9bd8d4d2fd9895
+The words "server side" automatically mean that there should be no working
+tree, and where there is no working tree there should be no index, so the
+direction should not make any difference.  The attributes that are used to
+help whitespace checks should come from project.git/info/attributes in
+such a case [*1*].
 
-j.
+As to the actual checking of the pushed contents, your pre-receive hook is
+called after all the objects received are placed in the object store, but
+before the refs are updated to conclude the push, and you can veto the
+push by exiting with non-zero status from the hook. Your hook will get
+which ref is being updated from what old commit to what new commit, so you
+can either
+
+ (1) grab the new commits introduced to the project using rev-list, and
+     invoke "git show --check" on each and every one of them; or
+
+ (2) check only the endpoints, by running "git diff --check" between the
+     old and new commits. A pushed series may introduce a breakage early
+     in the series which is corrected later in the series and you would
+     not catch such a case if you used this method.
+
+[Footnote]
+
+*1* granted, that there are people who make a checkout from their post
+update hook, perhaps so that a build robot can be told to work on it or
+the web server can deliver individual files. But that is merely a crude
+substitute of having a proper "install" procedure. As far as the
+"server-side" Git that accepts "git push" is concerned, such a working
+tree does not exist.
