@@ -1,92 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] git-p4 tests: refactor, split out common functions
-Date: Tue, 20 Sep 2011 19:35:55 -0700
-Message-ID: <7vboue4o6s.fsf@alter.siamese.dyndns.org>
-References: <20110918012634.GA4578@arf.padd.com>
- <20110918012713.GA4619@arf.padd.com>
- <7v7h55cyis.fsf@alter.siamese.dyndns.org>
- <20110921012917.GA27256@arf.padd.com>
- <7vfwjq4o96.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 2/3] branch: teach --edit-description option
+Date: Tue, 20 Sep 2011 19:44:50 -0700
+Message-ID: <7v7h524nrx.fsf@alter.siamese.dyndns.org>
+References: <7vaaa8xufi.fsf@alter.siamese.dyndns.org>
+ <CA+55aFxAQTR3sT7gekAD4qih8J+z-qwri7ZmNCPUd811xgci6w@mail.gmail.com>
+ <CA+55aFy0b+eozmzbKD4RXcJ7e3WCpf7BV1n1qXHOeEwSHZKOXw@mail.gmail.com>
+ <7vobynui8a.fsf@alter.siamese.dyndns.org>
+ <7viposfgvd.fsf_-_@alter.siamese.dyndns.org>
+ <7vy5xi4y3m.fsf@alter.siamese.dyndns.org>
+ <7vty864y24.fsf_-_@alter.siamese.dyndns.org>
+ <CAH5451nai988=jB8cgFcUaQZWWUyALC-tOSV_jdLX0r_2UfbPw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Vitor Antunes <vitor.hda@gmail.com>,
-	Luke Diamand <luke@diamand.org>, Chris Li <git@chrisli.org>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Wed Sep 21 04:36:05 2011
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 21 04:45:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6CfL-00068q-5y
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Sep 2011 04:36:03 +0200
+	id 1R6Cnz-0000NI-B5
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Sep 2011 04:44:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751969Ab1IUCf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Sep 2011 22:35:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50325 "EHLO
+	id S1751539Ab1IUCoy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Sep 2011 22:44:54 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52984 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751789Ab1IUCf5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Sep 2011 22:35:57 -0400
+	id S1751235Ab1IUCow (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2011 22:44:52 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F1E26C09;
-	Tue, 20 Sep 2011 22:35:57 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D5EB6D86;
+	Tue, 20 Sep 2011 22:44:52 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=w1qU/F2RFzSfrDc5Hj7zxL6f38E=; b=ha8E6n
-	8zeVPGJQeROqtHXgHaABvXWu/GDT2Tj91sLpgwankhQ6at7+QJ5PM5LELFTlkuKh
-	9Uo4+GrEzinfBIcEFxAMHMAhV6wkDsn6Pe2882ScCIQryR3iyEqPaWeWneQPSZjq
-	+7DP7SkjwUW9WltpVrH0CPWQIa/lQDZOUZFp8=
+	:content-type; s=sasl; bh=EHbsb6pzpjtlk0URst/r1F1UB+I=; b=YtEEhd
+	7P/ECfoj0ZhjoakYqCbbKeH/inGSPSis9e6XvruE20X6fQAHQ80CH8gzaTjO346a
+	nSD7JPUbIjrYjzWXZxYqua8THaftDcE2f0OCq9+rWfVhN/jqldvyJw4KSz/HZCb0
+	3Vc4KWqAXdOnBcSqVHzQbtMFW7U0bL8N6lAL0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UTK2bG2+qogyHBjRkTQCfYmge8Ht2xip
-	vCPW1HqhqI+AfxIaXjZX+GxW7g/LvIAGhReTDHaYjdlPcC0/P+Cw2VBqaEfYOFMc
-	bgtW6U9RoRf+OU2Df3ofIRUsbjf5Oq/oU+f9sNgzQSno8dkhjaHUnC4yTpKDm9Nk
-	lYRtKZYg/68=
+	:content-type; q=dns; s=sasl; b=M8Ltmn8YnbN2qdLTXHRt63mh23GW8DIP
+	3kxljH61IRUn8xq3L+KFvX0rStv3efLptNXjb4AtyucmCkF3wZv9GffxhEy5QYs+
+	OKKU64LmuXvKgZ3PY8DW9dJ+RGFFqsjcfedXpGE8JbMpFWkrogqa0rRY2IfHEMbT
+	Y3mPnRqAkiU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 653856C07;
-	Tue, 20 Sep 2011 22:35:57 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 059AB6D85;
+	Tue, 20 Sep 2011 22:44:52 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EE6536C05; Tue, 20 Sep 2011
- 22:35:56 -0400 (EDT)
-In-Reply-To: <7vfwjq4o96.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 20 Sep 2011 19:34:29 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8CB2C6D84; Tue, 20 Sep 2011
+ 22:44:51 -0400 (EDT)
+In-Reply-To: <CAH5451nai988=jB8cgFcUaQZWWUyALC-tOSV_jdLX0r_2UfbPw@mail.gmail.com> (Andrew
+ Ardill's message of "Wed, 21 Sep 2011 10:15:20 +1000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6F4EB29C-E3FA-11E0-9F07-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: ADF41CC0-E3FB-11E0-B364-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181813>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Andrew Ardill <andrew.ardill@gmail.com> writes:
 
-> Yeah, something like
->
-> 	: start
-> 	p4d &
->         echo $! >$pidfile
+> I understand your reasoning here, however is there a way to allow
+> setting the branch description in, for example, a script?
 
-Obviously I should have written:
+As you read in the patch, especially the documentation part, there is not
+a way to do that.
 
-	: stop
-        pid=$(cat "$pidfile")
-	while kill -0 $pid
-	do
-		kill $pid
-		sleep 1
-	done
+I am not interested because it does not directly help my cause of helping
+the human communication between the kernel developers who may want to
+perform a signed push to their public repository and send their pull
+requests with the same message to Linus.
 
-Sorry for the noise.
+That does _not_ mean I will _reject_ a patch to add such a feature. It
+just means writing such a patch myself or reviewing and accepting such a
+patch is not very high in my prioritized list at this point in the
+evolution of the series. Teaching the use of the information to other
+commands such as "format-patch --cover-letter" would have much higher
+precedence.
 
->         : stop
-> 	while kill -0 $pidfile
->         do
-> 	        kill $pidfile
->                 sleep 1
-> 	done
->
->> Finding an unused port is also a pain.
->
-> I think the way t55xx series assign LIB_HTTPD_PORT is an acceptable
-> compromise.
+> Additionally I can imagine it would be useful to be able to set the
+> branch description from another tool, what is the recommended way of
+> doing that? Should tools modify the config directly??
+
+An obvious answer: "do whatever you want". The only rule that the programs
+that need to follow is that branch.$name.description has the string to use
+to obtain the explanation text.
+
+How they achieve that (perhaps by running "git config") is of secondary
+importance.
