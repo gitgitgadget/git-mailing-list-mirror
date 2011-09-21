@@ -1,70 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH di/fast-import-deltified-tree] Windows: define S_ISUID
- properly
-Date: Wed, 21 Sep 2011 08:13:31 -0700
-Message-ID: <7v39fq2ajo.fsf@alter.siamese.dyndns.org>
-References: <4E798538.7070106@viscovery.net>
- <loom.20110921T092135-714@post.gmane.org>
- <7vfwjq2hoo.fsf@alter.siamese.dyndns.org>
- <CA+gfSn8VaTLcrLqb3HGJpjL5WJMHZz4kPPUtyeHPCsdmO5iU8g@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: mac osx
+Date: Wed, 21 Sep 2011 17:41:05 +0200
+Message-ID: <CAGdFq_iiuZXFr0=4G=XmAt5empZ-dhSLOmY45cJM-R9EckPLUg@mail.gmail.com>
+References: <loom.20110921T002437-246@post.gmane.org> <CAFcyEtiexmE0WMif-eGHe5xMoYv7-8mdXos1qbQBH3g04z0sAg@mail.gmail.com>
+ <CAGdFq_h0VqbZ5W3QVwoQWT63znhpePDFCRE+-n1TqPNztREwkA@mail.gmail.com>
+ <F4C226A7-768D-4913-A6C1-12411FBA212C@gmail.com> <CAP2yMaJz3-iX11vhbrTVasFD1zdwsdiDFKU7z7=an8pBoORk8w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Dmitry Ivankov <divanorama@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 21 17:13:45 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Timothy Harper <timcharper@gmail.com>,
+	Kyle Neath <kneath@gmail.com>,
+	tom smitts <tomsmitts@ymail.com>, git@vger.kernel.org
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 21 17:41:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6OUa-0000Yh-N9
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Sep 2011 17:13:45 +0200
+	id 1R6Ovn-0008Va-Ke
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Sep 2011 17:41:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752196Ab1IUPNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Sep 2011 11:13:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61606 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751872Ab1IUPNf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Sep 2011 11:13:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D607C51F6;
-	Wed, 21 Sep 2011 11:13:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OrZWs/1eVog7rK63FsTEsg1BRtM=; b=TzGSNg
-	advwvA3YvRt7yn41EMK61kfiF3A9qHuL7fTis2AVPv+N4YfC4+e0SbqljM6VstNA
-	C05CPFY+Xe1HsLqj2tbLrLhf+3nG/XhClTxRKF2HNbmKfEDT8qbEFRNTbRXCBz8g
-	1TAQ6b1zE78MNJU1zQ+S4JyIQDXQt/ave5kaM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gfjxw5MSovOao1NI8edaYJhRxkQMNj00
-	nbxq8LHqzL4EyQ1ZLw0AQsnTsHSEepEZqoXbOSelsqvJ3AG0HL3fdGe8bOjKGY3u
-	1y9KLDC58iQWtKSHOGNfEuxzHaRzOAQJLRH3xFS69QMgD5Z/6spO4JVa+pT5Xvb3
-	C82YQO+NMiM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CDC6151F5;
-	Wed, 21 Sep 2011 11:13:33 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5D8B051F4; Wed, 21 Sep 2011
- 11:13:33 -0400 (EDT)
-In-Reply-To: <CA+gfSn8VaTLcrLqb3HGJpjL5WJMHZz4kPPUtyeHPCsdmO5iU8g@mail.gmail.com> (Dmitry
- Ivankov's message of "Wed, 21 Sep 2011 19:44:55 +0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 457008F8-E464-11E0-A5F8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752532Ab1IUPlq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Sep 2011 11:41:46 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:59810 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752429Ab1IUPlq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Sep 2011 11:41:46 -0400
+Received: by gyg10 with SMTP id 10so1237423gyg.19
+        for <git@vger.kernel.org>; Wed, 21 Sep 2011 08:41:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=jjkXeAo9dwKwgPOSYvKwMBF46aEa8v4oupyGESZdOQI=;
+        b=NZLukP0sdVLAe+jbChTME2Jp6MFvkE5xrmjQLwbU6WweQJ1ZKRJGyTEePDGQzywmi5
+         cvzrQLZfziPXIGQNZa1/W75tUogehdWEgW/VVPfmdeukCH8UusOo2wy4JYu1lalM3leH
+         TmDjm0J92CT0/G9hlASV8wTvRXMsRmecUUE10=
+Received: by 10.68.122.166 with SMTP id lt6mr1746622pbb.153.1316619705079;
+ Wed, 21 Sep 2011 08:41:45 -0700 (PDT)
+Received: by 10.68.62.3 with HTTP; Wed, 21 Sep 2011 08:41:05 -0700 (PDT)
+In-Reply-To: <CAP2yMaJz3-iX11vhbrTVasFD1zdwsdiDFKU7z7=an8pBoORk8w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181850>
 
-Dmitry Ivankov <divanorama@gmail.com> writes:
+Heya,
 
->> And it would be even better to use a value that does not overlap with the
->> usual bits for do-not-delta bit if possible.
->
-> Depends on what is a usual bit. I'll use linux defines for mode bits.
+On Wed, Sep 21, 2011 at 16:58, Scott Chacon <schacon@gmail.com> wrote:
+> I link to the featured downloads from git-scm.com front page as the
+> huge mac icon
 
-Failed -- was too subtle to extract a hoped-for response "come to think of
-it we should have done it as a separate field in the structure".
+You currently link to:
+
+http://code.google.com/p/git-osx-installer/downloads/list?can=3
+
+Which apparently shows all downloads that were at some point featured.
+
+If you link instead to:
+
+http://code.google.com/p/git-osx-installer/downloads/list?q=label:Featured
+
+The list is a lot shorter.
+
+-- 
+Cheers,
+
+Sverre Rabbelier
