@@ -1,69 +1,65 @@
-From: Kyle Neath <kneath@gmail.com>
-Subject: Re: mac osx
-Date: Tue, 20 Sep 2011 20:40:29 -0700
-Message-ID: <CAFcyEtiexmE0WMif-eGHe5xMoYv7-8mdXos1qbQBH3g04z0sAg@mail.gmail.com>
-References: <loom.20110921T002437-246@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: tom smitts <tomsmitts@ymail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 21 05:40:58 2011
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] bisect: fix exiting when checkout failed in bisect_start()
+Date: Wed, 21 Sep 2011 07:17:24 +0200
+Message-ID: <20110921051725.5255.6756.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Joel Kaasinen <joel@zenrobotics.com>,
+	Jon Seymour <jon.seymour@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 21 07:19:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6Dg7-0000Rk-ES
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Sep 2011 05:40:55 +0200
+	id 1R6FD4-0003pY-98
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Sep 2011 07:19:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752435Ab1IUDku convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Sep 2011 23:40:50 -0400
-Received: from mail-gw0-f52.google.com ([74.125.83.52]:53975 "EHLO
-	mail-gw0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752388Ab1IUDku convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2011 23:40:50 -0400
-Received: by gwb1 with SMTP id 1so1281190gwb.11
-        for <git@vger.kernel.org>; Tue, 20 Sep 2011 20:40:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=uF8kckKBp85O06eBeFRha59zeTbO/eFf6lIIfuYOX24=;
-        b=Bhcliajw+/CYggvGOhdN/2Kks5vxAQ+XazL79mxaOCHMoMgA7PcvS4dr6EqoHG57yJ
-         NpqqQnGJWWI+5LIxxOrc0mrkJ6WdtGU4LLKD3aV3ljbTpSIPQ0gpQeefSPOAIM3lS34+
-         XiVYefjjfg2LasyTz9WSoHiBqazL2dh+8NFx4=
-Received: by 10.68.13.36 with SMTP id e4mr666004pbc.379.1316576449158; Tue, 20
- Sep 2011 20:40:49 -0700 (PDT)
-Received: by 10.142.233.14 with HTTP; Tue, 20 Sep 2011 20:40:29 -0700 (PDT)
-In-Reply-To: <loom.20110921T002437-246@post.gmane.org>
+	id S1751530Ab1IUFSx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Sep 2011 01:18:53 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:49904 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751130Ab1IUFSw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Sep 2011 01:18:52 -0400
+Received: from localhost6.localdomain6 (unknown [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id DDF63A60F5;
+	Wed, 21 Sep 2011 07:18:44 +0200 (CEST)
+X-git-sha1: b7a3a770a1be36df4e49ff4b7e7d0fd42a8c5bb3 
+X-Mailer: git-mail-commits v0.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181815>
 
-On Tue, Sep 20, 2011 at 3:40 PM, tom smitts <tomsmitts@ymail.com> wrote=
-:
-> Do the git maintainers really think any mac users have
-> =A0a clue which git install package to download? =A0You
-> put some arcane chipset designation in the package
-> =A0name! =A0Why make mac installers at all? =A0Mac users
-> know their operating system number, e.g. 10.6.7,
-> and that's all. =A0I doubt Windows users know any better.
-> And I doubt you can find anywhere on a mac that says
-> =A0i386 or whatever the heck the other dumb
-> designation is.
+Commit 4796e823 ("bisect: introduce --no-checkout support into porcelain." Aug 4 2011)
+made checking out the branch where we started depends on the "checkout" mode. But
+unfortunately it lost the "|| exit" part after the checkout command.
 
-Yikes! That's definitely not good. I'll see what we can do about updati=
-ng
-git-scm.com to point to a more reasonable installer for OSX. I haven't =
-clicked
-that link in a long time and had no idea it was so confusing.
+As it makes no sense to continue if the checkout failed and as people have already
+complained that the error message given when we just exit in this case is not clear, see:
 
-I've created an issue so we can track it, if you'd like to follow along=
-:
-https://github.com/schacon/gitscm/issues/16
+http://thread.gmane.org/gmane.comp.version-control.git/180733/
 
-Kyle Neath
-Director of Design, GitHub
+this patch adds a "|| die <hopefully clear message>" part after the checkout command.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ git-bisect.sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/git-bisect.sh b/git-bisect.sh
+index e0ca3fb..5fb4291 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -129,7 +129,8 @@ bisect_start() {
+ 		start_head=$(cat "$GIT_DIR/BISECT_START")
+ 		if test "z$mode" != "z--no-checkout"
+ 		then
+-			git checkout "$start_head" --
++			git checkout "$start_head" -- ||
++			die "$(eval_gettext "Checking out '\$start_head' failed. Try 'git bisect reset <validbranch>'.")"
+ 		fi
+ 	else
+ 		# Get rev from where we start.
+-- 
+1.7.7.rc0.72.g4b5ea.dirty
