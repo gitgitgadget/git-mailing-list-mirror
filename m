@@ -1,123 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] unpack-trees: print "Aborting" to stderr
-Date: Wed, 21 Sep 2011 15:40:06 -0700
-Message-ID: <7v39fp1pvd.fsf@alter.siamese.dyndns.org>
-References: <4E7996AA.4040909@drmicha.warpmail.net>
- <8b522de3711f339eea264dd7d8e44682af6c4865.1316590874.git.git@drmicha.warpmail.net> <7v7h511rl9.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Fwd: vcs-svn and friends
+Date: Wed, 21 Sep 2011 18:40:08 -0500
+Message-ID: <20110921234008.GA23439@elie>
+References: <CAFfmPPOBZ6cXG51mDHbj2VRDzjvH46Q7=_LvUWeMq0SGR40S1g@mail.gmail.com>
+ <20110915100106.GB2328@elie>
+ <CA+gfSn9KVN2iDCevd0s+TjYHNupDez8NiKZycP3pgBCkYiraFQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Joshua Jensen <jjensen@workspacewhiz.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Sep 22 00:40:19 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Michael Barr <davidbarr@google.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Dmitry Ivankov <divanorama@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 22 01:40:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6VSk-0002EA-EO
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 00:40:18 +0200
+	id 1R6WOu-0001hb-Lj
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 01:40:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751600Ab1IUWkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Sep 2011 18:40:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42334 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751018Ab1IUWkL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Sep 2011 18:40:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D1F2681B;
-	Wed, 21 Sep 2011 18:40:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=71I08iBriVSGrGAgPj2PAngpBWE=; b=pOpVrh
-	c8Mk0gXvRdp8UMeeukujZUc4ZOjXnuhgT6fL6c7dwFeQOCBHDNPfYMG81YjJ/oe8
-	j9MxPplAyo2x4h9Vts/tZrsBj6jsomia1Nf1RdNmbPPCi7m8XmSZeNsY70U8hc7/
-	jDyH8oH70wrwI8GMucOKv3Gi1v7Alg0tEA7bg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=q3EXabIpX7rA5luuK7A9yg5fToi6+oIV
-	3rkoNGgU47RIIx/ELTRQ9rmM8V+EXfR5wYxWy26ysWS0Mhz/sMU57QErHtv9MUhw
-	ZliUZic/8+ZnqgVsQIxU1NLTTYP3jE+DT6lGbrWuMXsrYsbCNB+ZkfLiNC8733W2
-	XSFJhOS7w7M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22FC5681A;
-	Wed, 21 Sep 2011 18:40:08 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 759846818; Wed, 21 Sep 2011
- 18:40:07 -0400 (EDT)
-In-Reply-To: <7v7h511rl9.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 21 Sep 2011 15:02:58 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A7F71708-E4A2-11E0-93E9-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751218Ab1IUXkQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Sep 2011 19:40:16 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:46823 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751172Ab1IUXkO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2011 19:40:14 -0400
+Received: by iaqq3 with SMTP id q3so2186243iaq.19
+        for <git@vger.kernel.org>; Wed, 21 Sep 2011 16:40:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=ZHk5XHVdaha8gv9OXqWgfXvEID7h9jy4ov1gjm1AQU4=;
+        b=tXPIV44awSXGtQ8DE87ByX7vmonSjqFJWEJncM5GPcu7qnzwD/pFwrM1vRQxQep1/U
+         8TyMM5x/c0UguDWRo0bLwTKFunh+TmRDWDbX5Eh7fDRYs63zLA1aIGXc4gWAzYAeFXl+
+         OUTybyioQAMPtHCZS/hsHMmReTeMN3ovKCzQI=
+Received: by 10.231.4.131 with SMTP id 3mr2582559ibr.30.1316648414294;
+        Wed, 21 Sep 2011 16:40:14 -0700 (PDT)
+Received: from elie (c-67-173-1-13.hsd1.il.comcast.net. [67.173.1.13])
+        by mx.google.com with ESMTPS id j2sm8639857ibx.11.2011.09.21.16.40.13
+        (version=SSLv3 cipher=OTHER);
+        Wed, 21 Sep 2011 16:40:13 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CA+gfSn9KVN2iDCevd0s+TjYHNupDez8NiKZycP3pgBCkYiraFQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181867>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Dmitry Ivankov wrote:
 
-> Forgot to update a test or two that this breaks?
+>> =C2=A0- 3bba32e9 ("fast-import: allow top directory as an argument f=
+or some
+>> =C2=A0 commands"): I'm not sure what the motivation is --- is this j=
+ust
+>> =C2=A0 about the principle of least surprise, or did it come up in p=
+ractice
+>> =C2=A0 somewhere?
+>
+> (to ease one's reading, commands are ls, copy and move top directory)
+>
+> Haven't seen them in practice. It seemed possible with svn import: if=
+ there were
+> no branches at start, and then someone did svn mv . trunk. But it
+> turns out that my
+> svn client doesn't allow such move. So more like a least surprise pur=
+pose.
 
-In the meantime I've squashed this in.
+With that information in mind, it sounds like a reasonable change in
+principle (though I haven't looked over the code at all).  Could you
+propose a log message explaining it (both the original motivation and
+the actual impact)?
 
- t/t7607-merge-overwrite.sh     |    1 +
- t/t7609-merge-co-error-msgs.sh |    5 +++++
- 2 files changed, 6 insertions(+), 0 deletions(-)
-
-diff --git a/t/t7607-merge-overwrite.sh b/t/t7607-merge-overwrite.sh
-index 72a8731..aa74184 100755
---- a/t/t7607-merge-overwrite.sh
-+++ b/t/t7607-merge-overwrite.sh
-@@ -107,6 +107,7 @@ error: The following untracked working tree files would be overwritten by merge:
- 	sub
- 	sub2
- Please move or remove them before you can merge.
-+Aborting
- EOF
- 
- test_expect_success 'will not overwrite untracked file in leading path' '
-diff --git a/t/t7609-merge-co-error-msgs.sh b/t/t7609-merge-co-error-msgs.sh
-index c994836..0e4a682 100755
---- a/t/t7609-merge-co-error-msgs.sh
-+++ b/t/t7609-merge-co-error-msgs.sh
-@@ -32,6 +32,7 @@ error: The following untracked working tree files would be overwritten by merge:
- 	three
- 	two
- Please move or remove them before you can merge.
-+Aborting
- EOF
- 
- test_expect_success 'untracked files overwritten by merge (fast and non-fast forward)' '
-@@ -56,6 +57,7 @@ Please, commit your changes or stash them before you can merge.
- error: The following untracked working tree files would be overwritten by merge:
- 	five
- Please move or remove them before you can merge.
-+Aborting
- EOF
- 
- test_expect_success 'untracked files or local changes ovewritten by merge' '
-@@ -71,6 +73,7 @@ error: Your local changes to the following files would be overwritten by checkou
- 	rep/one
- 	rep/two
- Please, commit your changes or stash them before you can switch branches.
-+Aborting
- EOF
- 
- test_expect_success 'cannot switch branches because of local changes' '
-@@ -92,6 +95,7 @@ error: Your local changes to the following files would be overwritten by checkou
- 	rep/one
- 	rep/two
- Please, commit your changes or stash them before you can switch branches.
-+Aborting
- EOF
- 
- test_expect_success 'not uptodate file porcelain checkout error' '
-@@ -105,6 +109,7 @@ error: Updating the following directories would lose untracked files in it:
- 	rep
- 	rep2
- 
-+Aborting
- EOF
- 
- test_expect_success 'not_uptodate_dir porcelain checkout error' '
+Thanks,
+Jonathan
