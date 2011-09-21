@@ -1,80 +1,64 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Fwd: vcs-svn and friends
-Date: Wed, 21 Sep 2011 18:40:08 -0500
-Message-ID: <20110921234008.GA23439@elie>
-References: <CAFfmPPOBZ6cXG51mDHbj2VRDzjvH46Q7=_LvUWeMq0SGR40S1g@mail.gmail.com>
- <20110915100106.GB2328@elie>
- <CA+gfSn9KVN2iDCevd0s+TjYHNupDez8NiKZycP3pgBCkYiraFQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Michael Barr <davidbarr@google.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Dmitry Ivankov <divanorama@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 22 01:40:26 2011
+From: Anatol Pomozov <anatol.pomozov@gmail.com>
+Subject: [PATCH] Clarify that '--tags' fetches tags only
+Date: Wed, 21 Sep 2011 16:52:56 -0700
+Message-ID: <1316649176-32352-1-git-send-email-anatol.pomozov@gmail.com>
+References: <1314997486-29996-1-git-send-email-anatol.pomozov@gmail.com>
+Cc: computerdruid@gmail.com, Anatol Pomozov <anatol.pomozov@gmail.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Sep 22 01:53:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6WOu-0001hb-Lj
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 01:40:25 +0200
+	id 1R6Wbr-0006IZ-Ci
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 01:53:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751218Ab1IUXkQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Sep 2011 19:40:16 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:46823 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751172Ab1IUXkO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2011 19:40:14 -0400
-Received: by iaqq3 with SMTP id q3so2186243iaq.19
-        for <git@vger.kernel.org>; Wed, 21 Sep 2011 16:40:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ZHk5XHVdaha8gv9OXqWgfXvEID7h9jy4ov1gjm1AQU4=;
-        b=tXPIV44awSXGtQ8DE87ByX7vmonSjqFJWEJncM5GPcu7qnzwD/pFwrM1vRQxQep1/U
-         8TyMM5x/c0UguDWRo0bLwTKFunh+TmRDWDbX5Eh7fDRYs63zLA1aIGXc4gWAzYAeFXl+
-         OUTybyioQAMPtHCZS/hsHMmReTeMN3ovKCzQI=
-Received: by 10.231.4.131 with SMTP id 3mr2582559ibr.30.1316648414294;
-        Wed, 21 Sep 2011 16:40:14 -0700 (PDT)
-Received: from elie (c-67-173-1-13.hsd1.il.comcast.net. [67.173.1.13])
-        by mx.google.com with ESMTPS id j2sm8639857ibx.11.2011.09.21.16.40.13
-        (version=SSLv3 cipher=OTHER);
-        Wed, 21 Sep 2011 16:40:13 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CA+gfSn9KVN2iDCevd0s+TjYHNupDez8NiKZycP3pgBCkYiraFQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1750975Ab1IUXxT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Sep 2011 19:53:19 -0400
+Received: from smtp-out.google.com ([216.239.44.51]:30477 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750781Ab1IUXxS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Sep 2011 19:53:18 -0400
+Received: from hpaq6.eem.corp.google.com (hpaq6.eem.corp.google.com [172.25.149.6])
+	by smtp-out.google.com with ESMTP id p8LNrGpm019889;
+	Wed, 21 Sep 2011 16:53:16 -0700
+Received: from anatol.mtv.corp.google.com (anatol.mtv.corp.google.com [172.18.102.63])
+	by hpaq6.eem.corp.google.com with ESMTP id p8LNrDix000750;
+	Wed, 21 Sep 2011 16:53:13 -0700
+Received: by anatol.mtv.corp.google.com (Postfix, from userid 67983)
+	id F029C1E41FC; Wed, 21 Sep 2011 16:53:12 -0700 (PDT)
+X-Mailer: git-send-email 1.7.7.rc0.72.g4b5ea.dirty
+In-Reply-To: <1314997486-29996-1-git-send-email-anatol.pomozov@gmail.com>
+X-System-Of-Record: true
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181868>
 
-Dmitry Ivankov wrote:
+'git fetch --tags' fetches tags only and leaves heads untouched.
+Many people are confused by the fact that 'git fetch --tags'
+does not fetch heads.
 
->> =C2=A0- 3bba32e9 ("fast-import: allow top directory as an argument f=
-or some
->> =C2=A0 commands"): I'm not sure what the motivation is --- is this j=
-ust
->> =C2=A0 about the principle of least surprise, or did it come up in p=
-ractice
->> =C2=A0 somewhere?
->
-> (to ease one's reading, commands are ls, copy and move top directory)
->
-> Haven't seen them in practice. It seemed possible with svn import: if=
- there were
-> no branches at start, and then someone did svn mv . trunk. But it
-> turns out that my
-> svn client doesn't allow such move. So more like a least surprise pur=
-pose.
+Signed-off-by: Anatol Pomozov <anatol.pomozov@gmail.com>
+---
+ Documentation/fetch-options.txt |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-With that information in mind, it sounds like a reasonable change in
-principle (though I haven't looked over the code at all).  Could you
-propose a log message explaining it (both the original motivation and
-the actual impact)?
-
-Thanks,
-Jonathan
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index 39d326a..37d2316 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -63,7 +63,8 @@ ifndef::git-pull[]
+ 	flag lets all tags and their associated objects be
+ 	downloaded. The default behavior for a remote may be
+ 	specified with the remote.<name>.tagopt setting. See
+-	linkgit:git-config[1].
++	linkgit:git-config[1]. Note that if this option is specified
++	then only tags are fetched, refs under refs/heads/* stay unchanged.
+ 
+ --recurse-submodules[=yes|on-demand|no]::
+ 	This option controls if and under what conditions new commits of
+-- 
+1.7.7.rc0.72.g4b5ea.dirty
