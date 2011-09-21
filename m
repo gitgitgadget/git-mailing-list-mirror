@@ -1,129 +1,115 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git checkout under 1.7.6 does not properly list untracked files
- and aborts
-Date: Wed, 21 Sep 2011 10:28:59 +0200
-Message-ID: <4E79A04B.7080607@drmicha.warpmail.net>
-References: <4E6A7167.6070408@workspacewhiz.com> <4E779BA4.8070109@workspacewhiz.com> <4E78ACE2.60306@drmicha.warpmail.net> <4E78DACF.3030200@workspacewhiz.com> <4E7996AA.4040909@drmicha.warpmail.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: git checkout under 1.7.6 does not properly list untracked
+ files and aborts
+Date: Wed, 21 Sep 2011 18:58:42 +1000
+Message-ID: <20110921085842.GA29768@duynguyen-vnpc>
+References: <4E6A7167.6070408@workspacewhiz.com>
+ <4E779BA4.8070109@workspacewhiz.com>
+ <4E78ACE2.60306@drmicha.warpmail.net>
+ <4E78DACF.3030200@workspacewhiz.com>
+ <4E7996AA.4040909@drmicha.warpmail.net>
+ <4E79A04B.7080607@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Joshua Jensen <jjensen@workspacewhiz.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Wed Sep 21 10:29:15 2011
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Sep 21 10:58:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6IB7-0008SS-Ef
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Sep 2011 10:29:13 +0200
+	id 1R6Idu-0004To-GK
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Sep 2011 10:58:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751088Ab1IUI3G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Sep 2011 04:29:06 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:36558 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751897Ab1IUI3D (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2011 04:29:03 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway2.nyi.mail.srv.osa (Postfix) with ESMTP id BDF8529E45;
-	Wed, 21 Sep 2011 04:29:02 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute1.internal (MEProxy); Wed, 21 Sep 2011 04:29:02 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=gAogPcFOZ/9xB9x/p+mQ98
-	QECL4=; b=nGFHA5oQfiLtsU1sdHrtWBJr99P9XQwanHPJU+QEjTZfUWlC57/GXA
-	rQQ5+ny0Bn1zbU6og01lVcD3lwFQKDx4DmijdfY6RJQRO3hHIYuUOqnYzFxmQqeu
-	crhfvoYnVfy0PXVCzDhFv2oJ4UwtG2pQyMQhai1YwgK9LsbRhJbJE=
-X-Sasl-enc: g+9f44E8vLbNVOlz3/fYS0l4s2gNUfpvHKCfknZlUPu/ 1316593742
-Received: from localhost.localdomain (p548594C9.dip0.t-ipconnect.de [84.133.148.201])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 00D647C06E7;
-	Wed, 21 Sep 2011 04:29:01 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0.2) Gecko/20110906 Thunderbird/6.0.2
-In-Reply-To: <4E7996AA.4040909@drmicha.warpmail.net>
+	id S1752416Ab1IUI6w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Sep 2011 04:58:52 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:54278 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752358Ab1IUI6v (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Sep 2011 04:58:51 -0400
+Received: by ywb5 with SMTP id 5so964874ywb.19
+        for <git@vger.kernel.org>; Wed, 21 Sep 2011 01:58:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=T1i4gV1nC94D4URi5oz3kF9Gwfjq4GGtgayIq8thWR8=;
+        b=dcdhJD9Pz8yxrTkk/3VGi0qnC7C+WXlUwWlz6PsCT/Xajv5RUCxsQkLtid0qbjVA31
+         diWbyP6lQez+XGJf/Sf+b0h5gE5Iq+WxKSo/uLgh+cYomiANmF5Dt0gDBoVTH05IrmK5
+         rXaqPuHaYY7GCyqyCYAeWya18b68c8FushhyE=
+Received: by 10.150.177.14 with SMTP id z14mr671783ybe.12.1316595531120;
+        Wed, 21 Sep 2011 01:58:51 -0700 (PDT)
+Received: from pclouds@gmail.com (220-244-161-237.static.tpgi.com.au. [220.244.161.237])
+        by mx.google.com with ESMTPS id c9sm1041581yba.13.2011.09.21.01.58.46
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 21 Sep 2011 01:58:49 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 21 Sep 2011 18:58:42 +1000
+Content-Disposition: inline
+In-Reply-To: <4E79A04B.7080607@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181827>
 
-Michael J Gruber venit, vidit, dixit 21.09.2011 09:47:
-
-> Interesting. So, it is related to sparse, it seems, and there is also a
-> mistake in the documentation (which contradicts itself, btw). With your
-> script, since all files are requested to be checked out ('*'), none
-> should have skip-worktree set, and the result should be the same as with
-> my version. But I get this:
+On Wed, Sep 21, 2011 at 10:28:59AM +0200, Michael J Gruber wrote:
+> So, I bisected it. The first bad commit is
 > 
-> Initialized empty Git repository in /tmp/t/utest/.git/
-> [master (root-commit) 5929c8b] a
->  1 files changed, 1 insertions(+), 0 deletions(-)
->  create mode 100644 a
-> [master 60ad69e] b
->  1 files changed, 1 insertions(+), 0 deletions(-)
->  create mode 100644 b
-> tracked
-> Switched to branch 'side'
-> cat: b: No such file or directory
-> untracked
-> untracked
+> 9037026 (unpack-trees: fix sparse checkout's "unable to match
+> directories", 2010-11-27)
 > 
-> That is probably the same output as for you. The final "git checkout
-> master" errored out without doing anything and without message. I'll
-> send a few cleanups now, and do some bisecting and thinking later;
-> though there are people whose sparse-knowledge is way less sparse than
-> mine ;)
+> although the real culprit may be its predecessor
+> 
+> 2431afb (unpack-trees: move all skip-worktree checks back to
+> unpack_trees(), 2010-11-27)
+> 
+> which does not compile:
+> 
+>     CC unpack-trees.o
+> unpack-trees.c: In function 'mark_new_skip_worktree':
+> unpack-trees.c:852:75: error: 'o' undeclared (first use in this function)
+> unpack-trees.c:852:75: note: each undeclared identifier is reported only
+> once for each function it appears in
+> make: *** [unpack-trees.o] Error 1
 
-So, I bisected it. The first bad commit is
+This may help
 
-9037026 (unpack-trees: fix sparse checkout's "unable to match
-directories", 2010-11-27)
+--8<--
+diff --git a/unpack-trees.c b/unpack-trees.c
+index a6518db..a239af7 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -245,13 +245,13 @@ static int check_updates(struct unpack_trees_options *o)
+ static int verify_uptodate_sparse(struct cache_entry *ce, struct unpack_trees_options *o);
+ static int verify_absent_sparse(struct cache_entry *ce, enum unpack_trees_error_types, struct unpack_trees_options *o);
+ 
+-static int will_have_skip_worktree(const struct cache_entry *ce, struct unpack_trees_options *o)
++static int will_have_skip_worktree(const struct cache_entry *ce, struct exclude_list *el)
+ {
+ 	const char *basename;
+ 
+ 	basename = strrchr(ce->name, '/');
+ 	basename = basename ? basename+1 : ce->name;
+-	return excluded_from_list(ce->name, ce_namelen(ce), basename, NULL, o->el) <= 0;
++	return excluded_from_list(ce->name, ce_namelen(ce), basename, NULL, el) <= 0;
+ }
 
-although the real culprit may be its predecessor
+ static int apply_sparse_checkout(struct cache_entry *ce, struct unpack_trees_options *o)
+@@ -849,7 +849,7 @@ static void mark_new_skip_worktree(struct exclude_list *el,
+ 		if (select_flag && !(ce->ce_flags & select_flag))
+ 			continue;
+ 
+-		if (!ce_stage(ce) && will_have_skip_worktree(ce, o))
++		if (!ce_stage(ce) && will_have_skip_worktree(ce, el))
+ 			ce->ce_flags |= skip_wt_flag;
+ 		else
+ 			ce->ce_flags &= ~skip_wt_flag;
+--8<--
 
-2431afb (unpack-trees: move all skip-worktree checks back to
-unpack_trees(), 2010-11-27)
+> Duy, sorry for prodding you again.
 
-which does not compile:
-
-    CC unpack-trees.o
-unpack-trees.c: In function 'mark_new_skip_worktree':
-unpack-trees.c:852:75: error: 'o' undeclared (first use in this function)
-unpack-trees.c:852:75: note: each undeclared identifier is reported only
-once for each function it appears in
-make: *** [unpack-trees.o] Error 1
-
-So, this problem was introduced after v1.7.3.2. Given the extent of
-those two commits, I can't help further (but your proposed fix may be fine).
-
-Duy, sorry for prodding you again. My bisect script was (based on
-Joshua's, based on mine):
-
-#!/bin/sh
-GIT_EXEC_DIR=~/src/git
-PATH=$GIT_EXEC_DIR:$PATH
-export GIT_EXEC_DIR
-d=/tmp/t/utest
-rm -Rf $d || exit 1
-mkdir $d || exit 1
-cd $d || exit 1
-git init
-git config core.sparseCheckout true
-echo *>.git/info/sparse-checkout
-echo tracked>a
-git add a
-git commit -m a a
-git branch side
-echo tracked>b
-git add b
-git commit -m b
-git checkout side
-echo untracked>b
-git checkout master 2>&1 | grep "would be"
-
-Hope this helps.
-
-Michael
+No problem (and sorry for breaking the build). I'll also have a look
+at this problem.
