@@ -1,88 +1,82 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 3/3] git-read-tree.txt: correct sparse-checkout and skip-worktree
- description
-Date: Wed, 21 Sep 2011 11:33:11 +0200
-Message-ID: <4E79AF57.3010300@drmicha.warpmail.net>
-References: <cover.1316590874.git.git@drmicha.warpmail.net> <4E7996AA.4040909@drmicha.warpmail.net> <31152a2ddb83e37be1efce1d0cd742b71ea3efdd.1316590874.git.git@drmicha.warpmail.net> <CACsJy8BrBsBM-DwC_CkYrrpFU6aTqpcohWDPxTnRhMEX+w3Nug@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: mac osx
+Date: Wed, 21 Sep 2011 11:34:59 +0200
+Message-ID: <CAGdFq_h0VqbZ5W3QVwoQWT63znhpePDFCRE+-n1TqPNztREwkA@mail.gmail.com>
+References: <loom.20110921T002437-246@post.gmane.org> <CAFcyEtiexmE0WMif-eGHe5xMoYv7-8mdXos1qbQBH3g04z0sAg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Joshua Jensen <jjensen@workspacewhiz.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 21 11:33:45 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: tom smitts <tomsmitts@ymail.com>, git@vger.kernel.org
+To: Kyle Neath <kneath@gmail.com>, Tim Harper <timcharper@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 21 11:38:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6JBV-0003eq-Vy
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Sep 2011 11:33:42 +0200
+	id 1R6JGP-0006VI-6H
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Sep 2011 11:38:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753427Ab1IUJdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Sep 2011 05:33:15 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:37916 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753374Ab1IUJdO (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2011 05:33:14 -0400
-Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
-	by gateway2.nyi.mail.srv.osa (Postfix) with ESMTP id 055B8298EC;
-	Wed, 21 Sep 2011 05:33:14 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute6.internal (MEProxy); Wed, 21 Sep 2011 05:33:14 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=6BU4pkTNISPrH1vmYpBgsn
-	rMUKM=; b=jwEr65HAi11DoCA6JTL154VgqZ7ad3XqClnWqUhrGntxJSyTn1tHE8
-	7Uola07NObB0Tx6ZqrLiKYKES76/+m5sfMaYN4Ag7rRaolx7prSFGE/ng6Q39RHq
-	5E6yynes2EdgOfXDmJUKzbFjKHe8670WY70Zr9V3wIixVKWR9ZqTw=
-X-Sasl-enc: 1pFDPtE1OuFN0bXDOiDHMnQgcrGT2J3QvxAs9SQt1ejT 1316597593
-Received: from localhost.localdomain (p548594C9.dip0.t-ipconnect.de [84.133.148.201])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 2049D7C0733;
-	Wed, 21 Sep 2011 05:33:12 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0.2) Gecko/20110906 Thunderbird/6.0.2
-In-Reply-To: <CACsJy8BrBsBM-DwC_CkYrrpFU6aTqpcohWDPxTnRhMEX+w3Nug@mail.gmail.com>
+	id S1753911Ab1IUJii convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Sep 2011 05:38:38 -0400
+Received: from mail-gw0-f52.google.com ([74.125.83.52]:52137 "EHLO
+	mail-gw0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753654Ab1IUJfk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2011 05:35:40 -0400
+Received: by gwb1 with SMTP id 1so1470261gwb.11
+        for <git@vger.kernel.org>; Wed, 21 Sep 2011 02:35:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=P+vQGLabMeVMWdCh4QKM4NcYCCZnFNGrEuH07wstjNQ=;
+        b=D9Ad2smnmipVt0CTsKCqxQYjiWWoiYKOo7fAHfrMR87mM29XZ0igi57sfJu0YGFaFa
+         qNl+08IeZ3GyGELKSBqiACNWVg4MuWJ0dabgT5xK29PfUYwDT9Y4mcS4onhC8RZSsDpr
+         bktSFYuDuTqeSdsy6qV6kUdA1ICvvR7GMsquc=
+Received: by 10.68.11.227 with SMTP id t3mr1144877pbb.488.1316597739079; Wed,
+ 21 Sep 2011 02:35:39 -0700 (PDT)
+Received: by 10.68.62.3 with HTTP; Wed, 21 Sep 2011 02:34:59 -0700 (PDT)
+In-Reply-To: <CAFcyEtiexmE0WMif-eGHe5xMoYv7-8mdXos1qbQBH3g04z0sAg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181832>
 
-Nguyen Thai Ngoc Duy venit, vidit, dixit 21.09.2011 11:26:
-> On Wed, Sep 21, 2011 at 5:48 PM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> The description of .git/info/sparse-checkout and
->> skip-worktree is exactly the opposite of what is true, which is:
->>
->> If a file matches a pattern in sparse-checkout, then (it is to be
->> checked out and therefore) skip-worktree is unset for that file;
->> otherwise, it is set (so that it is not checked out).
->>
->> Currently, the opposite is documented, and (consistently) read-tree's
->> behavior with respect to bit flips is descibed incorrectly.
->>
->> Fix it.
-> 
-> Ack.
-> 
->> In hindsight, it would have been much better to have a "sparse-ignore"
->> or "sparse-skip" file so that an empty file would mean a full checkout,
->> and the file logic would be analogous to that of .gitignore, excludes
->> and skip-worktree.
-> 
-> .gitignore works towards excluding files. No rule means no excluding.
-> sparse-checkout file works towards including files, no rule means no
-> inclusion.
+Heya,
 
-Sure, but with a "sparse-skip" rather than "sparse-checkout", we would
-not even need an additional config variable, and the skip-worktree
-centered explanations would follow the same logic (no need for the
-additional negation) as the ignore files and the new sparse-skip file.
-Also, I'm not sure whether more sparse users say "I want only that
-subdir." than "I don't want that subdir."
+[+timcharper, owner of the git-osx-installer project]
 
-But it's there to stay, of course.
+On Wed, Sep 21, 2011 at 05:40, Kyle Neath <kneath@gmail.com> wrote:
+> On Tue, Sep 20, 2011 at 3:40 PM, tom smitts <tomsmitts@ymail.com> wro=
+te:
+>> Do the git maintainers really think any mac users have
+>> =C2=A0a clue which git install package to download? =C2=A0You
+>> put some arcane chipset designation in the package
+>> =C2=A0name! =C2=A0Why make mac installers at all? =C2=A0Mac users
+>> know their operating system number, e.g. 10.6.7,
+>> and that's all. =C2=A0I doubt Windows users know any better.
+>> And I doubt you can find anywhere on a mac that says
+>> =C2=A0i386 or whatever the heck the other dumb
+>> designation is.
+>
+> Yikes! That's definitely not good. I'll see what we can do about upda=
+ting
+> git-scm.com to point to a more reasonable installer for OSX. I haven'=
+t clicked
+> that link in a long time and had no idea it was so confusing.
+>
+> I've created an issue so we can track it, if you'd like to follow alo=
+ng:
+> https://github.com/schacon/gitscm/issues/16
+>
+> Kyle Neath
+> Director of Design, GitHub
 
+
+
+
+--=20
 Cheers,
-Michael
+
+Sverre Rabbelier
