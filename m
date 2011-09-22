@@ -1,70 +1,89 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: What's cooking in git.git (Sep 2011, #06; Wed, 21)
-Date: Thu, 22 Sep 2011 10:37:06 +0200
-Message-ID: <1316680641.11165.2.camel@bee.lab.cmartin.tk>
-References: <7vaa9xyxpf.fsf@alter.siamese.dyndns.org>
+From: wanghui <Hui.Wang@windriver.com>
+Subject: Re: [PATCH] abspath: increase array size of cwd variable to PATH_MAX
+Date: Thu, 22 Sep 2011 16:54:16 +0800
+Message-ID: <4E7AF7B8.2080208@windriver.com>
+References: <1316425872-30457-1-git-send-email-Hui.Wang@windriver.com> <7v8vpkbhyv.fsf@alter.siamese.dyndns.org> <4E791A40.6040102@ramsay1.demon.co.uk> <7vty851wg9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-8UTzByj9Plx7R2fG89pt"
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>, <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 22 10:37:28 2011
+X-From: git-owner@vger.kernel.org Thu Sep 22 10:54:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6emd-00022I-U6
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 10:37:28 +0200
+	id 1R6f38-0001KK-4v
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 10:54:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751611Ab1IVIhX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Sep 2011 04:37:23 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:49844 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750869Ab1IVIhW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Sep 2011 04:37:22 -0400
-Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 87C374617B;
-	Thu, 22 Sep 2011 10:37:00 +0200 (CEST)
-In-Reply-To: <7vaa9xyxpf.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 3.0.3- 
+	id S1752018Ab1IVIyY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Sep 2011 04:54:24 -0400
+Received: from mail.windriver.com ([147.11.1.11]:55202 "EHLO
+	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751406Ab1IVIyX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Sep 2011 04:54:23 -0400
+Received: from ALA-HCA.corp.ad.wrs.com (ala-hca [147.11.189.40])
+	by mail.windriver.com (8.14.3/8.14.3) with ESMTP id p8M8sHaV006744
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Thu, 22 Sep 2011 01:54:17 -0700 (PDT)
+Received: from [128.224.163.220] (128.224.163.220) by ALA-HCA.corp.ad.wrs.com
+ (147.11.189.50) with Microsoft SMTP Server (TLS) id 14.1.255.0; Thu, 22 Sep
+ 2011 01:54:16 -0700
+User-Agent: Thunderbird 2.0.0.24 (X11/20101027)
+In-Reply-To: <7vty851wg9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181890>
 
+Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+>
+>   
+>> Hmm, the subject line says "... increase array size ...", but that is not
+>> necessarily what this patch is doing! :-D
+>>     
+>
+> True; will revert it out of 'next'.
+>
+> Thanks for noticing.
+>
+>   
+Hi Junio and Ramsay,
 
---=-8UTzByj9Plx7R2fG89pt
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In fact, i found lots of similar usage in the git source code. E.G.
 
-On Wed, 2011-09-21 at 22:04 -0700, Junio C Hamano wrote:
-> * cn/eradicate-working-copy (2011-09-21) 2 commits
->  - patch-id.c: use strbuf instead of a fixed buffer
->  - Remove 'working copy' from the documentation and C code
+in the dir.c,
+int is_inside_dir(const char *dir)
+{
+char cwd[PATH_MAX];
+if (!dir)
+return 0;
+if (!getcwd(cwd, sizeof(cwd)))
+die_errno("can't find the current directory");
+return dir_inside_of(cwd, dir) >= 0;
+}
 
-It looks like that first commit sneaked in there. Shouldn't that be its
-own topic?
+Since this implementation is not cross-OS safe, Could we use below solution?
 
-   cmn
+step1, add a new function xgetcwd() to wrapper getcwd() like this:
+char *xgetcwd(void)
+{
+size_t size = 100;
 
+while (1) {
+char *buffer = (char *) xmalloc (size);
+if (getcwd (buffer, size) == buffer)
+return buffer;
+free (buffer);
+if (errno != ERANGE)
+return 0;
+size *= 2;
+}
+}
 
---=-8UTzByj9Plx7R2fG89pt
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
+step2, use xgetcwd to replace all getcwd occurrence in the git source code.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAABAgAGBQJOevOyAAoJEHKRP1jG7ZzTezYIAI6h4k0eTy3cIUWpJT+f9i1s
-T5ypI72xDkexxP3T/30u9BAafPwIOudsXUrRD3jOhuMdg+Npqjj73djLxQBl5VVY
-RmcqObiA0csyMcref3BdZb1ymuAtSLesfrzhuEL2UEhIRSpw3LAbbvXqXeX7Ynps
-t0Jt3DwaHEhq3X5mO3A0JuFuiEJGF+MzI+EbHUriXrBlT547fcMOp8lMBsuPWUu4
-iSk8cWJhqKDyBqOS724h+H9lC4acMmWqDCTfoDw1/0kJkgW9DUqQUpBajIFvXIdp
-dq69dU+5Qzw+y5iN8xMLLUxll789M7YU/siDNtZUzRLqGW+Em7Mqqu70e0Y1wi4=
-=VObx
------END PGP SIGNATURE-----
-
---=-8UTzByj9Plx7R2fG89pt--
+This will add a little bit overhead to the git, but it is cross-OS safe.
