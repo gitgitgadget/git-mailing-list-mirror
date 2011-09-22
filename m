@@ -1,72 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug: git log --numstat counts wrong
-Date: Thu, 22 Sep 2011 10:32:32 -0700
-Message-ID: <7vsjnoxz2n.fsf@alter.siamese.dyndns.org>
-References: <D3CF0A47-64DA-4EBB-9DCD-D2D714596C50@inf.fu-berlin.de>
- <7vr53a2icn.fsf@alter.siamese.dyndns.org>
- <3BF8BA51-4CAA-40A2-8B45-D39AAEE58E6F@inf.fu-berlin.de>
- <7vobyd1vmo.fsf@alter.siamese.dyndns.org>
- <FAB0B05E-6BAD-488C-8478-F4B80493FB96@inf.fu-berlin.de>
+From: Chris Friesen <chris.friesen@genband.com>
+Subject: any way to "re-sync" a bare repository against another bare repository?
+Date: Thu, 22 Sep 2011 11:22:37 -0600
+Message-ID: <4E7B6EDD.1040106@genband.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Tay Ray Chuan <rctay89@gmail.com>
-To: Alexander Pepper <pepper@inf.fu-berlin.de>
-X-From: git-owner@vger.kernel.org Thu Sep 22 19:32:48 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 22 19:33:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6n8h-0007Sk-4R
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 19:32:47 +0200
+	id 1R6n9m-00081S-Jv
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 19:33:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753230Ab1IVRck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Sep 2011 13:32:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64443 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753227Ab1IVRch (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Sep 2011 13:32:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8901D6A25;
-	Thu, 22 Sep 2011 13:32:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=blScuKTjMxL+dVOstQ4Ythw6cuU=; b=Ias3zv
-	MB8iThJGUkQRInj2plQZ1xqLn+hFzQ87zdKm1Nfy23HtahJDjN//4xIiehc9uR0+
-	mUubmTmJzngqufrgPh7QPvemdSrutCyOX4dL5x0WHXnzuYenjXBC0Q9ezve3Jd+2
-	QZyO8pNFDLE1Kr6dBOuLE1+TynS455KNmjxDE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kTv3df9vhs99KDVMeVGiHMh0W8+2Xcdm
-	aJWok60eCjlWW9/rJFagYJcaJXgeOIJQVF0v+qGBnBcxqrgJ0ZFcguczJHaNpkjp
-	FCGSYYTIH3nD7JlCOckHB1u70Go91RgCRdW+ShRXmyft8yBJJTqM1kJe+8ulje1M
-	TVKHgGyNr5A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 806246A24;
-	Thu, 22 Sep 2011 13:32:35 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC0706A22; Thu, 22 Sep 2011
- 13:32:34 -0400 (EDT)
-In-Reply-To: <FAB0B05E-6BAD-488C-8478-F4B80493FB96@inf.fu-berlin.de>
- (Alexander Pepper's message of "Thu, 22 Sep 2011 15:19:39 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DBD2704C-E540-11E0-B2B2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752189Ab1IVRdu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Sep 2011 13:33:50 -0400
+Received: from exprod7og127.obsmtp.com ([64.18.2.210]:42784 "EHLO
+	exprod7og127.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751668Ab1IVRdt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Sep 2011 13:33:49 -0400
+X-Greylist: delayed 648 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Sep 2011 13:33:49 EDT
+Received: from mail.genband.com ([63.149.188.88]) (using TLSv1) by exprod7ob127.postini.com ([64.18.6.12]) with SMTP
+	ID DSNKTntxfOgneBqhirnxzKskJkTTpD0UcTPO@postini.com; Thu, 22 Sep 2011 10:33:49 PDT
+Received: from gbausmail.genband.com ([172.16.21.62]) by mail.genband.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Thu, 22 Sep 2011 12:22:38 -0500
+Received: from [1.220.36.114] ([1.220.36.114]) by gbausmail.genband.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Thu, 22 Sep 2011 12:22:39 -0500
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.22) Gecko/20110906 Fedora/3.1.14-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.14
+X-OriginalArrivalTime: 22 Sep 2011 17:22:39.0476 (UTC) FILETIME=[3A9D3B40:01CC794C]
+X-TM-AS-Product-Ver: SMEX-8.0.0.4160-6.500.1024-18402.000
+X-TM-AS-Result: No--8.825300-5.000000-31
+X-TM-AS-User-Approved-Sender: No
+X-TM-AS-User-Blocked-Sender: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181905>
 
-Alexander Pepper <pepper@inf.fu-berlin.de> writes:
+Suppose I have a parent bare repository.  I do a "git clone --bare" to 
+create a child repository, and then clone the child to create a 
+grandchild repository.
 
-> When used git version 1.7.7.rc1 I didn't observed any case where git
-> show and git log --numstat mismatch. I'm only a little confused, that
-> 'git show' yields different results, depending on the git version.
+If changes get pushed into the parent repository, is there any way to 
+cause the child to be updated?
 
-In general it is not surprising nor unexpected--as long as both patches
-describe the change correctly, they are both valid.
+Just a "git fetch <parent>" doesn't seem to help.  If I set up parent as 
+a remote branch I can fetch it, but then it shows all the branches as 
+"parent/<branch>" rather than updating the child.
 
-What was unexpected to me was that 27af01d (xdiff/xprepare: improve O(n*m)
-performance in xdl_cleanup_records(), 2011-08-17) which was supposed to be
-only about performance and not about logic made that difference.
+I just tried a "git clone --mirror" to create the child and it seems to 
+allow me to pick up changes in the parent via "git fetch".  Is that the 
+proper way to handle this?
+
+Thanks,
+Chris
+
+-- 
+Chris Friesen
+Software Developer
+GENBAND
+chris.friesen@genband.com
+www.genband.com
