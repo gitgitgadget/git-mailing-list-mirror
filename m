@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/6] branch: teach --edit-description option
-Date: Thu, 22 Sep 2011 15:09:19 -0700
-Message-ID: <1316729362-7714-4-git-send-email-gitster@pobox.com>
+Subject: [PATCH 2/6] format-patch: use branch description in cover letter
+Date: Thu, 22 Sep 2011 15:09:18 -0700
+Message-ID: <1316729362-7714-3-git-send-email-gitster@pobox.com>
 References: <7vy5xi4y3m.fsf@alter.siamese.dyndns.org>
  <1316729362-7714-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
@@ -11,169 +11,222 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6rSn-0007M2-9I
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 00:09:49 +0200
+	id 1R6rSl-0007M2-Vc
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 00:09:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754182Ab1IVWJi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Sep 2011 18:09:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62793 "EHLO
+	id S1754173Ab1IVWJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Sep 2011 18:09:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62779 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753955Ab1IVWJa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Sep 2011 18:09:30 -0400
+	id S1754168Ab1IVWJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Sep 2011 18:09:28 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 590B96ED4
-	for <git@vger.kernel.org>; Thu, 22 Sep 2011 18:09:30 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68BB06ED1
+	for <git@vger.kernel.org>; Thu, 22 Sep 2011 18:09:28 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=icV2
-	2FJ0Ho7QBSJQDZXtqyPV4ng=; b=g/puG0UFayGm1s8sb5cJkxCxjm+ohb4iATGW
-	snos6v/D7fI0PPiGP+bSbQ0X13ZSq5HYIJS1TKegZMD5mZ+SZIJT7qcKm8yHwsd7
-	+bcOnsof7z/yyUT+48XiAUxZHYNVzq3Jf721PlaLLerjZz5/OqXp83LWGp7AShUS
-	E60uqbo=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=4roc
+	GJWeNKtsvS2bPhaq8l2Wq5E=; b=eXRpTVLACHvNzxIPTg8PY8XGZs22tAzoGmze
+	LO1iw49mFsudqRKC7QrncD42H99cMpLpmimqEMI+VeqG5eX74agCZU+3GRj33evB
+	uqRlfZFXbDFTUrCIzZLXCQOqTIiIsXPB6g/Z04zGR1uuIYtNS/oaDXpeYJlupGQG
+	sc3nh4w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=IwW1Tv
-	URfk2G0ig9jD5E41AeDrEk1gBrLhfOJ3WzZDRxQzUQwdjCDt/D67gho6Zu5sEuIw
-	8EevUhHXspbSc8c/bmBt03uR6T4LFJESwWgHIsQB7yq3Kif47jtDomrwpOf3Xvpi
-	IuL1zkJyli6lIq1ZM1JaLo+RVCDhaQPJcoB8M=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=cJcm2F
+	Q/gI1oJZPXecsN+g6s267tN8CaovCz96KFYZVkSfh4kCt+T1GWEBvg/S6VMxIhoG
+	aKjgPzkTY/l8AT+ftCsIMxqK4d0VfQnJ/h+oYpyaEVCku1HlbwTU4vDM0RuSZOIK
+	MKsV8x7rzGyRZFOZ1DblO/FhsAEESuwFyLSMc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 515B66ED3
-	for <git@vger.kernel.org>; Thu, 22 Sep 2011 18:09:30 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EFB56ECF
+	for <git@vger.kernel.org>; Thu, 22 Sep 2011 18:09:28 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A594E6ED2 for
- <git@vger.kernel.org>; Thu, 22 Sep 2011 18:09:29 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ACBEE6ECE for
+ <git@vger.kernel.org>; Thu, 22 Sep 2011 18:09:27 -0400 (EDT)
 X-Mailer: git-send-email 1.7.7.rc2.4.g5ec82
 In-Reply-To: <1316729362-7714-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 8AF602FC-E567-11E0-83E2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 89C92F44-E567-11E0-AA99-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181926>
 
-Using branch.$name.description as the configuration key, give users a
-place to write about what the purpose of the branch is and things like
-that, so that various subsystems, e.g. "push -s", "request-pull", and
-"format-patch --cover-letter", can later be taught to use this
-information.
+Use the description for the branch when preparing the cover letter
+when available.
 
-The "-m" option similar to "commit/tag" is deliberately omitted, as the
-whole point of branch description is about giving descriptive information
-(the name of the branch itself is a better place for information that fits
-on a single-line).
+While at it, mark a loosely written codepath that would do a random and
+useless thing given an unusual input (e.g. "^master HEAD HEAD^"), which
+we may want to fix someday.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-branch.txt |    5 +++
- builtin/branch.c             |   56 ++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 59 insertions(+), 2 deletions(-)
+ branch.c      |    2 +-
+ builtin/log.c |   71 ++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 69 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 507b8d0..8871a4e 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -14,6 +14,7 @@ SYNOPSIS
- 'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
- 'git branch' (-m | -M) [<oldbranch>] <newbranch>
- 'git branch' (-d | -D) [-r] <branchname>...
-+'git branch' --edit-description [<branchname>]
+diff --git a/branch.c b/branch.c
+index 88da275..50088a4 100644
+--- a/branch.c
++++ b/branch.c
+@@ -156,7 +156,7 @@ int read_branch_desc(struct strbuf *buf, const char *branch_name)
+ 	strbuf_addf(&name, "branch.%s.description", branch_name);
+ 	cb.config_name = name.buf;
+ 	cb.value = NULL;
+-	if (git_config(read_branch_desc_cb, &cb)) {
++	if (git_config(read_branch_desc_cb, &cb) < 0) {
+ 		strbuf_release(&name);
+ 		return -1;
+ 	}
+diff --git a/builtin/log.c b/builtin/log.c
+index f5d4930..e80a925 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -19,6 +19,7 @@
+ #include "remote.h"
+ #include "string-list.h"
+ #include "parse-options.h"
++#include "branch.h"
  
- DESCRIPTION
- -----------
-@@ -144,6 +145,10 @@ start-point is either a local or remote-tracking branch.
- 	like '--track' would when creating the branch, except that where
- 	branch points to is not changed.
+ /* Set a default date-time format for git log ("log.date" config variable) */
+ static const char *default_date_mode = NULL;
+@@ -746,10 +747,24 @@ static void print_signature(void)
+ 		printf("-- \n%s\n\n", signature);
+ }
  
-+--edit-description::
-+	Open an editor and edit the text to explain what the branch is
-+	for, to be used by various other commands (e.g. `request-pull`).
++static void add_branch_description(struct strbuf *buf, const char *branch_name)
++{
++	struct strbuf desc = STRBUF_INIT;
++	if (!branch_name || !*branch_name)
++		return;
++	read_branch_desc(&desc, branch_name);
++	if (desc.len) {
++		strbuf_addch(buf, '\n');
++		strbuf_add(buf, desc.buf, desc.len);
++		strbuf_addch(buf, '\n');
++	}
++}
 +
- --contains <commit>::
- 	Only list branches which contain the specified commit.
+ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 			      int numbered, int numbered_files,
+ 			      struct commit *origin,
+ 			      int nr, struct commit **list, struct commit *head,
++			      const char *branch_name,
+ 			      int quiet)
+ {
+ 	const char *committer;
+@@ -807,6 +822,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	pp_user_info(&pp, NULL, &sb, committer, encoding);
+ 	pp_title_line(&pp, &msg, &sb, encoding, need_8bit_cte);
+ 	pp_remainder(&pp, &msg, &sb, 0);
++	add_branch_description(&sb, branch_name);
+ 	printf("%s\n", sb.buf);
  
-diff --git a/builtin/branch.c b/builtin/branch.c
-index f49596f..fffa319 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -606,11 +606,49 @@ static int opt_parse_merge_filter(const struct option *opt, const char *arg, int
+ 	strbuf_release(&sb);
+@@ -1006,6 +1022,35 @@ static int cc_callback(const struct option *opt, const char *arg, int unset)
  	return 0;
  }
  
-+static const char edit_description[] = "BRANCH_DESCRIPTION";
-+
-+static int edit_branch_description(const char *branch_name)
++static char *find_branch_name(struct rev_info *rev)
 +{
-+	FILE *fp;
-+	int status;
++	int i, positive = -1;
++	unsigned char branch_sha1[20];
 +	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf name = STRBUF_INIT;
++	const char *branch;
 +
-+	read_branch_desc(&buf, branch_name);
-+	if (!buf.len || buf.buf[buf.len-1] != '\n')
-+		strbuf_addch(&buf, '\n');
-+	strbuf_addf(&buf,
-+		    "# Please edit the description for the branch\n"
-+		    "#   %s\n"
-+		    "# Lines starting with '#' will be stripped.\n",
-+		    branch_name);
-+	fp = fopen(git_path(edit_description), "w");
-+	if ((fwrite(buf.buf, 1, buf.len, fp) < buf.len) || fclose(fp)) {
-+		strbuf_release(&buf);
-+		return error(_("could not write branch description template: %s\n"),
-+			     strerror(errno));
++	for (i = 0; i < rev->cmdline.nr; i++) {
++		if (rev->cmdline.rev[i].flags & UNINTERESTING)
++			continue;
++		if (positive < 0)
++			positive = i;
++		else
++			return NULL;
 +	}
-+	strbuf_reset(&buf);
-+	if (launch_editor(git_path(edit_description), &buf, NULL)) {
-+		strbuf_release(&buf);
-+		return -1;
-+	}
-+	stripspace(&buf, 1);
-+
-+	strbuf_addf(&name, "branch.%s.description", branch_name);
-+	status = git_config_set(name.buf, buf.buf);
-+	strbuf_release(&name);
++	if (positive < 0)
++		return NULL;
++	strbuf_addf(&buf, "refs/heads/%s", rev->cmdline.rev[positive].name);
++	branch = resolve_ref(buf.buf, branch_sha1, 1, 0);
++	if (!branch ||
++	    prefixcmp(branch, "refs/heads/") ||
++	    hashcmp(rev->cmdline.rev[positive].item->sha1, branch_sha1))
++		branch = NULL;
 +	strbuf_release(&buf);
-+
-+	return status;
++	if (branch)
++		return xstrdup(rev->cmdline.rev[positive].name);
++	return NULL;
 +}
 +
- int cmd_branch(int argc, const char **argv, const char *prefix)
+ int cmd_format_patch(int argc, const char **argv, const char *prefix)
  {
- 	int delete = 0, rename = 0, force_create = 0;
- 	int verbose = 0, abbrev = -1, detached = 0;
--	int reflog = 0;
-+	int reflog = 0, edit_description = 0;
- 	enum branch_track track;
- 	int kinds = REF_LOCAL_BRANCH;
- 	struct commit_list *with_commit = NULL;
-@@ -648,6 +686,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_BIT('m', NULL, &rename, "move/rename a branch and its reflog", 1),
- 		OPT_BIT('M', NULL, &rename, "move/rename a branch, even if target exists", 2),
- 		OPT_BOOLEAN('l', NULL, &reflog, "create the branch's reflog"),
-+		OPT_BOOLEAN(0, "edit-description", &edit_description,
-+			    "edit the description for the branch"),
- 		OPT__FORCE(&force_create, "force creation (when already exists)"),
- 		{
- 			OPTION_CALLBACK, 0, "no-merged", &merge_filter_ref,
-@@ -694,7 +734,19 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	struct commit *commit;
+@@ -1027,6 +1072,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int use_patch_format = 0;
+ 	int quiet = 0;
++	char *branch_name = NULL;
+ 	const struct option builtin_format_patch_options[] = {
+ 		{ OPTION_CALLBACK, 'n', "numbered", &numbered, NULL,
+ 			    "use [PATCH n/m] even with a single patch",
+@@ -1217,8 +1263,16 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			 * origin" that prepares what the origin side still
+ 			 * does not have.
+ 			 */
++			unsigned char sha1[20];
++			const char *ref;
++
+ 			rev.pending.objects[0].item->flags |= UNINTERESTING;
+ 			add_head_to_pending(&rev);
++			ref = resolve_ref("HEAD", sha1, 1, NULL);
++			if (ref && !prefixcmp(ref, "refs/heads/"))
++				branch_name = xstrdup(ref + strlen("refs/heads/"));
++			else
++				branch_name = xstrdup(""); /* no branch */
+ 		}
+ 		/*
+ 		 * Otherwise, it is "format-patch -22 HEAD", and/or
+@@ -1234,16 +1288,26 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	rev.show_root_diff = 1;
  
- 	if (delete)
- 		return delete_branches(argc, argv, delete > 1, kinds);
--	else if (argc == 0)
-+	else if (edit_description) {
-+		const char *branch_name;
-+		if (detached)
-+			die("Cannot give description to detached HEAD");
-+		if (!argc)
-+			branch_name = head;
-+		else if (argc == 1)
-+			branch_name = argv[0];
-+		else
-+			usage_with_options(builtin_branch_usage, options);
-+		if (edit_branch_description(branch_name))
-+			return 1;
-+	} else if (argc == 0)
- 		return print_ref_list(kinds, detached, verbose, abbrev, with_commit);
- 	else if (rename && (argc == 1))
- 		rename_branch(head, argv[0], rename > 1);
+ 	if (cover_letter) {
+-		/* remember the range */
++		/*
++		 * NEEDSWORK:randomly pick one positive commit to show
++		 * diffstat; this is often the tip and the command
++		 * happens to do the right thing in most cases, but a
++		 * complex command like "--cover-letter a b c ^bottom"
++		 * picks "c" and shows diffstat between bottom..c
++		 * which may not match what the series represents at
++		 * all and totally broken.
++		 */
+ 		int i;
+ 		for (i = 0; i < rev.pending.nr; i++) {
+ 			struct object *o = rev.pending.objects[i].item;
+ 			if (!(o->flags & UNINTERESTING))
+ 				head = (struct commit *)o;
+ 		}
+-		/* We can't generate a cover letter without any patches */
++		/* There is nothing to show; it is not an error, though. */
+ 		if (!head)
+ 			return 0;
++		if (!branch_name)
++			branch_name = find_branch_name(&rev);
+ 	}
+ 
+ 	if (ignore_if_in_upstream) {
+@@ -1294,7 +1358,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		if (thread)
+ 			gen_message_id(&rev, "cover");
+ 		make_cover_letter(&rev, use_stdout, numbered, numbered_files,
+-				  origin, nr, list, head, quiet);
++				  origin, nr, list, head, branch_name, quiet);
+ 		total++;
+ 		start_number--;
+ 	}
+@@ -1366,6 +1430,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			fclose(stdout);
+ 	}
+ 	free(list);
++	free(branch_name);
+ 	string_list_clear(&extra_to, 0);
+ 	string_list_clear(&extra_cc, 0);
+ 	string_list_clear(&extra_hdr, 0);
 -- 
 1.7.7.rc2.4.g5ec82
