@@ -1,96 +1,107 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [PATCH] Clarify that '--tags' fetches tags only
-Date: Thu, 22 Sep 2011 02:07:59 +0000
-Message-ID: <CAMOZ1Bt6gGVd6QuRZduZ4mJ=eoZ9d7xK-WfwZ3G-+oswT0RN_Q@mail.gmail.com>
-References: <1314997486-29996-1-git-send-email-anatol.pomozov@gmail.com>
- <1316649176-32352-1-git-send-email-anatol.pomozov@gmail.com>
- <CAMOZ1BuSd52woX0utOQ84gbCzBkZg3ATKnE+7G_BrD5_hUQSiQ@mail.gmail.com>
- <7vwrd1z9it.fsf@alter.siamese.dyndns.org> <CAMOZ1Bvxc+vcofb_KyeLS7Gy=KOtX1SKv72cXA2NtwgYCWA31A@mail.gmail.com>
+From: wanghui <Hui.Wang@windriver.com>
+Subject: Re: [PATCH] abspath: increase array size of cwd variable to PATH_MAX
+Date: Thu, 22 Sep 2011 10:09:48 +0800
+Message-ID: <4E7A98EC.6040007@windriver.com>
+References: <1316425872-30457-1-git-send-email-Hui.Wang@windriver.com> <7v8vpkbhyv.fsf@alter.siamese.dyndns.org> <4E791A40.6040102@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Anatol Pomozov <anatol.pomozov@gmail.com>, git@vger.kernel.org,
-	computerdruid@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 22 04:08:43 2011
+Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Thu Sep 22 04:10:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6YiQ-0004sx-Rt
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 04:08:43 +0200
+	id 1R6Yjg-0005Gz-2t
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 04:10:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751818Ab1IVCIb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Sep 2011 22:08:31 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:53592 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751789Ab1IVCI3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2011 22:08:29 -0400
-Received: by qyk30 with SMTP id 30so5702301qyk.19
-        for <git@vger.kernel.org>; Wed, 21 Sep 2011 19:08:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Yt05ZRLav9PzQ6DBUNKMdfB/va9KWhi6AW2H1jMtBZQ=;
-        b=xQjB9jIOdRI5C7xwUvChC9tsEv8fI0sxeDeNoJPDWCqvRDmoJe9qE/yNdo2a3gQ2vJ
-         yINlM7HWo/pZBxJmYof6zRPJSWaml0yVOthtAjbZ6tvsXzuW1SZP7ChbGVQmgwPRXply
-         aoO5CXVZrOUfSIru0Sb7h5uuVi1hQzFk8RwLY=
-Received: by 10.224.201.2 with SMTP id ey2mr282569qab.3.1316657309094; Wed, 21
- Sep 2011 19:08:29 -0700 (PDT)
-Received: by 10.229.233.6 with HTTP; Wed, 21 Sep 2011 19:07:59 -0700 (PDT)
-In-Reply-To: <CAMOZ1Bvxc+vcofb_KyeLS7Gy=KOtX1SKv72cXA2NtwgYCWA31A@mail.gmail.com>
+	id S1751385Ab1IVCJz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Sep 2011 22:09:55 -0400
+Received: from mail.windriver.com ([147.11.1.11]:57863 "EHLO
+	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750876Ab1IVCJz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Sep 2011 22:09:55 -0400
+Received: from ALA-HCA.corp.ad.wrs.com (ala-hca [147.11.189.40])
+	by mail.windriver.com (8.14.3/8.14.3) with ESMTP id p8M29nAH014002
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Wed, 21 Sep 2011 19:09:49 -0700 (PDT)
+Received: from [128.224.163.220] (128.224.163.220) by ALA-HCA.corp.ad.wrs.com
+ (147.11.189.50) with Microsoft SMTP Server (TLS) id 14.1.255.0; Wed, 21 Sep
+ 2011 19:09:49 -0700
+User-Agent: Thunderbird 2.0.0.24 (X11/20101027)
+In-Reply-To: <4E791A40.6040102@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181875>
 
-On Thu, Sep 22, 2011 at 02:01, Michael Witten <mfwitten@gmail.com> wrot=
-e:
-> On Thu, Sep 22, 2011 at 00:49, Junio C Hamano <gitster@pobox.com> wro=
-te:
->> --tags is merely a short-hand for "refs/tags/*:refs/tags/*")
->> explicitly from the command line
+Ramsay Jones wrote:
+> Junio C Hamano wrote:
+>   
+>> Wang Hui <Hui.Wang@windriver.com> writes:
+>>
+>>     
+>>> diff --git a/abspath.c b/abspath.c
+>>> index f04ac18..2ce1db9 100644
+>>> --- a/abspath.c
+>>> +++ b/abspath.c
+>>> @@ -24,7 +24,7 @@ int is_directory(const char *path)
+>>>  const char *real_path(const char *path)
+>>>  {
+>>>  	static char bufs[2][PATH_MAX + 1], *buf = bufs[0], *next_buf = bufs[1];
+>>> -	char cwd[1024] = "";
+>>> +	char cwd[PATH_MAX] = "";
+>>>       
+>> Thanks.
+>>
+>> This does not make things worse but in the longer term we should move away
+>> from using PATH_MAX in general.
+>>     
 >
-> [Disclaimer: I don't know the code or the semantics]
+> Hmm, the subject line says "... increase array size ...", but that is not
+> necessarily what this patch is doing! :-D
 >
-> Why not just use that explanation?
+> Yes, on some platforms PATH_MAX will be larger than 1024 (e.g. 4096 on Linux),
+> but that is not even true of all POSIX systems. POSIX defines the *minimum*
+> value of PATH_MAX that systems must support (as #define _POSIX_PATH_MAX) of 255.
+> [it also requires that POSIX conforming applications must not *require* a value
+> larger than 255].
 >
-> =C2=A0This option is merely a short-hand for writing
-> =C2=A0the refspec `refs/tags/*:refs/tags/*'; consequently,
-> =C2=A0using this option overrides any default refspec that
-> =C2=A0would be used if no refspec were provided on the
-> =C2=A0command line. That is,
+> However, we don't have to look too far to find systems with much smaller values.
+> On Cygwin, for example:
 >
-> =C2=A0 =C2=A0git fetch --tags origin frotz
+>     $ cat -n junk.c
+>          1  #include <stdio.h>
+>          2  #include <limits.h>
+>          3
+>          4  int main(int argc, char *argv[])
+>          5  {
+>          6          printf("PATH_MAX is %d\n", PATH_MAX);
+>          7          return 0;
+>          8  }
+>     $ gcc -o junk junk.c
+>     $ ./junk
+>     $ PATH_MAX is 260
+>     $ 
 >
-> =C2=A0is equivalent to:
+> On MinGW the answer is 259.
 >
-> =C2=A0 =C2=A0git fetch origin frotz 'refs/tags/*:refs/tags/*'
->
-> In fact, if the command line parsing performed by `git fetch'
-> is reasonably intelligent, then it might be worthwhile
-> to relocate `--tags' in the example:
->
-> =C2=A0That is,
->
-> =C2=A0 =C2=A0git fetch origin frotz --tags
->
-> =C2=A0is equivalent to:
->
-> =C2=A0 =C2=A0git fetch origin frotz 'refs/tags/*:refs/tags/*'
->
+> So, I certainly agree that moving away from PATH_MAX is a good idea, but I'm
+> not sure I agree that this patch "does not make things worse" ... (I haven't
+> given it *any* thought!).
+>   
+Hi Ramsay,
 
-Maybe this is less confusing for the example:
-
-  That is,
-
-    git fetch origin --tags
-    git fetch origin frotz --tags bar
-
-  are equivalent to:
-
-    git fetch origin 'refs/tags/*:refs/tags/*'
-    git fetch origin frotz 'refs/tags/*:refs/tags/*' bar
+Do you mean the PATH_MAX of a system should not be the limitation for 
+the git. That is to say, the git can handle the path which has name 
+longer than PATH_MAX? If it is, my patch is not needed here. :-)
+> [Also, note commits f66cf96, fd55a19, 620e2bb, etc...]
+>
+> ATB,
+> Ramsay Jones
+>
+>
+>   
