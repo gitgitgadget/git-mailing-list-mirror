@@ -1,138 +1,210 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: How to use git attributes to configure server-side checks?
-Date: Thu, 22 Sep 2011 14:41:42 -0400
-Message-ID: <CAG+J_DxdP2qHhttJOtWQTKeiDV2YbC_A_F+b9sDOZsWhWxjcjw@mail.gmail.com>
-References: <4E7A3BDE.3040301@alum.mit.edu>
-	<7vy5xh1whq.fsf@alter.siamese.dyndns.org>
-	<4E7AF1AE.5030005@alum.mit.edu>
-	<CAG+J_DxtCx6-RKWLKFy+V7tOtu7UnUrke7iN8gNdGiY-sC52sQ@mail.gmail.com>
-	<20110922171340.GA2934@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	git discussion list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 22 20:41:49 2011
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: any way to "re-sync" a bare repository against another bare repository?
+Date: Thu, 22 Sep 2011 18:50:24 -0000
+Message-ID: <7142366f54c44cea82542adf8aea5bb9-mfwitten@gmail.com>
+References: <4E7B6EDD.1040106@genband.com>
+Cc: git@vger.kernel.org
+To: Chris Friesen <chris.friesen@genband.com>
+X-From: git-owner@vger.kernel.org Thu Sep 22 21:00:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6oDU-0005fO-9e
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 20:41:48 +0200
+	id 1R6oVP-0007z3-Pj
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 21:00:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753526Ab1IVSln convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Sep 2011 14:41:43 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:65396 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753006Ab1IVSlm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2011 14:41:42 -0400
-Received: by ywb5 with SMTP id 5so2185484ywb.19
-        for <git@vger.kernel.org>; Thu, 22 Sep 2011 11:41:42 -0700 (PDT)
+	id S1753547Ab1IVTAO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Sep 2011 15:00:14 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:38469 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753503Ab1IVTAN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Sep 2011 15:00:13 -0400
+Received: by pzk1 with SMTP id 1so5350688pzk.1
+        for <git@vger.kernel.org>; Thu, 22 Sep 2011 12:00:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=nwtv1CYolrGgYEvm/MaIjCfqRMS+spxFfpvzu+C9CsU=;
-        b=XMj9gjAozNGYfNvPvNY5rPBMAxE1NmCM8FIX0HEl8Y/zUx82TbR9JNaBTbmdNWwu28
-         qCtCxdhAT4LHrWRpB2/rRB49I61S/5NZJK0VuaIaciC6wp8forkJZwf2Z+HUGYe1J52Q
-         p9OpmLdQ5giQN38y9vBCcmLIQskpkR8klIlhw=
-Received: by 10.236.190.200 with SMTP id e48mr15669149yhn.59.1316716902261;
- Thu, 22 Sep 2011 11:41:42 -0700 (PDT)
-Received: by 10.147.32.18 with HTTP; Thu, 22 Sep 2011 11:41:42 -0700 (PDT)
-In-Reply-To: <20110922171340.GA2934@sigill.intra.peff.net>
+        h=subject:date:from:to:cc:message-id:in-reply-to:references;
+        bh=5uKzFn6cpvGh0kGnWGtggvJbRS1cesBPXKmgMHcd3KQ=;
+        b=An4Yqyi9GM+CC1b57sFhuNrRtpXnoIhSTaLLH9QI2cpKlqdDj1zVTeQGinw3whMvbV
+         11SHSzNGyaRpdmVAvexOFhvZXVeQu63pM0iFlHta9vVJVGPQL1wQM3TWtXqjDITddpFM
+         yrWDkhmgq6uyo8F8+msKIZrbTha2OHRmkiDg0=
+Received: by 10.68.22.103 with SMTP id c7mr5839787pbf.90.1316718012924;
+        Thu, 22 Sep 2011 12:00:12 -0700 (PDT)
+Received: from gmail.com (117-18-75-235.sunnyvisiondatacenter.com. [117.18.75.235])
+        by mx.google.com with ESMTPS id n10sm30472433pbe.4.2011.09.22.12.00.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 22 Sep 2011 12:00:12 -0700 (PDT)
+In-Reply-To: <4E7B6EDD.1040106@genband.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181911>
 
-On Thu, Sep 22, 2011 at 1:13 PM, Jeff King <peff@peff.net> wrote:
->
-> No, we definitely don't use in-tree gitattributes. IIRC, there are so=
-me
-> precedence and ordering questions. I think the ordering now is:
->
-> =C2=A01. Look in $GIT_DIR/info/attributes
->
-> =C2=A02. If not found, look in per-directory .gitattributes
->
-> =C2=A03. If not found, look in core.gitattributesfile
->
-> Where do in-tree attributes fit in? Between 1 and 2? Or 2 and 3? And
-> which tree do we look at?
+On Thu, 22 Sep 2011 11:22:37 -0600, Chris Friesen wrote:
 
-attr.c says:
+> Suppose I have a parent bare repository.  I do a "git clone --bare" to 
+> create a child repository, and then clone the child to create a 
+> grandchild repository.
 
-  a. built-in attributes
-  b. $(prefix)/etc/gitattributes unless GIT_ATTR_NOSYSTEM is set
-  c. core.attributesfile
-  d. per-directory .gitattributes
-  e. $GIT_DIR/info/attributes
+Firstly, what exactly is the scenario you are trying to achieve? Perhaps
+there is a better way to do what you are trying to do.
 
-The mechanics of (d) are established by git_attr_direction:
+> If changes get pushed into the parent repository, is there any way to 
+> cause the child to be updated?
 
-  GIT_ATTR_CHECKIN: working-copy, then index
-  GIT_ATTR_CHECKOUT: index, then working-copy
-  GIT_ATTR_INDEX: index-only
+The documentation answers your question (but badly, as with much of the
+documentation); from `git help clone':
 
-Where GIT_ATTR_CHECKIN is the default direction and GIT_ATTR_CHECKOUT
-is used while checking-out files from the index. (GIT_ATTR_INDEX is
-used only by git-archive.)
+  --bare
+      Make a bare GIT repository. That is, instead of creating
+      <directory> and placing the administrative files in
+      <directory>/.git, make the <directory> itself the $GIT_DIR.
+      This obviously implies the -n because there is nowhere to
+      check out the working tree. Also the branch heads at the
+      remote are copied directly to corresponding local branch
+      heads, without mapping them to refs/remotes/origin/. When
+      this option is used, neither remote-tracking branches nor
+      the related configuration variables are created.
 
-Note that (d) only occurs in non-bare repos or if direction is GIT_ATTR=
-_INDEX.
+In particular:
 
-> Here are some examples:
->
-> =C2=A0a. If I do "git checkout branch-foo", we should look at branch-=
-foo's
-> =C2=A0 =C2=A0 tree for things like crlf, right? =C2=A0Do we still fal=
-l back to
-> =C2=A0 =C2=A0 per-directory .gitattributes in the working tree? On th=
-e one hand,
-> =C2=A0 =C2=A0 they're not really relevant to the commit we're moving =
-to. But they
-> =C2=A0 =C2=A0 are respected in the current code, and can be useful wh=
-en moving to
-> =C2=A0 =C2=A0 old commits which lack attributes.
->
-> =C2=A0 =C2=A0 I think this is where the index magic comes in in the c=
-urrent code
-> =C2=A0 =C2=A0 (we do something like "load the index, then respect git=
-attributes
-> =C2=A0 =C2=A0 from the index").
->
-> =C2=A0 =C2=A0 So maybe this is solved already.
->
-> =C2=A0b. You're diffing commit $a against commit $b. Whose gitattribu=
-tes
-> =C2=A0 =C2=A0 have precedence? Is order important? Are gitattributes =
-in the
-> =C2=A0 =C2=A0 working tree and index relevant?
->
-> =C2=A0c. You're diffing commit $a against HEAD. Which gitattributes h=
-ave
-> =C2=A0 =C2=A0 precedence? Again, is order important (i.e., does "diff=
- -R" look at
-> =C2=A0 =C2=A0 different attributes than "diff")?
->
-> I'm sure there are others, too. And I don't think any of these is
-> insurmountable. But somebody needs to think through a lot of cases an=
-d
-> come up with consistent, sane behavior that does the right thing in e=
-ach
-> case (considering both bare repositories and ones with working trees)=
-=2E
+                                  Also the branch heads at the
+      remote are copied directly to corresponding local branch
+      heads, without mapping them to refs/remotes/origin/. When
+      this option is used, neither remote-tracking branches nor
+      the related configuration variables are created.
 
-I think that diff-index --cached or when there is no working tree,
-should set the direction to GIT_ATTR_INDEX so that it may be used with
-a bare repo. In such case, the .gitattributes would come from the
-index.
+In particular:
 
-Consistent with that, when comparing two commits (diff-tree), I think
-you look at the .gitattributes in the second commit.
+                                                           When
+      this option is used, neither remote-tracking branches nor
+      the related configuration variables are created.
 
-j.
+Thus, you have to explicitly tell git what you fetched and which
+branch heads should be updated.
+
+Consider this:
+
+  $ git init parent
+  $ git clone        parent child0
+  $ git clone --bare parent child1
+
+Now, look at the config file for the child0 repository:
+
+  $ cat child0/.git/config 
+  [core]
+          repositoryformatversion = 0
+          filemode = true
+          bare = false
+          logallrefupdates = true
+  [remote "origin"]
+          fetch = +refs/heads/*:refs/remotes/origin/*
+          url = /path/to/parent
+  [branch "master"]
+          remote = origin
+          merge = refs/heads/master
+
+In particular:
+
+          fetch = +refs/heads/*:refs/remotes/origin/*
+
+That is the default `refspec'; when `git fetch' is not explicitly
+told on the command line what to fetch and which branch head[s] to
+update, then this refspec is used as a default.
+
+Now, look at the config file for the child1 repository:
+
+  $ cat child1/config
+  [core]
+          repositoryformatversion = 0
+          filemode = true
+          bare = true
+  [remote "origin"]
+          url = /path/to/parent
+
+In particular, note that a bare repository doesn't include any
+such default information for `git fetch'. However, you could be
+explicit about it; from within the chidl1 repo:
+
+  $ git fetch origin '+refs/heads/*:refs/remotes/origin/*'
+
+> Just a "git fetch <parent>" doesn't seem to help.  If I set up parent as 
+> a remote branch I can fetch it,
+
+Firstly, it doesn't make any sense to say "set up parent as a remote
+branch"; what you mean is "set up `<parent>' as a remote with a default
+refspec that creates any associated remote-tracking branch heads".
+
+Secondly, by setting up `<parent>' as a remote, you are creating the
+missing refspec in your config file:
+
+  [remote "<parent>"]
+          url = /path/to/parent
+          fetch = +refs/heads/*:refs/remotes/<parent>/*
+
+which is why you get this:
+
+> but then it shows all the branches as "<parent>/<branch>" rather
+> than updating the child.
+
+You need a different refspec, namely:
+
+  +refs/heads/*:refs/heads/*
+
+So, either be explicit:
+
+  git fetch '<parent>' '+refs/heads/*:refs/heads/*'
+
+or update your config:
+
+  git config 'remote.<parent>.fetch' '+refs/heads/*:refs/heads/*'
+
+Of course, there is an easier way that does all of this [and more]
+for you:
+
+> I just tried a "git clone --mirror" to create the child and it seems to 
+> allow me to pick up changes in the parent via "git fetch".  Is that the 
+> proper way to handle this?
+
+The documentation answers your question (but badly, as with much of the
+documentation); from `git help clone':
+
+  --mirror
+      Set up a mirror of the source repository. This implies
+      --bare. Compared to --bare, --mirror not only maps local
+      branches of the source to local branches of the target, it
+      maps all refs (including remote-tracking branches, notes
+      etc.) and sets up a refspec configuration such that all
+      these refs are overwritten by a git remote update in the
+      target repository.
+
+In particular:
+
+                sets up a refspec configuration such that all
+      these refs are overwritten by a git remote update in the
+      target repository.
+
+Consider this:
+
+  $ git clone --mirror parent child2
+  $ cat child2/config
+  [core]
+          repositoryformatversion = 0
+          filemode = true
+          bare = true
+  [remote "origin"]
+          fetch = +refs/*:refs/*
+          mirror = true
+          url = /path/to/parent
+
+In particular:
+
+          fetch = +refs/*:refs/*
+
+That's a very liberal refspec! It basically says that fetch
+should mirror everything by default.
+
+Sincerely,
+Michael Witten
