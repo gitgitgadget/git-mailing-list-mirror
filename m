@@ -1,210 +1,67 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: any way to "re-sync" a bare repository against another bare repository?
-Date: Thu, 22 Sep 2011 18:50:24 -0000
-Message-ID: <7142366f54c44cea82542adf8aea5bb9-mfwitten@gmail.com>
-References: <4E7B6EDD.1040106@genband.com>
-Cc: git@vger.kernel.org
-To: Chris Friesen <chris.friesen@genband.com>
-X-From: git-owner@vger.kernel.org Thu Sep 22 21:00:21 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: How to use git attributes to configure server-side checks?
+Date: Thu, 22 Sep 2011 12:22:51 -0700
+Message-ID: <7vk490xtys.fsf@alter.siamese.dyndns.org>
+References: <4E7A3BDE.3040301@alum.mit.edu>
+ <7vy5xh1whq.fsf@alter.siamese.dyndns.org> <4E7AF1AE.5030005@alum.mit.edu>
+ <CAG+J_DxtCx6-RKWLKFy+V7tOtu7UnUrke7iN8gNdGiY-sC52sQ@mail.gmail.com>
+ <20110922171340.GA2934@sigill.intra.peff.net>
+ <CAG+J_DxdP2qHhttJOtWQTKeiDV2YbC_A_F+b9sDOZsWhWxjcjw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+	git discussion list <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 22 21:23:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6oVP-0007z3-Pj
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 21:00:20 +0200
+	id 1R6orM-0003S3-2C
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 21:23:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753547Ab1IVTAO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Sep 2011 15:00:14 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:38469 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753503Ab1IVTAN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Sep 2011 15:00:13 -0400
-Received: by pzk1 with SMTP id 1so5350688pzk.1
-        for <git@vger.kernel.org>; Thu, 22 Sep 2011 12:00:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=subject:date:from:to:cc:message-id:in-reply-to:references;
-        bh=5uKzFn6cpvGh0kGnWGtggvJbRS1cesBPXKmgMHcd3KQ=;
-        b=An4Yqyi9GM+CC1b57sFhuNrRtpXnoIhSTaLLH9QI2cpKlqdDj1zVTeQGinw3whMvbV
-         11SHSzNGyaRpdmVAvexOFhvZXVeQu63pM0iFlHta9vVJVGPQL1wQM3TWtXqjDITddpFM
-         yrWDkhmgq6uyo8F8+msKIZrbTha2OHRmkiDg0=
-Received: by 10.68.22.103 with SMTP id c7mr5839787pbf.90.1316718012924;
-        Thu, 22 Sep 2011 12:00:12 -0700 (PDT)
-Received: from gmail.com (117-18-75-235.sunnyvisiondatacenter.com. [117.18.75.235])
-        by mx.google.com with ESMTPS id n10sm30472433pbe.4.2011.09.22.12.00.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 22 Sep 2011 12:00:12 -0700 (PDT)
-In-Reply-To: <4E7B6EDD.1040106@genband.com>
+	id S1753625Ab1IVTWz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Sep 2011 15:22:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49626 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753600Ab1IVTWz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Sep 2011 15:22:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4408D6675;
+	Thu, 22 Sep 2011 15:22:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mNmXvW/5UoyWZaGl7ahICE7ri3s=; b=lxXiG1
+	GbOJPMhdPlFgKvWtGHlmr4fplA1RH/J7D+fauDVESjGFVTCLYC/eieixG860I6CC
+	IrQCpFokWbGzUHc1L0FVR/YyX9yEw7ruiwEJKvIT8jpOOBYuMzVwSB4RFWXoV+8Q
+	N0RWGV3HzdZZh3fgXrQk4d5nqp3+3Elrbswk8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ne92Jze5Zy2JJaKW44omqc6hYAkW69KZ
+	oB1rdUO5jrn4fqnIDukrcZ68ZPJNCWNHui3e0+/8TZ3rsBVF4bVQ1WoDIh1P1Cwl
+	ZOg8hzvvowe3N7uOXxEjoNbrHTlFFV7I/O4XP/EZxcYyFWgcXCb/pvc5dxhYfXhd
+	qcoEQUzFa1g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C55D6674;
+	Thu, 22 Sep 2011 15:22:53 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C94946673; Thu, 22 Sep 2011
+ 15:22:52 -0400 (EDT)
+In-Reply-To: <CAG+J_DxdP2qHhttJOtWQTKeiDV2YbC_A_F+b9sDOZsWhWxjcjw@mail.gmail.com> (Jay
+ Soffian's message of "Thu, 22 Sep 2011 14:41:42 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 445F64C6-E550-11E0-82C3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181912>
 
-On Thu, 22 Sep 2011 11:22:37 -0600, Chris Friesen wrote:
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-> Suppose I have a parent bare repository.  I do a "git clone --bare" to 
-> create a child repository, and then clone the child to create a 
-> grandchild repository.
+> Consistent with that, when comparing two commits (diff-tree), I think
+> you look at the .gitattributes in the second commit.
 
-Firstly, what exactly is the scenario you are trying to achieve? Perhaps
-there is a better way to do what you are trying to do.
-
-> If changes get pushed into the parent repository, is there any way to 
-> cause the child to be updated?
-
-The documentation answers your question (but badly, as with much of the
-documentation); from `git help clone':
-
-  --bare
-      Make a bare GIT repository. That is, instead of creating
-      <directory> and placing the administrative files in
-      <directory>/.git, make the <directory> itself the $GIT_DIR.
-      This obviously implies the -n because there is nowhere to
-      check out the working tree. Also the branch heads at the
-      remote are copied directly to corresponding local branch
-      heads, without mapping them to refs/remotes/origin/. When
-      this option is used, neither remote-tracking branches nor
-      the related configuration variables are created.
-
-In particular:
-
-                                  Also the branch heads at the
-      remote are copied directly to corresponding local branch
-      heads, without mapping them to refs/remotes/origin/. When
-      this option is used, neither remote-tracking branches nor
-      the related configuration variables are created.
-
-In particular:
-
-                                                           When
-      this option is used, neither remote-tracking branches nor
-      the related configuration variables are created.
-
-Thus, you have to explicitly tell git what you fetched and which
-branch heads should be updated.
-
-Consider this:
-
-  $ git init parent
-  $ git clone        parent child0
-  $ git clone --bare parent child1
-
-Now, look at the config file for the child0 repository:
-
-  $ cat child0/.git/config 
-  [core]
-          repositoryformatversion = 0
-          filemode = true
-          bare = false
-          logallrefupdates = true
-  [remote "origin"]
-          fetch = +refs/heads/*:refs/remotes/origin/*
-          url = /path/to/parent
-  [branch "master"]
-          remote = origin
-          merge = refs/heads/master
-
-In particular:
-
-          fetch = +refs/heads/*:refs/remotes/origin/*
-
-That is the default `refspec'; when `git fetch' is not explicitly
-told on the command line what to fetch and which branch head[s] to
-update, then this refspec is used as a default.
-
-Now, look at the config file for the child1 repository:
-
-  $ cat child1/config
-  [core]
-          repositoryformatversion = 0
-          filemode = true
-          bare = true
-  [remote "origin"]
-          url = /path/to/parent
-
-In particular, note that a bare repository doesn't include any
-such default information for `git fetch'. However, you could be
-explicit about it; from within the chidl1 repo:
-
-  $ git fetch origin '+refs/heads/*:refs/remotes/origin/*'
-
-> Just a "git fetch <parent>" doesn't seem to help.  If I set up parent as 
-> a remote branch I can fetch it,
-
-Firstly, it doesn't make any sense to say "set up parent as a remote
-branch"; what you mean is "set up `<parent>' as a remote with a default
-refspec that creates any associated remote-tracking branch heads".
-
-Secondly, by setting up `<parent>' as a remote, you are creating the
-missing refspec in your config file:
-
-  [remote "<parent>"]
-          url = /path/to/parent
-          fetch = +refs/heads/*:refs/remotes/<parent>/*
-
-which is why you get this:
-
-> but then it shows all the branches as "<parent>/<branch>" rather
-> than updating the child.
-
-You need a different refspec, namely:
-
-  +refs/heads/*:refs/heads/*
-
-So, either be explicit:
-
-  git fetch '<parent>' '+refs/heads/*:refs/heads/*'
-
-or update your config:
-
-  git config 'remote.<parent>.fetch' '+refs/heads/*:refs/heads/*'
-
-Of course, there is an easier way that does all of this [and more]
-for you:
-
-> I just tried a "git clone --mirror" to create the child and it seems to 
-> allow me to pick up changes in the parent via "git fetch".  Is that the 
-> proper way to handle this?
-
-The documentation answers your question (but badly, as with much of the
-documentation); from `git help clone':
-
-  --mirror
-      Set up a mirror of the source repository. This implies
-      --bare. Compared to --bare, --mirror not only maps local
-      branches of the source to local branches of the target, it
-      maps all refs (including remote-tracking branches, notes
-      etc.) and sets up a refspec configuration such that all
-      these refs are overwritten by a git remote update in the
-      target repository.
-
-In particular:
-
-                sets up a refspec configuration such that all
-      these refs are overwritten by a git remote update in the
-      target repository.
-
-Consider this:
-
-  $ git clone --mirror parent child2
-  $ cat child2/config
-  [core]
-          repositoryformatversion = 0
-          filemode = true
-          bare = true
-  [remote "origin"]
-          fetch = +refs/*:refs/*
-          mirror = true
-          url = /path/to/parent
-
-In particular:
-
-          fetch = +refs/*:refs/*
-
-That's a very liberal refspec! It basically says that fetch
-should mirror everything by default.
-
-Sincerely,
-Michael Witten
+That would make "diff A B" and "diff -R B A" behave differently.
