@@ -1,107 +1,238 @@
-From: wanghui <Hui.Wang@windriver.com>
-Subject: Re: [PATCH] abspath: increase array size of cwd variable to PATH_MAX
-Date: Thu, 22 Sep 2011 10:09:48 +0800
-Message-ID: <4E7A98EC.6040007@windriver.com>
-References: <1316425872-30457-1-git-send-email-Hui.Wang@windriver.com> <7v8vpkbhyv.fsf@alter.siamese.dyndns.org> <4E791A40.6040102@ramsay1.demon.co.uk>
+From: Jeff Epler <jepler@unpythonic.net>
+Subject: [PATCH v3] Configurable hyperlinking in gitk
+Date: Wed, 21 Sep 2011 21:15:26 -0500
+Message-ID: <20110922021526.GC26880@unpythonic.net>
+References: <20110917022903.GA2445@unpythonic.net>
+ <4E7467B7.1090201@gmail.com>
+ <m3hb49sn26.fsf@localhost.localdomain>
+ <20110922013101.GB26880@unpythonic.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Thu Sep 22 04:10:01 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Marc Branchaud <marcnarc@xiplink.com>,
+	Chris Packham <judge.packham@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 22 04:15:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6Yjg-0005Gz-2t
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 04:10:00 +0200
+	id 1R6Yp6-00073N-MV
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 04:15:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751385Ab1IVCJz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Sep 2011 22:09:55 -0400
-Received: from mail.windriver.com ([147.11.1.11]:57863 "EHLO
-	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750876Ab1IVCJz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Sep 2011 22:09:55 -0400
-Received: from ALA-HCA.corp.ad.wrs.com (ala-hca [147.11.189.40])
-	by mail.windriver.com (8.14.3/8.14.3) with ESMTP id p8M29nAH014002
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
-	Wed, 21 Sep 2011 19:09:49 -0700 (PDT)
-Received: from [128.224.163.220] (128.224.163.220) by ALA-HCA.corp.ad.wrs.com
- (147.11.189.50) with Microsoft SMTP Server (TLS) id 14.1.255.0; Wed, 21 Sep
- 2011 19:09:49 -0700
-User-Agent: Thunderbird 2.0.0.24 (X11/20101027)
-In-Reply-To: <4E791A40.6040102@ramsay1.demon.co.uk>
+	id S1751647Ab1IVCPa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Sep 2011 22:15:30 -0400
+Received: from dsl.unpythonic.net ([206.222.212.217]:60306 "EHLO
+	unpythonic.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751541Ab1IVCP3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Sep 2011 22:15:29 -0400
+Received: by unpythonic.net (Postfix, from userid 1000)
+	id 5149A24834E; Wed, 21 Sep 2011 21:15:26 -0500 (CDT)
+Content-Disposition: inline
+In-Reply-To: <20110922013101.GB26880@unpythonic.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181876>
 
-Ramsay Jones wrote:
-> Junio C Hamano wrote:
->   
->> Wang Hui <Hui.Wang@windriver.com> writes:
->>
->>     
->>> diff --git a/abspath.c b/abspath.c
->>> index f04ac18..2ce1db9 100644
->>> --- a/abspath.c
->>> +++ b/abspath.c
->>> @@ -24,7 +24,7 @@ int is_directory(const char *path)
->>>  const char *real_path(const char *path)
->>>  {
->>>  	static char bufs[2][PATH_MAX + 1], *buf = bufs[0], *next_buf = bufs[1];
->>> -	char cwd[1024] = "";
->>> +	char cwd[PATH_MAX] = "";
->>>       
->> Thanks.
->>
->> This does not make things worse but in the longer term we should move away
->> from using PATH_MAX in general.
->>     
->
-> Hmm, the subject line says "... increase array size ...", but that is not
-> necessarily what this patch is doing! :-D
->
-> Yes, on some platforms PATH_MAX will be larger than 1024 (e.g. 4096 on Linux),
-> but that is not even true of all POSIX systems. POSIX defines the *minimum*
-> value of PATH_MAX that systems must support (as #define _POSIX_PATH_MAX) of 255.
-> [it also requires that POSIX conforming applications must not *require* a value
-> larger than 255].
->
-> However, we don't have to look too far to find systems with much smaller values.
-> On Cygwin, for example:
->
->     $ cat -n junk.c
->          1  #include <stdio.h>
->          2  #include <limits.h>
->          3
->          4  int main(int argc, char *argv[])
->          5  {
->          6          printf("PATH_MAX is %d\n", PATH_MAX);
->          7          return 0;
->          8  }
->     $ gcc -o junk junk.c
->     $ ./junk
->     $ PATH_MAX is 260
->     $ 
->
-> On MinGW the answer is 259.
->
-> So, I certainly agree that moving away from PATH_MAX is a good idea, but I'm
-> not sure I agree that this patch "does not make things worse" ... (I haven't
-> given it *any* thought!).
->   
-Hi Ramsay,
+Many projects use project-specific notations in changelogs to refer
+to bug trackers and the like.  One example is the "Closes: #12345"
+notation used in Debian.
 
-Do you mean the PATH_MAX of a system should not be the limitation for 
-the git. That is to say, the git can handle the path which has name 
-longer than PATH_MAX? If it is, my patch is not needed here. :-)
-> [Also, note commits f66cf96, fd55a19, 620e2bb, etc...]
->
-> ATB,
-> Ramsay Jones
->
->
->   
+Make gitk configurable so that arbitrary strings can be turned into
+clickable links that are opened in a web browser.
+
+Signed-off-by: Jeff Epler <jepler@unpythonic.net>
+---
+Since the previous patch, I
+ * Renamed configuration variables to get rid of the "gitk" prefix
+   to encourage other git-related programs to adopt the same
+   functionality.
+
+ * Renamed configuration variables from cryptic ".re", ".sub" to less
+   cryptic ".regexp" and "subst"
+
+ * Changed the example RE to be an ERE (no \d or \M)
+
+ * Documented that these are POSIX EREs; hopefully that's OK.  I see
+   in CodingGuidelines that in git itself "a subset of BREs" are used,
+   so maybe even this is too much power.  And hopefully tcl's
+   re_syntax really is close enough to an ERE superset that this isn't
+   a terrible lie about the initial implementation either.
+
+ * Added a Signed-Off-By, since I've had a number of positive feedbacks
+   and the only problems I've heard of (since patch v2) are the ones
+   related to 'eval' in git-web--browse.
+
+In v2 of the patch, I had fixed a problem with %-signs in URLs and
+changed the documentation example.
+
+ Documentation/config.txt |   30 +++++++++++++++++-
+ gitk-git/gitk            |   75 +++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 102 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ae9913b..ffc9ccf 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1064,6 +1064,10 @@ All gitcvs variables except for 'gitcvs.usecrlfattr' and
+ is one of "ext" and "pserver") to make them apply only for the given
+ access method.
+ 
++gitk.browser::
++	Specify the browser that will be used to open links generated by
++	'linkify' configuration options.
++
+ grep.lineNumber::
+ 	If set to true, enable '-n' option by default.
+ 
+@@ -1317,6 +1321,28 @@ interactive.singlekey::
+ 	setting is silently ignored if portable keystroke input
+ 	is not available.
+ 
++linkify.<name>.regexp::
++	Specify a regular expression in the POSIX Extended Regular Expression
++	syntax defining a class of strings to automatically convert to
++	hyperlinks.  This regular expression many not span multiple lines.
++	You must also specify 'linkify.<name>.subst'.
++
++linkify.<name>.subst::
++	Specify a substitution that results in the target URL for the
++	related regular expression.  Back-references like '\1' refer
++	to capturing groups in the associated regular expression.
++	You must also specify 'linkify.<name>.regexp'.
+++
++For example, to automatically link from Debian-style "Closes: #nnnn"
++message to the Debian BTS,
+++
++--------
++    git config linkify.debian-bts.regexp '#([1-9][0-9]*)'
++    git config linkify.debian-bts.subst 'http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=\1'
++--------
+++
++Currently, only linkgit:gitk[1] converts strings to links in this fashion.
++
+ log.abbrevCommit::
+ 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
+ 	linkgit:git-whatchanged[1] assume `\--abbrev-commit`. You may
+@@ -1870,5 +1896,5 @@ user.signingkey::
+ 
+ web.browser::
+ 	Specify a web browser that may be used by some commands.
+-	Currently only linkgit:git-instaweb[1] and linkgit:git-help[1]
+-	may use it.
++	Currently only linkgit:git-instaweb[1], linkgit:gitk[1],
++	and linkgit:git-help[1] may use it.
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 4cde0c4..9db5525 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -6684,7 +6684,7 @@ proc commit_descriptor {p} {
+ # append some text to the ctext widget, and make any SHA1 ID
+ # that we know about be a clickable link.
+ proc appendwithlinks {text tags} {
+-    global ctext linknum curview
++    global ctext linknum curview linkmakers
+ 
+     set start [$ctext index "end - 1c"]
+     $ctext insert end $text $tags
+@@ -6699,6 +6699,30 @@ proc appendwithlinks {text tags} {
+ 	setlink $linkid link$linknum
+ 	incr linknum
+     }
++
++    if {$linkmakers == {}} return
++
++    set link_re {}
++    foreach {re rep} $linkmakers { lappend link_re $re }
++    set link_re "([join $link_re {)|(}])"
++
++    set ee 0
++    while {[regexp -indices -start $ee -- $link_re $text l]} {
++	set s [lindex $l 0]
++	set e [lindex $l 1]
++	set linktext [string range $text $s $e]
++	incr e
++	set ee $e
++
++	foreach {re rep} $linkmakers {
++	    if {![regsub $re $linktext $rep linkurl]} continue
++	    $ctext tag delete link$linknum
++	    $ctext tag add link$linknum "$start + $s c" "$start + $e c"
++	    seturllink $linkurl link$linknum
++	    incr linknum
++	    break
++	}
++    }
+ }
+ 
+ proc setlink {id lk} {
+@@ -6726,6 +6750,53 @@ proc setlink {id lk} {
+     }
+ }
+ 
++proc get_link_config {} {
++    if {[catch {exec git config -z --get-regexp {^linkify\.}} linkers]} {
++	return {}
++    }
++
++    set linktypes [list]
++    foreach item [split $linkers "\0"] {
++	if {$item == ""} continue
++	if {![regexp {linkify\.(\S+)\.(regexp|subst)\s(.*)} $item _ k t v]} {
++	    continue
++	}
++	set linkconfig($t,$k) $v
++	if {$t == "regexp"} { lappend linktypes $k }
++    }
++
++    set linkmakers [list]
++    foreach k $linktypes {
++	if {![info exists linkconfig(subst,$k)]} {
++	    puts stderr "Warning: link `$k' is missing a substitution string"
++	} elseif {[catch {regexp -inline -- $linkconfig(regexp,$k) ""} err]} {
++	    puts stderr "Warning: link `$k': $err"
++	} else {
++	    lappend linkmakers $linkconfig(regexp,$k) $linkconfig(subst,$k)
++	}
++	unset linkconfig(regexp,$k)
++	unset -nocomplain linkconfig(subst,$k)
++    }
++    foreach k [array names linkconfig] {
++	regexp "subst,(.*)" $k _ k
++	puts stderr "Warning: link `$k' is missing a regular expression"
++    }
++    set linkmakers
++}
++
++proc openlink {url} {
++    exec git web--browse --config=gitk.browser $url &
++}
++
++proc seturllink {url lk} {
++    set qurl [string map {% %%} $url]
++    global ctext
++    $ctext tag conf $lk -foreground blue -underline 1
++    $ctext tag bind $lk <1> [list openlink $qurl]
++    $ctext tag bind $lk <Enter> {linkcursor %W 1}
++    $ctext tag bind $lk <Leave> {linkcursor %W -1}
++}
++
+ proc appendshortlink {id {pre {}} {post {}}} {
+     global ctext linknum
+ 
+@@ -11693,6 +11764,8 @@ if {[tk windowingsystem] eq "win32"} {
+     focus -force .
+ }
+ 
++set linkmakers [get_link_config]
++
+ getcommits {}
+ 
+ # Local variables:
+-- 
+1.7.2.5
