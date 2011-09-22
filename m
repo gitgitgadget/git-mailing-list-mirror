@@ -1,154 +1,117 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: [PATCH v3] Docs: Clarify the --tags option of `git fetch'
-Date: Thu, 22 Sep 2011 07:23:55 -0000
-Message-ID: <686c38876d5a4ad6bfac67ca77fe9bb3-mfwitten@gmail.com>
-References: <1314997486-29996-1-git-send-email-anatol.pomozov@gmail.com>
-            <1316649176-32352-1-git-send-email-anatol.pomozov@gmail.com>
-            <CAMOZ1BuSd52woX0utOQ84gbCzBkZg3ATKnE+7G_BrD5_hUQSiQ@mail.gmail.com>
-            <7vwrd1z9it.fsf@alter.siamese.dyndns.org>
-            <CAMOZ1Bvxc+vcofb_KyeLS7Gy=KOtX1SKv72cXA2NtwgYCWA31A@mail.gmail.com>
-            <CAMOZ1Bt6gGVd6QuRZduZ4mJ=eoZ9d7xK-WfwZ3G-+oswT0RN_Q@mail.gmail.com>
-            <CAH5451nb=DTed2kAVNQmFBbGFJ9zvQAtBE+VCzKqZfGMgYpx5w@mail.gmail.com>
-            <CAMOZ1BtPJ_Ddxo1UG2cxJMnGv9y8sR0rAyk3d_5JEz4kLsUQJQ@mail.gmail.com>
-            <7vfwjpyzds.fsf@alter.siamese.dyndns.org>
-Cc: Anatol Pomozov <anatol.pomozov@gmail.com>,
-	Drew Northup <drew.northup@maine.edu>,
-	Andrew Ardill <andrew.ardill@gmail.com>,
-	Daniel Johnson <computerdruid@gmail.com>, git@vger.kernel.org
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: How to use git attributes to configure server-side checks?
+Date: Thu, 22 Sep 2011 10:28:30 +0200
+Message-ID: <4E7AF1AE.5030005@alum.mit.edu>
+References: <4E7A3BDE.3040301@alum.mit.edu> <7vy5xh1whq.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git discussion list <git@vger.kernel.org>,
+	Jay Soffian <jaysoffian@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 22 09:30:24 2011
+X-From: git-owner@vger.kernel.org Thu Sep 22 10:28:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6dji-0006hh-Bz
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 09:30:22 +0200
+	id 1R6ee9-0006ZC-Rl
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 10:28:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752291Ab1IVHaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Sep 2011 03:30:16 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:41702 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752047Ab1IVHaO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Sep 2011 03:30:14 -0400
-Received: by bkbzt4 with SMTP id zt4so2204905bkb.19
-        for <git@vger.kernel.org>; Thu, 22 Sep 2011 00:30:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=subject:date:from:to:cc:message-id:in-reply-to:references;
-        bh=1Dm+Fhm4Pgk2B/fnDDAQus5w1tgc8nYCt+XtBxsqDB0=;
-        b=oKqik67/KvpV/0BA0ojl6FAzrJyjZpalti1zDPDGIlU6q5t4Dc1zYMqnpi/Fy8Z7yO
-         jD/RcsEtJBdf6eqaLktp0n845WyrRFnU6zYc3wNtNgAQp46bAefMAMDp0G8X5BrStlna
-         Y+LOHeU9uAtD4cIjXLrTmhDNQWBg+lM+VumIE=
-Received: by 10.204.139.72 with SMTP id d8mr1210823bku.347.1316676612747;
-        Thu, 22 Sep 2011 00:30:12 -0700 (PDT)
-Received: from gmail.com (saito.countshockula.com. [65.183.151.13])
-        by mx.google.com with ESMTPS id t18sm7248429bkb.9.2011.09.22.00.30.10
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 22 Sep 2011 00:30:11 -0700 (PDT)
-In-Reply-To: <7vfwjpyzds.fsf@alter.siamese.dyndns.org>
+	id S1751400Ab1IVI2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Sep 2011 04:28:37 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:43712 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751242Ab1IVI2e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Sep 2011 04:28:34 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p8M8SU7K013147
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 22 Sep 2011 10:28:30 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.21) Gecko/20110831 Lightning/1.0b2 Thunderbird/3.1.13
+In-Reply-To: <7vy5xh1whq.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181888>
 
-On Wed, 21 Sep 2011 21:28:15 -0700, Junio C Hamano wrote:
-
-> I expect the readers to, and I hope the documentation to help them to,
-> understand the following three basic facts and rules before diving into
-> descriptions of individual options, such as the paragraph we are
-> discussing:
+On 09/21/2011 10:17 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>> I was thinking of using git attributes to configure a server-side
+>> "update" hook that does some basic sanity checking before accepting a
+>> push.  I thought I could do something like
+>>
+>> ~/.gitattributes:
+>>     *.c whitespace
+>>
+>> ~/crappy-vendor-code/.gitattributes:
+>>     # This code doesn't conform to our standards; disable check:
+>>     *.c -whitespace
+>>
+>> This would allow fine-grained specification of which checks are applied
+>> to which files, and ensure that the hook configuration is kept
+>> synchronized with changes to the content.
 >
->  * "git fetch" command serves two purposes:
->
->    (1) It transfers objects the repository the command is invoked in does
->    not have from the remote repository. The objects transferred are the
->    commits that are necessary to complete the ancestry chain of _some_
->    history, and data (i.e. trees and blobs) associated to use these
->    commits.
->
->    (2) It optionally can update the local refs (e.g. branches and tags)
->    with copies of the refs taken from the remote repository.
->
->  * In the above, the user needs to tell the command two things. One is
->    "where the remote repository is". The other is "what refs to fetch and
->    (optionally) how to store them". The latter "what to fetch" also
->    determines what that "_some_ history" above is (i.e. everything
->    reachable from the refs that are fetched).
->
->  * "What to fetch and how to store" have a default, recorded in the
->    repository configuration file, that is used when the user does not give
->    that information to the command from the command line. If the user does
->    give that information from the command line, that default is not used
->    at all. IOW, the command line overrides the default.
->
-> With that understanding, the _only_ thing that "--tags" description needs
-> to talk about is that it is an explicit way to give that "what to fetch
-> and how to store" information from the command line. It instructs the
-> command to fetch all the tags from the remote repository and store them
-> locally.
+> The words "server side" automatically mean that there should be no working
+> tree, and where there is no working tree there should be no index, so the
+> direction should not make any difference.  The attributes that are used to
+> help whitespace checks should come from project.git/info/attributes in
+> such a case [*1*].
 
-For at least the near term, this patch may do a pretty good job of
-achieving those goals without having to change too much; I do some
-careful maneuvering to avoid mentioning refspecs until quite late
-in the description.
+Thanks for the reply and for explaining how the index can(not) be used
+for this purpose.  But what you propose is not flexible enough for me.
+I would like the checking configuration to be *versioned* along with the
+code.  For example, suppose my project decides to enforce a rule that
+all Python code needs to be indented with spaces.  It might be that not
+all of our old code adheres to this rule, and that we only want to clean
+up the code in master.  I would like to be able to
 
-8<-----------8<-----------8<-----------8<-----------8<-----------8<-----------
+1. Implement a new "check-space-indent" option in our update hook, which
+is applied to any file that has the "check-space-indent" attribute.  At
+first, no files have this attribute, so the new test has no effect.
 
-See the discussion starting here:
+2. Start cleaning up code in master.  Each time a subdirectory tree is
+cleaned up, add a line like
 
-  [PATCH] Clarify that '--tags' fetches tags only
-  Message-ID: <1314997486-29996-1-git-send-email-anatol.pomozov@gmail.com>
-  http://thread.gmane.org/gmane.comp.version-control.git/180636
+    *.py check-space-indent
 
-Suggested-by: Anatol Pomozov <anatol.pomozov@gmail.com>
-Signed-off-by: Michael Witten <mfwitten@gmail.com>
----
- Documentation/fetch-options.txt |   31 +++++++++++++++++++++++--------
- 1 files changed, 23 insertions(+), 8 deletions(-)
+in a .gitattributes file at the root of the subdirectory tree.  While
+this procedure proceeds incrementally, git ensures that code that has
+been cleaned up stays cleaned up.
 
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index 39d326a..4cc5a80 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -56,14 +56,29 @@ endif::git-pull[]
- ifndef::git-pull[]
- -t::
- --tags::
--	Most of the tags are fetched automatically as branch
--	heads are downloaded, but tags that do not point at
--	objects reachable from the branch heads that are being
--	tracked will not be fetched by this mechanism.  This
--	flag lets all tags and their associated objects be
--	downloaded. The default behavior for a remote may be
--	specified with the remote.<name>.tagopt setting. See
--	linkgit:git-config[1].
-+	Most of a remote's tags are fetched automatically as branches are
-+	downloaded. However, git does not automatically fetch any tag that,
-+	when 'git fetch' completes, would not be reachable from any local
-+	branch head.  This option tells git to fetch all tags (and their
-+	associated objects).
-++
-+The 'git fetch' command is often supplied with a default set of branch
-+heads to fetch, but using this option tells 'git fetch' to ignore those
-+defaults.
-++
-+This option is merely a shorthand for writing the refspec
-+`refs/tags/\*:refs/tags/\*'; that is,
-++
-+	git fetch origin --tags
-+	git fetch origin --tags frotz
-++
-+are equivalent to:
-++
-+	git fetch origin 'refs/tags/*:refs/tags/*'
-+	git fetch origin frotz 'refs/tags/*:refs/tags/*'
-++
-+The default behavior for a remote may be specified with
-+the remote.<name>.tagopt setting. See linkgit:git-config[1].
- 
- --recurse-submodules[=yes|on-demand|no]::
- 	This option controls if and under what conditions new commits of
+3. When all code is cleaned up, add the above line to the top-level
+.gitattributes file in the master branch.  But if there are some parts
+of the code that we don't want to clean up (for example, code acquired
+from elsewhere that uses different coding standards), we can turn off
+the check for that subdirectory tree.
+
+Note that during this whole process all code passes the update hook,
+because we can configure it to ignore problems in code that hasn't been
+cleaned up yet.  And even at the end of the procedure, it is still
+possible to commit to older branches where tabs are still used for
+indentation because they don't use the new attribute.
+
+For this to be possible, I would need to determine the git attributes to
+apply to a particular file in a particular commit; something like
+
+    git check-attr check-space-indent $SHA1:path/to/file
+
+This does not seem to be possible today without writing my own code to
+crawl and parse the gitattributes files from a particular commit.
+
+>  (1) grab the new commits introduced to the project using rev-list, and
+>      invoke "git show --check" on each and every one of them; or
+
+Where does "git show --check" read its gitattributes (i.e.,
+"whitespace") from?
+
+Michael
+
 -- 
-1.7.6.409.ge7a85
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
