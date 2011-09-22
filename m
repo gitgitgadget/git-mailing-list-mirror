@@ -1,71 +1,78 @@
-From: Jeff Epler <jepler@unpythonic.net>
-Subject: Re: [RFC/PATCH] Configurable hyperlinking in gitk
-Date: Wed, 21 Sep 2011 20:31:01 -0500
-Message-ID: <20110922013101.GB26880@unpythonic.net>
-References: <20110917022903.GA2445@unpythonic.net>
- <4E7467B7.1090201@gmail.com>
- <m3hb49sn26.fsf@localhost.localdomain>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: [PATCH] Clarify that '--tags' fetches tags only
+Date: Thu, 22 Sep 2011 02:01:30 +0000
+Message-ID: <CAMOZ1Bvxc+vcofb_KyeLS7Gy=KOtX1SKv72cXA2NtwgYCWA31A@mail.gmail.com>
+References: <1314997486-29996-1-git-send-email-anatol.pomozov@gmail.com>
+ <1316649176-32352-1-git-send-email-anatol.pomozov@gmail.com>
+ <CAMOZ1BuSd52woX0utOQ84gbCzBkZg3ATKnE+7G_BrD5_hUQSiQ@mail.gmail.com> <7vwrd1z9it.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Chris Packham <judge.packham@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 22 03:31:11 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Anatol Pomozov <anatol.pomozov@gmail.com>, git@vger.kernel.org,
+	computerdruid@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 22 04:02:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6Y86-0002mM-SH
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 03:31:11 +0200
+	id 1R6YcD-0003C0-HP
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 04:02:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751527Ab1IVBbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Sep 2011 21:31:06 -0400
-Received: from dsl.unpythonic.net ([206.222.212.217]:54647 "EHLO
-	unpythonic.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750826Ab1IVBbE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Sep 2011 21:31:04 -0400
-Received: by unpythonic.net (Postfix, from userid 1000)
-	id 10086114953; Wed, 21 Sep 2011 20:31:01 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <m3hb49sn26.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751784Ab1IVCCD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Sep 2011 22:02:03 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:60675 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751537Ab1IVCCB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Sep 2011 22:02:01 -0400
+Received: by qyk7 with SMTP id 7so2354937qyk.19
+        for <git@vger.kernel.org>; Wed, 21 Sep 2011 19:02:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Ey0h/gtve2ENaoWjRw6/GBXlpY6mcWbMxUDIz2jdJzo=;
+        b=JIpoLpZl+hfIuWAuh8EFE3xrEsJnKH0x+bCB31tSOT1keCAtlx7nNZa7+uclnopcrt
+         8V0AfVoqy4Qcao+RlofOF35uSZAqqR8oh5L91r5TL4sIn4PttrltJHsxd3NWyO+O8EgC
+         6mo6cf9sbaZPrrn4n3lqqF9gHG5pD2h8EadTY=
+Received: by 10.229.72.208 with SMTP id n16mr1185453qcj.165.1316656920274;
+ Wed, 21 Sep 2011 19:02:00 -0700 (PDT)
+Received: by 10.229.233.6 with HTTP; Wed, 21 Sep 2011 19:01:30 -0700 (PDT)
+In-Reply-To: <7vwrd1z9it.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181873>
 
-On Sun, Sep 18, 2011 at 11:50:30AM -0700, Jakub Narebski wrote:
-> Perhaps more descriptive name, i.e.
-> 
->   linkify.<name>.regexp
->   linkify.<name>.subst
-> 
-> would be better?
-> 
-> I guess that regexp is an extended regular expression, isn't it?
+On Thu, Sep 22, 2011 at 00:49, Junio C Hamano <gitster@pobox.com> wrote:
+> --tags is merely a short-hand for "refs/tags/*:refs/tags/*")
+> explicitly from the command line
 
-If "regexp" is clearer than "re" then I have no quarrel with changing
-it.  The typical user won't be typing these over and over, so the value
-of brevity is limited.
+[Disclaimer: I don't know the code or the semantics]
 
-As written, it's whatever is accepted by tcl's regular expression
-matcher, which is described in re_syntax(n), installed as
-re_syntax(3tcl) on debian-derived systems.  A one-sentence summary of a
-TCL "ARE" is "basically EREs with some significant extensions".
+Why not just use that explanation?
 
-It is probably possible to write expressions that are going to work the
-same in tcl, perl, and posix regular expressions, but to some extent the
-user who writes a complex expression and then tries to use it with both
-gitk and a future gitweb will simply be permitted to keep both pieces
-when it breaks.
+  This option is merely a short-hand for writing
+  the refspec `refs/tags/*:refs/tags/*'; consequently,
+  using this option overrides any default refspec that
+  would be used if no refspec were provided on the
+  command line. That is,
 
-Is it unnecessarily complicated to design
-    linkify.<name>.(regexp|subst)
-*AND*
-    gitk.linkify.<name>.(regexp|subst)
-in from the start?  This way the hypothetical power user can write a
-different version of the expression for gitk and future gitweb if it is
-required by RE dialect differences.
+    git fetch --tags origin frotz
 
-Jeff
+  is equivalent to:
+
+    git fetch origin frotz 'refs/tags/*:refs/tags/*'
+
+In fact, if the command line parsing performed by `git fetch'
+is reasonably intelligent, then it might be worthwhile
+to relocate `--tags' in the example:
+
+  That is,
+
+    git fetch origin frotz --tags
+
+  is equivalent to:
+
+    git fetch origin frotz 'refs/tags/*:refs/tags/*'
