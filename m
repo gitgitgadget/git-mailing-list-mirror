@@ -1,117 +1,113 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH 2/2] diff_index: honor in-index, not working-tree, .gitattributes
-Date: Thu, 22 Sep 2011 17:44:21 -0400
-Message-ID: <1316727861-90460-2-git-send-email-jaysoffian@gmail.com>
-References: <1316727861-90460-1-git-send-email-jaysoffian@gmail.com>
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/6] A handful of "branch description" patches
+Date: Thu, 22 Sep 2011 15:09:16 -0700
+Message-ID: <1316729362-7714-1-git-send-email-gitster@pobox.com>
+References: <7vy5xi4y3m.fsf@alter.siamese.dyndns.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 22 23:44:45 2011
+X-From: git-owner@vger.kernel.org Fri Sep 23 00:09:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6r4W-00039J-4H
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 23:44:44 +0200
+	id 1R6rSV-0007F1-JD
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 00:09:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754089Ab1IVVog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Sep 2011 17:44:36 -0400
-Received: from mail-gw0-f42.google.com ([74.125.83.42]:56952 "EHLO
-	mail-gw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752653Ab1IVVoe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Sep 2011 17:44:34 -0400
-Received: by mail-gw0-f42.google.com with SMTP id 16so2191717gwj.1
-        for <git@vger.kernel.org>; Thu, 22 Sep 2011 14:44:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=bckdI+M/LB2hMdLz2DPE4lobQaOJoDD8T6E59ZhfmoU=;
-        b=ixjHIDRYGnbILu8OE31cC6p5tujFAMY9yuDKlEz36spfaJE4IZ7KhziEH6CWWFgPVr
-         1CmVLfR7ZoZUD1zMgyaysq1Mk8StkYrfhAtjSRIwKwYOkGSWKzDxopA9NoUOj0wf+bkJ
-         GDAkXHjBoRvMkbTdAEGxVGm9+QoCbu+iaZsic=
-Received: by 10.151.157.10 with SMTP id j10mr2989535ybo.68.1316727874417;
-        Thu, 22 Sep 2011 14:44:34 -0700 (PDT)
-Received: from localhost (cpe-174-097-218-168.nc.res.rr.com. [174.97.218.168])
-        by mx.google.com with ESMTPS id t10sm34257855anl.26.2011.09.22.14.44.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 22 Sep 2011 14:44:34 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7.rc2.5.g12a2f
-In-Reply-To: <1316727861-90460-1-git-send-email-jaysoffian@gmail.com>
+	id S1754165Ab1IVWJZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Sep 2011 18:09:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62741 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753955Ab1IVWJZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Sep 2011 18:09:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 917766EC8
+	for <git@vger.kernel.org>; Thu, 22 Sep 2011 18:09:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=TWv9
+	vphhgaSOxzElaHvtvAcD3FQ=; b=gJCdvnAA0bxhjxYp61a2AcLV7gxI/85Cw2LP
+	iyLdwgb679F6M865s6bBxBMijHFyXVwD4uOhabmKelRcoZeVsvpjAkGA0KGOJFXv
+	TZtorJ3cgpZT82lwFxmWkrMRfXvtzKHU8nNkc/DGKpwJbeEptuO18LEaGTZV+28L
+	jtyj/KI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=Mw2UZj
+	8B3P4RSwDBM8Nu1SdpKPmhMcMMsvmaNjaSy+tNk4OE6YVw6tP3dlnYZGw4XbmvD2
+	1EBuyn4UJsNk4Ib/NIMoiRyGDPPc3YGYhapVE22Ppn7AoLjDZw6Ece+63lIYFxcn
+	8XzTqQpwjeP5xbNV0Nq7/+cBKOBKaPHI0Cc4k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 89D276EC6
+	for <git@vger.kernel.org>; Thu, 22 Sep 2011 18:09:24 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 02F366EC5 for
+ <git@vger.kernel.org>; Thu, 22 Sep 2011 18:09:23 -0400 (EDT)
+X-Mailer: git-send-email 1.7.7.rc2.4.g5ec82
+In-Reply-To: <7vy5xi4y3m.fsf@alter.siamese.dyndns.org>
+X-Pobox-Relay-ID: 879566F2-E567-11E0-9B43-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181922>
 
-When diff'ing the index against a tree (using either diff-index
-or diff --cached), git previously looked at .gitattributes in the
-working tree before considering .gitattributes in the index, even
-though the diff itself otherwise ignores the working tree.
+Here are a few patches that I have queued in 'pu', redoing some of the
+patches I already sent out to the list, around "branch description".
 
-Further, with an index, but no working tree, the in-index
-.gitattributes were ignored entirely.
+The original motivation was to make the push/pull workflow appear more
+robust by allowing human-to-human communication to leave audit trail that
+can be verified when it becomes necessary. Namely:
 
-Calling git_attr_set_direction(GIT_ATTR_INDEX) before generating
-the diff fixes both of these behaviors.
+ * request-pull message carries the SHA-1 of what is expected to be
+   merged; and
 
----
-This is a weather balloon patch I guess.
+ * "signed push" leaves the SHA-1 of what was pushed to the remote,
+   cryptographically signed.
 
-Obviously there is a behavior change here as evidenced by the change to
-t4020-diff-external.sh. I think the old behavior was wrong and this is a
-bug fix. But the old behavior has been that way a long time, so maybe
-we should use '--cached-attributes' instead for the "correct" behavior.
+Linus's reaction, as I understood him, was "if we are spending efforts to
+add more information, the end result should be more informative to humans
+not just to machines", and I agree.  An example of piece of information we
+often talk about is branch description---what a particular branch is meant
+to achieve. Both request-pull messages and declarations of what was pushed
+are good places to record that piece of information.
 
-Since I'm not really sure what we should do with --cached -R, I'm
-punting on that for now.
+So here is a partially re-rolled series to get us closer.
 
-Jeff's message regarding diff-tree made my head hurt, so tackling that
-will have to wait...
+ * The logic to read from an existing branch description was in
+   builtin/branch.c in the original series, but the first patch separates
+   it out into branch.c as a helper function;
 
- diff-lib.c               |    3 +++
- t/t4020-diff-external.sh |    4 ++--
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ * The second one is a digression; the branch description describes what
+   the topic aims to achieve, so it was natural to use it to prime the
+   cover letter while preparing a patch series with format-patch;
 
-diff --git a/diff-lib.c b/diff-lib.c
-index f8454dd291..fe218931e6 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -11,6 +11,7 @@
- #include "unpack-trees.h"
- #include "refs.h"
- #include "submodule.h"
-+#include "attr.h"
- 
- /*
-  * diff-files
-@@ -476,6 +477,8 @@ static int diff_cache(struct rev_info *revs,
- int run_diff_index(struct rev_info *revs, int cached)
- {
- 	struct object_array_entry *ent;
-+	if (cached)
-+		git_attr_set_direction(GIT_ATTR_INDEX, NULL);
- 
- 	ent = revs->pending.objects;
- 	if (diff_cache(revs, ent->item->sha1, ent->name, cached))
-diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
-index 083f62d1d6..c6fdab3e87 100755
---- a/t/t4020-diff-external.sh
-+++ b/t/t4020-diff-external.sh
-@@ -160,10 +160,10 @@ test_expect_success 'external diff with autocrlf = true' '
- '
- 
- test_expect_success 'diff --cached' '
--	git add file &&
-+	git add .gitattributes file &&
- 	git update-index --assume-unchanged file &&
- 	echo second >file &&
--	git diff --cached >actual &&
-+	git diff --cached file >actual &&
- 	test_cmp "$TEST_DIRECTORY"/t4020/diff.NUL actual
- '
- 
+ * The third one that adds "branch --edit-description" is basically
+   unchanged modulo small leakfix from the original round;
+
+ * And the remainder of the series for request-pull is the same as the
+   last round.
+
+The second patch uses facility introduced in bk/ancestry-path topic, so
+it would be the easiest to apply the series on top of a merge of c05b988
+to 'master'.
+
+I haven't updated the "signed push" patch to use this information yet.
+
+
+Junio C Hamano (6):
+  branch: add read_branch_desc() helper function
+  format-patch: use branch description in cover letter
+  branch: teach --edit-description option
+  request-pull: modernize style
+  request-pull: state what commit to expect
+  request-pull: use the branch description
+
+ Documentation/git-branch.txt |    5 +++
+ branch.c                     |   31 ++++++++++++++++++
+ branch.h                     |    5 +++
+ builtin/branch.c             |   56 +++++++++++++++++++++++++++++++-
+ builtin/log.c                |   71 +++++++++++++++++++++++++++++++++++++++--
+ git-request-pull.sh          |   73 ++++++++++++++++++++++++++---------------
+ t/t5150-request-pull.sh      |    6 +++
+ 7 files changed, 215 insertions(+), 32 deletions(-)
+
 -- 
-1.7.7.rc2.5.g12a2f
+1.7.7.rc2.4.g5ec82
