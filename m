@@ -1,95 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] diff_index: honor in-index, not working-tree,
- .gitattributes
-Date: Thu, 22 Sep 2011 15:39:20 -0700
-Message-ID: <7v8vpgxkvb.fsf@alter.siamese.dyndns.org>
-References: <1316727861-90460-1-git-send-email-jaysoffian@gmail.com>
- <1316727861-90460-2-git-send-email-jaysoffian@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: How to use git attributes to configure server-side checks?
+Date: Thu, 22 Sep 2011 15:54:50 -0700 (PDT)
+Message-ID: <m3vcskqjcv.fsf@localhost.localdomain>
+References: <4E7A3BDE.3040301@alum.mit.edu>
+	<7vy5xh1whq.fsf@alter.siamese.dyndns.org>
+	<4E7AF1AE.5030005@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 23 00:39:29 2011
+Content-Type: text/plain; charset=iso-8859-4
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	git discussion list <git@vger.kernel.org>,
+	Jay Soffian <jaysoffian@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Sep 23 00:54:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6rvV-0004k0-DX
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 00:39:29 +0200
+	id 1R6sAU-0002uu-Mp
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 00:54:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754173Ab1IVWjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Sep 2011 18:39:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42182 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754099Ab1IVWjY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Sep 2011 18:39:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A023B557C;
-	Thu, 22 Sep 2011 18:39:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=B/yeoL88gM1VVFQylZdw5MZ6XsQ=; b=cPf8Cd
-	AdYo1JSr/jyIzABzy2ZzNEdpgaiMH8/U/mL4uSzLwTeOH0kyuoallh57ihn0Kmmv
-	8P1A+vDIXFYR91lkXrZ+ppTV9WVrSDepPIgB4snIIUCLcpiMvMpVD+bBPZI/V+L7
-	R2TOHeZSjUbfus1wIMYeuYn1148om6y0kT0g0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kqw10pT0PQeUkjpGxyVwYCQRPVRv7+TO
-	xnrI+7NwudBjQN/iGoxMQv7LF2hPC83QaY6GTsWZM5UYLtdv9vHjb6TNsmcPdQFH
-	4+dHaa0nG9o7G7CAu424OuGS6Xy48TMOAMQ1mBD9axf4zpPCA2ZLPg58ph7vlDsg
-	h5eiTTnCcQo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 97C62557B;
-	Thu, 22 Sep 2011 18:39:22 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 21A20557A; Thu, 22 Sep 2011
- 18:39:22 -0400 (EDT)
-In-Reply-To: <1316727861-90460-2-git-send-email-jaysoffian@gmail.com> (Jay
- Soffian's message of "Thu, 22 Sep 2011 17:44:21 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B759C3B6-E56B-11E0-B5FD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753537Ab1IVWyy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Sep 2011 18:54:54 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:62482 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751560Ab1IVWyx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2011 18:54:53 -0400
+Received: by fxe4 with SMTP id 4so3221896fxe.19
+        for <git@vger.kernel.org>; Thu, 22 Sep 2011 15:54:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=bQlDy5q1hTYGSDGHnsAoft5IwSGJR92AEEErV1BF458=;
+        b=uRTIntXjuxt3GFvWFN2pBOAZ1QeK7g+2ibKJH7jcD4ralMNC+F2k1U40yXY0vtIV4s
+         +7rTTdGlFnzHYGcnk0b/yYrXC4Bwu880Pt0xCk51eoKg2lidt8BnXXKdc8RNzfCiKQSx
+         dP6X0eAH7mXGU1zhjpT2Iul00Wg2Y+9wWmew8=
+Received: by 10.223.11.23 with SMTP id r23mr3969923far.38.1316732092375;
+        Thu, 22 Sep 2011 15:54:52 -0700 (PDT)
+Received: from localhost.localdomain (abwe70.neoplus.adsl.tpnet.pl. [83.8.228.70])
+        by mx.google.com with ESMTPS id a7sm8961640fam.22.2011.09.22.15.54.49
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 22 Sep 2011 15:54:50 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p8MMsFBf013701;
+	Fri, 23 Sep 2011 00:54:26 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p8MMrsEX013696;
+	Fri, 23 Sep 2011 00:53:54 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <4E7AF1AE.5030005@alum.mit.edu>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181932>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> When diff'ing the index against a tree (using either diff-index
-> or diff --cached), git previously looked at .gitattributes in the
-> working tree before considering .gitattributes in the index, even
-> though the diff itself otherwise ignores the working tree.
+> Thanks for the reply and for explaining how the index can(not) be use=
+d
+> for this purpose.  But what you propose is not flexible enough for me=
+=2E
+> I would like the checking configuration to be *versioned* along with =
+the
+> code. [...]
 
-We can take attributes only from one place (so far from the working tree
-and perhaps from the index), people had to live within the limitation that
-comes from the "single source only" semantics. It also happens to be
-easier to understand (recall the complexity of the examples Jeff gave
-about "textconv" during "diff" which ideally should apply from its own
-side and "funcname", which does not even have a right answer).
+[...]
 
-In practice, because development progresses by making everything
-(including the .gitattributes file) better, I think "use the newer one"
-would be a good compromise when we have two possible sources to grab
-attributes from but we can only use one source.
+> For this to be possible, I would need to determine the git attributes=
+ to
+> apply to a particular file in a particular commit; something like
+>=20
+>     git check-attr check-space-indent $SHA1:path/to/file
+>=20
+> This does not seem to be possible today without writing my own code t=
+o
+> crawl and parse the gitattributes files from a particular commit.
 
-In that sense, I am somewhat skeptical about what this patch tries to
-do. The working tree is where people make the progress to update the
-index.
+Unfortunately it doesn't seem to be there mechanism to query about
+state of gitattributes at given commit.
 
-A related tangent.
+There is a slight problem from the UI point of view of git-check-attr,
+namely that there are _three_ pieces of information: a place to read
+=2Egitattributes from (working tree, index, commit), list of attributes
+to check (or --all) and list of files (list of paths).  You can use
+"--" to separate _two_ pieces of information.
 
-I think the logical conclusion of assuming that we will keep the "single
-source only" semantics (which I think we will, by the way, unless I hear a
-concrete proposal to how we apply attributes from more than one sources in
-what way to which side of the diff) is that a patch might be an
-improvement over the current behaviour if it teaches "diff-tree" to read
-from the tree and populate the in-core index (never writing it out to
-$GIT_DIR/index) from the postimage tree (i.e. "diff preimage postimage" or
-"diff -R postimage preimage") when it is run in a bare repository. It
-would be a regression if the attributes mechanism is used for auditing
-purposes (as we start reading from a tree that is being audited using the
-very attributes it brings in), though.
+Nb. the ability to read gitattributes from given commit would be
+useful also for gitweb (the `encoding` gitattribute, etc.).
+
+--=20
+Jakub Nar=EAbski
