@@ -1,153 +1,117 @@
 From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH 1/2] Teach '--cached' option to check-attr
-Date: Thu, 22 Sep 2011 17:44:20 -0400
-Message-ID: <1316727861-90460-1-git-send-email-jaysoffian@gmail.com>
+Subject: [PATCH 2/2] diff_index: honor in-index, not working-tree, .gitattributes
+Date: Thu, 22 Sep 2011 17:44:21 -0400
+Message-ID: <1316727861-90460-2-git-send-email-jaysoffian@gmail.com>
+References: <1316727861-90460-1-git-send-email-jaysoffian@gmail.com>
 Cc: Jay Soffian <jaysoffian@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 22 23:44:38 2011
+X-From: git-owner@vger.kernel.org Thu Sep 22 23:44:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6r4P-00036D-PW
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 23:44:38 +0200
+	id 1R6r4W-00039J-4H
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 23:44:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754013Ab1IVVoc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Sep 2011 17:44:32 -0400
+	id S1754089Ab1IVVog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Sep 2011 17:44:36 -0400
 Received: from mail-gw0-f42.google.com ([74.125.83.42]:56952 "EHLO
 	mail-gw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752653Ab1IVVoc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Sep 2011 17:44:32 -0400
-Received: by gwj16 with SMTP id 16so2191717gwj.1
-        for <git@vger.kernel.org>; Thu, 22 Sep 2011 14:44:31 -0700 (PDT)
+	with ESMTP id S1752653Ab1IVVoe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Sep 2011 17:44:34 -0400
+Received: by mail-gw0-f42.google.com with SMTP id 16so2191717gwj.1
+        for <git@vger.kernel.org>; Thu, 22 Sep 2011 14:44:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=tcVQdKxoefE9HLgIOeSTygBl/tUPyASWrflGgAlzQig=;
-        b=NagOMR/q/nqri8IQ0bmLIjj2Qhh3FcNCFcLamLxVFSH/TF2rGbZYtSQ/tIm+r1crb0
-         W74i54P7ZZKN+hvYi3HoO8by9wCM8CqUW140+X0TclC/j0uJwQpe8T7bOEVtwNnXv4I9
-         HQzBQ6PFT0qty9KHcoZ0A3QZ9XY3qI422dgVc=
-Received: by 10.151.20.12 with SMTP id x12mr2702311ybi.367.1316727871375;
-        Thu, 22 Sep 2011 14:44:31 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=bckdI+M/LB2hMdLz2DPE4lobQaOJoDD8T6E59ZhfmoU=;
+        b=ixjHIDRYGnbILu8OE31cC6p5tujFAMY9yuDKlEz36spfaJE4IZ7KhziEH6CWWFgPVr
+         1CmVLfR7ZoZUD1zMgyaysq1Mk8StkYrfhAtjSRIwKwYOkGSWKzDxopA9NoUOj0wf+bkJ
+         GDAkXHjBoRvMkbTdAEGxVGm9+QoCbu+iaZsic=
+Received: by 10.151.157.10 with SMTP id j10mr2989535ybo.68.1316727874417;
+        Thu, 22 Sep 2011 14:44:34 -0700 (PDT)
 Received: from localhost (cpe-174-097-218-168.nc.res.rr.com. [174.97.218.168])
-        by mx.google.com with ESMTPS id l18sm4521145ybg.22.2011.09.22.14.44.29
+        by mx.google.com with ESMTPS id t10sm34257855anl.26.2011.09.22.14.44.33
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 22 Sep 2011 14:44:30 -0700 (PDT)
+        Thu, 22 Sep 2011 14:44:34 -0700 (PDT)
 X-Mailer: git-send-email 1.7.7.rc2.5.g12a2f
+In-Reply-To: <1316727861-90460-1-git-send-email-jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181921>
 
-This option causes check-attr to consider .gitattributes from the index
-only, ignoring .gitattributes from the working tree. This allows it to
-be used in situations where a working tree does not exist.
+When diff'ing the index against a tree (using either diff-index
+or diff --cached), git previously looked at .gitattributes in the
+working tree before considering .gitattributes in the index, even
+though the diff itself otherwise ignores the working tree.
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+Further, with an index, but no working tree, the in-index
+.gitattributes were ignored entirely.
+
+Calling git_attr_set_direction(GIT_ATTR_INDEX) before generating
+the diff fixes both of these behaviors.
+
 ---
-This doesn't seem too controversial to me, and allows server-side
-reading of .gitattributes, albeit with the need to setup an index.
-Still that's better than having to setup an entire working tree.
+This is a weather balloon patch I guess.
 
- Documentation/git-check-attr.txt |    3 +++
- builtin/check-attr.c             |    5 +++++
- t/t0003-attributes.sh            |   28 ++++++++++++++++++++++++----
- 3 files changed, 32 insertions(+), 4 deletions(-)
+Obviously there is a behavior change here as evidenced by the change to
+t4020-diff-external.sh. I think the old behavior was wrong and this is a
+bug fix. But the old behavior has been that way a long time, so maybe
+we should use '--cached-attributes' instead for the "correct" behavior.
 
-diff --git a/Documentation/git-check-attr.txt b/Documentation/git-check-attr.txt
-index 1f7312a189..22537fea23 100644
---- a/Documentation/git-check-attr.txt
-+++ b/Documentation/git-check-attr.txt
-@@ -24,6 +24,9 @@ OPTIONS
- 	paths.  If this option is used, then 'unspecified' attributes
- 	will not be included in the output.
+Since I'm not really sure what we should do with --cached -R, I'm
+punting on that for now.
+
+Jeff's message regarding diff-tree made my head hurt, so tackling that
+will have to wait...
+
+ diff-lib.c               |    3 +++
+ t/t4020-diff-external.sh |    4 ++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/diff-lib.c b/diff-lib.c
+index f8454dd291..fe218931e6 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -11,6 +11,7 @@
+ #include "unpack-trees.h"
+ #include "refs.h"
+ #include "submodule.h"
++#include "attr.h"
  
-+--cached::
-+	Consider .gitattributes in the index only, ignoring the working tree.
-+
- --stdin::
- 	Read file names from stdin instead of from the command-line.
- 
-diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-index 708988a0e1..5682f6d2c7 100644
---- a/builtin/check-attr.c
-+++ b/builtin/check-attr.c
-@@ -5,6 +5,7 @@
- #include "parse-options.h"
- 
- static int all_attrs;
-+static int cached_attrs;
- static int stdin_paths;
- static const char * const check_attr_usage[] = {
- "git check-attr [-a | --all | attr...] [--] pathname...",
-@@ -16,6 +17,7 @@ static int null_term_line;
- 
- static const struct option check_attr_options[] = {
- 	OPT_BOOLEAN('a', "all", &all_attrs, "report all attributes set on file"),
-+	OPT_BOOLEAN(0,  "cached", &cached_attrs, "use cached .gitattributes"),
- 	OPT_BOOLEAN(0 , "stdin", &stdin_paths, "read file names from stdin"),
- 	OPT_BOOLEAN('z', NULL, &null_term_line,
- 		"input paths are terminated by a null character"),
-@@ -99,6 +101,9 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
- 		die("invalid cache");
- 	}
- 
-+	if (cached_attrs)
+ /*
+  * diff-files
+@@ -476,6 +477,8 @@ static int diff_cache(struct rev_info *revs,
+ int run_diff_index(struct rev_info *revs, int cached)
+ {
+ 	struct object_array_entry *ent;
++	if (cached)
 +		git_attr_set_direction(GIT_ATTR_INDEX, NULL);
-+
- 	doubledash = -1;
- 	for (i = 0; doubledash < 0 && i < argc; i++) {
- 		if (!strcmp(argv[i], "--"))
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index ae2f1da28f..2e1b4a7f75 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -134,10 +134,20 @@ test_expect_success 'attribute test: read paths from stdin' '
  
- test_expect_success 'attribute test: --all option' '
- 
--	grep -v unspecified < expect-all | sort > expect &&
--	sed -e "s/:.*//" < expect-all | uniq |
--		git check-attr --stdin --all | sort > actual &&
--	test_cmp expect actual
-+	grep -v unspecified < expect-all | sort > specified-all &&
-+	sed -e "s/:.*//" < expect-all | uniq > stdin-all &&
-+	git check-attr --stdin --all < stdin-all | sort > actual &&
-+	test_cmp specified-all actual
-+'
-+
-+test_expect_success 'attribute test: --cached option' '
-+
-+	:> empty &&
-+	git check-attr --cached --stdin --all < stdin-all | sort > actual &&
-+	test_cmp empty actual &&
-+	git add .gitattributes a/.gitattributes a/b/.gitattributes &&
-+	git check-attr --cached --stdin --all < stdin-all | sort > actual &&
-+	test_cmp specified-all actual
+ 	ent = revs->pending.objects;
+ 	if (diff_cache(revs, ent->item->sha1, ent->name, cached))
+diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
+index 083f62d1d6..c6fdab3e87 100755
+--- a/t/t4020-diff-external.sh
++++ b/t/t4020-diff-external.sh
+@@ -160,10 +160,10 @@ test_expect_success 'external diff with autocrlf = true' '
  '
  
- test_expect_success 'root subdir attribute test' '
-@@ -168,6 +178,16 @@ test_expect_success 'bare repository: check that .gitattribute is ignored' '
- 
+ test_expect_success 'diff --cached' '
+-	git add file &&
++	git add .gitattributes file &&
+ 	git update-index --assume-unchanged file &&
+ 	echo second >file &&
+-	git diff --cached >actual &&
++	git diff --cached file >actual &&
+ 	test_cmp "$TEST_DIRECTORY"/t4020/diff.NUL actual
  '
  
-+test_expect_success 'bare repository: check that --cached honors index' '
-+
-+	export GIT_INDEX_FILE=../.git/index &&
-+	git check-attr --cached --stdin --all < ../stdin-all |
-+		sort > actual &&
-+	test_cmp ../specified-all actual
-+
-+'
-+
-+
- test_expect_success 'bare repository: test info/attributes' '
- 
- 	(
 -- 
 1.7.7.rc2.5.g12a2f
