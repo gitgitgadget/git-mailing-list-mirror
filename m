@@ -1,102 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Daniel Johnson <computerdruid@gmail.com>
 Subject: Re: [PATCH] Clarify that '--tags' fetches tags only
-Date: Wed, 21 Sep 2011 17:49:14 -0700
-Message-ID: <7vwrd1z9it.fsf@alter.siamese.dyndns.org>
-References: <1314997486-29996-1-git-send-email-anatol.pomozov@gmail.com>
- <1316649176-32352-1-git-send-email-anatol.pomozov@gmail.com>
- <CAMOZ1BuSd52woX0utOQ84gbCzBkZg3ATKnE+7G_BrD5_hUQSiQ@mail.gmail.com>
+Date: Wed, 21 Sep 2011 21:14:16 -0400
+Message-ID: <119711285.RuumktFLOq@hyperion>
+References: <1314997486-29996-1-git-send-email-anatol.pomozov@gmail.com> <1316649176-32352-1-git-send-email-anatol.pomozov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Anatol Pomozov <anatol.pomozov@gmail.com>, git@vger.kernel.org,
-	computerdruid@gmail.com
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 22 02:52:35 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Anatol Pomozov <anatol.pomozov@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 22 03:14:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6XWk-0007xN-Vj
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 02:52:35 +0200
+	id 1R6Xry-0006JL-8X
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 03:14:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751431Ab1IVAtS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Sep 2011 20:49:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54234 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751345Ab1IVAtR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Sep 2011 20:49:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E36AB6473;
-	Wed, 21 Sep 2011 20:49:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=F4CG/dq6yHzpZEeUNWRicFcyWiY=; b=RFWFvZ
-	MP/wfKQ8nfJpiZ1SVfkCxilC97vfXJ4euDTgQie8SoPRzBRnBkDjXHEcJfEBzqM6
-	w3pfkI5WYoFD+rr+jdb7NuX5IqNVCBt8bxjhSvYOq+b91L1YyDM7SSAWkTD9o2kv
-	XWzfSERJWmseMo5prYj0jooU8wMGbb+t4wIpg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OvUOZftUhT5206eM/C0VzczFFElir0ND
-	DL+8UxkvPXR1vWlIBv9HGj6WXbEP6dnEhCH5ruC40l3gpA9oTuf7Ei4jcZmPMPRK
-	KJYwWtyiV33meGQXvm8H1tqJYDcGVscLYBvaHwjoHx5UCuYDyinjSFzudXKOa925
-	Owgtj/ec5LE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB5EE6472;
-	Wed, 21 Sep 2011 20:49:16 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5FA0B6471; Wed, 21 Sep 2011
- 20:49:16 -0400 (EDT)
-In-Reply-To: <CAMOZ1BuSd52woX0utOQ84gbCzBkZg3ATKnE+7G_BrD5_hUQSiQ@mail.gmail.com> (Michael
- Witten's message of "Thu, 22 Sep 2011 00:13:21 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B2ACD306-E4B4-11E0-AD72-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751228Ab1IVBOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Sep 2011 21:14:20 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:55674 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750874Ab1IVBOT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Sep 2011 21:14:19 -0400
+Received: by vcbfk10 with SMTP id fk10so101887vcb.19
+        for <git@vger.kernel.org>; Wed, 21 Sep 2011 18:14:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
+         :references:mime-version:content-transfer-encoding:content-type;
+        bh=EzrqgC3AYV9ugmcc30+rimIseaYh0Yrtf2KqwydTYso=;
+        b=Wnhyt4u/w+CNWDIJ3a+GYhuM+VDoHFqTRjvt7sYshGM9AwaeiErvIERIuCKBFDdRpH
+         n6Pm11bThem/fjWosUs9KRBsy9YYFSwMXhHrTIvuN1SXQpEFIX+Qci/vM+IT2UxOOvUX
+         Bqi1lFdl+eF7iDBWMJsJhFwO/yDYsh5CUpEbQ=
+Received: by 10.220.117.70 with SMTP id p6mr373740vcq.22.1316654058422;
+        Wed, 21 Sep 2011 18:14:18 -0700 (PDT)
+Received: from hyperion.localnet (hyperion.student.rit.edu. [129.21.115.228])
+        by mx.google.com with ESMTPS id l16sm5261789vdf.7.2011.09.21.18.14.17
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 21 Sep 2011 18:14:17 -0700 (PDT)
+User-Agent: KMail/4.7.0  (Linux/2.6.38.2; KDE/4.7.1; x86_64; ; )
+In-Reply-To: <1316649176-32352-1-git-send-email-anatol.pomozov@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181871>
 
-Michael Witten <mfwitten@gmail.com> writes:
+On Wednesday, September 21, 2011 04:52:56 PM Anatol Pomozov wrote:
+> @@ -63,7 +63,8 @@ ifndef::git-pull[]
+>  	flag lets all tags and their associated objects be
+>  	downloaded. The default behavior for a remote may be
+>  	specified with the remote.<name>.tagopt setting. See
+> -	linkgit:git-config[1].
+> +	linkgit:git-config[1]. Note that if this option is specified
+> +	then only tags are fetched, refs under refs/heads/* stay unchanged.
 
-> On Wed, Sep 21, 2011 at 23:52, Anatol Pomozov <anatol.pomozov@gmail.com> wrote:
->> +       linkgit:git-config[1]. Note that if this option is specified
->> +       then only tags are fetched, refs under refs/heads/* stay unchanged.
->
-> Note that if this option is specified, then only tags
-> are fetched; refs under refs/heads/* are not changed.
+I like this clarification. It would be better placed before the note about the 
+tagopt setting, as it clarifies the statement before that ("This flag lets all 
+tags and their associated objects be downloaded.")
 
-Can we improve the wording without singling out refs/heads/* specifically?
-
-I think the updated wording is not desirable for two reasons.
-
-For one thing, for the most newbies, I think refs/remotes/origin/* (not
-refs/heads/*) would be the hierarchy that they may expect to get updated
-and surprised.
-
-When you give --tags (or any other refspec for that matter; --tags is
-merely a short-hand for "refs/tags/*:refs/tags/*") explicitly from the
-command line, you are overriding the refspecs configured for the remote,
-and all the refs that are _not_ covered by the refspec you gave from the
-command line will stay unchanged, not just refs/heads/* but refs under
-other hierarchies (like refs/remotes/* and refs/notes/*). 
-
-Once the reader understands that the command line _overrides_ the
-configured fetch refspecs, everything else should fall naturally into
-place without further explanation.  For example,
-
-	$ git pull origin frotz
-
-would internally invoke "git fetch origin another_branch", and it would
-not update any refs for the _same exact reason_ [*1*].  You are giving a
-refspec from the command line (in this case, "grab refs/heads/frotz, but
-do not store it anywhere"), and it overrides the usual fetch refspec that
-may update "+refs/heads/*:refs/remotes/origin/*" (grab all refs at the
-origin under refs/heads/ hierarchy, and store in refs/remotes/origin).
-
-
-[Footnote]
-
-*1* The merging of the result would update the current branch but that is
-a natural consequence of "a pull integrates by running either a merge or a
-rebase after running a fetch".
+In fact, the optimal solution might be to rework that sentence with the 
+clarification from yours, so something like "This flag lets all tags and their 
+associated objects be downloaded instead of"...
