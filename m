@@ -1,117 +1,70 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: How to use git attributes to configure server-side checks?
-Date: Thu, 22 Sep 2011 10:28:30 +0200
-Message-ID: <4E7AF1AE.5030005@alum.mit.edu>
-References: <4E7A3BDE.3040301@alum.mit.edu> <7vy5xh1whq.fsf@alter.siamese.dyndns.org>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: What's cooking in git.git (Sep 2011, #06; Wed, 21)
+Date: Thu, 22 Sep 2011 10:37:06 +0200
+Message-ID: <1316680641.11165.2.camel@bee.lab.cmartin.tk>
+References: <7vaa9xyxpf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git discussion list <git@vger.kernel.org>,
-	Jay Soffian <jaysoffian@gmail.com>
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-8UTzByj9Plx7R2fG89pt"
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 22 10:28:42 2011
+X-From: git-owner@vger.kernel.org Thu Sep 22 10:37:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6ee9-0006ZC-Rl
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 10:28:42 +0200
+	id 1R6emd-00022I-U6
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 10:37:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751400Ab1IVI2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Sep 2011 04:28:37 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:43712 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751242Ab1IVI2e (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Sep 2011 04:28:34 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p8M8SU7K013147
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 22 Sep 2011 10:28:30 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.21) Gecko/20110831 Lightning/1.0b2 Thunderbird/3.1.13
-In-Reply-To: <7vy5xh1whq.fsf@alter.siamese.dyndns.org>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1751611Ab1IVIhX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Sep 2011 04:37:23 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:49844 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750869Ab1IVIhW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Sep 2011 04:37:22 -0400
+Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 87C374617B;
+	Thu, 22 Sep 2011 10:37:00 +0200 (CEST)
+In-Reply-To: <7vaa9xyxpf.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 3.0.3- 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181889>
 
-On 09/21/2011 10:17 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
->> I was thinking of using git attributes to configure a server-side
->> "update" hook that does some basic sanity checking before accepting a
->> push.  I thought I could do something like
->>
->> ~/.gitattributes:
->>     *.c whitespace
->>
->> ~/crappy-vendor-code/.gitattributes:
->>     # This code doesn't conform to our standards; disable check:
->>     *.c -whitespace
->>
->> This would allow fine-grained specification of which checks are applied
->> to which files, and ensure that the hook configuration is kept
->> synchronized with changes to the content.
->
-> The words "server side" automatically mean that there should be no working
-> tree, and where there is no working tree there should be no index, so the
-> direction should not make any difference.  The attributes that are used to
-> help whitespace checks should come from project.git/info/attributes in
-> such a case [*1*].
 
-Thanks for the reply and for explaining how the index can(not) be used
-for this purpose.  But what you propose is not flexible enough for me.
-I would like the checking configuration to be *versioned* along with the
-code.  For example, suppose my project decides to enforce a rule that
-all Python code needs to be indented with spaces.  It might be that not
-all of our old code adheres to this rule, and that we only want to clean
-up the code in master.  I would like to be able to
+--=-8UTzByj9Plx7R2fG89pt
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-1. Implement a new "check-space-indent" option in our update hook, which
-is applied to any file that has the "check-space-indent" attribute.  At
-first, no files have this attribute, so the new test has no effect.
+On Wed, 2011-09-21 at 22:04 -0700, Junio C Hamano wrote:
+> * cn/eradicate-working-copy (2011-09-21) 2 commits
+>  - patch-id.c: use strbuf instead of a fixed buffer
+>  - Remove 'working copy' from the documentation and C code
 
-2. Start cleaning up code in master.  Each time a subdirectory tree is
-cleaned up, add a line like
+It looks like that first commit sneaked in there. Shouldn't that be its
+own topic?
 
-    *.py check-space-indent
+   cmn
 
-in a .gitattributes file at the root of the subdirectory tree.  While
-this procedure proceeds incrementally, git ensures that code that has
-been cleaned up stays cleaned up.
 
-3. When all code is cleaned up, add the above line to the top-level
-.gitattributes file in the master branch.  But if there are some parts
-of the code that we don't want to clean up (for example, code acquired
-from elsewhere that uses different coding standards), we can turn off
-the check for that subdirectory tree.
+--=-8UTzByj9Plx7R2fG89pt
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
 
-Note that during this whole process all code passes the update hook,
-because we can configure it to ignore problems in code that hasn't been
-cleaned up yet.  And even at the end of the procedure, it is still
-possible to commit to older branches where tabs are still used for
-indentation because they don't use the new attribute.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-For this to be possible, I would need to determine the git attributes to
-apply to a particular file in a particular commit; something like
+iQEcBAABAgAGBQJOevOyAAoJEHKRP1jG7ZzTezYIAI6h4k0eTy3cIUWpJT+f9i1s
+T5ypI72xDkexxP3T/30u9BAafPwIOudsXUrRD3jOhuMdg+Npqjj73djLxQBl5VVY
+RmcqObiA0csyMcref3BdZb1ymuAtSLesfrzhuEL2UEhIRSpw3LAbbvXqXeX7Ynps
+t0Jt3DwaHEhq3X5mO3A0JuFuiEJGF+MzI+EbHUriXrBlT547fcMOp8lMBsuPWUu4
+iSk8cWJhqKDyBqOS724h+H9lC4acMmWqDCTfoDw1/0kJkgW9DUqQUpBajIFvXIdp
+dq69dU+5Qzw+y5iN8xMLLUxll789M7YU/siDNtZUzRLqGW+Em7Mqqu70e0Y1wi4=
+=VObx
+-----END PGP SIGNATURE-----
 
-    git check-attr check-space-indent $SHA1:path/to/file
-
-This does not seem to be possible today without writing my own code to
-crawl and parse the gitattributes files from a particular commit.
-
->  (1) grab the new commits introduced to the project using rev-list, and
->      invoke "git show --check" on each and every one of them; or
-
-Where does "git show --check" read its gitattributes (i.e.,
-"whitespace") from?
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+--=-8UTzByj9Plx7R2fG89pt--
