@@ -1,238 +1,128 @@
-From: Jeff Epler <jepler@unpythonic.net>
-Subject: [PATCH v3] Configurable hyperlinking in gitk
-Date: Wed, 21 Sep 2011 21:15:26 -0500
-Message-ID: <20110922021526.GC26880@unpythonic.net>
-References: <20110917022903.GA2445@unpythonic.net>
- <4E7467B7.1090201@gmail.com>
- <m3hb49sn26.fsf@localhost.localdomain>
- <20110922013101.GB26880@unpythonic.net>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: [PATCH] Clarify that '--tags' fetches tags only
+Date: Thu, 22 Sep 2011 13:13:03 +1000
+Message-ID: <CAH5451nb=DTed2kAVNQmFBbGFJ9zvQAtBE+VCzKqZfGMgYpx5w@mail.gmail.com>
+References: <1314997486-29996-1-git-send-email-anatol.pomozov@gmail.com>
+ <1316649176-32352-1-git-send-email-anatol.pomozov@gmail.com>
+ <CAMOZ1BuSd52woX0utOQ84gbCzBkZg3ATKnE+7G_BrD5_hUQSiQ@mail.gmail.com>
+ <7vwrd1z9it.fsf@alter.siamese.dyndns.org> <CAMOZ1Bvxc+vcofb_KyeLS7Gy=KOtX1SKv72cXA2NtwgYCWA31A@mail.gmail.com>
+ <CAMOZ1Bt6gGVd6QuRZduZ4mJ=eoZ9d7xK-WfwZ3G-+oswT0RN_Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marc Branchaud <marcnarc@xiplink.com>,
-	Chris Packham <judge.packham@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 22 04:15:37 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Anatol Pomozov <anatol.pomozov@gmail.com>, git@vger.kernel.org,
+	computerdruid@gmail.com
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 22 05:13:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6Yp6-00073N-MV
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 04:15:37 +0200
+	id 1R6Zj8-00076t-Mu
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Sep 2011 05:13:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751647Ab1IVCPa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Sep 2011 22:15:30 -0400
-Received: from dsl.unpythonic.net ([206.222.212.217]:60306 "EHLO
-	unpythonic.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751541Ab1IVCP3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Sep 2011 22:15:29 -0400
-Received: by unpythonic.net (Postfix, from userid 1000)
-	id 5149A24834E; Wed, 21 Sep 2011 21:15:26 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <20110922013101.GB26880@unpythonic.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751995Ab1IVDNZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Sep 2011 23:13:25 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:62792 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751887Ab1IVDNY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2011 23:13:24 -0400
+Received: by fxe4 with SMTP id 4so2291454fxe.19
+        for <git@vger.kernel.org>; Wed, 21 Sep 2011 20:13:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=akgla/R3/EIiQzAFx1tgKrXfR+/mZ9kSpQ2rpY6yK5A=;
+        b=EjTm5gH76EjiO9FKb+r0waIq4bkWjWAPW9VAbbSr+j1J+YhokjMvG6hdMo/CbD72s+
+         jAzKxN63uFI0MIOFwTGSlCdIW3B6chOG9pTPnQQteDneOQ56X3eJhGdwydKU4CmQQYhJ
+         xGLmv/iWsRdx8tpFajB3D+4HTLzrxgdzWNIso=
+Received: by 10.223.95.148 with SMTP id d20mr2193788fan.59.1316661203258; Wed,
+ 21 Sep 2011 20:13:23 -0700 (PDT)
+Received: by 10.152.37.66 with HTTP; Wed, 21 Sep 2011 20:13:03 -0700 (PDT)
+In-Reply-To: <CAMOZ1Bt6gGVd6QuRZduZ4mJ=eoZ9d7xK-WfwZ3G-+oswT0RN_Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181878>
 
-Many projects use project-specific notations in changelogs to refer
-to bug trackers and the like.  One example is the "Closes: #12345"
-notation used in Debian.
+On 22 September 2011 12:07, Michael Witten <mfwitten@gmail.com> wrote:
+> On Thu, Sep 22, 2011 at 02:01, Michael Witten <mfwitten@gmail.com> wr=
+ote:
+>> On Thu, Sep 22, 2011 at 00:49, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+>>> --tags is merely a short-hand for "refs/tags/*:refs/tags/*")
+>>> explicitly from the command line
+>>
+>> [Disclaimer: I don't know the code or the semantics]
+>>
+>> Why not just use that explanation?
+>>
+>> =C2=A0This option is merely a short-hand for writing
+>> =C2=A0the refspec `refs/tags/*:refs/tags/*'; consequently,
+>> =C2=A0using this option overrides any default refspec that
+>> =C2=A0would be used if no refspec were provided on the
+>> =C2=A0command line. That is,
+>>
+>> =C2=A0 =C2=A0git fetch --tags origin frotz
+>>
+>> =C2=A0is equivalent to:
+>>
+>> =C2=A0 =C2=A0git fetch origin frotz 'refs/tags/*:refs/tags/*'
+>>
+>> In fact, if the command line parsing performed by `git fetch'
+>> is reasonably intelligent, then it might be worthwhile
+>> to relocate `--tags' in the example:
+>>
+>> =C2=A0That is,
+>>
+>> =C2=A0 =C2=A0git fetch origin frotz --tags
+>>
+>> =C2=A0is equivalent to:
+>>
+>> =C2=A0 =C2=A0git fetch origin frotz 'refs/tags/*:refs/tags/*'
+>>
+>
+> Maybe this is less confusing for the example:
+>
+> =C2=A0That is,
+>
+> =C2=A0 =C2=A0git fetch origin --tags
+> =C2=A0 =C2=A0git fetch origin frotz --tags bar
+>
+> =C2=A0are equivalent to:
+>
+> =C2=A0 =C2=A0git fetch origin 'refs/tags/*:refs/tags/*'
+> =C2=A0 =C2=A0git fetch origin frotz 'refs/tags/*:refs/tags/*' bar
 
-Make gitk configurable so that arbitrary strings can be turned into
-clickable links that are opened in a web browser.
+This will only help people who understand that tags are just refs
+stored in refs/tags, and who understand the 'ref:ref' syntax. I think
+it is a good example to have, but people can understand the process
+and results of 'pulling/fetching a tag' without necessarily needing to
+know that tags are stored somewhere, or knowing the exact fetch
+mechanism. If these need to be documented, it should be in the
+appropriate place (which I don't think is here).
 
-Signed-off-by: Jeff Epler <jepler@unpythonic.net>
----
-Since the previous patch, I
- * Renamed configuration variables to get rid of the "gitk" prefix
-   to encourage other git-related programs to adopt the same
-   functionality.
+I think we are skirting around the real issue, and that is that
+pulling tags will often grab objects that are *meant* to be on a
+remote branch (from the user's perspective) but that appear to be
+hanging because the remote branch ref was not updated at the same
+time. Perhaps an example or explanation of why this is the case would
+be more useful?
 
- * Renamed configuration variables from cryptic ".re", ".sub" to less
-   cryptic ".regexp" and "subst"
+Maybe:
 
- * Changed the example RE to be an ERE (no \d or \M)
+Note that if this option is specified, then only tags
+are fetched. No other refs, such as a remote tracking
+branch, will be updated, even if it has been updated
+on the remote end.
 
- * Documented that these are POSIX EREs; hopefully that's OK.  I see
-   in CodingGuidelines that in git itself "a subset of BREs" are used,
-   so maybe even this is too much power.  And hopefully tcl's
-   re_syntax really is close enough to an ERE superset that this isn't
-   a terrible lie about the initial implementation either.
+extra info on how this option is merely a short-hand for writing the
+refspec `refs/tags/*:refs/tags/* could go here
 
- * Added a Signed-Off-By, since I've had a number of positive feedbacks
-   and the only problems I've heard of (since patch v2) are the ones
-   related to 'eval' in git-web--browse.
 
-In v2 of the patch, I had fixed a problem with %-signs in URLs and
-changed the documentation example.
-
- Documentation/config.txt |   30 +++++++++++++++++-
- gitk-git/gitk            |   75 +++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 102 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ae9913b..ffc9ccf 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1064,6 +1064,10 @@ All gitcvs variables except for 'gitcvs.usecrlfattr' and
- is one of "ext" and "pserver") to make them apply only for the given
- access method.
- 
-+gitk.browser::
-+	Specify the browser that will be used to open links generated by
-+	'linkify' configuration options.
-+
- grep.lineNumber::
- 	If set to true, enable '-n' option by default.
- 
-@@ -1317,6 +1321,28 @@ interactive.singlekey::
- 	setting is silently ignored if portable keystroke input
- 	is not available.
- 
-+linkify.<name>.regexp::
-+	Specify a regular expression in the POSIX Extended Regular Expression
-+	syntax defining a class of strings to automatically convert to
-+	hyperlinks.  This regular expression many not span multiple lines.
-+	You must also specify 'linkify.<name>.subst'.
-+
-+linkify.<name>.subst::
-+	Specify a substitution that results in the target URL for the
-+	related regular expression.  Back-references like '\1' refer
-+	to capturing groups in the associated regular expression.
-+	You must also specify 'linkify.<name>.regexp'.
-++
-+For example, to automatically link from Debian-style "Closes: #nnnn"
-+message to the Debian BTS,
-++
-+--------
-+    git config linkify.debian-bts.regexp '#([1-9][0-9]*)'
-+    git config linkify.debian-bts.subst 'http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=\1'
-+--------
-++
-+Currently, only linkgit:gitk[1] converts strings to links in this fashion.
-+
- log.abbrevCommit::
- 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
- 	linkgit:git-whatchanged[1] assume `\--abbrev-commit`. You may
-@@ -1870,5 +1896,5 @@ user.signingkey::
- 
- web.browser::
- 	Specify a web browser that may be used by some commands.
--	Currently only linkgit:git-instaweb[1] and linkgit:git-help[1]
--	may use it.
-+	Currently only linkgit:git-instaweb[1], linkgit:gitk[1],
-+	and linkgit:git-help[1] may use it.
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 4cde0c4..9db5525 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -6684,7 +6684,7 @@ proc commit_descriptor {p} {
- # append some text to the ctext widget, and make any SHA1 ID
- # that we know about be a clickable link.
- proc appendwithlinks {text tags} {
--    global ctext linknum curview
-+    global ctext linknum curview linkmakers
- 
-     set start [$ctext index "end - 1c"]
-     $ctext insert end $text $tags
-@@ -6699,6 +6699,30 @@ proc appendwithlinks {text tags} {
- 	setlink $linkid link$linknum
- 	incr linknum
-     }
-+
-+    if {$linkmakers == {}} return
-+
-+    set link_re {}
-+    foreach {re rep} $linkmakers { lappend link_re $re }
-+    set link_re "([join $link_re {)|(}])"
-+
-+    set ee 0
-+    while {[regexp -indices -start $ee -- $link_re $text l]} {
-+	set s [lindex $l 0]
-+	set e [lindex $l 1]
-+	set linktext [string range $text $s $e]
-+	incr e
-+	set ee $e
-+
-+	foreach {re rep} $linkmakers {
-+	    if {![regsub $re $linktext $rep linkurl]} continue
-+	    $ctext tag delete link$linknum
-+	    $ctext tag add link$linknum "$start + $s c" "$start + $e c"
-+	    seturllink $linkurl link$linknum
-+	    incr linknum
-+	    break
-+	}
-+    }
- }
- 
- proc setlink {id lk} {
-@@ -6726,6 +6750,53 @@ proc setlink {id lk} {
-     }
- }
- 
-+proc get_link_config {} {
-+    if {[catch {exec git config -z --get-regexp {^linkify\.}} linkers]} {
-+	return {}
-+    }
-+
-+    set linktypes [list]
-+    foreach item [split $linkers "\0"] {
-+	if {$item == ""} continue
-+	if {![regexp {linkify\.(\S+)\.(regexp|subst)\s(.*)} $item _ k t v]} {
-+	    continue
-+	}
-+	set linkconfig($t,$k) $v
-+	if {$t == "regexp"} { lappend linktypes $k }
-+    }
-+
-+    set linkmakers [list]
-+    foreach k $linktypes {
-+	if {![info exists linkconfig(subst,$k)]} {
-+	    puts stderr "Warning: link `$k' is missing a substitution string"
-+	} elseif {[catch {regexp -inline -- $linkconfig(regexp,$k) ""} err]} {
-+	    puts stderr "Warning: link `$k': $err"
-+	} else {
-+	    lappend linkmakers $linkconfig(regexp,$k) $linkconfig(subst,$k)
-+	}
-+	unset linkconfig(regexp,$k)
-+	unset -nocomplain linkconfig(subst,$k)
-+    }
-+    foreach k [array names linkconfig] {
-+	regexp "subst,(.*)" $k _ k
-+	puts stderr "Warning: link `$k' is missing a regular expression"
-+    }
-+    set linkmakers
-+}
-+
-+proc openlink {url} {
-+    exec git web--browse --config=gitk.browser $url &
-+}
-+
-+proc seturllink {url lk} {
-+    set qurl [string map {% %%} $url]
-+    global ctext
-+    $ctext tag conf $lk -foreground blue -underline 1
-+    $ctext tag bind $lk <1> [list openlink $qurl]
-+    $ctext tag bind $lk <Enter> {linkcursor %W 1}
-+    $ctext tag bind $lk <Leave> {linkcursor %W -1}
-+}
-+
- proc appendshortlink {id {pre {}} {post {}}} {
-     global ctext linknum
- 
-@@ -11693,6 +11764,8 @@ if {[tk windowingsystem] eq "win32"} {
-     focus -force .
- }
- 
-+set linkmakers [get_link_config]
-+
- getcommits {}
- 
- # Local variables:
--- 
-1.7.2.5
+Regards,
+Andrew
