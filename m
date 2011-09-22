@@ -1,78 +1,66 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Teach '--cached' option to check-attr
-Date: Thu, 22 Sep 2011 16:36:45 -0700
-Message-ID: <7vzkhww3n6.fsf@alter.siamese.dyndns.org>
-References: <1316727861-90460-1-git-send-email-jaysoffian@gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2011, #06; Wed, 21)
+Date: Thu, 22 Sep 2011 16:45:27 -0700
+Message-ID: <7vvcskw38o.fsf@alter.siamese.dyndns.org>
+References: <7vaa9xyxpf.fsf@alter.siamese.dyndns.org>
+ <m3r538qj0j.fsf@localhost.localdomain>
+ <7v4o04xjcb.fsf@alter.siamese.dyndns.org>
+ <201109230133.33214.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 23 01:36:54 2011
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 23 01:45:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6sp3-0003RR-Qa
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 01:36:54 +0200
+	id 1R6sxZ-0007Gt-D2
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 01:45:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754370Ab1IVXgt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Sep 2011 19:36:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34249 "EHLO
+	id S1754416Ab1IVXpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Sep 2011 19:45:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37831 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753746Ab1IVXgs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Sep 2011 19:36:48 -0400
+	id S1752653Ab1IVXpb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Sep 2011 19:45:31 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 51BE161F0;
-	Thu, 22 Sep 2011 19:36:47 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 76D9763B6;
+	Thu, 22 Sep 2011 19:45:30 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8JSVCQ91g74HUPWMDELay48SjTM=; b=Hpge2x
-	AdiN5d64mBMmMQ/GOi+jTKrIzR0uHxu7EqNyetOQwLoSOd1rpMPef2SCTfDVe523
-	62CaY6Q/mRSVPQ3J3j3cDHjCI65Znh2Ui8f+hKyHQEQvjSejTY9aFcK9cm7PpiMo
-	RWv608Zl0dK2vAtzEQBqRMbTii2vC1vVoEvTE=
+	:content-type; s=sasl; bh=dB8ljhZYd87QM9TXp1miFPMKcLQ=; b=T5XpmA
+	D5uVpV6h28OwKVh5QB+T9nAyfGlo7aXYjQCz9T/ag6UUo+hWMtXqmk9Rd7RY0dXi
+	HIsHPJisYA5HP2o1v9/19vWupUB/4M3wtjapkVwn1Fu863QyCLv3nyv3eS5DWrYf
+	oIg1/9PnWlleF5ncRWzIxd0myuopUA4qk2g+Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=E+j22fnsFK+oaWqrfzryfQOTPMKG6gNc
-	dVUCZ9mZcB900OGlW/ni61Vqk8CeUuUNAFBHXDrzJ/RQZZ4pY8qis+RN0CLoOHaD
-	9myL8/IUy0K4Z6+ZIFWHyJs2FSuMzzAar3+XwbqZ9j82LO7jqg2eg9JV9I7zIin+
-	n0BPj8DH26k=
+	:content-type; q=dns; s=sasl; b=iHPuX6SWdCoY07BF5OI5WWP/vh9eDALt
+	mi/mnKoxIvu1TgR4+AmE2liUOqtn0Ie9Rb+ANjexzZ0VWEFXc8vE5bfCxQf75PvK
+	RbYKaNt1LUSBV22I93KxxyWL5pqekHHY0bTIGXbWjC0rDjLVbeImb5oQV+h0h4at
+	7cxGfxDAOkM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 48CFA61EF;
-	Thu, 22 Sep 2011 19:36:47 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DB4E63B5;
+	Thu, 22 Sep 2011 19:45:30 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D386561EC; Thu, 22 Sep 2011
- 19:36:46 -0400 (EDT)
-In-Reply-To: <1316727861-90460-1-git-send-email-jaysoffian@gmail.com> (Jay
- Soffian's message of "Thu, 22 Sep 2011 17:44:20 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0464763B4; Thu, 22 Sep 2011
+ 19:45:29 -0400 (EDT)
+In-Reply-To: <201109230133.33214.jnareb@gmail.com> (Jakub Narebski's message
+ of "Fri, 23 Sep 2011 01:33:32 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BC91C466-E573-11E0-A7B8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F46429DC-E574-11E0-8732-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181937>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> This doesn't seem too controversial to me, and allows server-side
-> reading of .gitattributes, albeit with the need to setup an index.
+> I don't think _modern_ distributions need this workaround... asciidoc 8.4.5
+> which fixed the issue with "Synopsis" section was released 2009-05-24:
 
-Thanks; will queue with a few trivial tweaks.
-
-> +test_expect_success 'bare repository: check that --cached honors index' '
-> +
-> +	export GIT_INDEX_FILE=../.git/index &&
-> +	git check-attr --cached --stdin --all < ../stdin-all |
-> +		sort > actual &&
-> +	test_cmp ../specified-all actual
-> +
-> +'
-
-This is unfriendly to others who need to add more tests after this piece
-by contaminating their environment. A single-shot export would be more
-appropriate here:
-
-	GIT_INDEX_FILE=../.git/index git check-attr --cached ...
+Thanks for a clarification.  I'll then hold it off until the upcoming
+release and then merge it to see if anybody screams.
