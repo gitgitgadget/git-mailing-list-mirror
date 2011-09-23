@@ -1,136 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's The Right Way to Do This?
-Date: Fri, 23 Sep 2011 11:13:06 -0700
-Message-ID: <7vr537unyl.fsf@alter.siamese.dyndns.org>
-References: <loom.20110923T064720-366@post.gmane.org>
+From: Jon Forrest <nobozo@gmail.com>
+Subject: Re: More Beginning Git Questions
+Date: Fri, 23 Sep 2011 11:14:56 -0700
+Message-ID: <4E7CCCA0.50909@gmail.com>
+References: <4E7C9AAD.7060209@gmail.com> <m3ipojqhpm.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jon Forrest <nobozo@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 23 20:13:20 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 23 20:14:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R7AFQ-0006k4-0W
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 20:13:16 +0200
+	id 1R7AGq-0007NJ-Ra
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 20:14:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750981Ab1IWSNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Sep 2011 14:13:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58095 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750736Ab1IWSNJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2011 14:13:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 014076598;
-	Fri, 23 Sep 2011 14:13:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vC5DrlXc24GjBKhkeVHdX+A8o5M=; b=ks9/Or
-	9y0GHF2/7SkV5SwQGIS+QkDpptaGt5TXh3TH88dUMYip1VJIuuSj/wXgjzUvfZmT
-	y1l18apS8oOS3m3kbkJLcjAl1NvXQKNCBSZ0k8G3Ym5wEBvckSmhPrdPmQfx86AV
-	SesHKob0JwEIvRXEIBVei4ujpkAG4IWcyDcxM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=adCMXCMqTh5GEcrUU+j5/gSfVVkr2gDY
-	ElfO7g7Esp1exhlwr/dVfjTVBtDnIcc5/UgrtWT1zsiI6UzJtyb4MenwBDhvHElX
-	b0NLUQEM4a77MEBzfeaJtmq3ug6m9usKmfl/flXHcoT5GB+M6dE4lWcWHgSbfq6t
-	7e36/hdzPpo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED9526597;
-	Fri, 23 Sep 2011 14:13:08 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3AB216595; Fri, 23 Sep 2011
- 14:13:08 -0400 (EDT)
-In-Reply-To: <loom.20110923T064720-366@post.gmane.org> (Jon Forrest's message
- of "Fri, 23 Sep 2011 04:48:36 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B09431FC-E60F-11E0-BC08-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751124Ab1IWSOk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Sep 2011 14:14:40 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:48007 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751092Ab1IWSOk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2011 14:14:40 -0400
+Received: by ywb5 with SMTP id 5so2890249ywb.19
+        for <git@vger.kernel.org>; Fri, 23 Sep 2011 11:14:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=CWyVERWFAOnDhzssRsgt7k5qtBNFoJcsmKQxuOYTfQI=;
+        b=d5kCWFv4yB1CK5ra52gnZHfMhfWRpKzaNYrQ5BNZlhPJSoLKULvXrXn/1wiUviVtWD
+         z3TTv4Wmt4+aeNeL57kd7sG8wRoZ5z7l/8DLQzUAlnRysKp87DABhmMtEK+pNtHGuGfa
+         VTyFnkFdAW36Yas4lMYwAAC5hursZSMuiDzZc=
+Received: by 10.236.154.137 with SMTP id h9mr23685389yhk.26.1316801679510;
+        Fri, 23 Sep 2011 11:14:39 -0700 (PDT)
+Received: from [192.168.50.71] (206-80-5-2.static.twtelecom.net. [206.80.5.2])
+        by mx.google.com with ESMTPS id p14sm42438963anh.25.2011.09.23.11.14.38
+        (version=SSLv3 cipher=OTHER);
+        Fri, 23 Sep 2011 11:14:38 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
+In-Reply-To: <m3ipojqhpm.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181984>
 
-Jon Forrest <nobozo@gmail.com> writes:
+On 9/23/2011 10:42 AM, Jakub Narebski wrote:
 
-> I'm just now starting to use git for more than trivial things.
-> Today I got myself in trouble. Here's what happened:
+> I recommend reading "Pro Git" book (http://progit.org)
+
+I'm reading that too. I have some similar pedantic questions
+about that book but I don't want to be a pest so I'll
+stick with the tutorial now. Maybe some of my questions
+about "Pro Git" will get answered.
+
+>> Does this include both changes that Alice has checked in to
+>> her repository and uncommitted changes in her working tree?
 >
-> 1) I pulled the master branch from the IT repository from our
-> main git server.
->
-> 2) I created a branch from this called "J" and started making changes.
->
-> 3) Other people pulled master from IT and then pushed changes back.
->
-> 4) I merged J with my master branch.
->
-> 5) I tried pushing my master back to origin but this failed with
-> the usual message saying I first needed to pull from origin.
-> So, I pulled and then pushed. This worked.
->
-> 6) On another server where I was going to use my changes I pulled
-> master from IT.
+> Generally Alice shouldn't have uncommitted changes when doing
+> "git pull".
 
-Up to this point you are doing perfectly fine as far as I can tell.
+That's what the tutorial said but I'm trying to understand
+what happens if she does have uncommitted changes. I'm
+trying to understand the total picture.
 
-> 6) It turned out that my changes were incorrect. So, I tried to revert
-> using various methods I found by googling "git revert". What happened
-> was that when I tried to revert back to the commit before the one I
-> made,...
+> When there is a merge conflicts, the index gets populated by more than
+> one version: "ours" (i.e. Alice version) in stage 2, "theirs"
+> (i.e. Bob version) in stage 3, and "base" (common ancestor version) in
+> stage 1.  The stage 0, where "git add" / "git stage" puts contents of
+> file, is empty.
 
-Now, in git you do not "revert back TO the commit".  You could reset back
-to the commit but that is to discard everything that is done since that
-commit.
+I didn't know there were multiple staging areas.
 
-Imagine this history (time flows from left to right).
+> You can see it using "git ls-files --abbrev --stage".
 
-At point 4, 'master' in your working repository is at M, and you haven't
-seen others' work 'o' yet:
+That's very helpful.
 
-    ---M---o---o---o (others' work)
-        \
-         x---y---z (your work on J branch)
+Thanks to (almost) everyone who has responded. I'm hoping that
+others new to Git will benefit from this discussion.
 
-You merge your work your master and then your 'master' now points at 'z'.
-
-If you push and replace 'master' at the central repository with your
-'master', others' work 'o' will be lost. So you pulled in point 5 to make
-the history look like this:
-
-    ---M---o---o---o (others' work)
-        \           \
-         x---y---z---X
-
-You pulled to grab these 'o' commits, and made a merge with your master
-(now at J) to create 'X', and then pushed it as 'master' at the central
-repository.
-
-Time passes and there may be more changes on top of 'X' now and the
-current tip of the shared 'master' may be 'A'.
-
-    ---M---o---o---o (others' work)
-        \           \
-         x---y---z---X---o---o---A
-
-Even if the changes 'x', 'y', and 'z' later turns out to be unwanted, you
-do not want discard others' work 'o'. Rewinding the history to make the
-'master' point at 'M' is not what you want.
-
-Instead, you would make commits that revert the effect of them on top of
-the current history. That is what "git revert" does.
-
-
-    ---M---o---o---o (others' work)
-        \           \
-         x---y---z---X---o---o---A-(z)-(y)-(x)
-
-That is, on top of 'A', you would run "git revert z" to create an "anti-z"
-commit "(z)" to cancel the effect of 'z', and do the same for y and x, to
-eradicate them.
-
-Another possibility is to revert the merge 'X', but I'll leave it as an
-advanced exercise to the readers.
+Jon
