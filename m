@@ -1,79 +1,149 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH] credential-cache: don't cache items without context
-Date: Fri, 23 Sep 2011 17:53:24 -0400
-Message-ID: <20110923215324.GA3013@sigill.intra.peff.net>
+Subject: credential helper tests
+Date: Fri, 23 Sep 2011 18:15:13 -0400
+Message-ID: <20110923221513.GA3087@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>
+Cc: Lukas =?utf-8?Q?Sandstr=C3=B6m?= <luksan@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	John Szakmeister <john@szakmeister.net>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Ted Zlatanov <tzz@lifelogs.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 23 23:53:36 2011
+X-From: git-owner@vger.kernel.org Sat Sep 24 00:15:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R7Dgd-0001aK-MG
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 23:53:36 +0200
+	id 1R7E1n-0003VA-Ak
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Sep 2011 00:15:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752561Ab1IWVx2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Sep 2011 17:53:28 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41876
+	id S1752634Ab1IWWPT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Sep 2011 18:15:19 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41895
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752551Ab1IWVx1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2011 17:53:27 -0400
-Received: (qmail 21603 invoked by uid 107); 23 Sep 2011 21:58:27 -0000
+	id S1752573Ab1IWWPQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2011 18:15:16 -0400
+Received: (qmail 22097 invoked by uid 107); 23 Sep 2011 22:20:16 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 23 Sep 2011 17:58:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Sep 2011 17:53:24 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 23 Sep 2011 18:20:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Sep 2011 18:15:13 -0400
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182006>
 
-The credential helper should get a --unique=<whatever>
-context from the callers.  It would be meaningless to cache
-a username and password combination without being given any
-context, since we have no idea when we should use them
-again. The current code will reuse them next time we have no
-context again, but that is probably not sane; there is no
-guarantee that it is the same "lack of context" situation.
+Since we've had a few credential helpers posted to the list recently, I
+really want to try them all out. This can be a little bit tricky for
+automated testing, though, for two reasons:
 
-Git doesn't currently actually make requests of credential
-helpers without a context, so this is a non-issue outside of
-specialized testing. But it should do the sane thing given
-any input, and it's nice to set a good example for other
-helpers (which may not be tied to a specific git version,
-and so arguments like "git doesn't currently do this" don't
-apply to them).
+  - they run on lots of platforms with lots of dependencies
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-On top of jk/http-auth-keyring, naturally.
+  - they interact with parts of the systems that are opaque to git. So
+    we can't make a test that reliably simulates "and then the user
+    types 'foo' into a dialog box" across all platforms.
 
- credential-cache.c |    8 +++++---
- 1 files changed, 5 insertions(+), 3 deletions(-)
+Instead, I came up with a separate test script that is intended to be
+run interactively with the user. It runs the helpers through a battery
+of tests, and tells the user what to expect and what to input to any
+dialogs or prompts.
 
-diff --git a/credential-cache.c b/credential-cache.c
-index f495043..14d751e 100644
---- a/credential-cache.c
-+++ b/credential-cache.c
-@@ -155,9 +155,11 @@ int main(int argc, const char **argv)
- 	printf("username=%s\n", c.username);
- 	printf("password=%s\n", c.password);
- 
--	if (do_cache(socket_path, "store", &c, timeout) < 0) {
--		spawn_daemon(socket_path);
--		do_cache(socket_path, "store", &c, timeout);
-+	if (c.unique) {
-+		if (do_cache(socket_path, "store", &c, timeout) < 0) {
-+			spawn_daemon(socket_path);
-+			do_cache(socket_path, "store", &c, timeout);
-+		}
- 	}
- 	return 0;
- }
--- 
-1.7.7.rc2.4.ga9aee2.dirty
+I've run it already on the helpers I've written. I plan on running it
+with the helpers that have been posted, as well. But I also wanted to
+make it public so that authors could use it as a development aid.
+
+It's not integrated with git's tests at all. In theory it could be part
+of t/, but disabled unless the user asks for it. However, I'm not sure
+that makes much sense. It's intended to test helpers that aren't
+necessarily even shipped with git, and wouldn't necessarily even need
+git to run.
+
+Also, it is by no means a strict set of tests. A helper that did not
+store credentials, but only presented dialogs in a different way, or one
+that was about accessing a read-only store of credentials would not
+pass. So think of it as a best-practices guide and an exercise script
+for certain types of helpers, not necessarily as a set of tests that
+must be passed.
+
+-- >8 --
+#!/bin/sh
+
+# e.g., "cache"
+helper=$1
+
+say() {
+  echo >&2 "==> $*"
+}
+
+check() {
+  for i in username password; do
+    v=$1; shift
+    case "$v" in
+    auto:*)
+      v=${v#auto:}
+      say "  $i should be automatic ($v)"
+      ;;
+    *)
+      say "  Input $i=$v"
+      ;;
+    esac
+    echo $i=$v
+  done >expect
+  if git credential-$helper "$@" >actual &&
+     git --no-pager diff --no-index expect actual; then
+    say OK
+  else
+    say FAIL
+  fi
+}
+
+reject() {
+  git credential-$helper --reject "$@" || exit 1
+}
+
+say 'Cleaning old invocations...'
+reject --unique=https:foo.tld
+reject --unique=https:bar.tld
+
+say 'No context (initial, should ask)'
+check user pass
+say 'No context (again, should ask)'
+check user2 pass2
+
+say 'Context foo.tld (initial, should ask)'
+check foo-user foo-pass --unique=https:foo.tld
+say 'Context foo.tld (again)'
+check auto:foo-user auto:foo-pass --unique=https:foo.tld
+
+say 'Context bar.tld (should ask)'
+check bar-user bar-pass --unique=https:bar.tld
+say 'Context bar.tld (again)'
+check auto:bar-user auto:bar-pass --unique=https:bar.tld
+say 'Context foo.tld (should still remember)'
+check auto:foo-user auto:foo-pass --unique=https:foo.tld
+
+say 'Forget foo.tld (should ask)'
+reject --unique=https:foo.tld
+check foo-user2 foo-pass2 --unique=https:foo.tld
+say 'Context foo.tld (again)'
+check auto:foo-user2 auto:foo-pass2 --unique=https:foo.tld
+say 'Context bar.tld (should still remember)'
+check auto:bar-user auto:bar-pass --unique=https:bar.tld
+
+say 'Alternate user at foo.tld (should ask)'
+check auto:foo-user3 foo-pass3 --unique=https:foo.tld --username=foo-user3
+say 'Remember new user'
+check auto:foo-user3 auto:foo-pass3 --unique=https:foo.tld --username=foo-user3
+say 'Remember old user'
+check auto:foo-user2 auto:foo-pass2 --unique=https:foo.tld --username=foo-user2
+say 'Forget new user (should ask)'
+reject --unique=https:foo.tld --username=foo-user3
+check auto:foo-user3 foo-pass4 --unique=https:foo.tld --username=foo-user3
+say 'New user is now remembered'
+check auto:foo-user3 auto:foo-pass4 --unique=https:foo.tld --username=foo-user3
+say 'Remember old user'
+check auto:foo-user2 auto:foo-pass2 --unique=https:foo.tld --username=foo-user2
