@@ -1,106 +1,68 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v3 13/22] resolve_ref(): turn buffer into a proper string as soon as possible
-Date: Fri, 23 Sep 2011 10:17:55 +0200
-Message-ID: <201109231017.55996.trast@student.ethz.ch>
-References: <1316121043-29367-1-git-send-email-mhagger@alum.mit.edu> <1316121043-29367-14-git-send-email-mhagger@alum.mit.edu>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: How to use git attributes to configure server-side checks?
+Date: Fri, 23 Sep 2011 10:35:20 +0200
+Message-ID: <4E7C44C8.10000@alum.mit.edu>
+References: <4E7A3BDE.3040301@alum.mit.edu> <7vy5xh1whq.fsf@alter.siamese.dyndns.org> <4E7AF1AE.5030005@alum.mit.edu> <7vwrd0xzdc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	<cmn@elego.de>, A Large Angry SCM <gitzilla@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Sep 23 10:18:10 2011
+Cc: git discussion list <git@vger.kernel.org>,
+	Jay Soffian <jaysoffian@gmail.com>, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 23 10:35:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R70xR-0003Kw-TN
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 10:18:06 +0200
+	id 1R71ES-0003le-N3
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 10:35:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751580Ab1IWISA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Sep 2011 04:18:00 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:19789 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751368Ab1IWIR5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2011 04:17:57 -0400
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.339.1; Fri, 23 Sep
- 2011 10:17:55 +0200
-Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.339.1; Fri, 23 Sep
- 2011 10:17:55 +0200
-User-Agent: KMail/1.13.7 (Linux/3.0.4-43-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <1316121043-29367-14-git-send-email-mhagger@alum.mit.edu>
-X-Originating-IP: [129.132.153.233]
+	id S1751995Ab1IWIfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Sep 2011 04:35:32 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:57820 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751901Ab1IWIfb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2011 04:35:31 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p8N8ZKBS018921
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 23 Sep 2011 10:35:20 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.21) Gecko/20110831 Lightning/1.0b2 Thunderbird/3.1.13
+In-Reply-To: <7vwrd0xzdc.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181950>
 
-Hi Michael
-
-Michael Haggerty wrote:
-> Immediately strip off trailing spaces and null-terminate the string
-> holding the contents of the reference file; this allows the use of
-> string functions and avoids the need to keep separate track of the
-> string's length.  (get_sha1_hex() fails automatically if the string is
-> too short.)
+On 09/22/2011 07:26 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
 > 
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>> I would like the checking configuration to be *versioned* along with the
+>> code.  For example, suppose my project decides to enforce a rule that
+>> all Python code needs to be indented with spaces.  It might be that not
+>> all of our old code adheres to this rule, and that we only want to clean
+>> up the code in master.
+> 
+> You want to sneak in a badly formatted code? Add an entry to the in-tree
+> attributes file to disable whitespace checking to cover that file!
 
-I'm getting valgrind failures in t1450-fsck and t3800-mktag which
-blame to this commit.  For t1450 it looks as follows:
+No, the scenario that I was trying to describe is a project that wants
+to tighten up its code formatting rules after years of laxity.  It is
+convenient to support legacy branches that still contain nonconforming
+code without having to reformat it all, just as it is convenient to fix
+the current code incrementally rather than requiring all of the cleanup
+to be done in one big bang.  Thus it is important that new rules not be
+enforced retroactively on old code.
 
-    ok 5 - object with bad sha1
-
-    expecting success: 
-            git rev-parse HEAD^{tree} >.git/refs/heads/invalid &&
-            test_when_finished "git update-ref -d refs/heads/invalid" &&
-            git fsck 2>out &&
-            cat out &&
-            grep "not a commit" out
-
-    ==19623== Use of uninitialised value of size 8
-    ==19623==    at 0x4B6747: hexval (cache.h:798)
-    ==19623==    by 0x4B6797: get_sha1_hex (hex.c:42)
-    ==19623==    by 0x4DD12A: resolve_ref (refs.c:588)
-    ==19623==    by 0x4DC777: get_ref_dir (refs.c:313)
-    ==19623==    by 0x4DC6FA: get_ref_dir (refs.c:302)
-    ==19623==    by 0x4DC963: get_loose_refs (refs.c:368)
-    ==19623==    by 0x4DD556: do_for_each_ref (refs.c:687)
-    ==19623==    by 0x4DDA05: for_each_replace_ref (refs.c:806)
-    ==19623==    by 0x4E5CE9: prepare_replace_object (replace_object.c:86)
-    ==19623==    by 0x4E5D3C: do_lookup_replace_object (replace_object.c:103)
-    ==19623==    by 0x4C99BB: lookup_replace_object (cache.h:764)
-    ==19623==    by 0x4C9FA6: parse_object (object.c:191)
-    ==19623==  Uninitialised value was created by a stack allocation
-    ==19623==    at 0x4DCE34: resolve_ref (refs.c:498)
-
-or when I run it at the tip of pu instead of at the commit itself,
-line numbers are like so:
-
-    ==2308== Use of uninitialised value of size 8
-    ==2308==    at 0x4ADB8B: get_sha1_hex (cache.h:800)
-    ==2308==    by 0x4D4283: resolve_ref (refs.c:629)
-    ==2308==    by 0x4D4851: get_ref_dir (refs.c:361)
-    ==2308==    by 0x4D48C6: get_ref_dir (refs.c:350)
-    ==2308==    by 0x4D4D29: do_for_each_ref (refs.c:412)
-    ==2308==    by 0x4DCD93: do_lookup_replace_object (replace_object.c:86)
-    ==2308==    by 0x4C31F4: parse_object (cache.h:764)
-    ==2308==    by 0x4F2A1D: get_sha1_1 (sha1_name.c:567)
-    ==2308==    by 0x4F2D5F: get_sha1_with_context_1 (sha1_name.c:1117)
-    ==2308==    by 0x4F3543: get_sha1 (cache.h:822)
-    ==2308==    by 0x461B50: cmd_rev_parse (rev-parse.c:723)
-    ==2308==    by 0x404B71: run_builtin (git.c:308)
-    ==2308==  Uninitialised value was created by a stack allocation
-    ==2308==    at 0x4D4006: resolve_ref (refs.c:530)
-
-Can you look into this?
+Michael
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
