@@ -1,121 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] diff_index: honor in-index, not working-tree,
- .gitattributes
-Date: Fri, 23 Sep 2011 09:44:24 -0700
-Message-ID: <7vobybw6mv.fsf@alter.siamese.dyndns.org>
-References: <1316727861-90460-1-git-send-email-jaysoffian@gmail.com>
- <1316727861-90460-2-git-send-email-jaysoffian@gmail.com>
- <7v8vpgxkvb.fsf@alter.siamese.dyndns.org>
- <CAG+J_DzUQ3OGfiX=vHVGC7SHvwToVjD7uwFyDa8Tq6t7YwX12Q@mail.gmail.com>
- <CAG+J_Dyh=t2VAZ6rAqcF2meEgBCN5c+J_m_YvVQbKfvXeJ8WGA@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Fwd: permission to re-license strbuf subsystem as LGPL
+Date: Fri, 23 Sep 2011 10:12:34 -0700 (PDT)
+Message-ID: <m3mxdvqj31.fsf@localhost.localdomain>
+References: <CA+sFfMeRDQiqGhO9Y=k3tEnzdXjMx59huFE_fx6Y14cJxj1J=Q@mail.gmail.com>
+	<CA+sFfMcmsKkKM7C0g4vKmjmCCNqRHuvz-hwEHAm=+stqnOPpAw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 23 18:44:35 2011
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 23 19:12:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R78rZ-00040D-P9
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 18:44:34 +0200
+	id 1R79Io-0000u8-Cb
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 19:12:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752687Ab1IWQo3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Sep 2011 12:44:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46366 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752147Ab1IWQo2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2011 12:44:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2A19505D;
-	Fri, 23 Sep 2011 12:44:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ocs4RbxPbhNgnY2kBqMOeeNlT04=; b=GM1uUF
-	X5Zu6rOmun0gLWmKISdDMIe8LhcMC519yypIPtzzf6FrfoEQUgYUvXsPnZAml79R
-	SI9qpoI3v+B4vp/uY13lIymLe75ren6SmRavacnkho1/Hmnd69Y2iMFI/nX25EbK
-	YKtxCd69tbZ+o7Sd7OUEVhRcgFPLQv9roF6Og=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Pf7W/+1og49PLQaTx0lZzUvcbc+NK+oe
-	BGgWTj8WeN0Y2E20b9eXhV3hYck/vOsvckQu/y3C+4g79u1Et90n2XuCSnpAQeqT
-	sC8dAif2b/6RPqCF+wXQ77ZDx80qnVAawSLKoGE4j3xbZQ+O3pkyYmIZMgN7abfP
-	w9hUjxZFQMs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A9F9B505C;
-	Fri, 23 Sep 2011 12:44:26 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 257D8505B; Fri, 23 Sep 2011
- 12:44:26 -0400 (EDT)
-In-Reply-To: <CAG+J_Dyh=t2VAZ6rAqcF2meEgBCN5c+J_m_YvVQbKfvXeJ8WGA@mail.gmail.com> (Jay
- Soffian's message of "Fri, 23 Sep 2011 01:37:13 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4C5E3BA8-E603-11E0-A49A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754022Ab1IWRMh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Sep 2011 13:12:37 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:55984 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753988Ab1IWRMg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Sep 2011 13:12:36 -0400
+Received: by fxe4 with SMTP id 4so4013100fxe.19
+        for <git@vger.kernel.org>; Fri, 23 Sep 2011 10:12:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=Mc+0o0PGYo4Q1WtndgijeuyxRO3ojMQeb22iT4JbK94=;
+        b=YdIw04/z/VCUnaYiRyY70biCRM951TBfwMl/6RkK28yea3UDF5ucZ725SpUhlcoLoD
+         gcVmXCvKFNOJ37miH0IcocH6NeKcwKN6187ebcBTU9ao6Z3Z/dduYuEcRKEsteLqw18O
+         tMWT1xCeAyCBgaRBf11D/WIID1q4xilk2kgPE=
+Received: by 10.223.49.213 with SMTP id w21mr5444104faf.44.1316797955575;
+        Fri, 23 Sep 2011 10:12:35 -0700 (PDT)
+Received: from localhost.localdomain (abwe70.neoplus.adsl.tpnet.pl. [83.8.228.70])
+        by mx.google.com with ESMTPS id w6sm11703055fah.0.2011.09.23.10.12.33
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 23 Sep 2011 10:12:34 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p8NHC8TB025884;
+	Fri, 23 Sep 2011 19:12:18 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p8NHC2jw025880;
+	Fri, 23 Sep 2011 19:12:02 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <CA+sFfMcmsKkKM7C0g4vKmjmCCNqRHuvz-hwEHAm=+stqnOPpAw@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181978>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+Brandon Casey <drafnel@gmail.com> writes:
 
-> This area of git is still black magic to me. My best guess is
-> something like this:
->
-> diff --git a/tree-diff.c b/tree-diff.c
-> index b3cc2e4753..6fd84eb2bb 100644
-> --- a/tree-diff.c
-> +++ b/tree-diff.c
-> @@ -280,6 +282,19 @@ int diff_tree_sha1(const unsigned char *old,
-> const unsigned char *new, const cha
->  		die("unable to read destination tree (%s)", sha1_to_hex(new));
->  	init_tree_desc(&t1, tree1, size1);
->  	init_tree_desc(&t2, tree2, size2);
-> +
-> +	if (is_bare_repository()) {
-> +		struct unpack_trees_options unpack_opts;
-> +		memset(&unpack_opts, 0, sizeof(unpack_opts));
-> +		unpack_opts.index_only = 1;
-> +		unpack_opts.head_idx = -1;
-> +		unpack_opts.src_index = &the_index;
-> +		unpack_opts.dst_index = &the_index;
-> +		unpack_opts.fn = oneway_merge;
-> +		if (unpack_trees(1, DIFF_OPT_TST(opt, REVERSE_DIFF) ? &t1 : &t2,
-> &unpack_opts) == 0)
-> +			git_attr_set_direction(GIT_ATTR_INDEX, &the_index);
-> +	}
+> ---------- Forwarded message ----------
+> From: Brandon Casey <drafnel@gmail.com>
+> Date: Thu, Sep 22, 2011 at 11:21 PM
+> Subject: permission to re-license strbuf subsystem as LGPL
+>=20
+> To those who have contributed to git's strbuf subsystem,
+>=20
+> I'd like to turn git's strbufs into a library. =A0So with your consen=
+t
+> I'd like to re-license the code in strbuf.c and strbuf.h, and any
+> compat/ dependencies as LGPL so that I can create a strbuf library.
 
-This is hooking at too low a level in the callchain. diff_tree_sha1() is
-meant to be a general purpose "I have two tree-ish objects and I want the
-comparison machinery to work on them" library function [*1*].
+That's a laudable goal.  Do you plan on librarizing other universal
+mini-libraries, like parseopt or test-lib?
 
- - One of the more important uses is the history simplification done
-   during revision traversal by checking if the subtrees and the blobs
-   have the same SHA-1, and we should not pay penalty of reading the index
-   for each and every tree here.
+I wonder if for example "perf" tool in Linux kernel sources (userspace
+companion to perf events subsystem) will move to using it; currently
+it reuses some of internal git minilibraries, IIRC strbuf and parseopt
+included.
 
- - The caller may be using the index for its own purposes, and your use of
-   "the_index" here will break them.
+By the way, how the 'strbuf' from git (which I think was created among
+others to avoid additional external dependencies) differs from
+existing C (not C++) string libraries, like 'bstring'[1], The Better
+String Library, or the C libraries in http://bstring.sourceforge.net/fe=
+atures.html?
 
-If you want to allow use of in-tree attributes in _all_ callers of
-diff_tree_sha1(), then the right approach is to add an instance of "struct
-index_state" to "struct diff_options", have the caller _explicitly_ ask
-for use of in-tree attributes by setting a bit somewhere in "struct
-diff_options", and read the tree into that separate index_state using
-tree.c::read_tree(). I however doubt it is worth it.
+[1]: http://bstring.sourceforge.net
 
-I would think it makes more sense to add a codeblock like that at the
-beginning of builtin/diff.c::builtin_diff_tree() when a new command option
-asks for it. In that codepath, you _know_ that we are not using the index
-at all, and reading the index there will not interfere with other uses of
-the index in the program.
-
-
-[Footnote]
-
-*1* which means that it is not a good justification to say "no current
-    caller is broken by this change". We need to make the library usable
-    for future callers.
+--=20
+Jakub Nar=EAbski
