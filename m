@@ -1,70 +1,135 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Fwd: vcs-svn and friends
-Date: Fri, 23 Sep 2011 13:45:51 -0500
-Message-ID: <20110923184550.GA12721@elie>
-References: <CAFfmPPOBZ6cXG51mDHbj2VRDzjvH46Q7=_LvUWeMq0SGR40S1g@mail.gmail.com>
- <20110915100106.GB2328@elie>
- <CA+gfSn9KVN2iDCevd0s+TjYHNupDez8NiKZycP3pgBCkYiraFQ@mail.gmail.com>
- <CA+gfSn8UeqiLu3trecPzzqSLsUr3eNT0yVN=-991sL6oJHar2g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: More Beginning Git Questions
+Date: Fri, 23 Sep 2011 11:47:39 -0700
+Message-ID: <7vipojumd0.fsf@alter.siamese.dyndns.org>
+References: <4E7C9AAD.7060209@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Michael Barr <davidbarr@google.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Dmitry Ivankov <divanorama@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 23 20:46:06 2011
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jon Forrest <nobozo@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 23 20:47:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R7AlB-0005yS-8X
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 20:46:05 +0200
+	id 1R7Amq-0006p0-Rq
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 20:47:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751400Ab1IWSqA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Sep 2011 14:46:00 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:43342 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750736Ab1IWSp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2011 14:45:59 -0400
-Received: by gwb15 with SMTP id 15so3935090gwb.19
-        for <git@vger.kernel.org>; Fri, 23 Sep 2011 11:45:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=psG60Ieh4FDGjPam3d4Zp81wJyTGoqNkk5PDoq415YU=;
-        b=g7Iom1Cmz3HUxxIGRawjaIhGbXAI5xjS1UCC+SahWnkLGpUViFrDFpXSZVn0Ylmnbe
-         B0oNIAYBZdSebWihq9t9eTvp/WnqHCzkZxE1qOVS1rjqgzdWytUssVQnDDvhZZVfLHMx
-         rIvOoLIQw18CRjhCEnbrOFAd+VZvaueeXrLK4=
-Received: by 10.236.129.165 with SMTP id h25mr23847573yhi.38.1316803559121;
-        Fri, 23 Sep 2011 11:45:59 -0700 (PDT)
-Received: from elie (99-120-124-35.lightspeed.cicril.sbcglobal.net. [99.120.124.35])
-        by mx.google.com with ESMTPS id d5sm14189902yhl.19.2011.09.23.11.45.56
-        (version=SSLv3 cipher=OTHER);
-        Fri, 23 Sep 2011 11:45:57 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CA+gfSn8UeqiLu3trecPzzqSLsUr3eNT0yVN=-991sL6oJHar2g@mail.gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1751102Ab1IWSrp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Sep 2011 14:47:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39708 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750736Ab1IWSro (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2011 14:47:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26CE26CD5;
+	Fri, 23 Sep 2011 14:47:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oHNsOUibHnFmeAAqr4nVXsiGX4M=; b=t1fleI
+	xcJ+FONfucZh686lHfg/B9HZkRKA3Z0LsN0HVDTEsJ4gFg3B9uWxpigy6PD5TfLN
+	5cnIxpX8CzTS7ddhfBkVMP5frajomfM+kcRM4W30aked+joN1jJIzwvbTVWRmZuz
+	5LiVQqG4bdg9/+2BQYw6mUIkczmvDnehRtNu4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=R7E58VfQhPCEc1cSlacqc1X3YYjuaJPI
+	ALlLkATsSu8FAImPIr47REXdGkL6eCcMA7hjWchakb5GY8PKlJ4wCPivnQ2RZJup
+	MYPEp8/EapE5csXmZBec15cljq+2ZrJHSK9bzZ9kBdyhQj7DR7F+fSYTPV+2Hfvz
+	PoUM4DP35+E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1EA976CD3;
+	Fri, 23 Sep 2011 14:47:42 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 529726CD0; Fri, 23 Sep 2011
+ 14:47:41 -0400 (EDT)
+In-Reply-To: <4E7C9AAD.7060209@gmail.com> (Jon Forrest's message of "Fri, 23
+ Sep 2011 07:41:49 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 843DC2DA-E614-11E0-AD0E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181988>
 
-Dmitry Ivankov wrote:
-> On Thu, Sep 15, 2011 at 7:00 PM, Dmitry Ivankov <divanorama@gmail.com> wrote:
+Jon Forrest <nobozo@gmail.com> writes:
 
->> Haven't seen them in practice. It seemed possible with svn import:
->> if there were no branches at start, and then someone did svn mv .
->> trunk. But it turns out that my svn client doesn't allow such
->> move. So more like a least surprise purpose.
+> "Note that in general, Alice would want her local changes committed
+> before initiating this "pull"."
 >
-> I think now that this commit should go separately if at all.
-> Especially considering my other activity on fast-import (and thus
-> possible merge conflicts) that isn't strictly necessary for vcs-svn
-> and friends.
+> This is an interesting statement. I'll come back to it shortly.
+>
+> "If Bob’s work conflicts with what Alice did since their histories forked,"
+>
+> Does this include both changes that Alice has checked in to her
+> repository and uncommitted changes in her working tree?
 
-Well, I think it's a good patch, and merge conflicts are really not a
-big deal when one has a good patch, especially when it's clear how to
-test that the tool still works after resolving.  It's just missing a
-clear description...
+We do not consider uncommitted changes part of _any_ history. You can
+think of them as floating on top of the history of the branch that is
+currently checked out [*1*].
+
+> "Alice will use her working tree and the index to resolve conflicts,"
+>
+> How does Alice use her working tree and index? Does this mean
+> she makes changes to her working tree so that the conflicts
+> no longer exist? How does the index play a part in this?
+>
+> I thought that the index gets populated only when a
+> "git add" is done. Does Alice need to do "git add" as part
+> of the conflict resolution process?
+
+If you start from a clean working tree (i.e. no local changes), then after
+any "mergy" operation (not just "git pull" and "git merge" but things like
+"cherry-pick", "checkout -m", "rebase" and "am -3" that can stop due to
+conflicts), one of the three things will happen to each of the paths in
+the project:
+
+ 1. If the result of the operation can be mechanically known, and if that
+    is the same as your current state (i.e. HEAD or "ours"), nothing
+    happens.
+
+ 2. If the result of the operation can be mechanically known, and if that
+    is different from your current state (i.e. HEAD or "ours"), the index
+    entry for that path records the result, and the path in the working
+    tree is updated to match that result.
+
+ 3. If the result of the operation cannot be mechanically known
+    (i.e. merge conflict), the index entry for that path will record up to
+    3 "stages", stage #1 representing the contents the conflicting sides
+    diverged from (i.e. common ancestor), stage #2 representing the
+    contents of your current state (i.e. HEAD or "ours") and stage #3
+    representing the contents of the other branch (i.e. MERGE_HEAD or
+    "theirs"), and the path in the working tree is updated to represent it
+    with conflict markers.
+
+You conclude the "mergy" operation by resolving conflicts in the working
+tree for paths in the category 3, tell Git that you are done with these
+paths using "git add $path" (but paths in no other categories!!!).
+Because cleanly merged paths are already updated in the index (see
+2. above), that is all needed to bring the index to the state that
+represents the desired result of the "mergy" operation.
+
+Even if you have local changes in your working tree, as long as your index
+exactly matches HEAD when you start your "mergy" operation, thanks to the
+rule for "result matches the current HEAD" case (see 1. above), the result
+of your "mergy" operation recorded by the procedure in the previous
+paragraph will not be contaminated with your local changes.
+
+The precondition for all of the above to work is that you start from a
+clean index, and that is why "git merge" refuses to start if your index
+already has changes relative to HEAD.
+
+Also, for cases 2. and 3., updating the files in the working tree to match
+the auto-merge result (case 2.) or to show the conflicted state (case 3.)
+requires Git to overwrite the file, which is bad if you have local changes
+to the files in the working tree. To prevent lossage, "mergy" operations
+will notice if paths in categories 2. and 3. have local changes in the
+working tree, and refuses to work if that is the case.
+
+
+[Footnote]
+
+*1* This incidentally is important to have in your mental model to
+understand how to use "git checkout $branch" to switch branches.
