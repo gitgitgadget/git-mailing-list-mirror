@@ -1,146 +1,96 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH] use -h for synopsis and --help for manpage consistently
-Date: Fri, 23 Sep 2011 13:55:12 +0200
-Message-ID: <20110923115512.GB12122@ecki.lan>
-References: <7vaa9xyxpf.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v3 13/22] resolve_ref(): turn buffer into a proper string
+ as soon as possible
+Date: Fri, 23 Sep 2011 15:11:25 +0200
+Message-ID: <4E7C857D.8000304@alum.mit.edu>
+References: <1316121043-29367-1-git-send-email-mhagger@alum.mit.edu> <1316121043-29367-14-git-send-email-mhagger@alum.mit.edu> <201109231017.55996.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 23 14:55:29 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	cmn@elego.de, A Large Angry SCM <gitzilla@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Sep 23 15:12:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R75Hr-0006yV-95
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 14:55:27 +0200
+	id 1R75Xv-0006wk-6s
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 15:12:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753910Ab1IWMzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Sep 2011 08:55:22 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:48771 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753879Ab1IWMzS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2011 08:55:18 -0400
-Received: from localhost (unknown [80.123.242.182])
-	by bsmtp.bon.at (Postfix) with ESMTP id CB67910019;
-	Fri, 23 Sep 2011 14:54:04 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vaa9xyxpf.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754005Ab1IWNL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Sep 2011 09:11:57 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:60027 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753945Ab1IWNL5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2011 09:11:57 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p8NDBQE9012016
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 23 Sep 2011 15:11:26 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.21) Gecko/20110831 Lightning/1.0b2 Thunderbird/3.1.13
+In-Reply-To: <201109231017.55996.trast@student.ethz.ch>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181962>
 
-
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
-
-On Wed, Sep 21, 2011 at 10:04:28PM -0700, Junio C Hamano wrote:
+On 09/23/2011 10:17 AM, Thomas Rast wrote:
+> Michael Haggerty wrote:
+>> Immediately strip off trailing spaces and null-terminate the string
+>> holding the contents of the reference file; this allows the use of
+>> string functions and avoids the need to keep separate track of the
+>> string's length.  (get_sha1_hex() fails automatically if the string is
+>> too short.)
+>>
+>> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 > 
-> * cb/send-email-help (2011-09-12) 1 commit
->   (merged to 'next' on 2011-09-14 at ae71999)
->  + send-email: add option -h
+> I'm getting valgrind failures in t1450-fsck and t3800-mktag which
+> blame to this commit.  For t1450 it looks as follows:
 > 
-> A separate set of patches to remove the hidden fully-spelled "help" from
-> other commands would be nice to have as companion patches as well.
+>     ok 5 - object with bad sha1
+> 
+>     expecting success: 
+>             git rev-parse HEAD^{tree} >.git/refs/heads/invalid &&
+>             test_when_finished "git update-ref -d refs/heads/invalid" &&
+>             git fsck 2>out &&
+>             cat out &&
+>             grep "not a commit" out
+> 
+>     ==19623== Use of uninitialised value of size 8
+>     ==19623==    at 0x4B6747: hexval (cache.h:798)
+>     ==19623==    by 0x4B6797: get_sha1_hex (hex.c:42)
+>     ==19623==    by 0x4DD12A: resolve_ref (refs.c:588)
 
-This should do it.
+Thanks for finding this.
 
-Clemens
+The problem comes from passing get_sha1_hex() an arbitrary
+NUL-terminated string.  get_sha1_hex() calls hexval(), which returns -1
+if it finds a NUL character, and therefore (correctly) rejects any
+string that is less than 40 characters.  The problem is that
+get_sha1_hex() reads characters pairwise, and even if the first
+character in a pair is NUL, the second character is read anyway.
+Therefore, for strings whose strlen is an even number less than 40,
+get_sha1_hex() reads past the terminating NUL.
 
- Documentation/blame-options.txt |    1 -
- git-cvsserver.perl              |    4 ++--
- git-difftool.perl               |    2 +-
- git-pull.sh                     |    2 +-
- git-sh-setup.sh                 |    2 +-
- git-svn.perl                    |    2 +-
- 6 files changed, 6 insertions(+), 7 deletions(-)
+I don't know whether get_sha1_hex() is *supposed* to work for arbitrary
+NUL-terminated strings because it is not documented.  But other callers
+seem to make the same assumption that I did, so I think that I will fix
+get_sha1_hex() to not read past a NUL value (albeit at the cost of an
+extra check in each iteration of the loop).
 
-diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-index e76195a..d4a51da 100644
---- a/Documentation/blame-options.txt
-+++ b/Documentation/blame-options.txt
-@@ -117,5 +117,4 @@ commit. And the default value is 40. If there are more than one
- take effect.
- 
- -h::
----help::
- 	Show help message.
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index 1b8bff2..6c5185e 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -109,14 +109,14 @@ my $usage =
-     "    --strict-paths      : Don't allow recursing into subdirectories\n".
-     "    --export-all        : Don't check for gitcvs.enabled in config\n".
-     "    --version, -V       : Print version information and exit\n".
--    "    --help, -h, -H      : Print usage information and exit\n".
-+    "    -h                  : Print usage information and exit\n".
-     "\n".
-     "<directory> ... is a list of allowed directories. If no directories\n".
-     "are given, all are allowed. This is an additional restriction, gitcvs\n".
-     "access still needs to be enabled by the gitcvs.enabled config option.\n".
-     "Alternately, one directory may be specified in GIT_CVSSERVER_ROOT.\n";
- 
--my @opts = ( 'help|h|H', 'version|V',
-+my @opts = ( 'h', 'version|V',
- 	     'base-path=s', 'strict-paths', 'export-all' );
- GetOptions( $state, @opts )
-     or die $usage;
-diff --git a/git-difftool.perl b/git-difftool.perl
-index ced1615..09b65f1 100755
---- a/git-difftool.perl
-+++ b/git-difftool.perl
-@@ -97,7 +97,7 @@ sub generate_command
- 			$prompt = 'yes';
- 			next;
- 		}
--		if ($arg eq '-h' || $arg eq '--help') {
-+		if ($arg eq '-h') {
- 			usage();
- 		}
- 		push @command, $arg;
-diff --git a/git-pull.sh b/git-pull.sh
-index 63da37b..8c1370f 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -120,7 +120,7 @@ do
- 	--d|--dr|--dry|--dry-|--dry-r|--dry-ru|--dry-run)
- 		dry_run=--dry-run
- 		;;
--	-h|--h|--he|--hel|--help|--help-|--help-a|--help-al|--help-all)
-+	-h|--help-all)
- 		usage
- 		;;
- 	*)
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 8e427da..1fba6c2 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -90,7 +90,7 @@ $LONG_USAGE"
- 	fi
- 
- 	case "$1" in
--		-h|--h|--he|--hel|--help)
-+		-h)
- 		echo "$LONG_USAGE"
- 		exit
- 	esac
-diff --git a/git-svn.perl b/git-svn.perl
-index 89f83fd..a019f55 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -294,7 +294,7 @@ read_git_config(\%opts);
- if ($cmd && ($cmd eq 'log' || $cmd eq 'blame')) {
- 	Getopt::Long::Configure('pass_through');
- }
--my $rv = GetOptions(%opts, 'help|H|h' => \$_help, 'version|V' => \$_version,
-+my $rv = GetOptions(%opts, 'h' => \$_help, 'version|V' => \$_version,
-                     'minimize-connections' => \$Git::SVN::Migration::_minimize,
-                     'id|i=s' => \$Git::SVN::default_ref_id,
-                     'svn-remote|remote|R=s' => sub {
+The fix is trivial and will be sent shortly.
+
+Michael
+
 -- 
-1.7.6.1
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
