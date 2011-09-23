@@ -1,88 +1,101 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH 2/2] diff_index: honor in-index, not working-tree, .gitattributes
-Date: Fri, 23 Sep 2011 11:50:37 -0400
-Message-ID: <CAG+J_Dz7uQcYjwEZrAg-h2GAwJ0gCjW2kw2Erz3UWGYcCeTAVQ@mail.gmail.com>
-References: <1316727861-90460-1-git-send-email-jaysoffian@gmail.com>
-	<1316727861-90460-2-git-send-email-jaysoffian@gmail.com>
-	<7v8vpgxkvb.fsf@alter.siamese.dyndns.org>
-	<4E7C5DC3.8030409@alum.mit.edu>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: More Beginning Git Questions
+Date: Fri, 23 Sep 2011 18:11:51 +0200
+Message-ID: <vpq62kjw854.fsf@bauges.imag.fr>
+References: <4E7C9AAD.7060209@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Sep 23 17:50:49 2011
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jon Forrest <nobozo@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 23 18:12:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R781U-0000cX-VH
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 17:50:45 +0200
+	id 1R78M8-0003qK-1N
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 18:12:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754879Ab1IWPuj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Sep 2011 11:50:39 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:55612 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754834Ab1IWPui convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Sep 2011 11:50:38 -0400
-Received: by gwb15 with SMTP id 15so3816107gwb.19
-        for <git@vger.kernel.org>; Fri, 23 Sep 2011 08:50:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=zHfhKl+gP59e+7zkrKXdYyZrR81YUcgzmiv7uhtnjo4=;
-        b=Lnrvu3qX2pmhGxWmmr9y3o1kKtIE2lSUe86aDhmGO3JoK0EbtqvMWBeNNW/4/0SNNG
-         G/3XeOPS2O6tVdaDuqAdqLGo5VmqHllDX8mdj5/LlU0gpRFQekpvau4C3NLMvXMcpjRE
-         3+5c5splLD5wk9iU9ppJ2u0Hj874KRDMxcoIY=
-Received: by 10.147.54.19 with SMTP id g19mr3468735yak.21.1316793037435; Fri,
- 23 Sep 2011 08:50:37 -0700 (PDT)
-Received: by 10.147.32.18 with HTTP; Fri, 23 Sep 2011 08:50:37 -0700 (PDT)
-In-Reply-To: <4E7C5DC3.8030409@alum.mit.edu>
+	id S1751959Ab1IWQL7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Sep 2011 12:11:59 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:58126 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750930Ab1IWQL6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Sep 2011 12:11:58 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p8NG9srR002532
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 23 Sep 2011 18:09:54 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1R78Lv-0000ra-9p; Fri, 23 Sep 2011 18:11:51 +0200
+In-Reply-To: <4E7C9AAD.7060209@gmail.com> (Jon Forrest's message of "Fri, 23
+	Sep 2011 07:41:49 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 23 Sep 2011 18:09:54 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p8NG9srR002532
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1317398999.36015@bXER8pFEeQnJYFRlEynVUA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181974>
 
-On Fri, Sep 23, 2011 at 6:21 AM, Michael Haggerty <mhagger@alum.mit.edu=
-> wrote:
-> On 09/23/2011 12:39 AM, Junio C Hamano wrote:
->> [...] It
->> would be a regression if the attributes mechanism is used for auditi=
-ng
->> purposes (as we start reading from a tree that is being audited usin=
-g the
->> very attributes it brings in), though.
+Jon Forrest <nobozo@gmail.com> writes:
+
+> "If Bob=E2=80=99s work conflicts with what Alice did since their hist=
+ories forked,"
 >
-> I'm confused by this comment.
+> Does this include both changes that Alice has checked in to
+> her repository and uncommitted changes in her working tree?
+
+Git will not allow you to do a "git pull" if your uncommited changes
+touch the same files as the pull. So, you basically can't have conflict=
+s
+about uncommited changes with "git pull".
+
+That's by design: solving conflicts can be hard, and you want the "last
+commit" safety net while doing it. If you mess up your conflict
+resolution, you can still "git reset --merge" and try again.
+
+> "Alice will use her working tree and the index to resolve conflicts,"
 >
-> If an auditing system can be subverted by altering .gitattributes, th=
-en
-> I can do just as much harm by changing the .gitattributes in one comm=
-it
-> and making the "nasty" change in a second. =C2=A0So any rigorous audi=
-ting
-> system based on .gitattributes would have to prevent me from committi=
-ng
-> modifications to .gitattributes, in which case my commit will be
-> rejected anyway.
->
-> If by "auditing" you mean other less rigorous checks to which excepti=
-ons
-> are *allowed*, then it is preferable to add the exception in the same
-> commit as the otherwise-offending content, and therefore it is
-> *required* that the .gitattributes of the new tree be used when check=
-ing
-> the contents of that tree.
+> How does Alice use her working tree and index? Does this mean
+> she makes changes to her working tree so that the conflicts
+> no longer exist?
 
-Currently, an auditing hook that cares about attributes, and which
-runs in a bare repo, ignores the in-repo .gitattributes, considering
-only the attributes set outside of the repo.
+Yes.
 
-So by making git care about .gitattributes in a bare repo, such a hook
-can suddenly be bypassed.
+> How does the index play a part in this?
 
-j.
+Once the conflict is fixed in the working tree, you run "git add" to
+mark the conflict as resolved.
+
+And before this, the index contains half-merged versions of your file,
+and "git diff" can show you the difference between them and your
+worktree. See the user manual :
+
+http://schacon.github.com/git/user-manual.html#resolving-a-merge
+
+(BTW, that's not the official place for Git documentation, but since
+kernel.org is down now ...)
+
+> "and existing local changes will interfere with the conflict
+> resolution process"
+
+Probably this should have been "would have interfered" (and therefore
+are forbidden by Git, as the following sentence says):
+
+> "(git will still perform the fetch but will refuse to merge
+> --- Alice will have to get rid of her local changes in
+> some way and pull again when this happens)."
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
