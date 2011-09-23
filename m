@@ -1,69 +1,102 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: How to use git attributes to configure server-side checks?
-Date: Fri, 23 Sep 2011 15:31:12 +0200
-Message-ID: <4E7C8A20.8050100@alum.mit.edu>
-References: <33047451.27244.1316782148569.JavaMail.root@mail.hq.genarts.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git discussion list <git@vger.kernel.org>,
-	Jay Soffian <jaysoffian@gmail.com>, Jeff King <peff@peff.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Fri Sep 23 15:31:31 2011
+Subject: [PATCH 1/1] get_sha1_hex(): do not read past a NUL character
+Date: Fri, 23 Sep 2011 15:38:36 +0200
+Message-ID: <1316785116-21831-1-git-send-email-mhagger@alum.mit.edu>
+References: <4E7C857D.8000304@alum.mit.edu>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 23 15:38:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R75qj-00007e-Rz
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 15:31:30 +0200
+	id 1R75xv-000479-P5
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 15:38:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754048Ab1IWNbZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Sep 2011 09:31:25 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:60119 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752987Ab1IWNbZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2011 09:31:25 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p8NDVCfM013351
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 23 Sep 2011 15:31:13 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.21) Gecko/20110831 Lightning/1.0b2 Thunderbird/3.1.13
-In-Reply-To: <33047451.27244.1316782148569.JavaMail.root@mail.hq.genarts.com>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1753721Ab1IWNiv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Sep 2011 09:38:51 -0400
+Received: from mail.berlin.jpk.com ([212.222.128.130]:52050 "EHLO
+	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753501Ab1IWNiu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2011 09:38:50 -0400
+Received: from michael.berlin.jpk.com ([192.168.100.152])
+	by mail.berlin.jpk.com with esmtp (Exim 4.50)
+	id 1R75t3-0001Be-Rh; Fri, 23 Sep 2011 15:33:53 +0200
+X-Mailer: git-send-email 1.7.7.rc2
+In-Reply-To: <4E7C857D.8000304@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181966>
 
-On 09/23/2011 02:49 PM, Stephen Bash wrote:
-> We're in the process of a similar change over (we're dealing with EOL
-> rather than indents), but I attacked it from a different angle...  I
-> wrote our update script to examine modified files and ensure
-> compliance (diff-tree -r, iterate over blobs).  That way legacy files
-> are left alone (even in master), but active development must live up
-> to the current rules.  Is there a reason you need to go tree-by-tree
-> rather than file-by-file?
+Previously, get_sha1_hex() would read one character past the end of a
+null-terminated string whose strlen was an even number less than 40.
+Although the function correctly returned -1 in these cases, the extra
+memory access might have been to uninitialized (or even, conceivably,
+unallocated) memory.
 
-I want to avoid code churn, especially in third-party code.  With your
-solution, I believe that we would be forced to entirely clean up any
-file that we needed to touch.  The resulting code churn would make
-integrating future upstream releases a nightmare.
+Add a check to avoid reading past the end of a string.
 
-For some kinds of checks, one could only check that the *lines* changed
-satisfy the new rules.
+This problem was discovered by Thomas Rast <trast@student.ethz.ch>
+using valgrind.
 
-But rather than thinking up workarounds, it seems like a better idea to
-fix git to handle .gitattributes correctly.
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+It is suggested to apply this bugfix before mh/check-ref-format-3;
+otherwise the latter triggers the bug, leading to a valgrind error.
 
-Michael
+This patch could optionally be applied to maint (to which it can be
+rebased cleanly), though the bug that it fixes is relatively benign.
 
+ cache.h |    9 +++++++++
+ hex.c   |   10 +++++++++-
+ 2 files changed, 18 insertions(+), 1 deletions(-)
+
+diff --git cache.h cache.h
+index 607c2ea..e7bbc0d 100644
+--- cache.h
++++ cache.h
+@@ -819,7 +819,16 @@ static inline int get_sha1_with_context(const char *str, unsigned char *sha1, st
+ {
+ 	return get_sha1_with_context_1(str, sha1, orc, 0, NULL);
+ }
++
++/*
++ * Try to read a SHA1 in hexadecimal format from the 40 characters
++ * starting at hex.  Write the 20-byte result to sha1 in binary form.
++ * Return 0 on success.  Reading stops if a NUL is encountered in the
++ * input, so it is safe to pass this function an arbitrary
++ * null-terminated string.
++ */
+ extern int get_sha1_hex(const char *hex, unsigned char *sha1);
++
+ extern char *sha1_to_hex(const unsigned char *sha1);	/* static buffer result! */
+ extern int read_ref(const char *filename, unsigned char *sha1);
+ extern const char *resolve_ref(const char *path, unsigned char *sha1, int, int *);
+diff --git hex.c hex.c
+index bb402fb..9ebc050 100644
+--- hex.c
++++ hex.c
+@@ -39,7 +39,15 @@ int get_sha1_hex(const char *hex, unsigned char *sha1)
+ {
+ 	int i;
+ 	for (i = 0; i < 20; i++) {
+-		unsigned int val = (hexval(hex[0]) << 4) | hexval(hex[1]);
++		unsigned int val;
++		/*
++		 * hex[1]=='\0' is caught when val is checked below,
++		 * but if hex[0] is NUL we have to avoid reading
++		 * past the end of the string:
++		 */
++		if (!hex[0])
++			return -1;
++		val = (hexval(hex[0]) << 4) | hexval(hex[1]);
+ 		if (val & ~0xff)
+ 			return -1;
+ 		*sha1++ = val;
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.7.7.rc2
