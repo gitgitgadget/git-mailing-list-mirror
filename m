@@ -1,117 +1,78 @@
 From: Jeff King <peff@peff.net>
-Subject: config-file includes
-Date: Fri, 23 Sep 2011 15:58:29 -0400
-Message-ID: <20110923195829.GA27677@sigill.intra.peff.net>
+Subject: Re: [PATCH 0/6] A handful of "branch description" patches
+Date: Fri, 23 Sep 2011 16:18:24 -0400
+Message-ID: <20110923201824.GA27999@sigill.intra.peff.net>
+References: <7vy5xi4y3m.fsf@alter.siamese.dyndns.org>
+ <1316729362-7714-1-git-send-email-gitster@pobox.com>
+ <4E7C49CF.60508@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 23 21:58:40 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Sep 23 22:18:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R7BtP-0007hO-Fj
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 21:58:39 +0200
+	id 1R7CCm-0000F2-No
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 22:18:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752104Ab1IWT6d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Sep 2011 15:58:33 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41793
+	id S1752062Ab1IWUSh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Sep 2011 16:18:37 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41808
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752093Ab1IWT6c (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2011 15:58:32 -0400
-Received: (qmail 20142 invoked by uid 107); 23 Sep 2011 20:03:32 -0000
+	id S1751784Ab1IWUS1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2011 16:18:27 -0400
+Received: (qmail 20330 invoked by uid 107); 23 Sep 2011 20:23:27 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 23 Sep 2011 16:03:32 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Sep 2011 15:58:29 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 23 Sep 2011 16:23:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Sep 2011 16:18:24 -0400
 Content-Disposition: inline
+In-Reply-To: <4E7C49CF.60508@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181999>
 
-On Fri, Sep 23, 2011 at 03:33:41PM -0400, Jeff King wrote:
+On Fri, Sep 23, 2011 at 10:56:47AM +0200, Michael J Gruber wrote:
 
-> [1] I really wish we had an elegant way of versioning meta-information
->     about a repository (like config, info/attributes, etc). I've hacked
->     around this before by having a special meta-branch for each repo,
->     checkout it out in an alternate directory, and then symlinking bits
->     of it into .git. But that's kind of ugly, too.
+>   mjg/vob/refrev-pretend [mjg/vob/virtual-objects: ahead 1]
+>     Pseudo revs for refnames
+>     
+>     An alternative implementation using pretend_sha1...
+>     Currently unused.
 > 
->     I'm not sure what a good solution would look like. There's a real
->     can of worms with respect to picking and choosing local versus
->     remote bits of meta-information, with some security implications.
+>   mjg/vob/virtual-objects [origin/next: ahead 2, behind 10]
+>     Virtual refname objects
+>     
+>     For each existing refname, introduce virtual objects corresponding to a blob
+>     with the refname as the content. "virtual" refers to the fact that these
+>     objects are not written out but exist for all other purposes, such as
+>     attaching notes and keeping them from being pruned.
 
-Here's one solution I've given a little thought to. Comments welcome.
+Eww. :)
 
-I've sometimes wanted an "include" mechanism in git config files.
-Partially to just keep things tidier, partially to avoid
-cutting-and-pasting between some repo-specific config, and partially
-because I'd like a conditional inclusion mechanism[1]. I was thinking of
-something that would be syntactically compatible but semantically
-meaningless in current versions of git, like:
+This seems like a clever solution to making git-notes store a ref as a
+key instead of an arbitrary sha1. But I wonder if the end result is
+really waht the user wants. The resulting notes tree is good for doing
+lookups, but the entries are completely obfuscated. So I can't easily do
+something like "list all of the refs which have descriptions". I can
+only list the _hashes_ of the refs which have descriptions. And if I am
+lucky, I can hash the refs I have and correlate them. But unknown ones
+will simply be a mystery.
 
-  [include]
-  path = /some/file
-  path = /some/other/file
-  path = ~/some/file/in/your/homedir
+Wouldn't it be much more friendly to have a separate tree of refnames
+that stores:
 
-You could extend this to look in refs, with something like:
+  refs/heads/foo -> (some blob with the "foo" description)
+  refs/heads/bar -> (some blob with the "bar" description)
 
-  [include]
-  ref = meta:config
-
-which would resolve meta:config to a blob and examine it (i.e., it would
-look at refs/heads/meta).
-
-So the procedure for importing and updating config from a remote would
-look like:
-
-  git clone project.git
-  cd project
-
-  # check that the upstream config looks good
-  git show origin/meta:config
-  # if so, use it
-  git branch meta origin/meta
-  git config --add include.ref meta:config
-
-  # later, check updates to upstream's config
-  git fetch
-  git diff meta origin/meta -- config
-  # looks ok, use it
-  git branch -f meta origin/meta
-
-And obviously if you wanted to streamline that, you could make "meta"
-and "config" well-known names and have clone and fetch interactively
-show the config and say "do you want this [y/N]?" or something. Though I
-think there is some value to doing it manually, as it gives projects the
-flexibility to have different config profiles in their meta branch.
-
-And if you really wanted to live dangerously, you could do:
-
-  git config --add include.ref origin/meta:config
-
-That of course just covers "config". But I think you might be able to do
-something similar with core.attributesfile (which could be included from
-the config).
+Yeah, you have to build another git-notes-like interface around it. But
+the data structure is pleasant and flexible. You could even "git
+checkout" the whole tree and edit the notes with your editor, without
+having to deal with some obfuscated name.
 
 -Peff
-
-[1] I want conditional inclusion because sometimes the rules for config
-    entries changes from version to version. For example, I have
-    pager.diff set to a script in my ~/.gitconfig. But older versions of
-    git don't understand non-boolean values and barf. I'd really like to
-    do something like:
-
-    [include-ifdef "has-pager-scripts"]
-    path = ~/.gitconfig-pager
-
-    where "has-pager-scripts" would be a magic flag compiled into git
-    versions that understand that config.
