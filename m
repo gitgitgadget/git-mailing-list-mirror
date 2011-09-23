@@ -1,252 +1,75 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH] fix push --quiet: add 'quiet' capability to receive-pack
-Date: Fri, 23 Sep 2011 13:00:16 +0200
-Message-ID: <20110923110016.GA12122@ecki.lan>
-References: <7vaa9xyxpf.fsf@alter.siamese.dyndns.org>
+From: Stephen Bash <bash@genarts.com>
+Subject: Re: How to use git attributes to configure server-side checks?
+Date: Fri, 23 Sep 2011 08:49:08 -0400 (EDT)
+Message-ID: <33047451.27244.1316782148569.JavaMail.root@mail.hq.genarts.com>
+References: <4E7C44C8.10000@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, tmz@pobox.com, tobiasu@tmx.org,
-	jkeating@readhat.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 23 14:00:49 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git discussion list <git@vger.kernel.org>,
+	Jay Soffian <jaysoffian@gmail.com>, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Sep 23 14:49:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R74Qx-0006DB-O9
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 14:00:48 +0200
+	id 1R75Bx-0003mj-Rw
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 14:49:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753644Ab1IWMAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Sep 2011 08:00:45 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:42125 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753631Ab1IWMAm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2011 08:00:42 -0400
-Received: from localhost (unknown [80.123.242.182])
-	by bsmtp.bon.at (Postfix) with ESMTP id 9B9E3130054;
-	Fri, 23 Sep 2011 14:00:18 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vaa9xyxpf.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754255Ab1IWMtT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Sep 2011 08:49:19 -0400
+Received: from hq.genarts.com ([173.9.65.1]:14991 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754242Ab1IWMtQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2011 08:49:16 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id CC2DAEA236D;
+	Fri, 23 Sep 2011 08:49:14 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id YnjmEcXXPu0n; Fri, 23 Sep 2011 08:49:08 -0400 (EDT)
+Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 9B002EA2308;
+	Fri, 23 Sep 2011 08:49:08 -0400 (EDT)
+In-Reply-To: <4E7C44C8.10000@alum.mit.edu>
+X-Mailer: Zimbra 6.0.10_GA_2692 (ZimbraWebClient - SAF3 (Mac)/6.0.10_GA_2692)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181960>
 
-Currently, git push --quiet produces some non-error output, e.g.:
-
- $ git push --quiet
- Unpacking objects: 100% (3/3), done.
-
-This fixes a bug reported for the fedora git package:
-
- https://bugzilla.redhat.com/show_bug.cgi?id=725593
-
-Commit 90a6c7d4 (propagate --quiet to send-pack/receive-pack)
-introduced the --quiet option to receive-pack and made send-pack
-pass that option. Older versions of receive-pack do not recognize
-the option, however, and terminate immediately. The commit was
-therefore reverted.
-
-This change instead adds a 'quiet' capability to receive-pack,
-which is a backwards compatible.
-
-In addition, this fixes push --quiet via http: A verbosity of 0
-means quiet for remote helpers.
-
-Reported-by: Jesse Keating <jkeating@redhat.com>
-Reported-by: Tobias Ulmer <tobiasu@tmux.org>
-Cc: Todd Zullinger <tmz@pobox.com>
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
-
-On Wed, Sep 21, 2011 at 10:04:28PM -0700, Junio C Hamano wrote:
+----- Original Message -----
+> From: "Michael Haggerty" <mhagger@alum.mit.edu>
+> Sent: Friday, September 23, 2011 4:35:20 AM
+> Subject: Re: How to use git attributes to configure server-side checks?
+>
+> On 09/22/2011 07:26 PM, Junio C Hamano wrote:
+> > Michael Haggerty <mhagger@alum.mit.edu> writes:
+> >
+> >> I would like the checking configuration to be *versioned* along with the
+> >> code. For example, suppose my project decides to enforce a rule that
+> >> all Python code needs to be indented with spaces. It might be that not
+> >> all of our old code adheres to this rule, and that we only want to clean
+> >> up the code in master.
+> >
+> > You want to sneak in a badly formatted code? Add an entry to the
+> > in-tree attributes file to disable whitespace checking to cover that file!
 > 
-> * cb/maint-quiet-push (2011-09-05) 4 commits
->  . t5541: avoid TAP test miscounting
->  . push: old receive-pack does not understand --quiet
->  . fix push --quiet via http
->  . tests for push --quiet
-> 
-> Dropped for rerolling after 1.7.7 cycle.
+> No, the scenario that I was trying to describe is a project that wants
+> to tighten up its code formatting rules after years of laxity. It is
+> convenient to support legacy branches that still contain nonconforming
+> code without having to reformat it all, just as it is convenient to
+> fix the current code incrementally rather than requiring all of the
+> cleanup to be done in one big bang. Thus it is important that new rules not be
+> enforced retroactively on old code.
 
-This is the re-rolled version based on current master, without the
-backwards incompatible receive-pack --quiet option.
+We're in the process of a similar change over (we're dealing with EOL rather than indents), but I attacked it from a different angle...  I wrote our update script to examine modified files and ensure compliance (diff-tree -r, iterate over blobs).  That way legacy files are left alone (even in master), but active development must live up to the current rules.  Is there a reason you need to go tree-by-tree rather than file-by-file?
 
-I squashed the tests in and added your unpack(void) fixup.
-
-I have not added Michael's "t5541: avoid TAP test miscounting"
-since I cannot reproduce the error:
-
- http://mid.gmane.org/e4e82f1267da3edfc600361de0041f618c31e30c.1315232475.git.git@drmicha.warpmail.net
-
-And there is also this related patch "server_supports(): parse
-feature list more carefully", which looked good to me:
-
- http://mid.gmane.org/7vmxejy9od.fsf@alter.siamese.dyndns.org
-
-Does it need more work?
-
-Clemens
-
- builtin/receive-pack.c   |   14 ++++++++++++--
- builtin/send-pack.c      |   13 ++++++++++---
- remote-curl.c            |    4 +++-
- t/t5523-push-upstream.sh |    7 +++++++
- t/t5541-http-push.sh     |    8 ++++++++
- 5 files changed, 40 insertions(+), 6 deletions(-)
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index ae164da..4419323 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -31,6 +31,7 @@ static int transfer_unpack_limit = -1;
- static int unpack_limit = 100;
- static int report_status;
- static int use_sideband;
-+static int quiet;
- static int prefer_ofs_delta = 1;
- static int auto_update_server_info;
- static int auto_gc = 1;
-@@ -114,7 +115,7 @@ static int show_ref(const char *path, const unsigned char *sha1, int flag, void
- 	else
- 		packet_write(1, "%s %s%c%s%s\n",
- 			     sha1_to_hex(sha1), path, 0,
--			     " report-status delete-refs side-band-64k",
-+			     " report-status delete-refs side-band-64k quiet",
- 			     prefer_ofs_delta ? " ofs-delta" : "");
- 	sent_capabilities = 1;
- 	return 0;
-@@ -636,6 +637,8 @@ static struct command *read_head_info(void)
- 				report_status = 1;
- 			if (strstr(refname + reflen + 1, "side-band-64k"))
- 				use_sideband = LARGE_PACKET_MAX;
-+			if (strstr(refname + reflen + 1, "quiet"))
-+				quiet = 1;
- 		}
- 		cmd = xcalloc(1, sizeof(struct command) + len - 80);
- 		hashcpy(cmd->old_sha1, old_sha1);
-@@ -684,8 +687,10 @@ static const char *unpack(void)
- 
- 	if (ntohl(hdr.hdr_entries) < unpack_limit) {
- 		int code, i = 0;
--		const char *unpacker[4];
-+		const char *unpacker[5];
- 		unpacker[i++] = "unpack-objects";
-+		if (quiet)
-+			unpacker[i++] = "-q";
- 		if (receive_fsck_objects)
- 			unpacker[i++] = "--strict";
- 		unpacker[i++] = hdr_arg;
-@@ -799,6 +804,11 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		const char *arg = *argv++;
- 
- 		if (*arg == '-') {
-+			if (!strcmp(arg, "--quiet")) {
-+				quiet = 1;
-+				continue;
-+			}
-+
- 			if (!strcmp(arg, "--advertise-refs")) {
- 				advertise_refs = 1;
- 				continue;
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index c1f6ddd..a8d6b4c 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -263,6 +263,8 @@ int send_pack(struct send_pack_args *args,
- 		args->use_ofs_delta = 1;
- 	if (server_supports("side-band-64k"))
- 		use_sideband = 1;
-+	if (!server_supports("quiet"))
-+		args->quiet = 0;
- 
- 	if (!remote_refs) {
- 		fprintf(stderr, "No refs in common and none specified; doing nothing.\n"
-@@ -301,11 +303,12 @@ int send_pack(struct send_pack_args *args,
- 			char *old_hex = sha1_to_hex(ref->old_sha1);
- 			char *new_hex = sha1_to_hex(ref->new_sha1);
- 
--			if (!cmds_sent && (status_report || use_sideband)) {
--				packet_buf_write(&req_buf, "%s %s %s%c%s%s",
-+			if (!cmds_sent && (status_report || use_sideband || args->quiet)) {
-+				packet_buf_write(&req_buf, "%s %s %s%c%s%s%s",
- 					old_hex, new_hex, ref->name, 0,
- 					status_report ? " report-status" : "",
--					use_sideband ? " side-band-64k" : "");
-+					use_sideband ? " side-band-64k" : "",
-+					args->quiet ? " quiet" : "");
- 			}
- 			else
- 				packet_buf_write(&req_buf, "%s %s %s",
-@@ -439,6 +442,10 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 				args.force_update = 1;
- 				continue;
- 			}
-+			if (!strcmp(arg, "--quiet")) {
-+				args.quiet = 1;
-+				continue;
-+			}
- 			if (!strcmp(arg, "--verbose")) {
- 				args.verbose = 1;
- 				continue;
-diff --git a/remote-curl.c b/remote-curl.c
-index b8cf45a..2341106 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -762,7 +762,9 @@ static int push_git(struct discovery *heads, int nr_spec, char **specs)
- 		argv[argc++] = "--thin";
- 	if (options.dry_run)
- 		argv[argc++] = "--dry-run";
--	if (options.verbosity > 1)
-+	if (options.verbosity == 0)
-+		argv[argc++] = "--quiet";
-+	else if (options.verbosity > 1)
- 		argv[argc++] = "--verbose";
- 	argv[argc++] = url;
- 	for (i = 0; i < nr_spec; i++)
-diff --git a/t/t5523-push-upstream.sh b/t/t5523-push-upstream.sh
-index c229fe6..9ee52cf 100755
---- a/t/t5523-push-upstream.sh
-+++ b/t/t5523-push-upstream.sh
-@@ -108,4 +108,11 @@ test_expect_failure TTY 'push --no-progress suppresses progress' '
- 	! grep "Writing objects" err
- '
- 
-+test_expect_success TTY 'quiet push' '
-+	ensure_fresh_upstream &&
-+
-+	test_terminal git push --quiet --no-progress upstream master 2>&1 | tee output &&
-+	test_cmp /dev/null output
-+'
-+
- test_done
-diff --git a/t/t5541-http-push.sh b/t/t5541-http-push.sh
-index a73c826..e756a08 100755
---- a/t/t5541-http-push.sh
-+++ b/t/t5541-http-push.sh
-@@ -5,6 +5,7 @@
- 
- test_description='test smart pushing over http via http-backend'
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-terminal.sh
- 
- if test -n "$NO_CURL"; then
- 	skip_all='skipping test, git built without http support'
-@@ -154,5 +155,12 @@ test_expect_success 'push (chunked)' '
- 	 test $HEAD = $(git rev-parse --verify HEAD))
- '
- 
-+test_expect_success TTY 'quiet push' '
-+	cd "$ROOT_PATH"/test_repo_clone &&
-+	test_commit quiet &&
-+	test_terminal git push --quiet --no-progress 2>&1 | tee output &&
-+	test_cmp /dev/null output
-+'
-+
- stop_httpd
- test_done
--- 
-1.7.6.1
+Thanks,
+Stephen
