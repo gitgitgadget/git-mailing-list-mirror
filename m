@@ -1,101 +1,56 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: More Beginning Git Questions
-Date: Fri, 23 Sep 2011 18:11:51 +0200
-Message-ID: <vpq62kjw854.fsf@bauges.imag.fr>
-References: <4E7C9AAD.7060209@gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: permission to re-license archive-zip.c and zlib.c as LGPL
+Date: Fri, 23 Sep 2011 18:34:50 +0200
+Message-ID: <4E7CB52A.2090600@lsrfire.ath.cx>
+References: <CA+sFfMdzMCJut385jCJ88Z8sUw3E2Bs2A1SiECORQsFJjsb=Qg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Jon Forrest <nobozo@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 23 18:12:04 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	dpotapov@gmail.com, vagabon.xyz@gmail.com
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 23 18:35:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R78M8-0003qK-1N
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 18:12:04 +0200
+	id 1R78iP-0007Ik-8G
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 18:35:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751959Ab1IWQL7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Sep 2011 12:11:59 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:58126 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750930Ab1IWQL6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Sep 2011 12:11:58 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p8NG9srR002532
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 23 Sep 2011 18:09:54 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1R78Lv-0000ra-9p; Fri, 23 Sep 2011 18:11:51 +0200
-In-Reply-To: <4E7C9AAD.7060209@gmail.com> (Jon Forrest's message of "Fri, 23
-	Sep 2011 07:41:49 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 23 Sep 2011 18:09:54 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p8NG9srR002532
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1317398999.36015@bXER8pFEeQnJYFRlEynVUA
+	id S1753553Ab1IWQe7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Sep 2011 12:34:59 -0400
+Received: from india601.server4you.de ([85.25.151.105]:54528 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753478Ab1IWQe6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2011 12:34:58 -0400
+Received: from [192.168.2.104] (p4FFD97BD.dip.t-dialin.net [79.253.151.189])
+	by india601.server4you.de (Postfix) with ESMTPSA id 0440230C0D9;
+	Fri, 23 Sep 2011 18:34:56 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
+In-Reply-To: <CA+sFfMdzMCJut385jCJ88Z8sUw3E2Bs2A1SiECORQsFJjsb=Qg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181975>
 
-Jon Forrest <nobozo@gmail.com> writes:
+Am 23.09.2011 05:51, schrieb Brandon Casey:
+> To those who have contributed to archive-zip.c and zlib.c,
+>=20
+> I'd like to make a library for writing zip files.  I really don't see
+> another library out there that does it as easily as archive-zip.  So,
+> with your consent, I'd like to re-license the code in archive-zip.c
+> and zlib.c as LGPL so that I can create an archive-zip library.  The
+> reason for LGPL, of course, is so that it can be linked with non-GPL
+> code.
+>=20
+> Please offer your consent to re-license your contributions under LGPL
+> by replying to this email.
 
-> "If Bob=E2=80=99s work conflicts with what Alice did since their hist=
-ories forked,"
->
-> Does this include both changes that Alice has checked in to
-> her repository and uncommitted changes in her working tree?
+=46ine with me; BSD or MIT style licenses would be OK as well.
 
-Git will not allow you to do a "git pull" if your uncommited changes
-touch the same files as the pull. So, you basically can't have conflict=
-s
-about uncommited changes with "git pull".
+Actually I'm a bit surprised that libarchive didn't grow ZIP write
+support by now.
 
-That's by design: solving conflicts can be hard, and you want the "last
-commit" safety net while doing it. If you mess up your conflict
-resolution, you can still "git reset --merge" and try again.
-
-> "Alice will use her working tree and the index to resolve conflicts,"
->
-> How does Alice use her working tree and index? Does this mean
-> she makes changes to her working tree so that the conflicts
-> no longer exist?
-
-Yes.
-
-> How does the index play a part in this?
-
-Once the conflict is fixed in the working tree, you run "git add" to
-mark the conflict as resolved.
-
-And before this, the index contains half-merged versions of your file,
-and "git diff" can show you the difference between them and your
-worktree. See the user manual :
-
-http://schacon.github.com/git/user-manual.html#resolving-a-merge
-
-(BTW, that's not the official place for Git documentation, but since
-kernel.org is down now ...)
-
-> "and existing local changes will interfere with the conflict
-> resolution process"
-
-Probably this should have been "would have interfered" (and therefore
-are forbidden by Git, as the following sentence says):
-
-> "(git will still perform the fetch but will refuse to merge
-> --- Alice will have to get rid of her local changes in
-> some way and pull again when this happens)."
-
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Ren=C3=A9
