@@ -1,104 +1,157 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 3/6] branch: teach --edit-description option
-Date: Fri, 23 Sep 2011 19:47:21 +1000
-Message-ID: <20110923094721.GA8397@duynguyen-vnpc>
-References: <7vy5xi4y3m.fsf@alter.siamese.dyndns.org>
- <1316729362-7714-1-git-send-email-gitster@pobox.com>
- <1316729362-7714-4-git-send-email-gitster@pobox.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 0/6] A handful of "branch description" patches
+Date: Fri, 23 Sep 2011 10:56:47 +0200
+Message-ID: <4E7C49CF.60508@drmicha.warpmail.net>
+References: <7vy5xi4y3m.fsf@alter.siamese.dyndns.org> <1316729362-7714-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 23 11:47:40 2011
+X-From: git-owner@vger.kernel.org Fri Sep 23 11:55:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R72M7-0004L0-Nh
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 11:47:40 +0200
+	id 1R72TY-0007al-QL
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 11:55:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752775Ab1IWJrd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Sep 2011 05:47:33 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:42928 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752728Ab1IWJrc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2011 05:47:32 -0400
-Received: by yxl31 with SMTP id 31so2545459yxl.19
-        for <git@vger.kernel.org>; Fri, 23 Sep 2011 02:47:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=242MURV+qmI/BwIEU1ZqyisoW0DyyaJohor7wdkb9F0=;
-        b=ZrohDHo45X9vRyRFF8VocYC6MwfJ0XYZACF9T6h8I9Y627Lq9KWefzl7CdKG9JxXAN
-         B9CVs7ej54xyfzJVXIG1uXDz0Lv9Qlv2a8h0alBGt/1XPuff2vm1nK2iedNQ/Q0rBG/z
-         sXZTt7HE8g0PeJdGJFHXJ+45fzfnOj10YvMRg=
-Received: by 10.236.176.65 with SMTP id a41mr20487896yhm.72.1316771252016;
-        Fri, 23 Sep 2011 02:47:32 -0700 (PDT)
-Received: from pclouds@gmail.com (220-244-161-237.static.tpgi.com.au. [220.244.161.237])
-        by mx.google.com with ESMTPS id n18sm8412874yhi.14.2011.09.23.02.47.27
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 23 Sep 2011 02:47:30 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 23 Sep 2011 19:47:21 +1000
-Content-Disposition: inline
-In-Reply-To: <1316729362-7714-4-git-send-email-gitster@pobox.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752808Ab1IWJzQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Sep 2011 05:55:16 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:43318 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752734Ab1IWJzO (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Sep 2011 05:55:14 -0400
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway2.nyi.mail.srv.osa (Postfix) with ESMTP id 969232AFA7;
+	Fri, 23 Sep 2011 05:53:55 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute6.internal (MEProxy); Fri, 23 Sep 2011 05:53:55 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=EZZObTQXCVsxmbk6VElu7H
+	Miy/M=; b=EnDt9fgWUf/2DsmSLmlXjR6MTcVay+VG2zvcPyt4PtCSq4fCUqdzGV
+	JKCVxNygNUa7Q/ZwzH2XuLZVCHFiW8JRTvGv9Iz2M7CJU4OpD2LkJdkpTT7NLUrX
+	GNcBPbW1QPfFxvlebFMBha+sQuxc84hAKpRrp6gDbeFPP2mYsR3oU=
+X-Sasl-enc: hyTwAO697w2NtHxvazFgu9UatKkjGe3vsBJYoGJVa4Xa 1316768210
+Received: from localhost.localdomain (p5485951A.dip0.t-ipconnect.de [84.133.149.26])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B56EA820931;
+	Fri, 23 Sep 2011 04:56:49 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0.2) Gecko/20110906 Thunderbird/6.0.2
+In-Reply-To: <1316729362-7714-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181953>
 
-On Thu, Sep 22, 2011 at 03:09:19PM -0700, Junio C Hamano wrote:
-> +	if (launch_editor(git_path(edit_description), &buf, NULL)) {
-> +		strbuf_release(&buf);
-> +		return -1;
-> +	}
-> +	stripspace(&buf, 1);
-> +
-> +	strbuf_addf(&name, "branch.%s.description", branch_name);
-> +	status =3D git_config_set(name.buf, buf.buf);
+Junio C Hamano venit, vidit, dixit 23.09.2011 00:09:
+> Here are a few patches that I have queued in 'pu', redoing some of the
+> patches I already sent out to the list, around "branch description".
+> 
+> The original motivation was to make the push/pull workflow appear more
+> robust by allowing human-to-human communication to leave audit trail that
+> can be verified when it becomes necessary. Namely:
+> 
+>  * request-pull message carries the SHA-1 of what is expected to be
+>    merged; and
+> 
+>  * "signed push" leaves the SHA-1 of what was pushed to the remote,
+>    cryptographically signed.
+> 
+> Linus's reaction, as I understood him, was "if we are spending efforts to
+> add more information, the end result should be more informative to humans
+> not just to machines", and I agree.  An example of piece of information we
+> often talk about is branch description---what a particular branch is meant
+> to achieve. Both request-pull messages and declarations of what was pushed
+> are good places to record that piece of information.
+> 
+> So here is a partially re-rolled series to get us closer.
+> 
+>  * The logic to read from an existing branch description was in
+>    builtin/branch.c in the original series, but the first patch separates
+>    it out into branch.c as a helper function;
+> 
+>  * The second one is a digression; the branch description describes what
+>    the topic aims to achieve, so it was natural to use it to prime the
+>    cover letter while preparing a patch series with format-patch;
+> 
+>  * The third one that adds "branch --edit-description" is basically
+>    unchanged modulo small leakfix from the original round;
+> 
+>  * And the remainder of the series for request-pull is the same as the
+>    last round.
 
-I suppose a Windows editor mave save the description with \r\n
-ending. Perhaps a patch like this to avoid messing up config file?
+I'm afraid I've missed the first installment of the series, or rather the fact that it was about more than just signed pushes. I've been working at (and with) branch and tag annotations for quite a while now and should have probably pushed the WIP rather than just dropping the occasional note. So I'll describe briefly what I have (the branches are in any of my repos[1]), which is notes based:
 
---8<--
-Subject: [PATCH] config: quote \r in value
+  mjg/vob/branch-notes [mjg/vob/virtual-objects: ahead 4]
+    Annotations for branches and tags
+    
+    Show notes for branches and tags when "branch" resp. "tag" is called with "--notes".
+    The "--notes" argument can take on all usual forms.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- config.c |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+  mjg/vob/format-patch-branch-note [mjg/vob/refrev-hash: ahead 1]
+    Cover letter from notes
+    
+    Fill in the cover letter from a note to ref:HEAD if --notes is given.
+    TODO: The current branch may not be the one the format-patch arguments refer to.
 
-diff --git a/config.c b/config.c
-index 4183f80..2e238ac 100644
---- a/config.c
-+++ b/config.c
-@@ -165,6 +165,9 @@ static char *parse_value(void)
- 			case 'b':
- 				c =3D '\b';
- 				break;
-+			case 'r':
-+				c =3D '\r';
-+				break;
- 			case 'n':
- 				c =3D '\n';
- 				break;
-@@ -1048,6 +1051,9 @@ static int store_write_pair(int fd, const char *k=
-ey, const char *value)
-=20
- 	for (i =3D 0; value[i]; i++)
- 		switch (value[i]) {
-+		case '\r':
-+			strbuf_addstr(&sb, "\\r");
-+			break;
- 		case '\n':
- 			strbuf_addstr(&sb, "\\n");
- 			break;
---=20
-1.7.3.1.256.g2539c.dirty
---8<--
+  mjg/vob/refrev-hash [mjg/vob/virtual-objects: ahead 2]
+    Pseudo revs for refnames
+    
+    Introduce "ref:foo" to denote the (virtual) refname object for the ref named
+    "foo". This is handy for now (editing branch and tag notes) but should
+    become obsoleted by a better ui, such as "git branch --edit foo" or
+    "git notes --refname edit foo".
+    
+    Introduce "ref:" as a shortcut to "ref:HEAD" which is the refname object
+    for the current branch.
+
+  mjg/vob/refrev-pretend [mjg/vob/virtual-objects: ahead 1]
+    Pseudo revs for refnames
+    
+    An alternative implementation using pretend_sha1...
+    Currently unused.
+
+  mjg/vob/virtual-objects [origin/next: ahead 2, behind 10]
+    Virtual refname objects
+    
+    For each existing refname, introduce virtual objects corresponding to a blob
+    with the refname as the content. "virtual" refers to the fact that these
+    objects are not written out but exist for all other purposes, such as
+    attaching notes and keeping them from being pruned.
+
+  mjg/vob/virtual-refs-for-rnos
+    Virtual refs for refname objects
+    
+    For each ref, pretend that the corresponding refname object is referenced
+    to keep it from being pruned. This still requires branch note code to
+    write out these objects.
+    (Unused earlier approach.)
+
+  mjg/vob/virtual-refs-pretend-all
+    Virtual refs for refname objects
+    
+    For each ref, pretend that the corresponding refname object is referenced
+    to keep it from being pruned. This still requires branch note code to
+    write out these objects.
+    (Unused earlier approach using pretend_sha1....)
+
+
+Yes, the above is (with added newlines and removed top commit info) the output of 'git branch -vv --notes --list mjg/vob\*' :)
+
+Open questions:
+* Should the refname object for ref "foo" really be identical to a blob with content "foo"? Or content "ref: foo? Or...?
+* Should ref (branch and tag) annotations use the same default notes tree as commit notes?
+* How best to view annotations on remote branches? This is connected with open questions about notes sharing and the ref namespace structure.
+
+I do think that config based descriptions are a quick solution, but a very non-distributed, non-versioned approach when compared to the notes approach.
+
+Michael
+
+[1]
+git://github.com/gitigit/git.git
+git://gitorious.org/~mjg/git/mjg.git
+git://repo.or.cz/git/mjg.git
