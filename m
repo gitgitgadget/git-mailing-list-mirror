@@ -1,132 +1,106 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: Bug: git log --numstat counts wrong
-Date: Fri, 23 Sep 2011 14:30:40 +0800
-Message-ID: <CALUzUxprUFGMR-WVEMOOvYiwkev1cfxHOyBmZq9bKJcHq5E2VA@mail.gmail.com>
-References: <D3CF0A47-64DA-4EBB-9DCD-D2D714596C50@inf.fu-berlin.de>
-	<7vr53a2icn.fsf@alter.siamese.dyndns.org>
-	<3BF8BA51-4CAA-40A2-8B45-D39AAEE58E6F@inf.fu-berlin.de>
-	<7vobyd1vmo.fsf@alter.siamese.dyndns.org>
-	<4E7B5F28.2020204@lsrfire.ath.cx>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: What's The Right Way to Do This?
+Date: Fri, 23 Sep 2011 07:30:56 +0100
+Message-ID: <4E7C27A0.9030900@diamand.org>
+References: <loom.20110923T064720-366@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Alexander Pepper <pepper@inf.fu-berlin.de>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Fri Sep 23 08:30:48 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jon Forrest <nobozo@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 23 08:31:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6zHb-0005Y1-Ih
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 08:30:47 +0200
+	id 1R6zHw-0005hj-Pu
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 08:31:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752440Ab1IWGam convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Sep 2011 02:30:42 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:37156 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752366Ab1IWGam convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Sep 2011 02:30:42 -0400
-Received: by fxe4 with SMTP id 4so3497591fxe.19
-        for <git@vger.kernel.org>; Thu, 22 Sep 2011 23:30:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=NhF20paR+kRFZvcUfs5t1fjhuxTOaJ/F32I2ehZPRo8=;
-        b=YDUFEIopAC3jrPAGeRyDffuxoAELyodAxqvKecBksecEBgSd7KvnvqHtR4dImhAXfX
-         SnJ0vXw4IS6DfWI0+A+32Sx00tWtBRyibOsMCB2Z+ql7zFXtom9k8dRksGlk1K9FwR2b
-         qrAuJMmUbWpoSD1JEGvACC+B1DJvR5nBOfIoM=
-Received: by 10.223.20.18 with SMTP id d18mr4557582fab.102.1316759440607; Thu,
- 22 Sep 2011 23:30:40 -0700 (PDT)
-Received: by 10.223.79.65 with HTTP; Thu, 22 Sep 2011 23:30:40 -0700 (PDT)
-In-Reply-To: <4E7B5F28.2020204@lsrfire.ath.cx>
+	id S1752468Ab1IWGbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Sep 2011 02:31:05 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:49084 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752366Ab1IWGbB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2011 02:31:01 -0400
+Received: by wyg34 with SMTP id 34so3648608wyg.19
+        for <git@vger.kernel.org>; Thu, 22 Sep 2011 23:31:00 -0700 (PDT)
+Received: by 10.216.230.89 with SMTP id i67mr3231252weq.51.1316759460437;
+        Thu, 22 Sep 2011 23:31:00 -0700 (PDT)
+Received: from [86.26.7.206] (cpc1-cmbg14-2-0-cust973.5-4.cable.virginmedia.com. [86.26.7.206])
+        by mx.google.com with ESMTPS id fa7sm14818607wbb.26.2011.09.22.23.30.58
+        (version=SSLv3 cipher=OTHER);
+        Thu, 22 Sep 2011 23:30:59 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
+In-Reply-To: <loom.20110923T064720-366@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181946>
 
-On Fri, Sep 23, 2011 at 12:15 AM, Ren=E9 Scharfe
-<rene.scharfe@lsrfire.ath.cx> wrote:
-> The patch below reverts a part of 27af01d5523 that's not explained in=
- its
-> commit message and doesn't seem to contribute to the intended speedup=
-=2E =A0It
-> seems to restore the original diff output. =A0I don't know how it's a=
-ctually
-> doing that, though, as I haven't dug into the code at all.
+On 23/09/11 05:48, Jon Forrest wrote:
+> I'm just now starting to use git for more than trivial things.
+> Today I got myself in trouble. Here's what happened:
 >
-> [snip]
+> 1) I pulled the master branch from the IT repository from our
+> main git server.
 >
-> diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-> index 5a33d1a..e419f4f 100644
-> --- a/xdiff/xprepare.c
-> +++ b/xdiff/xprepare.c
-> @@ -383,7 +383,7 @@ static int xdl_clean_mmatch(char const *dis, long=
- i, long s, long e) {
-> =A0* might be potentially discarded if they happear in a run of disca=
-rdable.
-> =A0*/
-> =A0static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1=
-, xdfile_t *xdf2) {
-> - =A0 =A0 =A0 long i, nm, nreff;
-> + =A0 =A0 =A0 long i, nm, nreff, mlim;
-> =A0 =A0 =A0 =A0xrecord_t **recs;
-> =A0 =A0 =A0 =A0xdlclass_t *rcrec;
-> =A0 =A0 =A0 =A0char *dis, *dis1, *dis2;
-> @@ -396,16 +396,20 @@ static int xdl_cleanup_records(xdlclassifier_t =
-*cf, xdfile_t *xdf1, xdfile_t *xd
-> =A0 =A0 =A0 =A0dis1 =3D dis;
-> =A0 =A0 =A0 =A0dis2 =3D dis1 + xdf1->nrec + 1;
+> 2) I created a branch from this called "J" and started making changes.
 >
-> + =A0 =A0 =A0 if ((mlim =3D xdl_bogosqrt(xdf1->nrec)) > XDL_MAX_EQLIM=
-IT)
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 mlim =3D XDL_MAX_EQLIMIT;
-> =A0 =A0 =A0 =A0for (i =3D xdf1->dstart, recs =3D &xdf1->recs[xdf1->ds=
-tart]; i <=3D xdf1->dend; i++, recs++) {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0rcrec =3D cf->rcrecs[(*recs)->ha];
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0nm =3D rcrec ? rcrec->len2 : 0;
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 dis1[i] =3D (nm =3D=3D 0) ? 0: 1;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 dis1[i] =3D (nm =3D=3D 0) ? 0: (nm >=3D=
- mlim) ? 2: 1;
-> =A0 =A0 =A0 =A0}
+> 3) Other people pulled master from IT and then pushed changes back.
 >
-> + =A0 =A0 =A0 if ((mlim =3D xdl_bogosqrt(xdf2->nrec)) > XDL_MAX_EQLIM=
-IT)
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 mlim =3D XDL_MAX_EQLIMIT;
-> =A0 =A0 =A0 =A0for (i =3D xdf2->dstart, recs =3D &xdf2->recs[xdf2->ds=
-tart]; i <=3D xdf2->dend; i++, recs++) {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0rcrec =3D cf->rcrecs[(*recs)->ha];
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0nm =3D rcrec ? rcrec->len1 : 0;
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 dis2[i] =3D (nm =3D=3D 0) ? 0: 1;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 dis2[i] =3D (nm =3D=3D 0) ? 0: (nm >=3D=
- mlim) ? 2: 1;
-> =A0 =A0 =A0 =A0}
->
-> =A0 =A0 =A0 =A0for (nreff =3D 0, i =3D xdf1->dstart, recs =3D &xdf1->=
-recs[xdf1->dstart];
->
->
->
+> 4) I merged J with my master branch.
 
-Thanks for the patch, Ren=E9.
+Someone will be along soon to correct me, but I think you should have 
+rebased against the master branch rather than merged. Something like:
 
-Sorry for not explaining that part of the change.
+% git rebase origin
 
-My understanding of mlim is that it "caps" how deep the for loop at
-around line 387 goes through a hash bucket/record chaing to find a
-matching record from side A in side B (and vice-versa in a later
-loop), probably to prevent running time from becoming too long.
+That way your changes would remain appended to the tip of the master 
+branch. That will in general make your life much easier for all sorts of 
+reasons.
 
-But with 27af01d, this is no longer a concern. We can get an *exact*,
-pre-computed count of matching records in the other side, so we don't
-have go through the hash bucket. Thus mlim is no longer needed.
+>
+> 5) I tried pushing my master back to origin but this failed with
+> the usual message saying I first needed to pull from origin.
+> So, I pulled and then pushed. This worked.
+>
+> 6) On another server where I was going to use my changes I pulled
+> master from IT.
+>
+> 6) It turned out that my changes were incorrect. So, I tried to revert
+> using various methods I found by googling "git revert". What happened
+> was that when I tried to revert back to the commit before the one I
+> made, the files I had modified *and* the files that apparently were
+> modified by other people in #3 above were reverted. This wasn't what
+> I wanted. I only wanted to revert the changes I had made.
 
-So re-introducing mlim doesn't seem right, even though it may fix this
-"bug" (ie restore the old behaviour).
+At a guess, git revert created a commit that undid your _merge_, rather 
+than your commit. The merge included all those other changes....
 
---=20
-Cheers,
-Ray Chuan
+It's a good idea to take a look at what a commit does before pushing it 
+- "git show HEAD" is your friend.
+
+>
+> With the help of someone more experienced than me we were able to get
+> things back to normal but this experience left me wondering what I
+> should have done in the first place. There's a chance I'm going to
+> have to go through all this again as I try to fix the problem with
+> my changes.
+
+Use git rebase (*) to keep your changes nicely arranged at the top of 
+the main branch.
+
+Use git show to check the sanity of what you're about to push upstream.
+
+I think you could award yourself a nice cup of tea after an experience 
+like that though, having been on both sides of it, I can imagine you 
+need it :-P
+
+Regards!
+Luke
+
+
+(*) But note that rebasing can cause problems for people who are 
+downstream of _you_. See the  git-rebase(1) man page.
