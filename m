@@ -1,101 +1,57 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH 2/2] diff_index: honor in-index, not working-tree, .gitattributes
-Date: Thu, 22 Sep 2011 20:38:14 -0400
-Message-ID: <CAG+J_DzUQ3OGfiX=vHVGC7SHvwToVjD7uwFyDa8Tq6t7YwX12Q@mail.gmail.com>
-References: <1316727861-90460-1-git-send-email-jaysoffian@gmail.com>
-	<1316727861-90460-2-git-send-email-jaysoffian@gmail.com>
-	<7v8vpgxkvb.fsf@alter.siamese.dyndns.org>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: permission to re-license archive-zip.c and zlib.c as LGPL
+Date: Thu, 22 Sep 2011 22:51:14 -0500
+Message-ID: <CA+sFfMdzMCJut385jCJ88Z8sUw3E2Bs2A1SiECORQsFJjsb=Qg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 23 02:38:22 2011
+To: rene.scharfe@lsrfire.ath.cx, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, dpotapov@gmail.com, vagabon.xyz@gmail.com
+X-From: git-owner@vger.kernel.org Fri Sep 23 05:51:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6tmW-0002z3-On
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 02:38:21 +0200
+	id 1R6wnR-0004VA-Jq
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 05:51:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754605Ab1IWAiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Sep 2011 20:38:15 -0400
-Received: from mail-gw0-f42.google.com ([74.125.83.42]:33721 "EHLO
-	mail-gw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753866Ab1IWAiP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Sep 2011 20:38:15 -0400
-Received: by gwj16 with SMTP id 16so2315025gwj.1
-        for <git@vger.kernel.org>; Thu, 22 Sep 2011 17:38:14 -0700 (PDT)
+	id S1751297Ab1IWDvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Sep 2011 23:51:16 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:36794 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751164Ab1IWDvQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Sep 2011 23:51:16 -0400
+Received: by fxe4 with SMTP id 4so3400600fxe.19
+        for <git@vger.kernel.org>; Thu, 22 Sep 2011 20:51:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=giA1/lGziGxzr5HHbEynscVIe3nWIos1ZVrzWxVHdCg=;
-        b=SczZhTOjuWjW9MSsn8s3fNNb3dC6hy8hn1B2fLNBZ2zCtZ2MRWsrsUAibAX6I7guKh
-         /5PBo4PuVoAXG0rOI7jtPv+H9ujeby8FjiO5JQ0Ctbp1QLhgkURlAD5Yi9WGyaEJhlIB
-         nc5TyDS3QzttYq3FaSYXHQoQMysyuQH5FlTmI=
-Received: by 10.236.173.129 with SMTP id v1mr17894924yhl.25.1316738294469;
- Thu, 22 Sep 2011 17:38:14 -0700 (PDT)
-Received: by 10.147.32.18 with HTTP; Thu, 22 Sep 2011 17:38:14 -0700 (PDT)
-In-Reply-To: <7v8vpgxkvb.fsf@alter.siamese.dyndns.org>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=W49F4K1z0lFl4Ei3OaalH7Fc3PNUNzWy7s2FX5HUXzI=;
+        b=UPFrfnDk61SZF3w5+5TzbEStmZ/fMElgPbZhvGDxxn2dFVUxuYfTBHTgqdnHa0svE6
+         IKIc1r9uT6+KJgUKTJDoNl9sb4xc453ZA3F0jJb6oZNWbGG2wOiU0ALxXgMjGBBzLncv
+         bB0D+7PC5bpn8GlmXAyJhk2qEHIR+ISzb7+vI=
+Received: by 10.223.94.134 with SMTP id z6mr4287573fam.8.1316749874940; Thu,
+ 22 Sep 2011 20:51:14 -0700 (PDT)
+Received: by 10.152.8.227 with HTTP; Thu, 22 Sep 2011 20:51:14 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181940>
 
-On Thu, Sep 22, 2011 at 6:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jay Soffian <jaysoffian@gmail.com> writes:
->
->> When diff'ing the index against a tree (using either diff-index
->> or diff --cached), git previously looked at .gitattributes in the
->> working tree before considering .gitattributes in the index, even
->> though the diff itself otherwise ignores the working tree.
->
-> We can take attributes only from one place (so far from the working tree
-> and perhaps from the index), people had to live within the limitation that
-> comes from the "single source only" semantics. It also happens to be
-> easier to understand (recall the complexity of the examples Jeff gave
-> about "textconv" during "diff" which ideally should apply from its own
-> side and "funcname", which does not even have a right answer).
->
-> In practice, because development progresses by making everything
-> (including the .gitattributes file) better, I think "use the newer one"
-> would be a good compromise when we have two possible sources to grab
-> attributes from but we can only use one source.
+To those who have contributed to archive-zip.c and zlib.c,
 
-I agree with that...
+I'd like to make a library for writing zip files.  I really don't see
+another library out there that does it as easily as archive-zip.  So,
+with your consent, I'd like to re-license the code in archive-zip.c
+and zlib.c as LGPL so that I can create an archive-zip library.  The
+reason for LGPL, of course, is so that it can be linked with non-GPL
+code.
 
-> In that sense, I am somewhat skeptical about what this patch tries to
-> do. The working tree is where people make the progress to update the
-> index.
+Please offer your consent to re-license your contributions under LGPL
+by replying to this email.
 
-... but it still seems inconsistent that --cached ignores the working
-tree except for .gitattributes.
+All comments welcome.
 
-This also happens to be the only way to get diff-index to work with a
-bare repo and temporary (on-disk) index. But that's less important if
-we implement what's suggested in the next paragraph.
-
-> A related tangent.
->
-> I think the logical conclusion of assuming that we will keep the "single
-> source only" semantics (which I think we will, by the way, unless I hear a
-> concrete proposal to how we apply attributes from more than one sources in
-> what way to which side of the diff) is that a patch might be an
-> improvement over the current behaviour if it teaches "diff-tree" to read
-> from the tree and populate the in-core index (never writing it out to
-> $GIT_DIR/index) from the postimage tree (i.e. "diff preimage postimage" or
-> "diff -R postimage preimage") when it is run in a bare repository.
-
-Okay, I can give that a try.
-
-> It
-> would be a regression if the attributes mechanism is used for auditing
-> purposes (as we start reading from a tree that is being audited using the
-> very attributes it brings in), though.
-
---[no-]tree-attributes?
-
-j.
+Thanks,
+-Brandon
