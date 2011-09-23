@@ -1,135 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: More Beginning Git Questions
-Date: Fri, 23 Sep 2011 11:47:39 -0700
-Message-ID: <7vipojumd0.fsf@alter.siamese.dyndns.org>
+Date: Fri, 23 Sep 2011 11:59:22 -0700 (PDT)
+Message-ID: <m3ehz7qe5a.fsf@localhost.localdomain>
 References: <4E7C9AAD.7060209@gmail.com>
+	<m3ipojqhpm.fsf@localhost.localdomain> <4E7CCCA0.50909@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=iso-8859-4
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
 To: Jon Forrest <nobozo@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 23 20:47:49 2011
+X-From: git-owner@vger.kernel.org Fri Sep 23 20:59:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R7Amq-0006p0-Rq
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 20:47:49 +0200
+	id 1R7AyA-0004L2-8t
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 20:59:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751102Ab1IWSrp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Sep 2011 14:47:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39708 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750736Ab1IWSro (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2011 14:47:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26CE26CD5;
-	Fri, 23 Sep 2011 14:47:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=oHNsOUibHnFmeAAqr4nVXsiGX4M=; b=t1fleI
-	xcJ+FONfucZh686lHfg/B9HZkRKA3Z0LsN0HVDTEsJ4gFg3B9uWxpigy6PD5TfLN
-	5cnIxpX8CzTS7ddhfBkVMP5frajomfM+kcRM4W30aked+joN1jJIzwvbTVWRmZuz
-	5LiVQqG4bdg9/+2BQYw6mUIkczmvDnehRtNu4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=R7E58VfQhPCEc1cSlacqc1X3YYjuaJPI
-	ALlLkATsSu8FAImPIr47REXdGkL6eCcMA7hjWchakb5GY8PKlJ4wCPivnQ2RZJup
-	MYPEp8/EapE5csXmZBec15cljq+2ZrJHSK9bzZ9kBdyhQj7DR7F+fSYTPV+2Hfvz
-	PoUM4DP35+E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1EA976CD3;
-	Fri, 23 Sep 2011 14:47:42 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 529726CD0; Fri, 23 Sep 2011
- 14:47:41 -0400 (EDT)
-In-Reply-To: <4E7C9AAD.7060209@gmail.com> (Jon Forrest's message of "Fri, 23
- Sep 2011 07:41:49 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 843DC2DA-E614-11E0-AD0E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751818Ab1IWS7Z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Sep 2011 14:59:25 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:38929 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751699Ab1IWS7Y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Sep 2011 14:59:24 -0400
+Received: by fxe4 with SMTP id 4so4095501fxe.19
+        for <git@vger.kernel.org>; Fri, 23 Sep 2011 11:59:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=OrjMbQR89hQiBIWTiekCNPlreW1yn19WRZWf/kf8mwo=;
+        b=ovEJULoRZOsO8bYIlb5Tki1vEVfrZa+XI13VX0s+yds0uubV7+DKe+WzAGalZB/cTH
+         lQFeXR/UTno/Ll9PfcIgNmexOBG94By9fWAGPWLuD9fgsGnOOeVHI6WtOQDx3ZSDHfoi
+         o+czvpI5JiwD2EauXDrolCZjj6thGLBjHzVjI=
+Received: by 10.223.9.129 with SMTP id l1mr5486899fal.36.1316804363627;
+        Fri, 23 Sep 2011 11:59:23 -0700 (PDT)
+Received: from localhost.localdomain (abvk31.neoplus.adsl.tpnet.pl. [83.8.208.31])
+        by mx.google.com with ESMTPS id l8sm11984525fai.16.2011.09.23.11.59.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 23 Sep 2011 11:59:22 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p8NIwqbQ027393;
+	Fri, 23 Sep 2011 20:59:02 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p8NIwfEl027389;
+	Fri, 23 Sep 2011 20:58:41 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <4E7CCCA0.50909@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181989>
+
+BTW it is customary on git mailing list to send reply not only to git
+mailing list, but also to all responders (to previous author, cc to
+list and to others).
 
 Jon Forrest <nobozo@gmail.com> writes:
+> On 9/23/2011 10:42 AM, Jakub Narebski wrote:
+>> Jon Forrest <nobozo@gmail.com> writes:
+=20
+>>> Does this include both changes that Alice has checked in to
+>>> her repository and uncommitted changes in her working tree?
+>>
+>> Generally Alice shouldn't have uncommitted changes when doing
+>> "git pull".
+>=20
+> That's what the tutorial said but I'm trying to understand
+> what happens if she does have uncommitted changes. I'm
+> trying to understand the total picture.
 
-> "Note that in general, Alice would want her local changes committed
-> before initiating this "pull"."
->
-> This is an interesting statement. I'll come back to it shortly.
->
-> "If Bob’s work conflicts with what Alice did since their histories forked,"
->
-> Does this include both changes that Alice has checked in to her
-> repository and uncommitted changes in her working tree?
+If Alice have uncommitted changes, in working tree and/or in the
+index, what git does is try to merge if possible; if conflict or new
+versions from "theirs" touch changed file, git refuses to do a merge.
+=20
+The idea is to do merge if possible, but abort if there is any chance
+that user's changes would be lost.
 
-We do not consider uncommitted changes part of _any_ history. You can
-think of them as floating on top of the history of the branch that is
-currently checked out [*1*].
+>> When there is a merge conflicts, the index gets populated by more th=
+an
+>> one version: "ours" (i.e. Alice version) in stage 2, "theirs"
+>> (i.e. Bob version) in stage 3, and "base" (common ancestor version) =
+in
+>> stage 1.  The stage 0, where "git add" / "git stage" puts contents o=
+f
+>> file, is empty.
+>=20
+> I didn't know there were multiple staging areas.
 
-> "Alice will use her working tree and the index to resolve conflicts,"
->
-> How does Alice use her working tree and index? Does this mean
-> she makes changes to her working tree so that the conflicts
-> no longer exist? How does the index play a part in this?
->
-> I thought that the index gets populated only when a
-> "git add" is done. Does Alice need to do "git add" as part
-> of the conflict resolution process?
+Those are called "stages" inside one single staging area (the index).
+=20
+>> You can see it using "git ls-files --abbrev --stage".
+>=20
+> That's very helpful.
 
-If you start from a clean working tree (i.e. no local changes), then after
-any "mergy" operation (not just "git pull" and "git merge" but things like
-"cherry-pick", "checkout -m", "rebase" and "am -3" that can stop due to
-conflicts), one of the three things will happen to each of the paths in
-the project:
+Also in the case of conflict, "git diff" would show combined diff of
+changes.
 
- 1. If the result of the operation can be mechanically known, and if that
-    is the same as your current state (i.e. HEAD or "ours"), nothing
-    happens.
+Try both on some example.
 
- 2. If the result of the operation can be mechanically known, and if that
-    is different from your current state (i.e. HEAD or "ours"), the index
-    entry for that path records the result, and the path in the working
-    tree is updated to match that result.
-
- 3. If the result of the operation cannot be mechanically known
-    (i.e. merge conflict), the index entry for that path will record up to
-    3 "stages", stage #1 representing the contents the conflicting sides
-    diverged from (i.e. common ancestor), stage #2 representing the
-    contents of your current state (i.e. HEAD or "ours") and stage #3
-    representing the contents of the other branch (i.e. MERGE_HEAD or
-    "theirs"), and the path in the working tree is updated to represent it
-    with conflict markers.
-
-You conclude the "mergy" operation by resolving conflicts in the working
-tree for paths in the category 3, tell Git that you are done with these
-paths using "git add $path" (but paths in no other categories!!!).
-Because cleanly merged paths are already updated in the index (see
-2. above), that is all needed to bring the index to the state that
-represents the desired result of the "mergy" operation.
-
-Even if you have local changes in your working tree, as long as your index
-exactly matches HEAD when you start your "mergy" operation, thanks to the
-rule for "result matches the current HEAD" case (see 1. above), the result
-of your "mergy" operation recorded by the procedure in the previous
-paragraph will not be contaminated with your local changes.
-
-The precondition for all of the above to work is that you start from a
-clean index, and that is why "git merge" refuses to start if your index
-already has changes relative to HEAD.
-
-Also, for cases 2. and 3., updating the files in the working tree to match
-the auto-merge result (case 2.) or to show the conflicted state (case 3.)
-requires Git to overwrite the file, which is bad if you have local changes
-to the files in the working tree. To prevent lossage, "mergy" operations
-will notice if paths in categories 2. and 3. have local changes in the
-working tree, and refuses to work if that is the case.
-
-
-[Footnote]
-
-*1* This incidentally is important to have in your mental model to
-understand how to use "git checkout $branch" to switch branches.
+--=20
+Jakub Nar=EAbski
