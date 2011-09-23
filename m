@@ -1,72 +1,107 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: What's The Right Way to Do This?
-Date: Fri, 23 Sep 2011 05:08:40 +0000
-Message-ID: <CAMOZ1BtTi7GxwTvPTEtHoV-GspAZKJiLauXfkwBFJk+RZJT_7A@mail.gmail.com>
-References: <loom.20110923T064720-366@post.gmane.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH 2/2] diff_index: honor in-index, not working-tree, .gitattributes
+Date: Fri, 23 Sep 2011 01:37:13 -0400
+Message-ID: <CAG+J_Dyh=t2VAZ6rAqcF2meEgBCN5c+J_m_YvVQbKfvXeJ8WGA@mail.gmail.com>
+References: <1316727861-90460-1-git-send-email-jaysoffian@gmail.com>
+	<1316727861-90460-2-git-send-email-jaysoffian@gmail.com>
+	<7v8vpgxkvb.fsf@alter.siamese.dyndns.org>
+	<CAG+J_DzUQ3OGfiX=vHVGC7SHvwToVjD7uwFyDa8Tq6t7YwX12Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Jon Forrest <nobozo@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 23 07:09:17 2011
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 23 07:37:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R6y0j-0007UT-3v
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 07:09:17 +0200
+	id 1R6yS1-0001dk-Ri
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Sep 2011 07:37:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751317Ab1IWFJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Sep 2011 01:09:12 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:36058 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750802Ab1IWFJK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2011 01:09:10 -0400
-Received: by mail-iy0-f174.google.com with SMTP id q3so3525178iaq.19
-        for <git@vger.kernel.org>; Thu, 22 Sep 2011 22:09:10 -0700 (PDT)
+	id S1751882Ab1IWFhP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Sep 2011 01:37:15 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:53605 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751588Ab1IWFhO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2011 01:37:14 -0400
+Received: by gwb15 with SMTP id 15so3502636gwb.19
+        for <git@vger.kernel.org>; Thu, 22 Sep 2011 22:37:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=TQtlYgrRfq/5IIIWH85Vk0gt5kDrL0XiaU8qd6JmEvs=;
-        b=wCd+kx02mBqaNhfWw2BsLlqhcH+xruEAoNjZksem+7A2qsK0FnsHMnKYw5BVpxGzP6
-         439UWBZ7Y8kS8M7r1GHwXz9hDJnt6GRkMVEnoTL/96sn22+DluM8C/QOdK01q1FfJ7mE
-         QI3wGt9DmEdyz8GZrBpf5b7oBulcn+WWT4ebA=
-Received: by 10.42.156.138 with SMTP id z10mr3612879icw.193.1316754550079;
- Thu, 22 Sep 2011 22:09:10 -0700 (PDT)
-Received: by 10.42.171.194 with HTTP; Thu, 22 Sep 2011 22:08:40 -0700 (PDT)
-In-Reply-To: <loom.20110923T064720-366@post.gmane.org>
+        bh=S8iSDekYkWSl2KwGT/svKCgTwog9XM4Okt+aHK0YoJg=;
+        b=h8AsWUACPyBy6crbN+fBbT7RXHet9OxXri9tajgaeVJBVV5LFHXMOMu87FMH1mmeZa
+         yeMdVnv9O0EYu3L3+8k1TG0I0XTLTGRCxjwHmTcHBxER93to+4p++XUyQX3100TwG4wJ
+         O7Jkmwc7tnox5+by+q8udPaGpbtDf2V/dTTzU=
+Received: by 10.236.155.1 with SMTP id i1mr33917yhk.8.1316756233880; Thu, 22
+ Sep 2011 22:37:13 -0700 (PDT)
+Received: by 10.147.32.18 with HTTP; Thu, 22 Sep 2011 22:37:13 -0700 (PDT)
+In-Reply-To: <CAG+J_DzUQ3OGfiX=vHVGC7SHvwToVjD7uwFyDa8Tq6t7YwX12Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181944>
 
-On Fri, Sep 23, 2011 at 04:48, Jon Forrest <nobozo@gmail.com> wrote:
+On Thu, Sep 22, 2011 at 8:38 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
+> On Thu, Sep 22, 2011 at 6:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> I think the logical conclusion of assuming that we will keep the "single
+>> source only" semantics (which I think we will, by the way, unless I hear a
+>> concrete proposal to how we apply attributes from more than one sources in
+>> what way to which side of the diff) is that a patch might be an
+>> improvement over the current behaviour if it teaches "diff-tree" to read
+>> from the tree and populate the in-core index (never writing it out to
+>> $GIT_DIR/index) from the postimage tree (i.e. "diff preimage postimage" or
+>> "diff -R postimage preimage") when it is run in a bare repository.
+>
+> Okay, I can give that a try.
 
-> ... So, I tried to revert using various methods I found by
-> googling "git revert"...
-> ...
-> ...this experience left me wondering what I should have
-> done in the first place.
+This area of git is still black magic to me. My best guess is
+something like this:
 
-What you should have done in the first place is RTFM; while
-not fantastic, there is a decent amount of official git
-documentation.
+diff --git a/tree-diff.c b/tree-diff.c
+index b3cc2e4753..6fd84eb2bb 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -5,6 +5,8 @@
+ #include "diff.h"
+ #include "diffcore.h"
+ #include "tree.h"
++#include "attr.h"
++#include "unpack-trees.h"
 
-> What happened was that when I tried to revert back to the
-> commit before the one I made, the files I had modified
-> *and* the files that apparently were modified by other
-> people in #3 above were reverted. This wasn't what
-> I wanted. I only wanted to revert the changes I had made.
+ static void show_entry(struct diff_options *opt, const char *prefix,
+ 		       struct tree_desc *desc, struct strbuf *base);
+@@ -280,6 +282,19 @@ int diff_tree_sha1(const unsigned char *old,
+const unsigned char *new, const cha
+ 		die("unable to read destination tree (%s)", sha1_to_hex(new));
+ 	init_tree_desc(&t1, tree1, size1);
+ 	init_tree_desc(&t2, tree2, size2);
++
++	if (is_bare_repository()) {
++		struct unpack_trees_options unpack_opts;
++		memset(&unpack_opts, 0, sizeof(unpack_opts));
++		unpack_opts.index_only = 1;
++		unpack_opts.head_idx = -1;
++		unpack_opts.src_index = &the_index;
++		unpack_opts.dst_index = &the_index;
++		unpack_opts.fn = oneway_merge;
++		if (unpack_trees(1, DIFF_OPT_TST(opt, REVERSE_DIFF) ? &t1 : &t2,
+&unpack_opts) == 0)
++			git_attr_set_direction(GIT_ATTR_INDEX, &the_index);
++	}
++
+ 	retval = diff_tree(&t1, &t2, base, opt);
+ 	if (!*base && DIFF_OPT_TST(opt, FOLLOW_RENAMES) && diff_might_be_rename()) {
+ 		init_tree_desc(&t1, tree1, size1);
 
-It would be a good idea to reproduce the unexpected behavior
-you are experiencing by means of a minimal set of commands
-that you can post here for others to try.
+(And in case gmail line wraps that -- https://gist.github.com/1236806)
 
-> With the help of someone more experienced than me we were
-> able to get things back to normal... There's a chance I'm
-> going to have to go through all this again as I try to fix
-> the problem with my changes.
+Am I barking up the right tree? (Obviously still needs tests, and
+maybe an --[no]-tree-attributes option.)
 
-Why don't you ask that person about it?
+j.
