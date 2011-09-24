@@ -1,123 +1,113 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: [PATCH v0] fast-import: Add drop command
-Date: Sat, 24 Sep 2011 16:27:45 +0100
-Message-ID: <1316878065-11782-2-git-send-email-vitor.hda@gmail.com>
-References: <1316878065-11782-1-git-send-email-vitor.hda@gmail.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Vitor Antunes <vitor.hda@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 24 17:28:28 2011
+From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+Subject: [PATCH] send-email: auth plain/login fix
+Date: Sat, 24 Sep 2011 17:49:27 +0200
+Message-ID: <1316879367-1182-1-git-send-email-zbyszek@in.waw.pl>
+References: <7vzkjn16n6.fsf@alter.siamese.dyndns.org>
+Cc: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+To: gitster@pobox.com, joe@perches.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 24 17:50:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R7U9T-0008DP-GH
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Sep 2011 17:28:27 +0200
+	id 1R7UUS-0001wZ-2C
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Sep 2011 17:50:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751423Ab1IXP2T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Sep 2011 11:28:19 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:64730 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750832Ab1IXP2N (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Sep 2011 11:28:13 -0400
-Received: by wwf22 with SMTP id 22so4873798wwf.1
-        for <git@vger.kernel.org>; Sat, 24 Sep 2011 08:28:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=/xNYzNyDLttcGFh0A33s7iG9LpVKU7zM1VCE3baDX44=;
-        b=f9YeaC9oAvvyHbyrQKrAAr1fmT3PWN69r636MUr31z7fzBKUvIyonHmSdGZ1yNQQKt
-         8L+i1lSUN5rGIsH1AFYYkKaLRqwJ4prxt45VMxkyl3oduSwSgb/0oKzOMUJ6Txbr/VGs
-         +m5wyN7+Ont9YPW+m/UMJBMYi3xZBoS8DbcIk=
-Received: by 10.216.88.212 with SMTP id a62mr5057842wef.43.1316878092231;
-        Sat, 24 Sep 2011 08:28:12 -0700 (PDT)
-Received: from localhost.localdomain (111.216.54.77.rev.vodafone.pt. [77.54.216.111])
-        by mx.google.com with ESMTPS id fr18sm21661126wbb.9.2011.09.24.08.28.10
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 24 Sep 2011 08:28:11 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7.rc2.11.g4aecf.dirty
-In-Reply-To: <1316878065-11782-1-git-send-email-vitor.hda@gmail.com>
+	id S1751598Ab1IXPtp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Sep 2011 11:49:45 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:50394 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751526Ab1IXPto (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Sep 2011 11:49:44 -0400
+Received: from 86-85-n1.aster.pl ([85.222.86.85] helo=localhost.localdomain)
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1R7UTz-00023q-06; Sat, 24 Sep 2011 17:49:39 +0200
+X-Mailer: git-send-email 1.7.6.234.gb0b18.dirty
+In-Reply-To: <7vzkjn16n6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182032>
 
-The drop command deletes the given branch reference, allowing
-fast-import to actively ignore it in the final checks.
+git send-email was not authenticating properly when communicating over
+TLS with a server supporting only AUTH PLAIN and AUTH LOGIN. This is
+e.g. the standard server setup under debian with exim4 and probably
+everywhere where system accounts are used.
 
-Signed-off-by: Vitor Antunes <vitor.hda@gmail.com>
+The solution comes from this forum thread:
+http://www.perlmonks.org/?node_id=904354
+
+This patch is tested by sending it.
+
+Before:
+Net::SMTP>>> Net::SMTP(2.31)
+Net::SMTP>>>   Net::Cmd(2.29)
+Net::SMTP>>>     Exporter(5.64_01)
+Net::SMTP>>>   IO::Socket::INET(1.31)
+Net::SMTP>>>     IO::Socket(1.31)
+Net::SMTP>>>       IO::Handle(1.28)
+...
+Net::SMTP=GLOB(0x238f668)>>> STARTTLS
+Net::SMTP=GLOB(0x238f668)<<< 220 2.0.0 Ready to start TLS
+Net::SMTP::SSL=GLOB(0x238f668)>>> EHLO localhost.localdomain
+Net::SMTP::SSL=GLOB(0x238f668)<<< 250-yyy.yyy.yyy Hello xxx.xxx [xxx.xxx.xxx.xxx], pleased to meet you
+Net::SMTP::SSL=GLOB(0x238f668)<<< 250-ENHANCEDSTATUSCODES
+Net::SMTP::SSL=GLOB(0x238f668)<<< 250-PIPELINING
+Net::SMTP::SSL=GLOB(0x238f668)<<< 250-8BITMIME
+Net::SMTP::SSL=GLOB(0x238f668)<<< 250-SIZE 80000000
+Net::SMTP::SSL=GLOB(0x238f668)<<< 250-DSN
+Net::SMTP::SSL=GLOB(0x238f668)<<< 250-AUTH=LOGIN PLAIN
+Net::SMTP::SSL=GLOB(0x238f668)<<< 250-AUTH LOGIN PLAIN
+Net::SMTP::SSL=GLOB(0x238f668)<<< 250-DELIVERBY
+Net::SMTP::SSL=GLOB(0x238f668)<<< 250 HELP
+Password:
+Net::SMTP::SSL=GLOB(0x238f668)>>> AUTH
+Net::SMTP::SSL=GLOB(0x238f668)<<< 501 5.5.2 AUTH mechanism must be specified
+5.5.2 AUTH mechanism must be specified
+
+After:
+Net::SMTP=GLOB(0x1ac4a60)>>> STARTTLS
+Net::SMTP=GLOB(0x1ac4a60)<<< 220 2.0.0 Ready to start TLS
+Net::SMTP::SSL=GLOB(0x1ac4a60)>>> EHLO localhost.localdomain
+Net::SMTP::SSL=GLOB(0x1ac4a60)<<< 250-yyy.yyy.yyy Hello xxx.xxx [xxx.xxx.xxx.xxx], pleased to meet you
+Net::SMTP::SSL=GLOB(0x1ac4a60)<<< 250-ENHANCEDSTATUSCODES
+Net::SMTP::SSL=GLOB(0x1ac4a60)<<< 250-PIPELINING
+Net::SMTP::SSL=GLOB(0x1ac4a60)<<< 250-8BITMIME
+Net::SMTP::SSL=GLOB(0x1ac4a60)<<< 250-SIZE 80000000
+Net::SMTP::SSL=GLOB(0x1ac4a60)<<< 250-DSN
+Net::SMTP::SSL=GLOB(0x1ac4a60)<<< 250-AUTH=LOGIN PLAIN
+Net::SMTP::SSL=GLOB(0x1ac4a60)<<< 250-AUTH LOGIN PLAIN
+Net::SMTP::SSL=GLOB(0x1ac4a60)<<< 250-DELIVERBY
+Net::SMTP::SSL=GLOB(0x1ac4a60)<<< 250 HELP
+Password:
+Net::SMTP::SSL=GLOB(0x1ac4a60)>>> AUTH LOGIN
+Net::SMTP::SSL=GLOB(0x1ac4a60)<<< 334 VXNlcm5hbWU6
+Net::SMTP::SSL=GLOB(0x1ac4a60)>>> emJ5c3plaw==
+Net::SMTP::SSL=GLOB(0x1ac4a60)<<< 334 UGFzc3dvcmQ6
+Net::SMTP::SSL=GLOB(0x1ac4a60)>>> dGVzdA==
+Net::SMTP::SSL=GLOB(0x1ac4a60)<<< 535 5.7.0 authentication failed
+5.7.0 authentication failed
+
+The password is incorrect in this snippet, but the protocol works correctly.
 ---
- fast-import.c |   35 ++++++++++++++++++++++++++++++++++-
- 1 files changed, 34 insertions(+), 1 deletions(-)
+ git-send-email.perl |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-diff --git a/fast-import.c b/fast-import.c
-index 742e7da..906bbf4 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -743,6 +743,29 @@ static struct branch *new_branch(const char *name)
- 	return b;
- }
+diff --git git-send-email.perl git-send-email.perl
+index 37dfbe7..100fbd9 100755
+--- git-send-email.perl
++++ git-send-email.perl
+@@ -27,6 +27,7 @@ use Term::ANSIColor;
+ use File::Temp qw/ tempdir tempfile /;
+ use File::Spec::Functions qw(catfile);
+ use Error qw(:try);
++use Authen::SASL qw(Perl);
+ use Git;
+ use MIME::Base64;
  
-+static void release_tree_entry(struct tree_entry *e);
-+static void drop_branch(const char *name)
-+{
-+	unsigned int hc = hc_str(name, strlen(name)) % branch_table_sz;
-+	struct branch *b_prev = NULL, *b = NULL;
-+	struct ref_lock *lock;
-+	unsigned char old_sha1[20];
-+
-+	for (b = branch_table[hc]; b; b = b->table_next_branch) {
-+		if (!strcmp(name, b->name)) {
-+			release_tree_entry(&b->branch_tree);
-+			if (b_prev)
-+				b_prev->table_next_branch = b->table_next_branch;
-+			branch_table[hc] = NULL;
-+			branch_count--;
-+		}
-+		b_prev = b;
-+	}
-+
-+	if (!read_ref(name, old_sha1))
-+		delete_ref(name, old_sha1, 0)
-+}
-+
- static unsigned int hc_entries(unsigned int cnt)
- {
- 	cnt = cnt & 7 ? (cnt / 8) + 1 : cnt / 8;
-@@ -776,7 +799,6 @@ static struct tree_content *new_tree_content(unsigned int cnt)
- 	return t;
- }
- 
--static void release_tree_entry(struct tree_entry *e);
- static void release_tree_content(struct tree_content *t)
- {
- 	struct avail_tree_content *f = (struct avail_tree_content*)t;
-@@ -2793,6 +2815,15 @@ static void parse_reset_branch(void)
- 		unread_command_buf = 1;
- }
- 
-+static void parse_drop_branch(void)
-+{
-+	char *sp;
-+
-+	/* Obtain the branch name from the rest of our command */
-+	sp = strchr(command_buf.buf, ' ') + 1;
-+	drop_branch(sp);
-+}
-+
- static void cat_blob_write(const char *buf, unsigned long size)
- {
- 	if (write_in_full(cat_blob_fd, buf, size) != size)
-@@ -3332,6 +3363,8 @@ int main(int argc, const char **argv)
- 			parse_new_tag();
- 		else if (!prefixcmp(command_buf.buf, "reset "))
- 			parse_reset_branch();
-+		else if (!prefixcmp(command_buf.buf, "drop "))
-+			parse_drop_branch();
- 		else if (!strcmp("checkpoint", command_buf.buf))
- 			parse_checkpoint();
- 		else if (!strcmp("done", command_buf.buf))
 -- 
-1.7.7.rc2.11.g4aecf.dirty
+1.7.6
