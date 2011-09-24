@@ -1,69 +1,127 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: Re: [PATCH v0] fast-import: Add drop command
-Date: Sat, 24 Sep 2011 22:35:26 +0100
-Message-ID: <20110924223526.02ca9edf@fenix.utopia.dhis.org>
-References: <1316878065-11782-1-git-send-email-vitor.hda@gmail.com>
- <1316878065-11782-2-git-send-email-vitor.hda@gmail.com>
- <20110924193733.GB10955@elie>
+From: tactical <a5158017@nepwk.com>
+Subject: Re: More Beginning Git Questions
+Date: Sat, 24 Sep 2011 23:10:14 +0100
+Message-ID: <nbd7plmz30x2.mafpxaq9xl9r.dlg@40tude.net>
+References: <4E7C9AAD.7060209@gmail.com> <m3ipojqhpm.fsf@localhost.localdomain> <4E7CCCA0.50909@gmail.com> <14gm3o851q0ad.1uoossmxgfyit.dlg@40tude.net> <m362khr6kh.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
-	David Barr <davidbarr@google.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 24 23:43:29 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 25 00:10:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R7a0O-0007tv-Cy
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Sep 2011 23:43:28 +0200
+	id 1R7aQh-00010L-Sh
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Sep 2011 00:10:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752497Ab1IXVfg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Sep 2011 17:35:36 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:62152 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752115Ab1IXVfg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Sep 2011 17:35:36 -0400
-Received: by wwf22 with SMTP id 22so5094759wwf.1
-        for <git@vger.kernel.org>; Sat, 24 Sep 2011 14:35:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        bh=p0rT2l+VzeIHVFbladp2Eujk1cjsInqOAPlhEZzcc8k=;
-        b=TDaScQ3rTX7S5940m3TN/bF1+4iUSu3itM9I/3N2k3UxxhKmzebhfRIOE4g1t7/srV
-         DbphlYzmlVAJoC8oRmTDrbAHXr1SaeogOm+dvzZa83+xRYQwSoQ/Fy+SiHinWLUozG+s
-         FS5Cu9U1RlUMXVqcKcYxjND+Jn4eLxULwYdC8=
-Received: by 10.216.19.75 with SMTP id m53mr6571052wem.73.1316900134972;
-        Sat, 24 Sep 2011 14:35:34 -0700 (PDT)
-Received: from fenix.utopia.dhis.org (111.216.54.77.rev.vodafone.pt. [77.54.216.111])
-        by mx.google.com with ESMTPS id en20sm22990347wbb.20.2011.09.24.14.35.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 24 Sep 2011 14:35:34 -0700 (PDT)
-In-Reply-To: <20110924193733.GB10955@elie>
-X-Mailer: Claws Mail 3.7.10 (GTK+ 2.24.6; x86_64-pc-linux-gnu)
+	id S1752550Ab1IXWK2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Sep 2011 18:10:28 -0400
+Received: from lo.gmane.org ([80.91.229.12]:49029 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752544Ab1IXWK2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Sep 2011 18:10:28 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1R7aQV-0000xL-Fr
+	for git@vger.kernel.org; Sun, 25 Sep 2011 00:10:27 +0200
+Received: from 31.64.20.37 ([31.64.20.37])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 25 Sep 2011 00:10:27 +0200
+Received: from a5158017 by 31.64.20.37 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 25 Sep 2011 00:10:27 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 31.64.20.37
+User-Agent: 40tude_Dialog/2.0.15.84
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182046>
 
-On Sep 24, 2011 8:37 PM, "Jonathan Nieder" <jrnieder@gmail.com> wrote:
-> Thanks.  I must have missed the earlier discussion.  What are the
-> semantics of this command and its intended purpose?  For example, what
-> happens if the branch already existed or if there is a checkpoint
-> (perhaps triggered by the impatient user sending SIGUSR1 to
-> fast-import) before the "drop" command is processed?
+Jakub Narebski wrote:
 
-In the tests I made there are checkpoints triggered before using the
-command. I tried to remove the branch within fast-import variables as well
-as the already processed objects in git.
+>>> > Generally Alice shouldn't have uncommitted changes when doing
+>>> > "git pull".
+>>> 
+>>> That's what the tutorial said but I'm trying to understand
+>>> what happens if she does have uncommitted changes. I'm
+>>> trying to understand the total picture.
+>> 
+>> Mercurial allows this, and it's a very powerful feature.
+> 
+> You *do* realize thet "hg pull" is "git fetch", don't you?
 
-This command is required because I need to reset a given branch multiple
-times in order to be able to "guess" its origin commit in the parent branch.
-To make this analysis I also need to use "checkpoint" at each try.
+Yes.  This is what I mean:
 
-(Resending... apparently gmail Android app sends a HTML attachment)
+    c:\test>hg diff
+
+    diff --git a/foo b/foo
+    --- a/foo
+    +++ b/foo
+    @@ -1,1 +1,2 @@
+     test
+    +new line
+
+    c:\test>hg incoming --patch clone
+
+    comparing with clone
+    searching for changes
+    changeset:   1:0a897c3462a8
+    tag:         tip
+    user:        tactical
+    date:        Sat Sep 24 23:03:21 2011 +0100
+    summary:     bar
+
+    diff --git a/foo b/foo
+    --- a/foo
+    +++ b/foo
+    @@ -1,1 +1,2 @@
+     test
+    +bar
+
+    c:\test>hg pull clone
+
+    pulling from clone
+    searching for changes
+    adding changesets
+    adding manifests
+    adding file changes
+    added 1 changesets with 1 changes to 1 files
+    (run 'hg update' to get a working copy)
+
+    c:\test>hg update
+
+    merging foo
+
+Now KDiff3 automagically appears (because of the line conflict).
+
+>>  After reading 
+>> this thread, I could not believe Git didn't pulling with local changes, and 
+>> so I tried it, and also asked on IRC -- and it seems that Git really 
+>> doesn't.
+>> 
+>> If this is an important part of your workflow (as it is mine), I'd 
+>> recommend using Mercurial if possible.
+>> 
+> 
+> So the question is if mercurial allows _merging_ with local
+> changes... and from the thread it looks like git dies allow it, as
+> long as changes are isolated from changes brought by merge.
+
+For that reason, Git doesn't support my workflow at all.
+
+> Anyway merging with local changes is an easy way to f**k up your
+> changes in unrecoverable way, IMVHO...
+
+Mercurial backs everything up before doing this merge, so if I do lose my
+local changes, I can start over with this:
+
+    hg resolve --unmark --all
+    hg resolve --all
+
+Now KDiff3 comes up again, with the same data as before.  No data lost.
