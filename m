@@ -1,64 +1,60 @@
-From: tactical <a5158017@nepwk.com>
-Subject: Re: More Beginning Git Questions
-Date: Sat, 24 Sep 2011 23:17:35 +0100
-Message-ID: <1m2c90ds9e46c.7agk88pbgjl8$.dlg@40tude.net>
-References: <4E7C9AAD.7060209@gmail.com> <m3ipojqhpm.fsf@localhost.localdomain> <4E7CCCA0.50909@gmail.com> <14gm3o851q0ad.1uoossmxgfyit.dlg@40tude.net> <op.v2byz2p80aolir@keputer.lokaal>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+From: =?iso-8859-1?Q?Dieter_Sch=F6n?= <dieter@schoen.or.at>
+Subject: Re: how to remove unreachable objects?
+Date: Sun, 25 Sep 2011 00:11:06 +0200
+Message-ID: <326CBCA0-9960-41B9-B5CD-F231A6880DFE@schoen.or.at>
+References: <20110919110831.ewq03vnqos4w8cs8@webmail.edis.at> <20110919195335.GA31930@sigill.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v1084)
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 25 00:23:21 2011
+X-From: git-owner@vger.kernel.org Sun Sep 25 00:24:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R7acx-00057O-2x
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Sep 2011 00:23:19 +0200
+	id 1R7adx-0005St-4t
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Sep 2011 00:24:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752552Ab1IXWRy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Sep 2011 18:17:54 -0400
-Received: from lo.gmane.org ([80.91.229.12]:41720 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751517Ab1IXWRy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Sep 2011 18:17:54 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1R7aXh-0003YJ-Bd
-	for git@vger.kernel.org; Sun, 25 Sep 2011 00:17:53 +0200
-Received: from 31.64.20.37 ([31.64.20.37])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 25 Sep 2011 00:17:53 +0200
-Received: from a5158017 by 31.64.20.37 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 25 Sep 2011 00:17:53 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 31.64.20.37
-User-Agent: 40tude_Dialog/2.0.15.84
+	id S1752617Ab1IXWYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Sep 2011 18:24:07 -0400
+Received: from postrelay6.edis.at ([85.126.233.179]:53097 "EHLO
+	postrelay6.edis.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752522Ab1IXWYG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Sep 2011 18:24:06 -0400
+X-Greylist: delayed 771 seconds by postgrey-1.27 at vger.kernel.org; Sat, 24 Sep 2011 18:24:06 EDT
+Received: from mailrelay.edis.at (postrelay6.edis.at [85.126.233.179])
+	by postrelay6.edis.at (Postfix) with ESMTPS id 866B080CB16A
+	for <git@vger.kernel.org>; Sun, 25 Sep 2011 00:11:13 +0200 (CEST)
+Received: from [10.0.0.3] ([::ffff:178.190.202.120])
+  (AUTH: CRAM-MD5 dieter@schoen.or.at, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+  by mailrelay.edis.at with esmtp; Sun, 25 Sep 2011 00:11:12 +0200
+  id 00000000181D41DE.000000004E7E5581.00006420
+In-Reply-To: <20110919195335.GA31930@sigill.intra.peff.net>
+X-Mailer: Apple Mail (2.1084)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182048>
 
-Frans Klaver wrote:
 
->> Mercurial allows this, and it's a very powerful feature.  After reading
->> this thread, I could not believe Git didn't pulling with local changes,  
->> and so I tried it, and also asked on IRC -- and it seems that Git really
->> doesn't.
+Am 19.09.2011 um 21:53 schrieb Jeff King:
+
+> On Mon, Sep 19, 2011 at 11:08:31AM +0200, dieter@schoen.or.at wrote:
 > 
-> Git doesn't do it implicitly. Be explicit about it
+>> this is my use case:
+>> i create a repository and produce several commits on master.
+>> then i go back to a certain tag and create a new branch, where i also
+>> commit.
+>> then i switch back to master and delete (-D) the other branch.
+>> it should now be unreachable from within git (to prove its existence,
+>> i remember a commit SHA1 on the dead branch).
 > 
-> $ git stash
-> $ git pull
-> $ git stash pop
-> 
-> seems to do exactly what you want.
+> It will still be referenced by the HEAD reflog, won't it?
 
-Does popping the stash allow for a three-way merge?  If not, this doesn't
-really solve the problem.
+thanks to all that answered!
+it was very helpful and i gained a bit more insight.
 
-Thanks
+kind regards,
+dieter
