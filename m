@@ -1,88 +1,68 @@
-From: Chris Harris <chris.harris123@gmail.com>
-Subject: Fwd: git svn with non-standard svn layout
-Date: Sat, 24 Sep 2011 14:37:27 -0400
-Message-ID: <CANPpUWxnp3-ySO3oBEsWTQA=oWXEzKS1bddP9LjAsR1EyPxbVQ@mail.gmail.com>
-References: <CANPpUWyX+n7kMKZpCV=Oy=UmJb=9H=uZseYzU2-h1FLh2nzg8w@mail.gmail.com>
+From: Orgad and Raizel Shaneh <orgads@gmail.com>
+Subject: bug with submodule and assume-unchanged
+Date: Sat, 24 Sep 2011 21:41:29 +0300
+Message-ID: <CAGHpTBKyK_PQ1LU-st-vq3xa9tkxJSUQ=UZKARUQu25_sVu46A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 24 20:37:35 2011
+X-From: git-owner@vger.kernel.org Sat Sep 24 20:41:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R7X6U-0004uV-Ko
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Sep 2011 20:37:34 +0200
+	id 1R7XAO-0006aT-8e
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Sep 2011 20:41:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752277Ab1IXSh3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Sep 2011 14:37:29 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:41805 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752180Ab1IXSh2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Sep 2011 14:37:28 -0400
-Received: by wyg34 with SMTP id 34so4849532wyg.19
-        for <git@vger.kernel.org>; Sat, 24 Sep 2011 11:37:27 -0700 (PDT)
+	id S1752295Ab1IXSlc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Sep 2011 14:41:32 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:61998 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752284Ab1IXSlb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Sep 2011 14:41:31 -0400
+Received: by fxe4 with SMTP id 4so4803726fxe.19
+        for <git@vger.kernel.org>; Sat, 24 Sep 2011 11:41:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=qc+xpmZ/zxEqsWce7450IwchOXpNtTYrtzOBuIz0z/o=;
-        b=Xwt74p8JlD6UAoYtpOQIU4JBWQUFE0yB2WmGPC/kvHhUdCoYkk0JU0AK8Mf2z7CwAR
-         i+unKQB7rJR9pYKmcgOSynCdMYJwdOUuv7QwARgH0MsFFYt3gMlyJA7SXPRdQQ95cROm
-         uTGLPoDKOD+h6Vb6vqGwXvxM1kJyRIZflIdI0=
-Received: by 10.216.176.142 with SMTP id b14mr5068593wem.70.1316889447596;
- Sat, 24 Sep 2011 11:37:27 -0700 (PDT)
-Received: by 10.216.155.208 with HTTP; Sat, 24 Sep 2011 11:37:27 -0700 (PDT)
-In-Reply-To: <CANPpUWyX+n7kMKZpCV=Oy=UmJb=9H=uZseYzU2-h1FLh2nzg8w@mail.gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=7P8v62ib+og/Dbl8iRglObtjKgp0KQ/8OHXggS7FyCw=;
+        b=WnvC0Iuag7K1E5t4qCnDooPbDrB8rNwjq9F0V/dF7i819jHdtTyLMMcC8uEH8/GRAl
+         KBLMoGcHdXG3kkRGoTJKByKBxb/1b9cIyLgssKBlLuqEi+CZ1Rk2uid0mEklNanoHb5r
+         0kRY/fseYs+1gDNAbfzBU6kSa6HMB0NtWXd3M=
+Received: by 10.223.32.9 with SMTP id a9mr7245225fad.134.1316889689868; Sat,
+ 24 Sep 2011 11:41:29 -0700 (PDT)
+Received: by 10.223.115.82 with HTTP; Sat, 24 Sep 2011 11:41:29 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182037>
 
-I am using =A0git version 1.7.6.4 built from the latest stable source o=
-n
-github. =A0 Running Ubuntu with kernel 2.6.38-11-generic
+Hello,
 
-I can't seem to git git svn to see my branches correctly.
-Unfortunately my svn repository is not open source, so I can not post
-it here, but I will try to explain my issue.
-We use a non standard svn layout like the following
-branches
-=A0 =A0 =A0 =A0 V4.1
-=A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 V4.1.0
-=A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 V4.1.1
-dev
+Marking a submodule with update-index --assume-unchanged breaks diff.
 
+Consider the script in http://pastebin.ca/2082543. The last 'diff'
+output follows. Note that the diff for 'afile' is displayed, then sub
+breaks the operation, and the diff for 'test' (or any other file that
+comes after 'sub') is not displayed at all.
 
-dev is our trunk, and our branches have 2 levels.
-I first use git init, then=A0setup my config as follows
-[svn-remote "svn"]
-url =3D file:///home/chris/svnrepo
-fetch =3D dev:refs/remotes/trunk
-branches =3D branches/V4.1/{V4.1.1}:refs/remotes/branches/*
-=46or this example I am just trying to make a single branch work.
-After a fetch all revisions are ok. master correctly points to
-remotes/trunk,but gitk shows the following:
+$:/tmp/git$ cd super/
+$:/tmp/git/super$ git diff
+fatal: unable to read c17499ae216dfba9538ed7f94ba109c2c5b87b2a
+diff --git a/afile b/afile
+index 14be0d4..7c2160f 100644
+--- a/afile
++++ b/afile
+@@ -1 +1 @@
+-hello2
++goodbye2
+diff --git a/sub b/sub
+deleted file mode 160000
+index c17499a..0000000
+--- a/sub
++++ /dev/null
+@@ -1 +0,0 @@
+-Subproject commit c17499ae216dfba9538ed7f94ba109c2c5b87b2a
 
-o remotes/branches/V4.1.1
-|
-o some commit
-|
-|
-| =A0 =A0o master - remotes/trunk
-| =A0 =A0|
-| =A0 =A0o another commit
-| =A0 =A0/
-|
-etc
-( sorry for the bad ascii art. )
-My issue is that trunk ( master ) appears to be a =A0branch from V4.1.1
-instead of =A0V4.1.1 being a branch from trunk ( master )
-git log --graph shows the same structure.
-Any suggestions on how to configure this so git svn maps my
-non-standard layout correctly?
-Thank you
-Chris
+- Orgad
