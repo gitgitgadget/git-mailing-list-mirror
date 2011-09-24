@@ -1,46 +1,62 @@
-From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-Subject: Re: "git log --simplify-by-decoration" but including branch & merge
- points
-Date: Sat, 24 Sep 2011 12:01:17 +0200
-Message-ID: <4E7DAA6D.6060202@in.waw.pl>
-References: <EEB5CA46-D4FB-4B59-BDAF-36AE9BCC1D1E@rothlis.net>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: [ANNOUNCE] Git 1.7.6.4
+Date: Sat, 24 Sep 2011 10:35:04 +0000
+Message-ID: <robbat2-20110924T103319-176337633Z@orbis-terrarum.net>
+References: <7vlitesucu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?RGF2aWQgUsO2dGhsaXNiZXJnZXI=?= <david@rothlis.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 24 12:19:33 2011
+Content-Type: text/plain; charset=us-ascii
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 24 12:35:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R7PKW-0001sc-8Y
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Sep 2011 12:19:32 +0200
+	id 1R7PZw-00088Q-HD
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Sep 2011 12:35:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751002Ab1IXKT0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Sep 2011 06:19:26 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:48619 "EHLO kawka.in.waw.pl"
+	id S1751045Ab1IXKfG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Sep 2011 06:35:06 -0400
+Received: from smtp.gentoo.org ([140.211.166.183]:59225 "EHLO smtp.gentoo.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750845Ab1IXKTZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Sep 2011 06:19:25 -0400
-X-Greylist: delayed 1082 seconds by postgrey-1.27 at vger.kernel.org; Sat, 24 Sep 2011 06:19:25 EDT
-Received: from 86-85-n1.aster.pl ([85.222.86.85] helo=[192.168.1.6])
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1R7P2w-0000pE-Ps; Sat, 24 Sep 2011 12:01:22 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110807 Icedove/5.0
-In-Reply-To: <EEB5CA46-D4FB-4B59-BDAF-36AE9BCC1D1E@rothlis.net>
+	id S1751002Ab1IXKfF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Sep 2011 06:35:05 -0400
+Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.gentoo.org (Postfix) with ESMTPS id A701F1B40F1
+	for <git@vger.kernel.org>; Sat, 24 Sep 2011 10:35:04 +0000 (UTC)
+Received: (qmail 1868 invoked by uid 10000); 24 Sep 2011 10:35:04 -0000
+Content-Disposition: inline
+In-Reply-To: <7vlitesucu.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182025>
 
-See https://github.com/esc/git-big-picture. I think it's graphical only, 
-but might be a good starting point.
+On Fri, Sep 23, 2011 at 04:37:53PM -0700,  Junio C Hamano wrote:
+> The latest maintenance release Git 1.7.6.4 is available but not at the
+> usual places.
+> 
+> The release tarballs are found at:
+> 
+>     http://code.google.com/p/git-core/downloads/list
+> 
+> and their SHA-1 checksums are:
+> 
+> df91e2c32d6097ab1c9d0edc56dd8cecb4e9b686  git-1.7.6.4.tar.gz
+> 6abd985e24b6585284cef7fae2e3046ba9201356  git-htmldocs-1.7.6.4.tar.gz
+> c6f6d92f4005a7eccaf89e851c45768c18f7e65a  git-manpages-1.7.6.4.tar.gz
+Can you please upload the manpages and htmldocs tarballs to
+code.google.com downloads? We use them in packaging on Gentoo for users
+that want the docs without all of the documentation build chain.
 
-Best,
-Zbyszek
+(For 1.7.7.rc* too please).
+
+-- 
+Robin Hugh Johnson
+Gentoo Linux: Developer, Trustee & Infrastructure Lead
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
