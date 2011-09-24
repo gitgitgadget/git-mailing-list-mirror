@@ -1,88 +1,86 @@
-From: Anand Kumria <akumria@acm.org>
-Subject: git svn clone issues with buddypress subversion repository
-Date: Sat, 24 Sep 2011 17:50:39 +0100
-Message-ID: <CAM1C4G=o_Q5scdv=Jk3ou-3OjnZiukZV3nz0NJR7CTaKLbB2jw@mail.gmail.com>
-References: <CAM1C4G=YbK5PF21UujxNRR0PX9xqQBSEvcB45Zxy1hwZuyuL8Q@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: SSL certificate password storage?
+Date: Sat, 24 Sep 2011 10:51:30 -0700 (PDT)
+Message-ID: <m3aa9trfr2.fsf@localhost.localdomain>
+References: <CAEsSSh2MDPgcFtrwYJ7uCDHBHPEfo35deE4dsWrb7Ukp7b310A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 24 18:51:19 2011
+Cc: git <git@vger.kernel.org>
+To: James B <coderer@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 24 19:51:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R7VRd-00035w-UY
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Sep 2011 18:51:18 +0200
+	id 1R7WO3-00037M-9V
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Sep 2011 19:51:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751876Ab1IXQvL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Sep 2011 12:51:11 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:47680 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751386Ab1IXQvK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Sep 2011 12:51:10 -0400
-Received: by wwf22 with SMTP id 22so4931589wwf.1
-        for <git@vger.kernel.org>; Sat, 24 Sep 2011 09:51:09 -0700 (PDT)
+	id S1752074Ab1IXRvd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Sep 2011 13:51:33 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:47863 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752022Ab1IXRvc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Sep 2011 13:51:32 -0400
+Received: by eya28 with SMTP id 28so2829626eya.19
+        for <git@vger.kernel.org>; Sat, 24 Sep 2011 10:51:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:content-type
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
          :content-transfer-encoding;
-        bh=KK/UZRsmnxAKn86Gq/x4FfDFKW2Qd48Fg2dLfkrVdWI=;
-        b=G4LbEUGEBWD5e8P7BkJ2c18ZEkqVLrCxypzyvx5N/ntQxzmtuvURt1jyGDXkxUv8rq
-         wDNuleweMMhMKkgYGFkv53ft7v/cRvWfRBZZr3PVetpIx7zh78AB5rew4n6y9WdcQvAq
-         9fz+xoh3AzAqoiUB/qyi3PXYy2kK16kD77nTU=
-Received: by 10.227.11.18 with SMTP id r18mr5053227wbr.14.1316883069148; Sat,
- 24 Sep 2011 09:51:09 -0700 (PDT)
-Received: by 10.180.100.168 with HTTP; Sat, 24 Sep 2011 09:50:39 -0700 (PDT)
-In-Reply-To: <CAM1C4G=YbK5PF21UujxNRR0PX9xqQBSEvcB45Zxy1hwZuyuL8Q@mail.gmail.com>
-X-Google-Sender-Auth: pmYX5uAdDh5TpogjFJ8g04FvKi4
+        bh=u45HNy/3nPZbf+hYSzVd51iK1eg6UFDzG28u9p6O31I=;
+        b=F6lSbvamvaO/rvI7BkyvxEzOdXFz97ZWjOj4KhjTZcPEOmoCuOtQY5fWKsS0I9Pc7h
+         MQ23b65FwybQ7WHg2FuqHUfb1FFFXN+PXNtOjy71HjuA9fFtf4QuRcMZfp9Vohv8uWHd
+         neBRA4ytxWzJqACqW5Q/61pcRJUPPmQ684AEs=
+Received: by 10.14.18.207 with SMTP id l55mr1176991eel.42.1316886691613;
+        Sat, 24 Sep 2011 10:51:31 -0700 (PDT)
+Received: from localhost.localdomain (abvl230.neoplus.adsl.tpnet.pl. [83.8.209.230])
+        by mx.google.com with ESMTPS id a14sm15502647eeg.6.2011.09.24.10.51.28
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 24 Sep 2011 10:51:30 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p8OHp8gn009541;
+	Sat, 24 Sep 2011 19:51:18 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p8OHovvn009531;
+	Sat, 24 Sep 2011 19:50:57 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <CAEsSSh2MDPgcFtrwYJ7uCDHBHPEfo35deE4dsWrb7Ukp7b310A@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182035>
 
-Hi,
+James B <coderer@gmail.com> writes:
 
-I'm trying:
+> I'm accessing a Git repository over an HTTPS transport, where client
+> certificates are required.  My certificate requires a password to use=
+,
+> and Git prompts me for this every time I use it -- it's starting to
+> get a little old.  I've got Subversion set up to use Gnome-Keyring fo=
+r
+> credentials, so I only have to unlock that once per session.  Is ther=
+e
+> something similar for Git?  Is it planned?  If not, is there a good
+> place to make feature requests?
 
-% git svn clone -s http://svn.buddypress.org/trunk/ buddypress
-Initialized empty Git repository in
-/home/anand/Projects/wordpress/buddypress/.git/
-Using higher level of URL: http://svn.buddypress.org/trunk =3D>
-http://svn.buddypress.org
+There is "credential helper" series:
+ * infrastructure and simple example implementations,
+   like in-memory cache by Jeff King
+ * credential helper for MacOS X keychain from Jay Soffian
+ * credential helper for KDE (KWallet) from Lukas Sandstr=F6m
+ * simple credential helper for Windows by Erik Faye-Lund
 
-% git --version
-git version 1.7.0.4
+In 'next' there is only sample implemetations (credentia-cache and
+credential-store).  Some of the rest you can find in 'pu', others only
+on git mailing list.
 
-And at the end, git svn appears to successfull complete but nothing
-has occurred. I'm successfully using 'git svn' against other
-repositories with no problem, just wondering if anyone else has come
-across this.
+Currently there are no credentials helper for GNOME.  Perhaps you can
+write one?
 
-% find buddypress
-buddypress
-buddypress/.git
-[omitted]
-buddypress/.git/svn
-buddypress/.git/svn/refs
-buddypress/.git/svn/refs/remotes
-buddypress/.git/svn/refs/remotes/git-svn
-buddypress/.git/svn/refs/remotes/trunk
-buddypress/.git/svn/refs/remotes/trunk/.rev_map.cdf35c40-ae34-48e0-9cc9=
--0c9da1808c22
-buddypress/.git/svn/.metadata
-
-% cat buddypress/.git/svn/.metadata
-; This file is used internally by git-svn
-; You should not have to edit it
-[svn-remote "svn"]
-=C2=A0=C2=A0=C2=A0 reposRoot =3D http://svn.buddypress.org
-=C2=A0=C2=A0=C2=A0 uuid =3D cdf35c40-ae34-48e0-9cc9-0c9da1808c22
-=C2=A0=C2=A0=C2=A0 branches-maxRev =3D 5188
-=C2=A0=C2=A0=C2=A0 tags-maxRev =3D 5188
-
-Thanks,
-Anand
+--=20
+Jakub Nar=EAbski
