@@ -1,68 +1,64 @@
-From: Orgad and Raizel Shaneh <orgads@gmail.com>
-Subject: bug with submodule and assume-unchanged
-Date: Sat, 24 Sep 2011 21:41:29 +0300
-Message-ID: <CAGHpTBKyK_PQ1LU-st-vq3xa9tkxJSUQ=UZKARUQu25_sVu46A@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v0] fast-import: Add drop command
+Date: Sat, 24 Sep 2011 14:37:33 -0500
+Message-ID: <20110924193733.GB10955@elie>
+References: <1316878065-11782-1-git-send-email-vitor.hda@gmail.com>
+ <1316878065-11782-2-git-send-email-vitor.hda@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 24 20:41:38 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>,
+	David Barr <davidbarr@google.com>
+To: Vitor Antunes <vitor.hda@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 24 21:37:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R7XAO-0006aT-8e
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Sep 2011 20:41:36 +0200
+	id 1R7Y2j-0002X0-GF
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Sep 2011 21:37:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752295Ab1IXSlc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Sep 2011 14:41:32 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:61998 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752284Ab1IXSlb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Sep 2011 14:41:31 -0400
-Received: by fxe4 with SMTP id 4so4803726fxe.19
-        for <git@vger.kernel.org>; Sat, 24 Sep 2011 11:41:30 -0700 (PDT)
+	id S1752429Ab1IXThj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Sep 2011 15:37:39 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:44569 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752253Ab1IXThi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Sep 2011 15:37:38 -0400
+Received: by yib18 with SMTP id 18so3364289yib.19
+        for <git@vger.kernel.org>; Sat, 24 Sep 2011 12:37:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=7P8v62ib+og/Dbl8iRglObtjKgp0KQ/8OHXggS7FyCw=;
-        b=WnvC0Iuag7K1E5t4qCnDooPbDrB8rNwjq9F0V/dF7i819jHdtTyLMMcC8uEH8/GRAl
-         KBLMoGcHdXG3kkRGoTJKByKBxb/1b9cIyLgssKBlLuqEi+CZ1Rk2uid0mEklNanoHb5r
-         0kRY/fseYs+1gDNAbfzBU6kSa6HMB0NtWXd3M=
-Received: by 10.223.32.9 with SMTP id a9mr7245225fad.134.1316889689868; Sat,
- 24 Sep 2011 11:41:29 -0700 (PDT)
-Received: by 10.223.115.82 with HTTP; Sat, 24 Sep 2011 11:41:29 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=T7xqqLTA20juwqPcf4JioK/Usb1TKcpmZmbRID9jBxo=;
+        b=dIyljXjVoxRTTWx1vQOzqR1XqVH3LOWFfWfMT4bmozz5dDKfg74GOTarwoXLSY3F9X
+         ifPqCtmitW/li/WcWbSYNwq8A0ZGRUKj1CBmRN7a0Ott2M9YEFGyBDmTkq+pR4elBjlf
+         w9yd2Ap1W6tCAo3yvvPm2UfqNHrv9aEv4K0kg=
+Received: by 10.236.154.5 with SMTP id g5mr30862368yhk.3.1316893058159;
+        Sat, 24 Sep 2011 12:37:38 -0700 (PDT)
+Received: from elie (99-120-124-35.lightspeed.cicril.sbcglobal.net. [99.120.124.35])
+        by mx.google.com with ESMTPS id z53sm21944220yhj.7.2011.09.24.12.37.36
+        (version=SSLv3 cipher=OTHER);
+        Sat, 24 Sep 2011 12:37:37 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1316878065-11782-2-git-send-email-vitor.hda@gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182038>
 
-Hello,
+Vitor Antunes wrote:
 
-Marking a submodule with update-index --assume-unchanged breaks diff.
+> The drop command deletes the given branch reference, allowing
+> fast-import to actively ignore it in the final checks.
 
-Consider the script in http://pastebin.ca/2082543. The last 'diff'
-output follows. Note that the diff for 'afile' is displayed, then sub
-breaks the operation, and the diff for 'test' (or any other file that
-comes after 'sub') is not displayed at all.
+Thanks.  I must have missed the earlier discussion.  What are the
+semantics of this command and its intended purpose?  For example, what
+happens if the branch already existed or if there is a checkpoint
+(perhaps triggered by the impatient user sending SIGUSR1 to
+fast-import) before the "drop" command is processed?
 
-$:/tmp/git$ cd super/
-$:/tmp/git/super$ git diff
-fatal: unable to read c17499ae216dfba9538ed7f94ba109c2c5b87b2a
-diff --git a/afile b/afile
-index 14be0d4..7c2160f 100644
---- a/afile
-+++ b/afile
-@@ -1 +1 @@
--hello2
-+goodbye2
-diff --git a/sub b/sub
-deleted file mode 160000
-index c17499a..0000000
---- a/sub
-+++ /dev/null
-@@ -1 +0,0 @@
--Subproject commit c17499ae216dfba9538ed7f94ba109c2c5b87b2a
-
-- Orgad
+Jonathan
