@@ -1,64 +1,69 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v0] fast-import: Add drop command
-Date: Sat, 24 Sep 2011 14:37:33 -0500
-Message-ID: <20110924193733.GB10955@elie>
-References: <1316878065-11782-1-git-send-email-vitor.hda@gmail.com>
- <1316878065-11782-2-git-send-email-vitor.hda@gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: sparse checkout bug?
+Date: Sat, 24 Sep 2011 15:50:57 -0400
+Message-ID: <CAG+J_DwRPq69TUMOeqU5O9pv=cHZWEP1VJ1_NRaJv5BSFhF00g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>,
-	David Barr <davidbarr@google.com>
-To: Vitor Antunes <vitor.hda@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 24 21:37:46 2011
+Content-Type: text/plain; charset=UTF-8
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 24 21:51:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R7Y2j-0002X0-GF
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Sep 2011 21:37:45 +0200
+	id 1R7YFj-0007Vq-BX
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Sep 2011 21:51:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752429Ab1IXThj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Sep 2011 15:37:39 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:44569 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752253Ab1IXThi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Sep 2011 15:37:38 -0400
-Received: by yib18 with SMTP id 18so3364289yib.19
-        for <git@vger.kernel.org>; Sat, 24 Sep 2011 12:37:38 -0700 (PDT)
+	id S1751599Ab1IXTu7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Sep 2011 15:50:59 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:54888 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751390Ab1IXTu6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Sep 2011 15:50:58 -0400
+Received: by gyg10 with SMTP id 10so3299253gyg.19
+        for <git@vger.kernel.org>; Sat, 24 Sep 2011 12:50:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=T7xqqLTA20juwqPcf4JioK/Usb1TKcpmZmbRID9jBxo=;
-        b=dIyljXjVoxRTTWx1vQOzqR1XqVH3LOWFfWfMT4bmozz5dDKfg74GOTarwoXLSY3F9X
-         ifPqCtmitW/li/WcWbSYNwq8A0ZGRUKj1CBmRN7a0Ott2M9YEFGyBDmTkq+pR4elBjlf
-         w9yd2Ap1W6tCAo3yvvPm2UfqNHrv9aEv4K0kg=
-Received: by 10.236.154.5 with SMTP id g5mr30862368yhk.3.1316893058159;
-        Sat, 24 Sep 2011 12:37:38 -0700 (PDT)
-Received: from elie (99-120-124-35.lightspeed.cicril.sbcglobal.net. [99.120.124.35])
-        by mx.google.com with ESMTPS id z53sm21944220yhj.7.2011.09.24.12.37.36
-        (version=SSLv3 cipher=OTHER);
-        Sat, 24 Sep 2011 12:37:37 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1316878065-11782-2-git-send-email-vitor.hda@gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=5bRXQZsCGsBe0kpSM1y98Xr9t2uXb2+wh4a+eCOKtnk=;
+        b=RI77geQErT/X18prOmDh42KLRB4VJZC05+vOzCrtbXBImPekjl7dje1tkOBiuIMox4
+         gQs8rhxBnz/E1h0IUIFdvzT4jIT5GhRzZ1tkBe7upphjCUoBTMRo4vavs4e4I5/LQkof
+         c4oxHxtLYCNAsaPPpJ/nbm/T5zx/bwE2NkXuI=
+Received: by 10.146.60.29 with SMTP id i29mr1121290yaa.26.1316893857887; Sat,
+ 24 Sep 2011 12:50:57 -0700 (PDT)
+Received: by 10.147.32.18 with HTTP; Sat, 24 Sep 2011 12:50:57 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182039>
 
-Vitor Antunes wrote:
+I wanted to exclude a single massive directory from a checkout (the
+LayoutTests directory from WebKit, which includes 130k files), so I
+tried:
 
-> The drop command deletes the given branch reference, allowing
-> fast-import to actively ignore it in the final checks.
+$ git config core.sparsecheckout true
+$ echo '*' > .git/info/sparse-checkout
+$ echo '!LayoutTests' >> .git/info/sparse-checkout
+$ git read-tree -m -u HEAD
 
-Thanks.  I must have missed the earlier discussion.  What are the
-semantics of this command and its intended purpose?  For example, what
-happens if the branch already existed or if there is a checkpoint
-(perhaps triggered by the impatient user sending SIGUSR1 to
-fast-import) before the "drop" command is processed?
+But LayoutTests is not being excluded. I also tried every variation of
+including leading/trailing slash and trailing '*'.
 
-Jonathan
+Simple repro:
+
+git init sparse-test && cd sparse-test &&
+touch foo && mkdir bar && touch bar/baz &&
+git add foo bar/baz &&
+git commit -m initial &&
+git config core.sparsecheckout true &&
+echo '*' > .git/info/sparse-checkout &&
+echo '!bar' >> .git/info/sparse-checkout &&
+git read-tree -m -u HEAD &&
+ls -1R
+foo
+
+bar:
+baz
+
+j.
