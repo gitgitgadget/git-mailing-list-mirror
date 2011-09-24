@@ -1,84 +1,121 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Fwd: permission to re-license strbuf subsystem as LGPL
-Date: Sat, 24 Sep 2011 02:05:40 -0400
-Message-ID: <20110924060540.GA13974@sigill.intra.peff.net>
-References: <CA+sFfMeRDQiqGhO9Y=k3tEnzdXjMx59huFE_fx6Y14cJxj1J=Q@mail.gmail.com>
- <CA+sFfMcmsKkKM7C0g4vKmjmCCNqRHuvz-hwEHAm=+stqnOPpAw@mail.gmail.com>
- <m3mxdvqj31.fsf@localhost.localdomain>
- <CA+sFfMdt-95rfaZmiYAHx02Ukjt_WN-kLJr410AzZfGHYkSv5w@mail.gmail.com>
+Subject: Re: How to use git attributes to configure server-side checks?
+Date: Sat, 24 Sep 2011 02:15:55 -0400
+Message-ID: <20110924061555.GB13974@sigill.intra.peff.net>
+References: <4E7A3BDE.3040301@alum.mit.edu>
+ <7vy5xh1whq.fsf@alter.siamese.dyndns.org>
+ <4E7AF1AE.5030005@alum.mit.edu>
+ <CAG+J_DxtCx6-RKWLKFy+V7tOtu7UnUrke7iN8gNdGiY-sC52sQ@mail.gmail.com>
+ <20110922171340.GA2934@sigill.intra.peff.net>
+ <CAG+J_DxdP2qHhttJOtWQTKeiDV2YbC_A_F+b9sDOZsWhWxjcjw@mail.gmail.com>
+ <20110922205856.GA8563@sigill.intra.peff.net>
+ <4E7C5A3B.10703@alum.mit.edu>
+ <20110923193341.GA26820@sigill.intra.peff.net>
+ <4E7D7329.7070800@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 24 08:05:51 2011
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	git discussion list <git@vger.kernel.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sat Sep 24 08:16:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R7LN1-00069c-D4
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Sep 2011 08:05:51 +0200
+	id 1R7LWu-0000jT-2D
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Sep 2011 08:16:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751880Ab1IXGFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Sep 2011 02:05:45 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42126
+	id S1752372Ab1IXGP7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Sep 2011 02:15:59 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42134
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751529Ab1IXGFo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Sep 2011 02:05:44 -0400
-Received: (qmail 25403 invoked by uid 107); 24 Sep 2011 06:10:44 -0000
+	id S1752349Ab1IXGP6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Sep 2011 02:15:58 -0400
+Received: (qmail 25496 invoked by uid 107); 24 Sep 2011 06:20:58 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 24 Sep 2011 02:10:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 24 Sep 2011 02:05:40 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 24 Sep 2011 02:20:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 24 Sep 2011 02:15:55 -0400
 Content-Disposition: inline
-In-Reply-To: <CA+sFfMdt-95rfaZmiYAHx02Ukjt_WN-kLJr410AzZfGHYkSv5w@mail.gmail.com>
+In-Reply-To: <4E7D7329.7070800@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182021>
 
-On Fri, Sep 23, 2011 at 05:50:27PM -0500, Brandon Casey wrote:
+On Sat, Sep 24, 2011 at 08:05:29AM +0200, Michael Haggerty wrote:
 
-> Hmm, I forgot about bstring.  I think strbuf is a little smaller in
-> scope than bstring, perhaps less ambitious.  Less abstraction, and
-> less protection too.  With strbuf, you never forget that you're
-> dealing with C char arrays.  The data structures are pretty similar,
-> but I don't think strbuf will ever have a function like
+> This could be implemented by having a single local config option that
+> enables the use of an in-tree .gitconfig file:
 > 
->    bconcat(bstring1, bstring2)
+>     git config core.useTreeConfig true
 > 
-> instead, you'd just do
+> (or whatever the correct naming convention would be).  This option would
+> default to false, so the in-tree config would only occur following an
+> affirmative decision by the cloner.
+
+But once you've verified that the config looks OK and turned this option
+on, how do you protect yourself from malicious config entering the repo
+through a fetch?
+
+> If finer granularity is required, config options could be classified
+> into "security-relevant" and "non-security-relevant" options, where the
+> former group basically includes anything that can cause arbitrary code
+> to be executed.  Then there could be a "core.useTreeConfig = safeonly"
+> option to allow only the harmless options.
+
+This is the "can of worms" I referred to earlier. You have to start
+classifying each option.
+
+> I think the priority of config options (highest to lowest) should be
 > 
->    strbuf_add(strbuf1, strbuf2.buf, strbuf2.len)
+>        $GIT_DIR/config
+>        in-tree .gitconfig
+>        ~/.gitconfig
+>        $(prefix)/etc/gitconfig
 
-I think it's spelled:
+One catch with any precedence scheme is that there are certain config
+constructs that cannot be overridden. For example, some options are
+respected multiple times to form a list (e.g., remote fetch and push
+refspecs). There's no way in you $GIT_DIR/config to say "forget all of
+the previous values you saw for this key" that may have come from the
+in-tree .gitconfig.
 
-  strbuf_addbuf(strbuf1, strbuf2);
+I think you could introduce a special syntax for that, maybe just:
 
-in the current code.
+  # make a list with two elements
+  [foo]
+    bar = one
+    bar = two
 
-> The benefit, of course, of a bconcat function is that either bstring1
-> or bstring2 can be NULL (like if a previous bstring2 = bfromcstr()
-> initialization failed).  This allows you to perform a sequence of
-> bstring operations and only check errors at the end.
+  # now let's imagine this is our "reset" syntax
+    bar =
+  # and now we can put in our own new values
+    bar = three
 
-There is no error checking with strbufs at all. The only thing that can
-fail is malloc, and in that case, we always die().
+where the final value of the config above would be (three).
 
-It wouldn't be too hard to make it return errors (or set a global error
-flag), and have any failed mallocs just leave the strbuf unchanged.
-Because strbufs are always in a consistent state, it would be safe to
-do:
+It's actually not a new problem with in-tree config, and it doesn't tend
+to come up all that much because most config values are treated as
+simple scalars, and later values overwrite earlier ones.
 
-  global_strbuf_error_flag = 0;
-  strbuf_addbuf(strbuf1, strbuf2);
-  strbuf_addbuf(strbuf3, strbuf1);
-  strbuf_addbuf(strbuf3, strbuf4);
-  if (global_strbuf_error_flag)
-    ...
+> Of course, just like for attributes, it would have to be decided which
+> version of the .gitconfig to use in which situations.
 
-The contents of the strbufs would be indeterminant, but you would never
-have violated any memory constraints.
+I'm not sure it makes sense to have it in the tree at all. For
+attributes it makes sense, because you are annotating a path at a
+_specific_ revision. But config is often much more meta- than that.
+Take textconv for an example. The gitattributes say "foo.pdf should use
+the 'pdf' diff driver". That makes sense to go in a revision. But the
+config will say "pdf files can be converted to text using
+/usr/bin/pdftotext". That is not something that is tied to the revision
+at all, and should exist outside of any revision. I.e., whether I am
+doing a "git show" on the HEAD, or on some ancient commit, I would want
+to use the same value, not whatever tool I used to convert PDFs years
+ago.
 
 -Peff
