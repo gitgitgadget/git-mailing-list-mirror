@@ -1,127 +1,82 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 0/6] A handful of "branch description" patches
-Date: Sat, 24 Sep 2011 16:42:18 +0200
-Message-ID: <4E7DEC4A.3050900@drmicha.warpmail.net>
-References: <7vy5xi4y3m.fsf@alter.siamese.dyndns.org> <1316729362-7714-1-git-send-email-gitster@pobox.com> <4E7C49CF.60508@drmicha.warpmail.net> <20110923201824.GA27999@sigill.intra.peff.net>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: Possible timestamp problems with diff-files?
+Date: Sat, 24 Sep 2011 16:30:56 +0200
+Message-ID: <4E7DE9A0.8070209@dewire.com>
+References: <4E786B5D.40601@syntevo.com> <20110920175458.GA3776@sigill.intra.peff.net> <4E79DF81.8090605@syntevo.com> <7vboud1sz5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Sep 24 16:42:43 2011
+Cc: Marc Strapetz <marc.strapetz@syntevo.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 24 16:52:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R7TRC-0006AO-Si
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Sep 2011 16:42:43 +0200
+	id 1R7Tau-0001nW-Vz
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Sep 2011 16:52:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751410Ab1IXOmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Sep 2011 10:42:22 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:51564 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751091Ab1IXOmV (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Sep 2011 10:42:21 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 5BDEA25B1E;
-	Sat, 24 Sep 2011 10:42:21 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute3.internal (MEProxy); Sat, 24 Sep 2011 10:42:21 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=MBYV5QX5zjMk0C/BX9peDc
-	BO9FU=; b=jNfRm6VG9mvBCtTt+5foLqSGP+KFiAA2sKGrBH66sQ1kQ3tdY8qjHl
-	8Nj00SjhRDnSgPP/oNUfU2GELiWmJg27qIBGc39gc/RMk6Gf15MQXpz18ku56wwi
-	2IqWW+3w7sT6Oiq+8GwW4vYai0+4JbjK8hOkg2zXTWKpRnl3SiUVU=
-X-Sasl-enc: sd0YZD47Br3rI2B2MSfsPle2YMY/6G8qdj86UlAvwA+n 1316875340
-Received: from localhost.localdomain (p54858437.dip0.t-ipconnect.de [84.133.132.55])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 89A27A008BD;
-	Sat, 24 Sep 2011 10:42:20 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0.2) Gecko/20110906 Thunderbird/6.0.2
-In-Reply-To: <20110923201824.GA27999@sigill.intra.peff.net>
+	id S1751647Ab1IXOwj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Sep 2011 10:52:39 -0400
+Received: from mail.dewire.com ([83.140.172.130]:15337 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751584Ab1IXOwj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Sep 2011 10:52:39 -0400
+X-Greylist: delayed 1299 seconds by postgrey-1.27 at vger.kernel.org; Sat, 24 Sep 2011 10:52:38 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 86AE38006A7;
+	Sat, 24 Sep 2011 16:30:57 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 2yKSSA9piNa4; Sat, 24 Sep 2011 16:30:57 +0200 (CEST)
+Received: from Robin-Rosenbergs-MacBook-Pro.local (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id D6E56800391;
+	Sat, 24 Sep 2011 16:30:56 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:7.0) Gecko/20110905 Thunderbird/7.0
+In-Reply-To: <7vboud1sz5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182028>
 
-Jeff King venit, vidit, dixit 23.09.2011 22:18:
-> On Fri, Sep 23, 2011 at 10:56:47AM +0200, Michael J Gruber wrote:
-> 
->>   mjg/vob/refrev-pretend [mjg/vob/virtual-objects: ahead 1]
->>     Pseudo revs for refnames
->>     
->>     An alternative implementation using pretend_sha1...
->>     Currently unused.
->>
->>   mjg/vob/virtual-objects [origin/next: ahead 2, behind 10]
->>     Virtual refname objects
->>     
->>     For each existing refname, introduce virtual objects corresponding to a blob
->>     with the refname as the content. "virtual" refers to the fact that these
->>     objects are not written out but exist for all other purposes, such as
->>     attaching notes and keeping them from being pruned.
-> 
-> Eww. :)
-> 
-> This seems like a clever solution to making git-notes store a ref as a
-> key instead of an arbitrary sha1. But I wonder if the end result is
-> really waht the user wants. The resulting notes tree is good for doing
-> lookups, but the entries are completely obfuscated. So I can't easily do
-> something like "list all of the refs which have descriptions". I can
-> only list the _hashes_ of the refs which have descriptions. And if I am
-> lucky, I can hash the refs I have and correlate them. But unknown ones
-> will simply be a mystery.
+Junio C Hamano skrev 2011-09-21 23.33:
+> Marc Strapetz<marc.strapetz@syntevo.com>  writes:
+>
+>> On 20.09.2011 19:54, Jeff King wrote:
+>>> On Tue, Sep 20, 2011 at 12:30:53PM +0200, Marc Strapetz wrote:
+>>>
+>>>> For our Git client, we are invoking
+>>>>
+>>>> git diff-files--quiet --ignore-submodules
+>>>>
+>>>> immediately after a commit of *all* changes. Hence, the expected exit
+>>>> code would be 0 (because there are no changes). A user has now reported
+>>>> that for commits with many changes, exit code is sometimes 1. For the
+>>>> last incident, the commit was started at 15:24:11,820 and finished at
+>>>> 15:24:12,329, diff-files was invoked at 15:24:12,455 and failed with
+>>>> exit code 1 at 15:24:21,394. A subsequent diff-files succeeded, so I'm
+>>>> wondering now, if that could be a timestamp problem (maybe related to
+>>>> the Index)?
+>
+> What peff said already.
+>
+> If you do not refresh the cached stat information, diff-files may report
+> "they differ" for a path that is otherwise unchanged without looking at
+> the contents of such a path to notice that the only difference is the
+> cached stat information (the whole and only point of having the cached
+> stat information is to avoid looking at the contents). Also, it may look
+> at the contents of such a path if it has a reason to suspect that the file
+> might have changed if it cannot tell from the cached stat information
+> (look for "racy-git" if you are really interested).
+>
+> Update the cached stat information before you use plumbing commands in
+> your script.
 
-[mjg@localhost git]$ git rev-parse ref:mjg/vob/virtual-objects
-3f8aa9bb80fe241306aafd3d76af50739ba88268
-[mjg@localhost git]$ git show 3f8aa9bb80fe241306aafd3d76af50739ba88268
-refs/heads/mjg/vob/virtual-objects
+Using git diff instead of git diff-files would do just that, unless I am
+missing something.
 
-:)
-
-The only problem is with notes for non-existing refs. [You only have to
-invoke the inverse mapping to sha1, of course... Uhm.]
-
-> Wouldn't it be much more friendly to have a separate tree of refnames
-> that stores:
-> 
->   refs/heads/foo -> (some blob with the "foo" description)
->   refs/heads/bar -> (some blob with the "bar" description)
-
-Given the above, I don't think it's more friendly.
-
-In fact, in my first attempt, I wrote out the blobs, and referenced them
-just like above from a different subtree within the notes tree, in order
-to keep them from being pruned. So the virtual approach is pretty
-equivalent, though leaner.
-
-> Yeah, you have to build another git-notes-like interface around it. But
-> the data structure is pleasant and flexible. You could even "git
-> checkout" the whole tree and edit the notes with your editor, without
-> having to deal with some obfuscated name.
-
-Well, "git branch --edit-description" and such should be the way to edit
-them, shouldn't it?
-
-I really think the only issue is remote refnames. As Junio points out,
-they are local by nature. OTOH, you typically use a non-renaming refspec
-which puts them under refs/remotes/foo/bar with "bar" being the same
-name as the local one on the remote, foo something you have chosen. So,
-teaching the code that the note for
-
-refs/remotes/foo/bar
-
-is in the notes tree
-
-refs/remotes/foo/notes/commits (or .../refames, or whatever we do with
-the namespaces)
-
-as a note attached to sha1("refs/bar")
-
-is really a non-issue. It's not done yet, in part because of the
-possible namespace restructuring.
-
-Michael
+-- robin
