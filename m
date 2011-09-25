@@ -1,96 +1,46 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: Symbolic refs and the git protocol?
-Date: Sun, 25 Sep 2011 19:40:11 +0530
-Message-ID: <CAMK1S_g1Co8vogBuObQVsr+nT09urYs+qifJn1X+eGrkgUQZCA@mail.gmail.com>
-References: <4E7F29EB.8000800@redhat.com>
-	<CAMK1S_joYUKPXDKyomFdbDP4H0UhcwtNQbC89gvNZOTHowYrLw@mail.gmail.com>
-	<4E7F313A.2050103@redhat.com>
+From: vra5107 <venkatram.akkineni@gmail.com>
+Subject: Can a git changeset be created with no parent
+Date: Sun, 25 Sep 2011 07:15:36 -0700 (PDT)
+Message-ID: <1316960136073-6829212.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	John Hawley <warthog19@gmail.com>
-To: Avi Kivity <avi@redhat.com>
-X-From: git-owner@vger.kernel.org Sun Sep 25 16:10:21 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 25 16:15:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R7pPP-0003zJ-2c
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Sep 2011 16:10:19 +0200
+	id 1R7pUb-000637-3e
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Sep 2011 16:15:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752790Ab1IYOKM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Sep 2011 10:10:12 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:56813 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752732Ab1IYOKL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Sep 2011 10:10:11 -0400
-Received: by vcbfk10 with SMTP id fk10so2235272vcb.19
-        for <git@vger.kernel.org>; Sun, 25 Sep 2011 07:10:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=XOIP8GBvH0+e6jCTjWDs5i9f7jN3GCtyjSFn+tZit4M=;
-        b=mv6p4ehARd5WfMyNwUXDU6AtNo5JusiTlaJmdc/EE3fNS7Ow3VZgHplc38n1BN8m2J
-         eNTT1Wh4XdUCE/pRng/a+X9ZZrwJOzmtAmAhEyXsLXdSW/dZnRiAPoKyaR04+t1DHInT
-         6gJdaPodkYrHetpqkAxzxcsvAQM6wcQCzcZz8=
-Received: by 10.52.65.99 with SMTP id w3mr4611700vds.201.1316959811151; Sun,
- 25 Sep 2011 07:10:11 -0700 (PDT)
-Received: by 10.52.160.161 with HTTP; Sun, 25 Sep 2011 07:10:11 -0700 (PDT)
-In-Reply-To: <4E7F313A.2050103@redhat.com>
+	id S1752812Ab1IYOPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Sep 2011 10:15:37 -0400
+Received: from sam.nabble.com ([216.139.236.26]:52517 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752794Ab1IYOPg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Sep 2011 10:15:36 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <venkatram.akkineni@gmail.com>)
+	id 1R7pUW-0001qO-2b
+	for git@vger.kernel.org; Sun, 25 Sep 2011 07:15:36 -0700
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182075>
 
-On Sun, Sep 25, 2011 at 7:18 PM, Avi Kivity <avi@redhat.com> wrote:
-> On 09/25/2011 04:42 PM, Sitaram Chamarty wrote:
->>
->> On Sun, Sep 25, 2011 at 6:47 PM, Avi Kivity<avi@redhat.com> =C2=A0wr=
-ote:
->> > =C2=A0With the old kernel.org setup, practically the only think I =
-needed to
->> > do on
->> > =C2=A0the server itself is the 'git symbolic-ref' command (used to=
- point
->> > =C2=A0refs/heads/linux-next at the correct stream).
->> >
->> > =C2=A0Now it looks like kernel.org will no longer offer shell acce=
-ss. =C2=A0Is it
->> > =C2=A0possible to support symbolic-ref via 'git push'?
->>
->> Can I assume you mean specifically for HEAD, as in 'git symbolic-ref
->> HEAD refs/heads/some-branch'?
->
-> No, I use them for ordinary branches, for example
->
-> =C2=A0git symbolic-ref refs/heads/linux-next refs/heads/kvm-updates/3=
-=2E2
->
-> from this point on, any update to kvm-updates/3.2 will be reflected i=
-n the
-> linux-next ref.
->
->> Although gitolite disables shell access by design, it provides sever=
-al
->> (optionally installed) features to allow specific shell commands to =
-be
->> executed. =C2=A0One such command is "set-head", which does exactly w=
-hat you
->> ask. =C2=A0You run it like 'ssh git@server set-head reponame.git
->> refs/heads/foo' and it ends up running 'git symbolic-ref HEAD
->> refs/heads/foo' in the repo.
->>
->> I realise that does not answer "can it be done via git push" but I
->> thought it might help...
->
-> Well, if set-head can be extended a bit, it would suit me perfectly.
+Hi
 
-no reason it can't; shorn of all the argument/access checking, it's a
-very simple shell script
+        I am currently in the process of converting a large hg repository.
+One of the changesets has no parents assigned. So to mirror that is it
+possible to create a git changeset that doesnot have a parent ?
 
---=20
-Sitaram
+Thanks
+Venkat
+
+--
+View this message in context: http://git.661346.n2.nabble.com/Can-a-git-changeset-be-created-with-no-parent-tp6829212p6829212.html
+Sent from the git mailing list archive at Nabble.com.
