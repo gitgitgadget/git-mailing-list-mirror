@@ -1,104 +1,94 @@
-From: tactical <a5158017@nepwk.com>
-Subject: Re: More Beginning Git Questions
-Date: Sun, 25 Sep 2011 21:23:00 +0100
-Message-ID: <1rwoliveqwr1v.u3bsx5axtgsb$.dlg@40tude.net>
-References: <4E7C9AAD.7060209@gmail.com> <m3ipojqhpm.fsf@localhost.localdomain> <4E7CCCA0.50909@gmail.com> <14gm3o851q0ad.1uoossmxgfyit.dlg@40tude.net> <op.v2byz2p80aolir@keputer.lokaal> <1m2c90ds9e46c.7agk88pbgjl8$.dlg@40tude.net> <201109242259.p8OMxqIM026259@no.baka.org> <1wllqv48uqfjq.lt9yp4rbxugb.dlg@40tude.net> <m31uv4rc47.fsf@localhost.localdomain>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: Git is not scalable with too many refs/*
+Date: Sun, 25 Sep 2011 14:43:27 -0600
+Organization: CAF
+Message-ID: <201109251443.28243.mfick@codeaurora.org>
+References: <4DF6A8B6.9030301@op5.se> <1315511619144-6773496.post@n2.nabble.com> <1315529522448-6774328.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
+Cc: Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 25 22:23:24 2011
+X-From: git-owner@vger.kernel.org Sun Sep 25 22:44:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R7vES-0001wB-8c
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Sep 2011 22:23:24 +0200
+	id 1R7vYR-0001ZE-0g
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Sep 2011 22:44:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752383Ab1IYUXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Sep 2011 16:23:17 -0400
-Received: from lo.gmane.org ([80.91.229.12]:41709 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752176Ab1IYUXQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Sep 2011 16:23:16 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1R7vEJ-0001t1-CT
-	for git@vger.kernel.org; Sun, 25 Sep 2011 22:23:15 +0200
-Received: from 31.64.20.134 ([31.64.20.134])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 25 Sep 2011 22:23:15 +0200
-Received: from a5158017 by 31.64.20.134 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 25 Sep 2011 22:23:15 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 31.64.20.134
-User-Agent: 40tude_Dialog/2.0.15.84
+	id S1752872Ab1IYUns (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Sep 2011 16:43:48 -0400
+Received: from wolverine02.qualcomm.com ([199.106.114.251]:24680 "EHLO
+	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752734Ab1IYUns (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Sep 2011 16:43:48 -0400
+X-IronPort-AV: E=McAfee;i="5400,1158,6480"; a="121288666"
+Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
+  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 25 Sep 2011 13:43:28 -0700
+Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 9DF1F10004BE;
+	Sun, 25 Sep 2011 13:43:28 -0700 (PDT)
+User-Agent: KMail/1.13.5 (Linux/2.6.32-28-generic; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <1315529522448-6774328.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182082>
 
-Jakub Narebski wrote:
+A coworker of mine pointed out to me that a simple
 
-> With merging into branch with uncomitted changes your fairly well
-> understood 3-way merge (sometimes virtual 3-way merge in the case of
-> multiple common ancestors) would turn into 4-way merge.
+  git checkout 
 
-I don't see why it would be a four-way merge rather than a three-way merge.
+can also take rather long periods of time > 3 mins when run 
+on a repo with ~100K refs.  
 
-> Even if you
-> can automate it somehow (I do wonder how Mercurial manages that),
-> there could be problem resolving conflicts, unless you happen to touch
-> different parts of file.
+While this is not massive like the other problem I reported, 
+it still seems like it is more than one would expect.  So, I 
+tried an older version of git, and to my surprise/delight, 
+it was much faster (.2s).  So, I bisected this issue also, 
+and it seems that the "offending" commit is 
+680955702990c1d4bfb3c6feed6ae9c6cb5c3c07:
 
-This behaviour is by design in Mercurial.  It's simple, and it works.  I've
-never had a problem with resolving conflicts here, and I don't see why I
-ever would.
 
->> And that, I feel, is a problem with Git.  In some cases, you can't do
->> things how you want -- you have to do things how Git wants.
-> 
-> Please take into account the fact that when you were creating your
-> workflow to suit your situation you were "forced" to fit it to
-> Mercurial abilities and best practices.  No wonder that it does not
-> fit Git-ish workflows.
+commit 680955702990c1d4bfb3c6feed6ae9c6cb5c3c07
+Author: Christian Couder <chriscool@tuxfamily.org>
+Date:   Fri Jan 23 10:06:53 2009 +0100
 
-No, I came to the distributed world only recently, from Subversion.  I
-choose to use clones over plain anonymous branching, over bookmarks, and
-over named branching because I prefer the approach.  I can, of course, do
-"Git branching" in Mercurial very easily if I want (with Mercurial
-bookmarks).
+    replace_object: add mechanism to replace objects found 
+in "refs/replace/"
 
-> What you use uncomitted changes for, I would use is a separate branch,
-> and keep it rebasing (something like using 'mq' in Mercurial).
+    The code implementing this mechanism has been copied 
+more-or-less
+    from the commit graft code.
 
-Yes, but, as I mentioned, rebasing is less flexible.  A rebase here is
-effectively a merge and a commit in one step, whereas my approach separates
-the merge and the commit.
+    This mechanism is used in "read_sha1_file". sha1 passed 
+to this
+    function that match a ref name in "refs/replace/" are 
+replaced by
+    the sha1 that has been read in the ref.
 
->> Another example of this is the lack of support for anonymous branching as
->> part of a normal workflow in Git.  Anonymous branching is very powerful and
->> very simple.  I use it all the time in Mercurial.
-> 
-> What do you use anonymous branching for?
+    We "die" if the replacement recursion depth is too high 
+or if we
+    can't read the replacement object.
 
-Anonymous branching is great for minor divergence that isn't really
-significant enough to deserve a name.  It's also great for branches that
-*are* significant enough to deserve a name, but where you want to defer
-naming the branch right up until you merge it into another branch.  At that
-point you can 'name' the branch in the commit message.  (Of course, you
-could also create a Mercurial bookmark at that point, and then you'd
-essentially have a "Git branch".)
+    Signed-off-by: Christian Couder 
+<chriscool@tuxfamily.org>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-> Note that with Git by default pushing "matching" branches, you can
-> create private local-only branches.  The have to have _some_ name
-> (even if it is 'foo/temp'), but I think that it makes them perhaps
-> more work to create, but easier to use (to switch branches)... and for
-> single anonymous branch you can always use "detached HEAD".
 
->From what I read, detached heads are subject to garbage collection.
+
+Now, I suspect this commit is desirable, but I was hoping 
+that perhaps a look at it might inspire someone to find an 
+obvious problem with it.  
+
+Thanks,
+
+-Martin
+
+-- 
+Employee of Qualcomm Innovation Center, Inc. which is a 
+member of Code Aurora Forum
