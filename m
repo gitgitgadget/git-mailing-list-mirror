@@ -1,98 +1,92 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Mon, 26 Sep 2011 17:49:06 +0100
-Message-ID: <2b7c307b138bd6061209795056a593ca@quantumfyre.co.uk>
-References: <4DF6A8B6.9030301@op5.se>
- <201109260948.25312.mfick@codeaurora.org>
- <CAGdFq_hRmSif4=V+9h8=S1fWfPCj+meRY8xGyfgv=SWk+DrBQw@mail.gmail.com>
- <201109261038.34527.mfick@codeaurora.org>
+From: Georg-Johann Lay <avr@gjlay.de>
+Subject: Re: subversion-perl missing
+Date: Mon, 26 Sep 2011 18:49:31 +0200
+Message-ID: <4E80AD1B.3080700@gjlay.de>
+References: <4E8066AB.7000208@gjlay.de> <CAP8UFD0PiiA9SxvOuuh4t8P96v+iaJ0TfcBr1-xjMh4TXBEONQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, <git@vger.kernel.org>
-To: Martin Fick <mfick@codeaurora.org>
-X-From: git-owner@vger.kernel.org Mon Sep 26 18:49:18 2011
+Cc: git@vger.kernel.org
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 26 18:49:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8EMl-0007aa-Jw
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 18:49:15 +0200
+	id 1R8ENL-0007sC-Up
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 18:49:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751439Ab1IZQtK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Sep 2011 12:49:10 -0400
-Received: from neutrino.quantumfyre.co.uk ([93.93.128.23]:45821 "EHLO
-	neutrino.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751191Ab1IZQtJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2011 12:49:09 -0400
-Received: from reaper.quantumfyre.co.uk (quantumfyre-1-pt.tunnel.tserv5.lon1.ipv6.he.net [IPv6:2001:470:1f08:1724::2])
-	by neutrino.quantumfyre.co.uk (Postfix) with ESMTP id C76DEC0602;
-	Mon, 26 Sep 2011 17:49:07 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 73BCF36A824;
-	Mon, 26 Sep 2011 17:49:07 +0100 (BST)
-X-Virus-Scanned: amavisd-new at reaper
-Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
-	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id w8JDrSkqfkYS; Mon, 26 Sep 2011 17:49:06 +0100 (BST)
-Received: from webmail.quantumfyre.co.uk (reaper.quantumfyre.co.uk [192.168.0.2])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id C99D436A750;
-	Mon, 26 Sep 2011 17:49:06 +0100 (BST)
-In-Reply-To: <201109261038.34527.mfick@codeaurora.org>
-X-Sender: julian@quantumfyre.co.uk
-User-Agent: Roundcube Webmail/0.5.3
+	id S1751447Ab1IZQtr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Sep 2011 12:49:47 -0400
+Received: from mo-p00-ob.rzone.de ([81.169.146.161]:19550 "EHLO
+	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751191Ab1IZQtr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Sep 2011 12:49:47 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1317055785; l=1345;
+	s=domk; d=gjlay.de;
+	h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:
+	Subject:CC:To:MIME-Version:From:Date:X-RZG-CLASS-ID:X-RZG-AUTH;
+	bh=5vsYQeqslEuAhve60xUYxRSn41k=;
+	b=Q8mL24OOVO92Ymn8vPmmOUPXMfptWyjhVQlsncxq+PMHixJgcEoV/97QqlHPF+BdhIn
+	5zPqp0KdRTP9R1Zp9Wj8l9ezfzsf3Dnz+hMk7ae7gtqR1NVzM9uMjNz+QwVGfxrXPjQuA
+	jc1RK9yAqsGGPesXv6ogytPROYlT2CyFmVQ=
+X-RZG-AUTH: :LXoWVUeid/7A29J/hMvvT2k715jHQaJercGObUOFkj18odoYNahU4Q==
+X-RZG-CLASS-ID: mo00
+Received: from [192.168.0.22]
+	(business-188-111-022-002.static.arcor-ip.net [188.111.22.2])
+	by smtp.strato.de (cohen mo48) (RZmta 26.7)
+	with ESMTPA id R06257n8QGV2Hq ; Mon, 26 Sep 2011 18:49:31 +0200 (MEST)
+User-Agent: Thunderbird 2.0.0.24 (X11/20100302)
+In-Reply-To: <CAP8UFD0PiiA9SxvOuuh4t8P96v+iaJ0TfcBr1-xjMh4TXBEONQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182132>
 
-On Mon, 26 Sep 2011 10:38:34 -0600, Martin Fick wrote:
-> On Monday, September 26, 2011 09:56:50 am Sverre Rabbelier
-> wrote:
->> Heya,
->>
->> On Mon, Sep 26, 2011 at 17:48, Martin Fick
-> <mfick@codeaurora.org> wrote:
->> > Hmm, I was thinking that too, and I just did a test.
->> >
->> > Instead of storing the changes under refs/changes, I
->> > fetched them under refs/heads/changes and then ran git
->> > 1.7.6 and it took about 3 mins.  Then, I ran the
->> > 1.7.7.rc0.73 with
->> > c774aab98ce6c5ef7aaacbef38da0a501eb671d4 reverted and
->> > it only took 13s!  So, if this indeed tests what you
->> > were suggesting, I think it shows that even in the
->> > intended case this change slowed things down?
->>
->> And if you run 1.7.7 without that commit reverted?
->
-> Sorry, I probably confused things by mentioning 1.7.6, the
-> bad commit was way before that early 1.5 days...
->
-> As for 1.7.7, I don't think that exists yet, so did you mean
-> the 1.7.7.rc0.73 version that I mentioned above without the
-> revert?  Strangely enough, that ends up being
-> 1.7.7.rc0.72.g4b5ea.  That is also slow with
-> refs/heads/changes > 3mins.
+Christian Couder schrieb:
+> Hi,
+> 
+> On Mon, Sep 26, 2011 at 1:48 PM, Georg-Johann Lay <spam@spam.com> wrote:
+>> Where do I have to go to get the svn+perl stuff? Couldn't locate anything like
+>> that in subversion.tigris.org, so that I am stuck and need some hints on how to
+>> proceed.
+> 
+> Perhaps you can try to install this module from CPAN:
+> 
+> http://search.cpan.org/~mschwern/Alien-SVN-v1.6.12.1/
+> 
+> or from it's github repo:
+> 
+> https://github.com/schwern/alien-svn
 
-Hmm ... something interesting is going on.
+Hi Christian,
 
-I created a little test repo with ~100k unpacked refs.
+thanks for that hint.
 
-I tried "time git branch" with three versions of git, and I got (hot 
-cache times):
+After getting that piece of software, running ./Build.PL and ./Build I just
+don't know what to do next.  The README doesn't say anything about how to use
+the built modules or how to do an install.
 
-git version 1.7.6.1: ~1.2s
-git version 1.7.7.rc3: ~1.2s
-git version 1.7.7.rc3.1.gbc93f: ~40s
+As git-svn complains
 
-Where the third was with the commit reverted.  That was almost 40s of 
-100% CPU - my poor laptop had to turn the fans up to noisy ...
+...Can't locate SVN/Core.pm in @INC (@INC contains: ...
 
-> -Martin
+and
 
--- 
-Julian
+ schwern-alien-svn-9298884>find . -name 'Core.pm'
+./src/subversion/subversion/bindings/swig/perl/native/Core.pm
+./src/subversion/subversion/bindings/swig/perl/native/blib/lib/SVN/Core.pm
+
+the question is how to do the final trick of telling git how to use Core.pm
+(and which of the two?) and do the connexion between git and alien-svn.
+
+Sorry for the noob questions, never used perl or git before...
+
+Johann
+
+> Regards,
+> Christian.
+
+p.s. is it possible not to open quote e-mail addresses in mailing lists?
