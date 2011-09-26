@@ -1,73 +1,66 @@
-From: Martin Fick <mfick@codeaurora.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
 Subject: Re: Git is not scalable with too many refs/*
-Date: Mon, 26 Sep 2011 09:48:25 -0600
-Organization: CAF
-Message-ID: <201109260948.25312.mfick@codeaurora.org>
-References: <4DF6A8B6.9030301@op5.se> <201109260915.29285.mfick@codeaurora.org> <CAGdFq_iuY0-PBDOmtz1pRvh6J9EDRiRJHsWkTN_cHjGU20PYTQ@mail.gmail.com>
+Date: Mon, 26 Sep 2011 17:56:50 +0200
+Message-ID: <CAGdFq_hRmSif4=V+9h8=S1fWfPCj+meRY8xGyfgv=SWk+DrBQw@mail.gmail.com>
+References: <4DF6A8B6.9030301@op5.se> <201109260915.29285.mfick@codeaurora.org>
+ <CAGdFq_iuY0-PBDOmtz1pRvh6J9EDRiRJHsWkTN_cHjGU20PYTQ@mail.gmail.com> <201109260948.25312.mfick@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Julian Phillips <julian@quantumfyre.co.uk>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 26 17:48:44 2011
+To: Martin Fick <mfick@codeaurora.org>
+X-From: git-owner@vger.kernel.org Mon Sep 26 17:57:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8DQA-00039b-Qi
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 17:48:43 +0200
+	id 1R8DYo-0007Uy-Aq
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 17:57:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751172Ab1IZPsi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Sep 2011 11:48:38 -0400
-Received: from wolverine01.qualcomm.com ([199.106.114.254]:57625 "EHLO
-	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750928Ab1IZPsh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2011 11:48:37 -0400
-X-IronPort-AV: E=McAfee;i="5400,1158,6480"; a="121607973"
-Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
-  by wolverine01.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 26 Sep 2011 08:48:26 -0700
-Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id A527210004BE;
-	Mon, 26 Sep 2011 08:48:26 -0700 (PDT)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-28-generic; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <CAGdFq_iuY0-PBDOmtz1pRvh6J9EDRiRJHsWkTN_cHjGU20PYTQ@mail.gmail.com>
+	id S1751549Ab1IZP5b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Sep 2011 11:57:31 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:65166 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751347Ab1IZP5b convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2011 11:57:31 -0400
+Received: by gyg10 with SMTP id 10so4265271gyg.19
+        for <git@vger.kernel.org>; Mon, 26 Sep 2011 08:57:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=g0B0gKVVtmGbs3W5WUhjVyso9WCbqJK8NupBcb989kg=;
+        b=LNBZSdk2MmF/E5x63DodxYCplZpuwcHagR/6NSlb6MQqueRIhfEmV++1jmdpCI7aCj
+         +FrkY+l9HVEZW+eyR4r5xxNVNo5rQUQBfT+7aa4KY1TYXWGVWSD0WobvZrqx/0hTni9D
+         qyKXgkmICwrEQaaqeEFozb+zzVyk1KZrJ8SmY=
+Received: by 10.68.7.132 with SMTP id j4mr30899624pba.102.1317052650056; Mon,
+ 26 Sep 2011 08:57:30 -0700 (PDT)
+Received: by 10.68.62.3 with HTTP; Mon, 26 Sep 2011 08:56:50 -0700 (PDT)
+In-Reply-To: <201109260948.25312.mfick@codeaurora.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182126>
 
-On Monday, September 26, 2011 09:21:30 am Sverre Rabbelier 
-wrote:
-> Heya,
-> 
-> On Mon, Sep 26, 2011 at 17:15, Martin Fick 
-<mfick@codeaurora.org> wrote:
-> > If this change does not actually speed things up,
-> > should it be reverted?  Or was there a bug in the
-> > change that makes it not do what it was supposed to
-> > do?
-> 
-> It probably looks at the refs in refs/changes while it
-> shouldn't, hence worsening your performance compared to
-> not looking at those refs. I assume that it does improve
-> your situation if you have all those refs under say
-> refs/heads.
+Heya,
 
-Hmm, I was thinking that too, and I just did a test. 
+On Mon, Sep 26, 2011 at 17:48, Martin Fick <mfick@codeaurora.org> wrote=
+:
+> Hmm, I was thinking that too, and I just did a test.
+>
+> Instead of storing the changes under refs/changes, I fetched
+> them under refs/heads/changes and then ran git 1.7.6 and it
+> took about 3 mins. =C2=A0Then, I ran the 1.7.7.rc0.73 with
+> c774aab98ce6c5ef7aaacbef38da0a501eb671d4 reverted and it
+> only took 13s! =C2=A0So, if this indeed tests what you were
+> suggesting, I think it shows that even in the intended case
+> this change slowed things down?
 
-Instead of storing the changes under refs/changes, I fetched 
-them under refs/heads/changes and then ran git 1.7.6 and it 
-took about 3 mins.  Then, I ran the 1.7.7.rc0.73 with 
-c774aab98ce6c5ef7aaacbef38da0a501eb671d4 reverted and it 
-only took 13s!  So, if this indeed tests what you were 
-suggesting, I think it shows that even in the intended case 
-this change slowed things down?
+And if you run 1.7.7 without that commit reverted?
 
--Martin
+--=20
+Cheers,
 
--- 
-Employee of Qualcomm Innovation Center, Inc. which is a 
-member of Code Aurora Forum
+Sverre Rabbelier
