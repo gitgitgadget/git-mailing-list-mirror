@@ -1,63 +1,85 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH 2/2] templates/hooks--*: don't refer to contrib hooks
-Date: Mon, 26 Sep 2011 12:59:32 +0000
-Message-ID: <20110926125932.27854.qmail@804c778e7e6607.315fe32.mid.smarden.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: subversion-perl missing
+Date: Mon, 26 Sep 2011 15:03:37 +0200
+Message-ID: <4E807829.7050609@drmicha.warpmail.net>
+References: <4E8066AB.7000208@gjlay.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 26 14:59:41 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Georg-Johann Lay <avr@gjlay.de>
+X-From: git-owner@vger.kernel.org Mon Sep 26 15:03:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8AmX-0007T2-5N
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 14:59:37 +0200
+	id 1R8AqX-0000xK-V7
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 15:03:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751579Ab1IZM7e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Sep 2011 08:59:34 -0400
-Received: from a.ns.smarden.org ([109.68.224.7]:45697 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751958Ab1IZM7e (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2011 08:59:34 -0400
-Received: (qmail 27855 invoked by uid 1000); 26 Sep 2011 12:59:32 -0000
-Content-Disposition: inline
+	id S1751237Ab1IZNDk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Sep 2011 09:03:40 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:53717 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750833Ab1IZNDk (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2011 09:03:40 -0400
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id D1FFE249CC;
+	Mon, 26 Sep 2011 09:03:39 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute5.internal (MEProxy); Mon, 26 Sep 2011 09:03:39 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=zC9EPtjrzQ8rr6aHPLaBC5
+	5Ig1Q=; b=H5vmIJYjoABlNfleho/uQAKkxV/ApQMpL4NlZQPOlMpcdfhzkhUO1V
+	d5OOUdB4DnjxjzvFc9A0KzQ7FSNeAABHMNcFezu8wIzqHy5ktBn9h9jbCoVEqXAw
+	XgK36DHZBpj/OX7jtJtMYPeImkv4nf96xJPZ3woRum/+HXvKeTBqQ=
+X-Sasl-enc: WtOP8W/FH5VTtblKFA1izN1StpV5mNb7kK/C1jthlk3t 1317042219
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 5B211A00B85;
+	Mon, 26 Sep 2011 09:03:39 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0.2) Gecko/20110906 Thunderbird/6.0.2
+In-Reply-To: <4E8066AB.7000208@gjlay.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182109>
 
-Simplify the sample post-receive hook to not refer to some location of a
-contrib hook that might be installed in different locations on different
-systems.  Instead simply provide a sample file that does nothing just as
-the post-commit sample hook.
+Georg-Johann Lay venit, vidit, dixit 26.09.2011 13:48:
+> Hi, I just downloaded git and built from source, version is
+> 
+> git version 1.7.6.4
+> 
+> I am particularly interested in git-svn, but running it I get complaints
+> 
+> Initialized empty Git repository in /local/Downloads/v4.5.x/.git/
+> Can't locate SVN/Core.pm in @INC (@INC contains:
+> /usr/local/lib/perl5/site_perl/5.10.0/i586-linux-thread-multi
+> /usr/local/lib/perl5/site_perl/5.10.0
+> /usr/lib/perl5/5.10.0/i586-linux-thread-multi /usr/lib/perl5/5.10.0
+> /usr/lib/perl5/site_perl/5.10.0/i586-linux-thread-multi
+> /usr/lib/perl5/site_perl/5.10.0
+> /usr/lib/perl5/vendor_perl/5.10.0/i586-linux-thread-multi
+> /usr/lib/perl5/vendor_perl/5.10.0 /usr/lib/perl5/vendor_perl .) at
+> /usr/local/libexec/git-core/git-svn line 42
+> 
+> I found out that a module like subversion-perl is missing, but installing it
+> via OpenSuse 1.11 would downgrade my SVN installation, so I skipped that.
 
-Signed-off-by: Gerrit Pape <pape@smarden.org>
----
- templates/hooks--post-receive.sample |   12 ++----------
- 1 files changed, 2 insertions(+), 10 deletions(-)
+So, where did you get your svn from? If you compiled it yourself, you
+should rebuild it with the perl bindings. Make sure you note where you
+install this to - you may have to adjust your PERL5LIB.
 
-diff --git a/templates/hooks--post-receive.sample b/templates/hooks--post-receive.sample
-index 7a83e17..5b1771f 100755
---- a/templates/hooks--post-receive.sample
-+++ b/templates/hooks--post-receive.sample
-@@ -2,14 +2,6 @@
- #
- # An example hook script for the "post-receive" event.
- #
--# The "post-receive" script is run after receive-pack has accepted a pack
--# and the repository has been updated.  It is passed arguments in through
--# stdin in the form
--#  <oldrev> <newrev> <refname>
--# For example:
--#  aa453216d1b3e49e7f6f98441fa56946ddcd6a20 68f7abf4e6f922807889f52bc043ecd31b79f814 refs/heads/master
--#
--# see contrib/hooks/ for a sample, or uncomment the next line and
--# rename the file to "post-receive".
-+# To enable this hook, rename this file to "post-receive".
- 
--#. /usr/share/doc/git-core/contrib/hooks/post-receive-email
-+: Nothing
--- 
-1.7.6.3
+> Thus, being no admin and no perl guy, I am stuck now and am asking here for
+> some kind help, being very well aware that it's not a git issue but just about
+> getting some prerequisite for git.
+> 
+> Where do I have to go to get the svn+perl stuff? Couldn't locate anything like
+> that in subversion.tigris.org, so that I am stuck and need some hints on how to
+> proceed.
+> 
+> Many thanks,
+> 
+> Johann
