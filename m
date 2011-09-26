@@ -1,90 +1,57 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Mon, 26 Sep 2011 15:52:04 -0600
-Organization: CAF
-Message-ID: <201109261552.04946.mfick@codeaurora.org>
-References: <4DF6A8B6.9030301@op5.se> <9ae990f15489d7b51a172d08e63ca458@quantumfyre.co.uk> <201109261539.33437.mfick@codeaurora.org>
+From: Roy Liu <carsomyr@gmail.com>
+Subject: [PATCH] git-submodule: a small fix
+Date: Mon, 26 Sep 2011 18:00:21 -0400
+Message-ID: <CAOOg04z0UjOQCBMTuii37y3ykNU17hDTcD9E81C+r1whFpMaCg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Mon Sep 26 23:52:12 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 27 00:00:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8J5w-0006Y1-7I
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 23:52:12 +0200
+	id 1R8JE5-0001I6-EW
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 00:00:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752672Ab1IZVwH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Sep 2011 17:52:07 -0400
-Received: from wolverine02.qualcomm.com ([199.106.114.251]:45362 "EHLO
-	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752274Ab1IZVwG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2011 17:52:06 -0400
-X-IronPort-AV: E=McAfee;i="5400,1158,6481"; a="121589984"
-Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
-  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 26 Sep 2011 14:52:06 -0700
-Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 2D95310004BE;
-	Mon, 26 Sep 2011 14:52:06 -0700 (PDT)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-28-generic; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <201109261539.33437.mfick@codeaurora.org>
+	id S1752257Ab1IZWAY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Sep 2011 18:00:24 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:46174 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750741Ab1IZWAV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2011 18:00:21 -0400
+Received: by gyg10 with SMTP id 10so4569888gyg.19
+        for <git@vger.kernel.org>; Mon, 26 Sep 2011 15:00:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=n0kXMv19IBHOPywMqj/BnMHq/M9WfWCFvjYfzhqypS8=;
+        b=sE+brYWpcAthYFC6RLDK6FulCD7CBzwP+gXm029zl5clGm+LohfkafQVuKFEay/U6p
+         9/XjRCPK1PWLgdGLbD0lSlll9+sPkXBLBEbY2pwT+DECw/EwU4b8+z4UfxgPdgJRyL0I
+         4Z5CXe2hoNhQtRKHFg9R7cH6mZ7KOB48BJouw=
+Received: by 10.151.14.8 with SMTP id r8mr5568737ybi.131.1317074421214; Mon,
+ 26 Sep 2011 15:00:21 -0700 (PDT)
+Received: by 10.150.205.11 with HTTP; Mon, 26 Sep 2011 15:00:21 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182173>
 
-On Monday, September 26, 2011 03:39:33 pm Martin Fick wrote:
-> On Monday, September 26, 2011 02:28:53 pm Julian Phillips
-> wrote:
-> > >> Random thought.  What happens to the with
-> > >> compression case if you leave the commit in, but
-> > >> add a sleep(15) to the end of sort_refs_list?
-> > > 
-> > > Why, what are you thinking?  Hmm, I am trying this on
-> > > the non gced repo and it doesn't seem to be
-> > > completing (no cpu usage)!  It appears that perhaps
-> > > it is being called many times (the sleeping would
-> > > explain no cpu usage)?!?  This could be a real
-> > > problem, this should only get called once right?
-> > 
-> > I was just wondering if the time taken to get the refs
-> > was changing the interaction with something else.  Not
-> > very likely, but ...
-> > 
-> > I added a print statement, and it was called four times
-> > when I had unpacked refs, and once with packed.  So,
-> > maybe you are hitting some nasty case with unpacked
-> > refs.  If you use a print statement instead of a sleep,
-> > how many times does sort_refs_lists get called in your
-> > unpacked case?  It may well also be worth calculating
-> > the time taken to do the sort.
-> 
-> In my case it was called 18785 times!  Any other tests I
-> should run?
+In git-submodule.sh, the "url" variable may contain a stale value from
+the previous loop iteration, so clear it.
 
-Gerrit stores the changes in directories under refs/changes 
-named after the last 2 digits of the change.  Then under 
-each change it stores each patchset.  So it looks like this:   
-refs/changes/dd/change_num/ps_num
+--- git-submodule.sh.orig =A0 2011-09-26 17:50:45.000000000 -0400
++++ git-submodule.sh =A0 =A02011-09-26 17:51:18.000000000 -0400
+@@ -370,6 +370,8 @@
+=A0 =A0 =A0 =A0 =A0 =A0esac
+=A0 =A0 =A0 =A0 =A0 =A0git config submodule."$name".url "$url" ||
+=A0 =A0 =A0 =A0 =A0 =A0die "Failed to register url for submodule path '=
+$path'"
++ =A0 =A0 =A0 =A0else
++ =A0 =A0 =A0 =A0 =A0 =A0url=3D""
+=A0 =A0 =A0 =A0fi
 
-I noticed that:
-
- ls refs/changes/* | wc -l 
- -> 18876
-
-somewhat close, but not super close to 18785,  I am not sure 
-if that is a clue.  It's almost like each change is causing 
-a re-sort,
-
- 
--Martin
-
--- 
-Employee of Qualcomm Innovation Center, Inc. which is a 
-member of Code Aurora Forum
+=A0 =A0 =A0 =A0# Copy "update" setting when it is not set yet
