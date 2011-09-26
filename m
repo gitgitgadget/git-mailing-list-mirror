@@ -1,92 +1,106 @@
-From: Georg-Johann Lay <avr@gjlay.de>
-Subject: Re: subversion-perl missing
-Date: Mon, 26 Sep 2011 18:49:31 +0200
-Message-ID: <4E80AD1B.3080700@gjlay.de>
-References: <4E8066AB.7000208@gjlay.de> <CAP8UFD0PiiA9SxvOuuh4t8P96v+iaJ0TfcBr1-xjMh4TXBEONQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC 1/2] is_url: Remove redundant assignment
+Date: Mon, 26 Sep 2011 09:52:54 -0700
+Message-ID: <7vsjnj455l.fsf@alter.siamese.dyndns.org>
+References: <1316927182-14212-1-git-send-email-pangyanhan@gmail.com>
+ <1316927182-14212-2-git-send-email-pangyanhan@gmail.com>
+ <CALUzUxp-++A7azzimE1mjvPVoGxRM4rzYt9z66CmFb0B3vi7dQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 26 18:49:52 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Pang Yan Han <pangyanhan@gmail.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 26 18:53:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8ENL-0007sC-Up
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 18:49:52 +0200
+	id 1R8EQX-0001Db-Qe
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 18:53:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751447Ab1IZQtr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Sep 2011 12:49:47 -0400
-Received: from mo-p00-ob.rzone.de ([81.169.146.161]:19550 "EHLO
-	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751191Ab1IZQtr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2011 12:49:47 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1317055785; l=1345;
-	s=domk; d=gjlay.de;
-	h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:
-	Subject:CC:To:MIME-Version:From:Date:X-RZG-CLASS-ID:X-RZG-AUTH;
-	bh=5vsYQeqslEuAhve60xUYxRSn41k=;
-	b=Q8mL24OOVO92Ymn8vPmmOUPXMfptWyjhVQlsncxq+PMHixJgcEoV/97QqlHPF+BdhIn
-	5zPqp0KdRTP9R1Zp9Wj8l9ezfzsf3Dnz+hMk7ae7gtqR1NVzM9uMjNz+QwVGfxrXPjQuA
-	jc1RK9yAqsGGPesXv6ogytPROYlT2CyFmVQ=
-X-RZG-AUTH: :LXoWVUeid/7A29J/hMvvT2k715jHQaJercGObUOFkj18odoYNahU4Q==
-X-RZG-CLASS-ID: mo00
-Received: from [192.168.0.22]
-	(business-188-111-022-002.static.arcor-ip.net [188.111.22.2])
-	by smtp.strato.de (cohen mo48) (RZmta 26.7)
-	with ESMTPA id R06257n8QGV2Hq ; Mon, 26 Sep 2011 18:49:31 +0200 (MEST)
-User-Agent: Thunderbird 2.0.0.24 (X11/20100302)
-In-Reply-To: <CAP8UFD0PiiA9SxvOuuh4t8P96v+iaJ0TfcBr1-xjMh4TXBEONQ@mail.gmail.com>
+	id S1751523Ab1IZQw6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Sep 2011 12:52:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33798 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751493Ab1IZQw5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Sep 2011 12:52:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F3BFB5891;
+	Mon, 26 Sep 2011 12:52:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6VHdwPhX/DBO3GjMbp3xmhR5aDU=; b=vGbZ/R
+	CbI4pWXn/k1Wo6xHD1JzUobBqUtihIR0cUhzxgE7r/0rWPfD6m5CG6mYplbZGX0j
+	rszN+Zxh/AAgQpprNWu8Id1ZwU5MmDKw5ckv0pSKFaGFpa7ODkGnO4olQjv+Rf5d
+	Q5FIlHCC86p02cdr91vMYW9i6GXKBf8XW+doo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NqWwP2U6f33HkUKnpM32oWFM/AVnAZfv
+	EV6C/N18oy5qJqSbsQQH4wGwD0ZUSCfNXyT47qM59NxJgmfkVM+chOeJQknx1oxW
+	TPVtTRIAU4kznsauSKWodEQaUM7RE6bk+Y86jsHYrX0GGOMtkgUsMPkZCyhtDXGI
+	DnmTMuJ84lY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB1185890;
+	Mon, 26 Sep 2011 12:52:56 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 75BF4588F; Mon, 26 Sep 2011
+ 12:52:56 -0400 (EDT)
+In-Reply-To: <CALUzUxp-++A7azzimE1mjvPVoGxRM4rzYt9z66CmFb0B3vi7dQ@mail.gmail.com> (Tay Ray
+ Chuan's message of "Sun, 25 Sep 2011 17:26:27 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FBCCC3E4-E85F-11E0-9B40-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182133>
 
-Christian Couder schrieb:
-> Hi,
-> 
-> On Mon, Sep 26, 2011 at 1:48 PM, Georg-Johann Lay <spam@spam.com> wrote:
->> Where do I have to go to get the svn+perl stuff? Couldn't locate anything like
->> that in subversion.tigris.org, so that I am stuck and need some hints on how to
->> proceed.
-> 
-> Perhaps you can try to install this module from CPAN:
-> 
-> http://search.cpan.org/~mschwern/Alien-SVN-v1.6.12.1/
-> 
-> or from it's github repo:
-> 
-> https://github.com/schwern/alien-svn
+Tay Ray Chuan <rctay89@gmail.com> writes:
 
-Hi Christian,
+> On Sun, Sep 25, 2011 at 1:06 PM, Pang Yan Han <pangyanhan@gmail.com> wrote:
+>> Signed-off-by: Pang Yan Han <pangyanhan@gmail.com>
+>> ---
+>>  url.c |    1 -
+>>  1 files changed, 0 insertions(+), 1 deletions(-)
+>>
+>> diff --git a/url.c b/url.c
+>> index 3e06fd3..d2e17e6 100644
+>> --- a/url.c
+>> +++ b/url.c
+>> @@ -22,7 +22,6 @@ int is_url(const char *url)
+>>
+>>        if (!url)
+>>                return 0;
+>> -       url2 = url;
+>>        first_slash = strchr(url, '/');
+>>
+>>        /* Input with no slash at all or slash first can't be URL. */
+>
+> Looks correct. Perhaps you could mention in the patch message that
+>
+>   There are no operations on url2 until another assignment to it later
+> at line 41.
 
-thanks for that hint.
+The looks correct, so I'll queue it, but it looks like that the function
+is implemented in an overly complicated way.
 
-After getting that piece of software, running ./Build.PL and ./Build I just
-don't know what to do next.  The README doesn't say anything about how to use
-the built modules or how to do an install.
+Why aren't we checking from left to right in a single pass, perhaps like
+this?
 
-As git-svn complains
-
-...Can't locate SVN/Core.pm in @INC (@INC contains: ...
-
-and
-
- schwern-alien-svn-9298884>find . -name 'Core.pm'
-./src/subversion/subversion/bindings/swig/perl/native/Core.pm
-./src/subversion/subversion/bindings/swig/perl/native/blib/lib/SVN/Core.pm
-
-the question is how to do the final trick of telling git how to use Core.pm
-(and which of the two?) and do the connexion between git and alien-svn.
-
-Sorry for the noob questions, never used perl or git before...
-
-Johann
-
-> Regards,
-> Christian.
-
-p.s. is it possible not to open quote e-mail addresses in mailing lists?
+	/* Make sure it is of form "scheme://something" */
+	int is_url(const char *url)
+	{
+		/* Is "scheme" part reasonable? */
+		if (!url || !is_urlschemechar(1, *url++))
+	        	return 0;
+		while (*url && *url != ':') {
+			if (!is_urlschemechar(0, *url++))
+				return 0;
+		}
+		/* We've seen "scheme"; we want colon-slash-slash */
+		return (url[0] == ':' && url[1] == '/' && url[2] == '/');
+	}
