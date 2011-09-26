@@ -1,96 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG?] git fetch -p -t prunes all non-tag refs
-Date: Mon, 26 Sep 2011 16:16:55 -0700
-Message-ID: <7v1uv228t4.fsf@alter.siamese.dyndns.org>
-References: <20110926184739.GA11745@erythro.kitwarein.com>
- <7vehz30wdy.fsf@alter.siamese.dyndns.org>
- <1317078667.5579.13.camel@centaur.lab.cmartin.tk>
+From: Peter Stuge <peter@stuge.se>
+Subject: Re: [PATCH] gitweb: Add js=1 before an URI fragment to fix line
+	number links
+Date: Tue, 27 Sep 2011 01:17:03 +0200
+Message-ID: <20110926231703.21696.qmail@stuge.se>
+References: <1317060642-25488-1-git-send-email-peter@stuge.se> <7vaa9q29ag.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: mathstuf@gmail.com, git@vger.kernel.org
-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Tue Sep 27 01:17:05 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 27 01:17:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8KQ3-0001WL-Le
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 01:17:04 +0200
+	id 1R8KQT-0001ex-O3
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 01:17:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752906Ab1IZXQ7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Sep 2011 19:16:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33192 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752627Ab1IZXQ6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2011 19:16:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B42954627;
-	Mon, 26 Sep 2011 19:16:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=F+/8kBkiMjUd
-	wpMDDbYVAIzeuDM=; b=xYt8RHXGpbUXIQpGSE1r7TsH009eb3DYmZq+kErYwFP1
-	s8y4lJhBStG81blWt0mN4zUeEv/tKQe1IevREl/qkcEVqxaUp9QE+nA/bkU24mdy
-	qnon6hUBzGLbhXUijYyBXtl8Dfbm+PCIiIq6n7jqaOgGsEzvuLhCgBMejcF4UxI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=fLhpB+
-	VtoV4tdjhLapEzErt1uaWNjBlvJiX4h8IYhV2CYNS99rFOiYM1la6XvQzzM1+wU3
-	tSCwtey6+cxMDMa3E4N72/5QWK/hgvObwcFN/nf/w/M2EWPim37DM9rsWB1kFIhX
-	24Mj1obbyYLss0bLhNBa2+MISYVlz+tNFJRWg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A9F774626;
-	Mon, 26 Sep 2011 19:16:57 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 404204624; Mon, 26 Sep 2011
- 19:16:57 -0400 (EDT)
-In-Reply-To: <1317078667.5579.13.camel@centaur.lab.cmartin.tk> ("Carlos
- =?utf-8?Q?Mart=C3=ADn?= Nieto"'s message of "Tue, 27 Sep 2011 01:11:03
- +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A12989AA-E895-11E0-B4C4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752955Ab1IZXRG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Sep 2011 19:17:06 -0400
+Received: from foo.stuge.se ([212.116.89.98]:60844 "HELO foo.stuge.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752917Ab1IZXRF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Sep 2011 19:17:05 -0400
+Received: (qmail 21697 invoked by uid 501); 26 Sep 2011 23:17:03 -0000
+Content-Disposition: inline
+In-Reply-To: <7vaa9q29ag.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182185>
 
-Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
+Junio C Hamano wrote:
+> >  		var link = allLinks[i];
+> > -		if (!jsExceptionsRe.test(link)) { // =~ /[;?]js=[01]$/;
+> > -			link.href +=
+> > -				(link.href.indexOf('?') === -1 ? '?' : ';') + 'js=1';
+> > +		if (!jsExceptionsRe.test(link)) { // =~ /[;?]js=[01](#.*)?$/;
+> 
+> Let's not repeat the regexp in the comment (badness you inherited
+> from the original).
 
-> On Mon, 2011-09-26 at 15:30 -0700, Junio C Hamano wrote:
->> Ben Boeckel <mathstuf@gmail.com> writes:
->>=20
->> > When the --prune and --tags options are given to git fetch togethe=
-r, all
->> > non-tag refs are pruned because only tags are looked at and when p=
-runing
->> > it appears as if the branches have disappeared and are therefore d=
-eleted
->> > locally.
->>=20
->> I would call that a bug, and it is not limited to the use of "--tags=
-". For
->> example, I suspect that
->>=20
->>     $ git fetch --prune origin refs/heads/master:refs/remotes/origin=
-/master
->>=20
->> would prune remote tracking branches for "origin" other than "master=
-".
->
-> This should fix it (in a way). Let's agree that it's a bad idea and
-> complain to the user.
+I agree. I chose to follow style.
 
-That might be a reasonable short-term safety measure, but in the longer
-term I think we should fix it properly. We are already learning "what a=
-re
-the refs the remote side currently has" from the transport and the righ=
-t
-fix ought to be to use that original information, not the version filte=
-red
-for the use of the primary objective of fetch, which is to only fetch w=
-hat
-the user asked for.
+
+> Regarding the "we already have the js=0 or js=1 in the URL" check here...
+> 
+> > +var jsExceptionsRe = /[;?]js=[01](#.*)?$/;
+> 
+> ... I am wondering who guarantees that this js=[01] is the last parameter
+> before the fragment identifier. The answer obviously is "the way the
+> current code is written using replace() method on link.href", but that is
+> somewhat disturbing, because it is not clear what should happen, short of
+> total rewrite of the code around this, when somebody needs to include
+> another variable, say xx=[01], just like the js=[01] you are fixing here,
+> in the resulting URL. In other words, this fixLinks() logic does not seem
+> to scale and also looks brittle.
+
+At first glance indeed. But I think it might be fine, because the
+purpose of this function is only to use javascript in order to
+indicate to the server that the client supports javascript. This is
+somewhat an odd case, the link rewriting is pretty much needed only
+for this one value so it doesn't really have to scale. But I have
+nothing against say removing (#.*)?$ and thus only matching
+[?;]js=[01] in link.href.
+
+
+> The patch itself looks correct as a short-term fix, though.
+
+Thanks, I figured if it was OK before then at least it would be
+better now.
+
+
+//Peter
