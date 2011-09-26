@@ -1,87 +1,140 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How to use git attributes to configure server-side checks?
-Date: Mon, 26 Sep 2011 16:14:07 +0200
-Message-ID: <201109261614.09315.jnareb@gmail.com>
-References: <4E7AF1AE.5030005@alum.mit.edu> <4E7DB916.6010606@alum.mit.edu> <20110926110552.GA20796@sigill.intra.peff.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: subversion-perl missing
+Date: Mon, 26 Sep 2011 16:18:36 +0200
+Message-ID: <4E8089BC.6030000@drmicha.warpmail.net>
+References: <4E8066AB.7000208@gjlay.de> <4E807829.7050609@drmicha.warpmail.net> <4E80811B.4030309@gjlay.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	git discussion list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Sep 26 16:14:21 2011
+Cc: git@vger.kernel.org
+To: Georg-Johann Lay <avr@gjlay.de>
+X-From: git-owner@vger.kernel.org Mon Sep 26 16:18:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8Bwr-0003c9-4c
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 16:14:21 +0200
+	id 1R8C16-00061A-HI
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 16:18:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750928Ab1IZOOQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Sep 2011 10:14:16 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:54411 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750806Ab1IZOOQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2011 10:14:16 -0400
-Received: by eya28 with SMTP id 28so3624711eya.19
-        for <git@vger.kernel.org>; Mon, 26 Sep 2011 07:14:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=/hsOiQL2ewo8m4sW5YVAA4136I3RU8Qu6g3nTlZk0Cs=;
-        b=nE5rdqgd0QrHXwqUg36Zjcgo19FpjN+rtG3A8Sag6BDu+0X8b563LwlvckDwCa0h7L
-         KPtIZNXtX8EKqBmq+JGmD+5ES/BnhxWokBiEa+PhHWcBFwFN2SzJxQImBH9tMgWun5eF
-         koRkNPN73gj1y0aKsMgoFJ0DHjv6wyIu+PahA=
-Received: by 10.213.8.6 with SMTP id f6mr1070378ebf.69.1317046454851;
-        Mon, 26 Sep 2011 07:14:14 -0700 (PDT)
-Received: from [192.168.1.13] (abwm119.neoplus.adsl.tpnet.pl. [83.8.236.119])
-        by mx.google.com with ESMTPS id x45sm60685447eeh.11.2011.09.26.07.14.11
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 26 Sep 2011 07:14:12 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20110926110552.GA20796@sigill.intra.peff.net>
-Content-Disposition: inline
+	id S1751060Ab1IZOSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Sep 2011 10:18:40 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:60292 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750725Ab1IZOSj (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2011 10:18:39 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 3258D2964A;
+	Mon, 26 Sep 2011 10:18:39 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute1.internal (MEProxy); Mon, 26 Sep 2011 10:18:39 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=2yo0RKim8LtgNKW6yDnFeD
+	E2Nvc=; b=l2MfEkCegrnh2WPR+M/IgXkZE3LrtMsQN8YDQrmHN1W+mymHBCPFK5
+	5UxprJU2URKb/6RwrYdFlvJ4g3Po8PhD5mYOAb2P7NDm1KZqXxCXGiDz6A4RgubZ
+	+VvxaPBXigZ5xVXhLC+nOjn72WHXbdWsBbBjcv5Fih/pAcmoo1e5o=
+X-Sasl-enc: TWJhWgpmP2R4kR9lAUfqbrUv/sjN+p6QnoOfDR8iY8S6 1317046718
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id A70779A02E6;
+	Mon, 26 Sep 2011 10:18:38 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0.2) Gecko/20110906 Thunderbird/6.0.2
+In-Reply-To: <4E80811B.4030309@gjlay.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182114>
 
-Jeff King wrote:
-> On Sat, Sep 24, 2011 at 01:03:50PM +0200, Michael Haggerty wrote:
- 
-> > While we are on the topic of config settings, I have often thought that
-> > it would be nice for git's default settings to be set via a
-> > well-commented config file, installed along with git, rather than via
-> > values compiled into the code.  This file and Documentation/config.txt
-> > could be generated from a single source file as part of the build
-> > process.
+Georg-Johann Lay venit, vidit, dixit 26.09.2011 15:41:
+> Michael J Gruber schrieb:
+>> Georg-Johann Lay venit, vidit, dixit 26.09.2011 13:48:
+>>> Hi, I just downloaded git and built from source, version is
+>>>
+>>> git version 1.7.6.4
+>>>
+>>> I am particularly interested in git-svn, but running it I get complaints
+>>>
+>>> Initialized empty Git repository in /local/Downloads/v4.5.x/.git/
+>>> Can't locate SVN/Core.pm in @INC (@INC contains:
+>>> /usr/local/lib/perl5/site_perl/5.10.0/i586-linux-thread-multi
+>>> /usr/local/lib/perl5/site_perl/5.10.0
+>>> /usr/lib/perl5/5.10.0/i586-linux-thread-multi /usr/lib/perl5/5.10.0
+>>> /usr/lib/perl5/site_perl/5.10.0/i586-linux-thread-multi
+>>> /usr/lib/perl5/site_perl/5.10.0
+>>> /usr/lib/perl5/vendor_perl/5.10.0/i586-linux-thread-multi
+>>> /usr/lib/perl5/vendor_perl/5.10.0 /usr/lib/perl5/vendor_perl .) at
+>>> /usr/local/libexec/git-core/git-svn line 42
+>>>
+>>> I found out that a module like subversion-perl is missing, but installing it
+>>> via OpenSuse 1.11 would downgrade my SVN installation, so I skipped that.
+>>
+>> So, where did you get your svn from? If you compiled it yourself, you
+>> should rebuild it with the perl bindings. Make sure you note where you
+>> install this to - you may have to adjust your PERL5LIB.
 > 
-> I think that can be a nice piece of documentation, but there may be some
-> complications.  I seem to recall that there may be one or two options
-> whose builtin values cannot be replicated via config (i.e., the "unset"
-> state means something). But I may be misremembering.
+> Hi Michael
 > 
-> However, I'm not sure what you mean by "rather than via values compiled
-> into the code".  Would you somehow generate code that sets the default
-> according to your master file? Would git fail to start if the file is
-> missing? Or if a specific config option is missing? How would you track
-> that?
+> svn identifies itself as
+> 
+>  > svn --version
+> 
+> svn, version 1.6.2 (r37639)
+>    compiled Jun 19 2009, 12:21:15
+> 
+> Copyright (C) 2000-2009 CollabNet.
+> Subversion is open source software, see http://subversion.tigris.org/
+> This product includes software developed by CollabNet (http://www.Collab.Net/).
+> 
+> The following repository access (RA) modules are available:
+> 
+> * ra_neon : Module for accessing a repository via WebDAV protocol using Neon.
+>   - handles 'http' scheme
+>   - handles 'https' scheme
+> * ra_svn : Module for accessing a repository using the svn network protocol.
+>   - with Cyrus SASL authentication
+>   - handles 'svn' scheme
+> * ra_local : Module for accessing a repository on local disk.
+>   - handles 'file' scheme
+> 
+> and its installed in
+> 
+>  > which svn
+> 
+> /usr/bin/svn
+> 
+>  > echo $PERL5LIB
+> 
+> <empty>
+> 
+> so looks like plain vanilla installation/build.
+> 
+> Is "perl bindings" the "subversion-perl" package (which likes to downgrade my
+> svn upon installing in yast)?
 
-There is also problem that it would screw up Git deprecation policy.
- * new behavior is introduced, with a knob that defaults to off
- * after some time knob starts to default to on
- * git uses new feature by default
+Yes, subversion-perl are the perl bindings, and if your distro has
+mismatching versions of subversion and subversion perl, then they have a
+problem, sorry :|
 
-With Git creating config file with state of config variables frozen at
-the state of repository creation this would be not possible.
-
--- 
-Jakub Narebski
-Poland
+> Is it a part of SVN (couln't find it there) or of perl?
+> 
+>  > perl --version    says:
+> 
+> This is perl, v5.10.0 built for i586-linux-thread-multi
+> 
+> Copyright 1987-2007, Larry Wall
+> ...
+> 
+>>> Thus, being no admin and no perl guy, I am stuck now and am asking here for
+>>> some kind help, being very well aware that it's not a git issue but just about
+>>> getting some prerequisite for git.
+>>>
+>>> Where do I have to go to get the svn+perl stuff? Couldn't locate anything like
+>>> that in subversion.tigris.org, so that I am stuck and need some hints on how to
+>>> proceed.
+>>>
+>>> Many thanks,
+>>>
+>>> Johann
+> 
