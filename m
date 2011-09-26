@@ -1,166 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: config-file includes
-Date: Mon, 26 Sep 2011 08:36:20 -0400
-Message-ID: <20110926123620.GA30336@sigill.intra.peff.net>
-References: <20110923195829.GA27677@sigill.intra.peff.net>
- <CACsJy8BAVRAct=sxTpZ+b-ft1OjbY9oZG6uEXrcsTXw3CXnwSg@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: Git is not scalable with too many refs/*
+Date: Mon, 26 Sep 2011 14:41:04 +0200
+Message-ID: <CAP8UFD3TWQHU0wLPuxMDnc3bRSz90Yd+yDMBe03kofeo-nr7yA@mail.gmail.com>
+References: <4DF6A8B6.9030301@op5.se>
+	<1315511619144-6773496.post@n2.nabble.com>
+	<1315529522448-6774328.post@n2.nabble.com>
+	<201109251443.28243.mfick@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 26 14:36:33 2011
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+To: Martin Fick <mfick@codeaurora.org>
+X-From: git-owner@vger.kernel.org Mon Sep 26 14:41:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8AQC-0003gs-6v
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 14:36:32 +0200
+	id 1R8AUi-000691-7f
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 14:41:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753475Ab1IZMgZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Sep 2011 08:36:25 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44518
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753375Ab1IZMgZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2011 08:36:25 -0400
-Received: (qmail 11906 invoked by uid 107); 26 Sep 2011 12:41:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 26 Sep 2011 08:41:24 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Sep 2011 08:36:20 -0400
-Content-Disposition: inline
-In-Reply-To: <CACsJy8BAVRAct=sxTpZ+b-ft1OjbY9oZG6uEXrcsTXw3CXnwSg@mail.gmail.com>
+	id S1752745Ab1IZMlH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Sep 2011 08:41:07 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:45826 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752359Ab1IZMlF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2011 08:41:05 -0400
+Received: by wwf22 with SMTP id 22so6720197wwf.1
+        for <git@vger.kernel.org>; Mon, 26 Sep 2011 05:41:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=dVetD6lCfwYqf2VkJMHBUOSp3Ibxup5lI30YUsX6MjA=;
+        b=gNSD6HnNqDOhk8J3qdxk8qLQ9821GVjK3AUWaPN/uHZgi5kh5vnl2Vqv7PKAijTxJO
+         RsiX5xrjfjyPUVEKBdgRZ8dmCndWGR/+9Q8pJMmmkAH0dIbEIwXs/YX/tmtL3xV2JkxH
+         dC8fwhO0b8MXid0ks5ADD0GJQYq0b/khDagOw=
+Received: by 10.227.199.137 with SMTP id es9mr34771wbb.31.1317040864291; Mon,
+ 26 Sep 2011 05:41:04 -0700 (PDT)
+Received: by 10.180.83.168 with HTTP; Mon, 26 Sep 2011 05:41:04 -0700 (PDT)
+In-Reply-To: <201109251443.28243.mfick@codeaurora.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182105>
 
-On Mon, Sep 26, 2011 at 08:45:58PM +1000, Nguyen Thai Ngoc Duy wrote:
+On Sun, Sep 25, 2011 at 10:43 PM, Martin Fick <mfick@codeaurora.org> wr=
+ote:
+> A coworker of mine pointed out to me that a simple
+>
+> =A0git checkout
+>
+> can also take rather long periods of time > 3 mins when run
+> on a repo with ~100K refs.
 
-> > You could extend this to look in refs, with something like:
-> >
-> > =C2=A0[include]
-> > =C2=A0ref =3D meta:config
-> >
-> > which would resolve meta:config to a blob and examine it (i.e., it =
-would
-> > look at refs/heads/meta).
->=20
-> I had something similar [1], although I disregarded worktree content
-> completely.
+Are all these refs packed?
 
-Thanks, I had totally missed that thread.
+> While this is not massive like the other problem I reported,
+> it still seems like it is more than one would expect. =A0So, I
+> tried an older version of git, and to my surprise/delight,
+> it was much faster (.2s). =A0So, I bisected this issue also,
+> and it seems that the "offending" commit is
+> 680955702990c1d4bfb3c6feed6ae9c6cb5c3c07:
+>
+> commit 680955702990c1d4bfb3c6feed6ae9c6cb5c3c07
+> Author: Christian Couder <chriscool@tuxfamily.org>
+> Date: =A0 Fri Jan 23 10:06:53 2009 +0100
+>
+> =A0 =A0replace_object: add mechanism to replace objects found
+> in "refs/replace/"
 
-Maybe it wasn't clear from my proposal, but I intend to disregard the
-worktree entirely, too. The include.path was about including stuff from
-the local filesystem, not necessarily your worktree.
+[...]
 
-> One thing about this meta thing is fsck/prune must dig in
-> config file in order not to accidentally remove something config file
-> refers to.
+> Now, I suspect this commit is desirable, but I was hoping
+> that perhaps a look at it might inspire someone to find an
+> obvious problem with it.
 
-It is only a connectivity problem if you put a raw sha1 in the config.
-It seems much more sensible to me to use a real ref. That solves the
-fsck issue, and it makes it easier to manipulate the contents using git=
-=2E
+I don't think there is an obvious problem with it, but it would be
+nice if you could dig a bit deeper.
 
-> Another thing is, what if I want to exclude certain part of the inclu=
-ded config?
+The first thing that could take a lot of time is the call to
+for_each_replace_ref() in this function:
 
-  git show origin/meta:config ;# review upstream
-  git checkout meta origin/meta
-  $EDITOR config
-  git commit -a -m 'tweak my config based on upstream'
-  git config include.ref meta:config
++static void prepare_replace_object(void)
++{
++       static int replace_object_prepared;
++
++       if (replace_object_prepared)
++               return;
++
++       for_each_replace_ref(register_replace_ref, NULL);
++       replace_object_prepared =3D 1;
++}
 
-  [weeks later]
-  git fetch ;# oh, new config from upstream
-  git log -p origin/meta@{1}...origin/meta ;# looks good to me
-  git checkout meta
-  git merge origin/meta
+Another thing is calling replace_object_pos() repeatedly in
+lookup_replace_object().
 
-Junio raised a good point in the thread you referenced: why is this any
-better than the project just shipping a "./setup-config" script that yo=
-u
-run (and re-run when there is an update). Two things I can think of:
-
-  1. Carrying it in the project tree (as opposed to a separate ref) is
-     annoying. It bloats your project tree, and any changes you make
-     get tangled up in the changes you're making to the project itself.
-     To me, they're logically separate entities.
-
-     You can still keep a separate "meta" ref that has the setup-config
-     script in it, though. That wouldn't need git support at all.
-     But...
-
-  2. Using a script to deploy the config makes it annoying to track
-     changes. If I make local tweaks to what upstream suggests for the
-     config, I would want those tracked by git. And when upstream makes
-     a change, I want to do a 3-way merge. So either my script must be
-     clever in deploying, or I must never touch the deployed .git/confi=
-g
-     file, and instead edit the setup-config script. Even then, how doe=
-s
-     it handle changes in .git/config that happen naturally (e.g.,
-     branch config written by git).
-
-If we had even a mechanism to include regular files, you could do
-something like:
-
-       # make our local tweaked version of config
-       git checkout meta
-       $EDITOR config
-       git commit -a -m 'tweak config based on upstream'
-
-       # now deploy it
-       cp config .git/tracked-config
-
-       # and reference it
-       git config include.path tracked-config
-
-       # Weeks later, update and redeploy. Don't touch tracked-config i=
-n
-       # the meantime, as your changes will be overwritten (or copy it
-       # back after checkout, commit changes, then pull)
-       git checkout meta
-       git pull
-       cp config .git/tracked-config
-
-which is really quite similar to the "include.ref" I showed earlier,
-except you can skip the annoying "deploy" step. Which is a minor
-convenience if you are actually keeping your own local config branch,
-and a slightly larger one if you want to do the dangerous "just look at
-origin/meta for config" thing.
-
-> > [1] I want conditional inclusion because sometimes the rules for co=
-nfig
-> > =C2=A0 =C2=A0entries changes from version to version. For example, =
-I have
-> > =C2=A0 =C2=A0pager.diff set to a script in my ~/.gitconfig. But old=
-er versions of
-> > =C2=A0 =C2=A0git don't understand non-boolean values and barf. I'd =
-really like to
-> > =C2=A0 =C2=A0do something like:
-> >
-> > =C2=A0 =C2=A0[include-ifdef "has-pager-scripts"]
-> > =C2=A0 =C2=A0path =3D ~/.gitconfig-pager
-> >
-> > =C2=A0 =C2=A0where "has-pager-scripts" would be a magic flag compil=
-ed into git
-> > =C2=A0 =C2=A0versions that understand that config.
->=20
-> But how far would you go with conditional expressions?
-
-I agree it could become hairy in the general case. That's why I called
-it "include-ifdef" and not "include-if". That would serve my use case. =
-I
-have no desire to support
-
-  [include-if "2 + 2 >=3D 4"]
-
--Peff
+Thanks,
+Christian.
