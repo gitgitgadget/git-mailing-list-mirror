@@ -1,71 +1,57 @@
-From: Joe Perches <joe@perches.com>
-Subject: Re: [PATCH] send-email: auth plain/login fix
-Date: Mon, 26 Sep 2011 09:59:03 -0700
-Message-ID: <1317056343.14197.2.camel@Joe-Laptop>
-References: <7vzkjn16n6.fsf@alter.siamese.dyndns.org>
-	 <1316879367-1182-1-git-send-email-zbyszek@in.waw.pl>
-	 <7v8vpb5kea.fsf@alter.siamese.dyndns.org>
+From: Thomas Koch <thomas@koch.ro>
+Subject: emacs as mergetool
+Date: Mon, 26 Sep 2011 18:21:27 +0200
+Message-ID: <201109261821.28382.thomas@koch.ro>
+Reply-To: thomas@koch.ro
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Zbigniew =?UTF-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>, Graham Barr <gbarr@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 26 18:59:21 2011
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 26 19:07:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8EWW-0004eC-SY
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 18:59:21 +0200
+	id 1R8EeF-0008Ss-Fq
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 19:07:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751904Ab1IZQ7M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Sep 2011 12:59:12 -0400
-Received: from perches-mx.perches.com ([206.117.179.246]:37854 "EHLO
-	labridge.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751765Ab1IZQ7F (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2011 12:59:05 -0400
-Received: from [173.60.85.8] (account joe@perches.com HELO [192.168.1.151])
-  by labridge.com (CommuniGate Pro SMTP 5.0.14)
-  with ESMTPA id 18193753; Mon, 26 Sep 2011 09:59:04 -0700
-In-Reply-To: <7v8vpb5kea.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 3.1.92- 
+	id S1751191Ab1IZRHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Sep 2011 13:07:13 -0400
+Received: from koch.ro ([88.198.2.104]:39764 "EHLO koch.ro"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750782Ab1IZRHM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Sep 2011 13:07:12 -0400
+X-Greylist: delayed 2606 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Sep 2011 13:07:11 EDT
+Received: from [195.65.248.188] (helo=t61.localnet)
+	by koch.ro with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <thomas@koch.ro>)
+	id 1R8Dy2-0005Bh-Df
+	for git@vger.kernel.org; Mon, 26 Sep 2011 18:23:44 +0200
+User-Agent: KMail/1.13.7 (Linux/3.0.0-1-amd64; KDE/4.6.5; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182135>
 
-On Mon, 2011-09-26 at 09:38 -0700, Junio C Hamano wrote:
-> Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
->=20
-> > git send-email was not authenticating properly when communicating o=
-ver
-> > TLS with a server supporting only AUTH PLAIN and AUTH LOGIN. This i=
-s
-> > e.g. the standard server setup under debian with exim4 and probably
-> > everywhere where system accounts are used.
->=20
-> Now that's a solution that makes me feel less dirty than
->=20
->   http://thread.gmane.org/gmane.comp.version-control.git/178818/focus=
-=3D178824
+Hi,
 
-Dirty is dirty.  I don't see this as better or worse really,
-but thanks Zbigniew for bringing it up again.
+would you be so kind and give an emacs newbie (and vim refugee) a hint about 
+using emacs as mergetool?
 
-It'd be best if Graham Barr, the module author (cc'd),
-could respond to the issue.
+- Which one? ediff vs. emerge (I don't bother learning, just give me the best)
+- I'd like to have a setup, where I can run mergetool with different options 
+to
+  - connect to a running emacs server
+  - run emacs in X
+  - or in the terminal (default)
+- Is it possible to resolve all conflicting files in one session instead of 
+having emacs called again for every file?
+- Do you know a tutorial on emacs as a mergetool?
 
-cheers, Joe
+Thank you,
 
-> even though, by forcing Authen::SASL::Perl to be used bypassing XS an=
-d
-> Cyrus variants, this _might_ be introducing regression for others. We=
-'ll
-> find out soon enough if anybody screams ;-)
->=20
-> I see you already researched previous discussion and have Joe Perches=
- in
-> the loop; Thanks.
+Thomas Koch, http://www.koch.ro
