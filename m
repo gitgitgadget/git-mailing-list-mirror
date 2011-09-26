@@ -1,105 +1,69 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git svn clone issues with buddypress subversion repository
-Date: Mon, 26 Sep 2011 10:13:07 +0200
-Message-ID: <4E803413.3080709@drmicha.warpmail.net>
-References: <CAM1C4G=YbK5PF21UujxNRR0PX9xqQBSEvcB45Zxy1hwZuyuL8Q@mail.gmail.com> <CAM1C4G=o_Q5scdv=Jk3ou-3OjnZiukZV3nz0NJR7CTaKLbB2jw@mail.gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: Could someone give me a copy of git internal api document?
+Date: Mon, 26 Sep 2011 16:42:43 +0800
+Message-ID: <CALUzUxqth=P+fKnP3+w=dRa4Nue588wUNrTF6ArwgxHzLkknJg@mail.gmail.com>
+References: <CAMocUqREFHdqFGR9c_3hFJy6KxUaXLnaY9R+4K04mL42-KY-Kg@mail.gmail.com>
+	<4E802872.2010906@elegosoft.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Anand Kumria <akumria@acm.org>
-X-From: git-owner@vger.kernel.org Mon Sep 26 10:13:17 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?5b6Q6L+q?= <xudifsd@gmail.com>,
+	=?GB2312?B?R2l0INPKvP7B0LHt?= <git@vger.kernel.org>
+To: Michael Schubert <mschub@elegosoft.com>
+X-From: git-owner@vger.kernel.org Mon Sep 26 10:42:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R86JQ-0002w7-PL
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 10:13:17 +0200
+	id 1R86m2-0007UZ-RJ
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 10:42:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751220Ab1IZINL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Sep 2011 04:13:11 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:39098 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750855Ab1IZINK (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2011 04:13:10 -0400
-Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 22DEC240D8;
-	Mon, 26 Sep 2011 04:13:10 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute6.internal (MEProxy); Mon, 26 Sep 2011 04:13:10 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=7j6zO7IF8v2Y6WDXS/9len
-	hccr4=; b=ox2xPe+7XM0nZrLsogB+3bLxNtKugEZCgaFHdvO0EEx3PblV04xKip
-	d0n1kOVTbkB68nKyCSDinUs6ylucnO0oSWH8mPrMLwvls39KnfcKoLHCFDklLGpa
-	nFCrd0HodUSoJ5VS69vZhZVvm+kBBQYUBfJgZWfz17TOINnpfqIRE=
-X-Sasl-enc: ttrZCdAUuxozo2YbG3FF3GNwlkqorVlwdMEMlsh8AQ7U 1317024789
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id A0A63A0050E;
-	Mon, 26 Sep 2011 04:13:09 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0.2) Gecko/20110906 Thunderbird/6.0.2
-In-Reply-To: <CAM1C4G=o_Q5scdv=Jk3ou-3OjnZiukZV3nz0NJR7CTaKLbB2jw@mail.gmail.com>
+	id S1751911Ab1IZImp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Sep 2011 04:42:45 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:40608 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751670Ab1IZImp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2011 04:42:45 -0400
+Received: by fxe4 with SMTP id 4so5864576fxe.19
+        for <git@vger.kernel.org>; Mon, 26 Sep 2011 01:42:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=+v5h49YyImOLHELhmTOqFtc8nlLvvEiy7j4hMlN7bGk=;
+        b=rE8URM44a1o9IJOXVv6cq35RcAu4GeEOXvWLjqAw8eaBxtpkH7QUob7tNHw5VBitEU
+         6iFcOz7C59mcRuJIiEOfZfm9FkAzrrEruJfuEdSSruenMAbOkBJfR++LCuw+wvFybw3m
+         zSexjDjKkpSIFHmYo48enyNlm2+NPEQXF1XxA=
+Received: by 10.223.53.78 with SMTP id l14mr10161714fag.140.1317026563893;
+ Mon, 26 Sep 2011 01:42:43 -0700 (PDT)
+Received: by 10.223.79.65 with HTTP; Mon, 26 Sep 2011 01:42:43 -0700 (PDT)
+In-Reply-To: <4E802872.2010906@elegosoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182096>
 
-Anand Kumria venit, vidit, dixit 24.09.2011 18:50:
-> Hi,
-> 
-> I'm trying:
-> 
-> % git svn clone -s http://svn.buddypress.org/trunk/ buddypress
+2011/9/26 Michael Schubert <mschub@elegosoft.com>:
+> On 09/26/2011 09:11 AM, =E5=BE=90=E8=BF=AA wrote:
+>> I am reading code of git recently, and i want to know some internal
+>> api in git, so i googled "git internal api", and result is
+>> http://www.kernel.org/pub/software/scm/git/docs/v1.6.5.9/technical/a=
+pi-index.html
+>> but kernel.org was down for maintenance, and i have no idea when it
+>> will recover, could someone give me a mirror url or post me a copy o=
+f
+>> it?
+>
+> If you got the code, you should have Documentation/technical in your
+> source tree.?
 
-Please try
+If you prefer the generated HTML output:
 
-git svn clone -s http://svn.buddypress.org/ buddypress
+  https://git-core.googlecode.com/git-history/html/technical/api-index.=
+html
 
-By saying "-s", you make git-svn look in trunk, branches and tags
-subdirs of the URL that you specify, i.e. trunk/trunk etc. with your
-command line.
-
-Or, omit "-s" if you want the trunk branch only.
-
-> Initialized empty Git repository in
-> /home/anand/Projects/wordpress/buddypress/.git/
-> Using higher level of URL: http://svn.buddypress.org/trunk =>
-> http://svn.buddypress.org
-> 
-> % git --version
-> git version 1.7.0.4
-> 
-> And at the end, git svn appears to successfull complete but nothing
-> has occurred. I'm successfully using 'git svn' against other
-> repositories with no problem, just wondering if anyone else has come
-> across this.
-> 
-> % find buddypress
-> buddypress
-> buddypress/.git
-> [omitted]
-> buddypress/.git/svn
-> buddypress/.git/svn/refs
-> buddypress/.git/svn/refs/remotes
-> buddypress/.git/svn/refs/remotes/git-svn
-> buddypress/.git/svn/refs/remotes/trunk
-> buddypress/.git/svn/refs/remotes/trunk/.rev_map.cdf35c40-ae34-48e0-9cc9-0c9da1808c22
-> buddypress/.git/svn/.metadata
-> 
-> % cat buddypress/.git/svn/.metadata
-> ; This file is used internally by git-svn
-> ; You should not have to edit it
-> [svn-remote "svn"]
->     reposRoot = http://svn.buddypress.org
->     uuid = cdf35c40-ae34-48e0-9cc9-0c9da1808c22
->     branches-maxRev = 5188
->     tags-maxRev = 5188
-
-Contents of .git/config would be more helpful in general. We don't need
-it in this case, but looking at it might have given you the clue
-(trunk/trunk).
-
-Michael
+--=20
+Cheers,
+Ray Chuan
