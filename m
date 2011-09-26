@@ -1,91 +1,144 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 0/2] Teach receive-pack not to run update hook for
- corrupt/non existent ref
-Date: Mon, 26 Sep 2011 16:23:55 -0700
-Message-ID: <7vwrcuzy44.fsf@alter.siamese.dyndns.org>
-References: <1316927182-14212-1-git-send-email-pangyanhan@gmail.com>
- <CAMK1S_hadzaqixaW3Fx81pf=hVsvAMpVvVGqVtZ8ncfUsie_9w@mail.gmail.com>
- <20110925094822.GA1702@myhost>
- <CAMK1S_h3ufrK29_ajpcSSW7HV6ZA8z8ZVHvhHr2bx5Cga5FAKQ@mail.gmail.com>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: Git is not scalable with too many refs/*
+Date: Tue, 27 Sep 2011 00:26:55 +0100
+Message-ID: <ece30e6a1b74bcddde5634003408f61f@quantumfyre.co.uk>
+References: <4DF6A8B6.9030301@op5.se>
+ <9ae990f15489d7b51a172d08e63ca458@quantumfyre.co.uk>
+ <201109261539.33437.mfick@codeaurora.org>
+ <201109261552.04946.mfick@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pang Yan Han <pangyanhan@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 27 01:24:04 2011
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Martin Fick <mfick@codeaurora.org>
+X-From: git-owner@vger.kernel.org Tue Sep 27 01:27:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8KWq-0003k3-IA
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 01:24:04 +0200
+	id 1R8KZi-0004Uv-LU
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 01:27:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753017Ab1IZXYA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Sep 2011 19:24:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37294 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753008Ab1IZXX6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2011 19:23:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 017CD4A51;
-	Mon, 26 Sep 2011 19:23:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/4PccAz3t8PCIWkCVJjArtlxALs=; b=rL+HZa
-	Zx+LeJU0scTqsMmvaPRamg0FOKheA3K56+7a6zFJZodKyNEfiBBa7Ef0JGZpM21u
-	9tjOhqY44aMhUfvoBRAxObBNJRPESLSKYQNJUfzFn2ndbeOl5liaVjVE4S3NUa1V
-	lYQkqvQ+9oNp3Qv2Rgibm/m1vdokU0Xye8ob0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ih7BmF9mxaOMz0hyK3lMC3+1t8VqcJqi
-	GyX8jcdyCbyvN2THIDEoEg1jDk0KsBQgCTDsb6RRhNPElinpwcDkgSL6ctG1WMp5
-	89J5INu8bFIsURQiPd4nwQ8HdIX5CYZ5suOtkh53bRgo1wvfon8eI5GRiZsbVg/o
-	9gNxp2jRsOE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA2694A50;
-	Mon, 26 Sep 2011 19:23:57 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 530C84A4D; Mon, 26 Sep 2011
- 19:23:57 -0400 (EDT)
-In-Reply-To: <CAMK1S_h3ufrK29_ajpcSSW7HV6ZA8z8ZVHvhHr2bx5Cga5FAKQ@mail.gmail.com> (Sitaram
- Chamarty's message of "Sun, 25 Sep 2011 17:35:03 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9B8C5F30-E896-11E0-BD05-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752396Ab1IZX06 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Sep 2011 19:26:58 -0400
+Received: from neutrino.quantumfyre.co.uk ([93.93.128.23]:49793 "EHLO
+	neutrino.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750755Ab1IZX05 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2011 19:26:57 -0400
+Received: from reaper.quantumfyre.co.uk (quantumfyre-1-pt.tunnel.tserv5.lon1.ipv6.he.net [IPv6:2001:470:1f08:1724::2])
+	by neutrino.quantumfyre.co.uk (Postfix) with ESMTP id CF680C0602;
+	Tue, 27 Sep 2011 00:26:56 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id AB76B36A825;
+	Tue, 27 Sep 2011 00:26:56 +0100 (BST)
+X-Virus-Scanned: amavisd-new at reaper
+Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
+	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id be0A-FINI-Wu; Tue, 27 Sep 2011 00:26:56 +0100 (BST)
+Received: from webmail.quantumfyre.co.uk (reaper.quantumfyre.co.uk [192.168.0.2])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id EF8EA36A6DD;
+	Tue, 27 Sep 2011 00:26:55 +0100 (BST)
+In-Reply-To: <201109261552.04946.mfick@codeaurora.org>
+X-Sender: julian@quantumfyre.co.uk
+User-Agent: Roundcube Webmail/0.5.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182189>
 
-Sitaram Chamarty <sitaramc@gmail.com> writes:
+On Mon, 26 Sep 2011 15:52:04 -0600, Martin Fick wrote:
+> On Monday, September 26, 2011 03:39:33 pm Martin Fick wrote:
+>> On Monday, September 26, 2011 02:28:53 pm Julian Phillips
+>> wrote:
+>> > >> Random thought.  What happens to the with
+>> > >> compression case if you leave the commit in, but
+>> > >> add a sleep(15) to the end of sort_refs_list?
+>> > >
+>> > > Why, what are you thinking?  Hmm, I am trying this on
+>> > > the non gced repo and it doesn't seem to be
+>> > > completing (no cpu usage)!  It appears that perhaps
+>> > > it is being called many times (the sleeping would
+>> > > explain no cpu usage)?!?  This could be a real
+>> > > problem, this should only get called once right?
+>> >
+>> > I was just wondering if the time taken to get the refs
+>> > was changing the interaction with something else.  Not
+>> > very likely, but ...
+>> >
+>> > I added a print statement, and it was called four times
+>> > when I had unpacked refs, and once with packed.  So,
+>> > maybe you are hitting some nasty case with unpacked
+>> > refs.  If you use a print statement instead of a sleep,
+>> > how many times does sort_refs_lists get called in your
+>> > unpacked case?  It may well also be worth calculating
+>> > the time taken to do the sort.
+>>
+>> In my case it was called 18785 times!  Any other tests I
+>> should run?
+>
+> Gerrit stores the changes in directories under refs/changes
+> named after the last 2 digits of the change.  Then under
+> each change it stores each patchset.  So it looks like this:
+> refs/changes/dd/change_num/ps_num
+>
+> I noticed that:
+>
+>  ls refs/changes/* | wc -l
+>  -> 18876
+>
+> somewhat close, but not super close to 18785,  I am not sure
+> if that is a clue.  It's almost like each change is causing
+> a re-sort,
 
-> From a philosophical point of view, update and pre-receive *check*
-> things to make sure everything is OK.  IMO they should be allowed to
-> run even if the ref being deleted doesn't exist -- that could well be
-> an error condition that the guy who owns the repo wants to trap and
-> alert himself to in some special way.  I would *not* like them
-> disabled.
+basically, it is ...
 
-I think this is a sane thing to do.
+Back when I made that change, I failed to notice that get_ref_dir was 
+recursive for subdirectories ... sorry ...
 
-> Post-{update,receive} are for *after* a successful push.  My
-> suggestion would be to make sure the inputs supplied to those hooks
-> (via STDIN for post-receive, and as arguments in case of post-update)
-> reflect this -- only successfully updated refs are sent in as args.
+Hopefully this should speed things up.  My test repo went from ~17m 
+user time, to ~2.5s.
+Packing still make things much faster of course.
 
-Perhaps sane.
+diff --git a/refs.c b/refs.c
+index a615043..212e7ec 100644
+--- a/refs.c
++++ b/refs.c
+@@ -319,7 +319,7 @@ static struct ref_list *get_ref_dir(const char 
+*submodule, c
+                 free(ref);
+                 closedir(dir);
+         }
+-       return sort_ref_list(list);
++       return list;
+  }
 
-> This might mean that in the case of 'git push origin
-> :refs/heads/non-existent-ref' the post-receive hook would run but
-> STDIN would be empty, and post-update would run but have no arguments.
+  struct warn_if_dangling_data {
+@@ -361,11 +361,13 @@ static struct ref_list *get_loose_refs(const char 
+*submodu
+         if (submodule) {
+                 free_ref_list(submodule_refs.loose);
+                 submodule_refs.loose = get_ref_dir(submodule, "refs", 
+NULL);
++               submodule_refs.loose = 
+sort_refs_list(submodule_refs.loose);
+                 return submodule_refs.loose;
+         }
 
-Hmm?
+         if (!cached_refs.did_loose) {
+                 cached_refs.loose = get_ref_dir(NULL, "refs", NULL);
++               cached_refs.loose = sort_refs_list(cached_refs.loose);
+                 cached_refs.did_loose = 1;
+         }
+         return cached_refs.loose;
 
-In that case (if "non-existent-ref" was indeed non-existent, and not just
-pointing at a dangling commit), I would say the post anything hook should
-not be called for that ref.  These hooks of course need to run if there
-are _other_ refs that were updated, though, to handle these _other_ refs,
-but I do not think they should be told about the no-op.
+
+
+>
+>
+> -Martin
+
+-- 
+Julian
