@@ -1,80 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: auth plain/login fix
-Date: Mon, 26 Sep 2011 09:38:21 -0700
-Message-ID: <7v8vpb5kea.fsf@alter.siamese.dyndns.org>
-References: <7vzkjn16n6.fsf@alter.siamese.dyndns.org>
- <1316879367-1182-1-git-send-email-zbyszek@in.waw.pl>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: Git is not scalable with too many refs/*
+Date: Mon, 26 Sep 2011 10:38:34 -0600
+Organization: CAF
+Message-ID: <201109261038.34527.mfick@codeaurora.org>
+References: <4DF6A8B6.9030301@op5.se> <201109260948.25312.mfick@codeaurora.org> <CAGdFq_hRmSif4=V+9h8=S1fWfPCj+meRY8xGyfgv=SWk+DrBQw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: joe@perches.com, git@vger.kernel.org
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Mon Sep 26 18:38:30 2011
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Julian Phillips <julian@quantumfyre.co.uk>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 26 18:38:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8ECM-0002Da-8i
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 18:38:30 +0200
+	id 1R8ECa-0002LR-1b
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 18:38:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751927Ab1IZQiZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Sep 2011 12:38:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60444 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751857Ab1IZQiY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2011 12:38:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 95D7E54C4;
-	Mon, 26 Sep 2011 12:38:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=BIjZXDQhLQK3
-	CkYu3RX/gkq1f/c=; b=SKano0zJZ8e1643YRm7UQwk8ht3uBxkWzAp6wxo57/Vb
-	TSNuInDtATEVyTPwHtLGro+A9HpA/TvYYjLXA07mc4WGBKv1JD7HXMDY+z6igJ4Q
-	AMxZP8zijq6EWeA0s0elHAJK569kjPwsmNJEIfJf9x5rxTKms3O+y/BhyHjBUhw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=FV76/c
-	rRVaUKNqKTQt9+juBrO4r23uDrD0NFhOqZy5NIbY/OcD5gEOAhMcepiGOXFWs4lO
-	Oj4FtSRxcHSJVRajR72PYy46MjAVwZfl+KEORLFcpLzLBK6zyjm8W1Wqb8f4/CBK
-	M7uwBoNdTBdv8wIsov4ndvoE5DPNHbif6naio=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D19954C3;
-	Mon, 26 Sep 2011 12:38:23 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D80254C2; Mon, 26 Sep 2011
- 12:38:22 -0400 (EDT)
-In-Reply-To: <1316879367-1182-1-git-send-email-zbyszek@in.waw.pl> ("Zbigniew
- =?utf-8?Q?J=C4=99drzejewski-Szmek=22's?= message of "Sat, 24 Sep 2011
- 17:49:27 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F32F0956-E85D-11E0-A8BE-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751967Ab1IZQik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Sep 2011 12:38:40 -0400
+Received: from wolverine01.qualcomm.com ([199.106.114.254]:21493 "EHLO
+	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751857Ab1IZQij (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Sep 2011 12:38:39 -0400
+X-IronPort-AV: E=McAfee;i="5400,1158,6480"; a="121626743"
+Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
+  by wolverine01.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 26 Sep 2011 09:38:35 -0700
+Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 8F4B010004BE;
+	Mon, 26 Sep 2011 09:38:35 -0700 (PDT)
+User-Agent: KMail/1.13.5 (Linux/2.6.32-28-generic; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <CAGdFq_hRmSif4=V+9h8=S1fWfPCj+meRY8xGyfgv=SWk+DrBQw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182129>
 
-Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
+On Monday, September 26, 2011 09:56:50 am Sverre Rabbelier 
+wrote:
+> Heya,
+> 
+> On Mon, Sep 26, 2011 at 17:48, Martin Fick 
+<mfick@codeaurora.org> wrote:
+> > Hmm, I was thinking that too, and I just did a test.
+> > 
+> > Instead of storing the changes under refs/changes, I
+> > fetched them under refs/heads/changes and then ran git
+> > 1.7.6 and it took about 3 mins.  Then, I ran the
+> > 1.7.7.rc0.73 with
+> > c774aab98ce6c5ef7aaacbef38da0a501eb671d4 reverted and
+> > it only took 13s!  So, if this indeed tests what you
+> > were suggesting, I think it shows that even in the
+> > intended case this change slowed things down?
+> 
+> And if you run 1.7.7 without that commit reverted?
 
-> git send-email was not authenticating properly when communicating ove=
-r
-> TLS with a server supporting only AUTH PLAIN and AUTH LOGIN. This is
-> e.g. the standard server setup under debian with exim4 and probably
-> everywhere where system accounts are used.
+Sorry, I probably confused things by mentioning 1.7.6, the 
+bad commit was way before that early 1.5 days...  
 
-Now that's a solution that makes me feel less dirty than
+As for 1.7.7, I don't think that exists yet, so did you mean 
+the 1.7.7.rc0.73 version that I mentioned above without the 
+revert?  Strangely enough, that ends up being 
+1.7.7.rc0.72.g4b5ea.  That is also slow with 
+refs/heads/changes > 3mins.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/178818/focus=3D=
-178824
+-Martin
 
-even though, by forcing Authen::SASL::Perl to be used bypassing XS and
-Cyrus variants, this _might_ be introducing regression for others. We'l=
-l
-find out soon enough if anybody screams ;-)
-
-I see you already researched previous discussion and have Joe Perches i=
-n
-the loop; Thanks.
+-- 
+Employee of Qualcomm Innovation Center, Inc. which is a 
+member of Code Aurora Forum
