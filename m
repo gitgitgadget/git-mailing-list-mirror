@@ -1,104 +1,106 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: config-file includes
-Date: Mon, 26 Sep 2011 20:45:58 +1000
-Message-ID: <CACsJy8BAVRAct=sxTpZ+b-ft1OjbY9oZG6uEXrcsTXw3CXnwSg@mail.gmail.com>
-References: <20110923195829.GA27677@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: How to use git attributes to configure server-side checks?
+Date: Mon, 26 Sep 2011 07:05:52 -0400
+Message-ID: <20110926110552.GA20796@sigill.intra.peff.net>
+References: <4E7AF1AE.5030005@alum.mit.edu>
+ <CAG+J_DxtCx6-RKWLKFy+V7tOtu7UnUrke7iN8gNdGiY-sC52sQ@mail.gmail.com>
+ <20110922171340.GA2934@sigill.intra.peff.net>
+ <CAG+J_DxdP2qHhttJOtWQTKeiDV2YbC_A_F+b9sDOZsWhWxjcjw@mail.gmail.com>
+ <20110922205856.GA8563@sigill.intra.peff.net>
+ <4E7C5A3B.10703@alum.mit.edu>
+ <20110923193341.GA26820@sigill.intra.peff.net>
+ <4E7D7329.7070800@alum.mit.edu>
+ <20110924061555.GB13974@sigill.intra.peff.net>
+ <4E7DB916.6010606@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-	Jay Soffian <jaysoffian@gmail.com>,
+Content-Type: text/plain; charset=utf-8
+Cc: Jay Soffian <jaysoffian@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
+	git discussion list <git@vger.kernel.org>,
 	Jakub Narebski <jnareb@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Sep 26 12:46:37 2011
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Sep 26 13:06:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R88ho-0003q3-S4
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 12:46:37 +0200
+	id 1R890b-00046e-22
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 13:06:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751747Ab1IZKqb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Sep 2011 06:46:31 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:55011 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751325Ab1IZKqa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2011 06:46:30 -0400
-Received: by bkbzt4 with SMTP id zt4so5648887bkb.19
-        for <git@vger.kernel.org>; Mon, 26 Sep 2011 03:46:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=8FYqDS0nbdhQC01xAc0rzZuPKskplRXtls3KeiUrq10=;
-        b=wyUqwAqRigIeVWSP9755bui68HQIqxhUuhaETyiS2PsHdQ5UMZ1+dK3d0RPPgTu1PA
-         N8NCYnEWMFSZk4ousMm2RMb/kxXe6bvR1Nt0p4KPxhE4vqplU46H8gMseTAL7iuHTZCL
-         NosCpdcwcrbxVZlg9tmU15OEf2ZjYQ5VxKq/s=
-Received: by 10.204.136.198 with SMTP id s6mr929800bkt.131.1317033989167; Mon,
- 26 Sep 2011 03:46:29 -0700 (PDT)
-Received: by 10.205.114.134 with HTTP; Mon, 26 Sep 2011 03:45:58 -0700 (PDT)
-In-Reply-To: <20110923195829.GA27677@sigill.intra.peff.net>
+	id S1751921Ab1IZLF5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Sep 2011 07:05:57 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44472
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751843Ab1IZLF4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Sep 2011 07:05:56 -0400
+Received: (qmail 10355 invoked by uid 107); 26 Sep 2011 11:10:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 26 Sep 2011 07:10:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Sep 2011 07:05:52 -0400
+Content-Disposition: inline
+In-Reply-To: <4E7DB916.6010606@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182102>
 
-On Sat, Sep 24, 2011 at 5:58 AM, Jeff King <peff@peff.net> wrote:
-> Here's one solution I've given a little thought to. Comments welcome.
->
-> I've sometimes wanted an "include" mechanism in git config files.
-> Partially to just keep things tidier, partially to avoid
-> cutting-and-pasting between some repo-specific config, and partially
-> because I'd like a conditional inclusion mechanism[1]. I was thinking=
- of
-> something that would be syntactically compatible but semantically
-> meaningless in current versions of git, like:
->
-> =C2=A0[include]
-> =C2=A0path =3D /some/file
-> =C2=A0path =3D /some/other/file
-> =C2=A0path =3D ~/some/file/in/your/homedir
->
-> You could extend this to look in refs, with something like:
->
-> =C2=A0[include]
-> =C2=A0ref =3D meta:config
->
-> which would resolve meta:config to a blob and examine it (i.e., it wo=
-uld
-> look at refs/heads/meta).
+On Sat, Sep 24, 2011 at 01:03:50PM +0200, Michael Haggerty wrote:
 
-I had something similar [1], although I disregarded worktree content
-completely. One thing about this meta thing is fsck/prune must dig in
-config file in order not to accidentally remove something config file
-refers to.
+> > But once you've verified that the config looks OK and turned this option
+> > on, how do you protect yourself from malicious config entering the repo
+> > through a fetch?
+> 
+> For most software projects, the user does
+> 
+>     git pull
+>     make
+> 
+> daily.  There is nothing that a nasty .gitconfig can do that can't be
+> done more easily by a nasty Makefile (or anything else in the build
+> process).  The moment I pull from Junio's repository and run a build
+> without having personally done a full code review first, I've given
+> Junio complete pownership of my account.  For projects in which I invest
+> such trust, "core.useTreeConfig=true" would be a convenience that does
+> not appreciably increase my risk.
 
-Another thing is, what if I want to exclude certain part of the include=
-d config?
+True. I think it would be nice for their to be a less risky option, too,
+though.  Which was part of the motivation in my earlier proposal for
+specifying a ref that contains config. Then you can ignore it, track
+your own local config which is derived from upstream, or do the easy but
+dangerous thing of just using the remote tracking ref directly.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/163285/focus=
-=3D163288
+> There are obviously config options that should not be versioned.  These
+> should not be stored in the tree.  (Perhaps they should be stored in
+> another branch, as you suggested.)  But there's no need to prevent
+> people from versioning *any* config options just because they shouldn't
+> version *all* of them.
 
-> [1] I want conditional inclusion because sometimes the rules for conf=
-ig
-> =C2=A0 =C2=A0entries changes from version to version. For example, I =
-have
-> =C2=A0 =C2=A0pager.diff set to a script in my ~/.gitconfig. But older=
- versions of
-> =C2=A0 =C2=A0git don't understand non-boolean values and barf. I'd re=
-ally like to
-> =C2=A0 =C2=A0do something like:
->
-> =C2=A0 =C2=A0[include-ifdef "has-pager-scripts"]
-> =C2=A0 =C2=A0path =3D ~/.gitconfig-pager
->
-> =C2=A0 =C2=A0where "has-pager-scripts" would be a magic flag compiled=
- into git
-> =C2=A0 =C2=A0versions that understand that config.
+Do you have an example of a config option whose old value should be
+respected when looking at an old version? In general, the split between
+attributes and config was meant to split what is tied to a specific
+version, and what should apply to all versions. We may not have followed
+that in all cases, but if so, the right solution may actually be
+migrating the functionality into .gitattributes.
 
-But how far would you go with conditional expressions?
---=20
-Duy
+> While we are on the topic of config settings, I have often thought that
+> it would be nice for git's default settings to be set via a
+> well-commented config file, installed along with git, rather than via
+> values compiled into the code.  This file and Documentation/config.txt
+> could be generated from a single source file as part of the build
+> process.
+
+I think that can be a nice piece of documentation, but there may be some
+complications.  I seem to recall that there may be one or two options
+whose builtin values cannot be replicated via config (i.e., the "unset"
+state means something). But I may be misremembering.
+
+However, I'm not sure what you mean by "rather than via values compiled
+into the code".  Would you somehow generate code that sets the default
+according to your master file? Would git fail to start if the file is
+missing? Or if a specific config option is missing? How would you track
+that?
+
+-Peff
