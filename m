@@ -1,98 +1,130 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC 1/2] is_url: Remove redundant assignment
-Date: Mon, 26 Sep 2011 17:32:16 -0400
-Message-ID: <20110926213216.GA5415@sigill.intra.peff.net>
-References: <1316927182-14212-1-git-send-email-pangyanhan@gmail.com>
- <1316927182-14212-2-git-send-email-pangyanhan@gmail.com>
- <CALUzUxp-++A7azzimE1mjvPVoGxRM4rzYt9z66CmFb0B3vi7dQ@mail.gmail.com>
- <7vsjnj455l.fsf@alter.siamese.dyndns.org>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: Git is not scalable with too many refs/*
+Date: Mon, 26 Sep 2011 15:39:33 -0600
+Organization: CAF
+Message-ID: <201109261539.33437.mfick@codeaurora.org>
+References: <4DF6A8B6.9030301@op5.se> <201109261401.38624.mfick@codeaurora.org> <9ae990f15489d7b51a172d08e63ca458@quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	Pang Yan Han <pangyanhan@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 26 23:32:23 2011
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Mon Sep 26 23:39:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8Iml-0006tq-7F
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 23:32:23 +0200
+	id 1R8Itp-0001W5-AA
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 23:39:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752260Ab1IZVcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Sep 2011 17:32:19 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44752
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752109Ab1IZVcS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2011 17:32:18 -0400
-Received: (qmail 16744 invoked by uid 107); 26 Sep 2011 21:37:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 26 Sep 2011 17:37:20 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Sep 2011 17:32:16 -0400
-Content-Disposition: inline
-In-Reply-To: <7vsjnj455l.fsf@alter.siamese.dyndns.org>
+	id S1752329Ab1IZVjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Sep 2011 17:39:36 -0400
+Received: from wolverine02.qualcomm.com ([199.106.114.251]:37912 "EHLO
+	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751992Ab1IZVjg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Sep 2011 17:39:36 -0400
+X-IronPort-AV: E=McAfee;i="5400,1158,6481"; a="121587084"
+Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
+  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 26 Sep 2011 14:39:34 -0700
+Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 7839910004BE;
+	Mon, 26 Sep 2011 14:39:34 -0700 (PDT)
+User-Agent: KMail/1.13.5 (Linux/2.6.32-28-generic; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <9ae990f15489d7b51a172d08e63ca458@quantumfyre.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182169>
 
-[+cc Ilari, who wrote the code originally]
-
-On Mon, Sep 26, 2011 at 09:52:54AM -0700, Junio C Hamano wrote:
-
-> Tay Ray Chuan <rctay89@gmail.com> writes:
+On Monday, September 26, 2011 02:28:53 pm Julian Phillips 
+wrote:
+> On Mon, 26 Sep 2011 14:01:38 -0600, Martin Fick wrote:
+> -- snip --
 > 
-> > On Sun, Sep 25, 2011 at 1:06 PM, Pang Yan Han <pangyanhan@gmail.com> wrote:
-> >> Signed-off-by: Pang Yan Han <pangyanhan@gmail.com>
-> >> ---
-> >>  url.c |    1 -
-> >>  1 files changed, 0 insertions(+), 1 deletions(-)
-> >>
-> >> diff --git a/url.c b/url.c
-> >> index 3e06fd3..d2e17e6 100644
-> >> --- a/url.c
-> >> +++ b/url.c
-> >> @@ -22,7 +22,6 @@ int is_url(const char *url)
-> >>
-> >>        if (!url)
-> >>                return 0;
-> >> -       url2 = url;
-> >>        first_slash = strchr(url, '/');
-> >>
-> >>        /* Input with no slash at all or slash first can't be URL. */
-> >
-> > Looks correct. Perhaps you could mention in the patch message that
-> >
-> >   There are no operations on url2 until another assignment to it later
-> > at line 41.
+> > So, maybe you are correct, maybe my repo is the corner
+> > case? Is a repo which needs to be gced considered a
+> > corner case? Should git be able to detect that the
+> > repo is so in desperate need of gcing?  Is it normal
+> > for git to need to gc right after a clone and then
+> > fetching ~100K refs?
 > 
-> The looks correct, so I'll queue it, but it looks like that the function
-> is implemented in an overly complicated way.
-> 
-> Why aren't we checking from left to right in a single pass, perhaps like
-> this?
-> 
-> 	/* Make sure it is of form "scheme://something" */
-> 	int is_url(const char *url)
-> 	{
-> 		/* Is "scheme" part reasonable? */
-> 		if (!url || !is_urlschemechar(1, *url++))
-> 	        	return 0;
-> 		while (*url && *url != ':') {
-> 			if (!is_urlschemechar(0, *url++))
-> 				return 0;
-> 		}
-> 		/* We've seen "scheme"; we want colon-slash-slash */
-> 		return (url[0] == ':' && url[1] == '/' && url[2] == '/');
-> 	}
+> Were you 100k refs packed before the gc?  If not, perhaps
+> your refs are causing a lot of trouble for the merge
+> sort?  They will be written out sorted to the
+> packed-refs file, so the merge sort won't have to do any
+> real work when loading them after that...
 
-That looks right to me, and is way more readable.
+I am not sure how to determine that (?), but I think they 
+were packed.  Under .git/objects/pack there were 2 large 
+files, both close to 500MB.  Those 2 files constituted most 
+of the space in the repo (I was wrong about the repo sizes, 
+that included the working dir, so think about half the 
+quoted sizes for all of .git).  So does that mean it is 
+mostly packed?  Aside from the pack and idx files, there was 
+nothing else under the objects dir.  After gcing, it is down 
+to just one ~500MB pack file.
 
--Peff
+
+> > I am not sure what is right here, if this patch makes a
+> > repo which needs gcing degrade 5 to 10 times worse
+> > than the benefit of this patch, it still seems
+> > questionable to me.
+> 
+> Well - it does this _for your repo_, that doesn't
+> automatically mean that it does generally, or
+> frequently.  
+
+Oh, def agreed! I just didn't want to discount it so quickly 
+as being a corner case.
+
+
+> For instance, none of my normal repos that
+> have a lot of refs are Gerrit ones, and I wouldn't be
+> surprised if they benefitted from the merge sort
+> (assuming that I am right that the merge sort is taking
+> a long time on your gerrit refs).
+> 
+> Besides, you would be better off running gc, and thus
+> getting the benefit too.
+
+Agreed, which is why I was asking if git should have noticed 
+my "degenerate" case and auto gced?  But hopefully, there is 
+an actual bug here somewhere and we both will get to eat our 
+cake. :)
+
+
+
+> >> Random thought.  What happens to the with compression
+> >> case if you leave the commit in, but add a sleep(15)
+> >> to the end of sort_refs_list?
+> > 
+> > Why, what are you thinking?  Hmm, I am trying this on
+> > the non gced repo and it doesn't seem to be completing
+> > (no cpu usage)!  It appears that perhaps it is being
+> > called many times (the sleeping would explain no cpu
+> > usage)?!?  This could be a real problem, this should
+> > only get called once right?
+> 
+> I was just wondering if the time taken to get the refs
+> was changing the interaction with something else.  Not
+> very likely, but ...
+> 
+> I added a print statement, and it was called four times
+> when I had unpacked refs, and once with packed.  So,
+> maybe you are hitting some nasty case with unpacked
+> refs.  If you use a print statement instead of a sleep,
+> how many times does sort_refs_lists get called in your
+> unpacked case?  It may well also be worth calculating
+> the time taken to do the sort.
+
+In my case it was called 18785 times!  Any other tests I 
+should run?
+
+-Martin
+
+-- 
+Employee of Qualcomm Innovation Center, Inc. which is a 
+member of Code Aurora Forum
