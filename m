@@ -1,106 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 1/2] is_url: Remove redundant assignment
-Date: Mon, 26 Sep 2011 09:52:54 -0700
-Message-ID: <7vsjnj455l.fsf@alter.siamese.dyndns.org>
-References: <1316927182-14212-1-git-send-email-pangyanhan@gmail.com>
- <1316927182-14212-2-git-send-email-pangyanhan@gmail.com>
- <CALUzUxp-++A7azzimE1mjvPVoGxRM4rzYt9z66CmFb0B3vi7dQ@mail.gmail.com>
+From: Joe Perches <joe@perches.com>
+Subject: Re: [PATCH] send-email: auth plain/login fix
+Date: Mon, 26 Sep 2011 09:59:03 -0700
+Message-ID: <1317056343.14197.2.camel@Joe-Laptop>
+References: <7vzkjn16n6.fsf@alter.siamese.dyndns.org>
+	 <1316879367-1182-1-git-send-email-zbyszek@in.waw.pl>
+	 <7v8vpb5kea.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pang Yan Han <pangyanhan@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 26 18:53:13 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Zbigniew =?UTF-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>, Graham Barr <gbarr@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 26 18:59:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8EQX-0001Db-Qe
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 18:53:10 +0200
+	id 1R8EWW-0004eC-SY
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 18:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751523Ab1IZQw6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Sep 2011 12:52:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33798 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751493Ab1IZQw5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2011 12:52:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F3BFB5891;
-	Mon, 26 Sep 2011 12:52:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6VHdwPhX/DBO3GjMbp3xmhR5aDU=; b=vGbZ/R
-	CbI4pWXn/k1Wo6xHD1JzUobBqUtihIR0cUhzxgE7r/0rWPfD6m5CG6mYplbZGX0j
-	rszN+Zxh/AAgQpprNWu8Id1ZwU5MmDKw5ckv0pSKFaGFpa7ODkGnO4olQjv+Rf5d
-	Q5FIlHCC86p02cdr91vMYW9i6GXKBf8XW+doo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NqWwP2U6f33HkUKnpM32oWFM/AVnAZfv
-	EV6C/N18oy5qJqSbsQQH4wGwD0ZUSCfNXyT47qM59NxJgmfkVM+chOeJQknx1oxW
-	TPVtTRIAU4kznsauSKWodEQaUM7RE6bk+Y86jsHYrX0GGOMtkgUsMPkZCyhtDXGI
-	DnmTMuJ84lY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB1185890;
-	Mon, 26 Sep 2011 12:52:56 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 75BF4588F; Mon, 26 Sep 2011
- 12:52:56 -0400 (EDT)
-In-Reply-To: <CALUzUxp-++A7azzimE1mjvPVoGxRM4rzYt9z66CmFb0B3vi7dQ@mail.gmail.com> (Tay Ray
- Chuan's message of "Sun, 25 Sep 2011 17:26:27 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FBCCC3E4-E85F-11E0-9B40-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751904Ab1IZQ7M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Sep 2011 12:59:12 -0400
+Received: from perches-mx.perches.com ([206.117.179.246]:37854 "EHLO
+	labridge.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751765Ab1IZQ7F (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Sep 2011 12:59:05 -0400
+Received: from [173.60.85.8] (account joe@perches.com HELO [192.168.1.151])
+  by labridge.com (CommuniGate Pro SMTP 5.0.14)
+  with ESMTPA id 18193753; Mon, 26 Sep 2011 09:59:04 -0700
+In-Reply-To: <7v8vpb5kea.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 3.1.92- 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182134>
 
-Tay Ray Chuan <rctay89@gmail.com> writes:
+On Mon, 2011-09-26 at 09:38 -0700, Junio C Hamano wrote:
+> Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
+>=20
+> > git send-email was not authenticating properly when communicating o=
+ver
+> > TLS with a server supporting only AUTH PLAIN and AUTH LOGIN. This i=
+s
+> > e.g. the standard server setup under debian with exim4 and probably
+> > everywhere where system accounts are used.
+>=20
+> Now that's a solution that makes me feel less dirty than
+>=20
+>   http://thread.gmane.org/gmane.comp.version-control.git/178818/focus=
+=3D178824
 
-> On Sun, Sep 25, 2011 at 1:06 PM, Pang Yan Han <pangyanhan@gmail.com> wrote:
->> Signed-off-by: Pang Yan Han <pangyanhan@gmail.com>
->> ---
->>  url.c |    1 -
->>  1 files changed, 0 insertions(+), 1 deletions(-)
->>
->> diff --git a/url.c b/url.c
->> index 3e06fd3..d2e17e6 100644
->> --- a/url.c
->> +++ b/url.c
->> @@ -22,7 +22,6 @@ int is_url(const char *url)
->>
->>        if (!url)
->>                return 0;
->> -       url2 = url;
->>        first_slash = strchr(url, '/');
->>
->>        /* Input with no slash at all or slash first can't be URL. */
->
-> Looks correct. Perhaps you could mention in the patch message that
->
->   There are no operations on url2 until another assignment to it later
-> at line 41.
+Dirty is dirty.  I don't see this as better or worse really,
+but thanks Zbigniew for bringing it up again.
 
-The looks correct, so I'll queue it, but it looks like that the function
-is implemented in an overly complicated way.
+It'd be best if Graham Barr, the module author (cc'd),
+could respond to the issue.
 
-Why aren't we checking from left to right in a single pass, perhaps like
-this?
+cheers, Joe
 
-	/* Make sure it is of form "scheme://something" */
-	int is_url(const char *url)
-	{
-		/* Is "scheme" part reasonable? */
-		if (!url || !is_urlschemechar(1, *url++))
-	        	return 0;
-		while (*url && *url != ':') {
-			if (!is_urlschemechar(0, *url++))
-				return 0;
-		}
-		/* We've seen "scheme"; we want colon-slash-slash */
-		return (url[0] == ':' && url[1] == '/' && url[2] == '/');
-	}
+> even though, by forcing Authen::SASL::Perl to be used bypassing XS an=
+d
+> Cyrus variants, this _might_ be introducing regression for others. We=
+'ll
+> find out soon enough if anybody screams ;-)
+>=20
+> I see you already researched previous discussion and have Joe Perches=
+ in
+> the loop; Thanks.
