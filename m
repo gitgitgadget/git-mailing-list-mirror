@@ -1,130 +1,93 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Mon, 26 Sep 2011 15:39:33 -0600
-Organization: CAF
-Message-ID: <201109261539.33437.mfick@codeaurora.org>
-References: <4DF6A8B6.9030301@op5.se> <201109261401.38624.mfick@codeaurora.org> <9ae990f15489d7b51a172d08e63ca458@quantumfyre.co.uk>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: Can a git changeset be created with no parent
+Date: Mon, 26 Sep 2011 23:41:39 +0200
+Message-ID: <1317073309.5579.9.camel@centaur.lab.cmartin.tk>
+References: <1316960136073-6829212.post@n2.nabble.com>
+	 <1316961212.4388.5.camel@centaur.lab.cmartin.tk>
+	 <7vaa9r2jii.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Mon Sep 26 23:39:42 2011
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-UA6FLfaR9Yp/lQaltX6h"
+Cc: vra5107 <venkatram.akkineni@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 26 23:41:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8Itp-0001W5-AA
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 23:39:41 +0200
+	id 1R8Ivx-0002Lt-Tz
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 23:41:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752329Ab1IZVjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Sep 2011 17:39:36 -0400
-Received: from wolverine02.qualcomm.com ([199.106.114.251]:37912 "EHLO
-	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751992Ab1IZVjg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2011 17:39:36 -0400
-X-IronPort-AV: E=McAfee;i="5400,1158,6481"; a="121587084"
-Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
-  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 26 Sep 2011 14:39:34 -0700
-Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 7839910004BE;
-	Mon, 26 Sep 2011 14:39:34 -0700 (PDT)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-28-generic; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <9ae990f15489d7b51a172d08e63ca458@quantumfyre.co.uk>
+	id S1752492Ab1IZVlt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Sep 2011 17:41:49 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:47047 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752282Ab1IZVlt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Sep 2011 17:41:49 -0400
+Received: from [192.168.1.17] (brln-4db9fe34.pool.mediaWays.net [77.185.254.52])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 92B5D46180;
+	Mon, 26 Sep 2011 23:41:26 +0200 (CEST)
+In-Reply-To: <7vaa9r2jii.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 3.0.3- 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182169>
-
-On Monday, September 26, 2011 02:28:53 pm Julian Phillips 
-wrote:
-> On Mon, 26 Sep 2011 14:01:38 -0600, Martin Fick wrote:
-> -- snip --
-> 
-> > So, maybe you are correct, maybe my repo is the corner
-> > case? Is a repo which needs to be gced considered a
-> > corner case? Should git be able to detect that the
-> > repo is so in desperate need of gcing?  Is it normal
-> > for git to need to gc right after a clone and then
-> > fetching ~100K refs?
-> 
-> Were you 100k refs packed before the gc?  If not, perhaps
-> your refs are causing a lot of trouble for the merge
-> sort?  They will be written out sorted to the
-> packed-refs file, so the merge sort won't have to do any
-> real work when loading them after that...
-
-I am not sure how to determine that (?), but I think they 
-were packed.  Under .git/objects/pack there were 2 large 
-files, both close to 500MB.  Those 2 files constituted most 
-of the space in the repo (I was wrong about the repo sizes, 
-that included the working dir, so think about half the 
-quoted sizes for all of .git).  So does that mean it is 
-mostly packed?  Aside from the pack and idx files, there was 
-nothing else under the objects dir.  After gcing, it is down 
-to just one ~500MB pack file.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182170>
 
 
-> > I am not sure what is right here, if this patch makes a
-> > repo which needs gcing degrade 5 to 10 times worse
-> > than the benefit of this patch, it still seems
-> > questionable to me.
-> 
-> Well - it does this _for your repo_, that doesn't
-> automatically mean that it does generally, or
-> frequently.  
+--=-UA6FLfaR9Yp/lQaltX6h
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Oh, def agreed! I just didn't want to discount it so quickly 
-as being a corner case.
+On Mon, 2011-09-26 at 12:25 -0700, Junio C Hamano wrote:
+> Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
+>=20
+> > On Sun, 2011-09-25 at 07:15 -0700, vra5107 wrote:
+> >> Hi
+> >>=20
+> >>         I am currently in the process of converting a large hg reposit=
+ory.
+> >> One of the changesets has no parents assigned. So to mirror that is it
+> >> possible to create a git changeset that doesnot have a parent ?
+> >
+> > They're called commits in git, and yes it's possible. They are called
+> > orphan commits and it's what you get when you do the first commit in th=
+e
+>=20
+> Just to set the terminology straight, s/orphan/root/;
+
+Ah, quite.
+
+>=20
+> > repository.
+> >
+> > You can do this with 'git checkout --orphan somebranch'. Notice that th=
+e
+>=20
+> The orphan here refers to the fact that the next commit will not be a
+> child of the current commit. The resulting one is a "root" commit.
+
+The manpage mentions that an orphan branch is created. I guess that's
+where I got my "orphan commit" name.
 
 
-> For instance, none of my normal repos that
-> have a lot of refs are Gerrit ones, and I wouldn't be
-> surprised if they benefitted from the merge sort
-> (assuming that I am right that the merge sort is taking
-> a long time on your gerrit refs).
-> 
-> Besides, you would be better off running gc, and thus
-> getting the benefit too.
+--=-UA6FLfaR9Yp/lQaltX6h
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
 
-Agreed, which is why I was asking if git should have noticed 
-my "degenerate" case and auto gced?  But hopefully, there is 
-an actual bug here somewhere and we both will get to eat our 
-cake. :)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
 
+iQEcBAABAgAGBQJOgPGTAAoJEHKRP1jG7ZzTMfQH/iB+6D59XSlyL0/qy5EGGFil
+MBnV1GwYXxynixjif9XwGz0UTZ9UuKdncO92ZhBM2A4CORK88PpVW80Pn+kd5uG9
+ebKnazRdDt2rCLG8KJdMzWeiBmWSM5oO+/plkD9GP6UBmJzqb7bcJKdMHpQO+IMp
+KJTNsftg7ReojZYCmY+dXZ7/ELxEbO7pB+KbF4gikCu2bx9oW31NH2asalJ/Iyp5
+XXAH4Ddago4plrmKJvNeWzam5aDGhnBMEWRt1wy4dHgoVmSZ3mBkJJF3OKKxolzx
+tBA0MwWhVnfFYee/K3PTb4EHJ4lJ1b2glRghLPQWT6K2haqhJ7GSk97nOHv0uss=
+=gGQN
+-----END PGP SIGNATURE-----
 
-
-> >> Random thought.  What happens to the with compression
-> >> case if you leave the commit in, but add a sleep(15)
-> >> to the end of sort_refs_list?
-> > 
-> > Why, what are you thinking?  Hmm, I am trying this on
-> > the non gced repo and it doesn't seem to be completing
-> > (no cpu usage)!  It appears that perhaps it is being
-> > called many times (the sleeping would explain no cpu
-> > usage)?!?  This could be a real problem, this should
-> > only get called once right?
-> 
-> I was just wondering if the time taken to get the refs
-> was changing the interaction with something else.  Not
-> very likely, but ...
-> 
-> I added a print statement, and it was called four times
-> when I had unpacked refs, and once with packed.  So,
-> maybe you are hitting some nasty case with unpacked
-> refs.  If you use a print statement instead of a sleep,
-> how many times does sort_refs_lists get called in your
-> unpacked case?  It may well also be worth calculating
-> the time taken to do the sort.
-
-In my case it was called 18785 times!  Any other tests I 
-should run?
-
--Martin
-
--- 
-Employee of Qualcomm Innovation Center, Inc. which is a 
-member of Code Aurora Forum
+--=-UA6FLfaR9Yp/lQaltX6h--
