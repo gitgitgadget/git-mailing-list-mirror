@@ -1,112 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Mon, 26 Sep 2011 16:38:54 -0700
-Message-ID: <7vsjnizxf5.fsf@alter.siamese.dyndns.org>
-References: <4DF6A8B6.9030301@op5.se>
- <9ae990f15489d7b51a172d08e63ca458@quantumfyre.co.uk>
- <201109261539.33437.mfick@codeaurora.org>
- <201109261552.04946.mfick@codeaurora.org>
- <ece30e6a1b74bcddde5634003408f61f@quantumfyre.co.uk>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: [PATCH/RFC 0/2] Teach receive-pack not to run update hook for
+ corrupt/non existent ref
+Date: Tue, 27 Sep 2011 05:14:02 +0530
+Message-ID: <CAMK1S_gR6U=OxzGsjTD8LbvZFS125=p1fQ8Af7aRD2XSsRur_Q@mail.gmail.com>
+References: <1316927182-14212-1-git-send-email-pangyanhan@gmail.com>
+	<CAMK1S_hadzaqixaW3Fx81pf=hVsvAMpVvVGqVtZ8ncfUsie_9w@mail.gmail.com>
+	<20110925094822.GA1702@myhost>
+	<CAMK1S_h3ufrK29_ajpcSSW7HV6ZA8z8ZVHvhHr2bx5Cga5FAKQ@mail.gmail.com>
+	<7vwrcuzy44.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Fick <mfick@codeaurora.org>, <git@vger.kernel.org>
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Tue Sep 27 01:39:05 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pang Yan Han <pangyanhan@gmail.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 27 01:44:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8KlK-000803-5v
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 01:39:02 +0200
+	id 1R8KqI-00012V-7d
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 01:44:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753137Ab1IZXi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Sep 2011 19:38:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45335 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753083Ab1IZXi5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2011 19:38:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9C0751A0;
-	Mon, 26 Sep 2011 19:38:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iCLpHTwww5Q/4emJM5e6jY5PHn0=; b=LYBVWc
-	nFJceOPYTo9RIw8j2Z9rKv9AIe1IsjHeK1gMhBaGz2bvB94WkFER5g1akRPZN7gp
-	4Do50lvYiHNugnSW/BUn1w0rbwJAJ6KAjiQLsUK5AJwRSlcl1BO0DXigxWlXlsBS
-	otY+rha0kHUY3TQOXggSuxZWbT8RtmTST89OI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wPOVlOzEfvW954I4H0+7mzxi/LHmGNKG
-	XKPv0UQRJxUsYywe9BIvTjHjAjlkKsbUMsgHADkGoNLeOOPYZEUotY7lmQ0w6QFX
-	3B/am27hKC1yKSOTT9K3OOWpO+TtfuF/34bakyjTn44G2M8RxegpZU4rFMK9yjH2
-	/T0oDNfn0xE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF301519F;
-	Mon, 26 Sep 2011 19:38:56 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1695D519E; Mon, 26 Sep 2011
- 19:38:55 -0400 (EDT)
-In-Reply-To: <ece30e6a1b74bcddde5634003408f61f@quantumfyre.co.uk> (Julian
- Phillips's message of "Tue, 27 Sep 2011 00:26:55 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B33FC85E-E898-11E0-8DB9-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752718Ab1IZXoF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Sep 2011 19:44:05 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:51432 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752682Ab1IZXoE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2011 19:44:04 -0400
+Received: by vws1 with SMTP id 1so6150461vws.19
+        for <git@vger.kernel.org>; Mon, 26 Sep 2011 16:44:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=lMPnOHsJ7Z6cPeVthsR17WGf6K7ISedrw0NvBs6azJA=;
+        b=MJbMS28otuNQwSc5AHVTZV9fibgkuHalgtQ+MOMuiUNcKsOh3f9RcNmICdWTXJiU4c
+         MonpI9rNlPQnkNo4bMyKg3Pcb5/pfr9dkv1Mz/57riEtpfml6drIcBZgO2ZFrwR56a0/
+         elW8SBnifjHCcltzT7nuzQzBa1JYjP6xzldOc=
+Received: by 10.52.69.67 with SMTP id c3mr4197167vdu.469.1317080642981; Mon,
+ 26 Sep 2011 16:44:02 -0700 (PDT)
+Received: by 10.52.160.161 with HTTP; Mon, 26 Sep 2011 16:44:02 -0700 (PDT)
+In-Reply-To: <7vwrcuzy44.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182193>
 
-Julian Phillips <julian@quantumfyre.co.uk> writes:
+On Tue, Sep 27, 2011 at 4:53 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Sitaram Chamarty <sitaramc@gmail.com> writes:
+>
+>> From a philosophical point of view, update and pre-receive *check*
+>> things to make sure everything is OK. =C2=A0IMO they should be allow=
+ed to
+>> run even if the ref being deleted doesn't exist -- that could well b=
+e
+>> an error condition that the guy who owns the repo wants to trap and
+>> alert himself to in some special way. =C2=A0I would *not* like them
+>> disabled.
+>
+> I think this is a sane thing to do.
+>
+>> Post-{update,receive} are for *after* a successful push. =C2=A0My
+>> suggestion would be to make sure the inputs supplied to those hooks
+>> (via STDIN for post-receive, and as arguments in case of post-update=
+)
+>> reflect this -- only successfully updated refs are sent in as args.
+>
+> Perhaps sane.
+>
+>> This might mean that in the case of 'git push origin
+>> :refs/heads/non-existent-ref' the post-receive hook would run but
+>> STDIN would be empty, and post-update would run but have no argument=
+s.
+>
+> Hmm?
+>
+> In that case (if "non-existent-ref" was indeed non-existent, and not =
+just
+> pointing at a dangling commit), I would say the post anything hook sh=
+ould
+> not be called for that ref. =C2=A0These hooks of course need to run i=
+f there
+> are _other_ refs that were updated, though, to handle these _other_ r=
+efs,
+> but I do not think they should be told about the no-op.
 
-> Back when I made that change, I failed to notice that get_ref_dir was
-> recursive for subdirectories ... sorry ...
+Question is what happens if none of them existed.  It's a difference
+between not calling the hook at all, versus calling it with no
+arguments/empty stdin (as the case may be) -- which would you do?  I
+say the hook *should* always run, and the code inside the hook should
+take care of the fact that no arguments/no input means nothing
+actually happened.
 
-Aha, I also was blind while I was watching this discussion from the
-sideline, and I thought I re-read the codepath involved X-<. Indeed
-we were sorting the list way too early and the patch looks correct.
-
-Thanks.
-
-> Hopefully this should speed things up.  My test repo went from ~17m
-> user time, to ~2.5s.
-> Packing still make things much faster of course.
->
-> diff --git a/refs.c b/refs.c
-> index a615043..212e7ec 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -319,7 +319,7 @@ static struct ref_list *get_ref_dir(const char
-> *submodule, c
->                 free(ref);
->                 closedir(dir);
->         }
-> -       return sort_ref_list(list);
-> +       return list;
->  }
->
->  struct warn_if_dangling_data {
-> @@ -361,11 +361,13 @@ static struct ref_list *get_loose_refs(const
-> char *submodu
->         if (submodule) {
->                 free_ref_list(submodule_refs.loose);
->                 submodule_refs.loose = get_ref_dir(submodule, "refs",
-> NULL);
-> +               submodule_refs.loose =
-> sort_refs_list(submodule_refs.loose);
->                 return submodule_refs.loose;
->         }
->
->         if (!cached_refs.did_loose) {
->                 cached_refs.loose = get_ref_dir(NULL, "refs", NULL);
-> +               cached_refs.loose = sort_refs_list(cached_refs.loose);
->                 cached_refs.did_loose = 1;
->         }
->         return cached_refs.loose;
->
->
->
->>
->>
->> -Martin
+--=20
+Sitaram
