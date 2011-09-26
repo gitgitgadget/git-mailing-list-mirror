@@ -1,66 +1,57 @@
-From: =?utf-8?Q?R=C3=A9mi_Vanicat?= <vanicat@debian.org>
-Subject: Re: emacs as mergetool
-Date: Mon, 26 Sep 2011 19:28:58 +0200
-Organization: none
-Message-ID: <87ty7zjjqd.dlv@debian.org>
-References: <201109261821.28382.thomas@koch.ro>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: Git is not scalable with too many refs/*
+Date: Mon, 26 Sep 2011 11:47:56 -0600
+Organization: CAF
+Message-ID: <201109261147.56607.mfick@codeaurora.org>
+References: <4DF6A8B6.9030301@op5.se> <201109251443.28243.mfick@codeaurora.org> <CAP8UFD3TWQHU0wLPuxMDnc3bRSz90Yd+yDMBe03kofeo-nr7yA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 26 19:29:17 2011
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 26 19:48:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8EzU-0002ZG-MN
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 19:29:17 +0200
+	id 1R8FHh-0003JH-OO
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 19:48:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751967Ab1IZR3L convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Sep 2011 13:29:11 -0400
-Received: from lo.gmane.org ([80.91.229.12]:53145 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751456Ab1IZR3L (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2011 13:29:11 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1R8EzN-0002UQ-Li
-	for git@vger.kernel.org; Mon, 26 Sep 2011 19:29:09 +0200
-Received: from 66.57.138.88.rev.sfr.net ([88.138.57.66])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 26 Sep 2011 19:29:09 +0200
-Received: from vanicat by 66.57.138.88.rev.sfr.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 26 Sep 2011 19:29:09 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 66.57.138.88.rev.sfr.net
-User-Agent: Gnus/5.110017 (No Gnus v0.17) Emacs/23.3 (gnu/linux)
-Cancel-Lock: sha1:xqQ76s37YKPWqdx3SRkHyGJMQgQ=
+	id S1752158Ab1IZRr7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Sep 2011 13:47:59 -0400
+Received: from wolverine02.qualcomm.com ([199.106.114.251]:53268 "EHLO
+	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750997Ab1IZRr7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Sep 2011 13:47:59 -0400
+X-IronPort-AV: E=McAfee;i="5400,1158,6480"; a="121508368"
+Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
+  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 26 Sep 2011 10:47:57 -0700
+Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 7E07B10004BE;
+	Mon, 26 Sep 2011 10:47:57 -0700 (PDT)
+User-Agent: KMail/1.13.5 (Linux/2.6.32-28-generic; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <CAP8UFD3TWQHU0wLPuxMDnc3bRSz90Yd+yDMBe03kofeo-nr7yA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182139>
 
-Thomas Koch <thomas@koch.ro> writes:
+On Monday, September 26, 2011 06:41:04 am Christian Couder 
+wrote:
+> On Sun, Sep 25, 2011 at 10:43 PM, Martin Fick 
+<mfick@codeaurora.org> wrote:
+> > A coworker of mine pointed out to me that a simple
+> > 
+> >  git checkout
+> > 
+> > can also take rather long periods of time > 3 mins when
+> > run on a repo with ~100K refs.
+> 
+> Are all these refs packed?
 
-> Hi,
->
-> would you be so kind and give an emacs newbie (and vim refugee) a hin=
-t about=20
-> using emacs as mergetool?
+I think so, is there a way to find out for sure?
 
-In fact, I use magit like that: after the merge, if there was a
-conflict, I launch magit (M-x magit) and go on the unmerged file, then =
-I
-use "e" (magit-ediff) to merge them. ediff merge tool is self
-documented, and I never needed more than its documentation.
-
-Of course for this you need to install magit, and you don't really use
-Emacs as mergetool...
-
---=20
-R=C3=A9mi Vanicat
+-Martin
