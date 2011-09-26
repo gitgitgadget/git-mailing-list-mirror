@@ -1,92 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-remote rename should match whole string when
- renaming remote ref directory
-Date: Mon, 26 Sep 2011 11:04:26 -0700
-Message-ID: <7v62kf41ud.fsf@alter.siamese.dyndns.org>
-References: <1317045186-25206-1-git-send-email-benny@tonian.com>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: Git is not scalable with too many refs/*
+Date: Mon, 26 Sep 2011 12:07:52 -0600
+Organization: CAF
+Message-ID: <201109261207.52736.mfick@codeaurora.org>
+References: <4DF6A8B6.9030301@op5.se> <201109251443.28243.mfick@codeaurora.org> <201109260915.29285.mfick@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	git@vger.kernel.org, Benny Halevy <bhalevy@tonian.com>
-To: Benny Halevy <benny@tonian.com>
-X-From: git-owner@vger.kernel.org Mon Sep 26 20:04:36 2011
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Julian Phillips <julian@quantumfyre.co.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 26 20:08:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8FXf-0002qb-3Z
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 20:04:35 +0200
+	id 1R8Fax-0004fR-DI
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 20:07:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751701Ab1IZSE3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Sep 2011 14:04:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35016 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751651Ab1IZSE2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2011 14:04:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2FEEF54A3;
-	Mon, 26 Sep 2011 14:04:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qIXvyTvHL0CD9jE3nwQ7n31nLa8=; b=BGctlO
-	Gn3pY7OUrjRGe+kHuysjkj4LgrXsFba5TfKX7LBOoVWyF8S/w/LGCMG7uYbnQ6ba
-	uKGFw4NFmFshsBX7iZOjrr6pQBtIgwlTPFLz0QgiKa1VYn52WyKQywmQjgJWDR58
-	ThKnMVg3uHNumFtlIF7BZWnYmEIfsdpKOkm2c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=et64i5rRFfAg8lv+gBc7cuiLqNkedO6C
-	5hsE6hZ5zNXaVXdO3QcAWjai+XaU97QCJd8JMoCpz4A8dB0w6pM3K29+x7AZQaPX
-	tvb2NOuJ71alWcYtgqmj/5yOgqTWeUR5XBPpmaPkOx4CBA/cflA1Kj2i9clMNISo
-	xQOR38NGQps=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2734B54A2;
-	Mon, 26 Sep 2011 14:04:28 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8A50B549D; Mon, 26 Sep 2011
- 14:04:27 -0400 (EDT)
-In-Reply-To: <1317045186-25206-1-git-send-email-benny@tonian.com> (Benny
- Halevy's message of "Mon, 26 Sep 2011 16:53:06 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F978F25C-E869-11E0-A5F0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751733Ab1IZSHz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Sep 2011 14:07:55 -0400
+Received: from wolverine01.qualcomm.com ([199.106.114.254]:61639 "EHLO
+	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751466Ab1IZSHy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Sep 2011 14:07:54 -0400
+X-IronPort-AV: E=McAfee;i="5400,1158,6480"; a="121660726"
+Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
+  by wolverine01.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 26 Sep 2011 11:07:54 -0700
+Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id C7AEB10004BE;
+	Mon, 26 Sep 2011 11:07:53 -0700 (PDT)
+User-Agent: KMail/1.13.5 (Linux/2.6.32-28-generic; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <201109260915.29285.mfick@codeaurora.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182145>
 
-Benny Halevy <benny@tonian.com> writes:
+On Monday, September 26, 2011 09:15:29 am Martin Fick wrote:
+> OK, I have found what I believe is another performance
+> regression for large ref counts (~100K).
+> 
+> When I run git br on my repo which only has one branch,
+> but has ~100K refs under ref/changes (a gerrit repo), it
+> takes normally 3-6mins depending on whether my caches
+> are fresh or not.  After bisecting some older changes, I
+> noticed that this ref seems to be where things start to
+> get slow: c774aab98ce6c5ef7aaacbef38da0a501eb671d4
+> 
+> 
+> commit c774aab98ce6c5ef7aaacbef38da0a501eb671d4
+> Author: Julian Phillips <julian@quantumfyre.co.uk>
+> Date:   Tue Apr 17 02:42:50 2007 +0100
+> 
+>     refs.c: add a function to sort a ref list, rather
+> then sorting on add
+> 
+>     Rather than sorting the refs list while building it,
+> sort in one
+>     go after it is built using a merge sort.  This has a
+> large
+>     performance boost with large numbers of refs.
+> 
+>     It shouldn't happen that we read duplicate entries
+> into the same
+>     list, but just in case sort_ref_list drops them if
+> the SHA1s are
+>     the same, or dies, as we have no way of knowing which
+> one is the
+>     correct one.
+> 
+>     Signed-off-by: Julian Phillips
+> <julian@quantumfyre.co.uk>
+>     Acked-by: Linus Torvalds
+> <torvalds@linux-foundation.org> Signed-off-by: Junio C
+> Hamano <junkio@cox.net>
+> 
+> 
+> 
+> which is a bit strange since that commit's purpose was to
+> actually speed things up in the case of many refs.  Just
+> to verify, I reverted the commit on 1.7.7.rc0.73 and
+> sure enough, things speed up down to the 14-20s range
+> depending on caching.
+> 
+> If this change does not actually speed things up, should
+> it be reverted?  Or was there a bug in the change that
+> makes it not do what it was supposed to do?
 
-> From: Benny Halevy <bhalevy@tonian.com>
->
-> Otherwise, with two remotes: test, test-2
-> 	git remote rename test test-
-> ends up with:
-> 	.git/refs/remotes/test-
-> 	.git/refs/remotes/test--2
-> ...
-> diff --git a/builtin/remote.c b/builtin/remote.c
-> index f2a9c26..5443e71 100644
-> --- a/builtin/remote.c
-> +++ b/builtin/remote.c
-> @@ -571,7 +571,7 @@ static int read_remote_branches(const char *refname,
->  	const char *symref;
->  
->  	strbuf_addf(&buf, "refs/remotes/%s", rename->old);
-> -	if (!prefixcmp(refname, buf.buf)) {
-> +	if (!strcmp(refname, buf.buf)) {
 
-At this point of the code, refname has "refs/remotes/test/foo" and it is
-queued to later rename it to "refs/remotes/test-/foo" (the next invocation
-of this function will see "refs/remotes/test/bar" in refname). And the
-strbuf buf.buf has "refs/remotes/test"; your !strcmp(refname, buf.buf)
-would never trigger, I suspect.
+Ahh, I think I have some more clues.  So while this change 
+does not speed things up for me normally, I found a case 
+where it does!  I  set my .git/config to have
 
-Isn't 60e5eee (remote: "rename o foo" should not rename ref "origin/bar",
-2011-09-01) the correct fix for this issue?  It makes buf.buf properly
-terminated with a slash, to contain "refs/remotes/test/" so that prefixcmp
-properly matches it with "refs/remotes/test/foo" but not with refs under
-other hierarchies like "refs/remotes/test-2/anything".
+  [core]
+        compression = 0
 
-Thanks.
+and ran git-gc on my repo.  Now, with a modern git with this 
+optimization in it (1.7.6, 1.7.7.rc0...), 'git branch' is 
+almost instantaneous (.05s)!  But, if I revert c774aa it 
+takes > ~15s.  
+
+So, it appears that this optimization is foiled by 
+compression?  In the case when this optimization helps, it 
+save about 15s, when it hurts (with compression), it seems 
+to cost > 3mins.  I am not sure this optimization is worth 
+it?  Would there be someway for it to adjust to the repo 
+conditions?
+
+ 
+Thanks,
+
+-Martin
+
+-- 
+Employee of Qualcomm Innovation Center, Inc. which is a 
+member of Code Aurora Forum
