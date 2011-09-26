@@ -1,46 +1,62 @@
-From: =?GB2312?B?0Oy1zw==?= <xudifsd@gmail.com>
-Subject: Could someone give me a copy of git internal api document?
-Date: Mon, 26 Sep 2011 15:11:37 +0800
-Message-ID: <CAMocUqREFHdqFGR9c_3hFJy6KxUaXLnaY9R+4K04mL42-KY-Kg@mail.gmail.com>
+From: Michael Schubert <mschub@elegosoft.com>
+Subject: Re: Could someone give me a copy of git internal api document?
+Date: Mon, 26 Sep 2011 09:23:30 +0200
+Message-ID: <4E802872.2010906@elegosoft.com>
+References: <CAMocUqREFHdqFGR9c_3hFJy6KxUaXLnaY9R+4K04mL42-KY-Kg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: =?GB2312?B?R2l0INPKvP7B0LHt?= <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 26 09:11:46 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?R2l0IOmCruS7tuWIl+ihqA==?= <git@vger.kernel.org>
+To: =?UTF-8?B?5b6Q6L+q?= <xudifsd@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 26 09:24:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R85Lr-0001kR-TO
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 09:11:44 +0200
+	id 1R85Xz-0007Sv-F5
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Sep 2011 09:24:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751292Ab1IZHLj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Sep 2011 03:11:39 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:38603 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750933Ab1IZHLi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2011 03:11:38 -0400
-Received: by gxk6 with SMTP id 6so4062220gxk.19
-        for <git@vger.kernel.org>; Mon, 26 Sep 2011 00:11:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=Sh+oLvMCydcejLzNEugsiaigQt4xb/jIL1YFFzjv3J8=;
-        b=KnZft1Xc2xahQ0N0Osd395SE4AN1RAvxq6Exn5kPPDhoDjiDpcFz7URpnCzhYqTrS4
-         jjzkMch3Dx8b8pqDBzduTw7ItZrhYKLyUO3lDtRx9j4AnBK5mvf6AYkrPydHWr8b2rfW
-         lwgb4N+/Ji6TekYRIWyHubAWQN9t1Z6TC/luc=
-Received: by 10.43.133.138 with SMTP id hy10mr166504icc.184.1317021097740;
- Mon, 26 Sep 2011 00:11:37 -0700 (PDT)
-Received: by 10.231.206.138 with HTTP; Mon, 26 Sep 2011 00:11:37 -0700 (PDT)
+	id S1751655Ab1IZHYK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Sep 2011 03:24:10 -0400
+Received: from mx0.elegosoft.com ([78.47.87.163]:51059 "EHLO mx0.elegosoft.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751641Ab1IZHYJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Sep 2011 03:24:09 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id 191F7DE72C;
+	Mon, 26 Sep 2011 09:24:08 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vLF0sIumopEA; Mon, 26 Sep 2011 09:24:02 +0200 (CEST)
+Received: from [192.168.1.101] (g230120021.adsl.alicedsl.de [92.230.120.21])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id 29BFADE729;
+	Mon, 26 Sep 2011 09:24:02 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0.2) Gecko/20110906 Thunderbird/6.0.2
+In-Reply-To: <CAMocUqREFHdqFGR9c_3hFJy6KxUaXLnaY9R+4K04mL42-KY-Kg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182092>
 
-I am reading code of git recently, and i want to know some internal
-api in git, so i googled "git internal api", and result is
-http://www.kernel.org/pub/software/scm/git/docs/v1.6.5.9/technical/api-index.html
-but kernel.org was down for maintenance, and i have no idea when it
-will recover, could someone give me a mirror url or post me a copy of
-it?
+On 09/26/2011 09:11 AM, =E5=BE=90=E8=BF=AA wrote:
+> I am reading code of git recently, and i want to know some internal
+> api in git, so i googled "git internal api", and result is
+> http://www.kernel.org/pub/software/scm/git/docs/v1.6.5.9/technical/ap=
+i-index.html
+> but kernel.org was down for maintenance, and i have no idea when it
+> will recover, could someone give me a mirror url or post me a copy of
+> it?
+
+If you got the code, you should have Documentation/technical in your
+source tree.?
+
+Alternate repository source:
+
+http://repo.or.cz/w/alt-git.git
+
+Documentation/technical on GitHub:
+
+https://github.com/gitster/git/tree/master/Documentation/technical
