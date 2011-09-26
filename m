@@ -1,65 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: rerere with modified/deleted conflicts
-Date: Mon, 26 Sep 2011 16:10:44 -0700
-Message-ID: <7v62ke293f.fsf@alter.siamese.dyndns.org>
-References: <alpine.LFD.2.00.1109261904340.2718@xanadu.home>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: [BUG?] git fetch -p -t prunes all non-tag refs
+Date: Tue, 27 Sep 2011 01:11:03 +0200
+Message-ID: <1317078667.5579.13.camel@centaur.lab.cmartin.tk>
+References: <20110926184739.GA11745@erythro.kitwarein.com>
+	 <7vehz30wdy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Tue Sep 27 01:10:52 2011
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-CMcvEecqaktcwNmyiBaR"
+Cc: mathstuf@gmail.com, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 27 01:11:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8KK3-00080q-F4
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 01:10:51 +0200
+	id 1R8KKO-0008Ag-Gr
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 01:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752825Ab1IZXKr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Sep 2011 19:10:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62975 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750884Ab1IZXKq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2011 19:10:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EDB04420;
-	Mon, 26 Sep 2011 19:10:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=leSlxfWnUfF0ViL1ndq1LTAI7Po=; b=BfgO/W
-	qpCvQ5s2YRVxRtE0DFHd2qgGEOcmTXrCEiyBWT/nxvXDQPNV6tMe9JdCNcCZ9jfl
-	VJMFZUDly0wOMMMWKR6fmApYCBpD9i17vKAT0f8TPbhrtpiC99i1QTxjLTj0/OQY
-	qpo/JnYgCbOoyNuAyiLkfDpYzQ60WI3Ahol6Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eeoX3K7sP8ZdY8a7WW4ItSnbXAXBioyH
-	TSHIQd9M7koJqmYuLD4Klvg5BXb9hXxnTdlaZYaQK+36aoyHvbTfqekx5P6azdQW
-	qO6wYlSmBiLoENOF0JiOBbVn258FyNn7cdXocs3/RtqOkLuaID3KiXd+DCwoHPUb
-	U8x2fbnCe30=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 56FA3441F;
-	Mon, 26 Sep 2011 19:10:46 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E563A441E; Mon, 26 Sep 2011
- 19:10:45 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.00.1109261904340.2718@xanadu.home> (Nicolas
- Pitre's message of "Mon, 26 Sep 2011 19:06:06 -0400 (EDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C3D604D4-E894-11E0-BA7D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752841Ab1IZXLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Sep 2011 19:11:08 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:45379 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750884Ab1IZXLH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Sep 2011 19:11:07 -0400
+Received: from [192.168.1.17] (brln-4db9fe34.pool.mediaWays.net [77.185.254.52])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 3F4E146180;
+	Tue, 27 Sep 2011 01:10:44 +0200 (CEST)
+In-Reply-To: <7vehz30wdy.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 3.0.3- 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182183>
 
-Nicolas Pitre <nico@fluxnic.net> writes:
 
-> Is this supported already?
+--=-CMcvEecqaktcwNmyiBaR
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I do not think so, as rerere is about applying previous change using 3-way
-merge. A modify/delete conflict would mean you have only two stages, and
-while I can see somebody might want to say "I want to ignore further
-modifications to this dead path ignored and resolve in favor of deletion",
-it felt a bit too aggressive to my taste when I last worked on rerere.
+On Mon, 2011-09-26 at 15:30 -0700, Junio C Hamano wrote:
+> Ben Boeckel <mathstuf@gmail.com> writes:
+>=20
+> > When the --prune and --tags options are given to git fetch together, al=
+l
+> > non-tag refs are pruned because only tags are looked at and when prunin=
+g
+> > it appears as if the branches have disappeared and are therefore delete=
+d
+> > locally.
+>=20
+> I would call that a bug, and it is not limited to the use of "--tags". Fo=
+r
+> example, I suspect that
+>=20
+>     $ git fetch --prune origin refs/heads/master:refs/remotes/origin/mast=
+er
+>=20
+> would prune remote tracking branches for "origin" other than "master".
+
+This should fix it (in a way). Let's agree that it's a bad idea and
+complain to the user. Looking at the surrounding code, I can't find
+anything obvious that would break, and `git fetch --prune --multiple a
+b` is allowed.
+
+Patch on top of maint.
+
+--- 8< ---
+Subject: [PATCH] fetch: disallow --prune in combination with tags or refspe=
+cs
+
+Pruning shouldn't be used when other options limit the references that
+should be taken into account. For example
+
+    git fetch --prune --tags origin
+    git fetch --prune origin refs/heads/*:refs/remotes/*
+
+Both these commands would remove references which do still exist in
+the remote.
+
+Print an error and exit if prune is selected at the same time as
+either tags are selected or a refspec is given.
+
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+---
+ builtin/fetch.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index e422ced..158b20a 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -967,6 +967,9 @@ int cmd_fetch(int argc, const char **argv, const char *=
+prefix)
+ 			if (!add_remote_or_group(argv[i], &list))
+ 				die(_("No such remote or remote group: %s"), argv[i]);
+ 		result =3D fetch_multiple(&list);
++	} else if (prune && (argc =3D=3D 2 || tags !=3D TAGS_DEFAULT)) {
++		/* The if (multiple) is above so we don't report multiple remotes as an =
+error */
++		die(_("Pruning and limiting refs is not compatible"));
+ 	} else {
+ 		/* Single remote or group */
+ 		(void) add_remote_or_group(argv[0], &list);
+--=20
+1.7.5.2.354.g349bf
+
+
+
+
+--=-CMcvEecqaktcwNmyiBaR
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAABAgAGBQJOgQaHAAoJEHKRP1jG7ZzTb/oH+wYTtzUPPxVuw/JibeJ5hihU
+yGH2g6ns1jgmb0j9wW8EkG/CM3IHHRAI8bmd0nTPUI1ekN/BLgmrILFpktct5hJz
+lPp1/cAKIgrU6XHrUmZflPiGcgiTz0xLYJjQlH2vobVzuKY8Ba9j/39rsOM+uUxY
+yqTaNvP/27Wokt3+kYXAQe0u0t8uTQz/EU6sHI3LJtOfMMgn6uGBPqa/3XXl8ciS
+hj6Kkay5E6zMHtxuHrA/ucedFiJx3Hpx67fYx+FB6uWBVdSQvHmgBGmfmFJUThde
+8OBLDz263D+bZkiuOrOiIS9piBAFwJWq5yPHaf5CElz143v8w3mYkr+E2uICuiE=
+=L2Qf
+-----END PGP SIGNATURE-----
+
+--=-CMcvEecqaktcwNmyiBaR--
