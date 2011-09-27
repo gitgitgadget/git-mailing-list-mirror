@@ -1,119 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-remote rename should match whole string when
- renaming remote ref directory
-Date: Mon, 26 Sep 2011 23:07:03 -0700
-Message-ID: <7voby6y0vs.fsf@alter.siamese.dyndns.org>
-References: <1317045186-25206-1-git-send-email-benny@tonian.com>
- <7v62kf41ud.fsf@alter.siamese.dyndns.org> <4E8138B3.9090909@tonian.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] gitweb: Add js=1 before an URI fragment to fix line number
+ links
+Date: Tue, 27 Sep 2011 08:44:03 +0200
+Message-ID: <4E8170B3.8040205@viscovery.net>
+References: <1317060642-25488-1-git-send-email-peter@stuge.se> <7v62kf2jf4.fsf@alter.siamese.dyndns.org> <20110926194639.25339.qmail@stuge.se> <7vipof0zx0.fsf@alter.siamese.dyndns.org> <20110926222801.14985.qmail@stuge.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	git@vger.kernel.org
-To: Benny Halevy <bhalevy@tonian.com>
-X-From: git-owner@vger.kernel.org Tue Sep 27 08:07:18 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Peter Stuge <peter@stuge.se>
+X-From: git-owner@vger.kernel.org Tue Sep 27 08:44:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8Qp3-0004uP-JE
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 08:07:17 +0200
+	id 1R8ROq-0008P4-EA
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 08:44:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752810Ab1I0GHL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Sep 2011 02:07:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:32904 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752772Ab1I0GHK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2011 02:07:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 81AA531D7;
-	Tue, 27 Sep 2011 02:07:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eyV+UR/+NXLgMlJVajLxNtqDO1I=; b=ZgAsBU
-	iCcnxBUM4qbsHnneqLWcprsZq9biukfGmX7O4u/yxAUcaNxiGNPsZVxX4wF0qdsZ
-	nf56qAncw/7i+/vq6hlylKHrVuZH2LECm48R+V39sGLYPivnI+Tx16FZKDuyiojZ
-	qJSVULYJcxmIv23HngkU77JtY10webqv+XgLk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GkUHJWFMrLq0Errf6D9mM2iT06Ok5cUs
-	p1pG/rybWTieGG5dgfIGuuk7z8iVXuf0ehRxE9ZKYiz052dkbOsNpBSIcJ6322w/
-	f3cXtBY0u9n9POTOKTe32tO9phmS8YIuPFIdKBmLQtlwK23FbbPS8N/VzfGN1uro
-	JJ4N8rMvx7s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7967631D6;
-	Tue, 27 Sep 2011 02:07:05 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E75EF31D5; Tue, 27 Sep 2011
- 02:07:04 -0400 (EDT)
-In-Reply-To: <4E8138B3.9090909@tonian.com> (Benny Halevy's message of "Tue,
- 27 Sep 2011 05:45:07 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EC7C3F18-E8CE-11E0-A83B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751170Ab1I0GoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Sep 2011 02:44:12 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:57897 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751052Ab1I0GoL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2011 02:44:11 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1R8ROe-0003m4-El; Tue, 27 Sep 2011 08:44:04 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 2AD191660F;
+	Tue, 27 Sep 2011 08:44:04 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.22) Gecko/20110902 Thunderbird/3.1.14
+In-Reply-To: <20110926222801.14985.qmail@stuge.se>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182214>
 
-Benny Halevy <bhalevy@tonian.com> writes:
+Am 9/27/2011 0:28, schrieb Peter Stuge:
+> Junio C Hamano wrote:
+>> You don't have to explain these to *me* specifically as a response
+>> to this thread. What I meant was that your patch should have these
+>> necessary descriptions in its proposed commit log message.
+> 
+> IMO not so neccessary if one knows a little web and javascript, which
+> is probably likely for a gitweb change..
+> 
+> It's a simple fix of links broken by manual URI manipulation that
+> didn't consider fragments. Is the subject description really not
+> enough?
 
-> On 2011-09-26 21:04, Junio C Hamano wrote:
->> Benny Halevy <benny@tonian.com> writes:
->> ...
->>> -	if (!prefixcmp(refname, buf.buf)) {
->>> +	if (!strcmp(refname, buf.buf)) {
->> 
->> At this point of the code, refname has "refs/remotes/test/foo" and it is
->> queued to later rename it to "refs/remotes/test-/foo" (the next invocation
->> of this function will see "refs/remotes/test/bar" in refname). And the
->> strbuf buf.buf has "refs/remotes/test"; your !strcmp(refname, buf.buf)
->> would never trigger, I suspect.
->> 
->> Isn't 60e5eee (remote: "rename o foo" should not rename ref "origin/bar",
->> 2011-09-01) the correct fix for this issue?...
->
-> OK, 60e5eee solves the problem too.
+No, it is not. The target audience of a commit message are people like I
+am. I do know a bit of Perl, and a bit of Javascript; I know how an URL is
+structured; I would find my way through the gitweb code if the need
+arises. But I am not an expert in any of these areas.
 
-Hmm, what do you mean by "too" here?  Martin's patch fixes the issue, but
-does yours, too?
+The subject alone is not sufficient because I do not know for sure what an
+"URI fragment" is or what role line numbers in gitweb's links play. The
+explanations and examples you gave in a later email were very
+enlightening, and they would be very helpful if *I* am forced to hack
+gitweb, and if I need to understand why this particular change was good.
 
-> FWIW, here's the test I used:
-> ...
-> cd main || fail cd main failed
-> for i in test test-2; do
-> 	$git remote add $i file://$cwd/$i || fail git remote add $i failed
-> done
-> $git remote update || fail git remote update fail
-> $git remote rename test test-
-> $git show test-2/master || fail FAILED
-> echo PASSED
+Finding the right balance between verbosity and terseness needs practice,
+but to write *no* justification is practically always wrong.
 
-Before your last "echo PASSED", add this line:
-
-	$git show test-/master || fail FAILED
-
-and see what happens with your patch.
-
-It is unfortunately a rather common trap to fall into, so I wouldn't blame
-you too much. People tend to concentrate only on an aspect of the problem
-that originally motivated them, and forget about the other issues that are
-equally important, if not more. In this case, you were too thrilled to see
-that your updated code no longer renames "test-2" mistakenly to "test--2",
-and you forgot that the primary task of the resulting code was to rename
-"test" to "test-" correctly. The additional line I gave you above is to
-test that.
-
-When testing your own code, make it a habit to _always_ test both sides of
-the coin. It is somewhat difficult until you get used to it [*1*], but it
-is a skill that is really worth acquiring.
-
-Thanks.
-
-
-[Footnote]
-
-*1* ...and I do not claim that I myself never forget to fully enumerate
-other sides; even experienced people still overlook and embarrass
-themselves in public ;-)
+-- Hannes
