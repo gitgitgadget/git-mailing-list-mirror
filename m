@@ -1,88 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] notes_merge_commit(): do not pass temporary buffer to
- other function
-Date: Tue, 27 Sep 2011 09:59:30 -0700
-Message-ID: <7vd3elyl8t.fsf@alter.siamese.dyndns.org>
-References: <1317098813-30839-1-git-send-email-mhagger@alum.mit.edu>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: [PATCH v2] Docs: git checkout --orphan: `root commit' and `branch head'
+Date: Tue, 27 Sep 2011 17:09:58 +0000
+Message-ID: <CAMOZ1BuK1dNdW9gVSnXCwtUBYL7Ef-4-uNNyTMf-wwVCa+0tuw@mail.gmail.com>
+References: <1316960136073-6829212.post@n2.nabble.com> <1316961212.4388.5.camel@centaur.lab.cmartin.tk>
+ <7vaa9r2jii.fsf@alter.siamese.dyndns.org> <1317073309.5579.9.camel@centaur.lab.cmartin.tk>
+ <vpq39fi9gf5.fsf@bauges.imag.fr> <69d6fb3199bc4f74b25dae7992a9f132-mfwitten@gmail.com>
+ <vpqsjni6kkk.fsf@bauges.imag.fr> <CAMOZ1Buf5KxbN59o8QK_dMmF_SEY_Ckuz4DALorZpwuL9gx-Pg@mail.gmail.com>
+ <vpq8vpa2agq.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Sep 27 18:59:39 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
+	vra5107 <venkatram.akkineni@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Sep 27 19:10:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8b0L-0002tO-Mv
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 18:59:38 +0200
+	id 1R8bAw-0007vD-3z
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 19:10:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750900Ab1I0Q7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Sep 2011 12:59:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35298 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750821Ab1I0Q7c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2011 12:59:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4829A4923;
-	Tue, 27 Sep 2011 12:59:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NXiL9wPlb9tQS4168jdB8K3hVsA=; b=NBL3+2
-	9ETsP4VypnBgj9NYj30w53rrgokvlGxpzRS+kuoQxbp0VC5HUXPakK0Ee7vTS2TE
-	ohcNgXWQKB1eW2VcvjKWI3ondJ+1fkJEEUnatDPEZTzGOowAqKi9eSaBk39sDL9M
-	W4VE2PlvWJWdrSW/Zj/xRQisWtSyXpvD/0/GI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=px9uhFaZCUcj7ZasY3GgZ8u5gscc3YTn
-	oNo6NtNgIgrww7o0hoa1Cx5TfXsFldS3nH4JTfG8D42Zz7NPyUOSBYstO6YpijUF
-	qfYypjQ7KJjlOKTdVQbJERL6FoovaTF/3ZYveRN+e9xRt9JYE9hNiIK59YY4LQIi
-	WXR19u6gpOY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4001B4922;
-	Tue, 27 Sep 2011 12:59:32 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C9E1F4921; Tue, 27 Sep 2011
- 12:59:31 -0400 (EDT)
-In-Reply-To: <1317098813-30839-1-git-send-email-mhagger@alum.mit.edu>
- (Michael Haggerty's message of "Tue, 27 Sep 2011 06:46:53 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 11D7DE88-E92A-11E0-AFFC-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751568Ab1I0RK3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Sep 2011 13:10:29 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:42807 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750900Ab1I0RK2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2011 13:10:28 -0400
+Received: by iaqq3 with SMTP id q3so5918785iaq.19
+        for <git@vger.kernel.org>; Tue, 27 Sep 2011 10:10:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=zRmJaXll+yV4EMFjlk9wJb0+lQ76NVuOByoQ1qVDDhE=;
+        b=t+Yre+7fpy9glwNFQIsRNdgXXNTJOBpwPNoifov7cDE2xfeGuTEStc6inLirPgXm+/
+         4zH+5tt7PWFnOnk0ouDy6QQO4rls0FUWuyvw5MGYj1xmivdEhitfGyHXMkMnuVIwQIPv
+         fX8TmlMK4yNQzYWIrRmTgYtTqKkf7XxIMqpYI=
+Received: by 10.42.134.4 with SMTP id j4mr10044692ict.135.1317143428109; Tue,
+ 27 Sep 2011 10:10:28 -0700 (PDT)
+Received: by 10.42.171.194 with HTTP; Tue, 27 Sep 2011 10:09:58 -0700 (PDT)
+In-Reply-To: <vpq8vpa2agq.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182253>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Tue, Sep 27, 2011 at 16:53, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
 
-> I discovered this problem when an innocent modification to unrelated
-> code triggered test failures.
+> Michael Witten <mfwitten@gmail.com> writes:
 >
->  notes-merge.c |    3 ++-
->  1 files changed, 2 insertions(+), 1 deletions(-)
+>> I think that the last paragraph provides enough context to understan=
+d
+>> its usefulness.
 >
-> diff --git notes-merge.c notes-merge.c
-> index e1aaf43..baaf31f 100644
-> --- notes-merge.c
-> +++ notes-merge.c
+> The last paragraph tells the user how to commit something different f=
+rom
+> what is already here, which is pretty much the opposite.
+>
+> IOW, I see two uses for --orphan:
+>
+> 1) Publish the same tree without its history
+>
+> 2) Start a different project, but for some reason you wanted it to le=
+ave
+> =C2=A0 in the same repository and you didn't want a "git init".
+>
+> The next paragraph documents 2), but your removed paragraph was
+> documenting 1). Reading the new version, it feels like the user is
+> encourraged to modify the index, while it's just an option.
 
-It is Ok to play with -p0 yourself but please don't do that in the public.
+Those 2 uses are not really different; both are manifestations of
+creating a new root commit using some tree.
 
-> @@ -680,7 +680,7 @@ int notes_merge_commit(struct notes_merge_options *o,
->  	 * Finally store the new commit object SHA1 into 'result_sha1'.
->  	 */
->  	struct dir_struct dir;
-> -	const char *path = git_path(NOTES_MERGE_WORKTREE "/");
-> +	char *path = xstrdup(git_path(NOTES_MERGE_WORKTREE "/"));
->  	int path_len = strlen(path), i;
->  	const char *msg = strstr(partial_commit->buffer, "\n\n");
->  
-> @@ -720,6 +720,7 @@ int notes_merge_commit(struct notes_merge_options *o,
->  			    result_sha1);
->  	OUTPUT(o, 4, "Finalized notes merge commit: %s",
->  	       sha1_to_hex(result_sha1));
-> +	free(path);
->  	return 0;
->  }
+The way I see it, people would think:
+
+   1. I've got to get rid of this proprietary stuff
+      before I publish as open source.
+
+   2. I'll need a new root commit for the open source
+      stuff, too, otherwise it'll still be accessible.
+
+  3a. Aha! I can create a root commit based on the
+      proprietary stuff, but altered in any way that
+      I need.
+
+  3b. Aha! I've already got a cleaned commit, I can
+      just use that as the basis for the root commit
+      without further alteration.
+
+In any case, removing history is probably better handled by
+filter-branch or rebase, as I bet more often than not there are
+existing descendants of the proposed root commit that need to be
+played back anyway.
