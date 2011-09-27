@@ -1,81 +1,57 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] git-submodule: a small fix
-Date: Tue, 27 Sep 2011 09:24:13 +0200
-Message-ID: <4E817A1D.8050902@web.de>
-References: <CAOOg04z0UjOQCBMTuii37y3ykNU17hDTcD9E81C+r1whFpMaCg@mail.gmail.com> <CAH5451k-6HHx2xxddJauE8=P1umjG=TnrcOKmQfeh=4GOzpCKQ@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] notes_merge_commit(): do not pass temporary buffer to
+ other function
+Date: Tue, 27 Sep 2011 09:12:40 +0200
+Message-ID: <CALKQrgcO20am0nU7W=hmbMYVjjGi0-REB8=Xko5NtXjjG4UZag@mail.gmail.com>
+References: <1317098813-30839-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Andrew Ardill <andrew.ardill@gmail.com>, git@vger.kernel.org
-To: Roy Liu <carsomyr@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 27 09:24:25 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Sep 27 09:31:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8S1f-0005lL-4a
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 09:24:23 +0200
+	id 1R8S8e-0008Mr-1R
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 09:31:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751502Ab1I0HYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Sep 2011 03:24:18 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:55562 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751105Ab1I0HYR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2011 03:24:17 -0400
-Received: from smtp08.web.de  ( [172.20.5.216])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 6EB761AC85E91;
-	Tue, 27 Sep 2011 09:24:16 +0200 (CEST)
-Received: from [79.247.253.22] (helo=[192.168.178.43])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1R8S1Y-0006nT-00; Tue, 27 Sep 2011 09:24:16 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
-In-Reply-To: <CAH5451k-6HHx2xxddJauE8=P1umjG=TnrcOKmQfeh=4GOzpCKQ@mail.gmail.com>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX18tTyojgnCAGVsh4l3qIeSnreCG0CjA+UI3WqVK
-	w5jlvAH1nW+d3T7hPUyIkS43Gw3wAlKwxB+TovqVQYvP9w/xkW
-	ALWs6HVInQKR5VEJ1J6w==
+	id S1751854Ab1I0Hbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Sep 2011 03:31:31 -0400
+Received: from locusts.copyleft.no ([178.255.144.241]:54362 "EHLO
+	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751713Ab1I0Hbb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2011 03:31:31 -0400
+X-Greylist: delayed 1125 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Sep 2011 03:31:30 EDT
+Received: from mail-iy0-f174.google.com ([209.85.210.174])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1R8RqO-000NC0-7H
+	for git@vger.kernel.org; Tue, 27 Sep 2011 09:12:44 +0200
+Received: by iaqq3 with SMTP id q3so5390183iaq.19
+        for <git@vger.kernel.org>; Tue, 27 Sep 2011 00:12:40 -0700 (PDT)
+Received: by 10.42.132.10 with SMTP id b10mr8884652ict.76.1317107560820; Tue,
+ 27 Sep 2011 00:12:40 -0700 (PDT)
+Received: by 10.231.15.7 with HTTP; Tue, 27 Sep 2011 00:12:40 -0700 (PDT)
+In-Reply-To: <1317098813-30839-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182216>
 
-Am 27.09.2011 05:22, schrieb Andrew Ardill:
-> On 27 September 2011 08:00, Roy Liu <carsomyr@gmail.com> wrote:
->> In git-submodule.sh, the "url" variable may contain a stale value from
->> the previous loop iteration, so clear it.
->>
->> --- git-submodule.sh.orig   2011-09-26 17:50:45.000000000 -0400
->> +++ git-submodule.sh    2011-09-26 17:51:18.000000000 -0400
->> @@ -370,6 +370,8 @@
->>            esac
->>            git config submodule."$name".url "$url" ||
->>            die "Failed to register url for submodule path '$path'"
->> +        else
->> +            url=""
->>        fi
->>
->>        # Copy "update" setting when it is not set yet
-> 
-> Perhaps a better commit description would be:
-> 
-> git-submodule: clear the url variable when not set to avoid using stale values
+On Tue, Sep 27, 2011 at 06:46, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> It is unsafe to pass a temporary buffer as an argument to
+> read_directory().
+>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 
-Yes, the commit description needs to describe what was changed (and you can
-also drop the "git-", to start with "submodule:" is sufficient here). Also
-it would be nice if the message would describe under what circumstances this
-happens (how did you notice this problem?).
+ACK.
 
-But I wonder if the patch does it the right way. While it fixes the basic
-issue that "url" might not be set, I doubt it does what the user expects.
-The place where the - sometimes uninitialized - variable "url" is used is
-a few lines down:
+...Johan
 
-		say "$(eval_gettext "Submodule '\$name' (\$url) registered for path '\$path'")"
-
-I doesn't make much sense to say "Submodule 'foo' () registered for path 'foo'"
-here. Shouldn't "url" be set to "$(git config "submodule.$name.url")"? And
-when looking at the if you added the else to it might make sense to set it
-unconditionally before the if and then test "$url" there instead of adding an
-extra else.
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
