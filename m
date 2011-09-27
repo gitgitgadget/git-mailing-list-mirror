@@ -1,64 +1,87 @@
-From: Eric Raible <raible@nextest.com>
-Subject: Re: Re: [PATCH] Docs: git checkout --orphan: `root commit' and `branch
- head'
-Date: Tue, 27 Sep 2011 13:34:33 -0700
-Message-ID: <4E823359.7080602@nextest.com>
-References: <1316960136073-6829212.post@n2.nabble.com> <1316961212.4388.5.camel@centaur.lab.cmartin.tk> <7vaa9r2jii.fsf@alter.siamese.dyndns.org> <1317073309.5579.9.camel@centaur.lab.cmartin.tk> <e88b6e560cab4ed1937dd191b4180387-mfwitten@gmail.com> <4E81F080.7010905@drmicha.warpmail.net> <CAMOZ1BsvnZ7PyfjOJURX+B7vCZcYheLS4pissGvPNjEivbYXtw@mail.gmail.com> <7v39fhyk21.fsf@alter.siamese.dyndns.org>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH v2] Docs: git checkout --orphan: `root commit' and `branch head'
+Date: Tue, 27 Sep 2011 21:59:32 +0100
+Organization: OPDS
+Message-ID: <553B5FA1A43748B1ADD759572EADA6FF@PhilipOakley>
+References: <1316960136073-6829212.post@n2.nabble.com><1316961212.4388.5.camel@centaur.lab.cmartin.tk><7vaa9r2jii.fsf@alter.siamese.dyndns.org><1317073309.5579.9.camel@centaur.lab.cmartin.tk><vpq39fi9gf5.fsf@bauges.imag.fr><69d6fb3199bc4f74b25dae7992a9f132-mfwitten@gmail.com> <vpqsjni6kkk.fsf@bauges.imag.fr>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: Michael Witten <mfwitten@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	=?UTF-8?B?Q2FybG9zIE1hcnTDrW4gTmlldG8=?= <cmn@elego.de>,
-	vra5107 <venkatram.akkineni@gmail.com>, <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 27 22:39:59 2011
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	=?iso-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
+	"vra5107" <venkatram.akkineni@gmail.com>, <git@vger.kernel.org>
+To: "Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>,
+	"Michael Witten" <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 27 22:59:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8eRX-0003Xs-Qv
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 22:39:56 +0200
+	id 1R8ekH-0003Np-Cr
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 22:59:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753777Ab1I0Ujq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Sep 2011 16:39:46 -0400
-Received: from smtps.nextest.com ([12.96.234.114]:55992 "EHLO
-	exchange.DOMAIN1.nextest.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753771Ab1I0Ujp (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2011 16:39:45 -0400
-X-Greylist: delayed 311 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Sep 2011 16:39:45 EDT
-Received: from [131.101.151.13] (131.101.151.13) by
- Exchange.DOMAIN1.nextest.com (131.101.21.39) with Microsoft SMTP Server (TLS)
- id 8.2.176.0; Tue, 27 Sep 2011 13:34:33 -0700
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
-In-Reply-To: <7v39fhyk21.fsf@alter.siamese.dyndns.org>
+	id S1753313Ab1I0U7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Sep 2011 16:59:12 -0400
+Received: from out1.ip09ir2.opaltelecom.net ([62.24.128.245]:57041 "EHLO
+	out1.ip09ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752643Ab1I0U7M (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2011 16:59:12 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgEFAE44gk5cGntq/2dsb2JhbABBijGdUHmBTgEEAQEFCAEBLh4BASELAgMFAgEDFQwlFAEECBIGBxcGARIIAgECAwEIh1cKuV2GK2AEh0KWKIcd
+X-IronPort-AV: E=Sophos;i="4.68,451,1312153200"; 
+   d="scan'208";a="491802545"
+Received: from host-92-26-123-106.as13285.net (HELO PhilipOakley) ([92.26.123.106])
+  by out1.ip09ir2.opaltelecom.net with SMTP; 27 Sep 2011 21:59:09 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6109
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182263>
 
-On 11:59 AM, Junio C Hamano wrote:
+From: "Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>
 > Michael Witten <mfwitten@gmail.com> writes:
-> 
->> It seems like a more logical approach would be instead for "git
->> commit" to take a "--root" option that would create a new root commit
->> based on the current index and then point the current branch head to
->> the new root commit. Thus:
->>
->>   $ git checkout -b new_branch old_branch
->>   $ # Manipulate or not
->>   $ git commit --root
->>
->> That's how people think.
+>
+>> -This can be useful when you want to publish the tree from a commit
+>> -without exposing its full history. You might want to do this to publish
+>> -an open source branch of a project whose current tree is "clean", but
+>> -whose full history contains proprietary or otherwise encumbered bits of
+>> -code.
+>
+> This part used to be just this in v1:
+>
+> -This can be useful when you want to publish the tree from a commit
+> -without exposing its full history. You might want to do this to publish
+> +This can be useful when you want to publish a tree without exposing its
+> +full history; for instance, you might want to do this to publish
+> an open source branch of a project whose current tree is "clean", but
+> whose full history contains proprietary or otherwise encumbered bits of
+> code.
+>
+> is it intentionnal that you discarded completely the paragraph? If so,
+> then I disagree, the paragraph was one of the main motivation for
+> someone to use --orphan, without it, someone may understand _what_ it
+> does, but not _why_ it is useful.
+>
+> -- 
 
-Not this person.
+I agree - it would be wrong to discard the explanation of why it is used. As 
+a relatively new git user, the man pages do need to properly inform the 
+usage.
 
-I like the idea but I'd rather see:
+I have some orphan [i.e. independant] branches that are for documentation 
+and for old matlab code that are both part of the project, but are separate 
+from the various code branches. The original term `--orphan` was meaningful, 
+though I do agree about it being a root commit.
 
-	git commit --no-parent
-
-"parent" at least appears in gitk and therefore newcomers will prob
-have a better chance of understanding the intent w/out needing to
-otherwise unnecessary terminology.
+It can be very easy for those that already know to presume knowledge of the 
+reader that the reader doesn't have, leaving both sides frustrated. Reading 
+the full manual could be a life times work to get all the nuances.
