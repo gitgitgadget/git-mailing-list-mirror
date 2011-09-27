@@ -1,99 +1,77 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [PATCH v2] Docs: git checkout --orphan: `root commit' and `branch head'
-Date: Tue, 27 Sep 2011 17:09:58 +0000
-Message-ID: <CAMOZ1BuK1dNdW9gVSnXCwtUBYL7Ef-4-uNNyTMf-wwVCa+0tuw@mail.gmail.com>
-References: <1316960136073-6829212.post@n2.nabble.com> <1316961212.4388.5.camel@centaur.lab.cmartin.tk>
- <7vaa9r2jii.fsf@alter.siamese.dyndns.org> <1317073309.5579.9.camel@centaur.lab.cmartin.tk>
- <vpq39fi9gf5.fsf@bauges.imag.fr> <69d6fb3199bc4f74b25dae7992a9f132-mfwitten@gmail.com>
- <vpqsjni6kkk.fsf@bauges.imag.fr> <CAMOZ1Buf5KxbN59o8QK_dMmF_SEY_Ckuz4DALorZpwuL9gx-Pg@mail.gmail.com>
- <vpq8vpa2agq.fsf@bauges.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitweb: Fix links to lines in blobs when
+ javascript-actions are enabled
+Date: Tue, 27 Sep 2011 10:17:20 -0700
+Message-ID: <7v7h4tykf3.fsf@alter.siamese.dyndns.org>
+References: <20110927094947.10955.qmail@stuge.se>
+ <1317117060-3955-1-git-send-email-peter@stuge.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
-	vra5107 <venkatram.akkineni@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Sep 27 19:10:34 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Peter Stuge <peter@stuge.se>
+X-From: git-owner@vger.kernel.org Tue Sep 27 19:17:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8bAw-0007vD-3z
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 19:10:34 +0200
+	id 1R8bHb-0003qc-Hg
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 19:17:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751568Ab1I0RK3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Sep 2011 13:10:29 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:42807 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750900Ab1I0RK2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2011 13:10:28 -0400
-Received: by iaqq3 with SMTP id q3so5918785iaq.19
-        for <git@vger.kernel.org>; Tue, 27 Sep 2011 10:10:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=zRmJaXll+yV4EMFjlk9wJb0+lQ76NVuOByoQ1qVDDhE=;
-        b=t+Yre+7fpy9glwNFQIsRNdgXXNTJOBpwPNoifov7cDE2xfeGuTEStc6inLirPgXm+/
-         4zH+5tt7PWFnOnk0ouDy6QQO4rls0FUWuyvw5MGYj1xmivdEhitfGyHXMkMnuVIwQIPv
-         fX8TmlMK4yNQzYWIrRmTgYtTqKkf7XxIMqpYI=
-Received: by 10.42.134.4 with SMTP id j4mr10044692ict.135.1317143428109; Tue,
- 27 Sep 2011 10:10:28 -0700 (PDT)
-Received: by 10.42.171.194 with HTTP; Tue, 27 Sep 2011 10:09:58 -0700 (PDT)
-In-Reply-To: <vpq8vpa2agq.fsf@bauges.imag.fr>
+	id S1751175Ab1I0RRX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Sep 2011 13:17:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43044 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751127Ab1I0RRW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2011 13:17:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3AE4C4DEF;
+	Tue, 27 Sep 2011 13:17:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KB+KVMALQ9rz/YfB89Y1RdRXEok=; b=Nr+YJs
+	EtPM162K78oi1q2R5vD2BbcuSvxqdZDb31OWm1k5OLIzmXx8jmq7Qt/J3pLnclpd
+	gz30s9CeV98o3gxMYwRUK2A0o1qmTlNEeurgJOUOVPbud4Bzimdv0SZ0i4LNOmHr
+	Ma/6/FqTOm9RxaE4f6dML/BeArKgp+sGcPYns=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aMrOTdN9OQw+MjR8jA3nZlS6OnwHdrLJ
+	kVjoTdNH3SnzNQPjJr4aZKnHnpNxtbzyAJpbfrquY3mzds72aOXPQQmkUtXceAOw
+	K9OYAdMEeVQdiEQjOPM6NyEJWjFIsMub2arukV84f/bKXGzJZejKoXNMTZXpCmBR
+	CCNWVWiFpRA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 317F14DEE;
+	Tue, 27 Sep 2011 13:17:22 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BBDC04DED; Tue, 27 Sep 2011
+ 13:17:21 -0400 (EDT)
+In-Reply-To: <1317117060-3955-1-git-send-email-peter@stuge.se> (Peter Stuge's
+ message of "Tue, 27 Sep 2011 11:51:00 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8F9430E0-E92C-11E0-A5D4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182254>
 
-On Tue, Sep 27, 2011 at 16:53, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
+Peter Stuge <peter@stuge.se> writes:
 
-> Michael Witten <mfwitten@gmail.com> writes:
+> Some javascript code will run in the browser onLoad and signals back to
+> gitweb that the browser can actually do javascript.
 >
->> I think that the last paragraph provides enough context to understan=
-d
->> its usefulness.
+> The code adds [?;]js=1 into the URL of all links on the page. The code
+> always added [?;]js=1 to the end of links, which is wrong when links
+> contain a URI fragment, such as links directly to a line in a blob:
+> ..?p=repo.git;a=blob;f=file#l123
 >
-> The last paragraph tells the user how to commit something different f=
-rom
-> what is already here, which is pretty much the opposite.
+> In this case, [?;]js=1 must be added before the hashmark.
 >
-> IOW, I see two uses for --orphan:
->
-> 1) Publish the same tree without its history
->
-> 2) Start a different project, but for some reason you wanted it to le=
-ave
-> =C2=A0 in the same repository and you didn't want a "git init".
->
-> The next paragraph documents 2), but your removed paragraph was
-> documenting 1). Reading the new version, it feels like the user is
-> encourraged to modify the index, while it's just an option.
+> Signed-off-by: Peter Stuge <peter@stuge.se>
 
-Those 2 uses are not really different; both are manifestations of
-creating a new root commit using some tree.
+Nicely done. You forgot to mention another bug you fixed (see Jakub's
+sample in the thread), so I'll amend in a few sentences to describe it as
+well.
 
-The way I see it, people would think:
-
-   1. I've got to get rid of this proprietary stuff
-      before I publish as open source.
-
-   2. I'll need a new root commit for the open source
-      stuff, too, otherwise it'll still be accessible.
-
-  3a. Aha! I can create a root commit based on the
-      proprietary stuff, but altered in any way that
-      I need.
-
-  3b. Aha! I've already got a cleaned commit, I can
-      just use that as the basis for the root commit
-      without further alteration.
-
-In any case, removing history is probably better handled by
-filter-branch or rebase, as I bet more often than not there are
-existing descendants of the proposed root commit that need to be
-played back anyway.
+Thanks.
