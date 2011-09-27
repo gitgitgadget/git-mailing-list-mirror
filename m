@@ -1,571 +1,107 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: [RFC/PATCHv2] git-p4: handle files with shell metacharacters
-Date: Tue, 27 Sep 2011 09:40:36 +0100
-Message-ID: <1317112836-14135-2-git-send-email-luke@diamand.org>
-References: <20110926214758.GB3433@arf.padd.com>
- <1317112836-14135-1-git-send-email-luke@diamand.org>
-Cc: pw@padd.com, vitor.hda@gmail.com, Luke Diamand <luke@diamand.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 27 10:41:07 2011
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: [PATCH v0] fast-import: Add drop command
+Date: Tue, 27 Sep 2011 09:57:02 +0100
+Message-ID: <CAOpHH-WSyD23GKtZ2nLiSsJfLU-+7ibyGhGccyvtAhKQ-jffBw@mail.gmail.com>
+References: <1316878065-11782-1-git-send-email-vitor.hda@gmail.com>
+ <1316878065-11782-2-git-send-email-vitor.hda@gmail.com> <20110924193733.GB10955@elie>
+ <CA+gfSn8Z7Xn1hdpqNHiP3bd2KGRqcAc6O683Z4O+G=jNNYJtBA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	David Barr <davidbarr@google.com>
+To: Dmitry Ivankov <divanorama@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 27 10:57:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8TDt-0000cd-Uv
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 10:41:06 +0200
+	id 1R8TTu-0006P2-43
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 10:57:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752317Ab1I0Ik5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Sep 2011 04:40:57 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:45433 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752291Ab1I0Ikz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2011 04:40:55 -0400
-Received: by mail-wy0-f174.google.com with SMTP id 34so6926766wyg.19
-        for <git@vger.kernel.org>; Tue, 27 Sep 2011 01:40:54 -0700 (PDT)
-Received: by 10.227.203.80 with SMTP id fh16mr1248587wbb.9.1317112854159;
-        Tue, 27 Sep 2011 01:40:54 -0700 (PDT)
-Received: from localhost.localdomain (cpc1-cmbg14-2-0-cust973.5-4.cable.virginmedia.com. [86.26.7.206])
-        by mx.google.com with ESMTPS id fy13sm7253961wbb.18.2011.09.27.01.40.52
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 27 Sep 2011 01:40:53 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6.347.g4db0d
-In-Reply-To: <1317112836-14135-1-git-send-email-luke@diamand.org>
+	id S1751540Ab1I0I5d convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Sep 2011 04:57:33 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:60954 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751327Ab1I0I5c convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2011 04:57:32 -0400
+Received: by vws1 with SMTP id 1so6360938vws.19
+        for <git@vger.kernel.org>; Tue, 27 Sep 2011 01:57:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=+SsEJcMUXJPi3xlZxgE8nkV1Qcf4YbKaSFhnLk05JXY=;
+        b=WIj5gyLwtmo/bxn223zQT+fGQ2JExNCswxkBGAVd3m2M3KPp3MwifhRwbwXjiDEEWD
+         ddsN3Z+bKUrUDOu+/nMQjHyYBMM3oqXC68UZIrcOuFZPCqhZQ4l9S/k6L+gOtA2FHV/H
+         dy9PboxNDea+CnczntKgmFUCUuTRyLQ/c/uaw=
+Received: by 10.52.27.140 with SMTP id t12mr7721135vdg.156.1317113852100; Tue,
+ 27 Sep 2011 01:57:32 -0700 (PDT)
+Received: by 10.220.171.200 with HTTP; Tue, 27 Sep 2011 01:57:02 -0700 (PDT)
+In-Reply-To: <CA+gfSn8Z7Xn1hdpqNHiP3bd2KGRqcAc6O683Z4O+G=jNNYJtBA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182222>
 
-git-p4 used to simply pass strings into system() and popen(), and
-relied on the shell doing the necessary expansion. This though meant
-that shell metacharacters in file names would be corrupted - for
-example files with $ or space in them.
+On Sat, Sep 24, 2011 at 10:19 PM, Dmitry Ivankov <divanorama@gmail.com>=
+ wrote:
+> On Sun, Sep 25, 2011 at 1:37 AM, Jonathan Nieder <jrnieder@gmail.com>=
+ wrote:
+>> Thanks. =A0I must have missed the earlier discussion. =A0What are th=
+e
+>> semantics of this command and its intended purpose?
+> My guess is that if fast-import is used to manage a set of "remote"
+> branches, it should be able to delete branches. Then, it should
+> be allowed to do non-fastforward updates too (--force). Why can't
+> it just ignore branches deletion (considering --force)?
 
-Switch to using subprocess.Popen() and friends, and pass in explicit
-arrays in the places where it matters. This then avoids needing shell
-expansion.
+I started by using --force, but I did not want to completely disable
+these checks. The idea of the drop command is to add support to the
+exceptions that require non-fastforward updates.
 
-Add trivial helper functions for some common perforce operations. Add
-test case.
+> Random thoughts:
+> 1. once 'drop' is executed, fast-import can't tell if the branch was
+> actually deleted. And moreover any attempt to read this branch
+> head becomes illegal (either it's missing in .git or fast-import is
+> instructed to use a dropped branch).
+> 2. 'reset' command is a bit like proposed 'drop' but it never deletes
+> a branch ref. Consider following imports:
+> 1) import branch topic
+> 2) reset topic
+> 3) import branch topic2 starting at topic (incorrect import)
+> If 1-3) is done in one fast-import process, the error is reported.
+> If 3) is done separately, it succeeds but the result is strange:
+> topic2 isn't started from scratch but from old "erased" topic.
+> So, maybe, reset should be fixed to erase branches on --force.
 
-Signed-off-by: Luke Diamand <luke@diamand.org>
----
- contrib/fast-import/git-p4     |  200 ++++++++++++++++++++++++---------------
- t/t9803-git-shell-metachars.sh |   70 ++++++++++++++
- 2 files changed, 193 insertions(+), 77 deletions(-)
- create mode 100755 t/t9803-git-shell-metachars.sh
+I think you are not considering the possibility that checkpoints could
+have been done along the way. I use them frequently to be able to
+analyse branches with diff-tree. As soon as a checkpoint is done,
+update-branches will issue an error (commit A is not part of branch A')=
+=2E
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 782b891..9770304 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -22,36 +22,39 @@ def p4_build_cmd(cmd):
-     location. It means that hooking into the environment, or other configuration
-     can be done more easily.
-     """
--    real_cmd = "%s " % "p4"
-+    real_cmd = ["p4"]
- 
-     user = gitConfig("git-p4.user")
-     if len(user) > 0:
--        real_cmd += "-u %s " % user
-+        real_cmd += ["-u",user]
- 
-     password = gitConfig("git-p4.password")
-     if len(password) > 0:
--        real_cmd += "-P %s " % password
-+        real_cmd += ["-P", password]
- 
-     port = gitConfig("git-p4.port")
-     if len(port) > 0:
--        real_cmd += "-p %s " % port
-+        real_cmd += ["-p", port]
- 
-     host = gitConfig("git-p4.host")
-     if len(host) > 0:
--        real_cmd += "-h %s " % host
-+        real_cmd += ["-h", host]
- 
-     client = gitConfig("git-p4.client")
-     if len(client) > 0:
--        real_cmd += "-c %s " % client
-+        real_cmd += ["-c", client]
- 
--    real_cmd += "%s" % (cmd)
--    if verbose:
--        print real_cmd
-+
-+    if isinstance(cmd,basestring):
-+        real_cmd = ' '.join(real_cmd) + ' ' + cmd
-+    else:
-+        real_cmd += cmd
-     return real_cmd
- 
- def chdir(dir):
--    if os.name == 'nt':
--        os.environ['PWD']=dir
-+    # P4 uses the PWD environment variable rather than getcwd(). Since we're
-+    # not using the shell, we have to set it ourselves.
-+    os.environ['PWD']=dir
-     os.chdir(dir)
- 
- def die(msg):
-@@ -61,29 +64,34 @@ def die(msg):
-         sys.stderr.write(msg + "\n")
-         sys.exit(1)
- 
--def write_pipe(c, str):
-+def write_pipe(c, stdin):
-     if verbose:
--        sys.stderr.write('Writing pipe: %s\n' % c)
-+        sys.stderr.write('Writing pipe: %s\n' % str(c))
- 
--    pipe = os.popen(c, 'w')
--    val = pipe.write(str)
--    if pipe.close():
--        die('Command failed: %s' % c)
-+    expand = isinstance(c,basestring)
-+    p = subprocess.Popen(c, stdin=subprocess.PIPE, shell=expand)
-+    pipe = p.stdin
-+    val = pipe.write(stdin)
-+    pipe.close()
-+    if p.wait():
-+        die('Command failed: %s' % str(c))
- 
-     return val
- 
--def p4_write_pipe(c, str):
-+def p4_write_pipe(c, stdin):
-     real_cmd = p4_build_cmd(c)
--    return write_pipe(real_cmd, str)
-+    return write_pipe(real_cmd, stdin)
- 
- def read_pipe(c, ignore_error=False):
-     if verbose:
--        sys.stderr.write('Reading pipe: %s\n' % c)
-+        sys.stderr.write('Reading pipe: %s\n' % str(c))
- 
--    pipe = os.popen(c, 'rb')
-+    expand = isinstance(c,basestring)
-+    p = subprocess.Popen(c, stdout=subprocess.PIPE, shell=expand)
-+    pipe = p.stdout
-     val = pipe.read()
--    if pipe.close() and not ignore_error:
--        die('Command failed: %s' % c)
-+    if p.wait() and not ignore_error:
-+        die('Command failed: %s' % str(c))
- 
-     return val
- 
-@@ -93,12 +101,14 @@ def p4_read_pipe(c, ignore_error=False):
- 
- def read_pipe_lines(c):
-     if verbose:
--        sys.stderr.write('Reading pipe: %s\n' % c)
--    ## todo: check return status
--    pipe = os.popen(c, 'rb')
-+        sys.stderr.write('Reading pipe: %s\n' % str(c))
-+
-+    expand = isinstance(c, basestring)
-+    p = subprocess.Popen(c, stdout=subprocess.PIPE, shell=expand)
-+    pipe = p.stdout
-     val = pipe.readlines()
--    if pipe.close():
--        die('Command failed: %s' % c)
-+    if pipe.close() or p.wait():
-+        die('Command failed: %s' % str(c))
- 
-     return val
- 
-@@ -108,15 +118,37 @@ def p4_read_pipe_lines(c):
-     return read_pipe_lines(real_cmd)
- 
- def system(cmd):
-+    expand = isinstance(cmd,basestring)
-     if verbose:
--        sys.stderr.write("executing %s\n" % cmd)
--    if os.system(cmd) != 0:
--        die("command failed: %s" % cmd)
-+        sys.stderr.write("executing %s\n" % str(cmd))
-+    subprocess.check_call(cmd, shell=expand)
- 
- def p4_system(cmd):
-     """Specifically invoke p4 as the system command. """
-     real_cmd = p4_build_cmd(cmd)
--    return system(real_cmd)
-+    expand = isinstance(real_cmd, basestring)
-+    subprocess.check_call(real_cmd, shell=expand)
-+
-+def p4_integrate(src, dest):
-+    p4_system(["integrate", "-Dt", src, dest])
-+
-+def p4_sync(path):
-+    p4_system(["sync", path])
-+
-+def p4_add(f):
-+    p4_system(["add", f])
-+
-+def p4_delete(f):
-+    p4_system(["delete", f])
-+
-+def p4_edit(f):
-+    p4_system(["edit", f])
-+
-+def p4_revert(f):
-+    p4_system(["revert", f])
-+
-+def p4_reopen(type, file):
-+    p4_system(["reopen", "-t", type, file])
- 
- #
- # Canonicalize the p4 type and return a tuple of the
-@@ -167,12 +199,12 @@ def setP4ExecBit(file, mode):
-         if p4Type[-1] == "+":
-             p4Type = p4Type[0:-1]
- 
--    p4_system("reopen -t %s %s" % (p4Type, file))
-+    p4_reopen(p4Type, file)
- 
- def getP4OpenedType(file):
-     # Returns the perforce file type for the given file.
- 
--    result = p4_read_pipe("opened %s" % file)
-+    result = p4_read_pipe(["opened", file])
-     match = re.match(".*\((.+)\)\r?$", result)
-     if match:
-         return match.group(1)
-@@ -228,9 +260,17 @@ def isModeExecChanged(src_mode, dst_mode):
-     return isModeExec(src_mode) != isModeExec(dst_mode)
- 
- def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None):
--    cmd = p4_build_cmd("-G %s" % (cmd))
-+
-+    if isinstance(cmd,basestring):
-+        cmd = "-G " + cmd
-+        expand = True
-+    else:
-+        cmd = ["-G"] + cmd
-+        expand = False
-+
-+    cmd = p4_build_cmd(cmd)
-     if verbose:
--        sys.stderr.write("Opening pipe: %s\n" % cmd)
-+        sys.stderr.write("Opening pipe: %s\n" % str(cmd))
- 
-     # Use a temporary file to avoid deadlocks without
-     # subprocess.communicate(), which would put another copy
-@@ -238,11 +278,16 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None):
-     stdin_file = None
-     if stdin is not None:
-         stdin_file = tempfile.TemporaryFile(prefix='p4-stdin', mode=stdin_mode)
--        stdin_file.write(stdin)
-+        if isinstance(stdin,basestring):
-+            stdin_file.write(stdin)
-+        else:
-+            for i in stdin:
-+                stdin_file.write(i + '\n')
-         stdin_file.flush()
-         stdin_file.seek(0)
- 
--    p4 = subprocess.Popen(cmd, shell=True,
-+    p4 = subprocess.Popen(cmd,
-+                          shell=expand,
-                           stdin=stdin_file,
-                           stdout=subprocess.PIPE)
- 
-@@ -275,7 +320,7 @@ def p4Where(depotPath):
-     if not depotPath.endswith("/"):
-         depotPath += "/"
-     depotPath = depotPath + "..."
--    outputList = p4CmdList("where %s" % depotPath)
-+    outputList = p4CmdList(["where", depotPath])
-     output = None
-     for entry in outputList:
-         if "depotFile" in entry:
-@@ -477,8 +522,10 @@ def originP4BranchesExist():
- 
- def p4ChangesForPaths(depotPaths, changeRange):
-     assert depotPaths
--    output = p4_read_pipe_lines("changes " + ' '.join (["%s...%s" % (p, changeRange)
--                                                        for p in depotPaths]))
-+    cmd = ['changes']
-+    for p in depotPaths:
-+        cmd += ["%s...%s" % (p, changeRange)]
-+    output = p4_read_pipe_lines(cmd)
- 
-     changes = {}
-     for line in output:
-@@ -561,7 +608,7 @@ class P4Debug(Command):
- 
-     def run(self, args):
-         j = 0
--        for output in p4CmdList(" ".join(args)):
-+        for output in p4CmdList(args):
-             print 'Element: %d' % j
-             j += 1
-             print output
-@@ -715,7 +762,7 @@ class P4Submit(Command, P4UserMap):
-                 break
-         if not client:
-             die("could not get client spec")
--        results = p4CmdList("changes -c %s -m 1" % client)
-+        results = p4CmdList(["changes", "-c", client, "-m", "1"])
-         for r in results:
-             if r.has_key('change'):
-                 return r['change']
-@@ -778,7 +825,7 @@ class P4Submit(Command, P4UserMap):
-         # remove lines in the Files section that show changes to files outside the depot path we're committing into
-         template = ""
-         inFilesSection = False
--        for line in p4_read_pipe_lines("change -o"):
-+        for line in p4_read_pipe_lines(['change', '-o']):
-             if line.endswith("\r\n"):
-                 line = line[:-2] + "\n"
-             if inFilesSection:
-@@ -835,7 +882,7 @@ class P4Submit(Command, P4UserMap):
-             modifier = diff['status']
-             path = diff['src']
-             if modifier == "M":
--                p4_system("edit \"%s\"" % path)
-+                p4_edit(path)
-                 if isModeExecChanged(diff['src_mode'], diff['dst_mode']):
-                     filesToChangeExecBit[path] = diff['dst_mode']
-                 editedFiles.add(path)
-@@ -850,21 +897,21 @@ class P4Submit(Command, P4UserMap):
-                     filesToAdd.remove(path)
-             elif modifier == "C":
-                 src, dest = diff['src'], diff['dst']
--                p4_system("integrate -Dt \"%s\" \"%s\"" % (src, dest))
-+                p4_integrate(src, dest)
-                 if diff['src_sha1'] != diff['dst_sha1']:
--                    p4_system("edit \"%s\"" % (dest))
-+                    p4_edit(dest)
-                 if isModeExecChanged(diff['src_mode'], diff['dst_mode']):
--                    p4_system("edit \"%s\"" % (dest))
-+                    p4_edit(dest)
-                     filesToChangeExecBit[dest] = diff['dst_mode']
-                 os.unlink(dest)
-                 editedFiles.add(dest)
-             elif modifier == "R":
-                 src, dest = diff['src'], diff['dst']
--                p4_system("integrate -Dt \"%s\" \"%s\"" % (src, dest))
-+                p4_integrate(src, dest)
-                 if diff['src_sha1'] != diff['dst_sha1']:
--                    p4_system("edit \"%s\"" % (dest))
-+                    p4_edit(dest)
-                 if isModeExecChanged(diff['src_mode'], diff['dst_mode']):
--                    p4_system("edit \"%s\"" % (dest))
-+                    p4_edit(dest)
-                     filesToChangeExecBit[dest] = diff['dst_mode']
-                 os.unlink(dest)
-                 editedFiles.add(dest)
-@@ -887,9 +934,9 @@ class P4Submit(Command, P4UserMap):
-             if response == "s":
-                 print "Skipping! Good luck with the next patches..."
-                 for f in editedFiles:
--                    p4_system("revert \"%s\"" % f);
-+                    p4_revert(f)
-                 for f in filesToAdd:
--                    system("rm %s" %f)
-+                    os.remove(f)
-                 return
-             elif response == "a":
-                 os.system(applyPatchCmd)
-@@ -910,10 +957,10 @@ class P4Submit(Command, P4UserMap):
-         system(applyPatchCmd)
- 
-         for f in filesToAdd:
--            p4_system("add \"%s\"" % f)
-+            p4_add(f)
-         for f in filesToDelete:
--            p4_system("revert \"%s\"" % f)
--            p4_system("delete \"%s\"" % f)
-+            p4_revert(f)
-+            p4_delete(f)
- 
-         # Set/clear executable bits
-         for f in filesToChangeExecBit.keys():
-@@ -935,7 +982,7 @@ class P4Submit(Command, P4UserMap):
-                 del(os.environ["P4DIFF"])
-             diff = ""
-             for editedFile in editedFiles:
--                diff += p4_read_pipe("diff -du %r" % editedFile)
-+                diff += p4_read_pipe(['diff', '-du', editedFile])
- 
-             newdiff = ""
-             for newFile in filesToAdd:
-@@ -987,7 +1034,7 @@ class P4Submit(Command, P4UserMap):
-                 submitTemplate = message[:message.index(separatorLine)]
-                 if self.isWindows:
-                     submitTemplate = submitTemplate.replace("\r\n", "\n")
--                p4_write_pipe("submit -i", submitTemplate)
-+                p4_write_pipe(['submit', '-i'], submitTemplate)
- 
-                 if self.preserveUser:
-                     if p4User:
-@@ -998,10 +1045,10 @@ class P4Submit(Command, P4UserMap):
- 
-             else:
-                 for f in editedFiles:
--                    p4_system("revert \"%s\"" % f);
-+                    p4_revert(f)
-                 for f in filesToAdd:
--                    p4_system("revert \"%s\"" % f);
--                    system("rm %s" %f)
-+                    p4_revert(f)
-+                    os.remove(f)
- 
-             os.remove(fileName)
-         else:
-@@ -1054,8 +1101,7 @@ class P4Submit(Command, P4UserMap):
- 
-         chdir(self.clientPath)
-         print "Synchronizing p4 checkout..."
--        p4_system("sync ...")
--
-+        p4_sync("...")
-         self.check()
- 
-         commits = []
-@@ -1269,7 +1315,7 @@ class P4Sync(Command, P4UserMap):
-             # operations.  utf16 is converted to ascii or utf8, perhaps.
-             # But ascii text saved as -t utf16 is completely mangled.
-             # Invoke print -o to get the real contents.
--            text = p4_read_pipe('print -q -o - "%s"' % file['depotFile'])
-+            text = p4_read_pipe(['print', '-q', '-o', '-', file['depotFile']])
-             contents = [ text ]
- 
-         # Perhaps windows wants unicode, utf16 newlines translated too;
-@@ -1365,10 +1411,11 @@ class P4Sync(Command, P4UserMap):
-             def streamP4FilesCbSelf(entry):
-                 self.streamP4FilesCb(entry)
- 
--            p4CmdList("-x - print",
--                '\n'.join(['%s#%s' % (f['path'], f['rev'])
--                                                  for f in filesToRead]),
--                cb=streamP4FilesCbSelf)
-+            fileArgs = ['%s#%s' % (f['path'], f['rev']) for f in filesToRead]
-+
-+            p4CmdList(["-x", "-", "print"],
-+                      stdin=fileArgs,
-+                      cb=streamP4FilesCbSelf)
- 
-             # do the last chunk
-             if self.stream_file.has_key('depotFile'):
-@@ -1429,8 +1476,8 @@ class P4Sync(Command, P4UserMap):
-             if self.verbose:
-                 print "Change %s is labelled %s" % (change, labelDetails)
- 
--            files = p4CmdList("files " + ' '.join (["%s...@%s" % (p, change)
--                                                    for p in branchPrefixes]))
-+            files = p4CmdList(["files"] + ["%s...@%s" % (p, change)
-+                                                    for p in branchPrefixes])
- 
-             if len(files) == len(labelRevisions):
- 
-@@ -1478,9 +1525,9 @@ class P4Sync(Command, P4UserMap):
-             newestChange = 0
-             if self.verbose:
-                 print "Querying files for label %s" % label
--            for file in p4CmdList("files "
--                                  +  ' '.join (["%s...@%s" % (p, label)
--                                                for p in self.depotPaths])):
-+            for file in p4CmdList(["files"] +
-+                                      ["%s...@%s" % (p, label)
-+                                          for p in self.depotPaths]):
-                 revisions[file["depotFile"]] = file["rev"]
-                 change = int(file["change"])
-                 if change > newestChange:
-@@ -1735,10 +1782,9 @@ class P4Sync(Command, P4UserMap):
-         newestRevision = 0
- 
-         fileCnt = 0
--        for info in p4CmdList("files "
--                              +  ' '.join(["%s...%s"
--                                           % (p, revision)
--                                           for p in self.depotPaths])):
-+        fileArgs = ["%s...%s" % (p,revision) for p in self.depotPaths]
-+
-+        for info in p4CmdList(["files"] + fileArgs):
- 
-             if 'code' in info and info['code'] == 'error':
-                 sys.stderr.write("p4 returned an error: %s\n"
-diff --git a/t/t9803-git-shell-metachars.sh b/t/t9803-git-shell-metachars.sh
-new file mode 100755
-index 0000000..c166603
---- /dev/null
-+++ b/t/t9803-git-shell-metachars.sh
-@@ -0,0 +1,70 @@
-+#!/bin/sh
-+
-+test_description='git-p4 transparency to shell metachars in filenames'
-+
-+. ./lib-git-p4.sh
-+
-+test_expect_success 'start p4d' '
-+	kill_p4d || : &&
-+	start_p4d &&
-+	cd "$TRASH_DIRECTORY"
-+'
-+
-+test_expect_success 'init depot' '
-+	(
-+		cd "$cli" &&
-+		echo file1 >file1 &&
-+		p4 add file1 &&
-+		p4 submit -d "file1"
-+	)
-+'
-+
-+test_expect_success 'shell metachars in filenames' '
-+	"$GITP4" clone --dest="$git" //depot &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		git config git-p4.skipSubmitEditCheck true &&
-+		echo f1 >foo\$bar &&
-+		git add foo\$bar &&
-+		echo f2 >"file with spaces" &&
-+		git add "file with spaces" &&
-+		P4EDITOR=touch git commit -m "add files" &&
-+		"$GITP4" submit --verbose &&
-+		cd "$cli" &&
-+		p4 sync ... &&
-+		ls -l "file with spaces" &&
-+		ls -l "foo\$bar"
-+	)
-+'
-+
-+check_missing () {
-+	for i in $*; do
-+		if [ -f $i ]; then
-+			echo $i found but should be missing 1>&2
-+			exit 1
-+		fi
-+	done
-+}
-+
-+test_expect_success 'deleting with shell metachars' '
-+	"$GITP4" clone --dest="$git" --verbose //depot &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		git config git-p4.skipSubmitEditCheck true &&
-+		git rm foo\$bar &&
-+		git rm file\ with\ spaces &&
-+		P4EDITOR=touch git commit -m "remove files" &&
-+		"$GITP4" submit --verbose
-+		cd "$cli" &&
-+		p4 sync ... &&
-+		check_missing "file with spaces" foo\$bar
-+	)
-+'
-+
-+test_expect_success 'kill p4d' '
-+	kill_p4d
-+'
-+
-+test_done
--- 
-1.7.6.347.g4db0d
+> One more scenario is:
+> 1) import topic
+> 2) reset topic
+> 3) import topic
+> If 1-3) go together - no error
+> If 3) goes separate - no error, but non-fastforward update.
+> Much more harmless, but still may look strange.
+
+Not exactly true if there is a checkpoint done after step 1.
+
+My scenario is:
+
+1) import topic
+2) checkpoint
+3) diff-tree and processing
+4) exit if processing returns ok
+5) reset topic to another HEAD
+6) goto 1)
+
+--=20
+Vitor Antunes
