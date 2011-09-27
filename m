@@ -1,73 +1,68 @@
-From: Michal Vyskocil <mvyskocil@suse.cz>
-Subject: [PATCH] show git tag output in pager
-Date: Tue, 27 Sep 2011 15:42:36 +0200
-Message-ID: <20110927134235.GA27478@zelva.suse.cz>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] show git tag output in pager
+Date: Tue, 27 Sep 2011 16:19:39 +0200
+Message-ID: <vpqehz2cbk4.fsf@bauges.imag.fr>
+References: <20110927134235.GA27478@zelva.suse.cz>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="a8Wt8u1KmwUX3Y2C"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 27 15:48:16 2011
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Michal Vyskocil <mvyskocil@suse.cz>
+X-From: git-owner@vger.kernel.org Tue Sep 27 16:20:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8Y19-0001a4-VN
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 15:48:16 +0200
+	id 1R8YWP-00028S-Vr
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 16:20:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752818Ab1I0NsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Sep 2011 09:48:11 -0400
-Received: from nat.scz.novell.com ([213.151.88.252]:40968 "EHLO zelva.site"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752319Ab1I0NsK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2011 09:48:10 -0400
-X-Greylist: delayed 332 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Sep 2011 09:48:10 EDT
-Received: by zelva.site (Postfix, from userid 10112)
-	id 85666411B2F5; Tue, 27 Sep 2011 15:42:36 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753291Ab1I0OU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Sep 2011 10:20:29 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:36129 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752742Ab1I0OU3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2011 10:20:29 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p8REHUcd002357
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 27 Sep 2011 16:17:30 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1R8YVX-0004T4-Hx; Tue, 27 Sep 2011 16:19:39 +0200
+In-Reply-To: <20110927134235.GA27478@zelva.suse.cz> (Michal Vyskocil's message
+	of "Tue, 27 Sep 2011 15:42:36 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 27 Sep 2011 16:17:30 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p8REHUcd002357
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1317737852.14623@VNOOgngZ5/yHHjPlUGA18Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182239>
 
+The commit message should explain why this is needed, and in particular
+why you prefer this to setting pager.tag in your ~/.gitconfig.
 
---a8Wt8u1KmwUX3Y2C
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Michal Vyskocil <mvyskocil@suse.cz> writes:
 
----
- builtin/tag.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+> --- a/builtin/tag.c
+> +++ b/builtin/tag.c
+> @@ -147,6 +147,8 @@ static int list_tags(const char **patterns, int lines,
+>  			struct commit_list *with_commit)
+>  {
+>  	struct tag_filter filter;
+> +        
+> +        setup_pager();
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 667515e..9f70fa8 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -147,6 +147,8 @@ static int list_tags(const char **patterns, int lines,
- 			struct commit_list *with_commit)
- {
- 	struct tag_filter filter;
-+       =20
-+        setup_pager();
-=20
- 	filter.patterns =3D patterns;
- 	filter.lines =3D lines;
---=20
-1.7.6.3
+Git indents with tabs, not spaces, and does not leave trailing
+whitespaces.
 
-
---a8Wt8u1KmwUX3Y2C
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.18 (GNU/Linux)
-
-iEYEARECAAYFAk6B0ssACgkQGwzgx2QvQgRggQCfUwrQRCjC4k9VAeTTBHRzi0eD
-7qgAn09ms9jszG8oc5kKCImCe37Ef5nB
-=Rms5
------END PGP SIGNATURE-----
-
---a8Wt8u1KmwUX3Y2C--
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
