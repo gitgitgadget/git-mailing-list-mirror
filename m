@@ -1,132 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] grep: --untracked and --exclude tests
-Date: Tue, 27 Sep 2011 15:22:33 -0700
-Message-ID: <7voby5wrpy.fsf_-_@alter.siamese.dyndns.org>
-References: <2f376e61802a1a38c67698d5ec263d1807b1fcee.1316110876.git.bert.wesarg@googlemail.com> <7b3551dd84a2bfec78c8db1d14dd2d0e6dda35f6.1316110876.git.bert.wesarg@googlemail.com> <7vmxe5pp4n.fsf@alter.siamese.dyndns.org> <CAKPyHN2ewwLf6am3VQr_z4c3_Q5=saeLcZtuY-fEtUGr-41rKQ@mail.gmail.com> <7vty7xwrsf.fsf_-_@alter.siamese.dyndns.org>
+From: Pang Yan Han <pangyanhan@gmail.com>
+Subject: Re: [PATCH/RFC 0/2] Teach receive-pack not to run update hook for
+ corrupt/non existent ref
+Date: Wed, 28 Sep 2011 06:55:46 +0800
+Message-ID: <20110927225546.GA1648@myhost>
+References: <1316927182-14212-1-git-send-email-pangyanhan@gmail.com>
+ <CAMK1S_hadzaqixaW3Fx81pf=hVsvAMpVvVGqVtZ8ncfUsie_9w@mail.gmail.com>
+ <20110925094822.GA1702@myhost>
+ <CAMK1S_h3ufrK29_ajpcSSW7HV6ZA8z8ZVHvhHr2bx5Cga5FAKQ@mail.gmail.com>
+ <7vwrcuzy44.fsf@alter.siamese.dyndns.org>
+ <CAMK1S_gR6U=OxzGsjTD8LbvZFS125=p1fQ8Af7aRD2XSsRur_Q@mail.gmail.com>
+ <7voby6zwxg.fsf@alter.siamese.dyndns.org>
+ <7vd3emzw8n.fsf@alter.siamese.dyndns.org>
+ <20110927090225.GA1493@myhost>
+ <7vhb3xyld7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Bert Wesarg <bert.wesarg@googlemail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 28 00:22:44 2011
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 28 00:58:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8g31-00026h-TM
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 00:22:44 +0200
+	id 1R8gbn-0005cG-DB
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 00:58:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753481Ab1I0WWi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Sep 2011 18:22:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44400 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753024Ab1I0WWg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2011 18:22:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33E9F5554;
-	Tue, 27 Sep 2011 18:22:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JsUufOqVgIspBIJL6q4VpXiVOAY=; b=WlSjTR
-	QBP6kBN9bDjwqj02ZgQO13f8IqEXauyIHJFAdK4V8RaeSWvJku0hMk18DusWjPxH
-	+p53p9LjEkUsm6YiuEDXy3KwLzbVfgLfjqq9Ks3QD0M+Tr+xOOkp5yw8cg0XR8E+
-	XiTEewXGqMqtDuQceidIvL1LfnBJfIjd6ghjk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jo4tkZRINywy7IRdMnskJ+DD24nU4OWp
-	Nd6RCM0Svbp1ods+oGEncbr/aBwhWZsFywp6sPjq44txl9AD0IuLzE6PKEIL4LzI
-	vhy694AOHO3YEwE6Xg/1lIEf/RvXjNgdq/OIPLVv4T5J4Q9xG03qnkI69oOLoT/i
-	GcyiGZHt0MA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 287B45553;
-	Tue, 27 Sep 2011 18:22:36 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6291B5551; Tue, 27 Sep 2011
- 18:22:35 -0400 (EDT)
-In-Reply-To: <7vty7xwrsf.fsf_-_@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 27 Sep 2011 15:21:04 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 335AF478-E957-11E0-A8BD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753239Ab1I0W6e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Sep 2011 18:58:34 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:44945 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752104Ab1I0W6d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2011 18:58:33 -0400
+Received: by yib18 with SMTP id 18so5772716yib.19
+        for <git@vger.kernel.org>; Tue, 27 Sep 2011 15:58:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=SDIyDfTwahgOsbls9aVaWNni3lwMnWT7RCyLNU9GsLQ=;
+        b=qimRJGBwmvEsnhhZvAYXD71uKLuRQtUr86I4a2Kuz9gYziA/t2CZ+OTxUfGac6itff
+         8UPFXcJLbX1nGZ2Z29xnwSo/gd2YyLbJc4GMZ7HHhB1P2rpIbNtnM0y1uwUHr0oD4h1f
+         Jhb4qki8c2hiidEWpodCqwjbY1CpiUwuHizGw=
+Received: by 10.150.48.40 with SMTP id v40mr7657478ybv.380.1317164313095;
+        Tue, 27 Sep 2011 15:58:33 -0700 (PDT)
+Received: from localhost (bb220-255-243-30.singnet.com.sg. [220.255.243.30])
+        by mx.google.com with ESMTPS id h1sm920091ybi.2.2011.09.27.15.58.30
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 27 Sep 2011 15:58:32 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vhb3xyld7.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182273>
 
-Test various combinations of these options and --no-index.
+On Tue, Sep 27, 2011 at 09:56:52AM -0700, Junio C Hamano wrote:
+> [offtopic: where does that annoying M-F-T header come from? It even seems
+> to be pointless in this case as it lists the same people as are already on
+> To/Cc/From of the message.]
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t7002-grep.sh |   34 +++++++++++++++++++++++++++++++++-
- 1 files changed, 33 insertions(+), 1 deletions(-)
+Sorry, it's due to my lack of familiarity with mutt.
 
-diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
-index 918d33f..2cbbdcc 100755
---- a/t/t7002-grep.sh
-+++ b/t/t7002-grep.sh
-@@ -455,6 +455,23 @@ test_expect_success 'outside of git repository' '
- 		test_must_fail git grep o &&
- 		git grep --no-index o >../../actual.sub &&
- 		test_cmp ../../expect.sub ../../actual.sub
-+	) &&
-+
-+	echo ".*o*" >non/git/.gitignore &&
-+	(
-+		GIT_CEILING_DIRECTORIES="$(pwd)/non/git" &&
-+		export GIT_CEILING_DIRECTORIES &&
-+		cd non/git &&
-+		test_must_fail git grep o &&
-+		git grep --no-index --exclude o >../actual.full &&
-+		test_cmp ../expect.full ../actual.full &&
-+
-+		{
-+			echo ".gitignore:.*o*"
-+			cat ../expect.full
-+		} >../expect.with.ignored &&
-+		git grep --no-index --no-exclude o >../actual.full &&
-+		test_cmp ../expect.with.ignored ../actual.full
- 	)
- '
- 
-@@ -465,9 +482,12 @@ test_expect_success 'inside git repository but with --no-index' '
- 	echo world >is/git/sub/file2 &&
- 	echo ".*o*" >is/git/.gitignore &&
- 	{
--		echo ".gitignore:.*o*" &&
- 		echo file1:hello &&
- 		echo sub/file2:world
-+	} >is/expect.unignored &&
-+	{
-+		echo ".gitignore:.*o*" &&
-+		cat is/expect.unignored
- 	} >is/expect.full &&
- 	: >is/expect.empty &&
- 	echo file2:world >is/expect.sub
-@@ -476,12 +496,24 @@ test_expect_success 'inside git repository but with --no-index' '
- 		git init &&
- 		test_must_fail git grep o >../actual.full &&
- 		test_cmp ../expect.empty ../actual.full &&
-+
-+		git grep --untracked o >../actual.unignored &&
-+		test_cmp ../expect.unignored ../actual.unignored &&
-+
- 		git grep --no-index o >../actual.full &&
- 		test_cmp ../expect.full ../actual.full &&
-+
-+		git grep --no-index --exclude o >../actual.unignored &&
-+		test_cmp ../expect.unignored ../actual.unignored &&
-+
- 		cd sub &&
- 		test_must_fail git grep o >../../actual.sub &&
- 		test_cmp ../../expect.empty ../../actual.sub &&
-+
- 		git grep --no-index o >../../actual.sub &&
-+		test_cmp ../../expect.sub ../../actual.sub &&
-+
-+		git grep --untracked o >../../actual.sub &&
- 		test_cmp ../../expect.sub ../../actual.sub
- 	)
- '
--- 
-1.7.7.rc3.4.g8d714
+> 
+> Pang Yan Han <pangyanhan@gmail.com> writes:
+> 
+> > Should I reroll this patch with this behaviour:
+> >
+> > - Everything as usual for valid ref updates and deletes
+> > - For deleting corrupt (dangling?) ref, post-receive and post-update hooks
+> >   also receive the same args as per valid update / delete
+> 
+> Suonds sensible.
+> 
+> > - For deleting non-existent refs:
+> >   - post-receive shall have empty stdin for those refs
+> >   - post-update shall have an empty arg for those refs
+> 
+> I do not think these hooks should see names of refs that ended up being a
+> no-op. If the push is only about attempting to delete a ref that did not
+> exist, these hooks should not even get called. If there were other refs
+> that got updated, these hooks have to be called, but they should not be
+> told about the no-op.  IOW
+> 
+>     $ git push $there :no-such-ref master:refs/remotes/origin/master
+> 
+> should:
+> 
+>  (1) not call the post-* hooks if the refs/remotes/origin/master was
+>      already pointing at the same commit; or
+> 
+>  (2) invoke the post-* hooks if refs/remotes/origin/master is updated, but
+>      should tell hooks only about the update of refs/remotes/origin/master.
+> 
+> That is pretty much in line with how a normal attempt to push the same
+> commit to an already up-to-date ref works.  For example, if you:
+> 
+>     $ git push $there master next
+> 
+> when 'master' is lagging and 'next' is already up-to-date, post-update and
+> post-receive hooks run and told only about 'master' and not 'next'.
+
+Thanks, I will reroll this later.
