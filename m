@@ -1,87 +1,156 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: Add js=1 before an URI fragment to fix line
- number links
-Date: Tue, 27 Sep 2011 10:40:03 -0700
-Message-ID: <7vy5x9x4ss.fsf@alter.siamese.dyndns.org>
-References: <1317060642-25488-1-git-send-email-peter@stuge.se>
- <7v62kf2jf4.fsf@alter.siamese.dyndns.org>
- <20110926194639.25339.qmail@stuge.se>
- <7vipof0zx0.fsf@alter.siamese.dyndns.org>
- <20110926222801.14985.qmail@stuge.se> <4E8170B3.8040205@viscovery.net>
- <20110927094947.10955.qmail@stuge.se>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Peter Stuge <peter@stuge.se>
-X-From: git-owner@vger.kernel.org Tue Sep 27 19:40:15 2011
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 2/3] git-remote-mediawiki: set 'basetimestamp' to let the wiki handle conflicts
+Date: Tue, 27 Sep 2011 19:54:59 +0200
+Message-ID: <1317146100-22938-2-git-send-email-Matthieu.Moy@imag.fr>
+References: <1317146100-22938-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Sep 27 19:55:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8bde-0006Ks-R3
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 19:40:15 +0200
+	id 1R8bsH-00054a-A7
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 19:55:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751708Ab1I0RkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Sep 2011 13:40:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52688 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751295Ab1I0RkH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2011 13:40:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B963E535F;
-	Tue, 27 Sep 2011 13:40:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MTPdx9fSl2kXvivU/Ydp1KW7yXY=; b=EhtrIR
-	FlV6L5RQGRl7Nm3eke0iyXv4MWcphZpOz0rBFCD9X7fIG77BCM3GmIphd9MxutLK
-	0HuVL25PJLG3KbLrnCpes0Ua5LgVwAMtBoohXw9uFpmpspto+GFeH5c7PtOOIx7k
-	dkZyaV8nDrGSOiiMkPWrDJYHNeZw2o7GFTbbQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WFr/Kom4cCZj4h71JgOWZbUuAS4XaotI
-	x7nPPo7TrsMrUYT1mYBt8BZpeWDAtz8lBEtWJo/etyCpWbfNUzixG6gCIxGYq+VN
-	yNvlcA2IdkijO2c1KMqkX71u4znuGhO7f3aRazcvOq3alkDv8Ra6je+I8n0Y0naT
-	6fm2rTehTw0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B11F2535E;
-	Tue, 27 Sep 2011 13:40:06 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 42A50535A; Tue, 27 Sep 2011
- 13:40:05 -0400 (EDT)
-In-Reply-To: <20110927094947.10955.qmail@stuge.se> (Peter Stuge's message of
- "Tue, 27 Sep 2011 11:49:47 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BC4A669C-E92F-11E0-A480-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752159Ab1I0RzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Sep 2011 13:55:17 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:55088 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751595Ab1I0RzQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2011 13:55:16 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p8RHqv8e003352
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 27 Sep 2011 19:52:57 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1R8bs3-0008V7-DH; Tue, 27 Sep 2011 19:55:07 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1R8bs3-0005yh-Bp; Tue, 27 Sep 2011 19:55:07 +0200
+X-Mailer: git-send-email 1.7.7.rc0.75.g56f27
+In-Reply-To: <1317146100-22938-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 27 Sep 2011 19:52:57 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p8RHqv8e003352
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1317750781.1018@od/IyfH8Dp8F6WArq1gf/Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182257>
 
-Peter Stuge <peter@stuge.se> writes:
+We already have a check that no new revisions are on the wiki at the
+beginning of the push, but this didn't handle concurrent accesses to the
+wiki.
 
-> I disagree, but I agree with you if we qualify that a little. The
-> right balance is a matter of subjective review, so the only way it
-> can be practiced with relevance is by actually working with the same
-> reviewers for a while, to learn what they consider right.
->
-> It can absolutely not be practiced out of context,...
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ contrib/mw-to-git/git-remote-mediawiki |   43 +++++++++++++++++++++++++++----
+ 1 files changed, 37 insertions(+), 6 deletions(-)
 
-You are right that you need to practice in the context of working in the
-Git project to explain your change with the right amount of details when
-preparing a change for the Git project, and the same goes for the openocd
-project.
-
-We aim to write our commit log messages primarily for future developers
-who want to read "git log -p" output and understand why these changes had
-to be made, to help them avoid intentionally breaking what the old commit
-wanted to achieve when they want to modify the existing code 6 months down
-the road. Your reviewers aim to make sure that your log message gives
-sufficient information to such future developers, as opposed to themselves
-while reviewing the patch and the issue is still fresh in their head.
-
-I suspect that the target audience of log message may even be different
-depending on the project, and openocd may not work that way, and that is
-perfectly fine.
+diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
+index 768b42d..9bb58ab 100755
+--- a/contrib/mw-to-git/git-remote-mediawiki
++++ b/contrib/mw-to-git/git-remote-mediawiki
+@@ -287,6 +287,9 @@ sub get_last_local_revision {
+ 	return $lastrevision_number;
+ }
+ 
++# Remember the timestamp corresponding to a revision id.
++my %basetimestamps;
++
+ sub get_last_remote_revision {
+ 	mw_connect_maybe();
+ 
+@@ -300,7 +303,7 @@ sub get_last_remote_revision {
+ 		my $query = {
+ 			action => 'query',
+ 			prop => 'revisions',
+-			rvprop => 'ids',
++			rvprop => 'ids|timestamp',
+ 			pageids => $id,
+ 		};
+ 
+@@ -308,6 +311,8 @@ sub get_last_remote_revision {
+ 
+ 		my $lastrev = pop(@{$result->{query}->{pages}->{$id}->{revisions}});
+ 
++		$basetimestamps{$lastrev->{revid}} = $lastrev->{timestamp};
++
+ 		$max_rev_num = ($lastrev->{revid} > $max_rev_num ? $lastrev->{revid} : $max_rev_num);
+ 	}
+ 
+@@ -649,18 +654,32 @@ sub mw_push_file {
+ 			action => 'edit',
+ 			summary => $summary,
+ 			title => $title,
++			basetimestamp => $basetimestamps{$newrevid},
+ 			text => mediawiki_clean($file_content, $page_created),
+ 				  }, {
+ 					  skip_encoding => 1 # Helps with names with accentuated characters
+-				  }) || die 'Fatal: Error ' .
+-				  $mediawiki->{error}->{code} .
+-				  ' from mediwiki: ' . $mediawiki->{error}->{details};
++				  });
++		if (!$result) {
++			if ($mediawiki->{error}->{code} == 3) {
++				# edit conflicts, considered as non-fast-forward
++				print STDERR 'Warning: Error ' .
++				    $mediawiki->{error}->{code} .
++				    ' from mediwiki: ' . $mediawiki->{error}->{details} .
++				    ".\n";
++				return ($newrevid, "non-fast-forward");
++			} else {
++				# Other errors. Shouldn't happen => just die()
++				die 'Fatal: Error ' .
++				    $mediawiki->{error}->{code} .
++				    ' from mediwiki: ' . $mediawiki->{error}->{details};
++			}
++		}
+ 		$newrevid = $result->{edit}->{newrevid};
+ 		print STDERR "Pushed file: $new_sha1 - $title\n";
+ 	} else {
+ 		print STDERR "$complete_file_name not a mediawiki file (Not pushable on this version of git-remote-mediawiki).\n"
+ 	}
+-	return $newrevid;
++	return ($newrevid, "ok");
+ }
+ 
+ sub mw_push {
+@@ -767,13 +786,25 @@ sub mw_push_revision {
+ 		chomp($commit_msg);
+ 		# Push every blob
+ 		while (@diff_info_list) {
++			my $status;
+ 			# git diff-tree -z gives an output like
+ 			# <metadata>\0<filename1>\0
+ 			# <metadata>\0<filename2>\0
+ 			# and we've split on \0.
+ 			my $info = shift(@diff_info_list);
+ 			my $file = shift(@diff_info_list);
+-			$mw_revision = mw_push_file($info, $file, $commit_msg, $mw_revision);
++			($mw_revision, $status) = mw_push_file($info, $file, $commit_msg, $mw_revision);
++			if ($status eq "non-fast-forward") {
++				# we may already have sent part of the
++				# commit to MediaWiki, but it's too
++				# late to cancel it. Stop the push in
++				# the middle, but still give an
++				# accurate error message.
++				return error_non_fast_forward($remote);
++			}
++			if ($status ne "ok") {
++				die("Unknown error from mw_push_file()");
++			}
+ 		}
+ 		unless ($dumb_push) {
+ 			run_git("notes --ref=$remotename/mediawiki add -m \"mediawiki_revision: $mw_revision\" $sha1_commit");
+-- 
+1.7.7.rc0.75.g56f27
