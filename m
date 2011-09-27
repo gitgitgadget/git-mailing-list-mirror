@@ -1,70 +1,81 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] gitweb: Add js=1 before an URI fragment to fix line number
- links
-Date: Tue, 27 Sep 2011 08:44:03 +0200
-Message-ID: <4E8170B3.8040205@viscovery.net>
-References: <1317060642-25488-1-git-send-email-peter@stuge.se> <7v62kf2jf4.fsf@alter.siamese.dyndns.org> <20110926194639.25339.qmail@stuge.se> <7vipof0zx0.fsf@alter.siamese.dyndns.org> <20110926222801.14985.qmail@stuge.se>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] git-submodule: a small fix
+Date: Tue, 27 Sep 2011 09:24:13 +0200
+Message-ID: <4E817A1D.8050902@web.de>
+References: <CAOOg04z0UjOQCBMTuii37y3ykNU17hDTcD9E81C+r1whFpMaCg@mail.gmail.com> <CAH5451k-6HHx2xxddJauE8=P1umjG=TnrcOKmQfeh=4GOzpCKQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Peter Stuge <peter@stuge.se>
-X-From: git-owner@vger.kernel.org Tue Sep 27 08:44:18 2011
+Cc: Andrew Ardill <andrew.ardill@gmail.com>, git@vger.kernel.org
+To: Roy Liu <carsomyr@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 27 09:24:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8ROq-0008P4-EA
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 08:44:16 +0200
+	id 1R8S1f-0005lL-4a
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 09:24:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751170Ab1I0GoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Sep 2011 02:44:12 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:57897 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751052Ab1I0GoL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2011 02:44:11 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1R8ROe-0003m4-El; Tue, 27 Sep 2011 08:44:04 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 2AD191660F;
-	Tue, 27 Sep 2011 08:44:04 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.22) Gecko/20110902 Thunderbird/3.1.14
-In-Reply-To: <20110926222801.14985.qmail@stuge.se>
-X-Spam-Score: -1.4 (-)
+	id S1751502Ab1I0HYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Sep 2011 03:24:18 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:55562 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751105Ab1I0HYR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2011 03:24:17 -0400
+Received: from smtp08.web.de  ( [172.20.5.216])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 6EB761AC85E91;
+	Tue, 27 Sep 2011 09:24:16 +0200 (CEST)
+Received: from [79.247.253.22] (helo=[192.168.178.43])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1R8S1Y-0006nT-00; Tue, 27 Sep 2011 09:24:16 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
+In-Reply-To: <CAH5451k-6HHx2xxddJauE8=P1umjG=TnrcOKmQfeh=4GOzpCKQ@mail.gmail.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18tTyojgnCAGVsh4l3qIeSnreCG0CjA+UI3WqVK
+	w5jlvAH1nW+d3T7hPUyIkS43Gw3wAlKwxB+TovqVQYvP9w/xkW
+	ALWs6HVInQKR5VEJ1J6w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182215>
 
-Am 9/27/2011 0:28, schrieb Peter Stuge:
-> Junio C Hamano wrote:
->> You don't have to explain these to *me* specifically as a response
->> to this thread. What I meant was that your patch should have these
->> necessary descriptions in its proposed commit log message.
+Am 27.09.2011 05:22, schrieb Andrew Ardill:
+> On 27 September 2011 08:00, Roy Liu <carsomyr@gmail.com> wrote:
+>> In git-submodule.sh, the "url" variable may contain a stale value from
+>> the previous loop iteration, so clear it.
+>>
+>> --- git-submodule.sh.orig   2011-09-26 17:50:45.000000000 -0400
+>> +++ git-submodule.sh    2011-09-26 17:51:18.000000000 -0400
+>> @@ -370,6 +370,8 @@
+>>            esac
+>>            git config submodule."$name".url "$url" ||
+>>            die "Failed to register url for submodule path '$path'"
+>> +        else
+>> +            url=""
+>>        fi
+>>
+>>        # Copy "update" setting when it is not set yet
 > 
-> IMO not so neccessary if one knows a little web and javascript, which
-> is probably likely for a gitweb change..
+> Perhaps a better commit description would be:
 > 
-> It's a simple fix of links broken by manual URI manipulation that
-> didn't consider fragments. Is the subject description really not
-> enough?
+> git-submodule: clear the url variable when not set to avoid using stale values
 
-No, it is not. The target audience of a commit message are people like I
-am. I do know a bit of Perl, and a bit of Javascript; I know how an URL is
-structured; I would find my way through the gitweb code if the need
-arises. But I am not an expert in any of these areas.
+Yes, the commit description needs to describe what was changed (and you can
+also drop the "git-", to start with "submodule:" is sufficient here). Also
+it would be nice if the message would describe under what circumstances this
+happens (how did you notice this problem?).
 
-The subject alone is not sufficient because I do not know for sure what an
-"URI fragment" is or what role line numbers in gitweb's links play. The
-explanations and examples you gave in a later email were very
-enlightening, and they would be very helpful if *I* am forced to hack
-gitweb, and if I need to understand why this particular change was good.
+But I wonder if the patch does it the right way. While it fixes the basic
+issue that "url" might not be set, I doubt it does what the user expects.
+The place where the - sometimes uninitialized - variable "url" is used is
+a few lines down:
 
-Finding the right balance between verbosity and terseness needs practice,
-but to write *no* justification is practically always wrong.
+		say "$(eval_gettext "Submodule '\$name' (\$url) registered for path '\$path'")"
 
--- Hannes
+I doesn't make much sense to say "Submodule 'foo' () registered for path 'foo'"
+here. Shouldn't "url" be set to "$(git config "submodule.$name.url")"? And
+when looking at the if you added the else to it might make sense to set it
+unconditionally before the if and then test "$url" there instead of adding an
+extra else.
