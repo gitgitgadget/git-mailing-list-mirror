@@ -1,222 +1,114 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] parse-options: deprecate OPT_BOOLEAN
-Date: Tue, 27 Sep 2011 16:56:49 -0700
-Message-ID: <7v39fhv8se.fsf@alter.siamese.dyndns.org>
+Subject: [PATCH] archive.c: use OPT_BOOL()
+Date: Tue, 27 Sep 2011 16:59:01 -0700
+Message-ID: <7vy5x9tu4a.fsf@alter.siamese.dyndns.org>
+References: <7v39fhv8se.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 28 01:56:58 2011
+X-From: git-owner@vger.kernel.org Wed Sep 28 01:59:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8hWD-0007aM-Jc
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 01:56:58 +0200
+	id 1R8hYQ-00088x-4j
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 01:59:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751747Ab1I0X4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Sep 2011 19:56:53 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58758 "EHLO
+	id S1751854Ab1I0X7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Sep 2011 19:59:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59910 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751049Ab1I0X4w (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2011 19:56:52 -0400
+	id S1751638Ab1I0X7H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2011 19:59:07 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B74D45766;
-	Tue, 27 Sep 2011 19:56:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=P
-	Nh8B0WKJt4IGK6QUbFYvCTGuY4=; b=oOJEt2o1P8aBZp0i6d/sF6hffKSncQOOe
-	Bg1uybU5okefCGyemTyhjuqP3YDQEmQFcYNgZrVWhR8frmCJLjrxPkpnf0ozlux+
-	Y5ZAwlFM6sUs6VAiqHhVAEtJlNVTARmzfwDqUsRAmjEszXMP/2qEjXLxC2YYffO6
-	Knxjr+9OHY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=I6R1u8AZVPpZdmb+k8vVfkX8o+EzuEb2O3vrFMeVaRo7JzleFCETeNy8
-	zPipI06SFzM9zVldodu6yae9odOQdQYSHyM+FeKG05uhVevaoXVoL8nUPGkqLIYe
-	WQFGxUctH6oSt5oj7GmY28aOPiMK45WOZ13ZbHCkq1mcbWhZ4Rs=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DBECE57D2;
+	Tue, 27 Sep 2011 19:59:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mtRviJFn/t4ZJMP32sklklrBCi4=; b=Q0OkGE
+	TOcosdPI8gwBHcmg9G+SNUFrsHs3mw+q1uRX1hHkvWeh1wbCNddjtsndlDZdmI5T
+	BzINg4jE1SCuXeRXAJfWdpfbMyQyiaqdIGN0LIDLXxPqG4+cWhPKi+th+tsPY4o4
+	Fa6HXdL8vd95ScJzFKslNN++r5SKmzK51j06I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kZnb2qNdwAATEfynXM7Y+ssOcg5hHQuI
+	kFMGS4U/WgGbacPc8iu7T7Lc3AMKwXP8nmPCBFKmfVkSOMtLtSAEuk/JRM5J4RKt
+	PYidDPGvNioYWUokKlZwcZ7ZsIsJW993pCM79S63KeLjROJFJLb/FHnViPURZggL
+	k85XxtjkLzI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AEC575765;
-	Tue, 27 Sep 2011 19:56:51 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D413E57D1;
+	Tue, 27 Sep 2011 19:59:03 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 98E735763; Tue, 27 Sep 2011
- 19:56:50 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5E1C257D0; Tue, 27 Sep 2011
+ 19:59:03 -0400 (EDT)
+In-Reply-To: <7v39fhv8se.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 27 Sep 2011 16:56:49 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5E216C48-E964-11E0-8675-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: AD42B0F2-E964-11E0-97C2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182279>
 
-It is natural to expect that an option defined with OPT_BOOLEAN() could be
-used in this way:
+The list variable (which is OPT_BOOLEAN) is initialized to 0 and only
+checked against 0 in the code, so it is safe to use OPT_BOOL().
 
-	int option = -1; /* unspecified */
-
-	struct option options[] = {
-		OPT_BOOLEAN(0, "option", &option, "set option"),
-                OPT_END()
-	};
-	parse_options(ac, av, prefix, options, usage, 0);
-
-        if (option < 0)
-        	... do the default thing ...
-	else if (!option)
-		... --no-option was given ...
-	else
-		... --option was given ...
-
-to easily tell three cases apart:
-
- - There is no mention of the `--option` on the command line;
- - The variable is positively set with `--option`; or
- - The variable is explicitly negated with `--no-option`.
-
-Unfortunately, this is not the case. OPT_BOOLEAN() increments the variable
-every time `--option` is given, and resets it to zero when `--no-option`
-is given.
-
-As a first step to remedy this, introduce a true boolean OPT_BOOL(), and
-rename OPT_BOOLEAN() to OPT_COUNTUP(). To help transitioning, OPT_BOOLEAN
-and OPTION_BOOLEAN are defined as deprecated synonyms to OPT_COUNTUP and
-OPTION_COUNTUP respectively.
-
-This is what db7244b (parse-options new features., 2007-11-07) from four
-years ago started by marking OPTION_BOOLEAN as "INCR would have been a
-better name".
-
-Some existing users do depend on the count-up semantics; for example,
-users of OPT__VERBOSE() could use it to raise the verbosity level with
-repeated use of `-v` on the command line, but they probably should be
-rewritten to use OPT__VERBOSITY() instead these days.  I suspect that some
-users of OPT__FORCE() may also use it to implement different level of
-forcibleness but I didn't check.
-
-On top of this patch, here are the remaining clean-up tasks that other
-people can help:
-
- - Look at each hit in "git grep -e OPT_BOOLEAN"; trace all uses of the
-   value that is set to the underlying variable, and if it can proven that
-   the variable is only used as a boolean, replace it with OPT_BOOL(). If
-   the caller does depend on the count-up semantics, replace it with
-   OPT_COUNTUP() instead.
-
- - Same for OPTION_BOOLEAN; replace it with OPTION_SET_INT and arrange to
-   set 1 to the variable for a true boolean, and otherwise replace it with
-   OPTION_COUNTUP.
-
- - Look at each hit in "git grep -e OPT__VERBOSE -e OPT__QUIET" and see if
-   they can be replaced with OPT__VERBOSITY().
-
-I'll follow this message up with a separate patch as an example.
+The worktree_attributes variable (which is OPT_BOOLEAN) is initialized to
+0 and later assigned to a field with the same name in struct archive_args,
+which is a bitfield of width 1. It is safe and even more correct to use
+OPT_BOOL() here; the new test in 5001 demonstrates why using OPT_COUNTUP
+is wrong.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/technical/api-parse-options.txt |   16 +++++++++++-----
- parse-options.c                               |    4 ++--
- parse-options.h                               |   10 ++++++++--
- 3 files changed, 21 insertions(+), 9 deletions(-)
+ * This is an example of "the remaining clean-up tasks" I mentioned.
 
-diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
-index f6a4a36..acf1760 100644
---- a/Documentation/technical/api-parse-options.txt
-+++ b/Documentation/technical/api-parse-options.txt
-@@ -135,9 +135,14 @@ There are some macros to easily define options:
- 	describes the group or an empty string.
- 	Start the description with an upper-case letter.
+ archive.c               |    4 ++--
+ t/t5001-archive-attr.sh |    9 +++++++++
+ 2 files changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/archive.c b/archive.c
+index 3fd7f47..2ae740a 100644
+--- a/archive.c
++++ b/archive.c
+@@ -318,7 +318,7 @@ static int parse_archive_args(int argc, const char **argv,
+ 			"prepend prefix to each pathname in the archive"),
+ 		OPT_STRING('o', "output", &output, "file",
+ 			"write the archive to this file"),
+-		OPT_BOOLEAN(0, "worktree-attributes", &worktree_attributes,
++		OPT_BOOL(0, "worktree-attributes", &worktree_attributes,
+ 			"read .gitattributes in working directory"),
+ 		OPT__VERBOSE(&verbose, "report archived files on stderr"),
+ 		OPT__COMPR('0', &compression_level, "store only", 0),
+@@ -332,7 +332,7 @@ static int parse_archive_args(int argc, const char **argv,
+ 		OPT__COMPR_HIDDEN('8', &compression_level, 8),
+ 		OPT__COMPR('9', &compression_level, "compress better", 9),
+ 		OPT_GROUP(""),
+-		OPT_BOOLEAN('l', "list", &list,
++		OPT_BOOL('l', "list", &list,
+ 			"list supported archive formats"),
+ 		OPT_GROUP(""),
+ 		OPT_STRING(0, "remote", &remote, "repo",
+diff --git a/t/t5001-archive-attr.sh b/t/t5001-archive-attr.sh
+index 02d4d22..f47d871 100755
+--- a/t/t5001-archive-attr.sh
++++ b/t/t5001-archive-attr.sh
+@@ -57,6 +57,15 @@ test_expect_missing	worktree/ignored
+ test_expect_exists	worktree/ignored-by-tree
+ test_expect_missing	worktree/ignored-by-worktree
  
--`OPT_BOOLEAN(short, long, &int_var, description)`::
--	Introduce a boolean option.
--	`int_var` is incremented on each use.
-+`OPT_BOOL(short, long, &int_var, description)`::
-+	Introduce a boolean option. `int_var` is set to one with
-+	`--option` and set to zero with `--no-option`.
++test_expect_success 'git archive --worktree-attributes option' '
++	git archive --worktree-attributes --worktree-attributes HEAD >worktree.tar &&
++	(mkdir worktree2 && cd worktree2 && "$TAR" xf -) <worktree.tar
++'
 +
-+`OPT_COUNTUP(short, long, &int_var, description)`::
-+	Introduce a count-up option.
-+	`int_var` is incremented on each use of `--option`, and
-+	reset to zero with `--no-option`.
- 
- `OPT_BIT(short, long, &int_var, description, mask)`::
- 	Introduce a boolean option.
-@@ -148,8 +153,9 @@ There are some macros to easily define options:
- 	If used, `int_var` is bitwise-anded with the inverted `mask`.
- 
- `OPT_SET_INT(short, long, &int_var, description, integer)`::
--	Introduce a boolean option.
--	If used, set `int_var` to `integer`.
-+	Introduce an integer option.
-+	`int_var` is set to `integer` with `--option`, and
-+	reset to zero with `--no-option`.
- 
- `OPT_SET_PTR(short, long, &ptr_var, description, ptr)`::
- 	Introduce a boolean option.
-diff --git a/parse-options.c b/parse-options.c
-index 503ab5d..f0098eb 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -83,7 +83,7 @@ static int get_value(struct parse_opt_ctx_t *p,
- 			*(int *)opt->value &= ~opt->defval;
- 		return 0;
- 
--	case OPTION_BOOLEAN:
-+	case OPTION_COUNTUP:
- 		*(int *)opt->value = unset ? 0 : *(int *)opt->value + 1;
- 		return 0;
- 
-@@ -319,7 +319,7 @@ static void parse_options_check(const struct option *opts)
- 			err |= optbug(opts, "uses feature "
- 					"not supported for dashless options");
- 		switch (opts->type) {
--		case OPTION_BOOLEAN:
-+		case OPTION_COUNTUP:
- 		case OPTION_BIT:
- 		case OPTION_NEGBIT:
- 		case OPTION_SET_INT:
-diff --git a/parse-options.h b/parse-options.h
-index 59e0b52..22c0273 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -10,7 +10,7 @@ enum parse_opt_type {
- 	/* options with no arguments */
- 	OPTION_BIT,
- 	OPTION_NEGBIT,
--	OPTION_BOOLEAN, /* _INCR would have been a better name */
-+	OPTION_COUNTUP,
- 	OPTION_SET_INT,
- 	OPTION_SET_PTR,
- 	/* options with arguments (usually) */
-@@ -21,6 +21,9 @@ enum parse_opt_type {
- 	OPTION_FILENAME
- };
- 
-+/* Deprecated synonym */
-+#define OPTION_BOOLEAN OPTION_COUNTUP
++test_expect_missing	worktree2/ignored
++test_expect_exists	worktree2/ignored-by-tree
++test_expect_missing	worktree2/ignored-by-worktree
 +
- enum parse_opt_flags {
- 	PARSE_OPT_KEEP_DASHDASH = 1,
- 	PARSE_OPT_STOP_AT_NON_OPTION = 2,
-@@ -122,10 +125,11 @@ struct option {
- 				      PARSE_OPT_NOARG, NULL, (b) }
- #define OPT_NEGBIT(s, l, v, h, b)   { OPTION_NEGBIT, (s), (l), (v), NULL, \
- 				      (h), PARSE_OPT_NOARG, NULL, (b) }
--#define OPT_BOOLEAN(s, l, v, h)     { OPTION_BOOLEAN, (s), (l), (v), NULL, \
-+#define OPT_COUNTUP(s, l, v, h)     { OPTION_COUNTUP, (s), (l), (v), NULL, \
- 				      (h), PARSE_OPT_NOARG }
- #define OPT_SET_INT(s, l, v, h, i)  { OPTION_SET_INT, (s), (l), (v), NULL, \
- 				      (h), PARSE_OPT_NOARG, NULL, (i) }
-+#define OPT_BOOL(s, l, v, h)        OPT_SET_INT(s, l, v, h, 1)
- #define OPT_SET_PTR(s, l, v, h, p)  { OPTION_SET_PTR, (s), (l), (v), NULL, \
- 				      (h), PARSE_OPT_NOARG, NULL, (p) }
- #define OPT_INTEGER(s, l, v, h)     { OPTION_INTEGER, (s), (l), (v), "n", (h) }
-@@ -149,6 +153,8 @@ struct option {
- 	{ OPTION_CALLBACK, (s), (l), (v), "when", (h), PARSE_OPT_OPTARG, \
- 		parse_opt_color_flag_cb, (intptr_t)"always" }
- 
-+/* Deprecated synonym */
-+#define OPT_BOOLEAN OPT_COUNTUP
- 
- /* parse_options() will filter out the processed options and leave the
-  * non-option arguments in argv[].
+ test_expect_success 'git archive vs. bare' '
+ 	(cd bare && git archive HEAD) >bare-archive.tar &&
+ 	test_cmp archive.tar bare-archive.tar
