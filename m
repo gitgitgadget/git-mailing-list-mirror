@@ -1,114 +1,188 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/6] A handful of "branch description" patches
-Date: Tue, 27 Sep 2011 17:58:43 -0400
-Message-ID: <20110927215843.GE5176@sigill.intra.peff.net>
-References: <7vy5xi4y3m.fsf@alter.siamese.dyndns.org>
- <1316729362-7714-1-git-send-email-gitster@pobox.com>
- <4E7C49CF.60508@drmicha.warpmail.net>
- <20110923201824.GA27999@sigill.intra.peff.net>
- <4E7DEC4A.3050900@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re* [PATCH 2/2] grep --no-index: don't use git standard exclusions
+Date: Tue, 27 Sep 2011 15:21:04 -0700
+Message-ID: <7vty7xwrsf.fsf_-_@alter.siamese.dyndns.org>
+References: <2f376e61802a1a38c67698d5ec263d1807b1fcee.1316110876.git.bert.wesarg@googlemail.com> <7b3551dd84a2bfec78c8db1d14dd2d0e6dda35f6.1316110876.git.bert.wesarg@googlemail.com> <7vmxe5pp4n.fsf@alter.siamese.dyndns.org> <CAKPyHN2ewwLf6am3VQr_z4c3_Q5=saeLcZtuY-fEtUGr-41rKQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Sep 27 23:58:50 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Bert Wesarg <bert.wesarg@googlemail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 28 00:21:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8ffu-0001hO-CA
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 23:58:50 +0200
+	id 1R8g1d-0001bZ-QQ
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 00:21:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751871Ab1I0V6q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Sep 2011 17:58:46 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45533
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751572Ab1I0V6p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2011 17:58:45 -0400
-Received: (qmail 29001 invoked by uid 107); 27 Sep 2011 22:03:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 27 Sep 2011 18:03:47 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Sep 2011 17:58:43 -0400
-Content-Disposition: inline
-In-Reply-To: <4E7DEC4A.3050900@drmicha.warpmail.net>
+	id S1753018Ab1I0WVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Sep 2011 18:21:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43777 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752348Ab1I0WVI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2011 18:21:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 13ADC54A9;
+	Tue, 27 Sep 2011 18:21:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6U5syTOvdGr4jlfjunpwxgwhgCk=; b=ZhCsQ6
+	1xDLV5B3Q7AW1AtpJhYHPL7uPSRx49ubFjK8FqcpiCMKLK6EcAU5+N62GtpwXpx9
+	J873MDI6buu8FVILE4xmR/FXAcvICcpeThKAkGf0nVP+/sdAFmxkTuTCfhEczAoP
+	t8V8UJX7a5detRAMDWHMha4439E4U25r0OUt0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Pd7OvFDnMaLMUJB1ijN4HvuMkA/q3EpV
+	Ga6tolorOu4iZDJQMp7ZBp8zp9R2pwyJUFd6pfx3+poO8NUULU/+2RdsWuLykNiP
+	m6gT3NogY/tDbFqvlbwjZYvKe8J/xuGpx3tbCFJu86hc0piGjc/7JaVASKdahrDp
+	UHlMRdFJz4s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0AC8B54A8;
+	Tue, 27 Sep 2011 18:21:07 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5BF2354A7; Tue, 27 Sep 2011
+ 18:21:06 -0400 (EDT)
+In-Reply-To: <CAKPyHN2ewwLf6am3VQr_z4c3_Q5=saeLcZtuY-fEtUGr-41rKQ@mail.gmail.com> (Bert
+ Wesarg's message of "Fri, 16 Sep 2011 20:23:54 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FE4A8960-E956-11E0-85C1-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182271>
 
-On Sat, Sep 24, 2011 at 04:42:18PM +0200, Michael J Gruber wrote:
+Bert Wesarg <bert.wesarg@googlemail.com> writes:
 
-> > This seems like a clever solution to making git-notes store a ref as a
-> > key instead of an arbitrary sha1. But I wonder if the end result is
-> > really waht the user wants. The resulting notes tree is good for doing
-> > lookups, but the entries are completely obfuscated. So I can't easily do
-> > something like "list all of the refs which have descriptions". I can
-> > only list the _hashes_ of the refs which have descriptions. And if I am
-> > lucky, I can hash the refs I have and correlate them. But unknown ones
-> > will simply be a mystery.
-> 
-> [mjg@localhost git]$ git rev-parse ref:mjg/vob/virtual-objects
-> 3f8aa9bb80fe241306aafd3d76af50739ba88268
-> [mjg@localhost git]$ git show 3f8aa9bb80fe241306aafd3d76af50739ba88268
-> refs/heads/mjg/vob/virtual-objects
+> Would '--untracked-too' only be a synonym for '--no-index
+> --exclude-standard', i.e. the current behavior?
 
-Sure, but what about:
+That basically would be the idea. Perhaps something like this on top of
+a9e6436 (grep --no-index: don't use git standard exclusions, 2011-09-15).
 
-  git notes list
+-- >8 --
+Subject: [PATCH 1/2] grep: teach --untracked and --exclude options
 
-which is just filled with meaningless nonsense.
+In a working tree of a git managed repository, "grep --untracked" would
+find the specified patterns from files in untracked files in addition to
+its usual behaviour of finding them in the tracked files.
 
-> > Wouldn't it be much more friendly to have a separate tree of refnames
-> > that stores:
-> > 
-> >   refs/heads/foo -> (some blob with the "foo" description)
-> >   refs/heads/bar -> (some blob with the "bar" description)
-> 
-> Given the above, I don't think it's more friendly.
-> 
-> In fact, in my first attempt, I wrote out the blobs, and referenced them
-> just like above from a different subtree within the notes tree, in order
-> to keep them from being pruned. So the virtual approach is pretty
-> equivalent, though leaner.
+By default, when working with "--no-index" option, "grep" does not pay
+attention to .gitignore mechanism. "grep --no-index --exclude" can be
+used to tell the command to use .gitignore and stop reporting hits from
+files that would be ignored. Also, when working without "--no-index",
+"grep" honors .gitignore mechanism, and "grep --no-exclude" can be used
+to tell the command to include hits from files that are ignored.
 
-Hmm. So your mapping of $ref to $desc is:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-grep.txt |   15 ++++++++++++++-
+ builtin-grep.c             |   25 ++++++++++++++++++-------
+ 2 files changed, 32 insertions(+), 8 deletions(-)
 
-  sha1($ref) -> sha1(blob($desc))
-
->From what you wrote there, I think maybe you think I meant to store:
-
-  sha1(blob($ref)) -> sha1(blob($desc))
-
-But what I meant was actually:
-
-  $ref -> sha1(blob($desc))
-
-I.e., not to use "notes" at all, but rather a tree that mirrors the
-refs/ hierarchy in its names.
-
-> > Yeah, you have to build another git-notes-like interface around it. But
-> > the data structure is pleasant and flexible. You could even "git
-> > checkout" the whole tree and edit the notes with your editor, without
-> > having to deal with some obfuscated name.
-> 
-> Well, "git branch --edit-description" and such should be the way to edit
-> them, shouldn't it?
-
-It's one way. I assume that if we store things in a reasonable,
-readable state, then people like that because they can hack on the data
-structure using more flexible tools.
-
-> I really think the only issue is remote refnames. As Junio points out,
-> they are local by nature. OTOH, you typically use a non-renaming refspec
-> which puts them under refs/remotes/foo/bar with "bar" being the same
-> name as the local one on the remote, foo something you have chosen. So,
-> teaching the code that the note for
-
-If they are local by nature, is it worth putting them into a notes tree
-at all? That provides versioning and backup. But I wonder if it is worth
-the hassle, when one could just put them in the config.
-
--Peff
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index e019e76..2ccfb90 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -9,7 +9,7 @@ git-grep - Print lines matching a pattern
+ SYNOPSIS
+ --------
+ [verse]
+-'git grep' [--cached]
++'git grep' [--cached] [--untracked] [--excludes]
+ 	   [-a | --text] [-I] [-i | --ignore-case] [-w | --word-regexp]
+ 	   [-v | --invert-match] [-h|-H] [--full-name]
+ 	   [-E | --extended-regexp] [-G | --basic-regexp]
+@@ -36,6 +36,19 @@ OPTIONS
+ 	Instead of searching in the working tree files, check
+ 	the blobs registered in the index file.
+ 
++--untracked::
++	In addition to searching in the tracked files in the working
++	tree, search also in untracked files.
++
++--no-excludes::
++	Also search in ignored files by not honoring the `.gitignore`
++	mechanism. Only useful with `--untracked`.
++
++--excludes::
++	Do not pay attention to ignored files specified via the	`.gitignore`
++	mechanism.  Only useful when searching files in the current directory
++	with `--no-index`.
++
+ -a::
+ --text::
+ 	Process binary files as if they were text.
+diff --git a/builtin-grep.c b/builtin-grep.c
+index a10946d..c6cfdf8 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -646,12 +646,14 @@ static int grep_object(struct grep_opt *opt, const char **paths,
+ 	die("unable to grep from object of type %s", typename(obj->type));
+ }
+ 
+-static int grep_directory(struct grep_opt *opt, const char **paths)
++static int grep_directory(struct grep_opt *opt, const char **paths, int exc_std)
+ {
+ 	struct dir_struct dir;
+ 	int i, hit = 0;
+ 
+ 	memset(&dir, 0, sizeof(dir));
++	if (exc_std)
++		setup_standard_excludes(&dir);
+ 
+ 	fill_directory(&dir, paths);
+ 	for (i = 0; i < dir.nr; i++) {
+@@ -749,7 +751,7 @@ static int help_callback(const struct option *opt, const char *arg, int unset)
+ int cmd_grep(int argc, const char **argv, const char *prefix)
+ {
+ 	int hit = 0;
+-	int cached = 0;
++	int cached = 0, untracked = 0, opt_exclude = -1;
+ 	int seen_dashdash = 0;
+ 	int external_grep_allowed__ignored;
+ 	struct grep_opt opt;
+@@ -764,6 +766,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 		{ OPTION_BOOLEAN, 0, "index", &use_index, NULL,
+ 			"finds in contents not managed by git",
+ 			PARSE_OPT_NOARG | PARSE_OPT_NEGHELP },
++		OPT_BOOLEAN(0, "untracked", &untracked,
++			"search in both tracked and untracked files"),
++		OPT_SET_INT(0, "exclude", &opt_exclude,
++			    "search also in ignored files", 1),
+ 		OPT_GROUP(""),
+ 		OPT_BOOLEAN('v', "invert-match", &opt.invert,
+ 			"show non-matching lines"),
+@@ -950,18 +956,23 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 		paths[1] = NULL;
+ 	}
+ 
+-	if (!use_index) {
++	if (!use_index && (untracked || cached))
++		die("--cached or --untracked cannot be used with --no-index.");
++
++	if (!use_index || untracked) {
+ 		int hit;
+-		if (cached)
+-			die("--cached cannot be used with --no-index.");
++		int use_exclude = (opt_exclude < 0) ? use_index : !!opt_exclude;
+ 		if (list.nr)
+-			die("--no-index cannot be used with revs.");
+-		hit = grep_directory(&opt, paths);
++			die("--no-index or --untracked cannot be used with revs.");
++		hit = grep_directory(&opt, paths, use_exclude);
+ 		if (use_threads)
+ 			hit |= wait_all();
+ 		return !hit;
+ 	}
+ 
++	if (0 <= opt_exclude)
++		die("--exclude or --no-exclude cannot be used for tracked contents.");
++
+ 	if (!list.nr) {
+ 		int hit;
+ 		if (!cached)
+-- 
+1.7.7.rc3.4.g8d714
