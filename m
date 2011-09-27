@@ -1,100 +1,88 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: [PATCH] Don't sort ref_list too early
-Date: Tue, 27 Sep 2011 01:00:09 +0100
-Message-ID: <20110927000010.79913.71464.julian@quantumfyre.co.uk>
-References: <4DF6A8B6.9030301@op5.se>
-	<9ae990f15489d7b51a172d08e63ca458@quantumfyre.co.uk>
-	<201109261539.33437.mfick@codeaurora.org>
-	<201109261552.04946.mfick@codeaurora.org>
-	<ece30e6a1b74bcddde5634003408f61f@quantumfyre.co.uk>
-	<7vsjnizxf5.fsf@alter.siamese.dyndns.org>
-Cc: Martin Fick <mfick@codeaurora.org>, <git@vger.kernel.org>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: [PATCH/RFC 0/2] Teach receive-pack not to run update hook for
+ corrupt/non existent ref
+Date: Tue, 27 Sep 2011 05:35:33 +0530
+Message-ID: <CAMK1S_gZFxtCwUnzRU3PocB9LcewZ-f5RyraCebJdaBASODaPg@mail.gmail.com>
+References: <1316927182-14212-1-git-send-email-pangyanhan@gmail.com>
+	<CAMK1S_hadzaqixaW3Fx81pf=hVsvAMpVvVGqVtZ8ncfUsie_9w@mail.gmail.com>
+	<20110925094822.GA1702@myhost>
+	<CAMK1S_h3ufrK29_ajpcSSW7HV6ZA8z8ZVHvhHr2bx5Cga5FAKQ@mail.gmail.com>
+	<7vwrcuzy44.fsf@alter.siamese.dyndns.org>
+	<CAMK1S_gR6U=OxzGsjTD8LbvZFS125=p1fQ8Af7aRD2XSsRur_Q@mail.gmail.com>
+	<7voby6zwxg.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pang Yan Han <pangyanhan@gmail.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 27 02:05:19 2011
+X-From: git-owner@vger.kernel.org Tue Sep 27 02:05:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8LAk-0006uk-8X
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 02:05:18 +0200
+	id 1R8LB5-00072P-2G
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 02:05:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753145Ab1I0AFL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Sep 2011 20:05:11 -0400
-Received: from neutrino.quantumfyre.co.uk ([93.93.128.23]:49950 "EHLO
-	neutrino.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753103Ab1I0AFK (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2011 20:05:10 -0400
-Received: from reaper.quantumfyre.co.uk (quantumfyre-1-pt.tunnel.tserv5.lon1.ipv6.he.net [IPv6:2001:470:1f08:1724::2])
-	by neutrino.quantumfyre.co.uk (Postfix) with ESMTP id B5084C0602;
-	Tue, 27 Sep 2011 01:05:09 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 9043336A7B8;
-	Tue, 27 Sep 2011 01:05:09 +0100 (BST)
-X-Virus-Scanned: amavisd-new at reaper
-Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
-	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id JEv0Det85Z4h; Tue, 27 Sep 2011 01:05:09 +0100 (BST)
-Received: from rayne.quantumfyre.co.uk (rayne.quantumfyre.co.uk [IPv6:2001:470:96a1:2:e2f8:47ff:fe26:e1cc])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 0E56C36A74D;
-	Tue, 27 Sep 2011 01:05:09 +0100 (BST)
-X-git-sha1: add19b18460bf3b80bffdfe13f08e6d0ea29f35d 
-X-Mailer: git-mail-commits v0.5.3
-In-Reply-To: <7vsjnizxf5.fsf@alter.siamese.dyndns.org>
+	id S1753196Ab1I0AFf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Sep 2011 20:05:35 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:48522 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753110Ab1I0AFe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2011 20:05:34 -0400
+Received: by vcbfk10 with SMTP id fk10so3254570vcb.19
+        for <git@vger.kernel.org>; Mon, 26 Sep 2011 17:05:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=LYwn5/2WpgWXIz21lsGLD2QBCWPFOFySAXGFchy84Jw=;
+        b=gTuYLDUCECLGEnypf+Rj0jv0utGeYo9WbUKhnV1BPvFmkF2p5782L07wRBwyCXYZo9
+         gPfqsG8e7WwN3CnH7cJ0fjAYS7t0U/dj+qtOgQ2ZqXGtx1+szeg2cOvHUpwOFSOmoS9k
+         w93ikroRI7Tntm3g+tx+6NtjXgm+iYkaqCE7U=
+Received: by 10.52.93.178 with SMTP id cv18mr1900014vdb.134.1317081933777;
+ Mon, 26 Sep 2011 17:05:33 -0700 (PDT)
+Received: by 10.52.160.161 with HTTP; Mon, 26 Sep 2011 17:05:33 -0700 (PDT)
+In-Reply-To: <7voby6zwxg.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182197>
 
-get_ref_dir is called recursively for subdirectories, which means that
-we were calling sort_ref_list for each directory of refs instead of
-once for all the refs.  This is a massive wast of processing, so now
-just call sort_ref_list on the result of the top-level get_ref_dir, so
-that the sort is only done once.
+On Tue, Sep 27, 2011 at 5:19 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Sitaram Chamarty <sitaramc@gmail.com> writes:
+>
+>>> In that case (if "non-existent-ref" was indeed non-existent, and no=
+t just
+>>> pointing at a dangling commit), I would say the post anything hook =
+should
+>>> not be called for that ref. These hooks of course need to run if th=
+ere
+>>> are _other_ refs that were updated, though, to handle these _other_=
+ refs,
+>>> but I do not think they should be told about the no-op.
+>>
+>> Question is what happens if none of them existed. =C2=A0It's a diffe=
+rence
+>> between not calling the hook at all, versus calling it with no
+>> arguments/empty stdin (as the case may be) -- which would you do?
+>
+> In case it was unclear, I was trying to say the hooks should not run =
+with
+> empty input.
 
-In the common case of only a few different directories of refs the
-difference isn't very noticable, but it becomes very noticeable when
-you have a large number of direcotries containing refs (e.g. as
-created by Gerrit).
+I saw "should not be called for that ref" and I did get confused;
+thanks for clarifying.
 
-Reported by Martin Fick.
+I perfectly fine with it for post-{update,receive}.  My interest is in
+making sure the *update* hook runs, which (in an earlier email in the
+thread) I explained why and you agreed it made sense.
 
-Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
----
+Thanks,
 
-This time the typos are fixed too ... perhaps I wrote the original commit at 1am
-too ... :$
-
- refs.c |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index a615043..a49ff74 100644
---- a/refs.c
-+++ b/refs.c
-@@ -319,7 +319,7 @@ static struct ref_list *get_ref_dir(const char *submodule, const char *base,
- 		free(ref);
- 		closedir(dir);
- 	}
--	return sort_ref_list(list);
-+	return list;
- }
- 
- struct warn_if_dangling_data {
-@@ -361,11 +361,13 @@ static struct ref_list *get_loose_refs(const char *submodule)
- 	if (submodule) {
- 		free_ref_list(submodule_refs.loose);
- 		submodule_refs.loose = get_ref_dir(submodule, "refs", NULL);
-+		submodule_refs.loose = sort_ref_list(submodule_refs.loose);
- 		return submodule_refs.loose;
- 	}
- 
- 	if (!cached_refs.did_loose) {
- 		cached_refs.loose = get_ref_dir(NULL, "refs", NULL);
-+		cached_refs.loose = sort_ref_list(cached_refs.loose);
- 		cached_refs.did_loose = 1;
- 	}
- 	return cached_refs.loose;
--- 
-1.7.6.1
+--=20
+Sitaram
