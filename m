@@ -1,102 +1,137 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] templates/hooks--*: remove sample hooks without any
-	functionality
-Date: Tue, 27 Sep 2011 11:56:53 +0000
-Message-ID: <20110927115653.24283.qmail@bdefd4038bc987.315fe32.mid.smarden.org>
-References: <20110926125932.27854.qmail@804c778e7e6607.315fe32.mid.smarden.org> <7vbou742eg.fsf@alter.siamese.dyndns.org>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: Git is not scalable with too many refs/*
+Date: Tue, 27 Sep 2011 13:10:25 +0100
+Message-ID: <e44cba8038381a722e127fb47b8ddfe4@quantumfyre.co.uk>
+References: <4DF6A8B6.9030301@op5.se>
+ <9ae990f15489d7b51a172d08e63ca458@quantumfyre.co.uk>
+ <201109261539.33437.mfick@codeaurora.org>
+ <201109261552.04946.mfick@codeaurora.org>
+ <ece30e6a1b74bcddde5634003408f61f@quantumfyre.co.uk>
+ <CAGdFq_hvR1MPF33YFcjDCzCM0iOO2zpiiePFFS4dBabu84cwTg@mail.gmail.com>
+ <22f055b34840e3c64f3339f7b3dc6920@quantumfyre.co.uk>
+ <4E81AE63.8040008@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 27 13:57:01 2011
+Content-Type: multipart/mixed;
+ boundary="=_74ce99a6546b2474fc2b4b072b528f18"
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Martin Fick <mfick@codeaurora.org>, <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Michael Barr <davidbarr@google.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Sep 27 14:10:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8WHU-0008KL-De
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 13:57:00 +0200
+	id 1R8WUc-0005Cr-2W
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 14:10:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752662Ab1I0L44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Sep 2011 07:56:56 -0400
-Received: from a.ns.smarden.org ([109.68.224.7]:58773 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752184Ab1I0L4z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2011 07:56:55 -0400
-Received: (qmail 24284 invoked by uid 1000); 27 Sep 2011 11:56:53 -0000
-Content-Disposition: inline
-In-Reply-To: <7vbou742eg.fsf@alter.siamese.dyndns.org>
+	id S1753686Ab1I0MK3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Sep 2011 08:10:29 -0400
+Received: from neutrino.quantumfyre.co.uk ([93.93.128.23]:60870 "EHLO
+	neutrino.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753539Ab1I0MK2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2011 08:10:28 -0400
+Received: from reaper.quantumfyre.co.uk (quantumfyre-1-pt.tunnel.tserv5.lon1.ipv6.he.net [IPv6:2001:470:1f08:1724::2])
+	by neutrino.quantumfyre.co.uk (Postfix) with ESMTP id 78B79C060C;
+	Tue, 27 Sep 2011 13:10:27 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 5879336A831;
+	Tue, 27 Sep 2011 13:10:27 +0100 (BST)
+X-Virus-Scanned: amavisd-new at reaper
+Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
+	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id mQ5DSgBKLfVp; Tue, 27 Sep 2011 13:10:26 +0100 (BST)
+Received: from webmail.quantumfyre.co.uk (reaper.quantumfyre.co.uk [192.168.0.2])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id CE76635F60F;
+	Tue, 27 Sep 2011 13:10:25 +0100 (BST)
+In-Reply-To: <4E81AE63.8040008@alum.mit.edu>
+X-Sender: julian@quantumfyre.co.uk
+User-Agent: Roundcube Webmail/0.5.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182236>
 
-Remove the sample post-commit and post-receive hooks.  The sample
-post-commit doesn't contain any sample functionality and the comments do
-not provide more information than already found in the documentation.
-The sample post-receive hooks doesn't provide any sample functionality
-either and refers in the comments to a contrib hook that might be
-installed in different locations on different systems, which isn't that
-helpful.
+--=_74ce99a6546b2474fc2b4b072b528f18
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 
-Signed-off-by: Gerrit Pape <pape@smarden.org>
----
-
-On Mon, Sep 26, 2011 at 10:52:23AM -0700, Junio C Hamano wrote:
-> I removed the "-" lines above. Looking at the result, I really have to
-> wonder if it makes much sense to keep the file here. It is not even an
-> example anymore, and the user does not gain anything by enabling it,
-> following the suggestion.
+On Tue, 27 Sep 2011 13:07:15 +0200, Michael Haggerty wrote:
+> On 09/27/2011 11:01 AM, Julian Phillips wrote:
+>> It has to be hot-cache, otherwise time taken to read the refs from 
+>> disk
+>> will mean that it is always slow.  On my Mac it seems to _always_ be
+>> slow reading the refs from disk, so even the "fast" case still takes 
+>> ~17m.
 >
-> Let's instead remove the file altogether, Ok?
+> This case should be helped by lazy-loading of loose references, which 
+> I
+> am working on.  So if you develop some benchmarking code, it would 
+> help
+> me with my work.
 
-Fine with me.  As the same applies to the sample post-commit hook, I
-made this patch to remove both of them.
+The attached script creates the repo structure I was testing with ...
 
-Thanks for your patience, Gerrit.
+If you create a repo with 100k refs it takes quite a while to read the 
+refs from disk.  If you are lazy-loading then it should take practically 
+no time, since the only interesting ref is refs/heads/master.
 
+The following is the hot-cache timing for "./refs-stress c 40000", with 
+the sorting patch applied (wasn't prepared to wait for numbers with 100k 
+refs).
 
- templates/hooks--post-commit.sample  |    8 --------
- templates/hooks--post-receive.sample |   15 ---------------
- 2 files changed, 0 insertions(+), 23 deletions(-)
- delete mode 100755 templates/hooks--post-commit.sample
- delete mode 100755 templates/hooks--post-receive.sample
+jp3@rayne: refs>(cd c; time ~/misc/git/git/git branch)
+* master
 
-diff --git a/templates/hooks--post-commit.sample b/templates/hooks--post-commit.sample
-deleted file mode 100755
-index 2266821..0000000
---- a/templates/hooks--post-commit.sample
-+++ /dev/null
-@@ -1,8 +0,0 @@
--#!/bin/sh
--#
--# An example hook script that is called after a successful
--# commit is made.
--#
--# To enable this hook, rename this file to "post-commit".
--
--: Nothing
-diff --git a/templates/hooks--post-receive.sample b/templates/hooks--post-receive.sample
-deleted file mode 100755
-index 7a83e17..0000000
---- a/templates/hooks--post-receive.sample
-+++ /dev/null
-@@ -1,15 +0,0 @@
--#!/bin/sh
--#
--# An example hook script for the "post-receive" event.
--#
--# The "post-receive" script is run after receive-pack has accepted a pack
--# and the repository has been updated.  It is passed arguments in through
--# stdin in the form
--#  <oldrev> <newrev> <refname>
--# For example:
--#  aa453216d1b3e49e7f6f98441fa56946ddcd6a20 68f7abf4e6f922807889f52bc043ecd31b79f814 refs/heads/master
--#
--# see contrib/hooks/ for a sample, or uncomment the next line and
--# rename the file to "post-receive".
--
--#. /usr/share/doc/git-core/contrib/hooks/post-receive-email
+real    0m0.885s
+user    0m0.161s
+sys     0m0.722s
+
+After doing "rm -rf c/.git/refs/changes/*", I get:
+
+jp3@rayne: refs>(cd c; time ~/misc/git/git/git branch)
+* master
+
+real    0m0.004s
+user    0m0.001s
+sys     0m0.002s
+
 -- 
-1.7.6.3
+Julian
+--=_74ce99a6546b2474fc2b4b072b528f18
+Content-Transfer-Encoding: base64
+Content-Type: text/x-java;
+ name=refs-stress
+Content-Disposition: attachment;
+ filename=refs-stress
+
+IyEvdXNyL2Jpbi9lbnYgcHl0aG9uCgppbXBvcnQgb3MKaW1wb3J0IHJhbmRvbQppbXBvcnQgc3Vi
+cHJvY2VzcwppbXBvcnQgc3lzCgpkZWYgZGllKG1zZyk6CiAgICBwcmludCA+PiBzeXMuc3RkZXJy
+LCBtc2cKICAgIHN5cy5leGl0KDEpCgpkZWYgbmV3X3JlZihhLCBiLCBjb21taXQpOgogICAgZCA9
+ICIuZ2l0L3JlZnMvY2hhbmdlcy8lZC8lZCIgJSAoYSwgYikKICAgIGlmIG5vdCBvcy5wYXRoLmV4
+aXN0cyhkKToKICAgICAgICBvcy5tYWtlZGlycyhkKQogICAgZSA9IDEKICAgIHAgPSAiJXMvJWQi
+ICUgKGQsIGUpCiAgICB3aGlsZSBvcy5wYXRoLmV4aXN0cyhwKToKICAgICAgICBlICs9IDEKICAg
+ICAgICBwID0gIiVzLyVkIiAlIChkLCBlKQogICAgZiA9IG9wZW4ocCwgInciKQogICAgZi53cml0
+ZShjb21taXQpCiAgICBmLmNsb3NlKCkKCmRlZiBtYWtlX3JlZnMoY291bnQsIGNvbW1pdCk6CiAg
+ICB3aGlsZSBjb3VudCA+IDA6CiAgICAgICAgc3lzLnN0ZG91dC53cml0ZSgibGVmdDogJWQlc1xy
+IiAlIChjb3VudCwgIiAiICogMzApKQogICAgICAgIGEgPSByYW5kb20ucmFuZHJhbmdlKDEwLCAz
+MCkKICAgICAgICBiID0gcmFuZG9tLnJhbmRyYW5nZSgxMDAwMCwgNTAwMDApCiAgICAgICAgbmV3
+X3JlZihhLCBiLCBjb21taXQpCiAgICAgICAgY291bnQgLT0gMQogICAgcHJpbnQgInJlZnMgY29t
+cGxldGUiCgpkZWYgbWFpbigpOgogICAgaWYgbGVuKHN5cy5hcmd2KSAhPSAzOgogICAgICAgIGRp
+ZSgidXNhZ2U6ICVzIDxuYW1lPiA8cmVmIGNvdW50PiIgJSBzeXMuYXJndlswXSkKCiAgICBfLCBu
+YW1lLCByZWZzID0gc3lzLmFyZ3YKCiAgICBvcy5ta2RpcihuYW1lKQogICAgb3MuY2hkaXIobmFt
+ZSkKCiAgICBpZiBzdWJwcm9jZXNzLmNhbGwoWyJnaXQiLCAiaW5pdCJdKSAhPSAwOgogICAgICAg
+IGRpZSgiZmFpbGVkIHRvIGluaXQgcmVwbyIpCgogICAgZiA9IG9wZW4oImZvb2Jhci50eHQiLCAi
+dyIpCiAgICBmLndyaXRlKCIlczogJXMgcmVmc1xuIiAlIChuYW1lLCByZWZzKSkKICAgIGYuY2xv
+c2UoKQoKICAgIGlmIHN1YnByb2Nlc3MuY2FsbChbImdpdCIsICJhZGQiLCAiZm9vYmFyLnR4dCJd
+KSAhPSAwOgogICAgICAgIGRpZSgiZmFpbGVkIHRvIGFkZCBmb29iYXIudHh0IikKCiAgICBpZiBz
+dWJwcm9jZXNzLmNhbGwoWyJnaXQiLCAiY29tbWl0IiwgIi1tIiwgImluaXRhbCBjb21taXQiXSkg
+IT0gMDoKICAgICAgICBkaWUoImZhaWxlZCB0byBjcmVhdGUgaW5pdGlhbCBjb21taXQiKQoKICAg
+IGNvbW1pdCA9IHN1YnByb2Nlc3MuY2hlY2tfb3V0cHV0KFsiZ2l0IiwgInNob3ctcmVmIiwgIi1z
+IiwgIm1hc3RlciJdKS5zdHJpcCgpCgogICAgbWFrZV9yZWZzKGludChyZWZzKSwgY29tbWl0KQoK
+aWYgX19uYW1lX18gPT0gIl9fbWFpbl9fIjoKICAgIG1haW4oKQo=
+--=_74ce99a6546b2474fc2b4b072b528f18--
