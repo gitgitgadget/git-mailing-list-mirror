@@ -1,85 +1,109 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Tue, 27 Sep 2011 10:01:56 +0100
-Message-ID: <22f055b34840e3c64f3339f7b3dc6920@quantumfyre.co.uk>
-References: <4DF6A8B6.9030301@op5.se>
- <9ae990f15489d7b51a172d08e63ca458@quantumfyre.co.uk>
- <201109261539.33437.mfick@codeaurora.org>
- <201109261552.04946.mfick@codeaurora.org>
- <ece30e6a1b74bcddde5634003408f61f@quantumfyre.co.uk>
- <CAGdFq_hvR1MPF33YFcjDCzCM0iOO2zpiiePFFS4dBabu84cwTg@mail.gmail.com>
+From: Pang Yan Han <pangyanhan@gmail.com>
+Subject: Re: [PATCH/RFC 0/2] Teach receive-pack not to run update hook for
+ corrupt/non existent ref
+Date: Tue, 27 Sep 2011 17:02:25 +0800
+Message-ID: <20110927090225.GA1493@myhost>
+References: <1316927182-14212-1-git-send-email-pangyanhan@gmail.com>
+ <CAMK1S_hadzaqixaW3Fx81pf=hVsvAMpVvVGqVtZ8ncfUsie_9w@mail.gmail.com>
+ <20110925094822.GA1702@myhost>
+ <CAMK1S_h3ufrK29_ajpcSSW7HV6ZA8z8ZVHvhHr2bx5Cga5FAKQ@mail.gmail.com>
+ <7vwrcuzy44.fsf@alter.siamese.dyndns.org>
+ <CAMK1S_gR6U=OxzGsjTD8LbvZFS125=p1fQ8Af7aRD2XSsRur_Q@mail.gmail.com>
+ <7voby6zwxg.fsf@alter.siamese.dyndns.org>
+ <7vd3emzw8n.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Martin Fick <mfick@codeaurora.org>, <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Michael Barr <davidbarr@google.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 27 11:02:08 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Sitaram Chamarty <sitaramc@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Pang Yan Han <pangyanhan@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 27 11:05:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8TYF-000852-Kf
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 11:02:07 +0200
+	id 1R8TbM-0000p2-WF
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 11:05:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752084Ab1I0JCA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Sep 2011 05:02:00 -0400
-Received: from neutrino.quantumfyre.co.uk ([93.93.128.23]:47464 "EHLO
-	neutrino.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751456Ab1I0JCA (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2011 05:02:00 -0400
-Received: from reaper.quantumfyre.co.uk (quantumfyre-1-pt.tunnel.tserv5.lon1.ipv6.he.net [IPv6:2001:470:1f08:1724::2])
-	by neutrino.quantumfyre.co.uk (Postfix) with ESMTP id E8D2EC060C;
-	Tue, 27 Sep 2011 10:01:58 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 2C8BE36A831;
-	Tue, 27 Sep 2011 10:01:58 +0100 (BST)
-X-Virus-Scanned: amavisd-new at reaper
-Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
-	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id wNFp9YBLWF03; Tue, 27 Sep 2011 10:01:57 +0100 (BST)
-Received: from webmail.quantumfyre.co.uk (reaper.quantumfyre.co.uk [192.168.0.2])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 71C4636A6DD;
-	Tue, 27 Sep 2011 10:01:56 +0100 (BST)
-In-Reply-To: <CAGdFq_hvR1MPF33YFcjDCzCM0iOO2zpiiePFFS4dBabu84cwTg@mail.gmail.com>
-X-Sender: julian@quantumfyre.co.uk
-User-Agent: Roundcube Webmail/0.5.3
+	id S1752113Ab1I0JFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Sep 2011 05:05:14 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:55626 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752082Ab1I0JFN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2011 05:05:13 -0400
+Received: by ywb5 with SMTP id 5so5093457ywb.19
+        for <git@vger.kernel.org>; Tue, 27 Sep 2011 02:05:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=z0eWLw75b6mlq6QtB45Q/7ACMRuUgE76lBs3VhjWU8I=;
+        b=FacVOI+sM4pPGpPmTXaHjuskOmubtoEw3w+wqiWqEWcjB7H2Pq6FTWjrAh+zQxQEKS
+         tZYToyYcxmUTG+xy7ROXlPECvIvCS5KJGI1dG03Y0xdc+2CsUqmuh4BItGHjvyhcYv+s
+         zIlz3J/64LXfeSrXy5LdEETGcxA3joq5uwWVU=
+Received: by 10.236.180.105 with SMTP id i69mr45671088yhm.64.1317114312515;
+        Tue, 27 Sep 2011 02:05:12 -0700 (PDT)
+Received: from localhost (bb121-6-158-86.singnet.com.sg. [121.6.158.86])
+        by mx.google.com with ESMTPS id d5sm29543108yhl.19.2011.09.27.02.05.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 27 Sep 2011 02:05:11 -0700 (PDT)
+Mail-Followup-To: Pang Yan Han <pangyanhan@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <7vd3emzw8n.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182225>
 
-On Tue, 27 Sep 2011 10:20:29 +0200, Sverre Rabbelier wrote:
-> Heya,
->
-> On Tue, Sep 27, 2011 at 01:26, Julian Phillips
-> <julian@quantumfyre.co.uk> wrote:
->> Back when I made that change, I failed to notice that get_ref_dir=20
->> was
->> recursive for subdirectories ... sorry ...
->>
->> Hopefully this should speed things up. =C2=A0My test repo went from =
-~17m=20
->> user
->> time, to ~2.5s.
->> Packing still make things much faster of course.
->
-> Can we perhaps also have some tests to prevent this from happening=20
-> again?
+Hi Junio,
 
-Um ... any suggestion what to test?
+Should I reroll this patch with this behaviour:
 
-It has to be hot-cache, otherwise time taken to read the refs from disk=
-=20
-will mean that it is always slow.  On my Mac it seems to _always_ be=20
-slow reading the refs from disk, so even the "fast" case still takes=20
-~17m.
+- Everything as usual for valid ref updates and deletes
+- For deleting corrupt (dangling?) ref, post-receive and post-update hooks
+  also receive the same args as per valid update / delete
+- For deleting non-existent refs:
+  - post-receive shall have empty stdin for those refs
+  - post-update shall have an empty arg for those refs
 
-Also, what counts as ok, and what as broken?
+Thanks.
 
---=20
-Julian
+On Mon, Sep 26, 2011 at 05:04:24PM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Sitaram Chamarty <sitaramc@gmail.com> writes:
+> >
+> >>> In that case (if "non-existent-ref" was indeed non-existent, and not just
+> >>> pointing at a dangling commit), I would say the post anything hook should
+> >>> not be called for that ref. These hooks of course need to run if there
+> >>> are _other_ refs that were updated, though, to handle these _other_ refs,
+> >>> but I do not think they should be told about the no-op.
+> >>
+> >> Question is what happens if none of them existed.  It's a difference
+> >> between not calling the hook at all, versus calling it with no
+> >> arguments/empty stdin (as the case may be) -- which would you do?
+> >
+> > In case it was unclear, I was trying to say the hooks should not run with
+> > empty input.
+> 
+> If the purpose of "post-update" (or "post-receive") hooks were to trigger
+> every time anybody attempted to push into the repository, then it would
+> make perfect sense for them to trigger when "push origin :no-such-branch"
+> were attempted. But if that were the purpose of these hooks, they should
+> also trigger when "push origin master" is run and "master" is already at
+> the right commit, as that is the same kind of no-op -- the pushed into
+> repository was already up-to-date with respect to the wish of the pusher.
+> 
+> I do not mind, and I do prefer, these hooks to run when somebody deleted
+> an existing ref that points at a corrupt or non-existent object, as that
+> is _not_ a no-op but is a meaningful event that has an effect that is
+> observable from the outside world (e.g. ls-remote).
