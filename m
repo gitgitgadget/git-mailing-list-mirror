@@ -1,92 +1,68 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
+From: Sverre Rabbelier <srabbelier@gmail.com>
 Subject: Re: Git is not scalable with too many refs/*
-Date: Tue, 27 Sep 2011 08:59:24 +0100
-Message-ID: <2ad152520590530dd1bdcfae9941ef9d@quantumfyre.co.uk>
-References: <4DF6A8B6.9030301@op5.se>
- <201109261552.04946.mfick@codeaurora.org>
+Date: Tue, 27 Sep 2011 10:20:29 +0200
+Message-ID: <CAGdFq_hvR1MPF33YFcjDCzCM0iOO2zpiiePFFS4dBabu84cwTg@mail.gmail.com>
+References: <4DF6A8B6.9030301@op5.se> <9ae990f15489d7b51a172d08e63ca458@quantumfyre.co.uk>
+ <201109261539.33437.mfick@codeaurora.org> <201109261552.04946.mfick@codeaurora.org>
  <ece30e6a1b74bcddde5634003408f61f@quantumfyre.co.uk>
- <201109261812.31738.mfick@codeaurora.org>
- <97c45128ddeb8269273a4431b3941478@quantumfyre.co.uk>
- <3539dab7-0fb2-4759-baaf-8e22efab2904@email.android.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Martin Fick <mfick@codeaurora.org>
-X-From: git-owner@vger.kernel.org Tue Sep 27 09:59:34 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Martin Fick <mfick@codeaurora.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	David Michael Barr <davidbarr@google.com>
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Tue Sep 27 10:21:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8SZh-0002Jf-Sr
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 09:59:34 +0200
+	id 1R8Suk-0001jd-Ot
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 10:21:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751542Ab1I0H73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Sep 2011 03:59:29 -0400
-Received: from neutrino.quantumfyre.co.uk ([93.93.128.23]:52812 "EHLO
-	neutrino.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751195Ab1I0H72 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2011 03:59:28 -0400
-Received: from reaper.quantumfyre.co.uk (quantumfyre-1-pt.tunnel.tserv5.lon1.ipv6.he.net [IPv6:2001:470:1f08:1724::2])
-	by neutrino.quantumfyre.co.uk (Postfix) with ESMTP id 6C90CC060C;
-	Tue, 27 Sep 2011 08:59:27 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 67CE236A831;
-	Tue, 27 Sep 2011 08:59:26 +0100 (BST)
-X-Virus-Scanned: amavisd-new at reaper
-Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
-	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 13FLl89fpJXr; Tue, 27 Sep 2011 08:59:25 +0100 (BST)
-Received: from webmail.quantumfyre.co.uk (reaper.quantumfyre.co.uk [192.168.0.2])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 7E92F36A6DD;
-	Tue, 27 Sep 2011 08:59:25 +0100 (BST)
-In-Reply-To: <3539dab7-0fb2-4759-baaf-8e22efab2904@email.android.com>
-X-Sender: julian@quantumfyre.co.uk
-User-Agent: Roundcube Webmail/0.5.3
+	id S1751387Ab1I0IVM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Sep 2011 04:21:12 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:33576 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751331Ab1I0IVK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2011 04:21:10 -0400
+Received: by yxl31 with SMTP id 31so5055440yxl.19
+        for <git@vger.kernel.org>; Tue, 27 Sep 2011 01:21:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=VpdlwbEvcZaCi4tsH0hGdK+4exEm9Sgu/KTaj4W4u5Q=;
+        b=QfhSHJ0S6wx6kJ2ScT6ukCy3sWFFalaTBRFiY/3Oi7pM6eYS0VpJLcCVsAQkhogiLL
+         CIJ1erw/MQfspJn6ILcquh9BiiwKv8cq8G/JlH9Xt0XG9wnBBZYqez6EhYv3ENOQIsN1
+         VzuvifUp0Ct0p6aSi32yAorI/h6g9/6psNG3g=
+Received: by 10.68.33.164 with SMTP id s4mr13294409pbi.119.1317111669162; Tue,
+ 27 Sep 2011 01:21:09 -0700 (PDT)
+Received: by 10.68.62.3 with HTTP; Tue, 27 Sep 2011 01:20:29 -0700 (PDT)
+In-Reply-To: <ece30e6a1b74bcddde5634003408f61f@quantumfyre.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182219>
 
-On Mon, 26 Sep 2011 20:34:02 -0600, Martin Fick wrote:
->> Julian Phillips <julian@quantumfyre.co.uk> wrote:
->>On Mon, 26 Sep 2011 18:12:31 -0600, Martin Fick wrote:
->>That sounds a lot better.  Hopefully other commands should be faster
->>now too.
+Heya,
+
+On Tue, Sep 27, 2011 at 01:26, Julian Phillips <julian@quantumfyre.co.u=
+k> wrote:
+> Back when I made that change, I failed to notice that get_ref_dir was
+> recursive for subdirectories ... sorry ...
 >
-> Yeah, I will try this in a few other places to see.
->
->>> Thanks way much!!!
->>
->>No problem.  Thank you for all the time you've put in to help chase
->>this down.  Makes it so much easier when the person with original
->>problem mucks in with the investigation.
->>Just think how much time you've saved for anyone with a large number 
->> of
->>
->>those Gerrit change refs ;)
->
->  Perhaps this is a naive question, but why are all these refs being
-> put into a list to be sorted, only to be discarded soon thereafter
-> anyway?  After all, git branch knows that it isn't going to print
-> these, and the refs are stored precategorized, so why not only grab
-> the refs which matter upfront?
+> Hopefully this should speed things up. =C2=A0My test repo went from ~=
+17m user
+> time, to ~2.5s.
+> Packing still make things much faster of course.
 
-I can't say that I am aware of a specific decision having been taken on 
-the subject, but I'll have a guess at the reason:
+Can we perhaps also have some tests to prevent this from happening agai=
+n?
 
-The extra code it would take to have an API for getting a list of only 
-a subset of the refs has never been considered worth the cost.  It would 
-take effort to implement, test and maintain - and it would have to be 
-done separately for packed and unpacked cases to avoid still loading and 
-discarding unwanted refs.  All that to not do something that no-one has 
-noticed taking any time?  Until now, I doubt anyone has considered it 
-something that was a problem - and now that even with 100k refs it takes 
-less than a second, I doubt anyone will feel all that inclined to have a 
-crack at it now either.
+--=20
+Cheers,
 
--- 
-Julian
+Sverre Rabbelier
