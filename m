@@ -1,68 +1,68 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Tue, 27 Sep 2011 10:20:29 +0200
-Message-ID: <CAGdFq_hvR1MPF33YFcjDCzCM0iOO2zpiiePFFS4dBabu84cwTg@mail.gmail.com>
-References: <4DF6A8B6.9030301@op5.se> <9ae990f15489d7b51a172d08e63ca458@quantumfyre.co.uk>
- <201109261539.33437.mfick@codeaurora.org> <201109261552.04946.mfick@codeaurora.org>
- <ece30e6a1b74bcddde5634003408f61f@quantumfyre.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Martin Fick <mfick@codeaurora.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	David Michael Barr <davidbarr@google.com>
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Tue Sep 27 10:21:21 2011
+From: Luke Diamand <luke@diamand.org>
+Subject: [RFC/PATCHv2] git-p4: handle files with shell metacharacters
+Date: Tue, 27 Sep 2011 09:40:35 +0100
+Message-ID: <1317112836-14135-1-git-send-email-luke@diamand.org>
+References: <20110926214758.GB3433@arf.padd.com>
+Cc: pw@padd.com, vitor.hda@gmail.com, Luke Diamand <luke@diamand.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 27 10:40:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8Suk-0001jd-Ot
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 10:21:19 +0200
+	id 1R8TDi-0000ZZ-Av
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 10:40:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751387Ab1I0IVM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Sep 2011 04:21:12 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:33576 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751331Ab1I0IVK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2011 04:21:10 -0400
-Received: by yxl31 with SMTP id 31so5055440yxl.19
-        for <git@vger.kernel.org>; Tue, 27 Sep 2011 01:21:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=VpdlwbEvcZaCi4tsH0hGdK+4exEm9Sgu/KTaj4W4u5Q=;
-        b=QfhSHJ0S6wx6kJ2ScT6ukCy3sWFFalaTBRFiY/3Oi7pM6eYS0VpJLcCVsAQkhogiLL
-         CIJ1erw/MQfspJn6ILcquh9BiiwKv8cq8G/JlH9Xt0XG9wnBBZYqez6EhYv3ENOQIsN1
-         VzuvifUp0Ct0p6aSi32yAorI/h6g9/6psNG3g=
-Received: by 10.68.33.164 with SMTP id s4mr13294409pbi.119.1317111669162; Tue,
- 27 Sep 2011 01:21:09 -0700 (PDT)
-Received: by 10.68.62.3 with HTTP; Tue, 27 Sep 2011 01:20:29 -0700 (PDT)
-In-Reply-To: <ece30e6a1b74bcddde5634003408f61f@quantumfyre.co.uk>
+	id S1752289Ab1I0Ikt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Sep 2011 04:40:49 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:45433 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751651Ab1I0Iks (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2011 04:40:48 -0400
+Received: by wyg34 with SMTP id 34so6926766wyg.19
+        for <git@vger.kernel.org>; Tue, 27 Sep 2011 01:40:47 -0700 (PDT)
+Received: by 10.227.20.6 with SMTP id d6mr8445961wbb.49.1317112847186;
+        Tue, 27 Sep 2011 01:40:47 -0700 (PDT)
+Received: from localhost.localdomain (cpc1-cmbg14-2-0-cust973.5-4.cable.virginmedia.com. [86.26.7.206])
+        by mx.google.com with ESMTPS id fy13sm7253961wbb.18.2011.09.27.01.40.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 27 Sep 2011 01:40:45 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.347.g4db0d
+In-Reply-To: <20110926214758.GB3433@arf.padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182220>
 
-Heya,
+Updated git-p4 changes incorporating Pete's comments.
 
-On Tue, Sep 27, 2011 at 01:26, Julian Phillips <julian@quantumfyre.co.u=
-k> wrote:
-> Back when I made that change, I failed to notice that get_ref_dir was
-> recursive for subdirectories ... sorry ...
->
-> Hopefully this should speed things up. =C2=A0My test repo went from ~=
-17m user
-> time, to ~2.5s.
-> Packing still make things much faster of course.
+ - p4CmdList's stdin argument can now be a list.
 
-Can we perhaps also have some tests to prevent this from happening agai=
-n?
+ - Getting rid of the string option entirely is very hard; there are
+   places where currently git-p4 creates a pipeline.
 
---=20
-Cheers,
+ - I wonder if verbose should actually be enabled for all the test
+   cases?
 
-Sverre Rabbelier
+ - The $ENV{PWD} is needed now because the shell used to set that; now
+   that the shell isn't in use git-p4 has to set it.
+
+Pete - I wasn't sure whether you were saying I should rework
+my patch against next (and you would then rework your series) or
+something else. That sounds complicated though - let me know!
+
+Thanks!
+Luke
+
+Luke Diamand (1):
+  git-p4: handle files with shell metacharacters
+
+ contrib/fast-import/git-p4     |  200 ++++++++++++++++++++++++---------------
+ t/t9803-git-shell-metachars.sh |   70 ++++++++++++++
+ 2 files changed, 193 insertions(+), 77 deletions(-)
+ create mode 100755 t/t9803-git-shell-metachars.sh
+
+-- 
+1.7.6.347.g4db0d
