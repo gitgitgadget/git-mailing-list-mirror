@@ -1,67 +1,57 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Docs: git checkout --orphan: `root commit' and `branch head'
-Date: Tue, 27 Sep 2011 17:02:54 +0200
-Message-ID: <vpq39fi9gf5.fsf@bauges.imag.fr>
-References: <1316960136073-6829212.post@n2.nabble.com>
-	<1316961212.4388.5.camel@centaur.lab.cmartin.tk>
-	<7vaa9r2jii.fsf@alter.siamese.dyndns.org>
-	<1317073309.5579.9.camel@centaur.lab.cmartin.tk>
-	<e88b6e560cab4ed1937dd191b4180387-mfwitten@gmail.com>
+From: gitlist <gitlist@myword.co.uk>
+Subject: "Resetting" a repository
+Date: Tue, 27 Sep 2011 16:24:23 +0100
+Message-ID: <4E81EAA7.5030708@myword.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
-	vra5107 <venkatram.akkineni@gmail.com>, git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 27 17:03:49 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 27 17:24:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8ZCG-0006f2-QM
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 17:03:49 +0200
+	id 1R8ZWH-0008Uq-Ok
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 17:24:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751127Ab1I0PDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Sep 2011 11:03:44 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:34675 "EHLO shiva.imag.fr"
+	id S1751298Ab1I0PYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Sep 2011 11:24:25 -0400
+Received: from mail3.anu.net ([83.96.156.167]:34387 "EHLO mail3.anu.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750932Ab1I0PDn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2011 11:03:43 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p8RF0tx8031283
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 27 Sep 2011 17:00:55 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1R8ZBO-0005QO-Mz; Tue, 27 Sep 2011 17:02:54 +0200
-In-Reply-To: <e88b6e560cab4ed1937dd191b4180387-mfwitten@gmail.com> (Michael
-	Witten's message of "Tue, 27 Sep 2011 14:43:55 -0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 27 Sep 2011 17:00:55 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p8RF0tx8031283
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1317740457.44173@2e3OaQ6xPCxXZpTat6n5fA
+	id S1750926Ab1I0PYZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2011 11:24:25 -0400
+Received: from Roddie-Grants-MacBook-Pro.local (cpc3-warw13-2-0-cust132.3-2.cable.virginmedia.com [86.17.75.133])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail3.anu.net (Postfix) with ESMTP id 17538319B0E
+	for <git@vger.kernel.org>; Tue, 27 Sep 2011 17:24:39 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182243>
 
-Michael Witten <mfwitten@gmail.com> writes:
+I have a project with a test repository and a live repository (and a 
+development repository).
 
-> +	Tell git to make the next commit you make a root commit
+Over time, the test repository has had merges which were in a quite 
+different order to the live repository, so it no longer fulfills its 
+role of being pretty much like the live repository and therefore a good 
+place to test. The two have diverged too far.
 
-I'd even add 
+We've reached a point in the project when it would be good to reset the 
+test repository so that it is exactly the same as the live one. We can 
+then merge new work from the development repository.
 
-  (just like the first commit after "git init")
+I think that if I just merge the live repository into the test 
+respository it will not remove extra (non-conflicting) code. On this 
+occasion I want to remove all extra code and resolve all conflicts in 
+favour of the live repository version.
 
-at this point.
+I'd appreciate advice on the best way to do this.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks
+
+Roddie Grant
