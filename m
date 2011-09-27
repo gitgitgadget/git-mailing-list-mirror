@@ -1,79 +1,65 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Re: [PATCH] Docs: git checkout --orphan: `root commit' and `branch head'
-Date: Tue, 27 Sep 2011 22:31:17 +0100
-Organization: OPDS
-Message-ID: <DBCBE20265964ECCA5B9724DAC74D83B@PhilipOakley>
-References: <1316960136073-6829212.post@n2.nabble.com> <1316961212.4388.5.camel@centaur.lab.cmartin.tk> <7vaa9r2jii.fsf@alter.siamese.dyndns.org> <1317073309.5579.9.camel@centaur.lab.cmartin.tk> <e88b6e560cab4ed1937dd191b4180387-mfwitten@gmail.com> <4E81F080.7010905@drmicha.warpmail.net> <CAMOZ1BsvnZ7PyfjOJURX+B7vCZcYheLS4pissGvPNjEivbYXtw@mail.gmail.com> <7v39fhyk21.fsf@alter.siamese.dyndns.org> <4E823359.7080602@nextest.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Do we have a convenient way to refer to a specific commit in an
+ already filtered rev-list?
+Date: Tue, 27 Sep 2011 17:35:17 -0400
+Message-ID: <20110927213517.GB5176@sigill.intra.peff.net>
+References: <CAEvN+1jPD53-e8a31g+iz6vMB0-e2LECjouBELkBOXBV5=oGBg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="utf-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Michael Witten" <mfwitten@gmail.com>,
-	"Michael J Gruber" <git@drmicha.warpmail.net>,
-	=?utf-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
-	"vra5107" <venkatram.akkineni@gmail.com>, <git@vger.kernel.org>
-To: "Eric Raible" <raible@nextest.com>,
-	"Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 27 23:31:01 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Tzu-Jung Lee <roylee17@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 27 23:35:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8fEy-0007OC-PP
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 23:31:01 +0200
+	id 1R8fJE-00016s-Ky
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 23:35:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753391Ab1I0Va5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Sep 2011 17:30:57 -0400
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:64535 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752861Ab1I0Va4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2011 17:30:56 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgIFAFVAgk5cGntq/2dsb2JhbABBhGSFTZ1PeYFOAQQBAQUIAQEZFR4BASELAgMFAgEDFQMCAgUhAgIUAQQIEgYHFwYBEggCAQIDAYdfCqd5kWiBLIROMWAEnWqHHQ
-X-IronPort-AV: E=Sophos;i="4.68,451,1312153200"; 
-   d="scan'208";a="355988871"
-Received: from host-92-26-123-106.as13285.net (HELO PhilipOakley) ([92.26.123.106])
-  by out1.ip05ir2.opaltelecom.net with SMTP; 27 Sep 2011 22:30:54 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6109
+	id S1753577Ab1I0VfU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Sep 2011 17:35:20 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45502
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752858Ab1I0VfT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2011 17:35:19 -0400
+Received: (qmail 28649 invoked by uid 107); 27 Sep 2011 21:40:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 27 Sep 2011 17:40:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Sep 2011 17:35:17 -0400
+Content-Disposition: inline
+In-Reply-To: <CAEvN+1jPD53-e8a31g+iz6vMB0-e2LECjouBELkBOXBV5=oGBg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182266>
 
-From: "Eric Raible" <raible@nextest.com>
-> On 11:59 AM, Junio C Hamano wrote:
->> Michael Witten <mfwitten@gmail.com> writes:
->>
->>> It seems like a more logical approach would be instead for "git
->>> commit" to take a "--root" option that would create a new root commit
->>> based on the current index and then point the current branch head to
->>> the new root commit. Thus:
->>>
->>>   $ git checkout -b new_branch old_branch
->>>   $ # Manipulate or not
->>>   $ git commit --root
->>>
->>> That's how people think.
->
-> Not this person.
->
-> I like the idea but I'd rather see:
->
-> git commit --no-parent
->
-> "parent" at least appears in gitk and therefore newcomers will prob
-> have a better chance of understanding the intent w/out needing to
-> otherwise unnecessary terminology.
-> --
-I think this feels and sounds sensible.  And better located within the 
-'commit' command, rather than 'checkout --orphan' which was more obscure 
-(and difficult to find).
-Philip 
+On Sun, Sep 25, 2011 at 12:46:20AM +0800, Tzu-Jung Lee wrote:
+
+> Do we have a convenient/symbolic way to refer  to a specific commit of
+> an already filtered rev-list? For example, I'm interested in the
+> commits with some constraints:
+> 
+>     git log somepath --author=someone
+> 
+> Without gui/tui tools, I have to frequently CUT & PASTE the commit-ID
+> for further manipulation (show, cherry-pick, ...), and possibly repeat
+> the parsing couple of times if I didn't save the output. I wonder if
+> we have a convenient way to refer to the discrete commits? like
+> HEAD~4, HEAD@{3} or something magic.
+
+Use the shell:
+
+  git rev-list --author=someone HEAD >saved-query
+  git log --no-walk --stdin <saved-query
+  git cherry-pick `cat saved-query`
+
+or even:
+
+  q=`git rev-list --author=someone HEAD`
+  git log --no-walk $q
+  git cherry-pick $q
+
+-Peff
