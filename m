@@ -1,137 +1,151 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Tue, 27 Sep 2011 13:10:25 +0100
-Message-ID: <e44cba8038381a722e127fb47b8ddfe4@quantumfyre.co.uk>
-References: <4DF6A8B6.9030301@op5.se>
- <9ae990f15489d7b51a172d08e63ca458@quantumfyre.co.uk>
- <201109261539.33437.mfick@codeaurora.org>
- <201109261552.04946.mfick@codeaurora.org>
- <ece30e6a1b74bcddde5634003408f61f@quantumfyre.co.uk>
- <CAGdFq_hvR1MPF33YFcjDCzCM0iOO2zpiiePFFS4dBabu84cwTg@mail.gmail.com>
- <22f055b34840e3c64f3339f7b3dc6920@quantumfyre.co.uk>
- <4E81AE63.8040008@alum.mit.edu>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [RFC/PATCHv2] git-p4: handle files with shell metacharacters
+Date: Tue, 27 Sep 2011 09:03:34 -0400
+Message-ID: <20110927130334.GA24327@arf.padd.com>
+References: <20110926214758.GB3433@arf.padd.com>
+ <1317112836-14135-1-git-send-email-luke@diamand.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="=_74ce99a6546b2474fc2b4b072b528f18"
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Martin Fick <mfick@codeaurora.org>, <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Michael Barr <davidbarr@google.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Sep 27 14:10:35 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, vitor.hda@gmail.com
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Tue Sep 27 15:03:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8WUc-0005Cr-2W
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 14:10:34 +0200
+	id 1R8XK8-0005Ih-PM
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Sep 2011 15:03:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753686Ab1I0MK3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Sep 2011 08:10:29 -0400
-Received: from neutrino.quantumfyre.co.uk ([93.93.128.23]:60870 "EHLO
-	neutrino.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753539Ab1I0MK2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2011 08:10:28 -0400
-Received: from reaper.quantumfyre.co.uk (quantumfyre-1-pt.tunnel.tserv5.lon1.ipv6.he.net [IPv6:2001:470:1f08:1724::2])
-	by neutrino.quantumfyre.co.uk (Postfix) with ESMTP id 78B79C060C;
-	Tue, 27 Sep 2011 13:10:27 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 5879336A831;
-	Tue, 27 Sep 2011 13:10:27 +0100 (BST)
-X-Virus-Scanned: amavisd-new at reaper
-Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
-	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id mQ5DSgBKLfVp; Tue, 27 Sep 2011 13:10:26 +0100 (BST)
-Received: from webmail.quantumfyre.co.uk (reaper.quantumfyre.co.uk [192.168.0.2])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id CE76635F60F;
-	Tue, 27 Sep 2011 13:10:25 +0100 (BST)
-In-Reply-To: <4E81AE63.8040008@alum.mit.edu>
-X-Sender: julian@quantumfyre.co.uk
-User-Agent: Roundcube Webmail/0.5.3
+	id S1752858Ab1I0NDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Sep 2011 09:03:44 -0400
+Received: from honk.padd.com ([74.3.171.149]:54390 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751609Ab1I0NDn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2011 09:03:43 -0400
+Received: from arf.padd.com (unknown [50.55.131.180])
+	by honk.padd.com (Postfix) with ESMTPSA id 6E08BE10;
+	Tue, 27 Sep 2011 06:03:42 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id A751C313B4; Tue, 27 Sep 2011 09:03:34 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <1317112836-14135-1-git-send-email-luke@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182237>
 
---=_74ce99a6546b2474fc2b4b072b528f18
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
+luke@diamand.org wrote on Tue, 27 Sep 2011 09:40 +0100:
+> Updated git-p4 changes incorporating Pete's comments.
+> 
+>  - p4CmdList's stdin argument can now be a list.
 
-On Tue, 27 Sep 2011 13:07:15 +0200, Michael Haggerty wrote:
-> On 09/27/2011 11:01 AM, Julian Phillips wrote:
->> It has to be hot-cache, otherwise time taken to read the refs from 
->> disk
->> will mean that it is always slow.  On my Mac it seems to _always_ be
->> slow reading the refs from disk, so even the "fast" case still takes 
->> ~17m.
->
-> This case should be helped by lazy-loading of loose references, which 
-> I
-> am working on.  So if you develop some benchmarking code, it would 
-> help
-> me with my work.
+I think this fits in with the rest of the patch and can stay.
 
-The attached script creates the repo structure I was testing with ...
+>  - Getting rid of the string option entirely is very hard; there are
+>    places where currently git-p4 creates a pipeline.
 
-If you create a repo with 100k refs it takes quite a while to read the 
-refs from disk.  If you are lazy-loading then it should take practically 
-no time, since the only interesting ref is refs/heads/master.
+Yeah, thanks for checking though.  Best to leave it consistent
+like you did.
 
-The following is the hot-cache timing for "./refs-stress c 40000", with 
-the sorting patch applied (wasn't prepared to wait for numbers with 100k 
-refs).
+>  - I wonder if verbose should actually be enabled for all the test
+>    cases?
 
-jp3@rayne: refs>(cd c; time ~/misc/git/git/git branch)
-* master
+It is way too verbose, even for test, but I see the argument.
+One easy place to change it would be in the definition in
+t/lib-git-p4.sh.  You could do this by hand when testing the
+tests perhaps.
 
-real    0m0.885s
-user    0m0.161s
-sys     0m0.722s
+>  - The $ENV{PWD} is needed now because the shell used to set that; now
+>    that the shell isn't in use git-p4 has to set it.
+> 
+> Pete - I wasn't sure whether you were saying I should rework
+> my patch against next (and you would then rework your series) or
+> something else. That sounds complicated though - let me know!
 
-After doing "rm -rf c/.git/refs/changes/*", I get:
+If you don't mind, I'll just queue it up with the utf16 and
+test-refactor stuff I have, and send it all to Junio post-1.7.7.
+Here's how I plan to adjust your tests, given the feedback that
+Junio gave earlier and from reading other tests in t/.
 
-jp3@rayne: refs>(cd c; time ~/misc/git/git/git branch)
-* master
+		-- Pete
 
-real    0m0.004s
-user    0m0.001s
-sys     0m0.002s
 
+-----------8<------------------
+From 6b4bd671df338210ffd0348358420f0feb6f35c0 Mon Sep 17 00:00:00 2001
+From: Pete Wyckoff <pw@padd.com>
+Date: Tue, 27 Sep 2011 08:53:25 -0400
+Subject: [PATCH] git-p4 t9803: align syntax with other tests
+
+
+Signed-off-by: Pete Wyckoff <pw@padd.com>
+---
+ t/t9803-git-shell-metachars.sh |   30 ++++++++++++------------------
+ 1 files changed, 12 insertions(+), 18 deletions(-)
+
+diff --git a/t/t9803-git-shell-metachars.sh b/t/t9803-git-shell-metachars.sh
+index c166603..6cf4298 100755
+--- a/t/t9803-git-shell-metachars.sh
++++ b/t/t9803-git-shell-metachars.sh
+@@ -5,9 +5,7 @@ test_description='git-p4 transparency to shell metachars in filenames'
+ . ./lib-git-p4.sh
+ 
+ test_expect_success 'start p4d' '
+-	kill_p4d || : &&
+-	start_p4d &&
+-	cd "$TRASH_DIRECTORY"
++	start_p4d
+ '
+ 
+ test_expect_success 'init depot' '
+@@ -30,25 +28,18 @@ test_expect_success 'shell metachars in filenames' '
+ 		echo f2 >"file with spaces" &&
+ 		git add "file with spaces" &&
+ 		P4EDITOR=touch git commit -m "add files" &&
+-		"$GITP4" submit --verbose &&
++		"$GITP4" submit
++	) &&
++	(
+ 		cd "$cli" &&
+ 		p4 sync ... &&
+-		ls -l "file with spaces" &&
+-		ls -l "foo\$bar"
++		test -e "file with spaces" &&
++		test -e "foo\$bar"
+ 	)
+ '
+ 
+-check_missing () {
+-	for i in $*; do
+-		if [ -f $i ]; then
+-			echo $i found but should be missing 1>&2
+-			exit 1
+-		fi
+-	done
+-}
+-
+ test_expect_success 'deleting with shell metachars' '
+-	"$GITP4" clone --dest="$git" --verbose //depot &&
++	"$GITP4" clone --dest="$git" //depot &&
+ 	test_when_finished cleanup_git &&
+ 	(
+ 		cd "$git" &&
+@@ -56,10 +47,13 @@ test_expect_success 'deleting with shell metachars' '
+ 		git rm foo\$bar &&
+ 		git rm file\ with\ spaces &&
+ 		P4EDITOR=touch git commit -m "remove files" &&
+-		"$GITP4" submit --verbose
++		"$GITP4" submit
++	) &&
++	(
+ 		cd "$cli" &&
+ 		p4 sync ... &&
+-		check_missing "file with spaces" foo\$bar
++		test ! -e "file with spaces" &&
++		test ! -e foo\$bar
+ 	)
+ '
+ 
 -- 
-Julian
---=_74ce99a6546b2474fc2b4b072b528f18
-Content-Transfer-Encoding: base64
-Content-Type: text/x-java;
- name=refs-stress
-Content-Disposition: attachment;
- filename=refs-stress
-
-IyEvdXNyL2Jpbi9lbnYgcHl0aG9uCgppbXBvcnQgb3MKaW1wb3J0IHJhbmRvbQppbXBvcnQgc3Vi
-cHJvY2VzcwppbXBvcnQgc3lzCgpkZWYgZGllKG1zZyk6CiAgICBwcmludCA+PiBzeXMuc3RkZXJy
-LCBtc2cKICAgIHN5cy5leGl0KDEpCgpkZWYgbmV3X3JlZihhLCBiLCBjb21taXQpOgogICAgZCA9
-ICIuZ2l0L3JlZnMvY2hhbmdlcy8lZC8lZCIgJSAoYSwgYikKICAgIGlmIG5vdCBvcy5wYXRoLmV4
-aXN0cyhkKToKICAgICAgICBvcy5tYWtlZGlycyhkKQogICAgZSA9IDEKICAgIHAgPSAiJXMvJWQi
-ICUgKGQsIGUpCiAgICB3aGlsZSBvcy5wYXRoLmV4aXN0cyhwKToKICAgICAgICBlICs9IDEKICAg
-ICAgICBwID0gIiVzLyVkIiAlIChkLCBlKQogICAgZiA9IG9wZW4ocCwgInciKQogICAgZi53cml0
-ZShjb21taXQpCiAgICBmLmNsb3NlKCkKCmRlZiBtYWtlX3JlZnMoY291bnQsIGNvbW1pdCk6CiAg
-ICB3aGlsZSBjb3VudCA+IDA6CiAgICAgICAgc3lzLnN0ZG91dC53cml0ZSgibGVmdDogJWQlc1xy
-IiAlIChjb3VudCwgIiAiICogMzApKQogICAgICAgIGEgPSByYW5kb20ucmFuZHJhbmdlKDEwLCAz
-MCkKICAgICAgICBiID0gcmFuZG9tLnJhbmRyYW5nZSgxMDAwMCwgNTAwMDApCiAgICAgICAgbmV3
-X3JlZihhLCBiLCBjb21taXQpCiAgICAgICAgY291bnQgLT0gMQogICAgcHJpbnQgInJlZnMgY29t
-cGxldGUiCgpkZWYgbWFpbigpOgogICAgaWYgbGVuKHN5cy5hcmd2KSAhPSAzOgogICAgICAgIGRp
-ZSgidXNhZ2U6ICVzIDxuYW1lPiA8cmVmIGNvdW50PiIgJSBzeXMuYXJndlswXSkKCiAgICBfLCBu
-YW1lLCByZWZzID0gc3lzLmFyZ3YKCiAgICBvcy5ta2RpcihuYW1lKQogICAgb3MuY2hkaXIobmFt
-ZSkKCiAgICBpZiBzdWJwcm9jZXNzLmNhbGwoWyJnaXQiLCAiaW5pdCJdKSAhPSAwOgogICAgICAg
-IGRpZSgiZmFpbGVkIHRvIGluaXQgcmVwbyIpCgogICAgZiA9IG9wZW4oImZvb2Jhci50eHQiLCAi
-dyIpCiAgICBmLndyaXRlKCIlczogJXMgcmVmc1xuIiAlIChuYW1lLCByZWZzKSkKICAgIGYuY2xv
-c2UoKQoKICAgIGlmIHN1YnByb2Nlc3MuY2FsbChbImdpdCIsICJhZGQiLCAiZm9vYmFyLnR4dCJd
-KSAhPSAwOgogICAgICAgIGRpZSgiZmFpbGVkIHRvIGFkZCBmb29iYXIudHh0IikKCiAgICBpZiBz
-dWJwcm9jZXNzLmNhbGwoWyJnaXQiLCAiY29tbWl0IiwgIi1tIiwgImluaXRhbCBjb21taXQiXSkg
-IT0gMDoKICAgICAgICBkaWUoImZhaWxlZCB0byBjcmVhdGUgaW5pdGlhbCBjb21taXQiKQoKICAg
-IGNvbW1pdCA9IHN1YnByb2Nlc3MuY2hlY2tfb3V0cHV0KFsiZ2l0IiwgInNob3ctcmVmIiwgIi1z
-IiwgIm1hc3RlciJdKS5zdHJpcCgpCgogICAgbWFrZV9yZWZzKGludChyZWZzKSwgY29tbWl0KQoK
-aWYgX19uYW1lX18gPT0gIl9fbWFpbl9fIjoKICAgIG1haW4oKQo=
---=_74ce99a6546b2474fc2b4b072b528f18--
+1.7.6.3
