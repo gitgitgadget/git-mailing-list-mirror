@@ -1,88 +1,88 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] Docs: git checkout --orphan: `root commit' and `branch
- head'
-Date: Wed, 28 Sep 2011 10:00:43 +0200
-Message-ID: <4E82D42B.2000103@drmicha.warpmail.net>
-References: <1316960136073-6829212.post@n2.nabble.com> <1316961212.4388.5.camel@centaur.lab.cmartin.tk> <7vaa9r2jii.fsf@alter.siamese.dyndns.org> <1317073309.5579.9.camel@centaur.lab.cmartin.tk> <e88b6e560cab4ed1937dd191b4180387-mfwitten@gmail.com> <4E81F080.7010905@drmicha.warpmail.net> <CAMOZ1BsvnZ7PyfjOJURX+B7vCZcYheLS4pissGvPNjEivbYXtw@mail.gmail.com> <7v39fhyk21.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Annotated branch =?UTF-8?B?4omIIGFubm90YXRlZCB0YWc/?=
+Date: Wed, 28 Sep 2011 10:04:59 +0200
+Message-ID: <4E82D52B.9020709@alum.mit.edu>
+References: <7vy5xi4y3m.fsf@alter.siamese.dyndns.org> <1316729362-7714-1-git-send-email-gitster@pobox.com> <4E7C49CF.60508@drmicha.warpmail.net> <20110923201824.GA27999@sigill.intra.peff.net> <4E7DEC4A.3050900@drmicha.warpmail.net> <20110927215843.GE5176@sigill.intra.peff.net> <4E82A13B.2080509@alum.mit.edu> <CAH5451nT2Z6mBPkK4B2EgJAoMpf32bcc=7UqhTDnsw4-_hJwJw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Michael Witten <mfwitten@gmail.com>,
-	=?UTF-8?B?Q2FybG9zIE1hcnTDrW4gTmk=?= =?UTF-8?B?ZXRv?= 
-	<cmn@elego.de>, vra5107 <venkatram.akkineni@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 28 10:00:59 2011
+Cc: Jeff King <peff@peff.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 28 10:05:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8p4c-0005f8-Ia
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 10:00:58 +0200
+	id 1R8p8s-0007Pr-Qq
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 10:05:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753825Ab1I1IAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Sep 2011 04:00:48 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:47228 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753397Ab1I1IAr (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Sep 2011 04:00:47 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 76D3528F87;
-	Wed, 28 Sep 2011 04:00:46 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute4.internal (MEProxy); Wed, 28 Sep 2011 04:00:46 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=eRfrHQYwEEmgX8I+NaRLiL
-	sRq8o=; b=q2tJoC0xAYTZGDHUc3TWnz/kPg7/qb0NRmDrhlapjTw+rI2CFxhekc
-	0Jc7ipqqdqHHkO8cXQYsDHT1wPAIs97Q8FSevRfuKoR2I0YrJ4Q7e+tAY4XyHG23
-	5cQ1xpwOe4ScB0wRrXKwWvRcnHLFL/fEfuhRXSge2pPUyj4/jreuc=
-X-Sasl-enc: u/iWLQ1KAEd11AEFZAeXbk2+7Ud5vEsLOhAyYmcbW45C 1317196846
-Received: from localhost.localdomain (p5485957E.dip0.t-ipconnect.de [84.133.149.126])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6B4D16401AB;
-	Wed, 28 Sep 2011 04:00:45 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0.2) Gecko/20110906 Thunderbird/6.0.2
-In-Reply-To: <7v39fhyk21.fsf@alter.siamese.dyndns.org>
+	id S1752268Ab1I1IFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Sep 2011 04:05:14 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:39641 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751343Ab1I1IFK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2011 04:05:10 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p8S84xoH004208
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 28 Sep 2011 10:04:59 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.21) Gecko/20110831 Lightning/1.0b2 Thunderbird/3.1.13
+In-Reply-To: <CAH5451nT2Z6mBPkK4B2EgJAoMpf32bcc=7UqhTDnsw4-_hJwJw@mail.gmail.com>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182300>
 
-Junio C Hamano venit, vidit, dixit 27.09.2011 19:25:
-> Michael Witten <mfwitten@gmail.com> writes:
-> 
->> It seems like a more logical approach would be instead for "git
->> commit" to take a "--root" option that would create a new root commit
->> based on the current index and then point the current branch head to
->> the new root commit. Thus:
+On 09/28/2011 09:12 AM, Andrew Ardill wrote:
+> On 28 September 2011 14:23, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> [snip]
 >>
->>   $ git checkout -b new_branch old_branch
->>   $ # Manipulate or not
->>   $ git commit --root
->>
->> That's how people think.
+>> [1] If the retention of annotation history were considered a
+>> requirement, the annotation object could record as a "parent" the object
+>> name of the annotation object that it is succeeding.  But I don't think
+>> that this is a good idea; it would make branches too heavyweight and
+>> every branch update would be recorded permanently, both of which are
+>> contrary to the git philosophy.
 > 
-> This may indeed be an improvement. I suspect that we'd need to think about
-> it a bit more, but it feels right (perhaps introduce this new option,
-> deprecate --orphan from the checkout, and then eventually remove it
-> sometime in 1.8.0 timeframe).
+> If this was required, a better way would be to update the parent object only
+> if the description changed. You would then have a nice little DAG that
+> records changes to the description and could be used in 3-way merges etc.
+> You would of course get lots of 'dead' annotation objects pointing to the
+> previous change, however that shouldn't be too much of an issue.
 > 
->>>>  The index and the working tree are adjusted as if you had previously run
->>>>  "git checkout <start_point>".  This allows you to start a new history
->>>> -that records a set of paths similar to <start_point> by easily running
->>>> +that records a set of paths similar to <start_point> by just running
->>>>  "git commit -a" to make the root commit.
->>>
->>> "similar" is an understatement here, maybe "as in"?
-> 
-> I do not think "as in" is an improvement. It completely ignores the
-> "Manipulate or not" part in the above, and "similar" was very much an
+> At this point, however, I ask how is an annotation object any different to
+> placing an annotation file in our repository. Perhaps there is no difference,
+> except that one is a convention and the other is provided.
 
-I do not see that part in the above. If you really "just run git commit
--a" after git branch --orphan you get the same tree.
+Yes, if history is being preserved, then the annotation objects would
+not be much different than storing a file in the repository.  But even
+then, there are differences:
 
-> attempt to say "you do not have to commit it right away, but start from
-> the state and commit a deviation of it".
+- A branch annotation would be separate from the source code and not
+appear in the working tree, which seems more appropriate for metadata.
+
+- git and other tools would know where to find the annotation instead of
+having to configure whether a particular project uses annotations and if
+so where to find them.  This would make it easier to use the annotations
+in git workflow like the generation of pull requests.
+
+- The merge rules for annotations would be different than those for
+other files.
+
+But I believe that branch annotation history should *not* be retained,
+so storing the annotations in the source tree is not even an option
+(except perhaps in another artificial branch used only for annotations).
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
