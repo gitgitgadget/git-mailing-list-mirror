@@ -1,61 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: SVN -> Git *but* with special changes
-Date: Wed, 28 Sep 2011 15:07:16 -0400
-Message-ID: <20110928190716.GD1482@sigill.intra.peff.net>
-References: <16808473.33899.1317229852319.JavaMail.root@mail.hq.genarts.com>
- <vpq62kc36kn.fsf@bauges.imag.fr>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: 6d4bb3833c3d2114d (fetch: verify we have everything we need before updating our ref) breaks fetch
+Date: Wed, 28 Sep 2011 12:12:28 -0700 (PDT)
+Message-ID: <m3y5x8o527.fsf@localhost.localdomain>
+References: <1317225869.30267.18.camel@bee.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stephen Bash <bash@genarts.com>,
-	Abscissa <bus_nabble_git@semitwist.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Sep 28 21:07:25 2011
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?iso-8859-15?q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Wed Sep 28 21:12:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8zTZ-0003hl-AN
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 21:07:25 +0200
+	id 1R8zYa-00063t-Hs
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 21:12:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753554Ab1I1THU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Sep 2011 15:07:20 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47533
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751554Ab1I1THT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2011 15:07:19 -0400
-Received: (qmail 7925 invoked by uid 107); 28 Sep 2011 19:12:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Sep 2011 15:12:22 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Sep 2011 15:07:16 -0400
-Content-Disposition: inline
-In-Reply-To: <vpq62kc36kn.fsf@bauges.imag.fr>
+	id S1753435Ab1I1TMc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Sep 2011 15:12:32 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:39605 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751990Ab1I1TMb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Sep 2011 15:12:31 -0400
+Received: by eya28 with SMTP id 28so5950786eya.19
+        for <git@vger.kernel.org>; Wed, 28 Sep 2011 12:12:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=+d9iIWEf4jASRGT7j1Qzo5BmZV+Ke8s4xNgt2D3PolM=;
+        b=xUB1q+zL/9FQCmSiz4FaBPd8HTGaAh5RuDN5AZu/7kG+vHmcMamZEzhKItShMT/Ucm
+         Sw/7iuIvJUZYM8/5T+i0VGxF7ed1XztPIhQ/D8AqcU3CsW/5v7y8YV9TbD2S+V+ISnlm
+         g3fnyvb/1MtOlSL24NgEjMEHbS64jYkUjv5ng=
+Received: by 10.223.35.202 with SMTP id q10mr2171006fad.138.1317237150229;
+        Wed, 28 Sep 2011 12:12:30 -0700 (PDT)
+Received: from localhost.localdomain (abvu115.neoplus.adsl.tpnet.pl. [83.8.218.115])
+        by mx.google.com with ESMTPS id f10sm28369477fac.14.2011.09.28.12.12.28
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 28 Sep 2011 12:12:28 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p8SJBr8r008107;
+	Wed, 28 Sep 2011 21:12:04 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p8SJBT9U008090;
+	Wed, 28 Sep 2011 21:11:29 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1317225869.30267.18.camel@bee.lab.cmartin.tk>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182360>
 
-On Wed, Sep 28, 2011 at 07:44:24PM +0200, Matthieu Moy wrote:
+Carlos Mart=EDn Nieto <cmn@elego.de> writes:
 
-> > I'd eliminate these on the SVN side before converting to Git. If you
-> > have svnadmin access to the SVN repo svnadmin dump, svndumpfilter,
-> > svnadmin load is a pretty easy process.
-> 
-> Otherwise, you can do it on the Git side with:
-> 
->   git filter-branch --tree-filter 'rm -f some-large-blob'
+> Hello,
+>=20
+> Whilst trying to do some work related to fetch, I came across a
+> regression in the 'next' branch. Bisecting gave me this commit as
+> breaking point (and I tried with the parent and there it worked). Whe=
+n
+> doing 'git fetch', rev-list will complain about usage, and fetch will
+> say that we didn't receive enough, even though earlier versions of gi=
+t
+> have no problems. This fails both on github and on git.or.cz and for =
+git
+> and http transports:
+>=20
+> $ ./git-fetch git://repo.or.cz/git
 
-It's much more efficient to do:
+Have you tried
 
-    git filter-branch --index-filter \
-      'git rm --cached --ignore-unmatch some-large-blob'
+  $ ./git fetch git://repo.or.cz/git
 
-which avoids checking out the large files over and over[1], just to
-delete them. Of course, it's even more efficient not to import them from
-svn in the first place. :)
+?
 
--Peff
-
-[1] This is straight from the filter-branch manpage, btw.
+--=20
+Jakub Nar=EAbski
