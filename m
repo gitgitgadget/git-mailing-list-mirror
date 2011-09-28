@@ -1,124 +1,111 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Wed, 28 Sep 2011 16:10:48 -0600
-Organization: CAF
-Message-ID: <201109281610.49322.mfick@codeaurora.org>
-References: <4DF6A8B6.9030301@op5.se> <CAP8UFD3TWQHU0wLPuxMDnc3bRSz90Yd+yDMBe03kofeo-nr7yA@mail.gmail.com> <201109281338.04378.mfick@codeaurora.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Lack of detached signatures
+Date: Wed, 28 Sep 2011 18:25:43 -0400
+Message-ID: <20110928222542.GA18120@sigill.intra.peff.net>
+References: <alpine.LNX.2.00.1109271742460.24832@bruno>
+ <7vty7xttxh.fsf@alter.siamese.dyndns.org>
+ <CAMOZ1Bs2HW6e3V6sayVSm0NhC=0e5129ZR8YSGuZPnJw9H9TEA@mail.gmail.com>
+ <4B2793BF110AAB47AB0EE7B90897038516F63A7C@ORSMSX101.amr.corp.intel.com>
+ <1317195719.30267.4.camel@bee.lab.cmartin.tk>
+ <alpine.LNX.2.00.1109280555460.25187@bruno>
+ <7v1uv01uqm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Julian Phillips <julian@quantumfyre.co.uk>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 29 00:10:58 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Joseph Parmelee <jparmele@wildbear.com>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	"Olsen, Alan R" <alan.r.olsen@intel.com>,
+	Michael Witten <mfwitten@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 29 00:25:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R92LB-00069B-EE
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 00:10:57 +0200
+	id 1R92Zb-0003lR-6q
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 00:25:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752553Ab1I1WKx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Sep 2011 18:10:53 -0400
-Received: from wolverine01.qualcomm.com ([199.106.114.254]:16565 "EHLO
-	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751485Ab1I1WKw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2011 18:10:52 -0400
-X-IronPort-AV: E=McAfee;i="5400,1158,6483"; a="123269984"
-Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
-  by wolverine01.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 28 Sep 2011 15:10:52 -0700
-Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 061A310004BE;
-	Wed, 28 Sep 2011 15:10:52 -0700 (PDT)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-28-generic; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <201109281338.04378.mfick@codeaurora.org>
+	id S1753835Ab1I1WZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Sep 2011 18:25:46 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47663
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752805Ab1I1WZq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2011 18:25:46 -0400
+Received: (qmail 9962 invoked by uid 107); 28 Sep 2011 22:30:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Sep 2011 18:30:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Sep 2011 18:25:43 -0400
+Content-Disposition: inline
+In-Reply-To: <7v1uv01uqm.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182368>
 
-On Wednesday, September 28, 2011 01:38:04 pm Martin Fick 
-wrote:
-> On Monday, September 26, 2011 06:41:04 am Christian
-> Couder
-> 
-> wrote:
-> > On Sun, Sep 25, 2011 at 10:43 PM, Martin Fick
-> 
-> <mfick@codeaurora.org> wrote:
-> ...
-> 
-> > >  git checkout
-> > > 
-> > > can also take rather long periods of time > 3 mins
-> > > when run on a repo with ~100K refs.
-> 
-> ...
-> 
-> > >  So, I bisected this issue also, and it seems that
-> > >  the
-> > > 
-> > > "offending" commit is
-> 
-> ...
-> 
-> > > commit 680955702990c1d4bfb3c6feed6ae9c6cb5c3c07
-> > > Author: Christian Couder <chriscool@tuxfamily.org>
-> > > 
-> > >    replace_object: add mechanism to replace objects
-> > > 
-> > > found in "refs/replace/"
-> 
-> ...
-> 
-> > I don't think there is an obvious problem with it, but
-> > it would be nice if you could dig a bit deeper.
-> > 
-> > The first thing that could take a lot of time is the
-> > call to for_each_replace_ref() in this function:
-> > 
-> > +static void prepare_replace_object(void)
-> > +{
-> > +       static int replace_object_prepared;
-> > +
-> > +       if (replace_object_prepared)
-> > +               return;
-> > +
-> > +       for_each_replace_ref(register_replace_ref,
-> > NULL); +       replace_object_prepared = 1;
-> > +}
-> 
-> The time was actually spent in for_each_replace_ref()
-> which calls get_loose_refs() which has the recursive bug
-> that Julian Phillips fixed 2 days ago.  Good to see that
-> this fix helps other use cases too.
-> 
-> So with that bug fixed, the thing taking the most time
-> now for a git checkout with ~100K refs seems to be the
-> orphan check as Thomas predicted.  The strange part with
-> this, is that the orphan check seems to take only about
-> ~20s in the repo where the refs aren't packed.  However,
-> in the repo where they are packed, this check takes at
-> least 5min!  This seems a bit unusual, doesn't it?  Is
-> the filesystem that much better at indexing refs than
-> git's pack mechanism? Seems unlikely, the unpacked refs
-> take 312M in the FS, the packed ones only take about
-> 4.3M.  I suspect their is something else unexpected
-> going on here in the packed ref case.
-> 
-> Any thoughts?  I will dig deeper...
+On Wed, Sep 28, 2011 at 09:45:21AM -0700, Junio C Hamano wrote:
 
-I think the problem is that resolve_ref() walks a linked 
-list of searching for the packed ref.  Does this mean that 
-packed refs are not indexed at all?
-
+> The world is not so blank-and-white. Trust is ultimately among humans. If
+> this message is not from the real Junio, don't you think you will hear
+> something like "No, that c6ba05... is forgery, please don't use it!" from
+> him, when he finds this message on the Git mailing list?  If he does not
+> exercise diligence to even do that much, does he deserve your trust in the
+> first place?
 > 
-> -Martin
+> GPG does add security (if you have the key) but you can do pretty well
+> even without it in practice.
 
--- 
-Employee of Qualcomm Innovation Center, Inc. which is a 
-member of Code Aurora Forum
+Your suggestion above is something like an audit trail. It doesn't
+prevent all mischief from happening, but after it happens and is
+noticed, we can do some analysis, figuring out what happened and how to
+clean up. Banks do this all the time with transactions.
+
+At the same time, banks don't rely solely on an audit trail. They also
+have up-front mechanisms, like passwords and ATM secrets, that help
+prevent mischief from happening in the first place. And when they fail,
+we fall back to the audit trail.
+
+So having preventative mechanisms and audit mechanisms is not an
+either-or situation. They complement each other; the strengths of one
+can help when the other fails.
+
+In this case, I think signed tarballs would be a nice complement to the
+natural human audit trail. It can stop some attacks early, without
+having to worry about the effort of analyzing and cleaning up after the
+fact. Can the signature be wrong, or be checked improperly? Of course.
+If you realize your machine has been hacked and your key stolen, then
+you let everybody know and we fall back to auditing what has already
+happened.
+
+Each mechanism you put in place has a cost, of course. And it's worth
+thinking about whether that cost is worthwhile. But it really is as easy
+as running "gpg --detach-sign" when you upload a release, isn't it? You
+already do something similar with the signed tags. So the cost of the
+mechanism is quite low.
+
+> I do not think that is true at all. Developers just dropped *.tar.gz on a
+> 'master' machine, and left the rest to a cron job that reflates the
+> tarball into *.tar.bz2, sign both using a GPG key, and mirror them to the
+> public-facing machines 'www'.
+> 
+> Somebody who had access to the 'master' machine could add a new tarball
+> and have it go thru the same exact process, getting signed by the cron.
+
+Right. In theory the master machine is harder to hack than the public
+facing mirrors, but in this case it was not. Every link in the trust
+chain introduces new possibilities for failure.
+
+Given that git releases are all made by you, why not just sign them
+locally with the same key you use to sign the release tags? It does mean
+you have to generate and upload the .bz2 yourself[1], but is that really
+that big a deal?
+
+-Peff
+
+[1] This is a minor nit, and probably not worth breaking away from the
+way the rest of the world does it, but it is somewhat silly to sign the
+compressed data. I couldn't care less about the exact bytes in the
+compressed version; what I care about is the actual tar file. The
+compression is just a transport.
