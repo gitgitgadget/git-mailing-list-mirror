@@ -1,105 +1,106 @@
-From: Georg-Johann Lay <avr@gjlay.de>
-Subject: Re: subversion-perl missing
-Date: Wed, 28 Sep 2011 17:54:38 +0200
-Message-ID: <4E83433E.9000702@gjlay.de>
-References: <4E8066AB.7000208@gjlay.de> <m3k48vp6l7.fsf@localhost.localdomain> <4E82F18E.9080304@gjlay.de> <201109281459.31689.jnareb@gmail.com>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: 6d4bb3833c3d2114d (fetch: verify we have everything we need before
+ updating our ref) breaks fetch
+Date: Wed, 28 Sep 2011 18:04:27 +0200
+Message-ID: <1317225869.30267.18.camel@bee.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-4
-Content-Transfer-Encoding: 7bit
-Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 28 17:54:53 2011
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-ORH2faZWar+50fZ5Rv8s"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 28 18:04:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8wTD-0002hZ-Ic
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 17:54:51 +0200
+	id 1R8wce-0007hu-9v
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 18:04:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755057Ab1I1Pyq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Sep 2011 11:54:46 -0400
-Received: from mo-p00-ob.rzone.de ([81.169.146.162]:20236 "EHLO
-	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755053Ab1I1Pyq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2011 11:54:46 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1317225284; l=1621;
-	s=domk; d=gjlay.de;
-	h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:
-	Subject:CC:To:MIME-Version:From:Date:X-RZG-CLASS-ID:X-RZG-AUTH;
-	bh=ICmUIKZwduKaBS8UG5WXTHy1Djg=;
-	b=lhJ6PU2M7gmhpjUODsxmH1ucW3JVvUa7r2W62QjjuV4byASinS/4UdgpEFl5Km1ynw3
-	Cbgs1pwFXUgYyRGf7BfbJfuqm7Vt1SuHt5uLQt6J9Hmo2XssPJFn77/jn7M/4vOwPrss7
-	slGXwaDCxEGvlIdfZTkzKjjyLRngW4rF/wQ=
-X-RZG-AUTH: :LXoWVUeid/7A29J/hMvvT2k715jHQaJercGObUOFkj18odoYNahU4Q==
-X-RZG-CLASS-ID: mo00
-Received: from [192.168.0.22]
-	(business-188-111-022-002.static.arcor-ip.net [188.111.22.2])
-	by smtp.strato.de (klopstock mo58) (RZmta 26.7)
-	with ESMTPA id p013ban8SFnrRe ; Wed, 28 Sep 2011 17:54:38 +0200 (MEST)
-User-Agent: Thunderbird 2.0.0.24 (X11/20100302)
-In-Reply-To: <201109281459.31689.jnareb@gmail.com>
+	id S1754836Ab1I1QEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Sep 2011 12:04:31 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:54365 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753168Ab1I1QEa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2011 12:04:30 -0400
+Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id BF59C46180;
+	Wed, 28 Sep 2011 18:04:07 +0200 (CEST)
+X-Mailer: Evolution 3.0.3- 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182339>
 
-Jakub Narebski schrieb:
-> On Wed, 28 Sep 2011, Georg-Johann Lay wrote:
->> As far as I understand, alien-svn comes with SVN sources which it uses for its
->> own perl packages to provide svn stuff to perl, but don't install/build new svn
->> version.
-> 
-> Step by step instruction.
-> 
-> 1. Follow instructions on local::lib manpage
->    http://search.cpan.org/perldoc?local::lib
-> 
->    c.f. http://perl.jonallen.info/writing/articles/install-perl-modules-without-root
-> 
-> 2. (Optional). Follow instructions on cpanm manpage, e.g. http://cpanmin.us
->    or http://search.cpan.org/perldoc?cpanm
-> 
-> 3. Install Alien::SVN from CPAN using 'cpan' client or 'cpanm', e.g.
-> 
->    $ cpanm Alien::SVN
-> 
-> Now you are able to install Perl modules in your home directory.
 
-Thank you very much, I never would have found the way through all that jungle
-alone!
+--=-ORH2faZWar+50fZ5Rv8s
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-After steps 1-3 succeeded (as far as I can tell) I can run git svn (but not
-git-svn) now.
+Hello,
 
-With an SVN repo I can do
+Whilst trying to do some work related to fetch, I came across a
+regression in the 'next' branch. Bisecting gave me this commit as
+breaking point (and I tried with the parent and there it worked). When
+doing 'git fetch', rev-list will complain about usage, and fetch will
+say that we didn't receive enough, even though earlier versions of git
+have no problems. This fails both on github and on git.or.cz and for git
+and http transports:
 
-$ svn list http://repo/path
+$ ./git-fetch git://repo.or.cz/git
+usage: git rev-list [OPTION] <commit-id>... [ -- paths... ]
+  limiting output:
+    --max-count=3D<n>
+    --max-age=3D<epoch>
+    --min-age=3D<epoch>
+    --sparse
+    --no-merges
+    --min-parents=3D<n>
+    --no-min-parents
+    --max-parents=3D<n>
+    --no-max-parents
+    --remove-empty
+    --all
+    --branches
+    --tags
+    --remotes
+    --stdin
+    --quiet
+  ordering output:
+    --topo-order
+    --date-order
+    --reverse
+  formatting output:
+    --parents
+    --children
+    --objects | --objects-edge
+    --unpacked
+    --header | --pretty
+    --abbrev=3D<n> | --no-abbrev
+    --abbrev-commit
+    --left-right
+  special purpose:
+    --bisect
+    --bisect-vars
+    --bisect-all
+error: git://repo.or.cz/git did not send all necessary objects
 
-archive/
-branches/
-tags/
-trunk/
+--=-ORH2faZWar+50fZ5Rv8s
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
 
-and
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-$ svn checkout http://repo/path
+iQEcBAABAgAGBQJOg0WLAAoJEHKRP1jG7ZzT1SsH/A8Fz5BfVUcj/0SEmK0TZ2UL
+qXpIymk5lBsigK8VS4n3PaPnpwc8Ut4tNmngAGtShkSv93bYqV/wzcDt9MYCedbg
+Upz4gk2Uq0FFXx/+s+nBgKYQFRHX8ryjjONp6DTTEiiB2RccP5UyoRVAck1PjEPN
+glUy3lOunRMNtaAwXmsi169K9wBOQ7KngKtjSFKiVNBS5Y1GUNNZr3+LsSO1bCTv
+UAGVG/aJtdsT6k8SmicTvTiKkjDwF/DnMX+fd/rVfcZiJXZt6b0E/fQntRCegi4K
+JQdTf3K0LWIdRP2C92R9IRIigJlus75IcBYxyrLhxJdMBtR8vaZuJGV3tLyUtQQ=
+=PvwE
+-----END PGP SIGNATURE-----
 
-but git svn complains:
-
-$ git svn clone -s --username=georg http://repo/path
-
-Initialized empty Git repository in /local/georg/path/.git/
-Bad URL passed to RA layer: Unrecognized URL scheme for 'http://repo/path' at
-/usr/local/libexec/git-core/git-svn line 1941
-
-Does git svn not support http?
-
->From what I read in git svn --help this should suffice to checkout from SVN and
-http is mentioned explicitly in an example.
-
-So is my git-svn still broken/not functional or am I missing something from the
-docs?
-
-Johann
+--=-ORH2faZWar+50fZ5Rv8s--
