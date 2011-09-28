@@ -1,89 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFCv3 2/2] receive-pack: don't pass non-existent refs to
- post-{receive,update} hooks in push deletions
-Date: Wed, 28 Sep 2011 15:37:32 -0700
-Message-ID: <7vsjngxphv.fsf@alter.siamese.dyndns.org>
-References: <20110928153935.GA7800@myhost>
+From: Ted Ts'o <tytso@mit.edu>
+Subject: Re: Lack of detached signatures
+Date: Wed, 28 Sep 2011 19:09:58 -0400
+Message-ID: <20110928230958.GJ19250@thunk.org>
+References: <alpine.LNX.2.00.1109271742460.24832@bruno>
+ <7vty7xttxh.fsf@alter.siamese.dyndns.org>
+ <CAMOZ1Bs2HW6e3V6sayVSm0NhC=0e5129ZR8YSGuZPnJw9H9TEA@mail.gmail.com>
+ <4B2793BF110AAB47AB0EE7B90897038516F63A7C@ORSMSX101.amr.corp.intel.com>
+ <1317195719.30267.4.camel@bee.lab.cmartin.tk>
+ <alpine.LNX.2.00.1109280555460.25187@bruno>
+ <7v1uv01uqm.fsf@alter.siamese.dyndns.org>
+ <20110928222542.GA18120@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sitaram Chamarty <sitaramc@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Pang Yan Han <pangyanhan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 29 01:34:30 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Joseph Parmelee <jparmele@wildbear.com>,
+	Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
+	"Olsen, Alan R" <alan.r.olsen@intel.com>,
+	Michael Witten <mfwitten@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 29 02:08:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R93e1-00061s-8d
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 01:34:29 +0200
+	id 1R94Az-0000gj-Rk
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 02:08:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754263Ab1I1XeY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Sep 2011 19:34:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50875 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755356Ab1I1Whf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2011 18:37:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7E27639E;
-	Wed, 28 Sep 2011 18:37:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=I/h8BSbyo1FSCq5lGzoiJWxUAtU=; b=s+ku0t
-	ULpdSHXYudX1BUZXCwG6lmgFe6tSddrQQa1ps6lRy3xfKvxZ8RlIHU/lxwBnYZzA
-	TcTqZ7kv5hvfEhid2dN4sEqq1oafmzv66/j3sF54xTLO+dFxatg13T/yZxKoJo5/
-	WslVJlGnKCo2pbDYSlFHasywqjLpmoU5vNou4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xLEqrKaBySpG8WwlWOej3DfSP8nJCE0P
-	/7PefGbTOYSZtOYz+8jn4L5ZgsBxu4DJZMW42eLV9RwE3S/3wJ5jS+Mc+a3DsUqw
-	t8zvaEVywus+odODzaIrAAPBxhruJofYaPMbcCBqwjfPgvQkB/BAvtf1xSS0Ic/K
-	JWIxKZmBI2c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD7B0639D;
-	Wed, 28 Sep 2011 18:37:34 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5AAEC639C; Wed, 28 Sep 2011
- 18:37:34 -0400 (EDT)
-In-Reply-To: <20110928153935.GA7800@myhost> (Pang Yan Han's message of "Wed,
- 28 Sep 2011 23:39:35 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 759CC3C2-EA22-11E0-97DD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755130Ab1I2AI3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Sep 2011 20:08:29 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:48631 "EHLO
+	test.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752051Ab1I2AI2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2011 20:08:28 -0400
+Received: from root (helo=tytso-glaptop.cam.corp.google.com)
+	by test.thunk.org with local-esmtp (Exim 4.69)
+	(envelope-from <tytso@thunk.org>)
+	id 1R94Al-0002H8-Ew; Thu, 29 Sep 2011 00:08:19 +0000
+Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1R93GJ-0001VP-03; Wed, 28 Sep 2011 19:09:58 -0400
+Content-Disposition: inline
+In-Reply-To: <20110928222542.GA18120@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on test.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182375>
 
-Pang Yan Han <pangyanhan@gmail.com> writes:
+On Wed, Sep 28, 2011 at 06:25:43PM -0400, Jeff King wrote:
+> [1] This is a minor nit, and probably not worth breaking away from the
+> way the rest of the world does it, but it is somewhat silly to sign the
+> compressed data. I couldn't care less about the exact bytes in the
+> compressed version; what I care about is the actual tar file. The
+> compression is just a transport.
 
-> +/* For invalid refs */
-> +static struct command **invalid_delete;
-> +static size_t invalid_delete_nr;
-> +static size_t invalid_delete_alloc;
+The worry I have is that many users don't check the GPG checksum files
+as it is.  If they have to decompress the file, and then run gpg to
+check the checksum, they might never get around to doing it.
 
-Do you have to have these separately only to keep track of the corner case
-errors?  I would have expected that it would be more natural to mark them
-by adding a single bitfield to "struct command".
+That being said, I'm not sure I have a good solution.  One is to ship
+the file without using detached signatures, and ship a foo.tar.gz.gpg
+file, and force them to use GPG to unwrap the file before it can be
+unpacked.  But users would yell and scream if we did that...
 
-> @@ -447,6 +467,8 @@ static const char *update(struct command *cmd)
->  		if (!parse_object(old_sha1)) {
->  			rp_warning("Allowing deletion of corrupt ref.");
->  			old_sha1 = NULL;
-> +			if (!ref_exists((char *) name))
-> +				invalid_delete_append(cmd);
-
-This is not an "invalid" delete but deleting a non-existing ref.  Perhaps
-you would want to move the warning and optionally reword it as well, e.g.
-
-	if (!parse_object(old_sha1)) {
-        	old_sha1 = NULL;
-                if (ref_exists(name)) {
-			rp_warning("Allowing deletion of corrupt ref.");
-		} else {
-			rp_warning("Deleting a ref that does not exist.");
-			cmd->did_not_exist = 1;
-		}
-		...
+	       	     	   	    	   - Ted
