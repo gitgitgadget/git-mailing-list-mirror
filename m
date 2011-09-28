@@ -1,67 +1,80 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] git-send-email.perl: expand filename of aliasesfile
-Date: Wed, 28 Sep 2011 15:42:01 +0200
-Message-ID: <vpqwrcspyvq.fsf@bauges.imag.fr>
-References: <20110928131307.GB12586@laptop>
+Subject: Re: [PATCH] Docs: git checkout --orphan: `root commit' and `branch head'
+Date: Wed, 28 Sep 2011 15:45:37 +0200
+Message-ID: <vpqty7wok5a.fsf@bauges.imag.fr>
+References: <7vaa9r2jii.fsf@alter.siamese.dyndns.org>
+	<1317073309.5579.9.camel@centaur.lab.cmartin.tk>
+	<e88b6e560cab4ed1937dd191b4180387-mfwitten@gmail.com>
+	<4E81F080.7010905@drmicha.warpmail.net>
+	<CAMOZ1BsvnZ7PyfjOJURX+B7vCZcYheLS4pissGvPNjEivbYXtw@mail.gmail.com>
+	<7v39fhyk21.fsf@alter.siamese.dyndns.org>
+	<4E823359.7080602@nextest.com>
+	<DBCBE20265964ECCA5B9724DAC74D83B@PhilipOakley>
+	<20110927214213.GC5176@sigill.intra.peff.net>
+	<CAMOZ1BvzWDPQ_e3Y5H8CX4wQwL5xf3xVvZvRL3gQPcB_kCGBbw@mail.gmail.com>
+	<20110927233549.GA10434@sigill.intra.peff.net>
+	<7vpqiltsky.fsf@alter.siamese.dyndns.org>
+	<CAMOZ1BvL85xsQpZdez4VJ+dH4NoQ9RkthHY9OsmdnnaZ_tFnFg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 28 15:42:16 2011
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Philip Oakley <philipoakley@iee.org>,
+	Eric Raible <raible@nextest.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
+	vra5107 <venkatram.akkineni@gmail.com>, git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 28 15:46:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8uOs-0006As-4p
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 15:42:14 +0200
+	id 1R8uSv-0008Jf-1K
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 15:46:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754232Ab1I1NmJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Sep 2011 09:42:09 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:46740 "EHLO rominette.imag.fr"
+	id S1754265Ab1I1NqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Sep 2011 09:46:20 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:41464 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752963Ab1I1NmI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2011 09:42:08 -0400
+	id S1754132Ab1I1NqU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2011 09:46:20 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p8SDdmUD028783
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p8SDhZfO020963
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 28 Sep 2011 15:39:49 +0200
+	Wed, 28 Sep 2011 15:43:35 +0200
 Received: from bauges.imag.fr ([129.88.7.32])
 	by mail-veri.imag.fr with esmtp (Exim 4.69)
 	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1R8uOf-0000Wk-Ez; Wed, 28 Sep 2011 15:42:01 +0200
-In-Reply-To: <20110928131307.GB12586@laptop> (Cord Seele's message of "Wed, 28
-	Sep 2011 15:13:07 +0200")
+	id 1R8uSA-0000cu-37; Wed, 28 Sep 2011 15:45:38 +0200
+In-Reply-To: <CAMOZ1BvL85xsQpZdez4VJ+dH4NoQ9RkthHY9OsmdnnaZ_tFnFg@mail.gmail.com>
+	(Michael Witten's message of "Wed, 28 Sep 2011 13:40:58 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 28 Sep 2011 15:39:49 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 28 Sep 2011 15:43:36 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p8SDdmUD028783
+X-MailScanner-ID: p8SDhZfO020963
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1317821991.32694@NJOgcWvn6gdQkikjnYhVnQ
+MailScanner-NULL-Check: 1317822218.33198@xyKuWRI2EXOrTMfCr4joJQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182313>
 
-Cord Seele <cowose@googlemail.com> writes:
+Michael Witten <mfwitten@gmail.com> writes:
 
-> -		open my $fh, '<', $file or die "opening $file: $!\n";
-> +		open my $fh, '<', glob($file) or die "opening $file: $!\n";
+> Well, I think Jeff already proferred a solution. We could have:
+>
+>   git commit --no-parent
+[...]
 
-That'd be cleaner to use
+Appart from the safety objections, is the "root commit" senario common
+enough to deserve appearing in the user-interface for both "commit" and
+"checkout"?
 
-git config --path sendemail.aliasesfile
-
-to let Git do the right expansion, in a way consistant with other places
-of Git.
-
-In practice, that would imply adding %config_path_settings like the
-existing %config_bool_settings, and add config_path to Git.pm (again,
-similarly to config_bool).
+I think "git commit -h" is scary enough as it is ...
 
 -- 
 Matthieu Moy
