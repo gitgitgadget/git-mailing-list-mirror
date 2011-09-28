@@ -1,283 +1,323 @@
 From: Alan Jenkins <alan.christopher.jenkins@googlemail.com>
-Subject: [GUILT 3/6] Handle paths that contain spaces
-Date: Wed, 28 Sep 2011 15:15:21 +0100
-Message-ID: <1317219324-10319-3-git-send-email-alan.christopher.jenkins@googlemail.com>
+Subject: [GUILT 6/6] Allow the regression tests to be run from a directory with spaces in
+Date: Wed, 28 Sep 2011 15:15:24 +0100
+Message-ID: <1317219324-10319-6-git-send-email-alan.christopher.jenkins@googlemail.com>
 References: <1317219324-10319-1-git-send-email-alan.christopher.jenkins@googlemail.com>
 Cc: git@vger.kernel.org,
 	Alan Jenkins <alan.christopher.jenkins@googlemail.com>
 To: jeffpc@josefsipek.net
-X-From: git-owner@vger.kernel.org Wed Sep 28 16:16:57 2011
+X-From: git-owner@vger.kernel.org Wed Sep 28 16:17:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8uwS-0007Ie-UP
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 16:16:57 +0200
+	id 1R8uwi-0007QS-Jy
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 16:17:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754642Ab1I1OQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Sep 2011 10:16:54 -0400
+	id S1754657Ab1I1OQ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Sep 2011 10:16:58 -0400
 Received: from mail-ww0-f44.google.com ([74.125.82.44]:61456 "EHLO
 	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752643Ab1I1OQx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2011 10:16:53 -0400
-Received: by wwf22 with SMTP id 22so8982121wwf.1
-        for <git@vger.kernel.org>; Wed, 28 Sep 2011 07:16:51 -0700 (PDT)
+	with ESMTP id S1754598Ab1I1OQ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2011 10:16:57 -0400
+Received: by mail-ww0-f44.google.com with SMTP id 22so8982121wwf.1
+        for <git@vger.kernel.org>; Wed, 28 Sep 2011 07:16:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=OXu8+zkTyL+W6zNYzrcpYaQ+Ge2rS1SKq138zdtqSrA=;
-        b=Q/PUb+Snkbm1zQTmg/VyUR0V15mSeTgzBmaq94pupzKzyHPIeEFUDYDU/IfeycL6ov
-         YTf1s4WnoDey5Z8Kf3n4RiXZKswmlzVdsIs3puQukjesFVBNXM2Rc0Oczv7l+/6g5PUI
-         LhaWrKEwXbrRT7ivrPVk19qgxqZvqtXXzHPBk=
-Received: by 10.216.185.74 with SMTP id t52mr1169002wem.25.1317219411706;
-        Wed, 28 Sep 2011 07:16:51 -0700 (PDT)
+        bh=7MiswGy//SUtZSrVDSlbjdnxACWHn6IEkTh/6EIs4JQ=;
+        b=cGA5/ixEahp7+Q4DssZkK+t/lUUB0WB4bOgUbcGpnkoAPGMk5tmqqg/US6/oG002ZL
+         WDuvwfB+SCb//qPRF4HfPNrIdiFKLtLtd2r23aFkogQyJ1SLySYPh0hK3BEuGp92QPXv
+         B72NnPV0akMbCTeMpG6p/nfUVo4TXSY/3pFJo=
+Received: by 10.227.58.148 with SMTP id g20mr1587778wbh.108.1317219416800;
+        Wed, 28 Sep 2011 07:16:56 -0700 (PDT)
 Received: from localhost.localdomain ([86.53.68.233])
-        by mx.google.com with ESMTPS id n21sm40795936wbp.2.2011.09.28.07.16.50
+        by mx.google.com with ESMTPS id n21sm40795936wbp.2.2011.09.28.07.16.55
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 28 Sep 2011 07:16:51 -0700 (PDT)
+        Wed, 28 Sep 2011 07:16:56 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.1
 In-Reply-To: <1317219324-10319-1-git-send-email-alan.christopher.jenkins@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182322>
 
+sed -i regression/*.sh 's|source $REG_DIR/scaffold|source "$REG_DIR/scaffold"|'
+
+Same as the previous patch: it turned out I don't need this,
+but you might think it's a good idea anyway.
 
 Signed-off-by: Alan Jenkins <alan.christopher.jenkins@googlemail.com>
 ---
- guilt           |    6 +++---
- guilt-applied   |    4 ++--
- guilt-files     |    4 ++--
- guilt-fold      |    2 +-
- guilt-new       |    2 +-
- guilt-next      |    2 +-
- guilt-pop       |   12 ++++++------
- guilt-push      |    6 +++---
- guilt-series    |    4 ++--
- guilt-unapplied |    2 +-
- 10 files changed, 22 insertions(+), 22 deletions(-)
+ regression/t-010.sh |    2 +-
+ regression/t-011.sh |    2 +-
+ regression/t-020.sh |    2 +-
+ regression/t-021.sh |    2 +-
+ regression/t-022.sh |    2 +-
+ regression/t-023.sh |    2 +-
+ regression/t-024.sh |    2 +-
+ regression/t-025.sh |    2 +-
+ regression/t-026.sh |    2 +-
+ regression/t-027.sh |    2 +-
+ regression/t-028.sh |    2 +-
+ regression/t-029.sh |    2 +-
+ regression/t-030.sh |    2 +-
+ regression/t-031.sh |    2 +-
+ regression/t-032.sh |    2 +-
+ regression/t-050.sh |    2 +-
+ regression/t-051.sh |    2 +-
+ regression/t-052.sh |    2 +-
+ regression/t-060.sh |    2 +-
+ 19 files changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/guilt b/guilt
-index 5d79e0f..9f06b41 100755
---- a/guilt
-+++ b/guilt
-@@ -196,7 +196,7 @@ get_full_series()
+diff --git a/regression/t-010.sh b/regression/t-010.sh
+index 1fc88fa..9bbf32a 100755
+--- a/regression/t-010.sh
++++ b/regression/t-010.sh
+@@ -3,7 +3,7 @@
+ # Test the init code
+ #
  
- 		p
- 		}
--		" $series
-+		" "$series"
- }
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
  
- get_series()
-@@ -632,7 +632,7 @@ push_patch()
+ function opts
+ {
+diff --git a/regression/t-011.sh b/regression/t-011.sh
+index fde7b90..55a72d7 100755
+--- a/regression/t-011.sh
++++ b/regression/t-011.sh
+@@ -4,7 +4,7 @@
+ # not guilt init'ed
+ #
  
- 		commit "$pname" HEAD
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
  
--		echo "$pname" >> $applied
-+		echo "$pname" >> "$applied"
+ cmd setup_git_repo
  
- 		rm -f "$TMP_LOG"
- 	)
-@@ -739,7 +739,7 @@ __refresh_patch()
+diff --git a/regression/t-020.sh b/regression/t-020.sh
+index 6598b02..cdd08ba 100755
+--- a/regression/t-020.sh
++++ b/regression/t-020.sh
+@@ -3,7 +3,7 @@
+ # Test the push code
+ #
  
- 		# move the new patch in
- 		mv "$p" "$p~"
--		mv "$TMP_DIFF" $p
-+		mv "$TMP_DIFF" "$p"
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
  
- 		# commit
- 		commit "$pname" "HEAD~$3"
-diff --git a/guilt-applied b/guilt-applied
-index ead787b..a1f684a 100755
---- a/guilt-applied
-+++ b/guilt-applied
-@@ -14,7 +14,7 @@ _main() {
- case $# in
- 	0)
- 		# just output the regular series-style applied list
--		cat $applied
-+		cat "$applied"
- 	;;
+ cmd setup_repo
  
- 	1)
-@@ -22,7 +22,7 @@ case $# in
- 			usage
- 		fi
+diff --git a/regression/t-021.sh b/regression/t-021.sh
+index 035973c..6337d7b 100755
+--- a/regression/t-021.sh
++++ b/regression/t-021.sh
+@@ -3,7 +3,7 @@
+ # Test the pop code
+ #
  
--		cat $applied | while read pname; do
-+		cat "$applied" | while read pname; do
- 			git show-ref refs/patches/$branch/$pname | sed -e "s,refs/patches/$branch/,,"
- 		done
- 	;;
-diff --git a/guilt-files b/guilt-files
-index 9188070..f31a94c 100755
---- a/guilt-files
-+++ b/guilt-files
-@@ -34,9 +34,9 @@ top_patch=`get_top`
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
  
- IFS=:
- if [ -n "$opt_all" ]; then
--	cat $applied
-+	cat "$applied"
- else
--	tail -n 1 $applied
-+	tail -n 1 "$applied"
- fi | while read patch; do
- 	obj=`git rev-parse refs/patches/$branch/$patch`
+ cmd setup_repo
  
-diff --git a/guilt-fold b/guilt-fold
-index 9bf0d6e..06fbb7f 100755
---- a/guilt-fold
-+++ b/guilt-fold
-@@ -36,7 +36,7 @@ if ! must_commit_first; then
- fi
+diff --git a/regression/t-022.sh b/regression/t-022.sh
+index e43dc0a..0fe345b 100755
+--- a/regression/t-022.sh
++++ b/regression/t-022.sh
+@@ -3,7 +3,7 @@
+ # Test the applied code
+ #
  
- # make sure it is not applied
--pline=`cat $applied | grep -e "^$patch$"`
-+pline=`cat "$applied" | grep -e "^$patch$"`
- if [ ! -z "$pline" ]; then
- 	die "Patch is applied. Pop the patch first."
- fi
-diff --git a/guilt-new b/guilt-new
-index c660dfc..402104e 100755
---- a/guilt-new
-+++ b/guilt-new
-@@ -95,7 +95,7 @@ fi
- series_insert_patch "$patch"
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
  
- # apply the patch
--echo "$patch" >> $applied
-+echo "$patch" >> "$applied"
- commit "$patch" HEAD
+ cmd setup_repo
  
- }
-diff --git a/guilt-next b/guilt-next
-index 5ac026b..a0941fc 100755
---- a/guilt-next
-+++ b/guilt-next
-@@ -21,7 +21,7 @@ while [ $# -ne 0 ]; do
- 	shift
- done
+diff --git a/regression/t-023.sh b/regression/t-023.sh
+index 1e976fd..c0530d6 100755
+--- a/regression/t-023.sh
++++ b/regression/t-023.sh
+@@ -3,7 +3,7 @@
+ # Test the top code
+ #
  
--n=`wc -l < $applied`
-+n=`wc -l < "$applied"`
- n=$(($n + 1))
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
  
- p=`get_series | awk "{ if (NR == $n) print \\$0}"`
-diff --git a/guilt-pop b/guilt-pop
-index 77d2c88..df466c7 100755
---- a/guilt-pop
-+++ b/guilt-pop
-@@ -55,14 +55,14 @@ if [ ! -s "$applied" ]; then
- elif [ "$patch" = "-a" ]; then
- 	# we are supposed to pop all patches
+ cmd setup_repo
  
--	sidx=`wc -l < $applied`
-+	sidx=`wc -l < "$applied"`
- 	eidx=0
- elif [ ! -z "$num" ]; then
- 	# we are supposed to pop a set number of patches
+diff --git a/regression/t-024.sh b/regression/t-024.sh
+index 9b11286..38f53aa 100755
+--- a/regression/t-024.sh
++++ b/regression/t-024.sh
+@@ -3,7 +3,7 @@
+ # Test the unapplied code
+ #
  
- 	[ "$patch" -lt 0 ] && die "Invalid number of patches to pop."
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
  
--	sidx=`wc -l < $applied`
-+	sidx=`wc -l < "$applied"`
- 	eidx=`expr $sidx - $patch`
+ cmd setup_repo
  
- 	# catch underflow
-@@ -71,19 +71,19 @@ elif [ ! -z "$num" ]; then
- elif [ -z "$patch" ]; then
- 	# we are supposed to pop only the current patch on the stack
+diff --git a/regression/t-025.sh b/regression/t-025.sh
+index 6aa9bd3..3824608 100755
+--- a/regression/t-025.sh
++++ b/regression/t-025.sh
+@@ -3,7 +3,7 @@
+ # Test the new code
+ #
  
--	sidx=`wc -l < $applied`
-+	sidx=`wc -l < "$applied"`
- 	eidx=`expr $sidx - 1`
- else
- 	# we're supposed to pop only up to a patch, make sure the patch is
- 	# in the series
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
  
--	eidx=`cat $applied | grep -ne "^$patch$" | cut -d: -f 1`
-+	eidx=`cat "$applied" | grep -ne "^$patch$" | cut -d: -f 1`
- 	if [ -z "$eidx" ]; then
- 		die "Patch $patch is not in the series/is not applied"
- 	fi
+ cmd setup_repo
  
- 	eidx=`expr $eidx - 1`
--	sidx=`wc -l < $applied`
-+	sidx=`wc -l < "$applied"`
- fi
+diff --git a/regression/t-026.sh b/regression/t-026.sh
+index 5f29352..0ccdf85 100755
+--- a/regression/t-026.sh
++++ b/regression/t-026.sh
+@@ -3,7 +3,7 @@
+ # Test the delete code
+ #
  
- # make sure that there are no unapplied changes
-@@ -94,7 +94,7 @@ elif ! must_commit_first; then
- 	die "Uncommited changes detected. Refresh first."
- fi
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
  
--l=`awk "BEGIN{n=0}(n==$eidx){print \\$0; exit}{n=n+1}END{}" < $applied`
-+l=`awk "BEGIN{n=0}(n==$eidx){print \\$0; exit}{n=n+1}END{}" < "$applied"`
+ cmd setup_repo
  
- pop_many_patches `git rev-parse refs/patches/$branch/$l^` `expr $sidx - $eidx`
+diff --git a/regression/t-027.sh b/regression/t-027.sh
+index ee70229..2f5bb9f 100755
+--- a/regression/t-027.sh
++++ b/regression/t-027.sh
+@@ -3,7 +3,7 @@
+ # Test the refresh code
+ #
  
-diff --git a/guilt-push b/guilt-push
-index 05bcef5..d9a8590 100755
---- a/guilt-push
-+++ b/guilt-push
-@@ -72,7 +72,7 @@ elif [ ! -z "$num" ]; then
- 	eidx=`get_series | wc -l`
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
  
- 	# calculate end index from current
--	tidx=`wc -l < $applied`
-+	tidx=`wc -l < "$applied"`
- 	tidx=`expr $tidx + $patch`
+ cmd setup_repo
  
- 	# clamp to minimum
-@@ -81,7 +81,7 @@ elif [ ! -z "$num" ]; then
- elif [ -z "$patch" ]; then
- 	# we are supposed to push only the next patch onto the stack
+diff --git a/regression/t-028.sh b/regression/t-028.sh
+index 83fa879..8480100 100755
+--- a/regression/t-028.sh
++++ b/regression/t-028.sh
+@@ -3,7 +3,7 @@
+ # Test the header code
+ #
  
--	eidx=`wc -l < $applied`
-+	eidx=`wc -l < "$applied"`
- 	eidx=`expr $eidx + 1`
- else
- 	# we're supposed to push only up to a patch, make sure the patch is
-@@ -99,7 +99,7 @@ if ! must_commit_first; then
- fi
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
  
- # now, find the starting patch
--sidx=`wc -l < $applied`
-+sidx=`wc -l < "$applied"`
- sidx=`expr $sidx + 1`
+ cmd setup_repo
  
- # do we actually have to push anything?
-diff --git a/guilt-series b/guilt-series
-index d9b1cc2..c87b31e 100755
---- a/guilt-series
-+++ b/guilt-series
-@@ -30,8 +30,8 @@ if [ ! -z "$edit" ]; then
- 	git_editor "$series"
- elif [ ! -z "$gui" ]; then
- 	[ -z "`get_top`" ] && die "No patches applied."
--	bottom=`git rev-parse refs/patches/$branch/$(head_n 1 $applied)`
--	top=`git rev-parse refs/patches/$branch/$(tail -n 1 $applied)`
-+	bottom=`git rev-parse refs/patches/$branch/$(head_n 1 "$applied")`
-+	top=`git rev-parse refs/patches/$branch/$(tail -n 1 "$applied")`
- 	range="$bottom..$top"
+diff --git a/regression/t-029.sh b/regression/t-029.sh
+index 83e1d2b..e4036bf 100755
+--- a/regression/t-029.sh
++++ b/regression/t-029.sh
+@@ -5,7 +5,7 @@
  
- 	# FIXME, this doesn't quite work - it's perfectly fine with
-diff --git a/guilt-unapplied b/guilt-unapplied
-index 67ee1aa..e703408 100755
---- a/guilt-unapplied
-+++ b/guilt-unapplied
-@@ -15,7 +15,7 @@ if [ $# -ne 0 ]; then
- 	usage
- fi
+ # FIXME: test status file format upgrade code
  
--n=`wc -l < $applied`
-+n=`wc -l < "$applied"`
- n=`expr $n + 1`
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
  
- get_series | sed -n -e "$n,\$p"
+ cmd setup_repo
+ 
+diff --git a/regression/t-030.sh b/regression/t-030.sh
+index 0352948..06bd58f 100755
+--- a/regression/t-030.sh
++++ b/regression/t-030.sh
+@@ -3,7 +3,7 @@
+ # Test the commit code
+ #
+ 
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
+ 
+ cmd setup_repo
+ 
+diff --git a/regression/t-031.sh b/regression/t-031.sh
+index 9b5db6f..20c2a6b 100755
+--- a/regression/t-031.sh
++++ b/regression/t-031.sh
+@@ -3,7 +3,7 @@
+ # Test the fork code
+ #
+ 
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
+ 
+ cmd setup_repo
+ 
+diff --git a/regression/t-032.sh b/regression/t-032.sh
+index 3b32da5..b1d5f19 100755
+--- a/regression/t-032.sh
++++ b/regression/t-032.sh
+@@ -3,7 +3,7 @@
+ # Test the import code
+ #
+ 
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
+ 
+ cmd setup_repo
+ 
+diff --git a/regression/t-050.sh b/regression/t-050.sh
+index 82ac412..88be546 100755
+--- a/regression/t-050.sh
++++ b/regression/t-050.sh
+@@ -3,7 +3,7 @@
+ # Test the series code
+ #
+ 
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
+ 
+ cmd setup_repo
+ 
+diff --git a/regression/t-051.sh b/regression/t-051.sh
+index a05fcca..293459c 100755
+--- a/regression/t-051.sh
++++ b/regression/t-051.sh
+@@ -3,7 +3,7 @@
+ # Test the commands that use get_*_series, while applying guards
+ #
+ 
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
+ 
+ cmd setup_repo
+ 
+diff --git a/regression/t-052.sh b/regression/t-052.sh
+index e9c1a59..f8c60ab 100755
+--- a/regression/t-052.sh
++++ b/regression/t-052.sh
+@@ -3,7 +3,7 @@
+ # Test the commands that use get_*_series, while applying guards
+ #
+ 
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
+ 
+ cmd setup_repo
+ 
+diff --git a/regression/t-060.sh b/regression/t-060.sh
+index ec33d80..ebe93bd 100755
+--- a/regression/t-060.sh
++++ b/regression/t-060.sh
+@@ -3,7 +3,7 @@
+ # Test the guilt files code
+ #
+ 
+-source $REG_DIR/scaffold
++source "$REG_DIR/scaffold"
+ 
+ cmd setup_repo
+ 
 -- 
 1.7.4.1
