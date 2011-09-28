@@ -1,110 +1,119 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: git-rebase skips automatically no more needed commits
-Date: Wed, 28 Sep 2011 10:49:05 -0400
-Message-ID: <CAOeW2eFyTewS2+QK7UW_yOWpVKtCkwSBH0PjPutn0BYYqgV1HQ@mail.gmail.com>
-References: <CAC9WiBg9+30NjO+NKXVdBiWjR-HU2689JQqVY7Rk5+DM7MiNBg@mail.gmail.com>
-	<CALkWK0mggSNoxxqzUaGp1-AxGWSpCb0HnRmBxSkcVrHnhwMr1Q@mail.gmail.com>
-	<alpine.DEB.2.00.1109242148570.24369@debian>
-	<201109261110.59940.trast@student.ethz.ch>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: [PATCH] Docs: git checkout --orphan: `root commit' and `branch head'
+Date: Wed, 28 Sep 2011 15:06:27 +0000
+Message-ID: <CAMOZ1Bs5GKE19nd+9sVQuEH+zRCug0OTGXAqpDjEgq=_pKzZxA@mail.gmail.com>
+References: <7vaa9r2jii.fsf@alter.siamese.dyndns.org> <1317073309.5579.9.camel@centaur.lab.cmartin.tk>
+ <e88b6e560cab4ed1937dd191b4180387-mfwitten@gmail.com> <4E81F080.7010905@drmicha.warpmail.net>
+ <CAMOZ1BsvnZ7PyfjOJURX+B7vCZcYheLS4pissGvPNjEivbYXtw@mail.gmail.com>
+ <7v39fhyk21.fsf@alter.siamese.dyndns.org> <4E823359.7080602@nextest.com>
+ <DBCBE20265964ECCA5B9724DAC74D83B@PhilipOakley> <20110927214213.GC5176@sigill.intra.peff.net>
+ <CAMOZ1BvzWDPQ_e3Y5H8CX4wQwL5xf3xVvZvRL3gQPcB_kCGBbw@mail.gmail.com>
+ <20110927233549.GA10434@sigill.intra.peff.net> <7vpqiltsky.fsf@alter.siamese.dyndns.org>
+ <CAMOZ1BvL85xsQpZdez4VJ+dH4NoQ9RkthHY9OsmdnnaZ_tFnFg@mail.gmail.com>
+ <vpqty7wok5a.fsf@bauges.imag.fr> <CAMOZ1Bu8UiV+Z0+0CLjxSv5Zic8i4=aGxnzmLc+H7c2T-P4avw@mail.gmail.com>
+ <vpq4nzwoj1o.fsf@bauges.imag.fr> <CAMOZ1Btw7Bf3_ejZef_SdRojyVeM94knyz9Gw+SEqFtrrpBVsA@mail.gmail.com>
+ <vpq39fglo8y.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Francis Moreau <francis.moro@gmail.com>,
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Philip Oakley <philipoakley@iee.org>,
+	Eric Raible <raible@nextest.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Sep 28 16:49:19 2011
+	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
+	vra5107 <venkatram.akkineni@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Sep 28 17:07:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8vRm-0001Dn-N4
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 16:49:19 +0200
+	id 1R8viw-0002oo-OS
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 17:07:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754578Ab1I1OtI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Sep 2011 10:49:08 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:47437 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754437Ab1I1OtG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Sep 2011 10:49:06 -0400
-Received: by iaqq3 with SMTP id q3so6952657iaq.19
-        for <git@vger.kernel.org>; Wed, 28 Sep 2011 07:49:06 -0700 (PDT)
+	id S1754698Ab1I1PG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Sep 2011 11:06:58 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:59112 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751668Ab1I1PG5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2011 11:06:57 -0400
+Received: by qyk7 with SMTP id 7so9287132qyk.19
+        for <git@vger.kernel.org>; Wed, 28 Sep 2011 08:06:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=6QuchqmBjSBOtjMCwFlErZDvOte9YsgIF050VE7Mmn4=;
-        b=xurfhIrzU61jygH0yCwJqne3Gz5DikSoQ2AmxWf+oe78h+76ackELT6zmAA73ba0Zj
-         55cZUP9woiQQT/rzEH3NP3ALIIigDZmrvHzr2N/Znq1ThcfXR4bLGT91NRDqAv/WIAG7
-         UOvtwcO916XR2V5D0jjhyAZxTMbLwGTn9Xq4o=
-Received: by 10.231.82.131 with SMTP id b3mr12529529ibl.74.1317221345898; Wed,
- 28 Sep 2011 07:49:05 -0700 (PDT)
-Received: by 10.231.200.193 with HTTP; Wed, 28 Sep 2011 07:49:05 -0700 (PDT)
-In-Reply-To: <201109261110.59940.trast@student.ethz.ch>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=QwNNbhhhKbSk0d/C5E3c0gKAnib08GZlAJ+HRUSPTig=;
+        b=Fj9fp1ZsgS0b6JPs+nLCs+9FGqd90AUqv7igscW4RAcQ/SgtmPmy1Ev6k61M+dAc7E
+         tjWXNuc40+TsyWavTZ6T1ApVNXjVBuMx1B/1sz51UraLVDVn5gyK60ZDa5MbKJKzbgVm
+         ZA8E+yPm36rvDX9ueUrvn/fZ0fXSRznxMPYSk=
+Received: by 10.229.41.69 with SMTP id n5mr6803857qce.279.1317222417201; Wed,
+ 28 Sep 2011 08:06:57 -0700 (PDT)
+Received: by 10.229.233.6 with HTTP; Wed, 28 Sep 2011 08:06:27 -0700 (PDT)
+In-Reply-To: <vpq39fglo8y.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182331>
 
-On Mon, Sep 26, 2011 at 5:10 AM, Thomas Rast <trast@student.ethz.ch> wr=
-ote:
-> Martin von Zweigbergk wrote:
+On Wed, Sep 28, 2011 at 14:45, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Michael Witten <mfwitten@gmail.com> writes:
+>
+>>> Even if you use it normally:
+>>>
+>>> # I want to create a new root commit with a different tree
+>>> git checkout -b new-project
+>>> # hack for a while
+>>> git status
+>>> # ?!? why are files shown as 'deleted', 'moved', 'modified', I said I
+>>> # was creating a new project!
+>>>
+>>> Also, with your proposal, we would need to add two flags to "commit"
+>>> (--no-parent and --force), which is one of the first command beginners
+>>> learn, while in the current state we have just one for "checkout" to do
+>>> the trick, and newbies do not use or read the doc for checkout, so it's
+>>> not scary for them.
 >>
->> If I understand correctly, [rebase --root] was introduced to solve
->> exactly the same reason problem that made Francis start this thread
->> -- to avoid re-applying patches that are already in $onto.
+>> Well, those are mildly interesting scenarios. I can only say that I don't
+>> think we should cater to people who either have amnesia or work casually
+>> on a repository for short bursts every few months or so.
 >
-> Not quite; I wrote it because at the time, there was no way to
-> transplant git history onto a git-svn "make empty subdir" commit for
-> later dcommitting. =C2=A0So the main point was really
-
-But that was only due to the bug/limitation in format-patch that you
-(?) fixed a few days later, no?
-
-> I still think it would be natural for a user to want a way to say "al=
-l
-> the way back to the root commit". =C2=A0At least for me the "full" re=
-base
-> invocation is
+> How is the "git status" issue above linked to any kind of amnesia?
 >
-> =C2=A0git rebase --onto onto base branch
+> When hacking to create a rootless commit, it seems legitimate to me to
+> run "git status", and it seems _very_ confusing that "git status" still
+> refers to the commit you don't want as parent.
 
-Sure, I can understand that. Still,  it would just be an alternative
-syntax and nothing else. So I think I should also update the
-documentation after my other patches to make it clear that that is the
-case. We also have to think about backwards compatibility, so I'm
-obviously not suggesting that we should stop supporting the flag; I
-just wanted to make sure that it is not technically needed.
+I think "confusing" is perhaps the wrong word. How about "annoying"?
 
->> I saw that
->> "--root" is also passed to the hook. Should that value be passed to
->> the hook also when the old base is not explicitly a root (by "rebase
->> --root"), but only implicitly so (by an $onto that is disjoint from
->> $branch)?
->
-> I think I did it that way because if you use --root, the base/upstrea=
-m
-> argument is missing, and the hook needs to know that.
->
-> If the user specifies an upstream that is disjoint from the branch
-> itself, the hook gets the upstream argument and can presumably work i=
-t
-> out from there. =C2=A0So you could perhaps save the hook some trouble=
- if
-> you *know* that it's a disjoint rebase, but I wouldn't spend too much
-> time on that.
+I suppose it is true that neither "--orphan" nor "--no-parent" is good
+enough alone. For instance:
 
-The hook would still have to be able to handle both cases (i.e.
-getting the upstream argument as "--root" or simply a commit that
-happens to be disjoint from the the branch-to-be-rebased). I believe
-that has been the case since that bug in format-patch was fixed. So if
-we were to change git-rebase so it no longer passes the --root flag to
-the hook, I think any (correctly written) hooks should still work. I
-don't see much reason to change it, though; if the user uses the
---root syntax, we can pass the flag, otherwise we don't.
+  # I want to create a new root commit with a slightly different tree
+  git checkout --orphan new-project
+  # hack just a bit here and there
+  git status
+  # ?!? My slight alterations are obscured by hundreds of these
+  #     "new file" status notifications!
 
-Martin
+> (I don't get the relation between your reply and the paragraph right
+> above it either)
+
+Is that a passive aggressive French way to state that I didn't respond
+to your concern?
+
+I think it's moot now, anyway, given that both "--orphan" and
+"--no-parent" quite possibly have their logical purposes. However,
+perhaps:
+
+  git checkout --orphan
+
+should be renamed:
+
+  git checkout --no-parent
+
+in order to match:
+
+  git commit --no-parent
