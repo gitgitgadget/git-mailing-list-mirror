@@ -1,53 +1,58 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Signed push progress?
-Date: Wed, 28 Sep 2011 07:50:54 +0000
-Message-ID: <20110928075054.GA13727@orbis-terrarum.net>
+From: Roddie Grant <gitlist@myword.co.uk>
+Subject: Re: "Resetting" a repository
+Date: Wed, 28 Sep 2011 08:52:28 +0100
+Message-ID: <4E82D23C.4020400@myword.co.uk>
+References: <4E81EAA7.5030708@myword.co.uk> <861uv27y6k.fsf@red.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 28 09:51:02 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 28 09:52:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8ouy-0001je-IG
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 09:51:00 +0200
+	id 1R8owV-0002QK-C4
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 09:52:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751851Ab1I1Hu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Sep 2011 03:50:56 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:41687 "EHLO smtp.gentoo.org"
+	id S1753545Ab1I1Hwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Sep 2011 03:52:30 -0400
+Received: from mail3.anu.net ([83.96.156.167]:47986 "EHLO mail3.anu.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751549Ab1I1Huz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2011 03:50:55 -0400
-Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
+	id S1751377Ab1I1Hwa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2011 03:52:30 -0400
+Received: from Roddie-Grants-MacBook-Pro.local (cpc3-warw13-2-0-cust132.3-2.cable.virginmedia.com [86.17.75.133])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.gentoo.org (Postfix) with ESMTPS id 121C11B4007
-	for <git@vger.kernel.org>; Wed, 28 Sep 2011 07:50:55 +0000 (UTC)
-Received: (qmail 16549 invoked by uid 10000); 28 Sep 2011 07:50:54 -0000
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	by mail3.anu.net (Postfix) with ESMTP id 108BB319995
+	for <git@vger.kernel.org>; Wed, 28 Sep 2011 09:52:56 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
+In-Reply-To: <861uv27y6k.fsf@red.stonehenge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182298>
 
-I haven't seen anything about the status of signed push since earlier in
-the month, even the what's cooking report marked it as stalled.
+On 27/09/2011 17:22, Randal L. Schwartz wrote:
+>>>>>> "gitlist" == gitlist<gitlist@myword.co.uk>  writes:
+>
+> gitlist>  I have a project with a test repository and a live repository (and a
+> gitlist>  development repository).
+>
+> You haven't mentioned what kind of access you have to the two repos.
+> Are they both bare remote repos?  Or can you just rsync one over the
+> other?
 
-While I'd previously noted my concerns re the use of SHA1, that's not
-presently a solvable problems, whereas signed-push does improve security
-today.
+Both repos are on the same virtual server. I normally use ssh for git, 
+but have full access to the server. Both repos are not bare. The test 
+repos is for the customer to test new stuff and the live repos is for 
+the world to see the site (it's all for a website).
 
-Additionally, in the ever ongoing discussion about Gentoo's conversion
-from CVS to Git (we're very close now), we've decided that the signed
-pushes will provide better security than our plan of previous plan of
-using signed notes, so we'd like to see signed pushes succeed.
+The development repos is on my laptop, but it's the test and live repos 
+I want to get back in step with each other.
 
--- 
-Robin Hugh Johnson
-Gentoo Linux: Developer, Trustee & Infrastructure Lead
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+Thanks
+
+Roddie Grant
