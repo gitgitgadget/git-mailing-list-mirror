@@ -1,69 +1,173 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH] parse-options: deprecate OPT_BOOLEAN
-Date: Wed, 28 Sep 2011 18:30:41 +0900
-Message-ID: <buok48tggji.fsf@dhlpc061.dev.necel.com>
-References: <7v39fhv8se.fsf@alter.siamese.dyndns.org>
+From: Georg-Johann Lay <avr@gjlay.de>
+Subject: Re: subversion-perl missing
+Date: Wed, 28 Sep 2011 12:06:06 +0200
+Message-ID: <4E82F18E.9080304@gjlay.de>
+References: <4E8066AB.7000208@gjlay.de>	<CAP8UFD0PiiA9SxvOuuh4t8P96v+iaJ0TfcBr1-xjMh4TXBEONQ@mail.gmail.com>	<4E80AD1B.3080700@gjlay.de> <m3k48vp6l7.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 28 11:30:55 2011
+Content-Type: text/plain; charset=ISO-8859-4
+Content-Transfer-Encoding: 7bit
+Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 28 12:06:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8qTd-0007XZ-Pj
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 11:30:54 +0200
+	id 1R8r1v-0004n1-KY
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 12:06:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753907Ab1I1Jat convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Sep 2011 05:30:49 -0400
-Received: from relmlor3.renesas.com ([210.160.252.173]:64784 "EHLO
-	relmlor3.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751623Ab1I1Jas convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Sep 2011 05:30:48 -0400
-Received: from relmlir4.idc.renesas.com ([10.200.68.154])
- by relmlor3.idc.renesas.com ( SJSMS)
- with ESMTP id <0LS800LZM7RBAS90@relmlor3.idc.renesas.com> for
- git@vger.kernel.org; Wed, 28 Sep 2011 18:30:47 +0900 (JST)
-Received: from relmlac4.idc.renesas.com ([10.200.69.24])
- by relmlir4.idc.renesas.com ( SJSMS)
- with ESMTP id <0LS800IWI7RBU9E0@relmlir4.idc.renesas.com> for
- git@vger.kernel.org; Wed, 28 Sep 2011 18:30:47 +0900 (JST)
-Received: by relmlac4.idc.renesas.com (Postfix, from userid 0)
-	id 8D45A48087; Wed, 28 Sep 2011 18:30:47 +0900 (JST)
-Received: from relmlac4.idc.renesas.com (localhost [127.0.0.1])
-	by relmlac4.idc.renesas.com (Postfix) with ESMTP id 82FF64808E; Wed,
- 28 Sep 2011 18:30:47 +0900 (JST)
-Received: from relmlii2.idc.renesas.com [10.200.68.66]	by
- relmlac4.idc.renesas.com with ESMTP id UAG04280; Wed,
- 28 Sep 2011 18:30:47 +0900
-X-IronPort-AV: E=Sophos;i="4.68,454,1312124400";   d="scan'208";a="47628485"
-Received: from unknown (HELO relay51.aps.necel.com) ([10.29.19.60])
- by relmlii2.idc.renesas.com with ESMTP; Wed, 28 Sep 2011 18:30:47 +0900
-Received: from dhlpc061 (dhlpc061.dev.necel.com [10.114.97.223])
-	by relay51.aps.necel.com (8.14.4+Sun/8.14.4) with ESMTP id p8S9Ug3L009015;
- Wed, 28 Sep 2011 18:30:42 +0900 (JST)
-Received: by dhlpc061 (Postfix, from userid 31295)	id 5F90952E23D; Wed,
- 28 Sep 2011 18:30:42 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-reply-to: <7v39fhv8se.fsf@alter.siamese.dyndns.org>
+	id S1752220Ab1I1KGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Sep 2011 06:06:14 -0400
+Received: from mo-p00-ob.rzone.de ([81.169.146.160]:50630 "EHLO
+	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751878Ab1I1KGN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2011 06:06:13 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1317204372; l=5259;
+	s=domk; d=gjlay.de;
+	h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:
+	Subject:CC:To:MIME-Version:From:Date:X-RZG-CLASS-ID:X-RZG-AUTH;
+	bh=gy9/PFcZET4Emh0pKYa4h3vBWx0=;
+	b=njkBicl8AAzSwblLi8h6KFe/pqZxjgavcBkL40YvE30/AAPQN9mut1oLCgSvUolyfum
+	QTMNaskk7HSgstHROwgfIXYN+DdPlgujaxwdshWF2R6ZJYNWaOYxeFpwLx7pU3b9EFBc8
+	MMO+ddTv9AfR/VW2CT2yFB24+hx6AW3kNnw=
+X-RZG-AUTH: :LXoWVUeid/7A29J/hMvvT2k715jHQaJercGObUOFkj18odoYNahU4Q==
+X-RZG-CLASS-ID: mo00
+Received: from [192.168.0.22]
+	(business-188-111-022-002.static.arcor-ip.net [188.111.22.2])
+	by smtp.strato.de (jimi mo45) (RZmta 26.7)
+	with ESMTPA id 601520n8S9MnSK ; Wed, 28 Sep 2011 12:06:07 +0200 (MEST)
+User-Agent: Thunderbird 2.0.0.24 (X11/20100302)
+In-Reply-To: <m3k48vp6l7.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182305>
 
-Junio C Hamano <gitster@pobox.com> writes:
-> As a first step to remedy this, introduce a true boolean OPT_BOOL(), =
-and
-> rename OPT_BOOLEAN() to OPT_COUNTUP().
+Jakub Narebski schrieb:
+> Georg-Johann Lay writes:
+>> Christian Couder schrieb:
+>>> On Mon, Sep 26, 2011 at 1:48 PM, Georg-Johann Lay <spam@spam.com> wrote:
+> 
+>>>> Where do I have to go to get the svn+perl stuff? Couldn't locate anything like
+>>>> that in subversion.tigris.org, so that I am stuck and need some hints on how to
+>>>> proceed.
+>>> Perhaps you can try to install this module from CPAN:
+>>>
+>>> http://search.cpan.org/~mschwern/Alien-SVN-v1.6.12.1/
+>>>
+>>> or from it's github repo:
+>>>
+>>> https://github.com/schwern/alien-svn
+>> Hi Christian,
+>>
+>> thanks for that hint.
+>>
+>> After getting that piece of software, running ./Build.PL and ./Build I just
+>> don't know what to do next.  The README doesn't say anything about how to use
+>> the built modules or how to do an install.
+> 
+> If you don't have admin privileges on the box, the best solution would
+> be to use local::lib[1] to install Perl modules in your home directory
+> for you (#perl IRC channel on FreeNode, or perlmonks are really helpful).
+> 
+> I really recommend it, together with cpanm[2] (which can configure
+> local::lib for you, via --local-lib option), though the latter is not
+> necessary.
+> 
+> [1]: http://search.cpan.org/~apeiron/local-lib-1.008004/lib/local/lib.pm
+> [2]: http://search.cpan.org/~miyagawa/App-cpanminus-1.4008/bin/cpanm
+> 
+> 
+> If you have admin privileges, I think the best solution would be
+> either find repository which has subversion-perl that matches your
+> version of Subversion, or compile subversion-perl from a source
+> package... though this might be more difficult, it has advantage of
+> being in package management.
+>  
+>> As git-svn complains
+>>
+>> ...Can't locate SVN/Core.pm in @INC (@INC contains: ...
+>>
+>> and
+>>
+>>  schwern-alien-svn-9298884>find . -name 'Core.pm'
+>> ./src/subversion/subversion/bindings/swig/perl/native/Core.pm
+>> ./src/subversion/subversion/bindings/swig/perl/native/blib/lib/SVN/Core.pm
+>>
+>> the question is how to do the final trick of telling git how to use Core.pm
+>> (and which of the two?) and do the connexion between git and alien-svn.
+>>
+>> Sorry for the noob questions, never used perl or git before...
+> 
+> You have to install subversion-perl somewhere, not only build it.
 
-Hmm ...  "OPT_COUNTED"?
+Unfortunately, that package comes without hints on doing that.
 
--miles
+As far as I understand, alien-svn comes with SVN sources which it uses for its
+own perl packages to provide svn stuff to perl, but don't install/build new svn
+version.
 
---=20
-values of =CE=B2 will give rise to dom!
+> Though you could fiddle with PERL5LIB (which is PATH-like environmtne
+
+ > find . -name '*.pm'
+
+./src/subversion/subversion/bindings/swig/perl/native/Delta.pm
+./src/subversion/subversion/bindings/swig/perl/native/Base.pm
+./src/subversion/subversion/bindings/swig/perl/native/Ra.pm
+./src/subversion/subversion/bindings/swig/perl/native/Repos.pm
+./src/subversion/subversion/bindings/swig/perl/native/Core.pm
+./src/subversion/subversion/bindings/swig/perl/native/Wc.pm
+./src/subversion/subversion/bindings/swig/perl/native/Client.pm
+./src/subversion/subversion/bindings/swig/perl/native/blib/lib/SVN/Delta.pm
+./src/subversion/subversion/bindings/swig/perl/native/blib/lib/SVN/Base.pm
+./src/subversion/subversion/bindings/swig/perl/native/blib/lib/SVN/Ra.pm
+./src/subversion/subversion/bindings/swig/perl/native/blib/lib/SVN/Repos.pm
+./src/subversion/subversion/bindings/swig/perl/native/blib/lib/SVN/Core.pm
+./src/subversion/subversion/bindings/swig/perl/native/blib/lib/SVN/Wc.pm
+./src/subversion/subversion/bindings/swig/perl/native/blib/lib/SVN/Client.pm
+./src/subversion/subversion/bindings/swig/perl/native/blib/lib/SVN/Fs.pm
+./src/subversion/subversion/bindings/swig/perl/native/Fs.pm
+./inc/My/SVN/Builder.pm
+./lib/Alien/SVN.pm
+./blib/lib/Alien/SVN.pm
+
+and so I added the paths to PERL5LIB:
+  export PERL5LIB=\
+  <alien-svn>/blib/lib/Alien\
+  :<alien-svn>/src/subversion/subversion/bindings/swig/perl/native/blib/lib\
+  :<alien-svn>/src/subversion/subversion/bindings/swig/perl/native
+where "." is the source directory of alien-svn and where the ./Build.PL and
+./Build scripts ran.
+
+Running git-svn with that complains
+
+Can't locate loadable object for module SVN::_Core in @INC (@INC contains:
+...
+<alien-svn>/blib/lib/Alien
+<alien-svn>/src/subversion/subversion/bindings/swig/perl/native/blib/lib
+<alien-svn>/src/subversion/subversion/bindings/swig/perl/native
+...) at
+<alien-svn>/src/subversion/subversion/bindings/swig/perl/native/blib/lib/SVN/Base.pm
+line 59
+BEGIN failed--compilation aborted at
+<alien-svn>/src/subversion/subversion/bindings/swig/perl/native/blib/lib/SVN/Core.pm
+line 5.
+Compilation failed in require at /usr/local/libexec/git-core/git-svn line 42.
+
+git-svn:42 is mumbling about some problems:
+
+sub _req_svn {
+	require SVN::Core; # use()-ing this causes segfaults for me... *shrug*
+
+Or is there needed even more like a _Core.pm? alien-svn should build it,
+doesn't it?
+
+> variable to specify where to search for Perl modules) to make Perl
+> find your built but not installed Alien::SVN.
+
+How do I install that?
+
+Sorry for all these question. Admin left the company some weeks ago and I am
+struggling to get this to work somehow between my everyday work...
