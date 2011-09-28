@@ -1,60 +1,65 @@
-From: Stephen Bash <bash@genarts.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: error: addinfo_cache failed during merge
-Date: Wed, 28 Sep 2011 11:24:11 -0400 (EDT)
-Message-ID: <4364790.33608.1317223450994.JavaMail.root@mail.hq.genarts.com>
+Date: Wed, 28 Sep 2011 08:24:10 -0700
+Message-ID: <7vehz01yhx.fsf@alter.siamese.dyndns.org>
 References: <26411548.33530.1317221043429.JavaMail.root@mail.hq.genarts.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 28 17:24:38 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git discussion list <git@vger.kernel.org>
+To: Stephen Bash <bash@genarts.com>
+X-From: git-owner@vger.kernel.org Wed Sep 28 17:24:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8vzu-00046B-S9
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 17:24:35 +0200
+	id 1R8w0A-0004Cy-Gc
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 17:24:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754794Ab1I1PYa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Sep 2011 11:24:30 -0400
-Received: from hq.genarts.com ([173.9.65.1]:37418 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754811Ab1I1PYU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2011 11:24:20 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 4C080EA23C2
-	for <git@vger.kernel.org>; Wed, 28 Sep 2011 11:24:18 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id R+ynFQTD7p+U for <git@vger.kernel.org>;
-	Wed, 28 Sep 2011 11:24:11 -0400 (EDT)
-Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 1221CEA23B8
-	for <git@vger.kernel.org>; Wed, 28 Sep 2011 11:24:11 -0400 (EDT)
+	id S1754857Ab1I1PYk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Sep 2011 11:24:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44589 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754827Ab1I1PYO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2011 11:24:14 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4204D581C;
+	Wed, 28 Sep 2011 11:24:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5ifLUcyO8EQ7NImmbU1PN2HuAUI=; b=hn9VrG
+	V7CfwXhnvEIcUj/aCMOz2oZgo5uB3mt/6pv6lfy3Fs0lr7da15D0nmUDITm3LN2D
+	1LNHhw/y/tZFcaSNjv4kU8GRf9HuhK7ORy1Rq6shshgl48XoE+U5UUC6njeV663C
+	Pkoja4TTKrG6WX8BKqYlCWP3BRdQ/Dc0FLTbI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fmR5D4wrhUTk920ITVaK/5QXDUcmQlWa
+	tLF0OIq5+3G6W8yJFbyr7ZurhOr3jTOFk+B/GPFuejDbTXReIWOy9tFb1EcNZv9t
+	V7EAd4FcwPA1xABQGmNd6C9oXyfQn8TcL7gwrZV1k3x/94apOxyCootD+m569nlj
+	PwyJnml9pPo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 38B09581B;
+	Wed, 28 Sep 2011 11:24:13 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C3710581A; Wed, 28 Sep 2011
+ 11:24:12 -0400 (EDT)
 In-Reply-To: <26411548.33530.1317221043429.JavaMail.root@mail.hq.genarts.com>
-X-Mailer: Zimbra 6.0.10_GA_2692 (ZimbraWebClient - SAF3 (Mac)/6.0.10_GA_2692)
+ (Stephen Bash's message of "Wed, 28 Sep 2011 10:44:03 -0400 (EDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EB737CFE-E9E5-11E0-8594-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182333>
 
------ Original Message -----
-> From: "Stephen Bash" <bash@genarts.com>
-> To: "git discussion list" <git@vger.kernel.org>
-> Sent: Wednesday, September 28, 2011 10:44:03 AM
-> Subject: error: addinfo_cache failed during merge
->
-> Unfortunately, during the merge, I got a bunch of errors like
-> this:
-> 
-> error: addinfo_cache failed for path 'foo/bar.h'
-> 
-> So first, is this important?
+Stephen Bash <bash@genarts.com> writes:
 
-Well, to my uneducated eye, it looks like the error just left the conflicts in the working copy rather than resolving them.  Running mergetool appears to have cleaned up the problems.
+> ... I should caveat that my local git/git is a little out of date
+> because I haven't repointed it since k.org went down (I use it very
+> rarely), so there might be something newer in this area.
 
-Thanks,
-Stephen
+Indeed there have been a few fixs in this area and it would be really nice
+if you can test this with the latest master branch before 1.7.7 final
+ships.
