@@ -1,75 +1,92 @@
-From: Vijay Lakshminarayanan <laksvij@gmail.com>
-Subject: Re: emacs as mergetool
-Date: Wed, 28 Sep 2011 09:33:31 +0530
-Message-ID: <87d3elfh4c.fsf@gmail.com>
-References: <201109261821.28382.thomas@koch.ro>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH] Docs: git checkout --orphan: `root commit' and `branch head'
+Date: Wed, 28 Sep 2011 00:04:33 -0400
+Message-ID: <CAG+J_DxzcuYiffm6XVX-RQSxeMwy4Yi7CdhCdddAN=xRyJ2b5Q@mail.gmail.com>
+References: <1316960136073-6829212.post@n2.nabble.com>
+	<1316961212.4388.5.camel@centaur.lab.cmartin.tk>
+	<7vaa9r2jii.fsf@alter.siamese.dyndns.org>
+	<1317073309.5579.9.camel@centaur.lab.cmartin.tk>
+	<e88b6e560cab4ed1937dd191b4180387-mfwitten@gmail.com>
+	<4E81F080.7010905@drmicha.warpmail.net>
+	<CAMOZ1BsvnZ7PyfjOJURX+B7vCZcYheLS4pissGvPNjEivbYXtw@mail.gmail.com>
+	<7v39fhyk21.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: thomas@koch.ro
-X-From: git-owner@vger.kernel.org Wed Sep 28 06:03:53 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Witten <mfwitten@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
+	vra5107 <venkatram.akkineni@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 28 06:04:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8lNB-0001Op-CS
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 06:03:53 +0200
+	id 1R8lNx-0001dU-GP
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 06:04:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751346Ab1I1EDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Sep 2011 00:03:44 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:61964 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750905Ab1I1EDn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2011 00:03:43 -0400
-Received: by yxl31 with SMTP id 31so6020467yxl.19
-        for <git@vger.kernel.org>; Tue, 27 Sep 2011 21:03:43 -0700 (PDT)
+	id S1751555Ab1I1EEe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Sep 2011 00:04:34 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:52184 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750982Ab1I1EEe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Sep 2011 00:04:34 -0400
+Received: by ywb5 with SMTP id 5so6029007ywb.19
+        for <git@vger.kernel.org>; Tue, 27 Sep 2011 21:04:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=iacddZOF5sni6qv0MmKwxNpD0KR/y2+c8MEspAnralk=;
-        b=r9aSrAnY+bvGAND+SAy59EGWNrypfpTQJg7faq5d0DFAIpU65+pPfg/s1FXBSwknPM
-         FlNC3BowHafbjTbwD9xNbU4znpIqhg2x22uo1H4iYuRdDCt9v+v19piqP3H3GJdpJI5N
-         +FqeFX10CJ/toSSqUM0CBdaBVtynG+rFjJ9Bk=
-Received: by 10.68.40.234 with SMTP id a10mr41598650pbl.120.1317182622493;
-        Tue, 27 Sep 2011 21:03:42 -0700 (PDT)
-Received: from BALROG ([59.92.45.86])
-        by mx.google.com with ESMTPS id p9sm3365432pbq.12.2011.09.27.21.03.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 27 Sep 2011 21:03:41 -0700 (PDT)
-In-Reply-To: <201109261821.28382.thomas@koch.ro> (Thomas Koch's message of
-	"Mon, 26 Sep 2011 18:21:27 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (windows-nt)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=+4sbVtbnVIsEPtp+MNkULdzyorjJ7D/SLZJJT6JKEJs=;
+        b=uQh3DrQsUIvTck9/9dCxdwJ/fSZ0OGcHymASfRHoIVXgFx98OaimBzx5cSbEYo0a+B
+         pXDC9ZWAURpTRhZZuA6TNtfM0loiHxMpNO/unQmJ5ZgXbHbKpw7YVP1aB9cxj4vIFPRR
+         kjUzPTczl5uu0fcTxgnRWaam6Q/iJ/aqa9Xsw=
+Received: by 10.147.5.21 with SMTP id h21mr1721108yai.26.1317182673628; Tue,
+ 27 Sep 2011 21:04:33 -0700 (PDT)
+Received: by 10.147.32.18 with HTTP; Tue, 27 Sep 2011 21:04:33 -0700 (PDT)
+In-Reply-To: <7v39fhyk21.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182289>
 
-Thomas Koch <thomas@koch.ro> writes:
-
-> Hi,
+On Tue, Sep 27, 2011 at 1:25 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Michael Witten <mfwitten@gmail.com> writes:
 >
-> would you be so kind and give an emacs newbie (and vim refugee) a hint about 
-> using emacs as mergetool?
+>> It seems like a more logical approach would be instead for "git
+>> commit" to take a "--root" option that would create a new root commi=
+t
+>> based on the current index and then point the current branch head to
+>> the new root commit. Thus:
+>>
+>> =C2=A0 $ git checkout -b new_branch old_branch
+>> =C2=A0 $ # Manipulate or not
+>> =C2=A0 $ git commit --root
+>>
+>> That's how people think.
 >
-> - Which one? ediff vs. emerge (I don't bother learning, just give me the best)
-> - I'd like to have a setup, where I can run mergetool with different options 
-> to
->   - connect to a running emacs server
->   - run emacs in X
->   - or in the terminal (default)
-> - Is it possible to resolve all conflicting files in one session instead of 
-> having emacs called again for every file?
-> - Do you know a tutorial on emacs as a mergetool?
+> This may indeed be an improvement. I suspect that we'd need to think =
+about
+> it a bit more, but it feels right (perhaps introduce this new option,
+> deprecate --orphan from the checkout, and then eventually remove it
+> sometime in 1.8.0 timeframe).
 
-http://www.emacswiki.org/emacs/EmergeDiff works for me.
+Hrm, create new_branch just so you can immediately clobber its SHA1
+with the new commit that has no parents. That doesn't seem quite
+right. Imagine you use "git commit --root" by accident while on
+master, then you have to dig into your reflog?
 
-> Thank you,
->
-> Thomas Koch, http://www.koch.ro
+But it's close. Maybe:
 
--- 
-Cheers
-~vijay
+$ git commit --new-root-branch=3D<name>
+
+Which creates <name> with the index as its sole commit and switches
+you to that branch? That doesn't feel quite right either.
+
+</thinking out loud>
+
+j.
