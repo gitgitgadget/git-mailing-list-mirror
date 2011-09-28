@@ -1,106 +1,66 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: 6d4bb3833c3d2114d (fetch: verify we have everything we need before
- updating our ref) breaks fetch
-Date: Wed, 28 Sep 2011 18:04:27 +0200
-Message-ID: <1317225869.30267.18.camel@bee.lab.cmartin.tk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Signed push progress?
+Date: Wed, 28 Sep 2011 09:35:09 -0700
+Message-ID: <7v62kc1v7m.fsf@alter.siamese.dyndns.org>
+References: <20110928075054.GA13727@orbis-terrarum.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-ORH2faZWar+50fZ5Rv8s"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 28 18:04:36 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Robin H. Johnson" <robbat2@gentoo.org>
+X-From: git-owner@vger.kernel.org Wed Sep 28 18:35:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8wce-0007hu-9v
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 18:04:36 +0200
+	id 1R8x6Q-0006EG-I1
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 18:35:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754836Ab1I1QEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Sep 2011 12:04:31 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:54365 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753168Ab1I1QEa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2011 12:04:30 -0400
-Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id BF59C46180;
-	Wed, 28 Sep 2011 18:04:07 +0200 (CEST)
-X-Mailer: Evolution 3.0.3- 
+	id S1753422Ab1I1QfO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Sep 2011 12:35:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47073 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753080Ab1I1QfM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2011 12:35:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D29D4B59;
+	Wed, 28 Sep 2011 12:35:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ahqoS2T4zq8TlNCaa1IAeudklmA=; b=asqTeg
+	8rf1wQfdlNUEcon+Dl/NbBxV0dqpYvxhTLI0sbN+flknalkyTwb+v37bm/2wiXMk
+	sxl8O0U+jxYeDRyDafRPgusOzKlx9Y61WAuoWXQXWbVuUhbjsISdDONX5TiFGJLx
+	oUVviBq9HQ+gvtHuynKg4xeVrt/l5p5VVq5x0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fGhzE3ajbvwWdYdqGWuAsMRoiI64Rt13
+	eejoG+BK9VUEZ+345RU8mdxGaiOxq9/r9UTOVFlJdkdvRd2DnwJQ6eqxeMy7Myam
+	vmA6vI3+weiIgL+/d4yxlbnVDaz6kxeSsUyihDpnKBRhtKKPzhUWdR9oeDOSWEha
+	UPgn+fwKzGk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3449B4B58;
+	Wed, 28 Sep 2011 12:35:11 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AB5B64B57; Wed, 28 Sep 2011
+ 12:35:10 -0400 (EDT)
+In-Reply-To: <20110928075054.GA13727@orbis-terrarum.net> (Robin H. Johnson's
+ message of "Wed, 28 Sep 2011 07:50:54 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D55BA9D2-E9EF-11E0-8088-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182340>
 
+"Robin H. Johnson" <robbat2@gentoo.org> writes:
 
---=-ORH2faZWar+50fZ5Rv8s
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> from CVS to Git (we're very close now), we've decided that the signed
+> pushes will provide better security than our plan of previous plan of
+> using signed notes, so we'd like to see signed pushes succeed.
 
-Hello,
-
-Whilst trying to do some work related to fetch, I came across a
-regression in the 'next' branch. Bisecting gave me this commit as
-breaking point (and I tried with the parent and there it worked). When
-doing 'git fetch', rev-list will complain about usage, and fetch will
-say that we didn't receive enough, even though earlier versions of git
-have no problems. This fails both on github and on git.or.cz and for git
-and http transports:
-
-$ ./git-fetch git://repo.or.cz/git
-usage: git rev-list [OPTION] <commit-id>... [ -- paths... ]
-  limiting output:
-    --max-count=3D<n>
-    --max-age=3D<epoch>
-    --min-age=3D<epoch>
-    --sparse
-    --no-merges
-    --min-parents=3D<n>
-    --no-min-parents
-    --max-parents=3D<n>
-    --no-max-parents
-    --remove-empty
-    --all
-    --branches
-    --tags
-    --remotes
-    --stdin
-    --quiet
-  ordering output:
-    --topo-order
-    --date-order
-    --reverse
-  formatting output:
-    --parents
-    --children
-    --objects | --objects-edge
-    --unpacked
-    --header | --pretty
-    --abbrev=3D<n> | --no-abbrev
-    --abbrev-commit
-    --left-right
-  special purpose:
-    --bisect
-    --bisect-vars
-    --bisect-all
-error: git://repo.or.cz/git did not send all necessary objects
-
---=-ORH2faZWar+50fZ5Rv8s
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAABAgAGBQJOg0WLAAoJEHKRP1jG7ZzT1SsH/A8Fz5BfVUcj/0SEmK0TZ2UL
-qXpIymk5lBsigK8VS4n3PaPnpwc8Ut4tNmngAGtShkSv93bYqV/wzcDt9MYCedbg
-Upz4gk2Uq0FFXx/+s+nBgKYQFRHX8ryjjONp6DTTEiiB2RccP5UyoRVAck1PjEPN
-glUy3lOunRMNtaAwXmsi169K9wBOQ7KngKtjSFKiVNBS5Y1GUNNZr3+LsSO1bCTv
-UAGVG/aJtdsT6k8SmicTvTiKkjDwF/DnMX+fd/rVfcZiJXZt6b0E/fQntRCegi4K
-JQdTf3K0LWIdRP2C92R9IRIigJlus75IcBYxyrLhxJdMBtR8vaZuJGV3tLyUtQQ=
-=PvwE
------END PGP SIGNATURE-----
-
---=-ORH2faZWar+50fZ5Rv8s--
+Could you elaborate on your "previous plan" a bit? What is a signed note,
+how would it help validate the authenticity, how do developers interact
+using it and what do you perceive as weaknesses compared to the signed
+push that we discussed a few weeks ago?
