@@ -1,75 +1,57 @@
-From: Cord Seele <cowose@googlemail.com>
-Subject: Re: [PATCH] git-send-email.perl: expand filename of aliasesfile
-Date: Wed, 28 Sep 2011 16:40:57 +0200
-Message-ID: <20110928144057.GC12586@laptop>
-References: <20110928131307.GB12586@laptop>
- <vpqwrcspyvq.fsf@bauges.imag.fr>
+From: Stephen Bash <bash@genarts.com>
+Subject: error: addinfo_cache failed during merge
+Date: Wed, 28 Sep 2011 10:44:03 -0400 (EDT)
+Message-ID: <26411548.33530.1317221043429.JavaMail.root@mail.hq.genarts.com>
+References: <8172019.33448.1317219409234.JavaMail.root@mail.hq.genarts.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Sep 28 16:41:17 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 28 16:44:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8vK0-0004PZ-34
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 16:41:16 +0200
+	id 1R8vMz-0006Tx-HY
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 16:44:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753251Ab1I1OlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Sep 2011 10:41:00 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:49505 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751346Ab1I1OlA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2011 10:41:00 -0400
-Received: by fxe4 with SMTP id 4so623970fxe.19
-        for <git@vger.kernel.org>; Wed, 28 Sep 2011 07:40:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=rQ8dj405TP9xXfYBkad9BwpUrxvSE0ygG59OT1QinHc=;
-        b=BJQWd/eAdffDzFVOWqC4m8qNcshWotyBKK6xrsES+UVK4r1Qo28fwksQ1WqJlcsF6o
-         j07PMkzVRMSc6sc9ked2eiirzuxUf3TRj0bSVefZyQ+JKcsnel+kUVZSuXpirmZsLphS
-         nSihA0uVwjW45b3EBzc/lrtr9CBRGbPEodbHg=
-Received: by 10.223.42.202 with SMTP id t10mr156387fae.71.1317220858860;
-        Wed, 28 Sep 2011 07:40:58 -0700 (PDT)
-Received: from laptop (p4FF1B1D8.dip.t-dialin.net. [79.241.177.216])
-        by mx.google.com with ESMTPS id h16sm27544363fab.19.2011.09.28.07.40.57
-        (version=SSLv3 cipher=OTHER);
-        Wed, 28 Sep 2011 07:40:58 -0700 (PDT)
-Mail-Followup-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>
-Content-Disposition: inline
-In-Reply-To: <vpqwrcspyvq.fsf@bauges.imag.fr>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754391Ab1I1OoQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Sep 2011 10:44:16 -0400
+Received: from hq.genarts.com ([173.9.65.1]:23834 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754316Ab1I1OoP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2011 10:44:15 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id ADA69EA22EC
+	for <git@vger.kernel.org>; Wed, 28 Sep 2011 10:44:11 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 4hDA+VLwFIcQ for <git@vger.kernel.org>;
+	Wed, 28 Sep 2011 10:44:03 -0400 (EDT)
+Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 8A8BEEA22F5
+	for <git@vger.kernel.org>; Wed, 28 Sep 2011 10:44:03 -0400 (EDT)
+In-Reply-To: <8172019.33448.1317219409234.JavaMail.root@mail.hq.genarts.com>
+X-Mailer: Zimbra 6.0.10_GA_2692 (ZimbraWebClient - SAF3 (Mac)/6.0.10_GA_2692)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182327>
 
-On Wed 28 Sep 2011 15:42:01 +0200, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
+Hi all-
 
-> Cord Seele <cowose@googlemail.com> writes:
-> 
-> > -		open my $fh, '<', $file or die "opening $file: $!\n";
-> > +		open my $fh, '<', glob($file) or die "opening $file: $!\n";
-> 
-> That'd be cleaner to use
-> 
-> git config --path sendemail.aliasesfile
-> 
-> to let Git do the right expansion, in a way consistant with other places
-> of Git.
+I'm in the process of implementing whitespace and EOL normalization for our repo.  Having completed the work on our oldest maintenance branch, I'm attempting to merge the changes recursively into newer branches.
 
-This means to expand it at 'git config' time? Wouldn't it be nicer to
-have it expanded when you run 'git send-email'? Then you could move your
-~/.gitconfig (that's where I have my aliasesfile configured) between different
-accounts and it could still work.
+My approach is to merge using '-s recursive -X ours --no-commit' since the only conflicts are whitespace/EOL changes and I have to renormalize the current branch before committing anyway (new files, etc.).  Unfortunately, during the merge, I got a bunch of errors like this:
 
--- Cord
+error: addinfo_cache failed for path 'foo/bar.h'
+
+So first, is this important?  Second, can that message be replaced with something more helpful?  I'm not exactly a newbie, and I certainly can't grok that message...
+
+Doing a bit of archeology, pickaxe shows it arose in 0424138 "Fix bogus error message from merge-recursive error path", but that was Junio cleaning up the message a bit.  The original message is from the creation of merge-recursive.c in 6d297f8 "Status update on merge-recursive in C".  I should caveat that my local git/git is a little out of date because I haven't repointed it since k.org went down (I use it very rarely), so there might be something newer in this area.
+
+Thanks,
+Stephen
