@@ -1,135 +1,135 @@
-From: Joseph Parmelee <jparmele@wildbear.com>
-Subject: RE: Lack of detached signatures
-Date: Wed, 28 Sep 2011 06:36:10 -0600 (CST)
-Message-ID: <alpine.LNX.2.00.1109280555460.25187@bruno>
-References: <alpine.LNX.2.00.1109271742460.24832@bruno>  <7vty7xttxh.fsf@alter.siamese.dyndns.org>  <CAMOZ1Bs2HW6e3V6sayVSm0NhC=0e5129ZR8YSGuZPnJw9H9TEA@mail.gmail.com>  <4B2793BF110AAB47AB0EE7B90897038516F63A7C@ORSMSX101.amr.corp.intel.com>
- <1317195719.30267.4.camel@bee.lab.cmartin.tk>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: subversion-perl missing
+Date: Wed, 28 Sep 2011 14:59:30 +0200
+Message-ID: <201109281459.31689.jnareb@gmail.com>
+References: <4E8066AB.7000208@gjlay.de> <m3k48vp6l7.fsf@localhost.localdomain> <4E82F18E.9080304@gjlay.de>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463811328-1754446401-1317213370=:25187"
-Cc: "Olsen, Alan R" <alan.r.olsen@intel.com>,
-	Michael Witten <mfwitten@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: =?ISO-8859-15?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Wed Sep 28 14:36:19 2011
+Content-Type: text/plain;
+  charset="iso-8859-4"
+Content-Transfer-Encoding: 7bit
+Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+To: Georg-Johann Lay <avr@gjlay.de>
+X-From: git-owner@vger.kernel.org Wed Sep 28 14:59:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8tN4-0008T0-KL
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 14:36:18 +0200
+	id 1R8tjn-0002mM-Hp
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 14:59:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754097Ab1I1MgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Sep 2011 08:36:14 -0400
-Received: from ip205-30-10-190.ct.co.cr ([190.10.30.205]:49955 "EHLO
-	bruno.wildbear.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752921Ab1I1MgM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2011 08:36:12 -0400
-Received: by bruno.wildbear.com (Postfix, from userid 503)
-	id 7D8871BE05BF; Wed, 28 Sep 2011 06:36:10 -0600 (CST)
-Received: from localhost (localhost [127.0.0.1])
-	by bruno.wildbear.com (Postfix) with ESMTP id 61A401BE029D;
-	Wed, 28 Sep 2011 06:36:10 -0600 (CST)
-X-X-Sender: jparmele@bruno
-In-Reply-To: <1317195719.30267.4.camel@bee.lab.cmartin.tk>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1754068Ab1I1M7m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Sep 2011 08:59:42 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:52266 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753504Ab1I1M7l (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2011 08:59:41 -0400
+Received: by fxe4 with SMTP id 4so519954fxe.19
+        for <git@vger.kernel.org>; Wed, 28 Sep 2011 05:59:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=jvj3ViSZsULB5GX/NHegBCGaTNxCw5IjEPEJDuo1kTE=;
+        b=G0UnMEcrpr2FkeposecfeLYLm80ol0Tk46RTuYPVpVxzjnfJuE0LPIGwen4YAgKKpG
+         Epc7m5BRFIK7MAxdL9Hel6V5Iq+nDgcelzbIs+K/4rp0/IgG7gJLcGZsYZEwdAw6kGjn
+         XWB9N5jRNO3Mije6iyl9kuMVudG/+n+05oYHQ=
+Received: by 10.223.49.213 with SMTP id w21mr14476960faf.44.1317214780482;
+        Wed, 28 Sep 2011 05:59:40 -0700 (PDT)
+Received: from [192.168.1.13] (abvu115.neoplus.adsl.tpnet.pl. [83.8.218.115])
+        by mx.google.com with ESMTPS id v17sm27249730fai.18.2011.09.28.05.59.37
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 28 Sep 2011 05:59:38 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4E82F18E.9080304@gjlay.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182309>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
----1463811328-1754446401-1317213370=:25187
-Content-Type: TEXT/PLAIN; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-
-On Wed, 28 Sep 2011, Carlos Martín Nieto wrote:
-
-> On Wed, 2011-09-28 at 04:17 +0000, Olsen, Alan R wrote:
->> [Sorry for the top posting. Outlook is evil.]
->>
->> Detached signatures are created with gpg, not git.
->
-> Git delegates all the signing business to gpg.
->
->>
->> What I would like to see in git would be signed commits. I have looked
->
-> Every single commit? That sounds very heavy. You might want to look at
-> signed pushes (signed push certificates), which were discussed in the
-> list some time the kernel.org intrusion.
->
-> Due to the way git calculates the hash for each object, signing a tag
-> means that you also sign every single commit up to that point (with all
-> their tree and blob objects).
->
->>  at what it would take to make it work, but I don't have all the
->> details worked out. (Certain merges and cherry-picks would not work
->> very well.)
->
-> This is precisely because of the cryptographic hash that is used to make
-> sure that history doesn't get changed.
->
->   cmn
->
->>
->> -----Original Message-----
->> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On Behalf Of Michael Witten
->> Sent: Tuesday, September 27, 2011 5:08 PM
->> To: Junio C Hamano
->> Cc: Joseph Parmelee; git@vger.kernel.org
->> Subject: Re: Lack of detached signatures
->>
->> On Wed, Sep 28, 2011 at 00:03, Junio C Hamano <gitster@pobox.com> wrote:
->>> Joseph Parmelee <jparmele@wildbear.com> writes:
+On Wed, 28 Sep 2011, Georg-Johann Lay wrote:
+> Jakub Narebski schrieb:
+>> Georg-Johann Lay writes:
+>>> Christian Couder schrieb:
+>>>> On Mon, Sep 26, 2011 at 1:48 PM, Georg-Johann Lay <spam@spam.com> wrote:
+ 
+>>>>> Where do I have to go to get the svn+perl stuff? Couldn't locate anything like
+>>>>> that in subversion.tigris.org, so that I am stuck and need some hints on how to
+>>>>> proceed.
+>>>>
+>>>> Perhaps you can try to install this module from CPAN:
+>>>>
+>>>> http://search.cpan.org/~mschwern/Alien-SVN-v1.6.12.1/
+>>>>
+>>>> or from it's github repo:
+>>>>
+>>>> https://github.com/schwern/alien-svn
 >>>
->>>> Under the present circumstances, and particularly considering the
->>>> sensitivity of the git code itself, I would suggest that you implement
->>>> signed detached digital signatures on all release tarballs.
+>>> thanks for that hint.
 >>>
->>> Well, signed tags are essentially detached signatures. People can verify
->>> tarballs against them if they wanted to, although it is a bit cumbersome.
->>
->> Aren't tarballs used to get git on machines that don't yet have git?
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->> NrybX?v^)?{.n+??}?z&j:+vzZ++zfh~izw?&)?f
->
->
->
+>>> After getting that piece of software, running ./Build.PL and ./Build I just
+>>> don't know what to do next.  The README doesn't say anything about how to use
+>>> the built modules or how to do an install.
+>> 
+>> If you don't have admin privileges on the box, the best solution would
+>> be to use local::lib[1] to install Perl modules in your home directory
+>> for you (#perl IRC channel on FreeNode, or perlmonks are really helpful).
+>> 
+>> I really recommend it, together with cpanm[2] (which can configure
+>> local::lib for you, via --local-lib option), though the latter is not
+>> necessary.
+>> 
+>> [1]: http://search.cpan.org/~apeiron/local-lib-1.008004/lib/local/lib.pm
+>> [2]: http://search.cpan.org/~miyagawa/App-cpanminus-1.4008/bin/cpanm
+>> 
+>> 
+>> If you have admin privileges, I think the best solution would be
+>> either find repository which has subversion-perl that matches your
+>> version of Subversion, or compile subversion-perl from a source
+>> package... though this might be more difficult, it has advantage of
+>> being in package management.
+>>  
+>>> As git-svn complains
+>>>
+>>> ...Can't locate SVN/Core.pm in @INC (@INC contains: ...
+>>>
+>>> and
+>>>
+>>>  schwern-alien-svn-9298884>find . -name 'Core.pm'
+>>> ./src/subversion/subversion/bindings/swig/perl/native/Core.pm
+>>> ./src/subversion/subversion/bindings/swig/perl/native/blib/lib/SVN/Core.pm
+>>>
+>>> the question is how to do the final trick of telling git how to use Core.pm
+>>> (and which of the two?) and do the connexion between git and alien-svn.
+>>>
+>>> Sorry for the noob questions, never used perl or git before...
+>> 
+>> You have to install subversion-perl somewhere, not only build it.
+> 
+> Unfortunately, that package comes without hints on doing that.
+> 
+> As far as I understand, alien-svn comes with SVN sources which it uses for its
+> own perl packages to provide svn stuff to perl, but don't install/build new svn
+> version.
 
-There is confusion here between the repository and the tarball.  Once you
-have produced the tarball there is NO cryptographic protection against
-forgeries unless you sign it with GPG.  That is my point: either produce
-signatures with the tarballs, or don't provide them at all and force users
-to clone the repository.  Git itself provides internal crytopgraphic
-protection with its commit tags.
+Step by step instruction.
 
-The stability of the head depends on the policies followed by the developers
-and cannot be known by users not intimately involved in the development.  In
-any event if there is a tarball most users assume that it represents a more
-stable state of the repository than the head and they will tend to use it,
-even if they already have a version of the code, instead of cloning the
-repository directly.
+1. Follow instructions on local::lib manpage
+   http://search.cpan.org/perldoc?local::lib
 
-Git, and its signing key, are high-value targets for the bad guys, even
-higher than the kernel itself.  I hope you will give just a moment's thought
-to the damage that will be done if bad guys succeed in a DNS poisoning
-attack and succeed in passing off a phony git tarball with a back door in
-the git code itself to a major code project.  Any code produced in a
-repository using that phony version of git can then itself be corrupted.
+   c.f. http://perl.jonallen.info/writing/articles/install-perl-modules-without-root
 
-It is only because kernel.org exercised due diligence in the production of
-tags and signatures on all their tarballs that the kernel code itself
-withstood their recent intrusion.  I suspect that their signing key was not
-so lucky and needs to be changed.  The situation now is really dangerous
-with various important projects scattered about, including git, which are
-being operated without proper consideration of security.
----1463811328-1754446401-1317213370=:25187--
+2. (Optional). Follow instructions on cpanm manpage, e.g. http://cpanmin.us
+   or http://search.cpan.org/perldoc?cpanm
+
+3. Install Alien::SVN from CPAN using 'cpan' client or 'cpanm', e.g.
+
+   $ cpanm Alien::SVN
+
+Now you are able to install Perl modules in your home directory.
+-- 
+Jakub Narebski
+Poland
