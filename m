@@ -1,83 +1,77 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] git-remote-mediawiki: allow a domain to be set for authentication
-Date: Wed, 28 Sep 2011 15:48:01 +0200
-Message-ID: <1317217681-18763-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <1317146100-22938-3-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Sep 28 15:48:51 2011
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: [PATCH] Docs: git checkout --orphan: `root commit' and `branch head'
+Date: Wed, 28 Sep 2011 13:50:00 +0000
+Message-ID: <CAMOZ1Bu8UiV+Z0+0CLjxSv5Zic8i4=aGxnzmLc+H7c2T-P4avw@mail.gmail.com>
+References: <7vaa9r2jii.fsf@alter.siamese.dyndns.org> <1317073309.5579.9.camel@centaur.lab.cmartin.tk>
+ <e88b6e560cab4ed1937dd191b4180387-mfwitten@gmail.com> <4E81F080.7010905@drmicha.warpmail.net>
+ <CAMOZ1BsvnZ7PyfjOJURX+B7vCZcYheLS4pissGvPNjEivbYXtw@mail.gmail.com>
+ <7v39fhyk21.fsf@alter.siamese.dyndns.org> <4E823359.7080602@nextest.com>
+ <DBCBE20265964ECCA5B9724DAC74D83B@PhilipOakley> <20110927214213.GC5176@sigill.intra.peff.net>
+ <CAMOZ1BvzWDPQ_e3Y5H8CX4wQwL5xf3xVvZvRL3gQPcB_kCGBbw@mail.gmail.com>
+ <20110927233549.GA10434@sigill.intra.peff.net> <7vpqiltsky.fsf@alter.siamese.dyndns.org>
+ <CAMOZ1BvL85xsQpZdez4VJ+dH4NoQ9RkthHY9OsmdnnaZ_tFnFg@mail.gmail.com> <vpqty7wok5a.fsf@bauges.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Philip Oakley <philipoakley@iee.org>,
+	Eric Raible <raible@nextest.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
+	vra5107 <venkatram.akkineni@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Sep 28 15:50:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8uVH-00018c-Cz
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 15:48:51 +0200
+	id 1R8uX8-0002Ft-AE
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 15:50:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754387Ab1I1Nse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Sep 2011 09:48:34 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:57464 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754381Ab1I1Nsc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2011 09:48:32 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p8SDjtMu029916
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 28 Sep 2011 15:45:56 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1R8uUa-0000iq-Ee; Wed, 28 Sep 2011 15:48:08 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1R8uUa-0004tF-9Q; Wed, 28 Sep 2011 15:48:08 +0200
-X-Mailer: git-send-email 1.7.7.rc0.75.g56f27
-In-Reply-To: <1317146100-22938-3-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 28 Sep 2011 15:45:56 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p8SDjtMu029916
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1317822357.83519@/OrRIZVNExYVnzdMuJrerw
+	id S1754409Ab1I1Nuc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Sep 2011 09:50:32 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:45530 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754406Ab1I1Nub convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Sep 2011 09:50:31 -0400
+Received: by vws1 with SMTP id 1so7480386vws.19
+        for <git@vger.kernel.org>; Wed, 28 Sep 2011 06:50:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=AlQihVEHp1rXyue/NXadgmpbIb+e+kTKyFY42EuSMpc=;
+        b=ebaLI5V2ewyj1/8gjjo0ipm0737dHdXOn8OG4o8C6lM6Hoc7JG+G5kANaNRYeQJhFR
+         Pt8hkw2ZmotxeNIgZUgaVx3FCfvAsOw8QPepoREg9MdKF23wXCK+kThwLCB2ZQczjvD6
+         FqCxUzN9mwK9CmoVc4tNiwH/56QKOb7z9dGKE=
+Received: by 10.229.72.208 with SMTP id n16mr6730241qcj.165.1317217830103;
+ Wed, 28 Sep 2011 06:50:30 -0700 (PDT)
+Received: by 10.229.233.6 with HTTP; Wed, 28 Sep 2011 06:50:00 -0700 (PDT)
+In-Reply-To: <vpqty7wok5a.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182315>
 
-When the wiki uses e.g. LDAP for authentication, the web interface shows
-a popup to allow the user to chose an authentication domain, and we need
-to use lgdomain in the API at login time.
+On Wed, Sep 28, 2011 at 13:45, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Michael Witten <mfwitten@gmail.com> writes:
+>
+>> Well, I think Jeff already proferred a solution. We could have:
+>>
+>> =C2=A0 git commit --no-parent
+> [...]
+>
+> Appart from the safety objections, is the "root commit" senario commo=
+n
+> enough to deserve appearing in the user-interface for both "commit" a=
+nd
+> "checkout"?
+>
+> I think "git commit -h" is scary enough as it is ...
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- contrib/mw-to-git/git-remote-mediawiki |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
-index b809792..0b32d18 100755
---- a/contrib/mw-to-git/git-remote-mediawiki
-+++ b/contrib/mw-to-git/git-remote-mediawiki
-@@ -76,8 +76,10 @@ my $wiki_login = run_git("config --get remote.". $remotename .".mwLogin");
- # inside a remote helper, so our stdin is connect to git, not to a
- # terminal.
- my $wiki_passwd = run_git("config --get remote.". $remotename .".mwPassword");
-+my $wiki_domain = run_git("config --get remote.". $remotename .".mwDomain");
- chomp($wiki_login);
- chomp($wiki_passwd);
-+chomp($wiki_domain);
- 
- # Import only last revisions (both for clone and fetch)
- my $shallow_import = run_git("config --get --bool remote.". $remotename .".shallow");
-@@ -158,6 +160,7 @@ sub mw_connect_maybe {
- 		if (!$mediawiki->login({
- 			lgname => $wiki_login,
- 			lgpassword => $wiki_passwd,
-+			lgdomain => $wiki_domain,
- 		})) {
- 			print STDERR "Failed to log in mediawiki user \"$wiki_login\" on $url\n";
- 			print STDERR "(error " .
--- 
-1.7.7.rc0.75.g56f27
+Well, as Junio mentioned, "--orphan" could be deprecated in favor of
+"--no-parent"; the uncommon nature of this task works to our
+advantage, in that it makes a deprecation of "--orphan" easy.
