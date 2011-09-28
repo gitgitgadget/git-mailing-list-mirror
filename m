@@ -1,89 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Docs: git checkout --orphan: `root commit' and `branch
- head'
-Date: Wed, 28 Sep 2011 11:17:29 -0700
-Message-ID: <7vwrcszg3q.fsf@alter.siamese.dyndns.org>
-References: <7vaa9r2jii.fsf@alter.siamese.dyndns.org>
- <1317073309.5579.9.camel@centaur.lab.cmartin.tk>
- <e88b6e560cab4ed1937dd191b4180387-mfwitten@gmail.com>
- <4E81F080.7010905@drmicha.warpmail.net>
- <CAMOZ1BsvnZ7PyfjOJURX+B7vCZcYheLS4pissGvPNjEivbYXtw@mail.gmail.com>
- <7v39fhyk21.fsf@alter.siamese.dyndns.org> <4E823359.7080602@nextest.com>
- <DBCBE20265964ECCA5B9724DAC74D83B@PhilipOakley>
- <20110927214213.GC5176@sigill.intra.peff.net>
- <CAMOZ1BvzWDPQ_e3Y5H8CX4wQwL5xf3xVvZvRL3gQPcB_kCGBbw@mail.gmail.com>
- <20110927233549.GA10434@sigill.intra.peff.net>
- <7vpqiltsky.fsf@alter.siamese.dyndns.org>
- <CAMOZ1BvL85xsQpZdez4VJ+dH4NoQ9RkthHY9OsmdnnaZ_tFnFg@mail.gmail.com>
- <vpqty7wok5a.fsf@bauges.imag.fr>
- <CAMOZ1Bu8UiV+Z0+0CLjxSv5Zic8i4=aGxnzmLc+H7c2T-P4avw@mail.gmail.com>
- <vpq4nzwoj1o.fsf@bauges.imag.fr>
+Subject: Re: 6d4bb3833c3d2114d (fetch: verify we have everything we need
+ before updating our ref) breaks fetch
+Date: Wed, 28 Sep 2011 11:50:07 -0700
+Message-ID: <7vsjngzelc.fsf@alter.siamese.dyndns.org>
+References: <1317225869.30267.18.camel@bee.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Witten <mfwitten@gmail.com>, Jeff King <peff@peff.net>,
-	Philip Oakley <philipoakley@iee.org>,
-	Eric Raible <raible@nextest.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	vra5107 <venkatram.akkineni@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Sep 28 20:17:39 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Wed Sep 28 20:50:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R8yhN-0004fh-UQ
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 20:17:38 +0200
+	id 1R8zD1-0003Ur-69
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Sep 2011 20:50:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754738Ab1I1SRd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Sep 2011 14:17:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58620 "EHLO
+	id S1754747Ab1I1SuN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Sep 2011 14:50:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39771 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753647Ab1I1SRc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2011 14:17:32 -0400
+	id S1753227Ab1I1SuM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Sep 2011 14:50:12 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0256A460D;
-	Wed, 28 Sep 2011 14:17:32 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 06C304EE4;
+	Wed, 28 Sep 2011 14:50:11 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PTqRP1IxTM/M+sZ4kCgSmO6qJxc=; b=cZ0Mre
-	v/A7U71goGGG0EV6jN3f5NYRDAJrzCdQEuicpBsIv7ge+HYKQ05Q9y7c5kixCbtu
-	m88U2Rugc4yYdRaYTCJYuyCbTsAqr+LqMyJa2b9xaoGW2wXxKeaJLZ9QaXz+SjkO
-	uHy9udjd4v1m1Q8U57oQIozEUUf5lHZqb3sow=
+	:content-type:content-transfer-encoding; s=sasl; bh=8BktMCwh0nRJ
+	+vKh4b3yoOxVr5U=; b=x5xjj5yw4OfcRGT4srLjEB0fW7WlRpva07KYlqYqJKBZ
+	FtIfa2OmwuyaQmfqf2OnQsM6C5115zvi5h+0V/+TOAOeVtEzK0xo2M1NFM+5X3a3
+	zi6p5oTtAfA4C6LCTM3Uz4f2yt3HrnNOsdOBURB+Y/tJe7zptr2c3+/f4ZVlfyg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fxKOO/f+GLRK1LlljEcqbadk6tFWLnUk
-	vkPTHhKCvJajRUVi7FGfp0CJpuDGrPpzVaF5JD+xbnSOr/Im8a3jOuQo/upt9EXh
-	6BjixSjIPrnfP4IdhdNyNQ06W+WVqidIqJIhFQAQZh2L7awx9aYVggzA5SHe8Yf5
-	qLNKY4zkyp0=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=puXlQO
+	AI6mrTgF82TMjoilnpVCVKlwwYgknx1VSGFdSmEKz0qgPtj1Hyg9tE7qtJ1NkvjT
+	jkW2S+NHx2Qaa0cOamilMCbFtnkbjJGtwx/Exe2Y6YBjXX0cnV1pSMZY+WIt+hz4
+	o+Sk7B9Bnf1OjComoQvB3z8pum8IW6X4Rs0kY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EC4BC460C;
-	Wed, 28 Sep 2011 14:17:31 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F33B44EE3;
+	Wed, 28 Sep 2011 14:50:10 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6CB46460B; Wed, 28 Sep 2011
- 14:17:31 -0400 (EDT)
-In-Reply-To: <vpq4nzwoj1o.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Wed, 28 Sep 2011 16:09:23 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3E63D4EE2; Wed, 28 Sep 2011
+ 14:50:09 -0400 (EDT)
+In-Reply-To: <1317225869.30267.18.camel@bee.lab.cmartin.tk> ("Carlos
+ =?utf-8?Q?Mart=C3=ADn?= Nieto"'s message of "Wed, 28 Sep 2011 18:04:27
+ +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 218C68C4-E9FE-11E0-9FF7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B078E7AC-EA02-11E0-B47B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182356>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
 
-> Michael Witten <mfwitten@gmail.com> writes:
+> Whilst trying to do some work related to fetch, I came across a
+> regression in the 'next' branch....
 >
->> Well, as Junio mentioned, "--orphan" could be deprecated in favor of
->> "--no-parent"; the uncommon nature of this task works to our
->> advantage, in that it makes a deprecation of "--orphan" easy.
->
-> I agree that _some_ cases would be more natural with commit --no-parent,
-> but I disagree that it is a better solution in general.
+> $ ./git-fetch git://repo.or.cz/git
 
-Just for the record, in my later message after reading Peff's response, I
-said I agree that adding it to "commit" would be a mistake.
+That invocation of ./git-fetch looks suspicious.
+
+Are you sure that it internally invokes ./git-rev-list from the same
+version that knows --verify-objects option (you just built in your curr=
+ent
+directory), or is it invoking an old git-rev-list that is installed and=
+ is
+reachable from your usual $PATH, which does not know that option yet?
+
+When I try a new version that was just built in my current directory, h=
+ere
+is an incantation I use:
+
+    GIT_EXEC_PATH=3D`pwd`
+    PATH=3D`pwd`:/usr/bin:/bin
+    GITPERLLIB=3D`pwd`/perl/blib/lib
+
+    export GIT_EXEC_PATH PATH GITPERLLIB
