@@ -1,79 +1,76 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Lack of detached signatures
-Date: Thu, 29 Sep 2011 16:52:51 +0200
-Message-ID: <CAGdFq_gCkGkSnoHHdOpRb1+RP6YXPSEOwYVTbCZHeHtHzsaB9g@mail.gmail.com>
-References: <1317195719.30267.4.camel@bee.lab.cmartin.tk> <alpine.LNX.2.00.1109280555460.25187@bruno>
- <7v1uv01uqm.fsf@alter.siamese.dyndns.org> <20110928222542.GA18120@sigill.intra.peff.net>
- <20110928230958.GJ19250@thunk.org> <7vd3ekxkca.fsf@alter.siamese.dyndns.org>
- <20110929015919.GL19250@thunk.org> <7vbou4uhuu.fsf@alter.siamese.dyndns.org>
- <20110929131845.GQ19250@thunk.org> <CAGdFq_h6shMp+d4f1bG=if6L11M_5ixN5JF7KgCrZJ44QBt0QQ@mail.gmail.com>
- <20110929145046.GC13705@thunk.org>
+From: Joe Perches <joe@perches.com>
+Subject: Re: [PATCH v4] send-email: auth plain/login fix
+Date: Thu, 29 Sep 2011 08:01:14 -0700
+Message-ID: <1317308474.1854.8.camel@Joe-Laptop>
+References: <20110929141616.GU10763@in.waw.pl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Joseph Parmelee <jparmele@wildbear.com>,
-	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
-	"Olsen, Alan R" <alan.r.olsen@intel.com>,
-	Michael Witten <mfwitten@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Ted Ts'o" <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Sep 29 16:53:40 2011
+Cc: gitster@pobox.com, git@vger.kernel.org, peff@peff.net
+To: Zbigniew =?UTF-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Thu Sep 29 17:01:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9HzV-0008Sc-5s
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 16:53:37 +0200
+	id 1R9I6y-0003oO-3j
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 17:01:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755033Ab1I2Oxc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Sep 2011 10:53:32 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:55959 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751204Ab1I2Oxc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Sep 2011 10:53:32 -0400
-Received: by vcbfk10 with SMTP id fk10so496120vcb.19
-        for <git@vger.kernel.org>; Thu, 29 Sep 2011 07:53:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=mqA7fzdqSjuNAJkiStGV72+EOzDnYqU6UhiQ6lgFjnk=;
-        b=URec3uZcritu3tdsftnw0tRpXBe6ne4NVn1iEYNeLCANwUXhcy1on1L7n9bT2ZG1Km
-         oDWBeOJcjwF7CXhu2xdBX9Kopf9iIUQTPTOQc/+RsHhLB88rFnSeh4fPJMLwj6QF87H9
-         2wyMNIRW/22EuxAL6ER3qXfoj7R2RIhObTP/0=
-Received: by 10.68.15.70 with SMTP id v6mr33748019pbc.85.1317308011051; Thu,
- 29 Sep 2011 07:53:31 -0700 (PDT)
-Received: by 10.68.62.3 with HTTP; Thu, 29 Sep 2011 07:52:51 -0700 (PDT)
-In-Reply-To: <20110929145046.GC13705@thunk.org>
+	id S1756705Ab1I2PBQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Sep 2011 11:01:16 -0400
+Received: from perches-mx.perches.com ([206.117.179.246]:40521 "EHLO
+	labridge.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754863Ab1I2PBP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Sep 2011 11:01:15 -0400
+Received: from [173.60.85.8] (account joe@perches.com HELO [192.168.1.155])
+  by labridge.com (CommuniGate Pro SMTP 5.0.14)
+  with ESMTPA id 18209450; Thu, 29 Sep 2011 08:01:14 -0700
+In-Reply-To: <20110929141616.GU10763@in.waw.pl>
+X-Mailer: Evolution 3.1.92- 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182404>
 
-Heya,
+On Thu, 2011-09-29 at 16:16 +0200, Zbigniew J=C4=99drzejewski-Szmek wro=
+te:
+> git send-email was not authenticating properly when communicating ove=
+r
+> TLS with a server supporting only AUTH PLAIN and AUTH LOGIN. This is
+> e.g. the standard server setup under debian with exim4 and probably
+> everywhere where system accounts are used.
+>=20
+> The problem (only?) exists when libauthen-sasl-cyrus-perl
+> (Authen::SASL::Cyrus) is installed. Importing Authen::SASL::Perl
+> makes Authen::SASL use the perl implementation which works
+> better.
+[]
+> diff --git a/git-send-email.perl b/git-send-email.perl
+[]
+> @@ -1098,6 +1098,10 @@ X-Mailer: git-send-email $gitversion
+>  		}
+> =20
+>  		if (defined $smtp_authuser) {
+> +			eval {
+> +				require Authen::SASL;
+> +				Authen::SASL->import(qw(Perl));
+> +			};
 
-On Thu, Sep 29, 2011 at 16:50, Ted Ts'o <tytso@mit.edu> wrote:
-> On Thu, Sep 29, 2011 at 04:40:54PM +0200, Sverre Rabbelier wrote:
->>
->> This all sounds very interesting. Where is this discussion on a new
->> web of trust taking place? The kernel mailing list? Do you have a
->> message-id / gmane.org link for me to read more about this perhaps?
->
-> It's been taking place on private e-mails and on conference calls
-> amongst those of us who have been organizing the kernel.org recovery
-> efforts. =C2=A0There will be a more detailed discussion and a GPG key
-> signing party that I will be organizing at the upcoming kernel summit
-> meeting in Prague.
->
-> What are your concerns?
+Thanks for keeping at this.
 
-Not concerned at all. I just would have enjoyed listening in to those
-more knowledgeable than me discussing security and trust :).
+One comment:
 
---=20
-Cheers,
+This is a workaround for a nominal defect.
 
-Sverre Rabbelier
+As such, I think the code should be commented
+to note why it exists.
+
+How about adding a comment like:
+
+ 		if (defined $smtp_authuser) {
+			# Workaround AUTH PLAIN/LOGIN interaction defect
+			# with Authen::SASL::Cyrus
+			eval {
+				require Authen::SASL;
