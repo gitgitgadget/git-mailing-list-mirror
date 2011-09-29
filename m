@@ -1,89 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Lack of detached signatures
-Date: Wed, 28 Sep 2011 20:50:49 -0700
-Message-ID: <7vbou4uhuu.fsf@alter.siamese.dyndns.org>
-References: <alpine.LNX.2.00.1109271742460.24832@bruno>
- <7vty7xttxh.fsf@alter.siamese.dyndns.org>
- <CAMOZ1Bs2HW6e3V6sayVSm0NhC=0e5129ZR8YSGuZPnJw9H9TEA@mail.gmail.com>
- <4B2793BF110AAB47AB0EE7B90897038516F63A7C@ORSMSX101.amr.corp.intel.com>
- <1317195719.30267.4.camel@bee.lab.cmartin.tk>
- <alpine.LNX.2.00.1109280555460.25187@bruno>
- <7v1uv01uqm.fsf@alter.siamese.dyndns.org>
- <20110928222542.GA18120@sigill.intra.peff.net>
- <20110928230958.GJ19250@thunk.org> <7vd3ekxkca.fsf@alter.siamese.dyndns.org>
- <20110929015919.GL19250@thunk.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Annotated branch =?utf-8?B?4omIIGFu?= =?utf-8?Q?notated?= tag?
+Date: Thu, 29 Sep 2011 02:44:04 -0400
+Message-ID: <20110929064404.GA14022@sigill.intra.peff.net>
+References: <7vy5xi4y3m.fsf@alter.siamese.dyndns.org>
+ <1316729362-7714-1-git-send-email-gitster@pobox.com>
+ <4E7C49CF.60508@drmicha.warpmail.net>
+ <20110923201824.GA27999@sigill.intra.peff.net>
+ <4E7DEC4A.3050900@drmicha.warpmail.net>
+ <20110927215843.GE5176@sigill.intra.peff.net>
+ <4E82A13B.2080509@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Joseph Parmelee <jparmele@wildbear.com>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	"Olsen\, Alan R" <alan.r.olsen@intel.com>,
-	Michael Witten <mfwitten@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Ted Ts'o <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Sep 29 05:50:58 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Sep 29 08:44:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R97eC-000213-TB
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 05:50:57 +0200
+	id 1R9ALt-0000bV-EL
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 08:44:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754478Ab1I2Duw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Sep 2011 23:50:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54016 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753154Ab1I2Duw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2011 23:50:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 932715ECE;
-	Wed, 28 Sep 2011 23:50:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+M9SyOc1zYf5D+KyVEvS89uQYtI=; b=xp0d6W
-	AFcDLU1iTNKN2iV1TMRXMpb1YMvadzh2FTh6zq7miqRp0FVPZp5SnOiQSZziJqa8
-	x/107+glXAyGgYssVNpJsrRnVdGIWzLxIGRsKS49XK98DR35fIpW0Sz9a3NmW9/W
-	F0xUMXtd0ppR1oSJQGlNFTWLnfQKrhTVzEgkQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PcRea+fuB/Dy1LUhbc51XzMu7zPvV1nw
-	NrbxkWYRc3nF22gFlEsbdJZhmE0Owlnbb7X2LcX49jNLwcAY9eZ5ki9n/Qjgj3yz
-	9FmZpcJ1nV6ztpcke7NiswN91GkPX3FL9bsx+RrFqXxxb4nq4bCd4AEPtvIs1rlj
-	i7u3BTufOro=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85F8C5ECD;
-	Wed, 28 Sep 2011 23:50:51 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CB4DE5ECC; Wed, 28 Sep 2011
- 23:50:50 -0400 (EDT)
-In-Reply-To: <20110929015919.GL19250@thunk.org> (Ted Ts'o's message of "Wed,
- 28 Sep 2011 21:59:19 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 392CB42A-EA4E-11E0-81E6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752737Ab1I2GoJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Sep 2011 02:44:09 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47919
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751282Ab1I2GoI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Sep 2011 02:44:08 -0400
+Received: (qmail 17274 invoked by uid 107); 29 Sep 2011 06:49:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 29 Sep 2011 02:49:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Sep 2011 02:44:04 -0400
+Content-Disposition: inline
+In-Reply-To: <4E82A13B.2080509@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182386>
 
-Ted Ts'o <tytso@mit.edu> writes:
+On Wed, Sep 28, 2011 at 06:23:23AM +0200, Michael Haggerty wrote:
 
->> That would improve the situation (I suspect that there
->> were some people who misunderstood that these GPG signature were to
->> protect against break-in at the master machine), but at the same time, it
->> may create the chicken-and-egg bootstrapping problem if public keys of too
->> many people need to be published securely.
->
-> We are in the process of bootstrapping a GPG web of trust.  Linus has
-> generated a new GPG key which has been signed by Peter Anvin, Dirk,
-> and myself.  We'll get a much richer set of cross signatures at the
-> Kernel Summit in Prague in a few months.
+> It seems to me that an annotated branch is very much like an (unsigned)
+> annotated tag, except that it is movable and disposable like a normal
+> branch.  What would be the ramifications of using an annotated-tag-like
+> object to record metainformation about a branch?  (Let's just call it an
+> "annotation object" for this discussion.)
+> 
+> * The branch would point not at a commit but at an annotation object
+> that points at a commit.
+> 
+> * Obviously, a new annotation object would have to be written every time
+> the branch is updated.
 
-I was actually more worried about helping consumers convince themselves
-that thusly signed keys indeed belong to producers like Linus, Peter,
-etc. There are those who worry that DNS record to code.google.com/ for
-them may point at an evil place to give them rogue download material.
-"Here are the keys you can verify our trees with" message on the mailing
-list, even with the message is signed with GPG, would not be satisfactory
-to them.
+Leaving aside for a moment whether this is a good system or not, I think
+it's infeasible at this point simply because it is so far from what
+current git does, and in such a visible way.
+
+Consider the interactions between this system and older versions of git.
+Won't all of the older clients see this annotation cruft at the tip of
+each branch? How will they react? It would no longer be correct to make
+commits with "git commit-tree $tree `git rev-parse HEAD`", would it?
+
+-Peff
