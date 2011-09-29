@@ -1,88 +1,87 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Wed, 28 Sep 2011 19:37:18 -0600
-Message-ID: <960aacbf-8d4d-4b2a-8902-f6380ff9febd@email.android.com>
-References: <4DF6A8B6.9030301@op5.se> <CAP8UFD3TWQHU0wLPuxMDnc3bRSz90Yd+yDMBe03kofeo-nr7yA@mail.gmail.com> <201109281338.04378.mfick@codeaurora.org> <201109281610.49322.mfick@codeaurora.org> <c76d7f65203c0fc2c6e4e14fe2f33274@quantumfyre.co.uk>
+From: Jeff King <peff@peff.net>
+Subject: Re: Lack of detached signatures
+Date: Wed, 28 Sep 2011 21:41:41 -0400
+Message-ID: <20110929014141.GA23890@sigill.intra.peff.net>
+References: <alpine.LNX.2.00.1109271742460.24832@bruno>
+ <7vty7xttxh.fsf@alter.siamese.dyndns.org>
+ <CAMOZ1Bs2HW6e3V6sayVSm0NhC=0e5129ZR8YSGuZPnJw9H9TEA@mail.gmail.com>
+ <4B2793BF110AAB47AB0EE7B90897038516F63A7C@ORSMSX101.amr.corp.intel.com>
+ <1317195719.30267.4.camel@bee.lab.cmartin.tk>
+ <alpine.LNX.2.00.1109280555460.25187@bruno>
+ <7v1uv01uqm.fsf@alter.siamese.dyndns.org>
+ <20110928222542.GA18120@sigill.intra.peff.net>
+ <20110928230958.GJ19250@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Thu Sep 29 03:38:33 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Joseph Parmelee <jparmele@wildbear.com>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	"Olsen, Alan R" <alan.r.olsen@intel.com>,
+	Michael Witten <mfwitten@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Ted Ts'o <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Thu Sep 29 03:41:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R95a4-0004aD-N1
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 03:38:33 +0200
+	id 1R95dE-0005XI-QZ
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 03:41:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754790Ab1I2Bi2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Sep 2011 21:38:28 -0400
-Received: from wolverine02.qualcomm.com ([199.106.114.251]:24179 "EHLO
-	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753706Ab1I2Bi1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2011 21:38:27 -0400
-X-IronPort-AV: E=McAfee;i="5400,1158,6483"; a="123131477"
-Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
-  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 28 Sep 2011 18:38:27 -0700
-Received: from [192.168.1.190] (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id E45B210004BE;
-	Wed, 28 Sep 2011 18:38:26 -0700 (PDT)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <c76d7f65203c0fc2c6e4e14fe2f33274@quantumfyre.co.uk>
+	id S1755419Ab1I2Blo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Sep 2011 21:41:44 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47790
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753706Ab1I2Bln (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2011 21:41:43 -0400
+Received: (qmail 14340 invoked by uid 107); 29 Sep 2011 01:46:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Sep 2011 21:46:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Sep 2011 21:41:41 -0400
+Content-Disposition: inline
+In-Reply-To: <20110928230958.GJ19250@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182381>
 
-On Wednesday 28 September 2011 18:59:09 Martin Fick wrote: 
-> Julian Phillips <julian@quantumfyre.co.uk> wrote: 
-> > On Wed, 28 Sep 2011 16:10:48 -0600, Martin Fick wrote: 
-> >> So with that bug fixed, the thing taking the most time 
-> >> now for a git checkout with ~100K refs seems to be the 
-> >> orphan check as Thomas predicted. The strange part with 
-> >> this, is that the orphan check seems to take only about 
-> >> ~20s in the repo where the refs aren't packed. However, 
-> >> in the repo where they are packed, this check takes at 
-> >> least 5min! This seems a bit unusual, doesn't it? Is 
-> >> the filesystem that much better at indexing refs than 
-> >> git's pack mechanism? Seems unlikely, the unpacked refs 
-> >> take 312M in the FS, the packed ones only take about 
-> >> 4.3M. I suspect their is something else unexpected 
-> >> going on here in the packed ref case. 
-> >> 
-> >> Any thoughts? I will dig deeper... 
-> > 
-> > I think the problem is that resolve_ref() walks a linked 
-> > list of searching for the packed ref. Does this mean that 
-> > packed refs are not indexed at all? 
-> > Are you sure that it is walking the linked list that is the problem?
+On Wed, Sep 28, 2011 at 07:09:58PM -0400, Ted Ts'o wrote:
 
-It sure seems like it.
-
-> I've created a test repo with ~100k refs/changes/... style refs, and 
-> ~40000 refs/heads/... style refs, and checkout can walk the list of 
-> ~140k refs seven times in 85ms user time including doing whatever other 
-> processing is needed for checkout. The real time is only 114ms - but 
-> then my test repo has no real data in.
-
-If I understand what you are saying, it sounds like you do not have a very good test case. The amount of time it takes for checkout depends on how long it takes to find a ref with the sha1 that you are on. If that sha1 is so early in the list of refs that it only took you 7 traversals to find it, then that is not a very good testcase. I think that you should probably try making an orphaned ref (checkout a detached head, commit to it), that is probably the worst testcase since it should then have to search all 140K refs to eventually give up.
-
-Again, if I understand what you are saying, if it took 85ms for 7 traversals, then it takes approximately 10ms per traversal, that's only 100/s! If you have to traverse it 140K times, that should work out to 1400s ~ 23mins.
-
-> If resolve_ref() walking the linked list of refs was the problem, then > I would expect my test repo to show the same problem. It doesn't, a pre 
-> ref-packing checkout took minutes (~0.5s user time), whereas a 
-> ref-packed checkout takes ~0.1s. So, I would suggest that the problem > lies elsewhere. 
+> On Wed, Sep 28, 2011 at 06:25:43PM -0400, Jeff King wrote:
+> > [1] This is a minor nit, and probably not worth breaking away from the
+> > way the rest of the world does it, but it is somewhat silly to sign the
+> > compressed data. I couldn't care less about the exact bytes in the
+> > compressed version; what I care about is the actual tar file. The
+> > compression is just a transport.
 > 
-> Have you tried running a checkout whilst profiling?
+> The worry I have is that many users don't check the GPG checksum files
+> as it is.  If they have to decompress the file, and then run gpg to
+> check the checksum, they might never get around to doing it.
 
-No, to be honest, I am not familiar with any profilling tools.
+It shouldn't really be any more cumbersome. But at the same time, it's
+different than the way everyone else does it, so any minor convenience
+we get is probably nullified by simply confusing anybody.
 
--Martin
+I wonder how many people actually check gpg checksums on downloaded
+files. I don't usually. But I do expect something like a package manager
+building from upstream source (e.g., freebsd-style ports, or distro
+packagers pulling a new upstream) to bother to check it.
 
-Employee of Qualcomm Innovation Center,Inc. which is a member of Code Aurora Forum
+> That being said, I'm not sure I have a good solution.  One is to ship
+> the file without using detached signatures, and ship a foo.tar.gz.gpg
+> file, and force them to use GPG to unwrap the file before it can be
+> unpacked.  But users would yell and scream if we did that...
+
+And rightly so. I mentioned the cost of implementing the mechanism
+before. If it's just "Junio runs gpg and throws the detached signature
+up on the ftp site", it's not a big deal. But if it's "you can't
+download and install git until you have gpg installed", that is raising
+the bar quite a bit.
+
+It should be the recipient's decision how much they want to trust the
+data. We would just be helping them out by providing more information.
+
+-Peff
