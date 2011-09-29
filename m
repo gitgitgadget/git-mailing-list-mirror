@@ -1,70 +1,98 @@
-From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: Re: What's next for "signed push"?
-Date: Thu, 29 Sep 2011 11:50:09 +0000 (UTC)
-Message-ID: <loom.20110929T134216-159@post.gmane.org>
-References: <20110928075054.GA13727@orbis-terrarum.net> <7v62kc1v7m.fsf@alter.siamese.dyndns.org> <7vfwjgui8s.fsf_-_@alter.siamese.dyndns.org>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: What's cooking in git.git (Sep 2011, #04; Mon, 12)
+Date: Thu, 29 Sep 2011 14:03:55 +0200
+Organization: Home - http://www.obry.net
+Message-ID: <4E845EAB.2060002@obry.net>
+References: <7v4o0h7byd.fsf@alter.siamese.dyndns.org> <7v7h5d2wd3.fsf@alter.siamese.dyndns.org> <CABPQNSae3MU34pRw87CNkEUBbTpE5h9UVT3cqv3iFnWs1wQ5FQ@mail.gmail.com>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 29 13:50:36 2011
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Thu Sep 29 14:04:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9F8L-0002Av-Ao
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 13:50:33 +0200
+	id 1R9FLS-0008Vf-3g
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 14:04:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754203Ab1I2Lu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Sep 2011 07:50:28 -0400
-Received: from lo.gmane.org ([80.91.229.12]:46508 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752715Ab1I2Lu2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Sep 2011 07:50:28 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1R9F8D-00026n-QN
-	for git@vger.kernel.org; Thu, 29 Sep 2011 13:50:26 +0200
-Received: from dhcp249-230.yandex.net ([87.250.249.230])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 29 Sep 2011 13:50:25 +0200
-Received: from divanorama by dhcp249-230.yandex.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 29 Sep 2011 13:50:25 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 87.250.249.230 (Opera/9.80 (X11; Linux x86_64; U; en) Presto/2.9.168 Version/11.51)
+	id S1752661Ab1I2MEA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Sep 2011 08:04:00 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:56406 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751000Ab1I2MEA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Sep 2011 08:04:00 -0400
+Received: by wwf22 with SMTP id 22so931382wwf.1
+        for <git@vger.kernel.org>; Thu, 29 Sep 2011 05:03:59 -0700 (PDT)
+Received: by 10.227.12.15 with SMTP id v15mr10477864wbv.77.1317297838887;
+        Thu, 29 Sep 2011 05:03:58 -0700 (PDT)
+Received: from [192.168.0.100] (AVelizy-154-1-56-48.w83-199.abo.wanadoo.fr. [83.199.38.48])
+        by mx.google.com with ESMTPS id p2sm2153652wbo.17.2011.09.29.05.03.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 29 Sep 2011 05:03:57 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
+In-Reply-To: <CABPQNSae3MU34pRw87CNkEUBbTpE5h9UVT3cqv3iFnWs1wQ5FQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182393>
 
-Junio C Hamano <gitster <at> pobox.com> writes:
+Le 13/09/2011 11:46, Erik Faye-Lund a =E9crit :
+> On Tue, Sep 13, 2011 at 12:56 AM, Junio C Hamano<gitster@pobox.com>  =
+wrote:
+>> Junio C Hamano<gitster@pobox.com>  writes:
+>>
+>>> [Stalled]
+>>>
+>>> * po/cygwin-backslash (2011-08-05) 2 commits
+>>>   - On Cygwin support both UNIX and DOS style path-names
+>>>   - git-compat-util: add generic find_last_dir_sep that respects is=
+_dir_sep
+>>
+>> Honestly I lost track of this one. How would we want to proceed on t=
+his
+>> topic after 1.7.7?
+>>
+>> Asking help from Windows folks.
+>
+> I believe Hannes pointed out that there were some work left to be don=
+e
+> on it ("enable backslash processing in setup.c:prefix_filename()"),
+> and I didn't spot a new version after that. He also pointed out that
+> enabling backslash processing would cause you to lose the ability to
+> escape special characters, but it sounds to me like this is something
+> that simply "comes with the territory" of supporting win32-paths in a
+> POSIX-ish environment, and is already the governing convention in
+> Cygwin. But I'm not an expert on this topic; Cygwin is not something =
+I
+> usually care much about.
 
->  - It also was hoped that pre-receive or pre-update hook on the receiving
->    end can be used to authenticate and authorize the push itself with the
->    approach by v3, but when the check happens, the signed-notes tree to be
->    used for verification is not connected to any ref in the refs/notes/
->    hierarchy yet (otherwise it won't be pre-* hook). The query interface
->    "git notes show" needs to be updated so that it takes not just a ref
->    via the GIT_NOTES_REF interface, which is defined to specify a ref
->    because some subcommands of "git notes" need to create a new commit and
->    update it, but a bare notes tree commit object name [*1*]. We may need
->    to update "git notes" (at least "show" subcommand) for the use of
->    receiving end; v3 is no longer a simpler "sender only" solution.
-> 
-> *1* I wouldn't be surprised if it already worked when you give the object
-> name of the notes-tree commit to GIT_NOTES_REF when running "git show",
-> but that is not really a documented interface and working by accident. The
-> environment variable was designed to take a name of the ref.
-There's also my old request for comments on refs/notes/ ([RFC] plumbing git-
-notes, link below). Unexpected thing is that "refs/notes/commits^" is silently 
-accepted, but notes aren't displayed at all.
+Same here, not expert. I just can say that this at least fixes a real=20
+problem and the patches (provided by Theo and I) are going in the right=
+=20
+direction. They may be some other issues about Windows backslash (my=20
+experiences show that there is very entertaining issues with this!) but=
+=20
+I don't think we should hold those patches except if someone prove them=
+=20
+to be wrong.
 
+Pascal.
 
-http://thread.gmane.org/gmane.comp.version-control.git/178149
+--=20
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|    http://www.obry.net  -  http://v2p.fr.eu.org
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
