@@ -1,101 +1,80 @@
-From: Joseph Parmelee <jparmele@wildbear.com>
-Subject: Re: Lack of detached signatures
-Date: Thu, 29 Sep 2011 10:47:30 -0600 (CST)
-Message-ID: <alpine.LNX.2.00.1109291013220.29373@bruno>
-References: <CAMOZ1Bs2HW6e3V6sayVSm0NhC=0e5129ZR8YSGuZPnJw9H9TEA@mail.gmail.com> <4B2793BF110AAB47AB0EE7B90897038516F63A7C@ORSMSX101.amr.corp.intel.com> <1317195719.30267.4.camel@bee.lab.cmartin.tk> <alpine.LNX.2.00.1109280555460.25187@bruno>
- <7v1uv01uqm.fsf@alter.siamese.dyndns.org> <20110928222542.GA18120@sigill.intra.peff.net> <20110928230958.GJ19250@thunk.org> <7vd3ekxkca.fsf@alter.siamese.dyndns.org> <20110929015919.GL19250@thunk.org> <7vbou4uhuu.fsf@alter.siamese.dyndns.org>
- <20110929131845.GQ19250@thunk.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git bundle unbundle and "check-outable" refs
+Date: Thu, 29 Sep 2011 09:49:11 -0700
+Message-ID: <7vsjnfthtk.fsf@alter.siamese.dyndns.org>
+References: <dec8c877-bd6e-4120-b045-87179d54abe2@i30g2000yqd.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	=?ISO-8859-15?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
-	"Olsen, Alan R" <alan.r.olsen@intel.com>,
-	Michael Witten <mfwitten@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Ted Ts'o <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Sep 29 18:47:40 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Todd A. Jacobs" <nospam+listmail@codegnome.org>
+X-From: git-owner@vger.kernel.org Thu Sep 29 18:49:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9Jlq-0008EY-CC
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 18:47:38 +0200
+	id 1R9JnV-0000bY-Al
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 18:49:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754861Ab1I2Qrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Sep 2011 12:47:33 -0400
-Received: from ip205-30-10-190.ct.co.cr ([190.10.30.205]:51543 "EHLO
-	bruno.wildbear.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754201Ab1I2Qrc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Sep 2011 12:47:32 -0400
-Received: by bruno.wildbear.com (Postfix, from userid 503)
-	id 38DED1BE02A4; Thu, 29 Sep 2011 10:47:31 -0600 (CST)
-Received: from localhost (localhost [127.0.0.1])
-	by bruno.wildbear.com (Postfix) with ESMTP id 1CC291BE029D;
-	Thu, 29 Sep 2011 10:47:31 -0600 (CST)
-X-X-Sender: jparmele@bruno
-In-Reply-To: <20110929131845.GQ19250@thunk.org>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1757262Ab1I2QtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Sep 2011 12:49:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39746 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755961Ab1I2QtN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Sep 2011 12:49:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A88A58F4;
+	Thu, 29 Sep 2011 12:49:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1iWB+lBEY75Ugx70gcj3I14WJic=; b=smQUsu
+	jE+gNQFVRs8tQhRia2KHyLqV4MbTpnqhlRdCTjpx/68Fetd6A5lZ7mzDLEZaYhw6
+	UwxdSOclBtphNM/0tMo6Go5eXxHzHJYifWCmlmp5uYix5+mf1JYYqEBMWm2FrtqS
+	YVQBzwFlGkoLyNaaWHI5NMpU/l77L74TgS3Ts=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Whkl4tZOXSuJSIbkodqBGtKDKRUpBSqE
+	LQRc4dEkqOmkYpJAl5Etzlh7TVl6E3mGB+2NlcLkzrenI408UQ78jj2eOxyUXSB2
+	z7ay7n/acXoXglLMQUt5Iu8s1e2cg+Pcfqr41vo/VbMoolKezTOno0fIl1PHy9V7
+	9aiEV7WOIk0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 218F958F3;
+	Thu, 29 Sep 2011 12:49:13 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A9D8A58F2; Thu, 29 Sep 2011
+ 12:49:12 -0400 (EDT)
+In-Reply-To: <dec8c877-bd6e-4120-b045-87179d54abe2@i30g2000yqd.googlegroups.com> (Todd A.
+ Jacobs's message of "Thu, 29 Sep 2011 08:51:23 -0700 (PDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F5A37E38-EABA-11E0-B7C4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182413>
 
+"Todd A. Jacobs" <nospam+listmail@codegnome.org> writes:
 
+> directly to the local repository, but doesn't give me any of the
+> branch refs that I'm expecting from such an operation. In other words,
+> if I bundle branch foo on machine A, then unbundle on machine B, I
+> expect to be able to "git checkout foo" and get on with life.
 
+$ git bundle -h
+usage: git bundle create <file> <git-rev-list args>
+   or: git bundle verify <file>
+   or: git bundle list-heads <file> [<refname>...]
+   or: git bundle unbundle <file> [<refname>...]
 
-On Thu, 29 Sep 2011, Ted Ts'o wrote:
+$ git bundle list-heads /var/tmp/junk/foo.bundle
+632052641517de1a965c1f045b97d2eaa541b2e9 refs/heads/maint
 
-> On Wed, Sep 28, 2011 at 08:50:49PM -0700, Junio C Hamano wrote:
->>
->> I was actually more worried about helping consumers convince themselves
->> that thusly signed keys indeed belong to producers like Linus, Peter,
->> etc. There are those who worry that DNS record to code.google.com/ for
->> them may point at an evil place to give them rogue download material.
->> "Here are the keys you can verify our trees with" message on the mailing
->> list, even with the message is signed with GPG, would not be satisfactory
->> to them.
->
-> What do you mean by "consumers" in this context?  Most end users don't
-> actually download tarballs from www.kernel.org or code.google.com!  :-)
->
-> If you mean developers at Linux distributions Red Hat, SuSE, or
-> Handset manufacturers such as Samsung, HTC, Motorola, etc., there will
-> be many of those reprsenatives at LinuxCon Europe and CELF (Consumer
-> Electronics Linux Forum) Europe conferences, which will be colocated
-> with the Kernel Summit in Prague.
->
-> If you are thinking of random developers located in far-flung places
-> of the world who don't have any contact with other Linux developers,
-> this is a previously unsolved problem.  There are links into the
-> developing Kernel GPG tree that are signed by the GPG web trust used
-> by Debian, OpenSuSE, and (soon) Fedora.  Given that people generally
-> have to trust one or more of those web of trusts, that's the best we
-> can do, at least as far as I know.  If you can suggest something
-> better, please let me know!
->
->
-> 						- Ted
->
+$ git fetch /var/tmp/junk/foo.bundle maint
+From /var/tmp/junk/foo.bundle
+ * branch            maint      -> FETCH_HEAD
 
-Also included is distro developers that gen custom distros for limited
-corporate use on specific hardware, and anyone else that is sufficiently
-concerned about security and/or survivability that they prefer/need to build
-from the upstream source.
+or
 
-As far as accepting public keys, a key obtained from the key servers and
-signed by others, while not perfect, is vastly superior to nothing at all. 
-I am located in the mountains of Costa Rica.  Over the years I have
-collected a fair number of public keys making it very difficult for bad guys
-to fake both a public key and all the signatures too, even though I can't
-travel to a "key signing party" which would of course be better.
-
-Even if we have to change all the keys now its going to be risky but still
-vastly better than nothing.  I would hope that a new key would be signed by
-an existing valid private key as well as newly issued keys.  This would
-reassure people like me who have a substantial stash of old but valid public
-keys, while at the same time thwarting bad guys who can fake only those old
-signatures for which they have stolen valid private keys.
-
-Joseph
+$ git fetch /var/tmp/junk/foo.bundle maint:bundle_head
+$ git log bundle_head
