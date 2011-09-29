@@ -1,82 +1,106 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH v2 4/4] upload-archive: use start_command instead of fork
-Date: Thu, 29 Sep 2011 22:20:29 +0200
-Message-ID: <CABPQNSZaEdBMRq9wMbGV1E=EzZgpcKhT=_JW-3hSzF4GqviHHQ@mail.gmail.com>
-References: <4E37202B.80208@lsrfire.ath.cx> <20110802040004.GC17494@sigill.intra.peff.net>
- <4E3829DC.8070802@lsrfire.ath.cx> <20110802181357.GA1861@sigill.intra.peff.net>
- <4E388A55.6080606@kdbg.org> <4E3D0C1D.9000807@lsrfire.ath.cx>
- <4E3EEF3B.80908@kdbg.org> <4E401869.8060702@lsrfire.ath.cx>
- <20110809050211.GA3588@sigill.intra.peff.net> <4E410B26.1080407@lsrfire.ath.cx>
- <20110809200504.GA31944@sigill.intra.peff.net> <CABPQNSba+nQ+AOmVEVNWhJi2e65EiuhRxfOWZsW03Pkc6zXdHg@mail.gmail.com>
- <4E84D29F.6020305@lsrfire.ath.cx>
-Reply-To: kusmabite@gmail.com
+From: "Olsen, Alan R" <alan.r.olsen@intel.com>
+Subject: RE: Lack of detached signatures
+Date: Thu, 29 Sep 2011 20:31:02 +0000
+Message-ID: <4B2793BF110AAB47AB0EE7B90897038516F68647@ORSMSX101.amr.corp.intel.com>
+References: <alpine.LNX.2.00.1109271742460.24832@bruno>
+ <7vty7xttxh.fsf@alter.siamese.dyndns.org>
+ <CAMOZ1Bs2HW6e3V6sayVSm0NhC=0e5129ZR8YSGuZPnJw9H9TEA@mail.gmail.com>
+ <4B2793BF110AAB47AB0EE7B90897038516F63A7C@ORSMSX101.amr.corp.intel.com>
+ <1317195719.30267.4.camel@bee.lab.cmartin.tk>
+ <alpine.LNX.2.00.1109280555460.25187@bruno>
+ <7v1uv01uqm.fsf@alter.siamese.dyndns.org>
+ <20110928222542.GA18120@sigill.intra.peff.net>
+ <20110928230958.GJ19250@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, msysGit <msysgit@googlegroups.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Thu Sep 29 22:21:17 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Joseph Parmelee <jparmele@wildbear.com>,
+	=?iso-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
+	Michael Witten <mfwitten@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Ted Ts'o <tytso@mit.edu>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 29 22:31:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9N6a-0001ns-2F
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 22:21:16 +0200
+	id 1R9NGR-0006VY-EJ
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 22:31:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757617Ab1I2UVL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Sep 2011 16:21:11 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:43660 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757400Ab1I2UVJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Sep 2011 16:21:09 -0400
-Received: by pzk1 with SMTP id 1so2560713pzk.1
-        for <git@vger.kernel.org>; Thu, 29 Sep 2011 13:21:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=1Ikz7OHN+q49du4D1mYAk+AIXqvgYR3r4RShz7fNPGQ=;
-        b=MMyqwO8bTYEM8pUHEuT8XP06TkNxdlnoRasDTw7g9Ll5+SH+dciPsIgMhI+78WHep5
-         MY7B9IkHv3CEVefFUiGpUpF3Cb3ysU4qwQnXGUNJgUum1yT1HjR4fp5DU+fEiWaShLfS
-         2i8ffUrcTTxb9mvsmTCTAaJweCS/mOYd2mAtA=
-Received: by 10.68.36.99 with SMTP id p3mr52892051pbj.61.1317327669062; Thu,
- 29 Sep 2011 13:21:09 -0700 (PDT)
-Received: by 10.68.42.169 with HTTP; Thu, 29 Sep 2011 13:20:29 -0700 (PDT)
-In-Reply-To: <4E84D29F.6020305@lsrfire.ath.cx>
+	id S1757767Ab1I2UbG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Sep 2011 16:31:06 -0400
+Received: from mga03.intel.com ([143.182.124.21]:40544 "EHLO mga03.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757473Ab1I2UbE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Sep 2011 16:31:04 -0400
+Received: from azsmga001.ch.intel.com ([10.2.17.19])
+  by azsmga101.ch.intel.com with ESMTP; 29 Sep 2011 13:31:03 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.68,463,1312182000"; 
+   d="scan'208";a="57088929"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.226.49])
+  by azsmga001.ch.intel.com with ESMTP; 29 Sep 2011 13:31:02 -0700
+Received: from orsmsx103.amr.corp.intel.com (10.22.225.130) by
+ orsmsx603.amr.corp.intel.com (10.22.226.49) with Microsoft SMTP Server (TLS)
+ id 8.2.255.0; Thu, 29 Sep 2011 13:31:02 -0700
+Received: from orsmsx101.amr.corp.intel.com ([169.254.8.109]) by
+ ORSMSX103.amr.corp.intel.com ([169.254.2.100]) with mapi id 14.01.0323.003;
+ Thu, 29 Sep 2011 13:31:02 -0700
+Thread-Topic: Lack of detached signatures
+Thread-Index: AQHMfXEkzix7sKLnakG9o/UHmvckzpVh6UntgAB2iAD//8+r0IAAryOAgABSPgCAAC9kFoAAgbEAgADuo1A=
+In-Reply-To: <20110928230958.GJ19250@thunk.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.22.254.139]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182432>
 
-On Thu, Sep 29, 2011 at 10:18 PM, Ren=E9 Scharfe
-<rene.scharfe@lsrfire.ath.cx> wrote:
-> Am 29.09.2011 21:54, schrieb Erik Faye-Lund:
->> So the way forward is probably to just change to a self-compiled gzi=
-p
->> in msysGit (and Git for Windows by proxy).
->>
->> I'll post the patch to build a native-gzip to the msysGit mailing li=
-st
->> (I only got 1.2.4 to compile on Windows, but it's the same version a=
-s
->> we have in msysGit so it's probably fine), and post the latest versi=
-on
->> of this series soon...
->
-> Good to hear that.
->
-> By the way, are you aware of http://unxutils.sourceforge.net/ (includ=
-es
-> a native gzip 1.2.4 binary)?
+[Sorry for the top posting. Fscking Outlook demands it.]
 
-Yes, but we prefer to build our binaries ourselves in the msysGit proje=
-ct.
+The value of detached signatures is not that the users catch a hacked v=
+ersion, it is that the automated build bots catch the hacked version.  =
+There was a server compromised a number of years back that was not caug=
+ht by users, but by the Gentoo build bot.
 
-> Or http://zlib.net/pigz/ (parallel gzip, no binaries)?
+What I would eventually like to see is a similar way to check an existi=
+ng git tree and make sure all the commits authenticate and have not bee=
+n tampered with.  That is a harder problem since the actual patch can c=
+hange during a merge. (Having cryptographic sign-offs would be helpful =
+as well. I have seen a few cases internally where the signoffs were for=
+ bogus e-mail addresses that got generated by automated tools, as well =
+as patches that got altered after the sign-off.)
 
-I'm aware of pigz, but changing the gzip implementation isn't really
-the scope of this change IMO.
+-----Original Message-----
+=46rom: Ted Ts'o [mailto:tytso@mit.edu]=20
+Sent: Wednesday, September 28, 2011 4:10 PM
+To: Jeff King
+Cc: Junio C Hamano; Joseph Parmelee; Carlos Mart=EDn Nieto; Olsen, Alan=
+ R; Michael Witten; git@vger.kernel.org
+Subject: Re: Lack of detached signatures
+
+On Wed, Sep 28, 2011 at 06:25:43PM -0400, Jeff King wrote:
+> [1] This is a minor nit, and probably not worth breaking away from th=
+e
+> way the rest of the world does it, but it is somewhat silly to sign t=
+he
+> compressed data. I couldn't care less about the exact bytes in the
+> compressed version; what I care about is the actual tar file. The
+> compression is just a transport.
+
+The worry I have is that many users don't check the GPG checksum files
+as it is.  If they have to decompress the file, and then run gpg to
+check the checksum, they might never get around to doing it.
+
+That being said, I'm not sure I have a good solution.  One is to ship
+the file without using detached signatures, and ship a foo.tar.gz.gpg
+file, and force them to use GPG to unwrap the file before it can be
+unpacked.  But users would yell and scream if we did that...
+
+	       	     	   	    	   - Ted
