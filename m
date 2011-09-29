@@ -1,80 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git bundle unbundle and "check-outable" refs
-Date: Thu, 29 Sep 2011 09:49:11 -0700
-Message-ID: <7vsjnfthtk.fsf@alter.siamese.dyndns.org>
-References: <dec8c877-bd6e-4120-b045-87179d54abe2@i30g2000yqd.googlegroups.com>
+From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+Subject: [PATCH] send-email: auth plain/login fix
+Date: Thu, 29 Sep 2011 19:02:45 +0200
+Message-ID: <1317315765-5471-1-git-send-email-zbyszek@in.waw.pl>
+References: <1317308474.1854.8.camel@Joe-Laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Todd A. Jacobs" <nospam+listmail@codegnome.org>
-X-From: git-owner@vger.kernel.org Thu Sep 29 18:49:22 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+To: gitster@pobox.com, joe@perches.com, git@vger.kernel.org,
+	peff@peff.net
+X-From: git-owner@vger.kernel.org Thu Sep 29 19:03:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9JnV-0000bY-Al
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 18:49:21 +0200
+	id 1R9K0y-0007WM-7k
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 19:03:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757262Ab1I2QtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Sep 2011 12:49:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39746 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755961Ab1I2QtN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Sep 2011 12:49:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A88A58F4;
-	Thu, 29 Sep 2011 12:49:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1iWB+lBEY75Ugx70gcj3I14WJic=; b=smQUsu
-	jE+gNQFVRs8tQhRia2KHyLqV4MbTpnqhlRdCTjpx/68Fetd6A5lZ7mzDLEZaYhw6
-	UwxdSOclBtphNM/0tMo6Go5eXxHzHJYifWCmlmp5uYix5+mf1JYYqEBMWm2FrtqS
-	YVQBzwFlGkoLyNaaWHI5NMpU/l77L74TgS3Ts=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Whkl4tZOXSuJSIbkodqBGtKDKRUpBSqE
-	LQRc4dEkqOmkYpJAl5Etzlh7TVl6E3mGB+2NlcLkzrenI408UQ78jj2eOxyUXSB2
-	z7ay7n/acXoXglLMQUt5Iu8s1e2cg+Pcfqr41vo/VbMoolKezTOno0fIl1PHy9V7
-	9aiEV7WOIk0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 218F958F3;
-	Thu, 29 Sep 2011 12:49:13 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A9D8A58F2; Thu, 29 Sep 2011
- 12:49:12 -0400 (EDT)
-In-Reply-To: <dec8c877-bd6e-4120-b045-87179d54abe2@i30g2000yqd.googlegroups.com> (Todd A.
- Jacobs's message of "Thu, 29 Sep 2011 08:51:23 -0700 (PDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F5A37E38-EABA-11E0-B7C4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932105Ab1I2RDL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Sep 2011 13:03:11 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:36203 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754998Ab1I2RDK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Sep 2011 13:03:10 -0400
+Received: from 86-85-n1.aster.pl ([85.222.86.85] helo=localhost.localdomain)
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1R9K0p-0004rD-BG; Thu, 29 Sep 2011 19:03:07 +0200
+X-Mailer: git-send-email 1.7.6.234.g266fc.dirty
+In-Reply-To: <1317308474.1854.8.camel@Joe-Laptop>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182414>
 
-"Todd A. Jacobs" <nospam+listmail@codegnome.org> writes:
+git send-email was not authenticating properly when communicating over
+TLS with a server supporting only AUTH PLAIN and AUTH LOGIN. This is
+e.g. the standard server setup under debian with exim4 and probably
+everywhere where system accounts are used.
 
-> directly to the local repository, but doesn't give me any of the
-> branch refs that I'm expecting from such an operation. In other words,
-> if I bundle branch foo on machine A, then unbundle on machine B, I
-> expect to be able to "git checkout foo" and get on with life.
+The problem (only?) exists when libauthen-sasl-cyrus-perl
+(Authen::SASL::Cyrus) is installed. Importing Authen::SASL::Perl
+makes Authen::SASL use the perl implementation which works
+better.
 
-$ git bundle -h
-usage: git bundle create <file> <git-rev-list args>
-   or: git bundle verify <file>
-   or: git bundle list-heads <file> [<refname>...]
-   or: git bundle unbundle <file> [<refname>...]
+The solution is based on this forum thread:
+http://www.perlmonks.org/?node_id=3D904354.
 
-$ git bundle list-heads /var/tmp/junk/foo.bundle
-632052641517de1a965c1f045b97d2eaa541b2e9 refs/heads/maint
+This patch is tested by sending it. Without this fix, the interaction w=
+ith
+the server failed like this:
 
-$ git fetch /var/tmp/junk/foo.bundle maint
-From /var/tmp/junk/foo.bundle
- * branch            maint      -> FETCH_HEAD
+$ git send-email --smtp-encryption=3Dtls --smtp-server=3D... --smtp-deb=
+ug=3D1 change1.patch
+=2E..
+Net::SMTP::SSL=3DGLOB(0x238f668)<<< 250-AUTH LOGIN PLAIN
+Password:
+Net::SMTP::SSL=3DGLOB(0x238f668)>>> AUTH
+Net::SMTP::SSL=3DGLOB(0x238f668)<<< 501 5.5.2 AUTH mechanism must be sp=
+ecified
+5.5.2 AUTH mechanism must be specified
 
-or
+Signed-off-by: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+v2:  - the import is performed only if it will be used
+v3:  - the import is performed only if it will be used, and failure is =
+ignored
+v4:  - improved commit message
+v5:  - comment in code
 
-$ git fetch /var/tmp/junk/foo.bundle maint:bundle_head
-$ git log bundle_head
+ git-send-email.perl |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 98ab33a..f2a6e46 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1095,6 +1095,12 @@ X-Mailer: git-send-email $gitversion
+ 		}
+=20
+ 		if (defined $smtp_authuser) {
++			# Workaround AUTH PLAIN/LOGIN interaction defect
++			# with Authen::SASL::Cyrus
++			eval {
++				require Authen::SASL;
++				Authen::SASL->import(qw(Perl));
++			};
+=20
+ 			if (!defined $smtp_authpass) {
+=20
+--=20
+1.7.6
