@@ -1,67 +1,72 @@
-From: "Siegel, Steven N. (GSFC-585.0)[TELOPHASE CORP]" 
-	<steven.n.siegel@nasa.gov>
-Subject: Trying to Contact GIT
-Date: Thu, 29 Sep 2011 12:03:58 -0500
-Message-ID: <5F8BAEE72620A649B90E75296A7CBF10ABD4B0E65F@NDMSSCC04.ndc.nasa.gov>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Trying to Contact GIT
+Date: Thu, 29 Sep 2011 13:58:46 -0400
+Message-ID: <CACPiFC+684BN7WFecf9mJ0jGQ82jdSxVW3C9WGw5dr6z1gVKTw@mail.gmail.com>
+References: <5F8BAEE72620A649B90E75296A7CBF10ABD4B0E65F@NDMSSCC04.ndc.nasa.gov>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 29 19:25:00 2011
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Siegel, Steven N. (GSFC-585.0)[TELOPHASE CORP]" 
+	<steven.n.siegel@nasa.gov>
+X-From: git-owner@vger.kernel.org Thu Sep 29 19:59:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9KLx-0001Dm-Qp
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 19:24:58 +0200
+	id 1R9Kt8-00016E-PY
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 19:59:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754721Ab1I2RYx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Sep 2011 13:24:53 -0400
-Received: from ndmsnpf01.ndc.nasa.gov ([198.117.0.121]:39375 "EHLO
-	ndmsnpf01.ndc.nasa.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753227Ab1I2RYw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Sep 2011 13:24:52 -0400
-X-Greylist: delayed 1252 seconds by postgrey-1.27 at vger.kernel.org; Thu, 29 Sep 2011 13:24:52 EDT
-Received: from ndmsppt04.ndc.nasa.gov (ndmsppt04.ndc.nasa.gov [198.117.0.103])
-	by ndmsnpf01.ndc.nasa.gov (Postfix) with ESMTP id 6D5CB2606F4
-	for <git@vger.kernel.org>; Thu, 29 Sep 2011 12:03:59 -0500 (CDT)
-Received: from ndmshub01.ndc.nasa.gov (ndmshub01-pub.ndc.nasa.gov [198.117.0.160])
-	by ndmsppt04.ndc.nasa.gov (8.14.4/8.14.4) with ESMTP id p8TH3xlU026350
-	for <git@vger.kernel.org>; Thu, 29 Sep 2011 12:03:59 -0500
-Received: from NDMSSCC04.ndc.nasa.gov ([198.117.2.172]) by
- ndmshub01.ndc.nasa.gov ([198.117.0.160]) with mapi; Thu, 29 Sep 2011 12:03:59
- -0500
-Thread-Topic: Trying to Contact GIT
-Thread-Index: Acx+ycdJ51o/RNReQACPQdjTMTHReg==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.4.6813,1.0.211,0.0.0000
- definitions=2011-09-29_05:2011-09-29,2011-09-29,1970-01-01 signatures=0
+	id S1754303Ab1I2R7I convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Sep 2011 13:59:08 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:42700 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752028Ab1I2R7H convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Sep 2011 13:59:07 -0400
+Received: by iaqq3 with SMTP id q3so928875iaq.19
+        for <git@vger.kernel.org>; Thu, 29 Sep 2011 10:59:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=leE24TYqruFkViFLtz6fPcmZFcWiRouZkpVuuslGxCA=;
+        b=r8cNad2JV0ekcRrkS1RD6ne4W9nKIlTva9oaYWZb6TXpYAP2Jvh5c6eBK5BD4lmkux
+         hBsCS52Y2Xu7EykfmGBi7rRGHXijUzcjt16GsRuHMj0o6bbrKhOx2nMvuy3a2wP+HFmm
+         Vkwur9RE3o79NoeGQY4snV0cMxNgJA0me3Ybs=
+Received: by 10.42.147.136 with SMTP id n8mr1214546icv.0.1317319146036; Thu,
+ 29 Sep 2011 10:59:06 -0700 (PDT)
+Received: by 10.42.175.2 with HTTP; Thu, 29 Sep 2011 10:58:46 -0700 (PDT)
+In-Reply-To: <5F8BAEE72620A649B90E75296A7CBF10ABD4B0E65F@NDMSSCC04.ndc.nasa.gov>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182417>
 
-I am in the process of looking at some vendor's Configuration Managemen=
-t Tools for evaluation for use by some NASA projects. I have searched t=
-he Internet for information and your company is one of the ones we woul=
-d like to evaluate. I have a small questioner that I would like to send=
- to you and to evaluate your responses as required by NASA. This is bei=
-ng conducted in order to see what kind of support and feedback we can e=
-xpect from your company. I do not see a means of adding an attachment t=
-o a particular person of group and would appreciate an e-mail address t=
-o send the questioner to. Thanks
+On Thu, Sep 29, 2011 at 1:03 PM, Siegel, Steven N.
+(GSFC-585.0)[TELOPHASE CORP] <steven.n.siegel@nasa.gov> wrote:
+> I am in the process of looking at some vendor's Configuration Managem=
+ent Tools for evaluation for use by some NASA projects.
 
-Steven Siegel
-Telophase=A0Corporation
-http://www.telophase.com
-ssiegel@telophase.com
-=A0
-Cell (301) 452-2352
-NASA Phone:=A0 (301) 614-5409=A0 or=A0 x45409
-NASA e-mail:=A0 steven.n.siegel@nasa.gov
+Hi Steven
+
+I know for a fact that NASA and JPL use free and open source software
+internally. They probably have an appropriate procedure to evaluate
+such software -- perhaps one that is a bit different from treating the
+=46OSS project as if it were an old-style software vendor.
+
+Alternatively, there are a couple of companies that offer git-related
+services (hosting, training...); their people are on this list, or you
+can look at the 'hosting' section of http://git-scm.com/tools
+
+hth,
+
+
+m
+--=20
+=A0martin.langhoff@gmail.com
+=A0martin@laptop.org -- Software Architect - OLPC
+=A0- ask interesting questions
+=A0- don't get distracted with shiny stuff=A0 - working code first
+=A0- http://wiki.laptop.org/go/User:Martinlanghoff
