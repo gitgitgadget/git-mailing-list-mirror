@@ -1,106 +1,70 @@
-From: "Olsen, Alan R" <alan.r.olsen@intel.com>
-Subject: RE: Lack of detached signatures
-Date: Thu, 29 Sep 2011 20:31:02 +0000
-Message-ID: <4B2793BF110AAB47AB0EE7B90897038516F68647@ORSMSX101.amr.corp.intel.com>
-References: <alpine.LNX.2.00.1109271742460.24832@bruno>
- <7vty7xttxh.fsf@alter.siamese.dyndns.org>
- <CAMOZ1Bs2HW6e3V6sayVSm0NhC=0e5129ZR8YSGuZPnJw9H9TEA@mail.gmail.com>
- <4B2793BF110AAB47AB0EE7B90897038516F63A7C@ORSMSX101.amr.corp.intel.com>
- <1317195719.30267.4.camel@bee.lab.cmartin.tk>
- <alpine.LNX.2.00.1109280555460.25187@bruno>
- <7v1uv01uqm.fsf@alter.siamese.dyndns.org>
- <20110928222542.GA18120@sigill.intra.peff.net>
- <20110928230958.GJ19250@thunk.org>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: Git is not scalable with too many refs/*
+Date: Thu, 29 Sep 2011 14:44:32 -0600
+Organization: CAF
+Message-ID: <201109291444.33076.mfick@codeaurora.org>
+References: <4DF6A8B6.9030301@op5.se> <4E84B89F.4060304@lsrfire.ath.cx> <7vy5x7rwq9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Joseph Parmelee <jparmele@wildbear.com>,
-	=?iso-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
-	Michael Witten <mfwitten@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Ted Ts'o <tytso@mit.edu>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 29 22:31:28 2011
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: =?utf-8?q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Christian Couder <christian.couder@gmail.com>,
+	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 29 22:44:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9NGR-0006VY-EJ
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 22:31:27 +0200
+	id 1R9NTH-0003hk-C0
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 22:44:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757767Ab1I2UbG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Sep 2011 16:31:06 -0400
-Received: from mga03.intel.com ([143.182.124.21]:40544 "EHLO mga03.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757473Ab1I2UbE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Sep 2011 16:31:04 -0400
-Received: from azsmga001.ch.intel.com ([10.2.17.19])
-  by azsmga101.ch.intel.com with ESMTP; 29 Sep 2011 13:31:03 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="4.68,463,1312182000"; 
-   d="scan'208";a="57088929"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.226.49])
-  by azsmga001.ch.intel.com with ESMTP; 29 Sep 2011 13:31:02 -0700
-Received: from orsmsx103.amr.corp.intel.com (10.22.225.130) by
- orsmsx603.amr.corp.intel.com (10.22.226.49) with Microsoft SMTP Server (TLS)
- id 8.2.255.0; Thu, 29 Sep 2011 13:31:02 -0700
-Received: from orsmsx101.amr.corp.intel.com ([169.254.8.109]) by
- ORSMSX103.amr.corp.intel.com ([169.254.2.100]) with mapi id 14.01.0323.003;
- Thu, 29 Sep 2011 13:31:02 -0700
-Thread-Topic: Lack of detached signatures
-Thread-Index: AQHMfXEkzix7sKLnakG9o/UHmvckzpVh6UntgAB2iAD//8+r0IAAryOAgABSPgCAAC9kFoAAgbEAgADuo1A=
-In-Reply-To: <20110928230958.GJ19250@thunk.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.22.254.139]
+	id S1757597Ab1I2Uof (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Sep 2011 16:44:35 -0400
+Received: from wolverine02.qualcomm.com ([199.106.114.251]:4958 "EHLO
+	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755781Ab1I2Uoe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Sep 2011 16:44:34 -0400
+X-IronPort-AV: E=McAfee;i="5400,1158,6484"; a="123416987"
+Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
+  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 29 Sep 2011 13:44:34 -0700
+Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 2156B10004BE;
+	Thu, 29 Sep 2011 13:44:34 -0700 (PDT)
+User-Agent: KMail/1.13.5 (Linux/2.6.32-28-generic; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <7vy5x7rwq9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182433>
 
-[Sorry for the top posting. Fscking Outlook demands it.]
+On Thursday, September 29, 2011 01:10:06 pm Junio C Hamano 
+wrote:
+> Also we would probably want to drop "next" field from
+> "struct ref_list" (i.e. making it not a linear list),
+> introduce a new "struct ref_array" that is a
+> ALLOC_GROW() managed array of pointers to "struct
+> ref_list", make get_packed_refs() and get_loose_refs()
+> return a pointer to "struct ref_array" after sorting the
+> array contents by "name". Then resolve_ref() can do a
+> bisection search in the packed refs array when it does
+> not find a loose ref.
 
-The value of detached signatures is not that the users catch a hacked v=
-ersion, it is that the automated build bots catch the hacked version.  =
-There was a server compromised a number of years back that was not caug=
-ht by users, but by the Gentoo build bot.
+That would be nice, and I suspect it would shave a bit more 
+of the orphan check and possibly even a fetch.  If I 
+understood all that, I might try.  But I might need some 
+hand holding, my C is pretty rusty... Is there a bisection 
+search library in git already to use?  Is there a git 
+sorting library for the array also?
 
-What I would eventually like to see is a similar way to check an existi=
-ng git tree and make sure all the commits authenticate and have not bee=
-n tampered with.  That is a harder problem since the actual patch can c=
-hange during a merge. (Having cryptographic sign-offs would be helpful =
-as well. I have seen a few cases internally where the signoffs were for=
- bogus e-mail addresses that got generated by automated tools, as well =
-as patches that got altered after the sign-off.)
+-Martin
 
------Original Message-----
-=46rom: Ted Ts'o [mailto:tytso@mit.edu]=20
-Sent: Wednesday, September 28, 2011 4:10 PM
-To: Jeff King
-Cc: Junio C Hamano; Joseph Parmelee; Carlos Mart=EDn Nieto; Olsen, Alan=
- R; Michael Witten; git@vger.kernel.org
-Subject: Re: Lack of detached signatures
 
-On Wed, Sep 28, 2011 at 06:25:43PM -0400, Jeff King wrote:
-> [1] This is a minor nit, and probably not worth breaking away from th=
-e
-> way the rest of the world does it, but it is somewhat silly to sign t=
-he
-> compressed data. I couldn't care less about the exact bytes in the
-> compressed version; what I care about is the actual tar file. The
-> compression is just a transport.
-
-The worry I have is that many users don't check the GPG checksum files
-as it is.  If they have to decompress the file, and then run gpg to
-check the checksum, they might never get around to doing it.
-
-That being said, I'm not sure I have a good solution.  One is to ship
-the file without using detached signatures, and ship a foo.tar.gz.gpg
-file, and force them to use GPG to unwrap the file before it can be
-unpacked.  But users would yell and scream if we did that...
-
-	       	     	   	    	   - Ted
+-- 
+Employee of Qualcomm Innovation Center, Inc. which is a 
+member of Code Aurora Forum
