@@ -1,141 +1,113 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: In favor of "git commit --no-parent"
-Date: Thu, 29 Sep 2011 14:54:55 -0700
-Message-ID: <7v4nzvrp3k.fsf@alter.siamese.dyndns.org>
-References: <1316960136073-6829212.post@n2.nabble.com>
- <1316961212.4388.5.camel@centaur.lab.cmartin.tk>
- <7vaa9r2jii.fsf@alter.siamese.dyndns.org>
- <1317073309.5579.9.camel@centaur.lab.cmartin.tk>
- <vpq39fi9gf5.fsf@bauges.imag.fr>
- <69d6fb3199bc4f74b25dae7992a9f132-mfwitten@gmail.com>
- <vpqsjni6kkk.fsf@bauges.imag.fr>
- <553B5FA1A43748B1ADD759572EADA6FF@PhilipOakley>
- <e4f46b39e9ed4203bfab8a81e25eb600-mfwitten@gmail.com>
- <7vaa9oz9rl.fsf@alter.siamese.dyndns.org>
- <271cc2ed03774b4988bb61cb3e79750e-mfwitten@gmail.com>
- <7vmxdnte0j.fsf@alter.siamese.dyndns.org>
- <CABURp0q8YhTS-GDYOANEa19P-V2wf_EUTo=RHqnhDB619w=y-w@mail.gmail.com>
- <7vd3ejrqin.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] refs: Use binary search to lookup refs faster
+Date: Thu, 29 Sep 2011 14:57:53 -0700
+Message-ID: <7vzkhnqae6.fsf@alter.siamese.dyndns.org>
+References: <4DF6A8B6.9030301@op5.se>
+ <CAP8UFD3TWQHU0wLPuxMDnc3bRSz90Yd+yDMBe03kofeo-nr7yA@mail.gmail.com>
+ <201109281338.04378.mfick@codeaurora.org>
+ <201109281610.49322.mfick@codeaurora.org>
+ <c76d7f65203c0fc2c6e4e14fe2f33274@quantumfyre.co.uk>
+ <960aacbf-8d4d-4b2a-8902-f6380ff9febd@email.android.com>
+ <7c0105c6cca7dd0aa336522f90617fe4@quantumfyre.co.uk>
+ <4E84B89F.4060304@lsrfire.ath.cx> <7vy5x7rwq9.fsf@alter.siamese.dyndns.org>
+ <20110929041811.5363.33396.julian@quantumfyre.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 29 23:55:08 2011
+Cc: Martin Fick <mfick@codeaurora.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Thu Sep 29 23:58:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9OZO-0006bs-1j
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 23:55:06 +0200
+	id 1R9OcD-0007np-IG
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 23:58:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752549Ab1I2Vy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Sep 2011 17:54:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63002 "EHLO
+	id S1751694Ab1I2V55 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Sep 2011 17:57:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64122 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751204Ab1I2Vy7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Sep 2011 17:54:59 -0400
+	id S1751559Ab1I2V54 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Sep 2011 17:57:56 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E0D962291;
-	Thu, 29 Sep 2011 17:54:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A9772327;
+	Thu, 29 Sep 2011 17:57:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MQ/1EyesFPrDW0GCE65zwCv+KGI=; b=BWKu/f
-	5+qCg4TE7m3iR0r1OhNgo9cZKNOC/26SOyvptSMFAmulxbnkSPimJ/womEmEIsyc
-	dk+4849nobqtlEI/BFOtsFgfRzgw7VqZLjpDjFevgwHXj4rRn6/8LbHED3ntZED9
-	2oHwZZT4SAcA1uTeXROZhOB9OSj1aqnVzzRHM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=d7Xu7SFMke4+mA4ItFON8S5HnctsfQfZ
-	Ru49Tiw2ghr6IjnxSykryhJjhVd2crlX1kXYZHYx0bXhc6Ys3dI7awgOAns8zgoe
-	CzITuqWkYeHNX15ZOET72JURhVG2vbU1JYkEa+KfQmtsGkK1QO0UIUPC8CbTVS+K
-	ASvRvO1xiV0=
+	:content-type; s=sasl; bh=IJto2yWmRIJ250SNZj2QC4sURgo=; b=IVpamJ
+	AUXGG2BegLdo2T+6Y7v9CJgf+J4LM1OoCzwaEBQuNioBbMeo+d+Bfd4xuZEcbM/E
+	tjp7QH7s5VzWGfB6jsBJr+aBS3VKGZCINA7d8rs27DjCPui2eaoNnQDNIQT+4gdu
+	ZkieTF9acoI14ythdgXFlW9nWlqRRElF4fpC4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Lr0jPb2QkpjDZ3hMA6P1Nm9d8HTUTxJF
+	5nc/cU+haHOG8gmMIfcI9eA9sLxY6tyctKBiE1/cJOVA3fuw91dly8Cw9PBbQuUp
+	vxowqR105I75Ry6/37ROy5Uo4WSdb+ipOlQbdDdNPgp0ikn88ewMARRjHgfZb0Vu
+	q3uci75bcjQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D603B2290;
-	Thu, 29 Sep 2011 17:54:57 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 122592326;
+	Thu, 29 Sep 2011 17:57:56 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0C3E2228F; Thu, 29 Sep 2011
- 17:54:56 -0400 (EDT)
-In-Reply-To: <7vd3ejrqin.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 29 Sep 2011 14:24:16 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8A3FB2325; Thu, 29 Sep 2011
+ 17:57:54 -0400 (EDT)
+In-Reply-To: <20110929041811.5363.33396.julian@quantumfyre.co.uk> (Julian
+ Phillips's message of "Thu, 29 Sep 2011 05:18:10 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: ABB9B668-EAE5-11E0-8A7A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 1588F266-EAE6-11E0-B23E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182445>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Julian Phillips <julian@quantumfyre.co.uk> writes:
 
-> Phil Hord <phil.hord@gmail.com> writes:
+> Currently we linearly search through lists of refs when we need to
+> find a specific ref.  This can be very slow if we need to lookup a
+> large number of refs.  By changing to a binary search we can make this
+> faster.
 >
->> I think a user looking for this functionality -- either a new git user
->> or a user who seldom uses the "create secondary root commit" command
->> -- would first try 'git help init'.  It seems logical to me that I
->> should be able to do this:
->>
->>   cd my-git-repo
->>   git init --root=<newbranch> .
->>
->> This feels natural to me for this operation.
+> In order to be able to use a binary search we need to change from
+> using linked lists to arrays, which we can manage using ALLOC_GROW.
 >
-> Hmm, this does not feel very natural to me; unless "git init --root=work"
-> uses 'work' branch instead of 'master' when creating a new repository,
-> that is. But it is attractive that init is much less often used than
-> checkout/commit and everybody knows it is somewhat a _special_ operation.
+> We can now also use the standard library qsort function to sort the
+> refs arrays.
 >
->>> That leaves "Hidden History" the only useful use case. IOW, the answer to
->>> the first question above is not "Separate or Hidden History", but is
->>> "Hidden History and nothing else".
->>
->> I think you're saying that the "hidden history" scenario is more
->> special than the "separate history" one because of these reasons:
+> Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
+> ---
 >
-> Not at all.
+> Something like this?
 >
-> I am saying that "separate history" has no place in git workflow, if these
-> multiple roots _originate_ in the same single repository with a working
-> tree. And all of "git checkout --orphan", "git commit --root" and your
-> "git init --root" are solutions to make multiple roots _originate_ in the
-> same single repository with a working tree.
+>  refs.c |  328 ++++++++++++++++++++++++++--------------------------------------
+>  1 files changed, 131 insertions(+), 197 deletions(-)
 >
-> I have no trouble in a single repository with multiple roots if that is
-> done in a distribution point, which by definition does not need and
-> typically does not have any working tree. Options to "checkout/commit"
-> would not help as they need a working tree.
->
-> The way to do it is to work in multiple repositories, one for each of
-> these roots, and push into a single repository from them.
->
->>> And a half of the the answer to the second question is "checkout --orphan"
->>> (and the other half would be "filter-branch"). "checkout --orphan" does
->>> have major safety advantage than introducing "commit --no-parent", as Peff
->>> pointed out earlier (to which I agreed).
->>
->> The thing I don't understand about "checkout --orphan" is exactly what
->> you're getting when you do this.  I assume you get a populated index
->> and a non-existent HEAD. This seems a lot like "git init" to me,
->> especially in the non-existent HEAD area.
->
-> It is "HEAD pointing at a branch that does not yet exist", but I find it
-> strangely attractive ;-)
->
->> I didn't think git init would be much use for this scenario before,
->> but now I've changed my mind.
->>
->>   git init --root=<newbranch> --keep-index
->>
->> Again, this avoids complicating the common commands.  But maybe it
->> does overload init with extra baggage.
->
-> I do not think you would even need --keep-index there (running "git init"
-> in an existing repository to see what it does. It does not touch the index
-> nor HEAD).
->
-> I am not sure if "--root" is the right name but if "git init --root=work"
-> that is run to create (not re-init) a new repository points HEAD at a yet
-> to be created 'work' branch instead of 'master', I think it would be a
-> reasonable alternative.
->
-> By the way, why did you drop the mailing list?
+> diff --git a/refs.c b/refs.c
+> index a49ff74..e411bea 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -8,14 +8,18 @@
+>  #define REF_KNOWS_PEELED 04
+>  #define REF_BROKEN 010
+>  
+> -struct ref_list {
+> -	struct ref_list *next;
+> +struct ref_entry {
+>  	unsigned char flag; /* ISSYMREF? ISPACKED? */
+>  	unsigned char sha1[20];
+>  	unsigned char peeled[20];
+>  	char name[FLEX_ARRAY];
+>  };
+>  
+> +struct ref_array {
+> +	int nr, alloc;
+> +	struct ref_entry **refs;
+> +};
+> +
+
+Yeah, I can say "something like that" without looking at the rest of the
+patch ;-) The rest should naturally follow from the above data structures.
