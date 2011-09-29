@@ -1,68 +1,101 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [PATCH v4] Docs: git checkout --orphan: Copyedit, and s/root
- commit/orphan branch/
-Date: Thu, 29 Sep 2011 16:44:05 +0000
-Message-ID: <CAMOZ1BuqC4i8UVgsRt8NyKZnqp87cbcENW5g5hBXi69_Ctyscw@mail.gmail.com>
-References: <1316960136073-6829212.post@n2.nabble.com> <1316961212.4388.5.camel@centaur.lab.cmartin.tk>
- <7vaa9r2jii.fsf@alter.siamese.dyndns.org> <1317073309.5579.9.camel@centaur.lab.cmartin.tk>
- <vpq39fi9gf5.fsf@bauges.imag.fr> <69d6fb3199bc4f74b25dae7992a9f132-mfwitten@gmail.com>
- <vpqsjni6kkk.fsf@bauges.imag.fr> <553B5FA1A43748B1ADD759572EADA6FF@PhilipOakley>
- <e4f46b39e9ed4203bfab8a81e25eb600-mfwitten@gmail.com> <7vaa9oz9rl.fsf@alter.siamese.dyndns.org>
- <271cc2ed03774b4988bb61cb3e79750e-mfwitten@gmail.com> <3cba6bb85bde4f96903b2b617190a2b8-mfwitten@gmail.com>
+From: Joseph Parmelee <jparmele@wildbear.com>
+Subject: Re: Lack of detached signatures
+Date: Thu, 29 Sep 2011 10:47:30 -0600 (CST)
+Message-ID: <alpine.LNX.2.00.1109291013220.29373@bruno>
+References: <CAMOZ1Bs2HW6e3V6sayVSm0NhC=0e5129ZR8YSGuZPnJw9H9TEA@mail.gmail.com> <4B2793BF110AAB47AB0EE7B90897038516F63A7C@ORSMSX101.amr.corp.intel.com> <1317195719.30267.4.camel@bee.lab.cmartin.tk> <alpine.LNX.2.00.1109280555460.25187@bruno>
+ <7v1uv01uqm.fsf@alter.siamese.dyndns.org> <20110928222542.GA18120@sigill.intra.peff.net> <20110928230958.GJ19250@thunk.org> <7vd3ekxkca.fsf@alter.siamese.dyndns.org> <20110929015919.GL19250@thunk.org> <7vbou4uhuu.fsf@alter.siamese.dyndns.org>
+ <20110929131845.GQ19250@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
-	vra5107 <venkatram.akkineni@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Eric Raible <raible@nextest.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Jeff King <peff@peff.net>, Jay Soffian <jaysoffian@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 29 18:45:12 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?ISO-8859-15?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
+	"Olsen, Alan R" <alan.r.olsen@intel.com>,
+	Michael Witten <mfwitten@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Ted Ts'o <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Thu Sep 29 18:47:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9JjS-00074E-7A
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 18:45:10 +0200
+	id 1R9Jlq-0008EY-CC
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 18:47:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757245Ab1I2QpD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Sep 2011 12:45:03 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:37130 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754729Ab1I2QpC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Sep 2011 12:45:02 -0400
-Received: by ywb5 with SMTP id 5so703406ywb.19
-        for <git@vger.kernel.org>; Thu, 29 Sep 2011 09:45:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=uICQvxhTTVUf4Ti5E8rd2sWjdFcES6ngX3aY+f/FIFU=;
-        b=P+tb1/uJJB9WhVlIUCGOz5Ab3LVdfkA3+GOz/ZvtZPhTAAE8Jd2tBveuLSP2JKAsie
-         n1j+ovr/PWgqvxAWEcKSQ5bFm3UW4GCovMthLk7NfOT1y+6rs/rVrlpvF76w9NCg3r9w
-         z1Kb+XnDUXBhv5058F0/RVWK3UnkG+7bu9z5A=
-Received: by 10.42.28.133 with SMTP id n5mr1094021icc.77.1317314701417; Thu,
- 29 Sep 2011 09:45:01 -0700 (PDT)
-Received: by 10.42.171.194 with HTTP; Thu, 29 Sep 2011 09:44:05 -0700 (PDT)
-In-Reply-To: <3cba6bb85bde4f96903b2b617190a2b8-mfwitten@gmail.com>
+	id S1754861Ab1I2Qrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Sep 2011 12:47:33 -0400
+Received: from ip205-30-10-190.ct.co.cr ([190.10.30.205]:51543 "EHLO
+	bruno.wildbear.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754201Ab1I2Qrc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Sep 2011 12:47:32 -0400
+Received: by bruno.wildbear.com (Postfix, from userid 503)
+	id 38DED1BE02A4; Thu, 29 Sep 2011 10:47:31 -0600 (CST)
+Received: from localhost (localhost [127.0.0.1])
+	by bruno.wildbear.com (Postfix) with ESMTP id 1CC291BE029D;
+	Thu, 29 Sep 2011 10:47:31 -0600 (CST)
+X-X-Sender: jparmele@bruno
+In-Reply-To: <20110929131845.GQ19250@thunk.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182412>
 
-On Thu, Sep 29, 2011 at 15:44, Michael Witten <mfwitten@gmail.com> wrote:
 
-> Subject: [PATCH v4] Docs: git checkout --orphan: Copyedit, and s/root commit/orphan branch/
 
-Do me the kind favor of replacing:
 
-  s/root commit/orphan branch/
+On Thu, 29 Sep 2011, Ted Ts'o wrote:
 
-with:
+> On Wed, Sep 28, 2011 at 08:50:49PM -0700, Junio C Hamano wrote:
+>>
+>> I was actually more worried about helping consumers convince themselves
+>> that thusly signed keys indeed belong to producers like Linus, Peter,
+>> etc. There are those who worry that DNS record to code.google.com/ for
+>> them may point at an evil place to give them rogue download material.
+>> "Here are the keys you can verify our trees with" message on the mailing
+>> list, even with the message is signed with GPG, would not be satisfactory
+>> to them.
+>
+> What do you mean by "consumers" in this context?  Most end users don't
+> actually download tarballs from www.kernel.org or code.google.com!  :-)
+>
+> If you mean developers at Linux distributions Red Hat, SuSE, or
+> Handset manufacturers such as Samsung, HTC, Motorola, etc., there will
+> be many of those reprsenatives at LinuxCon Europe and CELF (Consumer
+> Electronics Linux Forum) Europe conferences, which will be colocated
+> with the Kernel Summit in Prague.
+>
+> If you are thinking of random developers located in far-flung places
+> of the world who don't have any contact with other Linux developers,
+> this is a previously unsolved problem.  There are links into the
+> developing Kernel GPG tree that are signed by the GPG web trust used
+> by Debian, OpenSuSE, and (soon) Fedora.  Given that people generally
+> have to trust one or more of those web of trusts, that's the best we
+> can do, at least as far as I know.  If you can suggest something
+> better, please let me know!
+>
+>
+> 						- Ted
+>
 
-  s/orphan branch/root commit/
+Also included is distro developers that gen custom distros for limited
+corporate use on specific hardware, and anyone else that is sufficiently
+concerned about security and/or survivability that they prefer/need to build
+from the upstream source.
+
+As far as accepting public keys, a key obtained from the key servers and
+signed by others, while not perfect, is vastly superior to nothing at all. 
+I am located in the mountains of Costa Rica.  Over the years I have
+collected a fair number of public keys making it very difficult for bad guys
+to fake both a public key and all the signatures too, even though I can't
+travel to a "key signing party" which would of course be better.
+
+Even if we have to change all the keys now its going to be risky but still
+vastly better than nothing.  I would hope that a new key would be signed by
+an existing valid private key as well as newly issued keys.  This would
+reassure people like me who have a substantial stash of old but valid public
+keys, while at the same time thwarting bad guys who can fake only those old
+signatures for which they have stolen valid private keys.
+
+Joseph
