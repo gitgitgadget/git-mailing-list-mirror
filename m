@@ -1,101 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Lack of detached signatures
-Date: Wed, 28 Sep 2011 17:28:53 -0700
-Message-ID: <7vd3ekxkca.fsf@alter.siamese.dyndns.org>
-References: <alpine.LNX.2.00.1109271742460.24832@bruno>
- <7vty7xttxh.fsf@alter.siamese.dyndns.org>
- <CAMOZ1Bs2HW6e3V6sayVSm0NhC=0e5129ZR8YSGuZPnJw9H9TEA@mail.gmail.com>
- <4B2793BF110AAB47AB0EE7B90897038516F63A7C@ORSMSX101.amr.corp.intel.com>
- <1317195719.30267.4.camel@bee.lab.cmartin.tk>
- <alpine.LNX.2.00.1109280555460.25187@bruno>
- <7v1uv01uqm.fsf@alter.siamese.dyndns.org>
- <20110928222542.GA18120@sigill.intra.peff.net>
- <20110928230958.GJ19250@thunk.org>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: Git is not scalable with too many refs/*
+Date: Thu, 29 Sep 2011 01:54:00 +0100
+Message-ID: <c76d7f65203c0fc2c6e4e14fe2f33274@quantumfyre.co.uk>
+References: <4DF6A8B6.9030301@op5.se>
+ <CAP8UFD3TWQHU0wLPuxMDnc3bRSz90Yd+yDMBe03kofeo-nr7yA@mail.gmail.com>
+ <201109281338.04378.mfick@codeaurora.org>
+ <201109281610.49322.mfick@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Joseph Parmelee <jparmele@wildbear.com>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	"Olsen\, Alan R" <alan.r.olsen@intel.com>,
-	Michael Witten <mfwitten@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Ted Ts'o <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Sep 29 02:29:05 2011
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Christian Couder <christian.couder@gmail.com>,
+	<git@vger.kernel.org>, Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Martin Fick <mfick@codeaurora.org>
+X-From: git-owner@vger.kernel.org Thu Sep 29 02:54:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R94Uq-0007H6-5Y
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 02:29:04 +0200
+	id 1R94t8-000752-9M
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Sep 2011 02:54:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755336Ab1I2A26 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Sep 2011 20:28:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35453 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754063Ab1I2A25 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2011 20:28:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 089C05812;
-	Wed, 28 Sep 2011 20:28:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Xm3b/yVTWQ11Y50eCIzzRdaa+zc=; b=aCthwG
-	yLVKtlD22UfpeH/RcWLK0qSf9g1errGMOsGz6Kn8OxtegBDRlpiwplNYd3tnb8Mp
-	Fy3ERSi86yRdMDw3CX5efStwCQYMvpgHEBCD+++0e8w08UFnyAeo4gnbF/OrdrLz
-	id9vQAauWrcRI2yxpjI/ho447Vo6qzBr3FbGE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=T6TJejqn7XBOZhromcOUQ0Fddu87pePu
-	aVKyUfeWzYwzFhf8beqUStMsEI63o+bbfS2xFVECxwu/+HQ9FHRSpYFGjlEt0obx
-	S/13yQtspgIPJPgLaa83G6+p/0I9ByUb1OyVTQM3psgSc2VyEVH8q0mNw3VgRSn+
-	ZuTop8VBI0c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 009D35810;
-	Wed, 28 Sep 2011 20:28:57 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8124F580F; Wed, 28 Sep 2011
- 20:28:56 -0400 (EDT)
-In-Reply-To: <20110928230958.GJ19250@thunk.org> (Ted Ts'o's message of "Wed,
- 28 Sep 2011 19:09:58 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 047DCA64-EA32-11E0-AA41-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755383Ab1I2AyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Sep 2011 20:54:05 -0400
+Received: from neutrino.quantumfyre.co.uk ([93.93.128.23]:54175 "EHLO
+	neutrino.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755336Ab1I2AyE (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Sep 2011 20:54:04 -0400
+Received: from reaper.quantumfyre.co.uk (quantumfyre-1-pt.tunnel.tserv5.lon1.ipv6.he.net [IPv6:2001:470:1f08:1724::2])
+	by neutrino.quantumfyre.co.uk (Postfix) with ESMTP id 04022C0626;
+	Thu, 29 Sep 2011 01:54:02 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id B4D3436A856;
+	Thu, 29 Sep 2011 01:54:01 +0100 (BST)
+X-Virus-Scanned: amavisd-new at reaper
+Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
+	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 31Z2wy9l6jRn; Thu, 29 Sep 2011 01:54:01 +0100 (BST)
+Received: from webmail.quantumfyre.co.uk (reaper.quantumfyre.co.uk [192.168.0.2])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id C3F7F36A4BE;
+	Thu, 29 Sep 2011 01:54:00 +0100 (BST)
+In-Reply-To: <201109281610.49322.mfick@codeaurora.org>
+X-Sender: julian@quantumfyre.co.uk
+User-Agent: Roundcube Webmail/0.5.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182377>
 
-Ted Ts'o <tytso@mit.edu> writes:
-
-> On Wed, Sep 28, 2011 at 06:25:43PM -0400, Jeff King wrote:
->> [1] This is a minor nit, and probably not worth breaking away from the
->> way the rest of the world does it, but it is somewhat silly to sign the
->> compressed data. I couldn't care less about the exact bytes in the
->> compressed version; what I care about is the actual tar file. The
->> compression is just a transport.
+On Wed, 28 Sep 2011 16:10:48 -0600, Martin Fick wrote:
+> On Wednesday, September 28, 2011 01:38:04 pm Martin Fick
+> wrote:
+-- snip --
+>> So with that bug fixed, the thing taking the most time
+>> now for a git checkout with ~100K refs seems to be the
+>> orphan check as Thomas predicted.  The strange part with
+>> this, is that the orphan check seems to take only about
+>> ~20s in the repo where the refs aren't packed.  However,
+>> in the repo where they are packed, this check takes at
+>> least 5min!  This seems a bit unusual, doesn't it?  Is
+>> the filesystem that much better at indexing refs than
+>> git's pack mechanism? Seems unlikely, the unpacked refs
+>> take 312M in the FS, the packed ones only take about
+>> 4.3M.  I suspect their is something else unexpected
+>> going on here in the packed ref case.
+>>
+>> Any thoughts?  I will dig deeper...
 >
-> The worry I have is that many users don't check the GPG checksum files
-> as it is.  If they have to decompress the file, and then run gpg to
-> check the checksum, they might never get around to doing it.
->
-> That being said, I'm not sure I have a good solution.  One is to ship
-> the file without using detached signatures, and ship a foo.tar.gz.gpg
-> file, and force them to use GPG to unwrap the file before it can be
-> unpacked.  But users would yell and scream if we did that...
+> I think the problem is that resolve_ref() walks a linked
+> list of searching for the packed ref.  Does this mean that
+> packed refs are not indexed at all?
 
-I suspect that letting GPG do the compression and shipping foo.tar.gpg
-would work just fine as well, and it is somewhat a tempting response to a
-_demand_ to sign materials we distribute. Of course, a nicer response to a
-_request_ would be to give a detached signature ;-)
+Are you sure that it is walking the linked list that is the problem?  
+I've created a test repo with ~100k refs/changes/... style refs, and 
+~40000 refs/heads/... style refs, and checkout can walk the list of 
+~140k refs seven times in 85ms user time including doing whatever other 
+processing is needed for checkout.  The real time is only 114ms - but 
+then my test repo has no real data in.
 
-I understand that the automated GPG signature k.org used to use on the
-master machine was primarily to protect the copies that the mirrors serve
-from getting tampered after they leave the master machine. Do you happen
-to know what the new policy will be? Will the developers who distribute
-their snapshot tarballs from the site be GPG signing them themselves
-before uploading? That would improve the situation (I suspect that there
-were some people who misunderstood that these GPG signature were to
-protect against break-in at the master machine), but at the same time, it
-may create the chicken-and-egg bootstrapping problem if public keys of too
-many people need to be published securely.
+If resolve_ref() walking the linked list of refs was the problem, then 
+I would expect my test repo to show the same problem.  It doesn't, a pre 
+ref-packing checkout took minutes (~0.5s user time), whereas a 
+ref-packed checkout takes ~0.1s.  So, I would suggest that the problem 
+lies elsewhere.
+
+Have you tried running a checkout whilst profiling?
+
+-- 
+Julian
