@@ -1,80 +1,79 @@
-From: Matti Linnanvuori <matti.linnanvuori@portalify.com>
-Subject: fatal: index-pack failed
-Date: Fri, 30 Sep 2011 11:11:02 +0300
-Message-ID: <50B87B00-064C-4FCC-B1E8-94A9EB027468@portalify.com>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
+From: Michal Vyskocil <mvyskocil@suse.cz>
+Subject: Re: RFC: reverse bisect
+Date: Fri, 30 Sep 2011 10:29:14 +0200
+Message-ID: <20110930082914.GD27152@zelva.suse.cz>
+References: <20110929142027.GA4936@zelva.suse.cz>
+ <4E849C5B.7050201@kdbg.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="UoPmpPX/dBe4BELn"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 30 10:11:31 2011
+X-From: git-owner@vger.kernel.org Fri Sep 30 10:29:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9YBt-0006X4-8E
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 10:11:29 +0200
+	id 1R9YTP-0005ET-8E
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 10:29:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757763Ab1I3ILV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Sep 2011 04:11:21 -0400
-Received: from helsinki.portalify.com ([217.30.185.41]:11183 "EHLO
-	helsinki.portalify.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758130Ab1I3ILE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Sep 2011 04:11:04 -0400
-Received: from [127.0.0.1] (putki.portalify.com [10.192.0.11])
-	by helsinki.portalify.com (Postfix) with ESMTP id B603D1B9068B
-	for <git@vger.kernel.org>; Fri, 30 Sep 2011 11:11:02 +0300 (EEST)
-X-Mailer: Apple Mail (2.1084)
+	id S1755351Ab1I3I3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Sep 2011 04:29:17 -0400
+Received: from nat.scz.novell.com ([213.151.88.252]:54248 "EHLO zelva.site"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755278Ab1I3I3Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Sep 2011 04:29:16 -0400
+Received: by zelva.site (Postfix, from userid 10112)
+	id 4957E42F3A0B; Fri, 30 Sep 2011 10:29:14 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <4E849C5B.7050201@kdbg.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182470>
 
-Jenkins got an error:
 
-Error performing command: git fetch -t ssh://iac-builder@sorsa.portalify.com/p/git/.git+refs/heads/*:refs/
-Command "git fetch -t ssh://iac-builder@sorsa.portalify.com/p/git/.git+refs/heads/*:refs/remotes/origin/*" returned status code 128: error: refs/remotes/origin/HEAD does not point to a valid object!
-error: refs/remotes/origin/master does not point to a valid object!
-error: refs/tags/jenkins-iac-orm-snapshot-889 does not point to a valid object!
-error: refs/remotes/origin/HEAD does not point to a valid object!
-error: refs/remotes/origin/master does not point to a valid object!
-error: refs/tags/jenkins-iac-orm-snapshot-889 does not point to a valid object!
-error: Could not read 49f273234b582edb44bbdbda29193719e5054cb7
-error: refs/remotes/origin/HEAD does not point to a valid object!
-error: refs/remotes/origin/master does not point to a valid object!
-error: missing object referenced by 'refs/tags/iac-1.4.13'
-error: refs/tags/jenkins-iac-orm-snapshot-889 does not point to a valid object!
-error: Could not read 49f273234b582edb44bbdbda29193719e5054cb7
-fatal: pack has 26 unresolved deltas
-fatal: index-pack failed
+--UoPmpPX/dBe4BELn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-git fsck --full
-error: refs/remotes/origin/HEAD does not point to a valid object!
-error: refs/remotes/origin/master does not point to a valid object!
-error: refs/tags/jenkins-iac-orm-snapshot-889 does not point to a valid object!
-broken link from  commit 5d4e8989e0b84546cd85fc5e1da12f68e4d38972
-              to    tree 54e146b9fca023bbde2b311629d82601fa1e89a0
-broken link from  commit 5d4e8989e0b84546cd85fc5e1da12f68e4d38972
-              to  commit 49f273234b582edb44bbdbda29193719e5054cb7
-dangling tree ec3b83770e89242fccda40b5194dd450122e49ed
-dangling tree dd51bc467f3f36c89b8064e550298f91d15bf28d
-dangling blob 1756f72adc8a8292e6fadeb306823f1d26feeb7b
-dangling tree 5e58d68ae6f5d5f554fbeb80f14c49bbf097a44c
-dangling blob 0f67ad10d3ad05b33b4689f3859cf2455bc0c292
-dangling tree 72818c927d476f0d56846d82062afe2648f9b554
-dangling blob 07969328481717f171624066c43948b8d69b4933
-dangling tree c49ef6d9a7a248c726327fb9e00bffa365f84dcb
-dangling tree 66b64e2a6ba858d357baa65887e8e117b368e771
-dangling blob 18c48a80fde2c5e1c9e696c055852af723eec01c
-dangling blob 4dcf4f005cc2e57f0f2720a937fa53740504ebf8
-dangling tree add32288c58a090c3746f7286bfaefd5f5fb24a4
-missing tree 54e146b9fca023bbde2b311629d82601fa1e89a0
-missing commit 49f273234b582edb44bbdbda29193719e5054cb7
+On Thu, Sep 29, 2011 at 06:27:07PM +0200, Johannes Sixt wrote:
+> Am 29.09.2011 16:20, schrieb Michal Vyskocil:
+> > git bisect start --reverse HEAD~999 HEAD
+>=20
+> With the regular meaning of the start subcommand, the revs given are
+> ordered: bad good good...
+>=20
+> With the reversed meaning, this would have to become: good bad bad...
+>=20
+> This would have to be mentioned clearly in the documentation.
+>=20
+> > git bisect good/bad/skip/run
+>=20
+> Last time this came up on the list I suggested to add the following
+> commands:
+>=20
+>    git bisect regression  # a synonym for git bisect start
+>    git bisect improvement # your --reverse
 
-git --version
-git version 1.7.2.5
+Good point! As you mentioned, the --switch already reverse the meanings
+of arguments as you mentioned. Using a new command will be less
+confusing for users.
 
-Debian GNU/Linux 6.0
+Michal Vyskocil
 
-Matti Linnanvuori
+--UoPmpPX/dBe4BELn
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.18 (GNU/Linux)
+
+iEYEARECAAYFAk6FfdoACgkQGwzgx2QvQgQjaACfXJAJ2P3kMWIkLVhQrEB7h2r8
+m2IAn2Vp7h6qIJpTokshV2tRDv7wFRSS
+=i3SJ
+-----END PGP SIGNATURE-----
+
+--UoPmpPX/dBe4BELn--
