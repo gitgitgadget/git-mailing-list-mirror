@@ -1,76 +1,134 @@
-From: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
-Subject: Re: [GUILT 1/6] Refuse to push corrupt patches
-Date: Fri, 30 Sep 2011 13:15:02 -0400
-Message-ID: <20110930171502.GE18364@poseidon.cudanet.local>
-References: <1317219324-10319-1-git-send-email-alan.christopher.jenkins@googlemail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alan Jenkins <alan.christopher.jenkins@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 30 19:24:21 2011
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: [PATCH] refs: Remove duplicates after sorting with qsort
+Date: Fri, 30 Sep 2011 18:56:57 +0100
+Message-ID: <20110930175658.1220.11552.julian@quantumfyre.co.uk>
+References: <4DF6A8B6.9030301@op5.se>
+ <CAP8UFD3TWQHU0wLPuxMDnc3bRSz90Yd+yDMBe03kofeo-nr7yA@mail.gmail.com>
+ <201109281338.04378.mfick@codeaurora.org>
+ <201109281610.49322.mfick@codeaurora.org>
+ <c76d7f65203c0fc2c6e4e14fe2f33274@quantumfyre.co.uk>
+ <960aacbf-8d4d-4b2a-8902-f6380ff9febd@email.android.com>
+ <7c0105c6cca7dd0aa336522f90617fe4@quantumfyre.co.uk>
+ <4E84B89F.4060304@lsrfire.ath.cx> <7vy5x7rwq9.fsf@alter.siamese.dyndns.org>
+ <20110929041811.5363.33396.julian@quantumfyre.co.uk>
+ <7vvcsbqa0k.fsf@alter.siamese.dyndns.org>
+ <20110929221143.23806.25666.julian@quantumfyre.co.uk>
+ <7v62karjv3.fsf@alter.siamese.dyndns.org> <4E85E07C.5070402@alum.mit.edu>
+ <7vk48qouht.fsf@alter.siamese.dyndns.org>
+Cc: Julian Phillips <julian@quantumfyre.co.uk>,
+	Martin Fick <mfick@codeaurora.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 30 20:04:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9gor-0006L1-Dw
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 19:24:17 +0200
+	id 1R9hRZ-0006Xh-8A
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 20:04:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754932Ab1I3RYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Sep 2011 13:24:12 -0400
-Received: from josefsipek.net ([64.9.206.49]:55304 "EHLO josefsipek.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753894Ab1I3RYL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Sep 2011 13:24:11 -0400
-X-Greylist: delayed 414 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Sep 2011 13:24:11 EDT
-Received: from poseidon.cudanet.local (unknown [12.200.95.45])
-	by josefsipek.net (Postfix) with ESMTPSA id 6662358521;
-	Fri, 30 Sep 2011 13:17:17 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <1317219324-10319-1-git-send-email-alan.christopher.jenkins@googlemail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1757577Ab1I3SEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Sep 2011 14:04:12 -0400
+Received: from neutrino.quantumfyre.co.uk ([93.93.128.23]:40275 "EHLO
+	neutrino.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757183Ab1I3SEK (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Sep 2011 14:04:10 -0400
+Received: from reaper.quantumfyre.co.uk (quantumfyre-1-pt.tunnel.tserv5.lon1.ipv6.he.net [IPv6:2001:470:1f08:1724::2])
+	by neutrino.quantumfyre.co.uk (Postfix) with ESMTP id 73826C060D;
+	Fri, 30 Sep 2011 19:04:09 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 4B8AC36A925;
+	Fri, 30 Sep 2011 19:04:09 +0100 (BST)
+X-Virus-Scanned: amavisd-new at reaper
+Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
+	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 5T1eME6rnf3G; Fri, 30 Sep 2011 19:04:08 +0100 (BST)
+Received: from [172.16.70.128] (rayne.quantumfyre.co.uk [192.168.0.18])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 2DE5D35F765;
+	Fri, 30 Sep 2011 19:04:08 +0100 (BST)
+X-git-sha1: 3c3b47317ef07f9030ace60495852861e06d1d61 
+X-Mailer: git-mail-commits v0.5.3
+In-Reply-To: <7vk48qouht.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182495>
 
-Thanks for the patches.  I looked them over and they look good.  I'll give
-them another thorough reading once I have a bit of time to apply them.
+The previous custom merge sort would drop duplicate entries as part of
+the sort.  It would also die if the duplicate entries had different
+sha1 values.  The standard library qsort doesn't do this, so we have
+to do it manually afterwards.
 
-Jeff.
+Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
+---
 
-On Wed, Sep 28, 2011 at 03:15:19PM +0100, Alan Jenkins wrote:
-> "guilt push" would treat corrupt patches as empty,
-> because "git apply --numstat" prints nothing on stdout.
-> 
-> (You do get an error message on stderr,
->  but then guilt says "Patch applied" etc,
->  and I didn't notice the earlier error message
->  for quite some time.)
-> 
-> Signed-off-by: Alan Jenkins <alan.christopher.jenkins@googlemail.com>
-> ---
->  guilt |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/guilt b/guilt
-> index d1e17d4..51532f9 100755
-> --- a/guilt
-> +++ b/guilt
-> @@ -611,7 +611,7 @@ push_patch()
->  		cd_to_toplevel
->  
->  		# apply the patch if and only if there is something to apply
-> -		if [ `git apply --numstat "$p" | wc -l` -gt 0 ]; then
-> +		if [ `do_get_patch "$p" | wc -l` -gt 0 ]; then
->  			if [ "$bail_action" = abort ]; then
->  				reject=""
->  			fi
-> -- 
-> 1.7.4.1
-> 
+On Fri, 30 Sep 2011 09:38:54 -0700, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>
+>> On 09/30/2011 01:48 AM, Junio C Hamano wrote:
+>>> This version looks sane, although I have a suspicion that it may 
+>>> have
+>>> some interaction with what Michael may be working on.
+>>
+>> Indeed, I have almost equivalent changes in the giant patch series 
+>> that
+>> I am working on [1].
+>
+> Good; that was the primary thing I wanted to know.  I want to take
+> Julian's patch early but if the approach and data structures were
+> drastically different from what you are cooking, that would force
+> unnecessary reroll on your part, which I wanted to avoid.
+>
+> Thanks.
 
+I had a quick look at Michael's code, and it reminded me that I had missed one
+thing out.  If we want to keep the duplicate detection & removal from the
+original merge sort then this patch is needed on top of v3 of the binary search.
+
+Though I never could figure out how duplicate refs were supposed to appear ... I
+tested by editing packed-refs, but I assume that isn't "supported".
+
+ refs.c |   22 ++++++++++++++++++++++
+ 1 files changed, 22 insertions(+), 0 deletions(-)
+
+diff --git a/refs.c b/refs.c
+index 4c01d79..cf080ee 100644
+--- a/refs.c
++++ b/refs.c
+@@ -77,7 +77,29 @@ static int ref_entry_cmp(const void *a, const void *b)
+ 
+ static void sort_ref_array(struct ref_array *array)
+ {
++	int i = 0, j = 1;
++
++	/* Nothing to sort unless there are at least two entries */
++	if (array->nr < 2)
++		return;
++
+ 	qsort(array->refs, array->nr, sizeof(*array->refs), ref_entry_cmp);
++
++	/* Remove any duplicates from the ref_array */
++	for (; j < array->nr; j++) {
++		struct ref_entry *a = array->refs[i];
++		struct ref_entry *b = array->refs[j];
++		if (!strcmp(a->name, b->name)) {
++			if (hashcmp(a->sha1, b->sha1))
++				die("Duplicated ref, and SHA1s don't match: %s",
++				    a->name);
++			warning("Duplicated ref: %s", a->name);
++			continue;
++		}
++		i++;
++		array->refs[i] = array->refs[j];
++	}
++	array->nr = i + 1;
+ }
+ 
+ static struct ref_entry *search_ref_array(struct ref_array *array, const char *name)
 -- 
-Hegh QaQ law'
-quvHa'ghach QaQ puS
+1.7.6.1
