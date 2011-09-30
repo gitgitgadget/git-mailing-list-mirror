@@ -1,53 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bug?: 'git log --find-copies' doesn't match 'git log --follow
- <rev> -- path/to/file'
-Date: Fri, 30 Sep 2011 17:38:41 -0400
-Message-ID: <20110930213841.GA9384@sigill.intra.peff.net>
-References: <DBC73B3F-2703-4651-AADA-233A9CC38AFD@inf.fu-berlin.de>
+From: Marcus Karlsson <mk@acc.umu.se>
+Subject: [PATCH] gitk: Show patch for initial commit
+Date: Fri, 30 Sep 2011 23:50:21 +0200
+Message-ID: <20110930215021.GA3005@kennedy.acc.umu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Alexander Pepper <pepper@inf.fu-berlin.de>
-X-From: git-owner@vger.kernel.org Fri Sep 30 23:38:49 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 30 23:59:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9knA-0007Nn-Of
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 23:38:49 +0200
+	id 1R9l7P-0006jV-GA
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 23:59:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756667Ab1I3Vio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Sep 2011 17:38:44 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50426
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757013Ab1I3Vin (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Sep 2011 17:38:43 -0400
-Received: (qmail 4675 invoked by uid 107); 30 Sep 2011 21:43:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 30 Sep 2011 17:43:47 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Sep 2011 17:38:41 -0400
+	id S1756541Ab1I3V73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Sep 2011 17:59:29 -0400
+Received: from mail.acc.umu.se ([130.239.18.156]:58475 "EHLO mail.acc.umu.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754159Ab1I3V71 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Sep 2011 17:59:27 -0400
+X-Greylist: delayed 544 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Sep 2011 17:59:27 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by amavisd-new (Postfix) with ESMTP id 65D27A27;
+	Fri, 30 Sep 2011 23:50:22 +0200 (MEST)
+X-Virus-Scanned: amavisd-new at acc.umu.se
+Received: from kennedy.acc.umu.se (kennedy.acc.umu.se [130.239.18.157])
+	by mail.acc.umu.se (Postfix) with ESMTP id BEC67A26;
+	Fri, 30 Sep 2011 23:50:21 +0200 (MEST)
+Received: by kennedy.acc.umu.se (Postfix, from userid 24678)
+	id 9EBC75F; Fri, 30 Sep 2011 23:50:21 +0200 (MEST)
 Content-Disposition: inline
-In-Reply-To: <DBC73B3F-2703-4651-AADA-233A9CC38AFD@inf.fu-berlin.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182512>
 
-On Fri, Sep 30, 2011 at 05:32:38PM +0200, Alexander Pepper wrote:
+Make gitk show the patch for the initial commit.
 
-> So git log with copy and rename detection on (--find-copies) tells me,
-> that the file StopClusterException.java is copied to
-> ClusterOperation.java. But If I ask git log for that specific file
-> with --follow git claims a copy from Immutable.java to
-> ClusterOperation.java!
+Signed-off-by: Marcus Karlsson <mk@acc.umu.se>
+---
+ gitk-git/gitk |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-I think that --follow uses --find-copies-harder. Did you try:
-
-  git log --numstat --find-copies-harder dd4e90f9
-
-? Does it find Immutable.java as the source?
-
--Peff
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 4cde0c4..20aeae6 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -7436,7 +7436,7 @@ proc diffcmd {ids flags} {
+ 	    lappend cmd HEAD
+ 	}
+     } else {
+-	set cmd [concat | git diff-tree -r $flags $ids]
++	set cmd [concat | git diff-tree -r --root $flags $ids]
+     }
+     return $cmd
+ }
+-- 
+1.7.7.rc3.4.g8d714
