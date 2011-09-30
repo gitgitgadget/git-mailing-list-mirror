@@ -1,74 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] refs: Use binary search to lookup refs faster
-Date: Thu, 29 Sep 2011 16:48:00 -0700
-Message-ID: <7v62karjv3.fsf@alter.siamese.dyndns.org>
-References: <4DF6A8B6.9030301@op5.se>
- <CAP8UFD3TWQHU0wLPuxMDnc3bRSz90Yd+yDMBe03kofeo-nr7yA@mail.gmail.com>
- <201109281338.04378.mfick@codeaurora.org>
- <201109281610.49322.mfick@codeaurora.org>
- <c76d7f65203c0fc2c6e4e14fe2f33274@quantumfyre.co.uk>
- <960aacbf-8d4d-4b2a-8902-f6380ff9febd@email.android.com>
- <7c0105c6cca7dd0aa336522f90617fe4@quantumfyre.co.uk>
- <4E84B89F.4060304@lsrfire.ath.cx> <7vy5x7rwq9.fsf@alter.siamese.dyndns.org>
- <20110929041811.5363.33396.julian@quantumfyre.co.uk>
- <7vvcsbqa0k.fsf@alter.siamese.dyndns.org>
- <20110929221143.23806.25666.julian@quantumfyre.co.uk>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: In favor of "git commit --no-parent"
+Date: Fri, 30 Sep 2011 00:51:20 +0000
+Message-ID: <CAMOZ1BuUvuyrf3Tio+9EZR_-b3zy-RWpq36+0rmDO+QKWaVmxQ@mail.gmail.com>
+References: <1316960136073-6829212.post@n2.nabble.com> <1316961212.4388.5.camel@centaur.lab.cmartin.tk>
+ <7vaa9r2jii.fsf@alter.siamese.dyndns.org> <1317073309.5579.9.camel@centaur.lab.cmartin.tk>
+ <vpq39fi9gf5.fsf@bauges.imag.fr> <69d6fb3199bc4f74b25dae7992a9f132-mfwitten@gmail.com>
+ <vpqsjni6kkk.fsf@bauges.imag.fr> <553B5FA1A43748B1ADD759572EADA6FF@PhilipOakley>
+ <e4f46b39e9ed4203bfab8a81e25eb600-mfwitten@gmail.com> <7vaa9oz9rl.fsf@alter.siamese.dyndns.org>
+ <271cc2ed03774b4988bb61cb3e79750e-mfwitten@gmail.com> <7vmxdnte0j.fsf@alter.siamese.dyndns.org>
+ <CABURp0q8YhTS-GDYOANEa19P-V2wf_EUTo=RHqnhDB619w=y-w@mail.gmail.com>
+ <7vd3ejrqin.fsf@alter.siamese.dyndns.org> <7v4nzvrp3k.fsf@alter.siamese.dyndns.org>
+ <CABURp0rjBdx+=_8R5g16fNKWis3=GgJw9SQ9D53H6xu_-Tq3Uw@mail.gmail.com> <7vd3ejq74z.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Martin Fick <mfick@codeaurora.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Fri Sep 30 01:48:13 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Phil Hord <phil.hord@gmail.com>,
+	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
+	vra5107 <venkatram.akkineni@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Eric Raible <raible@nextest.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Jeff King <peff@peff.net>, Jay Soffian <jaysoffian@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 30 02:51:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9QKp-00011L-Vv
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 01:48:12 +0200
+	id 1R9RKW-00018e-1J
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 02:51:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753501Ab1I2XsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Sep 2011 19:48:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52680 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751516Ab1I2XsD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Sep 2011 19:48:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D54604CE1;
-	Thu, 29 Sep 2011 19:48:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/mTOWK0mrOITWNRDQ3eJh/IvB4U=; b=gS6XMk
-	y+WS8ZyZ9M1U57CzDJDmxRQjr99E7k+/DcxzrVFq6RhkIIAlCnKhp/Gjz31VLbtp
-	YX6xFNPa1znTqJBS+d980BltsTxyrMB4W6BqwnFCwmJI/f2WT64P71wUo4SMMvCU
-	x1immiCkZc0mqjmwYOi/St9ZvwiYX1aKwZ+OA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=d6WNmp497q3GhCpRHtOeonVuSQNGKVqs
-	weBL7lIxtDEA0KtoqTBRDPP1I4vqIrQCoj3VuPkACdrVK8K8bMa0sgYYQRX5Uwc1
-	crKVpOAuOqR183ue9EM6uv0JxIWMi06NKo4b3F4Oge/iH2DHze0CF4O++wgkXRCI
-	l54paZCSuSA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA7F64CE0;
-	Thu, 29 Sep 2011 19:48:02 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4393F4CDF; Thu, 29 Sep 2011
- 19:48:02 -0400 (EDT)
-In-Reply-To: <20110929221143.23806.25666.julian@quantumfyre.co.uk> (Julian
- Phillips's message of "Thu, 29 Sep 2011 23:11:42 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 780C50A4-EAF5-11E0-9E56-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754605Ab1I3Avv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Sep 2011 20:51:51 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:64780 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751507Ab1I3Avu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Sep 2011 20:51:50 -0400
+Received: by iaqq3 with SMTP id q3so1248756iaq.19
+        for <git@vger.kernel.org>; Thu, 29 Sep 2011 17:51:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Z5yclEJUlpN/0GqrQCNE1+uXSis3+EMPev2vs0RWH+w=;
+        b=GcBz3E3SJvbdewk6eT/D+Hly8NtC2MQbieyjorG4rfVwcy8rU3cTkPYZuLyvSme6fR
+         lwEa/t1OwOwby50GBZadeNPOWMIpdbmIo1MZVsSXGvApHSVMP90XJAaTTHWmSSMg6nxk
+         V8g7QmSo3FeP9Si9bf2/rXfe4PSoJIwSsJmoM=
+Received: by 10.42.18.202 with SMTP id y10mr1741883ica.19.1317343910055; Thu,
+ 29 Sep 2011 17:51:50 -0700 (PDT)
+Received: by 10.42.171.194 with HTTP; Thu, 29 Sep 2011 17:51:20 -0700 (PDT)
+In-Reply-To: <7vd3ejq74z.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182457>
 
-This version looks sane, although I have a suspicion that it may have
-some interaction with what Michael may be working on.
+On Thu, Sep 29, 2011 at 23:08, Junio C Hamano <gitster@pobox.com> wrote:
 
-Thanks.
+> The branch switching semantics of Git is designed to work well when all
+> the branches you check out in the working tree are somewhat related
+> content-wise. You create a new file, or make modifications to an existing
+> file, realize that the change wants to go to a branch different from the
+> current one. You _can_ switch to the branch the change should belong to,
+> because the contents in the working tree is defined to be not tied to any
+> branch, but is floating on top of the current branch.
+
+That's exactly why "git commit --no-parent" is so useful.
+
+Look at the difference:
+
+  Creating a Hidden History (git commit --no-parent)
+
+    $ cd repo
+    $ git checkout -b hidden-history
+    $ # Hack away as usual or not
+    $ git status # As with any other commit.
+    $ git commit --no-parent
+
+  Creating a Hidden History (git checkout --orphan):
+
+    $ cd repo
+    $ git checkout --orphan hidden-history
+    $ # Hack away as usual or not
+    $ git status # lots of "new file" notifications obscuring my changes
+    $ git commit
+
+The main issue with "git commit --no-parent" is [supposedly] safety, but it
+can be made pretty safe:
+
+  $ cd repo
+  $ # Hack away as usual or not
+  $ git status # As with any other commit.
+  $ git commit --no-parent
+  Error! There must be another branch head directly referencing the
+  same commit that is directly referenced by the current branch head!
+  $ git checkout -b hidden-history
+  $ git commit --no-parent
+
+In the vast majority of cases, that rule will prevent people from
+losing history inadvertantly, and no extra "--force" is required.
