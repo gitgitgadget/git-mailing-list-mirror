@@ -1,72 +1,67 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: [PATCH v3] refs: Use binary search to lookup refs faster
-Date: Thu, 29 Sep 2011 19:13:08 -0600
-Organization: CAF
-Message-ID: <201109291913.34196.mfick@codeaurora.org>
-References: <4DF6A8B6.9030301@op5.se> <7vvcsbqa0k.fsf@alter.siamese.dyndns.org> <20110929221143.23806.25666.julian@quantumfyre.co.uk>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: [PATCH] contrib: add a pair of credential helpers for Mac OS X's keychain
+Date: Thu, 29 Sep 2011 21:17:11 -0400
+Message-ID: <CAEBDL5VbaafKYjJc6spgz94Z4R7QprA7vFPMGWhgk5QY99-wBQ@mail.gmail.com>
+References: <1316055113-2353-1-git-send-email-jaysoffian@gmail.com>
+	<20110929075627.GB14022@sigill.intra.peff.net>
+	<CAEBDL5WhpVg17aPuRqrE5=2Q293kVD4fYtxGqRzx_K=87t-jgw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Fri Sep 30 03:13:43 2011
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Sep 30 03:17:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9Rfa-0006f3-Qh
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 03:13:43 +0200
+	id 1R9Rj3-0007VN-L1
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 03:17:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756614Ab1I3BNi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Sep 2011 21:13:38 -0400
-Received: from wolverine02.qualcomm.com ([199.106.114.251]:57669 "EHLO
-	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756448Ab1I3BNg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Sep 2011 21:13:36 -0400
-X-IronPort-AV: E=McAfee;i="5400,1158,6484"; a="123480371"
-Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
-  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 29 Sep 2011 18:13:35 -0700
-Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 90FDF10004BE;
-	Thu, 29 Sep 2011 18:13:35 -0700 (PDT)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-28-generic; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <20110929221143.23806.25666.julian@quantumfyre.co.uk>
+	id S1755903Ab1I3BRM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Sep 2011 21:17:12 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:39369 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755712Ab1I3BRL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Sep 2011 21:17:11 -0400
+Received: by vcbfk10 with SMTP id fk10so959911vcb.19
+        for <git@vger.kernel.org>; Thu, 29 Sep 2011 18:17:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ZLhtp+Gvr2ebEyJG9lA4n0RYNtsOhprpVWVWxw5XWEI=;
+        b=fbtdxfDNvTMkgwJFr9S3jf+5X7mbZlC5LKTl3w8PYzIOitD4+PCnUpcIz6tQF7iQoz
+         0iyPPtUsbhuFnDu/kqL5RO1vrazHCCLcZN+syIJcXJZJiA3tR33TqIS63UZO9geoj7gH
+         JNGOdQgiyKfl0xg00EFOH90f5cu5JWGdfWdms=
+Received: by 10.52.108.68 with SMTP id hi4mr2620013vdb.385.1317345431310; Thu,
+ 29 Sep 2011 18:17:11 -0700 (PDT)
+Received: by 10.220.75.144 with HTTP; Thu, 29 Sep 2011 18:17:11 -0700 (PDT)
+In-Reply-To: <CAEBDL5WhpVg17aPuRqrE5=2Q293kVD4fYtxGqRzx_K=87t-jgw@mail.gmail.com>
+X-Google-Sender-Auth: -WWViWW8cwsO7-85P1I4KKBIRto
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182460>
 
-On Thursday, September 29, 2011 04:11:42 pm Julian Phillips=20
-wrote:
-> Currently we linearly search through lists of refs when
-> we need to find a specific ref.  This can be very slow
-> if we need to lookup a large number of refs.  By
-> changing to a binary search we can make this faster.
->=20
-> In order to be able to use a binary search we need to
-> change from using linked lists to arrays, which we can
-> manage using ALLOC_GROW.
->=20
-> We can now also use the standard library qsort function
-> to sort the refs arrays.
->=20
+On Thu, Sep 29, 2011 at 6:03 AM, John Szakmeister <john@szakmeister.net=
+> wrote:
+[snip]
+> Yep, I agree. =C2=A0And it's worse when using the security command li=
+ne
+> tool... when you grant security access to the key, then any app could
+> technically gain access to the item via the security tool. =C2=A0That=
+'s one
+> of the reasons I didn't pursue that route early on.
 
-This works for me, however unfortunately, I cannot find any=20
-scenarios where it improves anything over the previous fix=20
-by Ren=E9.  :(
+Thinking about this a little more, git-credential-anything has the
+same problem.  I can run it, and it'll dump out my password for
+anybody.  I'd rather it didn't do that.  I think it would be more
+satisfying to have the mechanisms built into git itself, without a
+separate application.  I'm not sure how practical that is though.
 
-I tested many things, clones, fetches, fetch noops,=20
-checkouts, garbage collection.  I am a bit surprised,=20
-because I thought that my hack of a hash map did improve=20
-still on checkouts on packed refs, but it could just be that=20
-my hack was buggy and did not actually do a full orphan=20
-check.
-
-Thanks,
-
--Martin
+-John
