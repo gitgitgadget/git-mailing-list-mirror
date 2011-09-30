@@ -1,91 +1,80 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [PATCH v3] refs: Use binary search to lookup refs faster
-Date: Fri, 30 Sep 2011 09:04:02 +0100
-Message-ID: <a9f3dba5f48adfa603d76b7d49111e3d@quantumfyre.co.uk>
-References: <4DF6A8B6.9030301@op5.se>
- <7vvcsbqa0k.fsf@alter.siamese.dyndns.org>
- <20110929221143.23806.25666.julian@quantumfyre.co.uk>
- <201109291913.34196.mfick@codeaurora.org>
- <7vwrcqpuc7.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Martin Fick <mfick@codeaurora.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	<git@vger.kernel.org>, Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 30 10:04:17 2011
+From: Matti Linnanvuori <matti.linnanvuori@portalify.com>
+Subject: fatal: index-pack failed
+Date: Fri, 30 Sep 2011 11:11:02 +0300
+Message-ID: <50B87B00-064C-4FCC-B1E8-94A9EB027468@portalify.com>
+Mime-Version: 1.0 (Apple Message framework v1084)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 30 10:11:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9Y4u-0003Rw-6i
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 10:04:16 +0200
+	id 1R9YBt-0006X4-8E
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 10:11:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757515Ab1I3IEI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Sep 2011 04:04:08 -0400
-Received: from neutrino.quantumfyre.co.uk ([93.93.128.23]:39759 "EHLO
-	neutrino.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754796Ab1I3IEG (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Sep 2011 04:04:06 -0400
-Received: from reaper.quantumfyre.co.uk (quantumfyre-1-pt.tunnel.tserv5.lon1.ipv6.he.net [IPv6:2001:470:1f08:1724::2])
-	by neutrino.quantumfyre.co.uk (Postfix) with ESMTP id 97CC6C060C;
-	Fri, 30 Sep 2011 09:04:04 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 6EDB636A8F2;
-	Fri, 30 Sep 2011 09:04:04 +0100 (BST)
-X-Virus-Scanned: amavisd-new at reaper
-Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
-	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id dDlPoEOiHxPu; Fri, 30 Sep 2011 09:04:03 +0100 (BST)
-Received: from webmail.quantumfyre.co.uk (reaper.quantumfyre.co.uk [192.168.0.2])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id EF1C536940A;
-	Fri, 30 Sep 2011 09:04:02 +0100 (BST)
-In-Reply-To: <7vwrcqpuc7.fsf@alter.siamese.dyndns.org>
-X-Sender: julian@quantumfyre.co.uk
-User-Agent: Roundcube Webmail/0.5.3
+	id S1757763Ab1I3ILV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Sep 2011 04:11:21 -0400
+Received: from helsinki.portalify.com ([217.30.185.41]:11183 "EHLO
+	helsinki.portalify.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758130Ab1I3ILE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Sep 2011 04:11:04 -0400
+Received: from [127.0.0.1] (putki.portalify.com [10.192.0.11])
+	by helsinki.portalify.com (Postfix) with ESMTP id B603D1B9068B
+	for <git@vger.kernel.org>; Fri, 30 Sep 2011 11:11:02 +0300 (EEST)
+X-Mailer: Apple Mail (2.1084)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182469>
 
-On Thu, 29 Sep 2011 20:44:40 -0700, Junio C Hamano wrote:
-> Martin Fick <mfick@codeaurora.org> writes:
->
->> This works for me, however unfortunately, I cannot find any
->> scenarios where it improves anything over the previous fix
->> by Ren=C3=A9.  :(
->
-> Nevertheless, I would appreciate it if you can try this _without_=20
-> Ren=C3=A9's
-> patch. This attempts to make resolve_ref() cheap for _any_ caller.=20
-> Ren=C3=A9's
-> patch avoids calling it in one specific callchain.
->
-> They address different issues. Ren=C3=A9's patch is probably an=20
-> independently
-> good change (I haven't thought about the interactions with the topics=
-=20
-> in
-> flight and its implications on the future direction), but would not=20
-> help
-> other/new callers that make many calls to resolve_ref().
+Jenkins got an error:
 
-It certainly helps with my test repo (~140k refs, of which ~40k are=20
-branches).  User times for checkout starting from an orphaned commit=20
-are:
+Error performing command: git fetch -t ssh://iac-builder@sorsa.portalify.com/p/git/.git+refs/heads/*:refs/
+Command "git fetch -t ssh://iac-builder@sorsa.portalify.com/p/git/.git+refs/heads/*:refs/remotes/origin/*" returned status code 128: error: refs/remotes/origin/HEAD does not point to a valid object!
+error: refs/remotes/origin/master does not point to a valid object!
+error: refs/tags/jenkins-iac-orm-snapshot-889 does not point to a valid object!
+error: refs/remotes/origin/HEAD does not point to a valid object!
+error: refs/remotes/origin/master does not point to a valid object!
+error: refs/tags/jenkins-iac-orm-snapshot-889 does not point to a valid object!
+error: Could not read 49f273234b582edb44bbdbda29193719e5054cb7
+error: refs/remotes/origin/HEAD does not point to a valid object!
+error: refs/remotes/origin/master does not point to a valid object!
+error: missing object referenced by 'refs/tags/iac-1.4.13'
+error: refs/tags/jenkins-iac-orm-snapshot-889 does not point to a valid object!
+error: Could not read 49f273234b582edb44bbdbda29193719e5054cb7
+fatal: pack has 26 unresolved deltas
+fatal: index-pack failed
 
-No fix          : ~16m8s
-+ Binary Search : ~4s
-+ Ren=C3=A9's patch  : ~2s
+git fsck --full
+error: refs/remotes/origin/HEAD does not point to a valid object!
+error: refs/remotes/origin/master does not point to a valid object!
+error: refs/tags/jenkins-iac-orm-snapshot-889 does not point to a valid object!
+broken link from  commit 5d4e8989e0b84546cd85fc5e1da12f68e4d38972
+              to    tree 54e146b9fca023bbde2b311629d82601fa1e89a0
+broken link from  commit 5d4e8989e0b84546cd85fc5e1da12f68e4d38972
+              to  commit 49f273234b582edb44bbdbda29193719e5054cb7
+dangling tree ec3b83770e89242fccda40b5194dd450122e49ed
+dangling tree dd51bc467f3f36c89b8064e550298f91d15bf28d
+dangling blob 1756f72adc8a8292e6fadeb306823f1d26feeb7b
+dangling tree 5e58d68ae6f5d5f554fbeb80f14c49bbf097a44c
+dangling blob 0f67ad10d3ad05b33b4689f3859cf2455bc0c292
+dangling tree 72818c927d476f0d56846d82062afe2648f9b554
+dangling blob 07969328481717f171624066c43948b8d69b4933
+dangling tree c49ef6d9a7a248c726327fb9e00bffa365f84dcb
+dangling tree 66b64e2a6ba858d357baa65887e8e117b368e771
+dangling blob 18c48a80fde2c5e1c9e696c055852af723eec01c
+dangling blob 4dcf4f005cc2e57f0f2720a937fa53740504ebf8
+dangling tree add32288c58a090c3746f7286bfaefd5f5fb24a4
+missing tree 54e146b9fca023bbde2b311629d82601fa1e89a0
+missing commit 49f273234b582edb44bbdbda29193719e5054cb7
 
-(The 2s includes both patches, though the timing is the same for Ren=C3=
-=A9's=20
-patch alone)
+git --version
+git version 1.7.2.5
 
---=20
-Julian
+Debian GNU/Linux 6.0
+
+Matti Linnanvuori
