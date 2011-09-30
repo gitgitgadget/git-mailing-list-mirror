@@ -1,233 +1,65 @@
-From: Michal Vyskocil <mvyskocil@suse.cz>
-Subject: [RFC/PATCH]: reverse bisect v 2.0
-Date: Fri, 30 Sep 2011 13:42:21 +0200
-Message-ID: <20110930114220.GA742@zelva.suse.cz>
-References: <20110929142027.GA4936@zelva.suse.cz>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: [PATCH] Clarify that '--tags' fetches tags only
+Date: Fri, 30 Sep 2011 13:23:48 +0000
+Message-ID: <CAMOZ1BsTKBPArRF-LxoNOJcQarMWx-2a2UBoVjWN-96xJ3Ad8A@mail.gmail.com>
+References: <1314997486-29996-1-git-send-email-anatol.pomozov@gmail.com>
+ <1316649176-32352-1-git-send-email-anatol.pomozov@gmail.com>
+ <119711285.RuumktFLOq@hyperion> <loom.20110930T041939-332@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="M9NhX3UHpAaciwkO"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 30 13:42:35 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Peter Shenkin <shenkin@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 30 15:24:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9bU5-00038a-AY
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 13:42:29 +0200
+	id 1R9d4i-0006J8-VR
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 15:24:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758311Ab1I3LmY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Sep 2011 07:42:24 -0400
-Received: from nat.scz.novell.com ([213.151.88.252]:34928 "EHLO zelva.site"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755564Ab1I3LmX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Sep 2011 07:42:23 -0400
-Received: by zelva.site (Postfix, from userid 10112)
-	id C5EB4411C45B; Fri, 30 Sep 2011 13:42:21 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20110929142027.GA4936@zelva.suse.cz>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755050Ab1I3NYT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Sep 2011 09:24:19 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:51282 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753341Ab1I3NYT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Sep 2011 09:24:19 -0400
+Received: by iaqq3 with SMTP id q3so1819873iaq.19
+        for <git@vger.kernel.org>; Fri, 30 Sep 2011 06:24:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=kxQpQe8M5ehTCN0j2mdfCx4O57HpdzkJdFhMxAWM52A=;
+        b=sgllRUwJGMuOqTJNvLuvrKs3nr/jNu0niSK4iNIwnFIUxcbplWI0iF1Sm11VJUSwnc
+         DefsYpQ+zT1/HceJdzw5gSabdc81K/EZHxJwx1WfYaEnjH7do9xysPTqUiYCfWL0Zso6
+         PZ1m/hxFnnqwOst3q5m6BkOU9UUpH62ELznLQ=
+Received: by 10.42.154.132 with SMTP id q4mr2743954icw.106.1317389058166; Fri,
+ 30 Sep 2011 06:24:18 -0700 (PDT)
+Received: by 10.42.171.194 with HTTP; Fri, 30 Sep 2011 06:23:48 -0700 (PDT)
+In-Reply-To: <loom.20110930T041939-332@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182481>
 
+On Fri, Sep 30, 2011 at 02:51, Peter Shenkin <shenkin@gmail.com> wrote:
+> Perhaps it will be useful to say what would have been most
+> helpful for me. In the current documentation for "fetch
+> --tags", one sentence reads, "This flag lets all tags and
+> their associated =C2=A0objects be downloaded." The following small
+> modification would, IMO, be sufficient: "This flag causes all
+> tags and their associated objects (only) to be downloaded."
 
---M9NhX3UHpAaciwkO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Well, you're missing the fact that it not only causes those to
+be downloaded, but it also causes the defaults to be ignored,
+which is why you don't get the other stuff. You can still tell
+git to fetch anything else you want in addition.
 
-The bugfix command works like the previous git bisect start --reverse.
-It switch the meaning of good(s) and bad from the default regression
-search approach to the bugfix one.
+See here:
 
-I don't like adding more new subcommands into bisect, so I decided to
-not add ideas I have found on this mailinglist, like 'git bisect
-regression' or 'yes', 'no', 'fixed', 'unfixed' or whatever.
-
-The git bisect start/bugfix good/bad/skip log replay and vizualize were
-tested (however on simple linear example).
-
-The missing points:
- * git-bisect--helper has the "bad" hardcoded, so the commit fixing a
-   bug is reffered as a bad one
- * in git bisect vizualize, the good commit is shown under refs/bad in
-   gitk (however that's the same problem if user reverse the usage of
-   good/bad itself).
- * documentation and tests of course
-
-Regards
-Michal Vyskocil
----
- bisect.c      |    2 +-
- git-bisect.sh |   66 ++++++++++++++++++++++++++++++++++++++++++++++++++---=
----
- 2 files changed, 60 insertions(+), 8 deletions(-)
-
-diff --git a/bisect.c b/bisect.c
-index c7b7d79..2eb34db 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -768,7 +768,7 @@ static void handle_bad_merge_base(void)
-=20
- 	fprintf(stderr, "Some good revs are not ancestor of the bad rev.\n"
- 		"git bisect cannot work properly in this case.\n"
--		"Maybe you mistake good and bad revs?\n");
-+		"Try git bisect bugfix to switch the default bisect logic.\n");
- 	exit(1);
- }
-=20
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 2524060..6959cf8 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -4,7 +4,9 @@ USAGE=3D'[help|start|bad|good|skip|next|reset|visualize|rep=
-lay|log|run]'
- LONG_USAGE=3D'git bisect help
- 	print this long help message.
- git bisect start [--no-checkout] [<bad> [<good>...]] [--] [<pathspec>...]
--	reset bisect state and start bisection.
-+	reset bisect state and start bisection to find a regression.
-+git bisect bugfix [--no-checkout] [<good> [<bad>...]] [--] [<pathspec>...]
-+	reset bisect state and start bisection to find a bugfix.
- git bisect bad [<rev>]
- 	mark <rev> a known-bad revision.
- git bisect good [<rev>...]
-@@ -33,6 +35,29 @@ OPTIONS_SPEC=3D
- _x40=3D'[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
- _x40=3D"$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
-=20
-+setup_bugfix_mode() {
-+	/bin/touch "$GIT_DIR/BISECT_BUGFIX"
-+}
-+
-+bisect_bugfix_mode() {
-+	test -f "$GIT_DIR/BISECT_BUGFIX"
-+}
-+
-+bisect_check_state() {
-+
-+	if bisect_bugfix_mode; then
-+		if test "$1" =3D "good"; then
-+			echo "bad"
-+			return 0
-+		elif test "$1" =3D "bad"; then
-+			echo "good"
-+			return 0
-+		fi
-+	fi
-+
-+	echo $1
-+}
-+
- bisect_head()
- {
- 	if test -f "$GIT_DIR/BISECT_HEAD"
-@@ -69,6 +94,15 @@ bisect_start() {
- 	# Check for one bad and then some good revisions.
- 	#
- 	has_double_dash=3D0
-+	#
-+	# Exchange the internal meaning of good/bad allowing bisect to find
-+	# a commit fixing a bug, not "only" the one causes a regression
-+	#
-+	cmd=3D"start"
-+	if test -n "$1" && test "$1" =3D "bugfix"; then
-+		cmd=3D"bugfix"
-+		shift 1
-+	fi
- 	for arg; do
- 		case "$arg" in --) has_double_dash=3D1; break ;; esac
- 	done
-@@ -99,10 +133,17 @@ bisect_start() {
- 				die "$(eval_gettext "'\$arg' does not appear to be a valid revision")"
- 				break
- 			}
--			case $bad_seen in
--			0) state=3D'bad' ; bad_seen=3D1 ;;
--			*) state=3D'good' ;;
--			esac
-+			#if test $cmd =3D "bisect"; then
-+				case $bad_seen in
-+				0) state=3D'bad' ; bad_seen=3D1 ;;
-+				*) state=3D'good' ;;
-+				esac
-+			#else
-+			#	case $bad_seen in
-+			#	0) state=3D'good' ; bad_seen=3D1 ;;
-+			#	*) state=3D'bad' ;;
-+			#	esac
-+			#fi
- 			eval=3D"$eval bisect_write '$state' '$rev' 'nolog' &&"
- 			shift
- 			;;
-@@ -169,7 +210,10 @@ bisect_start() {
- 	} &&
- 	git rev-parse --sq-quote "$@" >"$GIT_DIR/BISECT_NAMES" &&
- 	eval "$eval true" &&
--	echo "git bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG" || exit
-+	echo "git bisect $cmd$orig_args" >>"$GIT_DIR/BISECT_LOG" || exit
-+	if test $cmd =3D "bugfix"; then
-+		setup_bugfix_mode || exit
-+	fi
- 	#
- 	# Check if we can proceed to the next bisect state.
- 	#
-@@ -225,7 +269,7 @@ bisect_skip() {
-=20
- bisect_state() {
- 	bisect_autostart
--	state=3D$1
-+	state=3D$(bisect_check_state $1)
- 	case "$#,$state" in
- 	0,*)
- 		die "$(gettext "Please call 'bisect_state' with at least one argument.")=
-" ;;
-@@ -377,6 +421,7 @@ bisect_clean_state() {
- 	rm -f "$GIT_DIR/BISECT_LOG" &&
- 	rm -f "$GIT_DIR/BISECT_NAMES" &&
- 	rm -f "$GIT_DIR/BISECT_RUN" &&
-+	rm -f "$GIT_DIR/BISECT_BUGFIX" &&
- 	# Cleanup head-name if it got left by an old version of git-bisect
- 	rm -f "$GIT_DIR/head-name" &&
- 	git update-ref -d --no-deref BISECT_HEAD &&
-@@ -401,7 +446,12 @@ bisect_replay () {
- 		start)
- 			cmd=3D"bisect_start $rev"
- 			eval "$cmd" ;;
-+		bugfix)
-+			cmd=3D"bisect_start 'bugfix' $rev"
-+			setup_bugfix_mode || exit
-+			eval "$cmd" ;;
- 		good|bad|skip)
-+			command=3D$(bisect_check_state $1)
- 			bisect_write "$command" "$rev" ;;
- 		*)
- 			die "$(gettext "?? what are you talking about?")" ;;
-@@ -485,6 +535,8 @@ case "$#" in
- 		git bisect -h ;;
- 	start)
- 		bisect_start "$@" ;;
-+	bugfix)
-+		bisect_start "bugfix" "$@" ;;
- 	bad|good)
- 		bisect_state "$cmd" "$@" ;;
- 	skip)
---=20
-1.7.6.3
-
-
---M9NhX3UHpAaciwkO
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.18 (GNU/Linux)
-
-iEYEARECAAYFAk6FqxwACgkQGwzgx2QvQgTA1ACgguVYhYc96Y8H8Yqv8XOEhRAx
-Pf0AnRGb9TX3qNDKrp5ZpOBMX3MBMXor
-=6jmP
------END PGP SIGNATURE-----
-
---M9NhX3UHpAaciwkO--
+  [PATCH v3] Docs: Clarify the --tags option of `git fetch'
+  Message-ID: <686c38876d5a4ad6bfac67ca77fe9bb3-mfwitten@gmail.com>
+  http://article.gmane.org/gmane.comp.version-control.git/181887
