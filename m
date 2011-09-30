@@ -1,76 +1,71 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Fri, 30 Sep 2011 16:06:31 -0600
-Organization: CAF
-Message-ID: <201109301606.31748.mfick@codeaurora.org>
-References: <4DF6A8B6.9030301@op5.se> <201109301041.13848.mfick@codeaurora.org> <201109301502.30617.mfick@codeaurora.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Dealing with rewritten upstream
+Date: Fri, 30 Sep 2011 18:09:10 -0400
+Message-ID: <CAG+J_DwR4vE6iYt475EM7-VDNi4hG3jhdmXWSbJ04Y9fyHeuLw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	=?iso-8859-1?q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Julian Phillips <julian@quantumfyre.co.uk>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 01 00:06:38 2011
+Content-Type: text/plain; charset=UTF-8
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Oct 01 00:09:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9lE5-0000o6-PX
-	for gcvg-git-2@lo.gmane.org; Sat, 01 Oct 2011 00:06:38 +0200
+	id 1R9lGg-0001uO-4n
+	for gcvg-git-2@lo.gmane.org; Sat, 01 Oct 2011 00:09:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756541Ab1I3WGe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Sep 2011 18:06:34 -0400
-Received: from wolverine02.qualcomm.com ([199.106.114.251]:12487 "EHLO
-	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755179Ab1I3WGc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Sep 2011 18:06:32 -0400
-X-IronPort-AV: E=McAfee;i="5400,1158,6485"; a="123781324"
-Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
-  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 30 Sep 2011 15:06:32 -0700
-Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 5DAC310004BE;
-	Fri, 30 Sep 2011 15:06:32 -0700 (PDT)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-28-generic; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <201109301502.30617.mfick@codeaurora.org>
+	id S1756588Ab1I3WJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Sep 2011 18:09:13 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:42310 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757353Ab1I3WJK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Sep 2011 18:09:10 -0400
+Received: by ywb5 with SMTP id 5so1891262ywb.19
+        for <git@vger.kernel.org>; Fri, 30 Sep 2011 15:09:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=BSI027ycL5dQ/DBtudfE3k2/Y4wsoiVpkGjfjqd1KK0=;
+        b=xqQ1lWCPZB9ofU8BzmkZa8U7NDBAILyjmH77oP6eAU4WIqixIZkF+7bNGbLUhgAyVY
+         1nv1wG9wgJwDfSHe/gEms6lwOBtRn6hFMFm1TMySsI+DJn7C5GUBFyuH/5UtCXF8JxIJ
+         kO1VWgEbAJBOV2SgaLG2TYlANvGYmz2+Oox4E=
+Received: by 10.147.154.12 with SMTP id g12mr11319012yao.36.1317420550317;
+ Fri, 30 Sep 2011 15:09:10 -0700 (PDT)
+Received: by 10.147.32.18 with HTTP; Fri, 30 Sep 2011 15:09:10 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182515>
 
-On Friday, September 30, 2011 03:02:30 pm Martin Fick wrote:
-> On Friday, September 30, 2011 10:41:13 am Martin Fick 
-wrote:
-> Since a full sync is now done to about 5mins, I broke
-> down the output a bit.  It appears that the longest part
-> (2:45m) is now the time spent scrolling though each
-> change still. Each one of these takes about 2ms:
->  * [new branch]      refs/changes/99/71199/1 ->
-> refs/changes/99/71199/1
-> 
-> Seems fast, but at about 80K... So, are there any obvious
-> N loops over the refs happening inside each of of the
-> [new branch] iterations?
+I have a repo w/over two years of history whose upstream repo is a
+git-svn mirror.
 
-OK, I narrowed it down I believe.  If I comment out the 
-invalidate_cached_refs() line in write_ref_sha1(), it speeds 
-through this section.  
+The upstream folks recently announced they need to retire the existing
+repo and replace it with a new repo. The new repo is identical to the
+old repo tree wise (commit for commit), but some of the commits in the
+old repo had incorrect authorship which is corrected in the new repo,
+so the new repo has different commit IDs than the old.
 
-I guess this makes sense, we invalidate the cache and have 
-to rebuild it after every new ref is added?  Perhaps a 
-simple fix would be to move the invalidation right after all 
-the refs are updated?  Maybe write_ref_sha1 could take in a 
-flag to tell it to not invalidate the cache so that during 
-iterative updates it could be disabled and then run manually 
-after the update?
+(i.e., it's as if they've run filter-branch --env-filter on the old repo.)
 
--Martin
+My repo has many merge points with the old history.
 
--- 
-Employee of Qualcomm Innovation Center, Inc. which is a 
-member of Code Aurora Forum
+Pictorially:
+
+---A---B---C---D---E... new-upstream/master
+
+---a---b---c---d---e... old-upstream/master
+    \       \       \
+     1---2---3---4---5  master
+
+The obvious way do deal with this situation is:
+
+$ git merge -s ours -m "Splice in new-upstream/master" E
+
+Are there any other/better options I'm missing?
+
+(Eventually upstream plans to migrate entirely to git, so I can't just
+run git-svn myself.)
+
+j.
