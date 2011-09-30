@@ -1,99 +1,128 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Fri, 30 Sep 2011 11:12:08 +0200
-Message-ID: <4E8587E8.9070606@lsrfire.ath.cx>
-References: <4DF6A8B6.9030301@op5.se> <7c0105c6cca7dd0aa336522f90617fe4@quantumfyre.co.uk> <4E84B89F.4060304@lsrfire.ath.cx> <201109291411.06733.mfick@codeaurora.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] Add a credential-helper for KDE
+Date: Fri, 30 Sep 2011 06:21:11 -0400
+Message-ID: <20110930102111.GA24507@sigill.intra.peff.net>
+References: <4E594B5A.6070902@gmail.com>
+ <20110831014237.GA2519@sigill.intra.peff.net>
+ <4E7605CA.7020204@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Julian Phillips <julian@quantumfyre.co.uk>,
-	Christian Couder <christian.couder@gmail.com>,
-	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>
-To: Martin Fick <mfick@codeaurora.org>
-X-From: git-owner@vger.kernel.org Fri Sep 30 11:12:30 2011
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Lukas =?utf-8?Q?Sandstr=C3=B6m?= <luksan@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 30 12:21:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9Z8v-00042n-O1
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 11:12:30 +0200
+	id 1R9aDd-0004mU-GC
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 12:21:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756964Ab1I3JMW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Sep 2011 05:12:22 -0400
-Received: from india601.server4you.de ([85.25.151.105]:55515 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754637Ab1I3JMV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Sep 2011 05:12:21 -0400
-Received: from [192.168.2.104] (p4FFD9870.dip.t-dialin.net [79.253.152.112])
-	by india601.server4you.de (Postfix) with ESMTPSA id 176EA2F803A;
-	Fri, 30 Sep 2011 11:12:19 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0) Gecko/20110922 Thunderbird/7.0
-In-Reply-To: <201109291411.06733.mfick@codeaurora.org>
+	id S1755396Ab1I3KVT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Sep 2011 06:21:19 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50207
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751618Ab1I3KVR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Sep 2011 06:21:17 -0400
+Received: (qmail 32668 invoked by uid 107); 30 Sep 2011 10:26:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 30 Sep 2011 06:26:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Sep 2011 06:21:11 -0400
+Content-Disposition: inline
+In-Reply-To: <4E7605CA.7020204@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182474>
 
-Hi Martin,
+On Sun, Sep 18, 2011 at 04:52:58PM +0200, Lukas Sandstr=C3=B6m wrote:
 
-Am 29.09.2011 22:11, schrieb Martin Fick:
-> Your patch works well for me.  It achieves about the same=20
-> gains as Julian's patch. Thanks!
+> This Python script plugs into the credentials API
+> of Git to ask the user for passwords with a nice
+> KDE password dialog.
+>=20
+> The password is saved in the KWallet.
 
-OK, and what happens if you apply the following patch on top of my firs=
+So I managed to play with this a bit tonight. Overall, it seems pretty
+nice.
+
+Initially, it seemed somewhat clumsy. It asked me to open the wallet
+(using a password) each time git ran. Which is about as annoying as jus=
 t
-one?  It avoids going through all the refs a second time during cleanup=
-,
-at the cost of going through the list of all known objects.  I wonder i=
-f
-that's any faster in your case.
+typing my git password each time. :)
 
-Thanks,
-Ren=C3=A9
+The magic trick was to configure kwallet to "keep the wallet open for 1=
+0
+minutes after the last use" instead of "close when no applications have
+the wallet open". Since git runs as many small programs, kwallet has no
+real idea of how long a git session is.
 
+This is totally not a kwallet thing, and nothing to do with your helper=
+=2E
+But since the helper is so annoyingly useless without that config, it
+might be worth mentioning it in a README.
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 84e0cdc..a4b1003 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -596,15 +596,14 @@ static int add_pending_uninteresting_ref(const ch=
-ar *refname,
- 	return 0;
- }
-=20
--static int clear_commit_marks_from_one_ref(const char *refname,
--				      const unsigned char *sha1,
--				      int flags,
--				      void *cb_data)
-+static void clear_commit_marks_for_all(unsigned int mark)
- {
--	struct commit *commit =3D lookup_commit_reference_gently(sha1, 1);
--	if (commit)
--		clear_commit_marks(commit, -1);
--	return 0;
-+	unsigned int i, max =3D get_max_object_index();
-+	for (i =3D 0; i < max; i++) {
-+		struct object *object =3D get_indexed_object(i);
-+		if (object && object->type =3D=3D OBJ_COMMIT)
-+			object->flags &=3D ~mark;
-+	}
- }
-=20
- static void describe_one_orphan(struct strbuf *sb, struct commit *comm=
-it)
-@@ -690,8 +689,7 @@ static void orphaned_commit_warning(struct commit *=
-commit)
- 	else
- 		describe_detached_head(_("Previous HEAD position was"), commit);
-=20
--	clear_commit_marks(commit, -1);
--	for_each_ref(clear_commit_marks_from_one_ref, NULL);
-+	clear_commit_marks_for_all(ALL_REV_FLAGS);
- }
-=20
- static int switch_branches(struct checkout_opts *opts, struct branch_i=
-nfo *new)
+> Right. Multiple usernames per "unique" context is supported in this v=
+ersion.
+> I looked at the git-credential-storage helper when I wrote the first =
+patch,
+> which didn't have obvious support for multiple usernames per unique c=
+ontext.
+
+This part passed my tests just fine. Very nice.
+
+> +class CredentialHelper(KApplication):
+> +    def __init__(self, token, username =3D None, desc =3D None, reje=
+ct =3D False):
+> +        super(CredentialHelper, self).__init__()
+> +        self.password =3D None
+> +        self.username =3D username
+> +        self.save_password =3D False
+> +        self.token =3D token
+> +        self.desc =3D desc
+> +
+> +        if not self.token:
+> +            return
+
+My tests complained about doing nothing when there is no token. As I've
+mentioned elsewhere, this doesn't matter now (as git never invokes the
+helper that way), but it would be nice to future-proof the helper by
+just ignoring the wallet, but still doing the nice password dialog.
+
+> +    def open_wallet(self):
+> +        self.wallet =3D KWallet.Wallet.openWallet(
+> +            KWallet.Wallet.LocalWallet(), 0, KWallet.Wallet.Synchron=
+ous)
+> +        if not self.wallet.isOpen():
+> +            return None
+> +        if not self.wallet.hasFolder("GitCredentials"):
+> +            self.wallet.createFolder("GitCredentials")
+> +        self.wallet.setFolder("GitCredentials")
+
+I peeked around the KWallet manager. There's a "passwords" folder in th=
+e
+wallet, and I was surprised that the passwords didn't go there. But whe=
+n
+I tried using konqueror to store a password, I found that it also made
+its own folder, and then stored a map within it for each URL.
+
+So I'm not really sure if you're following kwallet best practices or
+not, as I'm clearly confused about what the "passwords" folder is for.
+;)
+
+> +    def check_wallet(self):
+> +        (res, data) =3D self.wallet.readMap(self.token)
+
+So you're just using the token as a big blob. Which is how I
+anticipated, but is the complete opposite of what OS X Keychain wants.
+Which is leading me to think we should really just hand helpers both
+forms: the information broken down by item (e.g., --host=3Dgithub.com),
+and a full URL (e.g., --url=3Dhttps://github.com/). And then the helper=
+s
+can use whatever they like (where you would use "url" instead of the
+current "unique").
+
+-Peff
