@@ -1,109 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Fri, 30 Sep 2011 09:52:34 -0700
-Message-ID: <7vfwjeotv1.fsf@alter.siamese.dyndns.org>
-References: <4DF6A8B6.9030301@op5.se>
- <7c0105c6cca7dd0aa336522f90617fe4@quantumfyre.co.uk>
- <4E84B89F.4060304@lsrfire.ath.cx> <201109291411.06733.mfick@codeaurora.org>
- <4E8587E8.9070606@lsrfire.ath.cx>
+From: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
+Subject: Re: [GUILT 1/6] Refuse to push corrupt patches
+Date: Fri, 30 Sep 2011 13:15:02 -0400
+Message-ID: <20110930171502.GE18364@poseidon.cudanet.local>
+References: <1317219324-10319-1-git-send-email-alan.christopher.jenkins@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Martin Fick <mfick@codeaurora.org>,
-	Julian Phillips <julian@quantumfyre.co.uk>,
-	Christian Couder <christian.couder@gmail.com>,
-	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Fri Sep 30 18:52:48 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alan Jenkins <alan.christopher.jenkins@googlemail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 30 19:24:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9gKN-0007dI-Um
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 18:52:48 +0200
+	id 1R9gor-0006L1-Dw
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 19:24:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752886Ab1I3Qwh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Sep 2011 12:52:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48649 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752028Ab1I3Qwg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Sep 2011 12:52:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 40482461B;
-	Fri, 30 Sep 2011 12:52:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=jmLPpt9fFHa0
-	WRxtSX5AgdSSGBI=; b=I6mZZQ9w6jz/RVB4vpYcafDbfoxOZCHNofMO4y23DMe3
-	hky9ieH0WKpY4lOe8HSlHBys+zc1MigxXokf3HnTsLeZZUx4W32DUK55PFbhxwmT
-	RsVby9HgynBCTs9Ku9bHqNC6SnynAO2FV/8EZxISMhxZsZG0kI5KVeYkb3UjSuE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=hSoiu1
-	d19fVtxx+jxGeYp9+ffE0+7ekPSqZ2fwi6uGnz6vAkE60u5Nz69cBWbvYNFfJ2bx
-	2DiUK9cFKhpKQWPCtYlnLR2rsns9FCFtdrKJQA7m+iZCA/0xA0YQFENK7k0J8irR
-	FzGYOynMWs/coDRqkUNXELsnR3PdKhAtnvtGM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3854B4619;
-	Fri, 30 Sep 2011 12:52:36 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B38594618; Fri, 30 Sep 2011
- 12:52:35 -0400 (EDT)
-In-Reply-To: <4E8587E8.9070606@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Fri, 30 Sep 2011 11:12:08 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 99174DD2-EB84-11E0-8F5B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754932Ab1I3RYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Sep 2011 13:24:12 -0400
+Received: from josefsipek.net ([64.9.206.49]:55304 "EHLO josefsipek.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753894Ab1I3RYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Sep 2011 13:24:11 -0400
+X-Greylist: delayed 414 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Sep 2011 13:24:11 EDT
+Received: from poseidon.cudanet.local (unknown [12.200.95.45])
+	by josefsipek.net (Postfix) with ESMTPSA id 6662358521;
+	Fri, 30 Sep 2011 13:17:17 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <1317219324-10319-1-git-send-email-alan.christopher.jenkins@googlemail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182494>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Thanks for the patches.  I looked them over and they look good.  I'll give
+them another thorough reading once I have a bit of time to apply them.
 
-> Hi Martin,
->
-> Am 29.09.2011 22:11, schrieb Martin Fick:
->> Your patch works well for me.  It achieves about the same=20
->> gains as Julian's patch. Thanks!
->
-> OK, and what happens if you apply the following patch on top of my fi=
-rst
-> one?  It avoids going through all the refs a second time during clean=
-up,
-> at the cost of going through the list of all known objects.  I wonder=
- if
-> that's any faster in your case.
-> ...
->  static void describe_one_orphan(struct strbuf *sb, struct commit *co=
-mmit)
-> @@ -690,8 +689,7 @@ static void orphaned_commit_warning(struct commit=
- *commit)
->  	else
->  		describe_detached_head(_("Previous HEAD position was"), commit);
-> =20
-> -	clear_commit_marks(commit, -1);
-> -	for_each_ref(clear_commit_marks_from_one_ref, NULL);
-> +	clear_commit_marks_for_all(ALL_REV_FLAGS);
->  }
+Jeff.
 
-The function already clears all the flag bits from commits near the tip=
- of
-all the refs (i.e. whatever commit it traverses until it gets to the fo=
-rk
-point), so it cannot be reused in other contexts where the caller
+On Wed, Sep 28, 2011 at 03:15:19PM +0100, Alan Jenkins wrote:
+> "guilt push" would treat corrupt patches as empty,
+> because "git apply --numstat" prints nothing on stdout.
+> 
+> (You do get an error message on stderr,
+>  but then guilt says "Patch applied" etc,
+>  and I didn't notice the earlier error message
+>  for quite some time.)
+> 
+> Signed-off-by: Alan Jenkins <alan.christopher.jenkins@googlemail.com>
+> ---
+>  guilt |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/guilt b/guilt
+> index d1e17d4..51532f9 100755
+> --- a/guilt
+> +++ b/guilt
+> @@ -611,7 +611,7 @@ push_patch()
+>  		cd_to_toplevel
+>  
+>  		# apply the patch if and only if there is something to apply
+> -		if [ `git apply --numstat "$p" | wc -l` -gt 0 ]; then
+> +		if [ `do_get_patch "$p" | wc -l` -gt 0 ]; then
+>  			if [ "$bail_action" = abort ]; then
+>  				reject=""
+>  			fi
+> -- 
+> 1.7.4.1
+> 
 
- - first marks commit objects with some flag bits for its own purpose,
-   unrelated to the "orphaned"-ness check;
- - calls this function to issue a warning; and then
- - use the flag it earlier set to do something useful.
-
-which requires "cleaning after yourself, by clearing only the bits you
-used without disturbing other bits that you do not use" pattern.
-
-It might be a better solution to not bother to clear the marks at all;
-would it break anything in this codepath?
+-- 
+Hegh QaQ law'
+quvHa'ghach QaQ puS
