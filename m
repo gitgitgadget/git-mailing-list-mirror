@@ -1,97 +1,72 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: [RFC/PATCH] git checkout $tree path
-Date: Thu, 29 Sep 2011 21:02:58 -0400
-Message-ID: <CAEBDL5VD1nkVK1b_zN+jFAnSrK5X3va0nMdUwypghBcFbz2s0Q@mail.gmail.com>
-References: <7vk48rq854.fsf@alter.siamese.dyndns.org>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: [PATCH v3] refs: Use binary search to lookup refs faster
+Date: Thu, 29 Sep 2011 19:13:08 -0600
+Organization: CAF
+Message-ID: <201109291913.34196.mfick@codeaurora.org>
+References: <4DF6A8B6.9030301@op5.se> <7vvcsbqa0k.fsf@alter.siamese.dyndns.org> <20110929221143.23806.25666.julian@quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: Text/Plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 30 03:03:12 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Fri Sep 30 03:13:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9RVQ-0003yd-2r
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 03:03:12 +0200
+	id 1R9Rfa-0006f3-Qh
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 03:13:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755591Ab1I3BC7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Sep 2011 21:02:59 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:47923 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755533Ab1I3BC6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Sep 2011 21:02:58 -0400
-Received: by vcbfk10 with SMTP id fk10so954309vcb.19
-        for <git@vger.kernel.org>; Thu, 29 Sep 2011 18:02:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=XyldA58OeNEmpCSRtpnOxUynh23NQ2YhUPdedwn8N2s=;
-        b=Jg1bsVBFOw5HDORFNjNWJQNTIfjYpq03injuizFaUJhGgjbMH3l/fsQ2NQw5DJF6Oy
-         4JqdvGKj0ETGxKItJp7ATRuLhZCiITkChGF75VuLB2FaKHR/C+iBCscmEj070zNwDlhO
-         dt3qjuNuH3RYIspu7M3k8Tm9755QC8fiF83FQ=
-Received: by 10.220.77.85 with SMTP id f21mr2678700vck.43.1317344578290; Thu,
- 29 Sep 2011 18:02:58 -0700 (PDT)
-Received: by 10.220.75.144 with HTTP; Thu, 29 Sep 2011 18:02:58 -0700 (PDT)
-In-Reply-To: <7vk48rq854.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: r6U_zIkJGtzsP43fVJYSf9Dk6Po
+	id S1756614Ab1I3BNi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Sep 2011 21:13:38 -0400
+Received: from wolverine02.qualcomm.com ([199.106.114.251]:57669 "EHLO
+	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756448Ab1I3BNg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Sep 2011 21:13:36 -0400
+X-IronPort-AV: E=McAfee;i="5400,1158,6484"; a="123480371"
+Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
+  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 29 Sep 2011 18:13:35 -0700
+Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 90FDF10004BE;
+	Thu, 29 Sep 2011 18:13:35 -0700 (PDT)
+User-Agent: KMail/1.13.5 (Linux/2.6.32-28-generic; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <20110929221143.23806.25666.julian@quantumfyre.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182459>
 
-On Thu, Sep 29, 2011 at 6:46 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-[snip]
-> According to that definition, because "master" has dir/file1, and the
-> index is unchanged since "next", we would add dir/file1 to the index,=
- and
-> then check dir/file1 and dir/file3 out of the index. Hence, we end up
-> resurrecting dir/file3 out of the index, even though "master" does no=
-t
-> have that path.
->
-> This is somewhat surprising.
+On Thursday, September 29, 2011 04:11:42 pm Julian Phillips=20
+wrote:
+> Currently we linearly search through lists of refs when
+> we need to find a specific ref.  This can be very slow
+> if we need to lookup a large number of refs.  By
+> changing to a binary search we can make this faster.
+>=20
+> In order to be able to use a binary search we need to
+> change from using linked lists to arrays, which we can
+> manage using ALLOC_GROW.
+>=20
+> We can now also use the standard library qsort function
+> to sort the refs arrays.
+>=20
 
-That is surprising!  It explains something I saw just yesterday which
-closely mirrors your recipe.
+This works for me, however unfortunately, I cannot find any=20
+scenarios where it improves anything over the previous fix=20
+by Ren=E9.  :(
 
-> It may make sense to tweak the semantics a little bit. We can grab th=
-e
-> paths out of the named tree ("master" in this case), update the index=
-, and
-> update the working tree with only with these paths we grabbed from th=
-e
-> named tree. By doing so, we will keep the local modification to dir/f=
-ile3
-> (in this case, the modification is to "delete", but the above observa=
-tion
-> hold equally true if dir/file3 were modified).
+I tested many things, clones, fetches, fetch noops,=20
+checkouts, garbage collection.  I am a bit surprised,=20
+because I thought that my hack of a hash map did improve=20
+still on checkouts on packed refs, but it could just be that=20
+my hack was buggy and did not actually do a full orphan=20
+check.
 
-That seems sane.
+Thanks,
 
-> An alternative semantics could be to first remove paths that match th=
-e
-> given pathspec from the index, then update the index with paths taken=
- from
-> the named tree, and update the working tree. "git checkout master dir=
-"
-> would then mean "replace anything currently in dir with whatever is i=
-n dir
-> in master". It is more dangerous, and it can easily emulated by doing=
-:
-
-This is equally sane, but is probably closer to my expectation.
-
-[snip]
-> =C2=A0* This is a behaviour change, but it may qualify as a bugfix. I=
- dunno.
-
-Personally, I lean towards it being a bugfix.
-
--John
+-Martin
