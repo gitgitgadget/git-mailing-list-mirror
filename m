@@ -1,72 +1,53 @@
-From: Cord Seele <cowose@googlemail.com>
-Subject: Re: [PATCH 2/2] use new Git::config_path() for aliasesfile
-Date: Fri, 30 Sep 2011 23:16:33 +0200
-Message-ID: <20110930211633.GE13435@laptop>
-References: <vpqty7wk9km.fsf@bauges.imag.fr>
- <1317379945-9355-1-git-send-email-cowose@gmail.com>
- <1317379945-9355-3-git-send-email-cowose@gmail.com>
- <7vsjndoldq.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bug?: 'git log --find-copies' doesn't match 'git log --follow
+ <rev> -- path/to/file'
+Date: Fri, 30 Sep 2011 17:38:41 -0400
+Message-ID: <20110930213841.GA9384@sigill.intra.peff.net>
+References: <DBC73B3F-2703-4651-AADA-233A9CC38AFD@inf.fu-berlin.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	Eric Wong <normalperson@yhbt.net>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 30 23:16:53 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Alexander Pepper <pepper@inf.fu-berlin.de>
+X-From: git-owner@vger.kernel.org Fri Sep 30 23:38:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9kRw-0007UW-5g
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 23:16:52 +0200
+	id 1R9knA-0007Nn-Of
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 23:38:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753656Ab1I3VQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Sep 2011 17:16:39 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:47119 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756316Ab1I3VQh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Sep 2011 17:16:37 -0400
-Received: by fxe4 with SMTP id 4so3367660fxe.19
-        for <git@vger.kernel.org>; Fri, 30 Sep 2011 14:16:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=CsPyQ6aQlpYEFuqh+C1hDwidAu6loWxl3+hmO0jSNnM=;
-        b=t/43qgF/zoTn3oPrICKqZh6KGl42R1bUV3PhE2RmqqaRLkHVzZV8ySjUenMps2vTkf
-         lAFDrM6pSTEviqZFfuAwgzpt5OxYrMs+oYFm3eRCTxkR9GX0je6LJKachjZno1T5J4vB
-         bCcZqPJXhwp7NZfQ+FdnUzNlS0qVHrbsmpiF8=
-Received: by 10.223.18.73 with SMTP id v9mr2846144faa.70.1317417396606;
-        Fri, 30 Sep 2011 14:16:36 -0700 (PDT)
-Received: from laptop (p4FF1A78A.dip.t-dialin.net. [79.241.167.138])
-        by mx.google.com with ESMTPS id c5sm8381878fai.2.2011.09.30.14.16.34
-        (version=SSLv3 cipher=OTHER);
-        Fri, 30 Sep 2011 14:16:35 -0700 (PDT)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	Eric Wong <normalperson@yhbt.net>,
-	Jakub Narebski <jnareb@gmail.com>
+	id S1756667Ab1I3Vio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Sep 2011 17:38:44 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50426
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757013Ab1I3Vin (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Sep 2011 17:38:43 -0400
+Received: (qmail 4675 invoked by uid 107); 30 Sep 2011 21:43:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 30 Sep 2011 17:43:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Sep 2011 17:38:41 -0400
 Content-Disposition: inline
-In-Reply-To: <7vsjndoldq.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <DBC73B3F-2703-4651-AADA-233A9CC38AFD@inf.fu-berlin.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182511>
 
-On Fri 30 Sep 2011 12:55:45 -0700, Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, Sep 30, 2011 at 05:32:38PM +0200, Alexander Pepper wrote:
 
-> I think the addition of "config --path" support is a good idea, but the
-> resulting code suffers from too many cut&paste cruft across the config*
-> family of methods.
-> 
-> How about doing a bit of refactoring, perhaps something like this, on top
-> as a separate patch?
+> So git log with copy and rename detection on (--find-copies) tells me,
+> that the file StopClusterException.java is copied to
+> ClusterOperation.java. But If I ask git log for that specific file
+> with --follow git claims a copy from Immutable.java to
+> ClusterOperation.java!
 
-Sound very reasonable to me - unfortunately it's beyond my perl-scope to be of
-much help here.
+I think that --follow uses --find-copies-harder. Did you try:
 
--- Cord
+  git log --numstat --find-copies-harder dd4e90f9
+
+? Does it find Immutable.java as the source?
+
+-Peff
