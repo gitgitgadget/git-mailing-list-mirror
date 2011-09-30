@@ -1,91 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Clarify that '--tags' fetches tags only
-Date: Fri, 30 Sep 2011 11:37:51 -0700
-Message-ID: <7vwrcpoozk.fsf@alter.siamese.dyndns.org>
-References: <1314997486-29996-1-git-send-email-anatol.pomozov@gmail.com>
- <1316649176-32352-1-git-send-email-anatol.pomozov@gmail.com>
- <119711285.RuumktFLOq@hyperion> <loom.20110930T041939-332@post.gmane.org>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Updated tag 'junio-gpg-pub' ?
+Date: Fri, 30 Sep 2011 20:46:57 +0200
+Message-ID: <m2zkhlkgv2.fsf@igel.home>
+References: <4E856676.3050209@atlas-elektronik.com>
+	<7voby2oy2s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Peter Shenkin <shenkin@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 30 20:38:00 2011
+Content-Type: text/plain
+Cc: Stefan =?utf-8?Q?N=C3=A4we?= <stefan.naewe@atlas-elektronik.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 30 20:47:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9hyC-0006FG-DO
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 20:38:00 +0200
+	id 1R9i74-0002Ky-Hn
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Sep 2011 20:47:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758194Ab1I3Sh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Sep 2011 14:37:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36476 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755879Ab1I3Shz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Sep 2011 14:37:55 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DF655F3F;
-	Fri, 30 Sep 2011 14:37:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=L2TA7lJEcZzTRdyasx7xK3bNCvM=; b=Fw+kwT
-	rVuKJ0YpclBljX6Yz6x3E1NEOaw/HviKnLR4j4PQOvDgLusZgUcczlyI67Omnqny
-	4KR2wD6EnmpzQg4P13KtsBdHLI3CYxixUaUzRu9Rpe65r9QHmNmLzD9x6krD2ZpV
-	dni1O8znTRPL6RaD6cbpsDJI7QaYtiC80GCQ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pf98gIaTaSKsq4TsS1GiWI+Glfw07VzK
-	UlYMkCY4FYsItzLRFNUSqFfhZcHepvZLBllLt3G+LmmD2kF1U6v36gqt8gc+BsBH
-	FdTfUx2KS3vVdyLPzxHaYm44a9YNNpQVmrha6TNPeWDunqgM56Z4CGNHHtS0fSIf
-	m9LuKqK1jvk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 74E3E5F3E;
-	Fri, 30 Sep 2011 14:37:54 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CB7A15F3D; Fri, 30 Sep 2011
- 14:37:53 -0400 (EDT)
-In-Reply-To: <loom.20110930T041939-332@post.gmane.org> (Peter Shenkin's
- message of "Fri, 30 Sep 2011 02:51:21 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4EF3E71A-EB93-11E0-A5F0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756945Ab1I3SrF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Sep 2011 14:47:05 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:52275 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755005Ab1I3SrE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Sep 2011 14:47:04 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id ED3AE1C02F1C;
+	Fri, 30 Sep 2011 20:46:59 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id C785D1C002B7;
+	Fri, 30 Sep 2011 20:46:59 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id 9ItSrukQ5hFa; Fri, 30 Sep 2011 20:46:59 +0200 (CEST)
+Received: from igel.home (ppp-88-217-103-127.dynamic.mnet-online.de [88.217.103.127])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Fri, 30 Sep 2011 20:46:59 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 9D207CA29C; Fri, 30 Sep 2011 20:46:58 +0200 (CEST)
+X-Yow: It's hard being an ARTIST!!
+In-Reply-To: <7voby2oy2s.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 30 Sep 2011 08:21:31 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.90 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182501>
 
-Peter Shenkin <shenkin@gmail.com> writes:
+You might want to update the tag message the next time with
+s/git-/git /.
 
-> Perhaps it will be useful to say what would have been most
-> helpful for me. In the current documentation for "fetch
-> --tags", one sentence reads, "This flag lets all tags and
-> their associated  objects be downloaded." The following small
-> modification would, IMO, be sufficient: "This flag causes all
-> tags and their associated objects (only) to be downloaded."
+Andreas.
 
-Hmm, from time to time we seem to see this kind of documentation
-suggestion where:
-
- - We (try to) describe what xyzzy does by saying "This is what xyzzy
-   does". We specifically do not say "In addition to what normally
-   happens, xyzzy causes these additional things to happen."
-
- - The reader (somehow) assumes xyzzy does more than what we described in
-   the documentation, even we did not say "In addition to..."; and then
-
- - A patch is proposed to add "these other things are _not_ done", after
-   existing "This is what xyzzy does".
-
-And it is not limited to the description of this particular option.
-
-I think in general our documentation aims to spell out _all_ that happens,
-and explicitly say "In addition to what normally happens", "This page
-lists only the most common ways", etc., when such a clatification is
-needed.
-
-I am wondering if there is a systemic failure that gives an impression
-that by default the documentation is incomplete and all other unspecified
-thing also happens to the readers? If so are there things that we could
-do better without going through individual description?
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
