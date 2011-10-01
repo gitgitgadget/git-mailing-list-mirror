@@ -1,64 +1,69 @@
-From: E-MAIL.BALLOT.rosilawati@bpfk.gov.my
-Subject: NOTIFICATION 2011
-Date: Sun, 02 Oct 2011 01:12:29 +0200
-Message-ID: <201110012312.p91N7ZjC011613@mail.ucla.edu>
-Reply-To: einfbanc5@yahoo.com.hk
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: Git, Mac OS X and German special characters
+Date: Sat, 1 Oct 2011 23:26:44 +0000
+Message-ID: <CAMOZ1BvcQtOzPR=a8NJ9QHXUMhfmmLWwbKMZqsmQTSE150TaXQ@mail.gmail.com>
+References: <CAO1Q+jf=RO=sE90-mQdi+=fUWH1RLM+JTubSgSVGC5uDyhU+2A@mail.gmail.com>
+ <4E87182C.8050201@op5.se> <CAO1Q+jeLEp2ReNc9eOFoJxdGq6oRE3b+O=JvMNU0Kqx_eAX=7w@mail.gmail.com>
+ <4E872288.10503@op5.se> <20111001194746.GA16826@inner.h.iocl.org>
+ <CAMOZ1BuXiQkZG_7mvay-ybm7Q7niwXVhbmbCmkfy=wD1AKsasQ@mail.gmail.com> <m3hb3snw4b.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Recipients <E-MAILBALLOT.rosilawati@bpfk.gov.my>
-X-From: git-owner@vger.kernel.org Sun Oct 02 01:22:56 2011
+Cc: Andreas Krey <a.krey@gmx.de>, Andreas Ericsson <ae@op5.se>,
+	Albert Zeyer <albzey@googlemail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 02 01:27:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RA8tT-000301-VY
-	for gcvg-git-2@lo.gmane.org; Sun, 02 Oct 2011 01:22:56 +0200
+	id 1RA8xk-0003q5-3n
+	for gcvg-git-2@lo.gmane.org; Sun, 02 Oct 2011 01:27:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752917Ab1JAXWu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Oct 2011 19:22:50 -0400
-Received: from out-78.smtp.ucla.edu ([169.232.46.181]:39833 "EHLO
-	out-78.smtp.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752691Ab1JAXWt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Oct 2011 19:22:49 -0400
-X-Greylist: delayed 377 seconds by postgrey-1.27 at vger.kernel.org; Sat, 01 Oct 2011 19:22:49 EDT
-Received: from smtp-15.smtp.ucla.edu (smtp-15.smtp.ucla.edu [169.232.46.242])
-	by out-78.smtp.ucla.edu with ESMTP id p91NCwgi032227;
-	Sat, 01 Oct 2011 16:12:59 -0700
-Received: from mail.ucla.edu (mail.ucla.edu [169.232.48.151])
-	by smtp-15.smtp.ucla.edu (8.14.3/8.14.3) with ESMTP id p91NCwgi032227;
-	Sat, 1 Oct 2011 16:12:58 -0700
-Received: from [192.168.1.7] (ip189-223-210-87.adsl2.static.versatel.nl [87.210.223.189])
-	(user=swestin mech=PLAIN bits=0)
-	by mail.ucla.edu (8.14.4/8.14.4) with ESMTP id p91N7ZjC011613
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 1 Oct 2011 16:12:49 -0700
-Content-Description: Mail message body
-X-Probable-Spam: yes
-X-Spam-Hits: 5.03
-X-Spam-Score: *****
-X-Spam-Report: CLAMAV_SANESECURITY,DCC_CHECK,SPF_SOFTFAIL,SUBJ_ALL_CAPS
-X-Scanned-By: smtp.ucla.edu on 169.232.46.242
+	id S1753230Ab1JAX1Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Oct 2011 19:27:16 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:36055 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753218Ab1JAX1O convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Oct 2011 19:27:14 -0400
+Received: by iaqq3 with SMTP id q3so3322315iaq.19
+        for <git@vger.kernel.org>; Sat, 01 Oct 2011 16:27:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ExSOxOw102dXHpFyExvUU1qKI7fzydYjqsfPgksix1I=;
+        b=hpv9PimWrjENPPAtotloZ+7T5AYEEd6ciBA/9zv5MNo29GnXf+mpg7LTpcg26uZFLX
+         x+OnLNUK2z54/ST187JdChjTtGaiWNL4HH5q2tMeQhZGDOvd6TomdDbCNonQ8wuNloHJ
+         cFLrEbvtpcJCUcMaKiWsQrJOuKx5ZC1vv4jcA=
+Received: by 10.42.137.69 with SMTP id x5mr495718ict.106.1317511634240; Sat,
+ 01 Oct 2011 16:27:14 -0700 (PDT)
+Received: by 10.42.171.194 with HTTP; Sat, 1 Oct 2011 16:26:44 -0700 (PDT)
+In-Reply-To: <m3hb3snw4b.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182583>
 
-NOTIFICATION
-This is to inform you of the release of the WINNERS of the E-MAIL LOTTE=
-RY
-BALLOT / WORLD GAMING BOARD held 2011.Your name attached to ticket numb=
-er
-219028657434 with serial number 918735625 You have therefore been appro=
-ved
-for a payment (=E2=82=AC1,500,000.00 Euros only. Your Email ID has won
+2011/10/1 Jakub Narebski <jnareb@gmail.com>:
 
-Email :   einfobak@yahoo.com.hk
-Tel:      +31-64-536-0288
-=46ax:      +31-84-7312-763
-=46ull names,Address,Age,Occupation,Phone/ numbers.
-Yours Sincerely,
-NAME: MRS LOECKX  MARGARETA MARIA CAROLINA
-(Web-Email Information Manager)
+> Michael Witten <mfwitten@gmail.com> writes:
+>> On Sat, Oct 1, 2011 at 19:47, Andreas Krey <a.krey@gmx.de> wrote:
+>>
+>> > The question is, should git forbid two filenames that consist
+>> > of the *same* characters, only differently uni-encoded? I don't
+>> > think anyone would make two files named 'B=C3=BCro', with differen=
+t
+>> > unicode encodings. But as far as I know that is a shady area.
+>>
+>> So, let's leave git's current behavior as the default and provide
+>> a config variable that when set, tells git to handle file names
+>> in terms of characters rather than bytes.
+>
+> You meant here _graphemes_, not Unicode codepoint when talking about
+> characters, didn't you?
+
+Yes.
