@@ -1,116 +1,80 @@
-From: Peter Shenkin <shenkin@gmail.com>
-Subject: Re: [PATCH] Clarify that '--tags' fetches tags only
-Date: Sat, 1 Oct 2011 20:22:16 +0000 (UTC)
-Message-ID: <loom.20111001T214551-834@post.gmane.org>
-References: <1314997486-29996-1-git-send-email-anatol.pomozov@gmail.com> <1316649176-32352-1-git-send-email-anatol.pomozov@gmail.com> <119711285.RuumktFLOq@hyperion> <loom.20110930T041939-332@post.gmane.org> <CAMOZ1BsTKBPArRF-LxoNOJcQarMWx-2a2UBoVjWN-96xJ3Ad8A@mail.gmail.com> <loom.20111001T073652-884@post.gmane.org> <CAMOZ1Bvn64q5sVfo2-ZhTSpBttpjG1pHELJMM9sEmWsrqANCkw@mail.gmail.com> <loom.20111001T191413-25@post.gmane.org> <CAMOZ1Bsc2idQnKxeggruPi1rrY3+vsa=DoMydHY4+BM+qoW69w@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git is not scalable with too many refs/*
+Date: Sat, 01 Oct 2011 13:41:45 -0700
+Message-ID: <7vwrcola0m.fsf@alter.siamese.dyndns.org>
+References: <4DF6A8B6.9030301@op5.se>
+ <201109301041.13848.mfick@codeaurora.org>
+ <201109301502.30617.mfick@codeaurora.org>
+ <201109301606.31748.mfick@codeaurora.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 01 22:22:40 2011
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Martin Fick <mfick@codeaurora.org>
+X-From: git-owner@vger.kernel.org Sat Oct 01 22:41:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RA651-0007KK-Ot
-	for gcvg-git-2@lo.gmane.org; Sat, 01 Oct 2011 22:22:40 +0200
+	id 1RA6Nd-0002a0-Vc
+	for gcvg-git-2@lo.gmane.org; Sat, 01 Oct 2011 22:41:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752958Ab1JAUWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Oct 2011 16:22:36 -0400
-Received: from lo.gmane.org ([80.91.229.12]:34209 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750884Ab1JAUWf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Oct 2011 16:22:35 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RA64u-0007Jn-NH
-	for git@vger.kernel.org; Sat, 01 Oct 2011 22:22:33 +0200
-Received: from h-67-101-25-249.nycmny83.dynamic.covad.net ([67.101.25.249])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 01 Oct 2011 22:22:32 +0200
-Received: from shenkin by h-67-101-25-249.nycmny83.dynamic.covad.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 01 Oct 2011 22:22:32 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 67.101.25.249 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.186 Safari/535.1)
+	id S1756611Ab1JAUlt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Oct 2011 16:41:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53552 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754872Ab1JAUlr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Oct 2011 16:41:47 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A98665FC;
+	Sat,  1 Oct 2011 16:41:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=scgFeS3mtYr8edRMjIYX+6yrtF8=; b=o4M4/W
+	EtvdILs4venNGty0bCj+OrRNNYk0gn47DZmBUyZ/coiTE2rv4QoJwfpqhXUKwNYG
+	LpHrFn87p06CvbRp1522aiaREioT67d5tiqqkLTRFyy12+VtTnss6ccG8S2e1x4s
+	BFhqEqdlCtsxsyJEMMmjwnzv3zt8wc1ZLPbDI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Bgvllw1FRqo94d34AZCRBLWsny87GSRw
+	aGII1WQ1MtnRmTZKGzMEutxjiPeuLZq098F/z3Re4koyNo7iiBDJetGBO2tC2UYd
+	7ycnciXxJEdIvuzGTw9a1XkZF5TeYyjBT2h4jl5Jabu4Bzw4/+jG4ema2hB2gIm2
+	QRMcFinMGJA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41A4765FB;
+	Sat,  1 Oct 2011 16:41:47 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C545265FA; Sat,  1 Oct 2011
+ 16:41:46 -0400 (EDT)
+In-Reply-To: <201109301606.31748.mfick@codeaurora.org> (Martin Fick's message
+ of "Fri, 30 Sep 2011 16:06:31 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C7C834F4-EC6D-11E0-A338-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182575>
 
-Michael Witten <mfwitten <at> gmail.com> writes:
->   git fetch --tags origin '+refs/heads/*:refs/remotes/origin/*'
+Martin Fick <mfick@codeaurora.org> writes:
 
-Well, Junio had just about convinced me that there was
-nothing wrong with the documentation -- just with the
-way I was reading it -- until I read the above.
+> I guess this makes sense, we invalidate the cache and have 
+> to rebuild it after every new ref is added?  Perhaps a 
+> simple fix would be to move the invalidation right after all 
+> the refs are updated?  Maybe write_ref_sha1 could take in a 
+> flag to tell it to not invalidate the cache so that during 
+> iterative updates it could be disabled and then run manually 
+> after the update?
 
-I tried it and yes, it does do what I want. Which was not
-at all my expectation, having read Junio's comment about
-how the documentation is to be read.
-
-Junio argued that the man-page mod I suggested -- 
-namely, "This flag causes all tags and their associated
-objects (only) to be downloaded." -- was unneeded 
-because the meaning, though correct, is clear already and
-therefore redundant.
-
-But the real problem is that the reading he gives is just
-wrong.
-
-I have the following in my .git/config file:
-
-[remote "origin"]
-	fetch = +refs/heads/*:refs/remotes/origin/*
-	tagopt = --tags
-	url = <whatever>
-
-Given this, I do not see how anyone could infer from 
-anything in the documentation that
-
-git fetch
-
-would do anything different from:
-
-git fetch --tags origin +refs/heads/*:refs/remotes/origin/*
-
-If I am wrong about this, please cite chapter and verse.
-
-The question is not how the --tags option should be
-documented, but rather why "--tags" should behave
-differently when the refspec is given on the commandline
-than when the refspec is given in the .git/config file.
-
-In fact, I no longer think it is a documentation error. It
-is a just a really terrible implementation decision. If it
-was desired to allow "git fetch --tags" to work without
-using the user's specified refspec, then a "--no-heads"
-option should have been provided to override the user's
-refspec -- no matter where it was given.
-
-Though a retrofit would likely break too many workflows,
-the best one might hope for now would likely be the
-addition of a "--heads" option, which would have the
-effect of  bringing down the branch heads even though
-this would not normally be done." 
-
-But then it would still be necessary to say that "--tags"
-does not normally obey the user's refspec if given in the
-config file, but does if given on the command line. 
-
-I might still be missing something. If anyone thinks the
-current behavior is clear from a careful reading of the
-documentation, I would like to hear how that inference
-could be drawn. For no matter how one reads the --tags
-description, it seems it is wrong in one of the two cases.
-
-It is either wrong for a refspec on the command-line (if
-you think it says it downloads tags only) or else it is wrong
-for refspec in the config file (if you think it says it downloads
-tags and heads).
+It might make sense, on top of Julian's patch, to add a bit that says "the
+contents of this ref-array is current but the array is not sorted", and
+whenever somebody runs add_ref(), append it also to the ref-array (so that
+the contents do not have to be re-read from the filesystem) but flip the
+"unsorted" bit on. Then update look-up and iteration to sort the array
+when "unsorted" bit is on without re-reading the contents from the
+filesystem.
