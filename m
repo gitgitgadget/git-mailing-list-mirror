@@ -1,60 +1,73 @@
-From: Peter Shenkin <shenkin@gmail.com>
-Subject: Re: [PATCH] Clarify that '--tags' fetches tags only
-Date: Sat, 1 Oct 2011 17:16:44 +0000 (UTC)
-Message-ID: <loom.20111001T191413-25@post.gmane.org>
-References: <1314997486-29996-1-git-send-email-anatol.pomozov@gmail.com> <1316649176-32352-1-git-send-email-anatol.pomozov@gmail.com> <119711285.RuumktFLOq@hyperion> <loom.20110930T041939-332@post.gmane.org> <CAMOZ1BsTKBPArRF-LxoNOJcQarMWx-2a2UBoVjWN-96xJ3Ad8A@mail.gmail.com> <loom.20111001T073652-884@post.gmane.org> <CAMOZ1Bvn64q5sVfo2-ZhTSpBttpjG1pHELJMM9sEmWsrqANCkw@mail.gmail.com>
+From: Marcus Karlsson <mk@acc.umu.se>
+Subject: Re: [PATCH] gitk: Show patch for initial commit
+Date: Sat, 1 Oct 2011 20:42:16 +0200
+Message-ID: <20111001184216.GA5796@kennedy.acc.umu.se>
+References: <20110930215021.GA3005@kennedy.acc.umu.se>
+ <4E86E343.5070704@in.waw.pl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 01 19:17:19 2011
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Zbigniew J??drzejewski-Szmek <zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Sat Oct 01 20:42:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RA3Be-00077U-Lk
-	for gcvg-git-2@lo.gmane.org; Sat, 01 Oct 2011 19:17:19 +0200
+	id 1RA4W1-0000tb-8b
+	for gcvg-git-2@lo.gmane.org; Sat, 01 Oct 2011 20:42:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756245Ab1JARRF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Oct 2011 13:17:05 -0400
-Received: from lo.gmane.org ([80.91.229.12]:53945 "EHLO lo.gmane.org"
+	id S1754407Ab1JASmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Oct 2011 14:42:20 -0400
+Received: from mail.acc.umu.se ([130.239.18.156]:47562 "EHLO mail.acc.umu.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751486Ab1JARRD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Oct 2011 13:17:03 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RA3BN-00072p-8Z
-	for git@vger.kernel.org; Sat, 01 Oct 2011 19:17:01 +0200
-Received: from h-67-101-25-249.nycmny83.dynamic.covad.net ([67.101.25.249])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 01 Oct 2011 19:17:01 +0200
-Received: from shenkin by h-67-101-25-249.nycmny83.dynamic.covad.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 01 Oct 2011 19:17:01 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 67.101.25.249 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.186 Safari/535.1)
+	id S1754154Ab1JASmT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Oct 2011 14:42:19 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by amavisd-new (Postfix) with ESMTP id 677F0455;
+	Sat,  1 Oct 2011 20:42:18 +0200 (MEST)
+X-Virus-Scanned: amavisd-new at acc.umu.se
+Received: from kennedy.acc.umu.se (kennedy.acc.umu.se [130.239.18.157])
+	by mail.acc.umu.se (Postfix) with ESMTP id 26CDE454;
+	Sat,  1 Oct 2011 20:42:17 +0200 (MEST)
+Received: by kennedy.acc.umu.se (Postfix, from userid 24678)
+	id 066E961; Sat,  1 Oct 2011 20:42:16 +0200 (MEST)
+Content-Disposition: inline
+In-Reply-To: <4E86E343.5070704@in.waw.pl>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182568>
 
-Michael Witten <mfwitten <at> gmail.com> writes:
-> However, my point was this:
-> 
->   You can still tell git to fetch anything else you want in addition.
+On Sat, Oct 01, 2011 at 11:54:11AM +0200, Zbigniew J??drzejewski-Szmek wrote:
+> On 09/30/2011 11:50 PM, Marcus Karlsson wrote:
+> >Make gitk show the patch for the initial commit.
+> >
+> >Signed-off-by: Marcus Karlsson<mk@acc.umu.se>
+> >---
+> >  gitk-git/gitk |    2 +-
+> >  1 files changed, 1 insertions(+), 1 deletions(-)
+> >
+> >diff --git a/gitk-git/gitk b/gitk-git/gitk
+> >index 4cde0c4..20aeae6 100755
+> >--- a/gitk-git/gitk
+> >+++ b/gitk-git/gitk
+> >@@ -7436,7 +7436,7 @@ proc diffcmd {ids flags} {
+> >  	    lappend cmd HEAD
+> >  	}
+> >      } else {
+> >-	set cmd [concat | git diff-tree -r $flags $ids]
+> >+	set cmd [concat | git diff-tree -r --root $flags $ids]
+> >      }
+> >      return $cmd
+> >  }
+> Cool, this works for me! But I think I would be really nice if gitk
+> respected the configuration value of log.showroot. This would give
+> nice consistency amongst the various tools.
 
-Michael,
+I agree, that would be reasonable. I'll prepare a new patch with that
+behavior.
 
-Yes, you are right. I am still missing how to do that.
-
-Can you show me a sample fetch invocation that would
-have the effect of downloading all tags and also branch heads?
-
-Thanks,
--P.
+Marcus
