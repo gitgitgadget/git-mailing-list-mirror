@@ -1,121 +1,61 @@
-From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-Subject: Re: [PATCH v2] gitk: Show patch for initial commit
-Date: Sat, 01 Oct 2011 23:03:18 +0200
-Message-ID: <4E878016.703@in.waw.pl>
-References: <20111001190554.GA5854@kennedy.acc.umu.se>
+From: Peter Shenkin <shenkin@gmail.com>
+Subject: Re: [PATCH] Clarify that '--tags' fetches tags only
+Date: Sat, 1 Oct 2011 21:41:09 +0000 (UTC)
+Message-ID: <loom.20111001T232414-84@post.gmane.org>
+References: <1314997486-29996-1-git-send-email-anatol.pomozov@gmail.com> <1316649176-32352-1-git-send-email-anatol.pomozov@gmail.com> <119711285.RuumktFLOq@hyperion> <loom.20110930T041939-332@post.gmane.org> <CAMOZ1BsTKBPArRF-LxoNOJcQarMWx-2a2UBoVjWN-96xJ3Ad8A@mail.gmail.com> <loom.20111001T073652-884@post.gmane.org> <CAMOZ1Bvn64q5sVfo2-ZhTSpBttpjG1pHELJMM9sEmWsrqANCkw@mail.gmail.com> <loom.20111001T191413-25@post.gmane.org> <CAMOZ1Bsc2idQnKxeggruPi1rrY3+vsa=DoMydHY4+BM+qoW69w@mail.gmail.com> <loom.20111001T214551-834@post.gmane.org> <CAMOZ1BsYYmH6hqcB4vfCq2LAu+fxJ4MzPQ1+-erUSqU1ptx2mQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Paul Mackerras <paulus@samba.org>
-To: Marcus Karlsson <mk@acc.umu.se>
-X-From: git-owner@vger.kernel.org Sat Oct 01 23:03:36 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 01 23:41:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RA6id-0008ST-TP
-	for gcvg-git-2@lo.gmane.org; Sat, 01 Oct 2011 23:03:36 +0200
+	id 1RA7JU-0008IZ-IN
+	for gcvg-git-2@lo.gmane.org; Sat, 01 Oct 2011 23:41:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756401Ab1JAVDc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Oct 2011 17:03:32 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:47297 "EHLO kawka.in.waw.pl"
+	id S1752717Ab1JAVl0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Oct 2011 17:41:26 -0400
+Received: from lo.gmane.org ([80.91.229.12]:60566 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752057Ab1JAVDa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Oct 2011 17:03:30 -0400
-Received: from 86-85-n1.aster.pl ([85.222.86.85] helo=[192.168.1.6])
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1RA6iX-00061P-I5; Sat, 01 Oct 2011 23:03:29 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110807 Icedove/5.0
-In-Reply-To: <20111001190554.GA5854@kennedy.acc.umu.se>
+	id S1751318Ab1JAVlZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Oct 2011 17:41:25 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RA7JD-0008G6-VN
+	for git@vger.kernel.org; Sat, 01 Oct 2011 23:41:24 +0200
+Received: from h-67-101-25-249.nycmny83.dynamic.covad.net ([67.101.25.249])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 01 Oct 2011 23:41:23 +0200
+Received: from shenkin by h-67-101-25-249.nycmny83.dynamic.covad.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 01 Oct 2011 23:41:23 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 67.101.25.249 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.186 Safari/535.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182578>
 
-[cc: Paul Mackerras]
+Michael Witten <mfwitten <at> gmail.com> writes:
+ 
+> On Sat, Oct 1, 2011 at 20:22, Peter Shenkin <shenkin <at> gmail.com> wrote:
+>     [--tags] is merely a shorthand for writing the refspec
+>     `refs/tags/\*:refs/tags/\*'; that is,
 
-Hi,
-I think that the historical explanation that Junio gave could
-be used as a basis for a commit message:
+Yes, I understand that fully and it makes perfect sense.
 
-  In early days, all projects managed by git (except for git itself) had the
-  product of a fairly mature development history in their first commit, and
-  it was deemed unnecessary clutter to show additions of these thousands of
-  paths as a patch.
+But it leaves unexplained and undocumented the fact
+that the user's specification of an *additional* refspec is
+observed if the additional refspec is given on the
+command line but ignored if the additional refspec is
+given in the config file.
 
-  "git log" learned to show the patch for the initial commit without requiring
-  --root command line option at 0f03ca9 (config option log.showroot to show
-  the diff of root commits, 2006-11-23).
-
-  Teach gitk to respect log.showroot.
-
-Also the gitk should be mentioned in the man-page for git-config log.showroot.
-The current description of this option seems suboptimal because it explains
-how it used to be, which is not really relevant:
-  log.showroot
-    If true, the initial commit will be shown as a big creation event. This is
-    equivalent to a diff against an empty tree. Tools like git-log(1) or git-
-    whatchanged(1), which normally hide the root commit will now show it. True by
-    default.
-This could be changed to:
-    If true (the default), the root commit will be shown as a big creation
-    event --- a diff against an empty tree. This diff can be very large for
-    a project which was imported into git after some development history.
-    If log.showroot is false tools like git-log(1), git-whatchanged(1), or
-    gitk(1) will not display the added files.
-    
-Zbyszek
-
-On 10/01/2011 09:05 PM, Marcus Karlsson wrote:
-> Make gitk show the patch for the initial commit by default.
-> Override with log.showroot.
-> 
-> Signed-off-by: Marcus Karlsson<mk@acc.umu.se>
-> ---
->   gitk-git/gitk |   13 +++++++++++--
->   1 files changed, 11 insertions(+), 2 deletions(-)
-> 
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 4cde0c4..40ea73f 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -7402,7 +7402,7 @@ proc addtocflist {ids} {
->   }
-> 
->   proc diffcmd {ids flags} {
-> -    global nullid nullid2
-> +    global log_showroot nullid nullid2
-> 
->       set i [lsearch -exact $ids $nullid]
->       set j [lsearch -exact $ids $nullid2]
-> @@ -7436,7 +7436,11 @@ proc diffcmd {ids flags} {
->   	    lappend cmd HEAD
->   	}
->       } else {
-> -	set cmd [concat | git diff-tree -r $flags $ids]
-> +	set cmd [concat | git diff-tree -r]
-> +	if {$log_showroot eq true} {
-> +	    set cmd [concat $cmd --root]
-> +	}
-> +	set cmd [concat $cmd $flags $ids]
->       }
->       return $cmd
->   }
-> @@ -11403,6 +11407,11 @@ catch {
->       }
->   }
-> 
-> +set log_showroot true
-> +catch {
-> +    set log_showroot [exec git config --get log.showroot]
-> +}
-> +
->   if {[tk windowingsystem] eq "aqua"} {
->       set mainfont {{Lucida Grande} 9}
->       set textfont {Monaco 9}
+-P.
