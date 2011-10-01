@@ -1,109 +1,75 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Git, Mac OS X and German special characters
-Date: Sat, 01 Oct 2011 09:24:08 -0500
-Message-ID: <4E872288.10503@op5.se>
-References: <CAO1Q+jf=RO=sE90-mQdi+=fUWH1RLM+JTubSgSVGC5uDyhU+2A@mail.gmail.com>	<4E87182C.8050201@op5.se> <CAO1Q+jeLEp2ReNc9eOFoJxdGq6oRE3b+O=JvMNU0Kqx_eAX=7w@mail.gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Git is not scalable with too many refs/*
+Date: Sat, 01 Oct 2011 17:28:47 +0200
+Message-ID: <4E8731AF.2040305@lsrfire.ath.cx>
+References: <4DF6A8B6.9030301@op5.se> <7c0105c6cca7dd0aa336522f90617fe4@quantumfyre.co.uk> <4E84B89F.4060304@lsrfire.ath.cx> <201109291411.06733.mfick@codeaurora.org> <4E8587E8.9070606@lsrfire.ath.cx> <7vfwjeotv1.fsf@alter.siamese.dyndns.org> <4E8607B6.2040800@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Albert Zeyer <albzey@googlemail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Oct 01 16:24:19 2011
+Cc: Martin Fick <mfick@codeaurora.org>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Christian Couder <christian.couder@gmail.com>,
+	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 01 17:29:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RA0UE-0001O1-GU
-	for gcvg-git-2@lo.gmane.org; Sat, 01 Oct 2011 16:24:18 +0200
+	id 1RA1VS-0007qM-1I
+	for gcvg-git-2@lo.gmane.org; Sat, 01 Oct 2011 17:29:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755525Ab1JAOYO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Oct 2011 10:24:14 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:58949 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752337Ab1JAOYM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Oct 2011 10:24:12 -0400
-Received: by iaqq3 with SMTP id q3so2939151iaq.19
-        for <git@vger.kernel.org>; Sat, 01 Oct 2011 07:24:12 -0700 (PDT)
-Received: by 10.42.84.15 with SMTP id j15mr4534894icl.228.1317479051986;
-        Sat, 01 Oct 2011 07:24:11 -0700 (PDT)
-Received: from vix.int.op5.se ([12.50.161.201])
-        by mx.google.com with ESMTPS id v16sm15108801ibe.0.2011.10.01.07.24.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 01 Oct 2011 07:24:10 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.22) Gecko/20110906 Fedora/3.1.14-1.fc14 Thunderbird/3.1.14 ThunderGit/0.1a
-In-Reply-To: <CAO1Q+jeLEp2ReNc9eOFoJxdGq6oRE3b+O=JvMNU0Kqx_eAX=7w@mail.gmail.com>
+	id S1751281Ab1JAP3U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Oct 2011 11:29:20 -0400
+Received: from india601.server4you.de ([85.25.151.105]:55602 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756665Ab1JAP3C (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Oct 2011 11:29:02 -0400
+Received: from [192.168.2.104] (p4FFDAD66.dip.t-dialin.net [79.253.173.102])
+	by india601.server4you.de (Postfix) with ESMTPSA id D94122F803A;
+	Sat,  1 Oct 2011 17:29:00 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0) Gecko/20110922 Thunderbird/7.0
+In-Reply-To: <4E8607B6.2040800@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182555>
 
-Please don't cull the list when replying. Reply-to-all is the
-standard on git@vger.
-
-On 10/01/2011 08:57 AM, Albert Zeyer wrote:
-> On Sat, Oct 1, 2011 at 3:39 PM, Andreas Ericsson<ae@op5.se>  wrote:
->> On 10/01/2011 07:44 AM, Albert Zeyer wrote:
->>> Hi,
->>>
->>> There are problems on MacOSX with different UTF8 encodings of
->>> filenames. A unicode string has multiple ways to be represented as
->>> UTF8 and Git treats them as different filenames. This is the actual
->>> bug. It should treat them all as the same filename. In some cases (=
-as
->>> on MacOSX), the underlying operating system may use a normalized UT=
-=468
->>> representation in some sort, i.e. change the actual UTF8 filename
->>> representation.
->>>
->>> Similar problems also exists in SVN, for example. This was reported
->>> [here](http://subversion.tigris.org/issues/show_bug.cgi?id=3D2464).
->>> There you can find also lengthy discussions about the topic. And al=
-so
->>> [here](http://svn.apache.org/repos/asf/subversion/trunk/notes/unico=
-de-composition-for-filenames).
->>>
->>> This was already reported for Git earlier and there is also a patch
->>> for Git [here](http://lists-archives.org/git/719832-git-mac-os-x-an=
-d-german-special-characters.html).
->>>
->>> I wonder about the state of this. This hasn't been applied yet. Why=
-?
->>>
->>
->> Because the patch didn't address repositories carrying files with
->> more than one possible representation of the filename and that
->> could have lead to silent loss of data for unsuspecting users.
->>
->> The real solution to your problem is, unfortunately, to either use
->> a different and more competent filesystem, or to avoid triggering
->> the bugs in the one you're currently using.
+Am 30.09.2011 20:17, schrieb Ren=C3=A9 Scharfe:
+> Am 30.09.2011 18:52, schrieb Junio C Hamano:
+>> It might be a better solution to not bother to clear the marks at
+>> all; would it break anything in this codepath?
 >=20
-> Well, I think it is a bug in Git itself that it treats different UTF8
-> representations of the same filename as different filenames. It
-> shouldn't have allowed such in the first place.
+> Unfortunately, yes; the cleanup part was added by 5c08dc48 later,
+> when it become apparent that it's really needed.
 >=20
-> But I see your point. I guess I will work myself on a patch here or
-> extend that one.
+> However, since the patch only buys us a 5% speedup I'm not sure it's=20
+> worth it in its current form.
 
+I found something better: A trick used by bisect and bundle.  They copy
+the list of pending objects from rev_info before calling
+prepare_revision_walk and then go through it to clean up the commit
+marks without going through the refs again.  And I think we can even
+improve it a little.
 
-The trouble is that they may represent two different files on a
-different filesystem. The Linux kernel repo has plenty of files
-that exist with both uppercase and lowercase characters, like so:
-SOMEFILE_driver.c
-somefile_driver.c
+The following patches tighten some orphan/detached head tests a little,
+then comes a resend of my first patch on this topic, only split up into
+two, then four patches that introduce the trick mentioned above (which
+could be squashed together perhaps) and the last one is a bonus
+refactoring patch.
 
-This is perfectly valid on all sensible and case-sensitive
-filesystems, but breaks horribly on HFS. There are other, far more
-"interesting" cases when you involve special chars such as the
-german umlaut, or the swedish =E5=E4=F6 characters.
+ bisect.c                   |   20 +++++++-------
+ builtin/checkout.c         |   58 +++++++++++++-----------------------=
+-------
+ bundle.c                   |   11 +++-----
+ commit.c                   |   14 ++++++++++
+ commit.h                   |    1 +
+ revision.c                 |   14 +++++++---
+ revision.h                 |    2 +
+ t/t2020-checkout-detach.sh |    7 ++++-
+ 8 files changed, 64 insertions(+), 63 deletions(-)
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Ren=C3=A9
