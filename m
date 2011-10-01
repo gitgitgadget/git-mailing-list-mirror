@@ -1,88 +1,77 @@
-From: david@lang.hm
-Subject: Re: Does git have "Path-Based Authorization"?
-Date: Fri, 30 Sep 2011 19:09:41 -0700 (PDT)
-Message-ID: <alpine.DEB.2.02.1109301904410.14711@asgard.lang.hm>
-References: <CAN0CFw0QXkNSF8+qGu+pCrv5dgy1OEvtq-53f23GRd4RrZ1GcQ@mail.gmail.com> <1317427503.4331.37.camel@centaur.lab.cmartin.tk> <CAN0CFw0+v9qscJ+isQdwJOHT4Ajsk-96QK8gQFsu9E87a3j+Ww@mail.gmail.com> <CACsJy8Dm-vSoki9Fr7s=DH7oRYL-a=kF7q9mBwo55ZxsLg5DTA@mail.gmail.com>
- <CAN0CFw1-Edb5PdoTzJz38vJOjjXVAg6F24XgHpTi+3e5C7yxfQ@mail.gmail.com>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: [PATCH] transport: do not allow to push over git:// protocol
+Date: Sat, 1 Oct 2011 05:25:44 +0300
+Message-ID: <20111001022544.GA31036@LK-Perkele-VI.localdomain>
+References: <1317432415-9459-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="680960-1068516109-1317434981=:14711"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Grant <emailgrant@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 01 04:09:58 2011
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 01 04:26:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9p1Y-0006Gi-RK
-	for gcvg-git-2@lo.gmane.org; Sat, 01 Oct 2011 04:09:57 +0200
+	id 1R9pH6-0000Lc-OH
+	for gcvg-git-2@lo.gmane.org; Sat, 01 Oct 2011 04:26:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754406Ab1JACJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Sep 2011 22:09:44 -0400
-Received: from mail.lang.hm ([64.81.33.126]:56941 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751009Ab1JACJn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Sep 2011 22:09:43 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id p9129fwb022889;
-	Fri, 30 Sep 2011 19:09:41 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <CAN0CFw1-Edb5PdoTzJz38vJOjjXVAg6F24XgHpTi+3e5C7yxfQ@mail.gmail.com>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+	id S1751562Ab1JACZr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Sep 2011 22:25:47 -0400
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:37438 "EHLO
+	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750775Ab1JACZq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Sep 2011 22:25:46 -0400
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id 67B41C7E60;
+	Sat,  1 Oct 2011 05:25:45 +0300 (EEST)
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A033AE390CA; Sat, 01 Oct 2011 05:25:45 +0300
+Received: from LK-Perkele-VI (a88-112-55-20.elisa-laajakaista.fi [88.112.55.20])
+	by emh06.mail.saunalahti.fi (Postfix) with ESMTP id 53B62E51A2;
+	Sat,  1 Oct 2011 05:25:43 +0300 (EEST)
+Content-Disposition: inline
+In-Reply-To: <1317432415-9459-1-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182534>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Sat, Oct 01, 2011 at 11:26:55AM +1000, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
+> This protocol has never been designed for pushing. Attempts to push
+> over git:// usually result in
+>=20
+>   fatal: The remote end hung up unexpectedly
+>=20
+> That message does not really point out the reason. With this patch, w=
+e get
+>=20
+>   error: this protocol does not support pushing
+>   error: failed to push some refs to 'git://some-host.com/my/repo'
 
---680960-1068516109-1317434981=:14711
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 8BIT
+What about sticking code to return an error to git daemon instead of th=
+is?
 
-On Fri, 30 Sep 2011, Grant wrote:
+Here's what happens if I try to push to one of repos on this computer
+over git://:
 
->>> I have a series of files containing server-side code which make up a
->>> website.  The entire layout contains only a few folders, but those
->>> folders contain many files.  I want to be able to allow access to only
->>> certain files at a time, sometimes only a single file.  Can that be
->>> done in the way you describe?
->>
->> If you can gather all sensitive files in a subdirectory, then you can
->> split that directory into its own repository (see git-submodule man
->> page) and grant limited access to that repo.
->> --
->> Duy
->
-> I thought about separating files the dev has had access to into a
-> separate folder from files the dev hasn't had access to, but it would
-> mean constantly changing the code as files move around, plus it would
-> be too complicated if I have multiple devs and want to give them
-> access to different stuff.  It's not that some files are more
-> sensitive than others, it's just that I don't want to give anyone
-> access to more than I have to.
+$ git push git://localhost/foobar
+fatal: remote error: W access for foobar DENIED to anonymous
 
-the thing to think about is why would you want to give a dev access to a 
-file or restrict their access.
+So send-pack can deal with ERR packet (and yes, that error message
+is really from Gitolite).
 
-Remember that the Dev should be able to test their changes, so you really 
-need to give them access to enough stuff to be a complete, working set.
+Aside: git archive seemingly can't deal with ERR packets. And worse
+yet, it doesn't even print what it received, resulting this:
 
-If you make each set of things it's own repository, then you should have 
-the granularity you are looking for.
+$ git archive --remote=3Dgit://localhost/foobar HEAD
+fatal: git archive: protocol error
 
-If you think you will need more granularity, please explain what you are 
-thinking of?
 
-Also remember that you don't want to have your development files on your 
-production site, so you probably don't want to deploy directly from your 
-repository to the production site. If you use a filter to make a new git 
-repository that only contains the pieces that you are wanting to publish, 
-and keep that repository clean, only submitting the files that you want 
-there, but treat it as a read-only repository (i.e. no development work 
-done there), you should be in good shape.
-
-David Lang
---680960-1068516109-1317434981=:14711--
+-Ilari=20
