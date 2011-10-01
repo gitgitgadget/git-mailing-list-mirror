@@ -1,77 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Fwd: Release notes link problem
-Date: Fri, 30 Sep 2011 23:58:41 -0700
-Message-ID: <7vlit5mc4e.fsf@alter.siamese.dyndns.org>
-References: <CAPZPVFbWtDM5T3ZPFMc_MH4aSsfoLyVoGrGm2FeO0TOdhLrz2g@mail.gmail.com>
- <CAPZPVFY9O2VC7TS9ASReD5LYiqfDwLY5M2vxE97M+7BsYvAoqg@mail.gmail.com>
- <20111001061004.GA25700@sigill.intra.peff.net>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: [PATCH] gitk: Show patch for initial commit
+Date: Sat, 01 Oct 2011 11:54:11 +0200
+Message-ID: <4E86E343.5070704@in.waw.pl>
+References: <20110930215021.GA3005@kennedy.acc.umu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eugene Sajine <euguess@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Oct 01 08:58:50 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Marcus Karlsson <mk@acc.umu.se>
+X-From: git-owner@vger.kernel.org Sat Oct 01 11:54:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R9tX7-0005NM-JR
-	for gcvg-git-2@lo.gmane.org; Sat, 01 Oct 2011 08:58:49 +0200
+	id 1R9wH4-0007E0-DP
+	for gcvg-git-2@lo.gmane.org; Sat, 01 Oct 2011 11:54:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752011Ab1JAG6q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Oct 2011 02:58:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51061 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751421Ab1JAG6o (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Oct 2011 02:58:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C24B44E7B;
-	Sat,  1 Oct 2011 02:58:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0NxuTsdCFT3EuNdcfOpACzKaXUU=; b=j6Mkov
-	yuGw0IyJyTcmBqxjx3m8f8aHU/OmenPVYX73FGYLC5wq6NqnwoXQ3kBORaAu94+d
-	xONKXQ8/dlfChbx2lJxi8l0qIm2SZxcpr0zP8QWste9tsW3INmWK33UWFTrmtatP
-	CxDxeCtAlI1y+5a7EAoJxHRl0wbUHLC1L1rjQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YFWSejTepVyJkW/qal1cJ1aIKAMKUNEZ
-	elxP8MMOTcHvgeilAyZ3X8S4BOFkuJRuTVjl2JWYowtx56T26L5D6yGFQl6Hfpvm
-	kfapxKlS+kwgZQ0bxgvM037a/5SI1TXxV4SCTImcmLj/F1Sy2NOEJpInUY/u6Xse
-	SOhT5M41I2w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B97B24E79;
-	Sat,  1 Oct 2011 02:58:43 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3FDA84E78; Sat,  1 Oct 2011
- 02:58:43 -0400 (EDT)
-In-Reply-To: <20111001061004.GA25700@sigill.intra.peff.net> (Jeff King's
- message of "Sat, 1 Oct 2011 02:10:04 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CCE07B54-EBFA-11E0-8FB5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755009Ab1JAJyV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Oct 2011 05:54:21 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:41329 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753928Ab1JAJyU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Oct 2011 05:54:20 -0400
+Received: from 86-85-n1.aster.pl ([85.222.86.85] helo=[192.168.1.6])
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1R9wGx-0003e9-1a; Sat, 01 Oct 2011 11:54:19 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110807 Icedove/5.0
+In-Reply-To: <20110930215021.GA3005@kennedy.acc.umu.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182544>
 
-Jeff King <peff@peff.net> writes:
-
-> On Fri, Sep 30, 2011 at 05:06:50PM -0400, Eugene Sajine wrote:
+On 09/30/2011 11:50 PM, Marcus Karlsson wrote:
+> Make gitk show the patch for the initial commit.
 >
->> The release notes link on http://git-scm.com/ is pointing to a page
->> which doesn't seem to exist. I'm getting error 404 when trying to
->> access it. Does anybody see the same issue?
->> 
->> the link is
->> https://raw.github.com/gitster/git/master/Documentation/RelNotes/1.7.6.4.txt
+> Signed-off-by: Marcus Karlsson<mk@acc.umu.se>
+> ---
+>   gitk-git/gitk |    2 +-
+>   1 files changed, 1 insertions(+), 1 deletions(-)
 >
-> This was due to some breakage on github this afternoon, but I believe it
-> has since been fixed.
+> diff --git a/gitk-git/gitk b/gitk-git/gitk
+> index 4cde0c4..20aeae6 100755
+> --- a/gitk-git/gitk
+> +++ b/gitk-git/gitk
+> @@ -7436,7 +7436,7 @@ proc diffcmd {ids flags} {
+>   	    lappend cmd HEAD
+>   	}
+>       } else {
+> -	set cmd [concat | git diff-tree -r $flags $ids]
+> +	set cmd [concat | git diff-tree -r --root $flags $ids]
+>       }
+>       return $cmd
+>   }
+Cool, this works for me! But I think I would be really nice if gitk 
+respected the configuration value of log.showroot. This would give nice 
+consistency amongst the various tools.
 
-I guess the link should be
-
-  https://raw.github.com/git/git/master/Documentation/RelNotes/1.7.7.txt
-
-instead ;-).
+Zbyszek
