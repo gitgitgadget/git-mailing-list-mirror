@@ -1,70 +1,82 @@
-From: Andreas Krey <a.krey@gmx.de>
-Subject: Re: Git, Mac OS X and German special characters
-Date: Sat, 1 Oct 2011 21:47:46 +0200
-Message-ID: <20111001194746.GA16826@inner.h.iocl.org>
-References: <CAO1Q+jf=RO=sE90-mQdi+=fUWH1RLM+JTubSgSVGC5uDyhU+2A@mail.gmail.com> <4E87182C.8050201@op5.se> <CAO1Q+jeLEp2ReNc9eOFoJxdGq6oRE3b+O=JvMNU0Kqx_eAX=7w@mail.gmail.com> <4E872288.10503@op5.se>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitk: Show patch for initial commit
+Date: Sat, 01 Oct 2011 13:20:44 -0700
+Message-ID: <7vaa9kmpk3.fsf@alter.siamese.dyndns.org>
+References: <20110930215021.GA3005@kennedy.acc.umu.se>
+ <4E86E343.5070704@in.waw.pl> <20111001184216.GA5796@kennedy.acc.umu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Albert Zeyer <albzey@googlemail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Sat Oct 01 21:48:09 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Zbigniew J??drzejewski-Szmek <zbyszek@in.waw.pl>,
+	git@vger.kernel.org, gitster@pobox.com
+To: Marcus Karlsson <mk@acc.umu.se>
+X-From: git-owner@vger.kernel.org Sat Oct 01 22:21:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RA5Xa-000081-94
-	for gcvg-git-2@lo.gmane.org; Sat, 01 Oct 2011 21:48:06 +0200
+	id 1RA63R-00072z-94
+	for gcvg-git-2@lo.gmane.org; Sat, 01 Oct 2011 22:21:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751670Ab1JATrx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Oct 2011 15:47:53 -0400
-Received: from continuum.iocl.org ([217.140.74.2]:49054 "EHLO
-	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750950Ab1JATrw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Oct 2011 15:47:52 -0400
-Received: (from krey@localhost)
-	by continuum.iocl.org (8.11.3/8.9.3) id p91Jlku18816;
-	Sat, 1 Oct 2011 21:47:46 +0200
-Content-Disposition: inline
-In-Reply-To: <4E872288.10503@op5.se>
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+	id S1752756Ab1JAUUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Oct 2011 16:20:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46823 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751555Ab1JAUUr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Oct 2011 16:20:47 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A77926301;
+	Sat,  1 Oct 2011 16:20:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=w8SBTI7CUKNeLiNZ/bTMxOqSu/Y=; b=BJ5+Am
+	j/iLIj2zmgJOMqDuN/s/GtoSVJRADRS9IIxLzcxj64Mjm0JGj6W++KoM6bE9BA54
+	Jj+aevbWayqPwLhFbXjiuHKikyEr3P3CRNbUrV2jwzuj+Odw1fUT/IZz3qOWo8Hj
+	p1BodGZeZwOd9HSCdirAzKs8ykw1xZ6zEgrNc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vcxrdUuxCnWU0XrdRAu9KPeoSFsk0Bkh
+	9KbF2EzDD5+QUX8q7iu+0BaU6bg1XAWsOzCeQr0NTotjasdS4uk4J09YAfrGlzc6
+	j9sWD8VSEuCGHGxgUfg8JCdT1tiunlI+c8whQtPRbyN4dEzaYlRHFX1SIT3BYqOP
+	VcbSL9bjUvM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9EE9C6300;
+	Sat,  1 Oct 2011 16:20:46 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 30BB662FF; Sat,  1 Oct 2011
+ 16:20:46 -0400 (EDT)
+In-Reply-To: <20111001184216.GA5796@kennedy.acc.umu.se> (Marcus Karlsson's
+ message of "Sat, 1 Oct 2011 20:42:16 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D861F532-EC6A-11E0-AD20-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182573>
 
-On Sat, 01 Oct 2011 09:24:08 +0000, Andreas Ericsson wrote:
-=2E..
-> The trouble is that they may represent two different files on a
-> different filesystem. The Linux kernel repo has plenty of files
-> that exist with both uppercase and lowercase characters, like so:
-> SOMEFILE_driver.c
-> somefile_driver.c
->=20
-> This is perfectly valid on all sensible and case-sensitive
-> filesystems, but breaks horribly on HFS.
+Marcus Karlsson <mk@acc.umu.se> writes:
 
-It also breaks on windows, except in at least one country[1].
-And the latter alone is good reason why no VCS should try to
-forbid to use different characters that some filesystems
-(and only some) consider the same.
+>> >diff --git a/gitk-git/gitk b/gitk-git/gitk
+>> >index 4cde0c4..20aeae6 100755
+>> >--- a/gitk-git/gitk
+>> >+++ b/gitk-git/gitk
+>> >@@ -7436,7 +7436,7 @@ proc diffcmd {ids flags} {
+>> >  	    lappend cmd HEAD
+>> >  	}
+>> >      } else {
+>> >-	set cmd [concat | git diff-tree -r $flags $ids]
+>> >+	set cmd [concat | git diff-tree -r --root $flags $ids]
+>> >      }
+>> >      return $cmd
+>> >  }
+>> Cool, this works for me! But I think I would be really nice if gitk
+>> respected the configuration value of log.showroot. This would give
+>> nice consistency amongst the various tools.
+>
+> I agree, that would be reasonable. I'll prepare a new patch with that
+> behavior.
 
-> There are other, far more
-> "interesting" cases when you involve special chars such as the
-> german umlaut, or the swedish =E5=E4=F6 characters.
-
-Care to share some?
-
-The question is, should git forbid two filenames that consist
-of the *same* characters, only differently uni-encoded? I don't
-think anyone would make two files named 'B=FCro', with different
-unicode encodings. But as far as I know that is a shady area.
-
-Andreas
-
-[1] Which has 'i with dot' and 'i without dot' both in uppercase
-    and lowercase variant, so I and i are not the 'same'.
+That would be good, but whatever you do please keep the maintainer of
+gitk, Paul Mackerras <paulus@samba.org>, in the loop.
