@@ -1,58 +1,65 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: Git, Mac OS X and German special characters
-Date: Sat, 1 Oct 2011 22:02:40 +0000
-Message-ID: <CAMOZ1BuXiQkZG_7mvay-ybm7Q7niwXVhbmbCmkfy=wD1AKsasQ@mail.gmail.com>
-References: <CAO1Q+jf=RO=sE90-mQdi+=fUWH1RLM+JTubSgSVGC5uDyhU+2A@mail.gmail.com>
- <4E87182C.8050201@op5.se> <CAO1Q+jeLEp2ReNc9eOFoJxdGq6oRE3b+O=JvMNU0Kqx_eAX=7w@mail.gmail.com>
- <4E872288.10503@op5.se> <20111001194746.GA16826@inner.h.iocl.org>
+From: Peter Shenkin <shenkin@gmail.com>
+Subject: Re: [PATCH] Clarify that '--tags' fetches tags only
+Date: Sat, 1 Oct 2011 22:06:53 +0000 (UTC)
+Message-ID: <loom.20111002T000048-827@post.gmane.org>
+References: <1314997486-29996-1-git-send-email-anatol.pomozov@gmail.com> <1316649176-32352-1-git-send-email-anatol.pomozov@gmail.com> <119711285.RuumktFLOq@hyperion> <loom.20110930T041939-332@post.gmane.org> <CAMOZ1BsTKBPArRF-LxoNOJcQarMWx-2a2UBoVjWN-96xJ3Ad8A@mail.gmail.com> <loom.20111001T073652-884@post.gmane.org> <CAMOZ1Bvn64q5sVfo2-ZhTSpBttpjG1pHELJMM9sEmWsrqANCkw@mail.gmail.com> <loom.20111001T191413-25@post.gmane.org> <CAMOZ1Bsc2idQnKxeggruPi1rrY3+vsa=DoMydHY4+BM+qoW69w@mail.gmail.com> <loom.20111001T214551-834@post.gmane.org> <CAMOZ1BsYYmH6hqcB4vfCq2LAu+fxJ4MzPQ1+-erUSqU1ptx2mQ@mail.gmail.com> <loom.20111001T232414-84@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andreas Ericsson <ae@op5.se>, Albert Zeyer <albzey@googlemail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Andreas Krey <a.krey@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Oct 02 00:03:18 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 02 00:07:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RA7eO-0004en-GQ
-	for gcvg-git-2@lo.gmane.org; Sun, 02 Oct 2011 00:03:16 +0200
+	id 1RA7iD-0005SB-Gt
+	for gcvg-git-2@lo.gmane.org; Sun, 02 Oct 2011 00:07:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751514Ab1JAWDM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Oct 2011 18:03:12 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:52088 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751211Ab1JAWDK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Oct 2011 18:03:10 -0400
-Received: by iaqq3 with SMTP id q3so3263929iaq.19
-        for <git@vger.kernel.org>; Sat, 01 Oct 2011 15:03:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=EimIIOueLVbzSbtlHResAMXmt9DT03swi9cn8OpFcYI=;
-        b=fR2ZFL22gi14L207FwrkCbvuvVcpaMqcb2wGEU8C3dv0NOEBBGM8kDX8sBMifDdOpj
-         0tNeiwDLME2ojUjW2yW6UQARpdZdcek8vNUFzclN6CtHZ7iX2jjopbVED9Maz0RmV3KF
-         2nk6EGzbs8XWIpwmeXmD7+ly1fIz1KRulgg4I=
-Received: by 10.42.134.4 with SMTP id j4mr5031629ict.135.1317506590106; Sat,
- 01 Oct 2011 15:03:10 -0700 (PDT)
-Received: by 10.42.171.194 with HTTP; Sat, 1 Oct 2011 15:02:40 -0700 (PDT)
-In-Reply-To: <20111001194746.GA16826@inner.h.iocl.org>
+	id S1751990Ab1JAWHJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Oct 2011 18:07:09 -0400
+Received: from lo.gmane.org ([80.91.229.12]:52893 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751527Ab1JAWHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Oct 2011 18:07:07 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RA7i4-0005Qh-Pn
+	for git@vger.kernel.org; Sun, 02 Oct 2011 00:07:04 +0200
+Received: from h-67-101-25-249.nycmny83.dynamic.covad.net ([67.101.25.249])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 02 Oct 2011 00:07:04 +0200
+Received: from shenkin by h-67-101-25-249.nycmny83.dynamic.covad.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 02 Oct 2011 00:07:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 67.101.25.249 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.186 Safari/535.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182580>
 
-On Sat, Oct 1, 2011 at 19:47, Andreas Krey <a.krey@gmx.de> wrote:
+Peter Shenkin <shenkin <at> gmail.com> writes:
+> But it leaves unexplained and undocumented the fact
+> that the user's specification of an *additional* refspec is
+> observed if the additional refspec is given on the
+> command line but ignored if the additional refspec is
+> given in the config file.
 
-> The question is, should git forbid two filenames that consist
-> of the *same* characters, only differently uni-encoded? I don't
-> think anyone would make two files named 'B=C3=BCro', with different
-> unicode encodings. But as far as I know that is a shady area.
+I have to take this back. It makes sense that a refspec on
+the cmdline overrides one in the config file.
 
-So, let's leave git's current behavior as the default and provide
-a config variable that when set, tells git to handle file names
-in terms of characters rather than bytes.
+I understand the behavior now, and Michael's  suggestion of a
+--default to add the refspec in the config file to the cmdline
+is IMO a good one.
+
+'Nuff said. (By me, anyway....)
+
+Thanks for your help and patience, everyone.
+
+-P.
