@@ -1,84 +1,78 @@
-From: Enrico Weigelt <weigelt@metux.de>
-Subject: Re: Restoring timestamps (Re: Branches & directories)
-Date: Sun, 2 Oct 2011 17:06:01 +0200
-Message-ID: <20111002150601.GB15083@nibiru.local>
-References: <CAGZ=bqK7H3zc8LK7EP8+uV8DpWW+czK2POfceGtcBF8Vmkhkow@mail.gmail.com> <CAE1pOi1J5DKtnyUQzu1K7G1+HLsWWCN7thCf6W8MwSzt4_vtOw@mail.gmail.com> <CAGZ=bqLZoLoyMcvnppg6SyFtJU8phSquQeBZ7uhwP=+ZL3DADw@mail.gmail.com> <CAE1pOi0Er1ZgftpNeCr85Zu27xR2127V_KdAtvKc1NOKmDUvzQ@mail.gmail.com> <CAGZ=bqLyS9tcpqztwGWFOXtDJRhugu+JYvz7wTnc0PTmECWX2g@mail.gmail.com> <CAE1pOi1axNmGaPVXqBH02x0N=Z6tgO9R00RTokuJm50eY-OoNg@mail.gmail.com> <20110822210141.GA3880@elie.gateway.2wire.net> <CAE1pOi1+nnpnHAuhYsXcfFNUroW0JcDQKLu6D7YNrUwJg0tXPw@mail.gmail.com> <CAFzf2Xw6=BFsKauYTG-4cw0D_LzLSNb_wqz8dQJ83wJHNQXbdg@mail.gmail.com> <CAE1pOi1J=TWUmJKZorotBsDoz3wozXsioN7fVO=7JBxdMD7Zqg@mail.gmail.com>
-Reply-To: weigelt@metux.de
-Mime-Version: 1.0
+From: Alexander Pepper <pepper@inf.fu-berlin.de>
+Subject: Re: Bug?: 'git log --find-copies' doesn't match 'git log --follow <rev> -- path/to/file'
+Date: Sun, 2 Oct 2011 17:10:26 +0200
+Message-ID: <67B22035-4B90-4A68-8960-DDB58F640CD9@inf.fu-berlin.de>
+References: <DBC73B3F-2703-4651-AADA-233A9CC38AFD@inf.fu-berlin.de> <20110930213841.GA9384@sigill.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v1084)
 Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Oct 02 17:09:02 2011
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Oct 02 17:10:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RANf3-00086s-Ur
-	for gcvg-git-2@lo.gmane.org; Sun, 02 Oct 2011 17:09:02 +0200
+	id 1RANgZ-0008Ts-4X
+	for gcvg-git-2@lo.gmane.org; Sun, 02 Oct 2011 17:10:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752798Ab1JBPIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Oct 2011 11:08:51 -0400
-Received: from caprica.metux.de ([82.165.128.25]:53982 "EHLO
-	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752725Ab1JBPIu (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Oct 2011 11:08:50 -0400
-Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
-	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id p92F1wUC008338
-	for <git@vger.kernel.org>; Sun, 2 Oct 2011 17:01:58 +0200
-Received: (from uucp@localhost)
-	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id p92F1ksG008334
-	for git@vger.kernel.org; Sun, 2 Oct 2011 17:01:46 +0200
-Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id p92F61n8004336
-	for git@vger.kernel.org; Sun, 2 Oct 2011 17:06:01 +0200
-Mail-Followup-To: Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <CAE1pOi1J=TWUmJKZorotBsDoz3wozXsioN7fVO=7JBxdMD7Zqg@mail.gmail.com>
-User-Agent: Mutt/1.4.1i
-X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
-X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
-X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
-X-Killer: 23, endloesung, Weltuntergang, 
-X-Doof: wer das liest ist doof
+	id S1752822Ab1JBPKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Oct 2011 11:10:30 -0400
+Received: from outpost1.zedat.fu-berlin.de ([130.133.4.66]:47913 "EHLO
+	outpost1.zedat.fu-berlin.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752725Ab1JBPK3 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 2 Oct 2011 11:10:29 -0400
+Received: from inpost2.zedat.fu-berlin.de ([130.133.4.69])
+          by outpost1.zedat.fu-berlin.de (Exim 4.69)
+          with esmtp
+          (envelope-from <pepper@inf.fu-berlin.de>)
+          id <1RANgR-0002Ea-Ue>; Sun, 02 Oct 2011 17:10:27 +0200
+Received: from dslb-088-075-073-091.pools.arcor-ip.net ([88.75.73.91] helo=[192.168.2.104])
+          by inpost2.zedat.fu-berlin.de (Exim 4.69)
+          with esmtpsa
+          (envelope-from <pepper@inf.fu-berlin.de>)
+          id <1RANgR-0006M5-Qh>; Sun, 02 Oct 2011 17:10:27 +0200
+In-Reply-To: <20110930213841.GA9384@sigill.intra.peff.net>
+X-Mailer: Apple Mail (2.1084)
+X-Originating-IP: 88.75.73.91
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182602>
-
-* Hilco Wijbenga <hilco.wijbenga@gmail.com> wrote:
-
-> Eclipse is a wonderful IDE except for how it makes sharing workspaces
-> practically impossible (where "share" means "put in SCM", not "used my
-> several developers at the same time"). 
-
-This is one the major points which render it rather useless for me ;-o
-
-> Is it possible to do git stash pop without losing the stash? 
-
-git cherry-pick stash{0}
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182603>
 
 
-Apropos IDEs:
+Am 30.09.2011 um 23:38 schrieb Jeff King:
 
-I've been thinking about how to properly integrate IDEs with VCS'es
-like git. My conclusion is that it should be directly built ontop
-of it. Project metadata itself belongs into git, and the project
-management tool should automatically create local working copies
-on-demand. I would even delegate *all* the VCS handling to git
-(even when using other VCS'es in the back)
+> On Fri, Sep 30, 2011 at 05:32:38PM +0200, Alexander Pepper wrote:
+> 
+>> So git log with copy and rename detection on (--find-copies) tells me,
+>> that the file StopClusterException.java is copied to
+>> ClusterOperation.java. But If I ask git log for that specific file
+>> with --follow git claims a copy from Immutable.java to
+>> ClusterOperation.java!
+> 
+> I think that --follow uses --find-copies-harder. Did you try:
+> 
+>  git log --numstat --find-copies-harder dd4e90f9
+> 
+> ? Does it find Immutable.java as the source?
+> 
+> -Peff
 
-Maybe I'll find some time to do some initial concepts.
-Perhaps anybody likes to join in ?
 
+Using 'git log --numstat --find-copies-harder dd4e90f9' yields "immutable.java" as you expected:
 
-cu
+$ git log --numstat --find-copies-harder dd4e90f9
+[...]
+6       10      src/java/voldemort/annotations/concurrency/Immutable.java => contrib/ec2-testing/src/java/voldemort/utils/ClusterOperation.java
+
+So is there a way to tell --follow to only use --find-copies instead of --find-copies harder? And what is the advantage of using "--find-copies-harder" over "--find-copies"?
+
+Greetings from Berlin
+Alex
+
 -- 
-----------------------------------------------------------------------
- Enrico Weigelt, metux IT service -- http://www.metux.de/
-
- phone:  +49 36207 519931  email: weigelt@metux.de
- mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
-----------------------------------------------------------------------
- Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-----------------------------------------------------------------------
+Alexander Pepper
+pepper@inf.fu-berlin.de
