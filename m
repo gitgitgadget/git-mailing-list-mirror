@@ -1,156 +1,113 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: [PATCHv3] git-web--browse: avoid the use of eval
-Date: Sun,  2 Oct 2011 13:44:17 +1300
-Message-ID: <1317516257-24435-1-git-send-email-judge.packham@gmail.com>
-Cc: gitster@pobox.com, peff@peff.net, chriscool@tuxfamily.org,
-	Chris Packham <judge.packham@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 02 02:44:58 2011
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: Does git have "Path-Based Authorization"?
+Date: Sun, 2 Oct 2011 06:57:57 +0530
+Message-ID: <CAMK1S_icdpCyA8SBcNu8CbCk3N-h8yEYZ9+6N=JVPAeayuzSPw@mail.gmail.com>
+References: <CAN0CFw0QXkNSF8+qGu+pCrv5dgy1OEvtq-53f23GRd4RrZ1GcQ@mail.gmail.com>
+	<m3lit4oo9q.fsf@localhost.localdomain>
+	<CAN0CFw3kzAgaVBKNHE5ttJgYnc_csjeHjOLq=EBjLizW=RPUkA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Grant <emailgrant@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 02 03:28:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAAAo-0000Pn-Cp
-	for gcvg-git-2@lo.gmane.org; Sun, 02 Oct 2011 02:44:54 +0200
+	id 1RAAqk-00089B-Dd
+	for gcvg-git-2@lo.gmane.org; Sun, 02 Oct 2011 03:28:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752072Ab1JBAol (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Oct 2011 20:44:41 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:54616 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751597Ab1JBAoj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Oct 2011 20:44:39 -0400
-Received: by gyg10 with SMTP id 10so2490523gyg.19
-        for <git@vger.kernel.org>; Sat, 01 Oct 2011 17:44:39 -0700 (PDT)
+	id S1751618Ab1JBB17 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Oct 2011 21:27:59 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:58621 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750963Ab1JBB16 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Oct 2011 21:27:58 -0400
+Received: by qadb15 with SMTP id b15so945078qad.19
+        for <git@vger.kernel.org>; Sat, 01 Oct 2011 18:27:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=LgTzspZzz01ttszWhZHCA6YAfaDHSuI6ea2ExEelDNg=;
-        b=j3RWOWqxmxUe3gdZ6MQZdMf8mKO42u6ba0i9IASMU2DaTc0pQDX9qy9AwBNYiHtcpN
-         RFSqCtoVV6y1LhxCsSrpJfwJ2Cn4a5IAQwTaZHyCu9x44EQNF4owkDtx5GitF+oIo3FZ
-         uxWn3P9BvTqEiGsOXrfAB/99wponTZ2dz7YLQ=
-Received: by 10.68.37.67 with SMTP id w3mr9529064pbj.9.1317516278742;
-        Sat, 01 Oct 2011 17:44:38 -0700 (PDT)
-Received: from localhost.localdomain (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPS id d1sm14541565pbm.3.2011.10.01.17.44.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 01 Oct 2011 17:44:37 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=RLN/6y97pxEnt68RmJEEzCH2kufOBSiPqxyJqWYuIx4=;
+        b=H7OWDlKLv3becmSM26PaXm0LpWqJW0dmQvKoSycvR1n8m96us7IVrwtIlI3lT2Ns1U
+         hau6R19QoUpeyrQxMgJYgckJCADcxtD7/jZTZO76ZHLFwbQlbJL9XZjTQ8aFryr5Vnl5
+         uZOwNvFUk+8SaUCOTd9gTdM1pnlHjupSE5BR0=
+Received: by 10.224.203.69 with SMTP id fh5mr9356066qab.271.1317518877844;
+ Sat, 01 Oct 2011 18:27:57 -0700 (PDT)
+Received: by 10.224.54.71 with HTTP; Sat, 1 Oct 2011 18:27:57 -0700 (PDT)
+In-Reply-To: <CAN0CFw3kzAgaVBKNHE5ttJgYnc_csjeHjOLq=EBjLizW=RPUkA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182587>
 
-Using eval causes problems when the URL contains an appropriately
-escaped ampersand (\&). Dropping eval from the built-in browser
-invocation avoids the problem.
+On Sun, Oct 2, 2011 at 5:30 AM, Grant <emailgrant@gmail.com> wrote:
+>>> Hello, I'm trying to decide between git and subversion. =C2=A0Subve=
+rsion
+>>> has "Path-Based Authorization" so I can give a developer access to
+>>> only specific files instead of everything. =C2=A0Does git have some=
+thing
+>>> similar?
+>>>
+>>> http://svnbook.red-bean.com/en/1.5/svn.serverconfig.pathbasedauthz.=
+html
+>>
+>> In distributed version control systems each developers gets full cop=
+y
+>> (a clone) of a repository (separate repository instance). =C2=A0This=
+ means that
+>> if you want for developer to see only specified subset of repository
+>> (specific subdirectories) you would have to split repository into
+>> submodules, and control access on (sub)repository basis.
+>
+> I do want to prevent reading of all but one or a few specified files
+> at a time. =C2=A0I did some reading on the differences between centra=
+lized
+> and distributed version control systems, and I can see how a
+> distributed system may be better for open source projects, but a
+> business project like mine may work better with centralized control.
+> Would you guys agree in general? =C2=A0Easier read/write control of
+> individual files in the repository is one benefit of the centralized
+> model I will put to use.
+>
+>> However if you want only to prevent developer from making changes ou=
+tside
+>> specific subdirectory or specified files, you can do that on publish=
+ time
+>> via update / pre-receive hook (like contrib/hooks/update-paranoid), =
+or git
+>> repository management tool such as Gitolite. =C2=A0That would preven=
+t a push if
+>> any of commits being published touches files that it shouldn't.
+>>
+>> P.S. Karl Fogel in "Producing Open Source Software" (http://producin=
+goss.com)
+>> writes that social solutions wrt. restricting contributors to given =
+area
+>> are better than technical solutions such as (overly-)strict access
+>> control.
+>
+> When I started this thread, I didn't realize the fact that my project
+> is not open-source would help decide which version control system to
+> use. =C2=A0Now I see that it does factor into the decision so I apolo=
+gize
+> for not mentioning it previously.
 
-Helped-by: Jeff King <peff@peff.net> (test case)
-Signed-off-by: Chris Packham <judge.packham@gmail.com>
+I'm afraid I did not follow the full thread, but I can assure you we
+have several "secret secret" type projects at work, both mine as well
+as many others.
 
----
-The consensus from the last round of discussion [1] seemed to be to
-remove the eval from the built in browsers but quote custom browser
-commands appropriately.
+There are a few occasions when they need the kind of stuff you seem to
+want more regularly, (the only one I can really recall is one of our
+largest customers has a custom version of one of our product for
+themselves and do not want people working on the generic version to
+see those changes in case they propagate to their competitors).  We
+just do that by using a different repo entirely, and making sure
+changes to common code migrate only one way.
 
-I've expanded the tests a little. A semi-colon had the same error as
-the ampersand. A hash was another common character that had meaning in
-a shell and in URL.
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/181671
-
- git-web--browse.sh         |   10 +++++-----
- t/t9901-git-web--browse.sh |   37 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 42 insertions(+), 5 deletions(-)
- create mode 100755 t/t9901-git-web--browse.sh
-
-diff --git a/git-web--browse.sh b/git-web--browse.sh
-index e9de241..1e82726 100755
---- a/git-web--browse.sh
-+++ b/git-web--browse.sh
-@@ -156,7 +156,7 @@ firefox|iceweasel|seamonkey|iceape)
- 	;;
- google-chrome|chrome|chromium|chromium-browser)
- 	# No need to specify newTab. It's default in chromium
--	eval "$browser_path" "$@" &
-+	"$browser_path" "$@" &
- 	;;
- konqueror)
- 	case "$(basename "$browser_path")" in
-@@ -164,10 +164,10 @@ konqueror)
- 		# It's simpler to use kfmclient to open a new tab in konqueror.
- 		browser_path="$(echo "$browser_path" | sed -e 's/konqueror$/kfmclient/')"
- 		type "$browser_path" > /dev/null 2>&1 || die "No '$browser_path' found."
--		eval "$browser_path" newTab "$@"
-+		"$browser_path" newTab "$@" &
- 		;;
- 	kfmclient)
--		eval "$browser_path" newTab "$@"
-+		"$browser_path" newTab "$@" &
- 		;;
- 	*)
- 		"$browser_path" "$@" &
-@@ -175,7 +175,7 @@ konqueror)
- 	esac
- 	;;
- w3m|elinks|links|lynx|open)
--	eval "$browser_path" "$@"
-+	"$browser_path" "$@"
- 	;;
- start)
- 	exec "$browser_path" '"web-browse"' "$@"
-@@ -185,7 +185,7 @@ opera|dillo)
- 	;;
- *)
- 	if test -n "$browser_cmd"; then
--		( eval $browser_cmd "$@" )
-+		( eval "$browser_cmd \"\$@\"" )
- 	fi
- 	;;
- esac
-diff --git a/t/t9901-git-web--browse.sh b/t/t9901-git-web--browse.sh
-new file mode 100755
-index 0000000..c6f48a9
---- /dev/null
-+++ b/t/t9901-git-web--browse.sh
-@@ -0,0 +1,37 @@
-+#!/bin/sh
-+#
-+
-+test_description='git web--browse basic tests
-+
-+This test checks that git web--browse can handle various valid URLs.'
-+
-+. ./test-lib.sh
-+
-+test_expect_success \
-+	'URL with an ampersand in it' '
-+	echo http://example.com/foo\&bar >expect &&
-+	git config browser.custom.cmd echo &&
-+	git web--browse --browser=custom \
-+		http://example.com/foo\&bar >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success \
-+	'URL with a semi-colon in it' '
-+	echo http://example.com/foo\;bar >expect &&
-+	git config browser.custom.cmd echo &&
-+	git web--browse --browser=custom \
-+		http://example.com/foo\;bar >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success \
-+	'URL with a hash in it' '
-+	echo http://example.com/foo#bar >expect &&
-+	git config browser.custom.cmd echo &&
-+	git web--browse --browser=custom \
-+		http://example.com/foo#bar >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
--- 
-1.7.7
+Git has too many advantages over legacy VCSs like SVN for people to
+throw it over for something as simple as this.
