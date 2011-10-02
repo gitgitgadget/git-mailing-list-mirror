@@ -1,123 +1,94 @@
-From: Albert Zeyer <albzey@googlemail.com>
-Subject: Re: Git, Mac OS X and German special characters
-Date: Sun, 2 Oct 2011 01:48:07 +0200
-Message-ID: <CAO1Q+jec0Dm3FXEbcb_yEU5XPW_7V5sf+Sn8SR0h9fGWJE=-=w@mail.gmail.com>
-References: <CAO1Q+jf=RO=sE90-mQdi+=fUWH1RLM+JTubSgSVGC5uDyhU+2A@mail.gmail.com>
-	<4E87182C.8050201@op5.se>
-	<CAO1Q+jeLEp2ReNc9eOFoJxdGq6oRE3b+O=JvMNU0Kqx_eAX=7w@mail.gmail.com>
-	<4E872288.10503@op5.se>
-	<20111001194746.GA16826@inner.h.iocl.org>
-	<CAMOZ1BuXiQkZG_7mvay-ybm7Q7niwXVhbmbCmkfy=wD1AKsasQ@mail.gmail.com>
+From: Grant <emailgrant@gmail.com>
+Subject: Re: Does git have "Path-Based Authorization"?
+Date: Sat, 1 Oct 2011 17:00:56 -0700
+Message-ID: <CAN0CFw3kzAgaVBKNHE5ttJgYnc_csjeHjOLq=EBjLizW=RPUkA@mail.gmail.com>
+References: <CAN0CFw0QXkNSF8+qGu+pCrv5dgy1OEvtq-53f23GRd4RrZ1GcQ@mail.gmail.com>
+	<m3lit4oo9q.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andreas Krey <a.krey@gmx.de>, Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 02 01:48:22 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 02 02:01:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RA9I4-00078l-FT
-	for gcvg-git-2@lo.gmane.org; Sun, 02 Oct 2011 01:48:20 +0200
+	id 1RA9UY-00010P-Ra
+	for gcvg-git-2@lo.gmane.org; Sun, 02 Oct 2011 02:01:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752852Ab1JAXsK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Oct 2011 19:48:10 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:62998 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750755Ab1JAXsI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Oct 2011 19:48:08 -0400
-Received: by vcbfk10 with SMTP id fk10so2023932vcb.19
-        for <git@vger.kernel.org>; Sat, 01 Oct 2011 16:48:07 -0700 (PDT)
+	id S1751492Ab1JBABA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Oct 2011 20:01:00 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:58466 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751103Ab1JBAA7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Oct 2011 20:00:59 -0400
+Received: by eya28 with SMTP id 28so1953001eya.19
+        for <git@vger.kernel.org>; Sat, 01 Oct 2011 17:00:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
+        d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=srLE7JobFXIzqQUmaP9odxDwxpHoq8UEeD3nTVatd9M=;
-        b=FAbDKJF5UWy6QNk6Bvp5QnK7in79Ykl3k5LP1Z56ZivpHE5diDS91X8qgxAR+1K7X9
-         8SrGMU6x1Cr9qOS+WebXgkR/I5t4rSq4bftpDhHTrqnfO0eZbXC79lt12kGM9BEtwbsj
-         p2OiOtV45Os6TsSV7d8G3K1WfPZ31b78F7Wso=
-Received: by 10.52.66.80 with SMTP id d16mr13102855vdt.106.1317512887358; Sat,
- 01 Oct 2011 16:48:07 -0700 (PDT)
-Received: by 10.52.112.10 with HTTP; Sat, 1 Oct 2011 16:48:07 -0700 (PDT)
-In-Reply-To: <CAMOZ1BuXiQkZG_7mvay-ybm7Q7niwXVhbmbCmkfy=wD1AKsasQ@mail.gmail.com>
+         :content-type:content-transfer-encoding;
+        bh=nmIGM9SMXgu1uDIlcc1Nu2In39i++MrYToXrLRibqaM=;
+        b=hdFtpINn4zAOXbY3v9ag1Obk+wVDrPMqyXp7Y5V+KLFrpuR+59CDVNX+CcElGZCbFh
+         MtvnqG6be5c4jM7c0kIOSYvlGWINldaC3clSgQawchVNptR9S1GnGelPZgwOd9/moEto
+         jAQmz1ikvml0YZfo2g1E7acRicd832cDiSK20=
+Received: by 10.213.33.142 with SMTP id h14mr355972ebd.65.1317513656689; Sat,
+ 01 Oct 2011 17:00:56 -0700 (PDT)
+Received: by 10.213.4.136 with HTTP; Sat, 1 Oct 2011 17:00:56 -0700 (PDT)
+In-Reply-To: <m3lit4oo9q.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182585>
 
-On Sun, Oct 2, 2011 at 12:02 AM, Michael Witten <mfwitten@gmail.com> wr=
-ote:
-> On Sat, Oct 1, 2011 at 19:47, Andreas Krey <a.krey@gmx.de> wrote:
+>> Hello, I'm trying to decide between git and subversion. =A0Subversio=
+n
+>> has "Path-Based Authorization" so I can give a developer access to
+>> only specific files instead of everything. =A0Does git have somethin=
+g
+>> similar?
+>>
+>> http://svnbook.red-bean.com/en/1.5/svn.serverconfig.pathbasedauthz.h=
+tml
 >
->> The question is, should git forbid two filenames that consist
->> of the *same* characters, only differently uni-encoded? I don't
->> think anyone would make two files named 'B=C3=BCro', with different
->> unicode encodings. But as far as I know that is a shady area.
+> In distributed version control systems each developers gets full copy
+> (a clone) of a repository (separate repository instance). =A0This mea=
+ns that
+> if you want for developer to see only specified subset of repository
+> (specific subdirectories) you would have to split repository into
+> submodules, and control access on (sub)repository basis.
+
+I do want to prevent reading of all but one or a few specified files
+at a time.  I did some reading on the differences between centralized
+and distributed version control systems, and I can see how a
+distributed system may be better for open source projects, but a
+business project like mine may work better with centralized control.
+Would you guys agree in general?  Easier read/write control of
+individual files in the repository is one benefit of the centralized
+model I will put to use.
+
+> However if you want only to prevent developer from making changes out=
+side
+> specific subdirectory or specified files, you can do that on publish =
+time
+> via update / pre-receive hook (like contrib/hooks/update-paranoid), o=
+r git
+> repository management tool such as Gitolite. =A0That would prevent a =
+push if
+> any of commits being published touches files that it shouldn't.
 >
-> So, let's leave git's current behavior as the default and provide
-> a config variable that when set, tells git to handle file names
-> in terms of characters rather than bytes.
+> P.S. Karl Fogel in "Producing Open Source Software" (http://producing=
+oss.com)
+> writes that social solutions wrt. restricting contributors to given a=
+rea
+> are better than technical solutions such as (overly-)strict access
+> control.
 
-I just read the very lengthy discussion here:
-http://thread.gmane.org/gmane.comp.version-control.git/70688
+When I started this thread, I didn't realize the fact that my project
+is not open-source would help decide which version control system to
+use.  Now I see that it does factor into the decision so I apologize
+for not mentioning it previously.
 
-Basically all the arguments have already been discussed.
-
-There are varios options. Most of them are not mutual exclusive, so it
-would also be an option to implement most of them and let the user
-pick what (s)he prefers.
-
-* TreatFilenamesAsText or however you would call it. I.e. handle
-filenames the same when they equal in Unicode.
-
-Linus is very much against this because in rare situations, it could
-destroy your data, like in this example:
-
-	echo "foo" > H=C3=BCtte # "H=C3=BCtte" in NFC
-	echo "bar" > H=C3=BCtte # "H=C3=BCtte" in NFD
-
-The second write would overwrite silently the file generated by the
-first write if those filenames would be handled the same. This (and
-such) behavior is to be avoided, claims Linus, because it would more
-often lead to not wanted behavior in third party applications.
-
-* On MacOSX, wrap all filesystem functions (like readdir()) to convert
-all filenames to NFC.
-
-MacOSX normalizes the UTF8 representation of the filenames to NFD but
-in most common situations (on most other systems), you end up with the
-filename being in NFC.
-
-As the filename is anyway normalized on OSX, it doesn't matter wether
-it is handled as NFC or NFD and NFC will likely generate less trouble.
-And this patch doesn't even really need an option.
-
-This was one suggestion by Linus itself:
-http://news.gmane.org/find-root.php?message_id=3D%3calpine.LFD.1.00.080=
-1211323120.2957%40woody.linux%2dfoundation.org%3e
-
-* Disallow any files with filenames which are not in NFC at all. This
-makes some things a bit more safe (like on MacOSX; along with the
-previous suggestion) and more clear (you always know that your
-filename is in NFC).
-
-* Some more clever readdir() which, when it gets a filename which is
-not in the Git index but Unicode-equally to one filename in the Git
-index, automatically replaces it by the filename in the index.
-
-This is some sort of half way to a TreatFilenamesAsText option but
-should produce less trouble.
-
-This probably also doesn't need an extra option as it should very
-likely generate less trouble (on OSX at least; and for other systems
-which don't mangle the filename, they don't need to use this code at
-all).
-
----
-
-I will probably go and try to implement the clever-readdir(). And/or
-maybe also the NFC conversation in such a readdir() wrapper.
+- Grant
