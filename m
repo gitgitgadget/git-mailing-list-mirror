@@ -1,39 +1,39 @@
 From: Enrico Weigelt <weigelt@metux.de>
-Subject: Re: Does git have "Path-Based Authorization"?
-Date: Sun, 2 Oct 2011 16:50:07 +0200
-Message-ID: <20111002145007.GA15083@nibiru.local>
-References: <CAN0CFw0QXkNSF8+qGu+pCrv5dgy1OEvtq-53f23GRd4RrZ1GcQ@mail.gmail.com> <m3lit4oo9q.fsf@localhost.localdomain> <CAN0CFw3kzAgaVBKNHE5ttJgYnc_csjeHjOLq=EBjLizW=RPUkA@mail.gmail.com> <CAMK1S_icdpCyA8SBcNu8CbCk3N-h8yEYZ9+6N=JVPAeayuzSPw@mail.gmail.com> <CAN0CFw2gVH7=LdKhseE3zo+Av_=kVdz=tH3s=BKeTK9bDOprcw@mail.gmail.com> <CACsJy8B2rhXvGKUsu10Po8cCi7p8uqWXWE5ZHB2Z6hH-aMyR2Q@mail.gmail.com> <CAN0CFw3ZDcXtD7WChjkT1Vg0cU_u==4KCHo8ff-ccbyxZ8xWjg@mail.gmail.com> <op.v2pox0g70aolir@keputer>
+Subject: Re: Restoring timestamps (Re: Branches & directories)
+Date: Sun, 2 Oct 2011 17:06:01 +0200
+Message-ID: <20111002150601.GB15083@nibiru.local>
+References: <CAGZ=bqK7H3zc8LK7EP8+uV8DpWW+czK2POfceGtcBF8Vmkhkow@mail.gmail.com> <CAE1pOi1J5DKtnyUQzu1K7G1+HLsWWCN7thCf6W8MwSzt4_vtOw@mail.gmail.com> <CAGZ=bqLZoLoyMcvnppg6SyFtJU8phSquQeBZ7uhwP=+ZL3DADw@mail.gmail.com> <CAE1pOi0Er1ZgftpNeCr85Zu27xR2127V_KdAtvKc1NOKmDUvzQ@mail.gmail.com> <CAGZ=bqLyS9tcpqztwGWFOXtDJRhugu+JYvz7wTnc0PTmECWX2g@mail.gmail.com> <CAE1pOi1axNmGaPVXqBH02x0N=Z6tgO9R00RTokuJm50eY-OoNg@mail.gmail.com> <20110822210141.GA3880@elie.gateway.2wire.net> <CAE1pOi1+nnpnHAuhYsXcfFNUroW0JcDQKLu6D7YNrUwJg0tXPw@mail.gmail.com> <CAFzf2Xw6=BFsKauYTG-4cw0D_LzLSNb_wqz8dQJ83wJHNQXbdg@mail.gmail.com> <CAE1pOi1J=TWUmJKZorotBsDoz3wozXsioN7fVO=7JBxdMD7Zqg@mail.gmail.com>
 Reply-To: weigelt@metux.de
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 02 16:54:04 2011
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Oct 02 17:09:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RANQa-0003e4-6K
-	for gcvg-git-2@lo.gmane.org; Sun, 02 Oct 2011 16:54:04 +0200
+	id 1RANf3-00086s-Ur
+	for gcvg-git-2@lo.gmane.org; Sun, 02 Oct 2011 17:09:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752906Ab1JBOx4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Oct 2011 10:53:56 -0400
-Received: from caprica.metux.de ([82.165.128.25]:48056 "EHLO
+	id S1752798Ab1JBPIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Oct 2011 11:08:51 -0400
+Received: from caprica.metux.de ([82.165.128.25]:53982 "EHLO
 	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752873Ab1JBOxs (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Oct 2011 10:53:48 -0400
+	by vger.kernel.org with ESMTP id S1752725Ab1JBPIu (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Oct 2011 11:08:50 -0400
 Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
-	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id p92EkwCk007509
-	for <git@vger.kernel.org>; Sun, 2 Oct 2011 16:46:58 +0200
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id p92F1wUC008338
+	for <git@vger.kernel.org>; Sun, 2 Oct 2011 17:01:58 +0200
 Received: (from uucp@localhost)
-	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id p92EkXRs007500
-	for git@vger.kernel.org; Sun, 2 Oct 2011 16:46:33 +0200
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id p92F1ksG008334
+	for git@vger.kernel.org; Sun, 2 Oct 2011 17:01:46 +0200
 Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id p92Eo7Hj025074
-	for git@vger.kernel.org; Sun, 2 Oct 2011 16:50:07 +0200
-Mail-Followup-To: git@vger.kernel.org
+	by nibiru.metux.de (8.12.10/8.12.10) id p92F61n8004336
+	for git@vger.kernel.org; Sun, 2 Oct 2011 17:06:01 +0200
+Mail-Followup-To: Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <op.v2pox0g70aolir@keputer>
+In-Reply-To: <CAE1pOi1J=TWUmJKZorotBsDoz3wozXsioN7fVO=7JBxdMD7Zqg@mail.gmail.com>
 User-Agent: Mutt/1.4.1i
 X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
 X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
@@ -44,29 +44,32 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182602>
 
-* Frans Klaver <fransklaver@gmail.com> wrote:
+* Hilco Wijbenga <hilco.wijbenga@gmail.com> wrote:
 
-Putting on my business consultant hat:
+> Eclipse is a wonderful IDE except for how it makes sharing workspaces
+> practically impossible (where "share" means "put in SCM", not "used my
+> several developers at the same time"). 
 
-> If you don't trust them, fix your trust and relationship, not some tool.
+This is one the major points which render it rather useless for me ;-o
 
-ACK. We're essentially talking about a social/political problem,
-bot a technical one. Take my advise, solve the problem on the
-layer it comes from.
+> Is it possible to do git stash pop without losing the stash? 
 
-The whole ideology of keeping individual devs on their little
-tiny isle is to have the whole project structured into such
-little islands in the first place. Meaning: a really strong
-compartimentalization. This requires an strictly modular
-architecture (which essentially means having completely
-separate trees for the individual modules) and, of course,
-good requirements engineering, contract-driven development,
-etc, with all the associated role models, etc, etc.
+git cherry-pick stash{0}
 
-What kind of project are we talking about ?
-Tactical control or nuclear plant systems ?
+
+Apropos IDEs:
+
+I've been thinking about how to properly integrate IDEs with VCS'es
+like git. My conclusion is that it should be directly built ontop
+of it. Project metadata itself belongs into git, and the project
+management tool should automatically create local working copies
+on-demand. I would even delegate *all* the VCS handling to git
+(even when using other VCS'es in the back)
+
+Maybe I'll find some time to do some initial concepts.
+Perhaps anybody likes to join in ?
 
 
 cu
