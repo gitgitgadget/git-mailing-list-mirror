@@ -1,59 +1,94 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] Don't sort ref_list too early
-Date: Sun, 02 Oct 2011 06:58:53 +0200
-Message-ID: <4E87EF8D.8020801@alum.mit.edu>
-References: <4DF6A8B6.9030301@op5.se>	<9ae990f15489d7b51a172d08e63ca458@quantumfyre.co.uk>	<201109261539.33437.mfick@codeaurora.org>	<201109261552.04946.mfick@codeaurora.org>	<ece30e6a1b74bcddde5634003408f61f@quantumfyre.co.uk>	<7vsjnizxf5.fsf@alter.siamese.dyndns.org> <20110927000010.79913.71464.julian@quantumfyre.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] diff: resurrect XDF_NEED_MINIMAL with --minimal
+Date: Sat, 01 Oct 2011 22:04:27 -0700
+Message-ID: <7voby0j86c.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Martin Fick <mfick@codeaurora.org>, git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Sun Oct 02 06:59:22 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 02 07:04:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAE93-000129-Bd
-	for gcvg-git-2@lo.gmane.org; Sun, 02 Oct 2011 06:59:21 +0200
+	id 1RAEE7-0001tm-Kw
+	for gcvg-git-2@lo.gmane.org; Sun, 02 Oct 2011 07:04:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750771Ab1JBE7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Oct 2011 00:59:07 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:60864 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750695Ab1JBE7F (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Oct 2011 00:59:05 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.134] (p54BEC733.dip.t-dialin.net [84.190.199.51])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p924ws4l017552
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 2 Oct 2011 06:58:54 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
-In-Reply-To: <20110927000010.79913.71464.julian@quantumfyre.co.uk>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1750840Ab1JBFEa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Oct 2011 01:04:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35606 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750695Ab1JBFEa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Oct 2011 01:04:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B5F030F1;
+	Sun,  2 Oct 2011 01:04:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=2Eb63mp01IKss7uDR0yHCrvMf
+	jA=; b=ddy3mN66ULWpa7YrLsj8Ct74sNDLjSeJmjBtxA+WhuLblYOtXhNbuguZJ
+	r8vbk8b6HQRxECb1F4nPg/x288X8Np/Q+KgWWxJEQ3NWDhXhuA7W8dKs2GhTc9kn
+	GS0qP0Vs9T3MAN3MmB+EhoOUFlgZ8R1ufd6YSHsD90q0KcuJtk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=kuHyGQEXwdO3Bz5yUfL
+	P1qokNyXNHmK10C/EtqMEhJRvWowWb81N1urcO96hnfJKmZg9r05PvUP0DbfddVG
+	HC6pwAGjQLWqWg3QJndszsOx363bLWkWdzNAXomoqVcs2ObgsKSre/LtN8Snb7sK
+	J92tbgv2chYowkDxyU3WITj8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2967430F0;
+	Sun,  2 Oct 2011 01:04:29 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A724330EF; Sun,  2 Oct 2011
+ 01:04:28 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 01A4A9AA-ECB4-11E0-B260-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182592>
 
-On 09/27/2011 02:00 AM, Julian Phillips wrote:
-> get_ref_dir is called recursively for subdirectories, which means that
-> we were calling sort_ref_list for each directory of refs instead of
-> once for all the refs.  This is a massive wast of processing, so now
-> just call sort_ref_list on the result of the top-level get_ref_dir, so
-> that the sort is only done once.
+Earlier, 582aa00 (git diff too slow for a file, 2010-05-02)
+unconditionally dropped XDF_NEED_MINIMAL option from the internal xdiff
+invocation to help performance on pathological cases, while hinting tha=
+t a
+follow-up patch could reintroduce it with "--minimal" option from the
+command line.
 
-+1
+Make it so.
 
-I think this patch should also be considered for maint, since it is
-noninvasive and fixes a bad performance regression.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * This together with Ren=C3=A9's c5aa906 (Revert removal of multi-matc=
+h
+   discard heuristic in 27af01, 2011-09-25) on top of v1.7.7 seems to g=
+ive
+   identical diff output as v1.7.1 (e.g. "git diff-tree -p v2.6.39 v3.0=
+"
+   in the kernel repository, with "--minimal").
 
-Michael
+ diff.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+diff --git a/diff.c b/diff.c
+index 93ef9a2..34a88db 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3511,6 +3511,10 @@ int diff_opt_parse(struct diff_options *options,=
+ const char **av, int ac)
+ 	}
+ 	else if (!strcmp(arg, "--abbrev"))
+ 		options->abbrev =3D DEFAULT_ABBREV;
++	else if (!strcmp(arg, "--minimal"))
++		DIFF_XDL_SET(options, NEED_MINIMAL);
++	else if (!strcmp(arg, "--no-minimal"))
++		DIFF_XDL_CLR(options, NEED_MINIMAL);
+ 	else if (!prefixcmp(arg, "--abbrev=3D")) {
+ 		options->abbrev =3D strtoul(arg + 9, NULL, 10);
+ 		if (options->abbrev < MINIMUM_ABBREV)
+--=20
+1.7.7
