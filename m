@@ -1,85 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] refs: Use binary search to lookup refs faster
-Date: Sat, 01 Oct 2011 22:45:17 -0700
-Message-ID: <7vd3egj6aa.fsf@alter.siamese.dyndns.org>
-References: <4DF6A8B6.9030301@op5.se>
- <CAP8UFD3TWQHU0wLPuxMDnc3bRSz90Yd+yDMBe03kofeo-nr7yA@mail.gmail.com>
- <201109281338.04378.mfick@codeaurora.org>
- <201109281610.49322.mfick@codeaurora.org>
- <c76d7f65203c0fc2c6e4e14fe2f33274@quantumfyre.co.uk>
- <960aacbf-8d4d-4b2a-8902-f6380ff9febd@email.android.com>
- <7c0105c6cca7dd0aa336522f90617fe4@quantumfyre.co.uk>
- <4E84B89F.4060304@lsrfire.ath.cx> <7vy5x7rwq9.fsf@alter.siamese.dyndns.org>
- <20110929041811.5363.33396.julian@quantumfyre.co.uk>
- <7vvcsbqa0k.fsf@alter.siamese.dyndns.org>
- <20110929221143.23806.25666.julian@quantumfyre.co.uk>
- <7v62karjv3.fsf@alter.siamese.dyndns.org> <4E85E07C.5070402@alum.mit.edu>
- <7vk48qouht.fsf@alter.siamese.dyndns.org> <4E87F383.1050403@alum.mit.edu>
+From: Andreas Krey <a.krey@gmx.de>
+Subject: Re: Does git have "Path-Based Authorization"?
+Date: Sun, 2 Oct 2011 08:38:57 +0200
+Message-ID: <20111002063857.GA9385@inner.h.iocl.org>
+References: <CAN0CFw0QXkNSF8+qGu+pCrv5dgy1OEvtq-53f23GRd4RrZ1GcQ@mail.gmail.com> <m3lit4oo9q.fsf@localhost.localdomain> <CAN0CFw3kzAgaVBKNHE5ttJgYnc_csjeHjOLq=EBjLizW=RPUkA@mail.gmail.com> <CAMK1S_icdpCyA8SBcNu8CbCk3N-h8yEYZ9+6N=JVPAeayuzSPw@mail.gmail.com> <CAN0CFw2gVH7=LdKhseE3zo+Av_=kVdz=tH3s=BKeTK9bDOprcw@mail.gmail.com> <CACsJy8B2rhXvGKUsu10Po8cCi7p8uqWXWE5ZHB2Z6hH-aMyR2Q@mail.gmail.com> <CAN0CFw3ZDcXtD7WChjkT1Vg0cU_u==4KCHo8ff-ccbyxZ8xWjg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Julian Phillips <julian@quantumfyre.co.uk>,
-	Martin Fick <mfick@codeaurora.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sun Oct 02 07:45:36 2011
+Cc: git@vger.kernel.org
+To: Grant <emailgrant@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 02 08:39:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAErk-0008Ck-2M
-	for gcvg-git-2@lo.gmane.org; Sun, 02 Oct 2011 07:45:32 +0200
+	id 1RAFhm-00011s-TE
+	for gcvg-git-2@lo.gmane.org; Sun, 02 Oct 2011 08:39:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750916Ab1JBFpW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Oct 2011 01:45:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46553 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750695Ab1JBFpU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Oct 2011 01:45:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D82093714;
-	Sun,  2 Oct 2011 01:45:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BH1Jbf0o6tdfHd+yiftIgQ7JF8Y=; b=udfl9u
-	kSJckFpJkljgRObF/+tlVnaA82JvB0K6VIoSUgMmaysDm9aZ7+IetPK69qAx+dzE
-	QWQDY7PM58oMJc2LfqkQ0hFi1CKAxuy6yaXBmny1PZAxxA3JBcTNpihEo1YJPhCn
-	JnMBT7c6/oRoAIXct2YXRYkq6slKHULM5isv4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vE+WQNGjSwFvsQENfX/oBCsFY6TDWxz2
-	u572rOrSS7TzV6mn817qX1GjrFW+vVpMHed1aPN1UV7uYMBvdnAXmC8WjnkoSoUa
-	cdpkyvW7bOkaMsPZ9fC0GvvxbBJChXKNm0gRDiEeL7CWc5C7MHb/oU1FovA9Jto3
-	ReP/P4EoUjc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CEAD33713;
-	Sun,  2 Oct 2011 01:45:19 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5ADCD3712; Sun,  2 Oct 2011
- 01:45:19 -0400 (EDT)
-In-Reply-To: <4E87F383.1050403@alum.mit.edu> (Michael Haggerty's message of
- "Sun, 02 Oct 2011 07:15:47 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B660FAD8-ECB9-11E0-87E8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751157Ab1JBGjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Oct 2011 02:39:04 -0400
+Received: from continuum.iocl.org ([217.140.74.2]:34597 "EHLO
+	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750916Ab1JBGjB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Oct 2011 02:39:01 -0400
+Received: (from krey@localhost)
+	by continuum.iocl.org (8.11.3/8.9.3) id p926cvK11796;
+	Sun, 2 Oct 2011 08:38:57 +0200
+Content-Disposition: inline
+In-Reply-To: <CAN0CFw3ZDcXtD7WChjkT1Vg0cU_u==4KCHo8ff-ccbyxZ8xWjg@mail.gmail.com>
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182596>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Sat, 01 Oct 2011 20:34:43 +0000, Grant wrote:
+...
+> That's true.  I hope to be able to give different developers access to
+> different parts of the code.  I really don't know if this will work.
 
-> Um, well, my patch series includes the same changes that Julian's wants
-> to introduce, but following lots of other changes, cleanups,
-> documentation improvements, etc.  Moreover, my patch series builds on
-> mh/iterate-refs, with which Julian's patch conflicts.  In other words,
-> it would be a real mess to reroll my series on top of Julian's patch.
+Depending on the implementation it may drive away the good devs...
 
-Conflicts during re-rolling was not something I was worried too much
-about---that is just the fact of life. We cannot easily resolve two topics
-that want to go in totally different direction, but we should be able to
-converge two topics that want to take the same approach in the end,
-especially one is a subset of the other.
+Anyway, what I think you need (for the reasons detailed in the svn list)
+is a setup where the whole project is checked out in the staging area
+where it can be tested in whatever way. That under a user id different
+from the dev's. Then you change permissions so that he can only see
+and edit the files you want him to. This at least eases the problem
+of having to commit for each test, and gives you a meaningful history.
+Additionally have sudo permissions to do commits etc. in the staging area.
+
+(But still the dev's life will be, erm, suboptimal.)
+
+> I just don't want my code to be stolen and I'm trying to find some way
+> to prevent that from happening.
+
+I'm just getting creative. When the one file that you allow access to
+is server-side code (as opposed to, say, css or client js) then the
+malevolent dev can use that to read the rest of the staging area anyway.
+
+Andreas
+
+-- 
+"Totally trivial. Famous last words."
+From: Linus Torvalds <torvalds@*.org>
+Date: Fri, 22 Jan 2010 07:29:21 -0800
