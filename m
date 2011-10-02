@@ -1,326 +1,119 @@
-From: relations@irasec.com
-Subject: =?windows-874?Q?FW=3A=E4=CD=E9=20=93=E0=BE=D5=C2=A7=B4=D4=B9=94=20=20=B7=D2=CA=C3=D1=BA=E3=AA=E9=A4=B9=C5=D2=C7=B7=D3=C3=E9=D2=C2=A4=B9=E4=B7=C2?=
-Date: 03 Oct 2011 06:26:56 +0700
-Message-ID: <45dcde$12uh3@smtp01.dtacnetwork.co.th>
-Reply-To: relations@irasec.com
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: Branches & directories
+Date: Sun, 2 Oct 2011 16:40:14 -0700
+Message-ID: <CAE1pOi3bm72Rk+UYygS_bC9eh0VTPr-VQSdtBGqjgDpEzkutZw@mail.gmail.com>
+References: <CAE1pOi3Eg88i+1s+CcW3+W0WNZ-NYUQb1EV55oh+g1Od78AByQ@mail.gmail.com>
+	<CAE1pOi3OEFg7-OeQM0fvD69gf-5oPQ239CGy9nN0Waas8EM3Bg@mail.gmail.com>
+	<CAMOZ1BvHKTPPmfB7Jx+y4OeRv-uwjmQkscXaRr-vEEy30G_Kdw@mail.gmail.com>
+	<CAE1pOi0b2w8t53U7PSvVwVxZF9O0HTyfCR4vy+-baBjqCDeNJA@mail.gmail.com>
+	<CAMOZ1BtOkwVbC3RyJVQb7K1DRMnJf3_omn7zrkzoE48Ayu7HBg@mail.gmail.com>
+	<CAE1pOi0jZT_HCEV8UDzEOQeuCcDeqxoKGUEk3bJm=O2eJSHfkg@mail.gmail.com>
+	<CAMOZ1Bu5pPeviyZD-e6aHbv-+tSaBDyyKb5vHA132K_3=1gD-g@mail.gmail.com>
+	<CAE1pOi0dL2qNMksuY_=gyGSRsfr6e9AmzgJUNB=jEz85sjuiUw@mail.gmail.com>
+	<CAGZ=bqK7H3zc8LK7EP8+uV8DpWW+czK2POfceGtcBF8Vmkhkow@mail.gmail.com>
+	<CAE1pOi1J5DKtnyUQzu1K7G1+HLsWWCN7thCf6W8MwSzt4_vtOw@mail.gmail.com>
+	<CAGZ=bqLZoLoyMcvnppg6SyFtJU8phSquQeBZ7uhwP=+ZL3DADw@mail.gmail.com>
+	<CAE1pOi0Er1ZgftpNeCr85Zu27xR2127V_KdAtvKc1NOKmDUvzQ@mail.gmail.com>
+	<CAGZ=bqLyS9tcpqztwGWFOXtDJRhugu+JYvz7wTnc0PTmECWX2g@mail.gmail.com>
+	<CAE1pOi1axNmGaPVXqBH02x0N=Z6tgO9R00RTokuJm50eY-OoNg@mail.gmail.com>
+	<4E889813.8070205@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-874
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 03 01:37:49 2011
+Cc: Kyle Moffett <kyle@moffetthome.net>,
+	Michael Witten <mfwitten@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Evan Shelhamer <shelhamer@imaginarynumber.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Robin Rosenberg <robin.rosenberg@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 03 01:40:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAVbO-0003cS-QM
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 01:37:47 +0200
+	id 1RAVdt-0004E0-5f
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 01:40:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754386Ab1JBXhf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Oct 2011 19:37:35 -0400
-Received: from smtp1.dtacnetwork.co.th ([124.40.235.4]:49869 "EHLO
-	smtp01.dtacnetwork.co.th" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751175Ab1JBXhd (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Oct 2011 19:37:33 -0400
-X-Greylist: delayed 626 seconds by postgrey-1.27 at vger.kernel.org; Sun, 02 Oct 2011 19:37:32 EDT
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AloWAMPxiE7KWxKt/2dsb2JhbABBgnwBhmiTF4oqanYPgU8EATgBXgECDVosAQYch3OZXaQqgQcEmSSEWg
-Received: from unknown (HELO LaoLand Cap) ([202.91.18.173])
-  by smtp01.dtacnetwork.co.th with SMTP; 03 Oct 2011 06:26:56 +0700
-X-Mailer: smtp.sucker.net
+	id S1754734Ab1JBXkR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Oct 2011 19:40:17 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:47059 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754407Ab1JBXkP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Oct 2011 19:40:15 -0400
+Received: by qyk7 with SMTP id 7so3147419qyk.19
+        for <git@vger.kernel.org>; Sun, 02 Oct 2011 16:40:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ejIq2W3Pf2Sse6zdknbh6FTSYvst4P03DmtWMuYEKeg=;
+        b=Z9rhFw4uW0lZJmZq8U6kETduap8iN6gDjc9aJ9/uTU0YzgBRYXuYKZi8XXGB7Pjesb
+         r65FELjUbLN/6muSutZeHYl86I95Wa8+iKQ3aVOjiFmUmcmq60UD5WgfapERZ2pARM2r
+         qhIYV2dyj7IgHQOfgkAn2YnjNNQu2s9NnkYjA=
+Received: by 10.229.63.20 with SMTP id z20mr1094489qch.201.1317598814904; Sun,
+ 02 Oct 2011 16:40:14 -0700 (PDT)
+Received: by 10.229.87.134 with HTTP; Sun, 2 Oct 2011 16:40:14 -0700 (PDT)
+In-Reply-To: <4E889813.8070205@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 6.5 points;
- *  0.6 RCVD_IN_SORBS_WEB RBL: SORBS: sender is a abuseable web server
- *      [202.91.18.173 listed in dnsbl.sorbs.net]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?202.91.18.173>]
- *  2.1 SUBJ_ALL_CAPS Subject is all capitals
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5000]
- *  0.8 MSGID_FROM_MTA_HEADER Message-Id was added by a relay
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182614>
 
-	=E0=C1=D7=E8=CD=CD=D2=A8=D2=C3=C2=EC =93=E0=BE=D5=C2=A7=B4=D4=B9=94 =C2=
-=CD=C1=B7=D4=E9=A7=CD=D8=B4=C1=A1=D2=C3=B3=EC=E0=BE=D5=C2=A7=E0=BE=D7=E8=
-=CD=E0=C8=C9=E0=A7=D4=B9=A2=CD=A7 =B4=C3.=C3=D4=AA=D2=C3=EC=B4 =E4=CA=CA=
-=C1=C1=CD=B9 =A4=C7=D2=C1=E0=BB=E7=B9=A4=B9=E4=B7=C2
-=B7=D5=E8=B5=E9=CD=A7=BE=D6=E8=A7=A4=B9=C5=D2=C7=B7=D3=E3=CB=E9=BC=C1=B5=
-=D1=B4=CA=D4=B9=E3=A8=C7=E8=D2 =BC=C1=E4=C1=E8=C3=D9=E9=A8=D1=A1=A4=B9=B7=
-=D5=E8=AA=D7=E8=CD =B9=D2=C2=E0=CA=B9=E8=CB=EC =B6=D4=E8=B9=E1=CA=B9 =CD=
-=D5=A1=B5=E8=CD=E4=BB =A2=CD=E3=CB=E9  =93=E0=BE=D5=C2=A7=B4=D4=B9=94 =E0=
-=BB=E7=B9
-=E0=BE=D5=C2=A7=E1=A4=E8  =93=E0=C8=C9=B4=D4=B9=A2=CD=A7=A4=B9=C5=D2=C7=
-=94 =E0=B7=E8=D2=B9=D1=E9=B9  =A1=C3=D0=B7=D9=E9=E0=C3=D7=E8=CD=A7 =93=A2=
-=CD=B9=E9=D3=E3=A8=E1=C5=D0=A4=C7=D2=C1=CA=D2=C1=D1=A4=A4=D5=A2=CD=A7=BE=
-=D5=E8=B9=E9=CD=A7=E4=B7=C2=94 =E2=B4=C2=20
-=93Piangdin=94 =E0=C1=D7=E8=CD=C7=D1=B9=B7=D5=E8 25 =A1=D1=B9=C2=D2=C2=B9=
- 2554 =E1=B5=E8=B6=D9=A1 =B4=C3.=C3=D4=AA=D2=C3=EC=B4 =E4=CA=CA=C1=C1=CD=
-=B9 =C5=BA=E4=BB=E0=C1=D7=E8=CD=C7=D1=B9=B7=D5=E8 27 =A1=D1=B9=C2=D2=C2=
-=B9 2554 =E1=C5=D0
-=E4=CD=E9 =93Piangdin=94  =BA=CD=A1=C7=E8=D2=E4=C1=E8=B5=D4=B4=E3=A8=B7=
-=D5=E8 =B4=C3.=C3=D4=AA=D2=C3=EC=B4 =C5=BA=A1=C3=D0=B7=D9=E9(=A2=CD=E3=CB=
-=E9=E4=B4=E9=E0=A7=D4=B9=A1=E7=BE=CD) =A2=E9=CD=A4=C7=D2=C1=E3=B9=A1=C3=
-=D0=B7=D9=E9=B7=D5=E8=BC=C1=A8=D0=B9=D3=C1=D2
-=E0=BB=D4=B4=E0=BC=C2=B9=D5=E9=B6=E9=D2=E4=C1=E8=E0=BB=E7=B9=A4=C7=D2=C1=
-=A8=C3=D4=A7 =A2=CD=E3=CB=E9=CA=D4=E8=A7=C8=D1=A1=B4=D4=EC=CA=D4=B7=B8=D4=
-=EC=B7=D1=E9=A7=CB=C5=D2=C2=C5=A7=E2=B7=C9=BC=C1=CD=C2=E8=D2=A7=CA=D2=CA=
-=C1 =E1=B5=E8=B6=E9=D2=E0=BB=E7=B9=A4=C7=D2=C1=A8=C3=D4=A7=A2=CD=E3=CB=E9=
-=BF=E9=D2=B4=D4=B9
-=C5=A7=E2=B7=C9=A4=B9=B7=D5=E8=E0=CB=E7=B9=E1=A1=E8=E0=C8=C9=CA=B5=D2=A7=
-=A4=EC=A2=CD=A7=A4=B9=C5=D2=C7=A8=A7=B5=A1=B9=C3=A1=CB=C1=A1=E4=CB=C1=E9=
- =B6=D6=A7=E4=C1=E8=C1=D5 Internetfreedom =E0=C3=D2=A4=B9=E4=B7=C2=C2=D1=
-=A7=A4=A7=CA=D9=E9
-=B5=E8=CD=E4=BB=E0=BE=D7=E8=CD=CD=D8=B4=C1=A1=D2=C3=B3=EC =E4=C1=E8=E3=AA=
-=E8=B9=D1=A1=B8=D8=C3=A1=D4=A8=E1=CD=BA=E1=BD=A7 =E4=CD=E9=E0=C5=C7... =
-=A2=CD=E3=CB=E9=BE=D5=E8=B9=E9=CD=A7=B7=D5=E8=C1=D5=E0=C5=D7=CD=B4=CA=D5=
-=E1=B4=A7=A2=CD=A7=A4=B9=E4=B7=C2=AA=E8=C7=C2=CA=E8=A7=E0=C1=C5=EC=A1=D1=
-=B9=B5=E8=CD=E6=20
-=E4=BB
-=2E.......... =BA=C3=C3=BE=B5=85=85=85=85
+On 2 October 2011 09:57, Robin Rosenberg <robin.rosenberg@gmail.com> wr=
+ote:
+> Hilco Wijbenga skrev 2011-08-22 22.10:
+>>
+>> [...] I just wish there was at least an option to
+>> keep the timestamp (and possibly other such things). Even Subversion
+>> can do that... ;-) After all, not everybody uses C& =C2=A0make.
+>>
+> What tools do you use that need the benefits from retaining timestamp=
+s? The
+> only
+> one I can think of is clearmake, but then that tool goes with another=
+ SCM.
+> Eclipse,
+> for example, will be just as confused by timestamps that travel backw=
+ards in
+> time, as
+> make is.
 
+Why would timestamps travel back in time? They simply would not change.
 
-	=A1=C3=D0=B7=D9=E9=E0=C3=D7=E8=CD=A7 =93=A2=CD=B9=E9=D3=E3=A8=E1=C5=D0=
-=A4=C7=D2=C1=CA=D2=C1=D1=A4=A4=D5=A2=CD=A7=BE=D5=E8=B9=E9=CD=A7=E4=B7=C2=
-=94 =E2=B4=C2 =93Piangdin=94 =E0=C1=D7=E8=CD=C7=D1=B9=B7=D5=E8 25 =A1=D1=
-=B9=C2=D2=C2=B9 2554=20
-=BE=D5=E8=B9=E9=CD=A7=E0=CA=D7=E9=CD=E1=B4=A7=E1=C5=D0=BE=D5=E8=B9=E9=CD=
-=A7=E4=B7=C2=CB=D1=C7=E3=A8=C3=D1=A1=BB=C3=D0=AA=D2=B8=D4=BB=E4=B5=C2=B7=
-=D8=A1=B7=E8=D2=B9=A4=C3=D1=BA
+Anyway, we're not really talking about the same thing. If there's an
+update (i.e. git pull or something similar) then changing the
+timestamp to something (anything) newer is the right thing to do. In
+fact, it would be painful (as you already alluded to) if this were not
+the case.
 
-	=A7=D2=B9=C7=D1=B9=CA=D4=B7=B8=D4=C1=B9=D8=C9=C2=AA=B9 =E4=B7=C2-=C5=D2=
-=C7 =B7=D5=E8=A8=D0=A8=D1=B4=A1=D1=B9=E3=B9=C7=D1=B9=B7=D5=E8 14 =B5=D8=
-=C5=D2=A4=C1 =C8=A1=B9=D5=E9 =B3 =CA=C0=D2=A4=CD=A7=E0=A1=C3=CA  =A1=C3=
-=D8=A7=C7=CD=AA=D4=A7=B5=D1=B9 =B4=D5=AB=D5 =B9=D1=E9=B9
-=E0=BB=E7=B9=A7=D2=B9=B7=D5=E8=A4=B9=E4=B7=C2=E0=C3=D2=CD=CD=A1=CB=B9=E9=
-=D2=C3=E8=C7=C1=C1=D7=CD=A1=D1=BA =B4=C3.=C3=D4=AA=D2=C3=EC=B4 =B7=D5=E8=
-=E0=BB=E7=B9=BC=D9=E9=B4=D9=E1=C5=CB=C5=D1=A1=E1=C5=D0=B5=D1=C7=E1=B7=B9=
-=BD=E8=D2=C2=C5=D2=C7 =CA=E8=C7=B9=B5=D1=C7=E1=B7=B9=BD=E8=D2=C2=E4=B7=C2=
-=E0=C3=D2
-=B9=D1=E9=B9 =BB=C3=D2=A1=AF=C7=E8=D2=C2=D1=A7=E4=C1=E8=C5=A7=B5=D1=C7 =
-=E1=C1=E9=A1=C3=D0=B7=D1=E8=A7=B9=D1=BA=C1=D2=B6=D6=A7 =B3 =C7=D4=B9=D2=
-=B7=D5=B9=D5=E9
+That's however not the scenario that I'm talking about. I'm talking abo=
+ut doing
 
-=E0=C3=D2=A8=D3=E0=BB=E7=B9=B5=E9=CD=A7=E1=CA=B4=A7=B9=E9=D3=E3=A8=A2=CD=
-=A7=A4=B9=E4=B7=C2=B5=E8=CD=A1=D2=C3=E0=BB=E7=B9=E0=A8=E9=D2=C0=D2=BE=A4=
-=C3=D1=E9=A7=B9=D5=E9 =AB=D6=E8=A7=BC=C1=A1=D3=C5=D1=A7=A4=D4=B4=C7=E8=D2=
-=A8=D0=CD=CD=A1=CB=B9=E9=D2=E0=BB=E7=B9=BB=C3=D0=B8=D2=B9=C3=E8=C7=C1=A8=
-=D1=B4
-=A7=D2=B9=A1=D1=BA =B4=C3. =C3=D4=AA=D2=C3=EC=B4 =E3=B9=B9=D2=C1=A4=B9=E4=
-=B7=C2 =E2=B4=C2=CD=C2=E8=D2=A7=B9=E9=CD=C2=E0=C3=D2=A4=C7=C3=B5=E9=CD=A7=
-=C1=D5=CB=C3=D7=CD=AA=E8=C7=C2=E0=CB=C5=D7=CD =B4=C3. =C3=D4=AA=D2=C3=EC=
-=B4 =E1=C5=D0=E0=B5=C3=D5=C2=C1=A1=D2=C3=E3=B9=CA=D4=E8=A7
-=E0=CB=C5=E8=D2=B9=D5=E9
+git checkout branch
+git checkout master
 
-=CB=B9=D6=E8=A7 =A1=D2=C3=BA=C3=D4=A8=D2=A4=E0=A7=D4=B9=E0=BE=D7=E8=CD=CA=
-=B9=D1=BA=CA=B9=D8=B9=A7=D2=B9=A4=C3=D1=E9=A7=B9=D5=E9 =E3=B9=B9=D2=C1=A4=
-=B9=E4=B7=C2 (=BC=C1=CD=C2=D2=A1=E3=CB=E9=C1=D5=A1=D2=C3=BA=C3=D4=A8=D2=
-=A4=E0=A2=E9=D2=CA=D9=E8=BA=D1=AD=AA=D5=CA=D3=CB=C3=D1=BA=BD=E8=D2=C2=E4=
-=B7=C2=20
-=E2=B4=C2=E4=C1=E8=BC=E8=D2=B9 =B4=C3. =C3=D4=AA=D2=C3=EC=B4 =E0=BE=D7=E8=
-=CD=A8=D0=E4=B4=E9=B7=C3=D2=BA=C7=E8=D2 =A4=B9=E4=B7=C2=E0=C3=D2=C1=D5=CA=
-=E8=C7=B9=C3=E8=C7=C1=E1=A4=E8=E4=CB=B9=CA=D3=CB=C3=D1=BA=A7=D2=B9=B9=D5=
-=E9 =AB=D6=E8=A7=E0=B7=E8=D2=B7=D5=E8 =B4=C3.=C3=D4=AA=D2=C3=EC=B4 =A4=D3=
-=B9=C7=B3
-=A4=C3=E8=D2=C7 =E6 =B9=E8=D2=A8=D0=E3=AA=E9=A8=E8=D2=C2=C1=D2=A1=B6=D6=
-=A7=CB=C5=D1=A1=CB=C1=D7=E8=B9=E0=CB=C3=D5=C2=AD=B6=D6=A7=CA=D2=C1=CB=C1=
-=D7=E8=B9=E0=CB=C3=D5=C2=AD =AB=D6=E8=A7=BC=C1=A1=D0=C7=E8=D2=A8=D0=AA=D5=
-=E9=E1=A8=A7=BC=E8=D2=B9=C3=D2=C2=A1=D2=C3 Seeds of=20
-Democracy =C7=D1=B9=C8=D8=A1=C3=EC=B9=D5=E9 =E1=C5=D0=E0=C3=D7=E8=CD=A7=
-=BA=D1=AD=AA=D5=CA=D3=CB=C3=D1=BA=A1=D2=C3=BA=C3=D4=A8=D2=A4=E1=C5=D0=A1=
-=AF=E0=A1=B3=B1=EC=A1=D2=C3=B4=D9=E1=C5=E0=A7=D4=B9=B9=D1=E9=B9 =BC=C1=A8=
-=D0=A4=D8=C2=A1=D1=BA=BE=D5=E8=B9=E9=CD=A7=B7=D5=E8
-=B7=D3=A7=D2=B9 =E1=C5=D0=A8=D0=B7=D3=E3=CB=E9=BA=D1=AD=AA=D5=C1=D1=B9=E2=
-=BB=C3=E8=A7=E3=CA =C1=D5=A4=B9=E0=BA=D4=A1=A8=E8=D2=C2=E1=C5=D0=B4=D9=E1=
-=C5=BA=D1=AD=AA=D5=BE=C3=E9=CD=C1=A1=D1=B9=CD=C2=E8=D2=A7=B9=E9=CD=C2=CA=
-=D2=C1=A4=B9 =E1=C5=D0=A8=D0=C1=D5=A1=D2=C3=C3=D2=C2=A7=D2=B9
-=BA=D1=AD=AA=D5=A1=D2=C3=E0=A7=D4=B9=CD=C2=E8=D2=A7=E2=BB=C3=E8=A7=E3=CA=
-=B7=D5=E8=CA=D8=B4 =E0=BE=D7=E8=CD=E4=C1=E8=E3=CB=E9=C1=D5=A2=E9=CD=A4=C3=
-=CB=D2=E3=B4 =E6 =E1=C5=D0=E0=BE=D7=E8=CD=A1=D2=C3=B4=D3=E0=B9=D4=B9=A7=
-=D2=B9=C3=D0=C2=D0=C2=D2=C7=B4=E9=C7=C2)
+or
 
-=CA=CD=A7 =B5=CD=B9=B9=D5=E9=E0=C3=D2=C2=D1=A7=B5=E9=CD=A7=A1=D2=C3=BC=D9=
-=E9=AA=E8=C7=C2=A7=D2=B9=B4=E9=D2=B9=B5=E8=D2=A7 =E6 =E0=AA=E8=B9 =A1=D2=
-=C3=B5=D4=B4=B5=E8=CD=BB=C3=D0=CA=D2=B9=A7=D2=B9 =A1=D2=C3=A8=D1=B4=CA=B6=
-=D2=B9=B7=D5=E8 =A1=D2=C3=C3=D1=BA=E1=A2=A1 =A1=D2=C3=CD=CD=A1
-=CB=B9=E9=D2=E3=B9=A7=D2=B9=E3=B9=B0=D2=B9=D0=B5=D1=C7=E1=B7=B9=A4=B9=E4=
-=B7=C2 =A1=D2=C3=B6=E8=D2=C2=B7=CD=B4=C3=D2=C2=A1=D2=C3=A1=D2=C3=BA=D1=B9=
-=B7=D6=A1=E1=C5=D0=C3=D2=C2=A7=D2=B9=A2=E8=D2=C7 =CF=C5=CF =E1=B5=E8=A4=
-=C7=D2=C1=A8=C3=D4=A7=A1=E7=A4=D7=CD =E0=C3=D2=C2=D1=A7
-=E4=C1=E8=C1=D5=A4=B9=B7=D3=A7=D2=B9=A4=C3=BA=A4=C3=D1=BA =BC=C1=A1=D3=C5=
-=D1=A7=A8=D0=CD=CD=A1=CB=B9=E9=D2=E0=BB=E7=B9=CB=C5=D1=A1=E3=CB=E9=CA=D3=
-=CB=C3=D1=BA=A7=D2=B9=B9=D5=E9 =E1=B5=E8=C2=D1=A7=B5=E9=CD=A7=A1=D2=C3=A1=
-=D3=C5=D1=A7=A4=B9=B7=D5=E8=A8=D0=E4=BB=A7=D2=B9=E1=C5=D0
-=B7=D3=A7=D2=B9=C3=E8=C7=C1=A1=D1=B9=AA=E8=C7=A7=E0=B5=C3=D5=C2=C1=A1=D2=
-=C3=E1=C5=D0=E3=B9=C7=D1=B9=A7=D2=B9 =E0=BE=D7=E8=CD=E1=CA=B4=A7=C7=E8=D2=
-=A4=B9=E4=B7=C2=E0=C3=D2=C3=D1=BA=E0=BB=E7=B9=E0=A8=E9=D2=C0=D2=BE=C3=E8=
-=C7=C1 =E1=C5=E9=C7=A8=D0=E4=C1=E8=BB=C5=E8=CD=C2=E3=CB=E9=20
-=B4=C3. =C3=D4=AA=D2=C3=EC=B4 =E1=C5=D0=BE=D5=E8=B9=E9=CD=A7=AA=D2=C7=C5=
-=D2=C7=B5=E9=CD=A7=E1=BA=A1=B9=E9=D3=CB=B9=D1=A1=C1=D2=A1=E0=A1=D4=B9=E4=
-=BB =BC=C1=A2=CD=E3=CB=E9=BE=D5=E8=B9=E9=CD=A7=B7=D5=E8=A8=D0=CA=D2=C1=D2=
-=C3=B6=E4=BB=C3=E8=C7=C1=A7=D2=B9=E4=B4=E9=CB=C3=D7=CD=CD=C2=D2=A1
-=AA=E8=C7=C2=E0=CB=C5=D7=CD=B4=E9=D2=B9=CD=D7=E8=B9 =E6 =A1=C3=D8=B3=D2=
-=AA=E8=C7=C2=E1=A8=E9=A7=C3=D2=C2=AA=D7=E8=CD=BC=E8=D2=B9=E4=BB=B7=D2=A7=
-=CD=D5=E0=C1=C5=EC=BC=C1 4everche@gmail.com
+git stash
+git stash pop
 
-=CA=D2=C1 =E0=C3=D2=B5=E9=CD=A7=A1=D2=C3=B7=E8=D2=B9=B7=D5=E8=BB=C3=D2=C3=
-=B6=B9=D2=A8=D0=B7=D3=A7=D2=B9=E3=B9=B0=D2=B9=D0=A4=B3=D0=A1=C3=C3=C1=A1=
-=D2=C3=A2=CD=A7=CB=B9=E8=C7=C2=A7=D2=B9=E3=B9=B9=D2=C1=A4=B9=E4=B7=C2 =B5=
-=CD=B9=B9=D5=E9=E0=C3=D2=E4=B4=E9 =B4=C3.=20
-=C3=D4=AA=D2=C3=EC=B4 =B7=D3=CB=B9=E9=D2=B7=D5=E8=AA=E8=C7=C2=E0=C3=D7=E8=
-=CD=A7=E0=CA=E9=B9=CA=D2=C2=E3=B9=A1=D2=C3=E0=A2=E9=D2=CB=D2=BC=D9=E9=C1=
-=D5=CD=D3=B9=D2=A8=E3=B9=C3=D1=B0=BA=D2=C5=CD=E0=C1=C3=D4=A1=D1=B9 =E2=B4=
-=C2=E0=A9=BE=D2=D0=E3=B9=CA=C0=D2=A4=CD=A7=E0=A1=C3=CA =E1=C5=D0=A1=D2=C3
-=A8=B4=B7=D0=E0=BA=D5=C2=B9=CD=A7=A4=EC=A1=C3 =E1=B5=E8=A1=D2=C3=B7=D3=A7=
-=D2=B9=A2=CD=A7=E0=C3=D2 =A4=C7=C3=B5=E9=CD=A7=E0=BB=E7=B9=A4=B9=E4=B7=C2=
-=B7=D5=E8=C1=D5=C3=D9=BB=E1=BA=BA=CD=A7=A4=EC=A1=C3=E1=C5=D0=B5=D1=C7=B5=
-=B9 =B7=D5=E8=C1=D5=C8=D1=A1=C2=C0=D2=BE=E1=C5=D0
-=CD=D3=B9=D2=A8=E3=B9=A1=D2=C3=A8=D1=B4=A1=D2=C3=A1=D1=B9=E3=B9=A1=C5=D8=
-=E8=C1=A4=B9=E4=B7=C2=E3=CB=E9=B4=D5=A2=D6=E9=B9 =E2=B4=C2=BB=C3=D0=CA=D2=
-=B9=A7=D2=B9=E1=C5=D0=A2=CD=A4=C7=D2=C1=C3=E8=C7=C1=C1=D7=CD=A8=D2=A1 =B4=
-=C3. =C3=D4=AA=D2=C3=EC=B4 =B5=D2=C1=CA=C1=A4=C7=C3=20
-=B4=D1=A7=B9=D1=E9=B9 =BC=C1=B5=E9=CD=A7=A1=D2=C3=BC=D9=E9=C3=E8=C7=C1=CD=
-=D8=B4=C1=A1=D2=C3=B3=EC=A8=D3=B9=C7=B9=CB=B9=D6=E8=A7 =B7=D5=E8=BE=C3=E9=
-=CD=C1=CD=CD=A1=CB=B9=E9=D2 =E3=AA=E9=AA=D7=E8=CD=E3=B9=A1=D2=C3=A8=D1=B4=
-=B5=D1=E9=A7=E1=C5=D0=BE=C3=E9=CD=C1=B7=D3=A7=D2=B9=A1=D1=B9=CD=C2=E8=D2=
-=A7
-=E1=B7=E9=A8=C3=D4=A7 (=AB=D6=E8=A7=E4=C1=E8=CB=B9=D1=A1=CB=B9=D2=E0=A1=
-=D4=B9=E4=BB=E1=B9=E8=B9=CD=B9=A4=C3=D1=BA) =B7=D5=E8=A4=D4=B4=E4=C7=E9=
-=B5=CD=B9=B9=D5=E9 =BC=C1=A8=D0=B7=D3=E3=CB=E9=CD=A7=A4=EC=A1=D2=C3=B9=D5=
-=E9=E0=BB=E7=B9=CD=A7=A4=EC=A1=D2=C3=E0=BE=D7=E8=CD=CA=D4=B7=B8=D4=C1=B9=
-=D8=C9=C2=AA=B9
-=CD=C2=E8=D2=A7=E1=B7=E9=A8=C3=D4=A7 =E0=C3=D2=C1=D5=E0=C5=D7=CD=B4=E0=CA=
-=D7=E9=CD=E1=B4=A7 =E1=B5=E8=A8=D0=E4=C1=E8=C3=D1=BA=E3=AA=E9=A4=D8=B3=B7=
-=D1=A1=C9=D4=B3 =E0=BE=D7=E8=CD=E4=B7=C2 =CB=C3=D7=CD=B5=D4=B4=C0=D2=BE=
-=B7=D2=A7=A1=D2=C3=E0=C1=D7=CD=A7=AA=D1=B4=E0=A8=B9=E0=A1=D4=B9=E4=BB =E0=
-=BE=D7=E8=CD=BC=C5
-=E3=B9=A1=D2=C3=B7=D3=A7=D2=B9=E1=C5=D0=A1=D2=C3=B5=E8=CD=C3=CD=A7=E3=B9=
-=C3=D0=B4=D1=BA=B9=D2=B9=D2=AA=D2=B5=D4 =E2=B4=C2=E0=C3=D2=CD=D2=A8=A8=D0=
-=E3=AA=E9=AA=D7=E8=CD=C7=E8=D2
+In both cases all files (or at least all affected files, in case of
+git stash) get the current time as their timestamp instead of the
+timestamp they had before. This is forcing (completely unnecessary)
+rebuilds. *Nothing* has changed but I have to do a complete rebuild
+(well, I suppose I could "touch" all build artifacts and such but I'm
+sure you get the idea).
 
-Thai Activists for Human Rights (TAHR)
-Association of Thais for Universal Human Rights (ATUHR)
-Thai Friends for Democracy and Univeral Human Rights (ADUHR)
-Thai Alliance for Democracy and Universal Human Rights (TADUHR)
-Thai Activists for Human Rights (TAHR)
-Activists for Democracy in Thailand (ADT)
-Association of Thais for Human Rights (ATHR)
-Association of Friends for Human Rights in Thailand (AFHRT)
-=46riends for Human Rights in Thailand (FHRT)
-Networks of Thai Activists for Human Rights (NTAHR)
-Democratic Association for Thailand=92s Human Rights (DATHR)
+I understand *why* it's happening (it's simply reusing the existing
+Git functionality) but in the scenarios above nothing has really
+changed, I should be able to pick up from where I left off, shouldn't
+I?
 
-=CB=C3=D7=CD=CD=D2=A8=A8=D0=E0=BB=E7=B9=AA=D7=E8=CD=CD=D7=E8=B9 =E6 =B7=
-=D5=E8=E0=CB=C1=D2=D0=CA=C1
+(Obviously, I moved the discussion off track when I started talking
+about Subversion, commits, and commit times. That's really just an
+implementation detail and I wish I had never brought it up.)
 
-=E0=C3=D2 =C1=D5=A4=B9=B7=D5=E8=C1=D5=AA=D7=E8=CD=E3=B9=CD=A7=A4=EC=A1=C3=
-=E0=A1=E8=D2 =E6 =CD=C2=D9=E8=E1=C5=E9=C7 =E1=B5=E8=E0=B9=D7=E8=CD=A7=A8=
-=D2=A1=C1=D1=B9=C2=D1=A7=C1=D5=BB=D1=AD=CB=D2=E0=AA=D4=A7=C3=D9=BB=B8=C3=
-=C3=C1=E1=C5=D0=A4=C7=D2=C1=E0=CB=C1=D2=D0=CA=C1=BA=D2=A7=BB=C3=D0=A1=D2=
-=C3 =E0=C3=D2
-=A8=D6=A7=E4=B4=E9=BB=C3=D6=A1=C9=D2=A1=D1=BA =B4=C3. =C3=D4=AA=D2=C3=EC=
-=B4=C7=E8=D2=A8=D0=E0=C3=D4=E8=C1=A1=D1=B9=E3=CB=C1=E8 =AB=D7=E8=A7=E0=C3=
-=D2=A8=D0=E4=B4=E9=C3=D1=BA=A4=C7=D2=C1=AA=E8=C7=C2=E0=CB=C5=D7=CD=A8=D2=
-=A1 =B4=C3. =C3=D4=AA=D2=C3=EC=B4 =CD=C2=E8=D2=A7=E0=B5=E7=C1=B7=D5=E8 =
-=B4=D1=A7=B9=D1=E9=B9=A8=D0
-=E4=C1=E8=E3=AA=E8=E0=C3=D7=E8=CD=A7=C2=D2=A1=E0=A1=D4=B9=E4=BB =E1=C5=D0=
-=A7=D2=B9=B9=D5=E9=CD=C2=D2=A1=E3=CB=E9=E0=C3=D4=E8=C1=A1=D1=B9=E3=CB=C1=
-=E8 =E2=B4=C2=BE=D5=E8=B9=E9=CD=A7=CA=C1=D1=A4=C3=A1=D1=B9=E0=A2=E9=D2=C1=
-=D2=E0=CD=A7 =BC=C1=A8=D0=B9=D3=B7=D1=BE=E3=B9=E0=BA=D7=E9=CD=A7=B5=E9=B9=
-=B9=D5=E9=E3=CB=E9=20
-=E2=B4=C2=CA=C1=D2=AA=D4=A1=CB=C3=D7=CD=A4=B3=D0=A1=C3=C3=C1=A1=D2=C3=BA=
-=C3=D4=CB=D2=C3=CD=A7=A4=EC=A1=C3=B9=D5=E9 =E0=C3=D2=B5=E9=CD=A7=A1=D2=C3=
-=AB=D1=A1=CA=D4=BA=A4=B9=B9=D0=A4=C3=D1=BA =E0=BB=E7=B9=A4=B9=E4=B7=C2=B7=
-=D1=E8=C7=E2=C5=A1 =B7=D1=E9=A7=B7=D5=E8=CD=C2=D9=E8=E3=B9
-=BB=C3=D0=E0=B7=C8=E4=B7=C2 =E1=C5=D0=B7=D5=E8=CD=C2=D9=E8=E3=B9=B7=D8=A1=
-=B7=C7=D5=BB=B7=D1=E8=C7=E2=C5=A1 =CD=A7=A4=EC=A1=C3=B9=D5=E9 =E0=C3=D2=
-=A8=D0=E4=C1=E8=E3=CB=E9=C1=D5=C0=D2=BE=A1=D2=C3=C5=E9=C1=E0=A8=E9=D2 =E0=
-=BE=C3=D2=D0=C1=D1=B9=C1=D5=BC=C5=A1=D1=BA=A1=D2=C3=CD=C2=D2=A1=C1=D5=CA=
-=E8=C7=B9
-=C3=E8=C7=C1=A2=CD=A7=BE=D5=E8=B9=E9=CD=A7=B7=D5=E8=C1=D5=C8=D1=A1=C2=C0=
-=D2=BE=E1=C5=D0=A4=C7=D2=C1=CA=D2=C1=D2=C3=B6=A8=D3=B9=C7=B9=C1=D2=A1 =CB=
-=C5=D2=C2=A4=B9=CD=D2=A8=A8=D0=CD=C2=D2=A1=CA=D9=E9=E0=BE=D7=E8=CD=BB=C3=
-=D0=AA=D2=B8=D4=BB=E4=B5=C2 =E1=B5=E8=E4=C1=E8=CD=C2=D2=A1=C1=D5
-=AA=D7=E8=CD=C3=E8=C7=C1=A1=D1=BA=A4=B9=B7=D5=E8=C1=D5=C0=D2=BE=C5=E9=C1=
-=E0=A8=E9=D2=CD=C2=D9=E8=E1=C5=E9=C7 =CB=C3=D7=CD=B5=E9=CD=A7=A4=B4=D5=A4=
-=C7=D2=C1=CD=C2=D9=E8=E1=C5=E9=C7 =E0=C3=D2=C2=D4=B9=B4=D5=B5=E9=CD=B9=C3=
-=D1=BA=BE=D5=E8=B9=E9=CD=A7=B7=D5=E8=C1=D5=BE=D7=E9=B9=A4=C7=D2=C1=A4=D4=
-=B4=CB=C5=D2=A1=CB=C5=D2=C2=20
-(=C3=C7=C1=B7=D1=E9=A7=BE=C7=A1=B7=D5=E8=E4=C1=E8=C3=D1=A1=E0=A8=E9=D2=B4=
-=E9=C7=C2) =E1=B5=E8=E0=C3=D2=A8=D0=B7=D3=E3=CB=E9=CD=A7=A4=EC=A1=C3=B9=
-=D5=E9 =E0=BB=E7=B9=CD=A7=A4=EC=A1=C3=B7=D5=C1=D5=C7=D4=B6=D5=BA=D4=B9=CA=
-=D9=A7=A1=C7=E8=D2=E1=A4=E8=E0=C3=D7=E8=CD=A7=A1=D2=C3=E0=C1=D7=CD=A7 =CB=
-=C3=D7=CD
-=BC=C5=BB=C3=D0=E2=C2=AA=B9=EC=A2=CD=A7=BE=C3=C3=A4=E3=B4 =E6 =E1=B5=E8=
-=E0=C3=D2=A8=D0=E0=B9=E9=B9=A1=D2=C3=BE=D1=B2=B9=D2=BB=C3=D0=AA=D2=B8=D4=
-=BB=E4=B5=C2=E1=C5=D0=CA=D4=B7=B8=D4=C1=B9=D8=C9=C2=AA=B9=BE=D7=E9=B9=B0=
-=D2=B9=E3=B9=E4=B7=C2 =E1=C5=D0=C3=E8=C7=C1=A1=D1=BA
-=C1=D4=B5=C3=BB=C3=D0=E0=B7=C8=B7=D1=E8=C7=E2=C5=A1 =E1=B5=E8=B4=E9=C7=C2=
-=CB=C5=D1=A1=A1=D2=C3=E1=C5=D0=E0=CB=B5=D8=BC=C5=E1=C5=E9=A7 =CD=A7=A4=EC=
-=A1=C3=B9=D5=E9 =CA=B9=D1=BA=CA=B9=D8=B9=A1=D2=C3=E0=A4=C5=D7=E8=CD=B9=E4=
-=CB=C7=A2=CD=A7=E0=CA=D7=E9=CD=E1=B4=A7=E1=BA=BA=CA=D1=B9=B5=D4=C7=D4=B8=
-=D5
-=E1=C5=D0=CD=C2=D9=E8=BA=B9=CB=C5=D1=A1=E0=CA=C3=D5=C0=D2=BE =E0=CA=C1=CD=
-=C0=D2=A4 =E1=C5=D0=C0=C3=D2=B4=C3=C0=D2=BE =CA=B9=D1=BA=CA=B9=D8=B9=A1=
-=D2=C3=C5=E9=C1=C5=E9=D2=A7=A1=AF=CB=C1=D2=C2=B7=D5=E8=E4=C1=E8=E0=BB=E7=
-=B9=BB=C3=D0=AA=D2=B8=D4=BB=E4=B5=C2 =E1=C5=D0
-=CA=B9=D1=BA=CA=B9=D8=B9=A1=D2=C3=BB=E9=CD=A7=A1=D1=B9=E1=C5=D0=BB=C3=D2=
-=BA=BB=C3=D2=C1=A1=D2=C3=A1=C3=D0=B7=D3=E3=B4 =E6 =B7=D5=E8=B7=D3=C3=E9=
-=D2=C2=CA=D4=B7=B8=D4=E1=C5=D0=E0=CA=C3=D5=C0=D2=BE=B5=D2=C1=CB=C5=D1=A1=
-=CA=D4=B7=B8=D4=C1=B9=D8=C9=C2=AA=B9=B7=D8=A1
-=C3=D9=BB=E1=BA=BA =E2=B4=C2=CD=C2=D9=E8=C0=D2=C2=E3=B5=E9=C0=D2=BE=A1=D2=
-=C3=E0=BB=E7=B9=B9=D4=B5=D4=C3=D1=B0=E1=C5=D0=A1=D2=C3=E3=AA=E9=B9=D4=B5=
-=D4=B8=C3=C3=C1=B5=D2=C1=C7=D4=B6=D5=CD=D2=C3=C2=D0
-
-=CB=D2=A1=B7=E8=D2=B9=A8=C3=D4=A7=E3=A8=E1=C5=D0=A8=C3=D4=A7=A8=D1=A7=A1=
-=D1=BA=A1=D2=C3=B7=D3=A7=D2=B9=C3=E8=C7=C1=A1=D1=B9 =A2=CD=E3=CB=E9=BB=D2=
-=C7=D2=C3=B3=D2=B5=D1=C7=B7=E8=D2=B9=BC=E8=D2=B9=E4=BB=B7=D5=E8=CD=D5=E0=
-=C1=C5=EC=A2=CD=A7=BC=C1=B9=D0=A4=C3=D1=BA=20
-4everche@gmail.com =E1=C5=E9=C7=BC=C1=A8=D0=B5=D4=B4=B5=E8=CD=A1=C5=D1=BA=
- =E1=C5=E9=C7=A4=A7=B5=E9=CD=A7=C1=D5=A1=D2=C3=BE=D9=B4=A4=D8=C2=A1=D1=B9=
-=E0=BB=E7=B9=CA=E8=C7=B9=B5=D1=C7 =E0=BE=D7=E8=CD=C2=D7=B9=C2=D1=B9=C7=E8=
-=D2=CD=C2=D2=A1
-=B7=D3=A7=D2=B9=E1=B9=E8=B9=CD=B9 =E1=C5=E9=C7=E0=C3=D2=A1=E7=A8=D0=E0=B4=
-=D4=B9=CB=B9=E9=D2=E4=BB=B4=E9=C7=C2=A1=D1=B9
-
-=BC=C1 =E0=AA=D7=E8=CD=C7=E8=D2=A4=B9=E4=B7=C2=C3=D2=C3=D1=A1=AA=D2=B5=D4=
-=E4=C1=E8=E1=BE=E9=AA=D2=B5=D4=E3=B4 =C3=D1=A1=E1=BC=E8=B9=B4=D4=B9=E0=A1=
-=D4=B4=E4=C1=E8=B9=E9=CD=C2=A1=C7=E8=D2=E3=A4=C3 =B4=C3. =C3=D4=AA=D2=C3=
-=EC=B4=E4=B4=E9=B7=D3=E0=BE=D7=E8=CD=BE=C7=A1=E0=C3=D2=C1=D2=C1=D2=A1 =E0=
-=C3=D2
-=B5=E9=CD=A7=E0=B5=D4=BA=E2=B5=E1=C5=D0=C2=D7=B9=BA=B9=A2=D2=B5=D1=C7=E0=
-=CD=A7=BA=B9=E0=C7=B7=D5=E2=C5=A1 =E0=BE=D7=E8=CD=B5=E8=CD=CA=D9=E9=CD=C2=
-=E8=D2=A7=CD=A7=CD=D2=A8=A1=C5=E9=D2=CB=D2=AD =BA=B9=CB=C5=D1=A1=A1=D2=C3=
-=B7=D5=E8=E0=C3=D2=C2=D6=B4=B6=D7=CD=C3=E8=C7=C1=A1=D1=B9 =CD=D1=B9=E4=B4=
-=E9=E1=A1=E8
-=CD=D3=B9=D2=A8=CD=B8=D4=BB=E4=B5=C2=B7=D5=E8=E4=C1=E8=B6=D9=A1=E3=A4=C3=
-=E1=C2=E8=A7=E4=BB =E1=C5=D0=A1=D2=C3=CD=C2=D9=E8=BA=B9=CB=C5=D1=A1=E0=CA=
-=C3=D5=C0=D2=BE =E0=CA=C1=CD=C0=D2=A4 =E1=C5=D0=C0=C3=D2=B4=C3=C0=D2=BE=
- =CD=D1=B9=C2=D1=E8=A7=C2=D7=B9 =BA=B9=A4=C7=D2=C1
-=E0=A8=C3=D4=AD=A1=E9=D2=C7=CB=B9=E9=D2=A2=CD=A7=BB=C3=D0=E0=B7=C8=E4=B7=
-=C2 =C0=D2=A4=D5=CD=D2=E0=AB=D5=C2=B9 =E1=C5=D0=A2=CD=A7=E2=C5=A1=B7=D5=
-=E8=E0=C3=D2=C2=D7=E8=B9=C1=D7=CD=E4=BB=AA=E8=C7=C2=E0=CB=C5=D7=CD=E4=B4=
-=E9
-
-=CB=C7=D1=A7=C7=E8=D2=A8=D0=E4=B4=E9=C3=D1=BA=A2=E8=D2=C7=B4=D5=A8=D2=A1=
-=BE=D5=E8 =B9=E9=CD=A7=C3=E8=C7=C1=CD=D8=B4=C1=A1=D2=B3=EC=E1=C5=D0=BC=D9=
-=E9=C1=D5=A8=D4=B5=E3=A8=B7=D5=E8=B4=D5=A7=D2=C1=B5=E8=CD=BA=E9=D2=B9=E0=
-=C1=D7=CD=A7=E0=C3=E7=C7 =E6 =B9=D5=E9 =B9=D0=A4=C3=D1=BA =E1=C5=D0=CB=C7=
-=D1=A7=C7=E8=D2=A7=D2=B9
-=C7=D1=B9=B7=D5=E8 14 =B5=D8=C5=D2=A4=C1 =C8=A1=B9=D5=E9 =A8=D0=E0=BB=E7=
-=B9=E2=CD=A1=D2=CA=E1=C3=A1 =B7=D5=E8=E0=C3=D2=A8=D0=E4=B4=E9=BE=BA=BB=D0=
-=E1=C5=D0=BE=D9=B4=A4=D8=C2=A1=D1=B9=B5=D2=C1=BB=C3=D0=CA=D2=A4=B9=E4=B7=
-=C2=CB=D1=C7=E3=A8=CA=D5=E1=B4=A7=B7=D5=E8=C3=D1=A1=E0=CA=C3=D5
-=BB=C3=D0=AA=D2=B8=D4=BB=E4=B5=C2 =E1=BA=BA=CA=D2=A1=C5
-
-=E2=BB=C3=B4=B5=D4=B4=B5=D2=C1=C3=D1=BA=BF=D1=A7=A1=D2=C3=CD=B8=D4=BA=D2=
-=C2=E0=BE=D4=E8=C1=E0=B5=D4=C1=E3=B9=C3=D2=C2=A1=D2=C3 Seeds of Democra=
-cy =E3=B9=C7=D1=B9=C8=D8=A1=C3=EC=B9=D5=E9 =B7=D2=A7 Red UDD=20
-=B5=D1=E9=A7=E1=B5=E8=CA=CD=A7=B7=D8=E8=C1 (=E0=C1=D7=CD=A7=E4=B7=C2) =B9=
-=D0=A4=C3=D1=BA
-
-=A2=CD=BA=A4=D8=B3=B7=D8=A1=B7=E8=D2=B9=B7=D5=E8=CD=E8=D2=B9=E1=C5=D0=BE=
-=D4=A8=D2=C3=B3=D2=C3=E8=C7=C1=C1=D7=CD
-piangdin
+P.S. I'm quite happy with git-new-workdir so I do believe I have a
+good workaround.
