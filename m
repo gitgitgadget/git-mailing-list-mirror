@@ -1,90 +1,64 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] Support ERR in remote archive like in fetch/push
-Date: Mon, 03 Oct 2011 13:45:14 +0200
-Message-ID: <4E89A04A.1060907@lsrfire.ath.cx>
-References: <1317432415-9459-1-git-send-email-pclouds@gmail.com> <20111003074250.GB9455@sigill.intra.peff.net> <20111003110159.GA13064@LK-Perkele-VI.localdomain> <20111003112649.GA12874@elie>
+From: Ian Jackson <ijackson@chiark.greenend.org.uk>
+Subject: Re: [PATCH v2] ident: check /etc/mailname if email is unknown
+Date: Mon, 3 Oct 2011 12:32:17 +0100
+Message-ID: <20105.40257.351258.425389@chiark.greenend.org.uk>
+References: <20111003045745.GA17604@elie>
+	<7v8vp2iqvc.fsf@alter.siamese.dyndns.org>
+	<20111003061633.GB17289@elie>
+	<4E895FBD.8020904@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 03 13:45:32 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Matt Kraai <kraai@ftbfs.org>, Gerrit Pape <pape@smarden.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Oct 03 13:52:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAgxc-0007xl-4D
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 13:45:28 +0200
+	id 1RAh4c-000261-HJ
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 13:52:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755533Ab1JCLpX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Oct 2011 07:45:23 -0400
-Received: from india601.server4you.de ([85.25.151.105]:55968 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753541Ab1JCLpW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 07:45:22 -0400
-Received: from [192.168.2.104] (p579BE686.dip.t-dialin.net [87.155.230.134])
-	by india601.server4you.de (Postfix) with ESMTPSA id A9D182F807D;
-	Mon,  3 Oct 2011 13:45:18 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0) Gecko/20110922 Thunderbird/7.0
-In-Reply-To: <20111003112649.GA12874@elie>
+	id S1754170Ab1JCLwi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Oct 2011 07:52:38 -0400
+Received: from chiark.greenend.org.uk ([212.13.197.229]:56926 "EHLO
+	chiark.greenend.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753378Ab1JCLwh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 07:52:37 -0400
+X-Greylist: delayed 1213 seconds by postgrey-1.27 at vger.kernel.org; Mon, 03 Oct 2011 07:52:37 EDT
+Received: by chiark.greenend.org.uk (Debian Exim 4.69 #1) with local
+	(return-path ijackson@chiark.greenend.org.uk)
+	id 1RAgkr-0002rQ-G0; Mon, 03 Oct 2011 12:32:17 +0100
+In-Reply-To: <4E895FBD.8020904@viscovery.net>
+X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182656>
 
-Am 03.10.2011 13:26, schrieb Jonathan Nieder:
-> Ilari Liusvaara wrote:
->=20
->> Oh, and adding interpretation of ERR packets to git archive is easy
->> (and I even happen to have git:// server that can send those to
->> test against):
->>
->> $ git archive --remote=3Dgit://localhost/foobar HEAD
->> fatal: remote error: R access for foobar DENIED to anonymous
->>
->> (I also tested that remote snapshotting of repository that should be
->> readable succeeds, it does).
->=20
-> Sounds like a good idea to me.  Let's see what Ren=C3=A9 thinks; also
-> changing the subject line to attract other reviewers.
+Johannes Sixt writes ("Re: [PATCH v2] ident: check /etc/mailname if email is unknown"):
+> Am 10/3/2011 8:16, schrieb Jonathan Nieder:
+> > +static int add_mailname_host(char *buf, size_t len)
+> > +{
+> > +	FILE *mailname;
+> > +
+> > +	mailname = fopen("/etc/mailname", "r");
+> > +	if (!mailname) {
+> > +		if (errno != ENOENT)
+> > +			warning("cannot open /etc/mailname: %s",
+> > +				strerror(errno));
+> 
+> This warns on EACCES. Is that OK? (Just asking, I have no opinion.)
 
-Looks good to me, but I'm not too familiar with the remote protocol.
+I think that's correct.  Personally I'm a bit of an error handling
+fascist and I would have it crash on EACCES but that's probably a bit
+harsh.
 
->> --- >8 ----
->> From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
->> Date: Mon, 3 Oct 2011 13:55:37 +0300
->> Subject: [PATCH] Support ERR in remote archive like in fetch/push
->>
->> Make ERR as first packet of remote snapshot reply work like it does =
-in
->> fetch/push. Lets servers decline remote snapshot with message the sa=
-me
->> way as declining fetch/push with a message.
->>
->> Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
->> ---
->>  builtin/archive.c |    2 ++
->>  1 files changed, 2 insertions(+), 0 deletions(-)
->>
->> diff --git a/builtin/archive.c b/builtin/archive.c
->> index 883c009..931956d 100644
->> --- a/builtin/archive.c
->> +++ b/builtin/archive.c
->> @@ -61,6 +61,8 @@ static int run_remote_archiver(int argc, const cha=
-r **argv,
->>  	if (strcmp(buf, "ACK")) {
->>  		if (len > 5 && !prefixcmp(buf, "NACK "))
->>  			die(_("git archive: NACK %s"), buf + 5);
->> +		if (len > 4 && !prefixcmp(buf, "ERR "))
->> +			die(_("remote error: %s"), buf + 4);
->>  		die(_("git archive: protocol error"));
->>  	}
->> =20
->> --=20
->> 1.7.7.3.g2791de.dirty
->>
+Certainly this file ought to be generally readable, if it exists.
+
+Ian.
