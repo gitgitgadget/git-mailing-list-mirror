@@ -1,117 +1,79 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] ident: check /etc/mailname if email is unknown
-Date: Mon, 3 Oct 2011 02:44:34 -0500
-Message-ID: <20111003074433.GD17289@elie>
-References: <20111003045745.GA17604@elie>
- <7v8vp2iqvc.fsf@alter.siamese.dyndns.org>
- <20111003061633.GB17289@elie>
- <4E895FBD.8020904@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Branches & directories
+Date: Mon, 03 Oct 2011 00:48:27 -0700
+Message-ID: <7v4nzqikhg.fsf@alter.siamese.dyndns.org>
+References: <CAE1pOi0Er1ZgftpNeCr85Zu27xR2127V_KdAtvKc1NOKmDUvzQ@mail.gmail.com>
+ <CAGZ=bqLyS9tcpqztwGWFOXtDJRhugu+JYvz7wTnc0PTmECWX2g@mail.gmail.com>
+ <CAE1pOi1axNmGaPVXqBH02x0N=Z6tgO9R00RTokuJm50eY-OoNg@mail.gmail.com>
+ <4E889813.8070205@gmail.com>
+ <CAE1pOi3bm72Rk+UYygS_bC9eh0VTPr-VQSdtBGqjgDpEzkutZw@mail.gmail.com>
+ <20111003030723.GA24523@sigill.intra.peff.net>
+ <CAE1pOi2xmVHrVJcC85wvCv=anhn_kYizyUMpUVZF4EE33RoGmg@mail.gmail.com>
+ <vpqaa9ijzt4.fsf@bauges.imag.fr>
+ <20111003073456.GA10054@sigill.intra.peff.net>
+ <vpqmxdiikt2.fsf@bauges.imag.fr>
+ <20111003074412.GC9455@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Matt Kraai <kraai@ftbfs.org>, Gerrit Pape <pape@smarden.org>,
-	Ian Jackson <ijackson@chiark.greenend.org.uk>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Oct 03 09:44:45 2011
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+	Robin Rosenberg <robin.rosenberg@gmail.com>,
+	Kyle Moffett <kyle@moffetthome.net>,
+	Michael Witten <mfwitten@gmail.com>,
+	Evan Shelhamer <shelhamer@imaginarynumber.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Oct 03 09:48:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAdCf-0003L1-Eb
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 09:44:45 +0200
+	id 1RAdGM-0004RY-Mo
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 09:48:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752045Ab1JCHom (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Oct 2011 03:44:42 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:56493 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751175Ab1JCHok (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 03:44:40 -0400
-Received: by yxl31 with SMTP id 31so3224472yxl.19
-        for <git@vger.kernel.org>; Mon, 03 Oct 2011 00:44:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=71Tg861BF/rsl3g4YabTtnUmpTf8ovk4GfY5di0FgSo=;
-        b=qMzSsaBc7ncr8a8mjm12ijKCiH9eDuQBt780jz9kFz43UFfdwh1iQHBSG2ny1v9k8H
-         KRXSCTq0LgR/6lyzYKBxfUrTboTQI21bmR4HyJqR0ttPrXd58MSaqjS3s1lkuAPIdjT9
-         uvk+q0i0ifeKJ5AGLcI6kat9XwWgURFGxTOnc=
-Received: by 10.42.28.65 with SMTP id m1mr3332584icc.81.1317627879881;
-        Mon, 03 Oct 2011 00:44:39 -0700 (PDT)
-Received: from elie (99-120-124-35.lightspeed.cicril.sbcglobal.net. [99.120.124.35])
-        by mx.google.com with ESMTPS id t9sm27713640ibq.11.2011.10.03.00.44.38
-        (version=SSLv3 cipher=OTHER);
-        Mon, 03 Oct 2011 00:44:39 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4E895FBD.8020904@viscovery.net>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1752717Ab1JCHsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Oct 2011 03:48:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45833 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752763Ab1JCHsa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 03:48:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 171683B9A;
+	Mon,  3 Oct 2011 03:48:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=v+7hKHQ1XMQSq0zdos6VcXar8G4=; b=KqwQBA
+	Om+VaF3vhtK10O+CLA6fu1UM+ugc9Pew7PIOirNdKxoHbMUGc7FgpI2wAbfKhI4W
+	gzdmGaVM0mt3rqXZ4kVPH+OPI5k/EAfQFfB/ZvuG73oWqMgrINXk4PVAiFwMYoC8
+	gJWt1upFss54Ec8JSjHQQ9DghfdnicAWmBiSE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hrpCw9BEVpgGFLxODjvim1yn5HJ0UXM3
+	IaeD1kOetT1Iwwjrwwfxas9y5d/RUAGAwcsaYSiH7K8sKPafUcT46UndiZuTmsvL
+	YBJZjK1tMBOJqOX70YO/IfguHtDa+uR9wbD2DlDHMjIqkBOGjAECYjIdgj3nOTxg
+	PcxceHK3MA8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0CC6F3B99;
+	Mon,  3 Oct 2011 03:48:29 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8B20A3B98; Mon,  3 Oct 2011
+ 03:48:28 -0400 (EDT)
+In-Reply-To: <20111003074412.GC9455@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 3 Oct 2011 03:44:12 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 151A9964-ED94-11E0-A6BD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182637>
 
-Johannes Sixt wrote:
+Jeff King <peff@peff.net> writes:
 
-> This warns on EACCES. Is that OK? (Just asking, I have no opinion.)
+> Yeah, you'd have to maintain your own dependency tree, then. Which is
+> nasty (aside from the work involved), because I don't think you can
+> portably get the header dependencies out of the C compiler.
 
-Good catch.  I was worried for a moment: could some command call
-copy_email() in a loop, producing an annoyingly redundant stream of
-warnings?
-
-Luckily setup_ident() checks if git_default_email has been set to save
-the trouble of computing it again.  So the behavior is to warn exactly
-once when using a command that uses an ident string, which is still
-more often than ideal.  It would be better to only warn if the
-permissions are creating an actual problem, so the user can (1)
-complain to the sysadmin and then (2) set an email address in
-~/.gitconfig and move on.
-
-We _could_ add parameters to setup_ident() to only warn if
-/etc/mailname was going to be used to produce the committer ident (or
-whichever ident is checked first).  That would be confusing if
-GIT_COMMITTER_EMAIL is set and GIT_AUTHOR_EMAIL is not.
-
-In the long term it would be nice to find a way to warn when the
-mailname we tried to retrieve was actually going to be used, but short
-of that, the least confusing behavior is to just not warn at all.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- ident.c |   10 +---------
- 1 files changed, 1 insertions(+), 9 deletions(-)
-
-diff --git a/ident.c b/ident.c
-index edb43144..6f5c885d 100644
---- a/ident.c
-+++ b/ident.c
-@@ -55,16 +55,9 @@ static int add_mailname_host(char *buf, size_t len)
- 	FILE *mailname;
- 
- 	mailname = fopen("/etc/mailname", "r");
--	if (!mailname) {
--		if (errno != ENOENT)
--			warning("cannot open /etc/mailname: %s",
--				strerror(errno));
-+	if (!mailname)
- 		return -1;
--	}
- 	if (!fgets(buf, len, mailname)) {
--		if (ferror(mailname))
--			warning("cannot read /etc/mailname: %s",
--				strerror(errno));
- 		fclose(mailname);
- 		return -1;
- 	}
-@@ -80,7 +73,6 @@ static void add_domainname(char *buf, size_t len)
- 	const char *domainname;
- 
- 	if (gethostname(buf, len)) {
--		warning("cannot get host name: %s", strerror(errno));
- 		strlcpy(buf, "(none)", len);
- 		return;
- 	}
--- 
-1.7.7.rc1
+Heh, but doesn't your Makefile know the header dependencies anyway?
