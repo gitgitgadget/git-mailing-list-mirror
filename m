@@ -1,107 +1,99 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH 0/9] i18n: add PO files to po/
-Date: Mon,  3 Oct 2011 18:58:08 +0000
-Message-ID: <1317668297-2702-1-git-send-email-avarab@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] ident: check /etc/mailname if email is unknown
+Date: Mon, 03 Oct 2011 12:13:05 -0700
+Message-ID: <7vty7pga7y.fsf@alter.siamese.dyndns.org>
+References: <20111003045745.GA17604@elie>
+ <7v8vp2iqvc.fsf@alter.siamese.dyndns.org> <20111003061633.GB17289@elie>
+ <4E895FBD.8020904@viscovery.net> <20111003074433.GD17289@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	=?UTF-8?q?Marcin=20Cie=C5=9Blak?= <saper@saper.info>,
-	Sam Reed <sam@reedyboy.net>,
-	Jan Engelhardt <jengelh@medozas.de>,
-	=?UTF-8?q?Jan=20Kr=C3=BCger?= <jk@jk.gs>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 03 21:04:12 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	Matt Kraai <kraai@ftbfs.org>, Gerrit Pape <pape@smarden.org>,
+	Ian Jackson <ijackson@chiark.greenend.org.uk>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 03 21:13:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAnoB-0007IA-4A
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 21:04:11 +0200
+	id 1RAnx0-0002Og-VK
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 21:13:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757285Ab1JCTD6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Oct 2011 15:03:58 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:58247 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754145Ab1JCTD4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 15:03:56 -0400
-Received: by wyg34 with SMTP id 34so3426764wyg.19
-        for <git@vger.kernel.org>; Mon, 03 Oct 2011 12:03:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=mk7XDkzNkTJX0OJo5pZ4DH/43V1flR5AsGhlBZADvSU=;
-        b=oSj4pChJ+UMP8hL8LwtFVVE+BbdVdGAyC7xdcCoFWyjYY49pkyGD8asR/ypwGX2z3a
-         g+s5nuc1tu88sk+89sV/LkqYf4l8DxSz6a/F/BQzly/sYZhdVP20KsIcse0qvfzKVtep
-         +ZdMNELzNvsDJ7mEVbMbE9n5ZjWnBKVeJgi6s=
-Received: by 10.223.10.25 with SMTP id n25mr341707fan.72.1317668313091;
-        Mon, 03 Oct 2011 11:58:33 -0700 (PDT)
-Received: from w.nix.is (w.nix.is. [188.40.98.140])
-        by mx.google.com with ESMTPS id f25sm22312819faf.7.2011.10.03.11.58.29
-        (version=SSLv3 cipher=OTHER);
-        Mon, 03 Oct 2011 11:58:31 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6.3
+	id S1757317Ab1JCTNO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Oct 2011 15:13:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34035 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756915Ab1JCTNN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 15:13:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DB265333;
+	Mon,  3 Oct 2011 15:13:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yxCDEemeSvn24com+me4raLk9uM=; b=OUlBxV
+	uud5Fjzuq5F7MRsqCdp7+bd5MPv3aUYLkDsXluq68b6TU8sW6sZ36tpY2kCaRdhv
+	ED3G4sKnhEUGENDdQKdC0d2qccsSAEuiLomHYRhFTTsYXTx5w/HDfxn/tjY+buZA
+	FXW90rqK0UmJNFr5bwX9/QOInC8w2tGnZ7Cnw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xyQKRDfcKt88Qjzy4LBlRxnl6upuE7M/
+	JF4A9++l8xdz47Q0bZU63+lc4BmmELBj3mEF7tQs9j0B7kWHYZBVUTPpPA1g3esW
+	412IqGTmPbRyiAvAEhEx8VhkehWwS18Tz1t6j4kIEcUdiAtZ4L+EdkbX4IRje6ry
+	Pl1rixRaQGo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 644955332;
+	Mon,  3 Oct 2011 15:13:08 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D073532D; Mon,  3 Oct 2011
+ 15:13:06 -0400 (EDT)
+In-Reply-To: <20111003074433.GD17289@elie> (Jonathan Nieder's message of
+ "Mon, 3 Oct 2011 02:44:34 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B9CA306E-EDF3-11E0-B928-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182696>
 
-It's been a long time coming, but here's an initial submission of PO
-files to the po/ directory. This adds some initial and as of yet
-unused translations.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-I plan on following these with more infrastructure stuff later on, and
-hopefully this'll encourage list members to submit new translations.
+> In the long term it would be nice to find a way to warn when the
+> mailname we tried to retrieve was actually going to be used, but short
+> of that, the least confusing behavior is to just not warn at all.
 
-Documentation on how to do that will follow in a later series, but is
-right now left as an exercise for the reader.
+I would think that if we widely advertise that we read from /etc/mailname
+if/when it exists, a user who wonders why it is not used would appreciate
+it if Git tells them why when it cannot use it.
 
-Jan Engelhardt (1):
-  po/de.po: update German translation
+But I agree that has to happen _after_ we flip the logic so that
+setup_ident() does not trigger when the user gave us the necessary
+information.
 
-Jan Kr=C3=BCger (1):
-  po/de.po: add German translation
+I wonder if that "flipping the logic" would be as simple as something like
+this. It probably is about time for us to stop using the static array that
+is hardwired MAX_GITNAME bytes long and start using strbuf, so I didn't
+bother with strlcpy().
 
-Marcin Cie=C5=9Blak (1):
-  po/pl.po: add Polish translation
 
-Peter Krefting (1):
-  po/sv.po: add Swedish translation
+ ident.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-Ramkumar Ramachandra (2):
-  po/hi.po: add Hindi Translation
-  po/hi.po: Eliminate fuzzy translations
-
-Sam Reed (1):
-  po/en_GB.po: add British English translation
-
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (2):
-  po/is.po: add Icelandic translation
-  po: run msgmerge to strings update the PO files
-
- po/de.po    | 3825 +++++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- po/en_GB.po | 3228 +++++++++++++++++++++++++++++++++++++++++++++++++
- po/hi.po    | 3228 +++++++++++++++++++++++++++++++++++++++++++++++++
- po/is.po    | 3254 ++++++++++++++++++++++++++++++++++++++++++++++++++
- po/pl.po    | 3246 ++++++++++++++++++++++++++++++++++++++++++++++++++
- po/sv.po    | 3531 +++++++++++++++++++++++++++++++++++++++++++++++++++=
-+++
- 6 files changed, 20312 insertions(+), 0 deletions(-)
- create mode 100644 po/de.po
- create mode 100644 po/en_GB.po
- create mode 100644 po/hi.po
- create mode 100644 po/is.po
- create mode 100644 po/pl.po
- create mode 100644 po/sv.po
-
---=20
-1.7.6.3
+diff --git a/ident.c b/ident.c
+index edb4314..9cc55f7 100644
+--- a/ident.c
++++ b/ident.c
+@@ -239,6 +239,10 @@ const char *fmt_ident(const char *name, const char *email,
+ 	int warn_on_no_name = (flag & IDENT_WARN_ON_NO_NAME);
+ 	int name_addr_only = (flag & IDENT_NO_DATE);
+ 
++	if (name && !git_default_name[0])
++		strcpy(git_default_name, name);
++	if (email && !git_default_email[0])
++		strcpy(git_default_email, email);
+ 	setup_ident();
+ 	if (!name)
+ 		name = git_default_name;
