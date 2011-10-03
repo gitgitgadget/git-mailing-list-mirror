@@ -1,55 +1,74 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] transport: do not allow to push over git:// protocol
-Date: Mon, 03 Oct 2011 10:44:23 +0200
-Message-ID: <4E8975E7.2040804@viscovery.net>
-References: <1317432415-9459-1-git-send-email-pclouds@gmail.com> <20111003074250.GB9455@sigill.intra.peff.net>
+From: Mattias Jiderhamn <mj-lists@expertsystems.se>
+Subject: Symbolic references updated by fetch?
+Date: Mon, 3 Oct 2011 08:47:55 +0000 (UTC)
+Message-ID: <loom.20111003T104608-738@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 03 10:44:33 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 03 11:10:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAe8X-0003tL-7l
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 10:44:33 +0200
+	id 1RAeXP-0003Xr-I7
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 11:10:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753103Ab1JCIo2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Oct 2011 04:44:28 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:61046 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752769Ab1JCIo1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 04:44:27 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1RAe8N-0004RK-Us; Mon, 03 Oct 2011 10:44:24 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id AE4CF1660F;
-	Mon,  3 Oct 2011 10:44:23 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.23) Gecko/20110920 Thunderbird/3.1.15
-In-Reply-To: <20111003074250.GB9455@sigill.intra.peff.net>
-X-Spam-Score: -1.4 (-)
+	id S1751963Ab1JCJKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Oct 2011 05:10:11 -0400
+Received: from lo.gmane.org ([80.91.229.12]:54265 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751844Ab1JCJKJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 05:10:09 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RAeXF-0003Tt-T4
+	for git@vger.kernel.org; Mon, 03 Oct 2011 11:10:07 +0200
+Received: from 84.19.131.18 ([84.19.131.18])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 Oct 2011 11:10:05 +0200
+Received: from mj-lists by 84.19.131.18 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 Oct 2011 11:10:05 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 84.19.131.18 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20100101 Firefox/7.0.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182640>
 
-Am 10/3/2011 9:42, schrieb Jeff King:
-> I still think push-over-git:// is a bit insane, and especially now with
-> smart-http, you'd be crazy to run it. And in that sense, I wouldn't mind
-> seeing it deprecated.
+In our current CVS setup, we have two separate builds in Jenkins CI; one for the
+latest and greatest (head of "master" branch) and one for the last/current minor
+release of the latest major release. The revisions to include in the minor
+release build will be tagged with a tag we can call "next-minor-release" here.
+Individual files are branched as needed and the "next-minor-release" tag is
+moved onto the branch. The Continuous Integration job will fetch and build the
+"next-minor-release" tag. As part of a major release, the "next-minor-release"
+tag is moved to the head of the main branch again.
 
-You must be kidding ;) It is so much easier to type
+When moving to GIT, the natural thing will be a hotfix branch originating from
+each major release. In order to have a fixed name for the current hotfix branch,
+primarily for the CI but also simplifying for developers working with hotfixes,
+it seems git symbolic-ref will do the trick. After the first major release we
+can do something like this in our bare repository whereto developers push and
+where from Jenkins pulls code to build:
+  git symbolic-ref refs/heads/current-hotfix-branch refs/heads/release-1-hotfixes
+and after the next major release, we simply move the referece pointer, as such
+  git symbolic-ref refs/heads/current-hotfix-branch refs/heads/release-2-hotfixes
 
-  git daemon --export-all --enable=receive-pack
+HOWEVER this seems to require that everyone fetching/pulling from that repo -
+Jenkins included - delete their local "current-hotfix-branch" tracking branch,
+and then refetch it.
 
-for a one-shot, temporary git connection compared to setting up a
-smart-http, ssh, or even a rsh server.
+Is there an easier way to solve the CI problem, eliminating the need to
+explicitly deleting the tracking branch on all remote repos every time the
+symbolic ref is moved i.e. at every major release?
+How have others solved this? Do you simply reconfigure Jenkins every time...?
 
--- Hannes
+Thanks in advance.
