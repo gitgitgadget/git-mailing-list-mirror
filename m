@@ -1,68 +1,117 @@
-From: Larry Finger <Larry.Finger@lwfinger.net>
-Subject: Re: unable to resolve reference refs/tags/v3.1-rc8: Success
-Date: Mon, 03 Oct 2011 00:11:42 -0500
-Message-ID: <4E89440E.8060702@lwfinger.net>
-References: <4E892483.7070605@lwfinger.net> <20111003035907.GA17134@elie> <4E8936F4.5060506@lwfinger.net> <20111003044045.GA17289@elie>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] ident: check /etc/mailname if email is unknown
+Date: Sun, 02 Oct 2011 22:30:31 -0700
+Message-ID: <7v8vp2iqvc.fsf@alter.siamese.dyndns.org>
+References: <20111003045745.GA17604@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: LKML <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Matt Kraai <kraai@ftbfs.org>,
+	Gerrit Pape <pape@smarden.org>,
+	Ian Jackson <ijackson@chiark.greenend.org.uk>,
+	Linus Torvalds <torvalds@linux-foundation.org>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: linux-kernel-owner@vger.kernel.org Mon Oct 03 07:12:01 2011
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+X-From: git-owner@vger.kernel.org Mon Oct 03 07:30:41 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1RAaoq-0001KX-DN
-	for glk-linux-kernel-3@lo.gmane.org; Mon, 03 Oct 2011 07:12:00 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1RAb6u-00050t-Qi
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 07:30:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755189Ab1JCFLw (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 3 Oct 2011 01:11:52 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:38326 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755004Ab1JCFLq (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 3 Oct 2011 01:11:46 -0400
-Received: by ywb5 with SMTP id 5so3060578ywb.19
-        for <multiple recipients>; Sun, 02 Oct 2011 22:11:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=caYmNRpVtz+kt9t/+y35BYqEGGne/Fptpwq8CJ2ckBs=;
-        b=qpWcQZm/YnlVKluV9FTV3jQ31GUSlKGBMVTmqT/5VhymyqNyClVbPyjGI2x4fbvm6A
-         Xyjlsqde5iZWcftht9baCjS48g+jEl6iekH3jQVOI/ieVAii9gY6Kpjrm3fYUhS1Ignr
-         VQOkMllW3LCQWY4sgwpAhW+OTzY69fvHMO+JA=
-Received: by 10.151.20.12 with SMTP id x12mr12523444ybi.367.1317618705515;
-        Sun, 02 Oct 2011 22:11:45 -0700 (PDT)
-Received: from larrylap.site (cpe-65-28-92-85.kc.res.rr.com. [65.28.92.85])
-        by mx.google.com with ESMTPS id z5sm34393522anz.7.2011.10.02.22.11.44
-        (version=SSLv3 cipher=OTHER);
-        Sun, 02 Oct 2011 22:11:44 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0) Gecko/20110922 Thunderbird/7.0
-In-Reply-To: <20111003044045.GA17289@elie>
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1755192Ab1JCFag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Oct 2011 01:30:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42563 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755045Ab1JCFae (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 01:30:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A47DA26F4;
+	Mon,  3 Oct 2011 01:30:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rkSUvrdXT22y1eNOxtjaPEW0NeM=; b=dtDMqJ
+	VpqLOz4pYWGr2ofQ7tIw/RMPeI348XPUn40ybMOlnWlnvfRPzQs9kaR4dt2PQ5EO
+	Bi2HK574PoV9qt7Fl6OjfrqTTenA7Bb41h252BhhSjcCL6agIpDVaPHFqX+SfOLV
+	5qUFthO1AhTdgEveMwWzEMahkz/j1gQdfnXVM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=olWog9G6IRb52nSb7Pw2m7WYwRdiV2sD
+	DJThd4i0OfN7BbDNNAuGm7/shxkE/Fc2IZqgEK1l/phKFZExhFk+4xbaEWjJlFO0
+	VJn87n0DJ5aUDkaDj6CKvZZxYpjZl53yn9Oto2hoA2rLyCOToQu5AnKK3vbAu5E3
+	zyB77G3OsA8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B62E26F3;
+	Mon,  3 Oct 2011 01:30:33 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1C34426F0; Mon,  3 Oct 2011
+ 01:30:33 -0400 (EDT)
+In-Reply-To: <20111003045745.GA17604@elie> (Jonathan Nieder's message of
+ "Sun, 2 Oct 2011 23:57:46 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D08C2C9E-ED80-11E0-A133-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182622>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182623>
 
-On 10/02/2011 11:40 PM, Jonathan Nieder wrote:
-> Larry Finger wrote:
->
->> After applying that patch, I get
->>
->> finger@larrylap:~/linux-2.6>  ~/git/git pull
->> fatal: ref refs/tags/v3.1-rc8 is corrupt: length=41, content=
->
-> Great, thanks.
->
-> In the short term I'd suggest just removing the corrupt
-> .git/refs/tags/v3.1-rc8 file with "rm" so it can be fetched again.
-> Hopefully later tonight I can prepare a real patch to fix this, though
-> I wouldn't mind if someone else takes care of it first.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Thanks. That did the trick.
+> @@ -52,6 +52,8 @@ static void copy_gecos(const struct passwd *w, char *name, size_t sz)
+>  
+>  static void copy_email(const struct passwd *pw)
+>  {
+> +	FILE *mailname;
+> +
+>  	/*
+>  	 * Make up a fake email address
+>  	 * (name + '@' + hostname [+ '.' + domainname])
+> @@ -61,6 +63,27 @@ static void copy_email(const struct passwd *pw)
+>  		die("Your sysadmin must hate you!");
+>  	memcpy(git_default_email, pw->pw_name, len);
+>  	git_default_email[len++] = '@';
+> +
+> +	/*
+> +	 * The domain part comes from /etc/mailname if it is readable,
+> +	 * or the current hostname and domain name otherwise.
+> +	 */
+> +	mailname = fopen("/etc/mailname", "r");
+> +	if (!mailname) {
+> +		if (errno != ENOENT)
+> +			warning("cannot open /etc/mailname: %s",
+> +				strerror(errno));
+> +	} else if (fgets(git_default_email + len,
+> +			 sizeof(git_default_email) - len, mailname)) {
+> +		/* success! */
+> +		fclose(mailname);
+> +		return;
+> +	} else {
+> +		if (ferror(mailname))
+> +			warning("cannot read /etc/mailname: %s",
+> +				strerror(errno));
+> +		fclose(mailname);
+> +	}
+>  	gethostname(git_default_email + len, sizeof(git_default_email) - len);
+>  	if (!strchr(git_default_email+len, '.')) {
+>  		struct hostent *he = gethostbyname(git_default_email + len);
 
-Larry
+I do not think this would hurt, even though I see /etc/mailname on only
+one of my boxes (i.e. Debian). For maintainability for the future,
+however, I would prefer to see the above hunk separated into a helper
+function to keep addition to copy_email() to the minimum, e.g.
+
+	memcpy(git_default_email, pw->pw_name, len);
+        git_default_email[len++] = '@';
+
++	if (add_mailname_host(git_default_email, len, sizeof(git_default_email)))
++		return; /* read from "/etc/mailname" (Debian) */
+
+	gethostname(git_default_email + len, sizeof(git_default_email) - len);
+        ...
+
+So that people who care about other distros can more easily add a single
+implementation to a similar location without making copy_email() too long
+to lose clarity. The fallback default logic that does gethostname() might
+also want to become a separate helper function as well.
