@@ -1,69 +1,78 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] contrib: add a pair of credential helpers for Mac OS X's keychain
-Date: Mon, 3 Oct 2011 09:16:42 -0400
-Message-ID: <CAG+J_DymMLP+c8kAqDOoPSGJG0CicZWzZPAO+D+cyqF5X19YHQ@mail.gmail.com>
-References: <1316055113-2353-1-git-send-email-jaysoffian@gmail.com>
-	<20110929075627.GB14022@sigill.intra.peff.net>
-	<CAEBDL5WhpVg17aPuRqrE5=2Q293kVD4fYtxGqRzx_K=87t-jgw@mail.gmail.com>
-	<CAG+J_DyhcA7RmHwgGJBw4r9JRij0_ONp3ZMD6oMTJ_f4dvYW8w@mail.gmail.com>
-	<CAEBDL5XhLAccfMoSyBjDA4ZsCgc4FnxEVYyqJsnGfzDW3Otudw@mail.gmail.com>
+From: robert mena <robert.mena@gmail.com>
+Subject: Unable to remove a file
+Date: Mon, 3 Oct 2011 10:21:58 -0400
+Message-ID: <CAAZ43xa2upWQ2LWJRVcOPew3kF0W7gSz9UgQ=g0gnMHKQB3Y4A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: John Szakmeister <john@szakmeister.net>
-X-From: git-owner@vger.kernel.org Mon Oct 03 15:16:56 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 03 16:22:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAiO6-0006be-IK
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 15:16:54 +0200
+	id 1RAjPC-0006Fh-Ji
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 16:22:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932098Ab1JCNQt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Oct 2011 09:16:49 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:41354 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932091Ab1JCNQo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Oct 2011 09:16:44 -0400
-Received: by gyg10 with SMTP id 10so3369229gyg.19
-        for <git@vger.kernel.org>; Mon, 03 Oct 2011 06:16:43 -0700 (PDT)
+	id S1756068Ab1JCOWB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Oct 2011 10:22:01 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:35414 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752400Ab1JCOWA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 10:22:00 -0400
+Received: by eya28 with SMTP id 28so2829531eya.19
+        for <git@vger.kernel.org>; Mon, 03 Oct 2011 07:21:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=SYNMdD3+Gd0O2aAkBl+dnnjQs3N5S2ba9FeFGEi3djA=;
-        b=TiWt+Nx86tLtnkuHVpsWVRcCY9OBf2yXS1+mSngyhwA78K3GPXXponvNbzBni9+Jq5
-         +qhJUw9l6S/yR48BMV9V+u8aJBkCl9M5CtvSwTZTOE5oU9cBrhE0xln7t6A1KaFHP+Zu
-         bVezQKgUcUA3N5yG/AKQuK58YiGM8reZsvxio=
-Received: by 10.236.190.200 with SMTP id e48mr85819724yhn.59.1317647803480;
- Mon, 03 Oct 2011 06:16:43 -0700 (PDT)
-Received: by 10.147.32.18 with HTTP; Mon, 3 Oct 2011 06:16:42 -0700 (PDT)
-In-Reply-To: <CAEBDL5XhLAccfMoSyBjDA4ZsCgc4FnxEVYyqJsnGfzDW3Otudw@mail.gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=Baq3r7DvzDf2PE8hKPLhlZ8s2myEHgipBpFh4cmZILY=;
+        b=HsFUDf0C9a4wrWJxG4C+Is+aHd42OpwqxBdfMgkLDynnioaYdQ46C54MLjvb4GHyMg
+         ROeC1QkNNpxzZoNEQXBWWuc2PxThWOSXiZTw1+KaClMswGjNUrHW+QwDivoxis8ZgFFY
+         bCU4Y+sRu99fGxOVak/Jep0XbGqAlOGKXJDbk=
+Received: by 10.223.37.91 with SMTP id w27mr275985fad.111.1317651719019; Mon,
+ 03 Oct 2011 07:21:59 -0700 (PDT)
+Received: by 10.223.104.66 with HTTP; Mon, 3 Oct 2011 07:21:58 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182663>
 
-On Sat, Oct 1, 2011 at 2:57 AM, John Szakmeister <john@szakmeister.net>=
- wrote:
->>> I don't use GitHub for Mac... does that mean this is busted for me?
->>
->> No. It just means that the credential helper and GitHub for Mac stor=
-e
->> their entry in a compatible fashion. (So that each can locate the
->> entry stored by the other.)
->
-> Ah, interesting. =C2=A0But it does mean that it won't pick up the pas=
-sword
-> I've cached via my browser, right?
+Hi,
 
-Correct. I can add code to also make it look for the password entry as
-stored by Safari/Chrome. It's actually stored as a slightly different
-entry type ("Web form password" vs "Internet password"), so it's not
-just the hostname difference.
+I had a file called \ under a directory scripts.  I've removed,
+committed, pushed to the server BUT my windows clients when they try
+to clone I stop because of this.
 
-j.
+Don't ask me why and it is probably windows/the IDE fault but I have
+to solve it.
+
+I found the command filter but it is not working.
+
+git filter-branch --index-filter 'git rm --cached scripts/\\' HEAD
+Rewrite b75a1a3af45a4d82fcfe7a6148fc4d6e1c55ee91 (1/48)rm 'scripts/\'
+Rewrite 8a32d6194e9c46dc0f1ce60a2245fcbcd7c12d00 (2/48)rm 'scripts/\'
+Rewrite 892bba8bd7563186d7b1c493cf05d8823cfe2f7b (3/48)rm 'scripts/\'
+Rewrite 0be74d8143f670b08806510dd09cf77029f57bcb (4/48)rm 'scripts/\'
+Rewrite ec7e45a5d8100b7a1e49ca8d0cf5ec5d638f2dd7 (5/48)rm 'scripts/\'
+Rewrite c9dde5bf86391a66f80dc86bcc3078c78866b5da (6/48)rm 'scripts/\'
+Rewrite 499be785b2538a1d6b382e1a0d6e9bdc8a771a76 (7/48)rm 'scripts/\'
+Rewrite 327ac340d4dee02bc2bfed07bd94df5f87b8036c (8/48)rm 'scripts/\'
+Rewrite 5ae256edce2959585b2819c4d6d0d4704b02984a (9/48)rm 'scripts/\'
+Rewrite 3811ef08c5a2be9f4f049c50caf501944483ec72 (10/48)rm 'scripts/\'
+Rewrite 52b3de12d3cde4f6bb920d335fe8629d368d965b (11/48)rm 'scripts/\'
+Rewrite ff115cd8f3213d8218d369361d5ee77010081c22 (12/48)rm 'scripts/\'
+Rewrite d28c02b462e8ee70c6d516d7d2c6754b82bfc80e (13/48)rm 'scripts/\'
+Rewrite 173aecfa81f64644747934f815befb8f83daf6ce (14/48)rm 'scripts/\'
+Rewrite d4649a98584c25c1c8d52adbd49d822c961dc7cb (15/48)rm 'scripts/\'
+Rewrite d026354566abc0d135cdd3838fa96055baa29a03 (16/48)rm 'scripts/\'
+Rewrite 9f7869cf30bc0c04e072859bfbc1325758a5e893 (17/48)rm 'scripts/\'
+Rewrite 6058b6d0b783cd290ce78e344f442d161989b72d (18/48)rm 'scripts/\'
+Rewrite 7f7842d461a645223e39d5b6c451ec8b3e8f89a4 (19/48)rm 'scripts/\'
+Rewrite 11f9ad3c22746e4fddb407790eb0db4db709902d (20/48)fatal:
+pathspec 'scripts/\' did not match any files
+index filter failed: git rm --cached scripts/\
+
+How can I really delete this without having to start from scratch?  I
+won't hold my breath for windows or even the IDE's to detect this and
+solve it.
