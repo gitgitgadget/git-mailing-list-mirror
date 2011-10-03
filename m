@@ -1,107 +1,108 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Branches & directories
-Date: Sun, 2 Oct 2011 23:07:23 -0400
-Message-ID: <20111003030723.GA24523@sigill.intra.peff.net>
-References: <CAMOZ1Bu5pPeviyZD-e6aHbv-+tSaBDyyKb5vHA132K_3=1gD-g@mail.gmail.com>
- <CAE1pOi0dL2qNMksuY_=gyGSRsfr6e9AmzgJUNB=jEz85sjuiUw@mail.gmail.com>
- <CAGZ=bqK7H3zc8LK7EP8+uV8DpWW+czK2POfceGtcBF8Vmkhkow@mail.gmail.com>
- <CAE1pOi1J5DKtnyUQzu1K7G1+HLsWWCN7thCf6W8MwSzt4_vtOw@mail.gmail.com>
- <CAGZ=bqLZoLoyMcvnppg6SyFtJU8phSquQeBZ7uhwP=+ZL3DADw@mail.gmail.com>
- <CAE1pOi0Er1ZgftpNeCr85Zu27xR2127V_KdAtvKc1NOKmDUvzQ@mail.gmail.com>
- <CAGZ=bqLyS9tcpqztwGWFOXtDJRhugu+JYvz7wTnc0PTmECWX2g@mail.gmail.com>
- <CAE1pOi1axNmGaPVXqBH02x0N=Z6tgO9R00RTokuJm50eY-OoNg@mail.gmail.com>
- <4E889813.8070205@gmail.com>
- <CAE1pOi3bm72Rk+UYygS_bC9eh0VTPr-VQSdtBGqjgDpEzkutZw@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: unable to resolve reference refs/tags/v3.1-rc8: Success (Re: git
+ problem)
+Date: Sun, 2 Oct 2011 22:59:07 -0500
+Message-ID: <20111003035907.GA17134@elie>
+References: <4E892483.7070605@lwfinger.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Robin Rosenberg <robin.rosenberg@gmail.com>,
-	Kyle Moffett <kyle@moffetthome.net>,
-	Michael Witten <mfwitten@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Evan Shelhamer <shelhamer@imaginarynumber.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 03 05:07:36 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: LKML <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+To: Larry Finger <Larry.Finger@lwfinger.net>
+X-From: linux-kernel-owner@vger.kernel.org Mon Oct 03 05:59:40 2011
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAYsR-0002uS-HR
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 05:07:35 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1RAZgo-0004HR-KL
+	for glk-linux-kernel-3@lo.gmane.org; Mon, 03 Oct 2011 05:59:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753953Ab1JCDH0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Oct 2011 23:07:26 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51352
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753580Ab1JCDHZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Oct 2011 23:07:25 -0400
-Received: (qmail 22871 invoked by uid 107); 3 Oct 2011 03:12:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 02 Oct 2011 23:12:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Oct 2011 23:07:23 -0400
+	id S1753335Ab1JCD73 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Sun, 2 Oct 2011 23:59:29 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:58170 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751804Ab1JCD7V (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Sun, 2 Oct 2011 23:59:21 -0400
+Received: by iaqq3 with SMTP id q3so4549918iaq.19
+        for <multiple recipients>; Sun, 02 Oct 2011 20:59:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=XQuOhPWAHwPch8mFDih03sldBP1oCZdLGdFwfOD//UA=;
+        b=aJyqt5jHJaoHJGXn/nuEwfzhK1j/Z5HynzXQaIJKzDPni/dI2UFDIyADqJhuzh4fdY
+         gyDhHRD6OwkJ7IaSbfGp8b+0Uuz9Zyvrsqzf5TNzEbi8PeuGOvOdaaOSjdYzDhL0v7Vh
+         RZVVebJhM8yb4xXh13N9lsglFOsUtltM4WFy8=
+Received: by 10.42.174.9 with SMTP id t9mr3592997icz.100.1317614360419;
+        Sun, 02 Oct 2011 20:59:20 -0700 (PDT)
+Received: from elie (99-120-124-35.lightspeed.cicril.sbcglobal.net. [99.120.124.35])
+        by mx.google.com with ESMTPS id by18sm26471256ibb.1.2011.10.02.20.59.19
+        (version=SSLv3 cipher=OTHER);
+        Sun, 02 Oct 2011 20:59:19 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <CAE1pOi3bm72Rk+UYygS_bC9eh0VTPr-VQSdtBGqjgDpEzkutZw@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
+In-Reply-To: <4E892483.7070605@lwfinger.net>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182617>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182618>
 
-On Sun, Oct 02, 2011 at 04:40:14PM -0700, Hilco Wijbenga wrote:
+Hi,
 
-> That's however not the scenario that I'm talking about. I'm talking about doing
-> 
-> git checkout branch
-> git checkout master
-> 
-> or
-> 
-> git stash
-> git stash pop
-> 
-> In both cases all files (or at least all affected files, in case of
-> git stash) get the current time as their timestamp instead of the
-> timestamp they had before. This is forcing (completely unnecessary)
-> rebuilds. *Nothing* has changed but I have to do a complete rebuild
-> (well, I suppose I could "touch" all build artifacts and such but I'm
-> sure you get the idea).
-> 
-> I understand *why* it's happening (it's simply reusing the existing
-> Git functionality) but in the scenarios above nothing has really
-> changed, I should be able to pick up from where I left off, shouldn't
-> I?
+Larry Finger wrote:
 
-No. There are cases where that will fool timestamp-based tools. The
-problem is that the build products are not tracked by git, and so they
-are not changed when you switch branches. But the timestamps of build
-products and branches are compared.
+> I had my system freeze when doing a pull from Linus's repo. Since then,
+> every pull results in the following errors:
+>
+> ~> git pull
+> error: unable to resolve reference refs/tags/v3.1-rc8: Success
+> From git://github.com/torvalds/linux
+>  ! [new tag]         v3.1-rc8   -> v3.1-rc8  (unable to update local ref)
 
-So let's imagine you have two branches, with two different versions of
-foo.c, both of which use "make" to build them into foo.o. Their
-timestamps are from an hour ago and two hours ago. And that git restores
-those old timestamps. You do:
+Could you try pulling again with
+"/path/to/git/sources/bin-wrappers/git pull" after applying this
+patch?
 
-  git checkout master
-  make
+Thanks,
 
-Now foo.c is one hour old (from master). But foo.o is only a few seconds
-old (it was just created by make. Now you do:
-
-  git checkout branch
-  make
-
-Now foo.c is two hours old (from branch). But foo.o is still new, so
-make doesn't rebuild it, which is an error.
-
-Or did you really mean your example literally, as in you run two
-checkouts back to back, without running anything in between, and the
-second checkout restores the state before the first one. In that case,
-yes, it would be correct to keep the old timestamps. But this is an
-optimization that can only apply in a few very specific cases. And
-moreoever, how can git know when it is OK to apply that optimization? It
-has no idea what commands you might have run since the last time we were
-at "master".
-
--Peff
+diff --git i/refs.c w/refs.c
+index a615043b..b15f78a4 100644
+--- i/refs.c
++++ w/refs.c
+@@ -493,12 +493,15 @@ const char *resolve_ref(const char *ref, unsigned char *sha1, int reading, int *
+ 		char *buf;
+ 		int fd;
+ 
+-		if (--depth < 0)
++		if (--depth < 0) {
++			errno = ELOOP;
+ 			return NULL;
++		}
+ 
+ 		git_snpath(path, sizeof(path), "%s", ref);
+ 		/* Special case: non-existing file. */
+ 		if (lstat(path, &st) < 0) {
++			int saved_errno = errno;
+ 			struct ref_list *list = get_packed_refs(NULL);
+ 			while (list) {
+ 				if (!strcmp(ref, list->name)) {
+@@ -509,6 +512,7 @@ const char *resolve_ref(const char *ref, unsigned char *sha1, int reading, int *
+ 				}
+ 				list = list->next;
+ 			}
++			errno = saved_errno;
+ 			if (reading || errno != ENOENT)
+ 				return NULL;
+ 			hashclr(sha1);
+@@ -562,7 +566,8 @@ const char *resolve_ref(const char *ref, unsigned char *sha1, int reading, int *
+ 			*flag |= REF_ISSYMREF;
+ 	}
+ 	if (len < 40 || get_sha1_hex(buffer, sha1))
+-		return NULL;
++		die("ref %s is corrupt: length=%d, content=%.*s", ref,
++		    (int) len, (int) len, buffer);
+ 	return ref;
+ }
+ 
