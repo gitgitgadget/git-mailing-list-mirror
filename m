@@ -1,144 +1,89 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] daemon: log errors if we could not use some sockets
-Date: Tue,  4 Oct 2011 06:13:28 +1100
-Message-ID: <1317669208-16340-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] ident: check /etc/mailname if email is unknown
+Date: Mon, 03 Oct 2011 12:15:37 -0700
+Message-ID: <7vpqidga3q.fsf@alter.siamese.dyndns.org>
+References: <20111003045745.GA17604@elie>
+ <7v8vp2iqvc.fsf@alter.siamese.dyndns.org> <20111003061633.GB17289@elie>
+ <4E895FBD.8020904@viscovery.net>
+ <20105.40257.351258.425389@chiark.greenend.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 03 21:13:48 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Matt Kraai <kraai@ftbfs.org>, Gerrit Pape <pape@smarden.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Ian Jackson <ijackson@chiark.greenend.org.uk>
+X-From: git-owner@vger.kernel.org Mon Oct 03 21:15:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAnxT-0002Ws-Jh
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 21:13:47 +0200
+	id 1RAnzM-0003Hp-I9
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 21:15:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756915Ab1JCTNo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Oct 2011 15:13:44 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:34802 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753509Ab1JCTNm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 15:13:42 -0400
-Received: by ywb5 with SMTP id 5so3737948ywb.19
-        for <git@vger.kernel.org>; Mon, 03 Oct 2011 12:13:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=0E6Oa6O6te9yLZAkhK5MoNxoxEqKnnni4Jx1lwXAhT0=;
-        b=LG7tihHMIfBeDVYfoz17SQKF8+dFhBL8Whxs8bABbXVvL01DZz8s1P1+v9XN6mYhrh
-         m5B9rbltd91hgkgCVDMA8YzYWSK2tCekt4pnQ7iUzmnu0PHaDFytGTnh15pzxX7UVDh/
-         CYucpOzJ89f0Kpv6wJGMOYWVB4751XdnJNuts=
-Received: by 10.236.187.35 with SMTP id x23mr2068955yhm.6.1317669222374;
-        Mon, 03 Oct 2011 12:13:42 -0700 (PDT)
-Received: from pclouds@gmail.com (220-244-161-237.static.tpgi.com.au. [220.244.161.237])
-        by mx.google.com with ESMTPS id l75sm15212267yhj.24.2011.10.03.12.13.38
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 03 Oct 2011 12:13:41 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 04 Oct 2011 06:13:29 +1100
-X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
+	id S1757322Ab1JCTPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Oct 2011 15:15:41 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35247 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753509Ab1JCTPj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 15:15:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D5AB53B4;
+	Mon,  3 Oct 2011 15:15:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Mrn+HE5dH9pjmbjnKoU6+XyGwx0=; b=nW0KEF
+	qhvwIaqP00+Nd/4KzDeFRZ/ze82vIqK3bWMZvR8TYkpTna3IVmnNFgcDTDILhzUc
+	Gzp9zlYcZZ2+EzOY5TBz2i8/woUiYDs+GP1/CgGvfftRmzFiv82qllTPxkTeZ75U
+	4SSdfG/g268vBVt/B5YFUdOI8NIMlXZSuz+gc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HNp47+djjWS6ekNnbZKsjGyUW1DR8KEz
+	mcJcT2YnYfnknlICzNH6yGGn/PSP0G/S14TJlEvvpto8d2YJcvFZwxFz9p6tG/T8
+	V6eXMreOiT8DdxD9hd+A0b7NQUPKvXph3D0+lX0/E4QZQmJr6SCNUStTLgdpTIlZ
+	VPmyLrHOVgs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 03E2953B3;
+	Mon,  3 Oct 2011 15:15:39 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8159B53B1; Mon,  3 Oct 2011
+ 15:15:38 -0400 (EDT)
+In-Reply-To: <20105.40257.351258.425389@chiark.greenend.org.uk> (Ian
+ Jackson's message of "Mon, 3 Oct 2011 12:32:17 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1412B460-EDF4-11E0-994F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182698>
 
+Ian Jackson <ijackson@chiark.greenend.org.uk> writes:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- daemon.c |   37 +++++++++++++++++++++++++++++++++++++
- 1 files changed, 37 insertions(+), 0 deletions(-)
+>> > +	if (!mailname) {
+>> > +		if (errno != ENOENT)
+>> > +			warning("cannot open /etc/mailname: %s",
+>> > +				strerror(errno));
+>> 
+>> This warns on EACCES. Is that OK? (Just asking, I have no opinion.)
+>
+> I think that's correct.  Personally I'm a bit of an error handling
+> fascist and I would have it crash on EACCES but that's probably a bit
+> harsh.
 
-diff --git a/daemon.c b/daemon.c
-index cfd8cef..154d66e 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -739,6 +739,29 @@ struct socketlist {
- 	size_t alloc;
- };
-=20
-+static const char *ip2str(int family, struct sockaddr *sin, socklen_t =
-len)
-+{
-+#ifdef NO_IPV6
-+	static char ip[INET_ADDRSTRLEN];
-+#else
-+	static char ip[INET6_ADDRSTRLEN];
-+#endif
-+
-+	switch (family) {
-+#ifndef NO_IPV6
-+	case AF_INET6:
-+		inet_ntop(family, &((struct sockaddr_in6*)sin)->sin6_addr, ip, len);
-+		break;
-+#endif
-+	case AF_INET:
-+		inet_ntop(family, &((struct sockaddr_in*)sin)->sin_addr, ip, len);
-+		break;
-+	default:
-+		strcpy(ip, "<unknown>");
-+	}
-+	return ip;
-+}
-+
- #ifndef NO_IPV6
-=20
- static int setup_named_sock(char *listen_addr, int listen_port, struct=
- socketlist *socklist)
-@@ -785,15 +808,22 @@ static int setup_named_sock(char *listen_addr, in=
-t listen_port, struct socketlis
- #endif
-=20
- 		if (set_reuse_addr(sockfd)) {
-+			logerror("Could not set SO_REUSEADDR: %s", strerror(errno));
- 			close(sockfd);
- 			continue;
- 		}
-=20
- 		if (bind(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
-+			logerror("Could not bind to %s: %s",
-+				 ip2str(ai->ai_family, ai->ai_addr, ai->ai_addrlen),
-+				 strerror(errno));
- 			close(sockfd);
- 			continue;	/* not fatal */
- 		}
- 		if (listen(sockfd, 5) < 0) {
-+			logerror("Could not listen to %s: %s",
-+				 ip2str(ai->ai_family, ai->ai_addr, ai->ai_addrlen),
-+				 strerror(errno));
- 			close(sockfd);
- 			continue;	/* not fatal */
- 		}
-@@ -840,16 +870,23 @@ static int setup_named_sock(char *listen_addr, in=
-t listen_port, struct socketlis
- 		return 0;
-=20
- 	if (set_reuse_addr(sockfd)) {
-+		logerror("Could not set SO_REUSEADDR: %s", strerror(errno));
- 		close(sockfd);
- 		return 0;
- 	}
-=20
- 	if ( bind(sockfd, (struct sockaddr *)&sin, sizeof sin) < 0 ) {
-+		logerror("Could not listen to %s: %s",
-+			 ip2str(AF_INET, (struct sockaddr *)&sin, sizeof(sin)),
-+			 strerror(errno));
- 		close(sockfd);
- 		return 0;
- 	}
-=20
- 	if (listen(sockfd, 5) < 0) {
-+		logerror("Could not listen to %s: %s",
-+			 ip2str(AF_INET, (struct sockaddr *)&sin, sizeof(sin)),
-+			 strerror(errno));
- 		close(sockfd);
- 		return 0;
- 	}
---=20
-1.7.3.1.256.g2539c.dirty
+It is not just harsh but is outright wrong if the platform is not Debian
+and the platform happens to use the file for other purposes that does not
+require normal users to be able to read the file.
+
+It _might_ make sense to do
+
+        #ifndef DEBIAN
+        #define add_mailname_host(x,y) (-1)
+        #else
+        static int add_mailname_host(char *buf, size_t len)
+        {
+                ...
+        }
+        #endif
