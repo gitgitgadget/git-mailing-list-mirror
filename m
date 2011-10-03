@@ -1,81 +1,92 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] show git tag output in pager
-Date: Mon, 03 Oct 2011 14:57:09 +0200
-Message-ID: <vpqwrcmw7ve.fsf@bauges.imag.fr>
-References: <20110927134235.GA27478@zelva.suse.cz>
-	<vpqehz2cbk4.fsf@bauges.imag.fr>
-	<20110929093749.GB27152@zelva.suse.cz>
-	<20110930104241.GB24507@sigill.intra.peff.net>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH] diff: resurrect XDF_NEED_MINIMAL with --minimal
+Date: Mon, 3 Oct 2011 21:04:28 +0800
+Message-ID: <CALUzUxrfUF5sbgSv3dwkBC6cggV3mqRDDMrpP-zX_86xdt6ZYA@mail.gmail.com>
+References: <7voby0j86c.fsf@alter.siamese.dyndns.org>
+	<20111003123843.GA15493@elie>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michal Vyskocil <mvyskocil@suse.cz>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 03 14:58:15 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 03 15:04:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAi60-00008z-Tz
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 14:58:13 +0200
+	id 1RAiCD-00029N-EK
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 15:04:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755755Ab1JCM6H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Oct 2011 08:58:07 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:50103 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755560Ab1JCM6F (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 08:58:05 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p93Csp1U018385
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 3 Oct 2011 14:54:51 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1RAi4z-0003z9-BN; Mon, 03 Oct 2011 14:57:09 +0200
-In-Reply-To: <20110930104241.GB24507@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 30 Sep 2011 06:42:41 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 03 Oct 2011 14:54:52 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p93Csp1U018385
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1318251294.05072@IZRGz6v+iqQtYyFYgsToVg
+	id S1755818Ab1JCNEd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Oct 2011 09:04:33 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:33083 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755645Ab1JCNEc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Oct 2011 09:04:32 -0400
+Received: by eya28 with SMTP id 28so2743704eya.19
+        for <git@vger.kernel.org>; Mon, 03 Oct 2011 06:04:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Z/2yCDSUU0uBxH4HLS2oA+yT3mfCiVWZOeh8JR1M50s=;
+        b=s+Rgu5YWYapA5uRAkMdTk2QyR2PKBBBI6wLEd8xAvXfARZwVL9M+blnnQHGy0xSQTW
+         TarkPNNcPn8kJZtdybhvI5k+tSzw8nyFqYShTsId0zyuAcd3ljYliG79rOFcrhgxdrMN
+         IRBSHUq2DL2Z4S6/HT3ktgP2xpjIsGSADrPkA=
+Received: by 10.223.42.24 with SMTP id q24mr15018183fae.45.1317647069073; Mon,
+ 03 Oct 2011 06:04:29 -0700 (PDT)
+Received: by 10.223.81.74 with HTTP; Mon, 3 Oct 2011 06:04:28 -0700 (PDT)
+In-Reply-To: <20111003123843.GA15493@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182660>
 
-Jeff King <peff@peff.net> writes:
+On Mon, Oct 3, 2011 at 8:38 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
+ote:
 
-> On Thu, Sep 29, 2011 at 11:37:49AM +0200, Michal Vyskocil wrote:
+Thanks for the Cc, Johnathan.
+
+> Junio C Hamano wrote:
 >
->> On Tue, Sep 27, 2011 at 04:19:39PM +0200, Matthieu Moy wrote:
->> > The commit message should explain why this is needed, and in particular
->> > why you prefer this to setting pager.tag in your ~/.gitconfig.
->> 
->> Opps! I read a documentation, but I did not realize this works for all
->> commands and not only for them calling setup_pager(). Then sorry, no
->> change is needed.
+>> =A0* This together with Ren=E9's c5aa906 (Revert removal of multi-ma=
+tch
+>> =A0 =A0discard heuristic in 27af01, 2011-09-25) on top of v1.7.7 see=
+ms to give
+>> =A0 =A0identical diff output as v1.7.1 (e.g. "git diff-tree -p v2.6.=
+39 v3.0"
+>> =A0 =A0in the kernel repository, with "--minimal").
 >
-> I don't think you want to set pager.tag. It will invoke the pager for
-> all tag subcommands, including tag creation and deletion.
+> Very neat.
 
-That's the kind of argument/discussion I was expecting in the commit
-message.
+Interesting. Clearly there is more than just the multi-match discard
+heuristic in (xdl_clean_mmatch() and xdl_cleanup_records()).
 
-> I think instead, you want some way for commands to say "OK, I'm in a
-> subcommand that might or might not want a pager now".
+> diff --git i/diff.c w/diff.c
+> index fcc00780..2282f86f 100644
+> --- i/diff.c
+> +++ w/diff.c
+> @@ -3393,6 +3393,10 @@ int diff_opt_parse(struct diff_options *option=
+s, const char **av, int ac)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0DIFF_XDL_SET(options, IGNORE_WHITESPAC=
+E_AT_EOL);
+> =A0 =A0 =A0 =A0else if (!strcmp(arg, "--patience"))
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0DIFF_XDL_SET(options, PATIENCE_DIFF);
+> + =A0 =A0 =A0 else if (!strcmp(arg, "--minimal"))
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 DIFF_XDL_SET(options, NEED_MINIMAL);
+> + =A0 =A0 =A0 else if (!strcmp(arg, "--no-minimal"))
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 DIFF_XDL_CLR(options, NEED_MINIMAL);
+> =A0 =A0 =A0 =A0else if (!strcmp(arg, "--histogram"))
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0DIFF_XDL_SET(options, HISTOGRAM_DIFF);
+>
+>
 
-Right.
+That's an improvement, but it would be even better if it was placed
+above the --<strategy> options, instead of being placed between them.
 
-I like the try_subcommand_pager idea. Ideally, there would also be a
-nice mechanism to set defaults for subcommands, so that "git tag
-<whatever>" does the right thing without configuration.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+--=20
+Cheers,
+Ray Chuan
