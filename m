@@ -1,80 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] git checkout $tree path
-Date: Mon, 03 Oct 2011 09:08:31 -0700
-Message-ID: <7vmxdigirk.fsf@alter.siamese.dyndns.org>
-References: <7vk48rq854.fsf@alter.siamese.dyndns.org>
- <20111003102647.GD16078@sigill.intra.peff.net>
+From: Chris Friesen <chris.friesen@genband.com>
+Subject: strange behaviour, default branch on clone not as expected
+Date: Mon, 03 Oct 2011 10:50:41 -0600
+Message-ID: <4E89E7E1.4000907@genband.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 03 18:08:41 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 03 18:51:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAl4K-0007Uv-Ik
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 18:08:40 +0200
+	id 1RAljM-0007Zm-Va
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 18:51:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756660Ab1JCQIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Oct 2011 12:08:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58830 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751664Ab1JCQIf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 12:08:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A84F841D3;
-	Mon,  3 Oct 2011 12:08:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=sOIWK1kjwIpdGlU5yrwxw0dreN4=; b=nAjA10hPFn9Eosy3CM0b
-	Lqp1ciFa+Lc1srbOfl0RmqvoHSK5Dx/aV5qlzNC6IY9XiTYSVipeqsCo/F0QFsxK
-	qNZ3DYPeaBxEOTovlwimIhXGrdFeAmsiKSLgozsl7sUlgmiddv8nFcWhH5M6EwGd
-	lZxnjD3j9ICK8Yz+M6xIS7Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=Z+4K4mqoPKnrj5xaHwJIsGMiK6729Dgk8FH8DAk5e5VXDx
-	aui+IRggRpk0JHWRmwRJcQZ9TEGJSRhHELpt9qhlIHZUOzcPzjCJiG1VwRsWu1/o
-	tHrqc6EFYpxtDRLLvINts/hLSQv8vV231gmLj2sxmTqZgyIGOuBtbty7R07Nk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9FA8141D2;
-	Mon,  3 Oct 2011 12:08:34 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 36A7141D1; Mon,  3 Oct 2011
- 12:08:34 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F1D932BC-EDD9-11E0-A644-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756903Ab1JCQvA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Oct 2011 12:51:00 -0400
+Received: from exprod7og109.obsmtp.com ([64.18.2.171]:57137 "EHLO
+	exprod7og109.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753812Ab1JCQu7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 12:50:59 -0400
+Received: from mail.genband.com ([63.149.188.88]) (using TLSv1) by exprod7ob109.postini.com ([64.18.6.12]) with SMTP;
+	Mon, 03 Oct 2011 09:50:59 PDT
+Received: from gbausmail.genband.com ([172.16.21.62]) by mail.genband.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Mon, 3 Oct 2011 11:50:42 -0500
+Received: from [1.220.38.209] ([1.220.38.209]) by gbausmail.genband.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Mon, 3 Oct 2011 11:50:42 -0500
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.22) Gecko/20110906 Fedora/3.1.14-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.14
+X-OriginalArrivalTime: 03 Oct 2011 16:50:42.0350 (UTC) FILETIME=[967644E0:01CC81EC]
+X-TM-AS-Product-Ver: SMEX-8.0.0.4160-6.500.1024-18424.000
+X-TM-AS-Result: No--9.796600-5.000000-31
+X-TM-AS-User-Approved-Sender: No
+X-TM-AS-User-Blocked-Sender: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182671>
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> But we can't distinguish those two cases without actually having a merge
-> base. And this isn't a merge; it's not about picking changes from
-> master, it's about saying "make dir look like it does in master". So
-> in that sense, the most straightforward thing is your second
-> alternative: afterwards, we should have only the files in "dir" that
-> master has.
+I have a bare repository on a server with (among others) branches 
+"atca6900-ecgl" and "ncgl".  The "HEAD" file in the bare repository 
+contains "ref: refs/heads/ncgl" and "git branch" in the bare repository 
+shows an asterisk beside "ncgl".
 
-We can think of it both ways, but the "make it look like the other one"
-unfortunately is too big a departure from the traditional semantics. At
-least I wanted "checkout master -- $path" to mean "I want to copy $path
-out of master and _overlay_ that on top of what I have now", similar to
-the way how "tar xf master.tar $path" and "cp -r ../master/$path $path"
-would be used, so that the command can help the user advance what is in
-progress and already underway in $path in the current working tree.
+However, if I clone the bare repository I get "atca-6900-ecgl" as the 
+default branch.  ".git/HEAD" contains "ref: refs/heads/atca6900-ecgl".
 
-Replacing could be easily done with "git rm -r [--cached] $path" followed
-by "git checkout $tree $path" under the original semantics, but overlaying
-is not very easily done if "git checkout $tree $path" had your "make $path
-look like it does in $tree" semantics.
+Something that might be relevent--currently both of these branches 
+actually point to the same commit (Don't ask, it's a vendor thing.) thus 
+"refs/heads/atca6900-ecgl" and "refs/heads/ncgl" have the same contents. 
+  I find it suspicious that atca6900-ecgl is alphabetically before ncgl 
+and that they point to the same commit ID...but I don't know how it 
+works internally so this may be just coincidence.
 
-The change brought in by the RFC/PATCH does change the behaviour, and I am
-fairly comfortable now to say that it is a bugfix ("copy and overlay" a la
-"tar xf" never clobbers/removes files not in the source, but the current
-code does).
+Any ideas what's going on?  I'm using git 1.7.3.2 if it makes any 
+difference.
+
+Chris
+
+
+
+-- 
+Chris Friesen
+Software Developer
+GENBAND
+chris.friesen@genband.com
+www.genband.com
