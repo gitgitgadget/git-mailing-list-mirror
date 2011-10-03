@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 1/9] po/is.po: add Icelandic translation
-Date: Mon,  3 Oct 2011 18:58:09 +0000
-Message-ID: <1317668297-2702-2-git-send-email-avarab@gmail.com>
+Subject: [PATCH 4/9] po/en_GB.po: add British English translation
+Date: Mon,  3 Oct 2011 18:58:12 +0000
+Message-ID: <1317668297-2702-5-git-send-email-avarab@gmail.com>
 References: <1317668297-2702-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -17,72 +17,79 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 03 20:58:50 2011
+X-From: git-owner@vger.kernel.org Mon Oct 03 20:59:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAniy-0005F0-V8
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 20:58:50 +0200
+	id 1RAnjU-0005Qd-0M
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 20:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756565Ab1JCS6o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Oct 2011 14:58:44 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:60232 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751853Ab1JCS6n (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 14:58:43 -0400
-Received: by ywb5 with SMTP id 5so3723477ywb.19
-        for <git@vger.kernel.org>; Mon, 03 Oct 2011 11:58:42 -0700 (PDT)
+	id S1756762Ab1JCS7N convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Oct 2011 14:59:13 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:55265 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754145Ab1JCS7K (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 14:59:10 -0400
+Received: by bkbzt4 with SMTP id zt4so5626680bkb.19
+        for <git@vger.kernel.org>; Mon, 03 Oct 2011 11:59:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=E88SN/OK+Wac2n4V8XRkPPV9F+B8HCH8U1j4pHoCw6s=;
-        b=rOC6l8PUwzGH8XLOZW14otmtk6XFfzNvqhHToL7S18ajEkKzcjjYlf09ia+T4D9Rma
-         XzHzxsNYAkdFHhZPmtR4xRNrOaiJo+NeW/rFhlFmBKNBoWnZNtxq+K5VFZokKL2TLRi6
-         sJfHb/SOwJRHwXkxAn1gqaT1yPWguvEIZe+Ak=
-Received: by 10.223.39.25 with SMTP id d25mr307433fae.131.1317668321028;
-        Mon, 03 Oct 2011 11:58:41 -0700 (PDT)
+        bh=l776++rL68y/mAqND0GvzICEuKkY8aZ92APS0eCcRAQ=;
+        b=omAuFyPpR5Re2WSUBugKTb3Kg12ht+NAhoZ0OVhurkLlENucNexlUbA4i9dbfuBlpr
+         Ol7LnSdgtPKQkc/Q/wRq/X6+xY7zdH7dvpqZLzUzndEPor+Jnhg0TA7IsJ67kgpRPnfM
+         SKMwY/i3QUuOsp6SP/ViVchBNJ85sK05zh1eY=
+Received: by 10.223.39.20 with SMTP id d20mr346504fae.70.1317668348723;
+        Mon, 03 Oct 2011 11:59:08 -0700 (PDT)
 Received: from w.nix.is (w.nix.is. [188.40.98.140])
-        by mx.google.com with ESMTPS id f25sm22312819faf.7.2011.10.03.11.58.38
+        by mx.google.com with ESMTPS id f25sm22312819faf.7.2011.10.03.11.59.07
         (version=SSLv3 cipher=OTHER);
-        Mon, 03 Oct 2011 11:58:38 -0700 (PDT)
+        Mon, 03 Oct 2011 11:59:08 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.3
 In-Reply-To: <1317668297-2702-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182689>
 
-Translate some non-TEST into Icelandic. This is far from a complete
-translation, I've only translated init-db.c.
+=46rom: Sam Reed <sam@reedyboy.net>
 
+Translate three Git messages from US to British English. These all had
+to do with z v.s. s differences.
+
+Signed-off-by: Sam Reed <sam@reedyboy.net>
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- po/is.po | 3412 ++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+ po/en_GB.po | 3387 +++++++++++++++++++++++++++++++++++++++++++++++++++=
 ++++++++
- 1 files changed, 3412 insertions(+), 0 deletions(-)
- create mode 100644 po/is.po
+ 1 files changed, 3387 insertions(+), 0 deletions(-)
+ create mode 100644 po/en_GB.po
 
-diff --git a/po/is.po b/po/is.po
+diff --git a/po/en_GB.po b/po/en_GB.po
 new file mode 100644
-index 0000000..db8cb65
+index 0000000..97c7abc
 --- /dev/null
-+++ b/po/is.po
-@@ -0,0 +1,3412 @@
++++ b/po/en_GB.po
+@@ -0,0 +1,3387 @@
++# British English translations for Git.
++# Copyright (C) 2010 Sam Reed <sam@reedyboy.net>
++# This file is distributed under the same license as the Git package.
++# Sam Reed <sam@reedyboy.net>, 2010.
++#
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: Git\n"
 +"Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
 +"POT-Creation-Date: 2011-07-06 19:20+0000\n"
-+"PO-Revision-Date: 2011-07-06 19:07 +0000\n"
-+"Last-Translator: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail=
-=2Ecom>\n"
++"PO-Revision-Date: 2011-07-06 19:24+0000\n"
++"Last-Translator: Sam Reed <sam@reedyboy.net>\n"
 +"Language-Team: Git Mailing List <git@vger.kernel.org>\n"
-+"Language: \n"
++"Language: en-gb\n"
 +"MIME-Version: 1.0\n"
 +"Content-Type: text/plain; charset=3DUTF-8\n"
 +"Content-Transfer-Encoding: 8bit\n"
@@ -93,9 +100,9 @@ index 0000000..db8cb65
 +msgstr ""
 +
 +#: diff.c:109
-+#, fuzzy, c-format
++#, c-format
 +msgid "  Unknown dirstat parameter '%.*s'\n"
-+msgstr "gat ekki stat-a=C3=B0 sni=C3=B0i=C3=B0 '%s'"
++msgstr ""
 +
 +#: diff.c:205
 +#, c-format
@@ -268,7 +275,7 @@ d)"
 +#: wt-status.c:731
 +#, fuzzy
 +msgid "Initial commit"
-+msgstr "Bj=C3=B3 til t=C3=B3ma"
++msgstr ""
 +
 +#: wt-status.c:745
 +msgid "Untracked"
@@ -389,14 +396,13 @@ d)"
 +msgstr ""
 +
 +#: builtin/add.c:288
-+#, fuzzy
 +msgid "Could not write patch"
-+msgstr "Gat ekki gert %s skrifanlega af h=C3=B3p"
++msgstr ""
 +
 +#: builtin/add.c:293
-+#, fuzzy, c-format
++#, c-format
 +msgid "Could not stat '%s'"
-+msgstr "gat ekki stat-a=C3=B0 '%s'"
++msgstr ""
 +
 +#: builtin/add.c:295
 +msgid "Empty patch. Aborted."
@@ -504,9 +510,8 @@ v.c:77
 +msgstr ""
 +
 +#: builtin/branch.c:169
-+#, fuzzy
 +msgid "cannot use -a with -d"
-+msgstr "finn ekki n=C3=BAverandi m=C3=B6ppu"
++msgstr ""
 +
 +#: builtin/branch.c:175
 +msgid "Couldn't look up commit object for HEAD"
@@ -697,9 +702,9 @@ ch name"
 +msgstr ""
 +
 +#: builtin/checkout.c:527
-+#, fuzzy, c-format
++#, c-format
 +msgid "Can not do reflog for '%s'\n"
-+msgstr "gat ekki opna=C3=B0 m=C3=B6ppuna '%s'"
++msgstr ""
 +
 +#: builtin/checkout.c:557
 +msgid "HEAD is now at"
@@ -915,24 +920,24 @@ sing to "
 +msgstr ""
 +
 +#: builtin/clone.c:241
-+#, fuzzy, c-format
++#, c-format
 +msgid "failed to open '%s'"
-+msgstr "gat ekki opna=C3=B0 m=C3=B6ppuna '%s'"
++msgstr ""
 +
 +#: builtin/clone.c:245
-+#, fuzzy, c-format
++#, c-format
 +msgid "failed to create directory '%s'"
-+msgstr "brj=C3=A1lu=C3=B0 git mappa %s"
++msgstr ""
 +
 +#: builtin/clone.c:247 builtin/diff.c:74
-+#, fuzzy, c-format
++#, c-format
 +msgid "failed to stat '%s'"
-+msgstr "gat ekki stat-a=C3=B0 '%s'"
++msgstr ""
 +
 +#: builtin/clone.c:249
-+#, fuzzy, c-format
++#, c-format
 +msgid "%s exists and is not a directory"
-+msgstr "brj=C3=A1lu=C3=B0 git mappa %s"
++msgstr ""
 +
 +#: builtin/clone.c:263
 +#, c-format
@@ -945,14 +950,14 @@ sing to "
 +msgstr ""
 +
 +#: builtin/clone.c:278
-+#, fuzzy, c-format
++#, c-format
 +msgid "failed to create link '%s'"
-+msgstr "gat ekki lesi=C3=B0 tengilinn '%s'"
++msgstr ""
 +
 +#: builtin/clone.c:282
-+#, fuzzy, c-format
++#, c-format
 +msgid "failed to copy file to '%s'"
-+msgstr "gat ekki afrita=C3=B0 '%s' til '%s'"
++msgstr ""
 +
 +#: builtin/clone.c:311
 +#, c-format
@@ -998,9 +1003,9 @@ ory."
 +msgstr ""
 +
 +#: builtin/clone.c:461
-+#, fuzzy, c-format
++#, c-format
 +msgid "could not create work tree dir '%s'."
-+msgstr "Get ekki opna=C3=B0 tr=C3=A9=C3=B0 '%s'"
++msgstr ""
 +
 +#: builtin/clone.c:480
 +#, c-format
@@ -1087,9 +1092,8 @@ ution.\n"
 +msgstr ""
 +
 +#: builtin/commit.c:456
-+#, fuzzy
 +msgid "cannot read the index"
-+msgstr "gat ekki lesi=C3=B0 tengilinn '%s'"
++msgstr ""
 +
 +#: builtin/commit.c:476
 +msgid "unable to write temporary index file"
@@ -1128,9 +1132,9 @@ ution.\n"
 +msgstr ""
 +
 +#: builtin/commit.c:674
-+#, fuzzy, c-format
++#, c-format
 +msgid "could not read log file '%s'"
-+msgstr "gat ekki lesi=C3=B0 tengilinn '%s'"
++msgstr ""
 +
 +#: builtin/commit.c:680
 +msgid "commit has empty message"
@@ -1145,14 +1149,14 @@ ution.\n"
 +msgstr ""
 +
 +#: builtin/commit.c:704
-+#, fuzzy, c-format
++#, c-format
 +msgid "could not read '%s'"
-+msgstr "gat ekki lesi=C3=B0 tengilinn '%s'"
++msgstr ""
 +
 +#: builtin/commit.c:732
-+#, fuzzy, c-format
++#, c-format
 +msgid "could not open '%s'"
-+msgstr "gat ekki opna=C3=B0 m=C3=B6ppuna '%s'"
++msgstr ""
 +
 +#: builtin/commit.c:756
 +msgid "could not write commit template"
@@ -1197,9 +1201,8 @@ ution.\n"
 +msgstr ""
 +
 +#: builtin/commit.c:829
-+#, fuzzy
 +msgid "Cannot read index"
-+msgstr "gat ekki lesi=C3=B0 tengilinn '%s'"
++msgstr ""
 +
 +#: builtin/commit.c:869
 +msgid "Error building trees"
@@ -1361,9 +1364,9 @@ hs..."
 +msgstr ""
 +
 +#: builtin/describe.c:287
-+#, fuzzy, c-format
++#, c-format
 +msgid "no tag exactly matches '%s'"
-+msgstr "gat ekki stat-a=C3=B0 sni=C3=B0i=C3=B0 '%s'"
++msgstr ""
 +
 +#: builtin/describe.c:289
 +#, c-format
@@ -1452,9 +1455,9 @@ hs..."
 +msgstr ""
 +
 +#: builtin/fetch.c:252
-+#, fuzzy, c-format
++#, c-format
 +msgid "object %s not found"
-+msgstr "sni=C3=B0in funndust ekki %s"
++msgstr ""
 +
 +#: builtin/fetch.c:257
 +msgid "[up to date]"
@@ -1502,9 +1505,9 @@ hs..."
 +msgstr ""
 +
 +#: builtin/fetch.c:361 builtin/fetch.c:684
-+#, fuzzy, c-format
++#, c-format
 +msgid "cannot open %s: %s\n"
-+msgstr "gat ekki opna=C3=B0 m=C3=B6ppuna '%s'"
++msgstr ""
 +
 +#: builtin/fetch.c:439
 +#, c-format
@@ -1618,9 +1621,9 @@ hs..."
 +msgstr ""
 +
 +#: builtin/gc.c:103
-+#, fuzzy, c-format
++#, c-format
 +msgid "insanely long object directory %.*s"
-+msgstr "brj=C3=A1lu=C3=B0 git mappa %s"
++msgstr ""
 +
 +#: builtin/gc.c:223
 +#, c-format
@@ -1681,9 +1684,9 @@ ve them."
 +msgstr ""
 +
 +#: builtin/grep.c:691
-+#, fuzzy, c-format
++#, c-format
 +msgid "cannot open '%s'"
-+msgstr "gat ekki opna=C3=B0 m=C3=B6ppuna '%s'"
++msgstr ""
 +
 +#: builtin/grep.c:974
 +msgid "no pattern given."
@@ -1713,74 +1716,72 @@ ve them."
 +#: builtin/init-db.c:35
 +#, c-format
 +msgid "Could not make %s writable by group"
-+msgstr "Gat ekki gert %s skrifanlega af h=C3=B3p"
++msgstr ""
 +
 +#: builtin/init-db.c:62
 +#, c-format
 +msgid "insanely long template name %s"
-+msgstr "brj=C3=A1l=C3=A6=C3=B0islega langt sni=C3=B0snafn %s"
++msgstr ""
 +
 +#: builtin/init-db.c:67
 +#, c-format
 +msgid "cannot stat '%s'"
-+msgstr "gat ekki stat-a=C3=B0 '%s'"
++msgstr ""
 +
 +#: builtin/init-db.c:73
 +#, c-format
 +msgid "cannot stat template '%s'"
-+msgstr "gat ekki stat-a=C3=B0 sni=C3=B0i=C3=B0 '%s'"
++msgstr ""
 +
 +#: builtin/init-db.c:80
 +#, c-format
 +msgid "cannot opendir '%s'"
-+msgstr "gat ekki opna=C3=B0 m=C3=B6ppuna '%s'"
++msgstr ""
 +
 +#: builtin/init-db.c:97
 +#, c-format
 +msgid "cannot readlink '%s'"
-+msgstr "gat ekki lesi=C3=B0 tengilinn '%s'"
++msgstr ""
 +
 +#: builtin/init-db.c:99
 +#, c-format
 +msgid "insanely long symlink %s"
-+msgstr "brj=C3=A1l=C3=A6=C3=B0islega langur tengill %s"
++msgstr ""
 +
 +#: builtin/init-db.c:102
 +#, c-format
 +msgid "cannot symlink '%s' '%s'"
-+msgstr "gat ekki b=C3=BAi=C3=B0 til tengilinn '%s' '%s'"
++msgstr ""
 +
 +#: builtin/init-db.c:106
 +#, c-format
 +msgid "cannot copy '%s' to '%s'"
-+msgstr "gat ekki afrita=C3=B0 '%s' til '%s'"
++msgstr ""
 +
 +#: builtin/init-db.c:110
 +#, c-format
 +msgid "ignoring template %s"
-+msgstr "hunsa sni=C3=B0i=C3=B0 %s"
++msgstr ""
 +
 +#: builtin/init-db.c:133
 +#, c-format
 +msgid "insanely long template path %s"
-+msgstr "brj=C3=A1l=C3=A6=C3=B0islega l=C3=B6ng sl=C3=B3=C3=B0 =C3=A1 s=
-ni=C3=B0 %s"
++msgstr ""
 +
 +#: builtin/init-db.c:141
 +#, c-format
 +msgid "templates not found %s"
-+msgstr "sni=C3=B0in funndust ekki %s"
++msgstr ""
 +
 +#: builtin/init-db.c:154
 +#, c-format
 +msgid "not copying templates of a wrong format version %d from '%s'"
-+msgstr "afrita ekki sni=C3=B0in vegna rangar =C3=BAtg=C3=A1fu %d fr=C3=
-=A1 '%s'"
++msgstr ""
 +
 +#: builtin/init-db.c:192
 +#, c-format
 +msgid "insane git directory %s"
-+msgstr "brj=C3=A1lu=C3=B0 git mappa %s"
++msgstr ""
 +
 +#: builtin/init-db.c:322 builtin/init-db.c:325
 +#, c-format
@@ -1810,33 +1811,33 @@ ni=C3=B0 %s"
 +#: builtin/init-db.c:419
 +#, c-format
 +msgid "%s%s Git repository in %s%s\n"
-+msgstr "%s%s Git lind =C3=AD %s%s\n"
++msgstr ""
 +
 +#: builtin/init-db.c:420
 +msgid "Reinitialized existing"
-+msgstr "Endurger=C3=B0i"
++msgstr "Reinitialised existing"
 +
 +#: builtin/init-db.c:420
 +msgid "Initialized empty"
-+msgstr "Bj=C3=B3 til t=C3=B3ma"
++msgstr "Initialised empty"
 +
 +#: builtin/init-db.c:421
 +msgid " shared"
-+msgstr " sameiginlega"
++msgstr ""
 +
 +#: builtin/init-db.c:440
 +msgid "cannot tell cwd"
-+msgstr "finn ekki n=C3=BAverandi m=C3=B6ppu"
++msgstr ""
 +
 +#: builtin/init-db.c:521 builtin/init-db.c:528
 +#, c-format
 +msgid "cannot mkdir %s"
-+msgstr "get ekki b=C3=BAi=C3=B0 til m=C3=B6ppuna %s"
++msgstr ""
 +
 +#: builtin/init-db.c:532
 +#, c-format
 +msgid "cannot chdir to %s"
-+msgstr "get ekki fari=C3=B0 inn =C3=AD m=C3=B6ppuna %s"
++msgstr ""
 +
 +#: builtin/init-db.c:554
 +#, c-format
@@ -1845,17 +1846,15 @@ ni=C3=B0 %s"
 or --git-"
 +"dir=3D<directory>)"
 +msgstr ""
-+"%s (e=C3=B0a --work-tree=3D<mappa>) ekki leyfilegt =C3=A1samt %s (e=C3=
-=B0a --git-dir=3D<mappa>)"
 +
 +#: builtin/init-db.c:578
 +msgid "Cannot access current working directory"
-+msgstr "Get ekki opna=C3=B0 n=C3=BAverandi m=C3=B6ppu"
++msgstr ""
 +
 +#: builtin/init-db.c:585
 +#, c-format
 +msgid "Cannot access work tree '%s'"
-+msgstr "Get ekki opna=C3=B0 tr=C3=A9=C3=B0 '%s'"
++msgstr ""
 +
 +#: builtin/log.c:186
 +#, c-format
@@ -1887,9 +1886,9 @@ c:1492
 +msgstr ""
 +
 +#: builtin/log.c:688
-+#, fuzzy, c-format
++#, c-format
 +msgid "Cannot open patch file %s"
-+msgstr "gat ekki opna=C3=B0 m=C3=B6ppuna '%s'"
++msgstr ""
 +
 +#: builtin/log.c:702
 +msgid "Need exactly one range."
@@ -1908,9 +1907,9 @@ c:1492
 +msgstr ""
 +
 +#: builtin/log.c:872
-+#, fuzzy, c-format
++#, c-format
 +msgid "insane in-reply-to: %s"
-+msgstr "brj=C3=A1lu=C3=B0 git mappa %s"
++msgstr ""
 +
 +#: builtin/log.c:945
 +msgid "Two output directories?"
@@ -1932,7 +1931,7 @@ c:1492
 +#: builtin/log.c:1188 builtin/shortlog.c:284
 +#, c-format
 +msgid "unrecognized argument: %s"
-+msgstr ""
++msgstr "unrecognised argument: %s"
 +
 +#: builtin/log.c:1191
 +msgid "--name-only does not make sense"
@@ -2078,9 +2077,9 @@ ually.\n"
 +
 +#: builtin/merge.c:841 builtin/merge.c:920 builtin/merge.c:1427
 +#: builtin/merge.c:1436 builtin/revert.c:210
-+#, fuzzy, c-format
++#, c-format
 +msgid "Could not open '%s' for writing"
-+msgstr "Gat ekki gert %s skrifanlega af h=C3=B3p"
++msgstr ""
 +
 +#: builtin/merge.c:852
 +#, c-format
@@ -2221,9 +2220,9 @@ ed\n"
 +msgstr ""
 +
 +#: builtin/mv.c:103
-+#, fuzzy, c-format
++#, c-format
 +msgid "Checking rename of '%s' to '%s'\n"
-+msgstr "gat ekki afrita=C3=B0 '%s' til '%s'"
++msgstr ""
 +
 +#: builtin/mv.c:107
 +msgid "bad source"
@@ -2302,9 +2301,9 @@ ed\n"
 +msgstr ""
 +
 +#: builtin/notes.c:175 builtin/tag.c:303
-+#, fuzzy, c-format
++#, c-format
 +msgid "could not create file '%s'"
-+msgstr "gat ekki lesi=C3=B0 tengilinn '%s'"
++msgstr ""
 +
 +#: builtin/notes.c:189
 +msgid "Please supply the note contents using either -m or -F option"
@@ -2325,14 +2324,14 @@ ed\n"
 +msgstr ""
 +
 +#: builtin/notes.c:251 builtin/tag.c:448
-+#, fuzzy, c-format
++#, c-format
 +msgid "cannot read '%s'"
-+msgstr "gat ekki lesi=C3=B0 tengilinn '%s'"
++msgstr ""
 +
 +#: builtin/notes.c:253 builtin/tag.c:451
-+#, fuzzy, c-format
++#, c-format
 +msgid "could not open or read '%s'"
-+msgstr "gat ekki opna=C3=B0 m=C3=B6ppuna '%s'"
++msgstr ""
 +
 +#: builtin/notes.c:272 builtin/notes.c:445 builtin/notes.c:447
 +#: builtin/notes.c:507 builtin/notes.c:561 builtin/notes.c:644
@@ -2374,9 +2373,9 @@ ed\n"
 +msgstr ""
 +
 +#: builtin/notes.c:456
-+#, fuzzy, c-format
++#, c-format
 +msgid "Failed to copy notes from '%s' to '%s'"
-+msgstr "gat ekki afrita=C3=B0 '%s' til '%s'"
++msgstr ""
 +
 +#: builtin/notes.c:500 builtin/notes.c:554 builtin/notes.c:627
 +#: builtin/notes.c:639 builtin/notes.c:712 builtin/notes.c:759
@@ -2794,9 +2793,9 @@ stead."
 +msgstr ""
 +
 +#: builtin/tag.c:126
-+#, fuzzy, c-format
++#, c-format
 +msgid "tag '%s' not found."
-+msgstr "sni=C3=B0in funndust ekki %s"
++msgstr ""
 +
 +#: builtin/tag.c:141
 +#, c-format
@@ -3219,14 +3218,12 @@ h."
 +msgstr ""
 +
 +#: git-stash.sh:80
-+#, fuzzy
 +msgid "Cannot save the current index state"
-+msgstr "Get ekki opna=C3=B0 n=C3=BAverandi m=C3=B6ppu"
++msgstr ""
 +
 +#: git-stash.sh:94 git-stash.sh:107
-+#, fuzzy
 +msgid "Cannot save the current worktree state"
-+msgstr "Get ekki opna=C3=B0 n=C3=BAverandi m=C3=B6ppu"
++msgstr ""
 +
 +#: git-stash.sh:111
 +msgid "No changes selected"
@@ -3237,9 +3234,8 @@ h."
 +msgstr ""
 +
 +#: git-stash.sh:127
-+#, fuzzy
 +msgid "Cannot record working tree state"
-+msgstr "Get ekki opna=C3=B0 tr=C3=A9=C3=B0 '%s'"
++msgstr ""
 +
 +#: git-stash.sh:182
 +msgid "No local changes to save"
@@ -3254,9 +3250,8 @@ h."
 +msgstr ""
 +
 +#: git-stash.sh:207
-+#, fuzzy
 +msgid "Cannot remove worktree changes"
-+msgstr "Get ekki opna=C3=B0 tr=C3=A9=C3=B0 '%s'"
++msgstr ""
 +
 +#: git-stash.sh:302
 +msgid "No stash found."
@@ -3514,29 +3509,5 @@ h."
 +#, sh-format
 +msgid "Synchronizing submodule url for '$name'"
 +msgstr ""
-+
-+#~ msgid "See 'git help COMMAND' for more information on a specific co=
-mmand."
-+#~ msgstr "Sj=C3=A1 'git help SKIPUN' til a=C3=B0 sj=C3=A1 hj=C3=A1lp =
-fyrir tiltekna skipun."
-+
-+#~ msgid "TEST: A C test string"
-+#~ msgstr "TILRAUN: C tilraunastrengur"
-+
-+#~ msgid "TEST: A C test string %s"
-+#~ msgstr "TILRAUN: C tilraunastrengur %s"
-+
-+#~ msgid "TEST: A Shell test string"
-+#~ msgstr "TILRAUN: Skeljartilraunastrengur"
-+
-+#~ msgid "TEST: A Shell test $variable"
-+#~ msgstr "TILRAUN: Skeljartilraunastrengur me=C3=B0 breytunni $variab=
-le"
-+
-+#~ msgid "TEST: A Perl test string"
-+#~ msgstr "TILRAUN: Perl tilraunastrengur"
-+
-+#~ msgid "TEST: A Perl test variable %s"
-+#~ msgstr "TILRAUN: Perl tilraunastrengur me=C3=B0 breytunni %s"
 --=20
 1.7.6.3
