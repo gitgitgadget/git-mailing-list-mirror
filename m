@@ -1,74 +1,60 @@
-From: Mattias Jiderhamn <mj-lists@expertsystems.se>
-Subject: Symbolic references updated by fetch?
-Date: Mon, 3 Oct 2011 08:47:55 +0000 (UTC)
-Message-ID: <loom.20111003T104608-738@post.gmane.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] transport: do not allow to push over git:// protocol
+Date: Mon, 3 Oct 2011 20:12:44 +1100
+Message-ID: <CACsJy8C7RXec_Zq8SAdyW2mYh44GBQsJ7sdwR8nHBcwVieV5mg@mail.gmail.com>
+References: <1317432415-9459-1-git-send-email-pclouds@gmail.com>
+ <20111001022544.GA31036@LK-Perkele-VI.localdomain> <20111001052910.GA6502@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 03 11:10:16 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 03 11:13:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAeXP-0003Xr-I7
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 11:10:15 +0200
+	id 1RAeaO-0004VF-8l
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 11:13:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751963Ab1JCJKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Oct 2011 05:10:11 -0400
-Received: from lo.gmane.org ([80.91.229.12]:54265 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751844Ab1JCJKJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 05:10:09 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RAeXF-0003Tt-T4
-	for git@vger.kernel.org; Mon, 03 Oct 2011 11:10:07 +0200
-Received: from 84.19.131.18 ([84.19.131.18])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Oct 2011 11:10:05 +0200
-Received: from mj-lists by 84.19.131.18 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Oct 2011 11:10:05 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 84.19.131.18 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20100101 Firefox/7.0.1)
+	id S1752248Ab1JCJNQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Oct 2011 05:13:16 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:33763 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751844Ab1JCJNP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 05:13:15 -0400
+Received: by bkbzt4 with SMTP id zt4so5053953bkb.19
+        for <git@vger.kernel.org>; Mon, 03 Oct 2011 02:13:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=GkEhOhkin29gvswYq9VjHxHMVimV4K3Xu7IWASs/PDk=;
+        b=iu4NYQ8Fi+YP7R/3BJbII1dJDfX/eUS0nzXWm2TymGYfsZBG9HPtEjhseNdVgb7/yd
+         dEKyyzc0pa9U/QZ3qALU8F4PzrhfTJIKA/NvuY4Vm6C4uXzEUSqhmk+Cio7WOKebJQaa
+         WNbqnLTZkr1kbCHpo21Wpqh6kkhowJPhjtNNI=
+Received: by 10.204.133.92 with SMTP id e28mr9038908bkt.407.1317633194157;
+ Mon, 03 Oct 2011 02:13:14 -0700 (PDT)
+Received: by 10.204.120.75 with HTTP; Mon, 3 Oct 2011 02:12:44 -0700 (PDT)
+In-Reply-To: <20111001052910.GA6502@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182641>
 
-In our current CVS setup, we have two separate builds in Jenkins CI; one for the
-latest and greatest (head of "master" branch) and one for the last/current minor
-release of the latest major release. The revisions to include in the minor
-release build will be tagged with a tag we can call "next-minor-release" here.
-Individual files are branched as needed and the "next-minor-release" tag is
-moved onto the branch. The Continuous Integration job will fetch and build the
-"next-minor-release" tag. As part of a major release, the "next-minor-release"
-tag is moved to the head of the main branch again.
+2011/10/1 Jonathan Nieder <jrnieder@gmail.com>:
+> Ilari Liusvaara wrote:
+>
+>> What about sticking code to return an error to git daemon instead of this?
+>
+> The code has even been written:
+> http://thread.gmane.org/gmane.comp.version-control.git/145456/focus=145573
+>
+> Testing and other improvements would be very welcome.
 
-When moving to GIT, the natural thing will be a hotfix branch originating from
-each major release. In order to have a fixed name for the current hotfix branch,
-primarily for the CI but also simplifying for developers working with hotfixes,
-it seems git symbolic-ref will do the trick. After the first major release we
-can do something like this in our bare repository whereto developers push and
-where from Jenkins pulls code to build:
-  git symbolic-ref refs/heads/current-hotfix-branch refs/heads/release-1-hotfixes
-and after the next major release, we simply move the referece pointer, as such
-  git symbolic-ref refs/heads/current-hotfix-branch refs/heads/release-2-hotfixes
-
-HOWEVER this seems to require that everyone fetching/pulling from that repo -
-Jenkins included - delete their local "current-hotfix-branch" tracking branch,
-and then refetch it.
-
-Is there an easier way to solve the CI problem, eliminating the need to
-explicitly deleting the tracking branch on all remote repos every time the
-symbolic ref is moved i.e. at every major release?
-How have others solved this? Do you simply reconfigure Jenkins every time...?
-
-Thanks in advance.
+Tests aside, are there any problems with the patch? I don't see any
+followup discussions. Personally I don't see much value in adding the
+description though.
+-- 
+Duy
