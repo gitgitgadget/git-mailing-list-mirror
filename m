@@ -1,58 +1,73 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2] ident: check /etc/mailname if email is unknown
-Date: Mon, 03 Oct 2011 09:09:49 +0200
-Message-ID: <4E895FBD.8020904@viscovery.net>
-References: <20111003045745.GA17604@elie> <7v8vp2iqvc.fsf@alter.siamese.dyndns.org> <20111003061633.GB17289@elie>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: Branches & directories
+Date: Mon, 3 Oct 2011 00:15:33 -0700
+Message-ID: <CAE1pOi2xmVHrVJcC85wvCv=anhn_kYizyUMpUVZF4EE33RoGmg@mail.gmail.com>
+References: <CAMOZ1Bu5pPeviyZD-e6aHbv-+tSaBDyyKb5vHA132K_3=1gD-g@mail.gmail.com>
+	<CAE1pOi0dL2qNMksuY_=gyGSRsfr6e9AmzgJUNB=jEz85sjuiUw@mail.gmail.com>
+	<CAGZ=bqK7H3zc8LK7EP8+uV8DpWW+czK2POfceGtcBF8Vmkhkow@mail.gmail.com>
+	<CAE1pOi1J5DKtnyUQzu1K7G1+HLsWWCN7thCf6W8MwSzt4_vtOw@mail.gmail.com>
+	<CAGZ=bqLZoLoyMcvnppg6SyFtJU8phSquQeBZ7uhwP=+ZL3DADw@mail.gmail.com>
+	<CAE1pOi0Er1ZgftpNeCr85Zu27xR2127V_KdAtvKc1NOKmDUvzQ@mail.gmail.com>
+	<CAGZ=bqLyS9tcpqztwGWFOXtDJRhugu+JYvz7wTnc0PTmECWX2g@mail.gmail.com>
+	<CAE1pOi1axNmGaPVXqBH02x0N=Z6tgO9R00RTokuJm50eY-OoNg@mail.gmail.com>
+	<4E889813.8070205@gmail.com>
+	<CAE1pOi3bm72Rk+UYygS_bC9eh0VTPr-VQSdtBGqjgDpEzkutZw@mail.gmail.com>
+	<20111003030723.GA24523@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Matt Kraai <kraai@ftbfs.org>, Gerrit Pape <pape@smarden.org>,
-	Ian Jackson <ijackson@chiark.greenend.org.uk>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 03 09:10:03 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Robin Rosenberg <robin.rosenberg@gmail.com>,
+	Kyle Moffett <kyle@moffetthome.net>,
+	Michael Witten <mfwitten@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Evan Shelhamer <shelhamer@imaginarynumber.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Oct 03 09:15:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAcf4-0001VW-SU
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 09:10:03 +0200
+	id 1RAckV-00037t-KE
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 09:15:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751200Ab1JCHJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Oct 2011 03:09:58 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:41895 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750877Ab1JCHJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 03:09:57 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1RAcer-0002TM-D3; Mon, 03 Oct 2011 09:09:49 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 956501660F;
-	Mon,  3 Oct 2011 09:09:49 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.23) Gecko/20110920 Thunderbird/3.1.15
-In-Reply-To: <20111003061633.GB17289@elie>
-X-Spam-Score: -1.4 (-)
+	id S1751298Ab1JCHPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Oct 2011 03:15:35 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:42368 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750873Ab1JCHPe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 03:15:34 -0400
+Received: by qyk30 with SMTP id 30so1771520qyk.19
+        for <git@vger.kernel.org>; Mon, 03 Oct 2011 00:15:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=2/UGJFfBWFCCj1G/+axPFLblA6+yELURD86sxNUCZZM=;
+        b=YssgtCPPdXaVds4D9XujAsIUh8N93VCi9RmvCaiLQfr7fXNlNyjDVfbXsBAu4pn9g4
+         FGjBXJ13+gFi3CIHM3fkG11lGrvD3MQJy3uR10Df9iKwkKgMVSRI5TQ003Z37wXW7G5W
+         1FV8Y1dsnqejGWpqhcP4dT1qvWCzOlrGe7YOU=
+Received: by 10.229.63.20 with SMTP id z20mr1295987qch.201.1317626133709; Mon,
+ 03 Oct 2011 00:15:33 -0700 (PDT)
+Received: by 10.229.87.134 with HTTP; Mon, 3 Oct 2011 00:15:33 -0700 (PDT)
+In-Reply-To: <20111003030723.GA24523@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182628>
 
-Am 10/3/2011 8:16, schrieb Jonathan Nieder:
-> +static int add_mailname_host(char *buf, size_t len)
-> +{
-> +	FILE *mailname;
-> +
-> +	mailname = fopen("/etc/mailname", "r");
-> +	if (!mailname) {
-> +		if (errno != ENOENT)
-> +			warning("cannot open /etc/mailname: %s",
-> +				strerror(errno));
+On 2 October 2011 20:07, Jeff King <peff@peff.net> wrote:
+<snip/>
+> Or did you really mean your example literally, as in you run two
+> checkouts back to back, without running anything in between, and the
+> second checkout restores the state before the first one. In that case,
+> yes, it would be correct to keep the old timestamps. But this is an
+> optimization that can only apply in a few very specific cases. And
+> moreoever, how can git know when it is OK to apply that optimization? It
+> has no idea what commands you might have run since the last time we were
+> at "master".
 
-This warns on EACCES. Is that OK? (Just asking, I have no opinion.)
-
--- Hannes
+Yes, I meant it literally. And, no, Git could not possibly know so it
+would have to be optional behaviour. But it's probably a lot of work
+for (for most people) little gain.
