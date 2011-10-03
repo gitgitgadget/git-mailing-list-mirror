@@ -1,62 +1,97 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] po/pl.po: Eliminate fuzzy translations
-Date: Mon, 3 Oct 2011 20:39:05 +0200
-Message-ID: <CACBZZX5_UD1MpiCuzDpfZVLzVXebK-rT0m=gD-dN1Y8at4n_Fw@mail.gmail.com>
-References: <CACBZZX4dP-OsrZ3wBOeSkzDFy6XBgeY=eqJUF2acyLC8W-3Vpg@mail.gmail.com>
-	<m3ipre4dtf.fsf@localhost.localdomain>
-	<CACBZZX7wj=j9Mx-m0HrRoRHP1HOSVpn-7o0YVnY6LsfWzuw8aw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 4/4] upload-archive: use start_command instead of fork
+Date: Mon, 03 Oct 2011 11:39:57 -0700
+Message-ID: <7vy5x1gbr6.fsf@alter.siamese.dyndns.org>
+References: <1317329963-6656-1-git-send-email-kusmabite@gmail.com>
+ <1317329963-6656-5-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 03 20:39:16 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, peff@peff.net, j6t@kdbg.org,
+	rene.scharfe@lsrfire.ath.cx
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 03 20:40:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAnQ2-0006R0-Ba
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 20:39:14 +0200
+	id 1RAnR1-0006sB-Md
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 20:40:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756785Ab1JCSjJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Oct 2011 14:39:09 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:62335 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756564Ab1JCSjG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Oct 2011 14:39:06 -0400
-Received: by bkbzt4 with SMTP id zt4so5607054bkb.19
-        for <git@vger.kernel.org>; Mon, 03 Oct 2011 11:39:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=SXHkTh8OnolVw1ToJkwtrUyFMH9Dbuk26x3I2sCP6uw=;
-        b=TBk3znc0qGjbYD4C2R/ki9KOXCTDRlR4XN/D7Wc10uCv5essjQsdRRdvNM9wEp/5LP
-         pKjc0y5a/8FFxehRBUxdVDOd2FC7lYO5SnYv/h5sLw5QZpF68GiO8lIg0FvpmlhksZmj
-         IHmlccqfapTCMBo9KeCQ/eQFAOh4VKY7IO+DU=
-Received: by 10.204.10.87 with SMTP id o23mr159331bko.144.1317667145278; Mon,
- 03 Oct 2011 11:39:05 -0700 (PDT)
-Received: by 10.204.119.203 with HTTP; Mon, 3 Oct 2011 11:39:05 -0700 (PDT)
-In-Reply-To: <CACBZZX7wj=j9Mx-m0HrRoRHP1HOSVpn-7o0YVnY6LsfWzuw8aw@mail.gmail.com>
+	id S932366Ab1JCSkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Oct 2011 14:40:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51362 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757255Ab1JCSkD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 14:40:03 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 43B9E5998;
+	Mon,  3 Oct 2011 14:40:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9I9w6sGHiEGRVoH/GfwqkbXZEWc=; b=pgk4cx
+	jhqRoc3vtApdyo61S5fkgF4E48j79GbvGnfYWxPZfZgrlfDVZ053ZKUbic2ZMSct
+	kXQbpNNgw93nsS5ejbgWOLNQZxrMsGiPxloLz3n64dU9R/7Uz4tbLpMnIixUHCO7
+	1dTDucF55ewiMnU//ikBnTuldyfOLF2vNXOUE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FGwOHHZ3ZMVeXDbt7+3l1YO0GXG6bmvZ
+	EjkbJSvjTuAr65AOqasngDVX+/tN1q+MH+1sKX9iYxfH9bh0VaILvVYXtUmxHA1A
+	a+4m1yQJxblPAfHHlREImU9fa70hiT7pr0Eug4EBIVQeT1a23vzVtiN6239q8Bu0
+	Frra9WJ+hpk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 397215997;
+	Mon,  3 Oct 2011 14:40:00 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BCFDF5996; Mon,  3 Oct 2011
+ 14:39:59 -0400 (EDT)
+In-Reply-To: <1317329963-6656-5-git-send-email-kusmabite@gmail.com> (Erik
+ Faye-Lund's message of "Thu, 29 Sep 2011 22:59:23 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 19425DBE-EDEF-11E0-B4CB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182685>
 
-On Mon, Oct 3, 2011 at 20:30, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
-varab@gmail.com> wrote:
-> 2011/7/7 Jakub Narebski <jnareb@gmail.com>:
->> Remove all fuzzy translations by either correcting them where trivia=
-l,
->> or removing them altogether.
->
-> I was about to try to submit this (better late than never) but I can'=
-t
-> get git-am to accept this mail which has quoted-printable format.
->
-> Can you perchance send this as a git:// URL or as a *.patch file atta=
-chment?
+Erik Faye-Lund <kusmabite@gmail.com> writes:
 
-Sorry about the noise. Didn't mean to send this to the list.
+> Add an undocumented flag to git-archive that tells it that the
+> action originated from a remote, so features can be disabled.
+
+> diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
+> index 2d0b383..c57e8bd 100644
+> --- a/builtin/upload-archive.c
+> +++ b/builtin/upload-archive.c
+> @@ -6,6 +6,7 @@
+>  #include "archive.h"
+>  #include "pkt-line.h"
+>  #include "sideband.h"
+> +#include "run-command.h"
+>  
+>  static const char upload_archive_usage[] =
+>  	"git upload-archive <repo>";
+> @@ -18,28 +19,17 @@ static const char lostchild[] =
+>  
+>  #define MAX_ARGS (64)
+>  
+> -static int run_upload_archive(int argc, const char **argv, const char *prefix)
+> +static void prepare_argv(const char **sent_argv, const char **argv)
+>  {
+> -	const char *sent_argv[MAX_ARGS];
+>  	const char *arg_cmd = "argument ";
+>  	char *p, buf[4096];
+>  	int sent_argc;
+>  	int len;
+>  
+> +	sent_argc = 2;
+> +	sent_argv[0] = "archive";
+> +	sent_argv[1] = "--remote-request";
+>  	for (p = buf;;) {
+>  		/* This will die if not enough free space in buf */
+>  		len = packet_read_line(0, p, (buf + sizeof buf) - p);
+
+Hmm, forgetting the "Windows" for a while, does this client work against
+the remote repositories that are running deployed versions of Git?
