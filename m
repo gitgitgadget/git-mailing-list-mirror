@@ -1,73 +1,67 @@
-From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: Re: Branches & directories
-Date: Mon, 3 Oct 2011 00:15:33 -0700
-Message-ID: <CAE1pOi2xmVHrVJcC85wvCv=anhn_kYizyUMpUVZF4EE33RoGmg@mail.gmail.com>
-References: <CAMOZ1Bu5pPeviyZD-e6aHbv-+tSaBDyyKb5vHA132K_3=1gD-g@mail.gmail.com>
-	<CAE1pOi0dL2qNMksuY_=gyGSRsfr6e9AmzgJUNB=jEz85sjuiUw@mail.gmail.com>
-	<CAGZ=bqK7H3zc8LK7EP8+uV8DpWW+czK2POfceGtcBF8Vmkhkow@mail.gmail.com>
-	<CAE1pOi1J5DKtnyUQzu1K7G1+HLsWWCN7thCf6W8MwSzt4_vtOw@mail.gmail.com>
-	<CAGZ=bqLZoLoyMcvnppg6SyFtJU8phSquQeBZ7uhwP=+ZL3DADw@mail.gmail.com>
-	<CAE1pOi0Er1ZgftpNeCr85Zu27xR2127V_KdAtvKc1NOKmDUvzQ@mail.gmail.com>
-	<CAGZ=bqLyS9tcpqztwGWFOXtDJRhugu+JYvz7wTnc0PTmECWX2g@mail.gmail.com>
-	<CAE1pOi1axNmGaPVXqBH02x0N=Z6tgO9R00RTokuJm50eY-OoNg@mail.gmail.com>
-	<4E889813.8070205@gmail.com>
-	<CAE1pOi3bm72Rk+UYygS_bC9eh0VTPr-VQSdtBGqjgDpEzkutZw@mail.gmail.com>
-	<20111003030723.GA24523@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Makefile: do not set setgid bit on directories on
+ GNU/kFreeBSD
+Date: Mon, 3 Oct 2011 02:19:49 -0500
+Message-ID: <20111003071949.GC17289@elie>
+References: <20111003064120.GA24396@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Robin Rosenberg <robin.rosenberg@gmail.com>,
-	Kyle Moffett <kyle@moffetthome.net>,
-	Michael Witten <mfwitten@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Evan Shelhamer <shelhamer@imaginarynumber.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 03 09:15:40 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Petr Salinger <Petr.Salinger@seznam.cz>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 03 09:20:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAckV-00037t-KE
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 09:15:39 +0200
+	id 1RAcoj-0004Us-Ah
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 09:20:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751298Ab1JCHPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Oct 2011 03:15:35 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:42368 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750873Ab1JCHPe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 03:15:34 -0400
-Received: by qyk30 with SMTP id 30so1771520qyk.19
-        for <git@vger.kernel.org>; Mon, 03 Oct 2011 00:15:33 -0700 (PDT)
+	id S1751315Ab1JCHT5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Oct 2011 03:19:57 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:45412 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750873Ab1JCHT4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 03:19:56 -0400
+Received: by iaqq3 with SMTP id q3so4709812iaq.19
+        for <git@vger.kernel.org>; Mon, 03 Oct 2011 00:19:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=2/UGJFfBWFCCj1G/+axPFLblA6+yELURD86sxNUCZZM=;
-        b=YssgtCPPdXaVds4D9XujAsIUh8N93VCi9RmvCaiLQfr7fXNlNyjDVfbXsBAu4pn9g4
-         FGjBXJ13+gFi3CIHM3fkG11lGrvD3MQJy3uR10Df9iKwkKgMVSRI5TQ003Z37wXW7G5W
-         1FV8Y1dsnqejGWpqhcP4dT1qvWCzOlrGe7YOU=
-Received: by 10.229.63.20 with SMTP id z20mr1295987qch.201.1317626133709; Mon,
- 03 Oct 2011 00:15:33 -0700 (PDT)
-Received: by 10.229.87.134 with HTTP; Mon, 3 Oct 2011 00:15:33 -0700 (PDT)
-In-Reply-To: <20111003030723.GA24523@sigill.intra.peff.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=/2+CvW0Ie49O9D0jMJ1ypkA14waQJzvdHYqCKmSX3Nc=;
+        b=U90sROfWTd6/y9wcEup/R/J9C7ZgM9nAj7mwQARhV6od4twZuBfHkHLmAcpz9EPC7b
+         htKU3j0R1itsvkzjZUg8IFSCl/+v5supT+Lkmk2h/DuZry5aeh3lqwmGDSE8gz/OkLeS
+         mRj9Lu1zSjNlRAAr9C8o7ry2zoAAyId57v5r8=
+Received: by 10.42.146.138 with SMTP id j10mr7157282icv.105.1317626395764;
+        Mon, 03 Oct 2011 00:19:55 -0700 (PDT)
+Received: from elie (99-120-124-35.lightspeed.cicril.sbcglobal.net. [99.120.124.35])
+        by mx.google.com with ESMTPS id g16sm27575894ibs.8.2011.10.03.00.19.54
+        (version=SSLv3 cipher=OTHER);
+        Mon, 03 Oct 2011 00:19:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20111003064120.GA24396@elie>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182629>
 
-On 2 October 2011 20:07, Jeff King <peff@peff.net> wrote:
-<snip/>
-> Or did you really mean your example literally, as in you run two
-> checkouts back to back, without running anything in between, and the
-> second checkout restores the state before the first one. In that case,
-> yes, it would be correct to keep the old timestamps. But this is an
-> optimization that can only apply in a few very specific cases. And
-> moreoever, how can git know when it is OK to apply that optimization? It
-> has no idea what commands you might have run since the last time we were
-> at "master".
+Jonathan Nieder wrote:
 
-Yes, I meant it literally. And, no, Git could not possibly know so it
-would have to be optional behaviour. But it's probably a lot of work
-for (for most people) little gain.
+> Since the setgid bit would only mean "do what you were going to do
+> already", it's better to avoid setting it.  Accordingly, ever since
+> v1.5.5-rc0~59^2 (Do not use GUID on dir in git init --share=all on
+> FreeBSD, 2008-03-05), git on true FreeBSD has done exactly that.  Set
+> DIR_HAS_BSD_GROUP_SEMANTICS in the makefile for GNU/kFreeBSD, too, so
+> machines that use glibc with the kernel of FreeBSD get the same fix.
+[...]
+> Sorry to have taken so long to send this one out.  Anyway, it seems
+> to me like the right thing to do.  Petr, what do you think?
+
+fwiw:
+
+Acked-by: Petr Salinger <Petr.Salinger@seznam.cz>
+
+Thanks for looking it over.
