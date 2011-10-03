@@ -1,67 +1,105 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Makefile: do not set setgid bit on directories on
- GNU/kFreeBSD
-Date: Mon, 3 Oct 2011 02:19:49 -0500
-Message-ID: <20111003071949.GC17289@elie>
-References: <20111003064120.GA24396@elie>
+From: Jeff King <peff@peff.net>
+Subject: Re: Branches & directories
+Date: Mon, 3 Oct 2011 03:30:59 -0400
+Message-ID: <20111003073059.GA9455@sigill.intra.peff.net>
+References: <CAGZ=bqK7H3zc8LK7EP8+uV8DpWW+czK2POfceGtcBF8Vmkhkow@mail.gmail.com>
+ <CAE1pOi1J5DKtnyUQzu1K7G1+HLsWWCN7thCf6W8MwSzt4_vtOw@mail.gmail.com>
+ <CAGZ=bqLZoLoyMcvnppg6SyFtJU8phSquQeBZ7uhwP=+ZL3DADw@mail.gmail.com>
+ <CAE1pOi0Er1ZgftpNeCr85Zu27xR2127V_KdAtvKc1NOKmDUvzQ@mail.gmail.com>
+ <CAGZ=bqLyS9tcpqztwGWFOXtDJRhugu+JYvz7wTnc0PTmECWX2g@mail.gmail.com>
+ <CAE1pOi1axNmGaPVXqBH02x0N=Z6tgO9R00RTokuJm50eY-OoNg@mail.gmail.com>
+ <4E889813.8070205@gmail.com>
+ <CAE1pOi3bm72Rk+UYygS_bC9eh0VTPr-VQSdtBGqjgDpEzkutZw@mail.gmail.com>
+ <20111003030723.GA24523@sigill.intra.peff.net>
+ <CAE1pOi2xmVHrVJcC85wvCv=anhn_kYizyUMpUVZF4EE33RoGmg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Petr Salinger <Petr.Salinger@seznam.cz>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 03 09:20:01 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Robin Rosenberg <robin.rosenberg@gmail.com>,
+	Kyle Moffett <kyle@moffetthome.net>,
+	Michael Witten <mfwitten@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Evan Shelhamer <shelhamer@imaginarynumber.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 03 09:31:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAcoj-0004Us-Ah
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 09:20:01 +0200
+	id 1RAczf-0007sJ-NP
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 09:31:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751315Ab1JCHT5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Oct 2011 03:19:57 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:45412 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750873Ab1JCHT4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 03:19:56 -0400
-Received: by iaqq3 with SMTP id q3so4709812iaq.19
-        for <git@vger.kernel.org>; Mon, 03 Oct 2011 00:19:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=/2+CvW0Ie49O9D0jMJ1ypkA14waQJzvdHYqCKmSX3Nc=;
-        b=U90sROfWTd6/y9wcEup/R/J9C7ZgM9nAj7mwQARhV6od4twZuBfHkHLmAcpz9EPC7b
-         htKU3j0R1itsvkzjZUg8IFSCl/+v5supT+Lkmk2h/DuZry5aeh3lqwmGDSE8gz/OkLeS
-         mRj9Lu1zSjNlRAAr9C8o7ry2zoAAyId57v5r8=
-Received: by 10.42.146.138 with SMTP id j10mr7157282icv.105.1317626395764;
-        Mon, 03 Oct 2011 00:19:55 -0700 (PDT)
-Received: from elie (99-120-124-35.lightspeed.cicril.sbcglobal.net. [99.120.124.35])
-        by mx.google.com with ESMTPS id g16sm27575894ibs.8.2011.10.03.00.19.54
-        (version=SSLv3 cipher=OTHER);
-        Mon, 03 Oct 2011 00:19:55 -0700 (PDT)
+	id S1751296Ab1JCHbE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Oct 2011 03:31:04 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51433
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751017Ab1JCHbC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 03:31:02 -0400
+Received: (qmail 24403 invoked by uid 107); 3 Oct 2011 07:36:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 03 Oct 2011 03:36:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Oct 2011 03:30:59 -0400
 Content-Disposition: inline
-In-Reply-To: <20111003064120.GA24396@elie>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+In-Reply-To: <CAE1pOi2xmVHrVJcC85wvCv=anhn_kYizyUMpUVZF4EE33RoGmg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182630>
 
-Jonathan Nieder wrote:
+On Mon, Oct 03, 2011 at 12:15:33AM -0700, Hilco Wijbenga wrote:
 
-> Since the setgid bit would only mean "do what you were going to do
-> already", it's better to avoid setting it.  Accordingly, ever since
-> v1.5.5-rc0~59^2 (Do not use GUID on dir in git init --share=all on
-> FreeBSD, 2008-03-05), git on true FreeBSD has done exactly that.  Set
-> DIR_HAS_BSD_GROUP_SEMANTICS in the makefile for GNU/kFreeBSD, too, so
-> machines that use glibc with the kernel of FreeBSD get the same fix.
-[...]
-> Sorry to have taken so long to send this one out.  Anyway, it seems
-> to me like the right thing to do.  Petr, what do you think?
+> On 2 October 2011 20:07, Jeff King <peff@peff.net> wrote:
+> <snip/>
+> > Or did you really mean your example literally, as in you run two
+> > checkouts back to back, without running anything in between, and the
+> > second checkout restores the state before the first one. In that case,
+> > yes, it would be correct to keep the old timestamps. But this is an
+> > optimization that can only apply in a few very specific cases. And
+> > moreoever, how can git know when it is OK to apply that optimization? It
+> > has no idea what commands you might have run since the last time we were
+> > at "master".
+> 
+> Yes, I meant it literally. And, no, Git could not possibly know so it
+> would have to be optional behaviour. But it's probably a lot of work
+> for (for most people) little gain.
 
-fwiw:
+If you really want the human to trigger it, then you can do something
+like this:
 
-Acked-by: Petr Salinger <Petr.Salinger@seznam.cz>
+  cat >git-checkout-timestamp <<\EOF
+  #!/bin/sh
 
-Thanks for looking it over.
+  old=`git rev-parse HEAD`
+  git checkout "$@" || exit 1
+  time=`git log -1 --format=%at`
+  git diff-tree --name-only -z "$old" HEAD |
+    perl -0ne "utime($time, $time, \$_)";
+  EOF
+
+Drop that somewhere in your $PATH, and use it instead of regular
+checkout. It restores the timestamps on any changed files, but not on
+those that were not touched. So your:
+
+  git checkout branch
+  git checkout master
+
+example would end up with timestamps set for "master" on the changed
+files. Two caveats:
+
+  1. This can still break makefiles! For example, like this:
+
+       make foo.o ;# now foo.o is recent
+       vi foo.c   ;# but foo.c is _more_ recent
+       git checkout branch ;# now it's even newer
+       git checkout-timestamp master ;# now we've restored it to some
+                                     ;# old timestamp, and make will
+                                     ;# think it's older than foo.o
+
+  2. In general, I'm not sure it makes any sense if there are local
+     worktree modifications to the files in question. But I didn't think
+     about it too hard. That ways madness lies.
+
+-Peff
