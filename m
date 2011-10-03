@@ -1,126 +1,116 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH/RFC] remote: support --all for the prune-subcommand
-Date: Mon,  3 Oct 2011 14:16:08 +0200
-Message-ID: <1317644168-5808-1-git-send-email-kusmabite@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 03 14:16:22 2011
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] diff: resurrect XDF_NEED_MINIMAL with --minimal
+Date: Mon, 3 Oct 2011 07:38:43 -0500
+Message-ID: <20111003123843.GA15493@elie>
+References: <7voby0j86c.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Tay Ray Chuan <rctay89@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 03 14:39:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAhRU-000250-W5
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 14:16:21 +0200
+	id 1RAhnW-00025A-Ks
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 14:39:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755582Ab1JCMQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Oct 2011 08:16:16 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:51347 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754352Ab1JCMQP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 08:16:15 -0400
-Received: by bkbzt4 with SMTP id zt4so5213078bkb.19
-        for <git@vger.kernel.org>; Mon, 03 Oct 2011 05:16:14 -0700 (PDT)
+	id S1755736Ab1JCMjB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Oct 2011 08:39:01 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:38007 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755670Ab1JCMjA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Oct 2011 08:39:00 -0400
+Received: by ywb5 with SMTP id 5so3350656ywb.19
+        for <git@vger.kernel.org>; Mon, 03 Oct 2011 05:38:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:message-id:x-mailer;
-        bh=uPENnAx+OvQqNOu0RJ/rAeVA3L9+6IeUY4Ez8G2QcKk=;
-        b=sGRZ3dNqGYaG60ysNcDMOupw56B3QX5OEcnuweWIZ/5Ym7g5PeW+cBNFtpT7gPunAQ
-         aD/HaUcVTMRXBgvZCbyH/+jXYaA0VqTL7FynlMLRiU8RlA7+VbITGvyetfTIAC1+KAMr
-         uuxqBwcrnc7UphdcEe202XtvEvsMKtp/M7U1M=
-Received: by 10.204.131.200 with SMTP id y8mr9811840bks.242.1317644173937;
-        Mon, 03 Oct 2011 05:16:13 -0700 (PDT)
-Received: from localhost ([77.40.159.131])
-        by mx.google.com with ESMTPS id l15sm13004983bkw.9.2011.10.03.05.16.11
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 03 Oct 2011 05:16:12 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6.msysgit.0.579.ga3d6f
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=cnJBZ/9ny0RWxvlWBDRnly5n4uuQtbpQFkOV05jlRdw=;
+        b=bVSfkOEAQ8VTE8cbs6PJY6KR9lyCIsn0VPsObPzEU1/X8uFmjQdv3vx7PFIE8s3NxW
+         3Hl0Py1IhcgbKXU1v4FpGx/s5UadsjEot2WknBI1YFiE5Seh9eYVFe4mLgQCyvTJKsKJ
+         QXIDWvLgBJ8oeWblYVuoFHcSp7EIdDTgaqQ4Y=
+Received: by 10.236.180.168 with SMTP id j28mr50693151yhm.15.1317645539831;
+        Mon, 03 Oct 2011 05:38:59 -0700 (PDT)
+Received: from elie (99-120-124-35.lightspeed.cicril.sbcglobal.net. [99.120.124.35])
+        by mx.google.com with ESMTPS id x12sm15507860yhi.10.2011.10.03.05.38.58
+        (version=SSLv3 cipher=OTHER);
+        Mon, 03 Oct 2011 05:38:59 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7voby0j86c.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182658>
 
-While we're at it, wrap a long line to fit on a 80 char terminal.
+Junio C Hamano wrote:
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
----
+>  * This together with Ren=C3=A9's c5aa906 (Revert removal of multi-ma=
+tch
+>    discard heuristic in 27af01, 2011-09-25) on top of v1.7.7 seems to=
+ give
+>    identical diff output as v1.7.1 (e.g. "git diff-tree -p v2.6.39 v3=
+=2E0"
+>    in the kernel repository, with "--minimal").
 
-I recently needed to prune remote branches in a repo with a lot
-of remotes, and to my surprise "git remote prune" didn't support
-the --all option. So I added it. Perhaps this is useful for other
-people as well?
+Very neat.
 
- Documentation/git-remote.txt |    2 +-
- builtin/remote.c             |   27 ++++++++++++++++++++-------
- 2 files changed, 21 insertions(+), 8 deletions(-)
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -3511,6 +3511,10 @@ int diff_opt_parse(struct diff_options *option=
+s, const char **av, int ac)
+>  	}
+>  	else if (!strcmp(arg, "--abbrev"))
+>  		options->abbrev =3D DEFAULT_ABBREV;
+> +	else if (!strcmp(arg, "--minimal"))
+> +		DIFF_XDL_SET(options, NEED_MINIMAL);
+> +	else if (!strcmp(arg, "--no-minimal"))
+> +		DIFF_XDL_CLR(options, NEED_MINIMAL);
+>  	else if (!prefixcmp(arg, "--abbrev=3D")) {
 
-diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-index 5a8c506..856cc7f 100644
---- a/Documentation/git-remote.txt
-+++ b/Documentation/git-remote.txt
-@@ -19,7 +19,7 @@ SYNOPSIS
- 'git remote set-url --add' [--push] <name> <newurl>
- 'git remote set-url --delete' [--push] <name> <url>
- 'git remote' [-v | --verbose] 'show' [-n] <name>
--'git remote prune' [-n | --dry-run] <name>
-+'git remote prune' [-n | --dry-run] (--all | <name>...)
- 'git remote' [-v | --verbose] 'update' [-p | --prune] [(<group> | <remote>)...]
- 
- DESCRIPTION
-diff --git a/builtin/remote.c b/builtin/remote.c
-index f2a9c26..2e8407d 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -14,7 +14,7 @@ static const char * const builtin_remote_usage[] = {
- 	"git remote rm <name>",
- 	"git remote set-head <name> (-a | -d | <branch>)",
- 	"git remote [-v | --verbose] show [-n] <name>",
--	"git remote prune [-n | --dry-run] <name>",
-+	"git remote prune [-n | --dry-run] (--all | <name>)",
- 	"git remote [-v | --verbose] update [-p | --prune] [(<group> | <remote>)...]",
- 	"git remote set-branches <name> [--add] <branch>...",
- 	"git remote set-url <name> <newurl> [<oldurl>]",
-@@ -1222,22 +1222,35 @@ static int set_head(int argc, const char **argv)
- 	return result;
- }
- 
-+static int add_one_remote(struct remote *remote, void *remotes)
-+{
-+	string_list_append(remotes, remote->name);
-+	return 0;
-+}
+I think this would fit well near --patience (the "xdiff options"
+section), instead of hidden between the unsticked and sticked forms of
+--abbrev. ;-)
+
+Like this:
+
+diff --git i/Documentation/diff-options.txt w/Documentation/diff-option=
+s.txt
+index b620b3af..4d87256e 100644
+--- i/Documentation/diff-options.txt
++++ w/Documentation/diff-options.txt
+@@ -48,6 +48,10 @@ endif::git-format-patch[]
+ --patience::
+ 	Generate a diff using the "patience diff" algorithm.
+=20
++--minimal::
++	Spend extra time to make sure the smallest possible
++	diff is produced.
 +
- static int prune(int argc, const char **argv)
- {
--	int dry_run = 0, result = 0;
-+	struct string_list remotes = STRING_LIST_INIT_NODUP;
-+	int dry_run = 0, result = 0, all = 0, i;
- 	struct option options[] = {
-+		OPT_BOOLEAN(0, "all", &all, "prune all remotes"),
- 		OPT__DRY_RUN(&dry_run, "dry run"),
- 		OPT_END()
- 	};
- 
--	argc = parse_options(argc, argv, NULL, options, builtin_remote_prune_usage,
--			     0);
-+	argc = parse_options(argc, argv, NULL, options,
-+	                     builtin_remote_prune_usage, 0);
- 
--	if (argc < 1)
-+	if (all)
-+		for_each_remote(add_one_remote, &remotes);
-+	else if (argc < 1)
- 		usage_with_options(builtin_remote_prune_usage, options);
-+	else
-+		for (; argc; argc--, argv++)
-+			string_list_append(&remotes, *argv);
- 
--	for (; argc; argc--, argv++)
--		result |= prune_remote(*argv, dry_run);
-+	for (i = 0; i < remotes.nr; ++i)
-+		result |= prune_remote(remotes.items[i].string, dry_run);
- 
- 	return result;
- }
--- 
-1.7.6.msysgit.0.579.ga3d6f
+ --stat[=3D<width>[,<name-width>[,<count>]]]::
+ 	Generate a diffstat.  You can override the default
+ 	output width for 80-column terminal by `--stat=3D<width>`.
+diff --git i/diff.c w/diff.c
+index fcc00780..2282f86f 100644
+--- i/diff.c
++++ w/diff.c
+@@ -3393,6 +3393,10 @@ int diff_opt_parse(struct diff_options *options,=
+ const char **av, int ac)
+ 		DIFF_XDL_SET(options, IGNORE_WHITESPACE_AT_EOL);
+ 	else if (!strcmp(arg, "--patience"))
+ 		DIFF_XDL_SET(options, PATIENCE_DIFF);
++	else if (!strcmp(arg, "--minimal"))
++		DIFF_XDL_SET(options, NEED_MINIMAL);
++	else if (!strcmp(arg, "--no-minimal"))
++		DIFF_XDL_CLR(options, NEED_MINIMAL);
+ 	else if (!strcmp(arg, "--histogram"))
+ 		DIFF_XDL_SET(options, HISTOGRAM_DIFF);
+=20
