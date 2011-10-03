@@ -1,64 +1,126 @@
-From: Ian Jackson <ijackson@chiark.greenend.org.uk>
-Subject: Re: [PATCH v2] ident: check /etc/mailname if email is unknown
-Date: Mon, 3 Oct 2011 12:32:17 +0100
-Message-ID: <20105.40257.351258.425389@chiark.greenend.org.uk>
-References: <20111003045745.GA17604@elie>
-	<7v8vp2iqvc.fsf@alter.siamese.dyndns.org>
-	<20111003061633.GB17289@elie>
-	<4E895FBD.8020904@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Matt Kraai <kraai@ftbfs.org>, Gerrit Pape <pape@smarden.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Oct 03 13:52:46 2011
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [PATCH/RFC] remote: support --all for the prune-subcommand
+Date: Mon,  3 Oct 2011 14:16:08 +0200
+Message-ID: <1317644168-5808-1-git-send-email-kusmabite@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 03 14:16:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAh4c-000261-HJ
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 13:52:42 +0200
+	id 1RAhRU-000250-W5
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 14:16:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754170Ab1JCLwi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Oct 2011 07:52:38 -0400
-Received: from chiark.greenend.org.uk ([212.13.197.229]:56926 "EHLO
-	chiark.greenend.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753378Ab1JCLwh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 07:52:37 -0400
-X-Greylist: delayed 1213 seconds by postgrey-1.27 at vger.kernel.org; Mon, 03 Oct 2011 07:52:37 EDT
-Received: by chiark.greenend.org.uk (Debian Exim 4.69 #1) with local
-	(return-path ijackson@chiark.greenend.org.uk)
-	id 1RAgkr-0002rQ-G0; Mon, 03 Oct 2011 12:32:17 +0100
-In-Reply-To: <4E895FBD.8020904@viscovery.net>
-X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
+	id S1755582Ab1JCMQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Oct 2011 08:16:16 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:51347 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754352Ab1JCMQP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 08:16:15 -0400
+Received: by bkbzt4 with SMTP id zt4so5213078bkb.19
+        for <git@vger.kernel.org>; Mon, 03 Oct 2011 05:16:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:message-id:x-mailer;
+        bh=uPENnAx+OvQqNOu0RJ/rAeVA3L9+6IeUY4Ez8G2QcKk=;
+        b=sGRZ3dNqGYaG60ysNcDMOupw56B3QX5OEcnuweWIZ/5Ym7g5PeW+cBNFtpT7gPunAQ
+         aD/HaUcVTMRXBgvZCbyH/+jXYaA0VqTL7FynlMLRiU8RlA7+VbITGvyetfTIAC1+KAMr
+         uuxqBwcrnc7UphdcEe202XtvEvsMKtp/M7U1M=
+Received: by 10.204.131.200 with SMTP id y8mr9811840bks.242.1317644173937;
+        Mon, 03 Oct 2011 05:16:13 -0700 (PDT)
+Received: from localhost ([77.40.159.131])
+        by mx.google.com with ESMTPS id l15sm13004983bkw.9.2011.10.03.05.16.11
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 03 Oct 2011 05:16:12 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.msysgit.0.579.ga3d6f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182657>
 
-Johannes Sixt writes ("Re: [PATCH v2] ident: check /etc/mailname if email is unknown"):
-> Am 10/3/2011 8:16, schrieb Jonathan Nieder:
-> > +static int add_mailname_host(char *buf, size_t len)
-> > +{
-> > +	FILE *mailname;
-> > +
-> > +	mailname = fopen("/etc/mailname", "r");
-> > +	if (!mailname) {
-> > +		if (errno != ENOENT)
-> > +			warning("cannot open /etc/mailname: %s",
-> > +				strerror(errno));
-> 
-> This warns on EACCES. Is that OK? (Just asking, I have no opinion.)
+While we're at it, wrap a long line to fit on a 80 char terminal.
 
-I think that's correct.  Personally I'm a bit of an error handling
-fascist and I would have it crash on EACCES but that's probably a bit
-harsh.
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+---
 
-Certainly this file ought to be generally readable, if it exists.
+I recently needed to prune remote branches in a repo with a lot
+of remotes, and to my surprise "git remote prune" didn't support
+the --all option. So I added it. Perhaps this is useful for other
+people as well?
 
-Ian.
+ Documentation/git-remote.txt |    2 +-
+ builtin/remote.c             |   27 ++++++++++++++++++++-------
+ 2 files changed, 21 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index 5a8c506..856cc7f 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -19,7 +19,7 @@ SYNOPSIS
+ 'git remote set-url --add' [--push] <name> <newurl>
+ 'git remote set-url --delete' [--push] <name> <url>
+ 'git remote' [-v | --verbose] 'show' [-n] <name>
+-'git remote prune' [-n | --dry-run] <name>
++'git remote prune' [-n | --dry-run] (--all | <name>...)
+ 'git remote' [-v | --verbose] 'update' [-p | --prune] [(<group> | <remote>)...]
+ 
+ DESCRIPTION
+diff --git a/builtin/remote.c b/builtin/remote.c
+index f2a9c26..2e8407d 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -14,7 +14,7 @@ static const char * const builtin_remote_usage[] = {
+ 	"git remote rm <name>",
+ 	"git remote set-head <name> (-a | -d | <branch>)",
+ 	"git remote [-v | --verbose] show [-n] <name>",
+-	"git remote prune [-n | --dry-run] <name>",
++	"git remote prune [-n | --dry-run] (--all | <name>)",
+ 	"git remote [-v | --verbose] update [-p | --prune] [(<group> | <remote>)...]",
+ 	"git remote set-branches <name> [--add] <branch>...",
+ 	"git remote set-url <name> <newurl> [<oldurl>]",
+@@ -1222,22 +1222,35 @@ static int set_head(int argc, const char **argv)
+ 	return result;
+ }
+ 
++static int add_one_remote(struct remote *remote, void *remotes)
++{
++	string_list_append(remotes, remote->name);
++	return 0;
++}
++
+ static int prune(int argc, const char **argv)
+ {
+-	int dry_run = 0, result = 0;
++	struct string_list remotes = STRING_LIST_INIT_NODUP;
++	int dry_run = 0, result = 0, all = 0, i;
+ 	struct option options[] = {
++		OPT_BOOLEAN(0, "all", &all, "prune all remotes"),
+ 		OPT__DRY_RUN(&dry_run, "dry run"),
+ 		OPT_END()
+ 	};
+ 
+-	argc = parse_options(argc, argv, NULL, options, builtin_remote_prune_usage,
+-			     0);
++	argc = parse_options(argc, argv, NULL, options,
++	                     builtin_remote_prune_usage, 0);
+ 
+-	if (argc < 1)
++	if (all)
++		for_each_remote(add_one_remote, &remotes);
++	else if (argc < 1)
+ 		usage_with_options(builtin_remote_prune_usage, options);
++	else
++		for (; argc; argc--, argv++)
++			string_list_append(&remotes, *argv);
+ 
+-	for (; argc; argc--, argv++)
+-		result |= prune_remote(*argv, dry_run);
++	for (i = 0; i < remotes.nr; ++i)
++		result |= prune_remote(remotes.items[i].string, dry_run);
+ 
+ 	return result;
+ }
+-- 
+1.7.6.msysgit.0.579.ga3d6f
