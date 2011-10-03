@@ -1,99 +1,79 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: pack-object poor performance (with large number of objects?)
-Date: Mon, 3 Oct 2011 16:43:02 +0200
-Message-ID: <CAA01CspZijOO_xbR=OcaRaesTeSy=6RM4DR01-07qimVzxvJZA@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg@gmail.com>
+Subject: Re: Branches & directories
+Date: Mon, 03 Oct 2011 16:59:22 +0200
+Message-ID: <4E89CDCA.9030802@gmail.com>
+References: <CAMOZ1Bu5pPeviyZD-e6aHbv-+tSaBDyyKb5vHA132K_3=1gD-g@mail.gmail.com> <CAE1pOi0dL2qNMksuY_=gyGSRsfr6e9AmzgJUNB=jEz85sjuiUw@mail.gmail.com> <CAGZ=bqK7H3zc8LK7EP8+uV8DpWW+czK2POfceGtcBF8Vmkhkow@mail.gmail.com> <CAE1pOi1J5DKtnyUQzu1K7G1+HLsWWCN7thCf6W8MwSzt4_vtOw@mail.gmail.com> <CAGZ=bqLZoLoyMcvnppg6SyFtJU8phSquQeBZ7uhwP=+ZL3DADw@mail.gmail.com> <CAE1pOi0Er1ZgftpNeCr85Zu27xR2127V_KdAtvKc1NOKmDUvzQ@mail.gmail.com> <CAGZ=bqLyS9tcpqztwGWFOXtDJRhugu+JYvz7wTnc0PTmECWX2g@mail.gmail.com> <CAE1pOi1axNmGaPVXqBH02x0N=Z6tgO9R00RTokuJm50eY-OoNg@mail.gmail.com> <4E889813.8070205@gmail.com> <CAE1pOi3bm72Rk+UYygS_bC9eh0VTPr-VQSdtBGqjgDpEzkutZw@mail.gmail.com> <20111003030723.GA24523@sigill.intra.peff.net> <CAE1pOi2xmVHrVJcC85wvCv=anhn_kYizyUMpUVZF4EE33RoGmg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Ingo Molnar <mingo@elte.hu>, Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 03 16:43:12 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Kyle Moffett <kyle@moffetthome.net>,
+	Michael Witten <mfwitten@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Evan Shelhamer <shelhamer@imaginarynumber.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 03 16:59:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAjjb-0006Wd-C6
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 16:43:11 +0200
+	id 1RAjzU-0005BA-5z
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 16:59:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756232Ab1JCOnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Oct 2011 10:43:06 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:44435 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753529Ab1JCOnE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 10:43:04 -0400
-Received: by ywb5 with SMTP id 5so3475338ywb.19
-        for <git@vger.kernel.org>; Mon, 03 Oct 2011 07:43:03 -0700 (PDT)
+	id S932182Ab1JCO7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Oct 2011 10:59:32 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:41808 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932159Ab1JCO7a (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 10:59:30 -0400
+Received: by bkbzt4 with SMTP id zt4so5386300bkb.19
+        for <git@vger.kernel.org>; Mon, 03 Oct 2011 07:59:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=HbBvNc6aBE40Vc+WiFy44aAz+b74CdUICWnBcBxuLAg=;
-        b=F+JgTLYP2MwPijqnx8/w0XijTu8lk584nL3Pscpu9mPhcyfGN2/CYCKB/ITW4JuVXZ
-         VHI39jpgrJ9yMpjtPw+p0sF34sgs0yujJWyrYv4eeTMMsJOlwEj0jb24FMBaNmoeE/pK
-         11nsIbiyNOUnUgiql0wH6WIShAekXLKiaOTO8=
-Received: by 10.150.59.11 with SMTP id h11mr203563yba.173.1317652983024; Mon,
- 03 Oct 2011 07:43:03 -0700 (PDT)
-Received: by 10.150.196.1 with HTTP; Mon, 3 Oct 2011 07:43:02 -0700 (PDT)
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=Raxfthhm1z2j+/EFau2B/JorbdBU5hEVGouFEHiyLwM=;
+        b=wWT/nJp2JstG6f+Talup+RBj0FjuPuOZWbtFOwCWBq1kNwmAp6AyefmSULVaXEfqny
+         kKsRf3/o3k+7le1AGO2/yIxm5g5mWZeyCr6gq0LtUI0tW26Zt6EQNqMQoDTRTg9H//2U
+         TSThEGBOnzD6JlakBgAgcKlOPdQ9BWrlsKJHA=
+Received: by 10.204.147.69 with SMTP id k5mr30454bkv.140.1317653969591;
+        Mon, 03 Oct 2011 07:59:29 -0700 (PDT)
+Received: from Robin-Rosenbergs-MacBook-Pro.local (host-95-199-30-22.mobileonline.telia.com. [95.199.30.22])
+        by mx.google.com with ESMTPS id b17sm13496309bkd.8.2011.10.03.07.59.25
+        (version=SSLv3 cipher=OTHER);
+        Mon, 03 Oct 2011 07:59:28 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:7.0) Gecko/20110916 Thunderbird/7.0
+In-Reply-To: <CAE1pOi2xmVHrVJcC85wvCv=anhn_kYizyUMpUVZF4EE33RoGmg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182665>
 
-Hi,
+Hilco Wijbenga skrev 2011-10-03 09.15:
+> On 2 October 2011 20:07, Jeff King<peff@peff.net>  wrote:
+> <snip/>
+>> Or did you really mean your example literally, as in you run two
+>> checkouts back to back, without running anything in between, and the
+>> second checkout restores the state before the first one. In that case,
+>> yes, it would be correct to keep the old timestamps. But this is an
+>> optimization that can only apply in a few very specific cases. And
+>> moreoever, how can git know when it is OK to apply that optimization? It
+>> has no idea what commands you might have run since the last time we were
+>> at "master".
+> Yes, I meant it literally. And, no, Git could not possibly know so it
+> would have to be optional behaviour. But it's probably a lot of work
+> for (for most people) little gain.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+I wouldn't use stash for that. Just regular commit/amend and your
+timestamps should be fine. Alternative submit a patch for either
+the save or create subcommands of stash. That would not be very
+hard (technically)  and no one needs to mess with the timestamps;
+they will just survive.
 
-I'm having poor git gc (pack-object) performance. Please read below
-for details. What can I do to improve the performance/debug the reason
-for the slowness? Should I leave the process running over night, or
-should I stop it (for debugging)?
-CCing people who posted some patches/benchmarks for pack-objects recently.
-
-git gc was first run automatically by git svn clone. It found 1544673
-objects and worked for 50 minutes until I've killed it.
-
-Then I've run it by hand with --aggresive (because I've found on
-Internet it helped in some cases). It found 1742200 objects this time.
-At this moment it's been working for about 90 minutes.
-
-The large number of unpacked objects is probably caused by me - I've
-disabled auto gc when I was cloning from svn (I though it might speed
-up things if it didn't repack several times during clone, only once
-afterwards).
-
-My git version is 1.7.7.rc3.4.g8d714
-The file system is ext4.
-
-First run process tree:
-pkruk    27873  0.0  0.0  15704   816 pts/2    S+   11:53   0:00
-       |           |                       \_ git gc --auto
-pkruk    27885  0.0  0.0  15704   776 pts/2    S+   11:53   0:00
-       |           |                           \_ git repack -d -l
-pkruk    27886  0.0  0.0   4220   608 pts/2    S+   11:53   0:00
-       |           |                               \_ /bin/sh
-/usr/local/stow/git-master/libexec/git-core/git-repack -d -l
-pkruk    27897  3.6  9.3 1136072 381148 pts/2  D+   11:53   5:51
-       |           |                                   \_ git
-pack-objects --keep-true-parents --honor-pack-keep --non-empty --all
---reflog --unpacked --incremental --local --delta-base-offset
-/home/pkruk/dv/devel1_git_repos/.git/objects/pack/.tmp-27886-pack
-
-Second run process tree:
-pkruk     6171  0.0  0.0  15704  1428 pts/2    S+   14:34   0:00
-       |           |               \_ git gc --aggressive
-pkruk     6174  0.0  0.0  15704  1356 pts/2    S+   14:34   0:00
-       |           |                   \_ git repack -d -l -f
---depth=250 --window=250 -A
-pkruk     6175  0.0  0.0   4220   648 pts/2    S+   14:34   0:00
-       |           |                       \_ /bin/sh
-/usr/local/stow/git-master/libexec/git-core/git-repack -d -l -f
---depth=250 --window=250 -A
-pkruk     6189  4.9 10.5 1143640 427396 pts/2  D+   14:34   4:50
-       |           |                           \_ git pack-objects
---keep-true-parents --honor-pack-keep --non-empty --all --reflog
---unpack-unreachable --local --no-reuse-delta --depth=250 --window=250
---delta-base-offset
-/home/pkruk/dv/devel1_git_repos/.git/objects/pack/.tmp-6175-pack
-
-
-
--- 
-Piotr Krukowiecki
+-- robin
