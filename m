@@ -1,110 +1,86 @@
-From: Jeff King <peff@peff.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: [PATCH] transport: do not allow to push over git:// protocol
-Date: Mon, 3 Oct 2011 05:39:12 -0400
-Message-ID: <20111003093912.GA16078@sigill.intra.peff.net>
+Date: Mon, 3 Oct 2011 20:44:22 +1100
+Message-ID: <CACsJy8B7Z-fT+ED=4F-Ug-bhvCagSxr0X6vZqn5PGRfB7KnUTA@mail.gmail.com>
 References: <1317432415-9459-1-git-send-email-pclouds@gmail.com>
- <20111003074250.GB9455@sigill.intra.peff.net>
- <4E8975E7.2040804@viscovery.net>
+ <20111003074250.GB9455@sigill.intra.peff.net> <4E8975E7.2040804@viscovery.net>
+ <20111003093912.GA16078@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Oct 03 11:39:22 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Oct 03 11:45:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAeza-0003Vh-6s
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 11:39:22 +0200
+	id 1RAf51-00054k-3i
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 11:44:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754062Ab1JCJjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Oct 2011 05:39:17 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51502
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754054Ab1JCJjQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 05:39:16 -0400
-Received: (qmail 26466 invoked by uid 107); 3 Oct 2011 09:44:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 03 Oct 2011 05:44:20 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Oct 2011 05:39:12 -0400
-Content-Disposition: inline
-In-Reply-To: <4E8975E7.2040804@viscovery.net>
+	id S1754185Ab1JCJoz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Oct 2011 05:44:55 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:46619 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753964Ab1JCJox convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Oct 2011 05:44:53 -0400
+Received: by bkbzt4 with SMTP id zt4so5081068bkb.19
+        for <git@vger.kernel.org>; Mon, 03 Oct 2011 02:44:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=zzzcqRJpLm5BPVDEqy/tA1i0QC3VXVcPymOkVEAxMIo=;
+        b=M2XRoJVBHpvwRkHYA1kpgPPTmvDCecmTyIRw8W61Cwjpjr3DlRVUqYJvRSPpLDpQgf
+         6jO4tXgfIhwLPe0sHXWlfY6sqKJfpRtJoIx8PtMzvbLuC945C8GV8NpZB6bgZS9gBMj3
+         FImQJpaWZqzFtlyxE3kZPofTSqtKitEIdbmO8=
+Received: by 10.204.13.74 with SMTP id b10mr796170bka.95.1317635092251; Mon,
+ 03 Oct 2011 02:44:52 -0700 (PDT)
+Received: by 10.204.120.75 with HTTP; Mon, 3 Oct 2011 02:44:22 -0700 (PDT)
+In-Reply-To: <20111003093912.GA16078@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182643>
 
-On Mon, Oct 03, 2011 at 10:44:23AM +0200, Johannes Sixt wrote:
+2011/10/3 Jeff King <peff@peff.net>:
+> So yeah, that makes it even worse for the client to start refusing th=
+is
+> without even contacting the server. I forgot that we added the "ERR"
+> response way back in a807328 (connect.c: add a way for git-daemon to
+> pass an error back to client, 2008-11-01).
+>
+> GitHub uses it to make nice messages:
+>
+> =C2=A0$ git push origin
+> =C2=A0fatal: remote error:
+> =C2=A0 =C2=A0You can't push to git://github.com/gitster/git.git
+> =C2=A0 =C2=A0Use git@github.com:gitster/git.git
+>
+> We should maybe do something like the patch below:
 
-> Am 10/3/2011 9:42, schrieb Jeff King:
-> > I still think push-over-git:// is a bit insane, and especially now with
-> > smart-http, you'd be crazy to run it. And in that sense, I wouldn't mind
-> > seeing it deprecated.
-> 
-> You must be kidding ;) It is so much easier to type
-> 
->   git daemon --export-all --enable=receive-pack
-> 
-> for a one-shot, temporary git connection compared to setting up a
-> smart-http, ssh, or even a rsh server.
+Jonathan also mentions another patch
 
-Ah, yeah, I didn't think about one-shot invocations like that (I think
-the original motivation was somebody actually running it all the time).
+http://article.gmane.org/gmane.comp.version-control.git/182536
 
-So yeah, that makes it even worse for the client to start refusing this
-without even contacting the server. I forgot that we added the "ERR"
-response way back in a807328 (connect.c: add a way for git-daemon to
-pass an error back to client, 2008-11-01).
+> but:
+>
+> =C2=A01. There is some information leakage there. In particular, one =
+can
+> =C2=A0 =C2=A0 tell the difference now between "repo does not exist" a=
+nd
+> =C2=A0 =C2=A0 "receive-pack is not turned on". Personally, I think th=
+e tradeoff
+> =C2=A0 =C2=A0 to have actual error messages is worth it. HTTP has had=
+ real error
+> =C2=A0 =C2=A0 codes for decades, and I don't think anybody is too up-=
+in-arms that
+> =C2=A0 =C2=A0 I can probe which pages are 404, and which are 401.
 
-GitHub uses it to make nice messages:
-
-  $ git push origin
-  fatal: remote error:
-    You can't push to git://github.com/gitster/git.git
-    Use git@github.com:gitster/git.git
-
-We should maybe do something like the patch below:
-
-diff --git a/daemon.c b/daemon.c
-index 4c8346d..c1fa55f 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -255,6 +255,7 @@ static int run_service(char *dir, struct daemon_service *service)
- 	loginfo("Request %s for '%s'", service->name, dir);
- 
- 	if (!enabled && !service->overridable) {
-+		packet_write(1, "ERR %s: service not enabled", service->name);
- 		logerror("'%s': service not enabled.", service->name);
- 		errno = EACCES;
- 		return -1;
-@@ -288,6 +289,8 @@ static int run_service(char *dir, struct daemon_service *service)
- 			enabled = service_enabled;
- 	}
- 	if (!enabled) {
-+		packet_write(1, "ERR %s: service not enabled for '%s'",
-+		       service->name, path);
- 		logerror("'%s': service not enabled for '%s'",
- 			 service->name, path);
- 		errno = EACCES;
-
-but:
-
-  1. There is some information leakage there. In particular, one can
-     tell the difference now between "repo does not exist" and
-     "receive-pack is not turned on". Personally, I think the tradeoff
-     to have actual error messages is worth it. HTTP has had real error
-     codes for decades, and I don't think anybody is too up-in-arms that
-     I can probe which pages are 404, and which are 401.
-
-  2. It probably makes sense to have a more human-friendly error
-     message.
-
-  3. It may be worth adding error messages for lots of other conditions
-     (e.g., no such repo). Assuming we accept the information leakage
-     for (1).
-
--Peff
+To me, just "<service>: access denied" is enough. Not particularly
+friendly but should be a good enough clue.
+--=20
+Duy
