@@ -1,73 +1,73 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] transport: do not allow to push over git:// protocol
-Date: Mon, 3 Oct 2011 03:42:51 -0400
-Message-ID: <20111003074250.GB9455@sigill.intra.peff.net>
-References: <1317432415-9459-1-git-send-email-pclouds@gmail.com>
+Subject: Re: Branches & directories
+Date: Mon, 3 Oct 2011 03:44:12 -0400
+Message-ID: <20111003074412.GC9455@sigill.intra.peff.net>
+References: <CAE1pOi0Er1ZgftpNeCr85Zu27xR2127V_KdAtvKc1NOKmDUvzQ@mail.gmail.com>
+ <CAGZ=bqLyS9tcpqztwGWFOXtDJRhugu+JYvz7wTnc0PTmECWX2g@mail.gmail.com>
+ <CAE1pOi1axNmGaPVXqBH02x0N=Z6tgO9R00RTokuJm50eY-OoNg@mail.gmail.com>
+ <4E889813.8070205@gmail.com>
+ <CAE1pOi3bm72Rk+UYygS_bC9eh0VTPr-VQSdtBGqjgDpEzkutZw@mail.gmail.com>
+ <20111003030723.GA24523@sigill.intra.peff.net>
+ <CAE1pOi2xmVHrVJcC85wvCv=anhn_kYizyUMpUVZF4EE33RoGmg@mail.gmail.com>
+ <vpqaa9ijzt4.fsf@bauges.imag.fr>
+ <20111003073456.GA10054@sigill.intra.peff.net>
+ <vpqmxdiikt2.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 03 09:42:59 2011
+Cc: Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+	Robin Rosenberg <robin.rosenberg@gmail.com>,
+	Kyle Moffett <kyle@moffetthome.net>,
+	Michael Witten <mfwitten@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Evan Shelhamer <shelhamer@imaginarynumber.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Oct 03 09:44:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAdAv-0002oI-Lm
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 09:42:57 +0200
+	id 1RAdCG-0003DE-54
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 09:44:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751716Ab1JCHmy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Oct 2011 03:42:54 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51455
+	id S1752002Ab1JCHoQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Oct 2011 03:44:16 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51463
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751390Ab1JCHmx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 03:42:53 -0400
-Received: (qmail 24812 invoked by uid 107); 3 Oct 2011 07:47:58 -0000
+	id S1751175Ab1JCHoP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 03:44:15 -0400
+Received: (qmail 24842 invoked by uid 107); 3 Oct 2011 07:49:19 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 03 Oct 2011 03:47:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Oct 2011 03:42:51 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 03 Oct 2011 03:49:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Oct 2011 03:44:12 -0400
 Content-Disposition: inline
-In-Reply-To: <1317432415-9459-1-git-send-email-pclouds@gmail.com>
+In-Reply-To: <vpqmxdiikt2.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182635>
 
-On Sat, Oct 01, 2011 at 11:26:55AM +1000, Nguyen Thai Ngoc Duy wrote:
+On Mon, Oct 03, 2011 at 09:41:29AM +0200, Matthieu Moy wrote:
 
-> This protocol has never been designed for pushing. Attempts to push
-> over git:// usually result in
+> Jeff King <peff@peff.net> writes:
 > 
->   fatal: The remote end hung up unexpectedly
+> > Speaking of which; does anybody know of a git-aware ccache-like tool?
+> > We already have a nice index of the sha1 of each file in the repository
+> > (along with a stat cache showing us whether it's up-to-date or not).
+> > Something like ccache could avoid even looking in the C files at all if
+> > it relied on git's index.
 > 
-> That message does not really point out the reason. With this patch, we get
-> 
->   error: this protocol does not support pushing
->   error: failed to push some refs to 'git://some-host.com/my/repo'
+> It would be a bit harder than that I think. IIRC, ccache hashes the
+> preprocessed file, hence it will notice if a .h file changed, even if
+> it's outside the project.
 
-I thought pushing over git:// _is_ supported. It's just that most
-servers don't have it turned on, for the obvious lack-of-authentication
-reasons.
+Yeah, you'd have to maintain your own dependency tree, then. Which is
+nasty (aside from the work involved), because I don't think you can
+portably get the header dependencies out of the C compiler.
 
-See 4b3b1e1 (git-push through git protocol, 2007-01-21), and the
-discussion here:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/37325
-
-Your patch shuts it off at the client level, so even with it turned on
-for the server, the client can never get to it.
-
-I still think push-over-git:// is a bit insane, and especially now with
-smart-http, you'd be crazy to run it. And in that sense, I wouldn't mind
-seeing it deprecated. But just shutting it off without a deprecation
-period seems unnecessarily harsh.
-
-The real problem here seems to be that instead of communicating "no, we
-don't support that", git-daemon just hangs up. It would be a much nicer
-fix if we could change that. I'm not sure it's possible, though. There's
-not much room in the beginning of the room to make that communication in
-a way that's backwards compatible.
+Oh well.
 
 -Peff
