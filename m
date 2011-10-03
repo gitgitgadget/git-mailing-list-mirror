@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 5/9] po/pl.po: add Polish translation
-Date: Mon,  3 Oct 2011 18:58:13 +0000
-Message-ID: <1317668297-2702-6-git-send-email-avarab@gmail.com>
+Subject: [PATCH 7/9] po/hi.po: add Hindi Translation
+Date: Mon,  3 Oct 2011 18:58:15 +0000
+Message-ID: <1317668297-2702-8-git-send-email-avarab@gmail.com>
 References: <1317668297-2702-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -13,88 +13,89 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Marcin=20Cie=C5=9Blak?= <saper@saper.info>,
 	Sam Reed <sam@reedyboy.net>,
 	Jan Engelhardt <jengelh@medozas.de>,
-	=?UTF-8?q?Jan=20Kr=C3=BCger?= <jk@jk.gs>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
+	=?UTF-8?q?Jan=20Kr=C3=BCger?= <jk@jk.gs>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 03 20:59:38 2011
+X-From: git-owner@vger.kernel.org Mon Oct 03 20:59:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAnjh-0005Y3-53
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 20:59:34 +0200
+	id 1RAnjx-0005d2-F1
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Oct 2011 20:59:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757192Ab1JCS7Z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Oct 2011 14:59:25 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:34044 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754145Ab1JCS7X (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 14:59:23 -0400
-Received: by ggnv2 with SMTP id v2so429546ggn.19
-        for <git@vger.kernel.org>; Mon, 03 Oct 2011 11:59:22 -0700 (PDT)
+	id S1757244Ab1JCS7n convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Oct 2011 14:59:43 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:57791 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757242Ab1JCS7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 14:59:39 -0400
+Received: by gyg10 with SMTP id 10so3708857gyg.19
+        for <git@vger.kernel.org>; Mon, 03 Oct 2011 11:59:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=c/DUxrB/uOXhRlDzYU/uE092Z+deyHJXn20GkVXoCTM=;
-        b=TJisRVAQttJtX0SYhAhF9sf77igN/MuEG8edALQoej9a9a0gQDWGpPLee0TbHMjS+v
-         ESdnZ1cSaCuFPpAu5IXZHcMyDDaEJYMdqQ6SYhC1k+vTrHWnPxRT9WEc1urTdQVzIX3e
-         /4j8bACJwNZ8RIdmZnUDo2t8kNyKJz/vAWB6Y=
-Received: by 10.223.99.209 with SMTP id v17mr311818fan.119.1317668362019;
-        Mon, 03 Oct 2011 11:59:22 -0700 (PDT)
+        bh=WE5YJuJVNzyislrXwfcxfELsrD47rr4AgPOi/gEGlgs=;
+        b=XeUKxPrBhZ3FKDBK5UJorqfaLi3OZiMU+UlfKTq31HRPB24TFik8aHLOv1XnNPhaIU
+         Y0tm1eQybmda3SNugr3J5U6HS81pPFaw1J9DPyw9sQRbeSAeyVz+l0xVv8dy3++3PU4R
+         KGDi7hmwDqJwdCMm0wCajaY2+vMVnHIVCVjlU=
+Received: by 10.223.35.15 with SMTP id n15mr341380fad.71.1317668377269;
+        Mon, 03 Oct 2011 11:59:37 -0700 (PDT)
 Received: from w.nix.is (w.nix.is. [188.40.98.140])
-        by mx.google.com with ESMTPS id f25sm22312819faf.7.2011.10.03.11.59.20
+        by mx.google.com with ESMTPS id f25sm22312819faf.7.2011.10.03.11.59.36
         (version=SSLv3 cipher=OTHER);
-        Mon, 03 Oct 2011 11:59:20 -0700 (PDT)
+        Mon, 03 Oct 2011 11:59:36 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.3
 In-Reply-To: <1317668297-2702-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182692>
 
-=46rom: Marcin Cie=C5=9Blak <saper@saper.info>
+=46rom: Ramkumar Ramachandra <artagnon@gmail.com>
 
-An incomplete Polish translation.
+Translate a few Git messages to Standard Hindi. It uses a phonetic
+script called Devanagari. Focus especially on transforming grammar and
+tense in a sane manner to serve as a guideline for future translators.
 
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-Signed-off-by: Marcin Cie=C5=9Blak <saper@saper.info>
+Note that Devanagari rendering is broken on many applications by
+default at this time- the latest Emacs, Vim and Chrome render it
+incorrectly.
+
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+Acked-by: Antriksh Pany <antriksh.pany@gmail.com>
+Acked-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 ---
- po/pl.po | 3404 ++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+ po/hi.po | 3395 ++++++++++++++++++++++++++++++++++++++++++++++++++++++=
 ++++++++
- 1 files changed, 3404 insertions(+), 0 deletions(-)
- create mode 100644 po/pl.po
+ 1 files changed, 3395 insertions(+), 0 deletions(-)
+ create mode 100644 po/hi.po
 
-diff --git a/po/pl.po b/po/pl.po
+diff --git a/po/hi.po b/po/hi.po
 new file mode 100644
-index 0000000..f7f2129
+index 0000000..45221e0
 --- /dev/null
-+++ b/po/pl.po
-@@ -0,0 +1,3404 @@
-+# Polish translations for Git.
-+# Copyright (C) 2010 Marcin Cie=C5=9Blak <saper@saper.info>
++++ b/po/hi.po
+@@ -0,0 +1,3395 @@
++# Hindi translations for Git.
++# Copyright (C) 2010 Ramkumar Ramachandra <artagnon@gmail.com>
 +# This file is distributed under the same license as the Git package.
-+# Marcin Cie=C5=9Blak <saper@saper.info>, 2010.
++# Ramkumar Ramachandra <artagnon@gmail.com>, 2010.
 +#
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: Git\n"
 +"Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
 +"POT-Creation-Date: 2011-07-06 19:20+0000\n"
-+"PO-Revision-Date: 2010-08-30 17:02+0200\n"
-+"Last-Translator: Marcin Cie=C5=9Blak <saper@saper.info>\n"
++"PO-Revision-Date: 2010-09-09 20:55+0530\n"
++"Last-Translator: Ramkumar Ramachandra <artagnon@gmail.com>\n"
 +"Language-Team: Git Mailing List <git@vger.kernel.org>\n"
-+"Language: pl\n"
++"Language: hi\n"
 +"MIME-Version: 1.0\n"
 +"Content-Type: text/plain; charset=3DUTF-8\n"
 +"Content-Transfer-Encoding: 8bit\n"
-+"Plural-Forms: nplurals=3D3; plural=3D(n=3D=3D1 ? 0 : n%10>=3D2 && n%1=
-0<=3D4 && (n%100<10 "
-+"|| n%100>=3D20) ? 1 : 2);\n"
 +
 +#: diff.c:104
 +#, c-format
@@ -104,7 +105,9 @@ index 0000000..f7f2129
 +#: diff.c:109
 +#, fuzzy, c-format
 +msgid "  Unknown dirstat parameter '%.*s'\n"
-+msgstr "nie mog=C4=99 tkn=C4=85=C4=87 szablonu '%s'"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F '%s' =E0=A4=95=E0=A5=8B [stat] =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=
+=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: diff.c:205
 +#, c-format
@@ -275,9 +278,8 @@ d)"
 +msgstr ""
 +
 +#: wt-status.c:731
-+#, fuzzy
 +msgid "Initial commit"
-+msgstr "Utworzy=C5=82em puste"
++msgstr ""
 +
 +#: wt-status.c:745
 +msgid "Untracked"
@@ -400,12 +402,17 @@ d)"
 +#: builtin/add.c:288
 +#, fuzzy
 +msgid "Could not write patch"
-+msgstr "Nie mog=C4=99 da=C4=87 prawa zapisu grupie w %s"
++msgstr "%s =E0=A4=95=E0=A5=8B =E0=A4=B8=E0=A4=AE=E0=A5=82=E0=A4=B9 =E0=
+=A4=A6=E0=A5=8D=E0=A4=B5=E0=A4=BE=E0=A4=B0=E0=A4=BE =E0=A4=B2=E0=A4=BF=E0=
+=A4=96=E0=A4=A8=E0=A5=87 =E0=A4=95=E0=A5=80 =E0=A4=87=E0=A4=9C=E0=A4=BE=
+=E0=A4=9C=E0=A4=BC=E0=A4=A4 =E0=A4=A8=E0=A4=B9=E0=A5=80 =E0=A4=A6=E0=A5=
+=87 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/add.c:293
 +#, fuzzy, c-format
 +msgid "Could not stat '%s'"
-+msgstr "nie mog=C4=99 tkn=C4=85=C4=87 '%s'"
++msgstr "'%s' =E0=A4=95=E0=A5=8B [stat] =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=
+=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/add.c:295
 +msgid "Empty patch. Aborted."
@@ -513,9 +520,8 @@ v.c:77
 +msgstr ""
 +
 +#: builtin/branch.c:169
-+#, fuzzy
 +msgid "cannot use -a with -d"
-+msgstr "nie wiem w kt=C3=B3rym katalogu jestem"
++msgstr ""
 +
 +#: builtin/branch.c:175
 +msgid "Couldn't look up commit object for HEAD"
@@ -708,7 +714,9 @@ ch name"
 +#: builtin/checkout.c:527
 +#, fuzzy, c-format
 +msgid "Can not do reflog for '%s'\n"
-+msgstr "nie mog=C4=99 otworzy=C4=87 katalogu '%s'"
++msgstr "=E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=
+=E0=A4=BF=E0=A4=95=E0=A4=BE '%s' =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=
+=A4=96=E0=A5=8B=E0=A4=B2 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/checkout.c:557
 +msgid "HEAD is now at"
@@ -754,7 +762,6 @@ ch name"
 +"%s\n"
 +msgstr[0] ""
 +msgstr[1] ""
-+msgstr[2] ""
 +
 +#: builtin/checkout.c:675
 +#, c-format
@@ -808,9 +815,8 @@ ch name"
 +msgstr ""
 +
 +#: builtin/checkout.c:979
-+#, fuzzy
 +msgid "--detach cannot be used with -t"
-+msgstr "nie wiem w kt=C3=B3rym katalogu jestem"
++msgstr ""
 +
 +#: builtin/checkout.c:985
 +msgid "--track needs a branch name"
@@ -908,7 +914,9 @@ sing to "
 +#: builtin/clean.c:161 builtin/clean.c:181
 +#, fuzzy, c-format
 +msgid "failed to remove %s"
-+msgstr "nie mog=C4=99 otworzy=C4=87 katalogu '%s'"
++msgstr "=E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=
+=E0=A4=BF=E0=A4=95=E0=A4=BE '%s' =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=
+=A4=96=E0=A5=8B=E0=A4=B2 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/clean.c:165
 +#, c-format
@@ -928,22 +936,29 @@ sing to "
 +#: builtin/clone.c:241
 +#, fuzzy, c-format
 +msgid "failed to open '%s'"
-+msgstr "nie mog=C4=99 otworzy=C4=87 katalogu '%s'"
++msgstr "=E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=
+=E0=A4=BF=E0=A4=95=E0=A4=BE '%s' =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=
+=A4=96=E0=A5=8B=E0=A4=B2 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/clone.c:245
 +#, fuzzy, c-format
 +msgid "failed to create directory '%s'"
-+msgstr "beznadziejny katalog gita %s"
++msgstr "=E0=A4=96=E0=A4=B0=E0=A4=BE=E0=A4=AC =E0=A4=97=E0=A4=BF=E0=A4=9F=
+ =E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=E0=A4=BF=
+=E0=A4=95=E0=A4=BE %s"
 +
 +#: builtin/clone.c:247 builtin/diff.c:74
 +#, fuzzy, c-format
 +msgid "failed to stat '%s'"
-+msgstr "nie mog=C4=99 tkn=C4=85=C4=87 '%s'"
++msgstr "'%s' =E0=A4=95=E0=A5=8B [stat] =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=
+=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/clone.c:249
 +#, fuzzy, c-format
 +msgid "%s exists and is not a directory"
-+msgstr "beznadziejny katalog gita %s"
++msgstr "=E0=A4=96=E0=A4=B0=E0=A4=BE=E0=A4=AC =E0=A4=97=E0=A4=BF=E0=A4=9F=
+ =E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=E0=A4=BF=
+=E0=A4=95=E0=A4=BE %s"
 +
 +#: builtin/clone.c:263
 +#, c-format
@@ -958,12 +973,16 @@ sing to "
 +#: builtin/clone.c:278
 +#, fuzzy, c-format
 +msgid "failed to create link '%s'"
-+msgstr "readlink nie zadzia=C5=82a=C5=82o dla '%s'"
++msgstr "=E0=A4=B2=E0=A4=BF=E0=A4=82=E0=A4=95 '%s' =E0=A4=A8=E0=A4=B9=E0=
+=A5=80=E0=A4=82 =E0=A4=AA=E0=A4=A2=E0=A4=BC =E0=A4=B8=E0=A4=95=E0=A5=87=
+"
 +
 +#: builtin/clone.c:282
 +#, fuzzy, c-format
 +msgid "failed to copy file to '%s'"
-+msgstr "nie mog=C4=99 skopiowa=C4=87 '%s' to '%s'"
++msgstr "'%s' =E0=A4=95=E0=A5=80 =E0=A4=85=E0=A4=A8=E0=A5=81=E0=A4=95=E0=
+=A5=83=E0=A4=A4=E0=A4=BF '%s' =E0=A4=AE=E0=A5=87=E0=A4=82 =E0=A4=A8=E0=A4=
+=B9=E0=A5=80=E0=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/clone.c:311
 +#, c-format
@@ -1009,9 +1028,9 @@ ory."
 +msgstr ""
 +
 +#: builtin/clone.c:461
-+#, fuzzy, c-format
++#, c-format
 +msgid "could not create work tree dir '%s'."
-+msgstr "Nie mog=C4=99 dosta=C4=87 si=C4=99 do drzewa roboczego '%s'"
++msgstr ""
 +
 +#: builtin/clone.c:480
 +#, c-format
@@ -1083,7 +1102,9 @@ ution.\n"
 +#: builtin/commit.c:359
 +#, fuzzy
 +msgid "unable to create temporary index"
-+msgstr "beznadziejny katalog gita %s"
++msgstr "=E0=A4=96=E0=A4=B0=E0=A4=BE=E0=A4=AC =E0=A4=97=E0=A4=BF=E0=A4=9F=
+ =E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=E0=A4=BF=
+=E0=A4=95=E0=A4=BE %s"
 +
 +#: builtin/commit.c:365
 +msgid "interactive add failed"
@@ -1101,7 +1122,9 @@ ution.\n"
 +#: builtin/commit.c:456
 +#, fuzzy
 +msgid "cannot read the index"
-+msgstr "readlink nie zadzia=C5=82a=C5=82o dla '%s'"
++msgstr "=E0=A4=B2=E0=A4=BF=E0=A4=82=E0=A4=95 '%s' =E0=A4=A8=E0=A4=B9=E0=
+=A5=80=E0=A4=82 =E0=A4=AA=E0=A4=A2=E0=A4=BC =E0=A4=B8=E0=A4=95=E0=A5=87=
+"
 +
 +#: builtin/commit.c:476
 +msgid "unable to write temporary index file"
@@ -1142,7 +1165,9 @@ ution.\n"
 +#: builtin/commit.c:674
 +#, fuzzy, c-format
 +msgid "could not read log file '%s'"
-+msgstr "readlink nie zadzia=C5=82a=C5=82o dla '%s'"
++msgstr "=E0=A4=B2=E0=A4=BF=E0=A4=82=E0=A4=95 '%s' =E0=A4=A8=E0=A4=B9=E0=
+=A5=80=E0=A4=82 =E0=A4=AA=E0=A4=A2=E0=A4=BC =E0=A4=B8=E0=A4=95=E0=A5=87=
+"
 +
 +#: builtin/commit.c:680
 +msgid "commit has empty message"
@@ -1159,12 +1184,16 @@ ution.\n"
 +#: builtin/commit.c:704
 +#, fuzzy, c-format
 +msgid "could not read '%s'"
-+msgstr "readlink nie zadzia=C5=82a=C5=82o dla '%s'"
++msgstr "=E0=A4=B2=E0=A4=BF=E0=A4=82=E0=A4=95 '%s' =E0=A4=A8=E0=A4=B9=E0=
+=A5=80=E0=A4=82 =E0=A4=AA=E0=A4=A2=E0=A4=BC =E0=A4=B8=E0=A4=95=E0=A5=87=
+"
 +
 +#: builtin/commit.c:732
 +#, fuzzy, c-format
 +msgid "could not open '%s'"
-+msgstr "nie mog=C4=99 otworzy=C4=87 katalogu '%s'"
++msgstr "=E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=
+=E0=A4=BF=E0=A4=95=E0=A4=BE '%s' =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=
+=A4=96=E0=A5=8B=E0=A4=B2 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/commit.c:756
 +msgid "could not write commit template"
@@ -1211,7 +1240,9 @@ ution.\n"
 +#: builtin/commit.c:829
 +#, fuzzy
 +msgid "Cannot read index"
-+msgstr "readlink nie zadzia=C5=82a=C5=82o dla '%s'"
++msgstr "=E0=A4=B2=E0=A4=BF=E0=A4=82=E0=A4=95 '%s' =E0=A4=A8=E0=A4=B9=E0=
+=A5=80=E0=A4=82 =E0=A4=AA=E0=A4=A2=E0=A4=BC =E0=A4=B8=E0=A4=95=E0=A5=87=
+"
 +
 +#: builtin/commit.c:869
 +msgid "Error building trees"
@@ -1375,7 +1406,9 @@ hs..."
 +#: builtin/describe.c:287
 +#, fuzzy, c-format
 +msgid "no tag exactly matches '%s'"
-+msgstr "nie mog=C4=99 tkn=C4=85=C4=87 szablonu '%s'"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F '%s' =E0=A4=95=E0=A5=8B [stat] =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=
+=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/describe.c:289
 +#, c-format
@@ -1466,7 +1499,9 @@ hs..."
 +#: builtin/fetch.c:252
 +#, fuzzy, c-format
 +msgid "object %s not found"
-+msgstr "nie znaleziono szablon=C3=B3w %s"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F=E0=A5=8D=E0=A4=B8 =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=A4=
+=AE=E0=A4=BF=E0=A4=B2=E0=A5=87: %s"
 +
 +#: builtin/fetch.c:257
 +msgid "[up to date]"
@@ -1516,7 +1551,9 @@ hs..."
 +#: builtin/fetch.c:361 builtin/fetch.c:684
 +#, fuzzy, c-format
 +msgid "cannot open %s: %s\n"
-+msgstr "nie mog=C4=99 otworzy=C4=87 katalogu '%s'"
++msgstr "=E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=
+=E0=A4=BF=E0=A4=95=E0=A4=BE '%s' =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=
+=A4=96=E0=A5=8B=E0=A4=B2 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/fetch.c:439
 +#, c-format
@@ -1632,7 +1669,9 @@ hs..."
 +#: builtin/gc.c:103
 +#, fuzzy, c-format
 +msgid "insanely long object directory %.*s"
-+msgstr "beznadziejny katalog gita %s"
++msgstr "=E0=A4=96=E0=A4=B0=E0=A4=BE=E0=A4=AC =E0=A4=97=E0=A4=BF=E0=A4=9F=
+ =E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=E0=A4=BF=
+=E0=A4=95=E0=A4=BE %s"
 +
 +#: builtin/gc.c:223
 +#, c-format
@@ -1695,7 +1734,9 @@ ve them."
 +#: builtin/grep.c:691
 +#, fuzzy, c-format
 +msgid "cannot open '%s'"
-+msgstr "nie mog=C4=99 otworzy=C4=87 katalogu '%s'"
++msgstr "=E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=
+=E0=A4=BF=E0=A4=95=E0=A4=BE '%s' =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=
+=A4=96=E0=A5=8B=E0=A4=B2 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/grep.c:974
 +msgid "no pattern given."
@@ -1725,75 +1766,110 @@ ve them."
 +#: builtin/init-db.c:35
 +#, c-format
 +msgid "Could not make %s writable by group"
-+msgstr "Nie mog=C4=99 da=C4=87 prawa zapisu grupie w %s"
++msgstr "%s =E0=A4=95=E0=A5=8B =E0=A4=B8=E0=A4=AE=E0=A5=82=E0=A4=B9 =E0=
+=A4=A6=E0=A5=8D=E0=A4=B5=E0=A4=BE=E0=A4=B0=E0=A4=BE =E0=A4=B2=E0=A4=BF=E0=
+=A4=96=E0=A4=A8=E0=A5=87 =E0=A4=95=E0=A5=80 =E0=A4=87=E0=A4=9C=E0=A4=BE=
+=E0=A4=9C=E0=A4=BC=E0=A4=A4 =E0=A4=A8=E0=A4=B9=E0=A5=80 =E0=A4=A6=E0=A5=
+=87 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/init-db.c:62
 +#, c-format
 +msgid "insanely long template name %s"
-+msgstr "beznadziejnie d=C5=82uga nazwa szablonu %s"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F %s =E0=A4=95=E0=A4=BE =E0=A4=A8=E0=A4=BE=E0=A4=AE =E0=A4=85=E0=
+=A4=A4=E0=A5=8D=E0=A4=AF=E0=A4=82=E0=A4=A4 =E0=A4=B2=E0=A4=82=E0=A4=AC=E0=
+=A4=BE"
 +
 +#: builtin/init-db.c:67
 +#, c-format
 +msgid "cannot stat '%s'"
-+msgstr "nie mog=C4=99 tkn=C4=85=C4=87 '%s'"
++msgstr "'%s' =E0=A4=95=E0=A5=8B [stat] =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=
+=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/init-db.c:73
 +#, c-format
 +msgid "cannot stat template '%s'"
-+msgstr "nie mog=C4=99 tkn=C4=85=C4=87 szablonu '%s'"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F '%s' =E0=A4=95=E0=A5=8B [stat] =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=
+=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/init-db.c:80
 +#, c-format
 +msgid "cannot opendir '%s'"
-+msgstr "nie mog=C4=99 otworzy=C4=87 katalogu '%s'"
++msgstr "=E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=
+=E0=A4=BF=E0=A4=95=E0=A4=BE '%s' =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=
+=A4=96=E0=A5=8B=E0=A4=B2 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/init-db.c:97
 +#, c-format
 +msgid "cannot readlink '%s'"
-+msgstr "readlink nie zadzia=C5=82a=C5=82o dla '%s'"
++msgstr "=E0=A4=B2=E0=A4=BF=E0=A4=82=E0=A4=95 '%s' =E0=A4=A8=E0=A4=B9=E0=
+=A5=80=E0=A4=82 =E0=A4=AA=E0=A4=A2=E0=A4=BC =E0=A4=B8=E0=A4=95=E0=A5=87=
+"
 +
 +#: builtin/init-db.c:99
 +#, c-format
 +msgid "insanely long symlink %s"
-+msgstr "beznadziejnie d=C5=82ugi link symboliczny %s"
++msgstr "=E0=A4=AA=E0=A5=8D=E0=A4=B0=E0=A4=A4=E0=A5=80=E0=A4=95=E0=A4=BE=
+=E0=A4=A4=E0=A5=8D=E0=A4=AE=E0=A4=95 =E0=A4=B2=E0=A4=BF=E0=A4=82=E0=A4=95=
+ %s =E0=A4=85=E0=A4=A4=E0=A5=8D=E0=A4=AF=E0=A4=82=E0=A4=A4 =E0=A4=B2=E0=
+=A4=82=E0=A4=AC=E0=A4=BE"
 +
 +#: builtin/init-db.c:102
 +#, c-format
 +msgid "cannot symlink '%s' '%s'"
-+msgstr "nie mog=C4=99 za=C5=82o=C5=BCy=C4=87 symbolicznego link z '%s'=
- do '%s'"
++msgstr "'%s' =E0=A4=95=E0=A4=BE =E0=A4=AA=E0=A5=8D=E0=A4=B0=E0=A4=A4=E0=
+=A5=80=E0=A4=95=E0=A4=BE=E0=A4=A4=E0=A5=8D=E0=A4=AE=E0=A4=95 =E0=A4=B2=E0=
+=A4=BF=E0=A4=82=E0=A4=95 '%s' =E0=A4=AE=E0=A5=87=E0=A4=82 =E0=A4=A8=E0=A4=
+=B9=E0=A5=80=E0=A4=82 =E0=A4=AC=E0=A4=A8=E0=A4=BE =E0=A4=B8=E0=A4=95=E0=
+=A5=87"
 +
 +#: builtin/init-db.c:106
 +#, c-format
 +msgid "cannot copy '%s' to '%s'"
-+msgstr "nie mog=C4=99 skopiowa=C4=87 '%s' to '%s'"
++msgstr "'%s' =E0=A4=95=E0=A5=80 =E0=A4=85=E0=A4=A8=E0=A5=81=E0=A4=95=E0=
+=A5=83=E0=A4=A4=E0=A4=BF '%s' =E0=A4=AE=E0=A5=87=E0=A4=82 =E0=A4=A8=E0=A4=
+=B9=E0=A5=80=E0=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/init-db.c:110
 +#, c-format
 +msgid "ignoring template %s"
-+msgstr "pomijam szablon %s"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F %s =E0=A4=95=E0=A5=80 =E0=A4=89=E0=A4=AA=E0=A5=87=E0=A4=95=E0=
+=A5=8D=E0=A4=B7=E0=A4=BE =E0=A4=95=E0=A4=B0 =E0=A4=B0=E0=A4=B9=E0=A5=87=
+ =E0=A4=B9=E0=A5=88=E0=A4=82"
 +
 +#: builtin/init-db.c:133
 +#, c-format
 +msgid "insanely long template path %s"
-+msgstr "beznadziejnie d=C5=82uga =C5=9Bie=C5=BCka do wzorca %s"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F %s =E0=A4=95=E0=A4=BE [path] =E0=A4=85=E0=A4=A4=E0=A5=8D=E0=A4=
+=AF=E0=A4=82=E0=A4=A4 =E0=A4=B2=E0=A4=82=E0=A4=AC=E0=A4=BE"
 +
 +#: builtin/init-db.c:141
 +#, c-format
 +msgid "templates not found %s"
-+msgstr "nie znaleziono szablon=C3=B3w %s"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F=E0=A5=8D=E0=A4=B8 =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=A4=
+=AE=E0=A4=BF=E0=A4=B2=E0=A5=87: %s"
 +
 +#: builtin/init-db.c:154
 +#, c-format
 +msgid "not copying templates of a wrong format version %d from '%s'"
-+msgstr ""
-+"nie b=C4=99d=C4=99 kopiowa=C4=87 szablon=C3=B3w oznaczonych niew=C5=82=
-a=C5=9Bciwym numerem wersji %d z '%s'"
++msgstr "'%2$s' =E0=A4=B8=E0=A5=87 =E0=A4=97=E0=A4=B2=E0=A4=A4 =E0=A4=B8=
+=E0=A5=8D=E0=A4=B5=E0=A4=B0=E0=A5=82=E0=A4=AA =E0=A4=B8=E0=A4=82=E0=A4=B8=
+=E0=A5=8D=E0=A4=95=E0=A4=B0=E0=A4=A3 %1$d =E0=A4=95=E0=A5=87 =E0=A4=9F=E0=
+=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=E0=A4=9F=E0=A5=8D=E0=
+=A4=B8 =E0=A4=95=E0=A5=80 =E0=A4=A8=E0=A4=95=E0=A4=B2 =E0=A4=A8=E0=A4=B9=
+=E0=A5=80=E0=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B0=E0=A4=B9=E0=A5=87 =E0=A4=
+=B9=E0=A5=88=E0=A4=82"
 +
 +#: builtin/init-db.c:192
 +#, c-format
 +msgid "insane git directory %s"
-+msgstr "beznadziejny katalog gita %s"
++msgstr "=E0=A4=96=E0=A4=B0=E0=A4=BE=E0=A4=AC =E0=A4=97=E0=A4=BF=E0=A4=9F=
+ =E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=E0=A4=BF=
+=E0=A4=95=E0=A4=BE %s"
 +
 +#: builtin/init-db.c:322 builtin/init-db.c:325
 +#, c-format
@@ -1808,12 +1884,16 @@ a=C5=9Bciwym numerem wersji %d z '%s'"
 +#: builtin/init-db.c:357
 +#, fuzzy, c-format
 +msgid "unable to move %s to %s"
-+msgstr "nie mog=C4=99 skopiowa=C4=87 '%s' to '%s'"
++msgstr "'%s' =E0=A4=95=E0=A5=80 =E0=A4=85=E0=A4=A8=E0=A5=81=E0=A4=95=E0=
+=A5=83=E0=A4=A4=E0=A4=BF '%s' =E0=A4=AE=E0=A5=87=E0=A4=82 =E0=A4=A8=E0=A4=
+=B9=E0=A5=80=E0=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/init-db.c:362
 +#, fuzzy, c-format
 +msgid "Could not create git link %s"
-+msgstr "readlink nie zadzia=C5=82a=C5=82o dla '%s'"
++msgstr "=E0=A4=B2=E0=A4=BF=E0=A4=82=E0=A4=95 '%s' =E0=A4=A8=E0=A4=B9=E0=
+=A5=80=E0=A4=82 =E0=A4=AA=E0=A4=A2=E0=A4=BC =E0=A4=B8=E0=A4=95=E0=A5=87=
+"
 +
 +#.
 +#. * TRANSLATORS: The first '%s' is either "Reinitialized
@@ -1823,33 +1903,37 @@ a=C5=9Bciwym numerem wersji %d z '%s'"
 +#: builtin/init-db.c:419
 +#, c-format
 +msgid "%s%s Git repository in %s%s\n"
-+msgstr "%s%s repozytorium Gita w %s%s\n"
++msgstr ""
 +
 +#: builtin/init-db.c:420
 +msgid "Reinitialized existing"
-+msgstr "Ponownie zainicjowa=C5=82em istniej=C4=85ce"
++msgstr ""
 +
 +#: builtin/init-db.c:420
 +msgid "Initialized empty"
-+msgstr "Utworzy=C5=82em puste"
++msgstr ""
 +
 +#: builtin/init-db.c:421
 +msgid " shared"
-+msgstr " wsp=C3=B3=C5=82dzielone"
++msgstr ""
 +
 +#: builtin/init-db.c:440
 +msgid "cannot tell cwd"
-+msgstr "nie wiem w kt=C3=B3rym katalogu jestem"
++msgstr ""
 +
 +#: builtin/init-db.c:521 builtin/init-db.c:528
-+#, c-format
++#, fuzzy, c-format
 +msgid "cannot mkdir %s"
-+msgstr "nie mog=C4=99 utworzy=C4=87 katalogu %s"
++msgstr "=E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=
+=E0=A4=BF=E0=A4=95=E0=A4=BE '%s' =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=
+=A4=96=E0=A5=8B=E0=A4=B2 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/init-db.c:532
-+#, c-format
++#, fuzzy, c-format
 +msgid "cannot chdir to %s"
-+msgstr "nie mog=C4=99 wej=C5=9B=C4=87 do katalogu %s"
++msgstr "=E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=
+=E0=A4=BF=E0=A4=95=E0=A4=BE '%s' =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=
+=A4=96=E0=A5=8B=E0=A4=B2 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/init-db.c:554
 +#, c-format
@@ -1858,19 +1942,17 @@ a=C5=9Bciwym numerem wersji %d z '%s'"
 or --git-"
 +"dir=3D<directory>)"
 +msgstr ""
-+"nie mo=C5=BCna u=C5=BCy=C4=87 %s (or --work-tree=3D<katalog>) bez pod=
-ania %s (or --git-"
-+"dir=3D<katalog>)"
 +
 +#: builtin/init-db.c:578
 +msgid "Cannot access current working directory"
-+msgstr "Nie mog=C4=99 dobra=C4=87 si=C4=99 do bie=C5=BC=C4=85cego kata=
-logu"
++msgstr ""
 +
 +#: builtin/init-db.c:585
-+#, c-format
++#, fuzzy, c-format
 +msgid "Cannot access work tree '%s'"
-+msgstr "Nie mog=C4=99 dosta=C4=87 si=C4=99 do drzewa roboczego '%s'"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F '%s' =E0=A4=95=E0=A5=8B [stat] =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=
+=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/log.c:186
 +#, c-format
@@ -1904,7 +1986,9 @@ c:1492
 +#: builtin/log.c:688
 +#, fuzzy, c-format
 +msgid "Cannot open patch file %s"
-+msgstr "nie mog=C4=99 otworzy=C4=87 katalogu '%s'"
++msgstr "=E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=
+=E0=A4=BF=E0=A4=95=E0=A4=BE '%s' =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=
+=A4=96=E0=A5=8B=E0=A4=B2 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/log.c:702
 +msgid "Need exactly one range."
@@ -1925,7 +2009,9 @@ c:1492
 +#: builtin/log.c:872
 +#, fuzzy, c-format
 +msgid "insane in-reply-to: %s"
-+msgstr "beznadziejny katalog gita %s"
++msgstr "=E0=A4=96=E0=A4=B0=E0=A4=BE=E0=A4=AC =E0=A4=97=E0=A4=BF=E0=A4=9F=
+ =E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=E0=A4=BF=
+=E0=A4=95=E0=A4=BE %s"
 +
 +#: builtin/log.c:945
 +msgid "Two output directories?"
@@ -2095,12 +2181,18 @@ ually.\n"
 +#: builtin/merge.c:1436 builtin/revert.c:210
 +#, fuzzy, c-format
 +msgid "Could not open '%s' for writing"
-+msgstr "Nie mog=C4=99 da=C4=87 prawa zapisu grupie w %s"
++msgstr "%s =E0=A4=95=E0=A5=8B =E0=A4=B8=E0=A4=AE=E0=A5=82=E0=A4=B9 =E0=
+=A4=A6=E0=A5=8D=E0=A4=B5=E0=A4=BE=E0=A4=B0=E0=A4=BE =E0=A4=B2=E0=A4=BF=E0=
+=A4=96=E0=A4=A8=E0=A5=87 =E0=A4=95=E0=A5=80 =E0=A4=87=E0=A4=9C=E0=A4=BE=
+=E0=A4=9C=E0=A4=BC=E0=A4=A4 =E0=A4=A8=E0=A4=B9=E0=A5=80 =E0=A4=A6=E0=A5=
+=87 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/merge.c:852
 +#, fuzzy, c-format
 +msgid "Could not read from '%s'"
-+msgstr "readlink nie zadzia=C5=82a=C5=82o dla '%s'"
++msgstr "=E0=A4=B2=E0=A4=BF=E0=A4=82=E0=A4=95 '%s' =E0=A4=A8=E0=A4=B9=E0=
+=A5=80=E0=A4=82 =E0=A4=AA=E0=A4=A2=E0=A4=BC =E0=A4=B8=E0=A4=95=E0=A5=87=
+"
 +
 +#: builtin/merge.c:869
 +#, c-format
@@ -2238,7 +2330,9 @@ ed\n"
 +#: builtin/mv.c:103
 +#, fuzzy, c-format
 +msgid "Checking rename of '%s' to '%s'\n"
-+msgstr "nie mog=C4=99 skopiowa=C4=87 '%s' to '%s'"
++msgstr "'%s' =E0=A4=95=E0=A5=80 =E0=A4=85=E0=A4=A8=E0=A5=81=E0=A4=95=E0=
+=A5=83=E0=A4=A4=E0=A4=BF '%s' =E0=A4=AE=E0=A5=87=E0=A4=82 =E0=A4=A8=E0=A4=
+=B9=E0=A5=80=E0=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/mv.c:107
 +msgid "bad source"
@@ -2319,7 +2413,9 @@ ed\n"
 +#: builtin/notes.c:175 builtin/tag.c:303
 +#, fuzzy, c-format
 +msgid "could not create file '%s'"
-+msgstr "readlink nie zadzia=C5=82a=C5=82o dla '%s'"
++msgstr "=E0=A4=B2=E0=A4=BF=E0=A4=82=E0=A4=95 '%s' =E0=A4=A8=E0=A4=B9=E0=
+=A5=80=E0=A4=82 =E0=A4=AA=E0=A4=A2=E0=A4=BC =E0=A4=B8=E0=A4=95=E0=A5=87=
+"
 +
 +#: builtin/notes.c:189
 +msgid "Please supply the note contents using either -m or -F option"
@@ -2342,12 +2438,16 @@ ed\n"
 +#: builtin/notes.c:251 builtin/tag.c:448
 +#, fuzzy, c-format
 +msgid "cannot read '%s'"
-+msgstr "readlink nie zadzia=C5=82a=C5=82o dla '%s'"
++msgstr "=E0=A4=B2=E0=A4=BF=E0=A4=82=E0=A4=95 '%s' =E0=A4=A8=E0=A4=B9=E0=
+=A5=80=E0=A4=82 =E0=A4=AA=E0=A4=A2=E0=A4=BC =E0=A4=B8=E0=A4=95=E0=A5=87=
+"
 +
 +#: builtin/notes.c:253 builtin/tag.c:451
 +#, fuzzy, c-format
 +msgid "could not open or read '%s'"
-+msgstr "nie mog=C4=99 otworzy=C4=87 katalogu '%s'"
++msgstr "=E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=
+=E0=A4=BF=E0=A4=95=E0=A4=BE '%s' =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=
+=A4=96=E0=A5=8B=E0=A4=B2 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/notes.c:272 builtin/notes.c:445 builtin/notes.c:447
 +#: builtin/notes.c:507 builtin/notes.c:561 builtin/notes.c:644
@@ -2391,7 +2491,9 @@ ed\n"
 +#: builtin/notes.c:456
 +#, fuzzy, c-format
 +msgid "Failed to copy notes from '%s' to '%s'"
-+msgstr "nie mog=C4=99 skopiowa=C4=87 '%s' to '%s'"
++msgstr "'%s' =E0=A4=95=E0=A5=80 =E0=A4=85=E0=A4=A8=E0=A5=81=E0=A4=95=E0=
+=A5=83=E0=A4=A4=E0=A4=BF '%s' =E0=A4=AE=E0=A5=87=E0=A4=82 =E0=A4=A8=E0=A4=
+=B9=E0=A5=80=E0=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: builtin/notes.c:500 builtin/notes.c:554 builtin/notes.c:627
 +#: builtin/notes.c:639 builtin/notes.c:712 builtin/notes.c:759
@@ -2811,7 +2913,9 @@ stead."
 +#: builtin/tag.c:126
 +#, fuzzy, c-format
 +msgid "tag '%s' not found."
-+msgstr "nie znaleziono szablon=C3=B3w %s"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F=E0=A5=8D=E0=A4=B8 =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=A4=
+=AE=E0=A4=BF=E0=A4=B2=E0=A5=87: %s"
 +
 +#: builtin/tag.c:141
 +#, c-format
@@ -3156,7 +3260,9 @@ h."
 +#: git-bisect.sh:372
 +#, fuzzy, sh-format
 +msgid "cannot read $file for replaying"
-+msgstr "readlink nie zadzia=C5=82a=C5=82o dla '%s'"
++msgstr "=E0=A4=B2=E0=A4=BF=E0=A4=82=E0=A4=95 '%s' =E0=A4=A8=E0=A4=B9=E0=
+=A5=80=E0=A4=82 =E0=A4=AA=E0=A4=A2=E0=A4=BC =E0=A4=B8=E0=A4=95=E0=A5=87=
+"
 +
 +#: git-bisect.sh:388
 +msgid "?? what are you talking about?"
@@ -3236,14 +3342,16 @@ h."
 +#: git-stash.sh:80
 +#, fuzzy
 +msgid "Cannot save the current index state"
-+msgstr "Nie mog=C4=99 dobra=C4=87 si=C4=99 do bie=C5=BC=C4=85cego kata=
-logu"
++msgstr "=E0=A4=B2=E0=A4=BF=E0=A4=82=E0=A4=95 '%s' =E0=A4=A8=E0=A4=B9=E0=
+=A5=80=E0=A4=82 =E0=A4=AA=E0=A4=A2=E0=A4=BC =E0=A4=B8=E0=A4=95=E0=A5=87=
+"
 +
 +#: git-stash.sh:94 git-stash.sh:107
 +#, fuzzy
 +msgid "Cannot save the current worktree state"
-+msgstr "Nie mog=C4=99 dobra=C4=87 si=C4=99 do bie=C5=BC=C4=85cego kata=
-logu"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F '%s' =E0=A4=95=E0=A5=8B [stat] =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=
+=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: git-stash.sh:111
 +msgid "No changes selected"
@@ -3256,7 +3364,9 @@ logu"
 +#: git-stash.sh:127
 +#, fuzzy
 +msgid "Cannot record working tree state"
-+msgstr "Nie mog=C4=99 dosta=C4=87 si=C4=99 do drzewa roboczego '%s'"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F '%s' =E0=A4=95=E0=A5=8B [stat] =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=
+=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: git-stash.sh:182
 +msgid "No local changes to save"
@@ -3273,7 +3383,9 @@ logu"
 +#: git-stash.sh:207
 +#, fuzzy
 +msgid "Cannot remove worktree changes"
-+msgstr "Nie mog=C4=99 dosta=C4=87 si=C4=99 do drzewa roboczego '%s'"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F '%s' =E0=A4=95=E0=A5=8B [stat] =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=
+=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: git-stash.sh:302
 +msgid "No stash found."
@@ -3314,7 +3426,11 @@ logu"
 +#: git-stash.sh:373
 +#, fuzzy
 +msgid "Could not save index tree"
-+msgstr "Nie mog=C4=99 da=C4=87 prawa zapisu grupie w %s"
++msgstr "%s =E0=A4=95=E0=A5=8B =E0=A4=B8=E0=A4=AE=E0=A5=82=E0=A4=B9 =E0=
+=A4=A6=E0=A5=8D=E0=A4=B5=E0=A4=BE=E0=A4=B0=E0=A4=BE =E0=A4=B2=E0=A4=BF=E0=
+=A4=96=E0=A4=A8=E0=A5=87 =E0=A4=95=E0=A5=80 =E0=A4=87=E0=A4=9C=E0=A4=BE=
+=E0=A4=9C=E0=A4=BC=E0=A4=A4 =E0=A4=A8=E0=A4=B9=E0=A5=80 =E0=A4=A6=E0=A5=
+=87 =E0=A4=B8=E0=A4=95=E0=A5=87"
 +
 +#: git-stash.sh:399
 +msgid "Cannot unstage modified files"
@@ -3370,7 +3486,9 @@ logu"
 +#: git-submodule.sh:222
 +#, fuzzy, sh-format
 +msgid "'$path' already exists in the index"
-+msgstr "readlink nie zadzia=C5=82a=C5=82o dla '%s'"
++msgstr "=E0=A4=B2=E0=A4=BF=E0=A4=82=E0=A4=95 '%s' =E0=A4=A8=E0=A4=B9=E0=
+=A5=80=E0=A4=82 =E0=A4=AA=E0=A4=A2=E0=A4=BC =E0=A4=B8=E0=A4=95=E0=A5=87=
+"
 +
 +#: git-submodule.sh:227
 +#, sh-format
@@ -3388,7 +3506,9 @@ logu"
 +#: git-submodule.sh:242
 +#, fuzzy, sh-format
 +msgid "'$path' already exists and is not a valid git repo"
-+msgstr "beznadziejny katalog gita %s"
++msgstr "=E0=A4=96=E0=A4=B0=E0=A4=BE=E0=A4=AC =E0=A4=97=E0=A4=BF=E0=A4=9F=
+ =E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=E0=A4=BF=
+=E0=A4=95=E0=A4=BE %s"
 +
 +#: git-submodule.sh:265
 +#, sh-format
