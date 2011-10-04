@@ -1,74 +1,66 @@
-From: Jay Soffian <jaysoffian@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [RFC/PATCH] git checkout $tree path
-Date: Tue, 4 Oct 2011 11:05:11 -0400
-Message-ID: <CAG+J_Dy7gnDEK-9KAJT4M_wumS_QpzLNMVzAiOHCyEbFBU65=w@mail.gmail.com>
+Date: Tue, 04 Oct 2011 08:20:17 -0700
+Message-ID: <7vk48kdbri.fsf@alter.siamese.dyndns.org>
 References: <7vk48rq854.fsf@alter.siamese.dyndns.org>
-	<20111003102647.GD16078@sigill.intra.peff.net>
+ <20111003102647.GD16078@sigill.intra.peff.net>
+ <7vmxdigirk.fsf@alter.siamese.dyndns.org>
+ <20111004074212.GB7308@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 04 17:05:23 2011
+X-From: git-owner@vger.kernel.org Tue Oct 04 17:20:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RB6Yb-0007SR-Ly
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 17:05:22 +0200
+	id 1RB6nE-0005b3-4P
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 17:20:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932471Ab1JDPFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Oct 2011 11:05:14 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:42793 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932463Ab1JDPFN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Oct 2011 11:05:13 -0400
-Received: by gyg10 with SMTP id 10so564990gyg.19
-        for <git@vger.kernel.org>; Tue, 04 Oct 2011 08:05:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Z6MqAYFX68iWbUGHmjHdyzhPiYphwLK+mCdi/f6R5s8=;
-        b=DISrok6dO1oe4OGfUqb+t4Zd3O6MFCi3ULOy+IpYasgUBO8r03br/j/mOzxnpIZmQY
-         UDqfaJlYcrkE531iz/Gs57DkaTwp51f7+Nx/yy9KQRVYCWFhrR7RzYJCU0AqscDMzJuo
-         c/cNly1jE4DXn+hDMUNwzsBNFISTwD2fMDDjU=
-Received: by 10.236.190.200 with SMTP id e48mr7177472yhn.59.1317740712015;
- Tue, 04 Oct 2011 08:05:12 -0700 (PDT)
-Received: by 10.147.32.18 with HTTP; Tue, 4 Oct 2011 08:05:11 -0700 (PDT)
-In-Reply-To: <20111003102647.GD16078@sigill.intra.peff.net>
+	id S932672Ab1JDPUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Oct 2011 11:20:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42314 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932494Ab1JDPUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Oct 2011 11:20:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C5F749ED;
+	Tue,  4 Oct 2011 11:20:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=00ESo82euCOCHeLA59p47Yl60a4=; b=qJrc4V
+	PtI7L+adf7eZc5p1cRuHyDhocWn0eT65aG7RHIBHXd5NXzCyS11Q39EW/JtX7myR
+	SXf/8G6fEdUy9WmccufY44m4FtE79hq7cWaegRm2uRftoFTV5B5FReYcJ7qPFC18
+	VAMoWdGt0OBVgJHKTRWd+e974XDYhUfD9/emg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=W8frM1OjMbdHWuOMsz3HIRhqXZzeokqz
+	aAOnoP4mDjCI2ce8NBRQpFgvmZ2FhkWpfmGqt3SBbKQotoxDrMs+Kycs8vblFcLo
+	lRYWDfctB/Fx1PJt6CACTE/SOo9tEz1Fy3VSV1h9mLxayRsFr5di5sAWHfg1AyFm
+	YovO2/xVR5o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FD2A49EC;
+	Tue,  4 Oct 2011 11:20:19 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2859149EB; Tue,  4 Oct 2011
+ 11:20:19 -0400 (EDT)
+In-Reply-To: <20111004074212.GB7308@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 4 Oct 2011 03:42:12 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5EAC0D16-EE9C-11E0-BCD0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182774>
 
-On Mon, Oct 3, 2011 at 6:26 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Sep 29, 2011 at 03:46:31PM -0700, Junio C Hamano wrote:
->> An alternative semantics could be to first remove paths that match the
->> given pathspec from the index, then update the index with paths taken from
->> the named tree, and update the working tree. "git checkout master dir"
->> would then mean "replace anything currently in dir with whatever is in dir
->> in master". It is more dangerous, and it can easily emulated by doing:
->
-> being what the user expects. As in, "master deleted this file; shouldn't
-> checkout pull the deletion to my new branch when I ask it to?".
->
-> But we can't distinguish those two cases without actually having a merge
-> base. And this isn't a merge; it's not about picking changes from
-> master, it's about saying "make dir look like it does in master". So
-> in that sense, the most straightforward thing is your second
-> alternative: afterwards, we should have only the files in "dir" that
-> master has.
+Jeff King <peff@peff.net> writes:
 
-I think I'd expect the first behavior with:
+> This is sufficiently tricky and subtle that it is probably worth
+> future-proofing with some tests (e.g., the example you gave in the
+> commit message).
 
-$ git checkout master -- dir/*
-
-And the second with:
-
-$ git checkout master -- dir
-
-$0.02.
-
-j.
+Yes, see t2022 in 'pu'.
