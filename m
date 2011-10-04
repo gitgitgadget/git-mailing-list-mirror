@@ -1,77 +1,79 @@
-From: Jon Forrest <nobozo@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: A Basic Git Question About File Tracking
-Date: Mon, 03 Oct 2011 18:14:24 -0700
-Message-ID: <4E8A5DF0.6040003@gmail.com>
-References: <j6dlhf$dp3$1@dough.gmane.org> <20111004011035.GA13836@elie>
+Date: Mon, 3 Oct 2011 20:22:44 -0500
+Message-ID: <20111004012244.GB13836@elie>
+References: <j6dlhf$dp3$1@dough.gmane.org>
+ <20111004011035.GA13836@elie>
+ <4E8A5DF0.6040003@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 04 03:16:32 2011
+To: Jon Forrest <nobozo@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 04 03:22:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAtcV-0004mR-TO
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 03:16:32 +0200
+	id 1RAtif-0006TR-LR
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 03:22:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752857Ab1JDBQ1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Oct 2011 21:16:27 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:51578 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752567Ab1JDBQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2011 21:16:27 -0400
-Received: by ywb5 with SMTP id 5so4015794ywb.19
-        for <git@vger.kernel.org>; Mon, 03 Oct 2011 18:16:26 -0700 (PDT)
+	id S1753153Ab1JDBWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Oct 2011 21:22:48 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:42103 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753108Ab1JDBWs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2011 21:22:48 -0400
+Received: by yxl31 with SMTP id 31so4084531yxl.19
+        for <git@vger.kernel.org>; Mon, 03 Oct 2011 18:22:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=0zXyo7AROz7ylFJAcMBWaH5H5+1DnpcyFgy81U9ygEw=;
-        b=TQ/grlapxDldfEWzumSgJtMIpH6/EnT0ujr1bCd8fPuG1E55U80MKuTWq0MGycre2i
-         Lft/S+KaF1K0fUo1N0nImCmQ8t8uErckw9b8WuJ2atfaw1mFv5ILGM082znAYUEcRvhZ
-         9Yp2xHzGWXwBZOzitAiRtMRpXRHYbZk6Psics=
-Received: by 10.68.31.132 with SMTP id a4mr5463847pbi.26.1317690986372;
-        Mon, 03 Oct 2011 18:16:26 -0700 (PDT)
-Received: from [192.168.0.107] (c-24-6-237-93.hsd1.ca.comcast.net. [24.6.237.93])
-        by mx.google.com with ESMTPS id e7sm31505760pbq.1.2011.10.03.18.16.25
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=W1VZDimQnvGAjh10Q0nKp625Pkl0XjN0G9dAr4mdEMs=;
+        b=ivpnNJjFolZfZSznFCtttwIcq64T1C04Re4GwnpZPeytob2ZO7wVND1xFO42SmnMYs
+         9Xn5Ps4kO7kxuptfnEKIiqSGWwXSS+jPVsNr2DcRcqV0gXgcBfs0HzGfcKD6FqKgdjwO
+         /zFpbB5ZcTjUmTfCUb7gHYour/uwEKUkAvsYg=
+Received: by 10.236.115.70 with SMTP id d46mr3304190yhh.83.1317691367538;
+        Mon, 03 Oct 2011 18:22:47 -0700 (PDT)
+Received: from elie (99-120-124-35.lightspeed.cicril.sbcglobal.net. [99.120.124.35])
+        by mx.google.com with ESMTPS id p8sm17776399yhe.17.2011.10.03.18.22.46
         (version=SSLv3 cipher=OTHER);
-        Mon, 03 Oct 2011 18:16:25 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0.2) Gecko/20110902 Thunderbird/6.0.2
-In-Reply-To: <20111004011035.GA13836@elie>
+        Mon, 03 Oct 2011 18:22:46 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4E8A5DF0.6040003@gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182722>
 
-On 10/3/2011 6:10 PM, Jonathan Nieder wrote:
-> Hi!
+Jon Forrest wrote:
+> On 10/3/2011 6:10 PM, Jonathan Nieder wrote:
 
-Thanks for the quick reply.
-
-> Jon Forrest wrote:
+>> "Untracked" means "not in
+>> the index", nothing more, nothing less.
 >
->> The Pro Git book says "Untracked basically means that Git sees a
->> file you didn=E2=80=99t have in the previous snapshot (commit)".
+> But your definition doesn't include files that
+> have been committed. In the following trivial case
+> in a new git repository
 >
-> Yep, that's a bug in the Pro Git book.  "Untracked" means "not in
-> the index", nothing more, nothing less.
+> cp /etc/passwd x
+> git add x
+> git commit -m"fooling around"
+>
+> is "x" tracked? Your definition says it isn't
+> but "git status" makes me think it is.
 
-But your definition doesn't include files that
-have been committed. In the following trivial case
-in a new git repository
+Yes, "x" is tracked.  Moreover, "x" is in the index.  You can
+list files in the index with the "git ls-files -s" command.
 
-cp /etc/passwd x
-git add x
-git commit -m"fooling around"
+Does that help?
 
-is "x" tracked? Your definition says it isn't
-but "git status" makes me think it is.
+> Sorry to be so pedantic.
 
-Sorry to be so pedantic.
+No problem --- it's good to clarify these things (especially if it
+results in finding documentation that should be clarified, too).
 
-Jon
+Jonathan
