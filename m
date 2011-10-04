@@ -1,219 +1,96 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH v2] log --children
-Date: Tue, 04 Oct 2011 22:51:49 +0200
-Message-ID: <4E8B71E5.7030303@drmicha.warpmail.net>
-References: <4E8B68AC.7020009@drmicha.warpmail.net> <1317761100-33922-1-git-send-email-jaysoffian@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] refs: Use binary search to lookup refs faster
+Date: Tue, 04 Oct 2011 13:58:29 -0700
+Message-ID: <7vehysbhje.fsf@alter.siamese.dyndns.org>
+References: <4DF6A8B6.9030301@op5.se>
+ <CAP8UFD3TWQHU0wLPuxMDnc3bRSz90Yd+yDMBe03kofeo-nr7yA@mail.gmail.com>
+ <201109281338.04378.mfick@codeaurora.org>
+ <201109281610.49322.mfick@codeaurora.org>
+ <c76d7f65203c0fc2c6e4e14fe2f33274@quantumfyre.co.uk>
+ <960aacbf-8d4d-4b2a-8902-f6380ff9febd@email.android.com>
+ <7c0105c6cca7dd0aa336522f90617fe4@quantumfyre.co.uk>
+ <4E84B89F.4060304@lsrfire.ath.cx> <7vy5x7rwq9.fsf@alter.siamese.dyndns.org>
+ <20110929041811.5363.33396.julian@quantumfyre.co.uk>
+ <7vvcsbqa0k.fsf@alter.siamese.dyndns.org>
+ <20110929221143.23806.25666.julian@quantumfyre.co.uk>
+ <7v62karjv3.fsf@alter.siamese.dyndns.org> <4E85E07C.5070402@alum.mit.edu>
+ <7vk48qouht.fsf@alter.siamese.dyndns.org> <4E87F383.1050403@alum.mit.edu>
+ <7vd3egj6aa.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 04 22:52:08 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Julian Phillips <julian@quantumfyre.co.uk>,
+	Martin Fick <mfick@codeaurora.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Oct 04 22:58:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBByB-0008Ks-QQ
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 22:52:08 +0200
+	id 1RBC4U-0002OJ-AP
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 22:58:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933696Ab1JDUwC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Oct 2011 16:52:02 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:59086 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933506Ab1JDUwB (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Oct 2011 16:52:01 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 4F65723964;
-	Tue,  4 Oct 2011 16:52:00 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute4.internal (MEProxy); Tue, 04 Oct 2011 16:52:00 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=pIrc2zfS8opJU/841A9Sec
-	GTgf0=; b=qXbE9t+uBDyqLz9XPGRqFGDFwdAnYHfHUGVQV9PkIHwY8yoGXyMWVY
-	NupeXD6bLYKeb28x5LvbfEmdLVfTVelZazflvnFsdQ7/YSpf6eNVd+WQt1MTuh4b
-	nF4ueP7Wlnj9AkD1VPbKeftBTempUYUTFpLXdbaEHTHLrTRk1doCA=
-X-Sasl-enc: KF+pHT7wzGuoRrVcatqv+IQG46l6qCefR6U0te5k+wAy 1317761519
-Received: from localhost.localdomain (p5485928F.dip0.t-ipconnect.de [84.133.146.143])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 53096AA0569;
-	Tue,  4 Oct 2011 16:51:59 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0) Gecko/20110927 Thunderbird/7.0
-In-Reply-To: <1317761100-33922-1-git-send-email-jaysoffian@gmail.com>
+	id S933746Ab1JDU6d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Oct 2011 16:58:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40590 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933569Ab1JDU6c (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Oct 2011 16:58:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BCF4F60AD;
+	Tue,  4 Oct 2011 16:58:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=f0Gn1q+cTVBeUoXStLi1FjVmuqY=; b=bS0GpQ
+	Y/G4fcSo8hrpsuXbFR9tbQvQKWl4Uly4+3GTBOJe9qx0belrt9fEh0XACITOlm7D
+	+bkcF95cibAgqYzU9kwlh2Kdnpaq36c4TSuZ9xOMjONpbrAr+UofaBX7cx24EuAT
+	qf+kzaMsD64stbvp2xprnNYligyvi3CYsnqDo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DewPhXqx/R2CbdWS7cGYo4U1GdWyiX6a
+	iO450vhuptt5fDHfbK6IspHb6NVeWdfDwGR/9LHaBBiksOvPcsYNlfhahJ/LjbVU
+	gSll34NX9KaFHMxjELAZKOIR+FEFMhi3OP/Rc5Y3K8VBxGkrQWUhNkLYjhJop7xB
+	Zqlqh7Fi/f8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B329D60AC;
+	Tue,  4 Oct 2011 16:58:31 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3B42660AB; Tue,  4 Oct 2011
+ 16:58:31 -0400 (EDT)
+In-Reply-To: <7vd3egj6aa.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sat, 01 Oct 2011 22:45:17 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9DB6708A-EECB-11E0-BB27-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182804>
 
-Jay Soffian venit, vidit, dixit 04.10.2011 22:45:
-> Teach git-log to support --children, which was added by f35f5603f4
-> to the revision machinery, and by 72276a3ecb to rev-list, but
-> was never added to git-log.
-> 
-> Also add tests for 'log --children' and 'log --parents'.
-> 
-> Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
-> ---
-> On Tue, Oct 4, 2011 at 4:12 PM, Michael J Gruber <git@drmicha.warpmail.net> wrote:
->> That means that "log --children --parents" will print out the parents'
->> sha1s, then the children's. Is that a good default format, or should we
->> somehow deal with the case when both are specified?
-> 
-> They are mutually exclusive:
-> 
-> $ git log --parents --children
-> fatal: cannot combine --parents and --children
-> 
->> And I guess we would like to test this...
-> 
-> Good idea. :-)
-> 
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks ;)
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>
+>> Um, well, my patch series includes the same changes that Julian's wants
+>> to introduce, but following lots of other changes, cleanups,
+>> documentation improvements, etc.  Moreover, my patch series builds on
+>> mh/iterate-refs, with which Julian's patch conflicts.  In other words,
+>> it would be a real mess to reroll my series on top of Julian's patch.
+>
+> Conflicts during re-rolling was not something I was worried too much
+> about---that is just the fact of life. We cannot easily resolve two topics
+> that want to go in totally different direction, but we should be able to
+> converge two topics that want to take the same approach in the end,
+> especially one is a subset of the other.
 
-Looks good to me.
+Ah, also I should have noted that I have a fix-up between mh/iterate-refs
+and Julian's patch already queued on 'pu'.
 
-Michael
+I am planning to make mh/iterate-refs graduate to 'master' soonish, so
+hopefully things will become simpler.
 
-> j.
-> 
->  log-tree.c                  |   12 ++++++++++++
->  t/t4013-diff-various.sh     |    2 ++
->  t/t4013/diff.log_--children |   34 ++++++++++++++++++++++++++++++++++
->  t/t4013/diff.log_--parents  |   34 ++++++++++++++++++++++++++++++++++
->  4 files changed, 82 insertions(+), 0 deletions(-)
->  create mode 100644 t/t4013/diff.log_--children
->  create mode 100644 t/t4013/diff.log_--parents
-> 
-> diff --git a/log-tree.c b/log-tree.c
-> index 24c295ea1d..e7694a3a4c 100644
-> --- a/log-tree.c
-> +++ b/log-tree.c
-> @@ -165,6 +165,14 @@ static void show_parents(struct commit *commit, int abbrev)
->  	}
->  }
->  
-> +static void show_children(struct rev_info *opt, struct commit *commit, int abbrev)
-> +{
-> +	struct commit_list *p = lookup_decoration(&opt->children, &commit->object);
-> +	for ( ; p; p = p->next) {
-> +		printf(" %s", find_unique_abbrev(p->item->object.sha1, abbrev));
-> +	}
-> +}
-> +
->  void show_decorations(struct rev_info *opt, struct commit *commit)
->  {
->  	const char *prefix;
-> @@ -414,6 +422,8 @@ void show_log(struct rev_info *opt)
->  		fputs(find_unique_abbrev(commit->object.sha1, abbrev_commit), stdout);
->  		if (opt->print_parents)
->  			show_parents(commit, abbrev_commit);
-> +		if (opt->children.name)
-> +			show_children(opt, commit, abbrev_commit);
->  		show_decorations(opt, commit);
->  		if (opt->graph && !graph_is_commit_finished(opt->graph)) {
->  			putchar('\n');
-> @@ -473,6 +483,8 @@ void show_log(struct rev_info *opt)
->  		      stdout);
->  		if (opt->print_parents)
->  			show_parents(commit, abbrev_commit);
-> +		if (opt->children.name)
-> +			show_children(opt, commit, abbrev_commit);
->  		if (parent)
->  			printf(" (from %s)",
->  			       find_unique_abbrev(parent->object.sha1,
-> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-> index 93a6f20871..a488325e2c 100755
-> --- a/t/t4013-diff-various.sh
-> +++ b/t/t4013-diff-various.sh
-> @@ -231,6 +231,8 @@ log -GF -p master
->  log -GF -p --pickaxe-all master
->  log --decorate --all
->  log --decorate=full --all
-> +log --parents
-> +log --children
->  
->  rev-list --parents HEAD
->  rev-list --children HEAD
-> diff --git a/t/t4013/diff.log_--children b/t/t4013/diff.log_--children
-> new file mode 100644
-> index 0000000000..bb8ed432cf
-> --- /dev/null
-> +++ b/t/t4013/diff.log_--children
-> @@ -0,0 +1,34 @@
-> +$ git log --children
-> +commit 59d314ad6f356dd08601a4cd5e530381da3e3c64
-> +Merge: 9a6d494 c7a2ab9
-> +Author: A U Thor <author@example.com>
-> +Date:   Mon Jun 26 00:04:00 2006 +0000
-> +
-> +    Merge branch 'side'
-> +
-> +commit c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a 59d314ad6f356dd08601a4cd5e530381da3e3c64
-> +Author: A U Thor <author@example.com>
-> +Date:   Mon Jun 26 00:03:00 2006 +0000
-> +
-> +    Side
-> +
-> +commit 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0 59d314ad6f356dd08601a4cd5e530381da3e3c64
-> +Author: A U Thor <author@example.com>
-> +Date:   Mon Jun 26 00:02:00 2006 +0000
-> +
-> +    Third
-> +
-> +commit 1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0
-> +Author: A U Thor <author@example.com>
-> +Date:   Mon Jun 26 00:01:00 2006 +0000
-> +
-> +    Second
-> +    
-> +    This is the second commit.
-> +
-> +commit 444ac553ac7612cc88969031b02b3767fb8a353a 1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44 c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a
-> +Author: A U Thor <author@example.com>
-> +Date:   Mon Jun 26 00:00:00 2006 +0000
-> +
-> +    Initial
-> +$
-> diff --git a/t/t4013/diff.log_--parents b/t/t4013/diff.log_--parents
-> new file mode 100644
-> index 0000000000..bc4d44ff1f
-> --- /dev/null
-> +++ b/t/t4013/diff.log_--parents
-> @@ -0,0 +1,34 @@
-> +$ git log --parents
-> +commit 59d314ad6f356dd08601a4cd5e530381da3e3c64 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0 c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a
-> +Merge: 9a6d494 c7a2ab9
-> +Author: A U Thor <author@example.com>
-> +Date:   Mon Jun 26 00:04:00 2006 +0000
-> +
-> +    Merge branch 'side'
-> +
-> +commit c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a 444ac553ac7612cc88969031b02b3767fb8a353a
-> +Author: A U Thor <author@example.com>
-> +Date:   Mon Jun 26 00:03:00 2006 +0000
-> +
-> +    Side
-> +
-> +commit 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0 1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44
-> +Author: A U Thor <author@example.com>
-> +Date:   Mon Jun 26 00:02:00 2006 +0000
-> +
-> +    Third
-> +
-> +commit 1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44 444ac553ac7612cc88969031b02b3767fb8a353a
-> +Author: A U Thor <author@example.com>
-> +Date:   Mon Jun 26 00:01:00 2006 +0000
-> +
-> +    Second
-> +    
-> +    This is the second commit.
-> +
-> +commit 444ac553ac7612cc88969031b02b3767fb8a353a
-> +Author: A U Thor <author@example.com>
-> +Date:   Mon Jun 26 00:00:00 2006 +0000
-> +
-> +    Initial
-> +$
+Thanks.
