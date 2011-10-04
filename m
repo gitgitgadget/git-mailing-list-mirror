@@ -1,102 +1,132 @@
-From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-Subject: Re: [PATCH] po/pl.po: Eliminate fuzzy translations
-Date: Tue, 04 Oct 2011 10:23:48 +0200
-Message-ID: <4E8AC294.2060608@in.waw.pl>
-References: <CACBZZX4dP-OsrZ3wBOeSkzDFy6XBgeY=eqJUF2acyLC8W-3Vpg@mail.gmail.com> <m3ipre4dtf.fsf@localhost.localdomain> <CACBZZX7wj=j9Mx-m0HrRoRHP1HOSVpn-7o0YVnY6LsfWzuw8aw@mail.gmail.com> <201110032337.09975.jnareb@gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH/RFC] remote: support --all for the prune-subcommand
+Date: Tue, 4 Oct 2011 10:22:35 +0200
+Message-ID: <CABPQNSb7WACrr=7FsR8YVMC1-q3i0zRhQtXiV8VshfCJn3qgEA@mail.gmail.com>
+References: <1317644168-5808-1-git-send-email-kusmabite@gmail.com>
+ <20111004070006.GA6824@sigill.intra.peff.net> <CABPQNSZrfxhyA3em8TN2=d7pAHopZMgRg47baKnDT9h14=rxkA@mail.gmail.com>
+ <20111004071332.GA7308@sigill.intra.peff.net> <CABPQNSZ-ELfFuxmKMqXCQaAgMZMRsZG3S5wWJLsjkYVvK6aGug@mail.gmail.com>
+ <CABPQNSb7NYTac5uWSegK9rmYz1n0yt1GJWHKUtLg1k_OYHdDNg@mail.gmail.com> <20111004075608.GC7308@sigill.intra.peff.net>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	=?UTF-8?B?TWFyY2luIENpZcWbbGFr?= <saper@saper.info>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 04 10:23:11 2011
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 04 10:23:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RB0HN-00027h-Sx
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 10:23:10 +0200
+	id 1RB0Hb-0002Br-KS
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 10:23:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754581Ab1JDIXD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Oct 2011 04:23:03 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:51661 "EHLO kawka.in.waw.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754289Ab1JDIXA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Oct 2011 04:23:00 -0400
-Received: from beck.fuw.edu.pl ([193.0.82.235])
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1RB0HD-0004Xx-Sw; Tue, 04 Oct 2011 10:23:00 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.21) Gecko/20110831 Icedove/3.1.13
-In-Reply-To: <201110032337.09975.jnareb@gmail.com>
+	id S1754773Ab1JDIXT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Oct 2011 04:23:19 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:39398 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754399Ab1JDIXQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Oct 2011 04:23:16 -0400
+Received: by gyg10 with SMTP id 10so217877gyg.19
+        for <git@vger.kernel.org>; Tue, 04 Oct 2011 01:23:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=jtZqeO6IYK6zC+qRE3kfQoXvqCCrjjX2hVjLoxazShk=;
+        b=QpnMx4XEKP759VSOieKQ1uV5grWIXovdsxj0cFCWZeaO+zUcpWAiq3OFtvn8dKjKZC
+         BxSsxRP6KPeDrF/IgvTDx2m46jxPOxlD3Z6dkt6uERMT30PTlovqrGDV0zAVj4KCogne
+         7IUuBxs9yUdU5T2YK+7oZ1mxnKPRNW3wvm0So=
+Received: by 10.68.21.103 with SMTP id u7mr2908459pbe.129.1317716595049; Tue,
+ 04 Oct 2011 01:23:15 -0700 (PDT)
+Received: by 10.68.42.169 with HTTP; Tue, 4 Oct 2011 01:22:35 -0700 (PDT)
+In-Reply-To: <20111004075608.GC7308@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182749>
 
-On 10/03/2011 11:37 PM, Jakub Narebski wrote:
-+# Terminologia dla kluczowych termin=C3=B3w z Subversion:
-+# path - =C5=9Bcie=C5=BCka
-+# URL - URL
-+# file - plik
-+# directory - katalog
-+# update - aktualizacja
-+# commit - zatwierdzenie, zatwierdzenie zmian
-This seems kind of awkward. E.g. 'initial commit' would become=20
-'pocz=C4=85tkowe zatwierdzenie zmian' or 'pierwsze zatwierdzenie', whic=
-h just=20
-doesn't sound right. What about starting with the mercurial term=20
-'changeset'? Git users also use 'commit' to mean 'change', so maybe
-the polish translation of this crucial term should be 'zmiana':
-'initial commit' -- 'pocz=C4=85tkowa zmiana' or 'pierwsza zmiana'
-'commit message' -- 'opis zmiany'
+On Tue, Oct 4, 2011 at 9:56 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Oct 04, 2011 at 09:40:22AM +0200, Erik Faye-Lund wrote:
+>> In fact, I'm not sure I understand why we simply do not always prune
+>> by default.
+>
+> I think the original rationale was that we didn't want fetch to be
+> "lossy". That is, if I were using upstream's "foo" branch as part of =
+my
+> work (to diff against, or whatever), then doing a "git fetch" to upda=
+te
+> should not suddenly make it hard to do my work. And not just hard as =
+in
+> "I notice that it's gone and I adapt my workflow". But that you no
+> longer have _any_ record of where upstream's "foo" branch used to poi=
+nt,
+> so even doing something like:
+>
+> =A0git rebase --onto new-foo foo my-topic
+>
+> is impossible.
+>
 
-+# version control - zarz=C4=85dzanie wersjami
-+# repository - repozytorium
-+# branch - odga=C5=82=C4=99zienie
-'ga=C5=82=C4=85=C5=BA'? I think that's the translation which is used in=
- informal=20
-conversations.
+=46ollowing that logic, a user cannot _ever_ safely prune a remote if h=
+e
+wants to work on some of the branches. Doing something like "git
+remote foo -n" to check if the branch would get pruned before doing a
+proper prune is prone to a race-condition; the branch could be deleted
+on the remote between the dry-run and the actual pruning.
 
-+# tag - tag
-'metka', 'etykieta' according to the dictionary. I'm aware of 'metka'
-being used in CS anywhere, but it is short, and pretty cool, IMO.
+Besides, the owner of the repo can just as easily have deleted the
+branch and created a new one with the same name, causing the contents
+of the branch to be lost. This happens all the time with
+"for-upstream"-kind of branches, no?
 
-+# merge - =C5=82=C4=85czenie zmian
-'=C5=82=C4=85czenie ga=C5=82=C4=99zi'?
+> These days we have reflogs, so you would hope to do something like:
+>
+> =A0git rebase --onto new-foo foo@{1} my-topic
+>
+> But ref deletion also deletes the reflog completely, so that doesn't
+> work.
+>
 
-+# conflict - konflikt
-+# property - atrybut
-+# revision - wersja
-+# log message - opis zmian
-+# entry/item - element
-+# ancestry - pochodzenie
-+# ancestor - przodek
-+# working copy - kopia robocza
-+# working dir - bie=C5=BC=C4=85cy katalog
-+# usage - wykorzystanie
-'u=C5=BCycie', 'wywo=C5=82anie'?
-E.g. 'standardowe wywo=C5=82anie tego programu to: prog arg'
+=2E..and this just makes the problem I pointed out above a lot worse.
 
-+# source - =C5=BAr=C3=B3d=C5=82owy
-+# destination - docelowy
-+# hook - skrypt (skrypt repozytorium)
-+# exclude - wykluczy=C4=87
-+# crop - obci=C4=85=C4=87
-+# cache - pami=C4=99=C4=87 podr=C4=99czna
-+# child - obiekt podrz=C4=99dny
-Standard CS term is 'ojciec' and 'syn' for 'parent/child'.
+So surely, the only sane thing is to make a local branch of what
+you're interested in to be safe?
 
-+# obliteration - obliteracja
-'wymazanie'?
+> The right solution, IMHO, is that ref deletion should actually keep t=
+he
+> reflog around in a graveyard of some sort. Entries would expire
+> naturally over time, as they do in regular reflogs. And then it becom=
+es
+> a lot safer to prune on every fetch, because you still have 90 days l=
+ook
+> at the reflog.
+>
 
-+# patch - =C5=82ata
-+# notes - adnotacja
+=46ixing the reflog to expire for ref deletion rather than completely
+deleting it sounds like a good move, indeed.
 
-Zbyszek
+>> If a user wants to keep another user's branch, surely the most sane
+>> thing would be to make a local branch of it?
+>
+> Unfortunately there are some management problems there. How do I keep=
+ my
+> local branch up to date with what I fetch? I have to keep checking ou=
+t
+> and merging on every fetch (or use some plumbing), which is a pain. B=
+ut
+> if I don't, then when the upstream branch goes away, I still have no
+> clue where its tip was right before it got pruned.
+
+Hmm, good point. I tend to just do the dirty work every now and then
+myself. But I only tend to track upstream and stale
+development-branches that I intend to pick up, so I'm probably not the
+best user-example.
+
+While we're on the subject, an additional argument to change "git
+fetch" to always prune is that it's much much easier for user to grok
+"last known state of <remote>'s branches" than "the union of all the
+branches that were ever pulled from <remote>, unless --prune was
+specified". But that's not a technical one, and surely there's issues
+to resolve with the proposal before going in that direction.
