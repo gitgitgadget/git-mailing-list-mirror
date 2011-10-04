@@ -1,67 +1,88 @@
-From: Alexey Shumkin <Alex.Crezoff@gmail.com>
-Subject: Re: Git mailing list admin wanted! :)
-Date: Tue, 4 Oct 2011 11:40:39 +0400
-Message-ID: <20111004114039.763f9906@ashu.dyn.rarus.ru>
-References: <20111004071027.GA19295@ashu.dyn.rarus.ru>
-	<vpqty7pdy83.fsf@bauges.imag.fr>
-	<20111004113611.62326b3b@ashu.dyn.rarus.ru>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH/RFC] remote: support --all for the prune-subcommand
+Date: Tue, 4 Oct 2011 09:40:22 +0200
+Message-ID: <CABPQNSb7NYTac5uWSegK9rmYz1n0yt1GJWHKUtLg1k_OYHdDNg@mail.gmail.com>
+References: <1317644168-5808-1-git-send-email-kusmabite@gmail.com>
+ <20111004070006.GA6824@sigill.intra.peff.net> <CABPQNSZrfxhyA3em8TN2=d7pAHopZMgRg47baKnDT9h14=rxkA@mail.gmail.com>
+ <20111004071332.GA7308@sigill.intra.peff.net> <CABPQNSZ-ELfFuxmKMqXCQaAgMZMRsZG3S5wWJLsjkYVvK6aGug@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Alexey Shumkin <alex.crezoff@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 04 09:40:53 2011
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 04 09:41:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RAzcS-0004kD-9e
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 09:40:52 +0200
+	id 1RAzcj-0004sS-BZ
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 09:41:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755099Ab1JDHkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Oct 2011 03:40:47 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:61594 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755035Ab1JDHkq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Oct 2011 03:40:46 -0400
-Received: by wwf22 with SMTP id 22so339934wwf.1
-        for <git@vger.kernel.org>; Tue, 04 Oct 2011 00:40:45 -0700 (PDT)
-Received: by 10.227.26.8 with SMTP id b8mr1055366wbc.45.1317714045355;
-        Tue, 04 Oct 2011 00:40:45 -0700 (PDT)
-Received: from ashu.dyn.rarus.ru (mail.rarus.ru. [213.247.194.83])
-        by mx.google.com with ESMTPS id gg18sm1460713wbb.26.2011.10.04.00.40.43
-        (version=SSLv3 cipher=OTHER);
-        Tue, 04 Oct 2011 00:40:44 -0700 (PDT)
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <20111004113611.62326b3b@ashu.dyn.rarus.ru>
-X-Newsreader: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
+	id S1755018Ab1JDHlE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Oct 2011 03:41:04 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:45015 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754945Ab1JDHlC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Oct 2011 03:41:02 -0400
+Received: by yxl31 with SMTP id 31so193533yxl.19
+        for <git@vger.kernel.org>; Tue, 04 Oct 2011 00:41:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=O73u1QjOfNZDd0EWJkdzmG0dz2cbG12a1UnmD/lJp3g=;
+        b=AaIC98x3gqa4nQs6p27Wy4RO4qDaOQifRcXX0vRJihAqZIqB1+LHWqwhkOpPNVknc8
+         7OB38zB4srkruRSsTpJm2cIIsoCKyemWwCUVir3N9zIdV5uWEkMnOhAiCkZ8FdDGgSZz
+         puNWH6Xl1KzRkccXT98iNzixdiXLzHGrglBrM=
+Received: by 10.68.21.103 with SMTP id u7mr2678160pbe.129.1317714062082; Tue,
+ 04 Oct 2011 00:41:02 -0700 (PDT)
+Received: by 10.68.42.169 with HTTP; Tue, 4 Oct 2011 00:40:22 -0700 (PDT)
+In-Reply-To: <CABPQNSZ-ELfFuxmKMqXCQaAgMZMRsZG3S5wWJLsjkYVvK6aGug@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182738>
 
-test reply
+On Tue, Oct 4, 2011 at 9:18 AM, Erik Faye-Lund <kusmabite@gmail.com> wr=
+ote:
+> On Tue, Oct 4, 2011 at 9:13 AM, Jeff King <peff@peff.net> wrote:
+>> On Tue, Oct 04, 2011 at 09:10:40AM +0200, Erik Faye-Lund wrote:
+>>
+>>> > =A0git fetch --all --prune
+>>> >
+>>> I wasn't aware that fetch could prune, but yeah, that seems much
+>>> better to me. Perhaps a mention of this in the "git remote prune"
+>>> documentation could steer other users in the right direction?
+>>
+>> Yeah, that makes sense.
+>>
+>> There is one slight difference: I think "git remote prune" will _jus=
+t_
+>> prune, and not fetch into existing refs at all. I'm not sure exactly
+>> why you would want that, though.
+>
+> Hmm, you might want to do that on, say, a mobile network to save
+> bandwidth; i.e throw away the stale branches, but not yet update the
+> non-stale ones because downloading the objects might take a long time
+> (and/or be expensive).
+>
+> So with that in mind, I actually think my patch makes sense in some
+> cases, but it certainly is less useful that I originally though ;)
 
-> Hmm!
-> It seems to me I got... not a reason, but the steps:
-> 
-> If I reply from NNTP-account (even I change an account for
-> sending to Gmail), messages are "lost".
-> 
-> If I reply from Gmail account, messages are delivered
-> 
-> > Alexey Shumkin <alex.crezoff@gmail.com> writes:
-> > 
-> > > Hello, list!
-> > >
-> > > I have a trouble with postings to this mailing list.
-> > > I can post from mutt or git-send-email,
-> > > but not from claws-mail email-client (and only claws-mail, sic!)
-> > > Messages are gone ok, CC account got that messages but not git
-> > > list.
-> > 
-> > Was the message plain text, or HTML?
-> > 
-> 
+Strike that part; I hadn't had my morning coffee yet. It might make
+sense to have similar _functionality_, but having this as a flag to
+"git fetch" instead of "git remote prune" strikes me as the only sane
+approach.
+
+In fact, I'm not sure I understand why we simply do not always prune
+by default. My guess would be backward compatibility, but this strikes
+me as one of these things where we should introduce a config variable
+(there's already one for git-gui: gui.pruneduringfetch), add a warning
+if unset, and flip the default at some future major release. After
+all, a remote branch isn't the user's branch - it's a cache/mirror
+some other user's branch. If a user wants to keep another user's
+branch, surely the most sane thing would be to make a local branch of
+it?
