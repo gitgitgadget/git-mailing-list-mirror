@@ -1,82 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-difftool: allow skipping file by typing 'n' at
- prompt
-Date: Tue, 04 Oct 2011 12:28:13 -0700
-Message-ID: <7vty7oblpu.fsf@alter.siamese.dyndns.org>
-References: <20111004105333.GA24331@atcmail.atc.tcs.com>
- <7vbotwdbjg.fsf@alter.siamese.dyndns.org>
- <CABURp0qmYWRJzHZZwZreKnj0ymFyM_AYXWXqwy=vTZspoPvvvg@mail.gmail.com>
+From: Michael Schubert <mschub@elegosoft.com>
+Subject: Re: [PATCH] git-completion: offer references for 'git reflog'
+Date: Tue, 04 Oct 2011 21:34:25 +0200
+Message-ID: <4E8B5FC1.3080902@elegosoft.com>
+References: <4E7F05A6.30505@elegosoft.com> <4E8AC85A.2070009@elegosoft.com> <7v7h4kd6vg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sitaram Chamarty <sitaram@atc.tcs.com>, git@vger.kernel.org
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 04 21:28:21 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 04 21:35:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBAf6-0007zm-Pz
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 21:28:21 +0200
+	id 1RBAlo-0002JW-Pu
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 21:35:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933160Ab1JDT2Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Oct 2011 15:28:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38524 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932752Ab1JDT2P (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Oct 2011 15:28:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 11414492E;
-	Tue,  4 Oct 2011 15:28:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=M170TWR0rmQw+Tzt5k5KimaiuN8=; b=j8yOcp
-	qA5lwm0BknVbExwAaqfFx3JwCugzIqhw/SncxjryyAUDYpbNo95MeclE/9J+1yN7
-	veoCMhDb8Jtr5FbHJabVtJb+Nq78l3yJyrsaLXU5Ymw0916avTa/tyYQGlGYRXgs
-	6HLRNfBSH26Y4g4oTRsWEFyZGjpteqY1fgwgU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CcE4V/YATtGtPwg+qoC1ghJEUtLMwf9P
-	UQ7fc42KUFiO6gPPT2uEcBvsuyJjHRZ4dLUEqjLDFRyue9qxzY1XqdewgLTUd2Br
-	O8IfJycC5qna7CW+Zbmk67wB9Xz+8/fOxeIEkM/qcOHAkRdpS78pOO7eIWCStPr4
-	vBEmtY8ue30=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 07CDF492D;
-	Tue,  4 Oct 2011 15:28:15 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A4D2492B; Tue,  4 Oct 2011
- 15:28:14 -0400 (EDT)
-In-Reply-To: <CABURp0qmYWRJzHZZwZreKnj0ymFyM_AYXWXqwy=vTZspoPvvvg@mail.gmail.com> (Phil
- Hord's message of "Tue, 4 Oct 2011 14:02:54 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 01103D8A-EEBF-11E0-AB69-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933217Ab1JDTfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Oct 2011 15:35:10 -0400
+Received: from mx0.elegosoft.com ([78.47.87.163]:54978 "EHLO mx0.elegosoft.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932752Ab1JDTfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Oct 2011 15:35:09 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id CD6EDDE7D3;
+	Tue,  4 Oct 2011 21:35:08 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id O1urUC4TJU9P; Tue,  4 Oct 2011 21:35:04 +0200 (CEST)
+Received: from [192.168.1.101] (g230120021.adsl.alicedsl.de [92.230.120.21])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id CD73EDE7D7;
+	Tue,  4 Oct 2011 21:35:03 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0.1) Gecko/20111001 Thunderbird/7.0.1
+In-Reply-To: <7v7h4kd6vg.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182790>
 
-Phil Hord <phil.hord@gmail.com> writes:
-
-> On Tue, Oct 4, 2011 at 11:25 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
->> I think I've seen this done as: "do this? [Y/n]" elsewhere.
+On 10/04/2011 07:05 PM, Junio C Hamano wrote:
+> Michael Schubert <mschub@elegosoft.com> writes:
+> 
+>> On 09/25/2011 12:42 PM, Michael Schubert wrote:
+>>> 'git reflog <ref>' is a valid command, therefore offer reference
+>>> completion.
+>>>
+>>> Signed-off-by: Michael Schubert <mschub@elegosoft.com>
+>>> ---
+>>>  contrib/completion/git-completion.bash |    2 +-
+>>>  1 files changed, 1 insertions(+), 1 deletions(-)
+>>>
+>>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+>>> index 8648a36..63d0f08 100755
+>>> --- a/contrib/completion/git-completion.bash
+>>> +++ b/contrib/completion/git-completion.bash
+>>> @@ -1774,7 +1774,7 @@ _git_reflog ()
+>>>  	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+>>>  
+>>>  	if [ -z "$subcommand" ]; then
+>>> -		__gitcomp "$subcommands"
+>>> +		__gitcomp "$subcommands $(__git_refs)"
+>>>  	else
+>>>  		__gitcomp "$(__git_refs)"
+>>>  	fi
 >>
->> Not telling you what to do, but trying to feel what others may think.
->
-> I think so, too.  The [y]/n syntax is not clear enough for me to
-> confidently know what the default value will be.
+>> Ping.?
+> 
+> Personally I think this change will give much less pleasant user
+> experience.  This is what I currently get:
+> 
+>     $ git reflog <TAB>
+>     delete  expire  show
+>     $ git reflog
+> 
+> and after learning the "show" subcommand exists, this is what I would get:
+> 
+>     $ git reflog show <TAB>
+>     Display all 626 possibilities? (y or n)
+> 
+> With your change, I would get:
+> 
+>     $ git reflog <TAB>
+>     Display all 629 possibilities? (y or n)
 
-One downside of "do this [Y,n,m,o,p,q]? " is that it limits us to
-lowercase responses, which means we cannot assign 'q' for quitting from
-the innermost nested context and assign 'Q' for quitting from the whole
-interactive loop (e.g. "git add -p").
+Yeah, that would be a tradeoff. IMHO the current behaviour is pleasant
+for newcomers, but (I guess) most users would rather enjoy "the short form".
 
-    "do this [y,n,m,o,p,q] (default=y)? "
-
-may have been a better choice in hindsight.
-
-No matter what we end up doing, let's try to be consistent.
-
-Thanks.
+> and do not even have a chance to remind myself if the subcommand to drop
+> a reflog was "delete" or "remove".
+> 
+> At least when I know that I want to be reminded of refs to $verb (use one
+> of the three subcommands I currently get in place of the "$verb"), I can
+> say
+> 
+>     $ git reflog $verb <TAB>
+> 
+> and at that point, I am willing to wade thru list of 600+ refs.
