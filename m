@@ -1,70 +1,105 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH] git-difftool: allow skipping file by typing 'n' at prompt
-Date: Tue, 4 Oct 2011 14:02:54 -0400
-Message-ID: <CABURp0qmYWRJzHZZwZreKnj0ymFyM_AYXWXqwy=vTZspoPvvvg@mail.gmail.com>
-References: <20111004105333.GA24331@atcmail.atc.tcs.com> <7vbotwdbjg.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: pack-object poor performance (with large number of objects?)
+Date: Tue, 4 Oct 2011 14:08:29 -0400
+Message-ID: <20111004180829.GB31671@sigill.intra.peff.net>
+References: <CAA01CspZijOO_xbR=OcaRaesTeSy=6RM4DR01-07qimVzxvJZA@mail.gmail.com>
+ <CAJo=hJtw+sYrP09zrDbZJNGHDYOeguQLkOe88FBYQDZrnaqsAw@mail.gmail.com>
+ <CAA01CsppPf_6Zp5UPYBsxa1JEwLGF-FqacRa7kBJ45Ges2ujrw@mail.gmail.com>
+ <7v62k5g988.fsf@alter.siamese.dyndns.org>
+ <CAA01CsoSTsBLNcbv5o6Jx6YrjG4g8T=yodX811ymBLXg7sjDJQ@mail.gmail.com>
+ <20111004110702.GA18599@sigill.intra.peff.net>
+ <CAA01CsodyUQJOnj5vV0LdVEWpkvwSW2TAONzyY9J82o9VwC6Ag@mail.gmail.com>
+ <20111004124502.GB30162@sigill.intra.peff.net>
+ <CAA01Csp2rouKk4jvCH0Wu+0gc3+cvyH__d-yw8EHEkeZhRpX1Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sitaram Chamarty <sitaram@atc.tcs.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 04 20:03:21 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ingo Molnar <mingo@elte.hu>
+To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 04 20:08:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RB9Kq-0006rh-TU
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 20:03:21 +0200
+	id 1RB9Px-0000X2-LJ
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 20:08:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933298Ab1JDSDQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Oct 2011 14:03:16 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:57715 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754644Ab1JDSDP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Oct 2011 14:03:15 -0400
-Received: by wwf22 with SMTP id 22so1213550wwf.1
-        for <git@vger.kernel.org>; Tue, 04 Oct 2011 11:03:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=1CDP0FUEaOG4F1lh04hsN3OcBe/2HYEXhMputH3juPQ=;
-        b=ZS4S5xELP4NZgdUSyovPzAGihe8FcaYi3pmQhKvDVKSVBSTekDjftP3QHPGkxqAn/X
-         cGm79hIbHX0AsduO8mP1Lihp6mYa4goO5CZfkNiISOQweXz7l0YWSZR4S50JlmABfgY7
-         lWR7yblpfrEJphXR9BiFSPhDeknO+tYLWrxWM=
-Received: by 10.216.80.69 with SMTP id j47mr5402425wee.102.1317751394130; Tue,
- 04 Oct 2011 11:03:14 -0700 (PDT)
-Received: by 10.216.88.72 with HTTP; Tue, 4 Oct 2011 11:02:54 -0700 (PDT)
-In-Reply-To: <7vbotwdbjg.fsf@alter.siamese.dyndns.org>
+	id S933039Ab1JDSId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Oct 2011 14:08:33 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52273
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753855Ab1JDSIc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Oct 2011 14:08:32 -0400
+Received: (qmail 10403 invoked by uid 107); 4 Oct 2011 18:13:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 04 Oct 2011 14:13:37 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Oct 2011 14:08:29 -0400
+Content-Disposition: inline
+In-Reply-To: <CAA01Csp2rouKk4jvCH0Wu+0gc3+cvyH__d-yw8EHEkeZhRpX1Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182785>
 
-On Tue, Oct 4, 2011 at 11:25 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Sitaram Chamarty <sitaram@atc.tcs.com> writes:
->
->> Signed-off-by: Sitaram Chamarty <sitaram@atc.tcs.com>
->> ---
->>
->> I'm using what is pretty much a universal convention to
->> signify that the default choice is "y"; I hope documentation
->> for something so small is not needed but if it is, let me
->> know and I'll do that also.
->>
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 printf "Hit return to laun=
-ch '%s': " \
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 printf "Launch '%s' [y]/n:=
- " \
->
-> I think I've seen this done as: "do this? [Y/n]" elsewhere.
->
-> Not telling you what to do, but trying to feel what others may think.
+On Tue, Oct 04, 2011 at 03:21:24PM +0200, Piotr Krukowiecki wrote:
 
-I think so, too.  The [y]/n syntax is not clear enough for me to
-confidently know what the default value will be.
+> I have 4GB ram + 4GB swap. Is it possible the RAM is the problem if I
+> always have free RAM left and my swap is almost not used?
+> For example at the moment repack finished counting objects ("Counting
+> objects: 1742200, done."):
+> 
+> $ free -m
+>              total       used       free     shared    buffers     cached
+> Mem:          3960       3814        146          0        441        215
+> -/+ buffers/cache:       3157        803
+> Swap:         6143        694       5449
 
-Phil
+I am not the best person to comment on Linux's disk caching strategies,
+but in general, it should prefer dropping disk cache over pushing
+program memory into swap. So no, you're not swapping, but you are
+working with only 800M or so to do your disk caching.
+
+So depending how big pack-object's working set of objects is, we might
+be overflowing that, and constantly evicting and re-reading objects. I
+don't recall offhand what kind of locality there is to pack-object's
+accesses.
+
+One thing you could try to reduce the working set is to incrementally
+pack some smaller chunks, and then combine them all at the end. That
+ends up being more work overall, but at any given time, your working set
+of objects will be smaller.
+
+You'd have to do something like this (this is very untested):
+
+  # find out how many revisions we have. Let's pretend it's about
+  # 25,000.
+  git rev-list HEAD | wc -l
+
+  # now split them into chunks of whatever size you feel like trying.
+  # 1000, maybe, or a few thousand. Bearing in mind that this is a gross
+  # approximation, since the history is not linear.
+  #
+  # Start with HEAD~24K (25K total, minus 1K we want to pack)
+  echo HEAD~24000 | git pack-objects --revs .git/objects/pack/pack
+  # And then prune the loose objects that we just packed.
+  git prune-packed
+  # And repeat for the next chunk
+  echo HEAD~24000..HEAD~23000 | git pack-objects --revs .git/objects/pack/pack
+  git prune-packed
+  # And so forth...
+
+And then at the end, probably do a "git repack -ad" to put it all in
+one big pack. Which should hopefully be less disk-intensive, because now
+you'll have a much smaller disk footprint, since most of your objects
+are at least delta'd against the others in their own pack.
+
+I have no idea if this will actually go faster for you. But it might be
+worth trying, instead of just redoing the svn import with auto-gc turned
+on.
+
+-Peff
