@@ -1,105 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: pack-object poor performance (with large number of objects?)
-Date: Tue, 4 Oct 2011 14:08:29 -0400
-Message-ID: <20111004180829.GB31671@sigill.intra.peff.net>
-References: <CAA01CspZijOO_xbR=OcaRaesTeSy=6RM4DR01-07qimVzxvJZA@mail.gmail.com>
- <CAJo=hJtw+sYrP09zrDbZJNGHDYOeguQLkOe88FBYQDZrnaqsAw@mail.gmail.com>
- <CAA01CsppPf_6Zp5UPYBsxa1JEwLGF-FqacRa7kBJ45Ges2ujrw@mail.gmail.com>
- <7v62k5g988.fsf@alter.siamese.dyndns.org>
- <CAA01CsoSTsBLNcbv5o6Jx6YrjG4g8T=yodX811ymBLXg7sjDJQ@mail.gmail.com>
- <20111004110702.GA18599@sigill.intra.peff.net>
- <CAA01CsodyUQJOnj5vV0LdVEWpkvwSW2TAONzyY9J82o9VwC6Ag@mail.gmail.com>
- <20111004124502.GB30162@sigill.intra.peff.net>
- <CAA01Csp2rouKk4jvCH0Wu+0gc3+cvyH__d-yw8EHEkeZhRpX1Q@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Git ksshaskpass to play nice with https and kwallet
+Date: Tue, 04 Oct 2011 20:49:55 +0200
+Message-ID: <4E8B5553.2080706@drmicha.warpmail.net>
+References: <4E8ADDCF.6090406@drmicha.warpmail.net> <20111004105008.GA11789@sigill.intra.peff.net> <4E8AEDBD.4070404@drmicha.warpmail.net> <20111004113713.GA19171@sigill.intra.peff.net> <4E8AF812.5090906@drmicha.warpmail.net> <20111004124344.GA30162@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ingo Molnar <mingo@elte.hu>
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 04 20:08:41 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 04 20:50:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RB9Px-0000X2-LJ
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 20:08:38 +0200
+	id 1RBA4h-0001BB-Pw
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 20:50:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933039Ab1JDSId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Oct 2011 14:08:33 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52273
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753855Ab1JDSIc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Oct 2011 14:08:32 -0400
-Received: (qmail 10403 invoked by uid 107); 4 Oct 2011 18:13:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 04 Oct 2011 14:13:37 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Oct 2011 14:08:29 -0400
-Content-Disposition: inline
-In-Reply-To: <CAA01Csp2rouKk4jvCH0Wu+0gc3+cvyH__d-yw8EHEkeZhRpX1Q@mail.gmail.com>
+	id S1756386Ab1JDSt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Oct 2011 14:49:59 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:59423 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753855Ab1JDSt6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Oct 2011 14:49:58 -0400
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id A22602B603;
+	Tue,  4 Oct 2011 14:49:57 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute6.internal (MEProxy); Tue, 04 Oct 2011 14:49:57 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=5QkE44tzJSBXKdVC38CvjF
+	2jSxg=; b=eaqr408xeyhJH2wI/z7F+TxG8BAFpaYv6hDUH1MraanZQxdUWYGYWa
+	3CbFyvkP4gPAHv4+DA4EblKJ3DiXpiwrsNNMPxQ6diNZiCJbFljVPfTGyT3C9ym6
+	q5njWRsDa+7nwxJpvgEZ2uxMugy3UzPLvBzCBVHLEdleu34t0Yl48=
+X-Sasl-enc: +xZnQ7rrUbNau0iacOF2k3KiFmNKL08oL8VUXG7ZpKXv 1317754197
+Received: from localhost.localdomain (p5485928F.dip0.t-ipconnect.de [84.133.146.143])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id F1D17900A00;
+	Tue,  4 Oct 2011 14:49:56 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0) Gecko/20110927 Thunderbird/7.0
+In-Reply-To: <20111004124344.GA30162@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182786>
 
-On Tue, Oct 04, 2011 at 03:21:24PM +0200, Piotr Krukowiecki wrote:
-
-> I have 4GB ram + 4GB swap. Is it possible the RAM is the problem if I
-> always have free RAM left and my swap is almost not used?
-> For example at the moment repack finished counting objects ("Counting
-> objects: 1742200, done."):
+Jeff King venit, vidit, dixit 04.10.2011 14:43:
+> On Tue, Oct 04, 2011 at 02:12:02PM +0200, Michael J Gruber wrote:
 > 
-> $ free -m
->              total       used       free     shared    buffers     cached
-> Mem:          3960       3814        146          0        441        215
-> -/+ buffers/cache:       3157        803
-> Swap:         6143        694       5449
+>>> The latter is especially useful if you have put a username in your
+>>> ~/.gitconfig, in which case you get:
+>>
+>> I'm actually wondering why git can't infer the user from
+>>
+>> https://user@host.com
+>>
+>> with last week's next, at least.
+> 
+> It can, and it has for some time. Part of the configurable-username
+> thing was that it would be way nicer to just use a user-agnostic URL,
+> because it means it's easier to share with other people.
+> 
 
-I am not the best person to comment on Linux's disk caching strategies,
-but in general, it should prefer dropping disk cache over pushing
-program memory into swap. So no, you're not swapping, but you are
-working with only 800M or so to do your disk caching.
+We seem to mean something different:
 
-So depending how big pack-object's working set of objects is, we might
-be overflowing that, and constantly evicting and re-reading objects. I
-don't recall offhand what kind of locality there is to pack-object's
-accesses.
+git config --get remote.bitbucket.pushurl
+https://grubix@bitbucket.org/grubix/git.git
+SSH_ASKPASS= git push -n bitbucket
+Username for 'bitbucket.org':
 
-One thing you could try to reduce the working set is to incrementally
-pack some smaller chunks, and then combine them all at the end. That
-ends up being more work overall, but at any given time, your working set
-of objects will be smaller.
+I mean that git should not need to ask for the username here.
 
-You'd have to do something like this (this is very untested):
-
-  # find out how many revisions we have. Let's pretend it's about
-  # 25,000.
-  git rev-list HEAD | wc -l
-
-  # now split them into chunks of whatever size you feel like trying.
-  # 1000, maybe, or a few thousand. Bearing in mind that this is a gross
-  # approximation, since the history is not linear.
-  #
-  # Start with HEAD~24K (25K total, minus 1K we want to pack)
-  echo HEAD~24000 | git pack-objects --revs .git/objects/pack/pack
-  # And then prune the loose objects that we just packed.
-  git prune-packed
-  # And repeat for the next chunk
-  echo HEAD~24000..HEAD~23000 | git pack-objects --revs .git/objects/pack/pack
-  git prune-packed
-  # And so forth...
-
-And then at the end, probably do a "git repack -ad" to put it all in
-one big pack. Which should hopefully be less disk-intensive, because now
-you'll have a much smaller disk footprint, since most of your objects
-are at least delta'd against the others in their own pack.
-
-I have no idea if this will actually go faster for you. But it might be
-worth trying, instead of just redoing the svn import with auto-gc turned
-on.
-
--Peff
+Michael
