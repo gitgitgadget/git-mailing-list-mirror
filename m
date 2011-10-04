@@ -1,79 +1,87 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: pack-object poor performance (with large number of objects?)
-Date: Tue, 4 Oct 2011 14:22:55 +0200
-Message-ID: <CAA01CsodyUQJOnj5vV0LdVEWpkvwSW2TAONzyY9J82o9VwC6Ag@mail.gmail.com>
-References: <CAA01CspZijOO_xbR=OcaRaesTeSy=6RM4DR01-07qimVzxvJZA@mail.gmail.com>
-	<CAJo=hJtw+sYrP09zrDbZJNGHDYOeguQLkOe88FBYQDZrnaqsAw@mail.gmail.com>
-	<CAA01CsppPf_6Zp5UPYBsxa1JEwLGF-FqacRa7kBJ45Ges2ujrw@mail.gmail.com>
-	<7v62k5g988.fsf@alter.siamese.dyndns.org>
-	<CAA01CsoSTsBLNcbv5o6Jx6YrjG4g8T=yodX811ymBLXg7sjDJQ@mail.gmail.com>
-	<20111004110702.GA18599@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git ksshaskpass to play nice with https and kwallet
+Date: Tue, 4 Oct 2011 08:43:44 -0400
+Message-ID: <20111004124344.GA30162@sigill.intra.peff.net>
+References: <4E8ADDCF.6090406@drmicha.warpmail.net>
+ <20111004105008.GA11789@sigill.intra.peff.net>
+ <4E8AEDBD.4070404@drmicha.warpmail.net>
+ <20111004113713.GA19171@sigill.intra.peff.net>
+ <4E8AF812.5090906@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ingo Molnar <mingo@elte.hu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 04 14:23:03 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Oct 04 14:43:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RB41W-0008G5-Hp
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 14:23:02 +0200
+	id 1RB4Lg-0007Qp-RW
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 14:43:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756619Ab1JDMW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Oct 2011 08:22:57 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:36387 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756482Ab1JDMW4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Oct 2011 08:22:56 -0400
-Received: by yxl31 with SMTP id 31so402901yxl.19
-        for <git@vger.kernel.org>; Tue, 04 Oct 2011 05:22:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=o3b2Bteb8BihVCzrgUyaK6yCRsc4mgOAI4DfU/krxb0=;
-        b=xRTYQweehZMElkzFH4Koo5PEXx67K5MBr/s8FJJwgMXm5tGv08bppk4nKeSUc7cDgO
-         /JO4iNNE9AlwXIbVIi5FwM/yEsPkFnzM+2W7PKxnXS0Ub1E6ZgWhNxHHla651vKG/hNF
-         bdLhftMsVyQTVxrfJ9LVGD52yXSt/fsl//ifA=
-Received: by 10.150.138.2 with SMTP id l2mr1068602ybd.344.1317730975972; Tue,
- 04 Oct 2011 05:22:55 -0700 (PDT)
-Received: by 10.150.196.1 with HTTP; Tue, 4 Oct 2011 05:22:55 -0700 (PDT)
-In-Reply-To: <20111004110702.GA18599@sigill.intra.peff.net>
+	id S932078Ab1JDMns (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Oct 2011 08:43:48 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52162
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756575Ab1JDMnr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Oct 2011 08:43:47 -0400
+Received: (qmail 8277 invoked by uid 107); 4 Oct 2011 12:48:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 04 Oct 2011 08:48:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Oct 2011 08:43:44 -0400
+Content-Disposition: inline
+In-Reply-To: <4E8AF812.5090906@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182767>
 
-On Tue, Oct 4, 2011 at 1:07 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Oct 04, 2011 at 09:59:08AM +0200, Piotr Krukowiecki wrote:
->
->> I've run the command and it took about 20 minutes in "Counting
->> objects" to count up to 500000 on idle machine and there's still 700MB
->> RAM free.
->> [...]
->> So it looks it's not a problem with git but rather with my disk/file
->> system/linux...
->
-> You mentioned that git was in the 'D' state earlier. And it sounds like
-> you have 1.7 million objects, _completely_ unpacked.
+On Tue, Oct 04, 2011 at 02:12:02PM +0200, Michael J Gruber wrote:
 
-That's right - since I had auto-gc disabled at first it had not chance
-to pack anything.
+> > The latter is especially useful if you have put a username in your
+> > ~/.gitconfig, in which case you get:
+> 
+> I'm actually wondering why git can't infer the user from
+> 
+> https://user@host.com
+> 
+> with last week's next, at least.
 
+It can, and it has for some time. Part of the configurable-username
+thing was that it would be way nicer to just use a user-agnostic URL,
+because it means it's easier to share with other people.
 
-> So my guess is that it is simply taking an enormous amount of disk
-> space, and git is mostly waiting on the disk to read in files. What does
-> "du -sh .git/objects" say?
+> >   $ git push https://example.com/foo.git
+> >   Password for 'user@example.com':
+> > 
+> > which is a nice reminder. And it would happen to work with your askpass
+> > magic (I also wonder if it should mention the protocol and the repo, but
+> > most of the time that isn't relevant, and it does make the prompt harder
+> > to read).
+> 
+> With the above, I can probably do without any magic: 'example.com' would
+> be the wallet key for the username (if I let the wallet store it) and
+> 'user@example.com' the key for the password, whether the username comes
+> from the wallet or from the config. (Again, why not from the URL?)
 
-It isn't that big - it's 11G.
-.git/objects/pack/ is 666MB currently.
+Yeah, sorry, I should have said "ksshaskpass's magic". :)
 
+And yes, it can come from the URL. Mentioning the user in the password
+prompt is not as useful a reminder if it comes from:
 
--- 
-Piotr Krukowiecki
+  $ git push https://user@example.com/foo.git
+
+but, if it's something like:
+
+  $ git clone https://user@example.com/foo.git
+  [months pass]
+
+  $ git push
+  Password for 'user@example.com':
+
+then it's a nice reminder.
+
+-Peff
