@@ -1,132 +1,67 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH/RFC] remote: support --all for the prune-subcommand
-Date: Tue, 4 Oct 2011 10:22:35 +0200
-Message-ID: <CABPQNSb7WACrr=7FsR8YVMC1-q3i0zRhQtXiV8VshfCJn3qgEA@mail.gmail.com>
-References: <1317644168-5808-1-git-send-email-kusmabite@gmail.com>
- <20111004070006.GA6824@sigill.intra.peff.net> <CABPQNSZrfxhyA3em8TN2=d7pAHopZMgRg47baKnDT9h14=rxkA@mail.gmail.com>
- <20111004071332.GA7308@sigill.intra.peff.net> <CABPQNSZ-ELfFuxmKMqXCQaAgMZMRsZG3S5wWJLsjkYVvK6aGug@mail.gmail.com>
- <CABPQNSb7NYTac5uWSegK9rmYz1n0yt1GJWHKUtLg1k_OYHdDNg@mail.gmail.com> <20111004075608.GC7308@sigill.intra.peff.net>
-Reply-To: kusmabite@gmail.com
+From: Michael Schubert <mschub@elegosoft.com>
+Subject: Re: [PATCH] git-completion: offer references for 'git reflog'
+Date: Tue, 04 Oct 2011 10:48:26 +0200
+Message-ID: <4E8AC85A.2070009@elegosoft.com>
+References: <4E7F05A6.30505@elegosoft.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 04 10:23:25 2011
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 04 10:51:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RB0Hb-0002Br-KS
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 10:23:23 +0200
+	id 1RB0j5-0003Ur-L2
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 10:51:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754773Ab1JDIXT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Oct 2011 04:23:19 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:39398 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754399Ab1JDIXQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Oct 2011 04:23:16 -0400
-Received: by gyg10 with SMTP id 10so217877gyg.19
-        for <git@vger.kernel.org>; Tue, 04 Oct 2011 01:23:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=jtZqeO6IYK6zC+qRE3kfQoXvqCCrjjX2hVjLoxazShk=;
-        b=QpnMx4XEKP759VSOieKQ1uV5grWIXovdsxj0cFCWZeaO+zUcpWAiq3OFtvn8dKjKZC
-         BxSsxRP6KPeDrF/IgvTDx2m46jxPOxlD3Z6dkt6uERMT30PTlovqrGDV0zAVj4KCogne
-         7IUuBxs9yUdU5T2YK+7oZ1mxnKPRNW3wvm0So=
-Received: by 10.68.21.103 with SMTP id u7mr2908459pbe.129.1317716595049; Tue,
- 04 Oct 2011 01:23:15 -0700 (PDT)
-Received: by 10.68.42.169 with HTTP; Tue, 4 Oct 2011 01:22:35 -0700 (PDT)
-In-Reply-To: <20111004075608.GC7308@sigill.intra.peff.net>
+	id S1755015Ab1JDItR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Oct 2011 04:49:17 -0400
+Received: from mx0.elegosoft.com ([78.47.87.163]:47618 "EHLO mx0.elegosoft.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754945Ab1JDItQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Oct 2011 04:49:16 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id 51525DE730;
+	Tue,  4 Oct 2011 10:49:15 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id lGd55WhxVY9i; Tue,  4 Oct 2011 10:49:10 +0200 (CEST)
+Received: from [10.10.10.197] (i59F7870A.versanet.de [89.247.135.10])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id 52CC1DE727;
+	Tue,  4 Oct 2011 10:49:10 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0.1) Gecko/20111001 Thunderbird/7.0.1
+In-Reply-To: <4E7F05A6.30505@elegosoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182750>
 
-On Tue, Oct 4, 2011 at 9:56 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, Oct 04, 2011 at 09:40:22AM +0200, Erik Faye-Lund wrote:
->> In fact, I'm not sure I understand why we simply do not always prune
->> by default.
->
-> I think the original rationale was that we didn't want fetch to be
-> "lossy". That is, if I were using upstream's "foo" branch as part of =
-my
-> work (to diff against, or whatever), then doing a "git fetch" to upda=
-te
-> should not suddenly make it hard to do my work. And not just hard as =
-in
-> "I notice that it's gone and I adapt my workflow". But that you no
-> longer have _any_ record of where upstream's "foo" branch used to poi=
-nt,
-> so even doing something like:
->
-> =A0git rebase --onto new-foo foo my-topic
->
-> is impossible.
->
+On 09/25/2011 12:42 PM, Michael Schubert wrote:
+> 'git reflog <ref>' is a valid command, therefore offer reference
+> completion.
+> 
+> Signed-off-by: Michael Schubert <mschub@elegosoft.com>
+> ---
+>  contrib/completion/git-completion.bash |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 8648a36..63d0f08 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1774,7 +1774,7 @@ _git_reflog ()
+>  	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+>  
+>  	if [ -z "$subcommand" ]; then
+> -		__gitcomp "$subcommands"
+> +		__gitcomp "$subcommands $(__git_refs)"
+>  	else
+>  		__gitcomp "$(__git_refs)"
+>  	fi
 
-=46ollowing that logic, a user cannot _ever_ safely prune a remote if h=
-e
-wants to work on some of the branches. Doing something like "git
-remote foo -n" to check if the branch would get pruned before doing a
-proper prune is prone to a race-condition; the branch could be deleted
-on the remote between the dry-run and the actual pruning.
-
-Besides, the owner of the repo can just as easily have deleted the
-branch and created a new one with the same name, causing the contents
-of the branch to be lost. This happens all the time with
-"for-upstream"-kind of branches, no?
-
-> These days we have reflogs, so you would hope to do something like:
->
-> =A0git rebase --onto new-foo foo@{1} my-topic
->
-> But ref deletion also deletes the reflog completely, so that doesn't
-> work.
->
-
-=2E..and this just makes the problem I pointed out above a lot worse.
-
-So surely, the only sane thing is to make a local branch of what
-you're interested in to be safe?
-
-> The right solution, IMHO, is that ref deletion should actually keep t=
-he
-> reflog around in a graveyard of some sort. Entries would expire
-> naturally over time, as they do in regular reflogs. And then it becom=
-es
-> a lot safer to prune on every fetch, because you still have 90 days l=
-ook
-> at the reflog.
->
-
-=46ixing the reflog to expire for ref deletion rather than completely
-deleting it sounds like a good move, indeed.
-
->> If a user wants to keep another user's branch, surely the most sane
->> thing would be to make a local branch of it?
->
-> Unfortunately there are some management problems there. How do I keep=
- my
-> local branch up to date with what I fetch? I have to keep checking ou=
-t
-> and merging on every fetch (or use some plumbing), which is a pain. B=
-ut
-> if I don't, then when the upstream branch goes away, I still have no
-> clue where its tip was right before it got pruned.
-
-Hmm, good point. I tend to just do the dirty work every now and then
-myself. But I only tend to track upstream and stale
-development-branches that I intend to pick up, so I'm probably not the
-best user-example.
-
-While we're on the subject, an additional argument to change "git
-fetch" to always prune is that it's much much easier for user to grok
-"last known state of <remote>'s branches" than "the union of all the
-branches that were ever pulled from <remote>, unless --prune was
-specified". But that's not a technical one, and surely there's issues
-to resolve with the proposal before going in that direction.
+Ping.?
