@@ -1,69 +1,74 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Unable to remove a file
-Date: Tue, 04 Oct 2011 16:50:43 +0200
-Message-ID: <m3k48ku7y4.fsf@hase.home>
-References: <CAAZ43xa2upWQ2LWJRVcOPew3kF0W7gSz9UgQ=g0gnMHKQB3Y4A@mail.gmail.com>
-	<m262k6jc2c.fsf@igel.home>
-	<CAAZ43xa43YjO7Vqw87cYnXhJWvsZT_ocPpLuJ81jCPc8KKRczw@mail.gmail.com>
-	<4E8ABC85.7090705@in.waw.pl>
-	<CAEBDL5U4gU9C0De42Sgqv1ODLwQBuOdYdhfTBCMUziCZrhK9dA@mail.gmail.com>
-	<CAAZ43xZo8cyE_ASz1Hc4yYoUjmH1OnVogOj6mtqFzmAUSBptFw@mail.gmail.com>
-	<4E8B135D.8090507@in.waw.pl>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [RFC/PATCH] git checkout $tree path
+Date: Tue, 4 Oct 2011 11:05:11 -0400
+Message-ID: <CAG+J_Dy7gnDEK-9KAJT4M_wumS_QpzLNMVzAiOHCyEbFBU65=w@mail.gmail.com>
+References: <7vk48rq854.fsf@alter.siamese.dyndns.org>
+	<20111003102647.GD16078@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: robert mena <robert.mena@gmail.com>,
-	John Szakmeister <john@szakmeister.net>, git@vger.kernel.org
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Tue Oct 04 16:50:53 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 04 17:05:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RB6Ka-0000u9-Ik
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 16:50:52 +0200
+	id 1RB6Yb-0007SR-Ly
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 17:05:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932346Ab1JDOup convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Oct 2011 10:50:45 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:45528 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932141Ab1JDOuo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Oct 2011 10:50:44 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 87968182447D;
-	Tue,  4 Oct 2011 16:50:41 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
-	by mail.m-online.net (Postfix) with ESMTP id A78181C001A6;
-	Tue,  4 Oct 2011 16:50:41 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
-	with ESMTP id 1bxcwVBO4neR; Tue,  4 Oct 2011 16:50:41 +0200 (CEST)
-Received: from hase.home (ppp-88-217-110-127.dynamic.mnet-online.de [88.217.110.127])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Tue,  4 Oct 2011 16:50:40 +0200 (CEST)
-X-Yow: What PROGRAM are they watching?
-In-Reply-To: <4E8B135D.8090507@in.waw.pl> ("Zbigniew =?utf-8?Q?J=C4=99drze?=
- =?utf-8?Q?jewski-Szmek=22's?=
-	message of "Tue, 04 Oct 2011 16:08:29 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+	id S932471Ab1JDPFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Oct 2011 11:05:14 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:42793 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932463Ab1JDPFN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Oct 2011 11:05:13 -0400
+Received: by gyg10 with SMTP id 10so564990gyg.19
+        for <git@vger.kernel.org>; Tue, 04 Oct 2011 08:05:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Z6MqAYFX68iWbUGHmjHdyzhPiYphwLK+mCdi/f6R5s8=;
+        b=DISrok6dO1oe4OGfUqb+t4Zd3O6MFCi3ULOy+IpYasgUBO8r03br/j/mOzxnpIZmQY
+         UDqfaJlYcrkE531iz/Gs57DkaTwp51f7+Nx/yy9KQRVYCWFhrR7RzYJCU0AqscDMzJuo
+         c/cNly1jE4DXn+hDMUNwzsBNFISTwD2fMDDjU=
+Received: by 10.236.190.200 with SMTP id e48mr7177472yhn.59.1317740712015;
+ Tue, 04 Oct 2011 08:05:12 -0700 (PDT)
+Received: by 10.147.32.18 with HTTP; Tue, 4 Oct 2011 08:05:11 -0700 (PDT)
+In-Reply-To: <20111003102647.GD16078@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182773>
 
-Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
+On Mon, Oct 3, 2011 at 6:26 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, Sep 29, 2011 at 03:46:31PM -0700, Junio C Hamano wrote:
+>> An alternative semantics could be to first remove paths that match the
+>> given pathspec from the index, then update the index with paths taken from
+>> the named tree, and update the working tree. "git checkout master dir"
+>> would then mean "replace anything currently in dir with whatever is in dir
+>> in master". It is more dangerous, and it can easily emulated by doing:
+>
+> being what the user expects. As in, "master deleted this file; shouldn't
+> checkout pull the deletion to my new branch when I ask it to?".
+>
+> But we can't distinguish those two cases without actually having a merge
+> base. And this isn't a merge; it's not about picking changes from
+> master, it's about saying "make dir look like it does in master". So
+> in that sense, the most straightforward thing is your second
+> alternative: afterwards, we should have only the files in "dir" that
+> master has.
 
-> git fetch updates the remote references, always.
+I think I'd expect the first behavior with:
 
-Only if the refspec starts with '+'.
+$ git checkout master -- dir/*
 
-Andreas.
+And the second with:
 
---=20
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
-ED5
-"And now for something completely different."
+$ git checkout master -- dir
+
+$0.02.
+
+j.
