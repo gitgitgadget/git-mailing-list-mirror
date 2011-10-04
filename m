@@ -1,168 +1,60 @@
-From: Phil Hord <hordp@cisco.com>
+From: Phil Hord <phil.hord@gmail.com>
 Subject: Re: [PATCH 1/4] enter_repo: do not modify input
-Date: Tue, 04 Oct 2011 18:51:22 -0400
-Message-ID: <4E8B8DEA.1000606@cisco.com>
+Date: Tue, 4 Oct 2011 19:01:22 -0400
+Message-ID: <CABURp0qEQdjLsUxQkf3jSAHU80NOZEqm9iEksZKST_JfK590Qw@mail.gmail.com>
+References: <4E8B8DEA.1000606@cisco.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>,
-	phil.hord@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 05 01:00:57 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: Phil Hord <hordp@cisco.com>
+X-From: git-owner@vger.kernel.org Wed Oct 05 01:01:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBDyq-000330-0j
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 01:00:56 +0200
+	id 1RBDzf-0003Ng-Vv
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 01:01:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933632Ab1JDXAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Oct 2011 19:00:50 -0400
-Received: from rcdn-iport-4.cisco.com ([173.37.86.75]:52996 "EHLO
-	rcdn-iport-4.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933137Ab1JDXAu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Oct 2011 19:00:50 -0400
-X-Greylist: delayed 566 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Oct 2011 19:00:50 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=hordp@cisco.com; l=3743; q=dns/txt;
-  s=iport; t=1317769250; x=1318978850;
-  h=message-id:date:from:mime-version:to:cc:subject:
-   content-transfer-encoding;
-  bh=BKKyQtSGLF1nemUjudRsvqFvbPJumjR1S8fy8fmta4E=;
-  b=VPCM5B0XdfL5Er8GUYOvrug8gKg8S+jvYxMNWVID+ILEc/E1wq+RB3fi
-   7XagqNIM9L24Bk3h1dp7ioefYni0Xovl21RnzATY6ZZda9V5YHAzVhXa9
-   bmOG2cknDHwTY9x7wcEQzjhWooLZj2fkboN2B24QrpCmGGZg7OhLzhKwr
-   A=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av4EANWMi06tJV2c/2dsb2JhbABCqAuBBYFTAQIWAWUBGxUMFhgDAgECAQ88DQEFAgEBHqE+AZ1shyMEk2aFJ4M2gUOHPg
-X-IronPort-AV: E=Sophos;i="4.68,487,1312156800"; 
-   d="scan'208";a="26071983"
-Received: from rcdn-core-5.cisco.com ([173.37.93.156])
-  by rcdn-iport-4.cisco.com with ESMTP; 04 Oct 2011 22:51:23 +0000
-Received: from [64.100.104.107] (dhcp-64-100-104-107.cisco.com [64.100.104.107])
-	by rcdn-core-5.cisco.com (8.14.3/8.14.3) with ESMTP id p94MpMgG009673;
-	Tue, 4 Oct 2011 22:51:23 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110812 Thunderbird/6.0
-X-Enigmail-Version: 1.2.1
+	id S933672Ab1JDXBn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Oct 2011 19:01:43 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:50493 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933137Ab1JDXBn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Oct 2011 19:01:43 -0400
+Received: by wwf22 with SMTP id 22so1574907wwf.1
+        for <git@vger.kernel.org>; Tue, 04 Oct 2011 16:01:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=D0yJ0qnE3ysce6Vj/rmyY5PmsfSAtdYtJIsqzCUCHiA=;
+        b=LLBG4xnLEx25aiGINZJDWZoQsViY7l40La1+U7M5IRImatrdu/qiXJw0h1nHD6olXb
+         xbiWMCKuywugqpPrcgcp0fuWUjf4JZT+OrqUEK3Xz8GCiwbIVir11XHm6MBlwPxdmSbY
+         ZaHwksJmTMUlbeF62OWP4iwxXsBMIf5tmLcjY=
+Received: by 10.216.133.129 with SMTP id q1mr2239601wei.87.1317769302101; Tue,
+ 04 Oct 2011 16:01:42 -0700 (PDT)
+Received: by 10.216.88.72 with HTTP; Tue, 4 Oct 2011 16:01:22 -0700 (PDT)
+In-Reply-To: <4E8B8DEA.1000606@cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182812>
 
-From: Erik Faye-Lund <kusmabite@gmail.com>
+On Tue, Oct 4, 2011 at 6:51 PM, Phil Hord <hordp@cisco.com> wrote:
+> From: Erik Faye-Lund <kusmabite@gmail.com>
+>
+> +++ b/daemon.c
+> @@ -108,11 +108,11 @@ static void NORETURN daemon_die(const char *err=
+,
+> va_list params)
+> =A0 =A0 exit(1);
 
-entr_repo(..., 0) currently modifies the input to strip away
-trailing slashes. This means that we some times need to copy the
-input to keep the original.
+Blast!  Borked again.
 
-Change it to unconditionally copy it into the used_path buffer so
-we can safely use the input without having to copy it. Also store
-a working copy in validated_path up-front before we start
-resolving anything.
+I'll re-work on this and try again tomorrow.
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
-Signed-off-by: Phil Hord <hordp@cisco.com>
-
-diff --git a/cache.h b/cache.h
-index 9994a3c..7eeb8cf 100644
---- a/cache.h
-+++ b/cache.h
-@@ -734,7 +734,7 @@ int safe_create_leading_directories(char *path);
- int safe_create_leading_directories_const(const char *path);
- int mkdir_in_gitdir(const char *path);
- extern char *expand_user_path(const char *path);
--char *enter_repo(char *path, int strict);
-+const char *enter_repo(const char *path, int strict);
- static inline int is_absolute_path(const char *path)
- {
-     return is_dir_sep(path[0]) || has_dos_drive_prefix(path);
-diff --git a/daemon.c b/daemon.c
-index 4c8346d..9253192 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -108,11 +108,11 @@ static void NORETURN daemon_die(const char *err,
-va_list params)
-     exit(1);
- }
- 
--static char *path_ok(char *directory)
-+static const char *path_ok(char *directory)
- {
-     static char rpath[PATH_MAX];
-     static char interp_path[PATH_MAX];
--    char *path;
-+    const char *path;
-     char *dir;
- 
-     dir = directory;
-diff --git a/path.c b/path.c
-index 6f3f5d5..f3d96aa 100644
---- a/path.c
-+++ b/path.c
-@@ -283,7 +283,7 @@ return_null:
-  * links.  User relative paths are also returned as they are given,
-  * except DWIM suffixing.
-  */
--char *enter_repo(char *path, int strict)
-+const char *enter_repo(const char *path, int strict)
- {
-     static char used_path[PATH_MAX];
-     static char validated_path[PATH_MAX];
-@@ -297,14 +297,17 @@ char *enter_repo(char *path, int strict)
-         };
-         int len = strlen(path);
-         int i;
--        while ((1 < len) && (path[len-1] == '/')) {
--            path[len-1] = 0;
-+        while ((1 < len) && (path[len-1] == '/'))
-             len--;
--        }
-+
-         if (PATH_MAX <= len)
-             return NULL;
--        if (path[0] == '~') {
--            char *newpath = expand_user_path(path);
-+        strncpy(used_path, path, len);
-+        used_path[len] = 0;
-+        strcpy(validated_path, used_path);
-+
-+        if (used_path[0] == '~') {
-+            char *newpath = expand_user_path(used_path);
-             if (!newpath || (PATH_MAX - 10 < strlen(newpath))) {
-                 free(newpath);
-                 return NULL;
-@@ -316,24 +319,18 @@ char *enter_repo(char *path, int strict)
-              * anyway.
-              */
-             strcpy(used_path, newpath); free(newpath);
--            strcpy(validated_path, path);
--            path = used_path;
-         }
-         else if (PATH_MAX - 10 < len)
-             return NULL;
--        else {
--            path = strcpy(used_path, path);
--            strcpy(validated_path, path);
--        }
--        len = strlen(path);
-+        len = strlen(used_path);
-         for (i = 0; suffix[i]; i++) {
--            strcpy(path + len, suffix[i]);
--            if (!access(path, F_OK)) {
-+            strcpy(used_path + len, suffix[i]);
-+            if (!access(used_path, F_OK)) {
-                 strcat(validated_path, suffix[i]);
-                 break;
-             }
-         }
--        if (!suffix[i] || chdir(path))
-+        if (!suffix[i] || chdir(used_path))
-             return NULL;
-         path = validated_path;
-     }
--- 
-1.7.7.503.g26392.dirty
-
- 
+P
