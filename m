@@ -1,84 +1,99 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: [PATCH 2/4] Learn to handle gitfiles in enter_repo
-Date: Tue, 4 Oct 2011 16:05:17 -0400
-Message-ID: <CABURp0r7o8Mq4RyjEac18syU3HwCXWm7FOe+Mu0PshVXddJwuA@mail.gmail.com>
+From: Marcus Karlsson <mk@acc.umu.se>
+Subject: [PATCH v3] gitk: Teach gitk to respect log.showroot
+Date: Tue, 4 Oct 2011 22:08:13 +0200
+Message-ID: <20111004200813.GA16596@kennedy.acc.umu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 04 22:05:44 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: zbyszek@in.waw.pl, gitster@pobox.com, git@vger.kernel.org
+To: paulus@samba.org
+X-From: git-owner@vger.kernel.org Tue Oct 04 22:08:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBBFH-0006Fq-BU
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 22:05:43 +0200
+	id 1RBBHp-0007N6-8k
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 22:08:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933580Ab1JDUFj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Oct 2011 16:05:39 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:60470 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933403Ab1JDUFi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Oct 2011 16:05:38 -0400
-Received: by wwf22 with SMTP id 22so1377990wwf.1
-        for <git@vger.kernel.org>; Tue, 04 Oct 2011 13:05:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=qqu4OapXU9sUOeyzuh60q7fhm1ahHUGPjuOKiN/NcoM=;
-        b=FnxSbf02ECtQxz7N4F5KjfSp2Qm10h3G0GM141dt6GsAB92X0ifgCzi9Qc6uP7VDGw
-         pjCfmvShL4+UbetWVYEUKbnVNui0g/RixcxeP+KROElFS6XG8xpO80zt7wViiSppW1Ek
-         oUqdMYVmrm6FND1atcCY59vqNv1ZeIcnevM1M=
-Received: by 10.216.190.131 with SMTP id e3mr2054625wen.48.1317758737111; Tue,
- 04 Oct 2011 13:05:37 -0700 (PDT)
-Received: by 10.216.88.72 with HTTP; Tue, 4 Oct 2011 13:05:17 -0700 (PDT)
+	id S933588Ab1JDUIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Oct 2011 16:08:16 -0400
+Received: from mail.acc.umu.se ([130.239.18.156]:47032 "EHLO mail.acc.umu.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933403Ab1JDUIQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Oct 2011 16:08:16 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by amavisd-new (Postfix) with ESMTP id D563B456;
+	Tue,  4 Oct 2011 22:08:14 +0200 (MEST)
+X-Virus-Scanned: amavisd-new at acc.umu.se
+Received: from kennedy.acc.umu.se (kennedy.acc.umu.se [130.239.18.157])
+	by mail.acc.umu.se (Postfix) with ESMTP id 182B0455;
+	Tue,  4 Oct 2011 22:08:14 +0200 (MEST)
+Received: by kennedy.acc.umu.se (Postfix, from userid 24678)
+	id 039B179; Tue,  4 Oct 2011 22:08:13 +0200 (MEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182793>
 
-The enter_repo() function is used to navigate into a .git
-directory.  It knows how to find standard alternatives (DWIM) but
-it doesn't handle gitfiles created by git init --separate-git-dir.
-This means that git-fetch and others do not work with repositories
-using the separate-git-dir mechanism.
+In early days, all projects managed by git (except for git itself) had the
+product of a fairly mature development history in their first commit, and
+it was deemed unnecessary clutter to show additions of these thousands of
+paths as a patch.
 
-Teach enter_repo() to deal with the gitfile mechanism by resolving
-the path to the redirected path and continuing tests on that path
-instead of the found file.
+"git log" learned to show the patch for the initial commit without requiring
+--root command line option at 0f03ca9 (config option log.showroot to show
+the diff of root commits, 2006-11-23).
 
-Signed-off-by: Phil Hord <hordp@cisco.com>
+Teach gitk to respect log.showroot.
+
+Signed-off-by: Marcus Karlsson <mk@acc.umu.se>
 ---
+Improved the commit message after suggestion from Zbigniew
+Jedrzejewski-Szmek.
 
-This change allows enter_repo to work with gitfiles, but another change
-is required to teach transport.c to recognize gitfiles as git-dirs.
+ gitk-git/gitk |   13 +++++++++++--
+ 1 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/path.c b/path.c
-index 01028f2..b6f71d1 100644
---- a/path.c
-+++ b/path.c
-@@ -295,6 +295,7 @@ const char *enter_repo(const char *path, int strict)
- 		static const char *suffix[] = {
- 			".git/.git", "/.git", ".git", "", NULL,
- 		};
-+		const char *gitfile;
- 		int len = strlen(path);
- 		int i;
- 		while ((1 < len) && (path[len-1] == '/'))
-@@ -329,7 +330,12 @@ const char *enter_repo(const char *path, int strict)
- 				break;
- 			}
- 		}
--		if (!suffix[i] || chdir(used_path))
-+		if (!suffix[i])
-+			return NULL;
-+		gitfile = read_gitfile(used_path) ;
-+		if (gitfile)
-+			strcpy(used_path, gitfile);
-+		if (chdir(used_path))
- 			return NULL;
- 		path = validated_path;
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 4cde0c4..40ea73f 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -7402,7 +7402,7 @@ proc addtocflist {ids} {
+ }
+ 
+ proc diffcmd {ids flags} {
+-    global nullid nullid2
++    global log_showroot nullid nullid2
+ 
+     set i [lsearch -exact $ids $nullid]
+     set j [lsearch -exact $ids $nullid2]
+@@ -7436,7 +7436,11 @@ proc diffcmd {ids flags} {
+ 	    lappend cmd HEAD
  	}
+     } else {
+-	set cmd [concat | git diff-tree -r $flags $ids]
++	set cmd [concat | git diff-tree -r]
++	if {$log_showroot eq true} {
++	    set cmd [concat $cmd --root]
++	}
++	set cmd [concat $cmd $flags $ids]
+     }
+     return $cmd
+ }
+@@ -11403,6 +11407,11 @@ catch {
+     }
+ }
+ 
++set log_showroot true
++catch {
++    set log_showroot [exec git config --get log.showroot]
++}
++
+ if {[tk windowingsystem] eq "aqua"} {
+     set mainfont {{Lucida Grande} 9}
+     set textfont {Monaco 9}
 -- 
-1.7.7.503.g26392.dirty
+1.7.7
