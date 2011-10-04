@@ -1,103 +1,138 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH]: reverse bisect v 2.0
-Date: Tue, 4 Oct 2011 06:30:56 -0400
-Message-ID: <20111004103056.GB11236@sigill.intra.peff.net>
-References: <20110929142027.GA4936@zelva.suse.cz>
- <20110930114220.GA742@zelva.suse.cz>
- <7v62k9q4oq.fsf@alter.siamese.dyndns.org>
- <20111003104112.GE16078@sigill.intra.peff.net>
- <7vfwjaggd2.fsf@alter.siamese.dyndns.org>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: [BUG?] git fetch -p -t prunes all non-tag refs
+Date: Tue, 04 Oct 2011 12:33:22 +0200
+Message-ID: <1317724404.2577.6.camel@bee.lab.cmartin.tk>
+References: <20110926184739.GA11745@erythro.kitwarein.com>
+	 <7vehz30wdy.fsf@alter.siamese.dyndns.org>
+	 <1317078667.5579.13.camel@centaur.lab.cmartin.tk>
+	 <7v1uv228t4.fsf@alter.siamese.dyndns.org>
+	 <1317079692.5579.19.camel@centaur.lab.cmartin.tk>
+	 <20110927033134.GB8534@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michal Vyskocil <mvyskocil@suse.cz>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 04 12:31:06 2011
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-DGyeNmxlJZRZtq6w8iIU"
+Cc: Junio C Hamano <gitster@pobox.com>, mathstuf@gmail.com,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 04 12:33:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RB2HB-0003DL-FG
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 12:31:05 +0200
+	id 1RB2JY-000440-Hc
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Oct 2011 12:33:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755911Ab1JDKbA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Oct 2011 06:31:00 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52081
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755819Ab1JDKa7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Oct 2011 06:30:59 -0400
-Received: (qmail 6952 invoked by uid 107); 4 Oct 2011 10:36:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 04 Oct 2011 06:36:04 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Oct 2011 06:30:56 -0400
-Content-Disposition: inline
-In-Reply-To: <7vfwjaggd2.fsf@alter.siamese.dyndns.org>
+	id S1756006Ab1JDKd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Oct 2011 06:33:28 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:51997 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755994Ab1JDKd0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Oct 2011 06:33:26 -0400
+Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id CDAF946100;
+	Tue,  4 Oct 2011 12:33:00 +0200 (CEST)
+In-Reply-To: <20110927033134.GB8534@sigill.intra.peff.net>
+X-Mailer: Evolution 3.0.3- 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182755>
 
-On Mon, Oct 03, 2011 at 10:00:25AM -0700, Junio C Hamano wrote:
 
-> > I like this idea a lot. My "yes/no" thing was a "if I were designing
-> > bisect from scratch today..." suggestion, but having something like
-> > --used-to makes it a natural addition to the regular good/bad interface.
-> > And I really like the prompt to help people remember what it is they're
-> > declaring each time.
-> 
-> I forgot to clarify that "tested" was only to help users who wanted
-> reminder; if the user is confident with the usual "yes/no", the
-> interactivity is not required.
+--=-DGyeNmxlJZRZtq6w8iIU
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-That makes sense to me. I think in either case, it would be nice to
-mention the --used-to text when we take each step. We're already
-outputting some status information there (like how many commits left).
+On Mon, 2011-09-26 at 23:31 -0400, Jeff King wrote:
+> On Tue, Sep 27, 2011 at 01:28:09AM +0200, Carlos Mart=C3=ADn Nieto wrote:
+>=20
+> > > term I think we should fix it properly. We are already learning "what=
+ are
+> > > the refs the remote side currently has" from the transport and the ri=
+ght
+> > > fix ought to be to use that original information, not the version fil=
+tered
+> > > for the use of the primary objective of fetch, which is to only fetch=
+ what
+> > > the user asked for.
+> >=20
+> > Do you mean that we should ignore the refspec? Or do you mean that we
+> > should look at the refspec if it exists, and only consider deleting
+> > those that meet the refspec, so that `--prune --tags` would only delete
+> > tags that don't exist in the remote?
+>=20
+> The latter. If I say:
+>=20
+>   git fetch --prune origin refs/heads/master:refs/remotes/origin/master
+>=20
+> and refs/heads/master doesn't exist on the remote, I would expect
+> refs/remotes/origin/master to be deleted locally. And that naturally
+> extends to:
+>=20
+>   git fetch --prune origin refs/heads/*:refs/remotes/origin/*
 
-> > However, --used-to feels a bit backwards to me. I think of it as
-> > "--has-property" or something similar.
-> 
-> I do not think --used-to='frotz says xyzzy' is a good phrasing at all; it
-> is grammatically incorrect. But --has-property has one large downside.  At
-> least --used-to makes it clear that the user is supposed to decribe the
-> property of the tree in the past.
-> 
-> Let's step back a bit to understand why I think this is not optimal.
+I have some code locally that solves this second part. If we are given
+refspecs on the command-line, it will try to match against that instead
+of blindly trusting what get_stale_heads tells us. I'm looking into
+putting the logic into get_stale_heads so that we can trust it.
 
-What you say makes sense, but isn't it just a problem of the name? IOW,
-a much better name than "--has-property" would be "--started-to". That
-would imply the exact same cutoff as --used-to, but negate only the
-yes/no bit.
+The first part might be more complicated. If the remote head doesn't
+exist, get_fetch_map dies. It does take a missing_ok flag, so it might
+be as easy as passing 1 there; but I'm not sure what that would do for a
+non-prune fetch.
 
-So you could say:
+>=20
+> We do something similar with "git push --mirror", which does pruning
+> like this[1].
+>=20
+> -Peff
+>=20
+> [1] Actually, I'm not sure how correct "push --mirror" is. It would be
+>     nice if the prune operation could be split from the mirror, too. In
+>     the past, I have wanted to do both:
+>=20
+>       # backup to a repository where our objects will be shared
+>       # with other related backups. So we must only use our slice of the
+>       # ref namespace.
+>       git push --mirror backup-repo +refs/*:refs/`hostname`/*
 
-  # find a bug:
-  git bisect start --used-to='work with --foo=bar'
+Is --mirror needed there? I would have thought that
+refs/*:refs/`hostname`/* would do the same by itself.
 
-  # or if you are looking for a specific undesirable behavior, you might
-  # write:
-  git bisect start --used-to='not segfault with --foo=bar'
+>=20
+>     and:
+>=20
+>       # update topic branches we have already published (using the
+>       # "matching" refspec), but remove any that we have deleted
+>       # locally.
+>       git push --mirror publish-point +:
+>=20
+>     and I don't think either works.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>=20
 
-  # but now you have a negation in your condition. So it might be more
-  # natural to write it as:
-  git bisect start --started-to='segfault with --foo=bar'
 
-  # Or we can find a feature
-  git bisect start --used-to='not respect core.foo'
 
-  # but again, we have a negation. Instead:
-  git bisect start --started-to='respect core.foo'
+--=-DGyeNmxlJZRZtq6w8iIU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
 
-And the --started-to would literally be implemented as flipping the
-meaning of "git bisect yes" and "git bisect no", and nothing more. IOW,
-it's just another way of spelling "git bisect --reverse".
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-I know you wanted to emphasize the "older tree has this property" of
---used-to, but I think it is clear with --started-to that the older tree
-obviously obviously had the negation of the property.
+iQEcBAABAgAGBQJOiuDyAAoJEHKRP1jG7ZzTGVoIAJnJsPYJ9mi7yayTi5hIYfCH
+HtxXsUJ4IgN2TP9yGzAvYglM4GeJRXRAGZbvvrLfvmjeyl4CKQiXHsLkbslsKVE1
+30e4khKgtq4/PYxa43Dnej2tdosilxCMLDBydFt4WrJrBJ719opnArqvivaGuft4
+SscDBIU36IwNwUiM2QfYUjuFcmP4oOXHmdNPSSjBrm6CWCI1RNYiPNXgt5BIfzid
+lm8zbAse8PM+6mlKMU79xP3G4o/5LN4P3nO8wutImzB5V4+9FWXvLaxbRtLVr0W/
+kSh/Oypq3lfcXyXuZS8gdvPfIMK9BMVx3H/7vApj/yuPD5/irkNOVZp5KqvMBJg=
+=H45T
+-----END PGP SIGNATURE-----
 
--Peff
+--=-DGyeNmxlJZRZtq6w8iIU--
