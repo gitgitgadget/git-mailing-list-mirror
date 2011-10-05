@@ -1,75 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git attributes ignored for root directory
-Date: Wed, 05 Oct 2011 13:25:15 -0700
-Message-ID: <7v7h4j6v9w.fsf@alter.siamese.dyndns.org>
-References: <4E8B55FB.1050203@svario.it> <4E8C481A.1070808@alum.mit.edu>
- <7vd3eb8hkb.fsf@alter.siamese.dyndns.org> <4E8C9A35.5030504@svario.it>
- <7vvcs370d1.fsf@alter.siamese.dyndns.org> <4E8CBB4C.4000408@svario.it>
+Subject: Re: [PATCH 1/1] get_sha1_hex(): do not read past a NUL character
+Date: Wed, 05 Oct 2011 13:37:40 -0700
+Message-ID: <7v39f76up7.fsf@alter.siamese.dyndns.org>
+References: <4E7C857D.8000304@alum.mit.edu>
+ <1316785116-21831-1-git-send-email-mhagger@alum.mit.edu>
+ <7vaa9vulsw.fsf@alter.siamese.dyndns.org>
+ <201110052111.52701.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
-To: Gioele Barabucci <gioele@svario.it>
-X-From: git-owner@vger.kernel.org Wed Oct 05 22:25:36 2011
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Oct 05 22:37:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBY24-00041J-9w
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 22:25:36 +0200
+	id 1RBYDs-0008AE-NX
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 22:37:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935329Ab1JEUZU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Oct 2011 16:25:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64794 "EHLO
+	id S1757877Ab1JEUho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Oct 2011 16:37:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36762 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935423Ab1JEUZS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Oct 2011 16:25:18 -0400
+	id S1756743Ab1JEUhn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Oct 2011 16:37:43 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E7944E0B;
-	Wed,  5 Oct 2011 16:25:17 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BE2265185;
+	Wed,  5 Oct 2011 16:37:42 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dXcpNpYd+yCFv2XfBWiiTbrb6nY=; b=BIgFVf
-	0D96K7bkmfjxXwV8hOIK54v/mewLh88ypEg/V+uaS2OmlfM0ICAhheyjxNQjQsKZ
-	hW1jBSK1YNMvUQgBE3ynJAaDbaTA8Wv2ZvW+3Px1blSrbK5lS105CLe7HeT3K+yA
-	oHPpx+41ssb+2nG5XcMo83dzKX9ErX75CZr1s=
+	:content-type; s=sasl; bh=5VNPjaJQimah4VxTQRyrvNNkymA=; b=i4My9l
+	IGhp/wzejvxgjfHvVLtoa1DCie5cAOdUKoHZ1ZvjfhQ4TIEJUJhFwQ0qvo5MonYd
+	N10Dl32r2JIwLzGG0udHv6cGkOxhVqF8O9o4RcBoE1m0IMLX1+JwFvvjfrxs5Oxr
+	dqgrt1JrYCKOr2lzbTMlA3EPdctQennkAgO/Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=W3Ht6OjJAevg+GfbKCSrNySZ50UaPBJB
-	mDqTEI5ZTWvk8NG6ns7a7Sb8YrIthH64GpUUTLoKK0/kqjslsl1UPGWQf2Vjegvp
-	n6u/LDgEwg3xE9qp9y4dIfn06o1ycqGBde9tMPS2kjBd1xPV2CU4c1n/G3kLxgC7
-	U6ZXfezAISE=
+	:content-type; q=dns; s=sasl; b=eSWExWRfvB4X9abc4Z4cwklIJiTEmWZL
+	lE9pgyiqQbrutJ+X8HXO0Tlhw9lGzYY11/sji6FpJbeRngIciq8EbqYOknr8ojoP
+	1/d1qXHOk50j2SahGAjQSZE/0eGDwrBM1T/09B/uFsy9fVgPS8dsjZ6hDZJO127o
+	ceyNG2lEf50=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 74D4D4E0A;
-	Wed,  5 Oct 2011 16:25:17 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4D0C5184;
+	Wed,  5 Oct 2011 16:37:42 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B9694E09; Wed,  5 Oct 2011
- 16:25:16 -0400 (EDT)
-In-Reply-To: <4E8CBB4C.4000408@svario.it> (Gioele Barabucci's message of
- "Wed, 05 Oct 2011 22:17:16 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4A8945183; Wed,  5 Oct 2011
+ 16:37:42 -0400 (EDT)
+In-Reply-To: <201110052111.52701.trast@student.ethz.ch> (Thomas Rast's
+ message of "Wed, 5 Oct 2011 21:11:52 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 237925CC-EF90-11E0-A891-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DFAE8060-EF91-11E0-BAC5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182882>
 
-Gioele Barabucci <gioele@svario.it> writes:
+Thomas Rast <trast@student.ethz.ch> writes:
 
-> ...  As you quoted,
+> Junio C Hamano wrote:
+>> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>> 
+>> > Previously, get_sha1_hex() would read one character past the end of a
+>> > null-terminated string whose strlen was an even number less than 40.
+>> > Although the function correctly returned -1 in these cases, the extra
+>> > memory access might have been to uninitialized (or even, conceivably,
+>> > unallocated) memory.
+>> >
+>> > Add a check to avoid reading past the end of a string.
+>> 
+>> Makes sense; thanks.
 >
->> If the pattern ends with a slash, it is removed for the purpose
->> of the following description, but it would only find a match with
->> a directory. In other words, foo/ will match a directory foo and
->> paths underneath it
+> Has this fixed patch ever made it to pu?  I'm still seeing the same
+> breakage in the automated valgrind runs.
 
-But the "will match a directory foo and" part in that description, while
-makes it easier to read, is technically unnecessary and even misleading.
+I do not think so.
 
-The ignore patterns ultimately decides which paths are not to be added to
-the index. Colloquially we could say "foo directory is ignored", but such
-a statement is just a short-hand for "everything in foo is ignored";
-technically "foo directory is ignored" is not necessary because we never
-add the directory itself to the index.
+I was under the impression that Michael wanted to include this in the
+early part of a re-roll of check-ref-format series.
+
+I'll do the rebase myself. Thanks.
