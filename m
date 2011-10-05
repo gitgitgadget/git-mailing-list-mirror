@@ -1,76 +1,147 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH WIP 0/3] git log --exclude
-Date: Wed, 05 Oct 2011 10:08:07 +0200
-Message-ID: <vpqd3ebn9nc.fsf@bauges.imag.fr>
-References: <1317799088-26626-1-git-send-email-pclouds@gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] Report errors related to .git access during repository discovery
+Date: Wed,  5 Oct 2011 19:17:31 +1100
+Message-ID: <1317802651-28956-1-git-send-email-pclouds@gmail.com>
+References: <4E8BF519.8090509@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 05 10:08:22 2011
+Cc: git@vger.kernel.org, Federico Lucifredi <federico@canonical.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Oct 05 10:18:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBMWb-0004TS-Er
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 10:08:21 +0200
+	id 1RBMft-0007ra-GE
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 10:17:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758009Ab1JEIIO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Oct 2011 04:08:14 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:54518 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757979Ab1JEIIM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Oct 2011 04:08:12 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p9585jSa000949
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 5 Oct 2011 10:05:45 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1RBMWO-0001kZ-0H; Wed, 05 Oct 2011 10:08:08 +0200
-In-Reply-To: <1317799088-26626-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 5 Oct
- 2011 18:18:05 +1100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 05 Oct 2011 10:05:45 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p9585jSa000949
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1318406746.85152@zq5DaCa0jalUCioIK+NXSw
+	id S1758016Ab1JEIRt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Oct 2011 04:17:49 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:39448 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757988Ab1JEIRr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Oct 2011 04:17:47 -0400
+Received: by iakk32 with SMTP id k32so1533687iak.19
+        for <git@vger.kernel.org>; Wed, 05 Oct 2011 01:17:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=/ZVw8FhqWJpHRiAz1hhH5mBpAaVxjeckY7Ili23IVGQ=;
+        b=BQDcZAmDZfva2wM0yW1kObbZmu5r+L06odp1RYWNned9vg+TT87JS8QBy0BkYXIp2i
+         UIceicaAtUJg9FcJ2W/1+BnL675RGau4Fpd1VcQuI7uLk7mfJ4IoPuTilSTb05ezTk52
+         SYlOJhnNmG9N3tRP0ZRsXPtP5+RCKSzforHgo=
+Received: by 10.42.136.65 with SMTP id s1mr2524996ict.5.1317802667048;
+        Wed, 05 Oct 2011 01:17:47 -0700 (PDT)
+Received: from pclouds@gmail.com (220-244-161-237.static.tpgi.com.au. [220.244.161.237])
+        by mx.google.com with ESMTPS id z11sm2342655iba.6.2011.10.05.01.17.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 05 Oct 2011 01:17:46 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 05 Oct 2011 19:17:33 +1100
+X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
+In-Reply-To: <4E8BF519.8090509@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182836>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+If $GIT_DIR is not given, we go up step by step and look for potential
+repository directory, may see .git directory but for some reasons we
+decide to skip and move on.
 
-> This series adds --exclude that uses .gitignore mechanism remove
-> commits whose changes that are _entirely_ excluded.
+It's probably better to report along the line, so users can stop
+wondering "hey, but I have .git directory _there_".
 
-I'd see this --exclude as the opposite of specifying files, i.e. in a
-repository containing directories A, B and C,
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ On Wed, Oct 5, 2011 at 5:11 PM, Johannes Sixt <j.sixt@viscovery.net> w=
+rote:
+ > Am 10/4/2011 23:24, schrieb Federico Lucifredi:
+ >> Hello Git list,
+ >>  Found a minor bug in git today - the error message reported is not
+ >> correct when trying to access a repo that is not accessible
+ >> permission-wise:
+ >>
+ >>> federico@skyplex:/etc$ git log
+ >>> fatal: Not a git repository (or any of the parent directories): .g=
+it
+ >>
+ >> with correct access permissions, everything works as expected.
+ >
+ > And the correct error message is...?
 
-git log --exclude=3DB
+ That's a correct message. But it'd be even better if we help diagnose
+ why. Even when you have proper access to .git dir, git can still
+ refuse to accept the directory as a repository, because "HEAD" is
+ invalid for example.
 
-would be the same as
+ I think a patch like this is an improvement. There may be many
+ situations git refuses a directory but I don't cover here. Well, we
+ may when users report them
 
-git log A C
+ setup.c |   23 +++++++++++++++++++----
+ 1 files changed, 19 insertions(+), 4 deletions(-)
 
-If I understand correctly, it's not the case with your implementation
-because
-
-> Because it uses .gitignore mechanism, beware that these patterns do
-> not behave exactly like pathspecs
-
-and because "git log --stat A C" (or --patch) will show the diff only
-for A and C for commits touching all directories.
-
+diff --git a/setup.c b/setup.c
+index 27c1d47..b6028e5 100644
+--- a/setup.c
++++ b/setup.c
+@@ -269,6 +269,19 @@ const char *pathspec_prefix(const char *prefix, co=
+nst char **pathspec)
+ }
+=20
+ /*
++ * This function is used during .git detection phase. If .git does not
++ * exist, it's OK not to report because that happens a lot if you stay
++ * inside a subdirectory and git checks every level back to topdir.
++ */
++static int access_and_warn(const char *path, int perm)
++{
++	int ret =3D access(path, perm);
++	if (ret && errno !=3D ENOENT)
++		error("%s: %s", absolute_path(path), strerror(errno));
++	return ret;
++}
++
++/*
+  * Test if it looks like we're at a git directory.
+  * We want to see:
+  *
+@@ -288,22 +301,24 @@ static int is_git_directory(const char *suspect)
+ 		die("Too long path: %.*s", 60, suspect);
+ 	strcpy(path, suspect);
+ 	if (getenv(DB_ENVIRONMENT)) {
+-		if (access(getenv(DB_ENVIRONMENT), X_OK))
++		if (access_and_warn(getenv(DB_ENVIRONMENT), X_OK))
+ 			return 0;
+ 	}
+ 	else {
+ 		strcpy(path + len, "/objects");
+-		if (access(path, X_OK))
++		if (access_and_warn(path, X_OK))
+ 			return 0;
+ 	}
+=20
+ 	strcpy(path + len, "/refs");
+-	if (access(path, X_OK))
++	if (access_and_warn(path, X_OK))
+ 		return 0;
+=20
+ 	strcpy(path + len, "/HEAD");
+-	if (validate_headref(path))
++	if (validate_headref(path)) {
++		error("invalid HEAD at %s", absolute_path(path));
+ 		return 0;
++	}
+=20
+ 	return 1;
+ }
 --=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.3.1.256.g2539c.dirty
