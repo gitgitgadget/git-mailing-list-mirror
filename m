@@ -1,71 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-cherry-pick and author field in version 1.7.6.4
-Date: Wed, 5 Oct 2011 13:41:39 -0400
-Message-ID: <20111005174138.GA22962@sigill.intra.peff.net>
-References: <4E8C6F0E.7000508@6wind.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] git stash -k show the help message for diff-index
+Date: Wed, 05 Oct 2011 10:43:02 -0700
+Message-ID: <7v4nzn8hcp.fsf@alter.siamese.dyndns.org>
+References: <vpqfwj7v5cx.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-X-From: git-owner@vger.kernel.org Wed Oct 05 19:41:50 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Oct 05 19:43:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBVTZ-0002Cr-5v
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 19:41:49 +0200
+	id 1RBVUu-0002iS-Na
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 19:43:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935128Ab1JERlp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Oct 2011 13:41:45 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53936
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934662Ab1JERlo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Oct 2011 13:41:44 -0400
-Received: (qmail 613 invoked by uid 107); 5 Oct 2011 17:41:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 05 Oct 2011 13:41:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Oct 2011 13:41:39 -0400
-Content-Disposition: inline
-In-Reply-To: <4E8C6F0E.7000508@6wind.com>
+	id S935160Ab1JERnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Oct 2011 13:43:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58029 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934662Ab1JERnG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Oct 2011 13:43:06 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C2C15224;
+	Wed,  5 Oct 2011 13:43:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vVdT5Se2xQRqd5OWX9RSv0QGhMY=; b=nwRWYI
+	Q8Xnk21VfvxTku925nkswYoIBBEEsxhcJxyXBVqjfJ28s/K/Cw/J8eF0TyVC4afF
+	1lXAUKsO+ZdV5OrFFcviI7n63rG6KjICmsaBkyec9H8IYJL9bUd7kpwKGsOsCmsN
+	B2S/Pjfeg3H6lGhekQO4VOrH1UFreh2xKWWKw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mHkTLMK4prtulvo9NC4EHLzReWqLAdi5
+	lXvWVZ8Z19W/ZFbxzl7npgEgMUGTbszv/JOgqgtGUVdd6juSuikGxBxTAF10Zbff
+	PalyEjWAF/FfrrMPVOhxjZObVgQsR0qENljpwRSla5T4vkbww8G36bbFZLdwAjRw
+	IZ4J0yZs/vg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 588085223;
+	Wed,  5 Oct 2011 13:43:05 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BEA5F5220; Wed,  5 Oct 2011
+ 13:43:04 -0400 (EDT)
+In-Reply-To: <vpqfwj7v5cx.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Wed, 05 Oct 2011 17:13:34 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7A970E3A-EF79-11E0-BBD6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182868>
 
-On Wed, Oct 05, 2011 at 04:51:58PM +0200, Nicolas Dichtel wrote:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> in the last stable version (1.7.6.4), when I perform a
-> git-cherry-pick, the initial author of the patch is erased whith my
-> name (it was not the case in version 1.7.3.4 and prior). Is this
-> behavior intended ? Is there an option to keep the initial author of
-> the patch?
+> Everything is in the title. No time to bisect/fix this now, but:
+>
+> $ git status
+> # On branch master
+> nothing to commit (working directory clean)
+> $ git stash -k
+> usage: git diff-index [-m] [--cached] [<common diff options>] <tree-ish> [<path>...]
 
-I can't reproduce your problem:
+Hmm, does not reproduce.
 
-  git init repo &&
-  cd repo &&
-  echo content >file && git add file && git commit -m base &&
-  echo changes >>file &&
-  git commit --author='Other Person <other@example.com>' -a -m other &&
-  git tag other &&
-  git reset --hard HEAD^ &&
-  git cherry-pick other
-
-gives this output for the cherry-pick:
-
-  [master 6eb207f] other
-   Author: Other Person <other@example.com>
-   1 files changed, 1 insertions(+), 0 deletions(-)
-
-and the resulting commit looks good:
-
-  $ git log -1 --format='%an <%ae>'
-  Other Person <other@example.com>
-
-Does the script above work for you? If so, then what is different about
-your problematic case?
-
--Peff
+: alter victim-2.git/master; git status
+# On branch master
+nothing to commit (working directory clean)
+: alter victim-2.git/master; git stash -k
+No local changes to save
+: alter victim-2.git/master; git version
+git version 1.7.7
