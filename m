@@ -1,59 +1,113 @@
-From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Subject: git-cherry-pick and git-commit --amend in version 1.7.6.4
-Date: Wed, 05 Oct 2011 16:52:31 +0200
-Organization: 6WIND
-Message-ID: <4E8C6F2F.1070306@6wind.com>
-Reply-To: nicolas.dichtel@6wind.com
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: [BUG] git stash -k show the help message for diff-index
+Date: Wed, 05 Oct 2011 17:13:34 +0200
+Message-ID: <vpqfwj7v5cx.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 05 16:52:44 2011
+Content-Type: text/plain
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 05 17:13:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBSpt-0006Li-5b
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 16:52:41 +0200
+	id 1RBTAH-0005F5-6r
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 17:13:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934422Ab1JEOwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Oct 2011 10:52:36 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:64893 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757820Ab1JEOwg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Oct 2011 10:52:36 -0400
-Received: by mail-ww0-f44.google.com with SMTP id 22so2678880wwf.1
-        for <git@vger.kernel.org>; Wed, 05 Oct 2011 07:52:35 -0700 (PDT)
-Received: by 10.227.201.67 with SMTP id ez3mr1329430wbb.75.1317826353924;
-        Wed, 05 Oct 2011 07:52:33 -0700 (PDT)
-Received: from [192.168.1.4] (schneckos.n1c0.com. [88.182.61.195])
-        by mx.google.com with ESMTPS id z9sm3280637wbn.19.2011.10.05.07.52.32
-        (version=SSLv3 cipher=OTHER);
-        Wed, 05 Oct 2011 07:52:32 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.23) Gecko/20110921 Thunderbird/3.1.15
+	id S934672Ab1JEPNj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Oct 2011 11:13:39 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:41166 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757878Ab1JEPNj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Oct 2011 11:13:39 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p95FB1V1002765
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 5 Oct 2011 17:11:01 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1RBTA6-0003UD-GX; Wed, 05 Oct 2011 17:13:34 +0200
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 05 Oct 2011 17:11:01 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p95FB1V1002765
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1318432262.60171@ImO9h3nsZnr2uOSPlcpHrw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182854>
 
-Hi,
+Everything is in the title. No time to bisect/fix this now, but:
 
-still with version 1.7.6.4, when I do a cherry-pick, that succeeded, I cannot do 
-a commit --amend after:
+$ git status
+# On branch master
+nothing to commit (working directory clean)
+$ git stash -k
+usage: git diff-index [-m] [--cached] [<common diff options>] <tree-ish> [<path>...]
+common diff options:
+  -z            output diff-raw with lines terminated with NUL.
+  -p            output patch format.
+  -u            synonym for -p.
+  --patch-with-raw
+                output both a patch and the diff-raw format.
+  --stat        show diffstat instead of patch.
+  --numstat     show numeric diffstat instead of patch.
+  --patch-with-stat
+                output a patch and prepend its diffstat.
+  --name-only   show only names of changed files.
+  --name-status show names and status of changed files.
+  --full-index  show full object name on index lines.
+  --abbrev=<n>  abbreviate object names in diff-tree header and diff-raw.
+  -R            swap input file pairs.
+  -B            detect complete rewrites.
+  -M            detect renames.
+  -C            detect copies.
+  --find-copies-harder
+                try unchanged files as candidate for copy detection.
+  -l<n>         limit rename attempts up to <n> paths.
+  -O<file>      reorder diffs according to the <file>.
+  -S<string>    find filepair whose only one side contains the string.
+  --pickaxe-all
+                show all files diff when -S is used and hit is found.
+  -a  --text    treat all files as text.
 
-# git cherry-pick 3f78d1f210ff89af77f042ab7f4a8fee39feb1c9
-[dev 1a04a23] drivers/net/usb/asix.c: Fix unaligned accesses
-  1 files changed, 33 insertions(+), 1 deletions(-)
-# echo $?
-0
-# git commit --amend
-fatal: You are in the middle of a cherry-pick -- cannot amend.
-#
+usage: git diff-index [-m] [--cached] [<common diff options>] <tree-ish> [<path>...]
+common diff options:
+  -z            output diff-raw with lines terminated with NUL.
+  -p            output patch format.
+  -u            synonym for -p.
+  --patch-with-raw
+                output both a patch and the diff-raw format.
+  --stat        show diffstat instead of patch.
+  --numstat     show numeric diffstat instead of patch.
+  --patch-with-stat
+                output a patch and prepend its diffstat.
+  --name-only   show only names of changed files.
+  --name-status show names and status of changed files.
+  --full-index  show full object name on index lines.
+  --abbrev=<n>  abbreviate object names in diff-tree header and diff-raw.
+  -R            swap input file pairs.
+  -B            detect complete rewrites.
+  -M            detect renames.
+  -C            detect copies.
+  --find-copies-harder
+                try unchanged files as candidate for copy detection.
+  -l<n>         limit rename attempts up to <n> paths.
+  -O<file>      reorder diffs according to the <file>.
+  -S<string>    find filepair whose only one side contains the string.
+  --pickaxe-all
+                show all files diff when -S is used and hit is found.
+  -a  --text    treat all files as text.
 
-The same operations (with the same patch), with version 1.7.3.4 is ok.
+Saved working directory and index state WIP on master: 977c790 foo
+HEAD is now at 977c790 foo
 
 
-Regards,
-Nicolas
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
