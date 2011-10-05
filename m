@@ -1,135 +1,74 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Git attributes ignored for root directory
-Date: Wed, 05 Oct 2011 14:05:46 +0200
-Message-ID: <4E8C481A.1070808@alum.mit.edu>
-References: <4E8B55FB.1050203@svario.it>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [RFC/PATCH] Add multiple workdir support to branch/checkout
+Date: Wed, 5 Oct 2011 09:11:47 -0400
+Message-ID: <CAG+J_DygQTD5ibco=-NOiKg0BLgBGFJnvV8zPyhngC2iZv_H8g@mail.gmail.com>
+References: <1317786204-57335-1-git-send-email-jaysoffian@gmail.com>
+	<CACsJy8AqYq+YF+rvUp=BBeFUAtUz783iF2jbUp3fO58yLp9ptQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Gioele Barabucci <gioele@svario.it>
-X-From: git-owner@vger.kernel.org Wed Oct 05 14:05:59 2011
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 05 15:11:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBQEX-0007MF-JP
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 14:05:57 +0200
+	id 1RBRGM-0006vu-Gj
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 15:11:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934429Ab1JEMFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Oct 2011 08:05:52 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:50113 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934286Ab1JEMFv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Oct 2011 08:05:51 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p95C5lan005095
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 5 Oct 2011 14:05:47 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
-In-Reply-To: <4E8B55FB.1050203@svario.it>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S934668Ab1JENLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Oct 2011 09:11:49 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:63238 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934332Ab1JENLs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Oct 2011 09:11:48 -0400
+Received: by ggnv2 with SMTP id v2so734595ggn.19
+        for <git@vger.kernel.org>; Wed, 05 Oct 2011 06:11:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=/BKQChZjHnJZBnyLB5FL5TgSORf+YoWHPP/puyTWTW0=;
+        b=m0lE+iPDXY4TbiIGisPJ3kUI0SqrRP+3+26LrnF3u3liWoSBED9BnZQn5JoJu7WNz2
+         TK4EG2Yu6wWhG7umiP3lFz/dNdnrrrVUPjgC2NqM0aGd+OSRwEdcT7LUnsryflDjfpkq
+         21g7B/e7aOcLc4MJ+33z01sb1hQWTDtmUPyqo=
+Received: by 10.236.155.1 with SMTP id i1mr13765439yhk.8.1317820308000; Wed,
+ 05 Oct 2011 06:11:48 -0700 (PDT)
+Received: by 10.147.32.18 with HTTP; Wed, 5 Oct 2011 06:11:47 -0700 (PDT)
+In-Reply-To: <CACsJy8AqYq+YF+rvUp=BBeFUAtUz783iF2jbUp3fO58yLp9ptQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182841>
 
-On 10/04/2011 08:52 PM, Gioele Barabucci wrote:
-> I just updated to git v1.7.7 using the Ubuntu Lucid PPA and I found that
-> `git check-attr` is broken now.
-> 
-> I have this attribute in my `$HOME/.gitattributes` file:
-> 
->     /. show_in_prompt=no
-> 
-> Now, if I go to `$HOME` and run
-> 
->     git check-attr show_in_prompt -- .
-> 
-> With git v1.7.6 this is the answer I got:
-> 
->     .: show_in_prompt: no
-> 
-> With the newer v1.7.7 I get this, instead:
-> 
->     .: show_in_prompt: unspecified
-> 
-> Also, if I use the `--all` option, `check-attr` does not show any
-> attribute at all.
-> 
-> I see in the release notes of 1.7.7-rc1 that `check-attr` has been
-> changed to allow relative paths to be specified. Maybe this error is
-> related to that change.
+On Wed, Oct 5, 2011 at 12:02 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> Could you please consider a more generic approach? What I have in mind
+> is a mechanism to "lock" a branch, so that only commands that have the
+> key can update it.
+>
+> So instead of branch.<name>.checkout, I would have something like
+> branch.<name>.locked = <key>, where <key> is just a string. Only
+> commands that provide the matching <key> are allowed to update the
+> branch. In checkout case, <key> could be "checkout: worktree".
 
-Indeed, your use case is broken by
+In this case, each workdir needs its own key, so I'd have to record
+the key somewhere, unless you meant using a key of "checkout:
+</path/to/workdir>".
 
-f5114a40c0d0276ce6ff215a3dc51eb19da5b420
+> This approach addresses more cases than just multiple workdir. We
+> could relax restrictions on pushing to a non-bare repository: we only
+> disallow pushing to locked branches.
 
-In fact the support for gitattributes using patterns involving "." was
-pretty spotty in v1.7.6 too.  For example,
+Isn't that another case where you only care if the branch is checked
+out and where? So using "branch.<name>.checkout = </path/to/workdir>"
+should be fine there too.
 
--------------------------------------------
-echo ". foo" >./.gitattributes
-git check-attr foo -- . ./ ./. x x/ ./x x/.
-.: foo: set
-./: foo: unspecified      WRONG
-./.: foo: set
-x: foo: unspecified       WRONG?
-x/: foo: unspecified      WRONG?
-./x: foo: unspecified     WRONG?
-x/.: foo: set             RIGHT?
+> We can also use this to prevent
+> users from checking out another branch (by locking HEAD) while in the
+> middle of interactive rebase/bisect/...
 
--------------------------------------------
-echo "/. foo" >./.gitattributes
-git check-attr foo -- . ./ ./. x x/ ./x x/.
-.: foo: set
-./: foo: unspecified      WRONG
-./.: foo: set
-x: foo: unspecified
-x/: foo: unspecified
-./x: foo: unspecified
-x/.: foo: unspecified
+I dunno, that seems like a really different use case.
 
--------------------------------------------
-echo ". foo" >x/.gitattributes
-git check-attr foo -- . ./ ./. x x/ ./x x/.
-.: foo: unspecified
-./: foo: unspecified
-./.: foo: unspecified
-x: foo: unspecified       WRONG?
-x/: foo: unspecified      WRONG?
-./x: foo: unspecified     WRONG?
-x/.: foo: set             RIGHT?
-
--------------------------------------------
-echo "/. foo" >x/.gitattributes
-git check-attr foo -- . ./ ./. x x/ ./x x/.
-.: foo: unspecified
-./: foo: unspecified
-./.: foo: unspecified
-x: foo: unspecified       WRONG
-x/: foo: unspecified      WRONG
-./x: foo: unspecified     WRONG
-x/.: foo: set
-
--------------------------------------------
-
-I conclude that this functionality was never really defined correctly,
-and you were pretty lucky that your case worked at all :-)
-
-It's not to hard to fix your particular use case.  But for a real fix,
-we would need to decide what is the correct behavior in all of the lines
-above marked "?"; specifically, should "." match every subdirectory
-under a given directory, does it match only the directory containing the
-.gitattributes file, or is this construct illegal?
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+j.
