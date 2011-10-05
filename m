@@ -1,80 +1,85 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: 66 patches and counting
-Date: Wed, 5 Oct 2011 16:55:05 -0500
-Message-ID: <20111005215505.GA12747@elie>
-References: <4E8CCC55.9070408@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-cherry-pick and git-commit --amend in version 1.7.6.4
+Date: Wed, 05 Oct 2011 14:55:35 -0700
+Message-ID: <7vpqib5ciw.fsf@alter.siamese.dyndns.org>
+References: <4E8C6F2F.1070306@6wind.com>
+ <7v8voz8hgq.fsf@alter.siamese.dyndns.org>
+ <CAG+J_Dyn3kk7SfNZzxjoD-hK9jBQr2igmOqJojeYNHLubtSY=w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Oct 05 23:55:25 2011
+Cc: git@vger.kernel.org, nicolas.dichtel@6wind.com
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 05 23:55:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBZQy-0007Zj-M6
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 23:55:25 +0200
+	id 1RBZRJ-0007eV-2Z
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 23:55:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935374Ab1JEVzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Oct 2011 17:55:20 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:43331 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934884Ab1JEVzT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Oct 2011 17:55:19 -0400
-Received: by gyg10 with SMTP id 10so2010776gyg.19
-        for <git@vger.kernel.org>; Wed, 05 Oct 2011 14:55:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Cin/lvqEBRwC/udPjUYkmj66CyFw+3P4Wyua3j6uQnQ=;
-        b=GEHNpllHd1yEUkWkfeUB0p+/yqaYehS2ld0W6n4HJ/8UEJfQxsCnYsitOmZbOijgEP
-         kdedtIBmMuGvHFxoNlmz0HVvzfIkiRB56aGLMkHR4otrFE61axarj7aiucmRSDGekuXZ
-         nKqAI+hfJtBo7PeBq6B5/o3Lxww6X8eKyipYY=
-Received: by 10.236.144.136 with SMTP id n8mr16895445yhj.12.1317851719370;
-        Wed, 05 Oct 2011 14:55:19 -0700 (PDT)
-Received: from elie (99-120-124-35.lightspeed.cicril.sbcglobal.net. [99.120.124.35])
-        by mx.google.com with ESMTPS id x65sm4317444yhg.18.2011.10.05.14.55.17
-        (version=SSLv3 cipher=OTHER);
-        Wed, 05 Oct 2011 14:55:18 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4E8CCC55.9070408@alum.mit.edu>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S935423Ab1JEVzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Oct 2011 17:55:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42756 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934884Ab1JEVzi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Oct 2011 17:55:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 890E766B7;
+	Wed,  5 Oct 2011 17:55:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Y/F7TyxOJ5YvRvMBY/GJ44Uas3E=; b=fe24Js
+	IvQvqTG1WBkEg4X8J+ATrkhGR8KhedygMZ+h9xNkWeezpDxlGYTO8aKb0RLDY+TP
+	1kZwzxsx7ZDsi9RBuHzZcvf5kmhgLo5qmlvHG3AllHX1/BNHOa8kK/YQjRekeBJc
+	DHjtqUKJw5NXefqo0mfYM5Az+rtiTfBIGsO/k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rEIg7sFE7TYuF1in/h3ajWLB0TJumifJ
+	rgh2IwxxDEvYLawoia9AJi2ppr8RjTLNbo1AitEF/LqVKiQjHg6o+oiwQjP0ID9k
+	NoR4AqwoOCl+6Jgo1Lgq7QAxJMcGdw54PUVkG/WUvt8zkcch1xGye2j4LKdBGiEX
+	Qc19bkUfIiI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8100C66B6;
+	Wed,  5 Oct 2011 17:55:37 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14CFE66B5; Wed,  5 Oct 2011
+ 17:55:36 -0400 (EDT)
+In-Reply-To: <CAG+J_Dyn3kk7SfNZzxjoD-hK9jBQr2igmOqJojeYNHLubtSY=w@mail.gmail.com> (Jay
+ Soffian's message of "Wed, 5 Oct 2011 13:43:19 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C2115B94-EF9C-11E0-8612-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182892>
 
-(+cc: Elijah, who has more experience in this subject than I do)
-Hi,
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-Michael Haggerty wrote:
-
-> My renovation of refs.c [1] is currently at 66 patches and counting.
-> What can I say?: (1) I like to make changes in the smallest irreducible
-> steps and (2) there is a lot that needed to be done in refs.c.
+> On Wed, Oct 5, 2011 at 1:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Pinging Jay who may have know a thing or two from the history leading to
+>> 37f7a85 (Teach commit about CHERRY_PICK_HEAD, 2011-02-19).
 >
-> When I'm done
+> Yep, I replied to Nicolas' other message.
+>
+> j.
 
-We've seen series with fifty-something patches on this list before.
-My (generic) advice:
+This is probably different fro Nicolas's use case, but you can easily
+trigger:
 
- 1. Send in installments, early and often.  It would not be fun if the
-    first ten patches have a fatal flaw that means the later ones have
-    to be reworked.
+ $ edit foo.c
+ $ EDITOR=: git commit --amend ;# forget to add foo.c
+ $ git cherry-pick other
+ error: Your local changes to the following files would be overwritten by
+ merge:
+        foo.c
+ Please, commit your changes or stash them before you can merge.
+ Aborting
+ $ EDITOR=: git commit --amend foo.c
+ fatal: You are in the middle of a cherry-pick -- cannot amend.
 
- 2. Make sure the cover letter makes people want to read the later
-    patches.  Make sure each patch has a commit message that motivates
-    it alone or explains how it fits into the larger picture.
+I think the sequencer state needs to be removed when the command aborts.
 
- 3. When a patch is not intended to cause any functional change, say
-    so, so reviewers can check that.
-
- 4. Include test scripts declaring what effect (or lack thereof) each
-    patch is supposed to have.
-
- 5. "Smallest irreducible step" is not necessarily the appropriate
-    granularity when publishing.  "Largest piece that a person would
-    want to review, apply, or revert independently" is.
+This needs to be fixed before 1.7.7.1.
