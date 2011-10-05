@@ -1,52 +1,68 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: git-cherry-pick and git-commit --amend in version 1.7.6.4
-Date: Wed, 5 Oct 2011 13:43:19 -0400
-Message-ID: <CAG+J_Dyn3kk7SfNZzxjoD-hK9jBQr2igmOqJojeYNHLubtSY=w@mail.gmail.com>
-References: <4E8C6F2F.1070306@6wind.com>
-	<7v8voz8hgq.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git ksshaskpass to play nice with https and kwallet
+Date: Wed, 5 Oct 2011 13:55:36 -0400
+Message-ID: <20111005175536.GB22962@sigill.intra.peff.net>
+References: <4E8ADDCF.6090406@drmicha.warpmail.net>
+ <20111004105008.GA11789@sigill.intra.peff.net>
+ <4E8AEDBD.4070404@drmicha.warpmail.net>
+ <20111004113713.GA19171@sigill.intra.peff.net>
+ <4E8AF812.5090906@drmicha.warpmail.net>
+ <20111004124344.GA30162@sigill.intra.peff.net>
+ <4E8B5553.2080706@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, nicolas.dichtel@6wind.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 05 19:43:29 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Oct 05 19:55:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBVV6-0002lz-CG
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 19:43:24 +0200
+	id 1RBVh2-00076I-5f
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 19:55:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935166Ab1JERnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Oct 2011 13:43:20 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:54277 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934662Ab1JERnT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Oct 2011 13:43:19 -0400
-Received: by yxl31 with SMTP id 31so1811528yxl.19
-        for <git@vger.kernel.org>; Wed, 05 Oct 2011 10:43:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=a5JffVNpexfNVUiFvd5IaQQljEZhCp6f8RahDistrGg=;
-        b=BSWJzchbhdM4Wp3lLoL/LJSpq3ZGOfghIO4BrvlsOurUB9BOrQFHSz6v8sA/Y2DPcM
-         oVEhhb6e7XjkClmIX8KYO+lbuJxeh3Ot6x/H6icZ4L0Jv0ZtQhyhmiRKxjB/wXMZFMWT
-         EPCvgNztj447djsxlxrReTXjL4BmmhscZlRZo=
-Received: by 10.147.154.12 with SMTP id g12mr2301615yao.36.1317836599254; Wed,
- 05 Oct 2011 10:43:19 -0700 (PDT)
-Received: by 10.147.32.18 with HTTP; Wed, 5 Oct 2011 10:43:19 -0700 (PDT)
-In-Reply-To: <7v8voz8hgq.fsf@alter.siamese.dyndns.org>
+	id S935105Ab1JERzj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Oct 2011 13:55:39 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53947
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755293Ab1JERzi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Oct 2011 13:55:38 -0400
+Received: (qmail 906 invoked by uid 107); 5 Oct 2011 17:55:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 05 Oct 2011 13:55:37 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Oct 2011 13:55:36 -0400
+Content-Disposition: inline
+In-Reply-To: <4E8B5553.2080706@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182870>
 
-On Wed, Oct 5, 2011 at 1:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Pinging Jay who may have know a thing or two from the history leading to
-> 37f7a85 (Teach commit about CHERRY_PICK_HEAD, 2011-02-19).
+On Tue, Oct 04, 2011 at 08:49:55PM +0200, Michael J Gruber wrote:
 
-Yep, I replied to Nicolas' other message.
+> We seem to mean something different:
+> 
+> git config --get remote.bitbucket.pushurl
+> https://grubix@bitbucket.org/grubix/git.git
+> SSH_ASKPASS= git push -n bitbucket
+> Username for 'bitbucket.org':
+> 
+> I mean that git should not need to ask for the username here.
 
-j.
+No, we are in agreement about the intended behavior. I think you are
+seeing a bug. What version of git produced it?
+
+With my http-auth series, I get:
+
+  $ git push https://github.com/peff/git.git
+  Username for 'github.com':
+
+  $ git push https://peff@github.com/peff/git.git
+  Password for 'github.com':
+
+Using v1.7.7 produces similar results.
+
+-Peff
