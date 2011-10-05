@@ -1,83 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] get_sha1_hex(): do not read past a NUL character
-Date: Wed, 05 Oct 2011 13:37:40 -0700
-Message-ID: <7v39f76up7.fsf@alter.siamese.dyndns.org>
-References: <4E7C857D.8000304@alum.mit.edu>
- <1316785116-21831-1-git-send-email-mhagger@alum.mit.edu>
- <7vaa9vulsw.fsf@alter.siamese.dyndns.org>
- <201110052111.52701.trast@student.ethz.ch>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [RFC/PATCH] Add multiple workdir support to branch/checkout
+Date: Wed, 5 Oct 2011 16:50:45 -0400
+Message-ID: <CAG+J_DynQ8U6T9YMsWstKF_Cf6CSCr8b8E4T=p5uyGPh28G=kA@mail.gmail.com>
+References: <1317786204-57335-1-git-send-email-jaysoffian@gmail.com>
+	<CACsJy8AqYq+YF+rvUp=BBeFUAtUz783iF2jbUp3fO58yLp9ptQ@mail.gmail.com>
+	<CAG+J_DygQTD5ibco=-NOiKg0BLgBGFJnvV8zPyhngC2iZv_H8g@mail.gmail.com>
+	<7vpqib8jzk.fsf@alter.siamese.dyndns.org>
+	<CAG+J_Dz-GXvRbYUXSoyfyHfOO-_BszcOza9x=ysHhmL5YBW-Jw@mail.gmail.com>
+	<7vzkhf713u.fsf@alter.siamese.dyndns.org>
+	<CAG+J_Dzg2D+vmFRfLX01S2k98YZQBE0FFv76VAyPnXdetyWADQ@mail.gmail.com>
+	<20111005200043.GA32732@inner.h.iocl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Oct 05 22:37:49 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 05 22:50:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBYDs-0008AE-NX
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 22:37:49 +0200
+	id 1RBYQV-0003xZ-Hz
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 22:50:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757877Ab1JEUho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Oct 2011 16:37:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36762 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756743Ab1JEUhn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Oct 2011 16:37:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BE2265185;
-	Wed,  5 Oct 2011 16:37:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5VNPjaJQimah4VxTQRyrvNNkymA=; b=i4My9l
-	IGhp/wzejvxgjfHvVLtoa1DCie5cAOdUKoHZ1ZvjfhQ4TIEJUJhFwQ0qvo5MonYd
-	N10Dl32r2JIwLzGG0udHv6cGkOxhVqF8O9o4RcBoE1m0IMLX1+JwFvvjfrxs5Oxr
-	dqgrt1JrYCKOr2lzbTMlA3EPdctQennkAgO/Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eSWExWRfvB4X9abc4Z4cwklIJiTEmWZL
-	lE9pgyiqQbrutJ+X8HXO0Tlhw9lGzYY11/sji6FpJbeRngIciq8EbqYOknr8ojoP
-	1/d1qXHOk50j2SahGAjQSZE/0eGDwrBM1T/09B/uFsy9fVgPS8dsjZ6hDZJO127o
-	ceyNG2lEf50=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4D0C5184;
-	Wed,  5 Oct 2011 16:37:42 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4A8945183; Wed,  5 Oct 2011
- 16:37:42 -0400 (EDT)
-In-Reply-To: <201110052111.52701.trast@student.ethz.ch> (Thomas Rast's
- message of "Wed, 5 Oct 2011 21:11:52 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DFAE8060-EF91-11E0-BAC5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932299Ab1JEUur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Oct 2011 16:50:47 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:33356 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755909Ab1JEUuq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Oct 2011 16:50:46 -0400
+Received: by gyg10 with SMTP id 10so1962015gyg.19
+        for <git@vger.kernel.org>; Wed, 05 Oct 2011 13:50:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=oA+KTN3vVjyG9VHtbNb2FBfmHDtGgh3jVVJwtQloOh4=;
+        b=S3MX8REmD0bV6b3JUkd9inH30tgoow8GOyR/OmLN7aaZuW4I5CdbctzFv/Phk0ZSYM
+         Rhi9JOJF74pm8J1X5nXmrg9qf+ZS0Bsud756ziN1X+R6ZmzNLnvhDiuMTysu9CYETvYa
+         iI700KKMnNzwRqY/x8JdfX1GdoEYppXh+NLb0=
+Received: by 10.236.76.102 with SMTP id a66mr16142573yhe.25.1317847845789;
+ Wed, 05 Oct 2011 13:50:45 -0700 (PDT)
+Received: by 10.147.32.18 with HTTP; Wed, 5 Oct 2011 13:50:45 -0700 (PDT)
+In-Reply-To: <20111005200043.GA32732@inner.h.iocl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182883>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+On Wed, Oct 5, 2011 at 4:00 PM, Andreas Krey <a.krey@gmx.de> wrote:
+> Hmm. You mean forcing the user to make a new branch *earlier* than at
+> commit time is better?
 
-> Junio C Hamano wrote:
->> Michael Haggerty <mhagger@alum.mit.edu> writes:
->> 
->> > Previously, get_sha1_hex() would read one character past the end of a
->> > null-terminated string whose strlen was an even number less than 40.
->> > Although the function correctly returned -1 in these cases, the extra
->> > memory access might have been to uninitialized (or even, conceivably,
->> > unallocated) memory.
->> >
->> > Add a check to avoid reading past the end of a string.
->> 
->> Makes sense; thanks.
->
-> Has this fixed patch ever made it to pu?  I'm still seeing the same
-> breakage in the automated valgrind runs.
+In my mind, we're trying to make new-workdir usable for non-advanced
+users. I think it's conceptually simplest to allow a branch to be
+checked out only once.
 
-I do not think so.
+FWIW, I use a modified copy of new-workdir w/this usage:
 
-I was under the impression that Michael wanted to include this in the
-early part of a re-roll of check-ref-format series.
+  git new-workdir <repo> <workdir> <ref> [<start>]
 
-I'll do the rebase myself. Thanks.
+Which allows me to create a new branch and workdir checked out to the
+new branch in one shot. It refuses to create the <workdir> if <ref>
+resolves to a checked-out branch. (If I want to start detached I can
+do so with <ref>^0, but I rarely if ever do that.)
+
+j.
