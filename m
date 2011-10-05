@@ -1,71 +1,116 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [RFC/PATCH] Add multiple workdir support to branch/checkout
-Date: Wed, 5 Oct 2011 16:50:45 -0400
-Message-ID: <CAG+J_DynQ8U6T9YMsWstKF_Cf6CSCr8b8E4T=p5uyGPh28G=kA@mail.gmail.com>
-References: <1317786204-57335-1-git-send-email-jaysoffian@gmail.com>
-	<CACsJy8AqYq+YF+rvUp=BBeFUAtUz783iF2jbUp3fO58yLp9ptQ@mail.gmail.com>
-	<CAG+J_DygQTD5ibco=-NOiKg0BLgBGFJnvV8zPyhngC2iZv_H8g@mail.gmail.com>
-	<7vpqib8jzk.fsf@alter.siamese.dyndns.org>
-	<CAG+J_Dz-GXvRbYUXSoyfyHfOO-_BszcOza9x=ysHhmL5YBW-Jw@mail.gmail.com>
-	<7vzkhf713u.fsf@alter.siamese.dyndns.org>
-	<CAG+J_Dzg2D+vmFRfLX01S2k98YZQBE0FFv76VAyPnXdetyWADQ@mail.gmail.com>
-	<20111005200043.GA32732@inner.h.iocl.org>
+From: Vicent Marti <vicent@github.com>
+Subject: [ANNOUNCE] libgit2 v0.15.0
+Date: Wed, 5 Oct 2011 23:00:28 +0200
+Message-ID: <CAFFjANQLFAhQGBFHAASwQWuK8RsCc2Vb+j_C2-=w4GnBQ_b_DQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Andreas Krey <a.krey@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 05 22:50:52 2011
+To: libgit2@librelist.org, git@vger.kernel.org, git-dev@github.com
+X-From: git-owner@vger.kernel.org Wed Oct 05 23:00:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBYQV-0003xZ-Hz
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 22:50:51 +0200
+	id 1RBYaE-0006mP-Bl
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 23:00:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932299Ab1JEUur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Oct 2011 16:50:47 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:33356 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755909Ab1JEUuq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Oct 2011 16:50:46 -0400
-Received: by gyg10 with SMTP id 10so1962015gyg.19
-        for <git@vger.kernel.org>; Wed, 05 Oct 2011 13:50:45 -0700 (PDT)
+	id S1757970Ab1JEVAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Oct 2011 17:00:50 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:60095 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757872Ab1JEVAt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Oct 2011 17:00:49 -0400
+Received: by bkbzt4 with SMTP id zt4so2595929bkb.19
+        for <git@vger.kernel.org>; Wed, 05 Oct 2011 14:00:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=oA+KTN3vVjyG9VHtbNb2FBfmHDtGgh3jVVJwtQloOh4=;
-        b=S3MX8REmD0bV6b3JUkd9inH30tgoow8GOyR/OmLN7aaZuW4I5CdbctzFv/Phk0ZSYM
-         Rhi9JOJF74pm8J1X5nXmrg9qf+ZS0Bsud756ziN1X+R6ZmzNLnvhDiuMTysu9CYETvYa
-         iI700KKMnNzwRqY/x8JdfX1GdoEYppXh+NLb0=
-Received: by 10.236.76.102 with SMTP id a66mr16142573yhe.25.1317847845789;
- Wed, 05 Oct 2011 13:50:45 -0700 (PDT)
-Received: by 10.147.32.18 with HTTP; Wed, 5 Oct 2011 13:50:45 -0700 (PDT)
-In-Reply-To: <20111005200043.GA32732@inner.h.iocl.org>
+        h=mime-version:sender:from:date:x-google-sender-auth:message-id
+         :subject:to:content-type;
+        bh=HKsax//rwwtqGs+pPdIOidbyI3bdqbMJ0sde7pOcpf0=;
+        b=OPAQa8P9aW/fS3BvKDjKYfRHHC56wKHOSloVPLXkFLG/JS8DoX5QycuI8YzoEFiIO6
+         epYa4NVO7NEvCJPz1HxsJ8mCFLkD3X9C1cHeWlhkDQtNJNDOPZX/UTCNF4XqfizME4jA
+         /poOvHVsm+1m/ON7GTjf8ItQAn8q+/6Hby/iQ=
+Received: by 10.223.40.214 with SMTP id l22mr4049421fae.93.1317848448047; Wed,
+ 05 Oct 2011 14:00:48 -0700 (PDT)
+Received: by 10.223.73.193 with HTTP; Wed, 5 Oct 2011 14:00:28 -0700 (PDT)
+X-Google-Sender-Auth: uCCteGgzCJPVh9su_co2NS_Mhbc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182884>
 
-On Wed, Oct 5, 2011 at 4:00 PM, Andreas Krey <a.krey@gmx.de> wrote:
-> Hmm. You mean forcing the user to make a new branch *earlier* than at
-> commit time is better?
+Hello everyone,
 
-In my mind, we're trying to make new-workdir usable for non-advanced
-users. I think it's conceptually simplest to allow a branch to be
-checked out only once.
+another minor libgit2 release is here. This time with proper
+networking support, even on Windows/MSVC.
 
-FWIW, I use a modified copy of new-workdir w/this usage:
+The release has been tagged at:
 
-  git new-workdir <repo> <workdir> <ref> [<start>]
+ https://github.com/libgit2/libgit2/tree/v0.15.0
 
-Which allows me to create a new branch and workdir checked out to the
-new branch in one shot. It refuses to create the <workdir> if <ref>
-resolves to a checked-out branch. (If I want to start detached I can
-do so with <ref>^0, but I rarely if ever do that.)
+A dist package can be found at:
 
-j.
+ https://github.com/downloads/libgit2/libgit2/libgit2-0.15.0.tar.gz
+
+Updated documentation can be found at:
+
+  http://libgit2.github.com/libgit2/
+
+The full change log follows after the message.
+
+Cheers,
+Vicent
+
+================
+
+libgit2 v0.15.0 "Das Wunderbar Release"
+
+I am aware the codename is not gramatically correct in any language.
+
+Check the COPYING file for the detailed terms on libgit2's license. Check
+the AUTHORS file for the full list of guilty parties.
+
+As we slowly stabilize the API, we've dropped 1 function from the library,
+and changed the signature of only 5 of them.
+
+In this release of libgit2:
+
+	* `git_blob_rawsize`: Now returns `size_t` instead of int, allowing
+	files >4GB in 64 bit systems.
+
+	- `git_commit_message_short`: Please use `git_commit_message`
+	to get the full message and decide which is the "short view" according
+	to your needs (first line, first 80 chars...)
+
+	+ `git_commit_message_encoding`: Returns the encoding field of a commit
+	message, if it exists.
+
+	* `git_commit_create`, `git_commit_create_v`: New argument `encoding`, which
+	adds a encoding field to the generated commit object.
+
+	+ `git_config_find_system`: Returns the path to the system's global config
+	file (according to the Core Git standards).
+
+	* `git_config_get_XX`, `git_config_set_XX`: the `long` and `int` types have
+	been replaced by `int64` and `int32` respectively, to make their meaning more
+	obvious.
+
+	+ `git_indexer`: An interface to index Git Packfiles has been added in the
+	`git2/indexer.h` header.
+
+	* `git_reflog_entry_XX`: Reflog entries are now returned as `git_oid *` objects
+	instead of hexadecimal OIDs.
+
+	+ `git_remote`: More fetch functionality has been added to the `git2/remote.h`
+	functionality. Local, Smart HTTP and Git protocols are now supported.
+
+	+ `git_repository_head`: Returns the HEAD of the repository.
+
+	+ `git_repository_config_autoload`: Opens the configuration file of a
+repository,
+	including the user's and the system's global config files, if they
+can be found.
+
+	* `git_signature_now`: Now returns an error code; the signature is stored by
+	reference.
