@@ -1,68 +1,80 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [RFC/PATCH] Add multiple workdir support to branch/checkout
-Date: Wed, 5 Oct 2011 17:52:23 -0400
-Message-ID: <CAG+J_Dz=9jAFBQ5fpY=d6M5Zc-BhNFi6foKJx69v3n3Km-U0rg@mail.gmail.com>
-References: <1317786204-57335-1-git-send-email-jaysoffian@gmail.com>
-	<CACsJy8AqYq+YF+rvUp=BBeFUAtUz783iF2jbUp3fO58yLp9ptQ@mail.gmail.com>
-	<CAG+J_DygQTD5ibco=-NOiKg0BLgBGFJnvV8zPyhngC2iZv_H8g@mail.gmail.com>
-	<7vpqib8jzk.fsf@alter.siamese.dyndns.org>
-	<CAG+J_Dz-GXvRbYUXSoyfyHfOO-_BszcOza9x=ysHhmL5YBW-Jw@mail.gmail.com>
-	<7vzkhf713u.fsf@alter.siamese.dyndns.org>
-	<CAG+J_Dzg2D+vmFRfLX01S2k98YZQBE0FFv76VAyPnXdetyWADQ@mail.gmail.com>
-	<20111005200043.GA32732@inner.h.iocl.org>
-	<CAG+J_DynQ8U6T9YMsWstKF_Cf6CSCr8b8E4T=p5uyGPh28G=kA@mail.gmail.com>
-	<20111005213002.GA12667@elie>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: 66 patches and counting
+Date: Wed, 5 Oct 2011 16:55:05 -0500
+Message-ID: <20111005215505.GA12747@elie>
+References: <4E8CCC55.9070408@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andreas Krey <a.krey@gmx.de>, Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 05 23:52:44 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Oct 05 23:55:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBZOL-0006sk-WB
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 23:52:42 +0200
+	id 1RBZQy-0007Zj-M6
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 23:55:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935395Ab1JEVwY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Oct 2011 17:52:24 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:42666 "EHLO
+	id S935374Ab1JEVzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Oct 2011 17:55:20 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:43331 "EHLO
 	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932499Ab1JEVwX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Oct 2011 17:52:23 -0400
-Received: by gyg10 with SMTP id 10so2008601gyg.19
-        for <git@vger.kernel.org>; Wed, 05 Oct 2011 14:52:23 -0700 (PDT)
+	with ESMTP id S934884Ab1JEVzT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Oct 2011 17:55:19 -0400
+Received: by gyg10 with SMTP id 10so2010776gyg.19
+        for <git@vger.kernel.org>; Wed, 05 Oct 2011 14:55:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ea+TfgBwr1NAfgrTCAdlZPtWH/yNC2Dui8lNukI81Ok=;
-        b=wGDAVTKe8xyl7/dE1fdisjy4VMp5NjyZIEQqNSGiGAg1PyJ6UEwq8cWlki4Rol3AAE
-         PcaqLQC9yLFwekfPlXO5S1xEcejk2YVoDV7VbPcqktQHuv3Hmr3du3G7QMxhDTPP+dVs
-         MBOBeueSDDOA1KXdeuHIUZgh5t4uVlFtcZ6+I=
-Received: by 10.236.190.200 with SMTP id e48mr16236369yhn.59.1317851543240;
- Wed, 05 Oct 2011 14:52:23 -0700 (PDT)
-Received: by 10.147.32.18 with HTTP; Wed, 5 Oct 2011 14:52:23 -0700 (PDT)
-In-Reply-To: <20111005213002.GA12667@elie>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Cin/lvqEBRwC/udPjUYkmj66CyFw+3P4Wyua3j6uQnQ=;
+        b=GEHNpllHd1yEUkWkfeUB0p+/yqaYehS2ld0W6n4HJ/8UEJfQxsCnYsitOmZbOijgEP
+         kdedtIBmMuGvHFxoNlmz0HVvzfIkiRB56aGLMkHR4otrFE61axarj7aiucmRSDGekuXZ
+         nKqAI+hfJtBo7PeBq6B5/o3Lxww6X8eKyipYY=
+Received: by 10.236.144.136 with SMTP id n8mr16895445yhj.12.1317851719370;
+        Wed, 05 Oct 2011 14:55:19 -0700 (PDT)
+Received: from elie (99-120-124-35.lightspeed.cicril.sbcglobal.net. [99.120.124.35])
+        by mx.google.com with ESMTPS id x65sm4317444yhg.18.2011.10.05.14.55.17
+        (version=SSLv3 cipher=OTHER);
+        Wed, 05 Oct 2011 14:55:18 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4E8CCC55.9070408@alum.mit.edu>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182891>
 
-On Wed, Oct 5, 2011 at 5:30 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
-> As for moving =E2=80=9Cgit new-workdir=E2=80=9D out of contrib, I bel=
-ieve another
-> prerequisite is sharing the HEAD reflog.
+(+cc: Elijah, who has more experience in this subject than I do)
+Hi,
 
-I don't understand this. Is it about not gc'ing commits that other
-workdirs are detached on, or something more?
+Michael Haggerty wrote:
 
-I like that each of my workdirs have their own HEAD reflog.
+> My renovation of refs.c [1] is currently at 66 patches and counting.
+> What can I say?: (1) I like to make changes in the smallest irreducible
+> steps and (2) there is a lot that needed to be done in refs.c.
+>
+> When I'm done
 
-j.
+We've seen series with fifty-something patches on this list before.
+My (generic) advice:
+
+ 1. Send in installments, early and often.  It would not be fun if the
+    first ten patches have a fatal flaw that means the later ones have
+    to be reworked.
+
+ 2. Make sure the cover letter makes people want to read the later
+    patches.  Make sure each patch has a commit message that motivates
+    it alone or explains how it fits into the larger picture.
+
+ 3. When a patch is not intended to cause any functional change, say
+    so, so reviewers can check that.
+
+ 4. Include test scripts declaring what effect (or lack thereof) each
+    patch is supposed to have.
+
+ 5. "Smallest irreducible step" is not necessarily the appropriate
+    granularity when publishing.  "Largest piece that a person would
+    want to review, apply, or revert independently" is.
