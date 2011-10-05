@@ -1,60 +1,104 @@
-From: Joerg Rosenkranz <Joerg.Rosenkranz@gmail.com>
-Subject: Re: git commit -a reports untracked files after a clone
-Date: Wed, 5 Oct 2011 14:26:30 +0000 (UTC)
-Message-ID: <loom.20111005T161522-357@post.gmane.org>
-References: <7B399C74-8048-42BA-8672-9D7964F24888@goli.at> <7v39kgr5ln.fsf@alter.siamese.dyndns.org> <4501A58F-46F8-410C-BCEF-DD2FC10BC3A5@goli.at> <20110516103829.GA23889@sigill.intra.peff.net> <7C2AE1EE-4CAE-4E86-A53C-C97BE1F2573B@goli.at> <20110516120825.GA24418@sigill.intra.peff.net> <1D7CF554-A4AC-49EF-A095-9B05167BC458@goli.at> <20110516145535.GA25930@sigill.intra.peff.net> <20110527180045.GA29119@sigill.intra.peff.net> <20110527181321.GB29119@sigill.intra.peff.net>
+From: Gioele Barabucci <gioele@svario.it>
+Subject: Re: Git attributes ignored for root directory
+Date: Wed, 05 Oct 2011 16:47:19 +0200
+Message-ID: <4E8C6DF7.9050406@svario.it>
+References: <4E8B55FB.1050203@svario.it> <4E8C481A.1070808@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 05 16:30:20 2011
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Oct 05 16:47:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBSUF-0004N3-K4
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 16:30:19 +0200
+	id 1RBSkr-0004Ck-BH
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 16:47:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934608Ab1JEOaM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Oct 2011 10:30:12 -0400
-Received: from lo.gmane.org ([80.91.229.12]:53124 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934577Ab1JEOaJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Oct 2011 10:30:09 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RBSU2-0004I8-DD
-	for git@vger.kernel.org; Wed, 05 Oct 2011 16:30:06 +0200
-Received: from port-92-198-60-67.static.qsc.de ([92.198.60.67])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 05 Oct 2011 16:30:06 +0200
-Received: from Joerg.Rosenkranz by port-92-198-60-67.static.qsc.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 05 Oct 2011 16:30:06 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 92.198.60.67 (Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.186 Safari/535.1)
+	id S934807Ab1JEOrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Oct 2011 10:47:24 -0400
+Received: from begonia.svario.it ([91.213.195.127]:43844 "EHLO
+	begonia.svario.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934414Ab1JEOrY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Oct 2011 10:47:24 -0400
+Received: from [192.168.2.2] (dynamic-adsl-84-223-204-232.clienti.tiscali.it [84.223.204.232])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: gioele@svario.it)
+	by begonia.svario.it (Postfix) with ESMTPSA id 41C472CE97;
+	Wed,  5 Oct 2011 14:47:20 +0000 (UTC)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0) Gecko/20110923 Thunderbird/7.0
+In-Reply-To: <4E8C481A.1070808@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182851>
 
-> On Fri, May 27, 2011 at 02:00:45PM -0400, Jeff King wrote:
->   1. We load the index, and for each entry, insert it into the index's
->      name_hash. In addition, if ignorecase is turned on, we make an
->      entry in the name_hash for the directory (e.g., "contrib/"), which
->      uses the following code from 5102c61's hash_index_entry_directories:
+On 05/10/2011 14:05, Michael Haggerty wrote:
+> On 10/04/2011 08:52 PM, Gioele Barabucci wrote:
+>> With the newer v1.7.7 I get this, instead:
+>>
+>>      .: show_in_prompt: unspecified
+>>
+>> I see in the release notes of 1.7.7-rc1 that `check-attr` has been
+>> changed to allow relative paths to be specified. Maybe this error is
+>> related to that change.
+>
+> Indeed, your use case is broken by
+>
+> f5114a40c0d0276ce6ff215a3dc51eb19da5b420
 
-Sorry for reactivating this old thread.
-We are running in this problem too. The behavior is the same in msysgit and on 
-Linux. Your patch resolves that problem for us.
+Wow, debug-by-changelog :)
 
-Is there any chance to drive this patch forward? 
+> In fact the support for gitattributes using patterns involving "." was
+> pretty spotty in v1.7.6 too.  For example,
 
-Thanks,
-Joerg
+[...]
+
+> It's not to hard to fix your particular use case.  But for a real fix,
+> we would need to decide what is the correct behavior in all of the lines
+> above marked "?"; specifically, should "." match every subdirectory
+> under a given directory, does it match only the directory containing the
+> .gitattributes file, or is this construct illegal?
+
+I do not know what the correct behavior should be, but here is my use case.
+
+I use git to version almost all my $HOME dir. In addition to my usual 
+files there are also separate project repositories under $HOME. I enjoy 
+using a git-enabled prompt in those projects' dirs but not in my $HOME dir.
+
+So I have this code somewhere in my `~/.bashrc`:
+
+     local show_status="$(git check-attr show_in_prompt -- .)"
+     local show_pattern='^\.: show_in_prompt: (.*)$'
+
+     # add the following line to .gitattributes
+     #
+     #     /. show_in_prompt=no
+     local show_in_prompt='yes'
+     if [[ ${show_status} =~ ${show_pattern} ]]; then
+            show_in_prompt="${BASH_REMATCH[1]}"
+     fi
+
+     if [ "${show_in_prompt}" == 'no' ]; then
+             return
+     fi
+
+As you see in my the line of this code, I exploit the fact that "." 
+refers to the root git dir, not to the current dir, to simplify the 
+code. Otherwise I would had to discover what is the path of the current 
+dir relative to its root git dir, something that I'd like to avoid as 
+this code runs every time the prompt is shown.
+
+This is just my personal use case. On the other hand, the first time I 
+looked at check-attr I found it strange that paths were meant as 
+relative to the root git dir ("." in "/foo" = "/") and not expanded from 
+the current dir ("." in "/foo" = "/foo").
+
+Bye,
+
+-- 
+Gioele Barabucci <gioele@svario.it>
