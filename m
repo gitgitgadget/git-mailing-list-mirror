@@ -1,897 +1,318 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (Oct 2011, #01; Tue, 4)
-Date: Tue, 04 Oct 2011 19:12:30 -0700
-Message-ID: <7vvcs49ofl.fsf@alter.siamese.dyndns.org>
+Subject: A note from the maintainer
+Date: Tue, 04 Oct 2011 19:22:58 -0700
+Message-ID: <7vr52s9ny5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 05 04:12:42 2011
+X-From: git-owner@vger.kernel.org Wed Oct 05 04:23:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBGyP-0008Ih-GV
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 04:12:42 +0200
+	id 1RBH8g-0002Wn-Ii
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Oct 2011 04:23:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934001Ab1JECMg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Oct 2011 22:12:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61292 "EHLO
+	id S934004Ab1JECXF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Oct 2011 22:23:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65045 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933564Ab1JECMe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Oct 2011 22:12:34 -0400
+	id S932820Ab1JECXC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Oct 2011 22:23:02 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 69E156792;
-	Tue,  4 Oct 2011 22:12:33 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 185496998;
+	Tue,  4 Oct 2011 22:23:01 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=5
-	ioyvrj+hhia9fWyNf7FUFuews4=; b=VFr4pNAIi9NYbYHxhh5+RoKwDegamDKFt
-	nww4QapRrHJ+BbynRp+KztD6QTEmn2kC4ZtmD5H4FvU+PaPYV2tmToA0OYR2h9zx
-	AL20rwBKL1FDZs+d8B7VdlzbXiUm3c/L7sCx95AATtgdkQ9NGSnbfmmFxfBf873I
-	nDwqP5FWvQ=
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=L55FxzXSVUTKmrr/kNRhPMywg
+	9U=; b=MGNrhaUqgrcXGlKq95GxlKRPACAvdPSriSkcJyLuiwPyqOYpxllerwkq6
+	iqnxE5Qp1WPccYB/JhbUq14wpSoX1K5+MNGh1GRp7MwsidpjiccBZ7JEaEvOZ+4H
+	1F2HfwLT2TGj8K6ZkTCYxQAQ6aOqCqCASDHIUyrG9v3Jp2QMiE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=X3W
-	siw11xexPttHh4h0YZCU+KTXuearA7jBV+S10RZQhVFte4XzIMNC3rEWklUJrZr+
-	Je7COwSCIlf96jMFLqVKBpHYXYQJSWvBDuM9BMVOffgbGXlLX9mOiZCPlb1qH6eL
-	GhdIh+62ZdJdO3K3HkKm/Bm7i38SdD0UNfxySbKc=
+	:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=PlL9pFVPKcxY3EkGkb/
+	n+Pr3zBBIYulY/KuPB0tt3knnWfnF5jrpPtWTxvVi8i2kGKB3S7dt5Zo3mlX7oCF
+	N9aXvqKPfhVX/baBv8HiwegNYvmq4Y42do/IULspuEQlru18qS/KVPntDEmG+ZKb
+	hbMvLv3k1gBNX/cS8FJS7uDM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 613AD6791;
-	Tue,  4 Oct 2011 22:12:33 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D64B6997;
+	Tue,  4 Oct 2011 22:23:01 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2FE3C6790; Tue,  4 Oct 2011
- 22:12:32 -0400 (EDT)
-X-master-at: 703f05ad5835cff92b12c29aecf8d724c8c847e2
-X-next-at: fb0d39e4afa503eb7e63e40306f6f566df484586
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 07F3E6996; Tue,  4 Oct 2011
+ 22:22:59 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7BC6B026-EEF7-11E0-A776-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F1FEFC02-EEF8-11E0-9DF1-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182819>
 
-Here are the topics that have been cooking.  Commits prefixed with '-' are
-only in 'pu' while commits prefixed with '+' are in 'next'.
+Welcome to git development community.
 
-Here are the repositories that have my integration branches:
+This message is written by the maintainer and talks about how Git
+project is managed, and how you can work with it.
 
-With maint, master, next, pu, todo, html and man:
+* Mailing list and the community
 
-	url = git://repo.or.cz/alt-git.git
-	url = https://code.google.com/p/git-core/
+The development is primarily done on the Git mailing list. Help
+requests, feature proposals, bug reports and patches should be sent to
+the list address <git@vger.kernel.org>.  You don't have to be
+subscribed to send messages.  The convention on the list is to keep
+everybody involved on Cc:, so it is unnecessary to ask "Please Cc: me,
+I am not subscribed".
 
-With only maint, master, html and man:
+Before sending patches, please read Documentation/SubmittingPatches
+and Documentation/CodingGuidelines to familiarize yourself with the
+project convention.
 
-	url = git://git.sourceforge.jp/gitroot/git-core/git.git
-	url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+If you sent a patch and you did not hear any response from anybody for
+several days, it could be that your patch was totally uninteresting,
+but it also is possible that it was simply lost in the noise.  Please
+do not hesitate to send a reminder message in such a case.  Messages
+getting lost in the noise is a sign that people involved don't have
+enough mental/time bandwidth to process them right at the moment, and
+it often helps to wait until the list traffic becomes calmer before
+sending such a reminder.
 
-With all the topics and integration branches but not todo, html or man:
+The list archive is available at a few public sites as well:
 
-	url = https://github.com/gitster/git
+        http://news.gmane.org/gmane.comp.version-control.git/
+        http://marc.theaimsgroup.com/?l=3Dgit
+        http://www.spinics.net/lists/git/
 
-Until kernel.org comes back to life, it might be a good idea to
-tentatively have the following in your $HOME/.gitconfig:
+and some people seem to prefer to read it over NNTP:
 
-    [url "http://code.google.com/p/git-core"]
-	insteadOf = git://git.kernel.org/pub/scm/git/git.git
+        nntp://news.gmane.org/gmane.comp.version-control.git
 
-I am planning to kick some topics out of 'next' back to 'pu' to give them
-a chance to be cleaned up. Not happened yet, but see below for ideas.
+When you point at a message in a mailing list archive, using
+gmane is often the easiest to follow by readers, like this:
 
---------------------------------------------------
-[New Topics]
+        http://thread.gmane.org/gmane.comp.version-control.git/27/focus=
+=3D217
 
-* cb/do-not-pretend-to-hijack-long-help (2011-10-03) 2 commits
- - fixup: leave uppercase H alone
- - use -h for synopsis and --help for manpage consistently
+as it also allows people who subscribe to the mailing list as gmane
+newsgroup to "jump to" the article.
 
-Will squash the top one into the original unless somebody objects.
+Some members of the development community can sometimes also be found
+on the #git IRC channel on Freenode.  Its log is available at:
 
-* cp/git-web-browse-browsers (2011-10-03) 1 commit
- - git-web--browse: avoid the use of eval
+        http://colabti.org/irclogger/irclogger_log/git
 
-Will merge to "next".
+* Reporting bugs
 
-* il/archive-err-signal (2011-10-03) 1 commit
- - transport: do not allow to push over git:// protocol
-
-Will merge to "next".
-
-* nd/daemon-log-sock-errors (2011-10-03) 1 commit
- - daemon: log errors if we could not use some sockets
-
-Will merge to "next".
-
-* nd/document-err-packet (2011-10-03) 1 commit
- - pack-protocol: document "ERR" line
-
-Will merge to "next".
-
-* nd/git-daemon-error-msgs (2011-10-03) 1 commit
- - daemon: return "access denied" if a service is not allowed
-
-Will merge to "next".
-
-* jc/is-url-simplify (2011-10-03) 1 commit
- - url.c: simplify is_url()
-
-Will merge to "next".
-
-* jn/ident-from-etc-mailname (2011-10-03) 1 commit
- - ident: check /etc/mailname if email is unknown
-
-Will merge to "next".
-
-The warning might have to be squelched further, but that can be done as a
-separate patch in-tree.
-
-* jn/no-g-plus-s-on-bsd (2011-10-03) 1 commit
- - Makefile: do not set setgid bit on directories on GNU/kFreeBSD
-
-Will merge to "next".
-
-* js/log-show-children (2011-10-04) 1 commit
- - log --children
-
-Will merge to "next".
-
-* rs/name-rev-usage (2011-10-03) 1 commit
- - name-rev: split usage string
-
-Will merge to "next".
-
-* rs/test-ctype (2011-10-03) 2 commits
- - test-ctype: add test for is_pathspec_magic
- - test-ctype: macrofy
-
-Will merge to "next".
-
-* rs/pending (2011-10-03) 8 commits
- - commit: factor out clear_commit_marks_for_object_array
- - checkout: use leak_pending flag
- - bundle: use leak_pending flag
- - bisect: use leak_pending flag
- - revision: add leak_pending flag
- - checkout: use add_pending_{object,sha1} in orphan check
- - revision: factor out add_pending_sha1
- - checkout: check for "Previous HEAD" notice in t2020
-
-* ph/transport-with-gitfile (2011-10-04) 4 commits
- - Add test showing git-fetch groks gitfiles
- - Teach transport about the gitfile mechanism
- - Learn to handle gitfiles in enter_repo
- - enter_repo: do not modify input
-
---------------------------------------------------
-[Stalled]
-
-* hv/submodule-merge-search (2011-08-26) 5 commits
- - submodule: Search for merges only at end of recursive merge
- - allow multiple calls to submodule merge search for the same path
- - submodule: Demonstrate known breakage during recursive merge
- - push: Don't push a repository with unpushed submodules
-  (merged to 'next' on 2011-08-24 at 398e764)
- + push: teach --recurse-submodules the on-demand option
- (this branch is tangled with fg/submodule-auto-push.)
-
-The second from the bottom one needs to be replaced with a properly
-written commit log message.
-
-Will kick back to 'pu'.
-
-* jc/signed-push (2011-09-12) 7 commits
- - push -s: support pre-receive-signature hook
- - push -s: receiving end
- - push -s: send signed push certificate
- - push -s: skeleton
- - Split GPG interface into its own helper library
- - rename "match_refs()" to "match_push_refs()"
- - send-pack: typofix error message
- (this branch uses jc/run-receive-hook-cleanup; is tangled with jc/signed-push-3.)
-
-This was the v2 that updated notes tree on the receiving end.
-
-* jc/signed-push-3 (2011-09-12) 4 commits
- . push -s: signed push
- - Split GPG interface into its own helper library
- - rename "match_refs()" to "match_push_refs()"
- - send-pack: typofix error message
- (this branch uses jc/run-receive-hook-cleanup; is tangled with jc/signed-push.)
-
-This is the third edition, that moves the preparation of the notes tree to
-the sending end.
-I expect that both of these topics will be discarded.
-
-* jk/add-i-hunk-filter (2011-07-27) 5 commits
-  (merged to 'next' on 2011-08-11 at 8ff9a56)
- + add--interactive: add option to autosplit hunks
- + add--interactive: allow negatation of hunk filters
- + add--interactive: allow hunk filtering on command line
- + add--interactive: factor out regex error handling
- + add--interactive: refactor patch mode argument processing
-
-Will discard.
-
-* jh/receive-count-limit (2011-05-23) 10 commits
- - receive-pack: Allow server to refuse pushes with too many objects
- - pack-objects: Estimate pack size; abort early if pack size limit is exceeded
- - send-pack/receive-pack: Allow server to refuse pushing too large packs
- - pack-objects: Allow --max-pack-size to be used together with --stdout
- - send-pack/receive-pack: Allow server to refuse pushes with too many commits
- - pack-objects: Teach new option --max-commit-count, limiting #commits in pack
- - receive-pack: Prepare for addition of the new 'limit-*' family of capabilities
- - Tighten rules for matching server capabilities in server_supports()
- - send-pack: Attempt to retrieve remote status even if pack-objects fails
- - Update technical docs to reflect side-band-64k capability in receive-pack
-
-Would need another round to separate per-pack and per-session limits.
-Will discard.
-
-* jk/generation-numbers (2011-09-11) 8 commits
- - metadata-cache.c: make two functions static
- - limit "contains" traversals based on commit generation
- - check commit generation cache validity against grafts
- - pretty: support %G to show the generation number of a commit
- - commit: add commit_generation function
- - add metadata-cache infrastructure
- - decorate: allow storing values instead of pointers
- - Merge branch 'jk/tag-contains-ab' (early part) into HEAD
-
-The initial "tag --contains" de-pessimization without need for generation
-numbers is already in.
-Will discard.
-
-* sr/transport-helper-fix-rfc (2011-07-19) 2 commits
- - t5800: point out that deleting branches does not work
- - t5800: document inability to push new branch with old content
-
-Perhaps 281eee4 (revision: keep track of the end-user input from the
-command line, 2011-08-25) in bk/ancestry-path would help.
-
-* po/cygwin-backslash (2011-08-05) 2 commits
- - On Cygwin support both UNIX and DOS style path-names
- - git-compat-util: add generic find_last_dir_sep that respects is_dir_sep
-
-Incomplete with respect to backslash processing in prefix_filename(), and
-also loses the ability to escape glob specials.
-Will discard.
-
---------------------------------------------------
-[Cooking]
-
-* jc/grep-untracked-exclude (2011-10-04) 1 commit
- - Merge branch 'jc/maint-grep-untracked-exclude' into jc/grep-untracked-exclude
- (this branch uses bw/grep-no-index-no-exclude and jc/maint-grep-untracked-exclude.)
-
-* jc/maint-grep-untracked-exclude (2011-10-04) 1 commit
- - grep: teach --untracked and --exclude-standard options
- (this branch is used by jc/grep-untracked-exclude; uses bw/grep-no-index-no-exclude.)
-
-Will merge to "next".
-
-* dm/tree-walk (2011-09-28) 2 commits
- - tree-walk: micro-optimization in tree_entry_interesting
- - tree-walk: drop unused parameter from match_dir_prefix
-
-Will merge to "next".
-
-* cs/perl-config-path-send-email (2011-09-30) 2 commits
- - use new Git::config_path() for aliasesfile
- - Add Git::config_path()
-
-Will merge to "next".
-
-* jc/checkout-from-tree-keep-local-changes (2011-09-30) 1 commit
- - checkout $tree $path: do not clobber local changes in $path not in $tree
-
-Will merge to "next".
-
-* jc/apply-blank-at-eof-fix (2011-09-26) 1 commit
- - apply --whitespace=error: correctly report new blank lines at end
-
-Will merge to "next".
-
-* nd/sparse-doc (2011-09-26) 1 commit
- - git-read-tree.txt: update sparse checkout examples
-
-Will merge to "next".
-
-* jp/get-ref-dir-unsorted (2011-09-30) 2 commits
- - refs: Use binary search to lookup refs faster
- - Don't sort ref_list too early
-
-Will merge to "next".
-
-* jc/parse-options-boolean (2011-09-28) 5 commits
- - apply: use OPT_NOOP_NOARG
- - revert: use OPT_NOOP_NOARG
- - parseopt: add OPT_NOOP_NOARG
- - archive.c: use OPT_BOOL()
- - parse-options: deprecate OPT_BOOLEAN
-
-Will merge to "next".
-
-* mh/maint-notes-merge-pathbuf-fix (2011-09-27) 1 commit
- - notes_merge_commit(): do not pass temporary buffer to other function
-
-Will merge to "next".
-
-* ph/push-to-delete-nothing (2011-09-30) 1 commit
- - receive-pack: don't pass non-existent refs to post-{receive,update} hooks
-
-Will merge to "next".
-
-* ps/gitweb-js-with-lineno (2011-09-27) 1 commit
- - gitweb: Fix links to lines in blobs when javascript-actions are enabled
-
-Will merge to "next".
-
-* zj/send-email-authen-sasl (2011-09-29) 1 commit
- - send-email: auth plain/login fix
-
-Will merge to "next".
-
-* jc/maint-diffstat-numstat-context (2011-09-22) 1 commit
-  (merged to 'next' on 2011-09-26 at 12539ab)
- + diff: teach --stat/--numstat to honor -U$num
-
-"diff" is allowed to match the common lines differently depending on how
-many context lines it is showing, so running --(num)stat with 0 lines of
-context internally gives a result that may be surprising to some people.
-
-Will merge to "master" as the second wave.
-
-* nd/maint-sparse-errors (2011-09-22) 2 commits
-  (merged to 'next' on 2011-09-26 at cdcdec5)
- + Add explanation why we do not allow to sparse checkout to empty working tree
- + sparse checkout: show error messages when worktree shaping fails
-
-Will merge to "master" as the third wave.
-
-* rs/diff-cleanup-records-fix (2011-10-03) 2 commits
- - diff: resurrect XDF_NEED_MINIMAL with --minimal
-  (merged to 'next' on 2011-09-27 at 3bd75d8)
- + Revert removal of multi-match discard heuristic in 27af01
-
-Will merge to "next".
-
-* di/fast-import-empty-tag-note-fix (2011-09-22) 2 commits
- - fast-import: don't allow to note on empty branch
- - fast-import: don't allow to tag empty branch
-
-Will merge to "next".
-
-* js/check-attr-cached (2011-09-22) 2 commits
-  (merged to 'next' on 2011-09-27 at 74d7b66)
- + t0003: remove extra whitespaces
- + Teach '--cached' option to check-attr
-
-Will merge to "master" as the first wave.
-
-* bw/grep-no-index-no-exclude (2011-09-15) 2 commits
-  (merged to 'next' on 2011-09-26 at 776f13b)
- + grep --no-index: don't use git standard exclusions
- + grep: do not use --index in the short usage output
- (this branch is used by jc/grep-untracked-exclude and jc/maint-grep-untracked-exclude.)
-
-Will merge to "master" as the third wave.
-
-* jc/want-commit (2011-09-15) 1 commit
-  (merged to 'next' on 2011-09-26 at 5841512)
- + Allow git merge ":/<pattern>"
-
-Will merge to "master" as the first wave.
-
-* jc/ls-remote-short-help (2011-09-16) 1 commit
-  (merged to 'next' on 2011-09-26 at e24a27a)
- + ls-remote: a lone "-h" is asking for help
-
-Will merge to "master" as the first wave.
-
-* jc/maint-bundle-too-quiet (2011-09-19) 1 commit
-  (merged to 'next' on 2011-09-26 at ba140d4)
- + Teach progress eye-candy to fetch_refs_from_bundle()
-
-Will merge to "master" as the first wave.
-
-* jk/filter-branch-require-clean-work-tree (2011-09-15) 1 commit
-  (merged to 'next' on 2011-09-26 at 206a74a)
- + filter-branch: use require_clean_work_tree
-
-Will merge to "master" as the first wave.
-
-* jn/gitweb-highlite-sanitise (2011-09-16) 1 commit
-  (merged to 'next' on 2011-09-26 at c79390a)
- + gitweb: Strip non-printable characters from syntax highlighter output
-
-Will merge to "master" as the first wave.
-
-* mh/check-ref-format-3 (2011-09-16) 22 commits
- - add_ref(): verify that the refname is formatted correctly
- - resolve_ref(): expand documentation
- - resolve_ref(): also treat a too-long SHA1 as invalid
- - resolve_ref(): emit warnings for improperly-formatted references
- - resolve_ref(): verify that the input refname has the right format
- - remote: avoid passing NULL to read_ref()
- - remote: use xstrdup() instead of strdup()
- - resolve_ref(): do not follow incorrectly-formatted symbolic refs
- - resolve_ref(): extract a function get_packed_ref()
- - resolve_ref(): turn buffer into a proper string as soon as possible
- - resolve_ref(): only follow a symlink that contains a valid, normalized refname
- - resolve_ref(): use prefixcmp()
- - resolve_ref(): explicitly fail if a symlink is not readable
- - Change check_refname_format() to reject unnormalized refnames
- - Inline function refname_format_print()
- - Make collapse_slashes() allocate memory for its result
- - Do not allow ".lock" at the end of any refname component
- - Refactor check_refname_format()
- - Change check_ref_format() to take a flags argument
- - Change bad_ref_char() to return a boolean value
- - git check-ref-format: add options --allow-onelevel and --refspec-pattern
- - t1402: add some more tests
-
-Will merge to "next".
-
-* cn/eradicate-working-copy (2011-09-21) 1 commit
-  (merged to 'next' on 2011-09-26 at 2683d36)
- + Remove 'working copy' from the documentation and C code
-
-Will merge to "master" as the first wave.
-
-* js/bisect-no-checkout (2011-09-21) 1 commit
-  (merged to 'next' on 2011-09-21 at e94ad3e)
- + bisect: fix exiting when checkout failed in bisect_start()
-
-Will merge to "master" as the third wave.
-
-* mg/maint-doc-sparse-checkout (2011-09-21) 3 commits
-  (merged to 'next' on 2011-09-21 at f316dec)
- + git-read-tree.txt: correct sparse-checkout and skip-worktree description
- + git-read-tree.txt: language and typography fixes
- + unpack-trees: print "Aborting" to stderr
-
-Will merge to "master" as the first wave.
-
-* ms/patch-id-with-overlong-line (2011-09-22) 1 commit
-  (merged to 'next' on 2011-09-26 at a33d0b2)
- + patch-id.c: use strbuf instead of a fixed buffer
-
-Will merge to "master" as the first wave.
-
-* sn/doc-update-index-assume-unchanged (2011-09-21) 1 commit
-  (merged to 'next' on 2011-09-21 at 325e796)
- + Documentation/git-update-index: refer to 'ls-files'
-
-Will merge to "master" as the first wave.
-
-* jc/request-pull-show-head-4 (2011-09-21) 7 commits
- - request-pull: use the branch description
- - request-pull: state what commit to expect
- - request-pull: modernize style
- - branch: teach --edit-description option
- - format-patch: use branch description in cover letter
- - branch: add read_branch_desc() helper function
- - Merge branch 'bk/ancestry-path' into jc/branch-desc
- (this branch uses bk/ancestry-path.)
-
-Will merge to "next".
-
-* jm/mergetool-pathspec (2011-09-26) 2 commits
-  (merged to 'next' on 2011-09-26 at f699566)
- + mergetool: no longer need to save standard input
- + mergetool: Use args as pathspec to unmerged files
-
-Will merge to "master" as the second wave.
-
-* nd/maint-autofix-tag-in-head (2011-09-18) 4 commits
-  (merged to 'next' on 2011-09-27 at dc8e2e3)
- + Accept tags in HEAD or MERGE_HEAD
- + merge: remove global variable head[]
- + merge: use return value of resolve_ref() to determine if HEAD is invalid
- + merge: keep stash[] a local variable
-
-Will merge to "master" as the third wave.
-
-* jk/maint-fetch-submodule-check-fix (2011-09-12) 1 commit
-  (merged to 'next' on 2011-09-12 at 3c73b8c)
- + fetch: avoid quadratic loop checking for updated submodules
- (this branch is used by jk/argv-array.)
-
-Will merge to "master" as the first wave.
-
-* bc/attr-ignore-case (2011-09-14) 5 commits
-  (merged to 'next' on 2011-09-26 at 1e0814c)
- + attr: read core.attributesfile from git_default_core_config
- + attr.c: respect core.ignorecase when matching attribute patterns
- + builtin/mv.c: plug miniscule memory leak
- + cleanup: use internal memory allocation wrapper functions everywhere
- + attr.c: avoid inappropriate access to strbuf "buf" member
-
-Will merge to "master" as the second wave.
-
-* jc/maint-fsck-fwrite-size-check (2011-09-11) 1 commit
-  (merged to 'next' on 2011-09-16 at 2258f11)
- + fsck: do not abort upon finding an empty blob
-
-Will merge to "master" as the first wave.
-
-* jk/argv-array (2011-09-14) 7 commits
-  (merged to 'next' on 2011-09-16 at 90feab4)
- + run_hook: use argv_array API
- + checkout: use argv_array API
- + bisect: use argv_array API
- + quote: provide sq_dequote_to_argv_array
- + refactor argv_array into generic code
- + quote.h: fix bogus comment
- + add sha1_array API docs
- (this branch uses jk/maint-fetch-submodule-check-fix.)
-
-This has a slight interaction with the "pending_sha1 without having to
-read the object" work on rs/pending, but otherwise OK.
-
-Will merge to "master" as the first wave.
-
-* js/cred-macos-x-keychain-2 (2011-09-14) 1 commit
-  (merged to 'next' on 2011-09-26 at 4f289a4)
- + contrib: add a pair of credential helpers for Mac OS X's keychain
- (this branch uses jk/http-auth-keyring.)
-
-Will kick back to 'pu' together with 'jk/http-auth-keyring'.
-
-* rj/maint-t9159-svn-rev-notation (2011-09-21) 1 commit
-  (merged to 'next' on 2011-09-26 at 525a567)
- + t9159-*.sh: skip for mergeinfo test for svn <= 1.4
-
-Will merge to "master" as the first wave.
-
-* tr/doc-note-rewrite (2011-09-13) 1 commit
-  (merged to 'next' on 2011-09-16 at 5fe813a)
- + Documentation: basic configuration of notes.rewriteRef
-
-Will merge to "master" as the first wave.
-
-* jk/default-attr (2011-09-12) 1 commit
- - attr: map builtin userdiff drivers to well-known extensions
-
-Will discard, expecting a fresh re-roll.
-
-* hl/iso8601-more-zone-formats (2011-09-12) 1 commit
-  (merged to 'next' on 2011-09-12 at 270f5c7)
- + date.c: Support iso8601 timezone formats
-
-Will merge to "master" as the first wave.
-
-* jc/run-receive-hook-cleanup (2011-09-12) 1 commit
-  (merged to 'next' on 2011-09-12 at 68dd431)
- + refactor run_receive_hook()
- (this branch is used by jc/signed-push and jc/signed-push-3.)
-
-Just to make it easier to run a hook that reads from its standard input.
-Will merge to "master" as the first wave.
-
-* jk/for-each-ref (2011-09-08) 5 commits
-  (merged to 'next' on 2011-09-14 at 36ed515)
- + for-each-ref: add split message parts to %(contents:*).
- + for-each-ref: handle multiline subjects like --pretty
- + for-each-ref: refactor subject and body placeholder parsing
- + t6300: add more body-parsing tests
- + t7004: factor out gpg setup
-
-Will merge to "master" as the first wave.
-
-* wh/normalize-alt-odb-path (2011-09-07) 1 commit
-  (merged to 'next' on 2011-09-14 at 96f722b)
- + sha1_file: normalize alt_odb path before comparing and storing
-
-Will merge to "master" as the first wave.
-
-* fk/use-kwset-pickaxe-grep-f (2011-09-11) 2 commits
-  (merged to 'next' on 2011-09-14 at 436d858)
- + obstack.c: Fix some sparse warnings
- + sparse: Fix an "Using plain integer as NULL pointer" warning
-
-Will merge to "master" as the first wave.
-
-* jc/make-static (2011-09-14) 4 commits
-  (merged to 'next' on 2011-09-14 at c5943ff)
- + exec_cmd.c: prepare_git_cmd() is sometimes used
- + environment.c: have_git_dir() has users on Cygwin
-  (merged to 'next' on 2011-09-11 at 2acb0af)
- + vcs-svn: remove unused functions and make some static
- + make-static: master
-
-Will discard (or at least kick it back to 'pu').
-
-* rj/quietly-create-dep-dir (2011-09-11) 1 commit
-  (merged to 'next' on 2011-09-12 at 93d1c6b)
- + Makefile: Make dependency directory creation less noisy
-
-Will merge to "master" as the first wave.
-
-* mz/remote-rename (2011-09-11) 4 commits
-  (merged to 'next' on 2011-09-26 at 5e64f68)
- + remote: only update remote-tracking branch if updating refspec
- + remote rename: warn when refspec was not updated
- + remote: "rename o foo" should not rename ref "origin/bar"
- + remote: write correct fetch spec when renaming remote 'remote'
-
-Will merge to "master" as the second wave.
-
-* cb/common-prefix-unification (2011-09-12) 3 commits
-  (merged to 'next' on 2011-09-14 at 24f571f)
- + rename pathspec_prefix() to common_prefix() and move to dir.[ch]
- + consolidate pathspec_prefix and common_prefix
- + remove prefix argument from pathspec_prefix
-
-Will merge to "master" as the second wave.
-
-* cb/send-email-help (2011-09-12) 1 commit
-  (merged to 'next' on 2011-09-14 at ae71999)
- + send-email: add option -h
-
-Will merge to "master" as the first wave.
-
-* jc/fetch-pack-fsck-objects (2011-09-04) 3 commits
-  (merged to 'next' on 2011-09-12 at a031347)
- + test: fetch/receive with fsckobjects
- + transfer.fsckobjects: unify fetch/receive.fsckobjects
- + fetch.fsckobjects: verify downloaded objects
-
-We had an option to verify the sent objects before accepting a push but
-lacked the corresponding option when fetching. In the light of the recent
-k.org incident, a change like this would be a good addition.
-
-Will merge to "master" as the first wave.
-
-* jc/fetch-verify (2011-09-01) 3 commits
-  (merged to 'next' on 2011-09-12 at 3f491ab)
- + fetch: verify we have everything we need before updating our ref
- + rev-list --verify-object
- + list-objects: pass callback data to show_objects()
- (this branch uses jc/traverse-commit-list; is tangled with jc/receive-verify.)
-
-During a fetch, we verify that the pack stream is self consistent,
-but did not verify that the refs that are updated are consistent with
-objects contained in the packstream, and this adds such a check.
-
-Will merge to "master" as the first wave.
-
-* jc/receive-verify (2011-09-09) 6 commits
-  (merged to 'next' on 2011-09-12 at 856de78)
- + receive-pack: check connectivity before concluding "git push"
- + check_everything_connected(): libify
- + check_everything_connected(): refactor to use an iterator
- + fetch: verify we have everything we need before updating our ref
- + rev-list --verify-object
- + list-objects: pass callback data to show_objects()
- (this branch uses jc/traverse-commit-list; is tangled with jc/fetch-verify.)
-
-While accepting a push, we verify that the pack stream is self consistent,
-but did not verify that the refs the push updates are consistent with
-objects contained in the packstream, and this adds such a check.
-
-Will merge to "master" as the third wave.
-
-* jn/maint-http-error-message (2011-09-06) 2 commits
-  (merged to 'next' on 2011-09-12 at a843f03)
- + http: avoid empty error messages for some curl errors
- + http: remove extra newline in error message
-
-Will merge to "master" as the second wave.
-
-* bk/ancestry-path (2011-09-15) 4 commits
-  (merged to 'next' on 2011-09-15 at aa64d04)
- + t6019: avoid refname collision on case-insensitive systems
-  (merged to 'next' on 2011-09-02 at d05ba5d)
- + revision: do not include sibling history in --ancestry-path output
- + revision: keep track of the end-user input from the command line
- + rev-list: Demonstrate breakage with --ancestry-path --all
- (this branch is used by jc/request-pull-show-head-4.)
-
-Will merge to "master" as the first wave.
-
-* mg/branch-list (2011-09-13) 7 commits
-  (merged to 'next' on 2011-09-14 at 6610a2e)
- + t3200: clean up checks for file existence
-  (merged to 'next' on 2011-09-11 at 20a9cdb)
- + branch: -v does not automatically imply --list
-  (merged to 'next' on 2011-09-02 at b818eae)
- + branch: allow pattern arguments
- + branch: introduce --list option
- + git-branch: introduce missing long forms for the options
- + git-tag: introduce long forms for the options
- + t6040: test branch -vv
-
-Will merge to "master" as the first wave.
-
-* mm/rebase-i-exec-edit (2011-08-26) 2 commits
-  (merged to 'next' on 2011-09-02 at e75b1b9)
- + rebase -i: notice and warn if "exec $cmd" modifies the index or the working tree
- + rebase -i: clean error message for --continue after failed exec
-
-Will merge to "master" as the first wave.
-
-* mm/mediawiki-as-a-remote (2011-09-28) 6 commits
-  (merged to 'next' on 2011-09-28 at a1c9ae5)
- + git-remote-mediawiki: allow a domain to be set for authentication
-  (merged to 'next' on 2011-09-27 at 7ce8254)
- + git-remote-mediawiki: obey advice.pushNonFastForward
- + git-remote-mediawiki: set 'basetimestamp' to let the wiki handle conflicts
- + git-remote-mediawiki: trivial fixes
-  (merged to 'next' on 2011-09-12 at 163c6a5)
- + git-remote-mediawiki: allow push to set MediaWiki metadata
- + Add a remote helper to interact with mediawiki (fetch & push)
-
-Will merge to "master" as the first wave.
-
-* bc/unstash-clean-crufts (2011-08-27) 4 commits
-  (merged to 'next' on 2011-09-02 at 7bfd66f)
- + git-stash: remove untracked/ignored directories when stashed
- + t/t3905: add missing '&&' linkage
- + git-stash.sh: fix typo in error message
- + t/t3905: use the name 'actual' for test output, swap arguments to test_cmp
-
-Will merge to "master" as the first wave.
-
-* gb/am-hg-patch (2011-08-29) 1 commit
-  (merged to 'next' on 2011-09-02 at 3edfe4c)
- + am: preliminary support for hg patches
-
-Will merge to "master" as the first wave.
-
-* jc/diff-index-unpack (2011-08-29) 3 commits
-  (merged to 'next' on 2011-09-02 at 4206bd9)
- + diff-index: pass pathspec down to unpack-trees machinery
- + unpack-trees: allow pruning with pathspec
- + traverse_trees(): allow pruning with pathspec
-
-Will merge to "master" as the first wave.
-
-* nm/grep-object-sha1-lock (2011-08-30) 1 commit
-  (merged to 'next' on 2011-09-02 at 336f57d)
- + grep: Fix race condition in delta_base_cache
-
-Will merge to "master" as the first wave.
-
-* tr/mergetool-valgrind (2011-08-30) 1 commit
-  (merged to 'next' on 2011-09-02 at f5f2c61)
- + Symlink mergetools scriptlets into valgrind wrappers
-
-Will merge to "master" as the first wave.
-
-* fg/submodule-auto-push (2011-09-11) 2 commits
-  (merged to 'next' on 2011-09-11 at 3fc86f7)
- + submodule.c: make two functions static
-  (merged to 'next' on 2011-08-24 at 398e764)
- + push: teach --recurse-submodules the on-demand option
- (this branch is tangled with hv/submodule-merge-search.)
-
-What the topic aims to achieve may make sense, but the implementation
-looked somewhat suboptimal.
-
-Will kick back to "pu" at least tentatively.
-
-* jc/traverse-commit-list (2011-08-22) 3 commits
-  (merged to 'next' on 2011-08-24 at df50dd7)
- + revision.c: update show_object_with_name() without using malloc()
- + revision.c: add show_object_with_name() helper function
- + rev-list: fix finish_object() call
- (this branch is used by jc/fetch-verify and jc/receive-verify.)
-
-Will merge to "master" as the first wave.
-
-* fk/make-auto-header-dependencies (2011-08-18) 1 commit
-  (merged to 'next' on 2011-08-24 at 3da2c25)
- + Makefile: Use computed header dependencies if the compiler supports it
- (this branch is used by da/make-auto-header-dependencies.)
-
-Will merge to "master" as the first wave.
-
-* da/make-auto-header-dependencies (2011-08-30) 1 commit
-  (merged to 'next' on 2011-09-02 at e04a4af)
- + Makefile: Improve compiler header dependency check
- (this branch uses fk/make-auto-header-dependencies.)
-
-Will merge to "master" as the first wave.
-
-* mh/iterate-refs (2011-09-11) 7 commits
-  (merged to 'next' on 2011-09-27 at c289699)
- + refs.c: make create_cached_refs() static
- + Retain caches of submodule refs
- + Store the submodule name in struct cached_refs
- + Allocate cached_refs objects dynamically
- + Change the signature of read_packed_refs()
- + Access reference caches only through new function get_cached_refs()
- + Extract a function clear_cached_refs()
-
-Will merge to "master" as the second wave.
-
-* hv/submodule-update-none (2011-08-11) 2 commits
-  (merged to 'next' on 2011-08-24 at 5302fc1)
- + add update 'none' flag to disable update of submodule by default
- + submodule: move update configuration variable further up
-
-Will merge to "master" as the second wave.
-
-* jc/lookup-object-hash (2011-08-11) 6 commits
-  (merged to 'next' on 2011-08-24 at 5825411)
- + object hash: replace linear probing with 4-way cuckoo hashing
- + object hash: we know the table size is a power of two
- + object hash: next_size() helper for readability
- + pack-objects --count-only
- + object.c: remove duplicated code for object hashing
- + object.c: code movement for readability
-
-I do not think there is anything fundamentally wrong with this series, but
-the risk of breakage far outweighs observed performance gain in one
-particular workload. Will keep it in 'next' at least for one cycle.
-
-Will kick back to 'pu'.
-
-* fg/submodule-git-file-git-dir (2011-08-22) 2 commits
-  (merged to 'next' on 2011-08-23 at 762194e)
- + Move git-dir for submodules
- + rev-parse: add option --resolve-git-dir <path>
-
-Will merge to "master" as the second wave.
-
-* jk/http-auth-keyring (2011-09-28) 22 commits
-  (merged to 'next' on 2011-09-28 at 65ce6c2)
- + credential-cache: don't cache items without context
-  (merged to 'next' on 2011-09-16 at b4195eb)
- + check_expirations: don't copy over same element
- + t0300: add missing EOF terminator for <<
-  (merged to 'next' on 2011-09-14 at 589c7c9)
- + credential-store: use a better storage format
- + t0300: make alternate username tests more robust
- + t0300: make askpass tests a little more robust
- + credential-cache: fix expiration calculation corner cases
- + docs: minor tweaks to credentials API
-  (merged to 'next' on 2011-09-11 at 491ce6a)
- + credentials: make credential_fill_gently() static
-  (merged to 'next' on 2011-08-03 at b06e80e)
- + credentials: add "getpass" helper
- + credentials: add "store" helper
- + credentials: add "cache" helper
- + docs: end-user documentation for the credential subsystem
- + http: use hostname in credential description
- + allow the user to configure credential helpers
- + look for credentials in config before prompting
- + http: use credential API to get passwords
- + introduce credentials API
- + http: retry authentication failures for all http requests
- + remote-curl: don't retry auth failures with dumb protocol
- + improve httpd auth tests
- + url: decode buffers that are not NUL-terminated
- (this branch is tangled with js/cred-macos-x-keychain-2.)
-
-Will kick back to 'pu'.
-
-* rr/revert-cherry-pick-continue (2011-09-11) 19 commits
-  (merged to 'next' on 2011-09-11 at 7d78054)
- + builtin/revert.c: make commit_list_append() static
-  (merged to 'next' on 2011-08-24 at 712c115)
- + revert: Propagate errors upwards from do_pick_commit
- + revert: Introduce --continue to continue the operation
- + revert: Don't implicitly stomp pending sequencer operation
- + revert: Remove sequencer state when no commits are pending
- + reset: Make reset remove the sequencer state
- + revert: Introduce --reset to remove sequencer state
- + revert: Make pick_commits functionally act on a commit list
- + revert: Save command-line options for continuing operation
- + revert: Save data for continuing after conflict resolution
- + revert: Don't create invalid replay_opts in parse_args
- + revert: Separate cmdline parsing from functional code
- + revert: Introduce struct to keep command-line options
- + revert: Eliminate global "commit" variable
- + revert: Rename no_replay to record_origin
- + revert: Don't check lone argument in get_encoding
- + revert: Simplify and inline add_message_to_msg
- + config: Introduce functions to write non-standard file
- + advice: Introduce error_resolve_conflict
-
-Will merge to "master" as the first wave.
-
-Note that generalized sequencer still needs a bit more thought (see the
-summary by Ram at $gmane/179613).
+When you think git does not behave as you expect, please do not stop yo=
+ur
+bug report with just "git does not work".  "I tried to do X but it did =
+not
+work" is not much better, neither is "I tried to do X and git did Y, wh=
+ich
+is broken".  It often is that what you expect is _not_ what other peopl=
+e
+expect, and chances are that what you expect is very different from wha=
+t
+people who have worked on git have expected (otherwise, the behavior
+would have been changed to match that expectation long time ago).
+
+Please remember to always state
+
+ - what you wanted to do;
+
+ - what you did (the version of git and the command sequence to reprodu=
+ce
+   the behavior);
+
+ - what you saw happen;
+
+ - what you expected to see; and
+
+ - how the last two are different.
+
+See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
+hints.
+
+* Repositories, branches and documentation.
+
+My public git.git repository is at:
+
+        git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git
+	https://github.com/git/git
+	https://code.google.com/p/git-core/
+
+Impatient people might have better luck with the latter two (there are =
+a
+few other mirrors I push into at sourceforge and github as well).
+
+Their gitweb interfaces are found at:
+
+        http://git.kernel.org/?p=3Dgit/git.git
+        http://repo.or.cz/w/alt-git.git
+
+There are three branches in git.git repository that are not about the
+source tree of git: "html", "man", and "todo".
+
+The "html" and "man" are preformatted documentation from the tip of
+the "master" branch; the tip of "html" is visible at:
+
+        http://www.kernel.org/pub/software/scm/git/docs/
+	http://git-core.googlecode.com/git-history/html/git.html
+
+The above URL is the top-level documentation page, and it may have
+links to documentation of older releases.
+
+The "todo" branch was originally meant to contain a TODO list for me,
+but is mostly used to keep some helper scripts I use to maintain git.
+=46or example, the script that was used to maintain the two documentati=
+on
+branches are found there as dodoc.sh, which may be a good demonstration
+of how to use a post-update hook to automate a task after pushing into =
+a
+repository.
+
+There are four branches in git.git repository that track the source tre=
+e
+of git: "master", "maint", "next", and "pu".
+
+The "master" branch is meant to contain what are very well tested and
+ready to be used in a production setting.  Every now and then, a "featu=
+re
+release" is cut from the tip of this branch and they typically are name=
+d
+with three dotted decimal digits.  The last such release was 1.7.7 done=
+ on
+Sept 30, 2011. You can expect that the tip of the "master" branch is al=
+ways
+more stable than any of the released versions.
+
+Whenever a feature release is made, "maint" branch is forked off from
+"master" at that point.  Obvious, safe and urgent fixes after a feature
+release are applied to this branch and maintenance releases are cut fro=
+m
+it.  The maintenance releases are named with four dotted decimal, named
+after the feature release they are updates to; the last such release wa=
+s
+1.7.6.4.  New features never go to this branch.  This branch is also
+merged into "master" to propagate the fixes forward.
+
+A new development does not usually happen on "master". When you send a
+series of patches, after review on the mailing list, a separate topic
+branch is forked from the tip of "master" and your patches are queued
+there, and kept out of "master" while people test it out.  The quality =
+of
+topic branches are judged primarily by the mailing list discussions.
+
+Topic branches that are in good shape are merged to the "next" branch. =
+In
+general, the "next" branch always contains the tip of "master".  It mig=
+ht
+not be quite rock-solid production ready, but is expected to work more =
+or
+less without major breakage. The "next" branch is where new and excitin=
+g
+things take place. A topic that is in "next" is expected to be polished=
+ to
+perfection before it is merged to "master" (that's why "master" can be
+expected to stay more stable than any released version).
+
+The "pu" (proposed updates) branch bundles all the remaining topic
+branches. The topics on the branch are not complete, well tested, nor w=
+ell
+documented and need further work. When a topic that was in "pu" proves =
+to
+be in testable shape, it is merged to "next".
+
+You can run "git log --first-parent master..pu" to see what topics are
+currently in flight.  Sometimes, an idea that looked promising turns ou=
+t
+to be not so good and the topic can be dropped from "pu" in such a case=
+=2E
+
+The two branches "master" and "maint" are never rewound, and "next"
+usually will not be either.  After a feature release is made from
+"master", however, "next" will be rebuilt from the tip of "master"
+using the topics that didn't make the cut in the feature release.
+
+Note that being in "next" is not a guarantee to appear in the next
+release, nor even in any future release.  There were cases that topics
+needed reverting a few commits in them before graduating to "master",
+or a topic that already was in "next" was reverted from "next" because
+fatal flaws were found in it after it was merged.
+
+
+* Other people's trees, trusted lieutenants and credits.
+
+Documentation/SubmittingPatches outlines to whom your proposed changes
+should be sent.  As described in contrib/README, I would delegate fixes
+and enhancements in contrib/ area to the primary contributors of them.
+
+Although the following are included in git.git repository, they have th=
+eir
+own authoritative repository and maintainers:
+
+ - git-gui/ comes from git-gui project, maintained by Pat Thoyts:
+
+        git://repo.or.cz/git-gui.git
+
+ - gitk-git/ comes from Paul Mackerras's gitk project:
+
+        git://git.kernel.org/pub/scm/gitk/gitk.git
+
+I would like to thank everybody who helped to raise git into the curren=
+t
+shape.  Especially I would like to thank the git list regulars whose he=
+lp
+I have relied on and expect to continue relying on heavily:
+
+ - Linus Torvalds, Shawn Pearce, Johannes Schindelin, Nicolas Pitre,
+   Ren=C3=A9 Scharfe, Jeff King, Jonathan Nieder, Johan Herland, Johann=
+es
+   Sixt, Sverre Rabbelier, Michael J Gruber, Nguy=E1=BB=85n Th=C3=A1i N=
+g=E1=BB=8Dc Duy,
+   =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason and Thomas Rast on general de=
+sign and
+   implementation issues and reviews on the mailing list.
+
+ - Shawn and Nicolas Pitre on pack issues.
+
+ - Martin Langhoff, Frank Lichtenheld and =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason on
+   cvsserver and cvsimport.
+
+ - Paul Mackerras on gitk.
+
+ - Eric Wong, David D. Kilzer and Sam Vilain on git-svn.
+
+ - Simon Hausmann and Pete Wyckoff on git-p4.
+
+ - Jakub Narebski, John Hawley, Petr Baudis, Luben Tuikov, Giuseppe Bil=
+otta on
+   gitweb.
+
+ - J. Bruce Fields, Jonathan Nieder, Michael J Gruber and Thomas Rast o=
+n
+   documentation (and countless others for proofreading and fixing).
+
+ - Alexandre Julliard on Emacs integration.
+
+ - David Aguilar and Charles Bailey for taking good care of git-mergeto=
+ol
+   (and Theodore Ts'o for creating it in the first place) and git-difft=
+ool.
+
+ - Johannes Schindelin, Johannes Sixt, Erik Faye-Lund and others for th=
+eir
+   effort to move things forward on the Windows front.
+
+ - People on non-Linux platforms for keeping their eyes on portability;
+   especially, Randal Schwartz, Theodore Ts'o, Jason Riedy, Thomas Glan=
+zmann,
+   Brandon Casey, Jeff King, Alex Riesen and countless others.
+
+* This document
+
+The latest copy of this document is found in git.git repository,
+on 'todo' branch, as MaintNotes.
