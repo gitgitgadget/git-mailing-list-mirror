@@ -1,110 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] Add multiple workdir support to branch/checkout
-Date: Wed, 05 Oct 2011 18:57:16 -0700
-Message-ID: <7v1uuq51c3.fsf@alter.siamese.dyndns.org>
-References: <1317786204-57335-1-git-send-email-jaysoffian@gmail.com>
- <CACsJy8AqYq+YF+rvUp=BBeFUAtUz783iF2jbUp3fO58yLp9ptQ@mail.gmail.com>
- <CAG+J_DygQTD5ibco=-NOiKg0BLgBGFJnvV8zPyhngC2iZv_H8g@mail.gmail.com>
- <7vpqib8jzk.fsf@alter.siamese.dyndns.org>
- <CAG+J_Dz-GXvRbYUXSoyfyHfOO-_BszcOza9x=ysHhmL5YBW-Jw@mail.gmail.com>
- <7vzkhf713u.fsf@alter.siamese.dyndns.org>
- <CACsJy8BHeZZqsOP_+OSPfrPdkYgKQe3LgaGfo3bERD+hWT7U0g@mail.gmail.com>
- <7vaa9f59p5.fsf@alter.siamese.dyndns.org>
- <CACsJy8D5FGr3R0tLYOND0kKNct4e_KgYfLUK8xL2Q4uNzWczgQ@mail.gmail.com>
- <7vwrcj3sow.fsf@alter.siamese.dyndns.org>
- <CAG+J_DzZrFx2v09zNxKm2xyA82MyKRTq3AEus3QthtpZYhQn0A@mail.gmail.com>
- <7vsjn73q6j.fsf@alter.siamese.dyndns.org>
- <CAG+J_DxXcvF3tBPkf7ZEtiXvEK80zYJvP1rNx-PagM8TV-1KSA@mail.gmail.com>
- <7v62k253ad.fsf@alter.siamese.dyndns.org>
- <CAG+J_Dz++SG28a=DhZ+Doz1np21jMavYpc0hKfe1rgq-dHZLPA@mail.gmail.com>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: [PATCH 2/4] cleanup: use internal memory allocation wrapper
+ functions everywhere
+Date: Wed, 5 Oct 2011 21:00:44 -0500
+Message-ID: <CA+sFfMdHpvdMU==a2sUR9sZZCcgqPfGF7+dy6yi8RVoMZ+uZVA@mail.gmail.com>
+References: <5XXEFw0WjtXKd9dpXSxpkskCcgVyG9Db1_zzVSEBNey-kpXSBbmQfYaxZ2Szg6Pbck6hZZTQ5hHzBwG4rhKYXshrdmveEFLPZ9W0V8P_lw@cipher.nrlssc.navy.mil>
+	<1316051979-19671-1-git-send-email-drafnel@gmail.com>
+	<1316051979-19671-3-git-send-email-drafnel@gmail.com>
+	<4E71A0C7.8080602@viscovery.net>
+	<CA+sFfMdVntk+U13UeMO=k1SCKJGhPfTpC9_i9kFOkbUJXrF-qg@mail.gmail.com>
+	<CA+sFfMf73K3yv_5K633DKOsVufMV6rTjd+SSunq4sBikt4jCsg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 06 04:00:58 2011
+Cc: "peff@peff.net" <peff@peff.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"gitster@pobox.com" <gitster@pobox.com>,
+	"sunshine@sunshineco.com" <sunshine@sunshineco.com>,
+	"bharrosh@panasas.com" <bharrosh@panasas.com>,
+	"trast@student.ethz.ch" <trast@student.ethz.ch>,
+	"zapped@mail.ru" <zapped@mail.ru>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Oct 06 04:01:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBdGb-00027e-1R
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 04:00:57 +0200
+	id 1RBdGz-0002Cq-2j
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 04:01:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755249Ab1JFB5U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Oct 2011 21:57:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47880 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753399Ab1JFB5T convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Oct 2011 21:57:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DFDD5DDA;
-	Wed,  5 Oct 2011 21:57:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=BfedplAysv4J
-	LbQpwRl5llwMn6M=; b=wP0+XwK2iyw6GjII3cUX/imrZQ9VrqfwS8yF0p3CPLSk
-	hVnALDsoxemFvxZ7X2uPOWfuFtkOarTMBcWxvIUQUuBLWII9W8czn2IEQ7K7JvK3
-	M7N0KQvETHeLK4n3c6cQ0sGWK9z/QTvjVYRd9Jx9+eK8PbFIp5h9Q2GJHvfGW+0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=aLaH6O
-	YiiZtYgdZ4bOBrf0GIGC08C/PiN2pA0+Rzg0ovaEjso6c2SDK1svoQHo9UkKjqC6
-	wNIbw1x9HVxgcsasYd6T19jyBYWBZINI7IGbRl8QqhNkfrYkl/T9T/Bwp0PuLgxw
-	+MMxL2qROdD1Z6DfB61LxRm8wdlbOD+14eevo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 95B365DD9;
-	Wed,  5 Oct 2011 21:57:18 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EA4985DD7; Wed,  5 Oct 2011
- 21:57:17 -0400 (EDT)
-In-Reply-To: <CAG+J_Dz++SG28a=DhZ+Doz1np21jMavYpc0hKfe1rgq-dHZLPA@mail.gmail.com> (Jay
- Soffian's message of "Wed, 5 Oct 2011 21:38:42 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 85430010-EFBE-11E0-8F3D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757171Ab1JFCAq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Oct 2011 22:00:46 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:65440 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755388Ab1JFCAp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Oct 2011 22:00:45 -0400
+Received: by eya28 with SMTP id 28so2192790eya.19
+        for <git@vger.kernel.org>; Wed, 05 Oct 2011 19:00:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=onfdQt3Jcvewjf3IsIbIVdXAjV7GDZjJ/2kw5ilvMcY=;
+        b=q+qm1DmjoGyZSLX+iXOqUJIdUJrD3+kDx8I4B261EVZJaOHEDH8Eg0/Dt7+f/pPIEu
+         J5OnDjXxQN7WLcVNAAooSsMMBE7ThMQxAwB6gSMvN+JLGO56JGpZDZru/PjH3ufPhwUL
+         JBDfWKwyMlMfnM9mPNvzkUExbSzPvPkIJ064A=
+Received: by 10.223.61.146 with SMTP id t18mr226419fah.34.1317866444140; Wed,
+ 05 Oct 2011 19:00:44 -0700 (PDT)
+Received: by 10.152.8.227 with HTTP; Wed, 5 Oct 2011 19:00:44 -0700 (PDT)
+In-Reply-To: <CA+sFfMf73K3yv_5K633DKOsVufMV6rTjd+SSunq4sBikt4jCsg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182917>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+[resend without html bits added by "gmail offline"]
 
-> On Wed, Oct 5, 2011 at 9:15 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->> Jay Soffian <jaysoffian@gmail.com> writes:
+So, it seems that of all of Google's email clients, only full desktop
+gmail allows you to send plain text email (if you're careful to make
+sure "Rich formatting" has not been clicked).  The new offline gmail
+sends html, gmail android app sends html, gmail mobile web sends html.
+ Google's war on plain text continues...
+
+Or have I overlooked the switch that makes gmail send plain text and
+only plain text?
+
+On Wed, Oct 5, 2011 at 7:53 PM, Brandon Casey <drafnel@gmail.com> wrote=
+:
+> On Thursday, September 15, 2011, Brandon Casey wrote:
 >>
->>> So you're envisioning this?
->>>
->>> =C2=A0 $ git commit foo.c
->>> =C2=A0 Warning, master is also checked out in workdir2
->>
->> No. I would rather think it needs to be forced.
+>> On Thu, Sep 15, 2011 at 1:52 AM, Johannes Sixt <j.sixt@viscovery.net=
 >
-> Now they do what? Either commit --force or create a new branch?
-> Wouldn't it have been better to create the new branch before they
-> started editing?
-
-If they are going to commit, and if they knew that they are going to
-commit, yes.
-
-But why do you want to forbid people from just checking things out if t=
-hey
-are not interested in committing? That is where I think you are going
-backwards.
-
-> I guess it depends what you mostly use your workdirs for. For me, it'=
-s
-> to have different branches checked out, not to have the same branch
-> checked out in multiple locations.
-
-Then you wouldn't have any problem if commit refused to make commit on =
-the
-branch that is checked out elsewhere, no?
-
-I am not saying we should never have an option to _warn_ checking out t=
+>> wrote:
+>> > Am 9/15/2011 3:59, schrieb Brandon Casey:
+>> >> The "x"-prefixed versions of strdup, malloc, etc. will check whet=
+her
+>> >> the
+>> >> allocation was successful and terminate the process otherwise.
+>> >>
+>> >> A few uses of malloc were left alone since they already implement=
+ed a
+>> >> graceful path of failure or were in a quasi external library like
+>> >> xdiff.
+>> >>
+>> >> Signed-off-by: Brandon Casey <drafnel@gmail.com>
+>> >> ---
+>> >> =C2=A0...
+>> >> =C2=A0compat/mingw.c =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0 =C2=A02 =
++-
+>> >> =C2=A0compat/qsort.c =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0 =C2=A02 =
++-
+>> >> =C2=A0compat/win32/syslog.c | =C2=A0 =C2=A02 +-
+>> >
+>> > There is a danger that the high-level die() routine (which is used=
+ by
+>> > the
+>> > x-wrappers) uses one of the low-level compat/ routines. IOW, in th=
+e case
+>> > of errors, recursion might occur. Therefore, I would prefer that t=
 he
-same branch in multiple places. I am saying it is wrong to forbid doing=
- so
-by default.
+>> > compat/ routines do their own error reporting (preferably via retu=
+rn
+>> > values and errno).
+>>
+>> Thanks. =C2=A0Will do.
+>
+> Hi Johannes,
+> I have taken a closer look at the possibility of recursion with respe=
+ct to
+> die() and=C2=A0the functions in compat/. =C2=A0It appears the risk is=
+ only related to
+> vsnprintf/snprintf at the moment. =C2=A0So as long as we avoid callin=
+g xmalloc et
+> al from within snprintf.c, I think we should be safe from recursion.
+> I'm inclined to keep the additions to=C2=A0mingw.c and win32/syslog.c=
+ since they
+> both already use the x-wrappers or strbuf, even though they could eas=
+ily be
+> worked around. =C2=A0The other file that was touched is compat/qsort,=
+ which
+> returns void and doesn't have a good alternative error handling path.=
+ =C2=A0So,
+> I'm inclined to keep that one too.
+> Sound reasonable?
+> -Brandon
+>
