@@ -1,123 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] commit: teach --gpg-sign option
-Date: Thu, 06 Oct 2011 14:29:00 -0700
-Message-ID: <7v8voxzu5f.fsf@alter.siamese.dyndns.org>
-References: <7vaa9f3pk8.fsf@alter.siamese.dyndns.org>
- <CAJo=hJvWbjEM9E5AjPHgmQ=eY8xf=Q=xtukeu2Ur7auUqeabDg@mail.gmail.com>
- <20111006171107.GA10973@elie>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH WIP 0/3] git log --exclude
+Date: Fri, 7 Oct 2011 08:47:45 +1100
+Message-ID: <CACsJy8C9O-dGo=Y6HfQ5iYtsD8SMuiWB8y5ab=C+vT4Z01F+ag@mail.gmail.com>
+References: <1317799088-26626-1-git-send-email-pclouds@gmail.com>
+ <7vhb3n8ie9.fsf@alter.siamese.dyndns.org> <20111006143441.GA21558@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 06 23:29:10 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 06 23:48:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBvV8-0003DH-9D
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 23:29:10 +0200
+	id 1RBvnk-0002d4-Iv
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 23:48:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756964Ab1JFV3F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 17:29:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37100 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755602Ab1JFV3E (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 17:29:04 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 29DC7691F;
-	Thu,  6 Oct 2011 17:29:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pNUJdG1Eu6NhsWfcvDXLMOoOjrA=; b=q/C0jA
-	XiGZwMckqhDBeY1qHok4CWsMT5QrcY2B8GFLYwEkp65qFGIyqw3dMpVMApTtkWOm
-	uYYrNDvg+4dav60NA+yTPA1C3KuK1L6qIrs7oQM6er3xgtxdGssM2vTs4rZ5kASZ
-	xC49mxO8044cGVo4lk0i8xW694QZzyn73N7Ts=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=x6RMP8zvWVVZcKJEUx0lLaM9lXuR++YO
-	p1UHtXYWVI9w7j+mFLTMDJRX273/fIQJXwxr9uE1klCbxGVFhUY1UR25TyZYgN8k
-	zc/wYgUhCZeMBs8yLnmVu0X5skLJcmEfkP0m00D7UohayfJkBcebkEp8Jvk41iVq
-	hzj650TnA9w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2158B691E;
-	Thu,  6 Oct 2011 17:29:03 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5EFAE691A; Thu,  6 Oct 2011
- 17:29:02 -0400 (EDT)
-In-Reply-To: <20111006171107.GA10973@elie> (Jonathan Nieder's message of
- "Thu, 6 Oct 2011 12:11:07 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 35F7B7F4-F062-11E0-BE3D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759313Ab1JFVsS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 17:48:18 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:41769 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759260Ab1JFVsR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 17:48:17 -0400
+Received: by bkbzt4 with SMTP id zt4so3999268bkb.19
+        for <git@vger.kernel.org>; Thu, 06 Oct 2011 14:48:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=88EsMIiHf+AIs4uVv1APC4RPUTG2oLrJKGrfDFY+btU=;
+        b=fb283UJlBBAo8L+44Lz4cBbAPn8LAD+7Z8fdkG8qpHvZelF8JIaf3OsxrhrHfvxytv
+         AV0Jvll9a1GrYbwCQWpLPQ+tK6Gv6anbJ3/XBHIBUjcXohWuw6FsqT5BnI35xI6C8esk
+         lDCl2Vsp9GPGgQNs+iqxfaJnQI4ptWIUQX2EM=
+Received: by 10.204.137.72 with SMTP id v8mr814068bkt.43.1317937695112; Thu,
+ 06 Oct 2011 14:48:15 -0700 (PDT)
+Received: by 10.204.120.75 with HTTP; Thu, 6 Oct 2011 14:47:45 -0700 (PDT)
+In-Reply-To: <20111006143441.GA21558@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183039>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
->> I like this approach better than the prior "push certificate" idea.
->> The signature information is part of the history graph
+2011/10/7 Jeff King <peff@peff.net>:
+> I'm really just a bystander on this topic, and haven't given it too much
+> thought. But one stumbling block I see for narrow clone is how narrow
+> repositories will interact with object transfer from other repositories.
 >
-> I probably missed some earlier discussion (so please forgive me this),
+> For example, if I have a narrow git.git that omits Documentation, and I
+> do a "git fetch" from a non-narrow repository, then how do we tell the
+> non-narrow remote that we don't have blobs in Documentation, and that
+> they should not be used as delta bases for any objects that are sent?
 
-Heh, you are not forgiven when the original message has a clear pointer to
-the previous discussion ;-).
+Pretty much how shallow cloned repos interacts. In shallow clone we
+send depth info. In narrow clone, we send width info, in terms of
+(restricted) pathspec. With pathspec (possibly plus exclude rules but
+this possibility is getting smaller), I can express "fetch this
+directory only", or "fetch this directory, but not this subdirectory
+(because I already have it)".
 
-> but how is it intended to be used?  Would projects
->
->  a. require as a matter of policy that all commits be signed
+We can prohibit certain use cases at client side just like shallow clone.
 
-Possible. Personally I would _not_ advise it but they can send in a patch
-to add a configuration or two if they do want to run their project that
-way.
+> The current protocol relies on certain repository properties on the
+> remote end that narrow clone will violate. I don't see a way around that
+> without a protocol extension to communicate the narrowness. What will
+> that extension look like?
 
->  b. just sign releases as usual, but as commits in the history graph
->     instead of tags
+Something like this
 
-This is not meant to replace tags that is attached after the fact. If
-anything...
-
->  c. sign the occasional especially interesting commit
-
-...with the definition of "interesting" being "this is tonight's tip of
-branch Linus is pushing out between releases", "I shortly will ask Linus
-to pull from the history leading up to this commit", etc., this is the
-primary scenario I personally envision the feature would be used in.
-Without having to have "nightly" signed tags that clutter the tag
-namespace, we can gain more confidence in the integrity of the history
-between officially tagged release points that may be a few months apart,
-depending on projects.
-
-> ... How
-> does this relate to the "push certificate" use case, which seemed to
-> be mostly about authenticating published branch tips with signatures
-> that are not necessarily important in the long term?
-
-To the upstream project whose participants are signing its history, these
-publish points may not be important in the longer term, but for downstream
-consumers that have to fork from an in-between point for the next embedded
-device release track, it serves the same purpose as push certificates and
-is equally important: it allows them to limit the length of near-tip
-history that might have been tampered that needs to be validated. If the
-downstream consumers fork only from a signed commit point, they only need
-to audit their own history without worrying about imported stuff after
-incident like what k.org had recently.
-
-I am also somewhat disturbed by "have to sign when committing, long before
-I am confident that this is worth pushing" aspect of this approach, but I
-do not think it would be much of an issue in practice.
-
- - If you are only pubishing one independent branch, it is just the matter
-   of either "commit --amend --gpg-sign" or "commit --allow-empty --gpg-sign"
-   before you push;
-
- - If you are publishing multiple related branches (e.g. maint, master,
-   next) like I do, and want to correct a mistake discovered at a lower
-   branch (e.g. master) after it has been already merged in higher
-   branches (e.g. next), you have to either amend the tip of the lower
-   branch and rebuild the higher branches, or queue a fix-up to the tip of
-   the lower branch and merge the result to the higher branches _anyway_,
-   before you push.
+http://thread.gmane.org/gmane.comp.version-control.git/155427/focus=155613
+-- 
+Duy
