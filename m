@@ -1,99 +1,123 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: [PATCH] git-difftool: allow skipping file by typing 'n' at prompt
-Date: Thu, 6 Oct 2011 18:26:58 +0530
-Message-ID: <20111006125658.GB18709@sita-lt.atc.tcs.com>
-References: <20111004105333.GA24331@atcmail.atc.tcs.com>
- <7vbotwdbjg.fsf@alter.siamese.dyndns.org>
- <CABURp0qmYWRJzHZZwZreKnj0ymFyM_AYXWXqwy=vTZspoPvvvg@mail.gmail.com>
- <7vty7oblpu.fsf@alter.siamese.dyndns.org>
- <CAMK1S_gssgpy7nF46c1roJUCN5yvQaOYfVE_-ZrvMfHGWKvk0w@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH v3 3/4] enter_repo: do not modify input
+Date: Thu, 6 Oct 2011 15:06:04 +0200
+Message-ID: <CABPQNSZFo7u5GBvZzhKDzR5YGYwd0j8-Mb080QymDu9ayV6uDA@mail.gmail.com>
+References: <1317329963-6656-1-git-send-email-kusmabite@gmail.com>
+ <1317329963-6656-4-git-send-email-kusmabite@gmail.com> <CABURp0qDsxHwsuyvB6-KvKPrKuUT0-Fpr730TD_TxxFY7fotpA@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Phil Hord <phil.hord@gmail.com>,
-	Sitaram Chamarty <sitaram@atc.tcs.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 06 14:57:18 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, peff@peff.net, j6t@kdbg.org,
+	gitster@pobox.com, rene.scharfe@lsrfire.ath.cx
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 06 15:06:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBnVm-0007rc-2i
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 14:57:18 +0200
+	id 1RBnf0-0002eC-QJ
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 15:06:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758257Ab1JFM5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 08:57:09 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:45874 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756425Ab1JFM5I (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 08:57:08 -0400
-Received: by qadb15 with SMTP id b15so1901797qad.19
-        for <git@vger.kernel.org>; Thu, 06 Oct 2011 05:57:07 -0700 (PDT)
+	id S1758352Ab1JFNGq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Oct 2011 09:06:46 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:63415 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758262Ab1JFNGp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Oct 2011 09:06:45 -0400
+Received: by qyk30 with SMTP id 30so5267107qyk.19
+        for <git@vger.kernel.org>; Thu, 06 Oct 2011 06:06:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=v2HMK3upou6MBUAGEGJ98/sUIuJoA1JTn9XoEkXuE7o=;
-        b=dmRwBM6XYfZMEFZKYcaxt/GgvJF9DT9ZrZY3FGOon3tg5Ny6d27pwP7pGzPaN+vJIy
-         kWFK80yA6hY4Dt9uTA9IuCaBkI8jGBcUNSstNaKmrEJtL9NLXmKkVwejbWhLqGrh0uC3
-         z56XuUPaTj67za5OcjcyOOqXm6B1Ibabd5X2A=
-Received: by 10.68.0.40 with SMTP id 8mr5786145pbb.45.1317905827252;
-        Thu, 06 Oct 2011 05:57:07 -0700 (PDT)
-Received: from sita-lt.atc.tcs.com ([117.195.161.22])
-        by mx.google.com with ESMTPS id p4sm19293688pbs.6.2011.10.06.05.57.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 06 Oct 2011 05:57:05 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAMK1S_gssgpy7nF46c1roJUCN5yvQaOYfVE_-ZrvMfHGWKvk0w@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=6NggQDX/mK8TnXjUgDoAbropP6B8/hYM0kW6enyOZKM=;
+        b=AjFtKGSIQRsI7oYEzk5CI5wNgUUkKplpB4SmF8iarg5adabUQqQUvejfLNBizOt/Xi
+         Hbj7Yq1KnV68oGVKYBfNNEozjAN68oxR+Q6Swmvj3yavyPEq3RZ9/OAFDaLoTsKiBwci
+         uWLN4cWgJQslI7dzOlBGYO4+cAtJ364USiRYw=
+Received: by 10.68.33.163 with SMTP id s3mr5950179pbi.10.1317906404374; Thu,
+ 06 Oct 2011 06:06:44 -0700 (PDT)
+Received: by 10.68.42.169 with HTTP; Thu, 6 Oct 2011 06:06:04 -0700 (PDT)
+In-Reply-To: <CABURp0qDsxHwsuyvB6-KvKPrKuUT0-Fpr730TD_TxxFY7fotpA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182942>
 
-Signed-off-by: Sitaram Chamarty <sitaram@atc.tcs.com>
----
+On Tue, Oct 4, 2011 at 7:55 PM, Phil Hord <phil.hord@gmail.com> wrote:
+> On Thu, Sep 29, 2011 at 4:59 PM, Erik Faye-Lund <kusmabite@gmail.com>=
+ wrote:
+>> entr_repo(..., 0) currently modifies the input to strip away
+>> trailing slashes. This means that we some times need to copy the
+>> input to keep the original.
+>
+> I'm also modifying enter_repo() so I'm looking a bit closer at this p=
+atch now.
+>
+>> Change it to unconditionally copy it into the used_path buffer so
+>> we can safely use the input without having to copy it.
+>>
+>> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+>> ---
+> [...]
+>> =A0*/
+>> -char *enter_repo(char *path, int strict)
+>> +const char *enter_repo(const char *path, int strict)
+>> =A0{
+>> =A0 =A0 =A0 =A0static char used_path[PATH_MAX];
+>> =A0 =A0 =A0 =A0static char validated_path[PATH_MAX];
+>> @@ -297,14 +297,15 @@ char *enter_repo(char *path, int strict)
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0};
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0int len =3D strlen(path);
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0int i;
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 while ((1 < len) && (path[len-1] =3D=3D=
+ '/')) {
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 path[len-1] =3D 0;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 while ((1 < len) && (path[len-1] =3D=3D=
+ '/'))
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0len--;
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
+>> +
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (PATH_MAX <=3D len)
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0return NULL;
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (path[0] =3D=3D '~') {
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 char *newpath =3D expa=
+nd_user_path(path);
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 strncpy(used_path, path, len);
+>
+> When len < strlen(path), this will will leave used_path unterminated.
+>
 
-(re-rolled according to earlier discussion)
+Good catch, thanks!
 
- git-difftool--helper.sh |    9 +++++----
- 1 files changed, 5 insertions(+), 4 deletions(-)
+>> +
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (used_path[0] =3D=3D '~') {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 char *newpath =3D expa=
+nd_user_path(used_path);
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (!newpath || (PATH=
+_MAX - 10 < strlen(newpath))) {
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0free(=
+newpath);
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0retur=
+n NULL;
+>> @@ -316,24 +317,21 @@ char *enter_repo(char *path, int strict)
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 * anyway.
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 */
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0strcpy(used_path, new=
+path); free(newpath);
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 strcpy(validated_path,=
+ path);
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 path =3D used_path;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 strcpy(validated_path,=
+ used_path);
+>
+> The point of 'validated_path' is to keep the original unmolested,
+> unexpanded path string (plus DWIM suffix), but here you've just
+> replaced validated_path with a copy of the expanded_user_path. =A0On =
+the
+> other hand, we seem always to strcpy(validated_path , path), so we
+> might as well get that done up-front.
 
-diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
-index 8452890..0468446 100755
---- a/git-difftool--helper.sh
-+++ b/git-difftool--helper.sh
-@@ -38,15 +38,16 @@ launch_merge_tool () {
- 
- 	# $LOCAL and $REMOTE are temporary files so prompt
- 	# the user with the real $MERGED name before launching $merge_tool.
-+	ans=y
- 	if should_prompt
- 	then
- 		printf "\nViewing: '$MERGED'\n"
- 		if use_ext_cmd
- 		then
--			printf "Hit return to launch '%s': " \
-+			printf "Launch '%s' [Y/n]: " \
- 				"$GIT_DIFFTOOL_EXTCMD"
- 		else
--			printf "Hit return to launch '%s': " "$merge_tool"
-+			printf "Launch '%s' [Y/n]: " "$merge_tool"
- 		fi
- 		read ans
- 	fi
-@@ -54,9 +55,9 @@ launch_merge_tool () {
- 	if use_ext_cmd
- 	then
- 		export BASE
--		eval $GIT_DIFFTOOL_EXTCMD '"$LOCAL"' '"$REMOTE"'
-+		test "$ans" != "n" && eval $GIT_DIFFTOOL_EXTCMD '"$LOCAL"' '"$REMOTE"'
- 	else
--		run_merge_tool "$merge_tool"
-+		test "$ans" != "n" && run_merge_tool "$merge_tool"
- 	fi
- }
- 
--- 
-1.7.6
+Yeah, that's probably better.
