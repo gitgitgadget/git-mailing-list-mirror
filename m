@@ -1,77 +1,74 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] revert.c: defer writing CHERRY_PICK_HEAD till it is safe
- to do so
-Date: Thu, 6 Oct 2011 13:33:23 -0400
-Message-ID: <CAG+J_Dx0W0oRL-MkoZSGuOfmUNCqmMRUigmgND_0o7kbKppu1Q@mail.gmail.com>
-References: <1317911641-47660-1-git-send-email-jaysoffian@gmail.com>
-	<7vty7m12b2.fsf@alter.siamese.dyndns.org>
-	<CAG+J_DxqpDAm-qPR-Udkr_b1gc=Y+LoKbsQdmiCi6ztNKz0_Mg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-difftool: allow skipping file by typing 'n' at
+ prompt
+Date: Thu, 06 Oct 2011 10:36:40 -0700
+Message-ID: <7v62k210pj.fsf@alter.siamese.dyndns.org>
+References: <20111004105333.GA24331@atcmail.atc.tcs.com>
+ <7vbotwdbjg.fsf@alter.siamese.dyndns.org>
+ <CABURp0qmYWRJzHZZwZreKnj0ymFyM_AYXWXqwy=vTZspoPvvvg@mail.gmail.com>
+ <7vty7oblpu.fsf@alter.siamese.dyndns.org>
+ <CAMK1S_gssgpy7nF46c1roJUCN5yvQaOYfVE_-ZrvMfHGWKvk0w@mail.gmail.com>
+ <20111006125658.GB18709@sita-lt.atc.tcs.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, nicolas.dichtel@6wind.com,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 06 19:33:31 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Phil Hord <phil.hord@gmail.com>,
+	Sitaram Chamarty <sitaram@atc.tcs.com>, git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 06 19:36:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBrp4-0007D1-JD
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 19:33:30 +0200
+	id 1RBrsJ-00006N-5K
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 19:36:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965177Ab1JFRdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 13:33:25 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:52765 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965106Ab1JFRdY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 13:33:24 -0400
-Received: by yxl31 with SMTP id 31so2833520yxl.19
-        for <git@vger.kernel.org>; Thu, 06 Oct 2011 10:33:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=whpmRQLdt8ovitdfAFwOmXAVEVplGNrbVBJPhE6YOlU=;
-        b=wiHZnlbHK0iZwfGhpCd+mhKnwVbtkXtmcgKcELLDeu1ZPwtxMPx3A9wIT48IxLWQ+E
-         FYR6O4h+0BmG1+A+FYIR1SbJ637mMmcEca+xy6IcpGuC4GIYfpH2+/c/EBWGk9HoQp8F
-         Z/L1HCfDO8IaUP1DJ214l8TGZvdw9Lx+tDK1o=
-Received: by 10.236.183.170 with SMTP id q30mr5036238yhm.42.1317922403989;
- Thu, 06 Oct 2011 10:33:23 -0700 (PDT)
-Received: by 10.147.32.18 with HTTP; Thu, 6 Oct 2011 10:33:23 -0700 (PDT)
-In-Reply-To: <CAG+J_DxqpDAm-qPR-Udkr_b1gc=Y+LoKbsQdmiCi6ztNKz0_Mg@mail.gmail.com>
+	id S965180Ab1JFRgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 13:36:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34443 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965106Ab1JFRgp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 13:36:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8865666A5;
+	Thu,  6 Oct 2011 13:36:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=et1bSlAwc1Xfusx1asaz726V0kw=; b=vmLmEL
+	sArt408bdWxJG+Snc5u6MwK8w3FEDy5UpC3F5P9gEuMmPdXEucHzZxQCCmeq3gRp
+	9xhjczKz6Mu7CbYNRo6zsqBuKEMrzxUfOxujDbcMsifq4M/a7D0ZT9+vI4AtZIgL
+	v++bJJyTqSoxEgo8/9cy5t24JiIstBhHI+sKc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WPHaMyeAwfKmMafU08O9zZ/sQHe9CxGb
+	GuWbJVZTiSAHZq3izDaXAYOxQmYa4KDNVgxHCa3Q2SouttKatz/tviFx3aa7PlmZ
+	5VEE0X0AObLh6H4oJDIXm/MVHdYnpGSh9w3q/0Ttjfo4ZsI5zeSXxieNglmQDJSG
+	E9FUwYzZmQE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EF2C66A4;
+	Thu,  6 Oct 2011 13:36:42 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F0D1A66A3; Thu,  6 Oct 2011
+ 13:36:41 -0400 (EDT)
+In-Reply-To: <20111006125658.GB18709@sita-lt.atc.tcs.com> (Sitaram Chamarty's
+ message of "Thu, 6 Oct 2011 18:26:58 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C0D70D6E-F041-11E0-89CF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182999>
 
-On Thu, Oct 6, 2011 at 1:28 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> On Thu, Oct 6, 2011 at 1:02 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> I think do_recursive_merge() would die() when the merge cannot even start
->> (i.e. the local changes after the cherry-pick exits are the ones from the
->> time before such a failed cherry-pick started), but I suspect that the
->> other codepath uses try_merge_command() to drive strategies other than
->> recursive and it does not die() there in such a case. Can you make sure
->> this patch is sufficient in such a case as well?
->
-> It's wrong to write out CHERRY_PICK_HEAD if we couldn't start the
-> merge, but using cherry-pick with a strategy other than recursive
-> seems broken in that case in other ways as well:
->
-> $ git cherry-pick --strategy=resolve side
-> error: Untracked working tree file 'bar' would be overwritten by merge.
-> error: could not apply a77535c9ac... bar
-> hint: after resolving the conflicts, mark the corrected paths
-> hint: with 'git add <paths>' or 'git rm <paths>'
-> hint: and commit the result with 'git commit'
->
-> The "hint" advice is completely wrong.
+Sitaram Chamarty <sitaramc@gmail.com> writes:
 
-For that matter, I don't see how to distinguish "the merge did not
-even start" from "the merge had conflicts" when using
-try_merge_command(). In the former case we do NOT want
-CHERRY_PICK_HEAD left behind (nor to print the wrong advice above),
-while in the latter case we do.
+> Signed-off-by: Sitaram Chamarty <sitaram@atc.tcs.com>
+> ---
+>
+> (re-rolled according to earlier discussion)
 
-j.
+Thanks. It is clear from the subject and the patch text that you are
+changing "hit return to unconditionally launch" into "launch it if you
+want to", but can you give justification why a choice not to launch is
+needed in the log message?
