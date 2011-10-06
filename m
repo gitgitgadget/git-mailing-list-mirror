@@ -1,60 +1,73 @@
-From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
-Subject: [PATCH 1/3] fetch: free all the additional refspecs
-Date: Thu,  6 Oct 2011 22:19:43 +0200
-Message-ID: <1317932385-28604-2-git-send-email-cmn@elego.de>
-References: <1317932385-28604-1-git-send-email-cmn@elego.de>
+From: Duane Murphy <duanemurphy@mac.com>
+Subject: Pull --rebase looses merge information
+Date: Thu, 06 Oct 2011 12:21:56 -0700
+Message-ID: <DECF417E-50BB-4963-965C-BEF1B5C95DAC@mac.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	mathstuf@gmail.com
+Content-Type: text/plain; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 06 22:20:08 2011
+X-From: git-owner@vger.kernel.org Thu Oct 06 22:22:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBuQI-0003EC-CV
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 22:20:06 +0200
+	id 1RBuSB-00045m-G8
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 22:22:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757120Ab1JFUTs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Oct 2011 16:19:48 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:52077 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756820Ab1JFUTr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 16:19:47 -0400
-Received: from centaur.lab.cmartin.tk (brln-4db9e4ec.pool.mediaWays.net [77.185.228.236])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 32CE746185;
-	Thu,  6 Oct 2011 22:19:22 +0200 (CEST)
-Received: (nullmailer pid 28644 invoked by uid 1000);
-	Thu, 06 Oct 2011 20:19:45 -0000
-X-Mailer: git-send-email 1.7.5.2.354.g349bf
-In-Reply-To: <1317932385-28604-1-git-send-email-cmn@elego.de>
+	id S1759186Ab1JFUV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 16:21:58 -0400
+Received: from asmtpout021.mac.com ([17.148.16.96]:34406 "EHLO
+	asmtpout021.mac.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759171Ab1JFUV6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 16:21:58 -0400
+X-Greylist: delayed 3600 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Oct 2011 16:21:58 EDT
+Received: from [192.168.1.108]
+ (70-36-184-216.dsl.static.sonic.net [70.36.184.216])
+ by asmtp021.mac.com (Oracle Communications Messaging Server 7u4-23.01
+ (7.0.4.23.0) 64bit (built Aug 10 2011))
+ with ESMTPSA id <0LSN005BNSGKKO70@asmtp021.mac.com> for git@vger.kernel.org;
+ Thu, 06 Oct 2011 12:21:57 -0700 (PDT)
+X-Proofpoint-Virus-Version: vendor=fsecure
+ engine=2.50.10432:5.4.6813,1.0.211,0.0.0000
+ definitions=2011-10-06_07:2011-10-06,2011-10-06,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ ipscore=0 suspectscore=5 phishscore=0 bulkscore=0 adultscore=0 classifier=spam
+ adjust=0 reason=mlx scancount=1 engine=6.0.2-1012030000
+ definitions=main-1110060205
+X-Mailer: Apple Mail (2.1084)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183028>
 
-Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
----
- builtin/fetch.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Here is the synopsis:
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 7a4e41c..30b485e 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -883,7 +883,7 @@ static int fetch_one(struct remote *remote, int arg=
-c, const char **argv)
- 	atexit(unlock_pack);
- 	refspec =3D parse_fetch_refspec(ref_nr, refs);
- 	exit_code =3D do_fetch(transport, refspec, ref_nr);
--	free(refspec);
-+	free_refspec(ref_nr, refspec);
- 	transport_disconnect(transport);
- 	transport =3D NULL;
- 	return exit_code;
---=20
-1.7.5.2.354.g349bf
+$ git checkout master
+$ git pull
+... time passes ... 
+$ git checkout topic # remote topic
+$ git checkout master
+$ git merge topic
+$ git push
+    non-fast-forward updates were rejected
+$ git pull 
+    merge by rebase; implied by config
+$ git push
+
+The result of this process is that the file changes are pushed but the reference back to the topic branch has been lost. This makes it appear as though the topic branch has not been merged properly.
+
+The trigger appears to be the pull (with rebase) that occurs after the merge and before the push. This of course is caused by the repo being out of sync from the point when the merge was started. That window of time can be shortened but it can never be zero.
+
+The problem is fixed by merging again, but it's difficult to notice that this problem has actually occurred.
+
+It has been noted that the problem is that we are using rebase on pull. We set our configurations to always rebase on a pull from a remote branch. This makes sense as it prevents artificial merges and unusual modifications to the history with respect to the shared repository. That is, if I'm working on merging changes into a remote branch and some one beats me, my merge should be after his, not before.
+
+I would hope that a rebase operates mostly like a merge (understanding that rebase is different). I would not expect the merge information (ie the source branch of the merge) to be lost just because of a rebase.
+
+Is there a bug here? Is there some way to avoid this situation without sacrificing the benefits of pull --rebase?
+
+Thanks,
+
+ ...Duane
