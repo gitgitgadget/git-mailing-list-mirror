@@ -1,115 +1,107 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Git ksshaskpass to play nice with https and kwallet
-Date: Thu, 06 Oct 2011 08:33:57 +0200
-Message-ID: <4E8D4BD5.2090202@drmicha.warpmail.net>
-References: <4E8ADDCF.6090406@drmicha.warpmail.net> <20111004105008.GA11789@sigill.intra.peff.net> <4E8AEDBD.4070404@drmicha.warpmail.net> <20111004113713.GA19171@sigill.intra.peff.net> <4E8AF812.5090906@drmicha.warpmail.net> <20111004124344.GA30162@sigill.intra.peff.net> <4E8B5553.2080706@drmicha.warpmail.net> <20111005175536.GB22962@sigill.intra.peff.net> <20111005180125.GC22962@sigill.intra.peff.net>
+From: Alexey Shumkin <zapped@mail.ru>
+Subject: Re: [PATCH 2/4] cleanup: use internal memory allocation wrapper
+ functions everywhere
+Date: Thu, 6 Oct 2011 11:01:13 +0400
+Message-ID: <20111006110113.45f47e58@ashu.dyn.rarus.ru>
+References: <5XXEFw0WjtXKd9dpXSxpkskCcgVyG9Db1_zzVSEBNey-kpXSBbmQfYaxZ2Szg6Pbck6hZZTQ5hHzBwG4rhKYXshrdmveEFLPZ9W0V8P_lw@cipher.nrlssc.navy.mil>
+	<1316051979-19671-1-git-send-email-drafnel@gmail.com>
+	<1316051979-19671-3-git-send-email-drafnel@gmail.com>
+	<4E71A0C7.8080602@viscovery.net>
+	<CA+sFfMdVntk+U13UeMO=k1SCKJGhPfTpC9_i9kFOkbUJXrF-qg@mail.gmail.com>
+	<CA+sFfMf73K3yv_5K633DKOsVufMV6rTjd+SSunq4sBikt4jCsg@mail.gmail.com>
+	<CA+sFfMdHpvdMU==a2sUR9sZZCcgqPfGF7+dy6yi8RVoMZ+uZVA@mail.gmail.com>
+	<4E8D4812.9090102@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 06 08:34:12 2011
+Cc: Brandon Casey <drafnel@gmail.com>, "peff@peff.net" <peff@peff.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"gitster@pobox.com" <gitster@pobox.com>,
+	"sunshine@sunshineco.com" <sunshine@sunshineco.com>,
+	"bharrosh@panasas.com" <bharrosh@panasas.com>,
+	"trast@student.ethz.ch" <trast@student.ethz.ch>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Oct 06 09:01:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBhX1-0002SB-KZ
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 08:34:11 +0200
+	id 1RBhxQ-0000JH-3W
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 09:01:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935705Ab1JFGeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 02:34:06 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:58447 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S935243Ab1JFGeF (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Oct 2011 02:34:05 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 0023E28F1A;
-	Thu,  6 Oct 2011 02:34:03 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute3.internal (MEProxy); Thu, 06 Oct 2011 02:34:04 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=LwRDawF5Z9BOrwCbNlIEB2
-	9ZLjw=; b=rfCVIx0YeU3BpvpjQGXkI6D4CRSmGK6NMmVUQyw3okVjvQV4QWHJVB
-	N39gxM0n0Lw0ceg5SUVJGl6GyAoUgavKmf8lE2mI18q9zzBQQ179JnmIwKEsBcuY
-	imp1+TdrdUWC14d1VNmUd75SkqZrdmdoIBcWA2OQ+BZ+bJz1THffk=
-X-Sasl-enc: VhblpZjFLgYze8SVTgYgzOlYoFikeUUetmj/vhM5v2Zm 1317882843
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 72DBB4001C6;
-	Thu,  6 Oct 2011 02:34:03 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0) Gecko/20110927 Thunderbird/7.0
-In-Reply-To: <20111005180125.GC22962@sigill.intra.peff.net>
+	id S932415Ab1JFHBX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 03:01:23 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:62732 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755680Ab1JFHBW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 03:01:22 -0400
+Received: by wwf22 with SMTP id 22so3756000wwf.1
+        for <git@vger.kernel.org>; Thu, 06 Oct 2011 00:01:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:in-reply-to:references
+         :x-mailer:mime-version:content-type:content-transfer-encoding;
+        bh=lAheLJhv7y+uBnCGuDXQTN0CC0kV0ifbn/7G5WfJonc=;
+        b=M1IhD2nrtPbDLO9lOxGMcbSvFRAru81YBMUF2lwgp0pqqsLCLillpX/Pjhhcs2QrbA
+         7s8AGDMzjBcXt2oz/adpbCY0Nl5hO+/UwrRNP6m8mpQr3NFeCtQ4Yy7ZA4frlfPv4Oit
+         EKDnWwWVVxSgnFCdBeNRvNCLv35wYId/Dw69Y=
+Received: by 10.216.189.82 with SMTP id b60mr708848wen.23.1317884481566;
+        Thu, 06 Oct 2011 00:01:21 -0700 (PDT)
+Received: from ashu.dyn.rarus.ru (mail.rarus.ru. [213.247.194.83])
+        by mx.google.com with ESMTPS id l40sm8496073wbm.10.2011.10.06.00.01.18
+        (version=SSLv3 cipher=OTHER);
+        Thu, 06 Oct 2011 00:01:21 -0700 (PDT)
+In-Reply-To: <4E8D4812.9090102@viscovery.net>
+X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182930>
 
-Jeff King venit, vidit, dixit 05.10.2011 20:01:
-> On Wed, Oct 05, 2011 at 01:55:36PM -0400, Jeff King wrote:
-> 
->> On Tue, Oct 04, 2011 at 08:49:55PM +0200, Michael J Gruber wrote:
->>
->>> We seem to mean something different:
->>>
->>> git config --get remote.bitbucket.pushurl
->>> https://grubix@bitbucket.org/grubix/git.git
->>> SSH_ASKPASS= git push -n bitbucket
->>> Username for 'bitbucket.org':
->>>
->>> I mean that git should not need to ask for the username here.
->>
->> No, we are in agreement about the intended behavior. I think you are
->> seeing a bug. What version of git produced it?
->>
->> With my http-auth series, I get:
->>
->>   $ git push https://github.com/peff/git.git
->>   Username for 'github.com':
->>
->>   $ git push https://peff@github.com/peff/git.git
->>   Password for 'github.com':
->>
->> Using v1.7.7 produces similar results.
-> 
-> Hrm. I do get this, with the same version of git:
-> 
->   $ git config remote.foo.url https://github.com/peff/git.git
->   $ git push foo
->   Username for 'github.com':
-> 
->   $ git config remote.foo.url https://peff@github.com/peff/git.git
->   $ git push foo
->   Password for 'github.com':
-> 
-> So far so good. Now how about this:
-> 
->   $ git config remote.foo.url https://github.com/peff/git.git
->   $ git config remote.foo.pushurl https://peff@github.com/peff/git.git
->   $ git push foo
->   Username for 'github.com':
-> 
-> So I think the problem is with pushurl, not with the auth code. Oddly,
-> though, running GIT_TRACE reveals:
+Offtopic:
+Excuse me, guys
+May I ask you to exclude me from CC-list for this topic,
+it seems to me I got in it for a mistake somehow,
+I have no relation to this topic
 
-Yep, I have a pushurl in config.
+thanks in advance :)
 
+> Am 10/6/2011 4:00, schrieb Brandon Casey:
+> > [resend without html bits added by "gmail offline"]
+> > On Wed, Oct 5, 2011 at 7:53 PM, Brandon Casey <drafnel@gmail.com>
+> > wrote:
+> >> On Thursday, September 15, 2011, Brandon Casey wrote:
+> >>>
+> >>> On Thu, Sep 15, 2011 at 1:52 AM, Johannes Sixt
+> >>> <j.sixt@viscovery.net>
+> >>>> There is a danger that the high-level die() routine (which is
+> >>>> used by the
+> >>>> x-wrappers) uses one of the low-level compat/ routines. IOW, in
+> >>>> the case of errors, recursion might occur. Therefore, I would
+> >>>> prefer that the compat/ routines do their own error reporting
+> >>>> (preferably via return values and errno).
+> >>>
+> >>> Thanks.  Will do.
+> >>
+> >> Hi Johannes,
+> >> I have taken a closer look at the possibility of recursion with
+> >> respect to die() and the functions in compat/.  It appears the
+> >> risk is only related to vsnprintf/snprintf at the moment.  So as
+> >> long as we avoid calling xmalloc et al from within snprintf.c, I
+> >> think we should be safe from recursion. I'm inclined to keep the
+> >> additions to mingw.c and win32/syslog.c since they both already
+> >> use the x-wrappers or strbuf, even though they could easily be
+> >> worked around.  The other file that was touched is compat/qsort,
+> >> which returns void and doesn't have a good alternative error
+> >> handling path.  So, I'm inclined to keep that one too.
 > 
->   $ GIT_TRACE=1 git push foo
->   trace: built-in: git 'push' 'foo'
->   trace: run_command: 'git-remote-https' 'foo' 'https://peff@github.com/peff/git.git'
+> I'm fine with keeping the change to mingw.c (getaddrinfo related) and
+> qsort: both are unlikely to be called from die().
 > 
-> which is the right URL. So it's almost as if we are throwing away the
-> passed URL in favor of the configuration, and then looking up the
-> configuration wrong. I'm about to go get on a plane, so I don't have
-> more time to look at it now, but I suspect it's something simple and
-> stupid.
-
-Thanks for confirming what it should be like. I never expected pushurl
-and url to behave differently (I had used GIT_TRACE myself).
-
-Good flight :)
-
-Michael
+> But syslog() *is* called from die() in git-daemon, and it would be
+> better to back out the other offenders instead of adding to them.
+> 
+> -- Hannes
+> 
