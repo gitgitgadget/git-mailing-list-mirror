@@ -1,103 +1,88 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: Git Bug report
-Date: Thu, 6 Oct 2011 02:33:18 +0200
-Message-ID: <20111006003318.GA9015@goldbirke>
-References: <1317763443.17036.15.camel@skyplex> <20111005072235.GA12600@kolya>
-	<7vlisz8jur.fsf@alter.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [RFC/PATCH] Add multiple workdir support to branch/checkout
+Date: Wed, 5 Oct 2011 20:33:35 -0400
+Message-ID: <CAG+J_DzZrFx2v09zNxKm2xyA82MyKRTq3AEus3QthtpZYhQn0A@mail.gmail.com>
+References: <1317786204-57335-1-git-send-email-jaysoffian@gmail.com>
+	<CACsJy8AqYq+YF+rvUp=BBeFUAtUz783iF2jbUp3fO58yLp9ptQ@mail.gmail.com>
+	<CAG+J_DygQTD5ibco=-NOiKg0BLgBGFJnvV8zPyhngC2iZv_H8g@mail.gmail.com>
+	<7vpqib8jzk.fsf@alter.siamese.dyndns.org>
+	<CAG+J_Dz-GXvRbYUXSoyfyHfOO-_BszcOza9x=ysHhmL5YBW-Jw@mail.gmail.com>
+	<7vzkhf713u.fsf@alter.siamese.dyndns.org>
+	<CACsJy8BHeZZqsOP_+OSPfrPdkYgKQe3LgaGfo3bERD+hWT7U0g@mail.gmail.com>
+	<7vaa9f59p5.fsf@alter.siamese.dyndns.org>
+	<CACsJy8D5FGr3R0tLYOND0kKNct4e_KgYfLUK8xL2Q4uNzWczgQ@mail.gmail.com>
+	<7vwrcj3sow.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>,
-	Federico Lucifredi <federico@canonical.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 06 02:33:27 2011
+X-From: git-owner@vger.kernel.org Thu Oct 06 02:33:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBbtv-0002uy-CN
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 02:33:27 +0200
+	id 1RBbu9-0002xb-Tm
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 02:33:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935455Ab1JFAdV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Oct 2011 20:33:21 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:54864 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757843Ab1JFAdV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Oct 2011 20:33:21 -0400
-Received: from localhost6.localdomain6 (p5B131283.dip0.t-ipconnect.de [91.19.18.131])
-	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
-	id 0LvLjr-1R3OO51cDj-010gBM; Thu, 06 Oct 2011 02:33:18 +0200
-Content-Disposition: inline
-In-Reply-To: <7vlisz8jur.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Provags-ID: V02:K0:zMKCqVXrV5pUOy93olA14NMU3/2/569RT51RN+QpYiD
- hCDgBjipgoHSxCq5TDYbiKk3QQV5jU40H1C/U3yc3IqAOYXu0t
- i9coeU4QJ8BQWKcIk3YsnVoO2adajxCfGeTEohfw2iowoD0uvw
- Cu8wKwMY2NFFJbmh4sEdkxtsxBsbDGmtoUU/xQjjVexbMxL98i
- boszXxLJgpeDimdbd0tppd1bgL9qd/IZVp5nZuVmuJm/V1MtIa
- bKENeleCfvMVJsicON/82aanouAvEBxpw3G59UHnXWES0dB6et
- 70OMu0FulI/qdGM+R0lLb7AWQcSMSOXPEBExMypsgAmLdjh1Ia
- jUDdJXaNjwq09fYb59HU=
+	id S935493Ab1JFAdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Oct 2011 20:33:37 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:43038 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935355Ab1JFAdg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Oct 2011 20:33:36 -0400
+Received: by gyg10 with SMTP id 10so2111847gyg.19
+        for <git@vger.kernel.org>; Wed, 05 Oct 2011 17:33:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=aC60BbWLavvHTdsMm//qUM3hH31O8pMZy4+7LKmmkBo=;
+        b=BjBA94tjwwiOA3cKaC992w79njxCZq4n7vJ7mbLpsj2g0GqhpV9VsWWo1sbO2dqk82
+         bfrOJmulxzCCvffjv1g33woqgnZFzA2ylhUS/0KDNh8AXeivv11CBG+B27I3JmRLgn/q
+         4apDaRS8w6TBuodChynFsMtNVuIrFH0nH5YlE=
+Received: by 10.147.154.12 with SMTP id g12mr50843yao.36.1317861215901; Wed,
+ 05 Oct 2011 17:33:35 -0700 (PDT)
+Received: by 10.147.32.18 with HTTP; Wed, 5 Oct 2011 17:33:35 -0700 (PDT)
+In-Reply-To: <7vwrcj3sow.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182907>
 
-On Wed, Oct 05, 2011 at 09:49:00AM -0700, Junio C Hamano wrote:
-> Fredrik Gustafsson <iveqy@iveqy.com> writes:
->=20
-> > On Tue, Oct 04, 2011 at 05:24:03PM -0400, Federico Lucifredi wrote:
-> >>  Found a minor bug in git today - the error message reported is no=
-t
-> >> correct when trying to access a repo that is not accessible
-> >> permission-wise:
-> >>=20
-> >> > federico@skyplex:/etc$ git log
-> >> > fatal: Not a git repository (or any of the parent directories): =
-=2Egit
-> >>=20
-> >> with correct access permissions, everything works as expected.
-> >
-> > So if:
-> > .git/ is a directory with not enought permissions.
-> > ../.git/ is a directory with enought permissions.
-> >
-> > git would today use ../.git. You suggest that git instead would die
-> > because a .git/ exists? (I'm not saying this is wrong or right).
->=20
-> For that matter, if you have .git/ that is a directory but is not a
-> repository, and ../.git/ that is, the same situation would arise. I d=
-o not
-> think we should die because .git/ is not a git repository. I do not k=
-now
-> if we should even warn about it.
+On Wed, Oct 5, 2011 at 7:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> This reminds me of how we ended up handling the "scary warning" around
+> detached HEAD. It is not wrong nor even dangerous to detach. It is not
+> wrong nor even dangerous to make commits on detached HEAD. It is however
+> dangerous to switch away from that state without saving it to a ref, and
+> that is where we give warnings.
 
-And what about unreadable .git files?
+If you have the same branch in two workdirs, then if you commit to
+that branch in one workdir, you have to reset --hard in the other. In
+that case, wouldn't it make more sense to just use a detached head in
+the second workdir?
 
-~/tmp/git/outside$ git init
-Initialized empty Git repository in /home/szeder/tmp/git/outside/.git/
-~/tmp/git/outside$ mkdir inside repo
-~/tmp/git/outside$ cd inside/
-~/tmp/git/outside/inside$ git init --separate-git-dir=3D../repo
-Initialized empty Git repository in /home/szeder/tmp/git/outside/repo/
-~/tmp/git/outside/inside$ git rev-parse --git-dir
-/home/szeder/tmp/git/outside/repo
-~/tmp/git/outside/inside$ chmod a-r .git
-~/tmp/git/outside/inside$ git rev-parse --git-dir
-fatal: Error opening '.git': Permission denied
+  $ git checkout topic
+  fatal: branch 'topic' is currently checked out in '...'
+  $ git checkout topic^0
+  ... topic is updated elsewhere ...
+  $ git reset --hard topic
 
-Or a non-gitfile .git file?
+Either way you need to use reset --hard if topic is updated outside of
+the current workdir, but at least if git encourages you to detach
+first, you don't accidentally undo a commit.
 
-~/tmp/git/outside/inside$ chmod a+r .git
-~/tmp/git/outside/inside$ echo foo >.git
-~/tmp/git/outside/inside$ git rev-parse --git-dir
-fatal: Invalid gitfile format: .git
+Also, if we wait till commit time to tell the user "sorry, topic's
+been updated elsewhere", now the user is in a perilous state. They
+have uncommitted work which they clearly want on topic. And they have
+to think about what steps are needed to get it there.
 
-Shouldn't these also be ignored?
+So, I really don't think this is quite analogous to detached HEAD, nor
+pushing into a repo's checked out branch. In both those cases, at
+least the user's work is already committed.
 
+Better to prevent checking out the same branch in multiple workdirs
+with an override for users that want risk shooting their foot off.
 
-Best,
-G=E1bor
+j.
