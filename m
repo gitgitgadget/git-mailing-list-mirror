@@ -1,169 +1,192 @@
 From: Brandon Casey <drafnel@gmail.com>
-Subject: [PATCH v2 1/2] attr: read core.attributesfile from git_default_core_config
-Date: Wed,  5 Oct 2011 23:00:13 -0500
-Message-ID: <1317873614-3057-2-git-send-email-drafnel@gmail.com>
+Subject: [PATCH v2 2/2] attr.c: respect core.ignorecase when matching attribute patterns
+Date: Wed,  5 Oct 2011 23:00:14 -0500
+Message-ID: <1317873614-3057-3-git-send-email-drafnel@gmail.com>
 References: <1317873614-3057-1-git-send-email-drafnel@gmail.com>
 Cc: git@vger.kernel.org, peff@peff.net,
 	Brandon Casey <drafnel@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Oct 06 06:00:57 2011
+X-From: git-owner@vger.kernel.org Thu Oct 06 06:01:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBf8g-0006Zo-Qp
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 06:00:55 +0200
+	id 1RBf8o-0006cw-73
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 06:01:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751079Ab1JFEAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 00:00:50 -0400
+	id S1751247Ab1JFEAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 00:00:53 -0400
 Received: from mail-yx0-f174.google.com ([209.85.213.174]:40691 "EHLO
 	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750923Ab1JFEAt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 00:00:49 -0400
+	with ESMTP id S1751174Ab1JFEAw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 00:00:52 -0400
 Received: by mail-yx0-f174.google.com with SMTP id 31so2240401yxl.19
-        for <git@vger.kernel.org>; Wed, 05 Oct 2011 21:00:49 -0700 (PDT)
+        for <git@vger.kernel.org>; Wed, 05 Oct 2011 21:00:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=QdGukbfPI9obnocYZA8W4T/PT+OOvzRFO+k4Ix7w/hI=;
-        b=UQTmvJYBlyXUHeo+9hzi1Td7ZOzLngFMp0nifa+gxmVnHt+E+Qd0fwrBTGveucz4VR
-         sZmwAvkci/EgKjByX1ImEOxDsT6cRWm/2zVc7AKeB7xNGvTB13p2jD0540VWTN3mvhQ/
-         yPxLldWXZk0d5d/eiVZ3TZtqwDZw6Y/N92llY=
-Received: by 10.100.83.8 with SMTP id g8mr145646anb.92.1317873649333;
-        Wed, 05 Oct 2011 21:00:49 -0700 (PDT)
+        bh=PBXyEl8IgFnwZ9cE/XS+EQG/lrMLmjILiJJwIOZG1zQ=;
+        b=Vnv+oCNvw8gHb1x4pC8H0aOLvExEuG86tnr2AQMSlbinPS37N17Z9dz4CJY7xINRCf
+         ShuH976tTU1MXM94xi88VDGjuh0jDQ5forVimiAJF4GL+lAfv3hpQlDUZiO94PwlErs1
+         vL+aSJ0Ua6bT/7yDlgZm1ujZ8riQh3feMX1JQ=
+Received: by 10.150.143.16 with SMTP id q16mr213712ybd.6.1317873652199;
+        Wed, 05 Oct 2011 21:00:52 -0700 (PDT)
 Received: from localhost.localdomain ([96.19.140.155])
-        by mx.google.com with ESMTPS id h20sm11169124ani.16.2011.10.05.21.00.47
+        by mx.google.com with ESMTPS id h20sm11169124ani.16.2011.10.05.21.00.50
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 05 Oct 2011 21:00:48 -0700 (PDT)
+        Wed, 05 Oct 2011 21:00:51 -0700 (PDT)
 X-Mailer: git-send-email 1.7.7.1.ge3b6f
 In-Reply-To: <1317873614-3057-1-git-send-email-drafnel@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182925>
 
-From: Junio C Hamano <gitster@pobox.com>
+When core.ignorecase is true, the file globs configured in the
+.gitattributes file should be matched case-insensitively against the paths
+in the working directory.  Let's do so.
 
-This code calls git_config from a helper function to parse the config entry
-it is interested in.  Calling git_config in this way may cause a problem if
-the helper function can be called after a previous call to git_config by
-another function since the second call to git_config may reset some
-variable to the value in the config file which was previously overridden.
+Plus, add some tests.
 
-The above is not a problem in this case since the function passed to
-git_config only parses one config entry and the variable it sets is not
-assigned outside of the parsing function.  But a programmer who desires
-all of the standard config options to be parsed may be tempted to modify
-git_attr_config() so that it falls back to git_default_config() and then it
-_would_ be vulnerable to the above described behavior.
+The last set of tests is performed only on a case-insensitive filesystem.
+Those tests make sure that git handles the case where the .gitignore file
+resides in a subdirectory and the user supplies a path that does not match
+the case in the filesystem.  In that case^H^H^H^Hsituation, part of the
+path supplied by the user is effectively interpreted case-insensitively,
+and part of it is dependent on the setting of core.ignorecase.  git should
+only match the portion of the path below the directory holding the
+.gitignore file according to the setting of core.ignorecase.
 
-So, move the call to git_config up into the top-level cmd_* function and
-move the responsibility for parsing core.attributesfile into the main
-config file parser.
-
-Which is only the logical thing to do ;-)
+This is also partly future-proofing.  Currently, git builds the attr stack
+based on the path supplied by the user, so we don't have to do anything
+special (like use strcmp_icase) to handle the parts of that path that don't
+match the filesystem with respect to case.  If git instead built the attr
+stack by scanning the repository, then the paths in the origin field would
+not necessarily match the paths supplied by the user.  If someone makes a
+change like that in the future, these tests will notice.
 
 Signed-off-by: Brandon Casey <drafnel@gmail.com>
 ---
- attr.c               |   15 ++-------------
- builtin/check-attr.c |    2 ++
- cache.h              |    1 +
- config.c             |    3 +++
- environment.c        |    1 +
- 5 files changed, 9 insertions(+), 13 deletions(-)
+ attr.c                |    5 ++-
+ t/t0003-attributes.sh |   60 ++++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 62 insertions(+), 3 deletions(-)
 
 diff --git a/attr.c b/attr.c
-index 0793859..124337d 100644
+index 124337d..76b079f 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -20,8 +20,6 @@ static const char git_attr__unknown[] = "(builtin)unknown";
- #define ATTR__UNSET NULL
- #define ATTR__UNKNOWN git_attr__unknown
+@@ -11,6 +11,7 @@
+ #include "cache.h"
+ #include "exec_cmd.h"
+ #include "attr.h"
++#include "dir.h"
  
--static const char *attributes_file;
--
- /* This is a randomly chosen prime. */
- #define HASHSIZE 257
- 
-@@ -494,14 +492,6 @@ static int git_attr_system(void)
- 	return !git_env_bool("GIT_ATTR_NOSYSTEM", 0);
+ const char git_attr__true[] = "(builtin)true";
+ const char git_attr__false[] = "\0(builtin)false";
+@@ -631,7 +632,7 @@ static int path_matches(const char *pathname, int pathlen,
+ 		/* match basename */
+ 		const char *basename = strrchr(pathname, '/');
+ 		basename = basename ? basename + 1 : pathname;
+-		return (fnmatch(pattern, basename, 0) == 0);
++		return (fnmatch_icase(pattern, basename, 0) == 0);
+ 	}
+ 	/*
+ 	 * match with FNM_PATHNAME; the pattern has base implicitly
+@@ -645,7 +646,7 @@ static int path_matches(const char *pathname, int pathlen,
+ 		return 0;
+ 	if (baselen != 0)
+ 		baselen++;
+-	return fnmatch(pattern, pathname + baselen, FNM_PATHNAME) == 0;
++	return fnmatch_icase(pattern, pathname + baselen, FNM_PATHNAME) == 0;
  }
  
--static int git_attr_config(const char *var, const char *value, void *dummy)
--{
--	if (!strcmp(var, "core.attributesfile"))
--		return git_config_pathname(&attributes_file, var, value);
--
--	return 0;
--}
--
- static void bootstrap_attr_stack(void)
- {
- 	if (!attr_stack) {
-@@ -521,9 +511,8 @@ static void bootstrap_attr_stack(void)
- 			}
- 		}
+ static int macroexpand_one(int attr_nr, int rem);
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index ae2f1da..47a70c4 100755
+--- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -9,7 +9,7 @@ attr_check () {
+ 	path="$1"
+ 	expect="$2"
  
--		git_config(git_attr_config, NULL);
--		if (attributes_file) {
--			elem = read_attr_from_file(attributes_file, 1);
-+		if (git_attributes_file) {
-+			elem = read_attr_from_file(git_attributes_file, 1);
- 			if (elem) {
- 				elem->origin = NULL;
- 				elem->prev = attr_stack;
-diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-index 708988a..abb1165 100644
---- a/builtin/check-attr.c
-+++ b/builtin/check-attr.c
-@@ -92,6 +92,8 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
- 	struct git_attr_check *check;
- 	int cnt, i, doubledash, filei;
+-	git check-attr test -- "$path" >actual 2>err &&
++	git $3 check-attr test -- "$path" >actual 2>err &&
+ 	echo "$path: test: $2" >expect &&
+ 	test_cmp expect actual &&
+ 	test_line_count = 0 err
+@@ -27,6 +27,7 @@ test_expect_success 'setup' '
+ 		echo "onoff test -test"
+ 		echo "offon -test test"
+ 		echo "no notest"
++		echo "A/e/F test=A/e/F"
+ 	) >.gitattributes &&
+ 	(
+ 		echo "g test=a/g" &&
+@@ -93,6 +94,63 @@ test_expect_success 'attribute test' '
  
-+	git_config(git_default_config, NULL);
+ '
+ 
++test_expect_success 'attribute matching is case sensitive when core.ignorecase=0' '
 +
- 	argc = parse_options(argc, argv, prefix, check_attr_options,
- 			     check_attr_usage, PARSE_OPT_KEEP_DASHDASH);
- 
-diff --git a/cache.h b/cache.h
-index 607c2ea..8d95fb2 100644
---- a/cache.h
-+++ b/cache.h
-@@ -589,6 +589,7 @@ extern int warn_ambiguous_refs;
- extern int shared_repository;
- extern const char *apply_default_whitespace;
- extern const char *apply_default_ignorewhitespace;
-+extern const char *git_attributes_file;
- extern int zlib_compression_level;
- extern int core_compression_level;
- extern int core_compression_seen;
-diff --git a/config.c b/config.c
-index 4183f80..d3bcaa0 100644
---- a/config.c
-+++ b/config.c
-@@ -491,6 +491,9 @@ static int git_default_core_config(const char *var, const char *value)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "core.attributesfile"))
-+		return git_config_pathname(&git_attributes_file, var, value);
++	test_must_fail attr_check F f "-c core.ignorecase=0" &&
++	test_must_fail attr_check a/F f "-c core.ignorecase=0" &&
++	test_must_fail attr_check a/c/F f "-c core.ignorecase=0" &&
++	test_must_fail attr_check a/G a/g "-c core.ignorecase=0" &&
++	test_must_fail attr_check a/B/g a/b/g "-c core.ignorecase=0" &&
++	test_must_fail attr_check a/b/G a/b/g "-c core.ignorecase=0" &&
++	test_must_fail attr_check a/b/H a/b/h "-c core.ignorecase=0" &&
++	test_must_fail attr_check a/b/D/g "a/b/d/*" "-c core.ignorecase=0" &&
++	test_must_fail attr_check oNoFf unset "-c core.ignorecase=0" &&
++	test_must_fail attr_check oFfOn set "-c core.ignorecase=0" &&
++	attr_check NO unspecified "-c core.ignorecase=0" &&
++	test_must_fail attr_check a/b/D/NO "a/b/d/*" "-c core.ignorecase=0" &&
++	attr_check a/b/d/YES a/b/d/* "-c core.ignorecase=0" &&
++	test_must_fail attr_check a/E/f "A/e/F" "-c core.ignorecase=0"
 +
- 	if (!strcmp(var, "core.bare")) {
- 		is_bare_repository_cfg = git_config_bool(var, value);
- 		return 0;
-diff --git a/environment.c b/environment.c
-index e96edcf..d60b73f 100644
---- a/environment.c
-+++ b/environment.c
-@@ -29,6 +29,7 @@ const char *git_log_output_encoding;
- int shared_repository = PERM_UMASK;
- const char *apply_default_whitespace;
- const char *apply_default_ignorewhitespace;
-+const char *git_attributes_file;
- int zlib_compression_level = Z_BEST_SPEED;
- int core_compression_level;
- int core_compression_seen;
++'
++
++test_expect_success 'attribute matching is case insensitive when core.ignorecase=1' '
++
++	attr_check F f "-c core.ignorecase=1" &&
++	attr_check a/F f "-c core.ignorecase=1" &&
++	attr_check a/c/F f "-c core.ignorecase=1" &&
++	attr_check a/G a/g "-c core.ignorecase=1" &&
++	attr_check a/B/g a/b/g "-c core.ignorecase=1" &&
++	attr_check a/b/G a/b/g "-c core.ignorecase=1" &&
++	attr_check a/b/H a/b/h "-c core.ignorecase=1" &&
++	attr_check a/b/D/g "a/b/d/*" "-c core.ignorecase=1" &&
++	attr_check oNoFf unset "-c core.ignorecase=1" &&
++	attr_check oFfOn set "-c core.ignorecase=1" &&
++	attr_check NO unspecified "-c core.ignorecase=1" &&
++	attr_check a/b/D/NO "a/b/d/*" "-c core.ignorecase=1" &&
++	attr_check a/b/d/YES unspecified "-c core.ignorecase=1" &&
++	attr_check a/E/f "A/e/F" "-c core.ignorecase=1"
++
++'
++
++test_expect_success 'check whether FS is case-insensitive' '
++	mkdir junk &&
++	echo good >junk/CamelCase &&
++	echo bad >junk/camelcase &&
++	if test "$(cat junk/CamelCase)" != good
++	then
++		test_set_prereq CASE_INSENSITIVE_FS
++	fi
++'
++
++test_expect_success CASE_INSENSITIVE_FS 'additional case insensitivity tests' '
++	test_must_fail attr_check a/B/D/g "a/b/d/*" "-c core.ignorecase=0" &&
++	test_must_fail attr_check A/B/D/NO "a/b/d/*" "-c core.ignorecase=0" &&
++	attr_check A/b/h a/b/h "-c core.ignorecase=0" &&
++	attr_check A/b/h a/b/h "-c core.ignorecase=1" &&
++	attr_check a/B/D/g "a/b/d/*" "-c core.ignorecase=1" &&
++	attr_check A/B/D/NO "a/b/d/*" "-c core.ignorecase=1"
++'
++
+ test_expect_success 'unnormalized paths' '
+ 
+ 	attr_check ./f f &&
 -- 
 1.7.7.1.ge3b6f
