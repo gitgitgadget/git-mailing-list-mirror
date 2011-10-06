@@ -1,90 +1,77 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 3/7] pickaxe: plug regex/kws leak
-Date: Thu, 06 Oct 2011 18:23:11 +0200
-Message-ID: <4E8DD5EF.9000700@lsrfire.ath.cx>
-References: <4E8DD065.3040607@lsrfire.ath.cx>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Git Bug report
+Date: Thu, 06 Oct 2011 18:26:12 +0200
+Message-ID: <vpq1uuq13yz.fsf@bauges.imag.fr>
+References: <1317763443.17036.15.camel@skyplex> <20111005072235.GA12600@kolya>
+	<7vlisz8jur.fsf@alter.siamese.dyndns.org>
+	<20111006003318.GA9015@goldbirke>
+	<7vobxv3q49.fsf@alter.siamese.dyndns.org>
+	<20111006010940.GR2208@goldbirke>
+	<CABURp0qCsKG2oOxLw4BfU8UM=9V+pigd69ZK=TZVwetBPqjuiA@mail.gmail.com>
+	<7vy5wy145q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 06 18:23:27 2011
+Content-Type: text/plain
+Cc: Phil Hord <phil.hord@gmail.com>,
+	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>,
+	git@vger.kernel.org, Fredrik Gustafsson <iveqy@iveqy.com>,
+	Federico Lucifredi <federico@canonical.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 06 18:26:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBqjD-0006BO-R0
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 18:23:24 +0200
+	id 1RBqmK-0007Ny-62
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 18:26:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965094Ab1JFQXT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 12:23:19 -0400
-Received: from india601.server4you.de ([85.25.151.105]:56168 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934637Ab1JFQXT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 12:23:19 -0400
-Received: from [192.168.2.104] (p4FFDBCAF.dip.t-dialin.net [79.253.188.175])
-	by india601.server4you.de (Postfix) with ESMTPSA id 0B2A42F8034;
-	Thu,  6 Oct 2011 18:23:18 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
-In-Reply-To: <4E8DD065.3040607@lsrfire.ath.cx>
+	id S965144Ab1JFQ0b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 12:26:31 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:46735 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S935867Ab1JFQ03 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 12:26:29 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p96GNaBd023444
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 6 Oct 2011 18:23:36 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1RBqlx-0003cV-1J; Thu, 06 Oct 2011 18:26:13 +0200
+In-Reply-To: <7vy5wy145q.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 06 Oct 2011 09:22:09 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 06 Oct 2011 18:23:36 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p96GNaBd023444
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1318523017.51657@tqttE2BT2WM10ahJNtHQkQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182970>
 
-With -S... --pickaxe-all, free the regex or the kws before returning
-even if we found a match.  Also get rid of the variable has_changes,
-as we can simply break out of the loop.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- diffcore-pickaxe.c |   13 +++++++------
- 1 files changed, 7 insertions(+), 6 deletions(-)
+>  If we cannot tell if it is or is not
+> a GIT_DIR, we should error out---the reason we cannot tell most likely is
+> because we cannot read it, and such a file, if it is not a GIT_DIR, cannot
+> be tracked in the real GIT_DIR at a higher level, and if it is a GIT_DIR,
+> we cannot use it to record updates or inspect existing history.
 
-diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index 96f7ea6..c367d8d 100644
---- a/diffcore-pickaxe.c
-+++ b/diffcore-pickaxe.c
-@@ -221,7 +221,7 @@ static void diffcore_pickaxe_count(struct diff_options *o)
- 
- 	if (opts & DIFF_PICKAXE_ALL) {
- 		/* Showing the whole changeset if needle exists */
--		for (i = has_changes = 0; !has_changes && i < q->nr; i++) {
-+		for (i = 0; i < q->nr; i++) {
- 			struct diff_filepair *p = q->queue[i];
- 			if (!DIFF_FILE_VALID(p->one)) {
- 				if (!DIFF_FILE_VALID(p->two))
-@@ -238,9 +238,9 @@ static void diffcore_pickaxe_count(struct diff_options *o)
- 				 contains(p->one, needle, len, regexp, kws) !=
- 				 contains(p->two, needle, len, regexp, kws))
- 				has_changes++;
-+			if (has_changes)
-+				goto out; /* do not munge the queue */
- 		}
--		if (has_changes)
--			return; /* not munge the queue */
- 
- 		/* otherwise we will clear the whole queue
- 		 * by copying the empty outq at the end of this
-@@ -278,13 +278,14 @@ static void diffcore_pickaxe_count(struct diff_options *o)
- 				diff_free_filepair(p);
- 		}
- 
-+	free(q->queue);
-+	*q = outq;
-+
-+ out:
- 	if (opts & DIFF_PICKAXE_REGEX)
- 		regfree(&regex);
- 	else
- 		kwsfree(kws);
--
--	free(q->queue);
--	*q = outq;
- 	return;
- }
- 
+Plus, the user may have removed the permission on the .git directory by
+mistake, and it would be very surprising behavior if git ran without
+complaining using a higher level GIT_DIR (i.e. a more or less arbitrary
+repo as far as the user is concerned ...)
+
+> How's that sound as a guideline?
+
+Sounds reasonable, yes.
+
 -- 
-1.7.7
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
