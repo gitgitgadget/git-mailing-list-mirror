@@ -1,44 +1,239 @@
-From: Andreas Krey <a.krey@gmx.de>
-Subject: Re: Prompt for merge message?
-Date: Thu, 6 Oct 2011 22:19:07 +0200
-Message-ID: <20111006201907.GA27744@inner.h.iocl.org>
-References: <6eb7acc7-f4be-4b90-a2fa-a0c91ed9a5a8@t11g2000yqk.googlegroups.com> <20111006182534.GA13628@vfa-6h>
+From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
+Subject: [PATCH 2/3] fetch: honor the user-provided refspecs when pruning refs
+Date: Thu,  6 Oct 2011 22:19:44 +0200
+Message-ID: <1317932385-28604-3-git-send-email-cmn@elego.de>
+References: <1317932385-28604-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Todd A. Jacobs" <nospam+listmail@codegnome.org>,
-	git@vger.kernel.org
-To: Jacob Helwig <jacob@technosorcery.net>
-X-From: git-owner@vger.kernel.org Thu Oct 06 22:19:20 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	mathstuf@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 06 22:19:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBuPX-0002uC-CZ
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 22:19:19 +0200
+	id 1RBuQ4-000377-FG
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 22:19:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756993Ab1JFUTO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 16:19:14 -0400
-Received: from continuum.iocl.org ([217.140.74.2]:57419 "EHLO
-	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756902Ab1JFUTO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 16:19:14 -0400
-Received: (from krey@localhost)
-	by continuum.iocl.org (8.11.3/8.9.3) id p96KJ8c27903;
-	Thu, 6 Oct 2011 22:19:08 +0200
-Content-Disposition: inline
-In-Reply-To: <20111006182534.GA13628@vfa-6h>
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+	id S1759093Ab1JFUTt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Oct 2011 16:19:49 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:52067 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756869Ab1JFUTr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 16:19:47 -0400
+Received: from centaur.lab.cmartin.tk (brln-4db9e4ec.pool.mediaWays.net [77.185.228.236])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id 18E8346103;
+	Thu,  6 Oct 2011 22:19:21 +0200 (CEST)
+Received: (nullmailer pid 28646 invoked by uid 1000);
+	Thu, 06 Oct 2011 20:19:45 -0000
+X-Mailer: git-send-email 1.7.5.2.354.g349bf
+In-Reply-To: <1317932385-28604-1-git-send-email-cmn@elego.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183024>
 
-On Thu, 06 Oct 2011 11:25:34 +0000, Jacob Helwig wrote:
-> "git merge --no-ff --no-commit branch_foo && git commit" ?
+If the user gave us refspecs on the command line, we should use those
+when deciding whether to prune a ref instead of relying on the
+refspecs in the config.
 
-"git merge --no-ff branch_foo && git commit --amend"
+Previously, running
 
-Andreas
+    git fetch --prune origin refs/heads/master:refs/remotes/origin/mast=
+er
+
+would delete every other tag under the origin namespace because we
+were using the refspec to filter the available refs but using the
+configured refspec to figure out if a ref had been deleted on the
+remote. This is clearly the wrong thing to do.
+
+Teach get_stale_heads about user-provided refspecs and use them if
+they're available.
+
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+---
+ builtin/fetch.c  |    6 ++--
+ builtin/remote.c |    2 +-
+ remote.c         |   74 ++++++++++++++++++++++++++++++++++++++++++++++=
+++-----
+ remote.h         |    3 +-
+ 4 files changed, 73 insertions(+), 12 deletions(-)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 30b485e..b937d71 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -505,10 +505,10 @@ static int fetch_refs(struct transport *transport=
+, struct ref *ref_map)
+ 	return ret;
+ }
+=20
+-static int prune_refs(struct transport *transport, struct ref *ref_map=
+)
++static int prune_refs(struct transport *transport, struct refspec *ref=
+s, int n, struct ref *ref_map)
+ {
+ 	int result =3D 0;
+-	struct ref *ref, *stale_refs =3D get_stale_heads(transport->remote, r=
+ef_map);
++	struct ref *ref, *stale_refs =3D get_stale_heads(transport->remote, r=
+ef_map, refs, n);
+ 	const char *dangling_msg =3D dry_run
+ 		? _("   (%s will become dangling)\n")
+ 		: _("   (%s has become dangling)\n");
+@@ -700,7 +700,7 @@ static int do_fetch(struct transport *transport,
+ 		return 1;
+ 	}
+ 	if (prune)
+-		prune_refs(transport, ref_map);
++		prune_refs(transport, refs, ref_count, ref_map);
+ 	free_refs(ref_map);
+=20
+ 	/* if neither --no-tags nor --tags was specified, do automated tag
+diff --git a/builtin/remote.c b/builtin/remote.c
+index b25dfb4..91a2148 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -349,7 +349,7 @@ static int get_ref_states(const struct ref *remote_=
+refs, struct ref_states *stat
+ 		else
+ 			string_list_append(&states->tracked, abbrev_branch(ref->name));
+ 	}
+-	stale_refs =3D get_stale_heads(states->remote, fetch_map);
++	stale_refs =3D get_stale_heads(states->remote, fetch_map, NULL, 0);
+ 	for (ref =3D stale_refs; ref; ref =3D ref->next) {
+ 		struct string_list_item *item =3D
+ 			string_list_append(&states->stale, abbrev_branch(ref->name));
+diff --git a/remote.c b/remote.c
+index 7840d2f..72a26d3 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1684,26 +1684,84 @@ struct stale_heads_info {
+ 	struct remote *remote;
+ 	struct string_list *ref_names;
+ 	struct ref **stale_refs_tail;
++	struct refspec *refs;
++	int ref_count;
+ };
+=20
++/*
++ * Find a refspec to a remote's
++ * Returns 0 on success, -1 if it couldn't find a the refspec
++ */
++static int find_in_refs(struct refspec *refs, int ref_count, struct re=
+fspec *query)
++{
++	int i;
++	struct refspec *refspec;
++
++	for (i =3D 0; i < ref_count; ++i) {
++		refspec =3D &refs[i];
++
++		/*
++		 * No '*' means that it must match exactly. If it does
++		 * have it, try to match it against the pattern. If
++		 * the refspec matches, store the ref name as it would
++		 * appear in the server in query->src.
++		 */
++		if (!strchr(refspec->dst, '*')) {
++			if (!strcmp(query->dst, refspec->dst)) {
++				query->src =3D xstrdup(refspec->src);
++				return 0;
++			}
++		} else {
++			if (match_name_with_pattern(refspec->dst, query->dst,
++						    refspec->src, &query->src)) {
++				return 0;
++			}
++		}
++	}
++
++	return -1;
++}
++
+ static int get_stale_heads_cb(const char *refname,
+ 	const unsigned char *sha1, int flags, void *cb_data)
+ {
+ 	struct stale_heads_info *info =3D cb_data;
+ 	struct refspec refspec;
++	int ret;
+ 	memset(&refspec, 0, sizeof(refspec));
+ 	refspec.dst =3D (char *)refname;
+-	if (!remote_find_tracking(info->remote, &refspec)) {
+-		if (!((flags & REF_ISSYMREF) ||
+-		    string_list_has_string(info->ref_names, refspec.src))) {
+-			struct ref *ref =3D make_linked_ref(refname, &info->stale_refs_tail=
+);
+-			hashcpy(ref->new_sha1, sha1);
+-		}
++
++	/*
++	 * If the user speicified refspecs on the command line, we
++	 * should only use those to check. Otherwise, look in the
++	 * remote's configuration for the branch.
++	 */
++	if (info->ref_count)
++		ret =3D find_in_refs(info->refs, info->ref_count, &refspec);
++	else
++		ret =3D remote_find_tracking(info->remote, &refspec);
++
++	/* No matches */
++	if (ret)
++		return 0;
++
++	/*
++	 * If we did find a suitable refspec and it's not a symref and
++	 * it's not in the list of refs that currently exist in that
++	 * remote we consider it to be stale.
++	 */
++	if (!((flags & REF_ISSYMREF) ||
++	      string_list_has_string(info->ref_names, refspec.src))) {
++		struct ref *ref =3D make_linked_ref(refname, &info->stale_refs_tail)=
+;
++		hashcpy(ref->new_sha1, sha1);
+ 	}
++
++	free(refspec.src);
+ 	return 0;
+ }
+=20
+-struct ref *get_stale_heads(struct remote *remote, struct ref *fetch_m=
+ap)
++struct ref *get_stale_heads(struct remote *remote, struct ref *fetch_m=
+ap,
++			    struct refspec *refs, int ref_count)
+ {
+ 	struct ref *ref, *stale_refs =3D NULL;
+ 	struct string_list ref_names =3D STRING_LIST_INIT_NODUP;
+@@ -1711,6 +1769,8 @@ struct ref *get_stale_heads(struct remote *remote=
+, struct ref *fetch_map)
+ 	info.remote =3D remote;
+ 	info.ref_names =3D &ref_names;
+ 	info.stale_refs_tail =3D &stale_refs;
++	info.refs =3D refs;
++	info.ref_count =3D ref_count;
+ 	for (ref =3D fetch_map; ref; ref =3D ref->next)
+ 		string_list_append(&ref_names, ref->name);
+ 	sort_string_list(&ref_names);
+diff --git a/remote.h b/remote.h
+index 9a30a9d..2f753a0 100644
+--- a/remote.h
++++ b/remote.h
+@@ -164,6 +164,7 @@ struct ref *guess_remote_head(const struct ref *hea=
+d,
+ 			      int all);
+=20
+ /* Return refs which no longer exist on remote */
+-struct ref *get_stale_heads(struct remote *remote, struct ref *fetch_m=
+ap);
++struct ref *get_stale_heads(struct remote *remote, struct ref *fetch_m=
+ap,
++			    struct refspec *refs, int ref_count);
+=20
+ #endif
+--=20
+1.7.5.2.354.g349bf
