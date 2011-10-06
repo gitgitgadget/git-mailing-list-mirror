@@ -1,182 +1,95 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH v3 5/5] attr.c: respect core.ignorecase when matching attribute patterns
-Date: Thu,  6 Oct 2011 13:22:25 -0500
-Message-ID: <U4wiHVyDLLG1PhI-8iY3YhHT7CEcTMEfg9MCDSaeuwAkg0N1a5wRE5NXaKAVQx8kpEYt75REVpRavoc-HiKe6rLk2AUepzHWptkevo08MRbGyWxqBHT_rySLemcbi66NKLRXwFGtaRQ@cipher.nrlssc.navy.mil>
-References: <VYN8m1JCy102-eaWWa-bsunEvt3zeXLJkVg7FZKZCtXT-Ww0vg7a8xA7NTvrZTiovKTnJ9Hlom0@cipher.nrlssc.navy.mil>
-Cc: git@vger.kernel.org, peff@peff.net, j.sixt@viscovery.net,
-	Brandon Casey <drafnel@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Oct 06 20:23:42 2011
+From: Jacob Helwig <jacob@technosorcery.net>
+Subject: Re: Prompt for merge message?
+Date: Thu, 6 Oct 2011 11:25:34 -0700
+Message-ID: <20111006182534.GA13628@vfa-6h>
+References: <6eb7acc7-f4be-4b90-a2fa-a0c91ed9a5a8@t11g2000yqk.googlegroups.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="1yeeQ81UyVL57Vl7"
+Cc: git@vger.kernel.org
+To: "Todd A. Jacobs" <nospam+listmail@codegnome.org>
+X-From: git-owner@vger.kernel.org Thu Oct 06 20:25:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBsba-0002nP-3A
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 20:23:38 +0200
+	id 1RBsdf-0003jU-7k
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 20:25:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758904Ab1JFSXb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 14:23:31 -0400
-Received: from mail4.nrlssc.navy.mil ([128.160.11.9]:45190 "EHLO
-	mail3.nrlssc.navy.mil" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758881Ab1JFSX2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 14:23:28 -0400
-Received: by mail3.nrlssc.navy.mil id p96IMrD9031904; Thu, 6 Oct 2011 13:22:53 -0500
-In-Reply-To: <VYN8m1JCy102-eaWWa-bsunEvt3zeXLJkVg7FZKZCtXT-Ww0vg7a8xA7NTvrZTiovKTnJ9Hlom0@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 06 Oct 2011 18:22:53.0490 (UTC) FILETIME=[F6848120:01CC8454]
-X-Virus-Scanned: clamav-milter 0.97.2 at mail4
-X-Virus-Status: Clean
+	id S1758907Ab1JFSZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 14:25:42 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:36484 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754178Ab1JFSZl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 14:25:41 -0400
+Received: by vws1 with SMTP id 1so2484816vws.19
+        for <git@vger.kernel.org>; Thu, 06 Oct 2011 11:25:40 -0700 (PDT)
+Received: by 10.68.156.20 with SMTP id wa20mr6908104pbb.58.1317925540124;
+        Thu, 06 Oct 2011 11:25:40 -0700 (PDT)
+Received: from vfa-6h (static-50-53-17-227.bvtn.or.frontiernet.net. [50.53.17.227])
+        by mx.google.com with ESMTPS id u1sm21963740pbr.9.2011.10.06.11.25.38
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 06 Oct 2011 11:25:39 -0700 (PDT)
+Received: by vfa-6h (Postfix, from userid 1000)
+	id C202E640715; Thu,  6 Oct 2011 11:25:34 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <6eb7acc7-f4be-4b90-a2fa-a0c91ed9a5a8@t11g2000yqk.googlegroups.com>
+X-PGP-Key: http://technosorcery.net/pubkey.asc
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183012>
 
-From: Brandon Casey <drafnel@gmail.com>
 
-When core.ignorecase is true, the file globs configured in the
-.gitattributes file should be matched case-insensitively against the paths
-in the working directory.  Let's do so.
+--1yeeQ81UyVL57Vl7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Plus, add some tests.
+On Thu, 06 Oct 2011 10:49:02 -0700, Todd A. Jacobs wrote:
+>=20
+> I often find myself using "--no-ff -m foo" for merging short-lived
+> branches, because the merge commit usually needs to say something
+> about having finished a feature rather than referring to a branch that
+> will be deleted shortly anyway. However, it's a little annoying to
+> have to always write the commit message on the command-line,
+> especially in cases where a more expository multi-line message would
+> be useful.
+>=20
+> Is there currently a way to get git to prompt for the merge message,
+> rather than using the default or requiring the -m flag? If not, isn't
+> this a common-enough use case to have that ability added to the merge
+> function?
 
-The last set of tests is performed only on a case-insensitive filesystem.
-Those tests make sure that git handles the case where the .gitignore file
-resides in a subdirectory and the user supplies a path that does not match
-the case in the filesystem.  In that case^H^H^H^Hsituation, part of the
-path supplied by the user is effectively interpreted case-insensitively,
-and part of it is dependent on the setting of core.ignorecase.  git should
-only match the portion of the path below the directory holding the
-.gitignore file according to the setting of core.ignorecase.
+"git merge --no-ff --no-commit branch_foo && git commit" ?
 
-This is also partly future-proofing.  Currently, git builds the attr stack
-based on the path supplied by the user, so we don't have to do anything
-special (like use strcmp_icase) to handle the parts of that path that don't
-match the filesystem with respect to case.  If git instead built the attr
-stack by scanning the repository, then the paths in the origin field would
-not necessarily match the paths supplied by the user.  If someone makes a
-change like that in the future, these tests will notice.
+Though it would be handy to have a "stop and let me edit the merge
+commit message" flag on git merge itself.
 
-Signed-off-by: Brandon Casey <drafnel@gmail.com>
----
- attr.c                |    5 ++-
- t/t0003-attributes.sh |   60 ++++++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 62 insertions(+), 3 deletions(-)
+--=20
+Jacob Helwig
+http://about.me/jhelwig
 
-diff --git a/attr.c b/attr.c
-index 124337d..76b079f 100644
---- a/attr.c
-+++ b/attr.c
-@@ -11,6 +11,7 @@
- #include "cache.h"
- #include "exec_cmd.h"
- #include "attr.h"
-+#include "dir.h"
- 
- const char git_attr__true[] = "(builtin)true";
- const char git_attr__false[] = "\0(builtin)false";
-@@ -631,7 +632,7 @@ static int path_matches(const char *pathname, int pathlen,
- 		/* match basename */
- 		const char *basename = strrchr(pathname, '/');
- 		basename = basename ? basename + 1 : pathname;
--		return (fnmatch(pattern, basename, 0) == 0);
-+		return (fnmatch_icase(pattern, basename, 0) == 0);
- 	}
- 	/*
- 	 * match with FNM_PATHNAME; the pattern has base implicitly
-@@ -645,7 +646,7 @@ static int path_matches(const char *pathname, int pathlen,
- 		return 0;
- 	if (baselen != 0)
- 		baselen++;
--	return fnmatch(pattern, pathname + baselen, FNM_PATHNAME) == 0;
-+	return fnmatch_icase(pattern, pathname + baselen, FNM_PATHNAME) == 0;
- }
- 
- static int macroexpand_one(int attr_nr, int rem);
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index ae2f1da..47a70c4 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -9,7 +9,7 @@ attr_check () {
- 	path="$1"
- 	expect="$2"
- 
--	git check-attr test -- "$path" >actual 2>err &&
-+	git $3 check-attr test -- "$path" >actual 2>err &&
- 	echo "$path: test: $2" >expect &&
- 	test_cmp expect actual &&
- 	test_line_count = 0 err
-@@ -27,6 +27,7 @@ test_expect_success 'setup' '
- 		echo "onoff test -test"
- 		echo "offon -test test"
- 		echo "no notest"
-+		echo "A/e/F test=A/e/F"
- 	) >.gitattributes &&
- 	(
- 		echo "g test=a/g" &&
-@@ -93,6 +94,63 @@ test_expect_success 'attribute test' '
- 
- '
- 
-+test_expect_success 'attribute matching is case sensitive when core.ignorecase=0' '
-+
-+	test_must_fail attr_check F f "-c core.ignorecase=0" &&
-+	test_must_fail attr_check a/F f "-c core.ignorecase=0" &&
-+	test_must_fail attr_check a/c/F f "-c core.ignorecase=0" &&
-+	test_must_fail attr_check a/G a/g "-c core.ignorecase=0" &&
-+	test_must_fail attr_check a/B/g a/b/g "-c core.ignorecase=0" &&
-+	test_must_fail attr_check a/b/G a/b/g "-c core.ignorecase=0" &&
-+	test_must_fail attr_check a/b/H a/b/h "-c core.ignorecase=0" &&
-+	test_must_fail attr_check a/b/D/g "a/b/d/*" "-c core.ignorecase=0" &&
-+	test_must_fail attr_check oNoFf unset "-c core.ignorecase=0" &&
-+	test_must_fail attr_check oFfOn set "-c core.ignorecase=0" &&
-+	attr_check NO unspecified "-c core.ignorecase=0" &&
-+	test_must_fail attr_check a/b/D/NO "a/b/d/*" "-c core.ignorecase=0" &&
-+	attr_check a/b/d/YES a/b/d/* "-c core.ignorecase=0" &&
-+	test_must_fail attr_check a/E/f "A/e/F" "-c core.ignorecase=0"
-+
-+'
-+
-+test_expect_success 'attribute matching is case insensitive when core.ignorecase=1' '
-+
-+	attr_check F f "-c core.ignorecase=1" &&
-+	attr_check a/F f "-c core.ignorecase=1" &&
-+	attr_check a/c/F f "-c core.ignorecase=1" &&
-+	attr_check a/G a/g "-c core.ignorecase=1" &&
-+	attr_check a/B/g a/b/g "-c core.ignorecase=1" &&
-+	attr_check a/b/G a/b/g "-c core.ignorecase=1" &&
-+	attr_check a/b/H a/b/h "-c core.ignorecase=1" &&
-+	attr_check a/b/D/g "a/b/d/*" "-c core.ignorecase=1" &&
-+	attr_check oNoFf unset "-c core.ignorecase=1" &&
-+	attr_check oFfOn set "-c core.ignorecase=1" &&
-+	attr_check NO unspecified "-c core.ignorecase=1" &&
-+	attr_check a/b/D/NO "a/b/d/*" "-c core.ignorecase=1" &&
-+	attr_check a/b/d/YES unspecified "-c core.ignorecase=1" &&
-+	attr_check a/E/f "A/e/F" "-c core.ignorecase=1"
-+
-+'
-+
-+test_expect_success 'check whether FS is case-insensitive' '
-+	mkdir junk &&
-+	echo good >junk/CamelCase &&
-+	echo bad >junk/camelcase &&
-+	if test "$(cat junk/CamelCase)" != good
-+	then
-+		test_set_prereq CASE_INSENSITIVE_FS
-+	fi
-+'
-+
-+test_expect_success CASE_INSENSITIVE_FS 'additional case insensitivity tests' '
-+	test_must_fail attr_check a/B/D/g "a/b/d/*" "-c core.ignorecase=0" &&
-+	test_must_fail attr_check A/B/D/NO "a/b/d/*" "-c core.ignorecase=0" &&
-+	attr_check A/b/h a/b/h "-c core.ignorecase=0" &&
-+	attr_check A/b/h a/b/h "-c core.ignorecase=1" &&
-+	attr_check a/B/D/g "a/b/d/*" "-c core.ignorecase=1" &&
-+	attr_check A/B/D/NO "a/b/d/*" "-c core.ignorecase=1"
-+'
-+
- test_expect_success 'unnormalized paths' '
- 
- 	attr_check ./f f &&
--- 
-1.7.7
+--1yeeQ81UyVL57Vl7
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQGcBAEBAgAGBQJOjfKaAAoJELcuR9l9xz+IPz0L/RSs9fLoDxElCtLbyKGHbTCT
+fJDgcK5DJck4Qd5onyVEqyFrjkkOhvzrpjfzc4oIRPan9TFsqdElfdIGGn3GH3Jv
+PZxEls4Kgqe2sxYg4IGRniW3PcL+C1iZFKEwETxi431nVXO0Nz0vtTh5qRFlsdMc
+Coh+pajSe3/WuNS91hkHWbw6jkZLolPOReB/Iuu7Zuw5vS29x1qIC5ytusnSOzTY
+Edg8qe7HPCEDpcike+F+xTpmPZgcnTc1CCtsHaWIuF5coWDUVd2qwQlmLxE2QKW1
+ezIsMCnTvLYx2JzO67sokAH55TG3/0k4WGR9CD5ib3wR4xmxZflCJ+nqCcfuMNXQ
+uG+OQ+9ZNDxmA5mexuDI5wZLahCsTXFKK2HliOjsexa4e0HzF2VmymL+3+QyfSFC
+gDMCr7jOXZksecUktgHbkEhgc4sWHCUxbArqMJDWkgKysL92+aCYBHtMY5ibGgxP
+hIuI5UftZevozZXGkcFiS52YoYEjzC/d68Wy95AHEQ==
+=nKhl
+-----END PGP SIGNATURE-----
+
+--1yeeQ81UyVL57Vl7--
