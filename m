@@ -1,112 +1,75 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH] revert.c: defer writing CHERRY_PICK_HEAD till it is safe to do so
-Date: Thu,  6 Oct 2011 10:34:01 -0400
-Message-ID: <1317911641-47660-1-git-send-email-jaysoffian@gmail.com>
-Cc: Jay Soffian <jaysoffian@gmail.com>, nicolas.dichtel@6wind.com,
-	Jeff King <peff@peff.net>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 06 16:34:30 2011
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH WIP 0/3] git log --exclude
+Date: Thu, 6 Oct 2011 10:34:41 -0400
+Message-ID: <20111006143441.GA21558@sigill.intra.peff.net>
+References: <1317799088-26626-1-git-send-email-pclouds@gmail.com>
+ <7vhb3n8ie9.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 06 16:34:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBp1p-0003xP-Rk
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 16:34:30 +0200
+	id 1RBp2A-00046R-Nd
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 16:34:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964933Ab1JFOeQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 10:34:16 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:63842 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964930Ab1JFOeN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 10:34:13 -0400
-Received: by ggnv2 with SMTP id v2so1755684ggn.19
-        for <git@vger.kernel.org>; Thu, 06 Oct 2011 07:34:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=Ft/KCpmRjEpbFTbtbWJTQwrkW0sL6H2RGF+tGKNhhFI=;
-        b=wYCJug4rqw71ngk60nlTGRXOybX/k8KYuxawmr9l9g+C81GMOQvcvdEvYYh5VuQpc8
-         nluiRjsPtGZAwSJCt8PS1AFuR3dQkkGO1lbNjEgwVatgckZv8r1t4v1X8cPbrSknrBKh
-         xH6Ne59/mW/X4d0pZ+JWn1yH1Yo7bTg5ATz+U=
-Received: by 10.236.77.233 with SMTP id d69mr3587503yhe.84.1317911652762;
-        Thu, 06 Oct 2011 07:34:12 -0700 (PDT)
-Received: from localhost (cpe-174-097-218-168.nc.res.rr.com. [174.97.218.168])
-        by mx.google.com with ESMTPS id k31sm15251070ann.15.2011.10.06.07.34.11
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 06 Oct 2011 07:34:12 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7.6.g25c34
+	id S964936Ab1JFOep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 10:34:45 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54386
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964930Ab1JFOep (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 10:34:45 -0400
+Received: (qmail 8382 invoked by uid 107); 6 Oct 2011 14:34:45 -0000
+Received: from 208.177.47.101.ptr.us.xo.net (HELO sigill.intra.peff.net) (208.177.47.101)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 06 Oct 2011 10:34:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Oct 2011 10:34:41 -0400
+Content-Disposition: inline
+In-Reply-To: <7vhb3n8ie9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182956>
 
-do_pick_commit() writes out CHERRY_PICK_HEAD before invoking merge (either
-via do_recursive_merge() or try_merge_command()) on the assumption that if
-the merge fails it is due to conflict. However, if the tree is dirty, the
-merge may not even start, aborting before do_pick_commit() can remove
-CHERRY_PICK_HEAD.
+On Wed, Oct 05, 2011 at 10:20:30AM -0700, Junio C Hamano wrote:
 
-Instead, defer writing CHERRY_PICK_HEAD till after merge has returned.
-At this point we know the merge has either succeeded or failed due
-to conflict. In either case, we want CHERRY_PICK_HEAD to be written
-so that it may be picked up by the subsequent invocation of commit.
+> The way I envisioned the narrow cloning would work like this [*1*]:
+> 
+>  * The narrowed set of paths is an attribute of the local repository. It
+>    is not tied to the history nor the current working tree state, so the
+>    information does not live in the index or in the history. A new file
+>    $GIT_DIR/narrowed-paths specifies a list of pathspecs. We call a
+>    repository with such a file "a narrowed repository".
+> 
+>  * The objects that live in a narrowed repository are subset of the
+>    objects in an unnarrowed repository that records the same
+>    history. Objects are not modified in any way when transferring into
+>    a narrowed repository. E.g. if you clone git.git but limit the tree to
+>    Documentation/ and builtin/, you will get _all_ commit objects, even
+>    the ones that do _not_ touch these two directories, and the top level
+>    tree objects. These top level tree objects _do_ record the object names
+>    for paths outside the narrowed area. To facilitate local history
+>    traversal, we may add either grafts or replace entries to "gather" away
+>    commits that do not touch the narrowed area, but this is not essential.
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
- builtin/revert.c                |    6 +++++-
- t/t3507-cherry-pick-conflict.sh |    7 +++++++
- 2 files changed, 12 insertions(+), 1 deletions(-)
+I'm really just a bystander on this topic, and haven't given it too much
+thought. But one stumbling block I see for narrow clone is how narrow
+repositories will interact with object transfer from other repositories.
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 3117776c2c..48526e1ef1 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -384,6 +384,7 @@ static int do_pick_commit(void)
- 	char *defmsg = NULL;
- 	struct strbuf msgbuf = STRBUF_INIT;
- 	int res;
-+	int record_cherry_pick_head = 0;
- 
- 	if (no_commit) {
- 		/*
-@@ -477,7 +478,7 @@ static int do_pick_commit(void)
- 			strbuf_addstr(&msgbuf, ")\n");
- 		}
- 		if (!no_commit)
--			write_cherry_pick_head();
-+			record_cherry_pick_head = 1;
- 	}
- 
- 	if (!strategy || !strcmp(strategy, "recursive") || action == REVERT) {
-@@ -498,6 +499,9 @@ static int do_pick_commit(void)
- 		free_commit_list(remotes);
- 	}
- 
-+	if (record_cherry_pick_head)
-+		write_cherry_pick_head();
-+
- 	if (res) {
- 		error(action == REVERT
- 		      ? _("could not revert %s... %s")
-diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
-index 212ec54aaf..29890bf5ac 100755
---- a/t/t3507-cherry-pick-conflict.sh
-+++ b/t/t3507-cherry-pick-conflict.sh
-@@ -77,6 +77,13 @@ test_expect_success 'cherry-pick --no-commit does not set CHERRY_PICK_HEAD' '
- 	test_must_fail git rev-parse --verify CHERRY_PICK_HEAD
- '
- 
-+test_expect_success 'cherry-pick w/dirty tree does not set CHERRY_PICK_HEAD' '
-+	pristine_detach initial &&
-+	echo foo > foo &&
-+	test_must_fail git cherry-pick base &&
-+	test_must_fail git rev-parse --verify CHERRY_PICK_HEAD
-+'
-+
- test_expect_success 'GIT_CHERRY_PICK_HELP suppresses CHERRY_PICK_HEAD' '
- 	pristine_detach initial &&
- 	(
--- 
-1.7.7.6.g25c34
+For example, if I have a narrow git.git that omits Documentation, and I
+do a "git fetch" from a non-narrow repository, then how do we tell the
+non-narrow remote that we don't have blobs in Documentation, and that
+they should not be used as delta bases for any objects that are sent?
+
+The current protocol relies on certain repository properties on the
+remote end that narrow clone will violate. I don't see a way around that
+without a protocol extension to communicate the narrowness. What will
+that extension look like?
+
+-Peff
