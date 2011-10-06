@@ -1,68 +1,82 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: [PATCH] strbuf.c: remove unnecessary strbuf_grow() from strbuf_getwholeline()
-Date: Wed,  5 Oct 2011 23:21:33 -0500
-Message-ID: <1317874893-4167-1-git-send-email-drafnel@gmail.com>
-Cc: Brandon Casey <drafnel@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 06 06:38:35 2011
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 2/4] cleanup: use internal memory allocation wrapper functions
+ everywhere
+Date: Thu, 06 Oct 2011 08:17:54 +0200
+Message-ID: <4E8D4812.9090102@viscovery.net>
+References: <5XXEFw0WjtXKd9dpXSxpkskCcgVyG9Db1_zzVSEBNey-kpXSBbmQfYaxZ2Szg6Pbck6hZZTQ5hHzBwG4rhKYXshrdmveEFLPZ9W0V8P_lw@cipher.nrlssc.navy.mil>	<1316051979-19671-1-git-send-email-drafnel@gmail.com>	<1316051979-19671-3-git-send-email-drafnel@gmail.com>	<4E71A0C7.8080602@viscovery.net>	<CA+sFfMdVntk+U13UeMO=k1SCKJGhPfTpC9_i9kFOkbUJXrF-qg@mail.gmail.com>	<CA+sFfMf73K3yv_5K633DKOsVufMV6rTjd+SSunq4sBikt4jCsg@mail.gmail.com> <CA+sFfMdHpvdMU==a2sUR9sZZCcgqPfGF7+dy6yi8RVoMZ+uZVA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "peff@peff.net" <peff@peff.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"gitster@pobox.com" <gitster@pobox.com>,
+	"sunshine@sunshineco.com" <sunshine@sunshineco.com>,
+	"bharrosh@panasas.com" <bharrosh@panasas.com>,
+	"trast@student.ethz.ch" <trast@student.ethz.ch>,
+	"zapped@mail.ru" <zapped@mail.ru>
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 06 08:18:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBfj6-0004w3-Bs
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 06:38:32 +0200
+	id 1RBhHX-0007QD-3T
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 08:18:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751369Ab1JFEWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 00:22:00 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:33843 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751284Ab1JFEWA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 00:22:00 -0400
-Received: by gyg10 with SMTP id 10so2236522gyg.19
-        for <git@vger.kernel.org>; Wed, 05 Oct 2011 21:21:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=CL0hUlfjpr5oPeDfP8CQSzq7ZznHq6gICZLz461NSz4=;
-        b=nTa9+9Ct5Sxk68kEDNXPY/zca0/Ycaw48+riIvNgUK6j7WAtWfUB5lExYc8QCXHmlT
-         GyEiNkhoCyXKTqpFwrz750gy53f8Lx9Xcud29Zq5jwvjcllqDGExYXr0gDcen8/nxISf
-         2xymTWtoG6vCxmWPVqf2RTMYRZE078vMgvKWU=
-Received: by 10.150.142.1 with SMTP id p1mr213608ybd.254.1317874919356;
-        Wed, 05 Oct 2011 21:21:59 -0700 (PDT)
-Received: from localhost.localdomain ([96.19.140.155])
-        by mx.google.com with ESMTPS id j13sm11296889ani.19.2011.10.05.21.21.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 05 Oct 2011 21:21:58 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7.1.ge3b6f
+	id S935725Ab1JFGSD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 02:18:03 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:35770 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933935Ab1JFGSD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 02:18:03 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1RBhHG-0007qk-ML; Thu, 06 Oct 2011 08:17:54 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 56D021660F;
+	Thu,  6 Oct 2011 08:17:54 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.23) Gecko/20110920 Thunderbird/3.1.15
+In-Reply-To: <CA+sFfMdHpvdMU==a2sUR9sZZCcgqPfGF7+dy6yi8RVoMZ+uZVA@mail.gmail.com>
+X-Enigmail-Version: 1.1.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182928>
 
-This use of strbuf_grow() is a historical artifact that was once used to
-ensure that strbuf.buf was allocated and properly nul-terminated.  This
-was added before the introduction of the slopbuf in b315c5c0, which
-guarantees that strbuf.buf always points to a usable nul-terminated string.
-So let's remove it.
+Am 10/6/2011 4:00, schrieb Brandon Casey:
+> [resend without html bits added by "gmail offline"]
+> On Wed, Oct 5, 2011 at 7:53 PM, Brandon Casey <drafnel@gmail.com> wrote:
+>> On Thursday, September 15, 2011, Brandon Casey wrote:
+>>>
+>>> On Thu, Sep 15, 2011 at 1:52 AM, Johannes Sixt <j.sixt@viscovery.net>
+>>>> There is a danger that the high-level die() routine (which is used by
+>>>> the
+>>>> x-wrappers) uses one of the low-level compat/ routines. IOW, in the case
+>>>> of errors, recursion might occur. Therefore, I would prefer that the
+>>>> compat/ routines do their own error reporting (preferably via return
+>>>> values and errno).
+>>>
+>>> Thanks.  Will do.
+>>
+>> Hi Johannes,
+>> I have taken a closer look at the possibility of recursion with respect to
+>> die() and the functions in compat/.  It appears the risk is only related to
+>> vsnprintf/snprintf at the moment.  So as long as we avoid calling xmalloc et
+>> al from within snprintf.c, I think we should be safe from recursion.
+>> I'm inclined to keep the additions to mingw.c and win32/syslog.c since they
+>> both already use the x-wrappers or strbuf, even though they could easily be
+>> worked around.  The other file that was touched is compat/qsort, which
+>> returns void and doesn't have a good alternative error handling path.  So,
+>> I'm inclined to keep that one too.
 
-Signed-off-by: Brandon Casey <drafnel@gmail.com>
----
- strbuf.c |    1 -
- 1 files changed, 0 insertions(+), 1 deletions(-)
+I'm fine with keeping the change to mingw.c (getaddrinfo related) and
+qsort: both are unlikely to be called from die().
 
-diff --git a/strbuf.c b/strbuf.c
-index 9ff1b59..3ad2cc0 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -357,7 +357,6 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
- {
- 	int ch;
- 
--	strbuf_grow(sb, 0);
- 	if (feof(fp))
- 		return EOF;
- 
--- 
-1.7.7.1.ge3b6f
+But syslog() *is* called from die() in git-daemon, and it would be better
+to back out the other offenders instead of adding to them.
+
+-- Hannes
