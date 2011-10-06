@@ -1,66 +1,58 @@
-From: Brad King <brad.king@kitware.com>
-Subject: Re: What's cooking in git.git (Oct 2011, #01; Tue, 4)
-Date: Thu, 06 Oct 2011 11:55:37 -0400
-Message-ID: <4E8DCF79.50200@kitware.com>
-References: <7vvcs49ofl.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH 0/7] pickaxe: plug memory leaks, deduplicate code
+Date: Thu, 06 Oct 2011 17:59:33 +0200
+Message-ID: <4E8DD065.3040607@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 06 17:55:45 2011
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 06 17:59:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBqIS-0002dM-NR
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 17:55:45 +0200
+	id 1RBqMQ-00045D-Lf
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 17:59:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964962Ab1JFPzj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 11:55:39 -0400
-Received: from na3sys009aog102.obsmtp.com ([74.125.149.69]:52008 "HELO
-	na3sys009aog102.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1756381Ab1JFPzi (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Oct 2011 11:55:38 -0400
-Received: from mail-yx0-f177.google.com ([209.85.213.177]) (using TLSv1) by na3sys009aob102.postini.com ([74.125.148.12]) with SMTP;
-	Thu, 06 Oct 2011 08:55:38 PDT
-Received: by mail-yx0-f177.google.com with SMTP id 11so3360140yxi.36
-        for <git@vger.kernel.org>; Thu, 06 Oct 2011 08:55:37 -0700 (PDT)
-Received: by 10.150.11.14 with SMTP id 14mr723152ybk.381.1317916537628;
-        Thu, 06 Oct 2011 08:55:37 -0700 (PDT)
-Received: from [192.168.1.220] (66-194-253-20.static.twtelecom.net. [66.194.253.20])
-        by mx.google.com with ESMTPS id j13sm15824387ani.19.2011.10.06.08.55.35
-        (version=SSLv3 cipher=OTHER);
-        Thu, 06 Oct 2011 08:55:36 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0) Gecko/20110812 Thunderbird/6.0
-In-Reply-To: <7vvcs49ofl.fsf@alter.siamese.dyndns.org>
+	id S964965Ab1JFP7q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 11:59:46 -0400
+Received: from india601.server4you.de ([85.25.151.105]:56157 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964856Ab1JFP7p (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 11:59:45 -0400
+Received: from [192.168.2.104] (p4FFDBCAF.dip.t-dialin.net [79.253.188.175])
+	by india601.server4you.de (Postfix) with ESMTPSA id AC3342F8034;
+	Thu,  6 Oct 2011 17:59:43 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182963>
 
-On 10/4/2011 10:12 PM, Junio C Hamano wrote:
-> [Stalled]
->
-> * hv/submodule-merge-search (2011-08-26) 5 commits
->   - submodule: Search for merges only at end of recursive merge
->   - allow multiple calls to submodule merge search for the same path
->   - submodule: Demonstrate known breakage during recursive merge
+Hello,
 
-The above three commits are independent of the other two, no?
-They form a complete topic demonstrating and fixing a merge bug
-independent from pushing.  The other commits:
+this series aims to clean up the code for pickaxe (-S/-G).  The first
+three patches plug minor to medium memory leaks.
 
->   - push: Don't push a repository with unpushed submodules
->    (merged to 'next' on 2011-08-24 at 398e764)
->   + push: teach --recurse-submodules the on-demand option
->   (this branch is tangled with fg/submodule-auto-push.)
->
-> The second from the bottom one needs to be replaced with a properly
-> written commit log message.
+	[PATCH 1/7] pickaxe: plug diff filespec leak with empty needle
+	[PATCH 2/7] pickaxe: plug regex leak
+	[PATCH 3/7] pickaxe: plug regex/kws leak
 
-are a separate topic.
+The next one moves a duplicate if/else cascade into its own helper
+function:
 
--Brad
+	[PATCH 4/7] pickaxe: factor out has_changes
+
+The remainder unifies the code for pickaxe (-S) and log grep (-G).
+
+	[PATCH 5/7] pickaxe: pass diff_options to contains and has_changes
+	[PATCH 6/7] pickaxe: give diff_grep the same signature as has_changes
+	[PATCH 7/7] pickaxe: factor out pickaxe
+
+As a result the code should be shorter and easier to maintain.
+
+ diffcore-pickaxe.c |  178 ++++++++++++++++++++-------------------------------
+ 1 files changed, 70 insertions(+), 108 deletions(-)
