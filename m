@@ -1,68 +1,88 @@
-From: in-gitvger@baka.org
-Subject: Re: Prompt for merge message?
-Date: Thu, 06 Oct 2011 14:51:41 -0400
-Message-ID: <201110061851.p96Ipfui016139@no.baka.org>
-References: <6eb7acc7-f4be-4b90-a2fa-a0c91ed9a5a8@t11g2000yqk.googlegroups.com>
-        <20111006182534.GA13628@vfa-6h>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-Cc: "Todd A. Jacobs" <nospam+listmail@codegnome.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 06 20:51:51 2011
+From: Phil Hord <hordp@cisco.com>
+Subject: Re: [PATCHv3 2/5] Learn to handle gitfiles in enter_repo
+Date: Thu, 06 Oct 2011 15:16:31 -0400
+Message-ID: <4E8DFE8F.3060408@cisco.com>
+References: <4E8C5C2E.50309@cisco.com> <CACsJy8BiZ7Ey95BOf4p-zwysyYwEY6WectRaj-GqnFvgDNTtZw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Phil Hord <phil.hord@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 06 21:16:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBt2s-0005JK-2v
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 20:51:50 +0200
+	id 1RBtQn-0005yo-QV
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 21:16:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965290Ab1JFSvp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 14:51:45 -0400
-Received: from tsutomu.baka.org ([66.114.72.182]:38574 "EHLO tsutomu.baka.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965275Ab1JFSvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 14:51:44 -0400
-Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
-	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id p96IpfS3006666
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 6 Oct 2011 14:51:42 -0400
-Received: from no.baka.org (localhost [127.0.0.1])
-	by no.baka.org (8.14.4/8.14.0) with ESMTP id p96Ipfui016139;
-	Thu, 6 Oct 2011 14:51:41 -0400
-In-reply-to: <20111006182534.GA13628@vfa-6h>
-Comments: In reply to a message from "Jacob Helwig <jacob@technosorcery.net>" dated "Thu, 06 Oct 2011 11:25:34 -0700."
+	id S1758638Ab1JFTQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 15:16:28 -0400
+Received: from rcdn-iport-5.cisco.com ([173.37.86.76]:35121 "EHLO
+	rcdn-iport-5.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756307Ab1JFTQ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 15:16:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=hordp@cisco.com; l=1395; q=dns/txt;
+  s=iport; t=1317928588; x=1319138188;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=qU3VDiq5B4fhcEg+CmnCToeF1IQHiyUsC3ryHYu9esI=;
+  b=XnlZMR8h7H7n3IXlD9DR66AZaY4ytWKp0TvYWw0JxPA/sTy0wBE014cl
+   I75N/hLrdB/4ndGF348D+u2tNQZ4uH7mgyE1WkGyDy8OvqMrdgaMDgw+G
+   3KSUXhOyeI/uc5UCs7g89c9rS09N9+m9YNxdPxTl7ncmtcn8iGAD/oV67
+   M=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgAFADX9jU6tJV2a/2dsb2JhbABChHSjP4EFgVMBAQEEEgEQVQEQCxgCAgUWCwICCQMCAQIBDzYGDQEFAgEBHqJBAYxGkVCBLYRrgRQEk26FKIM3gUOHQA
+X-IronPort-AV: E=Sophos;i="4.68,498,1312156800"; 
+   d="scan'208";a="26598314"
+Received: from rcdn-core-3.cisco.com ([173.37.93.154])
+  by rcdn-iport-5.cisco.com with ESMTP; 06 Oct 2011 19:16:27 +0000
+Received: from [64.100.104.107] (dhcp-64-100-104-107.cisco.com [64.100.104.107])
+	by rcdn-core-3.cisco.com (8.14.3/8.14.3) with ESMTP id p96JGQ3t031750;
+	Thu, 6 Oct 2011 19:16:26 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110812 Thunderbird/6.0
+In-Reply-To: <CACsJy8BiZ7Ey95BOf4p-zwysyYwEY6WectRaj-GqnFvgDNTtZw@mail.gmail.com>
+X-Enigmail-Version: 1.2.1
+X-TagToolbar-Keys: D20111006151631109
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183020>
 
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> says,
+> On Thu, Oct 6, 2011 at 12:31 AM, Phil Hord <hordp@cisco.com> wrote:
+>> -               if (!suffix[i] || chdir(used_path))
+>> +               if (!suffix[i])
+>> +                       return NULL;
+>> +               gitfile = read_gitfile(used_path) ;
+>> +               if (gitfile)
+>> +                       strcpy(used_path, gitfile);
+>> +               if (chdir(used_path))
+>>                        return NULL;
+>>                path = validated_path;
+>>        }
+> 
+> This is room for improvement, the patch is fine as it is now. We could
+> improve error reporting here. If .git file points to nowhere, we get
+> "not a repository-kind of message. Except daemon.c, enter_repo()
+> callers always die() if enter_repo() returns NULL. We could move the
+> die() part (with improved error message) into enter_repo().
+> 
+> We could update enter_repo(const char *, int) to enter_repo(const char
+> *, int, int gently). If gently is 1, we never die() nor report
+> anything (ie. what we're doing now). daemon.c will need this, the rest
+> of callers will be happy with gently = 0.
 
-In message <20111006182534.GA13628@vfa-6h>, Jacob Helwig writes:
+I like that.  It wasn't clear to me what the 'gently' moniker meant
+before, but now I understand it.  It could easily apply to this function
+and the new is_gitfile() to help reduce code duplication.
 
-    On Thu, 06 Oct 2011 10:49:02 -0700, Todd A. Jacobs wrote:
+In a different patch, though.
 
-    > I often find myself using "--no-ff -m foo" for merging short-lived
-    > branches, because the merge commit usually needs to say something
-    > about having finished a feature rather than referring to a branch that
-    > will be deleted shortly anyway. However, it's a little annoying to
-    > have to always write the commit message on the command-line,
-    > especially in cases where a more expository multi-line message would
-    > be useful.
-
-    "git merge --no-ff --no-commit branch_foo && git commit" ?
-
-While not ideal, you can use a multi-line message on the command line.
-I do it all of the time.  Popping up an editor like in the separated
-workflow is more user friendly.
-
-----------------------------------------------------------------------
-git merge --no-ff -m "My feature is very complex
-
-It requires multiple lines to explain.
-
-Or perhaps I am too verbose." branch_foo
-----------------------------------------------------------------------
-
-					-Seth Robertson
+Phil
