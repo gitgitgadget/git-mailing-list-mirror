@@ -1,80 +1,68 @@
-From: Luiz-Otavio Zorzella <zorzella@gmail.com>
-Subject: "Use of uninitialized value" running "git svn clone"
-Date: Thu, 6 Oct 2011 10:23:19 -0700
-Message-ID: <CAFjr8EsTFsnX2J51L0tofo_EuFyh70aeHu=Cs1xXkjGP12oz7A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Oct 2011, #01; Tue, 4)
+Date: Thu, 06 Oct 2011 10:24:41 -0700
+Message-ID: <7vlisy119i.fsf@alter.siamese.dyndns.org>
+References: <7vvcs49ofl.fsf@alter.siamese.dyndns.org>
+ <4E8DC01A.8060406@obry.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 06 19:23:50 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: pascal@obry.net
+X-From: git-owner@vger.kernel.org Thu Oct 06 19:25:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBrfh-0003Q5-9f
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 19:23:49 +0200
+	id 1RBrhR-00044r-Mq
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 19:25:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758730Ab1JFRXl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 13:23:41 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:57388 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758718Ab1JFRXk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 13:23:40 -0400
-Received: by vcbfk10 with SMTP id fk10so2402171vcb.19
-        for <git@vger.kernel.org>; Thu, 06 Oct 2011 10:23:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=GGiFw/SXXZvkIuKGzfxwlV9sN7wya80se4V0l9gTPDg=;
-        b=nB0R569Q/w/LuYdRJMyItFbtuA8+cisyZt9Yz9j2HTMRfI4WVug2zsG66skdxWhSra
-         TGfEXCwg7+PZTBZ9DnM3b+nwLKSb7WvrporoyzZISElcNVBPW2982y/LXIpuTt3SWe+e
-         zTVzyhUPOtNdbwXn+TGiyqINp3EnUTlWBHr7w=
-Received: by 10.52.75.34 with SMTP id z2mr946985vdv.297.1317921819159; Thu, 06
- Oct 2011 10:23:39 -0700 (PDT)
-Received: by 10.52.36.142 with HTTP; Thu, 6 Oct 2011 10:23:19 -0700 (PDT)
+	id S1758761Ab1JFRZU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 13:25:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61828 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758814Ab1JFRYo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 13:24:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C8666446;
+	Thu,  6 Oct 2011 13:24:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=f3sqX9Rxy+VTFUkdAsqKki9NZNY=; b=hLBtDm
+	W0JUPx+S4kyhH2jp3rHz3RVGDvZelyO58zvBOTF1EGjcgwuUfaZAs1xGwz/jB0af
+	deSwdmMUZEA+YWkIq1bmYGOA7mzbH5JhjjH3tNgXVtKzFfFWJTvWwnt0urXlnAqY
+	WHNv9ChbmAegOCcMg8zSnaOzZA/21Ix4mqULM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tz7O9Hdz6mQD8P2ojqV4Ls2B32WzpuYC
+	htVhh8VqV2aor9FDFKJOCRwxUP025QqKnljO5Ew8QaokCvU+TvpwnIs0UO/fTbUp
+	XMB/rYaaEgJnaPN5kR8NrrSWgVFvfcEIeQFePPIChdZQX/c2B6vqpl+Kftw8bscM
+	Jc++AN2i5Nw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D5146445;
+	Thu,  6 Oct 2011 13:24:43 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E314B6442; Thu,  6 Oct 2011
+ 13:24:42 -0400 (EDT)
+In-Reply-To: <4E8DC01A.8060406@obry.net> (Pascal Obry's message of "Thu, 06
+ Oct 2011 16:50:02 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 143FAC4C-F040-11E0-8421-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182991>
 
-I'm trying to convert a project (hosted in googlecode.com) from svn to
-git, using the "git svn clone" command, and I'm getting an "Use of
-uninitialized value" error. Here's the truncated output:
+Pascal Obry <pascal@obry.net> writes:
 
-$ git svn clone https://test-libraries-for-java.googlecode.com/svn
---no-metadata -A ~/tmp/authors.txt -t tags -b branches -T trunk
-test-libraries-for-java
-r1 = c3adafa93a420f19b1bcfb6765fe0eb90aaa751c (refs/remotes/trunk)
-	A	.classpath
-	A	.project
-	A	COPYING
-	A	build.properties
-	A	build.xml
-W: +empty_dir: trunk/src
-[...]
-r10 = 8d5d7fdebdb7f822388fd3e4f4061abbfd1fb0cf (refs/remotes/trunk)
-	M	test/com/google/common/testing/junit3/JUnitAssertsTest.java
-r11 = 4c8a77660bf353ed55c9d583b39e263203c685a4 (refs/remotes/trunk)
-Found possible branch point:
-https://test-libraries-for-java.googlecode.com/svn/trunk =>
-https://test-libraries-for-java.googlecode.com/svn/tags/release-1.0,
-11
-Use of uninitialized value $u in substitution (s///) at
-/usr/lib/git-core/git-svn line 1731.
-Use of uninitialized value $u in concatenation (.) or string at
-/usr/lib/git-core/git-svn line 1731.
-refs/remotes/trunk:
-'https://test-libraries-for-java.googlecode.com/svn' not found in ''
+>> Incomplete with respect to backslash processing in prefix_filename(), and
+>> also loses the ability to escape glob specials.
+>> Will discard.
+>
+> Sorry but this is letting best be enemy of good!
 
-For completeness, here's the authors.txt file I'm using:
-
-$ cat ~/tmp/authors.txt
-zorzella = Luiz-Otavio 'Z' Zorzella <zorzella@gmail.com>
-(no author) = Luiz-Otavio 'Z' Zorzella <zorzella@gmail.com>
-
-**************
-
-Thanks in advance,
-
-Z
+The impression I got from the discussion was quite different, which was
+that the patch was not even "good" by making certain things impossible to
+do by catering to a narrow corner case.
