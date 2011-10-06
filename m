@@ -1,123 +1,85 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH v3 3/4] enter_repo: do not modify input
-Date: Thu, 6 Oct 2011 15:06:04 +0200
-Message-ID: <CABPQNSZFo7u5GBvZzhKDzR5YGYwd0j8-Mb080QymDu9ayV6uDA@mail.gmail.com>
-References: <1317329963-6656-1-git-send-email-kusmabite@gmail.com>
- <1317329963-6656-4-git-send-email-kusmabite@gmail.com> <CABURp0qDsxHwsuyvB6-KvKPrKuUT0-Fpr730TD_TxxFY7fotpA@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: git-cherry-pick and git-commit --amend in version 1.7.6.4
+Date: Thu, 6 Oct 2011 09:09:06 -0400
+Message-ID: <CAG+J_DzY6oW3CgCPDhD81Eue1Ygh+3pR7Q_NZEhauH_qkyUwqQ@mail.gmail.com>
+References: <4E8C6F2F.1070306@6wind.com>
+	<CAG+J_DynqAK8uXDPtHwWpGhfA5qFZifucs91qL79Pu_DmCxG3g@mail.gmail.com>
+	<4E8D5AD0.2040509@6wind.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, peff@peff.net, j6t@kdbg.org,
-	gitster@pobox.com, rene.scharfe@lsrfire.ath.cx
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 06 15:06:51 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: nicolas.dichtel@6wind.com
+X-From: git-owner@vger.kernel.org Thu Oct 06 15:09:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBnf0-0002eC-QJ
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 15:06:51 +0200
+	id 1RBnhL-0003Nd-PF
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 15:09:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758352Ab1JFNGq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Oct 2011 09:06:46 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:63415 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758262Ab1JFNGp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Oct 2011 09:06:45 -0400
-Received: by qyk30 with SMTP id 30so5267107qyk.19
-        for <git@vger.kernel.org>; Thu, 06 Oct 2011 06:06:44 -0700 (PDT)
+	id S935809Ab1JFNJI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Oct 2011 09:09:08 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:50268 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758284Ab1JFNJH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Oct 2011 09:09:07 -0400
+Received: by ggnv2 with SMTP id v2so1667364ggn.19
+        for <git@vger.kernel.org>; Thu, 06 Oct 2011 06:09:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=6NggQDX/mK8TnXjUgDoAbropP6B8/hYM0kW6enyOZKM=;
-        b=AjFtKGSIQRsI7oYEzk5CI5wNgUUkKplpB4SmF8iarg5adabUQqQUvejfLNBizOt/Xi
-         Hbj7Yq1KnV68oGVKYBfNNEozjAN68oxR+Q6Swmvj3yavyPEq3RZ9/OAFDaLoTsKiBwci
-         uWLN4cWgJQslI7dzOlBGYO4+cAtJ364USiRYw=
-Received: by 10.68.33.163 with SMTP id s3mr5950179pbi.10.1317906404374; Thu,
- 06 Oct 2011 06:06:44 -0700 (PDT)
-Received: by 10.68.42.169 with HTTP; Thu, 6 Oct 2011 06:06:04 -0700 (PDT)
-In-Reply-To: <CABURp0qDsxHwsuyvB6-KvKPrKuUT0-Fpr730TD_TxxFY7fotpA@mail.gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=jUqg4tq/COtUcyTS7uODiE8GKh68VnxwneCpX0BwobQ=;
+        b=SdqSvz4E5OAxRb5gVlEoaATK6AOKRUwE3r6YxREd7MywNEwMcLBT4bMuyYHchQJ8VO
+         j2mDKFoOKp4+paHFTZ6Om64swAJcrWFfnKHVd+x899OnpBNrsyxmkwaIu58qUElDl0Yr
+         OHK+Tt/drvSUSvlPu9etirFx+DdTyVEU405Cg=
+Received: by 10.147.5.21 with SMTP id h21mr454730yai.26.1317906546656; Thu, 06
+ Oct 2011 06:09:06 -0700 (PDT)
+Received: by 10.147.32.18 with HTTP; Thu, 6 Oct 2011 06:09:06 -0700 (PDT)
+In-Reply-To: <4E8D5AD0.2040509@6wind.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182943>
 
-On Tue, Oct 4, 2011 at 7:55 PM, Phil Hord <phil.hord@gmail.com> wrote:
-> On Thu, Sep 29, 2011 at 4:59 PM, Erik Faye-Lund <kusmabite@gmail.com>=
- wrote:
->> entr_repo(..., 0) currently modifies the input to strip away
->> trailing slashes. This means that we some times need to copy the
->> input to keep the original.
->
-> I'm also modifying enter_repo() so I'm looking a bit closer at this p=
-atch now.
->
->> Change it to unconditionally copy it into the used_path buffer so
->> we can safely use the input without having to copy it.
->>
->> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
->> ---
-> [...]
->> =A0*/
->> -char *enter_repo(char *path, int strict)
->> +const char *enter_repo(const char *path, int strict)
->> =A0{
->> =A0 =A0 =A0 =A0static char used_path[PATH_MAX];
->> =A0 =A0 =A0 =A0static char validated_path[PATH_MAX];
->> @@ -297,14 +297,15 @@ char *enter_repo(char *path, int strict)
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0};
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0int len =3D strlen(path);
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0int i;
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 while ((1 < len) && (path[len-1] =3D=3D=
- '/')) {
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 path[len-1] =3D 0;
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 while ((1 < len) && (path[len-1] =3D=3D=
- '/'))
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0len--;
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
->> +
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (PATH_MAX <=3D len)
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0return NULL;
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (path[0] =3D=3D '~') {
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 char *newpath =3D expa=
-nd_user_path(path);
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 strncpy(used_path, path, len);
->
-> When len < strlen(path), this will will leave used_path unterminated.
->
+On Thu, Oct 6, 2011 at 3:37 AM, Nicolas Dichtel
+<nicolas.dichtel@6wind.com> wrote:
+> # ls .git
+> branches =C2=A0COMMIT_EDITMSG =C2=A0config =C2=A0description =C2=A0FE=
+TCH_HEAD =C2=A0HEAD =C2=A0hooks
+> =C2=A0index info =C2=A0logs =C2=A0objects =C2=A0ORIG_HEAD =C2=A0packe=
+d-refs =C2=A0refs
 
-Good catch, thanks!
+No CHERRY_PICK_HEAD, so far so good.
 
->> +
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (used_path[0] =3D=3D '~') {
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 char *newpath =3D expa=
-nd_user_path(used_path);
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (!newpath || (PATH=
-_MAX - 10 < strlen(newpath))) {
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0free(=
-newpath);
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0retur=
-n NULL;
->> @@ -316,24 +317,21 @@ char *enter_repo(char *path, int strict)
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 * anyway.
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 */
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0strcpy(used_path, new=
-path); free(newpath);
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 strcpy(validated_path,=
- path);
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 path =3D used_path;
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 strcpy(validated_path,=
- used_path);
->
-> The point of 'validated_path' is to keep the original unmolested,
-> unexpanded path string (plus DWIM suffix), but here you've just
-> replaced validated_path with a copy of the expanded_user_path. =A0On =
-the
-> other hand, we seem always to strcpy(validated_path , path), so we
-> might as well get that done up-front.
+> # git cherry-pick 3f78d1f210ff89af77f042ab7f4a8fee39feb1c9
+> [dev 4cca2c2] drivers/net/usb/asix.c: Fix unaligned accesses
+> =C2=A01 files changed, 33 insertions(+), 1 deletions(-)
 
-Yeah, that's probably better.
+cherry-pick completes successfully.
+
+> # ls .git
+> branches =C2=A0CHERRY_PICK_HEAD =C2=A0COMMIT_EDITMSG =C2=A0config =C2=
+=A0description =C2=A0FETCH_HEAD
+> HEAD =C2=A0hooks =C2=A0index =C2=A0info =C2=A0logs =C2=A0objects =C2=A0=
+ORIG_HEAD =C2=A0packed-refs =C2=A0refs
+
+This is bad. CHERRY_PICK_HEAD should only exist if the cherry-pick fail=
+ed.
+
+I really don't know what could cause this. Possibly a hook in your repo=
+?
+
+Using "GIT_TRACE=3D1 git cherry-pick
+3f78d1f210ff89af77f042ab7f4a8fee39feb1c9" will tell you whether git is
+running any hooks.
+
+I can't think of anything config-wise that would cause this behavior.
+
+I'll peer at the code some more...
+
+j.
