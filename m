@@ -1,73 +1,69 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [BUG] git stash -k show the help message for diff-index
-Date: Thu, 06 Oct 2011 11:54:21 +0200
-Message-ID: <vpqhb3mcunm.fsf@bauges.imag.fr>
-References: <vpqfwj7v5cx.fsf@bauges.imag.fr>
-	<7v4nzn8hcp.fsf@alter.siamese.dyndns.org>
+From: "Bernhard R. Link" <brl+git@mail.brlink.eu>
+Subject: Re: [RFC/PATCH] Add multiple workdir support to branch/checkout
+Date: Thu, 6 Oct 2011 13:25:30 +0200
+Message-ID: <20111006112530.GB27897@server.brlink.eu>
+References: <1317786204-57335-1-git-send-email-jaysoffian@gmail.com>
+ <CACsJy8AqYq+YF+rvUp=BBeFUAtUz783iF2jbUp3fO58yLp9ptQ@mail.gmail.com>
+ <CAG+J_DygQTD5ibco=-NOiKg0BLgBGFJnvV8zPyhngC2iZv_H8g@mail.gmail.com>
+ <7vpqib8jzk.fsf@alter.siamese.dyndns.org>
+ <CAG+J_Dz-GXvRbYUXSoyfyHfOO-_BszcOza9x=ysHhmL5YBW-Jw@mail.gmail.com>
+ <7vzkhf713u.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 06 11:54:44 2011
+X-From: git-owner@vger.kernel.org Thu Oct 06 13:23:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBkf2-0005gw-Et
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 11:54:40 +0200
+	id 1RBm2x-0008NB-UJ
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 13:23:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754344Ab1JFJya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 05:54:30 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:36080 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752300Ab1JFJy3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 05:54:29 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p969ptIv022339
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 6 Oct 2011 11:51:55 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1RBkej-0002z3-9B; Thu, 06 Oct 2011 11:54:21 +0200
-In-Reply-To: <7v4nzn8hcp.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 05 Oct 2011 10:43:02 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 06 Oct 2011 11:51:55 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p969ptIv022339
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1318499519.18814@/VfzPCPqAE2Am1w7j+IgFA
+	id S935824Ab1JFLXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 07:23:22 -0400
+Received: from pcpool00.mathematik.uni-freiburg.de ([132.230.30.150]:49379
+	"EHLO pcpool00.mathematik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S935288Ab1JFLXT (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Oct 2011 07:23:19 -0400
+Received: from pcpool09.mathematik.uni-freiburg.de ([132.230.30.159])
+	by pcpool00.mathematik.uni-freiburg.de with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <brl@pcpool00.mathematik.uni-freiburg.de>)
+	id 1RBm2k-0001ls-TQ; Thu, 06 Oct 2011 13:23:14 +0200
+Received: from brl by pcpool09.mathematik.uni-freiburg.de with local (Exim 4.72)
+	(envelope-from <brl@pcpool00.mathematik.uni-freiburg.de>)
+	id 1RBm4w-0007HP-3v; Thu, 06 Oct 2011 13:25:30 +0200
+Content-Disposition: inline
+In-Reply-To: <7vzkhf713u.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182938>
 
-Junio C Hamano <gitster@pobox.com> writes:
+* Junio C Hamano <gitster@pobox.com> [111005 20:19]:
+> I do not necessarily think that it is a good approach to forbid the same
+> branch to be checked out in two different places, by the way. [...]
+> [...] The problem arises only when one of the repositories try
+> to update or delete the branch while it is checked out in another working
+> tree.
 
-> Hmm, does not reproduce.
->
-> : alter victim-2.git/master; git status
-> # On branch master
-> nothing to commit (working directory clean)
-> : alter victim-2.git/master; git stash -k
-> No local changes to save
-> : alter victim-2.git/master; git version
-> git version 1.7.7
+I think this is mostly the same problem that also make pushing to a
+checked out branch a problem.
 
-Sorry, I should have mentionned that: I had the bug with next.
+Isn't the real problem that a checked out branch / a branch having a
+workdir only has information what branch it belongs to?
 
-I've tried bisecting it down, but the bug mysteriously disappeared
-during the bisect (I did have bad and good commits during bisect, but at
-the end, I had only good commits, and the bad ones weren't
-reproducible).
+Wouldn't both problems (multiple workdirs of the same branch, pushing
+to a checked out branch) solved if each working directory (including
+the default one in a non-bare repository) also stored the commit id
+last checked out? (And then giving a warning, error or automatically
+creating a detached head setting whenever the branch it followed is
+moved behind it's back?)
 
-I can't reproduce anymore.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+	Bernhard R. Link
