@@ -1,57 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] merge-one-file: fix "expr: non-numeric argument"
-Date: Thu, 06 Oct 2011 13:25:04 -0700
-Message-ID: <7vk48hzx3z.fsf@alter.siamese.dyndns.org>
-References: <1317925555-65237-1-git-send-email-jaysoffian@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: in-gitvger@baka.org
+Subject: Re: Pull --rebase looses merge information
+Date: Thu, 06 Oct 2011 16:31:57 -0400
+Message-ID: <201110062031.p96KVvsv018248@no.baka.org>
+References: <DECF417E-50BB-4963-965C-BEF1B5C95DAC@mac.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Cc: git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 06 22:25:20 2011
+To: Duane Murphy <duanemurphy@mac.com>
+X-From: git-owner@vger.kernel.org Thu Oct 06 22:32:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBuVJ-0005L1-5I
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 22:25:17 +0200
+	id 1RBubu-00082A-Hn
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 22:32:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757068Ab1JFUZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 16:25:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43368 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755001Ab1JFUZK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 16:25:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 292705764;
-	Thu,  6 Oct 2011 16:25:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=XFa7dS
-	0AQtsHqkfiy6ElE8SVUojTIaejz2NzXDv3fMr/fSnaY/OMDXvHxuEbY/kFbi7kDb
-	SSP17cM0KBg1YP9yGVZ4Ao0AUSdh/91eYz8dS2ewRATeGxjAh1NOcv4kyS9LIOaz
-	BmkgMUlvzSQTpwjHtyVFE5KaA/U6wJPEAKzjM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VdXeiNeA24BfZ1YkV/3ihAxCJF37Esjo
-	sBSctmT3xft9/v69VXNOvhPQsgMPXQgzhPjThSwwUQHpfve060BTHHHE/iKkOIFN
-	G3Z3enLgBo4/HrkmYtQqGZx8e6kvzMg4w4yRvPPfPCBzz8hmHIdGglpmGffxkbNK
-	3onqT2ajt18=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B9CA5763;
-	Thu,  6 Oct 2011 16:25:07 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A7DEA5759; Thu,  6 Oct 2011
- 16:25:05 -0400 (EDT)
-In-Reply-To: <1317925555-65237-1-git-send-email-jaysoffian@gmail.com> (Jay
- Soffian's message of "Thu, 6 Oct 2011 14:25:55 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 471E9B14-F059-11E0-B44B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759119Ab1JFUcB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 16:32:01 -0400
+Received: from tsutomu.baka.org ([66.114.72.182]:54612 "EHLO tsutomu.baka.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758841Ab1JFUcA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 16:32:00 -0400
+Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
+	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id p96KVwZe012190
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 6 Oct 2011 16:31:58 -0400
+Received: from no.baka.org (localhost [127.0.0.1])
+	by no.baka.org (8.14.4/8.14.0) with ESMTP id p96KVvsv018248;
+	Thu, 6 Oct 2011 16:31:57 -0400
+In-reply-to: <DECF417E-50BB-4963-965C-BEF1B5C95DAC@mac.com>
+Comments: In reply to a message from "Duane Murphy <duanemurphy@mac.com>" dated "Thu, 06 Oct 2011 12:21:56 -0700."
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183030>
 
-Thanks.
+
+In message <DECF417E-50BB-4963-965C-BEF1B5C95DAC@mac.com>, Duane Murphy writes:
+
+    $ git merge topic
+    $ git pull 
+        merge by rebase; implied by config
+    $ git push
+
+    The result of this process is that the file changes are pushed but
+    the reference back to the topic branch has been lost. This makes
+    it appear as though the topic branch has not been merged properly.
+
+[...]
+
+    Is there a bug here? Is there some way to avoid this situation
+    without sacrificing the benefits of pull --rebase?
+
+Yes, but it currently is annoying.
+
+Instead of `git pull --rebase` you need to run
+`git fetch && git rebase -p @{u}`
+
+It would be very nice if the -p argument to rebase could be
+automatically included in the `git pull --rebase`.
+
+I personally believe all pull should be --rebase, all merges should be
+--no-ff, and all rebases should be -p.  At least by default.  But that
+is just me.
+
+					-Seth Robertson
