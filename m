@@ -1,85 +1,89 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: git-cherry-pick and git-commit --amend in version 1.7.6.4
-Date: Thu, 6 Oct 2011 09:09:06 -0400
-Message-ID: <CAG+J_DzY6oW3CgCPDhD81Eue1Ygh+3pR7Q_NZEhauH_qkyUwqQ@mail.gmail.com>
-References: <4E8C6F2F.1070306@6wind.com>
-	<CAG+J_DynqAK8uXDPtHwWpGhfA5qFZifucs91qL79Pu_DmCxG3g@mail.gmail.com>
-	<4E8D5AD0.2040509@6wind.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: nicolas.dichtel@6wind.com
-X-From: git-owner@vger.kernel.org Thu Oct 06 15:09:17 2011
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [RFC/PATCH] remote-curl: Obey passed URL
+Date: Thu,  6 Oct 2011 15:15:59 +0200
+Message-ID: <2f1eccfa3fa9e732e9bea344fd69dfd9b16697a9.1317906388.git.git@drmicha.warpmail.net>
+References: <4E8D4BD5.2090202@drmicha.warpmail.net>
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Tay Ray Chuan <rctay89@gmail.com>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 06 15:16:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBnhL-0003Nd-PF
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 15:09:16 +0200
+	id 1RBno1-0006Am-8k
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 15:16:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935809Ab1JFNJI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Oct 2011 09:09:08 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:50268 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758284Ab1JFNJH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Oct 2011 09:09:07 -0400
-Received: by ggnv2 with SMTP id v2so1667364ggn.19
-        for <git@vger.kernel.org>; Thu, 06 Oct 2011 06:09:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=jUqg4tq/COtUcyTS7uODiE8GKh68VnxwneCpX0BwobQ=;
-        b=SdqSvz4E5OAxRb5gVlEoaATK6AOKRUwE3r6YxREd7MywNEwMcLBT4bMuyYHchQJ8VO
-         j2mDKFoOKp4+paHFTZ6Om64swAJcrWFfnKHVd+x899OnpBNrsyxmkwaIu58qUElDl0Yr
-         OHK+Tt/drvSUSvlPu9etirFx+DdTyVEU405Cg=
-Received: by 10.147.5.21 with SMTP id h21mr454730yai.26.1317906546656; Thu, 06
- Oct 2011 06:09:06 -0700 (PDT)
-Received: by 10.147.32.18 with HTTP; Thu, 6 Oct 2011 06:09:06 -0700 (PDT)
-In-Reply-To: <4E8D5AD0.2040509@6wind.com>
+	id S964807Ab1JFNQE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 09:16:04 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:42805 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758250Ab1JFNQC (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Oct 2011 09:16:02 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 5B2DF266A8;
+	Thu,  6 Oct 2011 09:16:01 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute3.internal (MEProxy); Thu, 06 Oct 2011 09:16:01 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=from:to:cc:subject:date:message-id
+	:in-reply-to:references; s=smtpout; bh=yzLuNfVKtN9dQv+VAf7u0Mpk5
+	Nc=; b=rw+UAsIeZ0wOsAo5wUEGT0WCyDM1HwEuVLrE4ABxygedtyqf/0GwwLTPY
+	vIgR8zIaboq/Q31DR9myO54WIQ4fMpCc2MBlLcOR4ASqqZIjti6Vc2Faii0+GJw5
+	OabhBgfaxI/zSIz+tQow9VF864idgDgyPKh2satKK+Q0u1qEFc=
+X-Sasl-enc: 9KjspiA4kcqQeesd0GmCrzaITFjZIM4VsTcsB3gd3TnE 1317906960
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id C9BC5400595;
+	Thu,  6 Oct 2011 09:16:00 -0400 (EDT)
+X-Mailer: git-send-email 1.7.7.rc2.451.g15e150
+In-Reply-To: <4E8D4BD5.2090202@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182944>
 
-On Thu, Oct 6, 2011 at 3:37 AM, Nicolas Dichtel
-<nicolas.dichtel@6wind.com> wrote:
-> # ls .git
-> branches =C2=A0COMMIT_EDITMSG =C2=A0config =C2=A0description =C2=A0FE=
-TCH_HEAD =C2=A0HEAD =C2=A0hooks
-> =C2=A0index info =C2=A0logs =C2=A0objects =C2=A0ORIG_HEAD =C2=A0packe=
-d-refs =C2=A0refs
+When the curl remote helper is called, e.g., as
 
-No CHERRY_PICK_HEAD, so far so good.
+git-remote-https foo https://john@doe.com
 
-> # git cherry-pick 3f78d1f210ff89af77f042ab7f4a8fee39feb1c9
-> [dev 4cca2c2] drivers/net/usb/asix.c: Fix unaligned accesses
-> =C2=A01 files changed, 33 insertions(+), 1 deletions(-)
+it looks up remote.foo.url rather than taking the provided url, at least
+as far as http_init() is concerned (authentication). (It does use the
+provided url at later stages.)
 
-cherry-pick completes successfully.
+The problem is that for pushing, "git push" looks up the pushurl, which
+may be different, and passes that down to the remote helper, so that the
+remote helper should take that when provided.
 
-> # ls .git
-> branches =C2=A0CHERRY_PICK_HEAD =C2=A0COMMIT_EDITMSG =C2=A0config =C2=
-=A0description =C2=A0FETCH_HEAD
-> HEAD =C2=A0hooks =C2=A0index =C2=A0info =C2=A0logs =C2=A0objects =C2=A0=
-ORIG_HEAD =C2=A0packed-refs =C2=A0refs
+Note that at the init stage, the remote helper does not know what kind of
+transcation is going to be requested, but the caller does.
 
-This is bad. CHERRY_PICK_HEAD should only exist if the cherry-pick fail=
-ed.
+Change it so that the remote helper obeys the passed url rather than
+trying to look it up.
 
-I really don't know what could cause this. Possibly a hook in your repo=
-?
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+While this passes all tests and fixes the described problem, I don't
+know about any side effects. Also, I always feel a bit insecure about
+simply dropping pointers to allocated memory (remote->url[0]). Should
+I free() it? Neither remote-helpers nor memory management are exactly
+homeground for me...
+---
+ remote-curl.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-Using "GIT_TRACE=3D1 git cherry-pick
-3f78d1f210ff89af77f042ab7f4a8fee39feb1c9" will tell you whether git is
-running any hooks.
-
-I can't think of anything config-wise that would cause this behavior.
-
-I'll peer at the code some more...
-
-j.
+diff --git a/remote-curl.c b/remote-curl.c
+index b8cf45a..1fa396a 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -846,6 +846,7 @@ int main(int argc, const char **argv)
+ 
+ 	if (argc > 2) {
+ 		end_url_with_slash(&buf, argv[2]);
++		remote->url[0] = xstrdup(argv[2]);
+ 	} else {
+ 		end_url_with_slash(&buf, remote->url[0]);
+ 	}
+-- 
+1.7.7.rc2.451.g15e150
