@@ -1,119 +1,92 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH v2] mingw: avoid using strbuf in syslog
-Date: Thu,  6 Oct 2011 19:52:48 +0200
-Message-ID: <1317923568-9040-1-git-send-email-kusmabite@gmail.com>
-Cc: drafnel@gmail.com, j.sixt@viscovery.net, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 06 19:53:06 2011
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH v2] revert.c: defer writing CHERRY_PICK_HEAD till it is
+ safe to do so
+Date: Thu, 6 Oct 2011 13:58:01 -0400
+Message-ID: <CAG+J_Dw8w9UGBzq4xK+i+QtA4ZuwJ5w1+mPg15mPNcGLuRaXyg@mail.gmail.com>
+References: <1317923315-54940-1-git-send-email-jaysoffian@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Jay Soffian <jaysoffian@gmail.com>, nicolas.dichtel@6wind.com,
+	Jeff King <peff@peff.net>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 06 19:58:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBs81-0006f2-CA
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 19:53:05 +0200
+	id 1RBsCz-0000Gw-IN
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 19:58:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965243Ab1JFRw7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 13:52:59 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:62565 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965181Ab1JFRw6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 13:52:58 -0400
-Received: by bkbzt4 with SMTP id zt4so3762995bkb.19
-        for <git@vger.kernel.org>; Thu, 06 Oct 2011 10:52:57 -0700 (PDT)
+	id S965245Ab1JFR6D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 13:58:03 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:41629 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750940Ab1JFR6C (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 13:58:02 -0400
+Received: by yxl31 with SMTP id 31so2857040yxl.19
+        for <git@vger.kernel.org>; Thu, 06 Oct 2011 10:58:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=9sGvrea4Udo2pYhbRHJnBsq0Za8cIviHMVP4dVYPK18=;
-        b=flHsKUmMpFF8ncl0z3bJ2oZFbqu9/F0f2UiG4NHgDZmBFF99jP5XHQDjjm7U37l4tl
-         5+Lo5hXsPrWsMnSZqzXUueyjI1uxZIXjusHIS2Wv0PrA0zdlsA4SjW/CiUnhraQ2bT9x
-         ApdGevqLXQ84VsEbBPnKtf/bI8ji5L9u0BYYo=
-Received: by 10.204.133.78 with SMTP id e14mr785803bkt.248.1317923577650;
-        Thu, 06 Oct 2011 10:52:57 -0700 (PDT)
-Received: from localhost ([77.40.159.131])
-        by mx.google.com with ESMTPS id v16sm6400560bkd.6.2011.10.06.10.52.55
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 06 Oct 2011 10:52:56 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6.msysgit.0.579.ga3d6f
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=7lzUmof/GwGW3eRFNygAdiZ3sPpkt1i5yDEUxWh8dWU=;
+        b=NiPSG+CA1BpEGz0I5czfiyVZSjDVoDXUo6mCAuM+IfgliRy3SdLHkcV3gXdwOCPAdG
+         vruGu1uRjWOVyy5kp/3sRoSeAk1ejd+pW0p9X49retMzj+eIOOs0XBah1ki5x1UuPIo2
+         LFUES8ty8WiP5LWsZPS3nceTG4sGKzI7ZMrcc=
+Received: by 10.147.5.21 with SMTP id h21mr763242yai.26.1317923881594; Thu, 06
+ Oct 2011 10:58:01 -0700 (PDT)
+Received: by 10.147.32.18 with HTTP; Thu, 6 Oct 2011 10:58:01 -0700 (PDT)
+In-Reply-To: <1317923315-54940-1-git-send-email-jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183002>
 
-strbuf can call die, which again can call syslog from git-daemon.
+On Thu, Oct 6, 2011 at 1:48 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
+> Note that do_recursive_merge() aborts if the merge cannot start, while
+> try_merge_command() returns a non-zero value other than 1.
 
-Endless recursion is no fun; fix it by hand-rolling the logic. As
-a side-effect malloc/realloc errors are changed into non-fatal
-warnings; this is probably an improvement anyway.
+Maybe you want this on-top:
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
-Noticed-by: Johannes Sixt <j.sixt@viscovery.net>
----
- compat/win32/syslog.c |   30 ++++++++++++++++++------------
- 1 files changed, 18 insertions(+), 12 deletions(-)
-
-diff --git a/compat/win32/syslog.c b/compat/win32/syslog.c
-index 42b95a9..d015e43 100644
---- a/compat/win32/syslog.c
-+++ b/compat/win32/syslog.c
-@@ -1,5 +1,4 @@
- #include "../../git-compat-util.h"
--#include "../../strbuf.h"
- 
- static HANDLE ms_eventlog;
- 
-@@ -16,13 +15,8 @@ void openlog(const char *ident, int logopt, int facility)
- 
- void syslog(int priority, const char *fmt, ...)
- {
--	struct strbuf sb = STRBUF_INIT;
--	struct strbuf_expand_dict_entry dict[] = {
--		{"1", "% 1"},
--		{NULL, NULL}
--	};
- 	WORD logtype;
--	char *str;
-+	char *str, *pos;
- 	int str_len;
- 	va_list ap;
- 
-@@ -39,11 +33,24 @@ void syslog(int priority, const char *fmt, ...)
- 	}
- 
- 	str = malloc(str_len + 1);
-+	if (!str) {
-+		warning("malloc failed: '%s'", strerror(errno));
-+		return;
-+	}
-+
- 	va_start(ap, fmt);
- 	vsnprintf(str, str_len + 1, fmt, ap);
- 	va_end(ap);
--	strbuf_expand(&sb, str, strbuf_expand_dict_cb, &dict);
--	free(str);
-+
-+	while ((pos = strstr(str, "%1")) != NULL) {
-+		str = realloc(str, ++str_len + 1);
-+		if (!str) {
-+			warning("realloc failed: '%s'", strerror(errno));
-+			return;
-+		}
-+		memmove(pos + 2, pos + 1, strlen(pos));
-+		pos[1] = ' ';
-+	}
- 
- 	switch (priority) {
- 	case LOG_EMERG:
-@@ -66,7 +73,6 @@ void syslog(int priority, const char *fmt, ...)
- 	}
- 
- 	ReportEventA(ms_eventlog, logtype, 0, 0, NULL, 1, 0,
--	    (const char **)&sb.buf, NULL);
--
--	strbuf_release(&sb);
-+	    (const char **)&str, NULL);
-+	free(str);
+diff --git i/builtin/revert.c w/builtin/revert.c
+index a95b255c86..7e4857530b 100644
+--- i/builtin/revert.c
++++ w/builtin/revert.c
+@@ -223,7 +223,7 @@ static void advise(const char *advice, ...)
+ 	va_end(params);
  }
--- 
-1.7.6.msysgit.0.579.ga3d6f
+
+-static void print_advice(void)
++static void print_advice(int show_hint)
+ {
+ 	char *msg = getenv("GIT_CHERRY_PICK_HELP");
+
+@@ -238,9 +238,11 @@ static void print_advice(void)
+ 		return;
+ 	}
+
+-	advise("after resolving the conflicts, mark the corrected paths");
+-	advise("with 'git add <paths>' or 'git rm <paths>'");
+-	advise("and commit the result with 'git commit'");
++	if (show_hint) {
++		advise("after resolving the conflicts, mark the corrected paths");
++		advise("with 'git add <paths>' or 'git rm <paths>'");
++		advise("and commit the result with 'git commit'");
++	}
+ }
+
+ static void write_message(struct strbuf *msgbuf, const char *filename)
+@@ -510,7 +512,7 @@ static int do_pick_commit(void)
+ 		      : _("could not apply %s... %s"),
+ 		      find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV),
+ 		      msg.subject);
+-		print_advice();
++		print_advice(res == 1);
+ 		rerere(allow_rerere_auto);
+ 	} else {
+ 		if (!no_commit)
+
+
+j.
