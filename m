@@ -1,85 +1,128 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [RFC/PATCH] Add multiple workdir support to branch/checkout
-Date: Thu, 6 Oct 2011 13:06:25 +1100
-Message-ID: <CACsJy8DZE5jSnOuraaVaW1+nA-hUiTXsNLJYEG+32qEJ1irGiQ@mail.gmail.com>
-References: <1317786204-57335-1-git-send-email-jaysoffian@gmail.com>
- <CACsJy8AqYq+YF+rvUp=BBeFUAtUz783iF2jbUp3fO58yLp9ptQ@mail.gmail.com>
- <CAG+J_DygQTD5ibco=-NOiKg0BLgBGFJnvV8zPyhngC2iZv_H8g@mail.gmail.com>
- <7vpqib8jzk.fsf@alter.siamese.dyndns.org> <CAG+J_Dz-GXvRbYUXSoyfyHfOO-_BszcOza9x=ysHhmL5YBW-Jw@mail.gmail.com>
- <7vzkhf713u.fsf@alter.siamese.dyndns.org> <CACsJy8BHeZZqsOP_+OSPfrPdkYgKQe3LgaGfo3bERD+hWT7U0g@mail.gmail.com>
- <7vaa9f59p5.fsf@alter.siamese.dyndns.org> <CACsJy8D5FGr3R0tLYOND0kKNct4e_KgYfLUK8xL2Q4uNzWczgQ@mail.gmail.com>
- <7vwrcj3sow.fsf@alter.siamese.dyndns.org>
+From: Thorkil Naur <naur@post11.tele.dk>
+Subject: Re: How do I investigate apparently random git clone reports of
+	"error: File ... has bad hash"?
+Date: Thu, 6 Oct 2011 04:34:33 +0200
+Message-ID: <20111006023425.GA2554@tn24>
+References: <loom.20110911T210035-693@post.gmane.org>
+	<m2r53metpo.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 06 04:07:03 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: cvs-ghc <cvs-ghc@haskell.org>, git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: cvs-ghc-bounces@haskell.org Thu Oct 06 04:34:46 2011
+Return-path: <cvs-ghc-bounces@haskell.org>
+Envelope-to: haskell-cvs-ghc@m.gmane.org
+Received: from lambda.haskell.org ([78.46.100.180])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBdMU-0003J9-0Q
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 04:07:02 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757914Ab1JFCG5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Oct 2011 22:06:57 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:56155 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754435Ab1JFCG5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Oct 2011 22:06:57 -0400
-Received: by bkbzt4 with SMTP id zt4so2829413bkb.19
-        for <git@vger.kernel.org>; Wed, 05 Oct 2011 19:06:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=BM7X5l6pWiWAI2+jn/mjx8l10ob/UidsRaRxp/eLJ7c=;
-        b=O2aZliO3VzNK3JKKebEsoFbkA0IFJltjtJVpdJZg/XksmwL3k96SF416QCQyBSuqc6
-         h+KCzH/uqaXE6d7oqY7i4z5IMKnV8ppbSoZZVTS+mGJ8KuHkvdac5LhAZ7fe7T2GDcGD
-         kUAWyKOLzi5hwvxn5b41PaqLg9VPGIJTMAlhI=
-Received: by 10.204.6.210 with SMTP id a18mr132244bka.303.1317866815361; Wed,
- 05 Oct 2011 19:06:55 -0700 (PDT)
-Received: by 10.204.120.75 with HTTP; Wed, 5 Oct 2011 19:06:25 -0700 (PDT)
-In-Reply-To: <7vwrcj3sow.fsf@alter.siamese.dyndns.org>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182918>
+	(envelope-from <cvs-ghc-bounces@haskell.org>)
+	id 1RBdnK-0008Kv-5h
+	for haskell-cvs-ghc@m.gmane.org; Thu, 06 Oct 2011 04:34:46 +0200
+Received: from localhost ([127.0.0.1] helo=lambda.haskell.org)
+	by lambda.haskell.org with esmtp (Exim 4.69)
+	(envelope-from <cvs-ghc-bounces@haskell.org>)
+	id 1RBdnD-0000YE-C9; Thu, 06 Oct 2011 04:34:39 +0200
+Received: from fep48.mail.dk ([195.41.46.231])
+	by lambda.haskell.org with esmtp (Exim 4.69)
+	(envelope-from <naur@post11.tele.dk>) id 1RBdnB-0000Xt-4u
+	for cvs-ghc@haskell.org; Thu, 06 Oct 2011 04:34:37 +0200
+DKIM-Signature: v=1; a=rsa-sha256; d=mail.dk; s=dkim512; c=relaxed/simple;
+	q=dns/txt; i=@mail.dk; t=1317868476;
+	h=From:Subject:Date:To:X-TDCLU:X-TDC-Sender-From-IP:X-TDCCM:MIME-Version:Content-Type;
+	bh=jhKK1J0S+uCN+e1ypwoT7MNWz6NEwHHkdw8yLECvGVA=;
+	b=sHKi26Gqb1AYmTop8D4fxenmpf/ZwP356PMVGK0SUyOGLnxR+0MwPGEARbzv1njW
+	sESISbgCPw7f3q8YFdXLyQ==;
+X-TDC-Sender-From-IP: 87.58.52.58
+X-TDCCM: v=2.0 cv=H6RsC6Hu c=1 sm=0 a=g5E0v2836JlJiYKsdgLjAQ==:17
+	a=XYJHFtupD_QA:10 a=t7DaeAZO0rIA:10 a=kj9zAlcOel0A:10
+	a=JqsHG6aPAAAA:8 a=tBb2bbeoAAAA:8 a=GqJYzsXzbFBoYYmoRakA:9
+	a=tbFGVTYj2cz5WSpypEgA:7 a=CjuIK1q_8ugA:10 a=f2jPalWG8NMA:10
+	a=7-EpqHia3K8A:10 a=YuKU6ANggZ8A:10 a=g5E0v2836JlJiYKsdgLjAQ==:117
+X-TDCLU: MTIwMDEwMzgxMzI1
+Received: from [87.58.52.58] ([87.58.52.58:22828] helo=localhost)
+	by fep48.mail.dk (envelope-from <naur@post11.tele.dk>)
+	(ecelerity 2.2.3.47 r(39824M)) with ESMTPA
+	id 40/F1-00170-BB31D8E4; Thu, 06 Oct 2011 04:34:36 +0200
+Content-Disposition: inline
+In-Reply-To: <m2r53metpo.fsf@igel.home>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-BeenThere: cvs-ghc@haskell.org
+X-Mailman-Version: 2.1.11
+Precedence: list
+List-Id: GHC/CVS discussion and fptools/ghc CVS commit messages
+	<cvs-ghc.haskell.org>
+List-Unsubscribe: <http://www.haskell.org/mailman/options/cvs-ghc>,
+	<mailto:cvs-ghc-request@haskell.org?subject=unsubscribe>
+List-Archive: <http://www.haskell.org/pipermail/cvs-ghc>
+List-Post: <mailto:cvs-ghc@haskell.org>
+List-Help: <mailto:cvs-ghc-request@haskell.org?subject=help>
+List-Subscribe: <http://www.haskell.org/mailman/listinfo/cvs-ghc>,
+	<mailto:cvs-ghc-request@haskell.org?subject=subscribe>
+Sender: cvs-ghc-bounces@haskell.org
+Errors-To: cvs-ghc-bounces@haskell.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182919>
 
-On Thu, Oct 6, 2011 at 10:49 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+Hello Andreas,
+
+Thank you very much for your response. I have separately received the
+advice of upgrading my curl installation:
+
+> Date: Fri, 30 Sep 2011 09:08:56 +0200
+> From: Karel Gardas <karel.gardas@centrum.cz>
+> To: cvs-ghc <cvs-ghc@haskell.org>
+> Subject: Re: tn23 (x86 OSX HEAD), build 442, Failure
+> ...
+> Hello,
 >
->> On Thu, Oct 6, 2011 at 9:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>>> I think of two options:
->>>> ...
->>> Sorry, what problem are you trying to solve? Does that "checkout -f" meant
->>> to nuke the local changes that are not yet at a good "stop point"?
->>
->> I meant "git checkout" on the already locked branch is refused, but
->> "git checkout -f" in that case will act just like "git checkout"
->> ignoring all locks. But I forgot that "git checkout -f" also discards
->> worktree changes. Maybe "git checkout --ignore-locks" instead of "git
->> checkout -f".
->
-> I see what you mean, but doesn't it feel as if it is working around a
-> problem that is introduced only because of a wrong policy (i.e. "you
-> cannot check out the same branch at two places", as opposed to "viewing
-> them in multiple places is perfectly fine, but no touching")?
+> my opensolaris builder machine also suffered from the same issue like
+> tn23 and sometimes even mbolingbroke and others. Symptoms are you are
+> not able to grab the ghc code or subrepos code. The solution is
+> simple: (1) either remove curl from your path or (2) update curl to
+> the latest version (7.21.7 works for me) and make sure it is really
+> using its latest libcurl. Once I did (2) here I've never seen the
+> issue again.
+> ...
 
-Well, we could do change the default so "git checkout" == "git
-checkout --ignore-locks".
+Additional details:
 
-"git commit --ignore-locks" would commit without checking locks. "git
-commit" could either:
+> http://www.haskell.org/pipermail/cvs-ghc/2011-October/066434.html
 
- - reject because it does not hold the lock (to hostile?)
+So it appears that upgrading curl has removed the problem.
 
- - detach automatically then commit
+Best regards
+Thorkil
 
-The latter has a benefit that we can now checkout tags without
-detaching from the beginning. "git branch" would show tag name until
-you commit.
--- 
-Duy
+On Sun, Sep 11, 2011 at 09:59:15PM +0200, Andreas Schwab wrote:
+> Thorkil Naur <naur@post11.tele.dk> writes:
+> 
+> >> $ git clone http://darcs.haskell.org/ghc.git/ build8
+> >> Cloning into build8...
+> >> error: File 42988feeeb76f5cb92b541e9dac277e073bcb3ef has bad hash
+> >> error: Unable to find 42988feeeb76f5cb92b541e9dac277e073bcb3ef under
+> > http://darcs.haskell.org/ghc.git
+> >> Cannot obtain needed blob 42988feeeb76f5cb92b541e9dac277e073bcb3ef
+> >> while processing commit ffb2e81c03a01e74825b3a0223e214df59241fab.
+> >> error: Fetch failed.
+> 
+> I just tried to clone it and got this error:
+> 
+> $ git clone http://darcs.haskell.org/ghc.git
+> Cloning into ghc...
+> error: Recv failure: Connection reset by peer (curl_result = 56, http_code = 0, sha1 = be6810bb027643bf0697b3d237426110f064aba1)
+> error: Unable to find be6810bb027643bf0697b3d237426110f064aba1 under http://darcs.haskell.org/ghc.git
+> Cannot obtain needed commit be6810bb027643bf0697b3d237426110f064aba1
+> while processing commit 6942b112082fbcdff5c66f06f56fdd336861da47.
+> error: Fetch failed.
+> 
+> It looks like this is just a network problem.
+> 
+> Btw, the repo is rather strange.  It's not a bare repo, but does not
+> contain a .git directory.  Instead the files that are normally under
+> .git are placed directly in the working tree.
+> 
+> Andreas.
+> 
+> -- 
+> Andreas Schwab, schwab@linux-m68k.org
+> GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+> "And now for something completely different."
