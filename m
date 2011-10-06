@@ -1,64 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-cherry-pick and author field in version 1.7.6.4
-Date: Thu, 6 Oct 2011 09:26:46 -0400
-Message-ID: <20111006132646.GB1792@sigill.intra.peff.net>
-References: <4E8C6F0E.7000508@6wind.com>
- <20111005174138.GA22962@sigill.intra.peff.net>
- <4E8D5DEA.9010500@6wind.com>
- <20111006112742.GA4445@sigill.intra.peff.net>
- <4E8DA0EE.50208@6wind.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: Merge seems to overwrite unstaged local changes
+Date: Thu, 06 Oct 2011 15:27:40 +0200
+Message-ID: <4E8DACCC.2050302@gmail.com>
+References: <j5v9r7$fi1$1@dough.gmane.org> <7vaa9o1yf7.fsf@alter.siamese.dyndns.org> <CAHGBnuNrhtyq1tfok3p9YHAVbfo9T7BO3ZOUy+8YvNE9Mmhjhg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-X-From: git-owner@vger.kernel.org Thu Oct 06 15:26:55 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Thu Oct 06 15:29:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBnyQ-00022s-2N
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 15:26:54 +0200
+	id 1RBo0l-0002tu-2B
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 15:29:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964865Ab1JFN0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 09:26:50 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54356
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935645Ab1JFN0t (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 09:26:49 -0400
-Received: (qmail 7496 invoked by uid 107); 6 Oct 2011 13:26:49 -0000
-Received: from 208.177.47.101.ptr.us.xo.net (HELO sigill.intra.peff.net) (208.177.47.101)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 06 Oct 2011 09:26:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Oct 2011 09:26:46 -0400
-Content-Disposition: inline
-In-Reply-To: <4E8DA0EE.50208@6wind.com>
+	id S964897Ab1JFN3O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 09:29:14 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:64765 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935837Ab1JFN3N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 09:29:13 -0400
+Received: by bkbzt4 with SMTP id zt4so3449680bkb.19
+        for <git@vger.kernel.org>; Thu, 06 Oct 2011 06:29:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=mkqn/QqDls4j3Bbdy4+Q5reebcYX9P7y2FLVYtf/W0M=;
+        b=VPmpzeTAMgWoVzNTr1UQfV0FcBbXmdHPGW5efkfZdOD31tqSFhb9hgmHbVnxWKnsSq
+         5MIV98RgWF0NbfmC5rtsn1CZtdC4BLY+7HOIx1bcMHgZf9lIW2beyJW+6ayO87vIICD9
+         xzsK6raxmKpPwbQIDR5eWBwZlSVjo6NqayAIM=
+Received: by 10.204.157.22 with SMTP id z22mr586489bkw.55.1317907752529;
+        Thu, 06 Oct 2011 06:29:12 -0700 (PDT)
+Received: from [130.73.68.203] (jambul.zib.de. [130.73.68.203])
+        by mx.google.com with ESMTPS id b17sm5559064bkd.8.2011.10.06.06.29.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 06 Oct 2011 06:29:10 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <CAHGBnuNrhtyq1tfok3p9YHAVbfo9T7BO3ZOUy+8YvNE9Mmhjhg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/182948>
 
-On Thu, Oct 06, 2011 at 02:37:02PM +0200, Nicolas Dichtel wrote:
+On 29.09.2011 15:07, Sebastian Schuberth wrote:
 
-> >>Maybe it is related to the problem I've reported in another thread:
-> >>http://comments.gmane.org/gmane.comp.version-control.git/182853
-> >
-> >Possibly. That issue is about the commit that comes _after_ the
-> >cherry-pick, and in this instance, things are already wrong for you by
-> >the time the cherry-pick has completed.
-> >
-> >However, the problem has to do with leaving a stale state file in .git,
-> >so perhaps a previous partially-completed cherry-pick has left cruft in
-> >.git that is confusing this cherry-pick (i.e., I can't reproduce because
-> >it is being affected by something that happened before the commands
-> >above). So let's see what Jay comes up with for solving the other
-> >problem, and I suspect it may just fix this issue, too.
-> I think so too. Will wait.
+>> There recently have been quite a change in merge-recursive implementation
+>> and it would be really nice if you can try this again with the tip of
+>> 'master' before 1.7.7 final ships.
+>
+> The unstaged changes do not seem to get lost during the merge anymore
+> when using git version 1.7.7.rc3.4.g8d714 on Linux. I guess that
+> somewhat confirms that there's a bug in git<  1.7.7. I'll write a word
+> of warning to our in-house git users that they should always commit
+> before merging ...
 
-Since you can reproduce this so readily, and since you said it seems to
-work with older versions of git, you might try bisecting. There's a
-reasonable chance it will just end up at Jay's CHERRY_PICK_HEAD commit,
-but it might be worth doing.
+It seems I'm not the only one who lost code due to this bug. For a more 
+detailed analysis see this blog post:
 
--Peff
+http://benno.id.au/blog/2011/10/01/git-recursive-merge-broken
+
+As it turns out, my use case also involves a rename of the file in which 
+changes were lost. And just like for the blog's author it somewhat 
+concerns me and shakes my confidence in Git for how long this severe bug 
+slipped through undetected.
+
+-- 
+Sebastian Schuberth
