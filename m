@@ -1,85 +1,61 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH/RFC jn/ident-from-etc-mailname] ident: do not retrieve
- default ident when unnecessary
-Date: Thu, 6 Oct 2011 13:48:23 -0500
-Message-ID: <20111006184823.GB16942@elie>
-References: <20111003045745.GA17604@elie>
- <7v8vp2iqvc.fsf@alter.siamese.dyndns.org>
- <20111003061633.GB17289@elie>
- <4E895FBD.8020904@viscovery.net>
- <20111003074433.GD17289@elie>
- <7vty7pga7y.fsf@alter.siamese.dyndns.org>
- <20111006171719.GB6946@elie>
- <7vy5wyyod1.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	Matt Kraai <kraai@ftbfs.org>, Gerrit Pape <pape@smarden.org>,
-	Ian Jackson <ijackson@chiark.greenend.org.uk>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 06 20:48:41 2011
+From: Teemu Matilainen <teemu.matilainen@iki.fi>
+Subject: [PATCH 1/3] completion: unite --reuse-message and --reedit-message handling
+Date: Thu,  6 Oct 2011 21:40:29 +0300
+Message-ID: <1317926431-609-1-git-send-email-teemu.matilainen@iki.fi>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Teemu Matilainen <teemu.matilainen@iki.fi>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 06 20:50:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBszn-00049G-Gi
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 20:48:39 +0200
+	id 1RBt1M-0004ig-8a
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 20:50:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758961Ab1JFSsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 14:48:33 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:50678 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758890Ab1JFSsc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 14:48:32 -0400
-Received: by yxl31 with SMTP id 31so2904912yxl.19
-        for <git@vger.kernel.org>; Thu, 06 Oct 2011 11:48:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=VLpZKsVAT+k0ArRkKRuFFBgBKfYlj65B3dWDbPo03II=;
-        b=T9EH1T9aiB92XySQUr2UQrh76S+0Cna2foO9UluVdQsQC6zWTwd1IqFXgTJNBvdKTf
-         BJtDZOR0o953pmw22xhyFxGYPedlT9vt+Iye2gjTINp1WnkIokmVKgxVVf3CfaHn0GCV
-         SvGZx5NUUPe5/CdzW1nXAz7JAogGvgPaCI5xc=
-Received: by 10.236.178.41 with SMTP id e29mr5245582yhm.117.1317926910921;
-        Thu, 06 Oct 2011 11:48:30 -0700 (PDT)
-Received: from elie (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id d5sm8868584yhl.19.2011.10.06.11.48.29
-        (version=SSLv3 cipher=OTHER);
-        Thu, 06 Oct 2011 11:48:30 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vy5wyyod1.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S965251Ab1JFSuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 14:50:08 -0400
+Received: from mx.reaktor.fi ([82.203.205.80]:43170 "EHLO mx.reaktor.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758991Ab1JFSuG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 14:50:06 -0400
+Received: from localhost.localdomain (v18-46.openvpn.reaktor.fi [10.1.18.46])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx.reaktor.fi (Postfix) with ESMTPSA id 5B8F03BACF;
+	Thu,  6 Oct 2011 21:41:18 +0300 (EEST)
+X-Mailer: git-send-email 1.7.7.138.g7f41b6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183016>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Signed-off-by: Teemu Matilainen <teemu.matilainen@iki.fi>
+---
+ contrib/completion/git-completion.bash |    8 ++------
+ 1 files changed, 2 insertions(+), 6 deletions(-)
 
->> Avoid a getpwuid() call (which contacts the network if the password
->> database is not local), read of /etc/mailname, gethostname() call, and
->> reverse DNS lookup if the user has already chosen a name and email
->> through configuration, the environment, or the command line.
->
-> Oh boy that is a hard to parse paragraph that took me three reads.
-
-Here's a possible replacement:
-
- Avoid looking up the current user's password database entry (which
- might be on another machine) and the current machine's domain name for
- outgoing mail (which can involve a reverse DNS lookup) when the
- environment, configuration, or command line specifies a name and email
- that would override them.
-
-Or it might make sense to drop that paragraph altogether, since the
-subject line already says as much.
-
-Thanks for looking it over.
-
-Sleepily,
-Jonathan
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 8648a36..656297d 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1259,12 +1259,8 @@ _git_commit ()
+ 			" "" "${cur##--cleanup=}"
+ 		return
+ 		;;
+-	--reuse-message=*)
+-		__gitcomp "$(__git_refs)" "" "${cur##--reuse-message=}"
+-		return
+-		;;
+-	--reedit-message=*)
+-		__gitcomp "$(__git_refs)" "" "${cur##--reedit-message=}"
++	--reuse-message=*|--reedit-message=*)
++		__gitcomp "$(__git_refs)" "" "${cur#*=}"
+ 		return
+ 		;;
+ 	--untracked-files=*)
+-- 
+1.7.7.138.g7f41b6
