@@ -1,58 +1,69 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] completion: unite --reuse-message and
- --reedit-message handling
-Date: Thu, 06 Oct 2011 16:14:28 -0700
-Message-ID: <7vd3e9yap7.fsf@alter.siamese.dyndns.org>
-References: <1317926431-609-1-git-send-email-teemu.matilainen@iki.fi>
+Subject: Re: Prompt for merge message?
+Date: Thu, 06 Oct 2011 16:17:19 -0700
+Message-ID: <7v8voxyakg.fsf@alter.siamese.dyndns.org>
+References: <6eb7acc7-f4be-4b90-a2fa-a0c91ed9a5a8@t11g2000yqk.googlegroups.com>
+ <7vsjn5ye0x.fsf@alter.siamese.dyndns.org>
+ <CAJo=hJvFytscxyx2z+Fdw9E1DS02wSXgoE3SHkxKq2OYOMQHgQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Teemu Matilainen <teemu.matilainen@iki.fi>
-X-From: git-owner@vger.kernel.org Fri Oct 07 01:14:37 2011
+Cc: "Todd A. Jacobs" <nospam+listmail@codegnome.org>,
+	git@vger.kernel.org
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Oct 07 01:17:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBx9B-0002pX-7K
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 01:14:37 +0200
+	id 1RBxBy-0003Wn-Hr
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 01:17:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935763Ab1JFXOc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 19:14:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53909 "EHLO
+	id S965330Ab1JFXRY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 19:17:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55275 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759370Ab1JFXOb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 19:14:31 -0400
+	id S1759400Ab1JFXRX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 19:17:23 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B8FF76470;
-	Thu,  6 Oct 2011 19:14:30 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF31C6570;
+	Thu,  6 Oct 2011 19:17:22 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=87kXL/yU8W5qt7kt7z3wL1e9XUU=; b=UKzNDk
-	ZnrfOa6tBBJynSEU8VkRgU/66RbPlyye4s1bVTl4Zf14YaSyxEGXP+YC3OdEoWfZ
-	DmKAwlD0jqXAxD52n4CpNkSbNCKhXWbMuKT9+yiPSfWf5X5d8Ruc7K+ejBlW7Bso
-	YPdHzeiIX2MWhk8tOXPWhXvd9JRww+VPOCa/0=
+	:content-type; s=sasl; bh=osHr+5MUoeZcc1XrjP2wHP8IGcE=; b=Kfb+10
+	NQR56JsXl7Oi9R+9oUgUcSlw2FJ8PBG/hBWIxL7Hi3FIMFQB6ufImNMM0HfbFCZn
+	T7nHU7FlecaGFZutEXWWutKqmE3LNNKOXKr5qqO9gyDn3iyVwmDt4CSgBJJlH2xp
+	5f0ylNgARBaWl+LgV8N4+ZcWzZyLBMAIYXgUk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J85g3MdKPsT8LKPRtamVhTKgQjhpkQrj
-	lzZjaSR+XOEQBnVYp+Df7UjcZ8FYzufAIGr6JA2ZRhSnQKe6hYCxXluyKtzyJ+kg
-	1MwxvIuSwswcWwXUp2t61UXZmRIdodWphO4nS0rGkNYlHevRkYtCuRazbhfx3qrO
-	ICqFKx9O/lk=
+	:content-type; q=dns; s=sasl; b=h5rFYSXIJRhX/fAYb9tOwo2mIiw+/xEU
+	C+tUjff4cnKploUkaWirjUhn1lBZNsLsfzh4zGCKoX2OUTx27BlA040C48qbu+Ex
+	/oMnqjKPdrmJjloU6T6hbkTdDQhor9upGN8F1TDI/ClTD0sq4NyKYjZRB0Epebvw
+	Cm7Ny0wuwHM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF7DC646F;
-	Thu,  6 Oct 2011 19:14:30 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D61DF656F;
+	Thu,  6 Oct 2011 19:17:22 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2AC82646E; Thu,  6 Oct 2011
- 19:14:30 -0400 (EDT)
-In-Reply-To: <1317926431-609-1-git-send-email-teemu.matilainen@iki.fi> (Teemu
- Matilainen's message of "Thu, 6 Oct 2011 21:40:29 +0300")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1594F656E; Thu,  6 Oct 2011
+ 19:17:21 -0400 (EDT)
+In-Reply-To: <CAJo=hJvFytscxyx2z+Fdw9E1DS02wSXgoE3SHkxKq2OYOMQHgQ@mail.gmail.com> (Shawn
+ Pearce's message of "Thu, 6 Oct 2011 15:09:26 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F19F3D52-F070-11E0-8047-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 581717EE-F071-11E0-9491-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183049>
 
-All three patches make sense to me. Thanks.
+Shawn Pearce <spearce@spearce.org> writes:
+
+> to git merge? I know the reason we don't want to do it all of the time
+> is because git merge is already used in a lot of scripts. But how many
+> of those are running with an active terminal on all 3 standard fds
+> when it runs git merge?
+
+Ninety four?
+
+$ git grep -l 'git merge' -- 't/t[0-9][0-9][0-9][0-9]-*.sh' | wc -l
