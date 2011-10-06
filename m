@@ -1,63 +1,157 @@
 From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH v3 3/5] builtin/mv.c: plug miniscule memory leak
-Date: Thu,  6 Oct 2011 13:22:23 -0500
-Message-ID: <U4wiHVyDLLG1PhI-8iY3YqpVXvr151LbD3OSy1NeXQm5ByYpuasT4PQ2mikx8l9NCM-x0SQVCoNYKu2B_37OiPIe7xhKUs0BWoBswpMpuwrxmIZKhEHGr_44lDLJGr3mebaKn5BoGro@cipher.nrlssc.navy.mil>
+Subject: [PATCH v3 4/5] attr: read core.attributesfile from git_default_core_config
+Date: Thu,  6 Oct 2011 13:22:24 -0500
+Message-ID: <U4wiHVyDLLG1PhI-8iY3YljG5XnXCSQW-EJ7qKWa1bE0OZIDnUlSVkFyweS7FdaYLHyDajBWhaSSiQNIf4HLi7sINgYDYgNVVZFZ6Sg5YaJNBhMXLQ1f9nSs13sKBYh_-kN6HUeDiTQ@cipher.nrlssc.navy.mil>
 References: <VYN8m1JCy102-eaWWa-bsunEvt3zeXLJkVg7FZKZCtXT-Ww0vg7a8xA7NTvrZTiovKTnJ9Hlom0@cipher.nrlssc.navy.mil>
 Cc: git@vger.kernel.org, peff@peff.net, j.sixt@viscovery.net,
 	Brandon Casey <drafnel@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Oct 06 20:23:38 2011
+X-From: git-owner@vger.kernel.org Thu Oct 06 20:23:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBsbZ-0002nP-Gv
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 20:23:37 +0200
+	id 1RBsba-0002nP-LX
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 20:23:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758874Ab1JFSW7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 14:22:59 -0400
-Received: from mail4.nrlssc.navy.mil ([128.160.11.9]:45180 "EHLO
+	id S1758906Ab1JFSXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 14:23:32 -0400
+Received: from mail4.nrlssc.navy.mil ([128.160.11.9]:45187 "EHLO
 	mail3.nrlssc.navy.mil" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751016Ab1JFSW5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 14:22:57 -0400
-Received: by mail3.nrlssc.navy.mil id p96IMpHX031890; Thu, 6 Oct 2011 13:22:51 -0500
+	with ESMTP id S1758872Ab1JFSW7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 14:22:59 -0400
+Received: by mail3.nrlssc.navy.mil id p96IMqJd031897; Thu, 6 Oct 2011 13:22:52 -0500
 In-Reply-To: <VYN8m1JCy102-eaWWa-bsunEvt3zeXLJkVg7FZKZCtXT-Ww0vg7a8xA7NTvrZTiovKTnJ9Hlom0@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 06 Oct 2011 18:22:51.0506 (UTC) FILETIME=[F555C520:01CC8454]
+X-OriginalArrivalTime: 06 Oct 2011 18:22:52.0646 (UTC) FILETIME=[F603B860:01CC8454]
 X-Virus-Scanned: clamav-milter 0.97.2 at mail4
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183010>
 
-From: Brandon Casey <drafnel@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 
-The "it" string would not be free'ed if base_name was non-NULL.
-Let's free it.
+This code calls git_config from a helper function to parse the config entry
+it is interested in.  Calling git_config in this way may cause a problem if
+the helper function can be called after a previous call to git_config by
+another function since the second call to git_config may reset some
+variable to the value in the config file which was previously overridden.
+
+The above is not a problem in this case since the function passed to
+git_config only parses one config entry and the variable it sets is not
+assigned outside of the parsing function.  But a programmer who desires
+all of the standard config options to be parsed may be tempted to modify
+git_attr_config() so that it falls back to git_default_config() and then it
+_would_ be vulnerable to the above described behavior.
+
+So, move the call to git_config up into the top-level cmd_* function and
+move the responsibility for parsing core.attributesfile into the main
+config file parser.
+
+Which is only the logical thing to do ;-)
 
 Signed-off-by: Brandon Casey <drafnel@gmail.com>
 ---
- builtin/mv.c |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+ attr.c               |   15 ++-------------
+ builtin/check-attr.c |    2 ++
+ cache.h              |    1 +
+ config.c             |    3 +++
+ environment.c        |    1 +
+ 5 files changed, 9 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/mv.c b/builtin/mv.c
-index e9d191f..5efe6c5 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -29,7 +29,11 @@ static const char **copy_pathspec(const char *prefix, const char **pathspec,
- 			to_copy--;
- 		if (to_copy != length || base_name) {
- 			char *it = xmemdupz(result[i], to_copy);
--			result[i] = base_name ? xstrdup(basename(it)) : it;
-+			if (base_name) {
-+				result[i] = xstrdup(basename(it));
-+				free(it);
-+			} else
-+				result[i] = it;
+diff --git a/attr.c b/attr.c
+index 0793859..124337d 100644
+--- a/attr.c
++++ b/attr.c
+@@ -20,8 +20,6 @@ static const char git_attr__unknown[] = "(builtin)unknown";
+ #define ATTR__UNSET NULL
+ #define ATTR__UNKNOWN git_attr__unknown
+ 
+-static const char *attributes_file;
+-
+ /* This is a randomly chosen prime. */
+ #define HASHSIZE 257
+ 
+@@ -494,14 +492,6 @@ static int git_attr_system(void)
+ 	return !git_env_bool("GIT_ATTR_NOSYSTEM", 0);
+ }
+ 
+-static int git_attr_config(const char *var, const char *value, void *dummy)
+-{
+-	if (!strcmp(var, "core.attributesfile"))
+-		return git_config_pathname(&attributes_file, var, value);
+-
+-	return 0;
+-}
+-
+ static void bootstrap_attr_stack(void)
+ {
+ 	if (!attr_stack) {
+@@ -521,9 +511,8 @@ static void bootstrap_attr_stack(void)
+ 			}
  		}
+ 
+-		git_config(git_attr_config, NULL);
+-		if (attributes_file) {
+-			elem = read_attr_from_file(attributes_file, 1);
++		if (git_attributes_file) {
++			elem = read_attr_from_file(git_attributes_file, 1);
+ 			if (elem) {
+ 				elem->origin = NULL;
+ 				elem->prev = attr_stack;
+diff --git a/builtin/check-attr.c b/builtin/check-attr.c
+index 708988a..abb1165 100644
+--- a/builtin/check-attr.c
++++ b/builtin/check-attr.c
+@@ -92,6 +92,8 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
+ 	struct git_attr_check *check;
+ 	int cnt, i, doubledash, filei;
+ 
++	git_config(git_default_config, NULL);
++
+ 	argc = parse_options(argc, argv, prefix, check_attr_options,
+ 			     check_attr_usage, PARSE_OPT_KEEP_DASHDASH);
+ 
+diff --git a/cache.h b/cache.h
+index 607c2ea..8d95fb2 100644
+--- a/cache.h
++++ b/cache.h
+@@ -589,6 +589,7 @@ extern int warn_ambiguous_refs;
+ extern int shared_repository;
+ extern const char *apply_default_whitespace;
+ extern const char *apply_default_ignorewhitespace;
++extern const char *git_attributes_file;
+ extern int zlib_compression_level;
+ extern int core_compression_level;
+ extern int core_compression_seen;
+diff --git a/config.c b/config.c
+index 4183f80..d3bcaa0 100644
+--- a/config.c
++++ b/config.c
+@@ -491,6 +491,9 @@ static int git_default_core_config(const char *var, const char *value)
+ 		return 0;
  	}
- 	return get_pathspec(prefix, result);
+ 
++	if (!strcmp(var, "core.attributesfile"))
++		return git_config_pathname(&git_attributes_file, var, value);
++
+ 	if (!strcmp(var, "core.bare")) {
+ 		is_bare_repository_cfg = git_config_bool(var, value);
+ 		return 0;
+diff --git a/environment.c b/environment.c
+index e96edcf..d60b73f 100644
+--- a/environment.c
++++ b/environment.c
+@@ -29,6 +29,7 @@ const char *git_log_output_encoding;
+ int shared_repository = PERM_UMASK;
+ const char *apply_default_whitespace;
+ const char *apply_default_ignorewhitespace;
++const char *git_attributes_file;
+ int zlib_compression_level = Z_BEST_SPEED;
+ int core_compression_level;
+ int core_compression_seen;
 -- 
 1.7.7
