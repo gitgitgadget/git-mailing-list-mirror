@@ -1,244 +1,123 @@
-From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
-Subject: [PATCH 2/3] fetch: honor the user-provided refspecs when pruning refs
-Date: Thu,  6 Oct 2011 23:21:46 +0200
-Message-ID: <1317936107-1230-3-git-send-email-cmn@elego.de>
-References: <20111006205103.GA1271@erythro.kitwarein.com>
- <1317936107-1230-1-git-send-email-cmn@elego.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] commit: teach --gpg-sign option
+Date: Thu, 06 Oct 2011 14:29:00 -0700
+Message-ID: <7v8voxzu5f.fsf@alter.siamese.dyndns.org>
+References: <7vaa9f3pk8.fsf@alter.siamese.dyndns.org>
+ <CAJo=hJvWbjEM9E5AjPHgmQ=eY8xf=Q=xtukeu2Ur7auUqeabDg@mail.gmail.com>
+ <20111006171107.GA10973@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	mathstuf@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 06 23:22:01 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 06 23:29:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBvOB-0000sC-Kg
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 23:22:00 +0200
+	id 1RBvV8-0003DH-9D
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Oct 2011 23:29:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965076Ab1JFVVy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Oct 2011 17:21:54 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:53066 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935753Ab1JFVVx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 17:21:53 -0400
-Received: from centaur.lab.cmartin.tk (brln-4db9e4ec.pool.mediaWays.net [77.185.228.236])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 2374A46185;
-	Thu,  6 Oct 2011 23:21:27 +0200 (CEST)
-Received: (nullmailer pid 1276 invoked by uid 1000);
-	Thu, 06 Oct 2011 21:21:47 -0000
-X-Mailer: git-send-email 1.7.5.2.354.g349bf
-In-Reply-To: <1317936107-1230-1-git-send-email-cmn@elego.de>
+	id S1756964Ab1JFV3F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 17:29:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37100 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755602Ab1JFV3E (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 17:29:04 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 29DC7691F;
+	Thu,  6 Oct 2011 17:29:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pNUJdG1Eu6NhsWfcvDXLMOoOjrA=; b=q/C0jA
+	XiGZwMckqhDBeY1qHok4CWsMT5QrcY2B8GFLYwEkp65qFGIyqw3dMpVMApTtkWOm
+	uYYrNDvg+4dav60NA+yTPA1C3KuK1L6qIrs7oQM6er3xgtxdGssM2vTs4rZ5kASZ
+	xC49mxO8044cGVo4lk0i8xW694QZzyn73N7Ts=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=x6RMP8zvWVVZcKJEUx0lLaM9lXuR++YO
+	p1UHtXYWVI9w7j+mFLTMDJRX273/fIQJXwxr9uE1klCbxGVFhUY1UR25TyZYgN8k
+	zc/wYgUhCZeMBs8yLnmVu0X5skLJcmEfkP0m00D7UohayfJkBcebkEp8Jvk41iVq
+	hzj650TnA9w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2158B691E;
+	Thu,  6 Oct 2011 17:29:03 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5EFAE691A; Thu,  6 Oct 2011
+ 17:29:02 -0400 (EDT)
+In-Reply-To: <20111006171107.GA10973@elie> (Jonathan Nieder's message of
+ "Thu, 6 Oct 2011 12:11:07 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 35F7B7F4-F062-11E0-BE3D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183038>
 
-If the user gave us refspecs on the command line, we should use those
-when deciding whether to prune a ref instead of relying on the
-refspecs in the config.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Previously, running
+>> I like this approach better than the prior "push certificate" idea.
+>> The signature information is part of the history graph
+>
+> I probably missed some earlier discussion (so please forgive me this),
 
-    git fetch --prune origin refs/heads/master:refs/remotes/origin/mast=
-er
+Heh, you are not forgiven when the original message has a clear pointer to
+the previous discussion ;-).
 
-would delete every other tag under the origin namespace because we
-were using the refspec to filter the available refs but using the
-configured refspec to figure out if a ref had been deleted on the
-remote. This is clearly the wrong thing to do.
+> but how is it intended to be used?  Would projects
+>
+>  a. require as a matter of policy that all commits be signed
 
-Teach get_stale_heads about user-provided refspecs and use them if
-they're available.
+Possible. Personally I would _not_ advise it but they can send in a patch
+to add a configuration or two if they do want to run their project that
+way.
 
-Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
----
- builtin/fetch.c  |    6 ++--
- builtin/remote.c |    2 +-
- remote.c         |   78 ++++++++++++++++++++++++++++++++++++++++++++++=
-+++-----
- remote.h         |    3 +-
- 4 files changed, 77 insertions(+), 12 deletions(-)
+>  b. just sign releases as usual, but as commits in the history graph
+>     instead of tags
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 30b485e..b937d71 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -505,10 +505,10 @@ static int fetch_refs(struct transport *transport=
-, struct ref *ref_map)
- 	return ret;
- }
-=20
--static int prune_refs(struct transport *transport, struct ref *ref_map=
-)
-+static int prune_refs(struct transport *transport, struct refspec *ref=
-s, int n, struct ref *ref_map)
- {
- 	int result =3D 0;
--	struct ref *ref, *stale_refs =3D get_stale_heads(transport->remote, r=
-ef_map);
-+	struct ref *ref, *stale_refs =3D get_stale_heads(transport->remote, r=
-ef_map, refs, n);
- 	const char *dangling_msg =3D dry_run
- 		? _("   (%s will become dangling)\n")
- 		: _("   (%s has become dangling)\n");
-@@ -700,7 +700,7 @@ static int do_fetch(struct transport *transport,
- 		return 1;
- 	}
- 	if (prune)
--		prune_refs(transport, ref_map);
-+		prune_refs(transport, refs, ref_count, ref_map);
- 	free_refs(ref_map);
-=20
- 	/* if neither --no-tags nor --tags was specified, do automated tag
-diff --git a/builtin/remote.c b/builtin/remote.c
-index b25dfb4..91a2148 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -349,7 +349,7 @@ static int get_ref_states(const struct ref *remote_=
-refs, struct ref_states *stat
- 		else
- 			string_list_append(&states->tracked, abbrev_branch(ref->name));
- 	}
--	stale_refs =3D get_stale_heads(states->remote, fetch_map);
-+	stale_refs =3D get_stale_heads(states->remote, fetch_map, NULL, 0);
- 	for (ref =3D stale_refs; ref; ref =3D ref->next) {
- 		struct string_list_item *item =3D
- 			string_list_append(&states->stale, abbrev_branch(ref->name));
-diff --git a/remote.c b/remote.c
-index 7840d2f..28f7917 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1684,26 +1684,88 @@ struct stale_heads_info {
- 	struct remote *remote;
- 	struct string_list *ref_names;
- 	struct ref **stale_refs_tail;
-+	struct refspec *refs;
-+	int ref_count;
- };
-=20
-+/*
-+ * Find a refspec to a remote's
-+ * Returns 0 on success, -1 if it couldn't find a the refspec
-+ */
-+static int find_in_refs(struct refspec *refs, int ref_count, struct re=
-fspec *query)
-+{
-+	int i;
-+	struct refspec *refspec;
-+
-+	for (i =3D 0; i < ref_count; ++i) {
-+		refspec =3D &refs[i];
-+
-+		/* No dst means it can't be used for prunning. */
-+		if (!refspec->dst)
-+			continue;
-+
-+		/*
-+		 * No '*' means that it must match exactly. If it does
-+		 * have it, try to match it against the pattern. If
-+		 * the refspec matches, store the ref name as it would
-+		 * appear in the server in query->src.
-+		 */
-+		if (!strchr(refspec->dst, '*')) {
-+			if (!strcmp(query->dst, refspec->dst)) {
-+				query->src =3D xstrdup(refspec->src);
-+				return 0;
-+			}
-+		} else {
-+			if (match_name_with_pattern(refspec->dst, query->dst,
-+						    refspec->src, &query->src)) {
-+				return 0;
-+			}
-+		}
-+	}
-+
-+	return -1;
-+}
-+
- static int get_stale_heads_cb(const char *refname,
- 	const unsigned char *sha1, int flags, void *cb_data)
- {
- 	struct stale_heads_info *info =3D cb_data;
- 	struct refspec refspec;
-+	int ret;
- 	memset(&refspec, 0, sizeof(refspec));
- 	refspec.dst =3D (char *)refname;
--	if (!remote_find_tracking(info->remote, &refspec)) {
--		if (!((flags & REF_ISSYMREF) ||
--		    string_list_has_string(info->ref_names, refspec.src))) {
--			struct ref *ref =3D make_linked_ref(refname, &info->stale_refs_tail=
-);
--			hashcpy(ref->new_sha1, sha1);
--		}
-+
-+	/*
-+	 * If the user speicified refspecs on the command line, we
-+	 * should only use those to check. Otherwise, look in the
-+	 * remote's configuration for the branch.
-+	 */
-+	if (info->ref_count)
-+		ret =3D find_in_refs(info->refs, info->ref_count, &refspec);
-+	else
-+		ret =3D remote_find_tracking(info->remote, &refspec);
-+
-+	/* No matches */
-+	if (ret)
-+		return 0;
-+
-+	/*
-+	 * If we did find a suitable refspec and it's not a symref and
-+	 * it's not in the list of refs that currently exist in that
-+	 * remote we consider it to be stale.
-+	 */
-+	if (!((flags & REF_ISSYMREF) ||
-+	      string_list_has_string(info->ref_names, refspec.src))) {
-+		struct ref *ref =3D make_linked_ref(refname, &info->stale_refs_tail)=
-;
-+		hashcpy(ref->new_sha1, sha1);
- 	}
-+
-+	free(refspec.src);
- 	return 0;
- }
-=20
--struct ref *get_stale_heads(struct remote *remote, struct ref *fetch_m=
-ap)
-+struct ref *get_stale_heads(struct remote *remote, struct ref *fetch_m=
-ap,
-+			    struct refspec *refs, int ref_count)
- {
- 	struct ref *ref, *stale_refs =3D NULL;
- 	struct string_list ref_names =3D STRING_LIST_INIT_NODUP;
-@@ -1711,6 +1773,8 @@ struct ref *get_stale_heads(struct remote *remote=
-, struct ref *fetch_map)
- 	info.remote =3D remote;
- 	info.ref_names =3D &ref_names;
- 	info.stale_refs_tail =3D &stale_refs;
-+	info.refs =3D refs;
-+	info.ref_count =3D ref_count;
- 	for (ref =3D fetch_map; ref; ref =3D ref->next)
- 		string_list_append(&ref_names, ref->name);
- 	sort_string_list(&ref_names);
-diff --git a/remote.h b/remote.h
-index 9a30a9d..2f753a0 100644
---- a/remote.h
-+++ b/remote.h
-@@ -164,6 +164,7 @@ struct ref *guess_remote_head(const struct ref *hea=
-d,
- 			      int all);
-=20
- /* Return refs which no longer exist on remote */
--struct ref *get_stale_heads(struct remote *remote, struct ref *fetch_m=
-ap);
-+struct ref *get_stale_heads(struct remote *remote, struct ref *fetch_m=
-ap,
-+			    struct refspec *refs, int ref_count);
-=20
- #endif
---=20
-1.7.5.2.354.g349bf
+This is not meant to replace tags that is attached after the fact. If
+anything...
+
+>  c. sign the occasional especially interesting commit
+
+...with the definition of "interesting" being "this is tonight's tip of
+branch Linus is pushing out between releases", "I shortly will ask Linus
+to pull from the history leading up to this commit", etc., this is the
+primary scenario I personally envision the feature would be used in.
+Without having to have "nightly" signed tags that clutter the tag
+namespace, we can gain more confidence in the integrity of the history
+between officially tagged release points that may be a few months apart,
+depending on projects.
+
+> ... How
+> does this relate to the "push certificate" use case, which seemed to
+> be mostly about authenticating published branch tips with signatures
+> that are not necessarily important in the long term?
+
+To the upstream project whose participants are signing its history, these
+publish points may not be important in the longer term, but for downstream
+consumers that have to fork from an in-between point for the next embedded
+device release track, it serves the same purpose as push certificates and
+is equally important: it allows them to limit the length of near-tip
+history that might have been tampered that needs to be validated. If the
+downstream consumers fork only from a signed commit point, they only need
+to audit their own history without worrying about imported stuff after
+incident like what k.org had recently.
+
+I am also somewhat disturbed by "have to sign when committing, long before
+I am confident that this is worth pushing" aspect of this approach, but I
+do not think it would be much of an issue in practice.
+
+ - If you are only pubishing one independent branch, it is just the matter
+   of either "commit --amend --gpg-sign" or "commit --allow-empty --gpg-sign"
+   before you push;
+
+ - If you are publishing multiple related branches (e.g. maint, master,
+   next) like I do, and want to correct a mistake discovered at a lower
+   branch (e.g. master) after it has been already merged in higher
+   branches (e.g. next), you have to either amend the tip of the lower
+   branch and rebuild the higher branches, or queue a fix-up to the tip of
+   the lower branch and merge the result to the higher branches _anyway_,
+   before you push.
