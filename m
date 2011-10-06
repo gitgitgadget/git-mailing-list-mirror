@@ -1,86 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Prompt for merge message?
-Date: Thu, 06 Oct 2011 15:02:38 -0700
-Message-ID: <7vsjn5ye0x.fsf@alter.siamese.dyndns.org>
-References: <6eb7acc7-f4be-4b90-a2fa-a0c91ed9a5a8@t11g2000yqk.googlegroups.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH v2] revert.c: defer writing CHERRY_PICK_HEAD till it is
+ safe to do so
+Date: Thu, 6 Oct 2011 18:02:59 -0400
+Message-ID: <CAG+J_DyPThjC1Mt-Hh9nke+U=ZT91AW0uWCO5sFZpZC_LbgDig@mail.gmail.com>
+References: <1317923315-54940-1-git-send-email-jaysoffian@gmail.com>
+	<CAG+J_Dw8w9UGBzq4xK+i+QtA4ZuwJ5w1+mPg15mPNcGLuRaXyg@mail.gmail.com>
+	<7vzkhdyecy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Todd A. Jacobs" <nospam+listmail@codegnome.org>
-X-From: git-owner@vger.kernel.org Fri Oct 07 00:02:48 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, nicolas.dichtel@6wind.com,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 07 00:03:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBw1e-0007tr-R0
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 00:02:47 +0200
+	id 1RBw1x-00081g-Ce
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 00:03:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759335Ab1JFWCm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 18:02:42 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52669 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758929Ab1JFWCl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 18:02:41 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D38C45158;
-	Thu,  6 Oct 2011 18:02:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GiT8nMDjr6tQeJxMiCgQf8MzhSg=; b=NgPTdc
-	aNCZPy2ju3vV0y578gdM9YT0oUlljb7Szuzu0JXzF43YvaBSgZezoPH4MGP5IV61
-	rnAwHtqpJG4FfEZGf/zsKRDeT5GB6T0Y8OKGeUS1hXGzXgc4JHCQBf6qaNU6kERO
-	vY0YE5o6Mgu6wGZ/SwxzsRt4gUEV7AazTnZBU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UqjkCGKaBsFaEjSkHZ8M3B1G2FghR57q
-	Irdh4RYuQTiast6mhiCGlTQcsjS3XEtKYNHQ1hQu5/s1wEY6PaeAM0bq9Qdi9Jop
-	7X20IMPXSvmIy6EI2o6yWCARnpS2uaq1zPJgcElrKQbXraEOoRRsU+7gJ9THumrK
-	yeuROqs1o2E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C8FD65157;
-	Thu,  6 Oct 2011 18:02:40 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2BBFA5155; Thu,  6 Oct 2011
- 18:02:40 -0400 (EDT)
-In-Reply-To: <6eb7acc7-f4be-4b90-a2fa-a0c91ed9a5a8@t11g2000yqk.googlegroups.com> (Todd A.
- Jacobs's message of "Thu, 6 Oct 2011 10:49:02 -0700 (PDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E8A9FDEA-F066-11E0-9C37-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759341Ab1JFWDA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Oct 2011 18:03:00 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:35836 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758929Ab1JFWC7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Oct 2011 18:02:59 -0400
+Received: by ggnv2 with SMTP id v2so2182142ggn.19
+        for <git@vger.kernel.org>; Thu, 06 Oct 2011 15:02:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=7Y1E9unOD1MVeMWKIxcENsHNzLmJkJGDdKhF0iz7SSw=;
+        b=VisLmhWNqoGJ96V6mcpsW/XwA52ILtRFAv+DkweJhGk7so5CRcmQjPTAtPn2OBP93o
+         bP/iA64G/d3p8/LKutpy5MosOXthIbtv6mpRoai200vrOsSQaTgfoWV6rYMgm97sMeWS
+         wQrGT857gGel09lbY0rWdr57mhyYwvc3e9+DM=
+Received: by 10.147.154.12 with SMTP id g12mr944112yao.36.1317938579394; Thu,
+ 06 Oct 2011 15:02:59 -0700 (PDT)
+Received: by 10.147.32.18 with HTTP; Thu, 6 Oct 2011 15:02:59 -0700 (PDT)
+In-Reply-To: <7vzkhdyecy.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183043>
 
-"Todd A. Jacobs" <nospam+listmail@codegnome.org> writes:
+On Thu, Oct 6, 2011 at 5:55 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Jay Soffian <jaysoffian@gmail.com> writes:
+>
+>> On Thu, Oct 6, 2011 at 1:48 PM, Jay Soffian <jaysoffian@gmail.com> w=
+rote:
+>>> Note that do_recursive_merge() aborts if the merge cannot start, wh=
+ile
+>>> try_merge_command() returns a non-zero value other than 1.
+>>
+>> Maybe you want this on-top:
+>
+> Good thinking.
+>
+> commit 4ed15ff067b548011b1eda8b12d46d887c4f056c
+> Author: Jay Soffian <jaysoffian@gmail.com>
+> Date: =C2=A0 Thu Oct 6 13:58:01 2011 -0400
+>
+> =C2=A0 =C2=A0cherry-pick: do not give irrelevant advice when cherry-p=
+ick punted
+>
+> =C2=A0 =C2=A0If a cherry-pick did not even start because the working =
+tree had local
+> =C2=A0 =C2=A0changes that would overlap with the operation, we should=
+n't be advising
+> =C2=A0 =C2=A0the users to resolve conflicts nor to conclude it with "=
+git commit".
+>
+> =C2=A0 =C2=A0Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>
+> Thanks. Care to sign-off?
 
-> I often find myself using "--no-ff -m foo" for merging short-lived
-> branches, because the merge commit usually needs to say something
-> about having finished a feature rather than referring to a branch that
-> will be deleted shortly anyway....
-> ... Is there currently a way to get git to prompt for the merge message,
-> rather than using the default or requiring the -m flag? If not, isn't
-> this a common-enough use case to have that ability added to the merge
-> function?
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
 
-Others commented on the current practices and gave their own useful tips
-already, but an additional hint is to name your branch more sensibly, so
-that you do not feel it is useless to record it in the history.
+Thank you for making it a proper commit. :-)
 
-As to a real longer-term solution, I wouldn't mind a patch that teaches
-"git merge" an "-e" option just like "git commit" has.
-
-    $ git commit -m "Finish frotz feature" -e -a
-    ... editor opens with the first line filled already here ...
-
-is something I find myself using fairly often.
-
-Thanks.
-
-[offtopic: It is annoying that my MUA warns me
-
-    "nospam+listmail@domain" may be bogus; do you really want to send?
-
-Could you do something about it please?]
+j.
