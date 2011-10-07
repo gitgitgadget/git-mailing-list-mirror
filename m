@@ -1,166 +1,144 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] po/pl.po: Eliminate fuzzy translations
-Date: Sat, 8 Oct 2011 00:11:14 +0200
-Message-ID: <201110080011.14757.jnareb@gmail.com>
-References: <CACBZZX4dP-OsrZ3wBOeSkzDFy6XBgeY=eqJUF2acyLC8W-3Vpg@mail.gmail.com> <201110032337.09975.jnareb@gmail.com> <4E8AC294.2060608@in.waw.pl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Teach merge the '[-e|--edit]' option
+Date: Fri, 07 Oct 2011 15:15:55 -0700
+Message-ID: <7vfwj4tplw.fsf@alter.siamese.dyndns.org>
+References: <7vk48gwvyd.fsf@alter.siamese.dyndns.org>
+ <1318023997-54810-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-	<avarab@gmail.com>, Git Mailing List <git@vger.kernel.org>,
-	Marcin =?utf-8?q?Cie=C5=9Blak?= <saper@saper.info>
-To: Zbigniew =?utf-8?q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Sat Oct 08 00:11:21 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	"Todd A. Jacobs" <nospam+listmail@codegnome.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 08 00:16:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCIdV-0008UP-49
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Oct 2011 00:11:21 +0200
+	id 1RCIi3-0001Tw-9I
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Oct 2011 00:16:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758659Ab1JGWLQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Oct 2011 18:11:16 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:46229 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752364Ab1JGWLQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Oct 2011 18:11:16 -0400
-Received: by bkbzt4 with SMTP id zt4so5326060bkb.19
-        for <git@vger.kernel.org>; Fri, 07 Oct 2011 15:11:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=HSoLvW9qg3vSjdmizrPVEOK7udH9mbTHPEiWsv5E9dU=;
-        b=TtDRXhftyzG7jEAf2qDsQ03MEhJsXLaCAfZcL9Urlt9eyPTykqGqYPuychZ54Eg+LX
-         ECTI5GRStTv5qlfpAVMIJ9ofqG2m8YWiq8eToiuj3qYgWd4fxJy35ASdcJ6uPszTdazC
-         VRnWCPmCAH/rRDsyEYBlMpNmOo5UhSIsvEJgw=
-Received: by 10.223.62.19 with SMTP id v19mr13410480fah.27.1318025474759;
-        Fri, 07 Oct 2011 15:11:14 -0700 (PDT)
-Received: from [192.168.1.13] (abrz200.neoplus.adsl.tpnet.pl. [83.8.119.200])
-        by mx.google.com with ESMTPS id n1sm14845679fad.20.2011.10.07.15.11.12
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 07 Oct 2011 15:11:13 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4E8AC294.2060608@in.waw.pl>
-Content-Disposition: inline
+	id S1758602Ab1JGWP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Oct 2011 18:15:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65074 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754716Ab1JGWP6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Oct 2011 18:15:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3068F536D;
+	Fri,  7 Oct 2011 18:15:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=IbwUl+SPosNFA4cT/SwoNu/j9W8=; b=pbYP5s
+	8oMuDcZEJi/Y0nqrg5CSr6rASRLUZXV7C7BoLXnTUDnPkombiNqxozNvPeS0wumW
+	h+b6vpR2C5TxW4NNegEJjqqH4fGNDhVMlW7bekIPwuIPNSRMsIR7Bh5oX1IXgvIF
+	wX6I8uAvguHmbRDTHSUp0aO1UejxPxXsnm+RU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=r+Lr1PtJLEnD3FKlsr2moVw3bg/Oa6Sy
+	6+oae6ooylhLVaEAZkqhKsEfPeGQzgtb6YImZjShGV7E6SQ0RtUj799Lygl9jKUF
+	YiJPPfmo6yanPrEVk9v7bR5kHI1hcIBgzqyJS1I4xehaUDCCLC0ZaKjgfKyWACkd
+	RXQxdVJHTMM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 28225536C;
+	Fri,  7 Oct 2011 18:15:57 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 87C9C5369; Fri,  7 Oct 2011
+ 18:15:56 -0400 (EDT)
+In-Reply-To: <1318023997-54810-1-git-send-email-jaysoffian@gmail.com> (Jay
+ Soffian's message of "Fri, 7 Oct 2011 17:46:37 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EDC16FC2-F131-11E0-A730-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183117>
 
-On Tue, 4 Oct 2011, Zbigniew J=C4=99drzejewski-Szmek wrote:
-> On 10/03/2011 11:37 PM, Jakub Narebski wrote:
->>
->> +# Terminologia dla kluczowych termin=C3=B3w z Subversion:
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-As I probably should write in the commit message, this terminology
-is taken directly from Subversion's po/pl.po file.  Subversion has
-IMHO quite good Polish translation.
-
-On the other hand no other *.po file in Git has glossary in
-comments...
-
->> +# path - =C5=9Bcie=C5=BCka
->> +# URL - URL
->> +# file - plik
->> +# directory - katalog
->> +# update - aktualizacja
->> +# commit - zatwierdzenie, zatwierdzenie zmian
+> Implemented internally instead of as "git merge --no-commit && git commit"
+> so that "merge --edit" is otherwise consistent (hooks, etc) with "merge".
 >
-> This seems kind of awkward. E.g. 'initial commit' would become=20
-> 'pocz=C4=85tkowe zatwierdzenie zmian' or 'pierwsze zatwierdzenie', wh=
-ich just=20
-> doesn't sound right. What about starting with the mercurial term=20
-> 'changeset'? Git users also use 'commit' to mean 'change', so maybe
-> the polish translation of this crucial term should be 'zmiana':
-> 'initial commit' -- 'pocz=C4=85tkowa zmiana' or 'pierwsza zmiana'
-> 'commit message' -- 'opis zmiany'
-
-The problem is that "commit" might be a verb ('to commit'), where I thi=
-nk
-"zatwierdzenie zmian" is a good translation, and "commit" might also be
-used as a noun ('a commit'), where I think it should be probably transl=
-ated
-as "wersja" (eng. version) or "zmiana" (eng. change).
-
-Nb. it is a good idea to take into account existing Mercurial translati=
-on
-into Polish.
-=20
->> +# version control - zarz=C4=85dzanie wersjami
->> +# repository - repozytorium
->> +# branch - odga=C5=82=C4=99zienie
+> Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+> ---
+> On Fri, Oct 7, 2011 at 1:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> If we wanted to do this properly, we should update builtin/merge.c to call
+>> launch_editor() before it runs commit_tree(), in a way similar to how
 >
-> 'ga=C5=82=C4=85=C5=BA'? I think that's the translation which is used =
-in informal=20
-> conversations.
-
-"Odga=C5=82=C4=99zienie" is what Subversion uses, but you are right tha=
-t "ga=C5=82=C4=85=C5=BA"
-might be better.  Though in this case the glossary cannot be marked
-as coming from Subversion...
-=20
->> +# tag - tag
+> I disagree that this is the proper way to do it. --edit is a new option, there's
+> no obviously "correct" behavior. You think 'merge --edit' should behave just
+> like 'merge', I think 'merge --edit' should behave like 'merge --no-commit &&
+> commit'.
 >
-> 'metka', 'etykieta' according to the dictionary. I'm aware of 'metka'
-> being used in CS anywhere, but it is short, and pretty cool, IMO.
+> The commit performed internally by git-merge is already wildly inconsistent with
+> git-commit.
 
-I think that "etykieta" (eng. label) has already established different
-meaning in Polish computer terminology for a "goto label".
+Think and look forward.
 
-"Metka" might be a good solution (it is mainly used in Polish to mean
-textile labels), though I wonder if using English term "tag" (which
-in Polish is used in computer science to mean metadata tag or markup
-language tag) wouldn't be better as it is already computer term.
-=20
->> +# merge - =C5=82=C4=85czenie zmian
->
-> '=C5=82=C4=85czenie ga=C5=82=C4=99zi'?
+You are complaining that the "commit" does not know enough to behave as if
+it were a part of the merge command workflow if you split a usual merge
+into two steps "merge --no-commit; commit".
 
-Well, in Subversion it is about merging changes, not branches ;-)))
-=20
->> +# conflict - konflikt
->> +# property - atrybut
->> +# revision - wersja
->> +# log message - opis zmian
->> +# entry/item - element
->> +# ancestry - pochodzenie
->> +# ancestor - przodek
->> +# working copy - kopia robocza
->> +# working dir - bie=C5=BC=C4=85cy katalog
->> +# usage - wykorzystanie
->
-> 'u=C5=BCycie', 'wywo=C5=82anie'?
-> E.g. 'standardowe wywo=C5=82anie tego programu to: prog arg'
+How would you make it better? Would you strip all the things usual "merge"
+does, so that it would work identically to the split one, losing some hook
+support and such, or would you rather make the split case work similar to
+the usual merge?
 
-I'd have to check how other programs translate this.  I think
-at least "usage: " in '-h' output is translated as "u=C5=BCycie: ",
-though I am not sure if it is really a good translation to recommend.
-=20
->> +# source - =C5=BAr=C3=B3d=C5=82owy
->> +# destination - docelowy
->> +# hook - skrypt (skrypt repozytorium)
->> +# exclude - wykluczy=C4=87
->> +# crop - obci=C4=85=C4=87
->> +# cache - pami=C4=99=C4=87 podr=C4=99czna
->> +# child - obiekt podrz=C4=99dny
->
-> Standard CS term is 'ojciec' and 'syn' for 'parent/child'.
+I'd say between "merge" and "merge --no-commit ; commit", the latter is
+what needs to be fixed. Viewed that way, why would you even consider
+making the new option behave similar to the _wrong_ one?
 
-Right.
-=20
->> +# obliteration - obliteracja
->
-> 'wymazanie'?
+> I didn't bother with the commit status, it's more code than I wanted
+> to deal with duplicating/refactoring from commit.c.
 
-Well, anyway I don't think this is needed for git translation.
-=20
->> +# patch - =C5=82ata
->> +# notes - adnotacja
+What do you mean by "commit status"? If you mean this patch is incomplete,
+it would have been nicer if it were labeled with [PATCH/RFC].
 
---=20
-Jakub Narebski
-Poland
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index ee56974371..0dee53b7e4 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -46,6 +46,7 @@ static const char * const builtin_merge_usage[] = {
+>  
+>  static int show_diffstat = 1, shortlog_len, squash;
+>  static int option_commit = 1, allow_fast_forward = 1;
+> +static int option_edit = 0;
+
+No need to move this into .data segment when it can be in .bss
+segment. Drop the unnecessary " = 0" before ";".
+
+> @@ -842,30 +845,54 @@ static void add_strategies(const char *string, unsigned attr)
+>  
+>  }
+>  
+> -static void write_merge_msg(void)
+> +static void write_merge_msg(struct strbuf *msg)
+>  {
+>  	int fd = open(git_path("MERGE_MSG"), O_WRONLY | O_CREAT, 0666);
+>  	if (fd < 0)
+>  		die_errno(_("Could not open '%s' for writing"),
+>  			  git_path("MERGE_MSG"));
+> -	if (write_in_full(fd, merge_msg.buf, merge_msg.len) != merge_msg.len)
+> +	if (write_in_full(fd, msg->buf, msg->len) != msg->len)
+>  		die_errno(_("Could not write to '%s'"), git_path("MERGE_MSG"));
+>  	close(fd);
+>  }
+>  
+> -static void read_merge_msg(void)
+> +static void read_merge_msg(struct strbuf *msg)
+>  {
+> -	strbuf_reset(&merge_msg);
+> -	if (strbuf_read_file(&merge_msg, git_path("MERGE_MSG"), 0) < 0)
+> +	strbuf_reset(msg);
+> +	if (strbuf_read_file(msg, git_path("MERGE_MSG"), 0) < 0)
+>  		die_errno(_("Could not read from '%s'"), git_path("MERGE_MSG"));
+>  }
+>  
+> -static void run_prepare_commit_msg(void)
+> +static void write_merge_state();
+
+s/()/(void)/;
+
+Thanks.
