@@ -1,107 +1,76 @@
-From: Jeff King <peff@peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH] show git tag output in pager
-Date: Fri, 7 Oct 2011 10:44:38 -0400
-Message-ID: <20111007144438.GA30318@sigill.intra.peff.net>
+Date: Fri, 07 Oct 2011 16:48:35 +0200
+Message-ID: <vpqsjn4dfi4.fsf@bauges.imag.fr>
 References: <20110927134235.GA27478@zelva.suse.cz>
- <vpqehz2cbk4.fsf@bauges.imag.fr>
- <20110929093749.GB27152@zelva.suse.cz>
- <20110930104241.GB24507@sigill.intra.peff.net>
- <vpqwrcmw7ve.fsf@bauges.imag.fr>
+	<vpqehz2cbk4.fsf@bauges.imag.fr>
+	<20110929093749.GB27152@zelva.suse.cz>
+	<20110930104241.GB24507@sigill.intra.peff.net>
+	<vpqwrcmw7ve.fsf@bauges.imag.fr>
+	<20111007144438.GA30318@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 Cc: Michal Vyskocil <mvyskocil@suse.cz>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Oct 07 16:44:49 2011
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 07 16:49:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCBfM-0005bd-69
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 16:44:48 +0200
+	id 1RCBjx-0007UJ-0T
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 16:49:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965483Ab1JGOon (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Oct 2011 10:44:43 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54916
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965454Ab1JGOom (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Oct 2011 10:44:42 -0400
-Received: (qmail 22013 invoked by uid 107); 7 Oct 2011 14:44:42 -0000
-Received: from 208.177.47.101.ptr.us.xo.net (HELO sigill.intra.peff.net) (208.177.47.101)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 07 Oct 2011 10:44:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Oct 2011 10:44:38 -0400
-Content-Disposition: inline
-In-Reply-To: <vpqwrcmw7ve.fsf@bauges.imag.fr>
+	id S965441Ab1JGOt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Oct 2011 10:49:28 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:41776 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965405Ab1JGOt1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Oct 2011 10:49:27 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p97Ek5NE001453
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 7 Oct 2011 16:46:05 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1RCBj1-00071o-Bl; Fri, 07 Oct 2011 16:48:35 +0200
+In-Reply-To: <20111007144438.GA30318@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 7 Oct 2011 10:44:38 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 07 Oct 2011 16:46:05 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p97Ek5NE001453
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1318603567.13285@NFQ3wm2C1YMQ8D2hKy4THg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183078>
 
-On Mon, Oct 03, 2011 at 02:57:09PM +0200, Matthieu Moy wrote:
+Jeff King <peff@peff.net> writes:
 
-> I like the try_subcommand_pager idea. Ideally, there would also be a
-> nice mechanism to set defaults for subcommands, so that "git tag
-> <whatever>" does the right thing without configuration.
+> On Mon, Oct 03, 2011 at 02:57:09PM +0200, Matthieu Moy wrote:
+>
+>> I like the try_subcommand_pager idea. Ideally, there would also be a
+>> nice mechanism to set defaults for subcommands, so that "git tag
+>> <whatever>" does the right thing without configuration.
+>
+> That's easy enough. Something like the patch below?
 
-That's easy enough. Something like the patch below?
+It may have been better with a big centralized array of configurations
+like
 
-Still thoroughly untested, but it looks Obviously Correct to me. :)
+	static struct cmd_struct commands[] = {
+		{ "add", cmd_add, RUN_SETUP | NEED_WORK_TREE },
+                ...
 
----
- builtin.h     |    1 +
- builtin/tag.c |    1 +
- git.c         |   13 +++++++++++++
- 3 files changed, 15 insertions(+), 0 deletions(-)
+in git.c, but if we have only a few instances of this, your system is
+probably fine. I like it.
 
-diff --git a/builtin.h b/builtin.h
-index 0e9da90..b2badf8 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -35,6 +35,7 @@ int copy_note_for_rewrite(struct notes_rewrite_cfg *c,
- void finish_copy_notes_for_rewrite(struct notes_rewrite_cfg *c);
- 
- extern int check_pager_config(const char *cmd);
-+extern void try_subcommand_pager(const char *subcommand, int fallback);
- 
- extern int textconv_object(const char *path, unsigned mode, const unsigned char *sha1, char **buf, unsigned long *buf_size);
- 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 9d89616..c77adc4 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -152,6 +152,7 @@ static int list_tags(const char **patterns, int lines,
- 	filter.lines = lines;
- 	filter.with_commit = with_commit;
- 
-+	try_subcommand_pager("tag.list", 1);
- 	for_each_tag_ref(show_reference, (void *) &filter);
- 
- 	return 0;
-diff --git a/git.c b/git.c
-index 8e34903..11ee1a8 100644
---- a/git.c
-+++ b/git.c
-@@ -64,6 +64,19 @@ static void commit_pager_choice(void) {
- 	}
- }
- 
-+void try_subcommand_pager(const char *subcommand, int fallback)
-+{
-+	/* it's too late to turn off a running pager */
-+	if (pager_in_use())
-+		return;
-+
-+	if (use_pager == -1)
-+		use_pager = check_pager_config(subcommand);
-+	if (use_pager == -1)
-+		use_pager = fallback;
-+	commit_pager_choice();
-+}
-+
- static int handle_options(const char ***argv, int *argc, int *envchanged)
- {
- 	const char **orig_argv = *argv;
 -- 
-1.7.7.rc2.7.gdfc92
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
