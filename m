@@ -1,57 +1,67 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: [PATCH] fmt-merge-msg: use branch.$name.description
-Date: Fri, 7 Oct 2011 04:16:36 -0500
-Message-ID: <20111007091636.GA22822@elie.hsd1.il.comcast.net>
-References: <7vobxtwaog.fsf@alter.siamese.dyndns.org>
- <4E8EBDA7.2040007@drmicha.warpmail.net>
+Date: Fri, 07 Oct 2011 11:45:09 +0200
+Message-ID: <4E8ECA25.205@drmicha.warpmail.net>
+References: <7vobxtwaog.fsf@alter.siamese.dyndns.org> <4E8EBDA7.2040007@drmicha.warpmail.net> <20111007091636.GA22822@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Oct 07 11:16:53 2011
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 07 11:45:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RC6Y1-0002fn-DB
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 11:16:53 +0200
+	id 1RC6zW-00049a-8y
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 11:45:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759622Ab1JGJQs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Oct 2011 05:16:48 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:50967 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751970Ab1JGJQr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Oct 2011 05:16:47 -0400
-Received: by iakk32 with SMTP id k32so3989864iak.19
-        for <git@vger.kernel.org>; Fri, 07 Oct 2011 02:16:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=fAAbNrgqGv3zJWKCz5grMG3dxDijAZJcsWMElEwYhyo=;
-        b=i0X+jJPhqmk/YtoNNxFg9pmFaNI3kHY73OvBvLxfjdXBr5VQ1abtjCAh+OhGAgshBx
-         h11Z61GYmDGncOM6m9pE8e6tEVwcUAqEx/yMD/eV4TPcA8FSJ9h9Hm3XZ5M3/mchjaXi
-         +bGL23KqcYw+6NEZlNUj/MJWgTNVi24nqu2R4=
-Received: by 10.43.52.136 with SMTP id vm8mr11149654icb.26.1317979007017;
-        Fri, 07 Oct 2011 02:16:47 -0700 (PDT)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id 2sm18545781ibf.0.2011.10.07.02.16.46
-        (version=SSLv3 cipher=OTHER);
-        Fri, 07 Oct 2011 02:16:46 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4E8EBDA7.2040007@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1752135Ab1JGJpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Oct 2011 05:45:12 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:39157 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752069Ab1JGJpL (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Oct 2011 05:45:11 -0400
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id B9F48204BD;
+	Fri,  7 Oct 2011 05:45:10 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute6.internal (MEProxy); Fri, 07 Oct 2011 05:45:10 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=2QwqBugIB44Opca4y20RrW
+	G5lVw=; b=SCh+abQ8WeRNhP+tgQjLBRLPzCOwQ6hZcUb84o06YfmP/zBQJj9L4J
+	nZwktWWp3vnyFuCfUO6JRoLVRl9i+UGapPHVF9jR0Oh2KJqIffQWmymyZlxDfpvt
+	JN5aHYNqnvqoECpcw31a5KKi0ydi9OjxvDnyJeczpnkGrvv5N07ng=
+X-Sasl-enc: ugecKbGxy+mIEU1aJu3q3vBpht1ejXo7CofI483SDhgC 1317980710
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 253DFCA04EF;
+	Fri,  7 Oct 2011 05:45:10 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0) Gecko/20110927 Thunderbird/7.0
+In-Reply-To: <20111007091636.GA22822@elie.hsd1.il.comcast.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183072>
 
-Michael J Gruber wrote:
+Jonathan Nieder venit, vidit, dixit 07.10.2011 11:16:
+> Michael J Gruber wrote:
+> 
+>> config based is so non-distributed, local in nature.
+> 
+> I don't follow.  Wouldn't a protocol change be enough to fix that, by
+> sharing branch descriptions analagously to how refs themselves are
+> shared?
 
-> config based is so non-distributed, local in nature.
+I'd be surprised if we changed the protocol just to be able to share
+some descriptions, when we have everything we need for sharing refs.
+Also note that config is non-versioned etc.
 
-I don't follow.  Wouldn't a protocol change be enough to fix that, by
-sharing branch descriptions analagously to how refs themselves are
-shared?
+But my main point here is that we should discuss the pros and cons of
+each approach in context (the context of the original thread), and I
+haven't heard many pros and cons for either.
+
+Michael
