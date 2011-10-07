@@ -1,78 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git remote doesn't show remotes from .git/remotes
-Date: Fri, 07 Oct 2011 11:08:59 -0700
-Message-ID: <7v1uuowu6c.fsf@alter.siamese.dyndns.org>
-References: <26866FC7-4D4D-46D0-89DE-85AF459AC48C@jetbrains.com>
- <20111007150423.GA2076@sigill.intra.peff.net>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: Scalable reference handling
+Date: Fri, 7 Oct 2011 12:51:43 -0600
+Organization: CAF
+Message-ID: <201110071251.44052.mfick@codeaurora.org>
+References: <4E8CCC55.9070408@alum.mit.edu> <4E8E6E8E.5070909@alum.mit.edu> <4E8F2012.90108@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 07 20:09:10 2011
+Content-Type: Text/Plain;
+  charset="iso-8859-6"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Oct 07 20:52:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCEr6-0000Sb-6J
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 20:09:08 +0200
+	id 1RCFWk-0000eF-Lk
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 20:52:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758308Ab1JGSJD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Oct 2011 14:09:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33121 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758262Ab1JGSJC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Oct 2011 14:09:02 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 35AF46D7C;
-	Fri,  7 Oct 2011 14:09:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5DG1zoqAsCa8X8W29qwz46m4T24=; b=MQHpNf
-	eMGjz82ZQLqUY0DgtC8F7ehIJY0BXrHQaeTIzTN1eUXqpi1XP7pIjDE/ix5BQLx4
-	9aA/dCTFDXYwNtyv0oLO3m8pLlCtf0F1UI4bK2KRhpvAnjPNRudR0n4YKsDtJwQr
-	f7TQU5/KxgqUcOfibNdo/ErfeLIt5E9cr/t8s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fAxLrg8JSeuL3sMTP/AD9jqvfvlwrcF4
-	HMcNt/23cJsImIHp8zycQw/i3JZW4nwMtgl5vIdMY8x3+evO0TerdgKQnk+XJX1Z
-	+Ft5YNqak9JjnK297VKRi8snpQJ9sqNNGmsOjdv258o1MU7aXxc2jXJKpqcGQgDZ
-	irwaqRTH5Fc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D1776D7A;
-	Fri,  7 Oct 2011 14:09:01 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B97BC6D79; Fri,  7 Oct 2011
- 14:09:00 -0400 (EDT)
-In-Reply-To: <20111007150423.GA2076@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 7 Oct 2011 11:04:24 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6EDA1BFE-F10F-11E0-BD36-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753822Ab1JGSwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Oct 2011 14:52:05 -0400
+Received: from wolverine01.qualcomm.com ([199.106.114.254]:38485 "EHLO
+	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752664Ab1JGSwD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Oct 2011 14:52:03 -0400
+X-IronPort-AV: E=McAfee;i="5400,1158,6492"; a="125748608"
+Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
+  by wolverine01.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 07 Oct 2011 11:51:45 -0700
+Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 2332C10004C2;
+	Fri,  7 Oct 2011 11:51:45 -0700 (PDT)
+User-Agent: KMail/1.13.5 (Linux/2.6.32-28-generic; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <4E8F2012.90108@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183096>
 
-Jeff King <peff@peff.net> writes:
+On Friday, October 07, 2011 09:51:46 am Michael Haggerty 
+wrote:
+> I can't write more now, but Martin, if you have time to
+> benchmark 9944c7faf903a95d4ed9de284ace32debe21cdc1
+> against your repository, I would be very interested to
+> learn the results.
 
-> On Thu, Oct 06, 2011 at 07:33:23PM +0400, Kirill Likhodedov wrote:
->
->> It seems that 'git remote' doesn't display remotes registered not in
->> .git/config but in .git/remotes/.
->> Is it a bug?
->
-> It seems to have been lost in 211c896 (Make git-remote a builtin,
-> 2008-02-29).
+The fetch no longer seems to suffer from the large 
+regression, it is now faster (~7m) than 1.7.7 (which was 
++15m).
 
-Sad.
 
-> I don't think there is a specific plan. They're kept for backwards
-> compatibility. But really, there is no reason to be using them at all at
-> this point.
+As a quick note, if I comment out the 
+invalidate_cached_refs() call in write_ref_sha1() on line  
+2065 (on top of 9944c7), it is still much faster, only ~2m.  
+Perhaps growing the array on the fly with many refs is still 
+be too inefficient?
 
-I've been thinking about making a list of deprecations/deletions for Git
-2.0. The only two requirements needed to be added to the list are that it
-gets list concensus and it is backed by a solid patch (or patch series).
+
+-Martin
+
+-- 
+Employee of Qualcomm Innovation Center, Inc. which is a 
+member of Code Aurora Forum
