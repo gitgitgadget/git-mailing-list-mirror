@@ -1,85 +1,82 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] fetch: plug two leaks on error exit in store_updated_refs
-Date: Fri, 07 Oct 2011 08:59:10 +0200
-Message-ID: <4E8EA33E.5020009@lsrfire.ath.cx>
-References: <20111007014136.GB10839@localhost> <4E8E98A7.8010008@lsrfire.ath.cx> <CALUzUxp4Eo7j=kM7YPJbj70-rwuyFK5V1mZZMY7vBwwPYWS6gQ@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH WIP 0/3] git log --exclude
+Date: Fri, 7 Oct 2011 18:16:04 +1100
+Message-ID: <CACsJy8DJs_cmCZegyPk=tB-bxWp4izrsTn8T=xeV1sU4fS5oTQ@mail.gmail.com>
+References: <1317799088-26626-1-git-send-email-pclouds@gmail.com> <7vhb3n8ie9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Chris Wilson <cwilson@vigilantsw.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 07 08:59:25 2011
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 07 09:16:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RC4Oz-00026Y-8k
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 08:59:25 +0200
+	id 1RC4fg-0007QP-Tf
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 09:16:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758285Ab1JGG7V convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Oct 2011 02:59:21 -0400
-Received: from india601.server4you.de ([85.25.151.105]:56393 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751433Ab1JGG7U (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Oct 2011 02:59:20 -0400
-Received: from [192.168.2.104] (p4FFDBCAF.dip.t-dialin.net [79.253.188.175])
-	by india601.server4you.de (Postfix) with ESMTPSA id 420502F804A;
-	Fri,  7 Oct 2011 08:59:19 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
-In-Reply-To: <CALUzUxp4Eo7j=kM7YPJbj70-rwuyFK5V1mZZMY7vBwwPYWS6gQ@mail.gmail.com>
+	id S1751621Ab1JGHQg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Oct 2011 03:16:36 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:47783 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751542Ab1JGHQf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Oct 2011 03:16:35 -0400
+Received: by bkbzt4 with SMTP id zt4so4503503bkb.19
+        for <git@vger.kernel.org>; Fri, 07 Oct 2011 00:16:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=3isCD8+TXMtNgSjbNNWpV2VWPX5JydQxgpmLHK45t74=;
+        b=JnckL9iahFoCQBvBNGaRAFdO9od8roOT3zqnPpneA8VsGnPYIqAEivRlE0NWco/uxt
+         NxXe8/9ATCoh0CWmA2n62bD8iYZgdUUCMWNyHczaFXbAvVyYimf+/TlzFmb0Cl8qh4+r
+         0eginrA1HuOCurARo95ze31iaZtj09Fh0UEho=
+Received: by 10.204.6.210 with SMTP id a18mr1083580bka.303.1317971794158; Fri,
+ 07 Oct 2011 00:16:34 -0700 (PDT)
+Received: by 10.204.120.75 with HTTP; Fri, 7 Oct 2011 00:16:04 -0700 (PDT)
+In-Reply-To: <7vhb3n8ie9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183063>
 
-Am 07.10.2011 08:49, schrieb Tay Ray Chuan:
-> How about reusing the function's cleanup calls, like this?
+2011/10/6 Junio C Hamano <gitster@pobox.com>:
+> For the purpose of "log --exclude" [*2*], I do not mind too much if t=
+he UI
+> expressed negative pathspecs using such a new command line option, bu=
+t I
+> think it would be more natural to say (notations aside):
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git log -- ':(no):po' .
+>
+> and define the behaviour of user-supplied pathspec limiter this way:
+>
+> =C2=A0* Paths are matched from left to right;
+>
+> =C2=A0* First match determines the fate of the path;
+>
+> =C2=A0* A match with negative pathspec means "the path in question do=
+es _not_
+> =C2=A0 match".
 
-Yes, that's better.
+Things have changed a bit since last time I touched negative pathspec.
+Because of depth limit support [1], pathspecs have to be sorted, which
+means we cannot keep pathspec in original order to match from left to
+right.
 
-> -- >8 --
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index fc254b6..56267c4 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -423,8 +423,10 @@ static int store_updated_refs(const char
-> *raw_url, const char *remote_name,
->  	else
->  		url =3D xstrdup("foreign");
->=20
-> -	if (check_everything_connected(ref_map, 0))
-> -		return error(_("%s did not send all necessary objects\n"), url);
-> +	if (check_everything_connected(ref_map, 0)) {
-> +		rc =3D error(_("%s did not send all necessary objects\n"), url);
-> +		goto abort;
-> +	}
->=20
->  	for (rm =3D ref_map; rm; rm =3D rm->next) {
->  		struct ref *ref =3D NULL;
-> @@ -506,12 +508,15 @@ static int store_updated_refs(const char
-> *raw_url, const char *remote_name,
->  				fprintf(stderr, " %s\n", note);
->  		}
->  	}
-> -	free(url);
-> -	fclose(fp);
-> +
->  	if (rc & STORE_REF_ERROR_DF_CONFLICT)
->  		error(_("some local refs could not be updated; try running\n"
->  		      " 'git remote prune %s' to remove any old, conflicting "
->  		      "branches"), remote_name);
-> +
-> +abort:
-> +	free(url);
-> +	fclose(fp);
->  	return rc;
->  }
->=20
+There may be a solution to mix depth limit and negative pathspec. I
+haven't thought carefully about that because I lean towards a simpler
+behaviour that only allows one negation level: a file is in if it
+matches any positive pathspecs and none of negative ones.
 
-Micro-nit: If you start the label with a space ("+ abort:") then the
-code continues to play nice with git grep -W.
+This is enough if narrow clones consist of positive pathspec only. I
+really doubt if users would want to make a narrow clone that "contains
+A but not A/B, storage-wise".
 
-Ren=E9
+[1] 86e4ca6 (tree_entry_interesting(): fix depth limit with
+overlapping pathspecs)
+--=20
+Duy
