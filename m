@@ -1,65 +1,68 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: Scalable reference handling
-Date: Fri, 7 Oct 2011 12:51:43 -0600
-Organization: CAF
-Message-ID: <201110071251.44052.mfick@codeaurora.org>
-References: <4E8CCC55.9070408@alum.mit.edu> <4E8E6E8E.5070909@alum.mit.edu> <4E8F2012.90108@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Teach merge the '[-e|--edit]' option
+Date: Fri, 07 Oct 2011 12:01:34 -0700
+Message-ID: <7vobxsvd69.fsf@alter.siamese.dyndns.org>
+References: <1318001347-11347-1-git-send-email-jaysoffian@gmail.com>
+ <7vk48gwvyd.fsf@alter.siamese.dyndns.org>
+ <CAG+J_Dz7-tTdgT=cqoKhK+fAhmESLnp93yHyxOF_NOY5Wx01+w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-6"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Oct 07 20:52:12 2011
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 07 21:01:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCFWk-0000eF-Lk
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 20:52:11 +0200
+	id 1RCFfx-0004eb-Kp
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 21:01:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753822Ab1JGSwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Oct 2011 14:52:05 -0400
-Received: from wolverine01.qualcomm.com ([199.106.114.254]:38485 "EHLO
-	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752664Ab1JGSwD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Oct 2011 14:52:03 -0400
-X-IronPort-AV: E=McAfee;i="5400,1158,6492"; a="125748608"
-Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
-  by wolverine01.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 07 Oct 2011 11:51:45 -0700
-Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 2332C10004C2;
-	Fri,  7 Oct 2011 11:51:45 -0700 (PDT)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-28-generic; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <4E8F2012.90108@alum.mit.edu>
+	id S1753929Ab1JGTBh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Oct 2011 15:01:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54311 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753703Ab1JGTBg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Oct 2011 15:01:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E49605CCD;
+	Fri,  7 Oct 2011 15:01:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=M18dbQwcohJTAGWAeL2jDXxEsx8=; b=ha7J2s
+	lKrm1riFGDVulaStQOZCPvMsznSRPmMLqK/6bguDB971C4l9rskSG3N1vM/NR/au
+	Sv3Xf+Ixse+EhzHh9JDd1+nUs8KEWThSh/aCzMlNsDSAEBJqVIJt2nAOrxnPmzcJ
+	6PGh7g6vY9M3LmYD6SqvIzjhiHJ5Lakga7DGA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Zd8xfUZ+R7aj6c5tQivxhZkS3MFiEXYT
+	AFKy3kGB4BvYQGFWJVSNIJGHSQ2DGlj8WFcCcLynPCWlarcamcsAq1UQBDwtFPla
+	sxwmt6DQQTej9Mu/UO8xuGgW6H5+E8g6BmTqnKvpwBbeix+OLg6DCfXO71N5s/7J
+	1ZUXdc9l3QQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC3F65CCC;
+	Fri,  7 Oct 2011 15:01:35 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 76A505CCA; Fri,  7 Oct 2011
+ 15:01:35 -0400 (EDT)
+In-Reply-To: <CAG+J_Dz7-tTdgT=cqoKhK+fAhmESLnp93yHyxOF_NOY5Wx01+w@mail.gmail.com> (Jay
+ Soffian's message of "Fri, 7 Oct 2011 14:01:00 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C7371886-F116-11E0-8B78-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183097>
 
-On Friday, October 07, 2011 09:51:46 am Michael Haggerty 
-wrote:
-> I can't write more now, but Martin, if you have time to
-> benchmark 9944c7faf903a95d4ed9de284ace32debe21cdc1
-> against your repository, I would be very interested to
-> learn the results.
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-The fetch no longer seems to suffer from the large 
-regression, it is now faster (~7m) than 1.7.7 (which was 
-+15m).
+> I actually think a better choice would be to remove commit_tree() from
+> merge and always have it run commit externally. I'm not seriously
+> suggesting that be done, but it would make git more consistent. But
+> I'm not going to send in a patch which makes the situation worse.
 
-
-As a quick note, if I comment out the 
-invalidate_cached_refs() call in write_ref_sha1() on line  
-2065 (on top of 9944c7), it is still much faster, only ~2m.  
-Perhaps growing the array on the fly with many refs is still 
-be too inefficient?
-
-
--Martin
-
--- 
-Employee of Qualcomm Innovation Center, Inc. which is a 
-member of Code Aurora Forum
+Think about it. What I suggested does no way make the situation
+worse. Your patch _does_ make it worse by changing the hook behaviour
+between "merge -m 'foo'" vs "merge -m 'foo' -e".
