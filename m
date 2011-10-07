@@ -1,94 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Teach merge the '[-e|--edit]' option
-Date: Fri, 07 Oct 2011 10:30:34 -0700
-Message-ID: <7vk48gwvyd.fsf@alter.siamese.dyndns.org>
-References: <1318001347-11347-1-git-send-email-jaysoffian@gmail.com>
+From: Andrew McNabb <amcnabb@mcnabbs.org>
+Subject: unexpected behavior with `git log --skip filename`
+Date: Fri, 7 Oct 2011 11:15:03 -0600
+Message-ID: <20111007171503.GB16607@mcnabbs.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 07 19:30:45 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 07 19:44:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCEFv-0001om-KX
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 19:30:43 +0200
+	id 1RCETf-0007Z7-C1
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 19:44:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753690Ab1JGRai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Oct 2011 13:30:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47992 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751487Ab1JGRah (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Oct 2011 13:30:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CDACB62AD;
-	Fri,  7 Oct 2011 13:30:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qrrqjNlGRwizc6CJg43epRKbqXE=; b=X4CtuE
-	XDncp2a/dwr7/lMDoyJ11l785HMBBsPplmpDAh3cP6K8f9zDYmF8HGEgXH3xv9G9
-	y+6p2YqSUdE60F56g3hkcirCMQCUkfXYOUjuxbJ9NYj2YSdNReLuPgJv1qIl8fxZ
-	6z7bUTzM2KIwlQs/OOvZ5AfbQ45xqnd+TujFA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JI3ySB9+H6HTtF9NinPwCyNylXsV6B+w
-	XX/yFcAV8okPAT/9O2GzmbcahxfR7WCPkOvojwx5dLLCrgYFNmqq5RWzvXeePjXI
-	xONC1SI8REaY8Mr2zcYOv7DSka/21dnAXVlc6K/k4xqZ/8XSAo7YWX22PZnOv0xF
-	9RUQ4TLmzrE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C514962AC;
-	Fri,  7 Oct 2011 13:30:36 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 587F062AB; Fri,  7 Oct 2011
- 13:30:36 -0400 (EDT)
-In-Reply-To: <1318001347-11347-1-git-send-email-jaysoffian@gmail.com> (Jay
- Soffian's message of "Fri, 7 Oct 2011 11:29:07 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1152F08C-F10A-11E0-82D6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758187Ab1JGRov (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Oct 2011 13:44:51 -0400
+Received: from komodo.mcnabbs.org ([67.207.145.27]:60846 "EHLO
+	mail.mcnabbs.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756111Ab1JGRou (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Oct 2011 13:44:50 -0400
+X-Greylist: delayed 1785 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 Oct 2011 13:44:50 EDT
+Received: from maggie.mcnabbs.org (otherlab.cs.byu.edu [128.187.81.254])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.mcnabbs.org (Postfix) with ESMTP id 0B73DBD76B
+	for <git@vger.kernel.org>; Fri,  7 Oct 2011 12:15:05 -0500 (CDT)
+Received: by maggie.mcnabbs.org (Postfix, from userid 1000)
+	id AABF128D16; Fri,  7 Oct 2011 11:15:03 -0600 (MDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183090>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+The "--skip" option to "git log" did not behave as I expected, but I'm
+not sure whether this was user error, unclear documentation, or a bug.
+Specifically, I ran the following, intending to find the previous
+revision of a given file:
 
-> Implement "git merge [-e|--edit]" as "git merge --no-commit && git commit"
-> as a convenience for the user.
->
-> Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
-> ---
-> ...
-> @@ -1447,6 +1457,10 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
->  	}
->  
->  	if (merge_was_ok) {
-> +		if (option_edit) {
-> +			const char *args[] = {"commit", "-e", NULL};
-> +			return run_command_v_opt(args, RUN_GIT_CMD);
-> +		}
->  		fprintf(stderr, _("Automatic merge went well; "
->  			"stopped before committing as requested\n"));
->  		return 0;
+git log --skip=1 -n 1 --oneline some-filename
 
+My expectation was that this would behave the same as:
 
-I wanted to like this approach, thinking this approach might be safer and
-with the least chance of breaking other codepaths, but this feels like an
-ugly hack.
+git log -n 2 --oneline some-filename |tail -n 1
 
-Are we still honoring all the hooks "git merge" honors?  More importantly,
-isn't this make it impossible for future maintainers of this command to
-enhance the command by adding other hooks after the commit is made?
+Instead, the --skip=1 parameter seemed to be ignored.  After I tried
+several different values, it appears that the commits are skipped before
+path matching with "some-filename".
 
-If we wanted to do this properly, we should update builtin/merge.c to call
-launch_editor() before it runs commit_tree(), in a way similar to how
-prepare_to_commit() in builtin/commit.c does so when e.g. "commit -m foo -e"
-is run. An editmsg is prepared (you already have it in MERGE_MSG), the
-editor is allowed to update it, and then the original code before such a
-patch will run using the updated contents of MERGE_MSG. That way, the _only_
-change in behaviour when "-e" is used is to let the user update the message
-used in the commit log, and everything else would run exactly the same way
-as if no "-e" was given, including the invocation of hooks.
+Is this the intended behavior?  If so, should the documentation be
+clarified by changing "Note that they are applied before commit ordering
+and formatting options, such as --reverse" to something like "Note that
+they are applied before path matching, commit ordering, and formatting
+options, such as --reverse"?
+
+--
+Andrew McNabb
+http://www.mcnabbs.org/andrew/
+PGP Fingerprint: 8A17 B57C 6879 1863 DE55  8012 AB4D 6098 8826 6868
