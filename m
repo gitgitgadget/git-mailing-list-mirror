@@ -1,101 +1,80 @@
-From: Andrew Ardill <andrew.ardill@gmail.com>
-Subject: Re: [RFC/PATCH]: reverse bisect v 2.0
-Date: Fri, 7 Oct 2011 12:57:30 +1100
-Message-ID: <CAH5451kUf=vPfgOOusmJjfbiyueX9VByJLzZ9WbyqLd0z78wxA@mail.gmail.com>
-References: <20110929142027.GA4936@zelva.suse.cz> <20111004103056.GB11236@sigill.intra.peff.net>
- <7vfwj8dbn0.fsf@alter.siamese.dyndns.org> <201110050034.46334.chriscool@tuxfamily.org>
- <7v62k4ban7.fsf@alter.siamese.dyndns.org>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: 66 patches and counting
+Date: Thu, 6 Oct 2011 19:59:33 -0600
+Organization: CAF
+Message-ID: <201110061959.34018.mfick@codeaurora.org>
+References: <4E8CCC55.9070408@alum.mit.edu> <201110061616.39381.mfick@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Jeff King <peff@peff.net>, Michal Vyskocil <mvyskocil@suse.cz>,
-	git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 07 03:57:58 2011
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Oct 07 03:59:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RBzhF-0005Bx-8O
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 03:57:57 +0200
+	id 1RBziw-0005aF-10
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 03:59:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759453Ab1JGB5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Oct 2011 21:57:52 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:48669 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759450Ab1JGB5v (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2011 21:57:51 -0400
-Received: by eyg7 with SMTP id 7so657513eyg.19
-        for <git@vger.kernel.org>; Thu, 06 Oct 2011 18:57:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=SNeoTce/IaQWknTANnU6tj61o456V99iKqwEYUtUymk=;
-        b=tmtjtqTiIOMPoWkeWjodo3WEMIHswJPmNbsk+bBSR12JPRLYjLvMOmGuvzR2Yjg/V2
-         SAuX3L1ny8JI/3TYK6LGmsWoM2fT/ysvw1N/2YucNBgJ1iaTQjFfzUA2puMjD8shshmO
-         M5vkwn7m4jukAX/+14suwSrB9pvMSb3w7q98w=
-Received: by 10.223.58.83 with SMTP id f19mr7325139fah.36.1317952670285; Thu,
- 06 Oct 2011 18:57:50 -0700 (PDT)
-Received: by 10.152.37.66 with HTTP; Thu, 6 Oct 2011 18:57:30 -0700 (PDT)
-In-Reply-To: <7v62k4ban7.fsf@alter.siamese.dyndns.org>
+	id S1759386Ab1JGB7g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Oct 2011 21:59:36 -0400
+Received: from wolverine01.qualcomm.com ([199.106.114.254]:54315 "EHLO
+	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752908Ab1JGB7f (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2011 21:59:35 -0400
+X-IronPort-AV: E=McAfee;i="5400,1158,6491"; a="125524838"
+Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
+  by wolverine01.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 06 Oct 2011 18:59:35 -0700
+Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 53FAE10004C2;
+	Thu,  6 Oct 2011 18:59:35 -0700 (PDT)
+User-Agent: KMail/1.13.5 (Linux/2.6.32-28-generic; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <201110061616.39381.mfick@codeaurora.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183054>
 
-Hi, I have given this some thought and have a slightly different
-proposal for the options to use. I have written a commit message that
-I think explains the need for the improvement, and justifies my
-proposal. The options I propose are '--intoduced' and '--removed'.
+On Thursday, October 06, 2011 04:16:39 pm Martin Fick wrote:
+> On Wednesday, October 05, 2011 03:29:57 pm Michael
+> Haggerty
+> > [1] hierarchical-refs at
+> > git://github.com/mhagger/git.git
+> 
+> I downloaded your patch series and tested it on my repos.
+> 
+>  * full fetch changes                  (> 1 hour) (bad!)
 
---->8---
+I bisected this problem, it was introduced in this commit:
 
-Bisect is used to look for a commit that causes a specific change.
-Such a change can be classified by the user as either introducing
-something, or removing something, and this distinction is arbitrary. A
-change could be said to introduce a bug fix, or remove a bug - both
-formulations have inherently the same meaning, but search behaviour
-changes depending on which one we use.
-Suppose I want to find the commit that removed a bug. If I examine a
-snapshot and it contains the bug, the bug has not yet been *removed*
-and I must look in the future for its removal. Conversely, if I
-examine a snapshot and the bug fix exists, the bug fix must have been
-*introduced* at some earlier point and so I must search backwards.
 
-Confusion exists at this point because at each verification step a
-question like 'Does this snapshot have X?' is asked, when what we
-eventually want to know is 'When was X introduced?' or 'When was X
-removed?'. Previously there has been no way to specify if we are
-looking for X being introduced or removed; it was assumed that we were
-looking for when something was introduced, for example when a bug was
-introduced.
+  commit e12ce45b4f1bd8ed6652a742b7e6cf6f101b3604
+  Author: Michael Haggerty <mhagger@alum.mit.edu>
+  Date:   Wed Oct 5 11:30:06 2011 +0200
 
-Teach git bisect if we are looking for when something was introduced
-or when something was removed.
+    Store references hierarchically
+    
+    This slightly changes the order of iteration over 
+references; now
+    references are strictly sorted componentwise rather than 
+as
+    "/"-containing strings as before.  For example, 
+"subspace/one" now
+    sorts before "subspace-x", whereas before the order was 
+reversed.
+    
+    Tweak a test case to accept the new ordering.
 
-Examples.
-Search for a feature add:
-   $ git bisect start --introduced='feature: git frotz says xyzzy' v0.99 master
-   Bisecting: 171 revisions left to test after this (roughly 8 steps)
-   $ ... build and then test ...
-   $ git bisect tested
-   Does this snapshot have 'feature: git frotz says xyzzy' [y/n]? yes
-# already added, look backwards
 
-Search for a feature regression:
-   $ git bisect start --removed='feature: git frotz says xyzzy' v0.99 master
-   Bisecting: 171 revisions left to test after this (roughly 8 steps)
-   $ ... build and then test ...
-   $ git bisect tested
-   Does this snapshot have 'feature: git frotz says xyzzy' [y/n]? yes
-# not removed yet, look forwards
 
---->8---
+Up until that point, the fetch looks pretty good,
 
-Regards,
+-Martin
 
-Andrew Ardill
+-- 
+Employee of Qualcomm Innovation Center, Inc. which is a 
+member of Code Aurora Forum
