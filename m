@@ -1,105 +1,94 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [PATCH 3/3] fetch: treat --tags like refs/tags/*:refs/tags/*
- when pruning
-Date: Fri, 07 Oct 2011 18:40:01 +0200
-Message-ID: <1318005601.4579.7.camel@centaur.lab.cmartin.tk>
-References: <20111006205103.GA1271@erythro.kitwarein.com>
-	 <1317936107-1230-1-git-send-email-cmn@elego.de>
-	 <1317936107-1230-4-git-send-email-cmn@elego.de>
-	 <20111007163319.GC4399@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Teach merge the '[-e|--edit]' option
+Date: Fri, 07 Oct 2011 10:30:34 -0700
+Message-ID: <7vk48gwvyd.fsf@alter.siamese.dyndns.org>
+References: <1318001347-11347-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-Qj4GfGI0DI5cThUPJGHg"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	mathstuf@gmail.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 07 18:40:24 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 07 19:30:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCDTD-0005bQ-1r
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 18:40:23 +0200
+	id 1RCEFv-0001om-KX
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Oct 2011 19:30:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965504Ab1JGQkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Oct 2011 12:40:18 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:58004 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965510Ab1JGQkD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Oct 2011 12:40:03 -0400
-Received: from [192.168.1.17] (brln-4dbc5717.pool.mediaWays.net [77.188.87.23])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id BF15E46103;
-	Fri,  7 Oct 2011 18:39:37 +0200 (CEST)
-In-Reply-To: <20111007163319.GC4399@sigill.intra.peff.net>
-X-Mailer: Evolution 3.0.3-2 
+	id S1753690Ab1JGRai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Oct 2011 13:30:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47992 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751487Ab1JGRah (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Oct 2011 13:30:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CDACB62AD;
+	Fri,  7 Oct 2011 13:30:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qrrqjNlGRwizc6CJg43epRKbqXE=; b=X4CtuE
+	XDncp2a/dwr7/lMDoyJ11l785HMBBsPplmpDAh3cP6K8f9zDYmF8HGEgXH3xv9G9
+	y+6p2YqSUdE60F56g3hkcirCMQCUkfXYOUjuxbJ9NYj2YSdNReLuPgJv1qIl8fxZ
+	6z7bUTzM2KIwlQs/OOvZ5AfbQ45xqnd+TujFA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JI3ySB9+H6HTtF9NinPwCyNylXsV6B+w
+	XX/yFcAV8okPAT/9O2GzmbcahxfR7WCPkOvojwx5dLLCrgYFNmqq5RWzvXeePjXI
+	xONC1SI8REaY8Mr2zcYOv7DSka/21dnAXVlc6K/k4xqZ/8XSAo7YWX22PZnOv0xF
+	9RUQ4TLmzrE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C514962AC;
+	Fri,  7 Oct 2011 13:30:36 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 587F062AB; Fri,  7 Oct 2011
+ 13:30:36 -0400 (EDT)
+In-Reply-To: <1318001347-11347-1-git-send-email-jaysoffian@gmail.com> (Jay
+ Soffian's message of "Fri, 7 Oct 2011 11:29:07 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1152F08C-F10A-11E0-82D6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183089>
+
+Jay Soffian <jaysoffian@gmail.com> writes:
+
+> Implement "git merge [-e|--edit]" as "git merge --no-commit && git commit"
+> as a convenience for the user.
+>
+> Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+> ---
+> ...
+> @@ -1447,6 +1457,10 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  	}
+>  
+>  	if (merge_was_ok) {
+> +		if (option_edit) {
+> +			const char *args[] = {"commit", "-e", NULL};
+> +			return run_command_v_opt(args, RUN_GIT_CMD);
+> +		}
+>  		fprintf(stderr, _("Automatic merge went well; "
+>  			"stopped before committing as requested\n"));
+>  		return 0;
 
 
---=-Qj4GfGI0DI5cThUPJGHg
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I wanted to like this approach, thinking this approach might be safer and
+with the least chance of breaking other codepaths, but this feels like an
+ugly hack.
 
-On Fri, 2011-10-07 at 12:33 -0400, Jeff King wrote:
-> On Thu, Oct 06, 2011 at 11:21:47PM +0200, Carlos Mart=C3=ADn Nieto wrote:
->=20
-> > diff --git a/builtin/fetch.c b/builtin/fetch.c
-> > index b937d71..94b2bd3 100644
-> > --- a/builtin/fetch.c
-> > +++ b/builtin/fetch.c
-> > @@ -699,8 +699,17 @@ static int do_fetch(struct transport *transport,
-> >  		free_refs(ref_map);
-> >  		return 1;
-> >  	}
-> > -	if (prune)
-> > +	if (prune) {
-> > +		/* If --tags was specified, we need to tell prune_refs
-> > +		 * that we're filtering the refs from the remote */
-> > +		if (tags =3D=3D TAGS_SET) {
-> > +			const char * tags_refspec =3D "refs/tags/*:refs/tags/*";
-> > +			refs =3D xrealloc(refs, (ref_count + 1) * sizeof(struct refspec));
-> > +			refs[ref_count] =3D *parse_fetch_refspec(1, &tags_refspec);
-> > +			ref_count++;
-> > +		}
-> >  		prune_refs(transport, refs, ref_count, ref_map);
-> > +	}
->=20
-> I don't think we can realloc refs here. It's passed into do_fetch. When
-> we realloc it, the old pointer value will be invalid. But when we return
-> from do_fetch, the caller (fetch_one) will still have that old value,
-> and will call free() on it.
+Are we still honoring all the hooks "git merge" honors?  More importantly,
+isn't this make it impossible for future maintainers of this command to
+enhance the command by adding other hooks after the commit is made?
 
-Yes, you're right. I guess it's been working by luck and generous amount
-of memory.
-
->=20
-> Instead, you have to make a whole new list, copy the old values in, add
-> your new one, and then free the result.
-
-Will do.
-
-   cmn
-
-
---=-Qj4GfGI0DI5cThUPJGHg
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAABAgAGBQJOjythAAoJEHKRP1jG7ZzTr/EH/2pZIOzP+Q58GhQ3MkzqRAtG
-uN2DNoianZjMVSR8Fu/DmI40wjWxwuGnvHnJRpWXfW55JOBlLBxsceGY++eqJI+J
-WRX2WGGPwT4MisU7JCAwu+Ryr3lK39JiURObJzyMZLQlYCZWhuQ1FcZmGNjcCE1V
-QGYcfvABrwJK4HNgJICgeYLbPmGyu68zSv7bAXZF7Kq6LhtIO9eqvrzJm96M9i7F
-j/Ifyz7a9uFfetPGmaCyUADd1fo8ZflBwOhFF/H4bzW5Iz0cOmjtKyMjwLoZjMG5
-K2nkfQpIcu7leV/QRfKDqtGSXqxvUskM8AEzdYRrDz8ylAYIHP5MMHilio+ypO0=
-=Q8Em
------END PGP SIGNATURE-----
-
---=-Qj4GfGI0DI5cThUPJGHg--
+If we wanted to do this properly, we should update builtin/merge.c to call
+launch_editor() before it runs commit_tree(), in a way similar to how
+prepare_to_commit() in builtin/commit.c does so when e.g. "commit -m foo -e"
+is run. An editmsg is prepared (you already have it in MERGE_MSG), the
+editor is allowed to update it, and then the original code before such a
+patch will run using the updated contents of MERGE_MSG. That way, the _only_
+change in behaviour when "-e" is used is to let the user update the message
+used in the commit log, and everything else would run exactly the same way
+as if no "-e" was given, including the invocation of hooks.
