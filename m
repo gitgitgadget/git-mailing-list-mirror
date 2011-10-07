@@ -1,121 +1,95 @@
-From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
-Subject: [PATCH 4/4] fetch: treat --tags like refs/tags/*:refs/tags/* when pruning
-Date: Sat,  8 Oct 2011 00:51:09 +0200
-Message-ID: <1318027869-4037-5-git-send-email-cmn@elego.de>
-References: <1318027869-4037-1-git-send-email-cmn@elego.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [WIP PATCH 0/2] Be more careful when prunning
+Date: Fri, 07 Oct 2011 16:00:07 -0700
+Message-ID: <7v39f4tnk8.fsf@alter.siamese.dyndns.org>
+References: <20111004103624.GA11863@sigill.intra.peff.net>
+ <1317920187-17389-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	mathstuf@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 08 00:51:32 2011
+Cc: git@vger.kernel.org
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Sat Oct 08 01:00:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCJGN-00034q-DC
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Oct 2011 00:51:31 +0200
+	id 1RCJPG-0005E2-Ro
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Oct 2011 01:00:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759330Ab1JGWvS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Oct 2011 18:51:18 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:53022 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759168Ab1JGWvL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Oct 2011 18:51:11 -0400
-Received: from centaur.lab.cmartin.tk (brln-4dbc5717.pool.mediaWays.net [77.188.87.23])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 8733346180;
-	Sat,  8 Oct 2011 00:50:45 +0200 (CEST)
-Received: (nullmailer pid 4085 invoked by uid 1000);
-	Fri, 07 Oct 2011 22:51:10 -0000
-X-Mailer: git-send-email 1.7.5.2.354.g349bf
-In-Reply-To: <1318027869-4037-1-git-send-email-cmn@elego.de>
+	id S1759017Ab1JGXAM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Oct 2011 19:00:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46789 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754769Ab1JGXAL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Oct 2011 19:00:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B50C5EFD;
+	Fri,  7 Oct 2011 19:00:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=4V/TMdIbJRgA
+	0TjeU7uveiqWiuU=; b=Grni1jJcVqUqbD0YvXjRk3+JSGnTr/hRVbxQPLRl8ouQ
+	ghNzd8cqvLv8h3JiGKzW4+yXBA7VJ36Yaj55XFQPCzTVsO1nI6B4hIIAfnScUS1f
+	Zmz8s9sw9FtlXfXHaVkwv5YBXYkAm81D5tCgjV8tRe+hcB+ZirHfyZvcQoFku4I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=jBVZ2z
+	6SOp8yOun8TGRapm833YA73mmHxbeKmeN7b3zFYD+cG1XJxqQnaN4JKP68WlOOgW
+	ht53EI0yuoybKO6NDjuNmhiPeEJfhNNmMul0duINCg12iWv6MDwYpkL5aCqvvbvr
+	yrxN3u2WKmYiSyEAXzDij/1gmJ23BG1w8FGAM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 927925EFC;
+	Fri,  7 Oct 2011 19:00:10 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0EF835EFB; Fri,  7 Oct 2011
+ 19:00:08 -0400 (EDT)
+In-Reply-To: <1317920187-17389-1-git-send-email-cmn@elego.de> ("Carlos
+ =?utf-8?Q?Mart=C3=ADn?= Nieto"'s message of "Thu, 6 Oct 2011 18:56:25 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1B5E10EC-F138-11E0-A2B3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183125>
 
-If --tags is specified, add that refspec to the list given to
-prune_refs so it knows to treat it as a filter on what refs to
-should consider for prunning. This way
+Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
 
-    git fetch --prune --tags origin
+> Now comes the interesting part: when --tags is given, there is no
+> refspec set up, fetch just sets up a global variable. What I'm
+> thinking (and going to implement after dinner, unless people cry out
+> against it) is this: just before calling prune_refs, add a refspec to
+> the user-provided list with the refspec refs/tags/*:refs/tags/*
+> similar to what fetch_one does if you gave it "tag v1.5.6". This woul=
+d
+> cause us to ignore the configured refspec and keep the branches. The
+> lack of '+' is most certainly on purpose. Is there anything
+> fundamentally wrong with that idea?
 
-only prunes tags and doesn't delete the branch refs.
+It sounds like that the approach should work and preserve the current
+"fetch --tags" semantics, but with one small caveat (which is not a
+downside).
 
-Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
----
- builtin/fetch.c  |   23 +++++++++++++++++++++--
- t/t5510-fetch.sh |    4 ++--
- 2 files changed, 23 insertions(+), 4 deletions(-)
+As was discussed in a few separate threads last month, in the longer te=
+rm
+I think we should fix the semantics of "fetch --tags" to mean "in addit=
+ion
+to what you usually fetch with the configured refspecs, add that all
+matching refs/tags/*:refs/tags/* to the refspec" to reduce confusion.
+"Only fetch tags" may make sense if you have everything else, but by
+itself it is somewhat a senseless thing to do.
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 041f79e..0f8170c 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -700,10 +700,29 @@ static int do_fetch(struct transport *transport,
- 		return 1;
- 	}
- 	if (prune) {
--		if (ref_count)
-+		/* If --tags was specified, pretend the user gave us the canonical t=
-ags refspec */
-+		if (tags =3D=3D TAGS_SET) {
-+			const char *tags_str =3D "refs/tags/*:refs/tags/*";
-+			struct refspec *tags_refspec, *refspec;
-+
-+			/* Copy the refspec and add the tags to it */
-+			refspec =3D xcalloc(ref_count + 1, sizeof(struct refspec));
-+			tags_refspec =3D parse_fetch_refspec(1, &tags_str);
-+			memcpy(refspec, refs, ref_count * sizeof(struct refspec));
-+			memcpy(&refspec[ref_count], tags_refspec, sizeof(struct refspec));
-+			ref_count++;
-+
-+			prune_refs(refspec, ref_count, ref_map);
-+
-+			ref_count--;
-+			/* The rest of the strings belong to fetch_one */
-+			free_refspec(1, tags_refspec);
-+			free(refspec);
-+		} else if (ref_count) {
- 			prune_refs(refs, ref_count, ref_map);
--		else
-+		} else {
- 			prune_refs(transport->remote->fetch, transport->remote->fetch_refsp=
-ec_nr, ref_map);
-+		}
- 	}
- 	free_refs(ref_map);
-=20
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 581049b..e0af4c4 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -105,7 +105,7 @@ test_expect_success 'fetch --prune with a namespace=
- keeps other namespaces' '
- 	git rev-parse origin/master
- '
-=20
--test_expect_failure 'fetch --prune --tags does not delete the remote-t=
-racking branches' '
-+test_expect_success 'fetch --prune --tags does not delete the remote-t=
-racking branches' '
- 	cd "$D" &&
- 	git clone . prune-tags &&
- 	cd prune-tags &&
-@@ -116,7 +116,7 @@ test_expect_failure 'fetch --prune --tags does not =
-delete the remote-tracking br
- 	test_must_fail git rev-parse somebranch
- '
-=20
--test_expect_failure 'fetch --prune --tags with branch does not delete =
-other remote-tracking branches' '
-+test_expect_success 'fetch --prune --tags with branch does not delete =
-other remote-tracking branches' '
- 	cd "$D" &&
- 	git clone . prune-tags-branch &&
- 	cd prune-tags-branch &&
---=20
-1.7.5.2.354.g349bf
+The semantics has been kept this way only from fear of breaking backwar=
+d
+compatibility, but because nobody wants to only fetch tags without
+branches, this forces people to say "git fetch && git fetch --tags".
+
+We should re-evaluate the design and change it at a major version
+boundary, I would think. And when that happens, we may need to rip out =
+the
+special case you discussed above.
+
+Thanks.
