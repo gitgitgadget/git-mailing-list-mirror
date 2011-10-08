@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 2/6] revert: Simplify getting commit subject
-Date: Sat,  8 Oct 2011 23:06:43 +0530
-Message-ID: <1318095407-26429-3-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 3/6] revert: Fix buffer overflow in insn sheet parser
+Date: Sat,  8 Oct 2011 23:06:44 +0530
+Message-ID: <1318095407-26429-4-git-send-email-artagnon@gmail.com>
 References: <1318095407-26429-1-git-send-email-artagnon@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
@@ -9,79 +9,99 @@ Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Oct 08 19:37:21 2011
+X-From: git-owner@vger.kernel.org Sat Oct 08 19:37:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCapr-0004l3-0e
+	id 1RCapr-0004l3-I3
 	for gcvg-git-2@lo.gmane.org; Sat, 08 Oct 2011 19:37:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753335Ab1JHRhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Oct 2011 13:37:06 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:43229 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753230Ab1JHRhF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Oct 2011 13:37:05 -0400
-Received: by mail-gy0-f174.google.com with SMTP id 10so4416168gyg.19
-        for <git@vger.kernel.org>; Sat, 08 Oct 2011 10:37:05 -0700 (PDT)
+	id S1753339Ab1JHRhL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Oct 2011 13:37:11 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:35970 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753230Ab1JHRhJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Oct 2011 13:37:09 -0400
+Received: by mail-pz0-f42.google.com with SMTP id 1so12271226pzk.1
+        for <git@vger.kernel.org>; Sat, 08 Oct 2011 10:37:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=2wxSlKtqQE8PfiNkK87QD96CK37t9ckFTSgRRdgRVmU=;
-        b=aV60kHZL8YGYYTqbukKE0MfxqQqsL4kM7VaGXLxof2Bg+P2TLlCOj6QeLDCAFfC0DL
-         xkrnXbzpg+ff/6EzNPm+NuxOEJjscrMqYRpbVlF0UH6W87eAKtxDvd282wq0ReXrXUNB
-         wr2mULxVdd+4cljTA05ufCLv7WVQuOoQk8kQg=
-Received: by 10.68.72.73 with SMTP id b9mr17169742pbv.100.1318095424850;
-        Sat, 08 Oct 2011 10:37:04 -0700 (PDT)
+        bh=Hha+CK2y5d9bQjsz5qPM1e/LQpzhDuIwxKPPFQJLD+g=;
+        b=OD5IEAP2o3AUWWRgqo5BSDDU+wX/dEC/9Q7aabrEx5ybij5gpTgutiUHOTpHxoChTl
+         zvh+j+Nner1FfHoJn59xhcuZGBKNl/tSfrQlnOQAkMwwlIs7pbT6vaHoyr5EomsuOoHe
+         q/aICLgnaVlNe1X1p5K6MjoyxMo+w3qwoMJhA=
+Received: by 10.68.6.98 with SMTP id z2mr23624196pbz.36.1318095428793;
+        Sat, 08 Oct 2011 10:37:08 -0700 (PDT)
 Received: from localhost.localdomain ([122.174.152.157])
-        by mx.google.com with ESMTPS id h5sm45151528pbq.11.2011.10.08.10.37.01
+        by mx.google.com with ESMTPS id h5sm45151528pbq.11.2011.10.08.10.37.05
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 08 Oct 2011 10:37:03 -0700 (PDT)
+        Sat, 08 Oct 2011 10:37:07 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.1
 In-Reply-To: <1318095407-26429-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183161>
 
-The heavy parsing and memory allocations performed by get_message is
-unnecessary when only the commit subject is desired.  Use
-find_commit_subject instead.
+Check that the commit name argument to a "pick" or "revert" action in
+'.git/sequencer/todo' is not too long, to avoid overflowing an
+on-stack buffer.  This fixes a regression introduced by 5a5d80f4
+(revert: Introduce --continue to continue the operation, 2011-08-04).
 
-Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
+Reported-by: Jonathan Nieder <jrnieder@gmail.com>
+Acked-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- builtin/revert.c |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
+ builtin/revert.c                |    2 +-
+ t/t3510-cherry-pick-sequence.sh |   14 ++++++++++++++
+ 2 files changed, 15 insertions(+), 1 deletions(-)
 
 diff --git a/builtin/revert.c b/builtin/revert.c
-index a2c304d..b3c5e0e 100644
+index b3c5e0e..6451089 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -673,16 +673,16 @@ static int format_todo(struct strbuf *buf, struct commit_list *todo_list,
- 		struct replay_opts *opts)
- {
- 	struct commit_list *cur = NULL;
--	struct commit_message msg = { NULL, NULL, NULL, NULL, NULL };
- 	const char *sha1_abbrev = NULL;
- 	const char *action_str = opts->action == REVERT ? "revert" : "pick";
-+	const char *subject;
-+	int subject_len;
+@@ -707,7 +707,7 @@ static struct commit *parse_insn_line(char *start, struct replay_opts *opts)
+ 		return NULL;
  
- 	for (cur = todo_list; cur; cur = cur->next) {
- 		sha1_abbrev = find_unique_abbrev(cur->item->object.sha1, DEFAULT_ABBREV);
--		if (get_message(cur->item, &msg))
--			return error(_("Cannot get commit message for %s"), sha1_abbrev);
--		strbuf_addf(buf, "%s %s %s\n", action_str, sha1_abbrev, msg.subject);
--		free_message(&msg);
-+		subject_len = find_commit_subject(cur->item->buffer, &subject);
-+		strbuf_addf(buf, "%s %s %.*s\n", action_str, sha1_abbrev,
-+			subject_len, subject);
- 	}
- 	return 0;
- }
+ 	q = strchr(p, ' ');
+-	if (!q)
++	if (!q || q - p + 1 > sizeof(sha1_abbrev))
+ 		return NULL;
+ 	q++;
+ 
+diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+index 3bca2b3..2113308 100755
+--- a/t/t3510-cherry-pick-sequence.sh
++++ b/t/t3510-cherry-pick-sequence.sh
+@@ -12,6 +12,9 @@ test_description='Test cherry-pick continuation features
+ 
+ . ./test-lib.sh
+ 
++# Repeat first match 10 times
++_r10='\1\1\1\1\1\1\1\1\1\1'
++
+ pristine_detach () {
+ 	git cherry-pick --reset &&
+ 	git checkout -f "$1^0" &&
+@@ -211,4 +214,15 @@ test_expect_success 'malformed instruction sheet 2' '
+ 	test_must_fail git cherry-pick --continue
+ '
+ 
++test_expect_success 'malformed instruction sheet 3' '
++	pristine_detach initial &&
++	test_must_fail git cherry-pick base..anotherpick &&
++	echo "resolved" >foo &&
++	git add foo &&
++	git commit &&
++	sed "s/pick \([0-9a-f]*\)/pick $_r10/" .git/sequencer/todo >new_sheet &&
++	cp new_sheet .git/sequencer/todo &&
++	test_must_fail git cherry-pick --continue
++'
++
+ test_done
 -- 
 1.7.4.1
