@@ -1,112 +1,61 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] fmt-merge-msg: use branch.$name.description
-Date: Fri, 07 Oct 2011 17:01:35 -0700 (PDT)
-Message-ID: <m3mxdc1hek.fsf@localhost.localdomain>
-References: <7vobxtwaog.fsf@alter.siamese.dyndns.org>
-	<4E8EBDA7.2040007@drmicha.warpmail.net>
-	<20111007091636.GA22822@elie.hsd1.il.comcast.net>
-	<4E8ECA25.205@drmicha.warpmail.net>
-	<20111007100646.GA23193@elie.hsd1.il.comcast.net>
-	<4E8EED39.1060607@drmicha.warpmail.net>
-	<7vobxstt4w.fsf@alter.siamese.dyndns.org>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 1/3] completion: unite --reuse-message and
+	--reedit-message handling
+Date: Sat, 8 Oct 2011 03:04:32 +0200
+Message-ID: <20111008010432.GA11561@goldbirke>
+References: <1317926431-609-1-git-send-email-teemu.matilainen@iki.fi>
+	<7vd3e9yap7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-4
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
+Cc: Teemu Matilainen <teemu.matilainen@iki.fi>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 08 02:01:45 2011
+X-From: git-owner@vger.kernel.org Sat Oct 08 03:10:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCKMI-00042c-WA
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Oct 2011 02:01:43 +0200
+	id 1RCLQj-00021H-B5
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Oct 2011 03:10:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754694Ab1JHABi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Oct 2011 20:01:38 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:44401 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753432Ab1JHABh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Oct 2011 20:01:37 -0400
-Received: by bkbzt4 with SMTP id zt4so5430563bkb.19
-        for <git@vger.kernel.org>; Fri, 07 Oct 2011 17:01:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=lDZ7QYwZcJ0Wxa/JfVZMHF+zvtHKULjH2DXHFehRegM=;
-        b=EIITh9HBcuqRTKXRfeOnQOIy05sBy0LUN9UTAcBbiV3qX3EaCEAjdkaGE+wFYj2lc7
-         Wib5eSEaZ2WlXrBxKiG5YQNAl1jlDSN/gfBDNFCPQnATKFQxdxQSUsAa3BkKAJoDv5a3
-         V+5UV2fnYiDGTgk4832ElMgIKqFIi68lm5Ajc=
-Received: by 10.223.92.147 with SMTP id r19mr14194035fam.18.1318032096627;
-        Fri, 07 Oct 2011 17:01:36 -0700 (PDT)
-Received: from localhost.localdomain (abrz200.neoplus.adsl.tpnet.pl. [83.8.119.200])
-        by mx.google.com with ESMTPS id n18sm15310107fah.2.2011.10.07.17.01.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 07 Oct 2011 17:01:35 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p98012KM003877;
-	Sat, 8 Oct 2011 02:01:12 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p9800Zk1003868;
-	Sat, 8 Oct 2011 02:00:35 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7vobxstt4w.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751753Ab1JHBEk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Oct 2011 21:04:40 -0400
+Received: from moutng.kundenserver.de ([212.227.126.187]:54228 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751549Ab1JHBEj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Oct 2011 21:04:39 -0400
+Received: from localhost6.localdomain6 (p5B131159.dip0.t-ipconnect.de [91.19.17.89])
+	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
+	id 0McRue-1RU0kS2HXE-00IBOF; Sat, 08 Oct 2011 03:04:33 +0200
+Content-Disposition: inline
+In-Reply-To: <7vd3e9yap7.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:w1PNb90Wi6GmxseeZ3dmsnT9UGG3y215dAy82ykV8Ys
+ xZLElu9Ue3g7ShE8kLdViF9YKHLctsQxocLf+jZokHHEcItKxq
+ Z8+ZgGYX9mNTq8Plz8x5WRkBof4TVAp5H0uObO4ri8fW3Yb8Tr
+ wR3yJ4HziFPLMu0fW38tiCrFKncCPVBKjwl2oio78m1Hr9I14S
+ 9w8tHK/gX3RxxmT26cTPLBgBTWeHMFDLkJHLn4x/rs40o4BXWm
+ EX0HtJ0z5yMO5BbXUtVPBNzDbvvuXDpRYURMymqoTVlb8wuiWI
+ HsQiouD3CAkoTm51gFqsQOkURSSQN4g5IYRq4zATv27iLXy46i
+ 0A+LeKbiSY/mizlgEi2k=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183130>
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
->=20
-> > Alternatively, one could store the description in a blob and refer =
-to
-> > that directly, of course. I.e., have
-> >
-> > refs/description/foo
-> >
-> > point to a blob whose content is the description of the ref
-> >
-> > ref/foo
-> >
-> > That would be unversioned, and one could decide more easily which
-> > descriptions to share. (A notes tree you either push or don't.)
-[...]
+Hi,
 
-> But it remains that any of these approaches assume branch names are
-> universal. Unlike other systems, what we call branches do not have th=
-eir
-> own identity, so if you really want to go that route (and we _might_ =
-need
-> to in the longer term, but I am not convinced at this point yet), you
-> would first need to define how that local namespace would look like, =
-how
-> people interact with it, etc. It might be just the matter of declarin=
-g a
-> convention e.g. "Among people who meet at this central repository,
-> everybody must map the branches identically to their local branch
-> namespace, and all sharing must go through the central repository", a=
-nd
-> calling a tuple <central repository URL, branch name in that reposito=
-ry>
-> with a name that cannot be confused with "branch" (so "remote branch"=
- is
-> out), such as "(development) track".
+On Thu, Oct 06, 2011 at 04:14:28PM -0700, Junio C Hamano wrote:
+> All three patches make sense to me. Thanks.
 
-Well, git could by default imply that 'refs/heads/*:refs/remotes/foo/*'
-implies 'refs/description/*:refs/remote-descriptions/foo/*'...
+This is a good cleanup/deduplication; there are a few places where
+similar cleanup can be done.  Since this conflicted with one of my
+more intrusive WIP branches, I figured it's better to clean up those
+first, too.
 
-=2E..one more argument for hierarchical remote-tracking refs namespace,
-i.e. 'refs/remotes/foo/refs/heads/*', and not current 'refs/remotes/foo=
-/*'
 
-Just my 3 eurocents^W groszy.
---=20
-Jakub Nar=EAbski
+Best,
+G=E1bor
