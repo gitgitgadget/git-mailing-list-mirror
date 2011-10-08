@@ -1,173 +1,113 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH v2] Teach merge the '[-e|--edit]' option
-Date: Sat, 8 Oct 2011 14:11:16 -0400
-Message-ID: <CAG+J_Dzrk5x0+JRC8EbrAxjZE+hD+-5mp+H=F=M8Su2WosPfmg@mail.gmail.com>
-References: <7vk48gwvyd.fsf@alter.siamese.dyndns.org>
-	<1318023997-54810-1-git-send-email-jaysoffian@gmail.com>
-	<7vfwj4tplw.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	"Todd A. Jacobs" <nospam+listmail@codegnome.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 08 20:11:23 2011
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCHv5/RFC 0/6] Moving gitweb documentation to manpages
+Date: Sat,  8 Oct 2011 20:31:57 +0200
+Message-ID: <1318098723-12813-1-git-send-email-jnareb@gmail.com>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org, Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Sat Oct 08 20:33:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCbMo-0008SA-TR
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Oct 2011 20:11:23 +0200
+	id 1RCbi9-0007b3-3w
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Oct 2011 20:33:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753423Ab1JHSLS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Oct 2011 14:11:18 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:50804 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753386Ab1JHSLR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Oct 2011 14:11:17 -0400
-Received: by gyg10 with SMTP id 10so4426993gyg.19
-        for <git@vger.kernel.org>; Sat, 08 Oct 2011 11:11:17 -0700 (PDT)
+	id S1753443Ab1JHScb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Oct 2011 14:32:31 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:44194 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753243Ab1JHSca (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Oct 2011 14:32:30 -0400
+Received: by bkbzt4 with SMTP id zt4so6340946bkb.19
+        for <git@vger.kernel.org>; Sat, 08 Oct 2011 11:32:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=oOPzlZjPkp/PYgh8WApafUPXnD19vXRgm9LPSA3lJ7g=;
-        b=bAK9EY8ewjtJlZ4WDIO6338JcgP89GSQIadv/ol4HvjWkhYCGX0DKgvIALdERLe4DO
-         4HbEPneTGX9cnB4ftm+JQ41aQ7FAPt6aMYeTg61xQbX+KSPLCnINCwMEYi6PSCRZsFwv
-         2mIUGyv8QaVyQcI3+mpzRsX4eMjgHwMJ9mnQk=
-Received: by 10.147.154.12 with SMTP id g12mr2478806yao.36.1318097477198; Sat,
- 08 Oct 2011 11:11:17 -0700 (PDT)
-Received: by 10.147.32.18 with HTTP; Sat, 8 Oct 2011 11:11:16 -0700 (PDT)
-In-Reply-To: <7vfwj4tplw.fsf@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=gqrZ+gwu03FDmboQIh8EUow4loXESSlYjQtG8uO0NzU=;
+        b=LZ5BQ9v3ZqyYPSxz9GsH4IXY/FlneQmCIiMP+/BuuUlqp6H1eoFiJq/MnRtI9aJUNY
+         AG5Iaoywd7bW47aDqmAGrj7a85MJ26LP4RlffWKabhl9J1DArB9E+2bdM9AcP8woMP9B
+         +F/HLHx1ZsdTaSd/6oYXPHbW67Cb9HjV+PZMg=
+Received: by 10.223.61.146 with SMTP id t18mr19825363fah.34.1318098747960;
+        Sat, 08 Oct 2011 11:32:27 -0700 (PDT)
+Received: from localhost.localdomain (abrz200.neoplus.adsl.tpnet.pl. [83.8.119.200])
+        by mx.google.com with ESMTPS id m26sm20180604fac.6.2011.10.08.11.32.25
+        (version=SSLv3 cipher=OTHER);
+        Sat, 08 Oct 2011 11:32:26 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183166>
 
-On Fri, Oct 7, 2011 at 6:15 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Think and look forward.
->
-> You are complaining that the "commit" does not know enough to behave =
-as if
-> it were a part of the merge command workflow if you split a usual mer=
-ge
-> into two steps "merge --no-commit; commit".
+The original patch adding manpage for /etc/gitweb.conf was sent by
+Drew Northup (as can be seen from shortlog); I have added manpage for
+gitweb itself, inspired by his patch.  Unfortunately Drew doesn't
+currently have time to work on this patch (patch series), so that is
+why it is me resending this series (again).
 
-No Junio, you have my argument completely reversed.
+Compared to previous version
 
-I am complaining that git-merge implements commits internally, which
-gives it unique behavior from git-{commit/cherry-pick/revert} (the
-latter two of which just run external git-commit). I'm saying merge is
-fundamentally broken to do it this way. And maybe that's something
-that should be fixed in 2.0 -- that git-merge should just call out to
-git-commit, just like cherry-pick/revert do.
+  "[PATCH/RFCv4 0/4] Moving gitweb documentation to manpages"
+  http://thread.gmane.org/gmane.comp.version-control.git/181605
 
-In case that's not clear: I think that git-merge should eventually
-behave identically to "merge --no-commit; commit".
+it has much improved gitweb.conf.txt manpage, and "Documentation:
+Preparation for gitweb manpages" commit message, thanks to feedback
+provided by Jonathan Nieder.
 
-> How would you make it better? Would you strip all the things usual "m=
-erge"
-> does, so that it would work identically to the split one,
+New in this series are patches 4 and 5, which add links to the newly
+created gitweb documentation and gitweb config variables from other
+manpages, respectively.
 
-Yes.
+Note that only "Documentation: Preparation for gitweb manpages" (which
+is not strictly necessary) and "gitweb: Add manpage for gitweb" (which
+didn't get as much review as "gitweb: Add manpage for gitweb
+configuration files" are still marked as RFC.
 
-> losing some hook support and such.
+I have checked that RPM generation of 'gitweb' package works correctly
+wrt. gitweb documentation.
 
-Yes, I would lose the post-merge hook and such.
+Table of contents:
+~~~~~~~~~~~~~~~~~~
+ [PATCHv5/RFC 1/6] Documentation: Preparation for gitweb manpages
+ [PATCHv5 2/6] gitweb: Add manpage for gitweb configuration files
+ [PATCHv5/RFC 3/6] gitweb: Add manpage for gitweb
+ [PATCHv5 4/6] Documentation: Link to gitweb(1) and 
+   gitweb.conf(5) in other manpages
+ [PATCHv5 5/6] Documentation: Add gitweb config variables to
+   git-config(1)
+ [PATCHv5 6/6] gitweb: Add gitweb manpages to 'gitweb' package in
+   git.spec.in
 
->, or would you rather make the split case work similar to the usual me=
-rge?
+Shortlog:
+~~~~~~~~~
+Drew Northup (1):
+  gitweb: Add manpage for gitweb configuration files
 
-No, I would not do that.
+Jakub Narebski (5):
+  Documentation: Preparation for gitweb manpages
+  gitweb: Add manpage for gitweb
+  Documentation: Link to gitweb(1) and gitweb.conf(5) in other manpages
+  Documentation: Add gitweb config variables to git-config(1)
+  gitweb: Add gitweb manpages to 'gitweb' package in git.spec
 
-BTW, the same arguments apply to git-am, which uses git-commit-tree,
-and so implements its own set of hooks.
+Diffstat:
+~~~~~~~~~
+ Documentation/Makefile         |    7 +-
+ Documentation/config.txt       |   17 +
+ Documentation/git-instaweb.txt |    4 +
+ Documentation/gitweb.conf.txt  |  875 ++++++++++++++++++++++++++++++++++++++++
+ Documentation/gitweb.txt       |  703 ++++++++++++++++++++++++++++++++
+ command-list.txt               |    1 +
+ git.spec.in                    |    7 +
+ gitweb/INSTALL                 |   94 +----
+ gitweb/Makefile                |    7 +-
+ gitweb/README                  |  411 +------------------
+ 10 files changed, 1647 insertions(+), 479 deletions(-)
+ create mode 100644 Documentation/gitweb.conf.txt
+ create mode 100644 Documentation/gitweb.txt
 
-> I'd say between "merge" and "merge --no-commit ; commit", the latter =
-is
-> what needs to be fixed. Viewed that way, why would you even consider
-> making the new option behave similar to the _wrong_ one?
-
-Strongly disagree. I think it would make much more sense for all
-commits to flow through git-commit, which would ensure consistent
-behavior. I think we've got a mishmash of hooks which evolved over
-time.
-
->> I didn't bother with the commit status, it's more code than I wanted
->> to deal with duplicating/refactoring from commit.c.
->
-> What do you mean by "commit status"? If you mean this patch is incomp=
-lete,
-> it would have been nicer if it were labeled with [PATCH/RFC].
-
-No, I meant that git-commit includes status information about the
-commit itself as comments in the commit message (git config
-commit.status), and I didn't implement that. I don't think that makes
-this patch incomplete however, that could be added by a later patch.
-
-I'll send another iteration with your comments below addressed.
-
-j.
-
->> diff --git a/builtin/merge.c b/builtin/merge.c
->> index ee56974371..0dee53b7e4 100644
->> --- a/builtin/merge.c
->> +++ b/builtin/merge.c
->> @@ -46,6 +46,7 @@ static const char * const builtin_merge_usage[] =3D=
- {
->>
->> =C2=A0static int show_diffstat =3D 1, shortlog_len, squash;
->> =C2=A0static int option_commit =3D 1, allow_fast_forward =3D 1;
->> +static int option_edit =3D 0;
->
-> No need to move this into .data segment when it can be in .bss
-> segment. Drop the unnecessary " =3D 0" before ";".
->
->> @@ -842,30 +845,54 @@ static void add_strategies(const char *string,=
- unsigned attr)
->>
->> =C2=A0}
->>
->> -static void write_merge_msg(void)
->> +static void write_merge_msg(struct strbuf *msg)
->> =C2=A0{
->> =C2=A0 =C2=A0 =C2=A0 int fd =3D open(git_path("MERGE_MSG"), O_WRONLY=
- | O_CREAT, 0666);
->> =C2=A0 =C2=A0 =C2=A0 if (fd < 0)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die_errno(_("Could =
-not open '%s' for writing"),
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 git_path("MERGE_MSG"));
->> - =C2=A0 =C2=A0 if (write_in_full(fd, merge_msg.buf, merge_msg.len) =
-!=3D merge_msg.len)
->> + =C2=A0 =C2=A0 if (write_in_full(fd, msg->buf, msg->len) !=3D msg->=
-len)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die_errno(_("Could =
-not write to '%s'"), git_path("MERGE_MSG"));
->> =C2=A0 =C2=A0 =C2=A0 close(fd);
->> =C2=A0}
->>
->> -static void read_merge_msg(void)
->> +static void read_merge_msg(struct strbuf *msg)
->> =C2=A0{
->> - =C2=A0 =C2=A0 strbuf_reset(&merge_msg);
->> - =C2=A0 =C2=A0 if (strbuf_read_file(&merge_msg, git_path("MERGE_MSG=
-"), 0) < 0)
->> + =C2=A0 =C2=A0 strbuf_reset(msg);
->> + =C2=A0 =C2=A0 if (strbuf_read_file(msg, git_path("MERGE_MSG"), 0) =
-< 0)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die_errno(_("Could =
-not read from '%s'"), git_path("MERGE_MSG"));
->> =C2=A0}
->>
->> -static void run_prepare_commit_msg(void)
->> +static void write_merge_state();
->
-> s/()/(void)/;
->
-> Thanks.
->
->
+-- 
+1.7.6
