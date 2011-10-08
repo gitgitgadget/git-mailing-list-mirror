@@ -1,133 +1,106 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH 9/9] completion: remove broken dead code from __git_heads()
-	and __git_tags()
-Date: Sat,  8 Oct 2011 16:54:43 +0200
-Message-ID: <1318085683-29830-10-git-send-email-szeder@ira.uka.de>
-References: <1318085683-29830-1-git-send-email-szeder@ira.uka.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: How pretty is pretty? git cat-file -p inconsistency
+Date: Sat, 8 Oct 2011 18:36:32 +0200
+Message-ID: <201110081836.33941.jnareb@gmail.com>
+References: <4E8EBC00.90909@drmicha.warpmail.net> <m3r52o1hxr.fsf@localhost.localdomain> <4E906292.1020909@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 08 16:57:07 2011
+Content-Type: text/plain;
+  charset="iso-8859-4"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Sat Oct 08 18:36:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCYKn-0000yP-Rw
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Oct 2011 16:57:06 +0200
+	id 1RCZtM-0008BP-8Y
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Oct 2011 18:36:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752338Ab1JHO5B convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Oct 2011 10:57:01 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:64768 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751339Ab1JHO5A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Oct 2011 10:57:00 -0400
-Received: from localhost6.localdomain6 (p5B130863.dip0.t-ipconnect.de [91.19.8.99])
-	by mrelayeu.kundenserver.de (node=mreu3) with ESMTP (Nemesis)
-	id 0M1MLN-1QxVU92jXd-00twZm; Sat, 08 Oct 2011 16:56:57 +0200
-X-Mailer: git-send-email 1.7.7.187.ga41de
-In-Reply-To: <1318085683-29830-1-git-send-email-szeder@ira.uka.de>
-X-Provags-ID: V02:K0:c1oHj4o8WdgGg1PbD64a8CBf2ZOxRPQOJkbnrV9mZzv
- FeF2WMjk4f6VjnwqN9kwC4d5Engt7U7nYPaaSCiYMM7JuNg3sE
- N4Hxr3UAx4zAuEcPhOVQ9ATaXiNcdwOF2hA2Z9wp3OpquX5Vyl
- 8r5JP31NMUpyb0Prho2fXJqh2wYNP9uPHIr5D5MP+KLvQyVRxx
- h+E5GAzGbJqG6mbfx+a1EFwkLdmKQllGTalI6X15dl1CNkcy6w
- Lp4KpcQaPZBeSVygvTz5a9zsS+EWkwcigrgijoGmgVhm+dm9tm
- 2LMCKNhWFCOJ0f2cW4qNqCQaGsFfpzc6XsAzAIoIHeqq3HZCoe
- yUb7D3DeDxdwvPdyqeU4zqVVVrIC4qaj/X7FejPzhfbhHeAZL9
- p6oqwcPr13cQw==
+	id S1751852Ab1JHQgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Oct 2011 12:36:43 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:34748 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751339Ab1JHQgm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Oct 2011 12:36:42 -0400
+Received: by bkbzt4 with SMTP id zt4so6250416bkb.19
+        for <git@vger.kernel.org>; Sat, 08 Oct 2011 09:36:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=lSDSZuFnm8WSszrx5T7G4k1ISALahWWeJjpzh72Ivp8=;
+        b=vxRUYI2UhwsWySp3QZJaWp9Lm6we0DX1Qyn0ghW59asddRc3/aVI/xn553R19X8GKv
+         nO4ANzWZfmARJwukb/FZohKEcoHz52e3obAJVl2bXdcaL8Fi6Qpedw21mUyzUgpa1/n7
+         fzqFn84Dmb5V3c5JFdHuQ+7iMLQaHRB4EvuUM=
+Received: by 10.204.6.206 with SMTP id a14mr1552468bka.38.1318091800951;
+        Sat, 08 Oct 2011 09:36:40 -0700 (PDT)
+Received: from [192.168.1.13] (abrz200.neoplus.adsl.tpnet.pl. [83.8.119.200])
+        by mx.google.com with ESMTPS id x4sm4711907fad.1.2011.10.08.09.36.38
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 08 Oct 2011 09:36:39 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4E906292.1020909@drmicha.warpmail.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183154>
 
-__git_heads() was introduced in 5de40f5 (Teach bash about
-git-repo-config., 2006-11-27), and __git_tags() in 88e21dc (Teach bash
-about completing arguments for git-tag, 2007-08-31).  As their name
-suggests, __git_heads() is supposed to list only branches, and
-__git_tags() only tags.
+On Sat, 8 Oct 2011, Michael J Gruber wrote:
+> Jakub Narebski venit, vidit, dixit 08.10.2011 01:50:
 
-Since their introduction both of these functions consist of two
-distinct parts.  The first part gets branches or tags, respectively,
-from a local repositoty using 'git for-each-ref'.  The second part
-queries a remote repository given as argument using 'git ls-remote'.
+> > Tree object consist of zero or more entries.  Each item consist of mode,
+> > filename, and sha1:
+> > 
+> >   <mode> SPC <filename> NUL <sha1>
+> > 
+> > where
+> > 
+> > 1. <mode> is variable-length (!) text (!) containing mode of an
+> >    entry. It encodes type of entry: if it is blob (including special
+> >    case: symbolic link), tree i.e. directory, or a commit
+> >    i.e. submodule.  Does not include leading zeros.
+> > 
+> > 2. <filename> is variable-length null-terminated ("\0") name of a file
+> >    or directory, or name of directory where submodule is attached
+> > 
+> > 3. <sha1> is 40-bytes _binary_ identifier.
+> > 
+> > HTH
+> 
+> It does help, thanks.
+> 
+> Though I'm beginning to think we have a crazy object format. Not only do
+> we have a lot of indirections (like ascii representation of decimal
+> representation of length), but we store sha1 as ascii in commit and tag
+> objects and as binary in tree objects. Which makes tree objects the only
+> unpleasant ones to look at (and parse) in raw form. (I was hoping we can
+> dispose of/deprecate cat-file -p in favor of show). Oh well.
 
-These remote-querying parts are broken in both functions since their
-introduction, because they list both branches and tags from the remote
-repository.  (The 'git ls-remote' query is not limited to list only
-heads or tags, respectively, and the for loop filtering the query
-results prints everything except dereferenced tags.)  This breakage
-could be easily fixed by passing the '--heads' or '--tags' options or
-appropriate refs patterns to the 'git ls-remote' invocations.
+Well, actually we have pretty consistent format, i.e. we use textual
+format everywhere (textual size of blob instead of some variable-length
+integer, textual name of type of object instead of a byte for it, epoch
+as a text and not 64bit signed int in some network format, hexadecimal sha1,
+space separated (sub)fields)... 
 
-However, that no one noticed this breakage yet is probably not a
-coincidence: neither of these two functions were used to query a
-remote repository, the remote-querying parts were dead code already
-upon thier introduction and remained dead ever since.
+... with the sole exception of tree object, which uses _binary_ sha1.
+What was Linus thinking?!?
 
-Since those parts of code are broken, are and were never used, stop
-the bit-rotting and remove them.
+To have consistency the tree entry should IMVHO look like this
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- contrib/completion/git-completion.bash |   22 ++--------------------
- 1 files changed, 2 insertions(+), 20 deletions(-)
+  <textual mode> SPC <filename> NUL <hexadecimal sha1> LF
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index d7151220..802b703d 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -536,42 +536,24 @@ __gitcomp_nl ()
- 	COMPREPLY=3D($(compgen -P "${2-}" -S "$suffix" -W "$1" -- "$cur_"))
- }
-=20
--# __git_heads accepts 0 or 1 arguments (to pass to __gitdir)
- __git_heads ()
- {
--	local cmd i is_hash=3Dy dir=3D"$(__gitdir "${1-}")"
-+	local dir=3D"$(__gitdir)"
- 	if [ -d "$dir" ]; then
- 		git --git-dir=3D"$dir" for-each-ref --format=3D'%(refname:short)' \
- 			refs/heads
- 		return
- 	fi
--	for i in $(git ls-remote "${1-}" 2>/dev/null); do
--		case "$is_hash,$i" in
--		y,*) is_hash=3Dn ;;
--		n,*^{}) is_hash=3Dy ;;
--		n,refs/heads/*) is_hash=3Dy; echo "${i#refs/heads/}" ;;
--		n,*) is_hash=3Dy; echo "$i" ;;
--		esac
--	done
- }
-=20
--# __git_tags accepts 0 or 1 arguments (to pass to __gitdir)
- __git_tags ()
- {
--	local cmd i is_hash=3Dy dir=3D"$(__gitdir "${1-}")"
-+	local dir=3D"$(__gitdir)"
- 	if [ -d "$dir" ]; then
- 		git --git-dir=3D"$dir" for-each-ref --format=3D'%(refname:short)' \
- 			refs/tags
- 		return
- 	fi
--	for i in $(git ls-remote "${1-}" 2>/dev/null); do
--		case "$is_hash,$i" in
--		y,*) is_hash=3Dn ;;
--		n,*^{}) is_hash=3Dy ;;
--		n,refs/tags/*) is_hash=3Dy; echo "${i#refs/tags/}" ;;
--		n,*) is_hash=3Dy; echo "$i" ;;
--		esac
--	done
- }
-=20
- # __git_refs accepts 0, 1 (to pass to __gitdir), or 2 arguments
---=20
-1.7.7.187.ga41de
+
+Nb. with hexadecimal sha-1 everywhere it would be I think possible (if very
+very difficult) to move to different hash function: SHA-256, Skein, etc.
+I don't know if it is now at all possible...
+
+-- 
+Jakub Narebski
+Poland
