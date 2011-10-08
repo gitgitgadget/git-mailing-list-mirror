@@ -1,81 +1,59 @@
-From: Andrew McNabb <amcnabb@mcnabbs.org>
-Subject: Re: unexpected behavior with `git log --skip filename`
-Date: Fri, 7 Oct 2011 20:36:37 -0600
-Message-ID: <20111008023637.GA18136@mcnabbs.org>
-References: <20111007171503.GB16607@mcnabbs.org>
- <CAG+J_DwnUOeDTiUW-UUJGLLg8jJ4EhXN21B7o_hOMnyowM9a8g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 08 04:36:46 2011
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH 0/3] jp/get-ref-dir-unsorted fixups
+Date: Fri,  7 Oct 2011 22:20:19 -0500
+Message-ID: <5WORKOGzj9pUA6-WazYHWoC73c8I1v5CksR-XJ592FHo27VoGczYpfodVAo5IkHADGEX_Z99bE2ZW-oMcjJ4UGTn2ajXlQjUPh1nRi12BF_tCkwU1qQ6JRoANGVSBwr8n-Q7tv0O4rA@cipher.nrlssc.navy.mil>
+Cc: julian@quantumfyre.co.uk
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 08 05:21:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCMmK-0002NG-0R
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Oct 2011 04:36:44 +0200
+	id 1RCNTP-0002NB-8o
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Oct 2011 05:21:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753396Ab1JHCgj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Oct 2011 22:36:39 -0400
-Received: from komodo.mcnabbs.org ([67.207.145.27]:33294 "EHLO
-	mail.mcnabbs.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753001Ab1JHCgj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Oct 2011 22:36:39 -0400
-Received: from maggie.mcnabbs.org (unknown [76.8.220.133])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.mcnabbs.org (Postfix) with ESMTP id 73DB6BD825;
-	Fri,  7 Oct 2011 21:36:38 -0500 (CDT)
-Received: by maggie.mcnabbs.org (Postfix, from userid 1000)
-	id A702C28D16; Fri,  7 Oct 2011 20:36:37 -0600 (MDT)
-Content-Disposition: inline
-In-Reply-To: <CAG+J_DwnUOeDTiUW-UUJGLLg8jJ4EhXN21B7o_hOMnyowM9a8g@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753292Ab1JHDU5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Oct 2011 23:20:57 -0400
+Received: from mail4.nrlssc.navy.mil ([128.160.11.9]:52790 "EHLO
+	mail3.nrlssc.navy.mil" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752898Ab1JHDU4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Oct 2011 23:20:56 -0400
+Received: by mail3.nrlssc.navy.mil id p983Knbi006444; Fri, 7 Oct 2011 22:20:49 -0500
+X-OriginalArrivalTime: 08 Oct 2011 03:20:48.0369 (UTC) FILETIME=[4641F610:01CC8569]
+X-Virus-Scanned: clamav-milter 0.97.2 at mail4
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183134>
 
-On Fri, Oct 07, 2011 at 05:54:36PM -0400, Jay Soffian wrote:
-> 
-> Hmm:
-> 
-> $ git log --oneline GIT-VERSION-GEN | head -2
-> 7f41b6bbe3 Post 1.7.7 first wave
-> 703f05ad58 Git 1.7.7
-> 
-> $ git log --oneline --skip=1 -n 1 GIT-VERSION-GEN
-> 703f05ad58 Git 1.7.7
+Here are a few fixups I found while investigating a segfault on IRIX.
 
-I went back to reproduce this, and I think I may have been using the
---follow option earlier.  In my private repository, git log gives
-identical output for the last two commits when I don't specify --skip:
+The first patch fixes a potential segfault due to an uninitialized
+variable, but it has already been made moot by Michael Haggerty's
+updates to refs.c that are merged in next.  So, not sure if it's worth
+applying or not.
 
-$ git log -n 2 --oneline httpd.conf.orig
-f0026e9 updated many of the *.orig files to the latest version
-e57e840 moved the .orig files into place, too
-$ git log --follow -n 2 --oneline httpd.conf.orig
-f0026e9 updated many of the *.orig files to the latest version
-e57e840 moved the .orig files into place, too
-$
+The second one fixes the segfault on IRIX and is a valid thing to do
+anyway.
 
-But when I specify --skip=1, the output is different:
+The third one plugs a little memory leak that may never occur.
 
-$ git log -n 1 --skip=1 --oneline httpd.conf.orig
-e57e840 moved the .orig files into place, too
-$ git log --follow -n 1 --skip=1 --oneline httpd.conf.orig
-f0026e9 updated many of the *.orig files to the latest version
-$
+Built on top of jp/get-ref-dir-unsorted e9c4c111.
 
+-Brandon
 
-GIT-VERSION-GEN example that you shared, I don't notice this difference.
-It's not immediately obvious to me what's different between the two
-examples.
+Brandon Casey (3):
+  refs.c: ensure struct whose member may be passed to realloc is
+    initialized
+  refs.c: abort ref search if ref array is empty
+  refs.c: free duplicate entries in the ref array instead of leaking
+    them
 
---
-Andrew McNabb
-http://www.mcnabbs.org/andrew/
-PGP Fingerprint: 8A17 B57C 6879 1863 DE55  8012 AB4D 6098 8826 6868
+ refs.c |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+
+-- 
+1.7.7
