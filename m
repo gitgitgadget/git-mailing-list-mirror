@@ -1,143 +1,1111 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCHv5/RFC 1/6] Documentation: Preparation for gitweb manpages
-Date: Sat,  8 Oct 2011 20:31:58 +0200
-Message-ID: <1318098723-12813-2-git-send-email-jnareb@gmail.com>
+Subject: [PATCHv5 2/6] gitweb: Add manpage for gitweb configuration files
+Date: Sat,  8 Oct 2011 20:31:59 +0200
+Message-ID: <1318098723-12813-3-git-send-email-jnareb@gmail.com>
 References: <1318098723-12813-1-git-send-email-jnareb@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org, Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Sat Oct 08 20:33:26 2011
+X-From: git-owner@vger.kernel.org Sat Oct 08 20:33:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCbi9-0007b3-KJ
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Oct 2011 20:33:25 +0200
+	id 1RCbiA-0007b3-4E
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Oct 2011 20:33:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753465Ab1JHSc5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Oct 2011 14:32:57 -0400
+	id S1753513Ab1JHSdO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Oct 2011 14:33:14 -0400
 Received: from mail-bw0-f46.google.com ([209.85.214.46]:44194 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753243Ab1JHSc4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Oct 2011 14:32:56 -0400
+	with ESMTP id S1753243Ab1JHSdM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Oct 2011 14:33:12 -0400
 Received: by mail-bw0-f46.google.com with SMTP id zt4so6340946bkb.19
-        for <git@vger.kernel.org>; Sat, 08 Oct 2011 11:32:55 -0700 (PDT)
+        for <git@vger.kernel.org>; Sat, 08 Oct 2011 11:33:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=x6N0lAFQCXapflSGD7y2KiPS7w7oMu32cEntONbTK8I=;
-        b=ezZAUCYL9GmZTbq0f/8cMl2jUhej+WSzQUKF7HiKSxV60ZsI8YGw+0G2WJSWu1S+ge
-         TeFGPn9xfwZCvQ9w5QbCQZXJY+OlT0ajR5c3jYRBSgd9RioGZytxEKw2tN/+QJIYuGFW
-         j9dQcnz0My1T5W8Ec8UWq4UfVyj4nF7KmBLqA=
-Received: by 10.223.62.15 with SMTP id v15mr19807522fah.22.1318098775778;
-        Sat, 08 Oct 2011 11:32:55 -0700 (PDT)
+        bh=qw5ZtWNdaNbPUR7ba2VBH72qKd7vyhTp/XFSC4Yr0fI=;
+        b=UGbF0rDSL0mAAvLisLKYFi4EqtyaEipeuDnfOfXQQvnqQMXzwOhmic+489LeZ/w05F
+         yJlZP7gNyTWcVjXxhQVuKzTiIl23mR2u4BZp1qcKa5ZAbzpwYGJOlQA+UjZuxiCyBiK5
+         rnE6+EikELuhg+ENZUdOfMVbpEAB9Oc/WFUjs=
+Received: by 10.223.88.148 with SMTP id a20mr19893124fam.28.1318098791001;
+        Sat, 08 Oct 2011 11:33:11 -0700 (PDT)
 Received: from localhost.localdomain (abrz200.neoplus.adsl.tpnet.pl. [83.8.119.200])
-        by mx.google.com with ESMTPS id m26sm20180604fac.6.2011.10.08.11.32.54
+        by mx.google.com with ESMTPS id m26sm20180604fac.6.2011.10.08.11.33.08
         (version=SSLv3 cipher=OTHER);
-        Sat, 08 Oct 2011 11:32:55 -0700 (PDT)
+        Sat, 08 Oct 2011 11:33:10 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6
 In-Reply-To: <1318098723-12813-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183168>
 
-Gitweb documentation currently consists of gitweb/README, gitweb/INSTALL
-and comments in gitweb source code.  This is harder to find, use and
-browse than manpages ("man gitweb" or "git help gitweb") and HTML
-documentation ("git help --web gitweb").
+From: Drew Northup <drew.northup@maine.edu>
 
-The goal of the next two commits is to move documentation out of
-gitweb/README to gitweb.txt and gitweb.conf.txt manpages, reducing its
-size 10x from around 500 to around 50 lines (two pages), and to move
-information not related directly to building and installing gitweb out
-of gitweb/INSTALL.
+Much of what is in gitweb.conf.txt has been pulled directly from the
+README file of gitweb.  The manpage was supplemented with description
+of missing gitweb config variables, and with description of gitweb's
+%features.
 
-The idea is to have the gitweb manpage sources reside in AsciiDoc
-format in the Documentation/ directory, like for gitk and git-gui.
-This means that building git documentation (with "make doc") would
-also build gitweb manpages.
+There remains a bit of redundancy, which should be reduced if
+possible... but I think some of duplication of information is
+inevitable.
 
-An alternate solution would be to have gitweb documentation in the
-gitweb/ directory, perhaps in POD format (see perlpod(1)).
+[jn: Improved, extended, removed duplicate info from README]
 
-
-This patch adds infrastructure for easy generation of only
-gitweb-related manpages.  It adds a currently empty 'gitweb-doc'
-target to Documentation/Makefile, and a 'doc' proxy target to
-gitweb/Makefile.
-
-This way to build only gitweb documentation in both 'man' and 'html'
-formats one can use
-
-  make -C gitweb doc
-
-or
-
-  cd gitweb; make doc
-
-This somewhat follows the idea of 'full-svn-test' and 'gitweb-test' in
-t/Makefile.  Note also that with alternate solution, where source of
-gitweb manpages would reside in the gitweb/ directory, "make doc"
-would invoke "make -C gitweb doc" to generate formatted docs.
-
-The gitweb.conf(5) and gitweb(1) manpages will be added in subsequent
-commits.
-
-[Commit message improved with help of Jonathan Nieder]
-
+Signed-off-by: Drew Northup <drew.northup@maine.edu>
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+Helped-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-This commit is not strictly necessary: it only adds "doc" target to
-gitweb/Makefile, and "gitweb-doc" target to Documentation/Makefile;
-neither is run when e.g. generating RPM.
+I refer to my reply to Jonathan Nieder in
 
-They are here because they would be here if documentation source was
-kept along with gitweb script in the 'gitweb/' subdirectory, and to
-make it easier and faster to test the changes.
+  Re: [PATCH/RFCv4 2/4] gitweb: Add manpage for /etc/gitweb.conf (for gitweb documentation)
+  http://thread.gmane.org/gmane.comp.version-control.git/181605/focus=181896
 
- Documentation/Makefile |    3 +++
- gitweb/Makefile        |    7 ++++++-
- 2 files changed, 9 insertions(+), 1 deletions(-)
+for description of changes (and to parent post).
+
+Thanks a lot to Jonathan Nieder.
+
+ Documentation/Makefile        |    2 +-
+ Documentation/gitweb.conf.txt |  866 +++++++++++++++++++++++++++++++++++++++++
+ gitweb/README                 |  133 +-------
+ 3 files changed, 868 insertions(+), 133 deletions(-)
+ create mode 100644 Documentation/gitweb.conf.txt
 
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 6346a75..44be67b 100644
+index 44be67b..6d71943 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -170,6 +170,9 @@ info: git.info gitman.info
- 
- pdf: user-manual.pdf
- 
-+GITWEB_DOC = $(filter gitweb.%,$(DOC_HTML) $(DOC_MAN1) $(DOC_MAN5) $(DOC_MAN7))
-+gitweb-doc: $(GITWEB_DOC)
+@@ -3,7 +3,7 @@ MAN1_TXT= \
+ 		$(wildcard git-*.txt)) \
+ 	gitk.txt git.txt
+ MAN5_TXT=gitattributes.txt gitignore.txt gitmodules.txt githooks.txt \
+-	gitrepository-layout.txt
++	gitrepository-layout.txt gitweb.conf.txt
+ MAN7_TXT=gitcli.txt gittutorial.txt gittutorial-2.txt \
+ 	gitcvs-migration.txt gitcore-tutorial.txt gitglossary.txt \
+ 	gitdiffcore.txt gitnamespaces.txt gitrevisions.txt gitworkflows.txt
+diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.txt
+new file mode 100644
+index 0000000..31eb527
+--- /dev/null
++++ b/Documentation/gitweb.conf.txt
+@@ -0,0 +1,866 @@
++gitweb.conf(5)
++==============
 +
- install: install-man
- 
- install-man: man
-diff --git a/gitweb/Makefile b/gitweb/Makefile
-index 1c85b5f..3014d80 100644
---- a/gitweb/Makefile
-+++ b/gitweb/Makefile
-@@ -174,6 +174,11 @@ test-installed:
- 	GITWEB_TEST_INSTALLED='$(DESTDIR_SQ)$(gitwebdir_SQ)' \
- 		$(MAKE) -C ../t gitweb-test
- 
-+### Documentation
++NAME
++----
++gitweb.conf - Gitweb (git web interface) configuration file
 +
-+doc:
-+	$(MAKE) -C ../Documentation gitweb-doc
++SYNOPSIS
++--------
++/etc/gitweb.conf, /etc/gitweb-common.conf, $GITWEBDIR/gitweb_config.perl
 +
- ### Installation rules
++DESCRIPTION
++-----------
++
++The gitweb CGI script for viewing Git repositories over the web uses a
++perl script fragment as its configuration file.  You can set variables
++using "`our $variable = value`"; text from a "#" character until the
++end of a line is ignored.  See *perlsyn*(1) for details.
++
++An example:
++
++    # gitweb configuration file for http://git.example.org
++    #
++    our $projectroot = "/srv/git"; # FHS recommendation
++    our $site_name = 'Example.org >> Repos';
++
++
++The configuration file is used to override the default settings that
++were built into gitweb at the time the 'gitweb.cgi' script was generated.
++
++While one could just alter the configuration settings in the gitweb
++CGI itself, those changes would be lost upon upgrade.  Configuration
++settings might also be placed into a file in the same directory as the
++CGI script with the default name 'gitweb_config.perl' -- allowing
++one to have multiple gitweb instances with different configurations by
++the use of symlinks.
++
++
++DISCUSSION
++----------
++Gitweb reads configuration data from the following sources in the
++following order:
++
++ * built-in values (some set during build stage),
++
++ * common system-wide configuration file (defaults to
++   '/etc/gitweb-common.conf'),
++
++ * either per-instance configuration file (defaults to 'gitweb_config.perl'
++   in the same directory as the installed gitweb), or if it does not exists
++   then fallback system-wide configuration file (defaults to '/etc/gitweb.conf').
++
++Values obtained in later configuration files override values obtained earlier
++in the above sequence.
++
++Locations of the common system-wide configuration file, the fallback
++system-wide configuration file and the per-instance configuration file
++are defined at compile time using build-time Makefile configuration
++variables, respectively `GITWEB_CONFIG_COMMON`, `GITWEB_CONFIG_SYSTEM`
++and `GITWEB_CONFIG`.
++
++You can also override locations of gitweb configuration files during
++runtime by setting the following environment variables:
++`GITWEB_CONFIG_COMMON`, `GITWEB_CONFIG_SYSTEM` and `GITWEB_CONFIG`
++to a non-empty value.
++
++
++The syntax of the configuration files is that of Perl, since these files are
++handled by sourcing them as fragments of Perl code (the language that
++gitweb itself is written in). Variables are typically set using the
++`our` qualifier (as in "`our $variable = <value>;`") to avoid syntax
++errors if a new version of gitweb no longer uses a variable and therefore
++stops declaring it.
++
++You can include other configuration file using read_config_file()
++subroutine.  For example, one might want to put gitweb configuration
++related to access control for viewing repositories via Gitolite (one
++of git repository management tools) in a separate file, e.g. in
++'/etc/gitweb-gitolite.conf'.  To include it, put
++
++--------------------------------------------------
++read_config_file("/etc/gitweb-gitolite.conf");
++--------------------------------------------------
++
++somewhere in gitweb configuration file used, e.g. in per-installation
++gitweb configuration file.  Note that read_config_file() checks itself
++that the file it reads exists, and does nothing if it is not found.
++It also handles errors in included file.
++
++
++The default configuration with no configuration file at all may work
++perfectly well for some installations.  Still, a configuration file is
++useful for customizing or tweaking the behavior of gitweb in many ways, and
++some optional features will not be present unless explicitly enabled using
++the configurable `%features` variable (see also "Configuring gitweb
++features" section below).
++
++
++CONFIGURATION VARIABLES
++-----------------------
++Some configuration variables have their default values (embedded in the CGI
++script) set during building gitweb -- if that is the case, this fact is put
++in their description.  See gitweb's 'INSTALL' file for instructions on building
++and installing gitweb.
++
++
++Location of repositories
++~~~~~~~~~~~~~~~~~~~~~~~~
++The configuration variables described below control how gitweb finds
++git repositories, and how repositories are displayed and accessed.
++
++$projectroot::
++	Absolute filesystem path which will be prepended to project path;
++	the path to repository is `$projectroot/$project`.  Set to
++	`$GITWEB_PROJECTROOT` during installation.  This variable has to be
++	set correctly for gitweb to find repositories.
+++
++For example, if `$projectroot` is set to "/srv/git" by putting the following
++in gitweb config file:
+++
++----------------------------------------------------------------------------
++our $projectroot = "/srv/git";
++----------------------------------------------------------------------------
+++
++then
+++
++------------------------------------------------
++http://git.example.com/gitweb.cgi?p=foo/bar.git
++------------------------------------------------
+++
++and its path_info based equivalent
+++
++------------------------------------------------
++http://git.example.com/gitweb.cgi/foo/bar.git
++------------------------------------------------
+++
++will map to the path '/srv/git/foo/bar.git' on the filesystem.
++
++$projects_list::
++	Name of a plain text file listing projects, or a name of directory
++	to be scanned for projects.
+++
++Project list files should list one project per line, with each line
++having the following format
+++
++-----------------------------------------------------------------------------
++<URI-encoded filesystem path to repository> SP <URI-encoded repository owner>
++-----------------------------------------------------------------------------
+++
++The default value of this variable is determined by the `GITWEB_LIST`
++makefile variable at installation time.  If this variable is empty, gitweb
++will fall back to scanning the `$projectroot` directory for repositories.
++
++$project_maxdepth::
++	If `$projects_list` variable is unset, gitweb will recursively
++	scan filesystem for git repositories.  The `$project_maxdepth`
++	is used to limit traversing depth, relative to `$projectroot`
++	(starting point); it means that directories which are further
++	from `$projectroot` than `$project_maxdepth` will be skipped.
+++
++It is purely performance optimization, originally intended for MacOS X,
++where recursive directory traversal is slow.  Gitweb follows symbolic
++links, but it detects cycles, ignoring any duplicate files and directories.
+++
++The default value of this variable is determined by the build-time
++configuration variable `GITWEB_PROJECT_MAXDEPTH`, which defaults to
++2007.
++
++$export_ok::
++	Show repository only if this file exists (in repository).  Only
++	effective if this variable evaluates to true.  Can be set when
++	building gitweb by setting `GITWEB_EXPORT_OK`.  This path is
++	relative to `GIT_DIR`.  git-daemon[1] uses 'git-daemon-export-ok',
++	unless started with `--export-all`.  [No default / Not set
++	(this feature is turned off)]
++
++$export_auth_hook::
++	Function used to determine which repositories should be shown.
++	This subroutine should take one parameter, the full path to
++	a project, and if it returns true, that project will be included
++	in the projects list and can be accessed through gitweb as long
++	as it fulfills the other requirements described by $export_ok,
++	$projects_list, and $projects_maxdepth.  Example:
+++
++----------------------------------------------------------------------------
++our $export_auth_hook = sub { return -e "$_[0]/git-daemon-export-ok"; };
++----------------------------------------------------------------------------
+++
++though the above might be done by using `$export_ok` instead
+++
++----------------------------------------------------------------------------
++our $export_ok = "git-daemon-export-ok";
++----------------------------------------------------------------------------
+++
++If not set (default), it means that this feature is disabled.
++
++$strict_export::
++	Only allow viewing of repositories also shown on the overview page.
++	This for example makes `$gitweb_export_ok` file decide if repository is
++	available and not only if it is shown.  If `$gitweb_list` points to
++	file with list of project, only those repositories listed would be
++	available for gitweb.  Can be set during building gitweb via
++	`GITWEB_STRICT_EXPORT`.  [No default / Not set (you can access
++	repositories hidden from projects list page)]
++
++
++Finding files
++~~~~~~~~~~~~~
++The following configuration variables tell gitweb where to find files.
++The values of these variables are paths on the filesystem.
++
++$GIT::
++	Core git executable to use.  By default set to `$GIT_BINDIR/git`, which
++	in turn is by default set to `$(bindir)/git`.  If you use git installed
++	from a binary package, you should usually set this to "/usr/bin/git".
++	This can just be "git" if your web server has a sensible PATH; from
++	security point of view it is better to use absolute path to git binary.
++	If you have multiple git versions installed it can be used to choose
++	which one to use.  Must be (correctly) set for gitweb to be able to
++	work.
++
++$mimetypes_file::
++	File to use for (filename extension based) guessing of MIME types before
++	trying '/etc/mime.types'.  *NOTE* that this path, if relative, is taken
++	as relative to the current git repository, not to CGI script.  If unset,
++	only '/etc/mime.types' is used (if present on filesystem).  If no mimetypes
++	file is found, mimetype guessing based on extension of file is disabled.
++	[Unset by default]
++
++$highlight_bin::
++	Path to the highlight executable to use (it must be the one from
++	http://www.andre-simon.de due to assumptions about parameters and output).
++	Useful if 'highlight' is not installed on your web server's PATH.
++	[Default: 'highlight']
+++
++*NOTE*: if you want to add support for new file type (supported by
++"highlight" but not used by gitweb), you need to modify `%highlight_ext`
++or `%highlight_basename`, depending on whether you detect type of file
++based on extension (for example "sh") or on its basename (for example
++"Makefile").  The keys of these hashes are extension and basename,
++respectively, and value for given key is name of syntax to be passed via
++`--syntax <syntax>` to highlighter.
+++
++For example if repositories you are hosting use "phtml" extension for
++PHP files, and you want to have correct syntax-highlighting for those
++files, you can add the following to gitweb configuration:
+++
++---------------------------------------------------------
++our %highlight_ext;
++$highlight_ext{'phtml'} = 'php';
++---------------------------------------------------------
++
++
++Links and their targets
++~~~~~~~~~~~~~~~~~~~~~~~
++The configuration variables described below configure some of gitweb links:
++their target and their look (text or image), and where to find page
++prerequisites (stylesheet, favicon, images, scripts).  Usually they are left
++at their default values, with the possible exception of `@stylesheets`
++variable.
++
++@stylesheets::
++	List of URIs of stylesheets (relative to the base URI of a page). You
++	might specify more than one stylesheet, for example to use "gitweb.css"
++	as base with site specific modifications in a separate stylesheet
++	to make it easier to upgrade gitweb.  For example, you can add
++	a `site` stylesheet by putting
+++
++----------------------------------------------------------------------------
++push @stylesheets, "gitweb-site.css";
++----------------------------------------------------------------------------
+++
++in the gitweb config file.  Those values that are relative paths are
++relative to base URI of gitweb.
+++
++This list should contain the URI of gitweb's standard stylesheet.  The default
++URI of gitweb stylesheet can be set at build time using the `GITWEB_CSS`
++makefile variable.  Its default value is 'static/gitweb.css'
++(or 'static/gitweb.min.css' if the `CSSMIN` variable is defined,
++i.e. if CSS minifier is used during build).
+++
++*Note*: there is also a legacy `$stylesheet` configuration variable, which was
++used by older gitweb.  If `$stylesheet` variable is defined, only CSS stylesheet
++given by this variable is used by gitweb.
++
++$logo::
++	Points to the location where you put 'git-logo.png' on your web
++	server, or to be more the generic URI of logo, 72x27 size).  This image
++	is displayed in the top right corner of each gitweb page and used as
++	a logo for the Atom feed.  Relative to the base URI of gitweb (as a path).
++	Can be adjusted when building gitweb using `GITWEB_LOGO` variable
++	[Default: 'static/git-logo.png']
++
++$favicon::
++	Points to the location where you put 'git-favicon.png' on your web
++	server, or to be more the generic URI of favicon, which will be served
++	as "image/png" type.  Web browsers that support favicons (website icons)
++	may display them in the browser's URL bar and next to the site name in
++	bookmarks.  Relative to the base URI of gitweb.  Can be adjusted at
++	build time using `GITWEB_FAVICON` variable.
++	[Default: 'static/git-favicon.png']
++
++$javascript::
++	Points to the location where you put 'gitweb.js' on your web server,
++	or to be more generic the URI of JavaScript code used by gitweb.
++	Relative to the base URI of gitweb.  Can be set at build time using
++	the `GITWEB_JS` build-time configuration variable.
+++
++The default value is either 'static/gitweb.js', or 'static/gitweb.min.js' if
++the `JSMIN` build variable was defined, i.e. if JavaScript minifier was used
++at build time.  *Note* that this single file is generated from multiple
++individual JavaScript "modules".
++
++$home_link::
++	Target of the home link on the top of all pages (the first part of view
++	"breadcrumbs").  By default it is set to the absolute URI of a current page
++	(to the value of `$my_uri` variable, or to "/" if `$my_uri` is undefined
++	or is an empty string).
++
++$home_link_str::
++	Label for the "home link" at the top of all pages, leading to `$home_link`
++	(usually the main gitweb page, which contains the projects list).  It is
++	used as the first component of gitweb's "breadcrumb trail":
++	`<home link> / <project> / <action>`.  Can be set at build time using
++	the `GITWEB_HOME_LINK_STR` variable.  [Default: "projects"]
++
++$logo_url::
++$logo_label::
++	URI and label (title) for the Git logo link (or your site logo,
++	if you chose to use different logo image). By default, these both
++	refer to git homepage; in the past, they pointed to git documentation
++	at http://www.kernel.org[].
++
++
++Changing gitweb's look
++~~~~~~~~~~~~~~~~~~~~~~
++You can adjust how pages generated by gitweb look using the variables described
++below.  You can change the site name, add common headers and footers for all
++pages, and add a description of this gitweb installation on its main page
++(which is the projects list page), etc.
++
++$site_name::
++	Name of your site or organization, to appear in page titles.  Set it
++	to something descriptive for clearer bookmarks etc.  If this variable
++	is not set or is, then gitweb uses the value of the `SERVER_NAME`
++	CGI environment variable, setting site name to "$SERVER_NAME Git",
++	or "Untitled Git" if this variable is not set (e.g. if running gitweb
++	as standalone script).
+++
++Can be set using the `GITWEB_SITENAME` at build time.  [No default]
++
++$site_header::
++	Name of a file with HTML to be included at the top of each page.
++	Relative to the directory containing the 'gitweb.cgi' script.
++	Can be set using `GITWEB_SITE_HEADER` at build time.  [No default]
++
++$site_footer::
++	Name of a file with HTML to be included at the bottom of each page.
++	Relative to the directory containing the 'gitweb.cgi' script.
++	Can be set using `GITWEB_SITE_FOOTER` at build time.  [No default]
++
++$home_text::
++	Name of a HTML file which, if it exists, is included on the
++	gitweb projects overview page ("projects_list" view).  Relative to
++	the directory containing the gitweb.cgi script.  Default value
++	can be adjusted during build time using `GITWEB_HOMETEXT` variable.
++	[Default: 'indextext.html']
++
++$projects_list_description_width::
++	The width (in characters) of the "Description" column of the projects list.
++	Longer descriptions will be truncated (trying to cut at word boundary);
++	the full description is available in the 'title' attribute (usually shown on
++	mouseover).  The default is 25, which might be too small if you
++	use long project descriptions.
++
++$default_projects_order::
++	Default value of ordering of projects on projects list page, which
++	means the ordering used if you don't explicitly sort projects list
++	(if there is no "o" CGI query parameter in the URL).  Valid values
++	are "none" (unsorted), "project" (projects are by project name,
++	i.e. path to repository relative to `$projectroot`), "descr"
++	(project description), "owner", and "age" (by date of most current
++	commit).
+++
++Default value is "project".  Unknown value means unsorted.
++
++
++Changing gitweb's behavior
++~~~~~~~~~~~~~~~~~~~~~~~~~~
++These configuration variables control _internal_ gitweb behavior.
++
++$default_blob_plain_mimetype::
++	Default mimetype for the blob_plain (raw) view, if mimetype checking
++	doesn't result in some other type; by default "text/plain".
++	Gitweb guesses mimetype of a file to display based on extension
++	of its filename, using `$mimetypes_file` (if set and file exists)
++	and '/etc/mime.types' files (see *mime.types*(5) manpage; only
++	filename extension rules are supported by gitweb).
++
++$default_text_plain_charset::
++	Default charset for text files. If this is not set, the web server
++	configuration will be used.  Unset by default.
++
++$fallback_encoding::
++	Gitweb assumes this charset when a line contains non-UTF-8 characters.
++	The fallback decoding is used without error checking, so it can be even
++	"utf-8". The value must be a valid encoding; see the *Encoding::Supported*(3pm)
++	man page for a list. The default is "latin1", aka. "iso-8859-1".
++
++@diff_opts::
++	Rename detection options for git-diff and git-diff-tree. The default is
++	(\'-M'); set it to (\'-C') or (\'-C', \'-C') to also detect copies,
++	or set it to () i.e. empty list if you don't want to have renames
++	detection.
+++
++*Note* that rename and especially copy detection can be quite
++CPU-intensive.  Note also that non git tools can have problems with
++patches generated with options mentioned above, especially when they
++involve file copies (\'-C') or criss-cross renames (\'-B').
++
++
++Some optional features and policies
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++Most of features are configured via `%feature` hash; however some of extra
++gitweb features can be turned on and configured using variables described
++below.  This list beside configuration variables that control how gitweb
++looks does contain variables configuring administrative side of gitweb
++(e.g. cross-site scripting prevention; admittedly this as side effect
++affects how "summary" pages look like, or load limiting).
++
++@git_base_url_list::
++	List of git base URLs.  These URLs are used to generate URLs
++	describing from where to fetch a project, which are shown on
++	project summary page.  The full fetch URL is "`$git_base_url/$project`",
++	for each element of this list. You can set up multiple base URLs
++	(for example one for `git://` protocol, and one for `http://`
++	protocol).
+++
++Note that per repository configuration can be set in '$GIT_DIR/cloneurl'
++file, or as values of multi-value `gitweb.url` configuration variable in
++project config.  Per-repository configuration takes precedence over value
++composed from `@git_base_url_list` elements and project name.
+++
++You can setup one single value (single entry/item in this list) at build
++time by setting the `GITWEB_BASE_URL` built-time configuration variable.
++[Default: (), i.e. empty list]
++
++$projects_list_group_categories::
++	Whether to enables the grouping of projects by category on the project
++	list page. The category of a project is determined by the
++	`$GIT_DIR/category` file or the `gitweb.category` variable in each
++	repository's configuration.  [Disabled by default].
++
++$project_list_default_category::
++	Default category for projects for which none is specified.  If this is
++	set to the empty string, such projects will remain uncategorized and
++	listed at the top, above categorized projects.  Used only if project
++	categories are enabled, which means if `$projects_list_group_categories`
++	is true.  [Default: "" (empty string)]
++
++$prevent_xss::
++	If true, some gitweb features are disabled to prevent content in
++	repositories from launching cross-site scripting (XSS) attacks.  Set this
++	to true if you don't trust the content of your repositories.
++	[Default: false].
++
++$maxload::
++	Used to set the maximum load that we will still respond to gitweb queries.
++	If the server load exceeds this value then gitweb will return
++	"503 Service Unavailable" error.  The server load is taken to be 0
++	if gitweb cannot determine its value.  Currently it works only on Linux,
++	where it uses '/proc/loadavg'; the load there is the number of active
++	tasks on the system -- processes that are actually running -- averaged
++	over the last minute.
+++
++Set `$maxload` to undefined value (`undef`) to turn this feature off.
++[Default: 300]
++
++$per_request_config::
++	If this is set to code reference, it will be run once for each request.
++	You can	set parts of configuration that change per session this way.
++	For example, one might use the following code in a gitweb configuration
++	file
+++
++--------------------------------------------------------------------------------
++our $per_request_config = sub {
++	$ENV{GL_USER} = $cgi->remote_user || "gitweb";
++};
++--------------------------------------------------------------------------------
+++
++If `$per_request_config` is not a code reference, it is interpreted as boolean
++value.  If it is true gitweb will process config files once per request,
++and if it is false gitweb will process config files only once, each time it
++is executed.  [Default: true]
+++
++*NOTE*: `$my_url`, `$my_uri`, and `$base_url` are overwritten with their default
++values before every request, so if you want to change them, be sure to set
++this variable to true or a code reference effecting the desired changes.
+++
++This variable matters only when using persistent web environments that
++serve multiple requests using single gitweb instance, like mod_perl,
++FastCGI or Plackup.
++
++
++Other variables
++~~~~~~~~~~~~~~~
++Usually you should not need to change (adjust) any of configuration
++variables described below; they should be automatically set by gitweb to
++correct value.
++
++
++$version::
++	Gitweb version, set automatically when creating gitweb.cgi from
++	gitweb.perl. You might want to modify it if you are running modified
++	gitweb, for example
+++
++---------------------------------------------------
++our $version .= " with caching";
++---------------------------------------------------
+++
++if you run modified version of gitweb with caching support.  This variable
++is purely informational, used e.g. in the "generator" meta header in HTML
++header.
++
++$my_url::
++$my_uri::
++	Full URL and absolute URL of the gitweb script;
++	in earlier versions of gitweb you might have need to set those
++	variables, but now there should be no need to do it.  See
++	`$per_request_config` if you need to set them still.
++
++$base_url::
++	Base URL for relative URLs in pages generated by gitweb,
++	(e.g. `$logo`, `$favicon`, `@stylesheets` if they are relative URLs),
++	needed and used '<base href="$base_url">' only for URLs with nonempty
++	PATH_INFO.  Usually gitweb sets its value correctly,
++	and there is no need to set this variable, e.g. to $my_uri or "/".
++	See `$per_request_config` if you need to override it anyway.
++
++
++CONFIGURING GITWEB FEATURES
++---------------------------
++Many gitweb features can be enabled (or disabled) and configured using the
++`%feature` hash.  Names of gitweb features are keys of this hash.
++
++Each `%feature` hash element is a hash reference and has the following
++structure:
++----------------------------------------------------------------------
++"<feature_name>" => {
++	"sub" => <feature-sub (subroutine)>,
++	"override" => <allow-override (boolean)>,
++	"default" => [ <options>... ]
++},
++----------------------------------------------------------------------
++Some features cannot be overridden per project.  For those
++features the structure of appropriate `%feature` hash element has a simpler
++form:
++----------------------------------------------------------------------
++"<feature_name>" => {
++	"override" => 0,
++	"default" => [ <options>... ]
++},
++----------------------------------------------------------------------
++As one can see it lacks the \'sub' element.
++
++The meaning of each part of feature configuration is described
++below:
++
++default::
++	List (array reference) of feature parameters (if there are any),
++	used also to toggle (enable or disable) given feature.
+++
++Note that it is currently *always* an array reference, even if
++feature doesn't accept any configuration parameters, and \'default'
++is used only to turn it on or off.  In such case you turn feature on
++by setting this element to `[1]`, and torn it off by setting it to
++`[0]`.  See also the passage about the "blame" feature in the "Examples"
++section.
+++
++To disable features that accept parameters (are configurable), you
++need to set this element to empty list i.e. `[]`.
++
++override::
++	If this field has a true value then the given feature is
++	overriddable, which means that it can be configured
++	(or enabled/disabled) on a per-repository basis.
+++
++Usually given "<feature>" is configurable via the `gitweb.<feature>`
++config variable in the per-repository git configuration file.
+++
++*Note* that no feature is overriddable by default.
++
++sub::
++	Internal detail of implementation.  What is important is that
++	if this field is not present then per-repository override for
++	given feature is not supported.
+++
++You wouldn't need to ever change it in gitweb config file.
++
++
++Features in `%feature`
++~~~~~~~~~~~~~~~~~~~~~~
++The gitweb features that are configurable via `%feature` hash are listed
++below.  This should be a complete list, but ultimately the authoritative
++and complete list is in gitweb.cgi source code, with features described
++in the comments.
++
++blame::
++	Enable the "blame" and "blame_incremental" blob views, showing for
++	each line the last commit that modified it; see linkgit:git-blame[1].
++	This can be very CPU-intensive and is therefore disabled by default.
+++
++This feature can be configured on a per-repository basis via
++repository's `gitweb.blame` configuration variable (boolean).
++
++snapshot::
++	Enable and configure the "snapshot" action, which allows user to
++	download a compressed archive of any tree or commit, as produced
++	by linkgit:git-archive[1] and possibly additionally compressed.
++	This can potentially generate high traffic if you have large project.
+++
++The value of \'default' is a list of names of snapshot formats,
++defined in `%known_snapshot_formats` hash, that you wish to offer.
++Supported formats include "tgz", "tbz2", "txz" (gzip/bzip2/xz
++compressed tar archive) and "zip"; please consult gitweb sources for
++a definitive list.  By default only "tgz" is offered.
+++
++This feature can be configured on a per-repository basis via
++repository's `gitweb.blame` configuration variable, which contains
++a comma separated list of formats or "none" to disable snapshots.
++Unknown values are ignored.
++
++grep::
++	Enable grep search, which lists the files in currently selected
++	tree (directory) containing the given string; see linkgit:git-grep[1].
++	This can be potentially CPU-intensive, of course.  Enabled by default.
+++
++This feature can be configured on a per-repository basis via
++repository's `gitweb.grep` configuration variable (boolean).
++
++pickaxe::
++	Enable the so called pickaxe search, which will list the commits
++	that introduced or removed a given string in a file.  This can be
++	practical and quite faster alternative to "blame" action, but it is
++	still potentially CPU-intensive.  Enabled by default.
+++
++The pickaxe search is described in linkgit:git-log[1] (the
++description of `-S<string>` option, which refers to pickaxe entry in
++linkgit:gitdiffcore[7] for more details).
+++
++This feature can be configured on a per-repository basis by setting
++repository's `gitweb.pickaxe` configuration variable (boolean).
++
++show-sizes::
++	Enable showing size of blobs (ordinary files) in a "tree" view, in a
++	separate column, similar to what `ls -l` does; see description of
++	`-l` option in linkgit:git-ls-tree[1] manpage.  This costs a bit of
++	I/O.  Enabled by default.
+++
++This feature can be configured on a per-repository basis via
++repository's `gitweb.showsizes` configuration variable (boolean).
++
++patches::
++	Enable and configure "patches" view, which displays list of commits in email
++	(plain text) output format; see also linkgit:git-format-patch[1].
++	The value is the maximum number of patches in a patchset generated
++	in "patches" view.  Set the 'default' field to a list containing single
++	item of or to an empty list to disable patch view, or to a list
++	containing a single negative number to remove any limit.
++	Default value is 16.
+++
++This feature can be configured on a per-repository basis via
++repository's `gitweb.patches` configuration variable (integer).
++
++avatar::
++	Avatar support.  When this feature is enabled, views such as
++	"shortlog" or "commit" will display an avatar associated with
++	the email of each committer and author.
+++
++Currently available providers are *"gravatar"* and *"picon"*.
++Only one provider at a time can be selected ('default' is one element list).
++If an unknown provider is specified, the feature is disabled.
++*Note* that some providers might require extra Perl packages to be
++installed; see 'gitweb/INSTALL' for more details.
+++
++This feature can be configured on a per-repository basis via
++repository's `gitweb.avatar` configuration variable.
+++
++See also `%avatar_size` with pixel sizes for icons and avatars
++("default" is used for one-line like "log" and "shortlog", "double"
++is used for two-line like "commit", "commitdiff" or "tag").  If the
++default font sizes or lineheights are changed (e.g. via adding extra
++CSS stylesheet in `@stylesheets`), it may be appropriate to change
++these values.
++
++highlight::
++	Server-side syntax highlight support in "blob" view.  It requires
++	`$highlight_bin` program to be available (see the description of
++	this variable in the "Configuration variables" section above),
++	and therefore is disabled by default.
+++
++This feature can be configured on a per-repository basis via
++repository's `gitweb.highlight` configuration variable (boolean).
++
++remote_heads::
++	Enable displaying remote heads (remote-tracking branches) in the "heads"
++	list.  In most cases the list of remote-tracking branches is an
++	unnecessary internal private detail, and this feature is therefore
++	disabled by default.  linkgit:git-instaweb[1], which is usually used
++	to browse local repositories, enables and uses this feature.
+++
++This feature can be configured on a per-repository basis via
++repository's `gitweb.remote_heads` configuration variable (boolean).
++
++
++The remaining features cannot be overridden on a per project basis.
++
++search::
++	Enable text search, which will list the commits which match author,
++	committer or commit text to a given string; see the description of
++	`--author`, `--committer` and `--grep` options in linkgit:git-log[1]
++	manpage.  Enabled by default.
+++
++Project specific override is not supported.
++
++forks::
++	If this feature is enabled, gitweb considers projects in
++	subdirectories of project root (basename) to be forks of existing
++	projects.  For each project `$projname.git`, projects in the
++	`$projname/` directory and its subdirectories will not be
++	shown in the main projects list.  Instead, a \'+' mark is shown
++	next to `$projname`, which links to a "forks" view that lists all
++	the forks (all projects in `$projname/` subdirectory).  Additionally
++	a "forks" view for a project is linked from project summary page.
+++
++If the project list is taken from a file (`$projects_list` points to a
++file), forks are only recognized if they are listed after the main project
++in that file.
+++
++Project specific override is not supported.
++
++actions::
++	Insert custom links to the action bar of all project pages.  This
++	allows you to link to third-party scripts integrating into gitweb.
+++
++The "default" value consists of a list of triplets in the form
++`("<label>", "<link>", "<position>")` where "position" is the label
++after which to insert the link, "link" is a format string where `%n`
++expands to the project name, `%f` to the project path within the
++filesystem (i.e. "$projectroot/$project"), `%h` to the current hash
++(\'h' gitweb parameter) and `%b` to the current hash base
++(\'hb' gitweb parameter); `%%` expands to \'%'.
+++
++For example, at the time this page was written, the http://repo.or.cz[]
++git hosting site set it to the following to enable graphical log
++(using the third party tool *git-browser*):
+++
++----------------------------------------------------------------------
++$feature{'actions'}{'default'} =
++	[ ('graphiclog', '/git-browser/by-commit.html?r=%n', 'summary')];
++----------------------------------------------------------------------
+++
++This adds a link titled "graphiclog" after the "summary" link, leading to
++`git-browser` script, passing `r=<project>` as a query parameter.
+++
++Project specific override is not supported.
++
++timed::
++	Enable displaying how much time and how many git commands it took to
++	generate and display each page in the page footer (at the bottom of
++	page).  For example the footer might contain: "This page took 6.53325
++	seconds and 13 git commands to generate."  Disabled by default.
+++
++Project specific override is not supported.
++
++javascript-timezone::
++	Enable and configure the ability to change a common timezone for dates
++	in gitweb output via JavaScript.  Dates in gitweb output include
++	authordate and committerdate in "commit", "commitdiff" and "log"
++	views, and taggerdate in "tag" view.  Enabled by default.
+++
++The value is a list of three values: a default timezone (for if the client
++hasn't selected some other timezone and saved it in a cookie), a name of cookie
++where to store selected timezone, and a CSS class used to mark up
++dates for manipulation.  If you want to turn this feature off, set "default"
++to empty list: `[]`.
+++
++Typical gitweb config files will only change starting (default) timezone,
++and leave other elements at their default values:
+++
++---------------------------------------------------------------------------
++$feature{'javascript-timezone'}{'default'}[0] = "utc";
++---------------------------------------------------------------------------
+++
++The example configuration presented here is guaranteed to be backwards
++and forward compatible.
+++
++Timezone values can be "local" (for local timezone that browser uses), "utc"
++(what gitweb uses when JavaScript or this feature is disabled), or numerical
++timezones in the form of "+/-HHMM", such as "+0200".
+++
++Project specific override is not supported.
++
++
++EXAMPLES
++--------
++
++To enable blame, pickaxe search, and snapshot support (allowing "tar.gz" and
++"zip" snapshots), while allowing individual projects to turn them off, put
++the following in your GITWEB_CONFIG file:
++
++        $feature{'blame'}{'default'} = [1];
++        $feature{'blame'}{'override'} = 1;
++
++        $feature{'pickaxe'}{'default'} = [1];
++        $feature{'pickaxe'}{'override'} = 1;
++
++        $feature{'snapshot'}{'default'} = ['zip', 'tgz'];
++        $feature{'snapshot'}{'override'} = 1;
++
++If you allow overriding for the snapshot feature, you can specify which
++snapshot formats are globally disabled. You can also add any command line
++options you want (such as setting the compression level). For instance, you
++can disable Zip compressed snapshots and set *gzip*(1) to run at level 6 by
++adding the following lines to your gitweb configuration file:
++
++        $known_snapshot_formats{'zip'}{'disabled'} = 1;
++        $known_snapshot_formats{'tgz'}{'compressor'} = ['gzip','-6'];
++
++ENVIRONMENT
++-----------
++The location of per-instance and system-wide configuration files can be
++overridden using the following environment variables:
++
++GITWEB_CONFIG::
++	Sets location of per-instance configuration file.
++GITWEB_CONFIG_SYSTEM::
++	Sets location of fallback system-wide configuration file.
++	This file is read only if per-instance one does not exist.
++GITWEB_CONFIG_COMMON::
++	Sets location of common system-wide configuration file.
++
++
++FILES
++-----
++gitweb_config.perl::
++	This is default name of per-instance configuration file.  The
++	format of this file is described above.
++/etc/gitweb.conf::
++	This is default name of fallback system-wide configuration
++	file.  This file is used only if per-instance configuration
++	variable is not found.
++/etc/gitweb-common.conf::
++	This is default name of common system-wide configuration
++	file.
++
++
++SEE ALSO
++--------
++linkgit:gitweb[1], linkgit:git-instaweb[1]
++
++'gitweb/README', 'gitweb/INSTALL'
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/gitweb/README b/gitweb/README
+index a998820..cf528d3 100644
+--- a/gitweb/README
++++ b/gitweb/README
+@@ -41,140 +41,9 @@ Ultimate description on how to reconfigure the default features setting
+ in your `GITWEB_CONFIG` or per-project in `project.git/config` can be found
+ as comments inside 'gitweb.cgi'.
  
- install: all
-@@ -187,5 +192,5 @@ install: all
- clean:
- 	$(RM) gitweb.cgi static/gitweb.min.js static/gitweb.min.css GITWEB-BUILD-OPTIONS
+-See also the "Gitweb config file" (with an example of config file), and
+-the "Gitweb repositories" sections in INSTALL file for gitweb.
++See also gitweb.conf(5) manpage.
  
--.PHONY: all clean install test test-installed .FORCE-GIT-VERSION-FILE FORCE
-+.PHONY: all clean install test test-installed doc .FORCE-GIT-VERSION-FILE FORCE
+ 
+-The gitweb config file is a fragment of perl code. You can set variables
+-using "our $variable = value"; text from "#" character until the end
+-of a line is ignored. See perlsyn(1) man page for details.
+-
+-Below is the list of variables which you might want to set in gitweb config.
+-See the top of 'gitweb.cgi' for the full list of variables and their
+-descriptions.
+-
+-Gitweb config file variables
+-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-
+-You can set, among others, the following variables in gitweb config files
+-(with the exception of $projectroot and $projects_list this list does
+-not include variables usually directly set during build):
+- * $GIT
+-   Core git executable to use.  By default set to "$GIT_BINDIR/git", which
+-   in turn is by default set to "$(bindir)/git".  If you use git from binary
+-   package, set this to "/usr/bin/git".  This can just be "git" if your
+-   webserver has a sensible PATH.  If you have multiple git versions
+-   installed it can be used to choose which one to use.
+- * $version
+-   Gitweb version, set automatically when creating gitweb.cgi from
+-   gitweb.perl. You might want to modify it if you are running modified
+-   gitweb.
+- * $projectroot
+-   Absolute filesystem path which will be prepended to project path;
+-   the path to repository is $projectroot/$project.  Set to
+-   $GITWEB_PROJECTROOT during installation.  This variable have to be
+-   set correctly for gitweb to find repositories.
+- * $projects_list
+-   Source of projects list, either directory to scan, or text file
+-   with list of repositories (in the "<URI-encoded repository path> SP
+-   <URI-encoded repository owner>" line format; actually there can be
+-   any sequence of whitespace in place of space (SP)).  Set to
+-   $GITWEB_LIST during installation.  If empty, $projectroot is used
+-   to scan for repositories.
+- * $my_url, $my_uri
+-   Full URL and absolute URL of gitweb script;
+-   in earlier versions of gitweb you might have need to set those
+-   variables, now there should be no need to do it.  See
+-   $per_request_config if you need to set them still.
+- * $base_url
+-   Base URL for relative URLs in pages generated by gitweb,
+-   (e.g. $logo, $favicon, @stylesheets if they are relative URLs),
+-   needed and used only for URLs with nonempty PATH_INFO via
+-   <base href="$base_url">.  Usually gitweb sets its value correctly,
+-   and there is no need to set this variable, e.g. to $my_uri or "/".
+-   See $per_request_config if you need to set it anyway.
+- * $home_link
+-   Target of the home link on top of all pages (the first part of view
+-   "breadcrumbs").  By default set to absolute URI of a page ($my_uri).
+- * @stylesheets
+-   List of URIs of stylesheets (relative to base URI of a page). You
+-   might specify more than one stylesheet, for example use gitweb.css
+-   as base, with site specific modifications in separate stylesheet
+-   to make it easier to upgrade gitweb. You can add 'site' stylesheet
+-   for example by using
+-      push @stylesheets, "gitweb-site.css";
+-   in the gitweb config file.
+- * $logo_url, $logo_label
+-   URI and label (title) of GIT logo link (or your site logo, if you choose
+-   to use different logo image). By default they point to git homepage;
+-   in the past they pointed to git documentation at www.kernel.org.
+- * $projects_list_description_width
+-   The width (in characters) of the projects list "Description" column.
+-   Longer descriptions will be cut (trying to cut at word boundary);
+-   full description is available as 'title' attribute (usually shown on
+-   mouseover).  By default set to 25, which might be too small if you
+-   use long project descriptions.
+- * $projects_list_group_categories
+-   Enables the grouping of projects by category on the project list page.
+-   The category of a project is determined by the $GIT_DIR/category
+-   file or the 'gitweb.category' variable in its repository configuration.
+-   Disabled by default.
+- * $project_list_default_category
+-   Default category for projects for which none is specified.  If set
+-   to the empty string, such projects will remain uncategorized and
+-   listed at the top, above categorized projects.
+- * @git_base_url_list
+-   List of git base URLs used for URL to where fetch project from, shown
+-   in project summary page.  Full URL is "$git_base_url/$project".
+-   You can setup multiple base URLs (for example one for  git:// protocol
+-   access, and one for http:// "dumb" protocol access).  Note that per
+-   repository configuration in 'cloneurl' file, or as values of gitweb.url
+-   project config.
+- * $default_blob_plain_mimetype
+-   Default mimetype for blob_plain (raw) view, if mimetype checking
+-   doesn't result in some other type; by default 'text/plain'.
+- * $default_text_plain_charset
+-   Default charset for text files. If not set, web server configuration
+-   would be used.
+- * $mimetypes_file
+-   File to use for (filename extension based) guessing of MIME types before
+-   trying /etc/mime.types. Path, if relative, is taken currently as
+-   relative to the current git repository.
+- * $fallback_encoding
+-   Gitweb assumes this charset if line contains non-UTF-8 characters.
+-   Fallback decoding is used without error checking, so it can be even
+-   'utf-8'. Value must be valid encoding; see Encoding::Supported(3pm) man
+-   page for a list.   By default 'latin1', aka. 'iso-8859-1'.
+- * @diff_opts
+-   Rename detection options for git-diff and git-diff-tree. By default
+-   ('-M'); set it to ('-C') or ('-C', '-C') to also detect copies, or
+-   set it to () if you don't want to have renames detection.
+- * $prevent_xss
+-   If true, some gitweb features are disabled to prevent content in
+-   repositories from launching cross-site scripting (XSS) attacks.  Set this
+-   to true if you don't trust the content of your repositories. The default
+-   is false.
+- * $maxload
+-   Used to set the maximum load that we will still respond to gitweb queries.
+-   If server load exceed this value then return "503 Service Unavailable" error.
+-   Server load is taken to be 0 if gitweb cannot determine its value.  Set it to
+-   undefined value to turn it off.  The default is 300.
+- * $highlight_bin
+-   Path to the highlight executable to use (must be the one from
+-   http://www.andre-simon.de due to assumptions about parameters and output).
+-   Useful if highlight is not installed on your webserver's PATH.
+-   [Default: highlight]
+- * $per_request_config
+-   If set to code reference, it would be run once per each request.  You can
+-   set parts of configuration that change per session, e.g. by setting it to
+-     sub { $ENV{GL_USER} = $cgi->remote_user || "gitweb"; }
+-   Otherwise it is treated as boolean value: if true gitweb would process
+-   config file once per request, if false it would process config file only
+-   once.  Note: $my_url, $my_uri, and $base_url are overwritten with
+-   their default values before every request, so if you want to change
+-   them, be sure to set this variable to true or a code reference effecting
+-   the desired changes.  The default is true.
+-
+ Projects list file format
+ ~~~~~~~~~~~~~~~~~~~~~~~~~
  
 -- 
 1.7.6
