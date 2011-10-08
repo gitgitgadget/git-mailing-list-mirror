@@ -1,7 +1,8 @@
 From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH 0/9] ref completion optimizations, fixes, and cleanups
-Date: Sat,  8 Oct 2011 16:54:34 +0200
-Message-ID: <1318085683-29830-1-git-send-email-szeder@ira.uka.de>
+Subject: [PATCH 1/9] completion: document __gitcomp()
+Date: Sat,  8 Oct 2011 16:54:35 +0200
+Message-ID: <1318085683-29830-2-git-send-email-szeder@ira.uka.de>
+References: <1318085683-29830-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -10,113 +11,71 @@ Cc: "Shawn O. Pearce" <spearce@spearce.org>,
 	Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 08 16:55:12 2011
+X-From: git-owner@vger.kernel.org Sat Oct 08 16:55:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCYIx-0000CI-Tn
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Oct 2011 16:55:12 +0200
+	id 1RCYJE-0000Hc-KG
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Oct 2011 16:55:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751549Ab1JHOzG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Oct 2011 10:55:06 -0400
-Received: from moutng.kundenserver.de ([212.227.17.9]:52872 "EHLO
+	id S1751977Ab1JHOzY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Oct 2011 10:55:24 -0400
+Received: from moutng.kundenserver.de ([212.227.17.8]:55986 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751433Ab1JHOzF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Oct 2011 10:55:05 -0400
+	with ESMTP id S1751885Ab1JHOzY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Oct 2011 10:55:24 -0400
 Received: from localhost6.localdomain6 (p5B130863.dip0.t-ipconnect.de [91.19.8.99])
 	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
-	id 0MVHuk-1RcJyJ11Z8-00Yy0z; Sat, 08 Oct 2011 16:54:49 +0200
+	id 0Lvfyq-1R2i232hI4-017kfp; Sat, 08 Oct 2011 16:55:15 +0200
 X-Mailer: git-send-email 1.7.7.187.ga41de
-X-Provags-ID: V02:K0:iXsQGYY+vhIbqZUB+U9uzN7+7tM7nKETPKwLM4rP1QL
- lzXd8bCOvrlysya6VpHUWQudn7B/9uJua5MyuWQTWMFhszZ5Dj
- xNPU0xWMbv/8Xnj3id6NWPR7A+rGWYqVu7RUGLIMoqlAKPg2u7
- 3eQ3FwnaDPXKlgbOjKv8AoGQCr7JJTqmWQhuwVXgfqn+ZOt6vw
- 749OLincljUlD1P7O+YL6TRTl8of3X3TAgkmmljXVzyaLA1O+N
- 8FAqfBzqobtUuYrABOTBhqi5XoS65vu8KzMPnd8k03jXXP/Xun
- +XRVUahWE2NKT0MtwLkHxLYzKByWle2UA8ScHQfq6urHS8BGTU
- vYGWMStOZX/+HbB4nStaWnXlH5BJ5uieP8gSvkF002vm+rSJqc
- zoc/0UjxUOeIQ==
+In-Reply-To: <1318085683-29830-1-git-send-email-szeder@ira.uka.de>
+X-Provags-ID: V02:K0:xvWstrjriR6vxKT+zas7G6nBtoGhXeB0DNzxZO7pQpm
+ 6O6sAmSVBqzVWRusHm0OiijoF5qDZUR9fYI/ExiCfhPZMyVa42
+ 80hSO5ua+dMk0dpaXB351USldzmJS/l8RumQYXoDejWkzEm8qt
+ tCx6uj4hTLt8f1RCXebCZ6uftjWNy1O8ETGoegC8BoNaLYLsgx
+ GztLDeMO2b117UJB6L3fKRaG+SuYO0DnhBkoOquPk9pHEQqPsr
+ jMKmCrBU37VcH/kBwyRGsD/E5wulpGXT/ApuJejAqGlO9zdwLE
+ lfhwro++bdXZk00d1jV7rYYqbfCRzlg7MPgEJoHzIslO511pLt
+ UiBSay96OYBsvD1rU+oR0TJthV4km79y5L0cxe7p96tytqCM5t
+ GRsAedy35vYiA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183145>
 
-Hi,
+I always forget which argument is which, and got tired of figuring it
+out over and over again.
 
-This series aims to improve the completion of refs & co.
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
+ contrib/completion/git-completion.bash |    9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
 
-This one is the most important in the series; it takes some shortcuts
-to make completing large number of refs faster (it's also faster for
-git.git, but it's unnoticeable).
-
-  [2/9] completion: optimize refs completion
-
-The following three make __git_refs() handle local and remote
-repositories more consistently, and also clean up the remote-handling
-code part of __git_refs().  They likely make things a bit faster, but
-since the code path usually involves network communication I didn't
-run any benchmarks.
-
-  [3/9] completion: make refs completion consistent for local and remot=
-e
-          repos
-  [4/9] completion: improve ls-remote output filtering in __git_refs()
-  [5/9] completion: support full refs from remote repositories
-
-The following two do similar cleanups in __git_refs_remotes() than 3/9
-and 4/9 in __git_refs().
-
-  [6/9] completion: query only refs/heads/ in __git_refs_remotes()
-  [7/9] completion: improve ls-remote output filtering in
-          __git_refs_remotes()
-
-A silly while-at-it optimization; the delay eliminated by this one was
-annoying when testing 6/9 and 7/9.
-
-  [8/9] completion: fast initial completion for config 'remote.*.fetch'
-          value
-
-And finally remove some bitrotted code.
-
-  [9/9] completion: remove broken dead code from __git_heads() and
-          __git_tags()
-
-
-This series is meant to be applied on the merge of master and 77653abd
-(completion: commit --fixup and --squash, 2011-10-06) from pu, and the
-patch in
-
-  Message-ID: <20111008010634.GB11561@goldbirke>
-  (http://article.gmane.org/gmane.comp.version-control.git/183131)
-
-from last night applied.  There will be two easily fixable conflicts
-when applied directly on top of current master.
-
-
-Best,
-G=C3=A1bor
-
-
-SZEDER G=C3=A1bor (9):
-  completion: document __gitcomp()
-  completion: optimize refs completion
-  completion: make refs completion consistent for local and remote
-    repos
-  completion: improve ls-remote output filtering in __git_refs()
-  completion: support full refs from remote repositories
-  completion: query only refs/heads/ in __git_refs_remotes()
-  completion: improve ls-remote output filtering in
-    __git_refs_remotes()
-  completion: fast initial completion for config 'remote.*.fetch' value
-  completion: remove broken dead code from __git_heads() and
-    __git_tags()
-
- contrib/completion/git-completion.bash |  200 +++++++++++++++++-------=
---------
- 1 files changed, 109 insertions(+), 91 deletions(-)
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index b36f9e70..c0fb6e15 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -485,8 +485,13 @@ _get_comp_words_by_ref ()
+ fi
+ fi
+=20
+-# __gitcomp accepts 1, 2, 3, or 4 arguments
+-# generates completion reply with compgen
++# Generates completion reply with compgen, appending a space to possib=
+le
++# completion words, if necessary.
++# It accepts 1 to 4 arguments:
++# 1: List of possible completion words.
++# 2: A prefix to be added to each possible completion word (optional).
++# 3: Generate possible completion matches for this word (optional).
++# 4: A suffix to be appended to each possible completion word (optiona=
+l).
+ __gitcomp ()
+ {
+ 	local cur_=3D"$cur"
 --=20
 1.7.7.187.ga41de
