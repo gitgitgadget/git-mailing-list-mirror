@@ -1,80 +1,115 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 6/6] Retain caches of submodule refs
-Date: Sun, 09 Oct 2011 13:12:20 +0200
-Message-ID: <4E918194.5060102@alum.mit.edu>
-References: <1313188589-2330-1-git-send-email-mhagger@alum.mit.edu> <1313188589-2330-7-git-send-email-mhagger@alum.mit.edu> <7v4o1hgemp.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH 1/2] xdiff: factor out get_func_line()
+Date: Sun, 09 Oct 2011 13:34:49 +0200
+Message-ID: <4E9186D9.4060805@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Drew Northup <drew.northup@maine.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 09 13:13:14 2011
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Oct 09 13:35:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCrJf-000113-Hg
-	for gcvg-git-2@lo.gmane.org; Sun, 09 Oct 2011 13:13:11 +0200
+	id 1RCrf0-0007vN-VJ
+	for gcvg-git-2@lo.gmane.org; Sun, 09 Oct 2011 13:35:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752434Ab1JILNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Oct 2011 07:13:00 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:53253 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752273Ab1JILMq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Oct 2011 07:12:46 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.134] (p54BEDFD0.dip.t-dialin.net [84.190.223.208])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p99BCM1q005114
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 9 Oct 2011 13:12:24 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
-In-Reply-To: <7v4o1hgemp.fsf@alter.siamese.dyndns.org>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1751029Ab1JILfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Oct 2011 07:35:10 -0400
+Received: from india601.server4you.de ([85.25.151.105]:56506 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750934Ab1JILfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Oct 2011 07:35:09 -0400
+Received: from [192.168.2.104] (p4FFDBD6A.dip.t-dialin.net [79.253.189.106])
+	by india601.server4you.de (Postfix) with ESMTPSA id 7F06B2F8030;
+	Sun,  9 Oct 2011 13:35:07 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183197>
 
-On 08/17/2011 12:45 AM, Junio C Hamano wrote:
-> All the changes except for this one made sense to me, but I am not sure
-> about this one. How often do we look into different submodule refs in the
-> same process over and over again?
+Move the code to search for a function line to be shown in the hunk
+header into its own function and to make returning the length-limited
+result string easier, introduce struct func_line.
 
-I am having pangs of uncertainty about this patch.
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ xdiff/xemit.c |   43 +++++++++++++++++++++++++++----------------
+ 1 files changed, 27 insertions(+), 16 deletions(-)
 
-Previous to this patch, the submodule reference cache was only used for
-the duration of one call to do_for_each_ref().  (It was not *discarded*
-until later, but the old cache was never reused.)  Therefore, the
-submodule reference cache was implicitly invalidated between successive
-uses.
-
-After this change, submodule ref caches are invalidated whenever
-invalidate_cached_refs() is called.  But this function is static, and it
-is only called when main-module refs are changed.
-
-AFAIK there is no way within refs.c to add, modify, or delete a
-submodule reference.  But if other code modifies submodule references
-directly, then the submodule ref cache in refs.c would become stale.
-Moreover, there is currently no API for invalidating the cache.
-
-So I think I need help from a submodule guru (Heiko?) who can tell me
-what is done with submodule references and whether they might be
-modified while a git process is executing in the main module.  If so,
-then either this patch has to be withdrawn, or more work has to be put
-in to make such code invalidate the submodule reference cache.
-
-Sorry for the oversight, but I forgot that not all code necessarily uses
-the refs.c API when dealing with references (a regrettable situation, BTW).
-
-Michael
-
+diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+index 277e2ee..64eb17a 100644
+--- a/xdiff/xemit.c
++++ b/xdiff/xemit.c
+@@ -100,14 +100,35 @@ static int xdl_emit_common(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
+ 	return 0;
+ }
+ 
++struct func_line {
++	long len;
++	char buf[80];
++};
++
++static void get_func_line(xdfenv_t *xe, xdemitconf_t const *xecfg,
++			  struct func_line *func_line, long start, long limit)
++{
++	find_func_t ff = xecfg->find_func ? xecfg->find_func : def_ff;
++	long l, size = sizeof(func_line->buf);
++	char *buf = func_line->buf;
++
++	for (l = start; l > limit && 0 <= l; l--) {
++		const char *rec;
++		long reclen = xdl_get_rec(&xe->xdf1, l, &rec);
++		long len = ff(rec, reclen, buf, size, xecfg->find_func_priv);
++		if (len >= 0) {
++			func_line->len = len;
++			break;
++		}
++	}
++}
++
+ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
+ 		  xdemitconf_t const *xecfg) {
+ 	long s1, s2, e1, e2, lctx;
+ 	xdchange_t *xch, *xche;
+-	char funcbuf[80];
+-	long funclen = 0;
+ 	long funclineprev = -1;
+-	find_func_t ff = xecfg->find_func ?  xecfg->find_func : def_ff;
++	struct func_line func_line = { 0 };
+ 
+ 	if (xecfg->flags & XDL_EMIT_COMMON)
+ 		return xdl_emit_common(xe, xscr, ecb, xecfg);
+@@ -130,22 +151,12 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
+ 		 */
+ 
+ 		if (xecfg->flags & XDL_EMIT_FUNCNAMES) {
+-			long l;
+-			for (l = s1 - 1; l >= 0 && l > funclineprev; l--) {
+-				const char *rec;
+-				long reclen = xdl_get_rec(&xe->xdf1, l, &rec);
+-				long newfunclen = ff(rec, reclen, funcbuf,
+-						     sizeof(funcbuf),
+-						     xecfg->find_func_priv);
+-				if (newfunclen >= 0) {
+-					funclen = newfunclen;
+-					break;
+-				}
+-			}
++			get_func_line(xe, xecfg, &func_line,
++				      s1 - 1, funclineprev);
+ 			funclineprev = s1 - 1;
+ 		}
+ 		if (xdl_emit_hunk_hdr(s1 + 1, e1 - s1, s2 + 1, e2 - s2,
+-				      funcbuf, funclen, ecb) < 0)
++				      func_line.buf, func_line.len, ecb) < 0)
+ 			return -1;
+ 
+ 		/*
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.7.7
