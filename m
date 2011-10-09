@@ -1,144 +1,80 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: A Basic Git Question About File Tracking [ANSWERED]
-Date: Sun, 9 Oct 2011 11:37:33 +0200
-Message-ID: <201110091137.34788.jnareb@gmail.com>
-References: <j6dlhf$dp3$1@dough.gmane.org> <m3ipnz0xri.fsf@localhost.localdomain> <4E910A14.7040801@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 6/6] Retain caches of submodule refs
+Date: Sun, 09 Oct 2011 13:12:20 +0200
+Message-ID: <4E918194.5060102@alum.mit.edu>
+References: <1313188589-2330-1-git-send-email-mhagger@alum.mit.edu> <1313188589-2330-7-git-send-email-mhagger@alum.mit.edu> <7v4o1hgemp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-4"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: Jon Forrest <nobozo@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 09 11:38:03 2011
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Drew Northup <drew.northup@maine.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 09 13:13:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCppY-0004Lo-Uy
-	for gcvg-git-2@lo.gmane.org; Sun, 09 Oct 2011 11:38:01 +0200
+	id 1RCrJf-000113-Hg
+	for gcvg-git-2@lo.gmane.org; Sun, 09 Oct 2011 13:13:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751371Ab1JIJht (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Oct 2011 05:37:49 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:63178 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751024Ab1JIJhs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Oct 2011 05:37:48 -0400
-Received: by bkbzt4 with SMTP id zt4so7021113bkb.19
-        for <git@vger.kernel.org>; Sun, 09 Oct 2011 02:37:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=BAKLqxaDfMr7Y0woMxqq+YTXpKdL6kIFZRnWJHJ8EB4=;
-        b=P6unlSAspp7QBRhnHOxa9hzCy/wFuf+oiDHCfKFLUUq72jFm4F9WMWheAoUIC9qcaN
-         Vmj0m4Ddhe+G6/b8Cs6I1W4cPP4N6fpOIh7rD/lyYhzzuOY2eCAPGBgTemvhdUP51L5X
-         NwYSOhHxkhKBddeC/mcRYCTeZXpVzcoXH4zYM=
-Received: by 10.223.5.3 with SMTP id 3mr23885236fat.4.1318153066762;
-        Sun, 09 Oct 2011 02:37:46 -0700 (PDT)
-Received: from [192.168.1.13] (abws83.neoplus.adsl.tpnet.pl. [83.8.242.83])
-        by mx.google.com with ESMTPS id y8sm24041460faj.10.2011.10.09.02.37.44
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 09 Oct 2011 02:37:45 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4E910A14.7040801@gmail.com>
-Content-Disposition: inline
+	id S1752434Ab1JILNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Oct 2011 07:13:00 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:53253 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752273Ab1JILMq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Oct 2011 07:12:46 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.134] (p54BEDFD0.dip.t-dialin.net [84.190.223.208])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p99BCM1q005114
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 9 Oct 2011 13:12:24 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
+In-Reply-To: <7v4o1hgemp.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183196>
 
-On Sun, 9 Oct 2011, Jon Forrest wrote:
-> On 10/8/2011 6:17 PM, Jakub Narebski wrote:
-> 
-> > You seem to be under [false] impression that git commit is about
-> > _changes_ / _changeset_.
-> 
-> This is correct. The Pro Git book says:
-> 
-> "You stage these modified files and then commit
-> all your staged changes"
-> 
-> Plus, even "git status" tells me
-> 
-> $ git status
-> # On branch master
-> # Changes to be committed:
+On 08/17/2011 12:45 AM, Junio C Hamano wrote:
+> All the changes except for this one made sense to me, but I am not sure
+> about this one. How often do we look into different submodule refs in the
+> same process over and over again?
 
-Well, that is because the two representations: delta / changeset
-("differential") representation and snapshot ("integral") representation
-are related, and [in practice] one can be transformed into the other.
+I am having pangs of uncertainty about this patch.
 
-Sometimes it is better to think about commit as representing changeset
-from parent commit, sometimes it is better to think of a commit as of
-snapshot of a state of project.
+Previous to this patch, the submodule reference cache was only used for
+the duration of one call to do_for_each_ref().  (It was not *discarded*
+until later, but the old cache was never reused.)  Therefore, the
+submodule reference cache was implicitly invalidated between successive
+uses.
 
-But under the hood git model is snapshot-based.
+After this change, submodule ref caches are invalidated whenever
+invalidate_cached_refs() is called.  But this function is static, and it
+is only called when main-module refs are changed.
 
-> But I see my error. Below is what I hope is a clear
-> explanation of what I didn't understand. It presumes
-> that the reader understands the git objects model.
-> Please let me know if anything is incorrect.
-> ----------
-> When you "git add" a file two things happen:
-> 
-> 1) The file is copied to the git objects tree.
+AFAIK there is no way within refs.c to add, modify, or delete a
+submodule reference.  But if other code modifies submodule references
+directly, then the submodule ref cache in refs.c would become stale.
+Moreover, there is currently no API for invalidating the cache.
 
-Actually it is file _contents_ that is copied to git object _store_.
+So I think I need help from a submodule guru (Heiko?) who can tell me
+what is done with submodule references and whether they might be
+modified while a git process is executing in the main module.  If so,
+then either this patch has to be withdrawn, or more work has to be put
+in to make such code invalidate the submodule reference cache.
 
-> This location where the file is copied depends
-> on the hash of the file's content.
+Sorry for the oversight, but I forgot that not all code necessarily uses
+the refs.c API when dealing with references (a regrettable situation, BTW).
 
-I'd say that this is unnecessary implementation detail of "loose"
-object format.  I would say that _identifier_ of added object is
-based on its contents.
+Michael
 
-> 
-> 2) An entry for the file is added to the git index.
-> This entry includes the same hash that was mentioned
-> in #1.
-
-Yes.
- 
-> A tracked file has an entry in the git index file.
-
-Yes.
-
-> A copy of the file also exists in the objects tree.
-
-A copy of a _contents_ of a file at specific point of time
-exists in object _store_ (not necessary object tree, as it
-can be packed).
- 
-> When you run 'git status', git computes the hash of
-> every file in your working directory and looks
-> up each file in the index. If the file isn't found
-> then the file is shown as untracked.
-
-Sidenote: git stores in the index also stats of a file (modification
-time etc.) so it is possible to avoid recomputing the hash of every 
-file.
- 
-> When you do a commit, the hash values of everything
-> in the index are copied into a tree object. The hash
-> value of the tree object is then placed in a commit object.
-
-True, though I would probably state it a bit differently.
-
-> No copies of tracked files in the working directory are
-> made at commit time. This is because the files were already
-> copied into the objects tree when 'git add' was run.
-> This is one reason why git commits are so fast.
-
-Well, there is also "git commit -a", but it is true that git
-copies into object store only those tracked files that changed.
-
-Also I think that the main reason that git commits are fast is
-that they are local operation, and not over the network as in the
-case of centralized version control systems.
- 
 -- 
-Jakub Narebski
-Poland
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
