@@ -1,85 +1,76 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v3 5/5] attr.c: respect core.ignorecase when matching
- attribute patterns
-Date: Sun, 09 Oct 2011 17:16:24 +0200
-Message-ID: <4E91BAC8.9060606@alum.mit.edu>
-References: <VYN8m1JCy102-eaWWa-bsunEvt3zeXLJkVg7FZKZCtXT-Ww0vg7a8xA7NTvrZTiovKTnJ9Hlom0@cipher.nrlssc.navy.mil> <U4wiHVyDLLG1PhI-8iY3YhHT7CEcTMEfg9MCDSaeuwAkg0N1a5wRE5NXaKAVQx8kpEYt75REVpRavoc-HiKe6rLk2AUepzHWptkevo08MRbGyWxqBHT_rySLemcbi66NKLRXwFGtaRQ@cipher.nrlssc.navy.mil>
+Subject: Re: [PATCH 1/3] traverse_trees(): allow pruning with pathspec
+Date: Sun, 09 Oct 2011 17:39:29 +0200
+Message-ID: <4E91C031.9030205@alum.mit.edu>
+References: <7vty9054qr.fsf@alter.siamese.dyndns.org> <1314653603-7533-1-git-send-email-gitster@pobox.com> <1314653603-7533-2-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org, peff@peff.net,
-	j.sixt@viscovery.net, Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Sun Oct 09 17:16:51 2011
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 09 17:39:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCv7P-00018o-3r
-	for gcvg-git-2@lo.gmane.org; Sun, 09 Oct 2011 17:16:47 +0200
+	id 1RCvTg-0001tl-H4
+	for gcvg-git-2@lo.gmane.org; Sun, 09 Oct 2011 17:39:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751597Ab1JIPQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Oct 2011 11:16:42 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:54516 "EHLO
+	id S1751906Ab1JIPjk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Oct 2011 11:39:40 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:54611 "EHLO
 	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751287Ab1JIPQl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Oct 2011 11:16:41 -0400
+	with ESMTP id S1751726Ab1JIPjk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Oct 2011 11:39:40 -0400
 X-Envelope-From: mhagger@alum.mit.edu
 Received: from [192.168.69.134] (p54BEDFD0.dip.t-dialin.net [84.190.223.208])
 	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p99FGQZk023856
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p99FdVe3024801
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 9 Oct 2011 17:16:27 +0200
+	Sun, 9 Oct 2011 17:39:32 +0200
 User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
-In-Reply-To: <U4wiHVyDLLG1PhI-8iY3YhHT7CEcTMEfg9MCDSaeuwAkg0N1a5wRE5NXaKAVQx8kpEYt75REVpRavoc-HiKe6rLk2AUepzHWptkevo08MRbGyWxqBHT_rySLemcbi66NKLRXwFGtaRQ@cipher.nrlssc.navy.mil>
+In-Reply-To: <1314653603-7533-2-git-send-email-gitster@pobox.com>
 X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183203>
 
-On 10/06/2011 08:22 PM, Brandon Casey wrote:
-> The last set of tests is performed only on a case-insensitive filesystem.
-> Those tests make sure that git handles the case where the .gitignore file
-> resides in a subdirectory and the user supplies a path that does not match
-> the case in the filesystem.  In that case^H^H^H^Hsituation, part of the
-> path supplied by the user is effectively interpreted case-insensitively,
-> and part of it is dependent on the setting of core.ignorecase.  git should
-> only match the portion of the path below the directory holding the
-> .gitignore file according to the setting of core.ignorecase.
+On 08/29/2011 11:33 PM, Junio C Hamano wrote:
+> diff --git a/tree-walk.c b/tree-walk.c
+> index 33f749e..808bb55 100644
+> --- a/tree-walk.c
+> +++ b/tree-walk.c
+> [...]
+> @@ -376,16 +396,22 @@ int traverse_trees(int n, struct tree_desc *t, =
+struct traverse_info *info)
+>  			mask |=3D 1ul << i;
+>  			if (S_ISDIR(entry[i].mode))
+>  				dirmask |=3D 1ul << i;
+> +			e =3D &entry[i];
+>  		}
+>  		if (!mask)
+>  			break;
+> -		ret =3D info->fn(n, mask, dirmask, entry, info);
+> -		if (ret < 0) {
+> -			error =3D ret;
+> -			if (!info->show_all_errors)
+> -				break;
+> +		interesting =3D prune_traversal(e, info, &base, interesting);
 
-Isn't this a rather perverse scenario?  It is hard to imagine that
-anybody *wants* part of a single filename to be matched
-case-insensitively and another part to be matched case-sensitively.
-ISTM that a person who is using a case-insensitive filesystem and has
-core-ignorecase=false is (1) a glutton for punishment and (2) probably
-very careful to make sure that the case of all pathnames is correct.  So
-such a person is not likely to benefit from this schizophrenic behavior.
+According to gcc 4.2.4 (though, strangely, not gcc 4.4.3):
 
-> [...]  If git instead built the attr
-> stack by scanning the repository, then the paths in the origin field would
-> not necessarily match the paths supplied by the user.  If someone makes a
-> change like that in the future, these tests will notice.
-
-Your decision to treat path names as partly case-insensitive will make
-this kind of improvement considerably more complicated.
-
-Therefore, weighing the negligible benefit of declaring this
-schizophrenic behavior against the potential big pain of remaining
-backwards-compatible with this behavior, I suggest that we either (1)
-declare that when core.ignorecase=false then the *whole* filenames
-(including the path leading up to the .gitignore file) must match
-case-sensitively, or (2) declare the behavior in this situation to be
-undefined so that nobody thinks they should depend on it.
-
-But given that I'm a potential implementer but not a potential Windows
-user, perhaps my judgment is biased...
+tree-walk.c: In function =91traverse_trees=92:
+tree-walk.c:347: warning: =91e=92 may be used uninitialized in this fun=
+ction
 
 Michael
 
--- 
+--=20
 Michael Haggerty
 mhagger@alum.mit.edu
 http://softwareswirl.blogspot.com/
