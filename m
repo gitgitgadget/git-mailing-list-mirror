@@ -1,90 +1,72 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] commit: teach --gpg-sign option
-Date: Sun, 9 Oct 2011 22:57:28 +0000
-Message-ID: <robbat2-20111009T225253-591026811Z@orbis-terrarum.net>
+Date: Sun, 09 Oct 2011 16:18:49 -0700
+Message-ID: <7vmxd9pxd2.fsf@alter.siamese.dyndns.org>
 References: <7vaa9f3pk8.fsf@alter.siamese.dyndns.org>
  <robbat2-20111006T221637-481195848Z@orbis-terrarum.net>
  <4E8EBAFE.8020805@drmicha.warpmail.net>
+ <robbat2-20111009T225253-591026811Z@orbis-terrarum.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "	Robin H. Johnson" <robbat2@gentoo.org>,
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 10 00:59:13 2011
+To: "Robin H. Johnson" <robbat2@gentoo.org>
+X-From: git-owner@vger.kernel.org Mon Oct 10 01:18:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RD2Ku-0001yR-VS
-	for gcvg-git-2@lo.gmane.org; Mon, 10 Oct 2011 00:59:13 +0200
+	id 1RD2e2-0007XF-7E
+	for gcvg-git-2@lo.gmane.org; Mon, 10 Oct 2011 01:18:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751123Ab1JIW5a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Oct 2011 18:57:30 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:49849 "EHLO smtp.gentoo.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750851Ab1JIW53 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Oct 2011 18:57:29 -0400
-Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.gentoo.org (Postfix) with ESMTPS id 59DCC1B401C
-	for <git@vger.kernel.org>; Sun,  9 Oct 2011 22:57:29 +0000 (UTC)
-Received: (qmail 13064 invoked by uid 10000); 9 Oct 2011 22:57:28 -0000
-Content-Disposition: inline
-In-Reply-To: <4E8EBAFE.8020805@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751557Ab1JIXSw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Oct 2011 19:18:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60213 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751007Ab1JIXSw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Oct 2011 19:18:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 357956C46;
+	Sun,  9 Oct 2011 19:18:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fAkc5NWo+6ENXGbbTkz1mAgejdU=; b=JWrZuN
+	DQVbcZZADA4z8/dUA4t12CwMG6vTdydJUWRv92FKJScmg5N5k0ZSJWVVbsLc3Qm2
+	KCJIA/NLpPxE5eEoYTEDHqhmvYa4T24rDrUSTauOd8z5jKS5J70EIs7SvgITFbCq
+	gsHkm6BM2x3zfSTPsoROkdOQ2QrbkwSuKE4j8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jhRBfG+RxSvSyMSU3g+QCzNy5i3x9gAn
+	x1hk9Ku3NSrnGcGMsmI2mnk23MRGlRgPzrzAC9a5R5BOy6OUtHxPUq6Q9LG/ns0Y
+	W323f1698/QyjSjzlHF7eMBZOLWYELf5wJ0d2PceMuDhb1+H8oQ8uRcDvhIMIiml
+	kus9vrEenZA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2BB936C45;
+	Sun,  9 Oct 2011 19:18:51 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B68636C44; Sun,  9 Oct 2011
+ 19:18:50 -0400 (EDT)
+In-Reply-To: <robbat2-20111009T225253-591026811Z@orbis-terrarum.net> (Robin
+ H. Johnson's message of "Sun, 9 Oct 2011 22:57:28 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0C2CACBE-F2CD-11E0-BB93-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183216>
 
-On Fri, Oct 07, 2011 at 10:40:30AM +0200,  Michael J Gruber wrote:
-> [readding JCH to cc whom you dropped]
-> Robin H. Johnson venit, vidit, dixit 07.10.2011 00:24:
-> > On Wed, Oct 05, 2011 at 05:56:55PM -0700,  Junio C Hamano wrote:
-> >> And this uses the gpg-interface.[ch] to allow signing the commit, i.e.
-> >>
-> >>     $ git commit --gpg-sign -m foo
-> >>     You need a passphrase to unlock the secret key for
-> >>     user: "Junio C Hamano <gitster@pobox.com>"
-> >>     4096-bit RSA key, ID 96AFE6CB, created 2011-10-03 (main key ID 713660A7)
-> >>
-> >>     [master 8457d13] foo
-> >>      1 files changed, 1 insertions(+), 0 deletions(-)
-> > I like it, but I have a couple of questions: 
-> > 1. Are the sig lines used in computed SHA1/commitid of a given commit (I
-> >    see examples w/ --amend and that would usually change the SHA1)?
-> Yes, just like with tag objects.
-Ok, at the core, this is going to pose a problem with multiple
-signatures.
+"Robin H. Johnson" <robbat2@gentoo.org> writes:
 
-Workflow example:
-1. Dev1 creates a commit, signs it, pushes to central repo.
-2. Dev2 pulls, signs the tip commit, pushes it back.
+> Workflow example:
+> 1. Dev1 creates a commit, signs it, pushes to central repo.
+> 2. Dev2 pulls, signs the tip commit, pushes it back.
 
-Since signing model here actually alters the commit, the push by Dev2
-loses the history point of a commit with only a single signature, like
-if somebody pushes a rewritten history (which should usually be
-prohibited).
-
-The push certificate variant of signing does permit this case without
-breaking history.
-
-> > I think this isn't a replacement for push certificates, but has value in
-> > itself. It's certainly provides better integration than the
-> > signature-in-note variants.
-> > 
-> 
-> I do think it's meant as an implementation of push certificates. I don't
-> see any other value in it which could not be achieved by signed tags.
-> Can you describe any?
-Identify of the committer for verification.
-
--- 
-Robin Hugh Johnson
-Gentoo Linux: Developer, Trustee & Infrastructure Lead
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+I personally am not sympathetic to such a "sign every and all commits by
+multiple people" workflow. If you really want to do such a thing, you can
+have the second and subsequent one to create a new commit on top whose
+sole purpose is to hold such a signature (commit --allow-empty --gpg-sig),
+or use signed tags.
