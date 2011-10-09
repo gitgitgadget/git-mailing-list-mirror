@@ -1,115 +1,134 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 1/2] xdiff: factor out get_func_line()
-Date: Sun, 09 Oct 2011 13:34:49 +0200
-Message-ID: <4E9186D9.4060805@lsrfire.ath.cx>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [PATCH] git-difftool: allow skipping file by typing 'n' at prompt
+Date: Sun, 9 Oct 2011 12:26:23 +0100
+Message-ID: <20111009112623.GA30585@hashpling.org>
+References: <20111004105333.GA24331@atcmail.atc.tcs.com>
+ <7vbotwdbjg.fsf@alter.siamese.dyndns.org>
+ <CABURp0qmYWRJzHZZwZreKnj0ymFyM_AYXWXqwy=vTZspoPvvvg@mail.gmail.com>
+ <7vty7oblpu.fsf@alter.siamese.dyndns.org>
+ <CAMK1S_gssgpy7nF46c1roJUCN5yvQaOYfVE_-ZrvMfHGWKvk0w@mail.gmail.com>
+ <20111006125658.GB18709@sita-lt.atc.tcs.com>
+ <7v62k210pj.fsf@alter.siamese.dyndns.org>
+ <20111006181522.GA2936@sita-lt.atc.tcs.com>
+ <7vwrcgtvh4.fsf@alter.siamese.dyndns.org>
+ <20111008131015.GA28213@sita-lt.atc.tcs.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Oct 09 13:35:16 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Phil Hord <phil.hord@gmail.com>,
+	Sitaram Chamarty <sitaram@atc.tcs.com>, git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 09 13:36:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCrf0-0007vN-VJ
-	for gcvg-git-2@lo.gmane.org; Sun, 09 Oct 2011 13:35:15 +0200
+	id 1RCrg0-0008G6-Pb
+	for gcvg-git-2@lo.gmane.org; Sun, 09 Oct 2011 13:36:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751029Ab1JILfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Oct 2011 07:35:10 -0400
-Received: from india601.server4you.de ([85.25.151.105]:56506 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750934Ab1JILfJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Oct 2011 07:35:09 -0400
-Received: from [192.168.2.104] (p4FFDBD6A.dip.t-dialin.net [79.253.189.106])
-	by india601.server4you.de (Postfix) with ESMTPSA id 7F06B2F8030;
-	Sun,  9 Oct 2011 13:35:07 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+	id S1751254Ab1JILgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Oct 2011 07:36:12 -0400
+Received: from relay.ptn-ipout02.plus.net ([212.159.7.36]:36861 "EHLO
+	relay.ptn-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750903Ab1JILgK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Oct 2011 07:36:10 -0400
+X-Greylist: delayed 583 seconds by postgrey-1.27 at vger.kernel.org; Sun, 09 Oct 2011 07:36:10 EDT
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av0EAAKEkU5UXeb0/2dsb2JhbABDqCCBBYFTAQEFOj8QCxgcEhQoIYgTtWuGYmEEjlcBikiMKQ
+Received: from outmx03.plus.net ([84.93.230.244])
+  by relay.ptn-ipout02.plus.net with ESMTP; 09 Oct 2011 12:26:25 +0100
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by outmx03.plus.net with esmtp (Exim) id 1RCrWS-00033s-UV; Sun, 09 Oct 2011 12:26:25 +0100
+Received: from charles by hashpling.plus.com with local (Exim 4.72)
+	(envelope-from <charles@hashpling.org>)
+	id 1RCrWR-0008BF-GF; Sun, 09 Oct 2011 12:26:23 +0100
+Content-Disposition: inline
+In-Reply-To: <20111008131015.GA28213@sita-lt.atc.tcs.com>
+User-Agent: Mutt/1.5.20 (2009-08-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183198>
 
-Move the code to search for a function line to be shown in the hunk
-header into its own function and to make returning the length-limited
-result string easier, introduce struct func_line.
+On Sat, Oct 08, 2011 at 06:40:15PM +0530, Sitaram Chamarty wrote:
+> 
+>  git-difftool--helper.sh |    9 +++++----
+>  t/t7800-difftool.sh     |   44 +++++++++++++++++++++++++++++++++++++++++++-
+>  2 files changed, 48 insertions(+), 5 deletions(-)
+> 
+> diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
+> index 8452890..0468446 100755
+> --- a/git-difftool--helper.sh
+> +++ b/git-difftool--helper.sh
+> @@ -38,15 +38,16 @@ launch_merge_tool () {
+>  
+>  	# $LOCAL and $REMOTE are temporary files so prompt
+>  	# the user with the real $MERGED name before launching $merge_tool.
+> +	ans=y
+>  	if should_prompt
+>  	then
+>  		printf "\nViewing: '$MERGED'\n"
+>  		if use_ext_cmd
+>  		then
+> -			printf "Hit return to launch '%s': " \
+> +			printf "Launch '%s' [Y/n]: " \
+>  				"$GIT_DIFFTOOL_EXTCMD"
+>  		else
+> -			printf "Hit return to launch '%s': " "$merge_tool"
+> +			printf "Launch '%s' [Y/n]: " "$merge_tool"
+>  		fi
+>  		read ans
+>  	fi
+> @@ -54,9 +55,9 @@ launch_merge_tool () {
+>  	if use_ext_cmd
+>  	then
+>  		export BASE
+> -		eval $GIT_DIFFTOOL_EXTCMD '"$LOCAL"' '"$REMOTE"'
+> +		test "$ans" != "n" && eval $GIT_DIFFTOOL_EXTCMD '"$LOCAL"' '"$REMOTE"'
+>  	else
+> -		run_merge_tool "$merge_tool"
+> +		test "$ans" != "n" && run_merge_tool "$merge_tool"
+>  	fi
+>  }
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- xdiff/xemit.c |   43 +++++++++++++++++++++++++++----------------
- 1 files changed, 27 insertions(+), 16 deletions(-)
+It's a minor point but for me, this looks a little more difficult to
+follow than it needs to be.
 
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index 277e2ee..64eb17a 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -100,14 +100,35 @@ static int xdl_emit_common(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
- 	return 0;
- }
- 
-+struct func_line {
-+	long len;
-+	char buf[80];
-+};
+Why do we need to hold on to 'ans' for so long? With the new prompt,
+if we ever 'read ans' we always want to return from the
+launch_merge_tool without doing anything else if we read "n". I think
+it's easier to follow if we just change 'read ans' and leave the 'if
+use_ext_cmd' clauses alone. Perhaps some people don't like the early
+return, though?
+
+Charles.
+
+
+E.g. (for discussion, untested):
+
+diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
+index 8452890..b668a12 100755
+--- a/git-difftool--helper.sh
++++ b/git-difftool--helper.sh
+@@ -43,12 +43,16 @@ launch_merge_tool () {
+                printf "\nViewing: '$MERGED'\n"
+                if use_ext_cmd
+                then
+-                       printf "Hit return to launch '%s': " \
++                       printf "Launch '%s' [Y/n]: " \
+                                "$GIT_DIFFTOOL_EXTCMD"
+                else
+-                       printf "Hit return to launch '%s': " "$merge_tool"
++                       printf "Launch '%s' [Y/n]: " "$merge_tool"
++               fi
 +
-+static void get_func_line(xdfenv_t *xe, xdemitconf_t const *xecfg,
-+			  struct func_line *func_line, long start, long limit)
-+{
-+	find_func_t ff = xecfg->find_func ? xecfg->find_func : def_ff;
-+	long l, size = sizeof(func_line->buf);
-+	char *buf = func_line->buf;
-+
-+	for (l = start; l > limit && 0 <= l; l--) {
-+		const char *rec;
-+		long reclen = xdl_get_rec(&xe->xdf1, l, &rec);
-+		long len = ff(rec, reclen, buf, size, xecfg->find_func_priv);
-+		if (len >= 0) {
-+			func_line->len = len;
-+			break;
-+		}
-+	}
-+}
-+
- int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
- 		  xdemitconf_t const *xecfg) {
- 	long s1, s2, e1, e2, lctx;
- 	xdchange_t *xch, *xche;
--	char funcbuf[80];
--	long funclen = 0;
- 	long funclineprev = -1;
--	find_func_t ff = xecfg->find_func ?  xecfg->find_func : def_ff;
-+	struct func_line func_line = { 0 };
- 
- 	if (xecfg->flags & XDL_EMIT_COMMON)
- 		return xdl_emit_common(xe, xscr, ecb, xecfg);
-@@ -130,22 +151,12 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
- 		 */
- 
- 		if (xecfg->flags & XDL_EMIT_FUNCNAMES) {
--			long l;
--			for (l = s1 - 1; l >= 0 && l > funclineprev; l--) {
--				const char *rec;
--				long reclen = xdl_get_rec(&xe->xdf1, l, &rec);
--				long newfunclen = ff(rec, reclen, funcbuf,
--						     sizeof(funcbuf),
--						     xecfg->find_func_priv);
--				if (newfunclen >= 0) {
--					funclen = newfunclen;
--					break;
--				}
--			}
-+			get_func_line(xe, xecfg, &func_line,
-+				      s1 - 1, funclineprev);
- 			funclineprev = s1 - 1;
- 		}
- 		if (xdl_emit_hunk_hdr(s1 + 1, e1 - s1, s2 + 1, e2 - s2,
--				      funcbuf, funclen, ecb) < 0)
-+				      func_line.buf, func_line.len, ecb) < 0)
- 			return -1;
- 
- 		/*
--- 
-1.7.7
++               if read ans && test "$ans" = "n"
++               then
++                       return
+                fi
+-               read ans
+        fi
+
+        if use_ext_cmd
