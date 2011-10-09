@@ -1,97 +1,80 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] commit: teach --gpg-sign option
-Date: Sun, 09 Oct 2011 18:32:48 +0200
-Message-ID: <4E91CCB0.4080809@drmicha.warpmail.net>
-References: <7vaa9f3pk8.fsf@alter.siamese.dyndns.org> <robbat2-20111006T221637-481195848Z@orbis-terrarum.net> <4E8EBAFE.8020805@drmicha.warpmail.net>
+From: Scott Chacon <schacon@gmail.com>
+Subject: Re: A Basic Git Question About File Tracking
+Date: Sun, 9 Oct 2011 09:57:07 -0700
+Message-ID: <CAP2yMaLKxtN-i6XikBTd9XeJ9_5HnAMxj=VnPMU=WsMNb6MsYw@mail.gmail.com>
+References: <j6dlhf$dp3$1@dough.gmane.org>
+	<20111004011035.GA13836@elie>
+	<4E8A5DF0.6040003@gmail.com>
+	<20111004012244.GB13836@elie>
+	<4E90E60C.7060105@gmail.com>
+	<m3ipnz0xri.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sun Oct 09 18:32:57 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Jon Forrest <nobozo@gmail.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 09 18:57:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCwJ7-00053n-78
-	for gcvg-git-2@lo.gmane.org; Sun, 09 Oct 2011 18:32:57 +0200
+	id 1RCwgc-0005uO-Eu
+	for gcvg-git-2@lo.gmane.org; Sun, 09 Oct 2011 18:57:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751963Ab1JIQcw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Oct 2011 12:32:52 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:36239 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751929Ab1JIQcv (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Oct 2011 12:32:51 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 4F2D32051A;
-	Sun,  9 Oct 2011 12:32:50 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute1.internal (MEProxy); Sun, 09 Oct 2011 12:32:50 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=eC5f8uR6+WWLP9JA4GThDI
-	pg4d4=; b=GyP3Mjj4RDh9MB/ebHs9NkZx4s9YNRwoTndzlQeJq/WdmDR8IhEM37
-	hcgCpqR3E1Etii2WVVowP+dPb6MhYdciOaVPrX66i7uE+84tJPSDd3YAOST8Fxxg
-	Gs1gsRJYTvvhk2KuSECcM3VcLF0KN1lmzFdhnm4og1A+YZI4owpbo=
-X-Sasl-enc: 4kZKrZYLz4JAHGyWd7fAfdOaqfCS3l7nHFp0D1Qt3V5k 1318177969
-Received: from localhost.localdomain (p54859556.dip0.t-ipconnect.de [84.133.149.86])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 8DE7D4022B3;
-	Sun,  9 Oct 2011 12:32:49 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0) Gecko/20110927 Thunderbird/7.0
-In-Reply-To: <4E8EBAFE.8020805@drmicha.warpmail.net>
+	id S1751988Ab1JIQ5K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Oct 2011 12:57:10 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:42026 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751952Ab1JIQ5H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Oct 2011 12:57:07 -0400
+Received: by gyg10 with SMTP id 10so4751205gyg.19
+        for <git@vger.kernel.org>; Sun, 09 Oct 2011 09:57:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=vJiGszkHptt/dFiBdYC5dqe4jH1+1uT51O4WwPwYgok=;
+        b=Ev3A4KrqmIJK4N5i8QkSirz5q7PlRJQHwYNI6NomwsKKq1gO8EXZEHChCAV9kI7Jmz
+         rZbEgQbWdAtCXxcprYCMIJQqiThqx/JgrxmuLmN1V2ZgvUFZGYrJ05cyqLRTJZ8rxFmX
+         XLbGc5SX9DaaED22IfS6wVp/I1sT2pL+KD050=
+Received: by 10.150.60.1 with SMTP id i1mr3768656yba.99.1318179427122; Sun, 09
+ Oct 2011 09:57:07 -0700 (PDT)
+Received: by 10.150.212.13 with HTTP; Sun, 9 Oct 2011 09:57:07 -0700 (PDT)
+In-Reply-To: <m3ipnz0xri.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183206>
 
-Michael J Gruber venit, vidit, dixit 07.10.2011 10:40:
-> [readding JCH to cc whom you dropped]
-> Robin H. Johnson venit, vidit, dixit 07.10.2011 00:24:
->> On Wed, Oct 05, 2011 at 05:56:55PM -0700,  Junio C Hamano wrote:
->>> And this uses the gpg-interface.[ch] to allow signing the commit, i.e.
->>>
->>>     $ git commit --gpg-sign -m foo
->>>     You need a passphrase to unlock the secret key for
->>>     user: "Junio C Hamano <gitster@pobox.com>"
->>>     4096-bit RSA key, ID 96AFE6CB, created 2011-10-03 (main key ID 713660A7)
->>>
->>>     [master 8457d13] foo
->>>      1 files changed, 1 insertions(+), 0 deletions(-)
->> I like it, but I have a couple of questions: 
->> 1. Are the sig lines used in computed SHA1/commitid of a given commit (I
->>    see examples w/ --amend and that would usually change the SHA1)?
-> 
-> Yes, just like with tag objects.
-> 
->> 2. Can we allow more than one person sign a commit?
-> 
-> I don't think we support it now (tags) but we could allow concatenating
-> signatures since they are detached.
+Jon,
 
-Quick update:
-Sticking two signatures into a signed tag works perfectly with current
-git, both signatures are verified and displayed.
+2011/10/8 Jakub Narebski <jnareb@gmail.com>:
+>> This spoils my understanding of what the index
+>> is. I had been thinking that after you add files
+>> to the index, and then commit, the index is then
+>> empty. In other words, whatever's in the index
+>> gets committed, and then the index is cleaned.
+>>
+>> On the other hand, if the definition of a tracked
+>> file is a file that's in the index, then this definitely
+>> clears up my understanding of tracked files.
+>>
+>> If every file that's 'git add'ed stays in the
+>> index, how does git know which files to commit?
 
-So, it might make sense to have "commit --amend" append to an existing
-signature.
+It may help to read a blog post I put on the Pro Git blog called
+"Reset Demystified" that talks about a simplified model of the HEAD,
+index and working directory.
 
-> There's a somewhat delicate issue here: The signature (tag/commit) is a
-> signature on the contents of the object, and is itself not part of the
-> contents (or else we would have a chicken-egg-problem).
-> 
-> The sha1 of the object is determined by the content+header, i.e.
-> including the signature.
+http://progit.org/2011/07/11/reset.html
 
-NB: "header" is the wrong term here, it's "data" I think.
+Let me know if that helps.  And you're right, the book should say "not
+in the index" rather than "not be in the last commit", that would be
+more technically correct. I think at that point in the book I have not
+gone into any details about the index yet, so it would be confusing
+without more detail.
 
-> So, by adding a signature, you change the sha1, but any existing
-> signature remains valid.
-> 
-> This is also how you can try to achieve a specific sha1 for a given
-> object content...
-> 
+thanks,
+Scott
