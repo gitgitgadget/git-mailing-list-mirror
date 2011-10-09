@@ -1,114 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH da/difftool-mergtool-refactor] Makefile: fix permissions of
- mergetools/ checked out with permissive umask
-Date: Sun, 9 Oct 2011 04:17:07 -0500
-Message-ID: <20111009091617.GA29150@elie.hsd1.il.comcast.net>
-References: <1313652227-48545-1-git-send-email-davvid@gmail.com>
- <1313652227-48545-4-git-send-email-davvid@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 6/6] revert: Simplify passing command-line arguments around
+Date: Sun, 9 Oct 2011 14:34:40 +0530
+Message-ID: <CALkWK0niwg1Ogs+xBr8NHEce-MUUzPc_Upn0ZKRi3iCZ6fA4BQ@mail.gmail.com>
+References: <1318095407-26429-1-git-send-email-artagnon@gmail.com>
+ <1318095407-26429-7-git-send-email-artagnon@gmail.com> <CALUzUxo=xN735+=Yz9eS_VSW3fpiTeng9s-66qM0Jno40-DPXQ@mail.gmail.com>
+ <CALkWK0kA=zhpsmYhjMwv11xyHNhA0Ps=BjUDao0+HFLMKnADUg@mail.gmail.com> <20111009085306.GA9209@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Tanguy Ortolo <tanguy+debian@ortolo.eu>,
-	Charles Bailey <charles@hashpling.org>,
-	Sebastian Schuberth <sschuberth@gmail.com>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 09 11:17:33 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Tay Ray Chuan <rctay89@gmail.com>, Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 09 11:18:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RCpVf-0005dv-Lw
-	for gcvg-git-2@lo.gmane.org; Sun, 09 Oct 2011 11:17:28 +0200
+	id 1RCpWT-0005xD-GA
+	for gcvg-git-2@lo.gmane.org; Sun, 09 Oct 2011 11:18:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752072Ab1JIJRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Oct 2011 05:17:22 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:42171 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752046Ab1JIJRV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Oct 2011 05:17:21 -0400
-Received: by iakk32 with SMTP id k32so6165121iak.19
-        for <git@vger.kernel.org>; Sun, 09 Oct 2011 02:17:20 -0700 (PDT)
+	id S1752081Ab1JIJSN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Oct 2011 05:18:13 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:50614 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752046Ab1JIJSM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Oct 2011 05:18:12 -0400
+Received: by wwf22 with SMTP id 22so7808003wwf.1
+        for <git@vger.kernel.org>; Sun, 09 Oct 2011 02:18:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=XP5ZnK7V03nrRKT8SxXEkGGlHKTa9OeHHNp3qT5Jh8E=;
-        b=tX6Oilvph/TXj6ZUj3FksmDCrN0h3+Yg3nhiz0tIJeChsHmCskbQwEdMLpAp9UCx7x
-         7wI75CDLRBl2HXp+vWsRBx6zOIWvBIWsIGatum22lBiBELcvrUYg6tOvcwk6byr5h6Lw
-         IBnOhr5Q8BCc37H2QsZB2A7NZclnfXkDb3474=
-Received: by 10.231.6.102 with SMTP id 38mr248188iby.62.1318151840628;
-        Sun, 09 Oct 2011 02:17:20 -0700 (PDT)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id g16sm36531247ibs.8.2011.10.09.02.17.18
-        (version=SSLv3 cipher=OTHER);
-        Sun, 09 Oct 2011 02:17:20 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1313652227-48545-4-git-send-email-davvid@gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=2Sce+xWPCgaVsREOpzuCNpmgWYyqBgYRpfz149sfrIw=;
+        b=M2BaeOrV5QJeRJWjiN3AhfjUO3OSXsXUlxxCTpycX1niBcyf8DNykVNUyp7Gganc4p
+         9lpyCU7DEmb3401xpC+Zf3kgawuQroDmaEYuOmnIp5nGC9Vxt8hpiGabXASex4G4NHeT
+         Bhp4GFl1tUQf82LRMb+gRum+1Ih6xPIEG0RGA=
+Received: by 10.216.190.131 with SMTP id e3mr4896149wen.48.1318151526242; Sun,
+ 09 Oct 2011 02:12:06 -0700 (PDT)
+Received: by 10.216.51.207 with HTTP; Sun, 9 Oct 2011 02:04:40 -0700 (PDT)
+In-Reply-To: <20111009085306.GA9209@elie.hsd1.il.comcast.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183192>
 
-Ever since mergetool--lib was split into multiple files in
-v1.7.7-rc0~3^2~1 (2011-08-18), the Makefile takes care to reset umask
-and use tar --no-owner when installing merge tool definitions to
-$(gitexecdir)/mergetools/.  Unfortunately it does not take into
-account the possibility that the permission bits of the files being
-copied might already be wrong.
+Hi Jonathan,
 
-Rather than fixing the "tar" incantation and making it even more
-complicated, let's just use the "install" utility.  This only means
-losing the ability to install executables and subdirectories of
-mergetools/, which wasn't used.
+Jonathan Nieder writes:
+> More important than the idiom is the intent. =C2=A0Presumably that in=
+tent
+> was something like "I wrote the commit message, so if it makes you
+> scratch your head, blame me, not Jonathan; and I made some other
+> (minor) improvements, so consider blaming me even if it's the
+> functional part that makes you scratch your head."
 
-Noticed by installing from a copy of git checked out with umask 002.
-Compare v1.6.0.3~81^2 (Fix permission bits on sources checked out with
-an overtight umask, 2008-08-21).
+Exactly.
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-David Aguilar wrote:
+> Sorry I haven't had a chance to look over the patch yet. =C2=A0Is it
+> supposed to introduce a behavior change, does it prepare for some
+> future change, or is it just a cleanup?
 
-> +++ b/Makefile
-[...]
-> @@ -2266,6 +2274,9 @@ install: all
->  	$(INSTALL) -m 644 $(SCRIPT_LIB) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
->  	$(INSTALL) $(install_bindir_programs) '$(DESTDIR_SQ)$(bindir_SQ)'
->  	$(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
-> +	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(mergetools_instdir_SQ)'
-> +	(cd mergetools && $(TAR) cf - .) | \
-> +	(cd '$(DESTDIR_SQ)$(mergetools_instdir_SQ)' && umask 022 && $(TAR) xof -)
+Prepare for some future change.  See $gmane/179282 for original discuss=
+ion.
 
-Last month I tried this out and found that, strangely, my files under
-/usr/lib/git-core/mergetools/ had the g+w bit set.  Leading me to
-wonder: does the "umask" here have any effect at all?
-
-Since debian/rules install is run as root, the default is for tar to
-act as thought --preserve-permissions were passed, so the umask when
-running "tar" is not relevant.  Luckily I think "tar" is overkill
-here, anyway.
-
-Thoughts?  Sorry to have taken so long to send this out.
-
- Makefile |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 1e91b19c..e27755e7 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2275,8 +2275,7 @@ install: all
- 	$(INSTALL) $(install_bindir_programs) '$(DESTDIR_SQ)$(bindir_SQ)'
- 	$(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(mergetools_instdir_SQ)'
--	(cd mergetools && $(TAR) cf - .) | \
--	(cd '$(DESTDIR_SQ)$(mergetools_instdir_SQ)' && umask 022 && $(TAR) xof -)
-+	$(INSTALL) -m 644 mergetools/* '$(DESTDIR_SQ)$(mergetools_instdir_SQ)'
- ifndef NO_PERL
- 	$(MAKE) -C perl prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' install
- 	$(MAKE) -C gitweb install
--- 
-1.7.7.rc1
+-- Ram
