@@ -1,8 +1,9 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 0/7] Provide API to invalidate refs cache
-Date: Mon, 10 Oct 2011 10:24:17 +0200
-Message-ID: <1318235064-25915-1-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 1/7] invalidate_ref_cache(): rename function from invalidate_cached_refs()
+Date: Mon, 10 Oct 2011 10:24:18 +0200
+Message-ID: <1318235064-25915-2-git-send-email-mhagger@alum.mit.edu>
 References: <1318225574-18785-1-git-send-email-mhagger@alum.mit.edu>
+ <1318235064-25915-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Drew Northup <drew.northup@maine.edu>,
 	Jakub Narebski <jnareb@gmail.com>,
@@ -16,72 +17,63 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDBAE-0004kw-Vx
+	id 1RDBAF-0004kw-G2
 	for gcvg-git-2@lo.gmane.org; Mon, 10 Oct 2011 10:24:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752272Ab1JJIYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752170Ab1JJIYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 10 Oct 2011 04:24:41 -0400
-Received: from mail.berlin.jpk.com ([212.222.128.130]:57833 "EHLO
+Received: from mail.berlin.jpk.com ([212.222.128.130]:57834 "EHLO
 	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751353Ab1JJIYj (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1751359Ab1JJIYj (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 10 Oct 2011 04:24:39 -0400
 Received: from michael.berlin.jpk.com ([192.168.100.152])
 	by mail.berlin.jpk.com with esmtp (Exim 4.50)
-	id 1RDB4U-0004Bi-1T; Mon, 10 Oct 2011 10:18:50 +0200
+	id 1RDB4Y-0004Bi-Ht; Mon, 10 Oct 2011 10:18:54 +0200
 X-Mailer: git-send-email 1.7.7.rc2
-In-Reply-To: <1318225574-18785-1-git-send-email-mhagger@alum.mit.edu>
+In-Reply-To: <1318235064-25915-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183233>
 
-Sorry for superseding my own patch series, but I prefer this patch
-series to the one that I submitted earlier today:
+It is the cache that is being invalidated, not the references.
 
-1. An API function deserves a more carefully-selected name:
-   invalidate_ref_cache().
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ refs.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-2. It gives me a chance to submit the first "bite" of my scalable-refs
-   changes.
-
-These patches apply on top of mh/iterate-refs, which is in next but
-not in master.
-
-This patch series provides an API for external code to invalidate the
-ref cache that is used internally to refs.c.  It also allows code
-*within* refs.c to invalidate only the packed or only the loose refs
-for a module/submodule.
-
-IMPORTANT:
-
-I won't myself have time to figure out who, outside of refs.c, has to
-*call* invalidate_ref_cache().  The candidates that I know off the top
-of my head are git-clone, git-submodule, and git-pack-refs.  It would
-be great if experts in those areas would insert calls to
-invalidate_ref_cache() where needed.
-
-Even better would be if the meddlesome code were changed to use the
-refs API.  I'd be happy to help expanding the refs API if needed to
-accommodate your needs.
-
-This is why the API for invalidating only packed or loose refs is
-private.  After code outside refs.c is changed to use the refs API, it
-will get the optimal behavior for free (and at that time
-invalidate_ref_cache() can be removed again).
-
-Michael Haggerty (7):
-  invalidate_ref_cache(): rename function from invalidate_cached_refs()
-  invalidate_ref_cache(): take the submodule as parameter
-  invalidate_ref_cache(): expose this function in refs API
-  clear_cached_refs(): rename parameter
-  clear_cached_refs(): extract two new functions
-  write_ref_sha1(): only invalidate the loose ref cache
-  clear_cached_refs(): inline function
-
- refs.c |   34 +++++++++++++++++++---------------
- refs.h |    8 ++++++++
- 2 files changed, 27 insertions(+), 15 deletions(-)
-
+diff --git a/refs.c b/refs.c
+index 2cb93e2..56e4254 100644
+--- a/refs.c
++++ b/refs.c
+@@ -223,7 +223,7 @@ static struct cached_refs *get_cached_refs(const char *submodule)
+ 	return refs;
+ }
+ 
+-static void invalidate_cached_refs(void)
++static void invalidate_ref_cache(void)
+ {
+ 	struct cached_refs *refs = cached_refs;
+ 	while (refs) {
+@@ -1212,7 +1212,7 @@ int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
+ 	ret |= repack_without_ref(refname);
+ 
+ 	unlink_or_warn(git_path("logs/%s", lock->ref_name));
+-	invalidate_cached_refs();
++	invalidate_ref_cache();
+ 	unlock_ref(lock);
+ 	return ret;
+ }
+@@ -1511,7 +1511,7 @@ int write_ref_sha1(struct ref_lock *lock,
+ 		unlock_ref(lock);
+ 		return -1;
+ 	}
+-	invalidate_cached_refs();
++	invalidate_ref_cache();
+ 	if (log_ref_write(lock->ref_name, lock->old_sha1, sha1, logmsg) < 0 ||
+ 	    (strcmp(lock->ref_name, lock->orig_ref_name) &&
+ 	     log_ref_write(lock->orig_ref_name, lock->old_sha1, sha1, logmsg) < 0)) {
 -- 
 1.7.7.rc2
