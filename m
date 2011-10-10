@@ -1,129 +1,156 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/6] revert: Make commit descriptions in insn sheet
- optional
-Date: Mon, 10 Oct 2011 10:54:50 -0700
-Message-ID: <7vwrccn34l.fsf@alter.siamese.dyndns.org>
-References: <1318095407-26429-1-git-send-email-artagnon@gmail.com>
- <1318095407-26429-5-git-send-email-artagnon@gmail.com>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: [PATCH v3 5/5] attr.c: respect core.ignorecase when matching
+ attribute patterns
+Date: Mon, 10 Oct 2011 13:01:03 -0500
+Message-ID: <CA+sFfMd9exQcGfTGLJFPXG3-bq-ukn7K4m1R=LvLKqc1-jDVQw@mail.gmail.com>
+References: <VYN8m1JCy102-eaWWa-bsunEvt3zeXLJkVg7FZKZCtXT-Ww0vg7a8xA7NTvrZTiovKTnJ9Hlom0@cipher.nrlssc.navy.mil>
+	<U4wiHVyDLLG1PhI-8iY3YhHT7CEcTMEfg9MCDSaeuwAkg0N1a5wRE5NXaKAVQx8kpEYt75REVpRavoc-HiKe6rLk2AUepzHWptkevo08MRbGyWxqBHT_rySLemcbi66NKLRXwFGtaRQ@cipher.nrlssc.navy.mil>
+	<4E91BAC8.9060606@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 10 19:55:00 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Brandon Casey <casey@nrlssc.navy.mil>, gitster@pobox.com,
+	git@vger.kernel.org, peff@peff.net, j.sixt@viscovery.net
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Oct 10 20:01:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDK43-0001ku-0e
-	for gcvg-git-2@lo.gmane.org; Mon, 10 Oct 2011 19:54:59 +0200
+	id 1RDKA3-0004Go-C0
+	for gcvg-git-2@lo.gmane.org; Mon, 10 Oct 2011 20:01:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753854Ab1JJRyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Oct 2011 13:54:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57929 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752597Ab1JJRyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Oct 2011 13:54:53 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB6844750;
-	Mon, 10 Oct 2011 13:54:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zV6u1SPDT0s5DNjBC+Dmk91+Er8=; b=xI6Ggy
-	PJsv6A4LgjJO3NYGzTg4NsKsAOsV5yxyx913+CGZPlr2LoshfjuhdeCjXKIPTd+j
-	qqSqyOImbB9KU5I1iPTC3R8P1aUMWD4j5lYYb3/Lja6UB5/5+DaNsuB9cEG4KbOq
-	BknXQio6VKUyR0P/K5Ajf1YcMV0DFJIDPllD4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EarBm8QD+87qOEVRMwLI02qalxSKox5x
-	e/EVCkpoYQpUci52njwgFoCioRClJ4NHTYqEekdFuKUwmAtKNaQ7XnDFxkdEMAh3
-	of2WQ3QEwYI7eu74/tONhXG66aGgMiiin5y/T1PBfvyGvzehK/JwPC5SMrWVQJyM
-	/csLDo78BFA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B1B92474F;
-	Mon, 10 Oct 2011 13:54:52 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 29321474E; Mon, 10 Oct 2011
- 13:54:52 -0400 (EDT)
-In-Reply-To: <1318095407-26429-5-git-send-email-artagnon@gmail.com> (Ramkumar
- Ramachandra's message of "Sat, 8 Oct 2011 23:06:45 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F44AE6F0-F368-11E0-8A79-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753613Ab1JJSBG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Oct 2011 14:01:06 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:39376 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751761Ab1JJSBE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Oct 2011 14:01:04 -0400
+Received: by yxl31 with SMTP id 31so5614324yxl.19
+        for <git@vger.kernel.org>; Mon, 10 Oct 2011 11:01:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=0E23WRrq1w+W3Rht9dAwoQ0kMiLl0KD94+vwp5jMYto=;
+        b=huhtxQqzDvgXd4/WP9hrxNzAJjKwv6jPiwazUeOqplCb3gzWrazbisYis4KuqcYqpm
+         tFkb1LeOf8h8ctEw4R5dwJEYTqwFgURE15SujYcBTAA6pMFFLrVjpcOiX8edbU7CWSo1
+         7IiMzZhtmDFH5xyaOMzRsuCc96roAg1w2pwrM=
+Received: by 10.223.77.71 with SMTP id f7mr11906692fak.33.1318269663143; Mon,
+ 10 Oct 2011 11:01:03 -0700 (PDT)
+Received: by 10.152.42.33 with HTTP; Mon, 10 Oct 2011 11:01:03 -0700 (PDT)
+In-Reply-To: <4E91BAC8.9060606@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183249>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
-
-> Change the instruction sheet format subtly so that a description of
-> the commit after the object name is optional.  As a result, an
-> instruction sheet like this is now perfectly valid:
+On Sun, Oct 9, 2011 at 10:16 AM, Michael Haggerty <mhagger@alum.mit.edu=
+> wrote:
+> On 10/06/2011 08:22 PM, Brandon Casey wrote:
+>> The last set of tests is performed only on a case-insensitive filesy=
+stem.
+>> Those tests make sure that git handles the case where the .gitignore=
+ file
+>> resides in a subdirectory and the user supplies a path that does not=
+ match
+>> the case in the filesystem. =C2=A0In that case^H^H^H^Hsituation, par=
+t of the
+>> path supplied by the user is effectively interpreted case-insensitiv=
+ely,
+>> and part of it is dependent on the setting of core.ignorecase. =C2=A0=
+git should
+>> only match the portion of the path below the directory holding the
+>> .gitignore file according to the setting of core.ignorecase.
 >
->   pick 35b0426
->   pick fbd5bbcbc2e
->   pick 7362160f
+> Isn't this a rather perverse scenario?
+
+No argument here. :)
+
+> It is hard to imagine that
+> anybody *wants* part of a single filename to be matched
+> case-insensitively and another part to be matched case-sensitively.
+> ISTM that a person who is using a case-insensitive filesystem and has
+> core-ignorecase=3Dfalse is (1) a glutton for punishment and (2) proba=
+bly
+> very careful to make sure that the case of all pathnames is correct. =
+=C2=A0So
+> such a person is not likely to benefit from this schizophrenic behavi=
+or.
 >
-> Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
-> Acked-by: Jonathan Nieder <jrnieder@gmail.com>
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  builtin/revert.c                |   19 ++++++++-----------
->  t/t3510-cherry-pick-sequence.sh |   14 ++++++++++++++
->  2 files changed, 22 insertions(+), 11 deletions(-)
+>> [...] =C2=A0If git instead built the attr
+>> stack by scanning the repository, then the paths in the origin field=
+ would
+>> not necessarily match the paths supplied by the user. =C2=A0If someo=
+ne makes a
+>> change like that in the future, these tests will notice.
 >
-> diff --git a/builtin/revert.c b/builtin/revert.c
-> index 6451089..aa6c34e 100644
-> --- a/builtin/revert.c
-> +++ b/builtin/revert.c
-> @@ -692,26 +692,23 @@ static struct commit *parse_insn_line(char *start, struct replay_opts *opts)
->  	unsigned char commit_sha1[20];
->  	char sha1_abbrev[40];
->  	enum replay_action action;
-> -	int insn_len = 0;
-> -	char *p, *q;
-> +	const char *p, *q;
->  
-> +	p = start;
->  	if (!prefixcmp(start, "pick ")) {
->  		action = CHERRY_PICK;
-> -		insn_len = strlen("pick");
-> -		p = start + insn_len + 1;
-> +		p += strlen("pick ");
->  	} else if (!prefixcmp(start, "revert ")) {
->  		action = REVERT;
-> -		insn_len = strlen("revert");
-> -		p = start + insn_len + 1;
-> +		p += strlen("revert ");
->  	} else
->  		return NULL;
->  
-> -	q = strchr(p, ' ');
-> -	if (!q || q - p + 1 > sizeof(sha1_abbrev))
-> +	q = p + strcspn(p, " \n");
-> +	if (q - p + 1 > sizeof(sha1_abbrev))
->  		return NULL;
-> -	q++;
-> -
-> -	strlcpy(sha1_abbrev, p, q - p);
-> +	memcpy(sha1_abbrev, p, q - p);
-> +	sha1_abbrev[q - p] = '\0';
+> Your decision to treat path names as partly case-insensitive...
 
-Since this is a part of clean-up series...
+You are giving more credit to this patch than it deserves.  It really
+doesn't do much.  It's not a design decision that I made to treat path
+names as case-insensitive.  That is a consequence of using a
+case-insensitive file system.  When you give git the path A/b/c and
+there exists a/.gitattributes, then on a case insensitive file system
+git will try to read A/.gitattributes and the filesystem will return a
+handle for a/.gitattributes and git won't be able to tell the
+difference.  git will then apply the rules in the file to the paths
+below a/ even when the path is supplied like A/.  So, at the moment,
+regardless of the setting of core.ignorecase, the path above a
+=2Egitignore file is treated as case-insensitive on a case-insensitive
+filesystem.
 
-Do you even need to have a sha1_abbrev[] local array that is limited to 40
-bytes here? The incoming _line_ is not "const char *start", so you should
-at least be able to temporarily terminate the commit object name with NUL
-(while remembering what byte there was before), give it to get_sha1(), and
-then restore the byte at the end before returning from this function.
+The purpose of the tests are primarily to ensure that nothing special
+needs to be done concerning paths leading up to a directory containing
+a .gitignore file in the core.ignorecase=3D1 case.  For example, it is
+_not_ necessary to use strncmp_icase instead of strncmp on the leading
+portion of the path.
 
-A bonus point would be to introduce a variant of get_sha1() that can take
-(a pointer + len) not (a pointer to NUL terminated string). While I think
-that would be a right thing to do in the longer term, it is outside of the
-scope of this series.
+What I meant when I said "If someone makes a change like that in the
+future, these tests will notice", is that they will notice that they
+must now use strncmp_icase when comparing the portion of the path
+above the .gitattributes file.
+
+> will make
+> this kind of improvement considerably more complicated.
+> Therefore, weighing the negligible benefit of declaring this
+> schizophrenic behavior against the potential big pain of remaining
+> backwards-compatible with this behavior, I suggest that we either (1)
+> declare that when core.ignorecase=3Dfalse then the *whole* filenames
+> (including the path leading up to the .gitignore file) must match
+> case-sensitively, or (2) declare the behavior in this situation to be
+> undefined so that nobody thinks they should depend on it.
+
+I do not plan to make git treat leading paths case-sensitively on a
+case-insensitive file system when core.ignorecase=3D0 any more than I
+plan to make git treat leading paths case-insensitively on a
+case-sensitive file system when core.ignorecase=3D1.  For justification=
+,
+I refer back to your original comment about perversion. :)
+
+So, #2 gets my vote.
+
+
+Maybe my commit message is not clear that it is describing the current
+behavior and not defining it.  Instead of
+
+   git should only match the portion of the path below the directory
+   holding the .gitignore file according to the setting of
+   core.ignorecase.
+
+maybe I should say
+
+    git will currently only match the portion of the path...
+
+I could also remove the following test from the CASE_INSENSITIVE_FS
+tests since it is really a dontcare:
+
+   attr_check A/b/h a/b/h "-c core.ignorecase=3D0"
+
+We don't care what happens when the user supplies A/b/h and a/b/h
+exists on disk when core.ignorecase=3D0, we only care that A/b/h is
+interpreted correctly when core.ignorecase=3D1.
+
+-Brandon
