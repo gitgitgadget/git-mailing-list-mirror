@@ -1,67 +1,92 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: Recovering Committed Changes in a Detached Head?
-Date: Mon, 10 Oct 2011 10:26:06 +0900
-Message-ID: <87sjn1fxht.fsf@catnip.gol.com>
-References: <1318107488.5865.46.camel@R0b0ty>
-	<20111008213741.GA24409@goldbirke>
-	<ab706826-75df-4410-941e-6b40ec92713c@email.android.com>
-	<7vfwj1px6h.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 1/3] traverse_trees(): allow pruning with pathspec
+Date: Mon, 10 Oct 2011 06:42:01 +0200
+Message-ID: <4E927799.6000604@alum.mit.edu>
+References: <7vty9054qr.fsf@alter.siamese.dyndns.org> <1314653603-7533-1-git-send-email-gitster@pobox.com> <1314653603-7533-2-git-send-email-gitster@pobox.com> <4E91C031.9030205@alum.mit.edu> <CACsJy8D9sJOtXj_jkVSyoAJ9TC4wmKNAD5YwsFXTYkpvM4e13w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Martin Fick <mfick@codeaurora.org>,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	Daly Gutierrez <daly.gutierrez@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 10 03:42:09 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 10 06:43:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RD4sb-0000kB-14
-	for gcvg-git-2@lo.gmane.org; Mon, 10 Oct 2011 03:42:09 +0200
+	id 1RD7hf-0005g7-Qm
+	for gcvg-git-2@lo.gmane.org; Mon, 10 Oct 2011 06:43:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752275Ab1JJBmB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Oct 2011 21:42:01 -0400
-Received: from smtp12.dentaku.gol.com ([203.216.5.74]:57729 "EHLO
-	smtp12.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751787Ab1JJBmA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Oct 2011 21:42:00 -0400
-X-Greylist: delayed 940 seconds by postgrey-1.27 at vger.kernel.org; Sun, 09 Oct 2011 21:42:00 EDT
-Received: from 61.245.23.167.eo.eaccess.ne.jp ([61.245.23.167] helo=catnip.gol.com)
-	by smtp12.dentaku.gol.com with esmtpa (Dentaku)
-	(envelope-from <miles@gnu.org>)
-	id 1RD4d5-0006LG-U5; Mon, 10 Oct 2011 10:26:07 +0900
-Received: by catnip.gol.com (Postfix, from userid 1000)
-	id E914BDFAD; Mon, 10 Oct 2011 10:26:06 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-In-Reply-To: <7vfwj1px6h.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sun, 09 Oct 2011 16:22:46 -0700")
-X-Virus-Scanned: ClamAV GOL (outbound)
-X-Abuse-Complaints: abuse@gol.com
+	id S1750964Ab1JJEmJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Oct 2011 00:42:09 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:58199 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750746Ab1JJEmI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Oct 2011 00:42:08 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p9A4g1fA032196
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 10 Oct 2011 06:42:01 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
+In-Reply-To: <CACsJy8D9sJOtXj_jkVSyoAJ9TC4wmKNAD5YwsFXTYkpvM4e13w@mail.gmail.com>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183220>
 
-Junio C Hamano <gitster@pobox.com> writes:
->> First, maybe git could create refs for these automatically, perhaps
->> with a name like orphans/1?  Maybe these refs would only be visible
->> via git branch --orphans.
->
-> Instead of spelling them orphans/$n, you already have @{$n}.
+On 10/09/2011 11:35 PM, Nguyen Thai Ngoc Duy wrote:
+> On Mon, Oct 10, 2011 at 2:39 AM, Michael Haggerty <mhagger@alum.mit.e=
+du> wrote:
+>> On 08/29/2011 11:33 PM, Junio C Hamano wrote:
+>>> diff --git a/tree-walk.c b/tree-walk.c
+>>> index 33f749e..808bb55 100644
+>>> --- a/tree-walk.c
+>>> +++ b/tree-walk.c
+>>> [...]
+>>> @@ -376,16 +396,22 @@ int traverse_trees(int n, struct tree_desc *t=
+, struct traverse_info *info)
+>>>                       mask |=3D 1ul << i;
+>>>                       if (S_ISDIR(entry[i].mode))
+>>>                               dirmask |=3D 1ul << i;
+>>> +                     e =3D &entry[i];
+>>>               }
+>>>               if (!mask)
+>>>                       break;
+>>> -             ret =3D info->fn(n, mask, dirmask, entry, info);
+>>> -             if (ret < 0) {
+>>> -                     error =3D ret;
+>>> -                     if (!info->show_all_errors)
+>>> -                             break;
+>>> +             interesting =3D prune_traversal(e, info, &base, inter=
+esting);
+>>
+>> According to gcc 4.2.4 (though, strangely, not gcc 4.4.3):
 
-Hmm, shouldn't that be "HEAD@{$n}" (as the reflog output suggests)?
+I checked this a bit more carefully.  gcc 4.2.4 emits a warning when th=
+e
+-O1 or -O2 optimization levels are used, but not with -O0.  gcc 4.4.3
+does not emit a warning regardless of optimization level.
 
-[Well, I dunno, I'm generally kind of confused by the @{...} notation,
-but I just tried it out, and just @{$n} seems to refer to the current
-branch, which presumably won't include the orphaned bit once one it's
-been orphaned...]
+>> tree-walk.c: In function =E2=80=98traverse_trees=E2=80=99:
+>> tree-walk.c:347: warning: =E2=80=98e=E2=80=99 may be used uninitiali=
+zed in this function
+>=20
+> False alarm. If e is not initialized in the for loop, mask would be
+> zero and therefore prune_traversal(e, info, &base, interesting), whic=
+h
+> would use uninitialized "e", would never be called.
 
-Thanks,
+That's good to know.  Still, it might be worthwhile to initialize the
+variable explicitly to avoid future confusion.
 
--Miles
+Michael
 
--- 
-`The suburb is an obsolete and contradictory form of human settlement'
+--=20
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
