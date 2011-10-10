@@ -1,80 +1,97 @@
-From: Alexey Shumkin <alex.crezoff@gmail.com>
-Subject: Re: Git bug. gitattributes' pattern does not respect spaces in the
- filenames
-Date: Mon, 10 Oct 2011 19:51:45 +0400
-Message-ID: <20111010195145.0d1fc966@ashu.dyn.rarus.ru>
-References: <20111010110221.38e9985a@ashu.dyn.rarus.ru>
-	<7vipnwooh1.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] commit: teach --gpg-sign option
+Date: Mon, 10 Oct 2011 09:35:39 -0700
+Message-ID: <7vehykold0.fsf@alter.siamese.dyndns.org>
+References: <7vaa9f3pk8.fsf@alter.siamese.dyndns.org>
+ <4E91FD57.7050808@drmicha.warpmail.net>
+ <7v8votrhbr.fsf@alter.siamese.dyndns.org>
+ <4E9291B6.2090201@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 10 17:51:57 2011
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Oct 10 18:35:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDI8y-0000AV-Fc
-	for gcvg-git-2@lo.gmane.org; Mon, 10 Oct 2011 17:51:56 +0200
+	id 1RDIpR-0002bk-Ig
+	for gcvg-git-2@lo.gmane.org; Mon, 10 Oct 2011 18:35:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751276Ab1JJPvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Oct 2011 11:51:52 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:50751 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750897Ab1JJPvu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Oct 2011 11:51:50 -0400
-Received: by ggnv2 with SMTP id v2so4626623ggn.19
-        for <git@vger.kernel.org>; Mon, 10 Oct 2011 08:51:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        bh=N6lEH8lTsh5thRi+V4uDcFmH8tzr4mp6BxS5cpPGUCw=;
-        b=mD7bNj42dD4VW4SWDTRqEqjxOijJx+PRjzRF9FuCBqIAn6nwIPHJiGuBSnOsQhbewj
-         VQs3hsQ9j5UbQYytOl/fDCCR6Lp6ezWjohvcyDzfG2TgVnwUakO7v4ng8y8386nxX+eE
-         vmoY6vigBxoKq8yy21+XpIghyH5d65lue1oWA=
-Received: by 10.216.229.41 with SMTP id g41mr6267808weq.62.1318261909794;
-        Mon, 10 Oct 2011 08:51:49 -0700 (PDT)
-Received: from ashu.dyn.rarus.ru (mail.rarus.ru. [213.247.194.83])
-        by mx.google.com with ESMTPS id p2sm33424258wbo.17.2011.10.10.08.51.48
-        (version=SSLv3 cipher=OTHER);
-        Mon, 10 Oct 2011 08:51:49 -0700 (PDT)
-In-Reply-To: <7vipnwooh1.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
+	id S1751140Ab1JJQfo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Oct 2011 12:35:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60765 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750804Ab1JJQfn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Oct 2011 12:35:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB0335166;
+	Mon, 10 Oct 2011 12:35:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2wDmNp4MmALffDdqvSN/nVFdW5A=; b=wqjkwD
+	Z8YsQQo0dpSPadcFk9aTF+DvCPMRBQ+ZZwVU515RoXKQhHu9gCVENS/M5eVDqRRe
+	vR7gQZPLMnZKj7T/PxRN+yVELo0OzPbEMKomKjdiDCRWhL4E0pIqtUzDkCq+HsCo
+	4qXtQnR0s64UflGUoc8nfUFdd79aUVeJm3W+Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=W0m6OIXMXco3RpHh2UXNEf3E/3wdto5i
+	YrFuetia5y/KKHseKGxJwpn3TiFFjXm3xzmMhqDna1PCP3ij8OC9eNmUzwor/Vtf
+	T5RhOYDyR//CiV13laZIQpbycSeOoc3RWZhYH4wdzVMTpsSplcM3+3aBvBwOmVnn
+	BvE9NIG2tjM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B25445165;
+	Mon, 10 Oct 2011 12:35:42 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 33F6D5164; Mon, 10 Oct 2011
+ 12:35:42 -0400 (EDT)
+In-Reply-To: <4E9291B6.2090201@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Mon, 10 Oct 2011 08:33:26 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E518D4AE-F35D-11E0-B37C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183246>
 
-> Alexey Shumkin <Alex.Crezoff@gmail.com> writes:
-> 
-> > As far as cp1251 and UTF-8 files are in different folders,
-> > it is logically enough to set pattern like
-> >
-> > <folder with a UTF-8-xmls>/*.xml diff=utf8-to-cp1251
-> >
-> > for the UTF-8 files.
-> 
-> ... IN the directory that needs conversion and not in the other one
-> or at the toplevel. Problem solved, no?
-Oh! yes! solved! thanks!
-I did not take into account that each folder can have
-its own .gitattributes-file
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> 
-> Another idea may be to use "?" in the directory part of the
-> pattern. Unless the directory structure is sick enough to have these
-> directory names:
-> 
-> 	dir-1/utf8-file.xml
->         dir 1/cp1251-file.xml
-> 
-> dir?1/*.xml would match the matter, so...
+> Junio C Hamano venit, vidit, dixit 09.10.2011 23:22:
+>> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>> 
+>>> I just noticed that this format differs from the one of signed
+>>> tags. What special reason is there for the "sig " indentation?
+>> 
+>> Read the part of the message you are quoting.
+>
+> I certainly did, and certainly did not find any mention. Do you think I
+> would have asked otherwise? I'm trying to be helpful by testing out a
+> patch in flight. That is: *I* am trying to be helpful.
 
-hmm... I like more the case above :)
-but TMTOWTDI principle rulez
+Surely, sorry and thanks. I should have pointed out where I _thought_ I
+spelled out the reason but apparently in an ineffective way (as my wording
+did not convey what I wanted to say at least to you) a bit more clearly.
 
-thanks again
+> This
+>> The lines of GPG detached signature are placed in new header lines, after
+>> the standard tree/parent/author/committer headers, instead of tucking the
+>> signature block at the end of the commit log message text (similar to how
+>> signed tag is done), for multiple reasons:
+> gave me the impression that commit signatures are done "similar to how
+> signed tag is done".
+
+Yeah, sorry if that sentence parses badly.
+
+It was trying to say:
+
+ - the sig is in header lines
+   - which is different (instead of) from tucking it at the end of text
+     - by the way that "tucking at the end" would have been similar to
+       signed tag
+
+The reasons why signatures in the header is better than tucking at the end
+are enumerated in the part you did not quote in this message but in the
+part you did quote in the previous message.
