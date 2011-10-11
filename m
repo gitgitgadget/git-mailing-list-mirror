@@ -1,117 +1,90 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [RFC/WIP PATCH] Use config value rebase.editor as editor when
- starting git rebase -i
-Date: Tue, 11 Oct 2011 14:15:25 -0400
-Message-ID: <CABURp0oQJ_rUQyOmm+CmZaqBp2mZYCwZRAz_mO5BshK4E+6eCA@mail.gmail.com>
-References: <201110111956.08829.kumbayo84@arcor.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv5/RFC 1/6] Documentation: Preparation for gitweb manpages
+Date: Tue, 11 Oct 2011 20:16:09 +0200
+Message-ID: <201110112016.09620.jnareb@gmail.com>
+References: <1318098723-12813-1-git-send-email-jnareb@gmail.com> <201110111739.49967.jnareb@gmail.com> <7vvcrvfmg4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Peter Oberndorfer <kumbayo84@arcor.de>
-X-From: git-owner@vger.kernel.org Tue Oct 11 20:15:53 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Drew Northup <drew.northup@maine.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 11 20:16:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDgro-0002zq-Jx
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 20:15:53 +0200
+	id 1RDgs9-0003AI-WF
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 20:16:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755147Ab1JKSPs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Oct 2011 14:15:48 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:40936 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754844Ab1JKSPr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Oct 2011 14:15:47 -0400
-Received: by wyg34 with SMTP id 34so7345491wyg.19
-        for <git@vger.kernel.org>; Tue, 11 Oct 2011 11:15:46 -0700 (PDT)
+	id S1755323Ab1JKSQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Oct 2011 14:16:09 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:33332 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755293Ab1JKSQI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Oct 2011 14:16:08 -0400
+Received: by bkbzt4 with SMTP id zt4so10114239bkb.19
+        for <git@vger.kernel.org>; Tue, 11 Oct 2011 11:16:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=UTcCkr+N4lfkFZLsV2XW2soTI9VXdOA9NWePRVVd9hM=;
-        b=hUQng3A0eBK0qCJB1n/DxqayOWyYSeYPyJ+hjuVD57ewpAOc2gRZsZjd+HyZA/cxOp
-         KPVIBZxjorgT6ID6MjkEWPoxUdLttZENy7llJ99+sIXmKlGtlLOY8EL4TkR1fGyk6M1t
-         9a0nai3OCcvEse+f/g/k5a50kIv06gsupR3tU=
-Received: by 10.216.159.12 with SMTP id r12mr1306358wek.87.1318356946222; Tue,
- 11 Oct 2011 11:15:46 -0700 (PDT)
-Received: by 10.216.88.72 with HTTP; Tue, 11 Oct 2011 11:15:25 -0700 (PDT)
-In-Reply-To: <201110111956.08829.kumbayo84@arcor.de>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=Hs13vo80R/6FjkcAvgvjqPpRnF2o1G8gog8QZMbw+xA=;
+        b=Bp+OlH+SV9IO/8UdGq5AvkL48RGrCna9EUWEo8T1RNaClLitZRJuyWSQrOvTgK7MC0
+         mMxQh/4pEtAJC2mHnplV2PcQ+tOPKnKtuJUtx4NKjAOj7S8pZ4V8xSVEEDfsWxQSpt9x
+         KaJOOAwpPPfeF5StgSHYwLTM3EQ+3kTVhb+Lw=
+Received: by 10.223.63.75 with SMTP id a11mr41097684fai.9.1318356967030;
+        Tue, 11 Oct 2011 11:16:07 -0700 (PDT)
+Received: from [192.168.1.13] (abwh114.neoplus.adsl.tpnet.pl. [83.8.231.114])
+        by mx.google.com with ESMTPS id l8sm38772561fai.16.2011.10.11.11.16.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 11 Oct 2011 11:16:05 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vvcrvfmg4.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183317>
 
-On Tue, Oct 11, 2011 at 1:56 PM, Peter Oberndorfer <kumbayo84@arcor.de>=
- wrote:
-> i wrote a (not yet released) git rebase -i helper that allows to orde=
-r commits
-> by drag/drop and allows to select the action from a combo box.
-> (written in Qt)
-> See http://i55.tinypic.com/2d94gg0.jpg for how it currently looks lik=
-e. :-)
-> No more typos, no more lost commit by cutting without pasting...
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>> On Tue, 11 Oct 2011, Junio C Hamano wrote:
+>>
+>>> I probably do not have time to look into this, but just FYI my trial merge
+>>> to 'pu' of this topic is failing like this:
+>>> 
+>>> asciidoc: ERROR: gitweb.conf.txt: line 484: illegal style name: Default: ()
+>>> asciidoc: ERROR: gitweb.conf.txt: line 494: illegal style name: Default: 300
+>>
+>> Damn, I thought I have fixed that.  This probably depends on AsciiDoc
+>> version ("make doc" on 'master' generates a few _warnings_ for me related
+>> to similar situation), but the problem is with
+>>
+>>   [Default: <value>]
+>>
+>> that was copied from gitweb/README.  But [<sth>] is an attribute list
+>> (style name in simplest form), used more often in newer AsciiDoc.
+>>
+>> So either we have to escape '[' and ']', i.e. use {startsb} and {endsb},
+>> which would reduce human-friendliness, or move to different way of marking
+>> default values, e.g. _italic_.
+>>
+>> What do you think?
+> 
+> What do the other documents in the directory this file lives say?  I think
+> we explain what the variables does, and add "defaults to false" or
+> somesuch in the text, without any funny mark-up.
 
-[+1]
+O.K., will do.
 
->
-> To integrate this properly into git i need something like this patch.
->
-> Open questions/problems:
-> * GIT_EDITOR env var is not honored anymore after this change.
-> =A0Help from somebody with more bash knowledge is highly appreciated!
->
-> * Should git_rebase_editor be in git-rebase--interactive.sh instead
-> =A0(since it is only used there)
->
-> * How should the config be called?
-> =A0It is not directly used during rebase, only during rebase -i
-> =A0that might not be fully clear from the config name.
->
-> * Better config.txt description?
->
-> Thanks,
-> Greetings Peter
->
-> PS: My tool will hopefully be released soon.
-> Cleanup code, test(lin/ win), write some doc (how to use with git),
-> choose name :-), choose license...
->
-> =A0Documentation/config.txt =A0 | =A0 =A06 ++++++
-> =A0git-rebase--interactive.sh | =A0 =A02 +-
-> =A0git-sh-setup.sh =A0 =A0 =A0 =A0 =A0 =A0| =A0 13 +++++++++++++
-> =A03 files changed, 20 insertions(+), 1 deletions(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 03296b7..1d9ae79 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1591,6 +1591,12 @@ rebase.stat::
-> =A0 =A0 =A0 =A0Whether to show a diffstat of what changed upstream si=
-nce the last
-> =A0 =A0 =A0 =A0rebase. False by default.
->
-> +rebase.editor::
-> + =A0 =A0 =A0 Text editor used by git rebase -i for editing the rebas=
-se todo file.
-s/rebasse/rebase/
+Now that reminds me that in a few situations gitweb.conf.txt uses literary
+description "defaults to sth"...  I'll make the rest consistent with this.
 
-> =A0cp "$todo" "$todo".backup
-> -git_editor "$todo" ||
-> +git_rebase_editor "$todo" ||
-> =A0 =A0 =A0 =A0die_abort "Could not execute editor"
-
-Maybe something like this would work:
-  git_rebase_editor "$todo" ||
-  git_editor "$todo" ||
-=A0 =A0 =A0 =A0die_abort "Could not execute editor"
-
-If git_rebase_editor call returns an error (non-zero exit code), then
-git_editor will be invoked. If that also returns an error, then the
-die_abort is called.
-
-I think this will allow your env:GIT_EDITOR to work as expected.
-
-Phil
+-- 
+Jakub Narebski
+Poland
