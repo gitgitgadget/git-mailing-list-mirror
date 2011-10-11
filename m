@@ -1,68 +1,102 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 6/6] Retain caches of submodule refs
-Date: Tue, 11 Oct 2011 06:12:34 +0200
-Message-ID: <4E93C232.9090400@alum.mit.edu>
-References: <1313188589-2330-1-git-send-email-mhagger@alum.mit.edu> <1313188589-2330-7-git-send-email-mhagger@alum.mit.edu> <7v4o1hgemp.fsf@alter.siamese.dyndns.org> <4E918194.5060102@alum.mit.edu> <20111010195325.GA5981@sandbox-rc>
+Subject: Re: [PATCH v2 0/7] Provide API to invalidate refs cache
+Date: Tue, 11 Oct 2011 07:50:42 +0200
+Message-ID: <4E93D932.6020001@alum.mit.edu>
+References: <1318225574-18785-1-git-send-email-mhagger@alum.mit.edu> <1318235064-25915-1-git-send-email-mhagger@alum.mit.edu> <7vty7ggzum.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Drew Northup <drew.northup@maine.edu>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Tue Oct 11 06:12:58 2011
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Martin Fick <mfick@codeaurora.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 11 07:51:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDTi6-000738-3T
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 06:12:58 +0200
+	id 1RDVFR-0007Qu-Bi
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 07:51:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750872Ab1JKEMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Oct 2011 00:12:53 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:37967 "EHLO
+	id S1751902Ab1JKFvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Oct 2011 01:51:16 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:38370 "EHLO
 	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750776Ab1JKEMx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Oct 2011 00:12:53 -0400
+	with ESMTP id S1750851Ab1JKFvO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Oct 2011 01:51:14 -0400
 X-Envelope-From: mhagger@alum.mit.edu
 Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
 	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p9B4CY94013696
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p9B5oh3e018007
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 11 Oct 2011 06:12:34 +0200
+	Tue, 11 Oct 2011 07:50:43 +0200
 User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
-In-Reply-To: <20111010195325.GA5981@sandbox-rc>
+In-Reply-To: <7vty7ggzum.fsf@alter.siamese.dyndns.org>
 X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183282>
 
-On 10/10/2011 09:53 PM, Heiko Voigt wrote:
-> On Sun, Oct 09, 2011 at 01:12:20PM +0200, Michael Haggerty wrote:
-> Since the setup_revision() api can currently not be used to safely
-> iterate twice over the same submodule my patch
+On 10/11/2011 02:02 AM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>> These patches apply on top of mh/iterate-refs, which is in next but
+>> not in master.
 > 
-> 	allow multiple calls to submodule merge search for the same path
-> 
-> rewrites the search into using a child process. AFAIK the submodule ref
-> iteration api would then even be unused.
+> Building your series on mh/iterate-refs would unfortunately make the
+> conflict resolution worse. It would have been better if this were based on
+> a merge between mh/iterate-refs and jp/get-ref-dir-unsorted (which already
+> has happened on 'master' as of fifteen minutes ago).
 
-If your patch is accepted, then we should check whether anything should
-be ripped out.
+AAAAaaaarrrgghh did that really have to happen?!?
 
-> At least in my code there is no place where a submodule ref is changed.
-> I only used it for merging submodule which only modifies the main
-> module. So I would say its currently safe to assume that submodule refs
-> do not get modified. If we do need that later on we can still add
-> invalidation for submodule refs.
+> I could rebase your series, but it always is more error prone to have
+> somebody who is not the original author rebase a series than the original
+> author build for the intended base tree from the beginning.
 
-OK, thanks!
+I don't mind rebasing this little series on jp/get-ref-dir-unsorted.
+But it's going to be an utter nightmare (as in, "can I even muster the
+energy to do so much pointless work") to rebase my much bigger
+hierarchical-refs series [1] onto jp/get-ref-dir-unsorted.  The latter
+makes changes all over refs.c and changes several things at once
+(separate ref_entry out of ref_list, change current_ref to a ref_entry*,
+rename ref_list to ref_array, change data structure to array plus
+rewrite all loops, change to binary search).  And
+jp/get-ref-dir-unsorted includes a change that was inspired by my patch
+series [2], so it is not like jp/get-ref-dir-unsorted was developed in
+complete isolation from hierarchical-refs.
+
+And this rebase will be work with no benefit, because my series includes
+all of the improvements of jp/get-ref-dir-unsorted plus much more.  But
+my change to the data structure is implemented in a different order and
+following other improvements.  For example, I add a lot of comments,
+change a lot of code to use the cached_refs data structure more
+consistently, and accommodate partly-sorted lists by the time my patch
+series includes everything that is in jp/get-ref-dir-unsorted.
+
+Rebasing 78 patches is going to be a morass of clerical work.  Is there
+any alternative?
 
 Michael
+
+PS: I see that some confusion might have been caused by one of my emails
+[3], where I mistakenly approved of the merge of jp/get-ref-dir-unsorted
+(meaning the "Don't sort ref_list too early" part) just before asking
+that jp/get-ref-dir-unsorted not be merged (meaning the rest).  So maybe
+I brought this whole mess down on my own head :-(
+
+[1] branch hierarchical-refs on git://github.com/mhagger/git.git
+[2] http://marc.info/?l=git&m=131740585620461&w=2
+[3] http://marc.info/?l=git&m=131753257824405&w=2
 
 -- 
 Michael Haggerty
