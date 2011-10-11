@@ -1,380 +1,274 @@
-From: klinkert@webgods.de
-Subject: [PATCH] Improving performance with pthreads in refresh_index().
-Date: Tue, 11 Oct 2011 11:32:01 +0200
-Message-ID: <1318325521-23262-1-git-send-email-klinkert@webgods.de>
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Oct 11 11:41:33 2011
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Improving performance with pthreads in refresh_index().
+Date: Tue, 11 Oct 2011 12:46:47 +0200
+Message-ID: <4E941E97.2070906@viscovery.net>
+References: <1318325521-23262-1-git-send-email-klinkert@webgods.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: klinkert@webgods.de
+X-From: git-owner@vger.kernel.org Tue Oct 11 12:47:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDYq2-0000GQ-0P
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 11:41:30 +0200
+	id 1RDZrR-0004n1-9E
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 12:47:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754145Ab1JKJlZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Oct 2011 05:41:25 -0400
-Received: from mort.rzone.de ([81.169.144.234]:39416 "EHLO mort.rzone.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754043Ab1JKJlY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Oct 2011 05:41:24 -0400
-X-Greylist: delayed 561 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Oct 2011 05:41:24 EDT
-Received: from glipzo.store (glipzo.store [192.168.41.210])
-	by mort.rzone.de (Postfix) with ESMTP id BE007E80;
-	Tue, 11 Oct 2011 11:32:01 +0200 (MEST)
-Received: by glipzo.store (Postfix, from userid 32626)
-	id C22238516; Tue, 11 Oct 2011 11:32:01 +0200 (MEST)
-X-Mailer: git-send-email 1.7.3.5
+	id S1754506Ab1JKKq4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Oct 2011 06:46:56 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:64559 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754265Ab1JKKqz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Oct 2011 06:46:55 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1RDZrE-0005p6-1Z; Tue, 11 Oct 2011 12:46:48 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id B3D841660F;
+	Tue, 11 Oct 2011 12:46:47 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.23) Gecko/20110920 Thunderbird/3.1.15
+In-Reply-To: <1318325521-23262-1-git-send-email-klinkert@webgods.de>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183290>
 
-Git performs for every file in a repository at least one (with a cold cache)
-lstat(). In larger repositories operations like git status take a
-long time. In case your local repository is located on a remote server
-(e. g. mounted via nfs) it ends up in an *incredible* slow git.
+First of all, thanks for your contribution!
 
-With this patch you're able to determine a number of threads (maxthreads)
-in your config file to run these tons of lstats in threads. There
-won't be created any pthreads if you haven't set maxthreads. In my
-test cases a git status with this patch performs enormously faster (over
-two minutes before and approximately 25 seconds now). Of course, it
-has a positive impact on other git commands, too.
+When you submit a patch, you should make sure that the "From:" line of
+your mail includes your full name. You included it in the Signed-off-by
+line and that is a good start.
 
-Signed-off-by: Simon Klinkert <klinkert@webgods.de>
----
- attr.c        |   22 +++++++++
- cache.h       |    1 +
- config.c      |    5 ++
- environment.c |    1 +
- read-cache.c  |  140 +++++++++++++++++++++++++++++++++++++++++++++++++-------
- 5 files changed, 151 insertions(+), 18 deletions(-)
+Am 10/11/2011 11:32, schrieb klinkert@webgods.de:
+> Git performs for every file in a repository at least one (with a cold cache)
+> lstat().
 
-diff --git a/attr.c b/attr.c
-index 33cb4e4..d296fe8 100644
---- a/attr.c
-+++ b/attr.c
-@@ -8,10 +8,14 @@
-  */
- 
- #define NO_THE_INDEX_COMPATIBILITY_MACROS
-+#include <pthread.h>
-+#undef _FILE_OFFSET_BITS
- #include "cache.h"
- #include "exec_cmd.h"
- #include "attr.h"
- 
-+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-+
- const char git_attr__true[] = "(builtin)true";
- const char git_attr__false[] = "\0(builtin)false";
- static const char git_attr__unknown[] = "(builtin)unknown";
-@@ -748,6 +752,9 @@ int git_check_attr(const char *path, int num, struct git_attr_check *check)
- {
- 	int i;
- 
-+	if (max_threads)
-+		pthread_mutex_lock(&mutex);
-+
- 	collect_all_attrs(path);
- 
- 	for (i = 0; i < num; i++) {
-@@ -757,6 +764,9 @@ int git_check_attr(const char *path, int num, struct git_attr_check *check)
- 		check[i].value = value;
- 	}
- 
-+	if (max_threads)
-+		pthread_mutex_unlock(&mutex);
-+
- 	return 0;
- }
- 
-@@ -764,6 +774,9 @@ int git_all_attrs(const char *path, int *num, struct git_attr_check **check)
- {
- 	int i, count, j;
- 
-+	if (max_threads)
-+		pthread_mutex_lock(&mutex);
-+
- 	collect_all_attrs(path);
- 
- 	/* Count the number of attributes that are set. */
-@@ -785,6 +798,9 @@ int git_all_attrs(const char *path, int *num, struct git_attr_check **check)
- 		}
- 	}
- 
-+	if (max_threads)
-+		pthread_mutex_unlock(&mutex);
-+
- 	return 0;
- }
- 
-@@ -795,8 +811,14 @@ void git_attr_set_direction(enum git_attr_direction new, struct index_state *ist
- 	if (is_bare_repository() && new != GIT_ATTR_INDEX)
- 		die("BUG: non-INDEX attr direction in a bare repo");
- 
-+	if (max_threads)
-+		pthread_mutex_lock(&mutex);
-+
- 	direction = new;
- 	if (new != old)
- 		drop_attr_stack();
- 	use_index = istate;
-+
-+	if (max_threads)
-+		pthread_mutex_unlock(&mutex);
- }
-diff --git a/cache.h b/cache.h
-index 607c2ea..ab1b3e4 100644
---- a/cache.h
-+++ b/cache.h
-@@ -600,6 +600,7 @@ extern int read_replace_refs;
- extern int fsync_object_files;
- extern int core_preload_index;
- extern int core_apply_sparse_checkout;
-+extern int max_threads;
- 
- enum branch_track {
- 	BRANCH_TRACK_UNSPECIFIED = -1,
-diff --git a/config.c b/config.c
-index 4183f80..24de139 100644
---- a/config.c
-+++ b/config.c
-@@ -466,6 +466,11 @@ int git_config_pathname(const char **dest, const char *var, const char *value)
- 
- static int git_default_core_config(const char *var, const char *value)
- {
-+	if (!strcmp(var, "core.maxthreads")) {
-+		max_threads = git_config_int(var, value);
-+		return 0;
-+	}
-+
- 	/* This needs a better name */
- 	if (!strcmp(var, "core.filemode")) {
- 		trust_executable_bit = git_config_bool(var, value);
-diff --git a/environment.c b/environment.c
-index e96edcf..8bca4d5 100644
---- a/environment.c
-+++ b/environment.c
-@@ -59,6 +59,7 @@ char *notes_ref_name;
- int grafts_replace_parents = 1;
- int core_apply_sparse_checkout;
- struct startup_info *startup_info;
-+int max_threads = 1;
- 
- /* Parallel index stat data preload? */
- int core_preload_index = 0;
-diff --git a/read-cache.c b/read-cache.c
-index 01a0e25..350bf4b 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -5,6 +5,8 @@
-  */
- #define NO_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
-+#undef _FILE_OFFSET_BITS
-+#include <pthread.h>
- #include "cache-tree.h"
- #include "refs.h"
- #include "dir.h"
-@@ -13,6 +15,8 @@
- #include "blob.h"
- #include "resolve-undo.h"
- 
-+pthread_mutex_t mutex_refresh_index = PTHREAD_MUTEX_INITIALIZER;
-+
- static struct cache_entry *refresh_cache_entry(struct cache_entry *ce, int really);
- 
- /* Index extensions.
-@@ -1080,7 +1084,7 @@ static struct cache_entry *refresh_cache_ent(struct index_state *istate,
- }
- 
- static void show_file(const char * fmt, const char * name, int in_porcelain,
--		      int * first, const char *header_msg)
-+		      int * first, char *header_msg)
- {
- 	if (in_porcelain && *first && header_msg) {
- 		printf("%s\n", header_msg);
-@@ -1089,45 +1093,96 @@ static void show_file(const char * fmt, const char * name, int in_porcelain,
- 	printf(fmt, name);
- }
- 
--int refresh_index(struct index_state *istate, unsigned int flags, const char **pathspec,
--		  char *seen, const char *header_msg)
-+struct t_ctx {
-+	int flags;
-+	int has_errors;
-+	struct index_state *istate;
-+	const char **pathspec;
-+	char *seen, header_msg;
-+
-+	int tasks_done;
-+} ctx;
-+
-+int
-+thread_manager(void)
-+{
-+	if (max_threads)
-+		pthread_mutex_lock(&mutex_refresh_index);
-+
-+	if (ctx.tasks_done >= ctx.istate->cache_nr) {
-+		if (max_threads)
-+			pthread_mutex_unlock(&mutex_refresh_index);
-+		return -1;
-+	}
-+
-+	int task = ctx.tasks_done++;
-+
-+	if (max_threads)
-+		pthread_mutex_unlock(&mutex_refresh_index);
-+
-+	return task;
-+}
-+
-+void *
-+thread_refresh_index(void *p)
- {
-+	struct cache_entry *ce, *new;
-+	int cache_errno = 0;
- 	int i;
--	int has_errors = 0;
-+
-+	while ((i = thread_manager()) != -1) {
-+		struct index_state *istate = ctx.istate;
-+		int flags = ctx.flags;
-+
- 	int really = (flags & REFRESH_REALLY) != 0;
- 	int allow_unmerged = (flags & REFRESH_UNMERGED) != 0;
- 	int quiet = (flags & REFRESH_QUIET) != 0;
- 	int not_new = (flags & REFRESH_IGNORE_MISSING) != 0;
--	int ignore_submodules = (flags & REFRESH_IGNORE_SUBMODULES) != 0;
-+		int ignore_submodules =
-+			 (flags & REFRESH_IGNORE_SUBMODULES) != 0;
- 	int first = 1;
- 	int in_porcelain = (flags & REFRESH_IN_PORCELAIN);
- 	unsigned int options = really ? CE_MATCH_IGNORE_VALID : 0;
- 	const char *needs_update_fmt;
- 	const char *needs_merge_fmt;
- 
--	needs_update_fmt = (in_porcelain ? "M\t%s\n" : "%s: needs update\n");
--	needs_merge_fmt = (in_porcelain ? "U\t%s\n" : "%s: needs merge\n");
--	for (i = 0; i < istate->cache_nr; i++) {
--		struct cache_entry *ce, *new;
--		int cache_errno = 0;
-+		needs_update_fmt =
-+			 (in_porcelain ? "M\t%s\n" : "%s: needs update\n");
-+		needs_merge_fmt =
-+			 (in_porcelain ? "U\t%s\n" : "%s: needs merge\n");
- 
- 		ce = istate->cache[i];
--		if (ignore_submodules && S_ISGITLINK(ce->ce_mode))
-+		if (ignore_submodules && S_ISGITLINK(ce->ce_mode)) {
- 			continue;
-+		}
-+
-+		if (max_threads)
-+			pthread_mutex_lock(&mutex_refresh_index);
- 
- 		if (ce_stage(ce)) {
- 			while ((i < istate->cache_nr) &&
- 			       ! strcmp(istate->cache[i]->name, ce->name))
- 				i++;
- 			i--;
--			if (allow_unmerged)
-+			if (allow_unmerged) {
-+				if (max_threads)
-+					pthread_mutex_unlock(&mutex_refresh_index);
- 				continue;
--			show_file(needs_merge_fmt, ce->name, in_porcelain, &first, header_msg);
--			has_errors = 1;
-+			}
-+			show_file(needs_merge_fmt, ce->name, in_porcelain,
-+				 &first, &ctx.header_msg);
-+			ctx.has_errors = 1;
-+			if (max_threads)
-+				pthread_mutex_unlock(&mutex_refresh_index);
- 			continue;
- 		}
- 
--		if (pathspec && !match_pathspec(pathspec, ce->name, strlen(ce->name), 0, seen))
-+		if (max_threads)
-+			pthread_mutex_unlock(&mutex_refresh_index);
-+
-+		if (ctx.pathspec && !match_pathspec(ctx.pathspec, ce->name,
-+						    strlen(ce->name), 0,
-+						    ctx.seen))
- 			continue;
- 
- 		new = refresh_cache_ent(istate, ce, options, &cache_errno);
-@@ -1145,14 +1200,63 @@ int refresh_index(struct index_state *istate, unsigned int flags, const char **p
- 			}
- 			if (quiet)
- 				continue;
--			show_file(needs_update_fmt, ce->name, in_porcelain, &first, header_msg);
--			has_errors = 1;
-+
-+			if (max_threads)
-+				pthread_mutex_lock(&mutex_refresh_index);
-+
-+			show_file(needs_update_fmt, ce->name, in_porcelain,
-+				  &first, &ctx.header_msg);
-+
-+			if (max_threads)
-+				pthread_mutex_unlock(&mutex_refresh_index);
-+
-+			ctx.has_errors = 1;
- 			continue;
- 		}
- 
- 		replace_index_entry(istate, i, new);
- 	}
--	return has_errors;
-+	return NULL;
-+}
-+
-+int refresh_index(struct index_state *istate, unsigned int flags,
-+		  const char **pathspec, char *seen, const char *header_msg)
-+{
-+	int i;
-+	int ret;
-+	unsigned int created_threads = 0;
-+
-+	ctx.has_errors = 0;
-+	ctx.tasks_done = 0;
-+	ctx.istate = istate;
-+	ctx.flags = flags;
-+	ctx.pathspec = &pathspec[0];
-+
-+	if (istate->cache_nr < max_threads)
-+		max_threads = istate->cache_nr;
-+
-+	if (max_threads > 1) {
-+		pthread_t threads[max_threads];
-+
-+		/* create threads */
-+		for (i = 0; i < max_threads; i++) {
-+			ret = pthread_create(&threads[created_threads], NULL,
-+					     thread_refresh_index, NULL);
-+			if (ret) {
-+				printf("pthread_create failed ret=%d\n", ret);
-+				break;
-+			}
-+			++created_threads;
-+		}
-+
-+		/* collect threads */
-+		for (i = 0; i < created_threads; i++) {
-+			ret = pthread_join(threads[i], NULL);
-+		}
-+	} else {
-+		thread_refresh_index(NULL);
-+	}
-+	return ctx.has_errors;
- }
- 
- static struct cache_entry *refresh_cache_entry(struct cache_entry *ce, int really)
--- 
-1.7.7
+It doesn't do the lstat() when the cache is warm? I doubt it.
+
+> In larger repositories operations like git status take a
+> long time. In case your local repository is located on a remote server
+> (e. g. mounted via nfs) it ends up in an *incredible* slow git.
+
+"Incredible" is very subjective. You should back your claim with benchmarks.
+
+> With this patch you're able to determine a number of threads (maxthreads)
+> in your config file to run these tons of lstats in threads. There
+> won't be created any pthreads if you haven't set maxthreads. In my
+> test cases a git status with this patch performs enormously faster (over
+> two minutes before and approximately 25 seconds now).
+
+Ok, so here you have something that you can turn into a benchmark. Just
+replace the hand-waving by hard facts.
+
+You report an improvement by a factor 4. How many threads did you use? How
+does the number of threads change the improvement. How does the number of
+threads influence the performance on a repository that is not on a network
+partition? Can I set it to 25 even on a dual core machine without
+noticable degradation?
+
+> Of course, it
+> has a positive impact on other git commands, too.
+
+What other commands? Benchmarks?
+
+> diff --git a/attr.c b/attr.c
+> index 33cb4e4..d296fe8 100644
+> --- a/attr.c
+> +++ b/attr.c
+> @@ -8,10 +8,14 @@
+>   */
+>  
+>  #define NO_THE_INDEX_COMPATIBILITY_MACROS
+> +#include <pthread.h>
+
+This and all pthread usages should be bracketed by NO_PTHREADS, or you
+could use thread-utils.h instead. And it should be included *after* cache.h.
+
+> +#undef _FILE_OFFSET_BITS
+
+What is this good for?
+
+>  #include "cache.h"
+>  #include "exec_cmd.h"
+>  #include "attr.h"
+>  
+> +pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
+This should be static, no? Otherwise, the name is *WAY* too generic for a
+global variable.
+
+What does the mutex protect? Please write some comment. It is not obvious.
+Or perhaps it is sufficient to move the variable near the data that it
+protects.
+
+PTHREAD_MUTEX_INITIALIZER does not work on Windows. Please call
+pthread_mutex_init() from a suitable place.
+
+> +
+>  const char git_attr__true[] = "(builtin)true";
+>  const char git_attr__false[] = "\0(builtin)false";
+>  static const char git_attr__unknown[] = "(builtin)unknown";
+> @@ -748,6 +752,9 @@ int git_check_attr(const char *path, int num, struct git_attr_check *check)
+>  {
+>  	int i;
+>  
+> +	if (max_threads)
+> +		pthread_mutex_lock(&mutex);
+
+As I said, this should be bracketed by #ifndef NO_PTHREADS. But since you
+also bracket all mutex uses by max_threads anyway, you should factor this
+into a small helper function.
+
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -600,6 +600,7 @@ extern int read_replace_refs;
+>  extern int fsync_object_files;
+>  extern int core_preload_index;
+>  extern int core_apply_sparse_checkout;
+> +extern int max_threads;
+
+This name is *WAY* too generic for a global variable. Please choose a more
+specific name.
+
+> --- a/config.c
+> +++ b/config.c
+> @@ -466,6 +466,11 @@ int git_config_pathname(const char **dest, const char *var, const char *value)
+>  
+>  static int git_default_core_config(const char *var, const char *value)
+>  {
+> +	if (!strcmp(var, "core.maxthreads")) {
+
+Same here. core.maxthreads is *WAY* too generic for its current use.
+Please paint the bikeshed in a more distiguishing color. ;)
+
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -5,6 +5,8 @@
+>   */
+>  #define NO_THE_INDEX_COMPATIBILITY_MACROS
+>  #include "cache.h"
+> +#undef _FILE_OFFSET_BITS
+
+Again: why this?
+
+> +#include <pthread.h>
+>  #include "cache-tree.h"
+>  #include "refs.h"
+>  #include "dir.h"
+> @@ -13,6 +15,8 @@
+>  #include "blob.h"
+>  #include "resolve-undo.h"
+>  
+> +pthread_mutex_t mutex_refresh_index = PTHREAD_MUTEX_INITIALIZER;
+
+Should be static, no?
+
+>  static void show_file(const char * fmt, const char * name, int in_porcelain,
+> -		      int * first, const char *header_msg)
+> +		      int * first, char *header_msg)
+
+Why?
+
+> -int refresh_index(struct index_state *istate, unsigned int flags, const char **pathspec,
+> -		  char *seen, const char *header_msg)
+> +struct t_ctx {
+> +	int flags;
+> +	int has_errors;
+> +	struct index_state *istate;
+> +	const char **pathspec;
+> +	char *seen, header_msg;
+> +
+> +	int tasks_done;
+> +} ctx;
+
+Should this be static? Is this the only global data that is protected by
+the mutex?
+
+> +
+> +int
+> +thread_manager(void)
+
+Style: the type is on the same line as the function name.
+
+> +void *
+> +thread_refresh_index(void *p)
+>  {
+> +	struct cache_entry *ce, *new;
+> +	int cache_errno = 0;
+>  	int i;
+> -	int has_errors = 0;
+> +
+> +	while ((i = thread_manager()) != -1) {
+> +		struct index_state *istate = ctx.istate;
+> +		int flags = ctx.flags;
+> +
+>  	int really = (flags & REFRESH_REALLY) != 0;
+>  	int allow_unmerged = (flags & REFRESH_UNMERGED) != 0;
+>  	int quiet = (flags & REFRESH_QUIET) != 0;
+>  	int not_new = (flags & REFRESH_IGNORE_MISSING) != 0;
+> -	int ignore_submodules = (flags & REFRESH_IGNORE_SUBMODULES) != 0;
+> +		int ignore_submodules =
+> +			 (flags & REFRESH_IGNORE_SUBMODULES) != 0;
+
+Indentation?
+
+Perhaps it is worthwhile to factor the body of the loop into a helper
+function in a preparatory patch to reduce churn in the "real" patch.
+
+>  		ce = istate->cache[i];
+> -		if (ignore_submodules && S_ISGITLINK(ce->ce_mode))
+> +		if (ignore_submodules && S_ISGITLINK(ce->ce_mode)) {
+>  			continue;
+> +		}
+
+Style: do not add braces unnecessarily.
+
+> +
+> +		if (max_threads)
+> +			pthread_mutex_lock(&mutex_refresh_index);
+>  
+>  		if (ce_stage(ce)) {
+>  			while ((i < istate->cache_nr) &&
+>  			       ! strcmp(istate->cache[i]->name, ce->name))
+>  				i++;
+>  			i--;
+> -			if (allow_unmerged)
+> +			if (allow_unmerged) {
+> +				if (max_threads)
+> +					pthread_mutex_unlock(&mutex_refresh_index);
+>  				continue;
+> -			show_file(needs_merge_fmt, ce->name, in_porcelain, &first, header_msg);
+> -			has_errors = 1;
+> +			}
+> +			show_file(needs_merge_fmt, ce->name, in_porcelain,
+> +				 &first, &ctx.header_msg);
+
+You are calling show_file() from the thread. Does that mean that the
+output is not in index order anymore? Are there guarantees that the output
+of different threads does not overlap?
+
+> +			ctx.has_errors = 1;
+> +			if (max_threads)
+> +				pthread_mutex_unlock(&mutex_refresh_index);
+
+So, at least the second worry is unfounded since output is produced while
+the mutex is held.
+
+BTW, would it be possible to use a different mutex for this purpose?
+
+> +		/* create threads */
+> +		for (i = 0; i < max_threads; i++) {
+> +			ret = pthread_create(&threads[created_threads], NULL,
+> +					     thread_refresh_index, NULL);
+> +			if (ret) {
+> +				printf("pthread_create failed ret=%d\n", ret);
+
+We have warning() to write warnings.
+
+-- Hannes
