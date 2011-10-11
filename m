@@ -1,81 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] Fix some "variable might be used uninitialized"
- warnings
-Date: Mon, 10 Oct 2011 16:59:53 -0700
-Message-ID: <7vty7gieiu.fsf@alter.siamese.dyndns.org>
-References: <4E6D0E74.1020801@ramsay1.demon.co.uk>
- <7vpqj6olfa.fsf@alter.siamese.dyndns.org>
- <4E6FDBA4.6050505@ramsay1.demon.co.uk> <4E90751C.4030409@ramsay1.demon.co.uk>
+Subject: Re: [PATCH v3 5/5] attr.c: respect core.ignorecase when matching
+ attribute patterns
+Date: Mon, 10 Oct 2011 17:00:10 -0700
+Message-ID: <7vmxd8ieid.fsf@alter.siamese.dyndns.org>
+References: <VYN8m1JCy102-eaWWa-bsunEvt3zeXLJkVg7FZKZCtXT-Ww0vg7a8xA7NTvrZTiovKTnJ9Hlom0@cipher.nrlssc.navy.mil> <U4wiHVyDLLG1PhI-8iY3YhHT7CEcTMEfg9MCDSaeuwAkg0N1a5wRE5NXaKAVQx8kpEYt75REVpRavoc-HiKe6rLk2AUepzHWptkevo08MRbGyWxqBHT_rySLemcbi66NKLRXwFGtaRQ@cipher.nrlssc.navy.mil> <4E91BAC8.9060606@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue Oct 11 02:00:05 2011
+Cc: Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org,
+	peff@peff.net, j.sixt@viscovery.net,
+	Brandon Casey <drafnel@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Oct 11 02:00:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDPlK-0004mY-1z
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 02:00:02 +0200
+	id 1RDPlc-0004rR-GP
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 02:00:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752564Ab1JJX75 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Oct 2011 19:59:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59173 "EHLO
+	id S1751942Ab1JKAAO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Oct 2011 20:00:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59391 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751061Ab1JJX74 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Oct 2011 19:59:56 -0400
+	id S1751061Ab1JKAAN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Oct 2011 20:00:13 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 012BB55C8;
-	Mon, 10 Oct 2011 19:59:56 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F74355F4;
+	Mon, 10 Oct 2011 20:00:13 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=/uFyt+HkDxw67SBM+r8O/6ro2PU=; b=t2nnSkfVOFe33bDVv9lK
-	qlxmfIH+nGe+CKPP4KK6d48w9yiaVbwsqV8VLnD2vDZCoL7xi9lTMf8E2hbXVHae
-	84iiqyDmVJ0Kf0BX29HKWSspmhu2songssh1t6KW4Db1SvNs930pKxrxgmPmLMT4
-	iPuf1aaxuH/x7RxKOOnexF8=
+	 s=sasl; bh=cjXHrHHSjc/WJVIYKDcVaKlsYwY=; b=aGoqt8CnRMlSR0+/nYEk
+	3fCShqutG2YmWbJkfqZxQJl/YCHQJNHT1vrFU3fjxa+i3iHYG/JMnZ3mq6DzI/g2
+	J2LIhb0hzJHGbx+qGX8GaF7XukjZIOii87YOHvDDp/06DqasDGF4UxbNfsbhXeaw
+	3ry/NgHJ0r2NSgkTHUbAhAQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=pgEMcb30jubDsP+r6Ti9IqB5yuHZhYI0frm2egHayPP6hq
-	DGUwCCo7nUDYAHBx8V4QRhpU4AQFn/bU3I/51P7AtkcFb3mWeHpRV9c11NGTQPtB
-	ptkhtowrF9lh+XhDnZ39lRmvz61rRB5i2CsfCCTWY6CeNhqWVl8DoGIgnZ93k=
+	 q=dns; s=sasl; b=X4RSqozh7Rv2RNBEJ4cc4aL6nAolzYxkAKoku2t6tRdbRB
+	uF0aAUsBXFh0byry1rZpT2qF9Z6E6rj12f14CdPDPqfI8kLQOmY3SeiBfUKtQlxh
+	5ZS1zWUo3r63U/8vQPQS6QP2vI6r0ma5c30eHolQziKl883nVS5U4aQEeFfPs=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ECF8155C7;
-	Mon, 10 Oct 2011 19:59:55 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 354F955EB;
+	Mon, 10 Oct 2011 20:00:13 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5782A55C6; Mon, 10 Oct 2011
- 19:59:55 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5A40855EA; Mon, 10 Oct 2011
+ 20:00:12 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F39C18A4-F39B-11E0-B2EF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: FDC010EC-F39B-11E0-A267-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183272>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
->> [I don't think traverse_trees() would ever be called with n == 0 anyway; the call
->> site in builtin/merge-tree.c is called with the constant 3, and the call-chains(s)
->> which start from unpack_trees() are protected by "if (len)", where 'len' is unsigned.]
+> On 10/06/2011 08:22 PM, Brandon Casey wrote:
+>> The last set of tests is performed only on a case-insensitive filesystem.
+>> Those tests make sure that git handles the case where the .gitignore file
+>> resides in a subdirectory and the user supplies a path that does not match
+>> the case in the filesystem.  In that case^H^H^H^Hsituation, part of the
+>> path supplied by the user is effectively interpreted case-insensitively,
+>> and part of it is dependent on the setting of core.ignorecase.  git should
+>> only match the portion of the path below the directory holding the
+>> .gitignore file according to the setting of core.ignorecase.
 >
-> When patches don't even make it to pu I just assume you hate them so much that
-> there is not much chance of them being applied and simply forget about them.
-> In this case, since compiler warnings are a bugbear of mine, I'm hoping that
-> you just forgot about this one ... :-D  [if not, sorry for the noise].
+> ... It is hard to imagine that
+> anybody *wants* part of a single filename to be matched
+> case-insensitively and another part to be matched case-sensitively.
 
-Thanks for a reminder.
+That is not necessarily coming from the user's wish. When a command that
+takes a pathspec from the user is run from a subdirectory, almost always
+the output from $(git rev-parse --show-prefix) is prefixed to them. This
+value is read from the filesystem, and unless on a system whose readdir()
+may lie to us, we do not _have_ to ignore the case of this part of the
+substring of a resulting pathspec element to get a successful match, even
+though we _do_ want to match the user-supplied part case insensitively
+if/when the user says he wants us to with core.ignorecase.
 
-The reason a patch may not hit 'pu', unless I or other people whose
-judgement I trust explicity say "the approach taken by the patch is
-utterly wrong" is either because (1) the discussion for or against the
-topic is still going strong and there is little chance of it getting
-forgotten by everybody, (2) I do not see much discussion for or against
-the topic, and I am indifferent, or (3) the patch was just lost in the
-noise.
+Having said that, it may not hurt in practice if we matched the prefix
+part case insensitvely, because prefix=foobar/ obtained on a filesystem
+where core.ignorecase is true would mean there won't be FooBar/ and other
+case-permuted names on the filesystem at the same time.
 
-So a good default strategy for a series that do not hit 'pu' is to
-re-post. Such a perseverance was what took format-patch to hit Linus's
-tree in June-July 2005 timeframe---we wouldn't have the command today, had
-I given up back then ;-).
+But of course I may be missing something...
