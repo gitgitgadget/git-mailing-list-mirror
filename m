@@ -1,70 +1,67 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v3 5/5] attr.c: respect core.ignorecase when matching
- attribute patterns
-Date: Tue, 11 Oct 2011 05:44:40 +0200
-Message-ID: <4E93BBA8.6080403@alum.mit.edu>
-References: <VYN8m1JCy102-eaWWa-bsunEvt3zeXLJkVg7FZKZCtXT-Ww0vg7a8xA7NTvrZTiovKTnJ9Hlom0@cipher.nrlssc.navy.mil>	<U4wiHVyDLLG1PhI-8iY3YhHT7CEcTMEfg9MCDSaeuwAkg0N1a5wRE5NXaKAVQx8kpEYt75REVpRavoc-HiKe6rLk2AUepzHWptkevo08MRbGyWxqBHT_rySLemcbi66NKLRXwFGtaRQ@cipher.nrlssc.navy.mil>	<4E91BAC8.9060606@alum.mit.edu> <CA+sFfMd9exQcGfTGLJFPXG3-bq-ukn7K4m1R=LvLKqc1-jDVQw@mail.gmail.com>
+Subject: Re: [PATCH 6/6] Retain caches of submodule refs
+Date: Tue, 11 Oct 2011 06:12:34 +0200
+Message-ID: <4E93C232.9090400@alum.mit.edu>
+References: <1313188589-2330-1-git-send-email-mhagger@alum.mit.edu> <1313188589-2330-7-git-send-email-mhagger@alum.mit.edu> <7v4o1hgemp.fsf@alter.siamese.dyndns.org> <4E918194.5060102@alum.mit.edu> <20111010195325.GA5981@sandbox-rc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Brandon Casey <casey@nrlssc.navy.mil>, gitster@pobox.com,
-	git@vger.kernel.org, peff@peff.net, j.sixt@viscovery.net
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 11 05:44:57 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Drew Northup <drew.northup@maine.edu>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Tue Oct 11 06:12:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDTGz-0007lW-Dr
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 05:44:57 +0200
+	id 1RDTi6-000738-3T
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 06:12:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752773Ab1JKDow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Oct 2011 23:44:52 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:37854 "EHLO
+	id S1750872Ab1JKEMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Oct 2011 00:12:53 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:37967 "EHLO
 	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752619Ab1JKDow (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Oct 2011 23:44:52 -0400
+	with ESMTP id S1750776Ab1JKEMx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Oct 2011 00:12:53 -0400
 X-Envelope-From: mhagger@alum.mit.edu
 Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
 	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p9B3ie1D012704
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p9B4CY94013696
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 11 Oct 2011 05:44:40 +0200
+	Tue, 11 Oct 2011 06:12:34 +0200
 User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
-In-Reply-To: <CA+sFfMd9exQcGfTGLJFPXG3-bq-ukn7K4m1R=LvLKqc1-jDVQw@mail.gmail.com>
+In-Reply-To: <20111010195325.GA5981@sandbox-rc>
 X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183281>
 
-On 10/10/2011 08:01 PM, Brandon Casey wrote:
-> On Sun, Oct 9, 2011 at 10:16 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> Maybe my commit message is not clear that it is describing the current
-> behavior and not defining it.  Instead of
+On 10/10/2011 09:53 PM, Heiko Voigt wrote:
+> On Sun, Oct 09, 2011 at 01:12:20PM +0200, Michael Haggerty wrote:
+> Since the setup_revision() api can currently not be used to safely
+> iterate twice over the same submodule my patch
 > 
->    git should only match the portion of the path below the directory
->    holding the .gitignore file according to the setting of
->    core.ignorecase.
+> 	allow multiple calls to submodule merge search for the same path
 > 
-> maybe I should say
-> 
->     git will currently only match the portion of the path...
-> 
-> I could also remove the following test from the CASE_INSENSITIVE_FS
-> tests since it is really a dontcare:
-> 
->    attr_check A/b/h a/b/h "-c core.ignorecase=0"
-> 
-> We don't care what happens when the user supplies A/b/h and a/b/h
-> exists on disk when core.ignorecase=0, we only care that A/b/h is
-> interpreted correctly when core.ignorecase=1.
+> rewrites the search into using a child process. AFAIK the submodule ref
+> iteration api would then even be unused.
 
-Sounds good to me.
+If your patch is accepted, then we should check whether anything should
+be ripped out.
 
-Thanks,
+> At least in my code there is no place where a submodule ref is changed.
+> I only used it for merging submodule which only modifies the main
+> module. So I would say its currently safe to assume that submodule refs
+> do not get modified. If we do need that later on we can still add
+> invalidation for submodule refs.
+
+OK, thanks!
+
 Michael
 
 -- 
