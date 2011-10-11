@@ -1,208 +1,121 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 6/6] Implement negative pathspec
-Date: Wed, 12 Oct 2011 09:44:43 +1100
-Message-ID: <1318373083-13840-7-git-send-email-pclouds@gmail.com>
-References: <1318373083-13840-1-git-send-email-pclouds@gmail.com>
+From: Phil Hord <hordp@cisco.com>
+Subject: [PATCH] Make is_gitfile a non-static generic function
+Date: Tue, 11 Oct 2011 18:52:27 -0400
+Message-ID: <4E94C8AB.3040807@cisco.com>
+References: <4E94C70E.3080003@cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 12 00:45:47 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Phil Hord <hordp@cisco.com>
+X-From: git-owner@vger.kernel.org Wed Oct 12 00:52:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDl50-00073A-3c
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 00:45:46 +0200
+	id 1RDlBh-0001A9-9p
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 00:52:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751652Ab1JKWpl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Oct 2011 18:45:41 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:35345 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751520Ab1JKWpl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Oct 2011 18:45:41 -0400
-Received: by mail-vx0-f174.google.com with SMTP id gb30so85726vcb.19
-        for <git@vger.kernel.org>; Tue, 11 Oct 2011 15:45:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=z33httFhO160mC7kpOYlmu/yKd9zI75JMVCG6Q7K8J8=;
-        b=TiVtHyDgjCtUryvU1JWVViY+SvLhMtE/BkDVf0wirVjnArcChY4CrJ0eGQ1WvbW9in
-         asNLTNWkYXuDp0xfFStz5lY3JETjt+bR8kzJNDGcTpsIdNShOCmN5HPc3PHXPkGp/IOi
-         AN15kvCmloNP2TQqdfZ02ipa61qClx3yyYgg0=
-Received: by 10.52.75.102 with SMTP id b6mr21000697vdw.90.1318373140820;
-        Tue, 11 Oct 2011 15:45:40 -0700 (PDT)
-Received: from pclouds@gmail.com (dektec3.lnk.telstra.net. [165.228.202.174])
-        by mx.google.com with ESMTPS id hl5sm155132vdb.18.2011.10.11.15.45.37
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 11 Oct 2011 15:45:40 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 12 Oct 2011 09:45:33 +1100
-X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
-In-Reply-To: <1318373083-13840-1-git-send-email-pclouds@gmail.com>
+	id S1751594Ab1JKWw2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Oct 2011 18:52:28 -0400
+Received: from rcdn-iport-6.cisco.com ([173.37.86.77]:36027 "EHLO
+	rcdn-iport-6.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751491Ab1JKWw1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Oct 2011 18:52:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=hordp@cisco.com; l=2354; q=dns/txt;
+  s=iport; t=1318373547; x=1319583147;
+  h=message-id:date:from:mime-version:to:subject:references:
+   in-reply-to:content-transfer-encoding;
+  bh=l+XTGA1R78LSAewdPu8Z3nG6xvpYw8jXv5RmBpcfYp0=;
+  b=c8k1JGcCbRO5MFqWuiJiTjxghgATL8zRuS1OdTodLFaOHdQUhVvq3PKH
+   7SG7gSpURwCz8K/Xo1uqRfXKy1HZTGT3jltskBCSgWKVUlNT1/rUjR2W7
+   b58yJfXXLLmAp9hMWDKaQpTY/1IpBKb80WWxgGldZbCVEzgD3hF69QHNZ
+   c=;
+X-IronPort-AV: E=Sophos;i="4.68,526,1312156800"; 
+   d="scan'208";a="27684171"
+Received: from rcdn-core2-5.cisco.com ([173.37.113.192])
+  by rcdn-iport-6.cisco.com with ESMTP; 11 Oct 2011 22:52:26 +0000
+Received: from [64.100.104.107] (dhcp-64-100-104-107.cisco.com [64.100.104.107])
+	by rcdn-core2-5.cisco.com (8.14.3/8.14.3) with ESMTP id p9BMqPqv025844;
+	Tue, 11 Oct 2011 22:52:26 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110812 Thunderbird/6.0
+In-Reply-To: <4E94C70E.3080003@cisco.com>
+X-Enigmail-Version: 1.2.1
+X-TagToolbar-Keys: D20111011185227201
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183341>
 
+The new is_gitfile is an amalgam of similar functional checks
+from different places in the code.  All these places do
+slightly different checks on the suspect gitfile (for their
+own good reasons).  But the lack of common code leads to bugs
+and maintenance problems. Help move the code forward by making
+is_gitfile() a common function that everyone can use for this
+purpose.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
+Signed-off-by: Phil Hord <hordp@cisco.com>
 ---
- I really like the mnemonic ^ but it's regex. ":^Documentation" looks
- nicer than ":~Documentation". Do we plan on supporting regex in
- pathspec too?
 
- We should mention these magic in a less obscure document. Glossary is
- mostly for developer discussions. git-diff may be a good place
- because it's one of the two frequently used commands (the other one
- is grep) that benefit magic the most (with a short reference from
- git.txt)
+I'm not sure this function belongs in transport.c anymore, but
+I left it here to minimize conflicts.  I think a better home would
+be path.c, but maybe not.  If someone has a preference,
+please let me know.
 
- Documentation/glossary-content.txt |    8 +++---
- cache.h                            |    1 +
- dir.c                              |    2 +
- setup.c                            |    1 +
- tree-walk.c                        |   37 ++++++++++++++++++++++++++++=
-+++++--
- 5 files changed, 42 insertions(+), 7 deletions(-)
+ builtin/clone.c |    8 +-------
+ cache.h         |    1 +
+ transport.c     |    6 +++++-
+ 3 files changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/glossary-content.txt b/Documentation/glossar=
-y-content.txt
-index 3595b58..9a2765d 100644
---- a/Documentation/glossary-content.txt
-+++ b/Documentation/glossary-content.txt
-@@ -319,12 +319,12 @@ top `/`;;
- 	The magic word `top` (mnemonic: `/`) makes the pattern match
- 	from the root of the working tree, even when you are running
- 	the command from inside a subdirectory.
-+
-+exclude `~`;;
-+	The magic word `exclude` (mnemonic: `~`) excludes paths that
-+	match the pattern.
- --
- +
--Currently only the slash `/` is recognized as the "magic signature",
--but it is envisioned that we will support more types of magic in later
--versions of git.
--+
- A pathspec with only a colon means "there is no pathspec". This form
- should not be combined with other pathspec.
-=20
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 488f48e..5110399 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -120,13 +120,7 @@ static char *get_repo_path(const char *repo, int
+*is_bundle)
+ 			return xstrdup(absolute_path(path));
+ 		} else if (S_ISREG(st.st_mode) && st.st_size > 8) {
+ 			/* Is it a "gitfile"? */
+-			char signature[8];
+-			int len, fd = open(path, O_RDONLY);
+-			if (fd < 0)
+-				continue;
+-			len = read_in_full(fd, signature, 8);
+-			close(fd);
+-			if (len != 8 || strncmp(signature, "gitdir: ", 8))
++			if (!is_gitfile(path))
+ 				continue;
+ 			path = read_gitfile(path);
+ 			if (path) {
 diff --git a/cache.h b/cache.h
-index 719d4a3..75fe589 100644
+index 601f6f6..7a8d9f9 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -541,6 +541,7 @@ extern int ie_modified(const struct index_state *, =
-struct cache_entry *, struct
-  */
- #define PATHSPEC_FROMTOP    (1<<0)
- #define PATHSPEC_NOGLOB     (1<<1)
-+#define PATHSPEC_NEGATE     (1<<2)
-=20
- struct pathspec {
- 	const char **raw; /* get_pathspec() result, not freed by free_pathspe=
-c() */
-diff --git a/dir.c b/dir.c
-index d38af0f..46dd35f 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1305,6 +1305,8 @@ int parse_pathspec(struct pathspec *pathspec, con=
-st char *prefix,
- 				pitem->magic |=3D PATHSPEC_NOGLOB;
- 			else
- 				pathspec->magic &=3D ~PATHSPEC_NOGLOB;
-+			if (pitem->magic & PATHSPEC_NEGATE)
-+				pathspec->magic |=3D PATHSPEC_NEGATE;
- 			pitem++;
- 			dst++;
- 		}
-diff --git a/setup.c b/setup.c
-index b074210..42beb9b 100644
---- a/setup.c
-+++ b/setup.c
-@@ -111,6 +111,7 @@ static struct pathspec_magic {
- 	const char *name;
- } pathspec_magic[] =3D {
- 	{ PATHSPEC_FROMTOP, '/', "top" },
-+	{ PATHSPEC_NEGATE, '~', "exclude" },
- };
-=20
- /*
-diff --git a/tree-walk.c b/tree-walk.c
-index db07fd6..936b5da 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -580,15 +580,17 @@ static int match_dir_prefix(const char *base, int=
- baselen,
-  *  - zero for no
-  *  - negative for "no, and no subsequent entries will be either"
-  */
--int tree_entry_interesting(const struct name_entry *entry,
--			   struct strbuf *base, int base_offset,
--			   const struct pathspec *ps)
-+static int tree_entry_interesting_1(const struct name_entry *entry,
-+				    struct strbuf *base, int base_offset,
-+				    const struct pathspec *ps, int negative_magic)
- {
- 	int i;
- 	int pathlen, baselen =3D base->len - base_offset;
- 	int never_interesting =3D ps->magic & PATHSPEC_NOGLOB ? -1 : 0;
-+	int has_effective_pathspec =3D 0;
-=20
- 	if (!ps->nr) {
-+no_pathspec:
- 		if (!ps->recursive || ps->max_depth =3D=3D -1)
- 			return 2;
- 		return !!within_depth(base->buf + base_offset, baselen,
-@@ -604,6 +606,12 @@ int tree_entry_interesting(const struct name_entry=
- *entry,
- 		const char *base_str =3D base->buf + base_offset;
- 		int matchlen =3D item->len;
-=20
-+		if ((!negative_magic && !(item->magic & PATHSPEC_NEGATE)) ||
-+		    ( negative_magic &&  (item->magic & PATHSPEC_NEGATE)))
-+			has_effective_pathspec =3D 1;
-+		else
-+			continue;
-+
- 		if (baselen >=3D matchlen) {
- 			/* If it doesn't match, move along... */
- 			if (!match_dir_prefix(base_str, baselen, match, matchlen))
-@@ -663,5 +671,28 @@ match_wildcards:
- 		if (ps->recursive && S_ISDIR(entry->mode))
- 			return 1;
- 	}
-+
-+	/* the same effect with ps->nr =3D=3D 0 */
-+	if (!has_effective_pathspec)
-+		goto no_pathspec;
-+
- 	return never_interesting; /* No matches */
+@@ -441,6 +441,7 @@ extern const char *get_git_work_tree(void);
+ extern const char *read_gitfile(const char *path);
+ extern const char *resolve_gitdir(const char *suspect);
+ extern void set_git_work_tree(const char *tree);
++extern int is_gitfile(const char *path);
+  #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
+ diff --git a/transport.c b/transport.c
+index f3195c0..d08a826 100644
+--- a/transport.c
++++ b/transport.c
+@@ -859,7 +859,11 @@ static int is_local(const char *url)
+ 		has_dos_drive_prefix(url);
  }
-+
-+int tree_entry_interesting(const struct name_entry *entry,
-+			   struct strbuf *base, int base_offset,
-+			   const struct pathspec *ps)
-+{
-+	int next_ret, ret;
-+
-+	ret =3D tree_entry_interesting_1(entry, base, base_offset, ps, 0);
-+	if (ps->magic & PATHSPEC_NEGATE) {
-+		next_ret =3D tree_entry_interesting_1(entry, base, base_offset, ps, =
-1);
-+		switch (next_ret) {
-+		case 2: ret =3D -1; break;
-+		case 1: ret =3D 0; break;
-+		default: break;
-+		}
-+	}
-+	return ret;
-+}
---=20
-1.7.3.1.256.g2539c.dirty
+ -static int is_gitfile(const char *url)
++/*
++ * See if the referenced file looks like a 'gitfile'.
++ * Does not try to determine if the referenced gitdir is actually valid.
++ */
++int is_gitfile(const char *url)
+ {
+ 	struct stat st;
+ 	char buf[9];
+-- 
+1.7.7.334.gfc143d
