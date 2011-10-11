@@ -1,90 +1,246 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv5/RFC 1/6] Documentation: Preparation for gitweb manpages
-Date: Tue, 11 Oct 2011 20:16:09 +0200
-Message-ID: <201110112016.09620.jnareb@gmail.com>
-References: <1318098723-12813-1-git-send-email-jnareb@gmail.com> <201110111739.49967.jnareb@gmail.com> <7vvcrvfmg4.fsf@alter.siamese.dyndns.org>
+From: Jeff Epler <jepler@unpythonic.net>
+Subject: [RESEND PATCH v3] Configurable hyperlinking in gitk
+Date: Tue, 11 Oct 2011 13:37:23 -0500
+Message-ID: <20111011183722.GA26646@unpythonic.net>
+References: <20110917022903.GA2445@unpythonic.net>
+ <4E7467B7.1090201@gmail.com>
+ <m3hb49sn26.fsf@localhost.localdomain>
+ <20110922013101.GB26880@unpythonic.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Drew Northup <drew.northup@maine.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 11 20:16:14 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, Marc Branchaud <marcnarc@xiplink.com>,
+	Chris Packham <judge.packham@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Paul Macke
+X-From: git-owner@vger.kernel.org Tue Oct 11 20:37:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDgs9-0003AI-WF
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 20:16:14 +0200
+	id 1RDhCz-0005RS-Ug
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 20:37:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755323Ab1JKSQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Oct 2011 14:16:09 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:33332 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755293Ab1JKSQI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Oct 2011 14:16:08 -0400
-Received: by bkbzt4 with SMTP id zt4so10114239bkb.19
-        for <git@vger.kernel.org>; Tue, 11 Oct 2011 11:16:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=Hs13vo80R/6FjkcAvgvjqPpRnF2o1G8gog8QZMbw+xA=;
-        b=Bp+OlH+SV9IO/8UdGq5AvkL48RGrCna9EUWEo8T1RNaClLitZRJuyWSQrOvTgK7MC0
-         mMxQh/4pEtAJC2mHnplV2PcQ+tOPKnKtuJUtx4NKjAOj7S8pZ4V8xSVEEDfsWxQSpt9x
-         KaJOOAwpPPfeF5StgSHYwLTM3EQ+3kTVhb+Lw=
-Received: by 10.223.63.75 with SMTP id a11mr41097684fai.9.1318356967030;
-        Tue, 11 Oct 2011 11:16:07 -0700 (PDT)
-Received: from [192.168.1.13] (abwh114.neoplus.adsl.tpnet.pl. [83.8.231.114])
-        by mx.google.com with ESMTPS id l8sm38772561fai.16.2011.10.11.11.16.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 11 Oct 2011 11:16:05 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vvcrvfmg4.fsf@alter.siamese.dyndns.org>
+	id S1755484Ab1JKSh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Oct 2011 14:37:28 -0400
+Received: from dsl.unpythonic.net ([206.222.212.217]:43315 "EHLO
+	unpythonic.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755388Ab1JKShZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Oct 2011 14:37:25 -0400
+Received: by unpythonic.net (Postfix, from userid 1000)
+	id 6878D278031; Tue, 11 Oct 2011 13:37:23 -0500 (CDT)
 Content-Disposition: inline
+In-Reply-To: <20110922013101.GB26880@unpythonic.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183318>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
->> On Tue, 11 Oct 2011, Junio C Hamano wrote:
->>
->>> I probably do not have time to look into this, but just FYI my trial merge
->>> to 'pu' of this topic is failing like this:
->>> 
->>> asciidoc: ERROR: gitweb.conf.txt: line 484: illegal style name: Default: ()
->>> asciidoc: ERROR: gitweb.conf.txt: line 494: illegal style name: Default: 300
->>
->> Damn, I thought I have fixed that.  This probably depends on AsciiDoc
->> version ("make doc" on 'master' generates a few _warnings_ for me related
->> to similar situation), but the problem is with
->>
->>   [Default: <value>]
->>
->> that was copied from gitweb/README.  But [<sth>] is an attribute list
->> (style name in simplest form), used more often in newer AsciiDoc.
->>
->> So either we have to escape '[' and ']', i.e. use {startsb} and {endsb},
->> which would reduce human-friendliness, or move to different way of marking
->> default values, e.g. _italic_.
->>
->> What do you think?
-> 
-> What do the other documents in the directory this file lives say?  I think
-> we explain what the variables does, and add "defaults to false" or
-> somesuch in the text, without any funny mark-up.
+Many projects use project-specific notations in changelogs to refer
+to bug trackers and the like.  One example is the "Closes: #12345"
+notation used in Debian.
 
-O.K., will do.
+Make gitk configurable so that arbitrary strings can be turned into
+clickable links that are opened in a web browser.
 
-Now that reminds me that in a few situations gitweb.conf.txt uses literary
-description "defaults to sth"...  I'll make the rest consistent with this.
+Signed-off-by: Jeff Epler <jepler@unpythonic.net>
+---
+This v3 patch didn't generate any discussion last time around (~3 weeks
+ago), so I've taken the liberty of reposting it.
 
+I'm aware of no problems with this patch, and a number of people have
+commented that it is useful to them.  For URLs that contain "&" and
+other shell metacharacters, it *does* depend on r480f062c
+"git-web--browse: avoid the use of eval" which is in next but not maint.
+
+Since the V2 patch, I
+ * Renamed configuration variables to get rid of the "gitk" prefix
+   to encourage other git-related programs to adopt the same
+   functionality.
+
+ * Renamed configuration variables from cryptic "re", "sub" to less
+   cryptic "regexp" and "subst"
+
+ * Changed the example RE to be an ERE (no \d or \M)
+
+ * Documented that these are POSIX EREs; hopefully that's OK.  I see
+   in CodingGuidelines that in git itself "a subset of BREs" are used,
+   so maybe even this is too much power.  And hopefully tcl's
+   re_syntax really is close enough to an ERE superset that this isn't
+   a terrible lie about the initial implementation either.
+
+ * Added a Signed-Off-By, since I've had a number of positive feedbacks
+   and the only problems I've heard of (since patch v2) are the ones
+   related to 'eval' in git-web--browse.
+
+In v2 of the patch, I had fixed a problem with %-signs in URLs and
+changed the documentation example.
+
+ Documentation/config.txt |   30 +++++++++++++++++-
+ gitk-git/gitk            |   75 +++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 102 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ae9913b..ffc9ccf 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1064,6 +1064,10 @@ All gitcvs variables except for 'gitcvs.usecrlfattr' and
+ is one of "ext" and "pserver") to make them apply only for the given
+ access method.
+ 
++gitk.browser::
++	Specify the browser that will be used to open links generated by
++	'linkify' configuration options.
++
+ grep.lineNumber::
+ 	If set to true, enable '-n' option by default.
+ 
+@@ -1317,6 +1321,28 @@ interactive.singlekey::
+ 	setting is silently ignored if portable keystroke input
+ 	is not available.
+ 
++linkify.<name>.regexp::
++	Specify a regular expression in the POSIX Extended Regular Expression
++	syntax defining a class of strings to automatically convert to
++	hyperlinks.  This regular expression many not span multiple lines.
++	You must also specify 'linkify.<name>.subst'.
++
++linkify.<name>.subst::
++	Specify a substitution that results in the target URL for the
++	related regular expression.  Back-references like '\1' refer
++	to capturing groups in the associated regular expression.
++	You must also specify 'linkify.<name>.regexp'.
+++
++For example, to automatically link from Debian-style "Closes: #nnnn"
++message to the Debian BTS,
+++
++--------
++    git config linkify.debian-bts.regexp '#([1-9][0-9]*)'
++    git config linkify.debian-bts.subst 'http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=\1'
++--------
+++
++Currently, only linkgit:gitk[1] converts strings to links in this fashion.
++
+ log.abbrevCommit::
+ 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
+ 	linkgit:git-whatchanged[1] assume `\--abbrev-commit`. You may
+@@ -1870,5 +1896,5 @@ user.signingkey::
+ 
+ web.browser::
+ 	Specify a web browser that may be used by some commands.
+-	Currently only linkgit:git-instaweb[1] and linkgit:git-help[1]
+-	may use it.
++	Currently only linkgit:git-instaweb[1], linkgit:gitk[1],
++	and linkgit:git-help[1] may use it.
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 4cde0c4..9db5525 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -6684,7 +6684,7 @@ proc commit_descriptor {p} {
+ # append some text to the ctext widget, and make any SHA1 ID
+ # that we know about be a clickable link.
+ proc appendwithlinks {text tags} {
+-    global ctext linknum curview
++    global ctext linknum curview linkmakers
+ 
+     set start [$ctext index "end - 1c"]
+     $ctext insert end $text $tags
+@@ -6699,6 +6699,30 @@ proc appendwithlinks {text tags} {
+ 	setlink $linkid link$linknum
+ 	incr linknum
+     }
++
++    if {$linkmakers == {}} return
++
++    set link_re {}
++    foreach {re rep} $linkmakers { lappend link_re $re }
++    set link_re "([join $link_re {)|(}])"
++
++    set ee 0
++    while {[regexp -indices -start $ee -- $link_re $text l]} {
++	set s [lindex $l 0]
++	set e [lindex $l 1]
++	set linktext [string range $text $s $e]
++	incr e
++	set ee $e
++
++	foreach {re rep} $linkmakers {
++	    if {![regsub $re $linktext $rep linkurl]} continue
++	    $ctext tag delete link$linknum
++	    $ctext tag add link$linknum "$start + $s c" "$start + $e c"
++	    seturllink $linkurl link$linknum
++	    incr linknum
++	    break
++	}
++    }
+ }
+ 
+ proc setlink {id lk} {
+@@ -6726,6 +6750,53 @@ proc setlink {id lk} {
+     }
+ }
+ 
++proc get_link_config {} {
++    if {[catch {exec git config -z --get-regexp {^linkify\.}} linkers]} {
++	return {}
++    }
++
++    set linktypes [list]
++    foreach item [split $linkers "\0"] {
++	if {$item == ""} continue
++	if {![regexp {linkify\.(\S+)\.(regexp|subst)\s(.*)} $item _ k t v]} {
++	    continue
++	}
++	set linkconfig($t,$k) $v
++	if {$t == "regexp"} { lappend linktypes $k }
++    }
++
++    set linkmakers [list]
++    foreach k $linktypes {
++	if {![info exists linkconfig(subst,$k)]} {
++	    puts stderr "Warning: link `$k' is missing a substitution string"
++	} elseif {[catch {regexp -inline -- $linkconfig(regexp,$k) ""} err]} {
++	    puts stderr "Warning: link `$k': $err"
++	} else {
++	    lappend linkmakers $linkconfig(regexp,$k) $linkconfig(subst,$k)
++	}
++	unset linkconfig(regexp,$k)
++	unset -nocomplain linkconfig(subst,$k)
++    }
++    foreach k [array names linkconfig] {
++	regexp "subst,(.*)" $k _ k
++	puts stderr "Warning: link `$k' is missing a regular expression"
++    }
++    set linkmakers
++}
++
++proc openlink {url} {
++    exec git web--browse --config=gitk.browser $url &
++}
++
++proc seturllink {url lk} {
++    set qurl [string map {% %%} $url]
++    global ctext
++    $ctext tag conf $lk -foreground blue -underline 1
++    $ctext tag bind $lk <1> [list openlink $qurl]
++    $ctext tag bind $lk <Enter> {linkcursor %W 1}
++    $ctext tag bind $lk <Leave> {linkcursor %W -1}
++}
++
+ proc appendshortlink {id {pre {}} {post {}}} {
+     global ctext linknum
+ 
+@@ -11693,6 +11764,8 @@ if {[tk windowingsystem] eq "win32"} {
+     focus -force .
+ }
+ 
++set linkmakers [get_link_config]
++
+ getcommits {}
+ 
+ # Local variables:
 -- 
-Jakub Narebski
-Poland
+1.7.2.5
