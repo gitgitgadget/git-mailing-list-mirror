@@ -1,58 +1,65 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH v3] Teach merge the '[-e|--edit]' option
-Date: Mon, 10 Oct 2011 17:09:53 -0700
-Message-ID: <CAG+J_Dz4x7CmHKXx-9p-ZxmiuFyE2v3TFwkXfYgyc-p37ONinQ@mail.gmail.com>
-References: <1318099192-60860-1-git-send-email-jaysoffian@gmail.com>
-	<7vd3e4k162.fsf@alter.siamese.dyndns.org>
-	<CAG+J_Dz37etot0nNkq+1gTUy8R0vVJpsRQuvwrTSczXRWy7mkA@mail.gmail.com>
-	<7v1uukieh2.fsf@alter.siamese.dyndns.org>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: [PATCH] commit: teach --gpg-sign option
+Date: Tue, 11 Oct 2011 00:38:53 +0000
+Message-ID: <robbat2-20111011T003728-410722439Z@orbis-terrarum.net>
+References: <7vaa9f3pk8.fsf@alter.siamese.dyndns.org>
+ <robbat2-20111006T221637-481195848Z@orbis-terrarum.net>
+ <4E8EBAFE.8020805@drmicha.warpmail.net>
+ <robbat2-20111009T225253-591026811Z@orbis-terrarum.net>
+ <7vmxd9pxd2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org,
-	"Todd A. Jacobs" <nospam+listmail@codegnome.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 11 02:09:58 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: "	Robin H. Johnson" <robbat2@gentoo.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 11 02:39:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDPuw-0007Ul-AG
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 02:09:58 +0200
+	id 1RDQN2-0006hD-J2
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 02:39:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753684Ab1JKAJy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Oct 2011 20:09:54 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:61078 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752581Ab1JKAJx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Oct 2011 20:09:53 -0400
-Received: by ggnv2 with SMTP id v2so5071403ggn.19
-        for <git@vger.kernel.org>; Mon, 10 Oct 2011 17:09:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=zEaabAJLUOJJKOWr4XW9FIms6taFlPAA29AiodvAO7s=;
-        b=PCgQ0e+iRInHWSqZr9Gl+HUmNXpkfbtNH+p5OV7+OaAi3bye7f0q2IgDVvvtn0+m3A
-         IvfeVNVoBKEBynvosaokH374lwbiSv4MRa9iBhS0RoNx3KgqV95hlhsOFzZkMvYzslT8
-         d1BNroTTnuO6R5YyjdDH2raF031x/JOl1SKwo=
-Received: by 10.236.155.1 with SMTP id i1mr27793705yhk.8.1318291793093; Mon,
- 10 Oct 2011 17:09:53 -0700 (PDT)
-Received: by 10.147.32.18 with HTTP; Mon, 10 Oct 2011 17:09:53 -0700 (PDT)
-In-Reply-To: <7v1uukieh2.fsf@alter.siamese.dyndns.org>
+	id S1753974Ab1JKAiz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Oct 2011 20:38:55 -0400
+Received: from smtp.gentoo.org ([140.211.166.183]:56787 "EHLO smtp.gentoo.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753952Ab1JKAiz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Oct 2011 20:38:55 -0400
+Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.gentoo.org (Postfix) with ESMTPS id B1E681B400E
+	for <git@vger.kernel.org>; Tue, 11 Oct 2011 00:38:54 +0000 (UTC)
+Received: (qmail 11305 invoked by uid 10000); 11 Oct 2011 00:38:53 -0000
+Content-Disposition: inline
+In-Reply-To: <7vmxd9pxd2.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183278>
 
-On Mon, Oct 10, 2011 at 5:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> So if we drop the "conditionally add '\n'" part in builtin/merge.c from my
-> "how about this on top" patch and we should be ready to go, right?
+On Sun, Oct 09, 2011 at 04:18:49PM -0700,  Junio C Hamano wrote:
+> "Robin H. Johnson" <robbat2@gentoo.org> writes:
+> > Workflow example:
+> > 1. Dev1 creates a commit, signs it, pushes to central repo.
+> > 2. Dev2 pulls, signs the tip commit, pushes it back.
+> 
+> I personally am not sympathetic to such a "sign every and all commits by
+> multiple people" workflow. If you really want to do such a thing, you can
+> have the second and subsequent one to create a new commit on top whose
+> sole purpose is to hold such a signature (commit --allow-empty --gpg-sig),
+> or use signed tags.
+For this case, I think having the push certificates works much better.
 
-Yes. I can send a followup patch adding an additional test case next
-week (for the case where the editor zeros out the message).
+No easy solution to all of this, just lots of yak-shaving :-(.
 
-Thanks Junio!
-
-j.
+-- 
+Robin Hugh Johnson
+Gentoo Linux: Developer, Trustee & Infrastructure Lead
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
