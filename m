@@ -1,104 +1,77 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [PATCHv5/RFC 3/6] gitweb: Add manpage for gitweb
-	(APPLICATION!!!)
-Date: Tue, 11 Oct 2011 12:56:53 -0400
-Message-ID: <1318352213.22324.58.camel@drew-northup.unet.maine.edu>
-References: <1318098723-12813-1-git-send-email-jnareb@gmail.com>
-	 <201110111551.09621.jnareb@gmail.com>
-	 <1318341714.22324.46.camel@drew-northup.unet.maine.edu>
-	 <201110111620.12788.jnareb@gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: "trying out" gitolite with minimum impact on a system
+Date: Tue, 11 Oct 2011 22:49:06 +0530
+Message-ID: <CAMK1S_g5CnP+vrE71cqMgcjpj8ocE+wdtA2vPjeaXGCRNt25Dw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 11 18:58:20 2011
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 11 19:19:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDfek-0005Sz-6g
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 18:58:18 +0200
+	id 1RDfz1-0008EI-5r
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 19:19:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755165Ab1JKQ6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Oct 2011 12:58:13 -0400
-Received: from beryl.its.maine.edu ([130.111.32.94]:46099 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755002Ab1JKQ6N (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Oct 2011 12:58:13 -0400
-Received: from [IPv6:2610:48:100:827::97] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827::97])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p9BGuwaC031114
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 11 Oct 2011 12:56:59 -0400
-In-Reply-To: <201110111620.12788.jnareb@gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=4 Fuz1=4
-	Fuz2=4
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p9BGuwaC031114
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1318957022.16255@OcomHxPc5R0WN/fyxPTDiw
+	id S1754830Ab1JKRTI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Oct 2011 13:19:08 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:56807 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754149Ab1JKRTH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Oct 2011 13:19:07 -0400
+Received: by qadb15 with SMTP id b15so4907490qad.19
+        for <git@vger.kernel.org>; Tue, 11 Oct 2011 10:19:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=K3Y71d4gklJT9Cgh/651OmQYct7S5QN1jjsOoNRDV2U=;
+        b=oWxQh3/xe3JUH6HqeBn5vI3umGIYgIxbj8IDOfMYIdlLvpi1mEwro+vNdeTLnV6ALy
+         qwXuusjAnp9jXrBdVFzEopGnxPq+2ie+9clNo3WinJvPIlSwF6u+K+OQTF9fuwfDR2Ux
+         PfdfN9O1Y38RLqcAbdMANHtktII0dy2trqep0=
+Received: by 10.224.208.199 with SMTP id gd7mr15602948qab.82.1318353547165;
+ Tue, 11 Oct 2011 10:19:07 -0700 (PDT)
+Received: by 10.224.20.67 with HTTP; Tue, 11 Oct 2011 10:19:06 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183307>
 
+(This is kind of a record for me, 2 gitolite related emails to the git
+ML in less than a month)
 
-On Tue, 2011-10-11 at 16:20 +0200, Jakub Narebski wrote:
-> On Tue, 11 Oct 2011, Drew Northup wrote:
-> > On Tue, 2011-10-11 at 15:51 +0200, Jakub Narebski wrote:
-> > > On Tue, 11 Oct 2011, Drew Northup wrote:
-> > 
-> > > > This would be why I included a synopsis with my original submission. As
-> > > > this was supposed to be a description of the configuration files of said
-> > > > application it does not make much sense to put the executable in the
-> > > > synopsis. Please forgive me for attempting to make sense!
-> > > 
-> > > But this manpage is about _gitweb itself_, not about gitweb config file(s).
-> > > Gitweb itself is application, though it is not runnable directly (yet).
-> > > 
-> > > Web apps either don't use manpages as documentation, and those that do
-> > > that I found (SVN::Web for example) include runnable server-starting script.
-> > 
-> > Hmm, Couldn't tell from the mail header _which_ we were talking about in
-> > this subthread. I'll have to read the _whole_ patch apparently next
-> > time.
-> 
-> I'm sorry.  I guess better subjects would be:
-> 
->   gitweb: Add gitweb.conf(5) manpage
->   gitweb: Add gitweb(1) manpage
-> 
-> instead of current
-> 
->   gitweb: Add manpage for gitweb configuration files
->   gitweb: Add manpage for gitweb
-> 
-> Or perhaps:
-> 
->   gitweb: Add manpage for gitweb configuration files
->   gitweb: Add manpage for gitweb itself
+If you were in the position of vaguely thinking gitolite may be useful
+to you but lacked the time to actually install it to try things out,
+this may help.
 
-Jakub,
-For the sake of clarity I'd go with redundancy (but I've noticed that's
-not always enormously popular around here)
+----
 
-	gitweb: Add manpage for gitweb configuration files--gitweb.conf(5)
-	gitweb: Add manpage for gitweb itself--gitweb(1)
+Some folks want to be able to try gitolite's access control features,
+play with the configuration language, and so on, but to actually
+*install* it seems like a "commitment" of some kind.
 
-Perhaps the first one is too long, but I think that it leaves little
-question as to what the patch contains. Otherwise, your first or final
-pair of updated subjects would probably be clear enough.
+Gitolite has always had the ability to be installed *entirely* within
+one Unix userid.  Plus, the homegrown test suite I've been using for a
+while now has always simulated different "gitolite users" with a bit
+of ~/.ssh/config magic.
 
-Granted, just as soon as you fix that somebody else will manage to top
-my misreading of the subject line ;-).
+So I just combined the two, and made the client also be on the same
+Unix userid, resulting in this:
+http://sitaramc.github.com/gitolite/t/README.html#_playing_with_gitolite
+
+Briefly, it boils down to this: create a user, log in as that user,
+clone gitolite, run *one* command.  Done.
+
+After that, entirely within that user, you have an admin user and six
+normal users, to do with as you please.  You emulate different users
+simply by using a different username in the URL, like "git clone
+u1:reponame" versus "git clone u2:reponame".
+
+This gives you a chance to play with the myriad access control
+features gitolite has.
+
+When done, delete that user and your system is back where it was.
 
 -- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+Sitaram
