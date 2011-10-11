@@ -1,80 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Re* [PATCH v3 19/22] resolve_ref(): emit warnings for
- improperly-formatted references
-Date: Tue, 11 Oct 2011 19:07:49 -0400
-Message-ID: <20111011230749.GA29785@sigill.intra.peff.net>
-References: <1316121043-29367-1-git-send-email-mhagger@alum.mit.edu>
- <1316121043-29367-20-git-send-email-mhagger@alum.mit.edu>
- <20111011161652.GA15629@sigill.intra.peff.net>
- <7vr52jfm8i.fsf@alter.siamese.dyndns.org>
- <7vmxd7flkw.fsf@alter.siamese.dyndns.org>
- <7v39ezffq5.fsf_-_@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/6] Negation magic pathspec
+Date: Tue, 11 Oct 2011 16:17:03 -0700
+Message-ID: <7vwrcbce4w.fsf@alter.siamese.dyndns.org>
+References: <1318373083-13840-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	cmn@elego.de, A Large Angry SCM <gitzilla@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 12 01:07:58 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 12 01:17:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDlQT-0007iW-Es
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 01:07:57 +0200
+	id 1RDlZR-0002l0-6p
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 01:17:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751491Ab1JKXHw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Oct 2011 19:07:52 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57904
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751378Ab1JKXHv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Oct 2011 19:07:51 -0400
-Received: (qmail 6541 invoked by uid 107); 11 Oct 2011 23:07:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 11 Oct 2011 19:07:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Oct 2011 19:07:49 -0400
-Content-Disposition: inline
-In-Reply-To: <7v39ezffq5.fsf_-_@alter.siamese.dyndns.org>
+	id S1751726Ab1JKXRH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Oct 2011 19:17:07 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59149 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751671Ab1JKXRF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Oct 2011 19:17:05 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E1816E95;
+	Tue, 11 Oct 2011 19:17:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=JtqahCLHYMNI
+	vSPcX1fNZzUsb50=; b=yCrYLVKhCOeUJZe5d0wGfYTATI88ww7Oubs21tkCBfrq
+	3agmlUwa5M/FMpZ0WuhDl1p2SwbOKw6IvIuPtVpsPdxk0CpJoD4zmBKhtvd8khTE
+	ZA5WDjd6gLUM2b4PRu4ERkfSmW/z4JJAHMIG/i4FR3GGNDhurvdSdrUOdgykX+c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=phYzud
+	AQzNNg3YRjntZ1y1Yr1AhVGHkaAbYfXs2wHlFdBa5tat0exMkLIgBGLvlmqenwBc
+	dxQAdUKm+YBbsTe8p2TXigvJZTXND5ATr5BiOb2BiRqsReRhkEeb/b+HwKk7m3xC
+	SSV44PBkGnWCzl6+axMbZMNyw9tM1YzfQQcr8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 448C56E94;
+	Tue, 11 Oct 2011 19:17:05 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B4F6D6E91; Tue, 11 Oct 2011
+ 19:17:04 -0400 (EDT)
+In-Reply-To: <1318373083-13840-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 12 Oct
+ 2011 09:44:37 +1100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 21D0CF76-F45F-11E0-B4AD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183346>
 
-On Tue, Oct 11, 2011 at 01:14:26PM -0700, Junio C Hamano wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> >> I think we've discussed tightening it a few years ago already.
-> >>
-> >> HEAD, MERGE_HEAD, FETCH_HEAD, etc. all are "^[_A-Z]*$" and it may even be
-> >> a good idea to insist "^[_A-Z]*HEAD$" or even "^([A-Z][A-Z]*_)?HEAD$".
-> >
-> > Perhaps like this? Only compile tested...
-> 
-> Not quite. There are at least three bugs in the patch.
-> 
->  - Some subsystems use random refnames like NOTES_MERGE_PARTIAL that would
->    not match "^([A-Z][A-Z]*_)?HEAD$". The rule needs to be relaxed;
-> 
->  - dwim_ref() can be fed "refs/heads/master" and is expected to dwim it to
->    the master branch.
-> 
->  - These codepaths get pointer+length so that it can be told to parse only
->    the first 4 bytes in "HEAD:$path".
+> I'm still struggling with read_directory() rewrite so that struct
+> pathspec can be used throughout git, but now realized we can at least
+> enable magic for certain commands and die() on those that don't.
+> This may help move magic pathspec patches forward.
 
-One more bug. :)
+I actually was thinking that teaching those that take bare "const char =
+**"
+to take "struct pathspec *" is much more important conversion before
+adding more magic to those that already do take "struct pathspec *". Th=
+e
+ones that ask "does this path match the pathspec" would automatically
+start honoring negative or quantum or whatever magic once we teach
+the magic to match_pathspec(), but the ones that take "const char **" w=
+ill
+have no way of doing so before getting converted to "struct pathspec *"
+interface.  If some parts of the system knows more magic and people sta=
+rt
+playing with them, the lack of the support in codepaths that haven't be=
+en
+converted will become real pain point.
 
-We also look at ref_rev_parse_rules in shorten_unambiguous_ref. So even
-with your patch, I still get the warning with:
-
-  $ git branch config
-  $ git for-each-ref --format='%(refname:short)' refs/heads/
-
-It looks like we also use it in remote.c:count_refspec_match, but I
-haven't figured out if that can trigger a warning or not.
-
--Peff
+That is not to say that these 6 patch series are wasted patches. I just
+think it may be doing things in a wrong order.
