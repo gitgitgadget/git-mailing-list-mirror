@@ -1,87 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Fix is_gitfile() for files larger than PATH_MAX
-Date: Tue, 11 Oct 2011 14:25:32 -0500 (CDT)
-Message-ID: <alpine.DEB.1.00.1110111424010.32316@s15462909.onlinehome-server.info>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Symmetric of rebase / more intelligent cherry-pick
+Date: Tue, 11 Oct 2011 12:36:13 -0700
+Message-ID: <7v8vorfhhu.fsf@alter.siamese.dyndns.org>
+References: <20111011155444.GB14417@capsaicin.mamane.lu>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1784107012-2076357281-1318361134=:32316"
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Oct 11 21:25:43 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Lionel Elie Mamane <lionel@mamane.lu>
+X-From: git-owner@vger.kernel.org Tue Oct 11 21:36:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDhxO-0004sD-OX
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 21:25:43 +0200
+	id 1RDi7h-0001Xp-VE
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 21:36:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755340Ab1JKTZh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Oct 2011 15:25:37 -0400
-Received: from mailout-de.gmx.net ([213.165.64.23]:47709 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1754933Ab1JKTZh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Oct 2011 15:25:37 -0400
-Received: (qmail invoked by alias); 11 Oct 2011 19:25:34 -0000
-Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
-  by mail.gmx.net (mp001) with SMTP; 11 Oct 2011 21:25:34 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19L2G1TZYhLpNsaHBZSkdPbr416jJ0vtmVznog1wv
-	LcyPPadeVzAoyP
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755338Ab1JKTgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Oct 2011 15:36:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56477 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754948Ab1JKTgQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Oct 2011 15:36:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E1FE5233;
+	Tue, 11 Oct 2011 15:36:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3TaVBymYa5d3yg5CPDRsFbfrNVo=; b=GH6gTH
+	ElxRNxpTnSgsEBxAkorov7jDuY4UuobQd97mQE3nAny+/aF1tWwfFSNPq5I6k9Ul
+	F0muMQicpZpAwR8bM2PtXvnO+fiQBdOoPAHG6ZKR7xBBciAaX/jLbAUtMJiw2kx/
+	RJta/r61IUIF9huj5+tGNjXA9XUnW8UKVYBY8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eOyYjAKguSJsiHtxu2I+/DPAzgaj9PsK
+	4TnNnlBCH1OuHvFWI3ftS+Vg/lX/2L6rMWiWISdK9Q3Zhz4WbeLgwWwcWheLVhqT
+	A1ma6+G/zIoMZP+Cu83DkS5u57a9fVteXZRpACEIBoZiaYJ90fBJCommKULnxEOi
+	Kc51ObPeVjU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 152E75232;
+	Tue, 11 Oct 2011 15:36:15 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 843AC5231; Tue, 11 Oct 2011
+ 15:36:14 -0400 (EDT)
+In-Reply-To: <20111011155444.GB14417@capsaicin.mamane.lu> (Lionel Elie
+ Mamane's message of "Tue, 11 Oct 2011 17:54:44 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4814D1D8-F440-11E0-B7EE-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183321>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Lionel Elie Mamane <lionel@mamane.lu> writes:
 
---1784107012-2076357281-1318361134=:32316
-Content-Type: TEXT/PLAIN; charset=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
+> git cherry-pick ..UPSTREAM
+> *nearly* does what I want, except that it lacks rebase's intelligence
+> of skipping commits that do the same textual changes as a commit
+> already in the current branch.
 
+I think in the longer term "--ignore-if-in-upstream" that is known only to
+format-patch, which is the true source the intelligence of rebase you
+observed comes from, should be factored out into a helper function that
+can be used to filter output from get_revision() in other commands, or
+perhaps get_revision() itself might want to learn it.
 
-The logic to check whether a file is a gitfile used the heuristics that
-the file cannot be larger than PATH_MAX. But in that case it returned the
-wrong value. Our test cases do not cover this, as the bundle files
-produced are smaller than PATH_MAX. Except on Windows.
-
-While at it, fix the faulty logic that the path stored in a gitfile cannot
-be larger than PATH_MAX-sizeof("gitfile: ").
-
-Problem identified by running the test suite in msysGit, offending commit
-identified by Jörg Rosenkranz.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-	This patch should apply cleanly to 'next', which we track in
-	msysgit/git.
-
-	The task of adding a test case is something I leave to someone who
-	wants to get involved with Git development and needs an easy way
-	in.
-
- transport.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/transport.c b/transport.c
-index f3195c0..57138d9 100644
---- a/transport.c
-+++ b/transport.c
-@@ -868,8 +868,8 @@ static int is_gitfile(const char *url)
- 		return 0;
- 	if (!S_ISREG(st.st_mode))
- 		return 0;
--	if (st.st_size < 10 || st.st_size > PATH_MAX)
--		return 1;
-+	if (st.st_size < 10 || st.st_size > 9 + PATH_MAX)
-+		return 0;
- 
- 	fd = open(url, O_RDONLY);
- 	if (fd < 0)
--- 
-1.7.6.msysgit.0.584.g2cbf
-
---1784107012-2076357281-1318361134=:32316--
+I say "or perhaps might" above, because I do not think the general
+revision traversal machinery used by the log family (which cherry-pick's
+multi-pick option relies on) has enough information to decide what the
+caller means by "upstream" at the point setup_revisions() is called.
