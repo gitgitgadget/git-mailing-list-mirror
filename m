@@ -1,157 +1,114 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re* [PATCH v3 19/22] resolve_ref(): emit warnings for
- improperly-formatted references
-Date: Tue, 11 Oct 2011 13:14:26 -0700
-Message-ID: <7v39ezffq5.fsf_-_@alter.siamese.dyndns.org>
-References: <1316121043-29367-1-git-send-email-mhagger@alum.mit.edu>
- <1316121043-29367-20-git-send-email-mhagger@alum.mit.edu>
- <20111011161652.GA15629@sigill.intra.peff.net>
- <7vr52jfm8i.fsf@alter.siamese.dyndns.org>
- <7vmxd7flkw.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] Fix is_gitfile() for files larger than PATH_MAX
+Date: Tue, 11 Oct 2011 13:25:32 -0700
+Message-ID: <7vy5wre0n7.fsf@alter.siamese.dyndns.org>
+References: <alpine.DEB.1.00.1110111424010.32316@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, cmn@elego.de,
-	A Large Angry SCM <gitzilla@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Oct 11 22:15:22 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Oct 11 22:25:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDijR-0004rb-0j
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 22:15:21 +0200
+	id 1RDitQ-00020C-Rf
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 22:25:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751270Ab1JKUOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Oct 2011 16:14:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40497 "EHLO
+	id S1751796Ab1JKUZf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Oct 2011 16:25:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45623 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750908Ab1JKUO3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Oct 2011 16:14:29 -0400
+	id S1751745Ab1JKUZe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Oct 2011 16:25:34 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6EE875DE9;
-	Tue, 11 Oct 2011 16:14:28 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20AD66195;
+	Tue, 11 Oct 2011 16:25:34 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rbh9bkDAAG+NpXukGLb3YY3fgTs=; b=bxV+dw
-	GKbxqqfSEF8R91qNlWB3sMXYvZ62t+HvStDlZs+TVQMsRZqHz6JxpFZeyOyLRvrB
-	LXjlZhXom0lGAH0LOSojIyBq+s2o/4RD9PUuva3A2fhF/d+FAqAswhxpevdxFQBO
-	aFru+6790qeWdNVfckLHQrWODUKamL6jODRj8=
+	:content-type:content-transfer-encoding; s=sasl; bh=HwbPTqatTBtY
+	EF6SRrAcBOYARxo=; b=nsVvF9u4IV5dz+BTSRdHusrZH8rckvpOQ4BCMhcKKeAR
+	bvuyyqhiz4vevPKcnME7mO77fApObiDSKby1zu0VHwhnlT3sNN5O5Qtev7JfA/ib
+	zLmoVkknQyRT022sqxW8itsmTM0wPs4P1WpKEjn1Im5UhStDR6RqA5cIT24GvhQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Inyi4k13TuI+3Qs/F3WAHD5U01TBepHb
-	e1vJQ/aP7aSsIAp6iM9CteRtQGVHtP7cUcBnIiDvWoNS/KWCjFs2cf91IaKfePXR
-	Sa7EUSpLTzj+zAlnJvyh7jBvaxC8vvexNko8Ylc8MnKPj+mpfOVVXiaeP8xOe/dJ
-	tp5o4OQY2Ng=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=nUmaQh
+	q2t8sbvtqREqD3etY+TfniPbxV2mINhLMtxxbUQgt0TlG8SIiFkrnlZQ8B9GyV6j
+	ask6aqN/+r7ira5GGXPaOUTPhhUH5Nqa60tIiM8dFWi3pM49Vqgw0sjPgFp1HNWP
+	spIC33T41evcuCbFXnLWS0SHdKXSInoF6wUEQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 64A575DE8;
-	Tue, 11 Oct 2011 16:14:28 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 172676194;
+	Tue, 11 Oct 2011 16:25:34 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BAD805DE5; Tue, 11 Oct 2011
- 16:14:27 -0400 (EDT)
-In-Reply-To: <7vmxd7flkw.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 11 Oct 2011 11:07:59 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9E9E86192; Tue, 11 Oct 2011
+ 16:25:33 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.1110111424010.32316@s15462909.onlinehome-server.info>
+ (Johannes Schindelin's message of "Tue, 11 Oct 2011 14:25:32 -0500 (CDT)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9EF7F73C-F445-11E0-B9EF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 2BD8BED8-F447-11E0-BE74-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183323>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> I think we've discussed tightening it a few years ago already.
->>
->> HEAD, MERGE_HEAD, FETCH_HEAD, etc. all are "^[_A-Z]*$" and it may even be
->> a good idea to insist "^[_A-Z]*HEAD$" or even "^([A-Z][A-Z]*_)?HEAD$".
+> The logic to check whether a file is a gitfile used the heuristics th=
+at
+> the file cannot be larger than PATH_MAX. But in that case it returned=
+ the
+> wrong value. Our test cases do not cover this, as the bundle files
+> produced are smaller than PATH_MAX. Except on Windows.
 >
-> Perhaps like this? Only compile tested...
+> While at it, fix the faulty logic that the path stored in a gitfile c=
+annot
+> be larger than PATH_MAX-sizeof("gitfile: ").
+>
+> Problem identified by running the test suite in msysGit, offending co=
+mmit
+> identified by J=C3=B6rg Rosenkranz.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> 	This patch should apply cleanly to 'next', which we track in
+> 	msysgit/git.
+>
+> 	The task of adding a test case is something I leave to someone who
+> 	wants to get involved with Git development and needs an easy way
+> 	in.
+>
+>  transport.c |    4 ++--
+>  1 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/transport.c b/transport.c
+> index f3195c0..57138d9 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -868,8 +868,8 @@ static int is_gitfile(const char *url)
+>  		return 0;
+>  	if (!S_ISREG(st.st_mode))
+>  		return 0;
+> -	if (st.st_size < 10 || st.st_size > PATH_MAX)
+> -		return 1;
+> +	if (st.st_size < 10 || st.st_size > 9 + PATH_MAX)
+> +		return 0;
 
-Not quite. There are at least three bugs in the patch.
+We are asked if the file is likely to be a single-liner "gitfile: <path=
+>",
+and were answering yes when it is a very short file (less than 10 bytes=
+)
+that cannot possibly even contain "gitfile: " prefix.
 
- - Some subsystems use random refnames like NOTES_MERGE_PARTIAL that would
-   not match "^([A-Z][A-Z]*_)?HEAD$". The rule needs to be relaxed;
+I suspect that we can and should get rid of the "cannot be very long"
+check altogether---we do open and check the file, and after all it is n=
+ot
+like we are throwing different strings as "url" argument to this functi=
+on
+at random and this function needs heuristics to reject bogus input
+early. The argument is an input from the user.
 
- - dwim_ref() can be fed "refs/heads/master" and is expected to dwim it to
-   the master branch.
-
- - These codepaths get pointer+length so that it can be told to parse only
-   the first 4 bytes in "HEAD:$path".
-
--- >8 --
-Subject: [PATCH] Restrict ref-like names immediately below $GIT_DIR
-
-We have always dwimmed the user input $string into a ref by first looking
-directly inside $GIT_DIR, and then in $GIT_DIR/refs, $GIT_DIR/refs/tags,
-etc., and that is what made
-
-	git log HEAD..MERGE_HEAD
-
-work correctly. This however means that
-
-	git rev-parse config
-        git log index
-
-would look at $GIT_DIR/config and $GIT_DIR/index and see if they are valid
-refs.
-
-To reduce confusion, let's not dwim a path immediately below $GIT_DIR that
-is not all-caps.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- sha1_name.c |   23 +++++++++++++++++++++++
- 1 files changed, 23 insertions(+), 0 deletions(-)
-
-diff --git a/sha1_name.c b/sha1_name.c
-index 143fd97..5eb19c2 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -261,6 +261,25 @@ static char *substitute_branch_name(const char **string, int *len)
- 	return NULL;
- }
- 
-+static int ok_at_root_level(const char *str, int len)
-+{
-+	int seen_non_root_char = 0;
-+
-+	while (len--) {
-+		char ch = *str++;
-+
-+		if (ch == '/')
-+			return 1;
-+		/*
-+		 * Only accept likes of .git/HEAD, .git/MERGE_HEAD at
-+		 * the root level as a ref.
-+		 */
-+		if (ch != '_' && (ch < 'A' || 'Z' < ch))
-+			seen_non_root_char = 1;
-+	}
-+	return !seen_non_root_char;
-+}
-+
- int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
- {
- 	char *last_branch = substitute_branch_name(&str, &len);
-@@ -274,6 +293,8 @@ int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
- 		unsigned char *this_result;
- 		int flag;
- 
-+		if (p == ref_rev_parse_rules && !ok_at_root_level(str, len))
-+			continue;
- 		this_result = refs_found ? sha1_from_ref : sha1;
- 		mksnpath(fullref, sizeof(fullref), *p, len, str);
- 		r = resolve_ref(fullref, this_result, 1, &flag);
-@@ -302,6 +323,8 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
- 		char path[PATH_MAX];
- 		const char *ref, *it;
- 
-+		if (p == ref_rev_parse_rules && !ok_at_root_level(str, len))
-+			continue;
- 		mksnpath(path, sizeof(path), *p, len, str);
- 		ref = resolve_ref(path, hash, 1, NULL);
- 		if (!ref)
+Quite an embarrasing bug. Thanks for spotting.
