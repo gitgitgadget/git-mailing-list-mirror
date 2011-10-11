@@ -1,103 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking snapshot
-Date: Mon, 10 Oct 2011 20:25:24 -0700
-Message-ID: <7vlissgqfv.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v3 5/5] attr.c: respect core.ignorecase when matching
+ attribute patterns
+Date: Tue, 11 Oct 2011 05:44:40 +0200
+Message-ID: <4E93BBA8.6080403@alum.mit.edu>
+References: <VYN8m1JCy102-eaWWa-bsunEvt3zeXLJkVg7FZKZCtXT-Ww0vg7a8xA7NTvrZTiovKTnJ9Hlom0@cipher.nrlssc.navy.mil>	<U4wiHVyDLLG1PhI-8iY3YhHT7CEcTMEfg9MCDSaeuwAkg0N1a5wRE5NXaKAVQx8kpEYt75REVpRavoc-HiKe6rLk2AUepzHWptkevo08MRbGyWxqBHT_rySLemcbi66NKLRXwFGtaRQ@cipher.nrlssc.navy.mil>	<4E91BAC8.9060606@alum.mit.edu> <CA+sFfMd9exQcGfTGLJFPXG3-bq-ukn7K4m1R=LvLKqc1-jDVQw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 11 05:25:41 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Brandon Casey <casey@nrlssc.navy.mil>, gitster@pobox.com,
+	git@vger.kernel.org, peff@peff.net, j.sixt@viscovery.net
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 11 05:44:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDSyD-0002hP-Pn
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 05:25:34 +0200
+	id 1RDTGz-0007lW-Dr
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 05:44:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753455Ab1JKDZ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Oct 2011 23:25:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36750 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752619Ab1JKDZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Oct 2011 23:25:27 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0544668F4;
-	Mon, 10 Oct 2011 23:25:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=t
-	dvgvtp4N/sXsVsDiCz75DJGJ6Q=; b=qSYwb4edPagUGLZvOWguG8Ox9PYRTerKc
-	xsu3Di0cFd8aq3+uSQP0QK2h6EfBxB9lDwxHeG8xbhs+VMv3xTO/yV9R093isO+n
-	oH1CnQJcsrccpGN06NHGPxjoMHkhmXhAFB+H6ddmL5rIR6oI/VtKB/KxucvWqZla
-	k3bdJ4jmNc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=hUm
-	5ZfiQIutS9gbCYWdY/rNS5kmv4w9yT0sTZHocWbuCFxqxgxpzpdbw5yruoC8qD58
-	r1kQDEPz8uuhZ+TrjcE1S54lfudygqxM8jkRU43SikwK7dd0KgJhmapaiK8RAy7y
-	lH4+q5SJ2xJ9MplhuejXw4lreMXOYdv74ejUuPyo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F092168F3;
-	Mon, 10 Oct 2011 23:25:26 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 596CB68F2; Mon, 10 Oct 2011
- 23:25:26 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A976804E-F3B8-11E0-B20F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752773Ab1JKDow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Oct 2011 23:44:52 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:37854 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752619Ab1JKDow (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Oct 2011 23:44:52 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p9B3ie1D012704
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 11 Oct 2011 05:44:40 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
+In-Reply-To: <CA+sFfMd9exQcGfTGLJFPXG3-bq-ukn7K4m1R=LvLKqc1-jDVQw@mail.gmail.com>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183280>
 
-I am planning to merge the following topics that are queued in 'pu' to
-'next' soonish.
+On 10/10/2011 08:01 PM, Brandon Casey wrote:
+> On Sun, Oct 9, 2011 at 10:16 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> Maybe my commit message is not clear that it is describing the current
+> behavior and not defining it.  Instead of
+> 
+>    git should only match the portion of the path below the directory
+>    holding the .gitignore file according to the setting of
+>    core.ignorecase.
+> 
+> maybe I should say
+> 
+>     git will currently only match the portion of the path...
+> 
+> I could also remove the following test from the CASE_INSENSITIVE_FS
+> tests since it is really a dontcare:
+> 
+>    attr_check A/b/h a/b/h "-c core.ignorecase=0"
+> 
+> We don't care what happens when the user supplies A/b/h and a/b/h
+> exists on disk when core.ignorecase=0, we only care that A/b/h is
+> interpreted correctly when core.ignorecase=1.
 
-* tm/completion-commit-fixup-squash (2011-10-06) 2 commits
- - completion: commit --fixup and --squash
- - completion: unite --reuse-message and --reedit-message handling
- (this branch is used by sg/completion.)
+Sounds good to me.
 
-* tm/completion-push-set-upstream (2011-10-06) 1 commit
- - completion: push --set-upstream
+Thanks,
+Michael
 
-* bc/attr-ignore-case (2011-10-06) 5 commits
- - attr.c: respect core.ignorecase when matching attribute patterns
- - attr: read core.attributesfile from git_default_core_config
- - builtin/mv.c: plug miniscule memory leak
- - cleanup: use internal memory allocation wrapper functions everywhere
- - attr.c: avoid inappropriate access to strbuf "buf" member
-
-* ef/mingw-syslog (2011-10-07) 1 commit
- - mingw: avoid using strbuf in syslog
-
-* jk/name-hash-dirent (2011-10-07) 1 commit
- - fix phantom untracked files when core.ignorecase is set
-
-* rs/pickaxe (2011-10-07) 7 commits
- - pickaxe: factor out pickaxe
- - pickaxe: give diff_grep the same signature as has_changes
- - pickaxe: pass diff_options to contains and has_changes
- - pickaxe: factor out has_changes
- - pickaxe: plug regex/kws leak
- - pickaxe: plug regex leak
- - pickaxe: plug diff filespec leak with empty needle
-
-* tc/fetch-leak (2011-10-07) 1 commit
- - fetch: plug two leaks on error exit in store_updated_refs
-
-* mm/maint-config-explicit-bool-display (2011-10-10) 1 commit
- - config: display key_delim for config --bool --get-regexp
-
-* rs/diff-whole-function (2011-10-10) 2 commits
- - diff: add option to show whole functions as context
- - xdiff: factor out get_func_line()
-
-* sc/difftool-skip (2011-10-10) 1 commit
- - git-difftool: allow skipping file by typing 'n' at prompt
-
-* sg/completion (2011-10-10) 2 commits
- - completion: unite --format and --pretty for 'log' and 'show'
- - completion: unite --reuse-message and --reedit-message for 'notes'
- (this branch uses tm/completion-commit-fixup-squash.)
-
-Comments welcome.
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
