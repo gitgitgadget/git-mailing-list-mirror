@@ -1,122 +1,127 @@
-From: Peter Oberndorfer <kumbayo84@arcor.de>
-Subject: Re: [RFC/WIP PATCH] Use config value rebase.editor as editor when starting git rebase -i
-Date: Tue, 11 Oct 2011 23:16:11 +0200
-Message-ID: <201110112316.11738.kumbayo84@arcor.de>
-References: <201110111956.08829.kumbayo84@arcor.de> <7vipnvfk70.fsf@alter.siamese.dyndns.org>
+From: Jean Privat <jean.privat@gmail.com>
+Subject: [RFC] teach --edit to git rebase
+Date: Tue, 11 Oct 2011 17:21:53 -0400
+Message-ID: <CAMQw0oOBEjW3yS2+wcktXDuEuUiHKjfbK2qDzKvBOiwxo7Zkow@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 11 23:17:13 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 11 23:22:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDjhG-0002GK-Pg
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 23:17:11 +0200
+	id 1RDjmZ-0004sd-MM
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 23:22:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750936Ab1JKVRF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Oct 2011 17:17:05 -0400
-Received: from mail-in-16.arcor-online.net ([151.189.21.56]:41459 "EHLO
-	mail-in-16.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750780Ab1JKVRD (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Oct 2011 17:17:03 -0400
-Received: from mail-in-07-z2.arcor-online.net (mail-in-07-z2.arcor-online.net [151.189.8.19])
-	by mx.arcor.de (Postfix) with ESMTP id 06F7A891F;
-	Tue, 11 Oct 2011 23:17:02 +0200 (CEST)
-Received: from mail-in-12.arcor-online.net (mail-in-12.arcor-online.net [151.189.21.52])
-	by mail-in-07-z2.arcor-online.net (Postfix) with ESMTP id 045A8E1973;
-	Tue, 11 Oct 2011 23:17:02 +0200 (CEST)
-Received: from soybean.localnet (188-22-107-88.adsl.highway.telekom.at [188.22.107.88])
-	(Authenticated sender: kumbayo84@arcor.de)
-	by mail-in-12.arcor-online.net (Postfix) with ESMTPSA id E39BB268E6;
-	Tue, 11 Oct 2011 23:17:01 +0200 (CEST)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-12.arcor-online.net E39BB268E6
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1318367822; bh=LM9pIH993U+5V1sY7jNffNP2L0+fI1wEB+ahnNELkbs=;
-	h=From:To:Subject:Date:Cc:References:In-Reply-To:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:Message-Id;
-	b=Cw4JLdiLqLldT/1rstGlzFUTn1JL17/8m/gAAcKLV2Lp4uPPGEA4LW3RJnarPAG/K
-	 8ZJ6Ycn7ORaQTNE7yQFIlrEBp9p98gZWEUdZeqUDqmtB1MudWFzbcQm32esFYcMNxQ
-	 3s9l9L4cicmXU+uXByNTKf+Y0kJlyUHqi7vMjuog=
-User-Agent: KMail/1.13.6 (Linux/2.6.38-11-generic-pae; KDE/4.6.2; i686; ; )
-In-Reply-To: <7vipnvfk70.fsf@alter.siamese.dyndns.org>
+	id S1751044Ab1JKVWf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Oct 2011 17:22:35 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:62793 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750994Ab1JKVWe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Oct 2011 17:22:34 -0400
+Received: by wwf22 with SMTP id 22so44737wwf.1
+        for <git@vger.kernel.org>; Tue, 11 Oct 2011 14:22:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=bxnrZAqWhIwJREN4ri4+ME/EdWPBDvtFSuwjKfF+aRw=;
+        b=IiXlzEsELrxk7wT1pVoVu1M2OFctk6s1JM6qsyrIWk/DepcK0Ky5dsy/eBq6q8wToD
+         WItATXd9VFtGo9UeZJQFRXBDE/WMGignJgwoNRqJWqW6fe+TaDuMAbC1WqKLUg5vTXd9
+         CDCPZz/J/q19sJfKxsz4Qiwh5NqVoDPbn6gw0=
+Received: by 10.223.7.18 with SMTP id b18mr23093290fab.31.1318368153088; Tue,
+ 11 Oct 2011 14:22:33 -0700 (PDT)
+Received: by 10.223.79.3 with HTTP; Tue, 11 Oct 2011 14:21:53 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183327>
 
-On Dienstag, 11. Oktober 2011, Junio C Hamano wrote:
-> Peter Oberndorfer <kumbayo84@arcor.de> writes:
-> 
-> > Using $GIT_EDITOR or core.editor config var for this is not possible
-> > since it is also used to start the commit message editor for reword action.
-> 
-> Your tool _could_ be smart about this issue and inspect the contents to
-> launch a real editor when it is fed a material not for sequencing, but
-> that feels hacky.
+The idea of this patch is to allow a simple edition of a buggy commit
+in the history.
 
-I already tried this, but my first version did not redirect stdin/stdout
-so vi stayed in background and the whole thing just hung.
-I did not try further because i assumed more problems would appear
-when redirecting stdin/stdout...
+## Motivation
 
-> > * GIT_EDITOR env var is not honored anymore after this change.
-> 
-> Care to explain?  "git var" knows magic about a few variables like
-> GIT_EDITOR and GIT_PAGER.
-> 
-> 	$ git config core.editor vim
-> 	$ GIT_EDITOR=vi EDITOR=emacs git var GIT_EDITOR
->         vi
-> 	$ unset GIT_EDITOR; EDITOR=emacs git var GIT_EDITOR
->         emacs
+The motivation behind the option is that sometime I have to do a
+simple fixup of a previous commit.
+Usually the way to do it is just to commit the fix on the top of the
+branch (git commit --fixup) then doing a 'git rebase  --autosquash'.
+However, the way is often not optimal if the context of commit on the
+top of the branch is different from the context of the buggy commit,
+thus the rebase with a fixup will lead to a conflict when git will
+apply the fixup patch to the buggy commit (and a second conflict
+later).
 
-Sorry i was wrong, i missed that git var looks at $GIT_EDITOR.
+An other way is to do a 'git rebase --interactive' with an edit in the
+todo list (instead of a pick). This is what I propose to simplify.
 
-So the sequence for choosing the sequencer editor is:
-$GIT_SEQUENCE_EDITOR
-config sequence.editor
-var GIT_EDITOR
+## Proposal
 
-Which looks OK to me.
+My idea is to add a --edit option to 'git rebase' in order to
+automatize the 'git rebase --interactive' workflow.
 
-> > * Should git_rebase_editor be in git-rebase--interactive.sh instead
-> 
-> Probably yes.
+Currently:
 
-OK, will do.
+    $ git rebase -i commit-to-fix^
+    # replace the first 'pick' with 'edit' then save and quit
+    $ hack hack hack...
+    $ git commit --amend  # or whatever you want to do like split commit
+    $ git rebase --continue  # and resolve possible conflicts
 
-> 
-> > * How should the config be called?
-> 
-> Given that in the longer term we would be using a unified sequencer
-> machinery for not just rebase-i but for am and cherry-pick, I would advise
-> against calling this anything "rebase".  How does "sequence.edit" sound?
-> 
+With the --edit option:
 
-I do not really care very much, but how about sequence.editor?
-Sounds more similar to core.editor
+    $ git rebase --edit commit_to_fix # note: no caret, no editor ! yeah !
+    $ hack hack hack...
+    $ git commit --amend  # or what ever like split commit
+    $ git rebase --continue  # and resolve possible conflicts
 
-> You need to be prepared to adjust your code to deal with new kinds of
-> sequencing insns in the insn sheet and possibly a format change of the
-> insn sheet itself.
+Note that for a more complex history modification, a standard git
+rebase with reordering, squashing and stuff the way to go is a good
+old git rebase --interactive.
 
-I assume instruction sheet is the commented out part that looks like:
-# Commands:
-#  p, pick = use commit
-#  r, reword = use commit, but edit the commit message
+## Implementation proposal
 
-Currently all lines starting with # are ignored.
-(They are also not written to the output when finished
-which is a point I might have to change...)
+Yes I know "show me the code" but because I am lazy I prefer ask 1-if
+the proposal makes sense, and 2-if the following way of doing it makes
+sense.
 
-Also the instructions are currently not taken from this instruction sheet.
-They are all hardcoded.
+The idea is to extend git-rebase and git-rebase-interactive.
 
-Thanks for the feedback
-Greetings Peter
+* detect and check the option --edit in git-rebase
+* automatically prepare the todolist in git-rebase-interactive without
+launching the editor.
+
+## Alternative proposals
+
+A weak point of the proposal it that it is a new option to a
+overloaded git command (git rebase). In fact is is even a new synopsis
+to git rebase since the --edit option will be incompatible with
+--interactive (it is an automatic interactive) and with --onto (since
+there is no real point to ``move'' the base if you want to fixup a
+single commit).
+A counter proposal could be to not extend the command 'git rebase' but
+add a new git command (for instance 'git edit buggy_commit') but since
+the edit may[1] lead to conflicts the user has to do some 'git edit
+--continue' to finish the editing (or 'git edit --abort' if bored). It
+will also require to adapt a lot of tinny things because hint
+messages, error messages, and prompts will talk about 'rebase' and not
+'edit'.
+
+[1] In fact, it is probable that the *may* is in fact a *will* since
+if no conflict arise, it is likable that a simple 'commit --fixup'
+(followed by a later 'git rebase --autosquash') will just work and be
+simpler.
+
+An other alternative is to use a simple git alias for myself (and do
+not bother the git community) but I do not know how to automatize the
+command 'git rebase --interactive' I suppose I need more complex
+infrastructure in the existing 'git rebase' (Maybe I did not look
+enough and there is a way to do it with a git alias).
+
+A last alternative is do do nothing. What I propose is just a way to
+1-do not need a caret ('git rebase --edit commit' instead of 'git
+rebase --interactive commit^') and 2-avoid launching the editor.
+Therefore, maybe the itch do not really need a patch.
+
+-- Jean Privat
