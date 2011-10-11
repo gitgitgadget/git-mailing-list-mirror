@@ -1,60 +1,73 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [PATCH v3] Teach merge the '[-e|--edit]' option
-Date: Tue, 11 Oct 2011 14:57:47 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1110111454490.8685@ds9.cixit.se>
-References: <1318099192-60860-1-git-send-email-jaysoffian@gmail.com>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: [PATCHv5/RFC 3/6] gitweb: Add manpage for gitweb
+	(APPLICATION!!!)
+Date: Tue, 11 Oct 2011 10:01:54 -0400
+Message-ID: <1318341714.22324.46.camel@drew-northup.unet.maine.edu>
+References: <1318098723-12813-1-git-send-email-jnareb@gmail.com>
+	 <20111010221811.GA21367@elie.hsd1.il.comcast.net>
+	 <1318338135.22324.33.camel@drew-northup.unet.maine.edu>
+	 <201110111551.09621.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Todd A. Jacobs" <nospam+listmail@codegnome.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 11 15:58:08 2011
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 11 16:04:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDcqN-00068a-8t
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 15:58:07 +0200
+	id 1RDcwE-0000m6-C0
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 16:04:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754312Ab1JKN6B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Oct 2011 09:58:01 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:47346 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753391Ab1JKN6A (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Oct 2011 09:58:00 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p9BDvpBi010457
+	id S1753461Ab1JKOEE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Oct 2011 10:04:04 -0400
+Received: from beryl.its.maine.edu ([130.111.32.94]:49055 "EHLO
+	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752231Ab1JKOED (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Oct 2011 10:04:03 -0400
+Received: from [IPv6:2610:48:100:827::97] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827::97])
+	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p9BE1w8I018175
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 11 Oct 2011 15:57:52 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id p9BDvmIY010452;
-	Tue, 11 Oct 2011 15:57:49 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <1318099192-60860-1-git-send-email-jaysoffian@gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Tue, 11 Oct 2011 15:57:52 +0200 (CEST)
+	Tue, 11 Oct 2011 10:01:58 -0400
+In-Reply-To: <201110111551.09621.jnareb@gmail.com>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC--Metrics: beryl.its.maine.edu 1356; Body=4 Fuz1=4 Fuz2=4
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p9BE1w8I018175
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1318946520.08425@+yNrZbsPoHSYzFY0jxzXzA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183296>
 
-Jay Soffian:
+On Tue, 2011-10-11 at 15:51 +0200, Jakub Narebski wrote:
+> On Tue, 11 Oct 2011, Drew Northup wrote:
 
-> +--edit::
-> +-e::
-> ++
-> +	Invoke editor before committing successful merge to further
-> +	edit the default merge message.
+> > This would be why I included a synopsis with my original submission. As
+> > this was supposed to be a description of the configuration files of said
+> > application it does not make much sense to put the executable in the
+> > synopsis. Please forgive me for attempting to make sense!
+> 
+> But this manpage is about _gitweb itself_, not about gitweb config file(s).
+> Gitweb itself is application, though it is not runnable directly (yet).
+> 
+> Web apps either don't use manpages as documentation, and those that do
+> that I found (SVN::Web for example) include runnable server-starting script.
 
-I have a feature request, and that is to also add a configuration option to 
-make this the default behaviour.
+Hmm, Couldn't tell from the mail header _which_ we were talking about in
+this subthread. I'll have to read the _whole_ patch apparently next
+time.
+
+Crawling back into my cave...
 
 -- 
-\\// Peter - http://www.softwolves.pp.se/
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
