@@ -1,113 +1,73 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] commit: teach --gpg-sign option
-Date: Tue, 11 Oct 2011 08:39:48 +0200
-Message-ID: <4E93E4B4.9070901@drmicha.warpmail.net>
-References: <7vaa9f3pk8.fsf@alter.siamese.dyndns.org> <4E91FD57.7050808@drmicha.warpmail.net> <7v4nzhrebp.fsf@alter.siamese.dyndns.org> <4E92919F.2030007@drmicha.warpmail.net> <7vaa98okwl.fsf@alter.siamese.dyndns.org>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH 0/9] i18n: add PO files to po/
+Date: Tue, 11 Oct 2011 08:58:41 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1110110856410.8685@ds9.cixit.se>
+References: <1317668297-2702-1-git-send-email-avarab@gmail.com> <20111003220659.GA19537@elie> <CACBZZX5uz5cdoWebYOY-Omu0drnQasJB-12DMZyZ_NX17jzhmg@mail.gmail.com> <7vaa9gbdyc.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.1110061025590.18528@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	=?ISO-8859-2?Q?Marcin_Cie=B6lak?= <saper@saper.info>,
+	Sam Reed <sam@reedyboy.net>,
+	Jan Engelhardt <jengelh@medozas.de>,
+	=?ISO-8859-15?Q?Jan_Kr=FCger?= <jk@jk.gs>,
+	=?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c?= <pclouds@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 11 08:40:00 2011
+X-From: git-owner@vger.kernel.org Tue Oct 11 09:59:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDW0K-0005Jn-ND
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 08:39:57 +0200
+	id 1RDXF7-0000vP-02
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 09:59:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750794Ab1JKGjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Oct 2011 02:39:51 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:51277 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750712Ab1JKGjv (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Oct 2011 02:39:51 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 5CEBE20BA6;
-	Tue, 11 Oct 2011 02:39:50 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute3.internal (MEProxy); Tue, 11 Oct 2011 02:39:50 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=hJkd9k07JEkYffc7lJ2VXK
-	+pjlo=; b=O3z3HmyDc8PAzQ1aecOx0ai0n92hUXFsavDsITb6URzlPmBFDEHaDO
-	pQYDf9I6X7/Z9oE58mHIAaCwWQTGJAijxapAlTz/8bAn7hLHTQb/Y6EYDOplosr1
-	xuTbd2IoXQJJPn+U7bme0uH01waJhmtaZnQ/xMrfvHYv9qzo5r/Gs=
-X-Sasl-enc: h3dNPILR3sfEAAg9d1HB2PdYj4/xB5RxoHDiVGDL0NMp 1318315190
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id D1F964833D9;
-	Tue, 11 Oct 2011 02:39:49 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0) Gecko/20110927 Thunderbird/7.0
-In-Reply-To: <7vaa98okwl.fsf@alter.siamese.dyndns.org>
+	id S1752625Ab1JKH7K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Oct 2011 03:59:10 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:34222 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752010Ab1JKH7H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Oct 2011 03:59:07 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p9B7wiOH013195
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 11 Oct 2011 09:58:44 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id p9B7wfOv013187;
+	Tue, 11 Oct 2011 09:58:42 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <alpine.DEB.2.00.1110061025590.18528@ds9.cixit.se>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Tue, 11 Oct 2011 09:58:44 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183285>
 
-Junio C Hamano venit, vidit, dixit 10.10.2011 18:45:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> What norm? --amend keeps some header fields and discards others. In
->> fact, signing a commit "without changing it" (i.e. keeping tree, parents
->> etc., alias "--amend -C HEAD") should be the normal use case for signing
->> the tip of an existing branch. I mean, I have no problems adding to this:
->>
->> git help fixup
->> `git fixup' is aliased to `commit --amend -C HEAD'
-> 
-> You are *additionally* saying "-C HEAD" in an non-standard alias. Isn't
-> that enough indication that a vanila "--amend" is intended to record the
-> commit based on the updated context in which the new commit is made?
-> E.g. the authorship of the patch is still the same but committer
-> information is updated.
+Peter Krefting:
 
-I was more referring to leaving "parent" and "tree" headers in place,
-which is a bit of a screwed comparison (because it relies on an
-unchanged index).
+> I have experience working with Translation Project, both as a softwar=
+e=20
+> maintainer requesting translation, and as a translator doing translat=
+ions,=20
+> and I am interested in setting up a po repository for Git and use TP =
+to=20
+> maintain translations (or directly, for those that would prefer that)=
+=2E
 
->> But what is the best default for the workflows that we encourage (commit
->> early, ...)? You answer a pull-request which happens to be a
->> fast-forward, sign the tip and suddenly you've taken over ownership (and
->> changed dates)??? Signing a commit should not do this.
-> 
-> I personally think a pull that is made in response to a pull-request,
-> i.e. the upstream merging from lieutenant, especially when the
-> authenticity of the puller matters, is perfectly fine with --no-ff.
+I have now extracted the po/ directory from =C6var's ab/i18n branch and=
+ made=20
+them available in a repository on Github: https://github.com/nafmo/git-=
+po
 
-Yeah, --no-ff would work. I guess we should find out what our "main
-customers" need here, since our own patch-based workflow is irrelevant,
-and either approach works with our "single push authority". Seems
---no-ff is an easy solution to multiple sigs.
-
-> Unlike the sign-less "we together made these history and nobody really
-> owns the result" (aka "Linus hates --no-ff merge because people do that to
-> leave a mark by peeing in the snow, without adding anything of value in
-> the history"), the whole purpose of signing a commit in the scenario you
-> mentioned is for the puller to leave his mark in the history.
-
-diff --git i/Documentation/merge-options.txt
-w/Documentation/merge-options.txt
-index b613d4e..74d6a05 100644
---- i/Documentation/merge-options.txt
-+++ w/Documentation/merge-options.txt
-@@ -7,6 +7,13 @@ With --no-commit perform the merge but pretend the merge
- failed and do not autocommit, to give the user a chance to
- inspect and further tweak the merge result before committing.
-
-+--pee::
-+--no-pee::
-+       This activates `--commit` and `--no-ff` and passes
-+       `--gpg-sign` to `commit`.
-++
-+Use `--no-pee` if you do not want or need to pee.
-+
- --ff::
- --no-ff::
-        Do not generate a merge commit if the merge resolved as
-
-:)
-
-Michael
+--=20
+\\// Peter - http://www.softwolves.pp.se/
