@@ -1,83 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 19/22] resolve_ref(): emit warnings for
- improperly-formatted references
-Date: Tue, 11 Oct 2011 12:16:53 -0400
-Message-ID: <20111011161652.GA15629@sigill.intra.peff.net>
-References: <1316121043-29367-1-git-send-email-mhagger@alum.mit.edu>
- <1316121043-29367-20-git-send-email-mhagger@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] attr.c: respect core.ignorecase when matching
+ attribute patterns
+Date: Tue, 11 Oct 2011 09:54:07 -0700
+Message-ID: <7v8vorh3kg.fsf@alter.siamese.dyndns.org>
+References: <4E93BBA8.6080403@alum.mit.edu>
+ <HBn1XX5GLcGG9WPqS0RC9Uscll_6Kbd741mHOR7uc_IFxdOpGSDGF7qEBPF66SbtO3keG4GcnkbtEvKDQ5D3bCDNiV9EPgEh-CMLKgbfFJcpVD5Gcb69-QoqTpHG_J9pDQG844LtNZU@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	cmn@elego.de, A Large Angry SCM <gitzilla@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Oct 11 18:17:01 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu,
+	Brandon Casey <drafnel@gmail.com>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Tue Oct 11 18:54:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDf0m-0007UZ-Eu
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 18:17:00 +0200
+	id 1RDfat-00038d-2p
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 18:54:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755109Ab1JKQQ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Oct 2011 12:16:56 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57587
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755158Ab1JKQQz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Oct 2011 12:16:55 -0400
-Received: (qmail 2774 invoked by uid 107); 11 Oct 2011 16:16:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 11 Oct 2011 12:16:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Oct 2011 12:16:53 -0400
-Content-Disposition: inline
-In-Reply-To: <1316121043-29367-20-git-send-email-mhagger@alum.mit.edu>
+	id S1754975Ab1JKQyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Oct 2011 12:54:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50742 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754970Ab1JKQyN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Oct 2011 12:54:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 58D214351;
+	Tue, 11 Oct 2011 12:54:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ngjdZfPfPw5Zd4E30RkzpJ4lG2Y=; b=suyq7d
+	9X+nR9qzCFM3JUste0wJZCXA4sf3lM650y70qUpdkXKwk2zzqpo55Qky/eDMmRK+
+	7nbMXzEtK5XL0md2DbDMSj6WAeaMAFYBdEMe+qYqZuqhbyMp5oNtA5XSabDIvpBk
+	3ZyzVmk/9OzRkbZ89LrGfjeXR5EaNRk2poAMU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Xlk2VTTWBRhx29UlQnjv0eKVvd2juCek
+	INx2tcOdq3qSE3wopmzRfd3C05y/cymhGwgcKHyKfYDUTDkBRf0JM9hg/EQJYfTx
+	/27f5GGDAAu+DRlKNeUuoiwzWcsvqmaFrisN/9i6lXh8l05dpwSx7xXBF5ZJl5rO
+	sOaKoaGJMAA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F3734345;
+	Tue, 11 Oct 2011 12:54:10 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B61E94344; Tue, 11 Oct 2011
+ 12:54:09 -0400 (EDT)
+In-Reply-To: <HBn1XX5GLcGG9WPqS0RC9Uscll_6Kbd741mHOR7uc_IFxdOpGSDGF7qEBPF66SbtO3keG4GcnkbtEvKDQ5D3bCDNiV9EPgEh-CMLKgbfFJcpVD5Gcb69-QoqTpHG_J9pDQG844LtNZU@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Tue, 11 Oct 2011 10:53:31 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A3A6D7F6-F429-11E0-A760-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183305>
 
-On Thu, Sep 15, 2011 at 11:10:40PM +0200, Michael Haggerty wrote:
+Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-> While resolving references, if a reference is found that is in an
-> unrecognized format, emit a warning (and then fail, as before).
-> Wouldn't *you* want to know?
+> ...  Currently, git builds the attr stack
+> based on the path supplied by the user, so we don't have to do anything
+> special (like use strcmp_icase) to handle the parts of that path that don't
+> match the filesystem with respect to case.  If git instead built the attr
+> stack by scanning the repository, then the paths in the origin field would
+> not necessarily match the paths supplied by the user.
 
-Not necessarily. :)
+I find this description somewhat misleading. "check-attr" at the plumbing
+level does take full path from the end user, but a common thing Git does
+is to ask the system to learn the prefix to the current directory with
+getcwd(3) append what fill_directory() enumerates as matching a pathspec
+given by the user with readdir(3) to the prefix to form the full path, and
+then feed that full path to git_check_attr().
 
-I noticed this today, and bisected it to this patch:
-
-  $ git.v1.7.7 show config
-  fatal: ambiguous argument 'config': unknown revision or path not in the working tree.
-  Use '--' to separate paths from revisions
-
-  $ git.mh.check-ref-format-3 show config
-  warning: reference in .git/config is formatted incorrectly
-  warning: reference in .git/config is formatted incorrectly
-  fatal: ambiguous argument 'config': unknown revision or path not in the working tree.
-  Use '--' to separate paths from revisions
-
-which is arguably not a big deal, as we eventually report failure
-anyway. But it's even worse with:
-
-  $ git branch config v1.7.7
-  $ git show --oneline config
-  warning: reference in .git/config is formatted incorrectly
-  703f05a Git 1.7.7
-
-As you probably guessed, this is due to the ref resolution rules first
-looking directly in .git for refs, which catches things like "HEAD" and
-fully-qualified refs like "refs/heads/foo".
-
-Which means we have been considering ".git/config" as a possible ref for
-a long time, which is arguably wrong. Your patch only makes it more
-obvious that this is the case.
-
-I wonder if the right solution is for us to be more picky about what can
-be found in $GIT_DIR. Maybe matching all-uppercase, or starting with
-"refs/", which I think would match existing convention?
-
--Peff
+Without anybody changing anything, we already do build the attr stack by
+"scanning the repository" in that case, no?
