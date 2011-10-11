@@ -1,127 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 19/22] resolve_ref(): emit warnings for
- improperly-formatted references
-Date: Tue, 11 Oct 2011 11:07:59 -0700
-Message-ID: <7vmxd7flkw.fsf@alter.siamese.dyndns.org>
-References: <1316121043-29367-1-git-send-email-mhagger@alum.mit.edu>
- <1316121043-29367-20-git-send-email-mhagger@alum.mit.edu>
- <20111011161652.GA15629@sigill.intra.peff.net>
- <7vr52jfm8i.fsf@alter.siamese.dyndns.org>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [RFC/WIP PATCH] Use config value rebase.editor as editor when
+ starting git rebase -i
+Date: Tue, 11 Oct 2011 14:15:25 -0400
+Message-ID: <CABURp0oQJ_rUQyOmm+CmZaqBp2mZYCwZRAz_mO5BshK4E+6eCA@mail.gmail.com>
+References: <201110111956.08829.kumbayo84@arcor.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, cmn@elego.de,
-	A Large Angry SCM <gitzilla@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Oct 11 20:08:17 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Peter Oberndorfer <kumbayo84@arcor.de>
+X-From: git-owner@vger.kernel.org Tue Oct 11 20:15:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDgkS-0007cq-9P
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 20:08:17 +0200
+	id 1RDgro-0002zq-Jx
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 20:15:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755010Ab1JKSIH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Oct 2011 14:08:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54900 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754879Ab1JKSIG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Oct 2011 14:08:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 556205B5A;
-	Tue, 11 Oct 2011 14:08:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tVu6vjWJvxz+md4bSbJFa2Isndg=; b=fxltLU
-	rwgfwjVHVPTr3x6PrQJXvvuiBaAcgHSRbV0MedbSc6yYJ0f2uSbvSVE2XA2uShgy
-	3PQQMOags9CrdMEvsmUdC2mmpP13+7trtHN7ze2a3Dgk/XgesUytbgOWmNd+5pzO
-	yLw6gWdk/vHqqZ1ePAHuY+nWZrPXzEIsgc7dw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=S/oJozaoY4P166byGPBGZXiyvz2j9ebo
-	v129qJz5e77Ch+jz1H+WTXasxy0glaQ76DUfREEr45nNlXfVRY49+ObeK+y+erTU
-	XCPKaaVUQ0YkWfn38+l8oHl8omp8IW66ezqukgUukJID2OcCkDAU8nUz6EB4hPM1
-	pi3CN9rH4Dw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B36045B58;
-	Tue, 11 Oct 2011 14:08:03 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D5E5A5B53; Tue, 11 Oct 2011
- 14:08:02 -0400 (EDT)
-In-Reply-To: <7vr52jfm8i.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 11 Oct 2011 10:53:49 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F605D8A8-F433-11E0-851A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755147Ab1JKSPs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Oct 2011 14:15:48 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:40936 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754844Ab1JKSPr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Oct 2011 14:15:47 -0400
+Received: by wyg34 with SMTP id 34so7345491wyg.19
+        for <git@vger.kernel.org>; Tue, 11 Oct 2011 11:15:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=UTcCkr+N4lfkFZLsV2XW2soTI9VXdOA9NWePRVVd9hM=;
+        b=hUQng3A0eBK0qCJB1n/DxqayOWyYSeYPyJ+hjuVD57ewpAOc2gRZsZjd+HyZA/cxOp
+         KPVIBZxjorgT6ID6MjkEWPoxUdLttZENy7llJ99+sIXmKlGtlLOY8EL4TkR1fGyk6M1t
+         9a0nai3OCcvEse+f/g/k5a50kIv06gsupR3tU=
+Received: by 10.216.159.12 with SMTP id r12mr1306358wek.87.1318356946222; Tue,
+ 11 Oct 2011 11:15:46 -0700 (PDT)
+Received: by 10.216.88.72 with HTTP; Tue, 11 Oct 2011 11:15:25 -0700 (PDT)
+In-Reply-To: <201110111956.08829.kumbayo84@arcor.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183316>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Oct 11, 2011 at 1:56 PM, Peter Oberndorfer <kumbayo84@arcor.de>=
+ wrote:
+> i wrote a (not yet released) git rebase -i helper that allows to orde=
+r commits
+> by drag/drop and allows to select the action from a combo box.
+> (written in Qt)
+> See http://i55.tinypic.com/2d94gg0.jpg for how it currently looks lik=
+e. :-)
+> No more typos, no more lost commit by cutting without pasting...
 
-> Jeff King <peff@peff.net> writes:
+[+1]
+
 >
->> I wonder if the right solution is for us to be more picky about what can
->> be found in $GIT_DIR. Maybe matching all-uppercase, or starting with
->> "refs/", which I think would match existing convention?
+> To integrate this properly into git i need something like this patch.
 >
-> I think we've discussed tightening it a few years ago already.
+> Open questions/problems:
+> * GIT_EDITOR env var is not honored anymore after this change.
+> =A0Help from somebody with more bash knowledge is highly appreciated!
 >
-> HEAD, MERGE_HEAD, FETCH_HEAD, etc. all are "^[_A-Z]*$" and it may even be
-> a good idea to insist "^[_A-Z]*HEAD$" or even "^([A-Z][A-Z]*_)?HEAD$".
+> * Should git_rebase_editor be in git-rebase--interactive.sh instead
+> =A0(since it is only used there)
+>
+> * How should the config be called?
+> =A0It is not directly used during rebase, only during rebase -i
+> =A0that might not be fully clear from the config name.
+>
+> * Better config.txt description?
+>
+> Thanks,
+> Greetings Peter
+>
+> PS: My tool will hopefully be released soon.
+> Cleanup code, test(lin/ win), write some doc (how to use with git),
+> choose name :-), choose license...
+>
+> =A0Documentation/config.txt =A0 | =A0 =A06 ++++++
+> =A0git-rebase--interactive.sh | =A0 =A02 +-
+> =A0git-sh-setup.sh =A0 =A0 =A0 =A0 =A0 =A0| =A0 13 +++++++++++++
+> =A03 files changed, 20 insertions(+), 1 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 03296b7..1d9ae79 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1591,6 +1591,12 @@ rebase.stat::
+> =A0 =A0 =A0 =A0Whether to show a diffstat of what changed upstream si=
+nce the last
+> =A0 =A0 =A0 =A0rebase. False by default.
+>
+> +rebase.editor::
+> + =A0 =A0 =A0 Text editor used by git rebase -i for editing the rebas=
+se todo file.
+s/rebasse/rebase/
 
-Perhaps like this? Only compile tested...
+> =A0cp "$todo" "$todo".backup
+> -git_editor "$todo" ||
+> +git_rebase_editor "$todo" ||
+> =A0 =A0 =A0 =A0die_abort "Could not execute editor"
 
- sha1_name.c |   21 +++++++++++++++++++++
- 1 files changed, 21 insertions(+), 0 deletions(-)
+Maybe something like this would work:
+  git_rebase_editor "$todo" ||
+  git_editor "$todo" ||
+=A0 =A0 =A0 =A0die_abort "Could not execute editor"
 
-diff --git a/sha1_name.c b/sha1_name.c
-index ba976b4..5effb1a 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -261,6 +261,23 @@ static char *substitute_branch_name(const char **string, int *len)
- 	return NULL;
- }
- 
-+static int is_kind_of_head(const char *str)
-+{
-+	int len = strlen(str) - 4;
-+	if (len < 0 || strcmp(str + len, "HEAD"))
-+		return 0;
-+	if (!len)
-+		return 1;
-+	if (str[--len] != '_' || !len)
-+		return 0;
-+	while (len) {
-+		char ch = str[--len];
-+		if (ch < 'A' || 'Z' < ch)
-+			return 0;
-+	}
-+	return 1;
-+}
-+
- int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
- {
- 	char *last_branch = substitute_branch_name(&str, &len);
-@@ -274,6 +291,8 @@ int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
- 		unsigned char *this_result;
- 		int flag;
- 
-+		if (p == ref_rev_parse_rules && !is_kind_of_head(str))
-+			continue;
- 		this_result = refs_found ? sha1_from_ref : sha1;
- 		mksnpath(fullref, sizeof(fullref), *p, len, str);
- 		r = resolve_ref(fullref, this_result, 1, &flag);
-@@ -302,6 +321,8 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
- 		char path[PATH_MAX];
- 		const char *ref, *it;
- 
-+		if (p == ref_rev_parse_rules && !is_kind_of_head(str))
-+			continue;
- 		mksnpath(path, sizeof(path), *p, len, str);
- 		ref = resolve_ref(path, hash, 1, NULL);
- 		if (!ref)
+If git_rebase_editor call returns an error (non-zero exit code), then
+git_editor will be invoked. If that also returns an error, then the
+die_abort is called.
+
+I think this will allow your env:GIT_EDITOR to work as expected.
+
+Phil
