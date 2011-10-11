@@ -1,73 +1,105 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [PATCHv5/RFC 3/6] gitweb: Add manpage for gitweb
-	(APPLICATION!!!)
-Date: Tue, 11 Oct 2011 10:01:54 -0400
-Message-ID: <1318341714.22324.46.camel@drew-northup.unet.maine.edu>
-References: <1318098723-12813-1-git-send-email-jnareb@gmail.com>
-	 <20111010221811.GA21367@elie.hsd1.il.comcast.net>
-	 <1318338135.22324.33.camel@drew-northup.unet.maine.edu>
-	 <201110111551.09621.jnareb@gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: Display line numbers in gitk?
+Date: Tue, 11 Oct 2011 16:16:41 +0200
+Message-ID: <CAHGBnuNPUMq+bCEcqTMpov6mG4ar4vCi4iV64fG2=jbC-xSpaQ@mail.gmail.com>
+References: <4E904FA7.2060606@gmail.com>
+	<CABNJ2GLaquXK7o_V_6KmOtnbcCGXMgbupbVJzXU_yK=2a=wKSg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 11 16:04:11 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Pat Thoyts <patthoyts@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 11 16:16:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDcwE-0000m6-C0
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 16:04:11 +0200
+	id 1RDd8W-00075P-P9
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 16:16:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753461Ab1JKOEE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Oct 2011 10:04:04 -0400
-Received: from beryl.its.maine.edu ([130.111.32.94]:49055 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752231Ab1JKOED (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Oct 2011 10:04:03 -0400
-Received: from [IPv6:2610:48:100:827::97] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827::97])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p9BE1w8I018175
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 11 Oct 2011 10:01:58 -0400
-In-Reply-To: <201110111551.09621.jnareb@gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC--Metrics: beryl.its.maine.edu 1356; Body=4 Fuz1=4 Fuz2=4
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p9BE1w8I018175
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1318946520.08425@+yNrZbsPoHSYzFY0jxzXzA
+	id S1754805Ab1JKOQn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Oct 2011 10:16:43 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:43971 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753496Ab1JKOQm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Oct 2011 10:16:42 -0400
+Received: by vws1 with SMTP id 1so5562831vws.19
+        for <git@vger.kernel.org>; Tue, 11 Oct 2011 07:16:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=idQtVOqNr23C3A/247w7GfzeBtFF5g6dBXLMRRoQvSo=;
+        b=YWKj3NQaBmZqGsrPuMITOplQLPpLVFLvG3TrXgdY66iKBueqd0hBZlwZQ0ajTbeaOg
+         Lc032NDetYOl1kuCWgZEi/hW8yMdxxa/nad2xucWiiMFFmoMAZX4/pyZmlLxeTQyoDCB
+         iXMUdqjYFd07BpXL3iqRHJblzZPAi4v0NNMCY=
+Received: by 10.52.31.102 with SMTP id z6mr18485812vdh.110.1318342601632; Tue,
+ 11 Oct 2011 07:16:41 -0700 (PDT)
+Received: by 10.220.188.69 with HTTP; Tue, 11 Oct 2011 07:16:41 -0700 (PDT)
+In-Reply-To: <CABNJ2GLaquXK7o_V_6KmOtnbcCGXMgbupbVJzXU_yK=2a=wKSg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183297>
 
-On Tue, 2011-10-11 at 15:51 +0200, Jakub Narebski wrote:
-> On Tue, 11 Oct 2011, Drew Northup wrote:
+On Tue, Oct 11, 2011 at 16:00, Pat Thoyts <patthoyts@gmail.com> wrote:
 
-> > This would be why I included a synopsis with my original submission. As
-> > this was supposed to be a description of the configuration files of said
-> > application it does not make much sense to put the executable in the
-> > synopsis. Please forgive me for attempting to make sense!
-> 
-> But this manpage is about _gitweb itself_, not about gitweb config file(s).
-> Gitweb itself is application, though it is not runnable directly (yet).
-> 
-> Web apps either don't use manpages as documentation, and those that do
-> that I found (SVN::Web for example) include runnable server-starting script.
+(putting the list back on CC)
 
-Hmm, Couldn't tell from the mail header _which_ we were talking about in
-this subthread. I'll have to read the _whole_ patch apparently next
-time.
+> Not currently possible. It can be done though. Is this just for the
+> file view or patch view as well?
+> The following seems to work reasonably well for just the file view.
 
-Crawling back into my cave...
+Thanks, from my tests it seems to work indeed very well. Although I
+was initially thinking about the patch view.
 
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+A downside of line numbers in the file view could be that they'll be
+copied to the clipboard, too, if you copy and paste code from there,
+so they should probably be implemented as an option.
+
+> From 0e18a9a2789838925f2ed50b05ce9d7e6c3a9a38 Mon Sep 17 00:00:00 200=
+1
+> From: Pat Thoyts <patthoyts@users.sourceforge.net>
+> Date: Tue, 11 Oct 2011 14:57:24 +0100
+> Subject: [PATCH] gitk: display line numbers for file view
+>
+> Suggested-by: Sebastian Schuberth <sschuberth@gmail.com>
+> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+> ---
+> =C2=A0gitk | =C2=A0 =C2=A05 ++++-
+> =C2=A01 files changed, 4 insertions(+), 1 deletions(-)
+>
+> diff --git a/gitk b/gitk
+> index 4cde0c4..70d8f57 100755
+> --- a/gitk
+> +++ b/gitk
+> @@ -2277,6 +2277,9 @@ proc makewindow {} {
+> =C2=A0 =C2=A0 if {$have_tk85} {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ctext conf -tabstyle wordprocessor
+> =C2=A0 =C2=A0 }
+> + =C2=A0 =C2=A0catch {eval font create linenofont [font configure tex=
+tfont] \
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-size [expr {[font =
+configure textfont -size] - 2}]}
+> + =C2=A0 =C2=A0$ctext tag configure lineno -foreground #808080 -font =
+linenofont
+> =C2=A0 =C2=A0 ${NS}::scrollbar .bleft.bottom.sb -command "$ctext yvie=
+w"
+> =C2=A0 =C2=A0 ${NS}::scrollbar .bleft.bottom.sbhorizontal -command "$=
+ctext
+> xview" -orient h
+> =C2=A0 =C2=A0 pack .bleft.top -side top -fill x
+> @@ -7316,7 +7319,7 @@ proc getblobline {bf id} {
+> =C2=A0 =C2=A0 $ctext config -state normal
+> =C2=A0 =C2=A0 set nl 0
+> =C2=A0 =C2=A0 while {[incr nl] <=3D 1000 && [gets $bf line] >=3D 0} {
+> - =C2=A0 =C2=A0 =C2=A0 $ctext insert end "$line\n"
+> + =C2=A0 =C2=A0 =C2=A0 $ctext insert end $nl lineno "\t" {} "$line\n"
+> =C2=A0 =C2=A0 }
+> =C2=A0 =C2=A0 if {[eof $bf]} {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0global jump_to_here ctext_file_names comme=
+ntend
+> --
+> 1.7.7.1.gbba15
