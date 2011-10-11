@@ -1,246 +1,90 @@
-From: Jeff Epler <jepler@unpythonic.net>
-Subject: [RESEND PATCH v3] Configurable hyperlinking in gitk
-Date: Tue, 11 Oct 2011 13:37:23 -0500
-Message-ID: <20111011183722.GA26646@unpythonic.net>
-References: <20110917022903.GA2445@unpythonic.net>
- <4E7467B7.1090201@gmail.com>
- <m3hb49sn26.fsf@localhost.localdomain>
- <20110922013101.GB26880@unpythonic.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/WIP PATCH] Use config value rebase.editor as editor when
+ starting git rebase -i
+Date: Tue, 11 Oct 2011 11:37:55 -0700
+Message-ID: <7vipnvfk70.fsf@alter.siamese.dyndns.org>
+References: <201110111956.08829.kumbayo84@arcor.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Marc Branchaud <marcnarc@xiplink.com>,
-	Chris Packham <judge.packham@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Paul Macke
-X-From: git-owner@vger.kernel.org Tue Oct 11 20:37:49 2011
+Cc: git@vger.kernel.org
+To: Peter Oberndorfer <kumbayo84@arcor.de>
+X-From: git-owner@vger.kernel.org Tue Oct 11 20:38:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDhCz-0005RS-Ug
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 20:37:46 +0200
+	id 1RDhDX-0005gi-6n
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Oct 2011 20:38:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755484Ab1JKSh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Oct 2011 14:37:28 -0400
-Received: from dsl.unpythonic.net ([206.222.212.217]:43315 "EHLO
-	unpythonic.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755388Ab1JKShZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Oct 2011 14:37:25 -0400
-Received: by unpythonic.net (Postfix, from userid 1000)
-	id 6878D278031; Tue, 11 Oct 2011 13:37:23 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <20110922013101.GB26880@unpythonic.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755651Ab1JKSiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Oct 2011 14:38:00 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33889 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755409Ab1JKSh6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Oct 2011 14:37:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 925F16415;
+	Tue, 11 Oct 2011 14:37:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hkxsnoUkr8EIykzyd7r37Y+f9QY=; b=uiminM
+	aRJ1tH79Cg7cSsyLSRXj+8pccXJn+s5ACyZ7+K2+o/zIWQ2+iu3T/+FtXVkHSjSO
+	5Z02AntHQMolLwqToIxQejnD14WLoajBg7Bd7CXpeEx5DgCgkkF4b+xUyqMlj6cA
+	ktXThooyT8PgQqGNovGJha29K1AD2/8V+SzXo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=I0ha8+L7JY+NiXF5aa+SAdRdR9Zje55r
+	9LrIp8jza3l9xFEQBqXB/GshxKOi7Ryl2/s5B6fPq1c8vYHjJXo79a899fPgjU7i
+	Hem5NbhkQmx806OHV2hH6leqaHCiknnRxFXzBuVIozNPHfVSgrCIKOd3wN5vf8rM
+	sEA/dTn1a7g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 889556413;
+	Tue, 11 Oct 2011 14:37:57 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1BB9C6411; Tue, 11 Oct 2011
+ 14:37:57 -0400 (EDT)
+In-Reply-To: <201110111956.08829.kumbayo84@arcor.de> (Peter Oberndorfer's
+ message of "Tue, 11 Oct 2011 19:56:08 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 23739F2E-F438-11E0-B684-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183319>
 
-Many projects use project-specific notations in changelogs to refer
-to bug trackers and the like.  One example is the "Closes: #12345"
-notation used in Debian.
+Peter Oberndorfer <kumbayo84@arcor.de> writes:
 
-Make gitk configurable so that arbitrary strings can be turned into
-clickable links that are opened in a web browser.
+> Using $GIT_EDITOR or core.editor config var for this is not possible
+> since it is also used to start the commit message editor for reword action.
 
-Signed-off-by: Jeff Epler <jepler@unpythonic.net>
----
-This v3 patch didn't generate any discussion last time around (~3 weeks
-ago), so I've taken the liberty of reposting it.
+Your tool _could_ be smart about this issue and inspect the contents to
+launch a real editor when it is fed a material not for sequencing, but
+that feels hacky.
 
-I'm aware of no problems with this patch, and a number of people have
-commented that it is useful to them.  For URLs that contain "&" and
-other shell metacharacters, it *does* depend on r480f062c
-"git-web--browse: avoid the use of eval" which is in next but not maint.
+> * GIT_EDITOR env var is not honored anymore after this change.
 
-Since the V2 patch, I
- * Renamed configuration variables to get rid of the "gitk" prefix
-   to encourage other git-related programs to adopt the same
-   functionality.
+Care to explain?  "git var" knows magic about a few variables like
+GIT_EDITOR and GIT_PAGER.
 
- * Renamed configuration variables from cryptic "re", "sub" to less
-   cryptic "regexp" and "subst"
+	$ git config core.editor vim
+	$ GIT_EDITOR=vi EDITOR=emacs git var GIT_EDITOR
+        vi
+	$ unset GIT_EDITOR; EDITOR=emacs git var GIT_EDITOR
+        emacs
 
- * Changed the example RE to be an ERE (no \d or \M)
+> * Should git_rebase_editor be in git-rebase--interactive.sh instead
 
- * Documented that these are POSIX EREs; hopefully that's OK.  I see
-   in CodingGuidelines that in git itself "a subset of BREs" are used,
-   so maybe even this is too much power.  And hopefully tcl's
-   re_syntax really is close enough to an ERE superset that this isn't
-   a terrible lie about the initial implementation either.
+Probably yes.
 
- * Added a Signed-Off-By, since I've had a number of positive feedbacks
-   and the only problems I've heard of (since patch v2) are the ones
-   related to 'eval' in git-web--browse.
+> * How should the config be called?
 
-In v2 of the patch, I had fixed a problem with %-signs in URLs and
-changed the documentation example.
+Given that in the longer term we would be using a unified sequencer
+machinery for not just rebase-i but for am and cherry-pick, I would advise
+against calling this anything "rebase".  How does "sequence.edit" sound?
 
- Documentation/config.txt |   30 +++++++++++++++++-
- gitk-git/gitk            |   75 +++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 102 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ae9913b..ffc9ccf 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1064,6 +1064,10 @@ All gitcvs variables except for 'gitcvs.usecrlfattr' and
- is one of "ext" and "pserver") to make them apply only for the given
- access method.
- 
-+gitk.browser::
-+	Specify the browser that will be used to open links generated by
-+	'linkify' configuration options.
-+
- grep.lineNumber::
- 	If set to true, enable '-n' option by default.
- 
-@@ -1317,6 +1321,28 @@ interactive.singlekey::
- 	setting is silently ignored if portable keystroke input
- 	is not available.
- 
-+linkify.<name>.regexp::
-+	Specify a regular expression in the POSIX Extended Regular Expression
-+	syntax defining a class of strings to automatically convert to
-+	hyperlinks.  This regular expression many not span multiple lines.
-+	You must also specify 'linkify.<name>.subst'.
-+
-+linkify.<name>.subst::
-+	Specify a substitution that results in the target URL for the
-+	related regular expression.  Back-references like '\1' refer
-+	to capturing groups in the associated regular expression.
-+	You must also specify 'linkify.<name>.regexp'.
-++
-+For example, to automatically link from Debian-style "Closes: #nnnn"
-+message to the Debian BTS,
-++
-+--------
-+    git config linkify.debian-bts.regexp '#([1-9][0-9]*)'
-+    git config linkify.debian-bts.subst 'http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=\1'
-+--------
-++
-+Currently, only linkgit:gitk[1] converts strings to links in this fashion.
-+
- log.abbrevCommit::
- 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
- 	linkgit:git-whatchanged[1] assume `\--abbrev-commit`. You may
-@@ -1870,5 +1896,5 @@ user.signingkey::
- 
- web.browser::
- 	Specify a web browser that may be used by some commands.
--	Currently only linkgit:git-instaweb[1] and linkgit:git-help[1]
--	may use it.
-+	Currently only linkgit:git-instaweb[1], linkgit:gitk[1],
-+	and linkgit:git-help[1] may use it.
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 4cde0c4..9db5525 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -6684,7 +6684,7 @@ proc commit_descriptor {p} {
- # append some text to the ctext widget, and make any SHA1 ID
- # that we know about be a clickable link.
- proc appendwithlinks {text tags} {
--    global ctext linknum curview
-+    global ctext linknum curview linkmakers
- 
-     set start [$ctext index "end - 1c"]
-     $ctext insert end $text $tags
-@@ -6699,6 +6699,30 @@ proc appendwithlinks {text tags} {
- 	setlink $linkid link$linknum
- 	incr linknum
-     }
-+
-+    if {$linkmakers == {}} return
-+
-+    set link_re {}
-+    foreach {re rep} $linkmakers { lappend link_re $re }
-+    set link_re "([join $link_re {)|(}])"
-+
-+    set ee 0
-+    while {[regexp -indices -start $ee -- $link_re $text l]} {
-+	set s [lindex $l 0]
-+	set e [lindex $l 1]
-+	set linktext [string range $text $s $e]
-+	incr e
-+	set ee $e
-+
-+	foreach {re rep} $linkmakers {
-+	    if {![regsub $re $linktext $rep linkurl]} continue
-+	    $ctext tag delete link$linknum
-+	    $ctext tag add link$linknum "$start + $s c" "$start + $e c"
-+	    seturllink $linkurl link$linknum
-+	    incr linknum
-+	    break
-+	}
-+    }
- }
- 
- proc setlink {id lk} {
-@@ -6726,6 +6750,53 @@ proc setlink {id lk} {
-     }
- }
- 
-+proc get_link_config {} {
-+    if {[catch {exec git config -z --get-regexp {^linkify\.}} linkers]} {
-+	return {}
-+    }
-+
-+    set linktypes [list]
-+    foreach item [split $linkers "\0"] {
-+	if {$item == ""} continue
-+	if {![regexp {linkify\.(\S+)\.(regexp|subst)\s(.*)} $item _ k t v]} {
-+	    continue
-+	}
-+	set linkconfig($t,$k) $v
-+	if {$t == "regexp"} { lappend linktypes $k }
-+    }
-+
-+    set linkmakers [list]
-+    foreach k $linktypes {
-+	if {![info exists linkconfig(subst,$k)]} {
-+	    puts stderr "Warning: link `$k' is missing a substitution string"
-+	} elseif {[catch {regexp -inline -- $linkconfig(regexp,$k) ""} err]} {
-+	    puts stderr "Warning: link `$k': $err"
-+	} else {
-+	    lappend linkmakers $linkconfig(regexp,$k) $linkconfig(subst,$k)
-+	}
-+	unset linkconfig(regexp,$k)
-+	unset -nocomplain linkconfig(subst,$k)
-+    }
-+    foreach k [array names linkconfig] {
-+	regexp "subst,(.*)" $k _ k
-+	puts stderr "Warning: link `$k' is missing a regular expression"
-+    }
-+    set linkmakers
-+}
-+
-+proc openlink {url} {
-+    exec git web--browse --config=gitk.browser $url &
-+}
-+
-+proc seturllink {url lk} {
-+    set qurl [string map {% %%} $url]
-+    global ctext
-+    $ctext tag conf $lk -foreground blue -underline 1
-+    $ctext tag bind $lk <1> [list openlink $qurl]
-+    $ctext tag bind $lk <Enter> {linkcursor %W 1}
-+    $ctext tag bind $lk <Leave> {linkcursor %W -1}
-+}
-+
- proc appendshortlink {id {pre {}} {post {}}} {
-     global ctext linknum
- 
-@@ -11693,6 +11764,8 @@ if {[tk windowingsystem] eq "win32"} {
-     focus -force .
- }
- 
-+set linkmakers [get_link_config]
-+
- getcommits {}
- 
- # Local variables:
--- 
-1.7.2.5
+You need to be prepared to adjust your code to deal with new kinds of
+sequencing insns in the insn sheet and possibly a format change of the
+insn sheet itself.
