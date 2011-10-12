@@ -1,8 +1,8 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Re* [PATCH v3 19/22] resolve_ref(): emit warnings for
  improperly-formatted references
-Date: Tue, 11 Oct 2011 16:50:46 -0700
-Message-ID: <7vehyjcckp.fsf@alter.siamese.dyndns.org>
+Date: Tue, 11 Oct 2011 22:11:28 -0400
+Message-ID: <20111012021128.GA32149@sigill.intra.peff.net>
 References: <1316121043-29367-1-git-send-email-mhagger@alum.mit.edu>
  <1316121043-29367-20-git-send-email-mhagger@alum.mit.edu>
  <20111011161652.GA15629@sigill.intra.peff.net>
@@ -10,64 +10,64 @@ References: <1316121043-29367-1-git-send-email-mhagger@alum.mit.edu>
  <7vmxd7flkw.fsf@alter.siamese.dyndns.org>
  <7v39ezffq5.fsf_-_@alter.siamese.dyndns.org>
  <20111011230749.GA29785@sigill.intra.peff.net>
+ <7vehyjcckp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
 	cmn@elego.de, A Large Angry SCM <gitzilla@gmail.com>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Sverre Rabbelier <srabbelier@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 12 01:50:55 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 12 04:11:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDm61-00076d-IU
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 01:50:54 +0200
+	id 1RDoID-0005v2-7Y
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 04:11:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751854Ab1JKXut (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Oct 2011 19:50:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38659 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751344Ab1JKXus (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Oct 2011 19:50:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68B72574A;
-	Tue, 11 Oct 2011 19:50:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=k0wrN2iG+p3y8D3iMzr7hvnzM1g=; b=UC9spu
-	1i78kzKJoMC3zoUBodZgvwkj51+LpvJZUUMMCHAmp+SHiiLGkLStwmNt4/7S2K2C
-	49wuqsFS07meA77CXNllUUO/6Xi20lbJhD4YYDjtBZQxQQSBdii0jxbpgfPn9vtl
-	oHs90CiE6E88IKjr4tH3dUjWyOjgq2Tj9oKGQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WfBwiP3ZojsuExZTo5k3JvC+je1l+o9e
-	b01Og5Drpgp0imXZV3ap1WIetbd2WNpq8xIP7Dyn8UzZXdmcio1+8lcqayN4tSJO
-	ipzHDSQCZ5QJq87yDpm+mnlDEa/kNMHZIrAAzZUvIcN37QkgckalaJq1D5ApzQtP
-	pboaPjQdH+w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 605855748;
-	Tue, 11 Oct 2011 19:50:48 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EACA15747; Tue, 11 Oct 2011
- 19:50:47 -0400 (EDT)
-In-Reply-To: <20111011230749.GA29785@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 11 Oct 2011 19:07:49 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D7C00212-F463-11E0-8C3B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751358Ab1JLCLb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Oct 2011 22:11:31 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57997
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751183Ab1JLCLa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Oct 2011 22:11:30 -0400
+Received: (qmail 7392 invoked by uid 107); 12 Oct 2011 02:11:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 11 Oct 2011 22:11:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Oct 2011 22:11:28 -0400
+Content-Disposition: inline
+In-Reply-To: <7vehyjcckp.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183350>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Oct 11, 2011 at 04:50:46PM -0700, Junio C Hamano wrote:
 
-> It looks like we also use it in remote.c:count_refspec_match, but I
-> haven't figured out if that can trigger a warning or not.
+> Jeff King <peff@peff.net> writes:
+> 
+> > It looks like we also use it in remote.c:count_refspec_match, but I
+> > haven't figured out if that can trigger a warning or not.
+> 
+> It starts sounding like that the ill-thought-out warning should be ripped
+> out regardless of what other things we do.
 
-It starts sounding like that the ill-thought-out warning should be ripped
-out regardless of what other things we do.
+Maybe. I think it is not the warning that is wrong, but that it is
+exposing a slightly hack-ish part of git (that we consider things like
+$GIT_DIR/config as possible refs, and just silently reject them because
+they happen not to have the right format).
+
+On the other hand, it has been working fine that way for years, so maybe
+it is not worth changing now.
+
+At any rate, I think the changes should be all or nothing. If the
+warning goes away, fine. But if the warning stays, and dwim_ref is going
+to have special rules for looking in the top-level $GIT_DIR, then things
+like shorten_unambiguous_ref need to respect those rules, or we've just
+created a new bug.
+
+-Peff
