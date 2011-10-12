@@ -1,161 +1,194 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/6] Recognize magic pathspec as filenames
-Date: Wed, 12 Oct 2011 13:49:26 -0700
-Message-ID: <7v4nze7x61.fsf@alter.siamese.dyndns.org>
-References: <1318373083-13840-1-git-send-email-pclouds@gmail.com>
- <1318373083-13840-2-git-send-email-pclouds@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC/PATCH] remote-curl: Obey passed URL
+Date: Wed, 12 Oct 2011 22:51:20 +0200
+Message-ID: <4E95FDC8.5030009@drmicha.warpmail.net>
+References: <4E8D4BD5.2090202@drmicha.warpmail.net> <2f1eccfa3fa9e732e9bea344fd69dfd9b16697a9.1317906388.git.git@drmicha.warpmail.net> <20111006132500.GA1792@sigill.intra.peff.net> <20111006133758.GA18033@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 12 22:49:35 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Tay Ray Chuan <rctay89@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 12 22:51:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RE5k6-0000XE-Px
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 22:49:35 +0200
+	id 1RE5m0-0001ki-5p
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 22:51:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754106Ab1JLUta convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Oct 2011 16:49:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56388 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754094Ab1JLUt3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Oct 2011 16:49:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5FD16A70;
-	Wed, 12 Oct 2011 16:49:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=8KyH2xXadduo
-	hr9yPFnUx7c/G20=; b=aJaI5KM0g7WW/Up7Qry1rC2iUWw1NmiyszU6V2zzenUv
-	upVPapco7g4eLaEF1Bd/bAUqJRpbM/dfHeUrgAvM+HuC72JBm1r8NsM7RXaNx2Hu
-	LrOrUDhU3/KWKaW8isfDBr3vAz9K9u1iYqeG/Cg6Bu4YTxzBghBmYRyHrIcdIUw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=me4nCb
-	0tiCS9ePVRi3NkufpduauikOi+iFU45nvjfAKvwk43pf36hNvRs+M5jPh25LhLET
-	6SsHng/VIjMFerdscAC6FsgO9DR/gBkYhlqdN7fzpFtmu5wpWy/dLNUVIwB6E49n
-	DYUajlbIadG/2Wer1QxHNxJevQtry40jSDX5w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE8A96A6F;
-	Wed, 12 Oct 2011 16:49:28 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3916A6A6D; Wed, 12 Oct 2011
- 16:49:28 -0400 (EDT)
-In-Reply-To: <1318373083-13840-2-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 12 Oct
- 2011 09:44:38 +1100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AD56CE06-F513-11E0-89D7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754132Ab1JLUv0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Oct 2011 16:51:26 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:56771 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752608Ab1JLUv0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Oct 2011 16:51:26 -0400
+Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 13F5A208CD;
+	Wed, 12 Oct 2011 16:51:23 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute4.internal (MEProxy); Wed, 12 Oct 2011 16:51:23 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=O0ew+/01r/pr3j+7tShf7l
+	XaTh4=; b=MKsB3Xe+q4e9jfJvtZWEXHDU4ANdH5/ucYPK5ZZ4xnZeOYXePb7h5T
+	+mlC5C3xofiF1YJ8NLDv/GckeWR3qRCQ3J/kD/1FZAkchpjUthFfQly5d7nKOd8x
+	ImnBo3IBq3zSAyToQTFRIBjAh1wFPF+AhJFwRNt8re06bFMlCbDZY=
+X-Sasl-enc: 5rUyiHVKn9PARTrXVXIfRAckX/G62BDjsqfZuwFcY2y6 1318452682
+Received: from localhost.localdomain (p5485939D.dip0.t-ipconnect.de [84.133.147.157])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 1E8DF483420;
+	Wed, 12 Oct 2011 16:51:21 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0) Gecko/20110927 Thunderbird/7.0
+In-Reply-To: <20111006133758.GA18033@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183414>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Jeff King venit, vidit, dixit 06.10.2011 15:37:
+> On Thu, Oct 06, 2011 at 09:25:00AM -0400, Jeff King wrote:
+> 
+>> Your analysis is correct, but tweaking the remote object seems kind
+>> of ugly. I think a nicer solution would be to pass the URL in
+>> separately to http_init. Of the three existing callers:
+> 
+> Here's what that patch looks like. It's definitely an improvement and
+> fixes a real bug, so it may be worth applying. But I'm still going to
+> look into pushing the url examination closer to the point of use.
 
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+It definitely is an improvement. I've been running happily with this
+(and without my askpass helper/workaround). Are you going forward with
+this one?
+
+> 
+> -- >8 --
+> Subject: [PATCH] http_init: accept separate URL parameter
+> 
+> The http_init function takes a "struct remote". Part of its
+> initialization procedure is to look at the remote's url and
+> grab some auth-related parameters. However, using the url
+> included in the remote is:
+> 
+>   - wrong; the remote-curl helper may have a separate,
+>     unrelated URL (e.g., from remote.*.pushurl). Looking at
+>     the remote's configured url is incorrect.
+> 
+>   - incomplete; http-fetch doesn't have a remote, so passes
+>     NULL. So http_init never gets to see the URL we are
+>     actually going to use.
+> 
+>   - cumbersome; http-push has a similar problem to
+>     http-fetch, but actually builds a fake remote just to
+>     pass in the URL.
+> 
+> Instead, let's just add a separate URL parameter to
+> http_init, and all three callsites can pass in the
+> appropriate information.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
 > ---
->  .. so that "git log :/" works, not so sure this is correct though
-
-At least the first half should be in the commit log message, and also i=
-t
-should contrast it against "git log -- :/".
-
-I doubt the approach taken by this particular patch (I do not know abou=
-t
-the rest of the series) is correct, as it breaks the symmetry between
-verify_filename() and verify_non_filename().
-
-When given a list of command line arguments, we do:
-
- (1) If there is "--", then no verification is needed. Everything befor=
-e
-     the double-dash that is not a "-flag" will be interpreted as revs
-     (and get_sha1() will error out otherwise), and everything after th=
-e
-     double-dash will be used as an pathspec element.
-
- (2) If there is no "--", then earlier ones must be all revs and cannot=
- be
-     pathnames in the working tree. The first argument that is not a re=
-v
-     and everything after that must be a pathname in the working tree, =
-and
-     must not be interpretable as revs.
-
-That "must be a pathname in the working tree" is what verify_filename()
-does. and you say that ":/foo" is OK to be a pathname in this patch.
-
-But shouldn't the opposite "cannot be pathnames in the working tree" ch=
-eck
-done by verify_non_filename() also be told the same logic? If ":/foo" i=
-s
-OK to be a pathname, shouldn't check_filename() call in that function a=
-lso
-be avoided the same way?
-
-And once that happens, I think you will be back to square one.
-
-"git log :/foo" is ambiguous no matter how you slice it, if you are goi=
-ng
-to look at only the first character in the string. It could be asking t=
-o
-show only commits that touch the path in the top-level directory "foo" =
-and
-its subdirectories, or it could be asking to start traversal at a commi=
-t
-with "foo" in the log message.
-
-Longhand magic pathspecs e.g. ":(icase)foo" might have better chance, b=
-ut
-not by a wide margin. It can be a rev that names the blob object in the
-index registered for the literal path "'(icase)foo", or it could be an
-element in the pathspec to match [Ff][Oo][[Oo].
-
->  setup.c |   16 +++++++---------
->  1 files changed, 7 insertions(+), 9 deletions(-)
->
-> diff --git a/setup.c b/setup.c
-> index 27c1d47..08f605b 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -58,15 +58,8 @@ static void NORETURN die_verify_filename(const cha=
-r *prefix, const char *arg)
->  	unsigned char sha1[20];
->  	unsigned mode;
-> =20
+>  http-fetch.c  |    2 +-
+>  http-push.c   |   10 +---------
+>  http.c        |    8 ++++----
+>  http.h        |    2 +-
+>  remote-curl.c |    2 +-
+>  5 files changed, 8 insertions(+), 16 deletions(-)
+> 
+> diff --git a/http-fetch.c b/http-fetch.c
+> index 3af4c71..e341872 100644
+> --- a/http-fetch.c
+> +++ b/http-fetch.c
+> @@ -63,7 +63,7 @@ int main(int argc, const char **argv)
+>  
+>  	git_config(git_default_config, NULL);
+>  
+> -	http_init(NULL);
+> +	http_init(NULL, url);
+>  	walker = get_http_walker(url);
+>  	walker->get_tree = get_tree;
+>  	walker->get_history = get_history;
+> diff --git a/http-push.c b/http-push.c
+> index 376331a..215b640 100644
+> --- a/http-push.c
+> +++ b/http-push.c
+> @@ -1747,7 +1747,6 @@ int main(int argc, char **argv)
+>  	int i;
+>  	int new_refs;
+>  	struct ref *ref, *local_refs;
+> -	struct remote *remote;
+>  
+>  	git_extract_argv0_path(argv[0]);
+>  
+> @@ -1821,14 +1820,7 @@ int main(int argc, char **argv)
+>  
+>  	memset(remote_dir_exists, -1, 256);
+>  
 > -	/*
-> -	 * Saying "'(icase)foo' does not exist in the index" when the
-> -	 * user gave us ":(icase)foo" is just stupid.  A magic pathspec
-> -	 * begins with a colon and is followed by a non-alnum; do not
-> -	 * let get_sha1_with_mode_1(only_to_die=3D1) to even trigger.
+> -	 * Create a minimum remote by hand to give to http_init(),
+> -	 * primarily to allow it to look at the URL.
 > -	 */
-> -	if (!(arg[0] =3D=3D ':' && !isalnum(arg[1])))
-> -		/* try a detailed diagnostic ... */
-> -		get_sha1_with_mode_1(arg, sha1, &mode, 1, prefix);
-> +	/* try a detailed diagnostic ... */
-> +	get_sha1_with_mode_1(arg, sha1, &mode, 1, prefix);
-> =20
->  	/* ... or fall back the most general message. */
->  	die("ambiguous argument '%s': unknown revision or path not in the w=
-orking tree.\n"
-> @@ -85,6 +78,11 @@ void verify_filename(const char *prefix, const cha=
-r *arg)
+> -	remote = xcalloc(sizeof(*remote), 1);
+> -	ALLOC_GROW(remote->url, remote->url_nr + 1, remote->url_alloc);
+> -	remote->url[remote->url_nr++] = repo->url;
+> -	http_init(remote);
+> +	http_init(NULL, repo->url);
+>  
+>  #ifdef USE_CURL_MULTI
+>  	is_running_queue = 0;
+> diff --git a/http.c b/http.c
+> index b2ae8de..d9f9938 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -357,7 +357,7 @@ static void set_from_env(const char **var, const char *envname)
+>  		*var = val;
+>  }
+>  
+> -void http_init(struct remote *remote)
+> +void http_init(struct remote *remote, const char *url)
 >  {
->  	if (*arg =3D=3D '-')
->  		die("bad flag '%s' used after filename", arg);
-> +
-> +	/* If it's magic pathspec, just assume it's file name */
-> +	if (arg[0] =3D=3D ':' && is_pathspec_magic(arg[1]))
-> +		return;
-> +
->  	if (check_filename(prefix, arg))
->  		return;
->  	die_verify_filename(prefix, arg);
+>  	char *low_speed_limit;
+>  	char *low_speed_time;
+> @@ -421,11 +421,11 @@ void http_init(struct remote *remote)
+>  	if (getenv("GIT_CURL_FTP_NO_EPSV"))
+>  		curl_ftp_no_epsv = 1;
+>  
+> -	if (remote && remote->url && remote->url[0]) {
+> -		http_auth_init(remote->url[0]);
+> +	if (url) {
+> +		http_auth_init(url);
+>  		if (!ssl_cert_password_required &&
+>  		    getenv("GIT_SSL_CERT_PASSWORD_PROTECTED") &&
+> -		    !prefixcmp(remote->url[0], "https://"))
+> +		    !prefixcmp(url, "https://"))
+>  			ssl_cert_password_required = 1;
+>  	}
+>  
+> diff --git a/http.h b/http.h
+> index 0bf8592..3c332a9 100644
+> --- a/http.h
+> +++ b/http.h
+> @@ -86,7 +86,7 @@ struct buffer {
+>  extern void step_active_slots(void);
+>  #endif
+>  
+> -extern void http_init(struct remote *remote);
+> +extern void http_init(struct remote *remote, const char *url);
+>  extern void http_cleanup(void);
+>  
+>  extern int data_received;
+> diff --git a/remote-curl.c b/remote-curl.c
+> index 69831e9..33d3d8c 100644
+> --- a/remote-curl.c
+> +++ b/remote-curl.c
+> @@ -852,7 +852,7 @@ int main(int argc, const char **argv)
+>  
+>  	url = strbuf_detach(&buf, NULL);
+>  
+> -	http_init(remote);
+> +	http_init(remote, url);
+>  
+>  	do {
+>  		if (strbuf_getline(&buf, stdin, '\n') == EOF)
