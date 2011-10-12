@@ -1,159 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/6] revert: Make commit descriptions in insn sheet
- optional
-Date: Wed, 12 Oct 2011 14:05:25 -0700
-Message-ID: <7vwrc97wfe.fsf@alter.siamese.dyndns.org>
-References: <1318095407-26429-1-git-send-email-artagnon@gmail.com>
- <1318095407-26429-5-git-send-email-artagnon@gmail.com>
- <7vwrccn34l.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC] remote: support --all for the prune-subcommand
+Date: Wed, 12 Oct 2011 17:36:18 -0400
+Message-ID: <20111012213618.GA4315@sigill.intra.peff.net>
+References: <1317644168-5808-1-git-send-email-kusmabite@gmail.com>
+ <20111004070006.GA6824@sigill.intra.peff.net>
+ <CABPQNSZrfxhyA3em8TN2=d7pAHopZMgRg47baKnDT9h14=rxkA@mail.gmail.com>
+ <20111004071332.GA7308@sigill.intra.peff.net>
+ <CABPQNSZ-ELfFuxmKMqXCQaAgMZMRsZG3S5wWJLsjkYVvK6aGug@mail.gmail.com>
+ <CABPQNSb7NYTac5uWSegK9rmYz1n0yt1GJWHKUtLg1k_OYHdDNg@mail.gmail.com>
+ <20111004075608.GC7308@sigill.intra.peff.net>
+ <CABPQNSb7WACrr=7FsR8YVMC1-q3i0zRhQtXiV8VshfCJn3qgEA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 12 23:05:36 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 12 23:36:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RE5za-0001P8-O6
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 23:05:35 +0200
+	id 1RE6TS-0000Oz-Eu
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 23:36:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754160Ab1JLVF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Oct 2011 17:05:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63848 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753912Ab1JLVF2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Oct 2011 17:05:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EFEB36EDB;
-	Wed, 12 Oct 2011 17:05:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=M+jgn6o3o7+sNmC8g8qbkSkk1yk=; b=QyY8Tt
-	iEAkpmehinLwXgUWA4bS/h/d/AZ/4Kkd/TyvyjflTeF5N7N4BsGBNrahvQNN3cgL
-	T7pMtKBMjCcVz3feyOWm3rDs2ryyTt4Kx5inQ3OD9w5fN/Fewkm0jr3PV+hjbqPx
-	0qsoZPtdPz4okoRWwufq7fyhENIUnnz9p9kPQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Bzx5SuHJTISKbP8gwQXP4zWP5X14iyG0
-	/JDhzlMQNFmegicdI3LuQiTuaxsdGzMajGOS8h2QnMH6k+oBBxGBVbpHa3/Vh9Qp
-	7uykJHeI+RLeKn1Rzy8OMgZbXh3yY+3OcDIvq5KhZbPCbG+4QM1qOzrn8TxsDktw
-	6qZs2aoyKAE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6A546EDA;
-	Wed, 12 Oct 2011 17:05:27 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2777C6ED7; Wed, 12 Oct 2011
- 17:05:27 -0400 (EDT)
-In-Reply-To: <7vwrccn34l.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 10 Oct 2011 10:54:50 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E8E7BEC4-F515-11E0-8F88-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754334Ab1JLVgV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Oct 2011 17:36:21 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58902
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754307Ab1JLVgU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Oct 2011 17:36:20 -0400
+Received: (qmail 18176 invoked by uid 107); 12 Oct 2011 21:36:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Oct 2011 17:36:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Oct 2011 17:36:18 -0400
+Content-Disposition: inline
+In-Reply-To: <CABPQNSb7WACrr=7FsR8YVMC1-q3i0zRhQtXiV8VshfCJn3qgEA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183416>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Oct 04, 2011 at 10:22:35AM +0200, Erik Faye-Lund wrote:
 
-> Since this is a part of clean-up series...
->
-> Do you even need to have a sha1_abbrev[] local array that is limited to 40
-> bytes here? The incoming _line_ is not "const char *start", so you should
-> at least be able to temporarily terminate the commit object name with NUL
-> (while remembering what byte there was before), give it to get_sha1(), and
-> then restore the byte at the end before returning from this function.
+> > I think the original rationale was that we didn't want fetch to be
+> > "lossy". That is, if I were using upstream's "foo" branch as part o=
+f my
+> > work (to diff against, or whatever), then doing a "git fetch" to up=
+date
+> > should not suddenly make it hard to do my work. And not just hard a=
+s in
+> > "I notice that it's gone and I adapt my workflow". But that you no
+> > longer have _any_ record of where upstream's "foo" branch used to p=
+oint,
+> > so even doing something like:
+> >
+> > =C2=A0git rebase --onto new-foo foo my-topic
+> >
+> > is impossible.
+>=20
+> Following that logic, a user cannot _ever_ safely prune a remote if h=
+e
+> wants to work on some of the branches. Doing something like "git
+> remote foo -n" to check if the branch would get pruned before doing a
+> proper prune is prone to a race-condition; the branch could be delete=
+d
+> on the remote between the dry-run and the actual pruning.
 
-Like this, perhaps.  I did this on top of the whole series only as a
-demonstration but the change should be squashed into this step when the
-series is rerolled.
+Right. And that's why we don't prune by default. In practice, it tends
+to be safe if you pick a reasonable time to prune, and the upstream is
+reasonable about their branches. But turning it on all the time takes
+away the "pick a reasonable time".
 
- builtin/revert.c |   47 +++++++++++++++++++----------------------------
- 1 files changed, 19 insertions(+), 28 deletions(-)
+> Besides, the owner of the repo can just as easily have deleted the
+> branch and created a new one with the same name, causing the contents
+> of the branch to be lost. This happens all the time with
+> "for-upstream"-kind of branches, no?
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index b28c3ca..170a6c1 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -691,42 +691,34 @@ static int format_todo(struct strbuf *buf, struct replay_insn_list *todo_list)
- 	return 0;
- }
- 
--static int parse_insn_line(char *start, struct replay_insn_list *item)
-+static int parse_insn_line(char *bol, char *eol, struct replay_insn_list *item)
- {
- 	unsigned char commit_sha1[20];
--	char sha1_abbrev[40];
--	const char *p, *q;
-+	char *end_of_object_name;
-+	int saved, status;
- 
--	p = start;
--	if (!prefixcmp(start, "pick ")) {
-+	if (!prefixcmp(bol, "pick ")) {
- 		item->action = REPLAY_PICK;
--		p += strlen("pick ");
--	} else if (!prefixcmp(start, "revert ")) {
-+		bol += strlen("pick ");
-+	} else if (!prefixcmp(bol, "revert ")) {
- 		item->action = REPLAY_REVERT;
--		p += strlen("revert ");
-+		bol += strlen("revert ");
- 	} else {
--		size_t len = strchrnul(p, '\n') - p;
--		if (len > 255)
--			len = 255;
--		return error(_("Unrecognized action: %.*s"), (int)len, p);
-+		return error(_("Unrecognized action: %s"), bol);
- 	}
- 
--	q = p + strcspn(p, " \n");
--	if (q - p + 1 > sizeof(sha1_abbrev)) {
--		size_t len = q - p;
--		if (len > 255)
--			len = 255;
--		return error(_("Object name too large: %.*s"), (int)len, p);
--	}
--	memcpy(sha1_abbrev, p, q - p);
--	sha1_abbrev[q - p] = '\0';
-+	end_of_object_name = bol + strcspn(bol, " \n");
-+	saved = *end_of_object_name;
-+	*end_of_object_name = '\0';
-+	status = get_sha1(bol, commit_sha1);
-+	*end_of_object_name = saved;
- 
--	if (get_sha1(sha1_abbrev, commit_sha1) < 0)
--		return error(_("Malformed object name: %s"), sha1_abbrev);
-+	if (status < 0)
-+		return error(_("Malformed object name: %s"), bol);
- 
- 	item->operand = lookup_commit_reference(commit_sha1);
- 	if (!item->operand)
--		return error(_("Not a valid commit: %s"), sha1_abbrev);
-+		return error(_("Not a valid commit: %s"), bol);
- 
- 	item->next = NULL;
- 	return 0;
-@@ -740,12 +732,11 @@ static int parse_insn_buffer(char *buf, struct replay_insn_list **todo_list)
- 	int i;
- 
- 	for (i = 1; *p; i++) {
--		if (parse_insn_line(p, &item) < 0)
-+		char *eol = strchrnul(p, '\n');
-+		if (parse_insn_line(p, eol, &item) < 0)
- 			return error(_("on line %d."), i);
- 		next = replay_insn_list_append(item.action, item.operand, next);
--		p = strchrnul(p, '\n');
--		if (*p)
--			p++;
-+		p = *eol ? eol + 1 : eol;
- 	}
- 	if (!*todo_list)
- 		return error(_("No commits parsed."));
+They can do that, but on the local side, you will just see a jump in
+history. But because we didn't _delete_ the ref on the local side, you
+will retain your reflog.
+
+IOW, the reflog can save us from anything the upstream will do. And
+that's what makes deletion so special: we delete the local reflog.
+
+> > The right solution, IMHO, is that ref deletion should actually keep=
+ the
+> > reflog around in a graveyard of some sort. Entries would expire
+> > naturally over time, as they do in regular reflogs. And then it bec=
+omes
+> > a lot safer to prune on every fetch, because you still have 90 days=
+ look
+> > at the reflog.
+> >
+> Fixing the reflog to expire for ref deletion rather than completely
+> deleting it sounds like a good move, indeed.
+
+This is on my long-term todo list, but if somebody gets around to it
+before me, I won't be upset. :)
+
+> While we're on the subject, an additional argument to change "git
+> fetch" to always prune is that it's much much easier for user to grok
+> "last known state of <remote>'s branches" than "the union of all the
+> branches that were ever pulled from <remote>, unless --prune was
+> specified". But that's not a technical one, and surely there's issues
+> to resolve with the proposal before going in that direction.
+
+Agreed. Really, everything argument points towards auto-prune except th=
+e
+reflog-safety thing. I think once that is fixed, turning on pruning by
+default becomes a no-brainer.
+
+-Peff
