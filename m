@@ -1,88 +1,122 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: [PATCH 00/20] [GIT PULL][v3.2] tracing: queued updates
-Date: Wed, 12 Oct 2011 10:07:14 +0200
-Message-ID: <20111012080711.GM18618@elte.hu>
-References: <20111010133852.829771373@goodmis.org>
- <20111011055017.GA32616@elte.hu>
- <20002.1318367320@turing-police.cc.vt.edu>
+From: Jim Meyering <jim@meyering.net>
+Subject: [PATCH] fix "git apply --index ..." not to deref NULL
+Date: Wed, 12 Oct 2011 10:18:01 +0200
+Message-ID: <87lisq8vye.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steven Rostedt <rostedt@goodmis.org>, linux-kernel@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Frederic Weisbecker <fweisbec@gmail.com>
-To: Valdis.Kletnieks@vt.edu, git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Wed Oct 12 10:09:04 2011
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 12 10:18:43 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1RDts7-0001SK-Sl
-	for glk-linux-kernel-3@lo.gmane.org; Wed, 12 Oct 2011 10:09:04 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1RDu1S-000600-NW
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 10:18:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752769Ab1JLIIz (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 12 Oct 2011 04:08:55 -0400
-Received: from mx2.mail.elte.hu ([157.181.151.9]:39124 "EHLO mx2.mail.elte.hu"
+	id S1752608Ab1JLISN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Oct 2011 04:18:13 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:40945 "EHLO smtp5-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751566Ab1JLIIx (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 12 Oct 2011 04:08:53 -0400
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1RDtrq-0006dW-A6
-	from <mingo@elte.hu>; Wed, 12 Oct 2011 10:08:51 +0200
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id 8E64A3E253E; Wed, 12 Oct 2011 10:08:38 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20002.1318367320@turing-police.cc.vt.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Received-SPF: neutral (mx2.mail.elte.hu: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-SpamScore: -2.0
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-2.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.3.1
-	-2.0 BAYES_00               BODY: Bayes spam probability is 0 to 1%
-	[score: 0.0000]
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1751772Ab1JLISL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Oct 2011 04:18:11 -0400
+Received: from mx.meyering.net (unknown [88.168.87.75])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id D4263D48330
+	for <git@vger.kernel.org>; Wed, 12 Oct 2011 10:18:03 +0200 (CEST)
+Received: from rho.meyering.net (localhost.localdomain [127.0.0.1])
+	by rho.meyering.net (Acme Bit-Twister) with ESMTP id 704926007E
+	for <git@vger.kernel.org>; Wed, 12 Oct 2011 10:18:01 +0200 (CEST)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183359>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183360>
 
 
-* Valdis.Kletnieks@vt.edu <Valdis.Kletnieks@vt.edu> wrote:
+I noticed this when "git am CORRUPTED" unexpectedly failed with an
+odd diagnostic, and even removed one of the files it was supposed
+to have patched.
 
-> On Tue, 11 Oct 2011 07:50:17 +0200, Ingo Molnar said:
-> 
-> >  $ git pull git://git.kernel.org/pub/scm/linux/kernel/git/rostedt/linux-2.6-trace.git tip/perf/core
-> >  fatal: The remote end hung up unexpectedly
-> 
-> Is it possible to get 'git' to say something more informative than 
-> "hung up unexpectedly"? "Tree not found, check URL" or similar 
-> would be nice...
+Reproduce with any valid old/new patch from which you have removed
+the "+++ b/FILE" line.  You'll see a diagnostic like this
 
-I've Cc:-ed the Git development list which has lots of very 
-responsive gents on it eager to improve Git.
+    fatal: unable to write file '(null)' mode 100644: Bad address
 
-I see this message dozens of times per year and i am always confused 
-about the message.
+and you'll find that FILE has been removed.
 
-Firstly, arguably, typoing something is not 'fatal' really - it's 
-just a resource that was not found on the server.
+The above is on glibc-based systems.  On other systems, rather than
+getting "null" in parentheses, you'll probably provoke a segfault,
+as git tries to dereference the NULL file name.
 
-Secondly, and more importantly, the reason for the failed pull is 
-indeed important to know, if you want to resolve the problem with a 
-minimum fuss:
+Signed-off-by: Jim Meyering <meyering@redhat.com>
+---
+ builtin/apply.c       |    3 +++
+ t/t4254-am-corrupt.sh |   43 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 46 insertions(+), 0 deletions(-)
+ create mode 100644 t/t4254-am-corrupt.sh
 
- - Was it the tree that didnt exist?
- - Or the branch?
- - Or was there some other problem [such as a truly unexpectedly 
-                                    closed transport socket]?
-
-It's really useful for a painless UI flow to disambiguate failure 
-messages into clearly actionable variants.
-
-Thanks,
-
-	Ingo
+diff --git a/builtin/apply.c b/builtin/apply.c
+index f2edc52..aaa39fe 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -1407,6 +1407,9 @@ static int find_header(char *line, unsigned long size, int *hdrsize, struct patc
+ 					    "%d leading pathname components (line %d)" , p_value, linenr);
+ 				patch->old_name = patch->new_name = patch->def_name;
+ 			}
++			if (!patch->is_delete && !patch->new_name)
++				die("git diff header lacks filename information "
++				    "(line %d)", linenr);
+ 			patch->is_toplevel_relative = 1;
+ 			*hdrsize = git_hdr_len;
+ 			return offset;
+diff --git a/t/t4254-am-corrupt.sh b/t/t4254-am-corrupt.sh
+new file mode 100644
+index 0000000..b7da95f
+--- /dev/null
++++ b/t/t4254-am-corrupt.sh
+@@ -0,0 +1,43 @@
++#!/bin/sh
++
++test_description='git am with corrupt input'
++. ./test-lib.sh
++
++# Note the missing "+++" line:
++cat > bad-patch.diff <<'EOF'
++From: A U Thor <au.thor@example.com>
++diff --git a/f b/f
++index 7898192..6178079 100644
++--- a/f
++@@ -1 +1 @@
++-a
+++b
++EOF
++
++test_expect_success setup '
++	test $? = 0 &&
++	echo a > f &&
++	git add f &&
++	test_tick &&
++	git commit -m initial
++'
++
++# This used to fail before, too, but with a different diagnostic.
++#   fatal: unable to write file '(null)' mode 100644: Bad address
++# Also, it had the unwanted side-effect of deleting f.
++test_expect_success 'try to apply corrupted patch' '
++	git am bad-patch.diff 2> actual
++	test $? = 1
++'
++
++cat > expected <<EOF
++fatal: git diff header lacks filename information (line 4)
++EOF
++
++test_expect_success 'compare diagnostic; ensure file is still here' '
++	test $? = 0 &&
++	test -f f &&
++	test_cmp expected actual
++'
++
++test_done
+--
+1.7.7
