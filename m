@@ -1,194 +1,159 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC/PATCH] remote-curl: Obey passed URL
-Date: Wed, 12 Oct 2011 22:51:20 +0200
-Message-ID: <4E95FDC8.5030009@drmicha.warpmail.net>
-References: <4E8D4BD5.2090202@drmicha.warpmail.net> <2f1eccfa3fa9e732e9bea344fd69dfd9b16697a9.1317906388.git.git@drmicha.warpmail.net> <20111006132500.GA1792@sigill.intra.peff.net> <20111006133758.GA18033@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/6] revert: Make commit descriptions in insn sheet
+ optional
+Date: Wed, 12 Oct 2011 14:05:25 -0700
+Message-ID: <7vwrc97wfe.fsf@alter.siamese.dyndns.org>
+References: <1318095407-26429-1-git-send-email-artagnon@gmail.com>
+ <1318095407-26429-5-git-send-email-artagnon@gmail.com>
+ <7vwrccn34l.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Tay Ray Chuan <rctay89@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 12 22:51:35 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 12 23:05:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RE5m0-0001ki-5p
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 22:51:32 +0200
+	id 1RE5za-0001P8-O6
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 23:05:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754132Ab1JLUv0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Oct 2011 16:51:26 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:56771 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752608Ab1JLUv0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Oct 2011 16:51:26 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 13F5A208CD;
-	Wed, 12 Oct 2011 16:51:23 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute4.internal (MEProxy); Wed, 12 Oct 2011 16:51:23 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=O0ew+/01r/pr3j+7tShf7l
-	XaTh4=; b=MKsB3Xe+q4e9jfJvtZWEXHDU4ANdH5/ucYPK5ZZ4xnZeOYXePb7h5T
-	+mlC5C3xofiF1YJ8NLDv/GckeWR3qRCQ3J/kD/1FZAkchpjUthFfQly5d7nKOd8x
-	ImnBo3IBq3zSAyToQTFRIBjAh1wFPF+AhJFwRNt8re06bFMlCbDZY=
-X-Sasl-enc: 5rUyiHVKn9PARTrXVXIfRAckX/G62BDjsqfZuwFcY2y6 1318452682
-Received: from localhost.localdomain (p5485939D.dip0.t-ipconnect.de [84.133.147.157])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 1E8DF483420;
-	Wed, 12 Oct 2011 16:51:21 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0) Gecko/20110927 Thunderbird/7.0
-In-Reply-To: <20111006133758.GA18033@sigill.intra.peff.net>
+	id S1754160Ab1JLVF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Oct 2011 17:05:29 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63848 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753912Ab1JLVF2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Oct 2011 17:05:28 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EFEB36EDB;
+	Wed, 12 Oct 2011 17:05:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=M+jgn6o3o7+sNmC8g8qbkSkk1yk=; b=QyY8Tt
+	iEAkpmehinLwXgUWA4bS/h/d/AZ/4Kkd/TyvyjflTeF5N7N4BsGBNrahvQNN3cgL
+	T7pMtKBMjCcVz3feyOWm3rDs2ryyTt4Kx5inQ3OD9w5fN/Fewkm0jr3PV+hjbqPx
+	0qsoZPtdPz4okoRWwufq7fyhENIUnnz9p9kPQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Bzx5SuHJTISKbP8gwQXP4zWP5X14iyG0
+	/JDhzlMQNFmegicdI3LuQiTuaxsdGzMajGOS8h2QnMH6k+oBBxGBVbpHa3/Vh9Qp
+	7uykJHeI+RLeKn1Rzy8OMgZbXh3yY+3OcDIvq5KhZbPCbG+4QM1qOzrn8TxsDktw
+	6qZs2aoyKAE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6A546EDA;
+	Wed, 12 Oct 2011 17:05:27 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2777C6ED7; Wed, 12 Oct 2011
+ 17:05:27 -0400 (EDT)
+In-Reply-To: <7vwrccn34l.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 10 Oct 2011 10:54:50 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E8E7BEC4-F515-11E0-8F88-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183415>
 
-Jeff King venit, vidit, dixit 06.10.2011 15:37:
-> On Thu, Oct 06, 2011 at 09:25:00AM -0400, Jeff King wrote:
-> 
->> Your analysis is correct, but tweaking the remote object seems kind
->> of ugly. I think a nicer solution would be to pass the URL in
->> separately to http_init. Of the three existing callers:
-> 
-> Here's what that patch looks like. It's definitely an improvement and
-> fixes a real bug, so it may be worth applying. But I'm still going to
-> look into pushing the url examination closer to the point of use.
+Junio C Hamano <gitster@pobox.com> writes:
 
-It definitely is an improvement. I've been running happily with this
-(and without my askpass helper/workaround). Are you going forward with
-this one?
+> Since this is a part of clean-up series...
+>
+> Do you even need to have a sha1_abbrev[] local array that is limited to 40
+> bytes here? The incoming _line_ is not "const char *start", so you should
+> at least be able to temporarily terminate the commit object name with NUL
+> (while remembering what byte there was before), give it to get_sha1(), and
+> then restore the byte at the end before returning from this function.
 
-> 
-> -- >8 --
-> Subject: [PATCH] http_init: accept separate URL parameter
-> 
-> The http_init function takes a "struct remote". Part of its
-> initialization procedure is to look at the remote's url and
-> grab some auth-related parameters. However, using the url
-> included in the remote is:
-> 
->   - wrong; the remote-curl helper may have a separate,
->     unrelated URL (e.g., from remote.*.pushurl). Looking at
->     the remote's configured url is incorrect.
-> 
->   - incomplete; http-fetch doesn't have a remote, so passes
->     NULL. So http_init never gets to see the URL we are
->     actually going to use.
-> 
->   - cumbersome; http-push has a similar problem to
->     http-fetch, but actually builds a fake remote just to
->     pass in the URL.
-> 
-> Instead, let's just add a separate URL parameter to
-> http_init, and all three callsites can pass in the
-> appropriate information.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  http-fetch.c  |    2 +-
->  http-push.c   |   10 +---------
->  http.c        |    8 ++++----
->  http.h        |    2 +-
->  remote-curl.c |    2 +-
->  5 files changed, 8 insertions(+), 16 deletions(-)
-> 
-> diff --git a/http-fetch.c b/http-fetch.c
-> index 3af4c71..e341872 100644
-> --- a/http-fetch.c
-> +++ b/http-fetch.c
-> @@ -63,7 +63,7 @@ int main(int argc, const char **argv)
->  
->  	git_config(git_default_config, NULL);
->  
-> -	http_init(NULL);
-> +	http_init(NULL, url);
->  	walker = get_http_walker(url);
->  	walker->get_tree = get_tree;
->  	walker->get_history = get_history;
-> diff --git a/http-push.c b/http-push.c
-> index 376331a..215b640 100644
-> --- a/http-push.c
-> +++ b/http-push.c
-> @@ -1747,7 +1747,6 @@ int main(int argc, char **argv)
->  	int i;
->  	int new_refs;
->  	struct ref *ref, *local_refs;
-> -	struct remote *remote;
->  
->  	git_extract_argv0_path(argv[0]);
->  
-> @@ -1821,14 +1820,7 @@ int main(int argc, char **argv)
->  
->  	memset(remote_dir_exists, -1, 256);
->  
-> -	/*
-> -	 * Create a minimum remote by hand to give to http_init(),
-> -	 * primarily to allow it to look at the URL.
-> -	 */
-> -	remote = xcalloc(sizeof(*remote), 1);
-> -	ALLOC_GROW(remote->url, remote->url_nr + 1, remote->url_alloc);
-> -	remote->url[remote->url_nr++] = repo->url;
-> -	http_init(remote);
-> +	http_init(NULL, repo->url);
->  
->  #ifdef USE_CURL_MULTI
->  	is_running_queue = 0;
-> diff --git a/http.c b/http.c
-> index b2ae8de..d9f9938 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -357,7 +357,7 @@ static void set_from_env(const char **var, const char *envname)
->  		*var = val;
->  }
->  
-> -void http_init(struct remote *remote)
-> +void http_init(struct remote *remote, const char *url)
->  {
->  	char *low_speed_limit;
->  	char *low_speed_time;
-> @@ -421,11 +421,11 @@ void http_init(struct remote *remote)
->  	if (getenv("GIT_CURL_FTP_NO_EPSV"))
->  		curl_ftp_no_epsv = 1;
->  
-> -	if (remote && remote->url && remote->url[0]) {
-> -		http_auth_init(remote->url[0]);
-> +	if (url) {
-> +		http_auth_init(url);
->  		if (!ssl_cert_password_required &&
->  		    getenv("GIT_SSL_CERT_PASSWORD_PROTECTED") &&
-> -		    !prefixcmp(remote->url[0], "https://"))
-> +		    !prefixcmp(url, "https://"))
->  			ssl_cert_password_required = 1;
->  	}
->  
-> diff --git a/http.h b/http.h
-> index 0bf8592..3c332a9 100644
-> --- a/http.h
-> +++ b/http.h
-> @@ -86,7 +86,7 @@ struct buffer {
->  extern void step_active_slots(void);
->  #endif
->  
-> -extern void http_init(struct remote *remote);
-> +extern void http_init(struct remote *remote, const char *url);
->  extern void http_cleanup(void);
->  
->  extern int data_received;
-> diff --git a/remote-curl.c b/remote-curl.c
-> index 69831e9..33d3d8c 100644
-> --- a/remote-curl.c
-> +++ b/remote-curl.c
-> @@ -852,7 +852,7 @@ int main(int argc, const char **argv)
->  
->  	url = strbuf_detach(&buf, NULL);
->  
-> -	http_init(remote);
-> +	http_init(remote, url);
->  
->  	do {
->  		if (strbuf_getline(&buf, stdin, '\n') == EOF)
+Like this, perhaps.  I did this on top of the whole series only as a
+demonstration but the change should be squashed into this step when the
+series is rerolled.
+
+ builtin/revert.c |   47 +++++++++++++++++++----------------------------
+ 1 files changed, 19 insertions(+), 28 deletions(-)
+
+diff --git a/builtin/revert.c b/builtin/revert.c
+index b28c3ca..170a6c1 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -691,42 +691,34 @@ static int format_todo(struct strbuf *buf, struct replay_insn_list *todo_list)
+ 	return 0;
+ }
+ 
+-static int parse_insn_line(char *start, struct replay_insn_list *item)
++static int parse_insn_line(char *bol, char *eol, struct replay_insn_list *item)
+ {
+ 	unsigned char commit_sha1[20];
+-	char sha1_abbrev[40];
+-	const char *p, *q;
++	char *end_of_object_name;
++	int saved, status;
+ 
+-	p = start;
+-	if (!prefixcmp(start, "pick ")) {
++	if (!prefixcmp(bol, "pick ")) {
+ 		item->action = REPLAY_PICK;
+-		p += strlen("pick ");
+-	} else if (!prefixcmp(start, "revert ")) {
++		bol += strlen("pick ");
++	} else if (!prefixcmp(bol, "revert ")) {
+ 		item->action = REPLAY_REVERT;
+-		p += strlen("revert ");
++		bol += strlen("revert ");
+ 	} else {
+-		size_t len = strchrnul(p, '\n') - p;
+-		if (len > 255)
+-			len = 255;
+-		return error(_("Unrecognized action: %.*s"), (int)len, p);
++		return error(_("Unrecognized action: %s"), bol);
+ 	}
+ 
+-	q = p + strcspn(p, " \n");
+-	if (q - p + 1 > sizeof(sha1_abbrev)) {
+-		size_t len = q - p;
+-		if (len > 255)
+-			len = 255;
+-		return error(_("Object name too large: %.*s"), (int)len, p);
+-	}
+-	memcpy(sha1_abbrev, p, q - p);
+-	sha1_abbrev[q - p] = '\0';
++	end_of_object_name = bol + strcspn(bol, " \n");
++	saved = *end_of_object_name;
++	*end_of_object_name = '\0';
++	status = get_sha1(bol, commit_sha1);
++	*end_of_object_name = saved;
+ 
+-	if (get_sha1(sha1_abbrev, commit_sha1) < 0)
+-		return error(_("Malformed object name: %s"), sha1_abbrev);
++	if (status < 0)
++		return error(_("Malformed object name: %s"), bol);
+ 
+ 	item->operand = lookup_commit_reference(commit_sha1);
+ 	if (!item->operand)
+-		return error(_("Not a valid commit: %s"), sha1_abbrev);
++		return error(_("Not a valid commit: %s"), bol);
+ 
+ 	item->next = NULL;
+ 	return 0;
+@@ -740,12 +732,11 @@ static int parse_insn_buffer(char *buf, struct replay_insn_list **todo_list)
+ 	int i;
+ 
+ 	for (i = 1; *p; i++) {
+-		if (parse_insn_line(p, &item) < 0)
++		char *eol = strchrnul(p, '\n');
++		if (parse_insn_line(p, eol, &item) < 0)
+ 			return error(_("on line %d."), i);
+ 		next = replay_insn_list_append(item.action, item.operand, next);
+-		p = strchrnul(p, '\n');
+-		if (*p)
+-			p++;
++		p = *eol ? eol + 1 : eol;
+ 	}
+ 	if (!*todo_list)
+ 		return error(_("No commits parsed."));
