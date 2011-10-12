@@ -1,189 +1,198 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] fetch: honor the user-provided refspecs when pruning
- refs
-Date: Wed, 12 Oct 2011 14:39:24 -0700
-Message-ID: <7vsjmx7uur.fsf@alter.siamese.dyndns.org>
-References: <1318027869-4037-1-git-send-email-cmn@elego.de>
- <1318027869-4037-4-git-send-email-cmn@elego.de>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] http_init: accept separate URL parameter
+Date: Wed, 12 Oct 2011 17:43:16 -0400
+Message-ID: <20111012214316.GA4393@sigill.intra.peff.net>
+References: <4E95FDC8.5030009@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, mathstuf@gmail.com
-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Wed Oct 12 23:40:06 2011
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 12 23:43:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RE6Wy-0001sc-9x
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 23:40:04 +0200
+	id 1RE6aD-0003bi-Up
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 23:43:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754419Ab1JLVjc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Oct 2011 17:39:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45972 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754342Ab1JLVj1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Oct 2011 17:39:27 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF9305968;
-	Wed, 12 Oct 2011 17:39:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Kx4XtI4ayNI+
-	pzwR8BwZ5KOjVGc=; b=BvGu1MXtAhYT3ybZI0nMUqybj7PdpD+o2tE+AnEQh+iH
-	B0hx0jUD02lcoGru6L5P1QHeYNv8oBau7O4TvI856BGNoCK5bFQqd6vX6LLK71hS
-	xwGDgHD5Mf987LboIa1Z2mjTjK8EopUdcZG0fOYNOieUNLOmZiVs4g12AKZYGM4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xF3SED
-	yMKKe5SYgseSm68ZEta0kTDlTO7809jE7a1FiJW++nFNLKPG6hIn6n7OCkGEtLWK
-	c+Te3FMaW+TcFzy8Si3Tl6ENdKjs2Kl/xZC5ip6u1LXBoKhVHsI8Gu6hX4k1fXwY
-	hjqJ+4TbaLFX01RGBeyzBsjGKP23ikwI8v90s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A72085967;
-	Wed, 12 Oct 2011 17:39:26 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EA69B5966; Wed, 12 Oct 2011
- 17:39:25 -0400 (EDT)
-In-Reply-To: <1318027869-4037-4-git-send-email-cmn@elego.de> ("Carlos
- =?utf-8?Q?Mart=C3=ADn?= Nieto"'s message of "Sat, 8 Oct 2011 00:51:08 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A81FD07A-F51A-11E0-A7FD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754363Ab1JLVnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Oct 2011 17:43:20 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58914
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754356Ab1JLVnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Oct 2011 17:43:19 -0400
+Received: (qmail 18354 invoked by uid 107); 12 Oct 2011 21:43:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Oct 2011 17:43:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Oct 2011 17:43:16 -0400
+Content-Disposition: inline
+In-Reply-To: <4E95FDC8.5030009@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183418>
 
-Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
+The http_init function takes a "struct remote". Part of its
+initialization procedure is to look at the remote's url and
+grab some auth-related parameters. However, using the url
+included in the remote is:
 
-> -static int prune_refs(struct transport *transport, struct ref *ref_m=
-ap)
-> +static int prune_refs(struct refspec *refs, int ref_count, struct re=
-f *ref_map)
->  {
->  	int result =3D 0;
-> -	struct ref *ref, *stale_refs =3D get_stale_heads(transport->remote,=
- ref_map);
-> +	struct ref *ref, *stale_refs =3D get_stale_heads(ref_map, refs, ref=
-_count);
+  - wrong; the remote-curl helper may have a separate,
+    unrelated URL (e.g., from remote.*.pushurl). Looking at
+    the remote's configured url is incorrect.
 
-So in short, get_state_heads() used to take a ref_map and a remote. The
-ref_map is what we actually observed from the remote after talking
-ls-remote with it. It tried to see if any existing ref in our refspace =
-may
-have come from that remote by inspecting the fetch refspec associated w=
-ith
-that remote (and the ones that does not exist anymore are queued in the
-stale ref list).
+  - incomplete; http-fetch doesn't have a remote, so passes
+    NULL. So http_init never gets to see the URL we are
+    actually going to use.
 
-Now get_state_heads() takes a ref_map and <refs, ref_count> (you made t=
-he
-patch unnecessarily harder to read by swapping the order of parameters)=
-=2E
-The latter "pair" roughly corresponds to what the "remote" parameter us=
-ed
-to mean, but instead of using the refspec associated with that remote, =
-we
-would use the refspec used for this particular fetch to determine which
-refs we have are stale.
+  - cumbersome; http-push has a similar problem to
+    http-fetch, but actually builds a fake remote just to
+    pass in the URL.
 
-> @@ -699,8 +699,12 @@ static int do_fetch(struct transport *transport,
->  		free_refs(ref_map);
->  		return 1;
->  	}
-> -	if (prune)
-> -		prune_refs(transport, ref_map);
-> +	if (prune) {
-> +		if (ref_count)
-> +			prune_refs(refs, ref_count, ref_map);
-> +		else
-> +			prune_refs(transport->remote->fetch, transport->remote->fetch_ref=
-spec_nr, ref_map);
-> +	}
+Instead, let's just add a separate URL parameter to
+http_init, and all three callsites can pass in the
+appropriate information.
 
-And this is consistent to my two paragraph commentary above.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+On Wed, Oct 12, 2011 at 10:51:20PM +0200, Michael J Gruber wrote:
 
-> diff --git a/builtin/remote.c b/builtin/remote.c
-> index f2a9c26..79d898b 100644
-> --- a/builtin/remote.c
-> +++ b/builtin/remote.c
-> @@ -349,7 +349,8 @@ static int get_ref_states(const struct ref *remot=
-e_refs, struct ref_states *stat
->  		else
->  			string_list_append(&states->tracked, abbrev_branch(ref->name));
->  	}
-> -	stale_refs =3D get_stale_heads(states->remote, fetch_map);
-> +	stale_refs =3D get_stale_heads(fetch_map, states->remote->fetch,
-> +				     states->remote->fetch_refspec_nr);
+> > Here's what that patch looks like. It's definitely an improvement and
+> > fixes a real bug, so it may be worth applying. But I'm still going to
+> > look into pushing the url examination closer to the point of use.
+> 
+> It definitely is an improvement. I've been running happily with this
+> (and without my askpass helper/workaround). Are you going forward with
+> this one?
 
-So is this.
+I think we should go ahead with this one. I gave some thought to
+tweaking the http code to figure out authentication closer to the point
+of use, so we could be adaptive to things like redirects. But it's quite
+an invasive change, since we now have to start possibly keeping a string
+of credentials, each mapped from their context.
 
-> diff --git a/remote.c b/remote.c
-> index b8ecfa5..13c9153 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -1681,36 +1681,84 @@ struct ref *guess_remote_head(const struct re=
-f *head,
->  }
-> =20
->  struct stale_heads_info {
-> -	struct remote *remote;
->  	struct string_list *ref_names;
->  	struct ref **stale_refs_tail;
-> +	struct refspec *refs;
-> +	int ref_count;
->  };
-> =20
-> +/* Returns 0 on success, -1 if it couldn't find a match in the refsp=
-ecs. */
-> +static int find_in_refs(struct refspec *refs, int ref_count, struct =
-refspec *query)
-> +{
-> +	int i;
-> +	struct refspec *refspec;
+But more importantly, it changes the user-visible behavior. If I do
+something like:
 
-This function replaces the role remote_find_tracking() used to play in =
-the
-old code and the difference in the behaviour (except the obvious lack o=
-f
-"find_src/find_dst") feels gratuitous.
+  git fetch https://user@git.foo.com/repo.git
 
-The original code in remote_find_tracking() uses "->pattern" to see if =
-a
-pattern match is necessary, but this scans the refspec for an asterisk,
-assuring a breakage when the refspec language is updated to understand
-other glob magic in the future. Why isn't refspec->pattern used here?
+and give it a password, and then it redirects me to "git2.foo.com" or
+something, then right now we will retry the same credential. I'm not
+sure if people rely on that or not.
 
-Can't these two functions share more logic?  It appears to me that by
-enhancing the logic here a little bit, it may be possible to implement
-remote_find_tracking() ed in terms of this function as a helper.
+Arguably, it's wrong to do so in the general case. If I redirect to
+"git.someotherdomain.com", you probably _do_ want to re-ask the
+credential. So maybe it should be changed, and there should be some
+magic with comparing the old and new contexts. I dunno.
 
-> +	for (i =3D 0; i < ref_count; ++i) {
-> +		refspec =3D &refs[i];
-> +
-> +		/* No dst means it can't be used for prunning. */
-> +		if (!refspec->dst)
-> +			continue;
-> +
-> +		/*
-> +		 * No '*' means that it must match exactly. If it does
-> +		 * have it, try to match it against the pattern. If
-> +		 * the refspec matches, store the ref name as it would
-> +		 * appear in the server in query->src.
-> +		 */
-> +		if (!strchr(refspec->dst, '*')) {
-> +			if (!strcmp(query->dst, refspec->dst)) {
-> +				query->src =3D xstrdup(refspec->src);
-> +				return 0;
-> +			}
-> +		} else if (match_name_with_pattern(refspec->dst, query->dst,
-> +						    refspec->src, &query->src)) {
-> +			return 0;
-> +		}
-> +	}
-> +
-> +	return -1;
-> +}
+At any rate, this is certainly an improvement in the meantime. If the
+url parameter to http_init eventually goes away, it is easy enough to do
+on top of this.
+
+ http-fetch.c  |    2 +-
+ http-push.c   |   10 +---------
+ http.c        |    8 ++++----
+ http.h        |    2 +-
+ remote-curl.c |    2 +-
+ 5 files changed, 8 insertions(+), 16 deletions(-)
+
+diff --git a/http-fetch.c b/http-fetch.c
+index 3af4c71..e341872 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -63,7 +63,7 @@ int main(int argc, const char **argv)
+ 
+ 	git_config(git_default_config, NULL);
+ 
+-	http_init(NULL);
++	http_init(NULL, url);
+ 	walker = get_http_walker(url);
+ 	walker->get_tree = get_tree;
+ 	walker->get_history = get_history;
+diff --git a/http-push.c b/http-push.c
+index 6e8f6d0..ecbfae5 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1747,7 +1747,6 @@ int main(int argc, char **argv)
+ 	int i;
+ 	int new_refs;
+ 	struct ref *ref, *local_refs;
+-	struct remote *remote;
+ 
+ 	git_extract_argv0_path(argv[0]);
+ 
+@@ -1821,14 +1820,7 @@ int main(int argc, char **argv)
+ 
+ 	memset(remote_dir_exists, -1, 256);
+ 
+-	/*
+-	 * Create a minimum remote by hand to give to http_init(),
+-	 * primarily to allow it to look at the URL.
+-	 */
+-	remote = xcalloc(sizeof(*remote), 1);
+-	ALLOC_GROW(remote->url, remote->url_nr + 1, remote->url_alloc);
+-	remote->url[remote->url_nr++] = repo->url;
+-	http_init(remote);
++	http_init(NULL, repo->url);
+ 
+ #ifdef USE_CURL_MULTI
+ 	is_running_queue = 0;
+diff --git a/http.c b/http.c
+index d6b2d78..65d3aa7 100644
+--- a/http.c
++++ b/http.c
+@@ -356,7 +356,7 @@ static void set_from_env(const char **var, const char *envname)
+ 		*var = val;
+ }
+ 
+-void http_init(struct remote *remote)
++void http_init(struct remote *remote, const char *url)
+ {
+ 	char *low_speed_limit;
+ 	char *low_speed_time;
+@@ -420,11 +420,11 @@ void http_init(struct remote *remote)
+ 	if (getenv("GIT_CURL_FTP_NO_EPSV"))
+ 		curl_ftp_no_epsv = 1;
+ 
+-	if (remote && remote->url && remote->url[0]) {
+-		http_auth_init(remote->url[0]);
++	if (url) {
++		http_auth_init(url);
+ 		if (!ssl_cert_password_required &&
+ 		    getenv("GIT_SSL_CERT_PASSWORD_PROTECTED") &&
+-		    !prefixcmp(remote->url[0], "https://"))
++		    !prefixcmp(url, "https://"))
+ 			ssl_cert_password_required = 1;
+ 	}
+ 
+diff --git a/http.h b/http.h
+index 0bf8592..3c332a9 100644
+--- a/http.h
++++ b/http.h
+@@ -86,7 +86,7 @@ struct buffer {
+ extern void step_active_slots(void);
+ #endif
+ 
+-extern void http_init(struct remote *remote);
++extern void http_init(struct remote *remote, const char *url);
+ extern void http_cleanup(void);
+ 
+ extern int data_received;
+diff --git a/remote-curl.c b/remote-curl.c
+index 6c24ab1..d4d0910 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -850,7 +850,7 @@ int main(int argc, const char **argv)
+ 
+ 	url = strbuf_detach(&buf, NULL);
+ 
+-	http_init(remote);
++	http_init(remote, url);
+ 
+ 	do {
+ 		if (strbuf_getline(&buf, stdin, '\n') == EOF)
+-- 
+1.7.7.rc2.21.gb9948
