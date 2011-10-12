@@ -1,89 +1,72 @@
-From: Simon Klinkert <klinkert@webgods.de>
-Subject: Re: [PATCH] Improving performance with pthreads in refresh_index().
-Date: Wed, 12 Oct 2011 09:21:20 +0200
-Message-ID: <470EDA14-707D-42C7-A57A-CFE7208E1D03@webgods.de>
-References: <1318325521-23262-1-git-send-email-klinkert@webgods.de> <4E942D76.7030908@drmicha.warpmail.net>
-Mime-Version: 1.0 (Apple Message framework v1244.3)
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Oct 12 09:42:14 2011
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: "trying out" gitolite with minimum impact on a system
+Date: Wed, 12 Oct 2011 13:22:47 +0530
+Message-ID: <CAMK1S_juQRRNhCMDx4Wdp+QwAZBQBvBYYQ06AdS_P2fdtLqBtg@mail.gmail.com>
+References: <CAMK1S_g5CnP+vrE71cqMgcjpj8ocE+wdtA2vPjeaXGCRNt25Dw@mail.gmail.com>
+	<CAGK7Mr6cnP6QQwGswWwQYiGR2_BUjMPz+VsygQXb0Voehm+akg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Philippe Vaucher <philippe.vaucher@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 12 09:52:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDtS9-0006rv-MD
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 09:42:14 +0200
+	id 1RDtcT-0002tS-1j
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 09:52:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752592Ab1JLHmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Oct 2011 03:42:05 -0400
-Received: from fredda.webgods.de ([192.166.196.83]:56608 "EHLO
-	fredda.webgods.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751040Ab1JLHmF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Oct 2011 03:42:05 -0400
-X-Greylist: delayed 1241 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Oct 2011 03:42:04 EDT
-In-Reply-To: <4E942D76.7030908@drmicha.warpmail.net>
-X-Mailer: Apple Mail (2.1244.3)
+	id S1752602Ab1JLHws convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Oct 2011 03:52:48 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:50570 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751743Ab1JLHws convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Oct 2011 03:52:48 -0400
+Received: by qadb15 with SMTP id b15so317014qad.19
+        for <git@vger.kernel.org>; Wed, 12 Oct 2011 00:52:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=mNFSRME0AZ7PEz5GK602w4pdQeS/olmF5lD/yAUcJvs=;
+        b=bdQW2op6SFJNDXDfPtfqflQC8RT+zKB6MQL/wPDV6OeE6u5qpnJY8K9qwD9yfXwTks
+         I4DK2GZvHle3VwrwXcxiy15pyVxqe/8e+1c80yDtFAOMi7Pixe0guvUeCEuNk39QBEgO
+         9kFkQ0lK1kmsGUKmrsJ0mEpKYOiuosNwsFjjc=
+Received: by 10.224.218.9 with SMTP id ho9mr17820320qab.56.1318405967530; Wed,
+ 12 Oct 2011 00:52:47 -0700 (PDT)
+Received: by 10.224.20.67 with HTTP; Wed, 12 Oct 2011 00:52:47 -0700 (PDT)
+In-Reply-To: <CAGK7Mr6cnP6QQwGswWwQYiGR2_BUjMPz+VsygQXb0Voehm+akg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183358>
 
+On Wed, Oct 12, 2011 at 11:45 AM, Philippe Vaucher
+<philippe.vaucher@gmail.com> wrote:
+>> After that, entirely within that user, you have an admin user and si=
+x
+>> normal users, to do with as you please. =C2=A0You emulate different =
+users
+>> simply by using a different username in the URL, like "git clone
+>> u1:reponame" versus "git clone u2:reponame".
+>
+> Hum, except if I missed something the classic way to use gitolite is
+> to always clone using the same user (git@host:repository.git), and th=
+e
+> "real" identification is done by the ssh keys (which means that
+> contrary to plain ssh you lose the ability to have two users with the
+> same ssh key, which should never happen anyway).
+>
+> But maybe you're refering to an alternate authentification mechanism
+> within gitolite I'm unaware of.
 
-Okay. It seems like my idea was already implemented by Linus. I wasn't aware of that fact.
+you should read "entirely within that user" as "entirely within that
+new, possibly throw-away, Unix userid you created".  This is meant to
+fit with the subject line's "minimum impact on a system" phrase.
 
-Anyway, I've learned a bit more about git's bowels. Thanks a lot.
+regards
 
-Simon
-
-On 11.10.2011, at 13:50, Michael J Gruber wrote:
-
-> klinkert@webgods.de venit, vidit, dixit 11.10.2011 11:32:
->> Git performs for every file in a repository at least one (with a cold cache)
->> lstat(). In larger repositories operations like git status take a
->> long time. In case your local repository is located on a remote server
->> (e. g. mounted via nfs) it ends up in an *incredible* slow git.
->> 
->> With this patch you're able to determine a number of threads (maxthreads)
->> in your config file to run these tons of lstats in threads. There
->> won't be created any pthreads if you haven't set maxthreads. In my
->> test cases a git status with this patch performs enormously faster (over
->> two minutes before and approximately 25 seconds now). Of course, it
->> has a positive impact on other git commands, too.
-> 
-> Can you specify under which circumstances one should get a speedup? Our
-> NFS isn't slow enough... but on a dead slow sshfs work tree I get the
-> following for "git status -s":
-> 
-> maxthreads: 0, preloadindex: false, time: 14.73
-> maxthreads: 1, preloadindex: false, time: 14.25
-> maxthreads: 2, preloadindex: false, time: 13.32
-> maxthreads: 3, preloadindex: false, time: 12.40
-> maxthreads: 4, preloadindex: false, time: 12.65
-> maxthreads: 5, preloadindex: false, time: 12.16
-> maxthreads: 8, preloadindex: false, time: 12.32
-> maxthreads: 10, preloadindex: false, time: 11.98
-> maxthreads: 15, preloadindex: false, time: 12.31
-> maxthreads: 20, preloadindex: false, time: 12.00
-> maxthreads: 0, preloadindex: true, time: 12.17
-> maxthreads: 1, preloadindex: true, time: 11.98
-> maxthreads: 2, preloadindex: true, time: 12.21
-> maxthreads: 3, preloadindex: true, time: 11.99
-> maxthreads: 4, preloadindex: true, time: 12.14
-> maxthreads: 5, preloadindex: true, time: 12.21
-> maxthreads: 8, preloadindex: true, time: 12.14
-> maxthreads: 10, preloadindex: true, time: 12.08
-> maxthreads: 15, preloadindex: true, time: 12.16
-> maxthreads: 20, preloadindex: true, time: 11.96
-> 
-> So it seams it gives me what preloadindex does, which is not much.
-> 
-> Note: I'm not saying the patch is bad. I'm just wondering whether that
-> is expected.
-> 
-> Michael
-> P.S.: It's actually sshfs with ssh to an NFSv3 client (server restricts
-> exports) :(
+sitaram
