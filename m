@@ -1,82 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Restrict ref-like names immediately below $GIT_DIR
-Date: Wed, 12 Oct 2011 15:26:43 -0700
-Message-ID: <7vobxl7snw.fsf@alter.siamese.dyndns.org>
-References: <1316121043-29367-1-git-send-email-mhagger@alum.mit.edu>
- <1316121043-29367-20-git-send-email-mhagger@alum.mit.edu>
- <20111011161652.GA15629@sigill.intra.peff.net>
- <7vr52jfm8i.fsf@alter.siamese.dyndns.org>
- <7vmxd7flkw.fsf@alter.siamese.dyndns.org>
- <7v39ezffq5.fsf_-_@alter.siamese.dyndns.org>
- <20111011230749.GA29785@sigill.intra.peff.net>
- <7vehyjcckp.fsf@alter.siamese.dyndns.org>
- <20111012021128.GA32149@sigill.intra.peff.net>
- <7v39eyddoc.fsf@alter.siamese.dyndns.org>
- <20111012045004.GA22413@sigill.intra.peff.net>
- <7vvcru9k22.fsf_-_@alter.siamese.dyndns.org> <4E95D60B.5030904@alum.mit.edu>
- <7vr52i9j8g.fsf@alter.siamese.dyndns.org> <4E9609E3.1000300@alum.mit.edu>
+From: =?utf-8?B?5LuFMTDlhYPmr4/lpKk=?= <admin@jj-port.com>
+Subject: =?utf-8?B?576k5Y+R6L2v5Lu2K+S5sOWutuaQnOe0ouacuisxMDnlsYrlub/kuqTkvJrkubDlrrY=?=
+	=?utf-8?B?44CB5rW35YWz5pWw5o2uLEIyQuivouebmOS5sOWutjUwMOS4h+OAgg==?=
+Date: Wed, 12 Oct 2011 22:33:51 +0000 (UTC)
+Message-ID: <20121013061907522440@jj-port.com>
+Reply-To: <1339625218@qq.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, cmn@elego.de,
-	A Large Angry SCM <gitzilla@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Oct 13 00:27:01 2011
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
+To: <girlsitem@hotmail.co>, <girlygoogietutus@hotmail.com>,
+	<girotto@strigoivii.com>, <gisbertrattan@wanadoo.es>,
+	<gisellealcock-ryan@hotmail.com>, <gismbkyfty@pqevdp.com>,
+	<git@vger.kern
+X-From: git-owner@vger.kernel.org Thu Oct 13 00:33:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RE7GN-0004py-Jg
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 00:26:59 +0200
+	id 1RE7Mz-0007Hm-BT
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 00:33:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753854Ab1JLW0s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Oct 2011 18:26:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33363 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753823Ab1JLW0r (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Oct 2011 18:26:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 049DD652F;
-	Wed, 12 Oct 2011 18:26:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5xPhFSV+pGx4E38xE+wApK7AW00=; b=CxGDZx
-	ZJpuKHNyvSpxHe1xFfxNb31MZ4poFvPoZ7DoHCxl41aIZRMwI5kjs/OfvsARwrFO
-	V7hkb75A1lVrITED4BolCazy9ByANZZ+UK0ilUpmTd6W6TKiLDo/9ooDMvzBBMaE
-	mQYvZPnLm2+Gu0bE6t/t2egxuo1ICGEbqA9ws=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EaBNociQsNTLwObSOiAhhBAwrgDZwNqu
-	xcSJDZG5HKjFHG9UOeeppFKJJ3oa9mnoglITWE+jisTNgSjZFgd1QGnR4pziApC+
-	uP99KH21OxDiKAMEIX9Dg4jY01Jt5xINbOq9j2B3JoERi9xTqd+asD/+/CEzEIio
-	k4561oS8/6c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EF04A652E;
-	Wed, 12 Oct 2011 18:26:45 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 730E2652D; Wed, 12 Oct 2011
- 18:26:45 -0400 (EDT)
-In-Reply-To: <4E9609E3.1000300@alum.mit.edu> (Michael Haggerty's message of
- "Wed, 12 Oct 2011 23:42:59 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 449F523A-F521-11E0-AD15-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754373Ab1JLWdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Oct 2011 18:33:43 -0400
+Received: from [218.65.3.196] ([218.65.3.196]:31393 "EHLO mail.jj-port.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751777Ab1JLWdb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Oct 2011 18:33:31 -0400
+X-Greylist: delayed 915 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Oct 2011 18:33:31 EDT
+Received: from spb ([113.116.146.209]) by mail.jj-port.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Thu, 13 Oct 2011 06:17:01 +0800
+Date: Sat, 13 Oct 2012 06:18:58 +0800
+X-mailer: Zdbxzkq 5
+X-OriginalArrivalTime: 12 Oct 2011 22:17:01.0192 (UTC) FILETIME=[AA143880:01CC892C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183424>
+X-Spam-Report: 5.1 points;
+ *  1.4 DATE_IN_FUTURE_96_XX Date: is 96 hours or more after Received: date
+ *  2.9 SUSPICIOUS_RECIPS Similar addresses in recipient list
+ *  1.1 SORTED_RECIPS Recipient list is sorted by address
+ *  2.2 TVD_SPACE_RATIO BODY: TVD_SPACE_RATIO
+ * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
+ *      [score: 0.0001]
+ *  0.0 MIME_BASE64_BLANKS RAW: Extra blank lines in base64 encoding
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183425>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
-
-> /*
->  * Accept strings that are either ALL_CAPS or include a '/'.
->  */
->
-> (I think the underscore is implied by the example, but the comment could
-> be expanded if necessary to be explicit.)
-
-I like that comment hints "_" by having it between all and caps ;-).
+576k5Y+R6L2v5Lu2KzEwOeWxiuW5v+S6pOS8muS5sOWutuOAgea1t+WFs+aVsOaNruOAgeaQnOe0
+ouW8leaTjuS5sOWutixCMkLor6Lnm5jkubDlrrblhbE1MDDkuIcs5LuFMTDlhYPmr4/lpKnjgIIg
+DQrnvqTlj5Hova/ku7YrMTA55bGK5bm/5Lqk5Lya5Lmw5a6244CB5rW35YWz5pWw5o2u44CB5pCc
+57Si5byV5pOO5Lmw5a62LEIyQuivouebmOS5sOWutuWFsTUwMOS4hyzku4UxMOWFg+avj+WkqeOA
+giANCuS/neivgeavj+WkqemDveacieS5sOWutuWbnuWkjeOAgg0K5L+d6K+B5q+P5aSp6YO95pyJ
+5Lmw5a625Zue5aSN44CCDQrkv53or4Hmr4/lpKnpg73mnInkubDlrrblm57lpI3jgIINCg0KMeOA
+gee+pOWPkei9r+S7tu+8miDmk43kvZznroDljZXvvIzlip/og73lvLrlpKfvvIzmqKHku7/kurrl
+t6Xmk43kvZzmqKHlvI/vvIzliLDovr7njofpq5jvvIzml6Xlj5HpgIE15LiH5bCB5Lul5LiK44CC
+IA0KMuOAgTUwMOS4h+S5sOWutui1hOa6kO+8miDotaDpgIHnmoQ1MDDkuIfkubDlrrbotYTmupDl
+upPvvIzmm7TmlrAgKOWPr+S7peaMieeFp+aCqOeahOS6p+WTgeaPkOWPluWHuuadpe+8jOabtOey
+vuWHhuW8gOWPkSnjgIIgDQoz44CB6LaF57qn5rW35aSW5Lmw5a62RW1haWzmkJzntKLmnLrvvJog
+5YaF572u5LqGNjAw5LiH6KGM5Lia5YWz6ZSu6K+N77yM5qC55o2u6ZW/5bC+6K+N5pCc57Si77yM
+57uT5p6c5pu057K+56Gu5Yy56YWN77yb5q+P5aSp6IO95pCc57SiMS0y5LiH5Lul5LiK5Lmw5a62
+55yf5a6eRU1BSUzvvIzmiJDljZXnjofpq5jjgIIgDQogDQoNCuimgeeahOaKk+e0p+iBlOezu1FR
+OiAxMzM5NjI1MjE4ICAgIOaIluiAheeri+WNs+WbnuWkjemCrueusTogMTMzOTYyNTIxOEBxcS5j
+b20NCuimgeeahOaKk+e0p+iBlOezu1FROiAxMzM5NjI1MjE4ICAgIOaIluiAheeri+WNs+WbnuWk
+jemCrueusTogMTMzOTYyNTIxOEBxcS5jb20NCuimgeeahOaKk+e0p+iBlOezu1FROiAxMzM5NjI1
+MjE4ICAgIOaIluiAheeri+WNs+WbnuWkjemCrueusTogMTMzOTYyNTIxOEBxcS5jb20NCiANCuWF
+jei0uei1oOmAgToNCuS4gOWFsTjkuKrljIUo5pWw5o2u5piv5YWo6KGM5Lia55qE77yM5oyJ54Wn
+6KGM5Lia5YiG5aW957G777yM5bm25LiU5Y+v5Lul5oyJ54Wn5YWz6ZSu6K+N5p+l6K+i55qEKe+8
+miANCjHvvIwyMDEx5pil5a2jMTA55bGK5bm/5Lqk5Lya5Lmw5a62546w5Zy66K+i55uY5pWw5o2u
+5bqT5paw6bKc5Ye654KJ77yM6LaF57qn5paw6bKc5Lmw5a6277yM5paw6bKc5pWw5o2u77yM5a65
+5piT5oiQ5Y2V77yBIA0KMu+8jOi0reS5sOWQjuWPr+S7peWFjei0ueabtOaWsDIwMTHnp4vlraPl
+ub/kuqTkvJorMjAxMuaYpeWto+W5v+S6pOS8muS5sOWutuaVsOaNruOAguWkqui2heWAvOS6huOA
+gg0KM++8jOacgOaWsOWFqOeQg+S5sOWutuW6kyzlhbE0NTE2NjDmnaHmlbDmja7jgIIgKOacgOaW
+sOabtOaWsOaXpeacnyAyMDExLTA1LTE25pelKQ0KNO+8jDIwMDjlubQsMjAwOeW5tCwyMDEw5bm0
+IOaYpeWtoyvnp4vlraPlub/kuqTkvJrkubDlrrblkI3lvZXvvIwxMDMgMTA0IDEwNSAxMDYgMTA3
+IDEwOCDlhbHlha3lsYog5YWxMTIwLjbkuIfmlbDmja7jgIINCjXvvIwyMDEw5bm05Zu96ZmF5L+D
+6ZSA5Y2P5Lya77yIUFBBSe+8ieaIkOWRmOWQjeWNlSBQUEFJIE1lbWJlcnMgRGlyZWN0b3J577yM
+6Z2e5bi46YeN6KaB55qE5aSn5Lmw5a6244CCDQo277yMMjAxMOW5tOWIsOmmmea4r+mHh+i0reea
+hOWbveWkluWuouS6uuWQjeW9lSjpppnmuK/otLjlj5HlsYDmj5Dkvpsp77yM5YWxNy4y5LiH5pWw
+5o2u77yM6LaF57qn6YeN6KaB55qE5Lmw5a6244CCDQo377yMNDguNjjkuIfmnaHmnIDmlrDkubDl
+rrbor6Lnm5jvvIzotK3kubDlkI7mr4/mnIjmm7TmlrAgMS0y5LiH5p2h77yM5YyF5ousMumDqOWI
+hu+8jDHvvIzmnIDmlrDnmoTor6Lnm5ggMu+8jOacgOaWsOeahOWxleS8muS5sOWutuOAguWFjei0
+ueabtOaWsDM25Liq5pyI44CCDQo477yMMjAwOeW5tOa1t+WFs+aPkOWNleaVsOaNrnBpZXJz54mI
+5pWw5o2uIDHljYPkuIfjgIINCg0KDQror5rkv6HkuLrmnKzvvIzmlK/mjIHmlK/ku5jlrp3mi4Xk
+v53kuqTmmJMgKOWFiOWPkei0p+W5tuWuieijheiuvue9rue+pOWPkei9r+S7tu+8jOeEtuWQjuS7
+mOasvikg5b275bqV5omT5raI5oKo55qEIOmhvuiZkeOAgg0KDQogDQoNCg0KIA0KDQrnsr7lh4bm
+lbDmja4t5oiQ5Y2V546H5p6B6auYDQrnsr7lh4bmlbDmja4t5oiQ5Y2V546H5p6B6auYDQrnsr7l
+h4bmlbDmja4t5oiQ5Y2V546H5p6B6auYDQrnsr7lh4bmlbDmja4t5oiQ5Y2V546H5p6B6auYDQrn
+sr7lh4bmlbDmja4t5oiQ5Y2V546H5p6B6auYDQo=
