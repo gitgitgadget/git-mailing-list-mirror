@@ -1,64 +1,81 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH] Make is_gitfile a non-static generic function
-Date: Wed, 12 Oct 2011 14:01:02 -0400
-Message-ID: <CABURp0p4_oVMmkFDPue4kvhO_bEr_dBh-XFGArdSJFMz-Eboeg@mail.gmail.com>
-References: <4E94C70E.3080003@cisco.com> <4E94C8AB.3040807@cisco.com> <7vipnvccso.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 2/2] Restrict ref-like names immediately below $GIT_DIR
+Date: Wed, 12 Oct 2011 20:01:47 +0200
+Message-ID: <4E95D60B.5030904@alum.mit.edu>
+References: <1316121043-29367-1-git-send-email-mhagger@alum.mit.edu> <1316121043-29367-20-git-send-email-mhagger@alum.mit.edu> <20111011161652.GA15629@sigill.intra.peff.net> <7vr52jfm8i.fsf@alter.siamese.dyndns.org> <7vmxd7flkw.fsf@alter.siamese.dyndns.org> <7v39ezffq5.fsf_-_@alter.siamese.dyndns.org> <20111011230749.GA29785@sigill.intra.peff.net> <7vehyjcckp.fsf@alter.siamese.dyndns.org> <20111012021128.GA32149@sigill.intra.peff.net> <7v39eyddoc.fsf@alter.siamese.dyndns.org> <20111012045004.GA22413@sigill.intra.peff.net> <7vvcru9k22.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Phil Hord <hordp@cisco.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, cmn@elego.de,
+	A Large Angry SCM <gitzilla@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 12 20:01:32 2011
+X-From: git-owner@vger.kernel.org Wed Oct 12 20:02:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RE37R-0002ln-Qg
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 20:01:30 +0200
+	id 1RE38B-0003G0-NL
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 20:02:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753819Ab1JLSBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Oct 2011 14:01:25 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:50181 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753780Ab1JLSBY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Oct 2011 14:01:24 -0400
-Received: by wwf22 with SMTP id 22so433849wwf.1
-        for <git@vger.kernel.org>; Wed, 12 Oct 2011 11:01:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=feAB3Ke7h31VSEUPidIWUrR8lR/pzbrr9w6yqcoMTcM=;
-        b=sf9xUz2mGKxidon2IUfrkJBmwoeWe2jTLROjEcY/2hBAVvlufI0lFTbeW79+b/GBJg
-         cKQ8p3Uq6Fb6uBYQKE5naYfc7udiEtRAT9d8BWVcipotsnLPbsx9FMOejwvdjCuXtKKQ
-         irjUAqYh0xNXTuSt5s5HnrSf/+tAjBq/1vo1I=
-Received: by 10.216.14.97 with SMTP id c75mr2845263wec.102.1318442483076; Wed,
- 12 Oct 2011 11:01:23 -0700 (PDT)
-Received: by 10.216.88.72 with HTTP; Wed, 12 Oct 2011 11:01:02 -0700 (PDT)
-In-Reply-To: <7vipnvccso.fsf@alter.siamese.dyndns.org>
+	id S1753830Ab1JLSCL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Oct 2011 14:02:11 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:51049 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753792Ab1JLSCK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Oct 2011 14:02:10 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p9CI1mbA022827
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 12 Oct 2011 20:01:48 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
+In-Reply-To: <7vvcru9k22.fsf_-_@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183382>
 
-On Tue, Oct 11, 2011 at 7:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> After looking at this patch and the way the other caller in transport.c
-> uses it, I am more and more convinced that "is_gitfile()" is a stupid and
-> horrible mistake.
+On 10/12/2011 07:49 PM, Junio C Hamano wrote:
+> diff --git a/refs.c b/refs.c
+> index e3692bd..e54c482 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -994,12 +994,34 @@ const char *ref_fetch_rules[] = {
+>  	NULL
+>  };
+>  
+> +static int refname_ok_at_root_level(const char *str, int len)
+> +{
+> +	int seen_non_root_char = 0;
+> +
+> +	while (len--) {
+> +		char ch = *str++;
+> +
+> +		if (ch == '/')
+> +			return 1;
+> +		/*
+> +		 * Only accept likes of .git/HEAD, .git/MERGE_HEAD at
+> +		 * the root level as a ref.
+> +		 */
+> +		if (ch != '_' && (ch < 'A' || 'Z' < ch))
+> +			seen_non_root_char = 1;
+> +	}
+> +	return !seen_non_root_char;
+> +}
+> +
 
-I think I misunderstood your objection before.  Now I think I
-understand.  Tell me if I am right.
+Nit: the seen_non_root_char variable can be replaced by an early "return
+0" from the loop and "return 1" if the loop falls through.
 
+Michael
 
-I think you mean that instead of this:
-        } else if (is_local(url) && is_file(url) && !is_gitfile(url)) {
-
-you would like to see this:
-        } else if (is_local(url) && is_file(url) && is_bundle(url)) {
-
-Or maybe even this:
-        } else if (is_bundle(url)) {
-
-Phil
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
