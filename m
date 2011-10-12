@@ -1,63 +1,79 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [RESEND PATCH v3] Configurable hyperlinking in gitk
-Date: Wed, 12 Oct 2011 22:07:28 +1300
-Message-ID: <4E9558D0.60802@gmail.com>
-References: <20110917022903.GA2445@unpythonic.net> <4E7467B7.1090201@gmail.com> <m3hb49sn26.fsf@localhost.localdomain> <20110922013101.GB26880@unpythonic.net> <20111011183722.GA26646@unpythonic.net> <7vfwizdvnn.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 1/3] t5403.1: simplify commit creation
+Date: Wed, 12 Oct 2011 20:35:03 +1100
+Message-ID: <1318412105-13595-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff Epler <jepler@unpythonic.net>,
-	Paul Mackerras <paulus@samba.org>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Marc Branchaud <marcnarc@xiplink.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 12 11:07:41 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 12 11:35:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDumq-0003T6-Au
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 11:07:40 +0200
+	id 1RDvDp-0007ow-T2
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 11:35:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750864Ab1JLJHa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Oct 2011 05:07:30 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:34146 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750756Ab1JLJHa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Oct 2011 05:07:30 -0400
-Received: by pzk1 with SMTP id 1so1104218pzk.1
-        for <git@vger.kernel.org>; Wed, 12 Oct 2011 02:07:29 -0700 (PDT)
+	id S1751258Ab1JLJfV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Oct 2011 05:35:21 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:51812 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751119Ab1JLJfU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Oct 2011 05:35:20 -0400
+Received: by ggnv2 with SMTP id v2so486735ggn.19
+        for <git@vger.kernel.org>; Wed, 12 Oct 2011 02:35:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=8p51SI+ocHgmkwFAjU3eCQlqS70G2OtTlDB6G0PLQR8=;
-        b=MC3H4H5GFgxx1dx5Qv727HIpMvlMu/+h4j13tSoYwEf0Rxien/m+AphqNOeiFJaHhD
-         Ffg9GhnUlc0FAoGyiR7+CwRE4d4dPvl+TmU/G5NkpRIoBlPJkwK9lfu1lA/d0xZN2hXQ
-         WuK1/k1Pw6y5IIFiiUY2yd2lHdznnIhiJP6xg=
-Received: by 10.68.0.227 with SMTP id 3mr15712476pbh.48.1318410449579;
-        Wed, 12 Oct 2011 02:07:29 -0700 (PDT)
-Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPS id ml4sm5605133pbc.0.2011.10.12.02.07.24
-        (version=SSLv3 cipher=OTHER);
-        Wed, 12 Oct 2011 02:07:26 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.2.22) Gecko/20110907 SUSE/3.1.14 Thunderbird/3.1.14
-In-Reply-To: <7vfwizdvnn.fsf@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=yzO3Q2KgLgsWg7KXupDUipZFZu1h2uZXSgyLpdKpiJQ=;
+        b=a9SgtSsyJHtMqG2kZHGGGMqn9pwpj5Wpb7gQwBiUp0gwtHbaUvi0LrDDxbw2tFO9gH
+         coruy9+e1ZJpUqw8h2qFLGxoxa4iuM5jjVCxFS32RfutUHOMLyEv2ff9USXSrmZ4aaRS
+         zqGt43N+Lyu90e5cogVZ7OSfDMCE9PDeeSwBU=
+Received: by 10.236.116.98 with SMTP id f62mr32385825yhh.48.1318412119845;
+        Wed, 12 Oct 2011 02:35:19 -0700 (PDT)
+Received: from pclouds@gmail.com (220-244-161-237.static.tpgi.com.au. [220.244.161.237])
+        by mx.google.com with ESMTPS id x65sm2387854yhg.18.2011.10.12.02.35.15
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 12 Oct 2011 02:35:19 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 12 Oct 2011 20:35:08 +1100
+X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183363>
 
-On 12/10/11 11:13, Junio C Hamano wrote:
-> Jeff Epler <jepler@unpythonic.net> writes:
-> 
->> I'm aware of no problems with this patch, and a number of people have
->> commented that it is useful to them.
-> 
-> Hmmm, "didn't generate any discussion" does not mesh very well with "a
-> number of people are happy". Which one should I trust?
-> 
 
-For what it's worth I've (just) tested v3 and it works well for me.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ t/t5403-post-checkout-hook.sh |    7 ++-----
+ 1 files changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook=
+=2Esh
+index d05a913..0c126d7 100755
+--- a/t/t5403-post-checkout-hook.sh
++++ b/t/t5403-post-checkout-hook.sh
+@@ -9,11 +9,8 @@ test_description=3D'Test the post-checkout hook.'
+ test_expect_success setup '
+ 	echo Data for commit0. >a &&
+ 	echo Data for commit0. >b &&
+-	git update-index --add a &&
+-	git update-index --add b &&
+-	tree0=3D$(git write-tree) &&
+-	commit0=3D$(echo setup | git commit-tree $tree0) &&
+-	git update-ref refs/heads/master $commit0 &&
++	git add a b &&
++	git commit -m setup &&
+ 	git clone ./. clone1 &&
+ 	git clone ./. clone2 &&
+ 	GIT_DIR=3Dclone2/.git git branch new2 &&
+--=20
+1.7.3.1.256.g2539c.dirty
