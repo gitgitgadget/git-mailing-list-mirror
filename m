@@ -1,112 +1,110 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] Restrict ref-like names immediately below $GIT_DIR
-Date: Wed, 12 Oct 2011 17:51:05 -0400
-Message-ID: <20111012215105.GA4498@sigill.intra.peff.net>
-References: <20111011161652.GA15629@sigill.intra.peff.net>
- <7vr52jfm8i.fsf@alter.siamese.dyndns.org>
- <7vmxd7flkw.fsf@alter.siamese.dyndns.org>
- <7v39ezffq5.fsf_-_@alter.siamese.dyndns.org>
- <20111011230749.GA29785@sigill.intra.peff.net>
- <7vehyjcckp.fsf@alter.siamese.dyndns.org>
- <20111012021128.GA32149@sigill.intra.peff.net>
- <7v39eyddoc.fsf@alter.siamese.dyndns.org>
- <20111012045004.GA22413@sigill.intra.peff.net>
- <7vvcru9k22.fsf_-_@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v3 2/7] invalidate_ref_cache(): take the submodule as
+ parameter
+Date: Thu, 13 Oct 2011 00:07:13 +0200
+Message-ID: <4E960F91.5020103@alum.mit.edu>
+References: <7vty7ggzum.fsf@alter.siamese.dyndns.org> <1318445067-19279-1-git-send-email-mhagger@alum.mit.edu> <1318445067-19279-3-git-send-email-mhagger@alum.mit.edu> <7vwrca81c7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	cmn@elego.de, A Large Angry SCM <gitzilla@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Drew Northup <drew.northup@maine.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Julian Phillips <julian@quantumfyre.co.uk>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 12 23:51:16 2011
+X-From: git-owner@vger.kernel.org Thu Oct 13 00:07:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RE6hm-0006dt-87
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 23:51:14 +0200
+	id 1RE6xe-0005gQ-1r
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 00:07:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754363Ab1JLVvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Oct 2011 17:51:08 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58929
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751914Ab1JLVvH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Oct 2011 17:51:07 -0400
-Received: (qmail 18610 invoked by uid 107); 12 Oct 2011 21:51:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Oct 2011 17:51:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Oct 2011 17:51:05 -0400
-Content-Disposition: inline
-In-Reply-To: <7vvcru9k22.fsf_-_@alter.siamese.dyndns.org>
+	id S1753526Ab1JLWHc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Oct 2011 18:07:32 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:52202 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753463Ab1JLWHb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Oct 2011 18:07:31 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p9CM7E5i004206
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 13 Oct 2011 00:07:14 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
+In-Reply-To: <7vwrca81c7.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183422>
 
-On Wed, Oct 12, 2011 at 10:49:41AM -0700, Junio C Hamano wrote:
+On 10/12/2011 09:19 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> Instead of invalidating the ref cache on an all-or-nothing basis,
+>> allow the cache for individual submodules to be invalidated.
+> 
+> That "allow" does not seem to describe what this patch does. It disallows
+> the wholesale invalidation and forces the caller to invalidate ref cache
+> individually.
+> 
+> Probably that is what all the existing callers want, but I would have
+> expected that an existing feature would be kept, perhaps like this
+> instead:
+> 
+> 	if (!submodule) {
+> 		struct ref_cache *c;
+>                 for (c = ref_cache; c; c = c->next)
+>                 	clear_ref_cache(c);
+> 	} else {
+> 		clear_ref_cache(get_ref_cache(submodule);
+> 	}
+> 
+> Not a major "vetoing" objection, just a comment.
 
-> +static int refname_ok_at_root_level(const char *str, int len)
-> +{
-> +	int seen_non_root_char = 0;
-> +
-> +	while (len--) {
-> +		char ch = *str++;
-> +
-> +		if (ch == '/')
-> +			return 1;
-> +		/*
-> +		 * Only accept likes of .git/HEAD, .git/MERGE_HEAD at
-> +		 * the root level as a ref.
-> +		 */
-> +		if (ch != '_' && (ch < 'A' || 'Z' < ch))
-> +			seen_non_root_char = 1;
-> +	}
-> +	return !seen_non_root_char;
-> +}
+Indeed, it is currently not possible for code outside of refs.c to
+implement "forget everything" using the "forget one" function (because
+there is no API for getting the list of caches that are currently in
+memory).
 
-I thought from your earlier comment:
+A "forget everything" function might be useful for code that delegates
+to a subprocess, if it does not know what submodules the subprocess has
+tinkered with.  Heiko, does that apply to the future submodule code?
 
-> I wanted to start as loose as possible to avoid negatively impacting
-> existing users, later to tighten.  As fsck and friends never look
-> outside of refs/, I think the prefix refs/ is a reasonable restriction
-> that is safe.
+Your specific suggestion would not work because currently
+submodule==NULL signifies the main module.  However, it would be easy to
+add the few-line function when/if it is needed.
 
-that you did agree with tightening this up to allow just refs/ as a
-subdirectory.
 
-Squashable patch is below.
+I guess the bigger issue for me is whether the whole submodule cache
+thing is going to continue to be needed.  I really am too ignorant of
+how submodules work to be able to judge.  From Heiko's recent email it
+sounds like things might be moving in the direction of "top-level git
+doesn't need to know much about submodules because it delegates to
+subprocesses".  He also said that submodule references are not modified
+by the top-level git process, meaning that it might be sensible for the
+submodule reference cache to be less capable than the main module
+reference cache.
 
-diff --git a/refs.c b/refs.c
-index 0f26d9d..b159c4a 100644
---- a/refs.c
-+++ b/refs.c
-@@ -994,21 +994,20 @@ int check_refname_format(const char *ref, int flags)
- 
- static int refname_ok_at_root_level(const char *str, int len)
- {
--	int seen_non_root_char = 0;
-+	if (len >= 5 && !memcmp(str, "refs/", 5))
-+		return 1;
- 
- 	while (len--) {
- 		char ch = *str++;
- 
--		if (ch == '/')
--			return 1;
- 		/*
- 		 * Only accept likes of .git/HEAD, .git/MERGE_HEAD at
- 		 * the root level as a ref.
- 		 */
- 		if (ch != '_' && (ch < 'A' || 'Z' < ch))
--			seen_non_root_char = 1;
-+			return 0;
- 	}
--	return !seen_non_root_char;
-+	return 1;
- }
- 
- int refname_match(const char *abbrev_name, const char *full_name, const char **rules)
+But if things move in the other direction (submodules handled by the
+top-level git process), let alone if git is libified, then it seems
+inevitable that there will someday be a "submodule" object that keeps
+track of its own ref cache, with the submodule objects rather than the
+submodule reference caches looked up by submodule name.
+
+Given that I'm still very new to the codebase, I'm mostly making
+"peephole changes" and so I'm happy to get your feedback about how this
+fits into the grand scheme of things.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
