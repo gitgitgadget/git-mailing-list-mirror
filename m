@@ -1,62 +1,92 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 1/3] t5403.1: simplify commit creation
-Date: Wed, 12 Oct 2011 16:14:23 +0200
-Message-ID: <4E95A0BF.2060003@viscovery.net>
-References: <1318412105-13595-1-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 00/20] [GIT PULL][v3.2] tracing: queued updates
+Date: Wed, 12 Oct 2011 10:19:39 -0400
+Message-ID: <20111012141939.GA25085@sigill.intra.peff.net>
+References: <20111010133852.829771373@goodmis.org>
+ <20111011055017.GA32616@elte.hu>
+ <20002.1318367320@turing-police.cc.vt.edu>
+ <20111012080711.GM18618@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 12 16:14:35 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Valdis.Kletnieks@vt.edu, git@vger.kernel.org,
+	Steven Rostedt <rostedt@goodmis.org>,
+	linux-kernel@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Frederic Weisbecker <fweisbec@gmail.com>
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Wed Oct 12 16:19:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDzZp-0004yk-Ip
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 16:14:33 +0200
+	id 1RDzes-0008BB-8P
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 16:19:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751267Ab1JLOO3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Oct 2011 10:14:29 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:23477 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750990Ab1JLOO2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Oct 2011 10:14:28 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1RDzZg-00044a-CQ; Wed, 12 Oct 2011 16:14:24 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 1BD9B1660F;
-	Wed, 12 Oct 2011 16:14:24 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.23) Gecko/20110920 Thunderbird/3.1.15
-In-Reply-To: <1318412105-13595-1-git-send-email-pclouds@gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1751343Ab1JLOTm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Oct 2011 10:19:42 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58441
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751071Ab1JLOTl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Oct 2011 10:19:41 -0400
+Received: (qmail 11220 invoked by uid 107); 12 Oct 2011 14:19:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Oct 2011 10:19:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Oct 2011 10:19:39 -0400
+Content-Disposition: inline
+In-Reply-To: <20111012080711.GM18618@elte.hu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183369>
 
-Am 10/12/2011 11:35, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy:
->  test_expect_success setup '
->  	echo Data for commit0. >a &&
->  	echo Data for commit0. >b &&
-> -	git update-index --add a &&
-> -	git update-index --add b &&
-> -	tree0=3D$(git write-tree) &&
-> -	commit0=3D$(echo setup | git commit-tree $tree0) &&
-> -	git update-ref refs/heads/master $commit0 &&
-> +	git add a b &&
-> +	git commit -m setup &&
->  	git clone ./. clone1 &&
->  	git clone ./. clone2 &&
->  	GIT_DIR=3Dclone2/.git git branch new2 &&
+On Wed, Oct 12, 2011 at 10:07:14AM +0200, Ingo Molnar wrote:
 
-I don't think this change is necessary. It doesn't hurt to use plumbing
-commands here and there in the test suite to exercise them to a degree
-that they deserve.
+> > On Tue, 11 Oct 2011 07:50:17 +0200, Ingo Molnar said:
+> > 
+> > >  $ git pull git://git.kernel.org/pub/scm/linux/kernel/git/rostedt/linux-2.6-trace.git tip/perf/core
+> > >  fatal: The remote end hung up unexpectedly
+> > 
+> > Is it possible to get 'git' to say something more informative than 
+> > "hung up unexpectedly"? "Tree not found, check URL" or similar 
+> > would be nice...
 
--- Hannes
+It's not possible for the client to say anything more. The server sees
+that the request isn't valid and hangs up without saying anything. So
+the server needs to be changed to output better responses.
+
+> Firstly, arguably, typoing something is not 'fatal' really - it's 
+> just a resource that was not found on the server.
+> 
+> Secondly, and more importantly, the reason for the failed pull is 
+> indeed important to know, if you want to resolve the problem with a 
+> minimum fuss:
+> 
+>  - Was it the tree that didnt exist?
+>  - Or the branch?
+>  - Or was there some other problem [such as a truly unexpectedly 
+>                                     closed transport socket]?
+> 
+> It's really useful for a painless UI flow to disambiguate failure 
+> messages into clearly actionable variants.
+
+I agree. I think some people are concerned with leaking information
+about which repos exist and how they are configured. That is probably
+not a big problem for a public site like kernel.org, though.
+
+You might find this thread interesting:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/182529/focus=182642
+
+It seems to have resulted in a patch that will at least say "access
+denied" for every error. Which is a step up from "the remote end hung up
+unexpectedly", but I do think most users would appreciate it being more
+specific.
+
+Perhaps we just need a config option to turn on more verbose messages,
+if the site decides that there's no security implications to doing so.
+
+-Peff
