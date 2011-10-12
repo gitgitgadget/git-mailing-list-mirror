@@ -1,127 +1,106 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH] Make is_gitfile a non-static generic function
-Date: Wed, 12 Oct 2011 09:29:17 -0400
-Message-ID: <CABURp0qDH6+S-m4nmPrfOECEVQUoXjsvz9ZQhA5PbVJEuwEL_g@mail.gmail.com>
-References: <4E94C70E.3080003@cisco.com> <4E94C8AB.3040807@cisco.com> <7vipnvccso.fsf@alter.siamese.dyndns.org>
+From: Jean Privat <jean.privat@gmail.com>
+Subject: Re: [RFC] teach --edit to git rebase
+Date: Wed, 12 Oct 2011 09:57:11 -0400
+Message-ID: <CAMQw0oOKsVv82c5yaHR0LQu+B-OaBAE8OBXQH-ksiQc2KEBnjA@mail.gmail.com>
+References: <CAMQw0oOBEjW3yS2+wcktXDuEuUiHKjfbK2qDzKvBOiwxo7Zkow@mail.gmail.com>
+ <7vvcrubyz1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Phil Hord <hordp@cisco.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 12 15:29:49 2011
+X-From: git-owner@vger.kernel.org Wed Oct 12 15:57:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RDysX-0003Pm-BC
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 15:29:49 +0200
+	id 1RDzJl-0003Ra-AE
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 15:57:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753265Ab1JLN3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Oct 2011 09:29:44 -0400
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:53680 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753264Ab1JLN3n (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Oct 2011 09:29:43 -0400
-Received: by wwn22 with SMTP id 22so6705018wwn.1
-        for <git@vger.kernel.org>; Wed, 12 Oct 2011 06:29:42 -0700 (PDT)
+	id S1751570Ab1JLN5x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Oct 2011 09:57:53 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:42117 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750964Ab1JLN5w (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Oct 2011 09:57:52 -0400
+Received: by eye27 with SMTP id 27so765541eye.19
+        for <git@vger.kernel.org>; Wed, 12 Oct 2011 06:57:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=fkhAfYab2Nrg/OnenybEKc1F5sfYmMlaXKrbK7WBaDo=;
-        b=wLm5UITZV55WLIOC4dpmMOum4//0fW/VY1TyHG4aUpQjrSw//ri0+h0J340HwDllBT
-         Ren28UXiei/ymVL+IHEqT8d+Z7WUsK8yJDHs+CHzrDj31mQYN6+KQ7yhRRlyImBckl7k
-         dU1q2gJQqYl5MT2InUYQu9th7YbVIlt9Nx0oE=
-Received: by 10.216.133.129 with SMTP id q1mr9743935wei.87.1318426182555; Wed,
- 12 Oct 2011 06:29:42 -0700 (PDT)
-Received: by 10.216.88.72 with HTTP; Wed, 12 Oct 2011 06:29:17 -0700 (PDT)
-In-Reply-To: <7vipnvccso.fsf@alter.siamese.dyndns.org>
+        bh=hdarEYsitlxQ2+ybMX5c8mwkKTo/kDW1IsuCCLxy+Zs=;
+        b=OhtQtcYc4mpGZWZhPX65Vn77+mYapFQEIuk7wuapHIW/kR85A1W9+TN20QE0i4rovb
+         PCORkjXWsDDMrkDq9vq5vmUFUEKePTHwKHhegjTyiCSna4Z+UTGYqHAHbk9VxrdNaMUp
+         WSI4GSJuwfaldjZRPUdbRWOaXydb+s1YDgH+g=
+Received: by 10.223.75.27 with SMTP id w27mr33747659faj.11.1318427871126; Wed,
+ 12 Oct 2011 06:57:51 -0700 (PDT)
+Received: by 10.223.79.3 with HTTP; Wed, 12 Oct 2011 06:57:11 -0700 (PDT)
+In-Reply-To: <7vvcrubyz1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183367>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Phil Hord <hordp@cisco.com> writes:
->
->> The new is_gitfile is an amalgam of similar functional checks
->> from different places in the code....
->
->
-> After looking at this patch and the way the other caller in transport.c
-> uses it, I am more and more convinced that "is_gitfile()" is a stupid and
-> horrible mistake.
+> The only thing you can do with this new option is "update one commit
+> buried in the history, and rebase everything that build on top of it",
 
-I think it's a simple and low-impact change that fixes a bug with a
-minimum of disruption.  But I also think it is lazy.
+It is a good summary indeed.
 
-> The caller in transport.c says "I am about to read from a regular file,
-> and usually I would treat it as a bundle, but I want to avoid that
-> codepath if that regular file is not a bundle. So I use the codepath only
-> when that file is not a gitfile".
->
-> It should be saying "Is it a bundle? Then I'd use the codepath to read
-> from the bundle" to begin with. Otherwise the code will break when we add
-> yet another regular file we can fetch from that is not a bundle nor a
-> gitfile.
+> as
+> far as I can tell. It feels a shame to waste the generic word "--edit" for
+> such a narrow option.
 
-Yes, and this is part of the kind of distraction that held back my
-update over the weekend.
+I'm bad at bikesheeding. The 'edit' come from the 'edit' command in
+rebase interactive. I am open to other names. Note that in the
+following I keep the --edit name, not because I am suborn but because
+I do not have better to propose yet.
 
-When we do add another file type we'll wind up with a half-dozen
-places that get affected in slightly different ways again.  Wouldn't
-it be nice to have a function to tell us what kind of thing it is
-we've been asked to look at?  Something like git_type(url) that
-returns GIT_BUNDLE, GIT_DIRECTORY or GIT_FILE, maybe.
+> At the UI level, "git commit --amend HEAD~4" might be a more natural way
+> to invoke such an operation, I would think.
 
-Except I didn't see many examples in the code using this sort of
-enumerated decision function.
+As I say in the original email the point of the 'rebase --edit
+some-commit' is to temporally checkout some-commit so that edits are
+done in the context of the commit and not in the context of the head
+of the branch.
+One has to do a rebase --edit prior to modification (although we can
+imagine a possibility to bring back the index or the content of the
+working directory with us either automatically as with a branch
+checkout or manually with the help of stash).
 
-> I think the hand-crafted check in builtin/clone.c you removed originated
-> from laziness to avoid teaching read_gitfile() to read potential gitfile
-> silently (and signal errors by simply returning NULL).
+Unless I misinterpret the 'git commit --amend HEAD~4' you suggest, it
+means that you have to prepare the commit in the head of the branch.
+It may be difficult if what was in HEAD~4 is altered by HEAD~2.
+My argument is that if preparing a patch to HEAD~4 in HEAD is easy, a
+git commit --fixup will do the tick.
+If the preparation is difficult because I have to work on (or more
+insidious, near) change that occurs between HEAD~4 and HEAD, I need
+something like my proposal. For example I added a line in HEAD~2 but I
+prefer now to have this line to appears in HEAD~4.
 
-I made a read_gitfile(... , gently) function, but I didn't like it
-much.  When !gently, I think it should be rather explicit about the
-type of failure.  This makes the code look like 20% of it is repeated
-"if (!gently) die... ;\n return;" sequences.  It's almost enough to
-lead me to macros.
+The workflow I propose is :
 
-And what about when fopen() fails and we are running silently.  Do we
-just shrug and say "Not a gitfile"?  I don't think it's good enough.
-We need to be able to say all of these:
+$ # we are on master
+$ git rebase --edit HEAD~4 # workdir is a detached master~4 like with a
+                           # git checkout master~4
+$ hack hack hack; git add files
+$ git commit --amend
+$ git rebase --continue # conflict is detected with master~2, resolve it
+                        # manually
+$ git rebase --continue # workdir is now a rebased master
 
-  It's a gitfile, here's the internal path.
+I do no see what is the workflow with an extend git commit --amend
+Do you mean something like the following ?
 
-  It's not a gitfile, it is something else.
+$ git checkout HEAD~4 -- . # bring back the content of master~4 but
+                           # HEAD still points master
+$ hack hack hack; git add files # And try to now be disturbed by the fact
+                                # that diff and status are polluted
+                                # with things related to master
+$ git commit --amend HEAD~4 # conflict is detected with master~2, resolve it
+$ git rebase --continue # Do we really want using "git rebase"?
 
-  It looked like a gitfile until I ran into E_ACCES or some other error.
+This last workflow seems so awkward to me that I might miss something.
 
-Making the one function run silently or not complicates the code further.
-
-I tried to find a similar style to mimic elsewhere in the code, but I
-didn't find any consistency.  Pointers to clean examples would be
-welcome.
-
-I started working on more of an API.  But it's still very ugly and not
-ready for even a strawman discussion.
-
-But I don't know how much time I have for a full writeup atm.  Without
-something, though, I cannot easily fetch from a submodule, because
-submodules all use gitfiles now, and git:master does not know how to
-fetch from them.
-
-And that's the itch I had to scratch.
-
-> I also suspect the
-> codepath may become simpler if we had a way to ask "Is this a bundle?".
->
-> I think read_bundle_header() in bundle.c can be refactored to a silent
-> interface that allows us to ask "Is this a bundle?" question properly.
-
-I'll take a look at it.  But I won't have much time for it this week.
-
-Thanks,
-Phil
+-- Jean Privat
