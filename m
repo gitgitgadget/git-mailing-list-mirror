@@ -1,116 +1,189 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] remote: support --all for the prune-subcommand
-Date: Wed, 12 Oct 2011 17:36:18 -0400
-Message-ID: <20111012213618.GA4315@sigill.intra.peff.net>
-References: <1317644168-5808-1-git-send-email-kusmabite@gmail.com>
- <20111004070006.GA6824@sigill.intra.peff.net>
- <CABPQNSZrfxhyA3em8TN2=d7pAHopZMgRg47baKnDT9h14=rxkA@mail.gmail.com>
- <20111004071332.GA7308@sigill.intra.peff.net>
- <CABPQNSZ-ELfFuxmKMqXCQaAgMZMRsZG3S5wWJLsjkYVvK6aGug@mail.gmail.com>
- <CABPQNSb7NYTac5uWSegK9rmYz1n0yt1GJWHKUtLg1k_OYHdDNg@mail.gmail.com>
- <20111004075608.GC7308@sigill.intra.peff.net>
- <CABPQNSb7WACrr=7FsR8YVMC1-q3i0zRhQtXiV8VshfCJn3qgEA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] fetch: honor the user-provided refspecs when pruning
+ refs
+Date: Wed, 12 Oct 2011 14:39:24 -0700
+Message-ID: <7vsjmx7uur.fsf@alter.siamese.dyndns.org>
+References: <1318027869-4037-1-git-send-email-cmn@elego.de>
+ <1318027869-4037-4-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 12 23:36:28 2011
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, mathstuf@gmail.com
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Wed Oct 12 23:40:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RE6TS-0000Oz-Eu
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 23:36:26 +0200
+	id 1RE6Wy-0001sc-9x
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Oct 2011 23:40:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754334Ab1JLVgV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Oct 2011 17:36:21 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58902
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754307Ab1JLVgU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Oct 2011 17:36:20 -0400
-Received: (qmail 18176 invoked by uid 107); 12 Oct 2011 21:36:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Oct 2011 17:36:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Oct 2011 17:36:18 -0400
-Content-Disposition: inline
-In-Reply-To: <CABPQNSb7WACrr=7FsR8YVMC1-q3i0zRhQtXiV8VshfCJn3qgEA@mail.gmail.com>
+	id S1754419Ab1JLVjc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Oct 2011 17:39:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45972 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754342Ab1JLVj1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Oct 2011 17:39:27 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF9305968;
+	Wed, 12 Oct 2011 17:39:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Kx4XtI4ayNI+
+	pzwR8BwZ5KOjVGc=; b=BvGu1MXtAhYT3ybZI0nMUqybj7PdpD+o2tE+AnEQh+iH
+	B0hx0jUD02lcoGru6L5P1QHeYNv8oBau7O4TvI856BGNoCK5bFQqd6vX6LLK71hS
+	xwGDgHD5Mf987LboIa1Z2mjTjK8EopUdcZG0fOYNOieUNLOmZiVs4g12AKZYGM4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xF3SED
+	yMKKe5SYgseSm68ZEta0kTDlTO7809jE7a1FiJW++nFNLKPG6hIn6n7OCkGEtLWK
+	c+Te3FMaW+TcFzy8Si3Tl6ENdKjs2Kl/xZC5ip6u1LXBoKhVHsI8Gu6hX4k1fXwY
+	hjqJ+4TbaLFX01RGBeyzBsjGKP23ikwI8v90s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A72085967;
+	Wed, 12 Oct 2011 17:39:26 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EA69B5966; Wed, 12 Oct 2011
+ 17:39:25 -0400 (EDT)
+In-Reply-To: <1318027869-4037-4-git-send-email-cmn@elego.de> ("Carlos
+ =?utf-8?Q?Mart=C3=ADn?= Nieto"'s message of "Sat, 8 Oct 2011 00:51:08 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A81FD07A-F51A-11E0-A7FD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183417>
 
-On Tue, Oct 04, 2011 at 10:22:35AM +0200, Erik Faye-Lund wrote:
+Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
 
-> > I think the original rationale was that we didn't want fetch to be
-> > "lossy". That is, if I were using upstream's "foo" branch as part o=
-f my
-> > work (to diff against, or whatever), then doing a "git fetch" to up=
-date
-> > should not suddenly make it hard to do my work. And not just hard a=
-s in
-> > "I notice that it's gone and I adapt my workflow". But that you no
-> > longer have _any_ record of where upstream's "foo" branch used to p=
-oint,
-> > so even doing something like:
-> >
-> > =C2=A0git rebase --onto new-foo foo my-topic
-> >
-> > is impossible.
->=20
-> Following that logic, a user cannot _ever_ safely prune a remote if h=
-e
-> wants to work on some of the branches. Doing something like "git
-> remote foo -n" to check if the branch would get pruned before doing a
-> proper prune is prone to a race-condition; the branch could be delete=
-d
-> on the remote between the dry-run and the actual pruning.
+> -static int prune_refs(struct transport *transport, struct ref *ref_m=
+ap)
+> +static int prune_refs(struct refspec *refs, int ref_count, struct re=
+f *ref_map)
+>  {
+>  	int result =3D 0;
+> -	struct ref *ref, *stale_refs =3D get_stale_heads(transport->remote,=
+ ref_map);
+> +	struct ref *ref, *stale_refs =3D get_stale_heads(ref_map, refs, ref=
+_count);
 
-Right. And that's why we don't prune by default. In practice, it tends
-to be safe if you pick a reasonable time to prune, and the upstream is
-reasonable about their branches. But turning it on all the time takes
-away the "pick a reasonable time".
+So in short, get_state_heads() used to take a ref_map and a remote. The
+ref_map is what we actually observed from the remote after talking
+ls-remote with it. It tried to see if any existing ref in our refspace =
+may
+have come from that remote by inspecting the fetch refspec associated w=
+ith
+that remote (and the ones that does not exist anymore are queued in the
+stale ref list).
 
-> Besides, the owner of the repo can just as easily have deleted the
-> branch and created a new one with the same name, causing the contents
-> of the branch to be lost. This happens all the time with
-> "for-upstream"-kind of branches, no?
+Now get_state_heads() takes a ref_map and <refs, ref_count> (you made t=
+he
+patch unnecessarily harder to read by swapping the order of parameters)=
+=2E
+The latter "pair" roughly corresponds to what the "remote" parameter us=
+ed
+to mean, but instead of using the refspec associated with that remote, =
+we
+would use the refspec used for this particular fetch to determine which
+refs we have are stale.
 
-They can do that, but on the local side, you will just see a jump in
-history. But because we didn't _delete_ the ref on the local side, you
-will retain your reflog.
+> @@ -699,8 +699,12 @@ static int do_fetch(struct transport *transport,
+>  		free_refs(ref_map);
+>  		return 1;
+>  	}
+> -	if (prune)
+> -		prune_refs(transport, ref_map);
+> +	if (prune) {
+> +		if (ref_count)
+> +			prune_refs(refs, ref_count, ref_map);
+> +		else
+> +			prune_refs(transport->remote->fetch, transport->remote->fetch_ref=
+spec_nr, ref_map);
+> +	}
 
-IOW, the reflog can save us from anything the upstream will do. And
-that's what makes deletion so special: we delete the local reflog.
+And this is consistent to my two paragraph commentary above.
 
-> > The right solution, IMHO, is that ref deletion should actually keep=
- the
-> > reflog around in a graveyard of some sort. Entries would expire
-> > naturally over time, as they do in regular reflogs. And then it bec=
-omes
-> > a lot safer to prune on every fetch, because you still have 90 days=
- look
-> > at the reflog.
-> >
-> Fixing the reflog to expire for ref deletion rather than completely
-> deleting it sounds like a good move, indeed.
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index f2a9c26..79d898b 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -349,7 +349,8 @@ static int get_ref_states(const struct ref *remot=
+e_refs, struct ref_states *stat
+>  		else
+>  			string_list_append(&states->tracked, abbrev_branch(ref->name));
+>  	}
+> -	stale_refs =3D get_stale_heads(states->remote, fetch_map);
+> +	stale_refs =3D get_stale_heads(fetch_map, states->remote->fetch,
+> +				     states->remote->fetch_refspec_nr);
 
-This is on my long-term todo list, but if somebody gets around to it
-before me, I won't be upset. :)
+So is this.
 
-> While we're on the subject, an additional argument to change "git
-> fetch" to always prune is that it's much much easier for user to grok
-> "last known state of <remote>'s branches" than "the union of all the
-> branches that were ever pulled from <remote>, unless --prune was
-> specified". But that's not a technical one, and surely there's issues
-> to resolve with the proposal before going in that direction.
+> diff --git a/remote.c b/remote.c
+> index b8ecfa5..13c9153 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -1681,36 +1681,84 @@ struct ref *guess_remote_head(const struct re=
+f *head,
+>  }
+> =20
+>  struct stale_heads_info {
+> -	struct remote *remote;
+>  	struct string_list *ref_names;
+>  	struct ref **stale_refs_tail;
+> +	struct refspec *refs;
+> +	int ref_count;
+>  };
+> =20
+> +/* Returns 0 on success, -1 if it couldn't find a match in the refsp=
+ecs. */
+> +static int find_in_refs(struct refspec *refs, int ref_count, struct =
+refspec *query)
+> +{
+> +	int i;
+> +	struct refspec *refspec;
 
-Agreed. Really, everything argument points towards auto-prune except th=
-e
-reflog-safety thing. I think once that is fixed, turning on pruning by
-default becomes a no-brainer.
+This function replaces the role remote_find_tracking() used to play in =
+the
+old code and the difference in the behaviour (except the obvious lack o=
+f
+"find_src/find_dst") feels gratuitous.
 
--Peff
+The original code in remote_find_tracking() uses "->pattern" to see if =
+a
+pattern match is necessary, but this scans the refspec for an asterisk,
+assuring a breakage when the refspec language is updated to understand
+other glob magic in the future. Why isn't refspec->pattern used here?
+
+Can't these two functions share more logic?  It appears to me that by
+enhancing the logic here a little bit, it may be possible to implement
+remote_find_tracking() ed in terms of this function as a helper.
+
+> +	for (i =3D 0; i < ref_count; ++i) {
+> +		refspec =3D &refs[i];
+> +
+> +		/* No dst means it can't be used for prunning. */
+> +		if (!refspec->dst)
+> +			continue;
+> +
+> +		/*
+> +		 * No '*' means that it must match exactly. If it does
+> +		 * have it, try to match it against the pattern. If
+> +		 * the refspec matches, store the ref name as it would
+> +		 * appear in the server in query->src.
+> +		 */
+> +		if (!strchr(refspec->dst, '*')) {
+> +			if (!strcmp(query->dst, refspec->dst)) {
+> +				query->src =3D xstrdup(refspec->src);
+> +				return 0;
+> +			}
+> +		} else if (match_name_with_pattern(refspec->dst, query->dst,
+> +						    refspec->src, &query->src)) {
+> +			return 0;
+> +		}
+> +	}
+> +
+> +	return -1;
+> +}
