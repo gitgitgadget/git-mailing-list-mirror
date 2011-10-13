@@ -1,103 +1,104 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [CLOSED] git checkout <branch> allowed with uncommitted changes
-Date: Thu, 13 Oct 2011 12:01:23 -0700 (PDT)
-Message-ID: <m3vcrs7m3v.fsf@localhost.localdomain>
-References: <loom.20111013T094053-111@post.gmane.org>
-	<CACsJy8Dzy5-kOZAjwdx=ooUdnN0L2F3EiNQ7b==3AGQZYjEUXQ@mail.gmail.com>
-	<20111013145924.2113c142@ashu.dyn.rarus.ru>
-	<loom.20111013T130924-792@post.gmane.org> <4E96D819.20905@op5.se>
-	<loom.20111013T144822-277@post.gmane.org>
-	<1318514356.4646.16.camel@centaur.lab.cmartin.tk>
-	<loom.20111013T181801-923@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Bug] git pull doesn't recognize --work-tree parameter
+Date: Thu, 13 Oct 2011 12:06:46 -0700
+Message-ID: <7v62js4sop.fsf@alter.siamese.dyndns.org>
+References: <E95C75ED-99F2-463C-A1AB-0F8152696739@jetbrains.com>
+ <20111013155923.GA13134@sigill.intra.peff.net>
+ <7vbotk6aae.fsf@alter.siamese.dyndns.org>
+ <20111013183709.GB17573@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-4
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: arQon <arqon@gmx.com>
-X-From: git-owner@vger.kernel.org Thu Oct 13 21:01:32 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 13 21:06:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REQX5-0003Qg-5r
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 21:01:31 +0200
+	id 1REQcH-0006Ex-Vr
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 21:06:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751723Ab1JMTB0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Oct 2011 15:01:26 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:34661 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751002Ab1JMTBZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Oct 2011 15:01:25 -0400
-Received: by eye27 with SMTP id 27so350553eye.19
-        for <git@vger.kernel.org>; Thu, 13 Oct 2011 12:01:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=1MImiCtbPd0LlPLBlTmvCu9fyRkvbYiwRFWbl0Hj6VM=;
-        b=RdZmtOili18xjKWEWFqEVOaadapu03iGs49a9r8k0i2VL3MYxaZmlvfy2c7ZWZlaCl
-         wuMjXWXqvQRmt/2tehGYloZoqs2aK5gdBp8687Mgt5i1gpPpnm40yw527Jq/vGqQicjV
-         x+iVayMAQx1SJTMwmXypMGRWThDM8BJIkPVFw=
-Received: by 10.223.61.211 with SMTP id u19mr7773550fah.29.1318532484143;
-        Thu, 13 Oct 2011 12:01:24 -0700 (PDT)
-Received: from localhost.localdomain (abvv157.neoplus.adsl.tpnet.pl. [83.8.219.157])
-        by mx.google.com with ESMTPS id k26sm1295188fab.12.2011.10.13.12.01.22
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 13 Oct 2011 12:01:23 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p9DJ0rdI003660;
-	Thu, 13 Oct 2011 21:01:04 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p9DJ0bnw003655;
-	Thu, 13 Oct 2011 21:00:37 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <loom.20111013T181801-923@post.gmane.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753127Ab1JMTGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Oct 2011 15:06:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45473 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751525Ab1JMTGt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2011 15:06:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 896AB3BBF;
+	Thu, 13 Oct 2011 15:06:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=c3v1W9DaCtyun8iNThiCvJHUq8E=; b=PrGW4D
+	928dckm1DeRUdEnCv9gie3UahCWiTQqpMDAQZyHwUQmwG2WgTla5qEuWkX4ZO8yN
+	isBWLN9wuvA6BEsoOh/e5m64GJgnxPus7VOF7GOMGAWJ4eyv/1QwLoOXvxIBc/GB
+	7TZo/tHRpyyXA4vA+awIRQ5x86F/JLboYlcog=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wCZ9IteaFzSRQPtzx8croIPR1joKYNrg
+	4uIfQvBg8heq5nAN6UupXlnnDTjckc+PdxhSVq+vQYezhejYq8gWFEN1LuXtbzYT
+	LgtZ9hmMtUAiwebhP3o+0dSb7jeKNAATzsx1CVAwi964R3VqPB1LICaX56TTvpyU
+	jeG9fpQo37w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 811E93BBE;
+	Thu, 13 Oct 2011 15:06:48 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 05AFD3BBD; Thu, 13 Oct 2011
+ 15:06:47 -0400 (EDT)
+In-Reply-To: <20111013183709.GB17573@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 13 Oct 2011 14:37:09 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7FFB0542-F5CE-11E0-B8F5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183517>
 
-arQon <arqon@gmx.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> (Though if someone can come up with a script / hook / whatever that i=
-mproves
-> the "visibility" of stash, that would be awesome. Or one that makes t=
-he
-> refusal to switch branches consistent).
-
-Well, if you use __git_ps1 from contrib/completion/git-completion.bash
-(installed with git-core package for some time), there is an option to
-add '$' to branch name if stash is non-empty (though it doesn't actuall=
-y
-check if stash was on said branch).
-=20
-> Looking at the manpage for checkout in the hope that there might be a=
- "--safe"
-> switch, I don't understand why
+> And then convert the two scripts in my patch to use it (along with the
+> change to require_work_tree_exists).  That would make my prior analysis
+> hold, then, as the annoying do-nothing behavior of "cd_to_toplevel" only
+> kicks in when we are outside the work tree (i.e., it could not have
+> happened before in those scripts, because the existing require_work_tree
+> call would cause us to die).
+> ...
+> Right. I suspect the proposed behavior for cd_to_toplevel is what they
+> all would want eventually, but some scripts may need minor tweaks. I
+> think we should follow the same path as require_work_tree_exists, and
+> introduce the new function, use it where we know it's safe, and then
+> eventually get rid of the old one.
 >
->   "-f  Proceed even if the index *or the working tree* differs from H=
-EAD."
->
-> even exists, since it proceeds under those conditions anyway.
-> "--safe" appears to be exactly what the behavior should be if you DON=
-'T
-> specify -f, except that -f nukes the working tree outright rather tha=
-n just
-> bleeding it across. Hopefully it'll be clearer after some sleep.  :)
-=20
-Without '-f' git-checkout would switch branches only if uncomitted
-changes (which do not belong to any branch) could be "floated" on top
-of new branch.
+> The real trick is coming up with a good name, because cd_to_toplevel is
+> already taken. :)
 
-If branch you are switching to has differences from current branch
-that conflict with uncomitted changes, git would refuse switching
-branches.  Now '-f' would get rid of your uncomitted changes, and '-m'
-try to merge it with changes brought by new branch.
+It is not as simple as that I am afraid. We could introduce cd_to_top with
+the new semantics and use it in pull and rebase, but a case that would
+break is for a script (let's call that hypothetical operation "git svn
+dcommit", even though I do not know if dcommit uses the real working tree
+or a temporary one) that prepares a temporary working tree inside .git/svn/
+and run "git rebase" there without setting GIT_WORKING_TREE to point at
+the temporary directory.
 
-HTH
---=20
-Jakub Nar=EAbski
+With cd_to_toplevel, such a "rebase" would work and "git svn dcommit" can
+take that result and do whatever it wants to the real working tree after
+it finishes. When we start using cd_to_top in the updated "rebase", such a
+script suddenly breaks, as we would start touching the real working tree.
+
+So I do not think it makes much sense to add cd_to_top with updated
+semantics while keeping cd_to_toplevel.
+
+What we could do is to update cd_to_toplevel so that it would notice and
+warn when the results between the historical incorrect behaviour and the
+updated behaviour would be different. The warning can first read "You are
+running 'rebase' somewhere in $GIT_DIR without setting $GIT_WORK_TREE; we
+historically used the directory you started 'rebase' as the top level of
+the working tree, and this version continues to do so, but it will change
+to work on the real working tree associated with your $GIT_DIR in future
+versions of git. Update your script to correctly set $GIT_WORK_TREE", and
+then we transition to start using the new semantics while rewording the
+warning message, and then later remove the warning altogether.
