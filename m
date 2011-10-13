@@ -1,76 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] daemon: return "access denied" if a service is not
- allowed
-Date: Thu, 13 Oct 2011 00:59:24 -0500
-Message-ID: <20111013055924.GA24019@elie.hsd1.il.comcast.net>
-References: <7vsjn9etm3.fsf@alter.siamese.dyndns.org>
- <1317678909-19383-1-git-send-email-pclouds@gmail.com>
- <20111012200916.GA1502@sigill.intra.peff.net>
- <20111013044544.GA27890@duynguyen-vnpc.dek-tpc.internal>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2011, #04; Wed, 12)
+Date: Wed, 12 Oct 2011 23:02:45 -0700 (PDT)
+Message-ID: <m3zkh577ln.fsf@localhost.localdomain>
+References: <7vipnu9hbj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 13 07:59:44 2011
+Content-Type: text/plain; charset=iso-8859-4
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Cord Seele <cowose@googlemail.com>,
+	Cord Seele <cowose@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 13 08:03:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REEKV-0002K2-Pw
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 07:59:44 +0200
+	id 1REENf-0003RJ-FQ
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 08:02:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752905Ab1JMF7j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Oct 2011 01:59:39 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:37080 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751453Ab1JMF7i (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Oct 2011 01:59:38 -0400
-Received: by gyb13 with SMTP id 13so1464702gyb.19
-        for <git@vger.kernel.org>; Wed, 12 Oct 2011 22:59:38 -0700 (PDT)
+	id S1753146Ab1JMGCu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Oct 2011 02:02:50 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:44755 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753130Ab1JMGCt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Oct 2011 02:02:49 -0400
+Received: by eye27 with SMTP id 27so1475069eye.19
+        for <git@vger.kernel.org>; Wed, 12 Oct 2011 23:02:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=1OkmWckU8FIkqWafasQ7q8fB9gfyDCUKuT7BoLCN3aU=;
-        b=dGjk0h9VINjBHCwdZr1vl+7H4OS+gujfWxVKZ+u5vdW+cSO5yS+FgukJUCcFoZfCHe
-         vB3F/e9t2sfyn1D9tH6D/9r8wnSWW9GyDnGJH2hwt+Or4iy7MfR8wv+inmHlEs+yXYIh
-         8dYYoLYAchunCyK8V538FTwV7GK6EGvj3yOwc=
-Received: by 10.236.153.200 with SMTP id f48mr2563107yhk.114.1318485578068;
-        Wed, 12 Oct 2011 22:59:38 -0700 (PDT)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id x12sm6003803yhi.10.2011.10.12.22.59.36
-        (version=SSLv3 cipher=OTHER);
-        Wed, 12 Oct 2011 22:59:37 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20111013044544.GA27890@duynguyen-vnpc.dek-tpc.internal>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=+I3HGAohnsJ9I2CgWry4Mu2V7ANRMNtrr7MpwFQxpYE=;
+        b=YG0eLYrHqryxsfsCTBh+W+RkuaLwiRxuUzhmlANlcHA0yZM9d0ZUYermjhQNC65ke5
+         C6/Tdz8ORPATcX1gm7HVfCi4u3mNTezatDH/zMH0BaCmqVXW6fKxQc57feNneQakTs+y
+         A/5bxoyixCTuAhGOas98g/VWyuX27Zk5flBbU=
+Received: by 10.223.75.27 with SMTP id w27mr3955176faj.11.1318485766506;
+        Wed, 12 Oct 2011 23:02:46 -0700 (PDT)
+Received: from localhost.localdomain (abwe119.neoplus.adsl.tpnet.pl. [83.8.228.119])
+        by mx.google.com with ESMTPS id w14sm7999266fae.13.2011.10.12.23.02.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 12 Oct 2011 23:02:45 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p9D626CH027157;
+	Thu, 13 Oct 2011 08:02:16 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p9D61e2h027146;
+	Thu, 13 Oct 2011 08:01:40 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vipnu9hbj.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183442>
 
-Nguyen Thai Ngoc Duy wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> How about allow users to select which messages they want to print? We
-> can even go further, allowing users to specify the messages themselves..
-[...]
-> +	{ "service not enabled", "message.serviceNotEnabled" },
-> +	{ "no such repository", "message.noSuchRepository" },
-> +	{ "repository not exported", "message.repositoryNotExported" },
+> * cs/perl-config-path-send-email (2011-09-30) 2 commits
+>   (merged to 'next' on 2011-10-06 at 93c00f0)
+>  + use new Git::config_path() for aliasesfile
+>  + Add Git::config_path()
+>=20
+> Originally merged to 'next' on 2011-10-05.
+> Will merge to 'master' in the second wave.
 
-I administer a private server that is only accessible as "localhost".
-:)  This much customization would leave me confused about what the
-right choices are and what the choices mean (even if I were to make
-the server public and start having security worries).
+What about
 
-What is the intended use --- translation?  The idealist in me thinks
-that should be taken care of on the client side, if at all.  (This
-way, we would not be preventing especially friendly clients from
-offering pertinent detailed advice for each error condition.
-Alternatively, maybe some day the protocol will want to provide a way
-for clients to indicate a preferred language and message verbosity.)
+   . Refactor Git::config_*
+
+from
+
+   [PATCH/RFC 3/2] Refactor Git::config_*
+   http://thread.gmane.org/gmane.comp.version-control.git/182310/focus=3D=
+183111
+
+Ahhh... sorry, it is marked as an RFC.  Should I resend?
+--=20
+Jakub Nar=EAbski
