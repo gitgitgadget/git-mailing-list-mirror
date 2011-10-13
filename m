@@ -1,168 +1,130 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: arQon <arqon@gmx.com>
 Subject: Re: [BUG] git checkout <branch> allowed with uncommitted changes
-Date: Thu, 13 Oct 2011 17:09:49 +0200
-Message-ID: <4E96FF3D.90600@drmicha.warpmail.net>
-References: <loom.20111013T094053-111@post.gmane.org>
+Date: Thu, 13 Oct 2011 15:53:07 +0000 (UTC)
+Message-ID: <loom.20111013T171530-970@post.gmane.org>
+References: <loom.20111013T094053-111@post.gmane.org>  <CACsJy8Dzy5-kOZAjwdx=ooUdnN0L2F3EiNQ7b==3AGQZYjEUXQ@mail.gmail.com>  <20111013145924.2113c142@ashu.dyn.rarus.ru>  <loom.20111013T130924-792@post.gmane.org> <4E96D819.20905@op5.se>  <loom.20111013T152144-60@post.gmane.org> <1318517194.4646.30.camel@centaur.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: arQon <arqon@gmx.com>
-X-From: git-owner@vger.kernel.org Thu Oct 13 17:09:59 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 13 17:53:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REMv1-0000PU-AM
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 17:09:59 +0200
+	id 1RENb8-0001mH-F9
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 17:53:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932121Ab1JMPJy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Oct 2011 11:09:54 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:38613 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932116Ab1JMPJx (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Oct 2011 11:09:53 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id AF22121B6F;
-	Thu, 13 Oct 2011 11:09:52 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute3.internal (MEProxy); Thu, 13 Oct 2011 11:09:52 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=oUTTGjuvs/YU02S5hzYhTj
-	y8acs=; b=NeRTd/ge5wsLkGiMOoZtuttuljDXgEU6PGWgvGgLp9SfGbgktvJeHl
-	BkbSs/6FXwJfpYt3WhwDFE1kOEe6f1fdE8olKXJPCYnRLHfOnpAZY7/SfD0wE1QM
-	6G4Oy7PcDXSsJJnG75mONII6mF7DtebTwm2KYN74wKVwIlQA5GewI=
-X-Sasl-enc: EeKZo6EkakVuyS/MDOdmxw+vA969G6gJBlodfTSZmXbx 1318518592
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 2B0FE4044FD;
-	Thu, 13 Oct 2011 11:09:52 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0) Gecko/20110927 Thunderbird/7.0
-In-Reply-To: <loom.20111013T094053-111@post.gmane.org>
+	id S1756220Ab1JMPxZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Oct 2011 11:53:25 -0400
+Received: from lo.gmane.org ([80.91.229.12]:46644 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752676Ab1JMPxZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2011 11:53:25 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RENay-0001fr-S2
+	for git@vger.kernel.org; Thu, 13 Oct 2011 17:53:20 +0200
+Received: from 24-180-45-63.dhcp.crcy.nv.charter.com ([24.180.45.63])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 13 Oct 2011 17:53:20 +0200
+Received: from arqon by 24-180-45-63.dhcp.crcy.nv.charter.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 13 Oct 2011 17:53:20 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 24.180.45.63 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Ubuntu/10.04 (lucid) Firefox/3.6.23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183491>
 
-arQon venit, vidit, dixit 13.10.2011 10:40:
-> Which, as you'd expect, results in both the on-disk copies and other branches
-> becoming corrupted.
-> 
-> Tested on git versions 1.7.6 and 1.7.7 (msysgit)
-> 
-> http://benno.id.au/blog/2011/10/01/git-recursive-merge-broken describes
-> something that sounds similar, but that's supposedly fixed on 1.7.7,
-> whereas this happens on that as well.
-> 
-> master is a tracking branch, "ttfcon" is the branch I was using to develop
-> a change. Got to a good point on the branch, merged it in:
-> 
-> $ git co master
-> $ git merge ttfcon
-> Updating b9f0c75..6280b7a
-> Fast-forward
->  .gitignore                |    2 ++
->  code/renderer/tr_font.cpp |   27 ++++++++-------------------
->  2 files changed, 10 insertions(+), 19 deletions(-)
-> 
-> $ git st
-> # On branch master
-> # Your branch is ahead of 'origin/master' by 3 commits.
-> 
-> back to the branch to mess around with a couple of things to be sure this
-> is what i want to push
-> $ git co ttfcon
-> do stuff
-> 
-> $ git st
-> # On branch ttfcon
-> # Changes not staged for commit:
-> #   (use "git add <file>..." to update what will be committed)
-> #   (use "git checkout -- <file>..." to discard changes in working directory)
-> #
-> #       modified:   code/freetype-2.3.11/builds/win32/visualc/freetype.vcproj
-> #       modified:   code/renderer/tr_font.cpp
-> 
-> so far so good...
-> 
-> $ git ci -m "blah" code/freetype-2.3.11/builds/win32/visualc/freetype.vcproj
->  1 files changed, 4 insertions(+), 0 deletions(-)
-> 
-> note that tr_font is locally modified and still *not committed* at this point.
+Carlos Mart=C3=ADn Nieto <cmn <at> elego.de> writes:
+> I have not seen a revert command in any of your messages. If a revert=
+ on
+> one branch changes another one, that would be a bug, but you haven't
+> shown this to happen.
 
-and neither staged for commit, exactly.
+Sorry, it was in prose in the original post (near the end)
+"At this point, reverting the master with "checkout --" also wipes out =
+the
+changes on the other branch. It's like the merge symlinked the two bran=
+ches
+rather than, well, merging them."
 
-> $ git co master
-> M       code/renderer/tr_font.cpp
-> Switched to branch 'master'
-> Your branch is ahead of 'origin/master' by 3 commits.
-> 
-> boom. instead of rejecting the branch change, git switches branches anyway,
-> and doesn't do anything about the uncommitted changes in the file itself -
+Based on the explanations here, and the git *st* message, it wiping out=
+ the
+other branch is to be expected, because it's "the working directory", n=
+ot
+"the branch".
 
-Exactly. git leaves them as they are, without changing what you have in
-your work tree.
+>git st
+# On branch foo
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working dire=
+ctory)
+#
+#       modified:   file1.txt
+#
+no changes added to commit (use "git add" and/or "git commit -a")
 
-(This is possible because the switch ttfcon to master involves no
-changes which conflict with the chnage that you have in your work tree).
+What makes this really interesting though is this: I tried to switch to
+master to see if that gave the same warning, and NOW, I get the correct
+error.
 
-> meaning they're now effectively "in" master because they're still on disk,
-> so now the master is poisoned.
+>git co master
+error: Your local changes to the following files would be overwritten b=
+y
+checkout:
+        file1.txt
+Please, commit your changes or stash them before you can switch branche=
+s.
+Aborting
 
-Not at all. They are on "disk" (work tree). Full stop. Not staged, not
-committed, not at all "in master".
+I'm sure if I thought about it enough (ie re-read Andreas's post a coup=
+le
+more times) I'd be able to understand why git gets it right sometimes b=
+ut
+not other times, but I'm too tired right now. Even when I *am* awake an=
+d
+grok it properly, I'm still going to be annoyed that it's so inconsiste=
+nt,
+but I can live with that if I have to.
 
-> 
-> "git st" does show the change:
-> 
-> # On branch master
-> # Changes not staged for commit:
-> #       modified:   code/renderer/tr_font.cpp
-> 
-> but it's a change I never MADE on this branch (ie master), only on the
-> other branch.
+> The reason this happens both in svn and git is that the most likely
+> cause for someone to change a branch mid-edit is that they decide
+> they're doing the changes on the wrong branch.
 
-You never made it on the other branch either. You made it in the work
-tree. And "git status" clearly says so: modified, not staged.
+Lucky you. :P  The most likely reason for me is, I'm working on somethi=
+ng
+and I get interrupted and have to switch. Since the code may well not e=
+ven
+compile at this point, the last thing I want to do is commit it. git's
+ability for that commit to be local is half the reason I'm trying to sw=
+itch
+to it. (I'm not particularly keen on having to commit broken code to ev=
+en a
+local repo, but that's still a hell of a lot better than having it push=
+ed
+upstream as well).
 
-> "git diff" is just as confused as I am:
-> 
-> $ git diff ttfcon
-> --- a/code/renderer/tr_font.cpp
-> +++ b/code/renderer/tr_font.cpp
-> +		// git branch bug
+> svn doesn't tell you about the modifications being carried over
+> (presumably you're meant to use status and diff to figure out what's
+> going on). Therefore, the same workflow (with the only difference bei=
+ng
+> how to create and switch branches) works for svn and git in this case=
+=2E
 
-"git diff" shows you the change you have in your work tree, i.e. the
-difference between index (which coincides with master since nothing is
-staged) and work tree. The fact that there is a difference is equivalent
-to saying "there are unstaged changes".
-
-> So it's picking up the difference between the two branches, but as far as
-
-No. The difference between the branches is the change to freetype.vcproj
-because you committed that to ttfcon, not master.
-
-> the *actual file* goes, master now has a line in it that shouldn't be there.
-
-It's in the work tree, not master....
-
-> I'm just trying out git as a possible replacement for SVN, so maybe I'm
-> mistaken about what "should" happen, but AIUI git switching branches with
-> uncommitted changes is a bug (and given that it poisoned a branch that I
-> wasn't on, it certainly looks like one). A couple of days ago it DID complain
-> when I tried to switch with uncommitted files still present, so it was working
-> properly then. I have no idea what's made it happy to ignore them now:
-> nothing's changed that I know of.
-
-When switching branches, git tries to preserves the changes that you
-have in your work tree. If it is possible (because there is no overlap,
-as written above), it hapilly does just that. If not it barks.
-
-I think you have to wrap your head around the Git model after unwinding
-it from the svn model, which is normal ;)
-
-Cheers,
-Michael
+I expect part of my confusion comes from using different workdirs for s=
+vn
+branches, ie "clone" rather than "branch", because branching in svn is =
+such
+a PITA I just don't bother with it unless the branch is going to be
+"heavyweight" enough to warrant a "proper" branch.
+Good to be reminded of though, thanks.
