@@ -1,89 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [Bug] git pull doesn't recognize --work-tree parameter
-Date: Thu, 13 Oct 2011 14:37:09 -0400
-Message-ID: <20111013183709.GB17573@sigill.intra.peff.net>
-References: <E95C75ED-99F2-463C-A1AB-0F8152696739@jetbrains.com>
- <20111013155923.GA13134@sigill.intra.peff.net>
- <7vbotk6aae.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/14] cache.h: add comments for git_path() and
+ git_path_submodule()
+Date: Thu, 13 Oct 2011 11:37:00 -0700
+Message-ID: <7vvcrs4u2b.fsf@alter.siamese.dyndns.org>
+References: <1318492715-5931-1-git-send-email-mhagger@alum.mit.edu>
+ <1318492715-5931-2-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 13 20:37:32 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Drew Northup <drew.northup@maine.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Thu Oct 13 20:37:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REQ9q-0006jL-2K
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 20:37:30 +0200
+	id 1REQ9w-0006ng-V2
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 20:37:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752017Ab1JMShR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Oct 2011 14:37:17 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59812
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751699Ab1JMShM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Oct 2011 14:37:12 -0400
-Received: (qmail 27669 invoked by uid 107); 13 Oct 2011 18:37:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 13 Oct 2011 14:37:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Oct 2011 14:37:09 -0400
-Content-Disposition: inline
-In-Reply-To: <7vbotk6aae.fsf@alter.siamese.dyndns.org>
+	id S1751900Ab1JMShI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Oct 2011 14:37:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61972 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751723Ab1JMShH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2011 14:37:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 30F5F3184;
+	Thu, 13 Oct 2011 14:37:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=y0RnnNSAPSWHrdDeRki3bJXdYY8=; b=KyhVVS
+	Kf12ZoPmZWqUhCj0TYgkyQYfMswjU8VIml6jUzbT+dQk2Cwz7T/Lu7SSZCWnLBYt
+	69dMjmsYmmjw3N2/gj4NgFl+Tw/f1L5DEFa+1vBzXO65829As/oKxanoztlph0gO
+	7Ombll8Ic04ErvafJum7vcKvGjESaz2Okm8w8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SWYJTS6nyFU+VyUNwjPOMZKPPGWi/qdL
+	nXC94TGwUFOdTSuj3AMlxHFkdKQHNlzXjoh2M+5mleNix25JaKRjF8+wtVKywfRV
+	mYcxPJz4kuLpxvUOZQa+PkmizwWQusvYTbF4+fGhAFL7GabsBsnJfZrZDWF88Vw8
+	q5nks139834=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 286243183;
+	Thu, 13 Oct 2011 14:37:02 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC71D3182; Thu, 13 Oct 2011
+ 14:37:01 -0400 (EDT)
+In-Reply-To: <1318492715-5931-2-git-send-email-mhagger@alum.mit.edu>
+ (mhagger@alum.mit.edu's message of "Thu, 13 Oct 2011 09:58:22 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 574523A2-F5CA-11E0-A8D8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183508>
 
-On Thu, Oct 13, 2011 at 11:01:13AM -0700, Junio C Hamano wrote:
+mhagger@alum.mit.edu writes:
 
-> I am not absolutely sure about "obviously correct", given that you assume
-> that cd_to_toplevel does what its name makes you think it does.  I've been
-> wondering if we want to do give a bit more sanity to "cd_to_toplevel" and
-> "rev-parse --show-toplevel".
-> 
->     $ pwd
->     /srv/project/git/git.git
->     $ (cd Documentation/howto && git rev-parse --show-toplevel); echo $?
->     /srv/project/git/git.git
->     0
-> 
-> So far so good, however:
-> 
->     $ (cd .git/refs/heads && git rev-parse --show-toplevel); echo $?
->     0
-> 
-> I do not think this is quite right.
+> +
+> +/*
+> + * Return the path of a file within get_git_dir().  The arguments
+> + * should be printf-like arguments that produce the filename relative
+> + * to get_git_dir().  Return the resulting path, or "/bad-path/" if
+> + * there is an error.
+> + */
+>  extern char *git_path(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
 
-Ugh. You are right. I for some reason assumed that cd_to_toplevel would,
-of all things, cd to the toplevel.  I think the right solution is to
-introduce a "cd_to_work_tree_toplevel" (or similarly named) command that
-always moves to the root of the work tree.
+Ok.
 
-And then convert the two scripts in my patch to use it (along with the
-change to require_work_tree_exists).  That would make my prior analysis
-hold, then, as the annoying do-nothing behavior of "cd_to_toplevel" only
-kicks in when we are outside the work tree (i.e., it could not have
-happened before in those scripts, because the existing require_work_tree
-call would cause us to die).
+> +/*
+> + * Return the path of a file within the submodule located at path.
 
-> We would probably want to add "rev-parse --show-work-tree", but we would
-> need to audit the users of cd_to_toplevel before starting to use it.  I
-> wouldn't be surprised if there is a script that creates a temporary work
-> tree in .git/some/where and runs the scripted Porcelains without setting
-> GIT_WORK_TREE, relying on the historical behaviour of cd_to_toplevel that
-> does not really go to the top level.
+This is confusing. Does this "file within the submodule" refer to files
+like "Makefile" tracked in a submodule at "dir"?  Your description for
+git_path() above makes it clear that the function is about files like
+"index" and "HEAD" that are part of the control information for the
+current project, but the above gives an impression that you are talking
+about files in the working tree of the submodule.
 
-Right. I suspect the proposed behavior for cd_to_toplevel is what they
-all would want eventually, but some scripts may need minor tweaks. I
-think we should follow the same path as require_work_tree_exists, and
-introduce the new function, use it where we know it's safe, and then
-eventually get rid of the old one.
+> + * The other arguments should be printf-like arguments that produce
+> + * the filename relative to "<path>/.git".  If "<path>/.git" is a
 
-The real trick is coming up with a good name, because cd_to_toplevel is
-already taken. :)
+And the reader is puzzled by the sudden mention of <path>/.git here.
 
--Peff
+> + * gitlink file, follow it to find the actual submodule git path.
+> + * Return the resulting path, or "/bad-path/" if there is an error.
+> + */
+>  extern char *git_path_submodule(const char *path, const char *fmt, ...)
+>  	__attribute__((format (printf, 2, 3)));
