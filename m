@@ -1,105 +1,105 @@
 From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [RFC/PATCH 4/4] git-gui: incremental goto line in blame view
-Date: Thu, 13 Oct 2011 15:48:15 +0200
-Message-ID: <7a9760b8cf85274b17c7233f61f59bb59cd18578.1318513492.git.bert.wesarg@googlemail.com>
-References: <1d1c91fdaa0bfd31067fd2e06f3f1ecf5597b8d3.1318513492.git.bert.wesarg@googlemail.com>
- <a59d40509d4f80a6dae99bae5ef6311bb607bd34.1318513492.git.bert.wesarg@googlemail.com>
- <fbfb3f3ba4db190f8956eea4f78419a1b81573a6.1318513492.git.bert.wesarg@googlemail.com>
+Subject: [PATCH 1/4] git-gui: search and linenumber input are mutual exclusive in the blame view
+Date: Thu, 13 Oct 2011 15:48:12 +0200
+Message-ID: <1d1c91fdaa0bfd31067fd2e06f3f1ecf5597b8d3.1318513492.git.bert.wesarg@googlemail.com>
 Cc: David Fries <David@Fries.net>, git@vger.kernel.org,
 	Bert Wesarg <bert.wesarg@googlemail.com>
 To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Thu Oct 13 15:48:33 2011
+X-From: git-owner@vger.kernel.org Thu Oct 13 15:48:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RELeD-0002Hq-4V
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 15:48:33 +0200
+	id 1RELeB-0002Hq-FF
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 15:48:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755407Ab1JMNsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Oct 2011 09:48:30 -0400
+	id S1755297Ab1JMNsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Oct 2011 09:48:21 -0400
 Received: from mail-bw0-f46.google.com ([209.85.214.46]:33264 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755264Ab1JMNs3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Oct 2011 09:48:29 -0400
-Received: by mail-bw0-f46.google.com with SMTP id zt4so1464856bkb.19
-        for <git@vger.kernel.org>; Thu, 13 Oct 2011 06:48:28 -0700 (PDT)
+	with ESMTP id S1755264Ab1JMNsT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2011 09:48:19 -0400
+Received: by bkbzt4 with SMTP id zt4so1464856bkb.19
+        for <git@vger.kernel.org>; Thu, 13 Oct 2011 06:48:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :in-reply-to:references;
-        bh=VfJTf3AmJmp1nYPGu895v5rGL9RH1+1wbgIsXzoeLvY=;
-        b=IItMdcYSJp3704c3vWDFg3xmOqK7ICjvuXWsFQniJGzvelV5hNLsWPxVWKnNeVqzwH
-         XoBCClEwpzBvk3n2kiMPIysY5EAkECuqAzz5T7EIhgluXVIkW69IfHpgOLmKr5+yVu9y
-         6LzGSzbBpZ1bPsnZINctNCR07SwsgNDLiMoo8=
-Received: by 10.204.140.153 with SMTP id i25mr2750888bku.102.1318513708580;
-        Thu, 13 Oct 2011 06:48:28 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=jKSnPfVIQ+TOlax13P1MfjAoC300KBvs3Ke58PHeEGo=;
+        b=BiShBRRWsi+rStpVAHNCu8va0k7syGOtJGfkOSbms6q3bT5hepJSJ+ZFfr4yVrZTlH
+         XjSJRV89Tzdx13CuENXcOpw50dWqxKqkqYGxGFhu9bwJETu45yBb89oRBBn3LZuIIsHN
+         3S4IiNdRAZEPAOOFIIA4zuH1/oEfIRL3fVtjI=
+Received: by 10.204.144.204 with SMTP id a12mr2907386bkv.5.1318513698526;
+        Thu, 13 Oct 2011 06:48:18 -0700 (PDT)
 Received: from localhost (m111.zih.tu-dresden.de. [141.30.68.111])
-        by mx.google.com with ESMTPS id z9sm3732087bkn.7.2011.10.13.06.48.24
+        by mx.google.com with ESMTPS id k6sm3729016bkv.8.2011.10.13.06.48.16
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 13 Oct 2011 06:48:27 -0700 (PDT)
+        Thu, 13 Oct 2011 06:48:17 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.789.gb4599
-In-Reply-To: <fbfb3f3ba4db190f8956eea4f78419a1b81573a6.1318513492.git.bert.wesarg@googlemail.com>
-In-Reply-To: <1d1c91fdaa0bfd31067fd2e06f3f1ecf5597b8d3.1318513492.git.bert.wesarg@googlemail.com>
-References: <1d1c91fdaa0bfd31067fd2e06f3f1ecf5597b8d3.1318513492.git.bert.wesarg@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183483>
 
-The view jumps now to the given line number after each key press.
+It was possible to open the search input (Ctrl+S) and the goto-line input
+(Ctrl+G) at the same time. Prevent this.
 
 Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 ---
+ lib/blame.tcl |   22 ++++++++++++++++------
+ 1 files changed, 16 insertions(+), 6 deletions(-)
 
-I didn't know this before, but gedits goto-line-dialog works this way.
-
- lib/line.tcl |   15 +++++++++++----
- 1 files changed, 11 insertions(+), 4 deletions(-)
-
-diff --git a/lib/line.tcl b/lib/line.tcl
-index 70785e1..0113e06 100644
---- a/lib/line.tcl
-+++ b/lib/line.tcl
-@@ -20,7 +20,7 @@ constructor new {i_w i_text args} {
- 		-background lightgreen \
- 		-validate key \
- 		-validatecommand [cb _validate %P]
--	${NS}::button $w.bn      -text [mc Go] -command [cb _incrgoto]
-+	${NS}::button $w.bn      -text [mc Go] -command [cb _goto]
+diff --git a/lib/blame.tcl b/lib/blame.tcl
+index 2099776..691941e 100644
+--- a/lib/blame.tcl
++++ b/lib/blame.tcl
+@@ -280,11 +280,11 @@ constructor new {i_commit i_path i_jump} {
+ 	$w.ctxm add command \
+ 		-label [mc "Find Text..."] \
+ 		-accelerator F7 \
+-		-command [list searchbar::show $finder]
++		-command [cb _show_finder]
+ 	$w.ctxm add command \
+ 		-label [mc "Goto Line..."] \
+ 		-accelerator "Ctrl-G" \
+-		-command [list linebar::show $gotoline]
++		-command [cb _show_linebar]
+ 	menu $w.ctxm.enc
+ 	build_encoding_menu $w.ctxm.enc [cb _setencoding]
+ 	$w.ctxm add cascade \
+@@ -351,13 +351,13 @@ constructor new {i_commit i_path i_jump} {
+ 	bind $w_cviewer <Tab>       "[list focus $w_file];break"
+ 	bind $w_cviewer <Button-1>   [list focus $w_cviewer]
+ 	bind $w_file    <Visibility> [cb _focus_search $w_file]
+-	bind $top       <F7>         [list searchbar::show $finder]
+-	bind $top       <Key-slash>  [list searchbar::show $finder]
+-	bind $top    <Control-Key-s> [list searchbar::show $finder]
++	bind $top       <F7>         [cb _show_finder]
++	bind $top       <Key-slash>  [cb _show_finder]
++	bind $top    <Control-Key-s> [cb _show_finder]
+ 	bind $top       <Escape>     [list searchbar::hide $finder]
+ 	bind $top       <F3>         [list searchbar::find_next $finder]
+ 	bind $top       <Shift-F3>   [list searchbar::find_prev $finder]
+-	bind $top    <Control-Key-g> [list linebar::show $gotoline]
++	bind $top    <Control-Key-g> [cb _show_linebar]
+ 	catch { bind $top <Shift-Key-XF86_Switch_VT_3> [list searchbar::find_prev $finder] }
  
- 	pack   $w.l   -side left
- 	pack   $w.bn  -side right
-@@ -29,7 +29,8 @@ constructor new {i_w i_text args} {
- 	eval grid conf $w -sticky we $args
- 	grid remove $w
- 
--	bind $w.ent <Return> [cb _incrgoto]
-+	trace add variable linenum write [cb _goto_cb]
-+	bind $w.ent <Return> [cb _goto]
- 	bind $w.ent <Escape> [cb hide]
- 
- 	bind $w <Destroy> [list delete_this $this]
-@@ -67,10 +68,16 @@ method _validate {P} {
- 	return 0
+ 	grid configure $w.header -sticky ew
+@@ -1349,4 +1349,14 @@ method _resize {new_height} {
+ 	set old_height $new_height
  }
  
--method _incrgoto {} {
-+method _goto_cb {name ix op} {
-+	after idle [cb _goto 1]
++method _show_finder {} {
++	linebar::hide $gotoline
++	searchbar::show $finder
 +}
 +
-+method _goto {{nohide {0}}} {
- 	if {$linenum ne {}} {
- 		$ctext see $linenum.0
--		hide $this
-+		if {!$nohide} {
-+			hide $this
-+		}
- 	}
++method _show_linebar {} {
++	searchbar::hide $finder
++	linebar::show $gotoline
++}
++
  }
- 
 -- 
 1.7.6.789.gb4599
