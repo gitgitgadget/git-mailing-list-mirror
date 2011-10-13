@@ -1,76 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 07/14] is_refname_available(): remove the "quiet"
- argument
-Date: Thu, 13 Oct 2011 11:49:12 -0700
-Message-ID: <7vaa944thz.fsf@alter.siamese.dyndns.org>
-References: <1318492715-5931-1-git-send-email-mhagger@alum.mit.edu>
- <1318492715-5931-8-git-send-email-mhagger@alum.mit.edu>
- <1318509685.7231.6.camel@drew-northup.unet.maine.edu>
+From: Alexey Shumkin <alex.crezoff@gmail.com>
+Subject: Re: [CLOSED] git checkout <branch> allowed with uncommitted changes
+Date: Thu, 13 Oct 2011 22:56:11 +0400
+Message-ID: <20111013225611.37093103@zappedws>
+References: <loom.20111013T094053-111@post.gmane.org>
+	<CACsJy8Dzy5-kOZAjwdx=ooUdnN0L2F3EiNQ7b==3AGQZYjEUXQ@mail.gmail.com>
+	<20111013145924.2113c142@ashu.dyn.rarus.ru>
+	<loom.20111013T130924-792@post.gmane.org>
+	<4E96D819.20905@op5.se>
+	<loom.20111013T144822-277@post.gmane.org>
+	<1318514356.4646.16.camel@centaur.lab.cmartin.tk>
+	<loom.20111013T181801-923@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: mhagger@alum.mit.edu, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johan Herland <johan@herland.net>,
-	Julian Phillips <julian@quantumfyre.co.uk>
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Thu Oct 13 20:49:20 2011
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: arQon <arqon@gmx.com>
+X-From: git-owner@vger.kernel.org Thu Oct 13 20:56:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REQLH-0004tM-W6
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 20:49:20 +0200
+	id 1REQSA-0000ba-HE
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 20:56:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752808Ab1JMStP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Oct 2011 14:49:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37272 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751703Ab1JMStO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Oct 2011 14:49:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B48735F2;
-	Thu, 13 Oct 2011 14:49:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5G+h2r3EWIbgHcm8LekPBWhvoW0=; b=mCPVxE
-	62eUPzk5Tt753OaIly8u7DeKzXir4DXchgarDJUN8xUtWOxjBXFGlTXqGBSdcc3v
-	9aHjuYdg1GGwvZ9cU1ceat4rp2EkvsstFdYpAEKVDEeHu1ei7M6eLfSHHn1ERyBq
-	z/Dsfh0q8RWoFrSHRqIvlDEmX6Sfbej71medo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JHduoar43Ocy/a23QEiSU2AOE9ryYG3n
-	ZeEjENX+Gpx9oBfe6w1onNj4QKXa6GUgjsVp1OwJPkLIZKbq2uJw1qjlNVGG3ibD
-	4ymiVS6oYNJA8G97DuR7nhOIstO4RtvC6kOtEbT1xI5PR9XLtwfopGQOYNC9Od1n
-	lj4Snt4Tz+4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 71F7635F1;
-	Thu, 13 Oct 2011 14:49:14 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D2A1935F0; Thu, 13 Oct 2011
- 14:49:13 -0400 (EDT)
-In-Reply-To: <1318509685.7231.6.camel@drew-northup.unet.maine.edu> (Drew
- Northup's message of "Thu, 13 Oct 2011 08:41:25 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0BABAC8E-F5CC-11E0-A859-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752876Ab1JMS4W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Oct 2011 14:56:22 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:49317 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752837Ab1JMS4V (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2011 14:56:21 -0400
+Received: by bkbzt4 with SMTP id zt4so1831030bkb.19
+        for <git@vger.kernel.org>; Thu, 13 Oct 2011 11:56:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=o3K/xtKxpqL6VkYAmtdcVbLWHRdaAuXZSRS83/tplwM=;
+        b=q3CH+kwGJQ52lKe1fdvh+oLSDU+mwHAhiZWqJmZrULDlGa2G29ll4M7E5c2x9jrAw0
+         JLaqpV/TM8oKnAgMvoNTHO+pv50cnhRsgXU/PcGEA8bRy8YwpirUW+vF2+2ehtgxXiXi
+         qN6J9jroA5ES3Ib8XLpScLueSLqnopmjAHojc=
+Received: by 10.204.132.199 with SMTP id c7mr3945488bkt.45.1318532180119;
+        Thu, 13 Oct 2011 11:56:20 -0700 (PDT)
+Received: from zappedws (ppp91-78-136-140.pppoe.mtu-net.ru. [91.78.136.140])
+        by mx.google.com with ESMTPS id u10sm4682947bkv.3.2011.10.13.11.56.18
+        (version=SSLv3 cipher=OTHER);
+        Thu, 13 Oct 2011 11:56:18 -0700 (PDT)
+In-Reply-To: <loom.20111013T181801-923@post.gmane.org>
+X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183514>
 
-Drew Northup <drew.northup@maine.edu> writes:
+> (Though if someone can come up with a script / hook / whatever that
+> improves the "visibility" of stash, that would be awesome. 
+> 
+"git-completion" for Bash/ZSH gives such an opportunity
+I use it
 
-> On Thu, 2011-10-13 at 09:58 +0200, mhagger@alum.mit.edu wrote:
->> From: Michael Haggerty <mhagger@alum.mit.edu>
->> 
->> quiet was always set to 0, so get rid of it.  Add a function docstring
->> for good measure.
->
-> I would like to know if perhaps it was an unfinished project somewhere
-> to propagate the "quiet" option down to this level before removing the
-> function argument. Comments?
+take a look into 
+<git-sources>/contrib/completion/git-completion.bash
+-- >8 --
+#    3) Consider changing your PS1 to also show the current branch:
+#         Bash: PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+#         ZSH:  PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
+#
+#       The argument to __git_ps1 will be displayed only if you
+#       are currently in a git repository.  The %s token will be
+#       the name of the current branch.
+#
+#       In addition, if you set GIT_PS1_SHOWDIRTYSTATE to a nonempty
+#       value, unstaged (*) and staged (+) changes will be shown next
+#       to the branch name.  You can configure this per-repository
+#       with the bash.showDirtyState variable, which defaults to true
+#       once GIT_PS1_SHOWDIRTYSTATE is enabled.
+#
+#       You can also see if currently something is stashed, by setting
+#       GIT_PS1_SHOWSTASHSTATE to a nonempty value. If something is
+stashed, #       then a '$' will be shown next to the branch name.
+#
+#       If you would like to see if there're untracked files, then you
+can #       set GIT_PS1_SHOWUNTRACKEDFILES to a nonempty value. If
+there're #       untracked files, then a '%' will be shown next to the
+branch name. #
+#       If you would like to see the difference between HEAD and its
+#       upstream, set GIT_PS1_SHOWUPSTREAM="auto".  A "<" indicates
+#       you are behind, ">" indicates you are ahead, and "<>"
+#       indicates you have diverged.
+-- >8 --
+my .bashrc contains (shortly)
+PS1='\[\e]0;\w [$(__git_ps1 "%s")]\a\]\n\[\e[32m\]\u@\h'
+PS1=$PS1' \[\e[33m\]\w\[\e[0m\]\n[$(__git_ps1 "%s")]\n\$'
 
-Have you tried blaming?
+export PS1
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUPSTREAM="auto"
+
+and console prompt with all possible cases looks like
+
+<username>@<hostname> ~/Git-src.git/contrib/completion
+[post-receive-email *+$>]
+$ 
+
+* - I have unstaged changes
++ - I have staged changes
+$ - I have stashed changes (ta-daaa!)
+> - I have commits ahead upsteam (named branch I branched from)
+
+P.S. 
+And JFYI, it is a good form in mailing lists to CC (Reply to all)
+participants
