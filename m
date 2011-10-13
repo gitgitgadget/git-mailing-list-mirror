@@ -1,142 +1,89 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 2/9] completion: optimize refs completion
-Date: Thu, 13 Oct 2011 12:40:47 +0200
-Message-ID: <20111013104047.GA15379@goldbirke>
-References: <1318085683-29830-1-git-send-email-szeder@ira.uka.de>
-	<1318085683-29830-3-git-send-email-szeder@ira.uka.de>
-	<7v7h497m01.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [BUG] git checkout <branch> allowed with uncommitted changes
+Date: Thu, 13 Oct 2011 21:48:05 +1100
+Message-ID: <CACsJy8Dzy5-kOZAjwdx=ooUdnN0L2F3EiNQ7b==3AGQZYjEUXQ@mail.gmail.com>
+References: <loom.20111013T094053-111@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 13 12:40:55 2011
+Cc: git@vger.kernel.org
+To: arQon <arqon@gmx.com>
+X-From: git-owner@vger.kernel.org Thu Oct 13 12:48:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REIid-0004gc-Az
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 12:40:55 +0200
+	id 1REIq9-0008BS-JU
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 12:48:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754559Ab1JMKku convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Oct 2011 06:40:50 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:65502 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752742Ab1JMKkt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Oct 2011 06:40:49 -0400
-Received: from localhost6.localdomain6 (p5B130F07.dip0.t-ipconnect.de [91.19.15.7])
-	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
-	id 0MTrXg-1RefHy189Q-00QW2T; Thu, 13 Oct 2011 12:40:46 +0200
-Content-Disposition: inline
-In-Reply-To: <7v7h497m01.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Provags-ID: V02:K0:2D4f/SRooj5ozILE19sPfrQGDTkIvIgi0p7ADDBB/+A
- OqhwDBozhNrPZmzfJZghvIQke2VWqW93NIzdZU8pAeZQAFhA6N
- sNHouDdQAvohXQgHn3jZ7PHSCpylhs8E3u7n1DvLuPEOhwZVDG
- PahJVlHRd/JDJjJvQo26/cXaq0wwfAn4ocBY6hsCqIp42UnIT6
- j+n67y0cZvNlJaXyyuNVA1pzPldf7IV7nMQQjJwpVUvu6SKeGo
- 3ZSd+1oQTmwuUnMaGnS6QF6fdkDgiI9N4Yu5cEc1ENFcyud1yz
- lupmCZ8Z9DMOZeJQFtUzyFP/dbxfu7CC08ki/TAng2eQE2YK8+
- 4S/KVTu9mp8M7X1cK8qw=
+	id S1753974Ab1JMKsh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Oct 2011 06:48:37 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:62090 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752571Ab1JMKsg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Oct 2011 06:48:36 -0400
+Received: by eye27 with SMTP id 27so1691188eye.19
+        for <git@vger.kernel.org>; Thu, 13 Oct 2011 03:48:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=KNfB3cGCIZFyxferWQJhlogas9n4avek2pI53XH2ByE=;
+        b=NFfAxEjC6hxKAW0CY1UJaIpovvm9x+2mzkaCio7GjRsNyr+vIsA8hootk3NJhvvHmZ
+         f6372z5BoMDB+tiagzypX2rEVUFcV6rKN3a8/PLgvIqfmN/HlmgMExnxp0FDPG6nUO9D
+         wkt+Twyno1XcDj8zdQxTR2FLskzPv4b+1ZXNk=
+Received: by 10.223.81.205 with SMTP id y13mr5262547fak.34.1318502915161; Thu,
+ 13 Oct 2011 03:48:35 -0700 (PDT)
+Received: by 10.223.88.202 with HTTP; Thu, 13 Oct 2011 03:48:05 -0700 (PDT)
+In-Reply-To: <loom.20111013T094053-111@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183466>
 
-On Wed, Oct 12, 2011 at 05:50:38PM -0700, Junio C Hamano wrote:
-> SZEDER G=E1bor <szeder@ira.uka.de> writes:
->=20
-> > After a unique command or option is completed, in most cases it is =
-a
-> > good thing to add a trailing a space, but sometimes it doesn't make=
-s
->=20
-> s/makes/make/;
->=20
-> > __gitcomp() therefore iterates over all possible completion words i=
-t
-> > got as argument, and checks each word whether a trailing space is
-> > necessary or not.  This is ok for commands, options, etc., i.e. whe=
-n
-> > the number of words is relatively small, but can be noticeably slow
-> > for large number of refs.  However, while options might or might no=
-t
-> > need that trailing space, refs are always handled uniformly and alw=
-ays
-> > get that trailing space (or a trailing '.' for 'git config
-> > branch.<head>.').
-> > ...
-> > So, add a specialized variant of __gitcomp() that only deals with
-> > possible completion words separated by a newline and uniformly appe=
-nds
-> > the trailing space to all words using 'compgen -S' (or any other
-> > suffix, if specified), so no iteration over all words is done.
->=20
-> s/is done./is needed./;
->=20
-> I think I followed your logic (very well written ;-)
+On Thu, Oct 13, 2011 at 7:40 PM, arQon <arqon@gmx.com> wrote:
+> $ git co master
+> M =C2=A0 =C2=A0 =C2=A0 code/renderer/tr_font.cpp
+> Switched to branch 'master'
+> Your branch is ahead of 'origin/master' by 3 commits.
 
-Thanks; learned it around here ;)
+=2E..
 
-> but feel somewhat
-> dirty, as you are conflating the "These things are separated with new=
-lines"
-> with "These things do not need inspection --- they all need suffix", =
-which
-> has one obvious drawback --- you may find other class of words that a=
-lways
-> want a SP after each of them but the source that generates such a cla=
-ss of
-> words may not separate the list elements with a newline.
+> At this point, reverting the master with "checkout --" also wipes out=
+ the
+> changes on the other branch. It's like the merge symlinked the two br=
+anches
+> rather than, well, merging them.
 
-Yes, there are a couple of other places where SP is uniformly needed,
-for example completion of subcommands for bisect, notes, stash, etc.,
-merge strategies, whitespace options, which are all separated by SP,
-or help topics, which are separated by SP, TAB, and NL.  However, it
-really is necessary that no SP is used to separate those words, see
-below, so we can't use this optimization in these cases.  And since
-the number of possible completion words in these cases is usually low,
-it doesn't worth the effort to restructure those words to not use SP
-separator, because it doesn't really make a performance difference
-anyway.
+It does show you that there are changes in the working tree and you
+could have switched back with "git co -", done whatever you want with
+your changes then switched to master again.
 
-> Because a ref cannot have $IFS whitespace in its name anyway, I think=
- you
-> can rename __gitcomp_nl to a name that conveys more clearly what it d=
-oes
-> (i.e. "complete and always append suffix"), drop the IFS fiddling fro=
-m the
-> function, and get the same optimization, no?
+> A couple of days ago it DID complain
+> when I tried to switch with uncommitted files still present, so it wa=
+s working
+> properly then. I have no idea what's made it happy to ignore them now=
+:
+> nothing's changed that I know of.
 
-Unfortunately, this optimization depends on the IFS fiddling, because
-we want to append a SP.  The same IFS trick is done in __gitcomp(),
-too.  If we use the default IFS containing an SP and append a SP to
-possible completion words by 'compgen -S " "' (or by word=3D"$word ", a=
-s
-in __gitcomp_1()), then that SP will be promply stripped off when
-compgen's output is stored in the COMPREPLY array.  Using an IFS
-without SP keeps those SP suffixes.  Perhaps I should've mentioned
-this explicitly in the commit message, but didn't do so because one of
-the referenced commit messages (72e5e989 (bash: Add space after unique
-command name is completed., 2007-02-04)) already mentioned it briefly.
+git tries to keep all changes on working tree you have. If you have
+changes in file A and the new branch changes in file B, fine. If the
+new branch also changes in file A too, it'll complain because
+otherwise it may overwrite your changes. What it actual does is "Two
+way merge", there is a table in "git read-tree" man page that
+describes exactly how it is done, what cases would fail...
 
-But when we use an IFS without SP, that also implies that we can't
-pass words separated by SP to __gitcomp_nl(), because those words
-won't be split at SPs anymore.  Since refs & co. are separated by NL,
-it was the obvious choice for this special-purpose IFS.  So this
-optimization can't work with the class of words mentioned above. =20
+I see it as more choices. As I said above, it does tell you there are
+changes and you could do something. You could make alias "co" that
+check for worktree/index cleanliness before calling checkout.
+Something like this maybe (I have not tested it)
 
-So I thought that it's important to stress that this function can only
-deal with NL separated words, hence I named it __gitcomp_nl().  But I
-see your point about naming it after what it actually does, so I'm
-fine with __gitcomp_add_suffix() or whatever else that indicates
-"complete and always append suffix".
+git config alias.co '!git update-index --refresh && git diff-files
+--quiet && git diff-index --cached --quiet HEAD && git checkout "$@"'
 
-Will resend in a day or two, to leave some time for other suggestions.
-
-
-Best,
-G=E1bor
+A config key to enforce this may be nice. I don't know, I have never
+had problems with current behavior.
+--=20
+Duy
