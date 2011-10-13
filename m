@@ -1,69 +1,51 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: [BUG] git checkout <branch> allowed with uncommitted changes
-Date: Thu, 13 Oct 2011 14:55:58 +0200
-Message-ID: <4E96DFDE.4060707@ira.uka.de>
-References: <loom.20111013T094053-111@post.gmane.org> <CACsJy8Dzy5-kOZAjwdx=ooUdnN0L2F3EiNQ7b==3AGQZYjEUXQ@mail.gmail.com> <20111013145924.2113c142@ashu.dyn.rarus.ru> <loom.20111013T130924-792@post.gmane.org> <loom.20111013T141239-151@post.gmane.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Git attributes ignored for root directory
+Date: Thu, 13 Oct 2011 15:16:25 +0200
+Message-ID: <4E96E4A9.8030708@viscovery.net>
+References: <4E8B55FB.1050203@svario.it> <4E8C481A.1070808@alum.mit.edu> <7vd3eb8hkb.fsf@alter.siamese.dyndns.org> <4E961626.4030201@alum.mit.edu> <7vfwix7qk2.fsf@alter.siamese.dyndns.org> <4E96C220.5050601@svario.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: arQon <arqon@gmx.com>
-X-From: git-owner@vger.kernel.org Thu Oct 13 15:14:19 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Gioele Barabucci <gioele@svario.it>
+X-From: git-owner@vger.kernel.org Thu Oct 13 15:16:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REL70-0007bz-Fd
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 15:14:14 +0200
+	id 1REL9M-0000a1-PV
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 15:16:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755327Ab1JMNOJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Oct 2011 09:14:09 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:47386 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755146Ab1JMNOI (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Oct 2011 09:14:08 -0400
-X-Greylist: delayed 1110 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 Oct 2011 09:14:08 EDT
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1REKoq-00006U-Lh; Thu, 13 Oct 2011 14:55:36 +0200
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1REKoq-0005WG-6M; Thu, 13 Oct 2011 14:55:28 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.22) Gecko/20110907 SUSE/3.1.14 Thunderbird/3.1.14
-In-Reply-To: <loom.20111013T141239-151@post.gmane.org>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1318510537.013182000
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1318511647.010865000
+	id S1753054Ab1JMNQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Oct 2011 09:16:36 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:4295 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751177Ab1JMNQf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2011 09:16:35 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1REL9B-0005WX-5I; Thu, 13 Oct 2011 15:16:29 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 556111660F;
+	Thu, 13 Oct 2011 15:16:26 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.23) Gecko/20110920 Thunderbird/3.1.15
+In-Reply-To: <4E96C220.5050601@svario.it>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183480>
 
-On 13.10.2011 14:42, arQon wrote:
->> git co -b foo
->   Switched to a new branch 'foo'
->> notepad file1
-> (edit stuff)
->> git st
->   # On branch foo
->   # Changes not staged for commit:
->   #       modified:   file1.txt
->
->> git co master
->   M       file1.txt
->
-> Maybe I'm just missing something obvious, but at the time that last "git
-> co master" was issued:
->
-> The file is locally modified.
-> The file is different on the current branch (foo) than on the branch to which
-> I am switching (master).
+Am 10/13/2011 12:49, schrieb Gioele Barabucci:
+> I see that `/*/` in `.gitignores` successfully ignores all the non-hidden
+> directories in the root project directory. Another accidental success? :)
 
-Wrong. On branch foo as well as on master the same old file1.txt is 
-committed. You never staged nor committed the new file1.txt anywhere.
+No, that's by design. The first slash means "apply only in this directory,
+not any subdirectories", and the slash at the end means "match only if the
+name is a directory".
 
-> The command fails to refuse to switch branches.
+-- Hannes
