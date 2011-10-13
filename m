@@ -1,177 +1,108 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [BUG] git checkout <branch> allowed with uncommitted changes
-Date: Thu, 13 Oct 2011 19:04:46 +0200
-Message-ID: <1318525486.4646.53.camel@centaur.lab.cmartin.tk>
-References: <loom.20111013T094053-111@post.gmane.org>
-	  <CACsJy8Dzy5-kOZAjwdx=ooUdnN0L2F3EiNQ7b==3AGQZYjEUXQ@mail.gmail.com>
-	  <20111013145924.2113c142@ashu.dyn.rarus.ru>
-	  <loom.20111013T130924-792@post.gmane.org> <4E96D819.20905@op5.se>
-	  <loom.20111013T152144-60@post.gmane.org>
-	 <1318517194.4646.30.camel@centaur.lab.cmartin.tk>
-	 <loom.20111013T171530-970@post.gmane.org>
+From: arQon <arqon@gmx.com>
+Subject: Re: [CLOSED] git checkout <branch> allowed with uncommitted changes
+Date: Thu, 13 Oct 2011 17:09:11 +0000 (UTC)
+Message-ID: <loom.20111013T181801-923@post.gmane.org>
+References: <loom.20111013T094053-111@post.gmane.org>  <CACsJy8Dzy5-kOZAjwdx=ooUdnN0L2F3EiNQ7b==3AGQZYjEUXQ@mail.gmail.com>  <20111013145924.2113c142@ashu.dyn.rarus.ru>  <loom.20111013T130924-792@post.gmane.org> <4E96D819.20905@op5.se>  <loom.20111013T144822-277@post.gmane.org> <1318514356.4646.16.camel@centaur.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-CkFP1YxgZBcpdGQmpAD/"
-Cc: git@vger.kernel.org
-To: arQon <arqon@gmx.com>
-X-From: git-owner@vger.kernel.org Thu Oct 13 19:04:55 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 13 19:09:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REOiE-00047d-T5
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 19:04:55 +0200
+	id 1REOmj-0006iw-I8
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 19:09:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932143Ab1JMREt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Oct 2011 13:04:49 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:46078 "EHLO kimmy.cmartin.tk"
+	id S1756118Ab1JMRJ3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Oct 2011 13:09:29 -0400
+Received: from lo.gmane.org ([80.91.229.12]:42589 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754417Ab1JMREt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Oct 2011 13:04:49 -0400
-Received: from [192.168.1.17] (brln-4dbc7ca2.pool.mediaWays.net [77.188.124.162])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id CC1DA460FE;
-	Thu, 13 Oct 2011 19:04:19 +0200 (CEST)
-In-Reply-To: <loom.20111013T171530-970@post.gmane.org>
-X-Mailer: Evolution 3.0.3-2 
+	id S1753601Ab1JMRJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2011 13:09:28 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1REOmc-0006e0-ND
+	for git@vger.kernel.org; Thu, 13 Oct 2011 19:09:26 +0200
+Received: from 24-180-45-63.dhcp.crcy.nv.charter.com ([24.180.45.63])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 13 Oct 2011 19:09:25 +0200
+Received: from arqon by 24-180-45-63.dhcp.crcy.nv.charter.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 13 Oct 2011 19:09:25 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 24.180.45.63 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Ubuntu/10.04 (lucid) Firefox/3.6.23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183498>
 
+Carlos Mart=C3=ADn Nieto <cmn <at> elego.de> writes:
+> When you changed branches, git told you that a file had been changed =
+in
+> the working tree.
 
---=-CkFP1YxgZBcpdGQmpAD/
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+That's a very good point, if it was actually documented at all that tha=
+t's
+what it meant; and / or presented some warning that "BTW, if you edit t=
+his
+file again now, it'll screw up your whole tree" instead of an innocuous=
+ "M";
+and didn't appear to contradict what the manpage says about "local
+modifications", we could probably have avoided half of this confusion. =
+ :P
+As it was, when I saw that M suddenly appear after several days of boun=
+cing
+between branches without it and with everything working, I just thought
+"oh great, git's managed to break this tree", because I remembered the =
+same
+thing from the previous trial run.
 
-On Thu, 2011-10-13 at 15:53 +0000, arQon wrote:
-> Carlos Mart=C3=ADn Nieto <cmn <at> elego.de> writes:
-> > I have not seen a revert command in any of your messages. If a revert o=
-n
-> > one branch changes another one, that would be a bug, but you haven't
-> > shown this to happen.
->=20
-> Sorry, it was in prose in the original post (near the end)
-> "At this point, reverting the master with "checkout --" also wipes out th=
-e
-> changes on the other branch. It's like the merge symlinked the two branch=
-es
-> rather than, well, merging them."
->=20
-> Based on the explanations here, and the git *st* message, it wiping out t=
-he
-> other branch is to be expected, because it's "the working directory", not
-> "the branch".
->=20
-> >git st
-> # On branch foo
-> # Changes not staged for commit:
-> #   (use "git add <file>..." to update what will be committed)
-> #   (use "git checkout -- <file>..." to discard changes in working direct=
-ory)
-> #
-> #       modified:   file1.txt
-> #
-> no changes added to commit (use "git add" and/or "git commit -a")
->=20
-> What makes this really interesting though is this: I tried to switch to
-> master to see if that gave the same warning, and NOW, I get the correct
-> error.
->=20
-> >git co master
-> error: Your local changes to the following files would be overwritten by
-> checkout:
->         file1.txt
-> Please, commit your changes or stash them before you can switch branches.
-> Aborting
->=20
-> I'm sure if I thought about it enough (ie re-read Andreas's post a couple
-> more times) I'd be able to understand why git gets it right sometimes but
-> not other times, but I'm too tired right now. Even when I *am* awake and
-> grok it properly, I'm still going to be annoyed that it's so inconsistent=
+That there IS an indication though might just be enough for me to be ab=
+le to
+deal with it. Realistically, switching branches with uncommitted change=
+s
+(unless you're doing it because you've ALREADY screwed up and are chang=
+ing
+the wrong branch) is basically a trainwreck waiting to happen.
+
+git stash appears to be useless for any nontrivial change on the *other=
+*
+branch, since there's no indication when you return to the stashed bran=
+ch
+there's a stash sitting around, which is not something you're going to
+remember the next morning if fixing the master took the rest of the day=
 ,
-> but I can live with that if I have to.
+and you're not going to use "stash list" by then either.
 
-If file1.txt in the foo branch is different from the one in the master
-branch, git will refuse to switch branches. 'git diff foo master' should
-show that those two files are different.
+But as long as you get the "warning", an alias that does a "commit -am =
+'temp
+commit to avoid git breaking the tree'" is something I think I can prob=
+ably
+live with.
 
->=20
-> > The reason this happens both in svn and git is that the most likely
-> > cause for someone to change a branch mid-edit is that they decide
-> > they're doing the changes on the wrong branch.
->=20
-> Lucky you. :P  The most likely reason for me is, I'm working on something
-> and I get interrupted and have to switch. Since the code may well not eve=
-n
-> compile at this point, the last thing I want to do is commit it. git's
-> ability for that commit to be local is half the reason I'm trying to swit=
-ch
-> to it. (I'm not particularly keen on having to commit broken code to even=
- a
-> local repo, but that's still a hell of a lot better than having it pushed
-> upstream as well).
+Thanks for all the help guys - very much appreciated.
+As far as I'm concerned, this topic's done.
 
-Yes, this is a great feature of distributed systems. A local repo is
-where you experiment. Treat it as your own personal space to play around
-with things. Committing non-working code is fine, as long as you don't
-push it out.
+(Though if someone can come up with a script / hook / whatever that imp=
+roves
+the "visibility" of stash, that would be awesome. Or one that makes the
+refusal to switch branches consistent).
 
->=20
-> > svn doesn't tell you about the modifications being carried over
-> > (presumably you're meant to use status and diff to figure out what's
-> > going on). Therefore, the same workflow (with the only difference being
-> > how to create and switch branches) works for svn and git in this case.
->=20
-> I expect part of my confusion comes from using different workdirs for svn
-> branches, ie "clone" rather than "branch", because branching in svn is su=
-ch
-> a PITA I just don't bother with it unless the branch is going to be
-> "heavyweight" enough to warrant a "proper" branch.
-
-Then the issue is that you've changed the workflow but haven't adjusted
-for it. You can do this as well with the git-new-workdir. As I mentioned
-it has a few rough edges, but if you're going to use it to have a
-checkout of a particular branch, it shouldn't present any problems. That
-would be like your current workflow.
-
-Another option is to clone with a reference which will create a brand
-new clone but will use the objects that you've already downloaded (or
-just clone locally). This can be more comfortable than using the
-new-workdir and will hardly put any strain on the filesystem.
-
-The bigger problem seems to be your reluctance to accept that git is
-different from subversion, as you keep saying "that's just how git is"
-to back your claim that you can't trust git on a feature where
-subversion behaves the same way. If you'd rather use different
-directories for different branches, you can. That is not an aspect which
-you can point to and say that you can't migrate to git for that reason.
-If you're more comfortable with subversion, that's fine also, it's an
-excellent piece of software[0], but don't go around saying that git
-corrupts branches when that's blatantly not true.
-
-   cmn
-
-[0] Whatever one may think about the merits of CVCS vs DVCS; that
-shouldn't come into the quality of the software.
-
-
---=-CkFP1YxgZBcpdGQmpAD/
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAABAgAGBQJOlxouAAoJEHKRP1jG7ZzTNWkIAKM4yeTqWgeheacL2T2pFV2f
-XntUSG5qWLkS5Pav+/FP0YzwebTPwL+HAiTRej4aTxCpwHas48AiZh/1yyuV4UMK
-MIGOmCDLTwGLOioDZNxwVQci5ne/jHklaiGfmgQwqHO8uzE4b2VN5nKoBlO9/lyv
-XZ/uZQiXxOCbkbLcm4ucFuHk6eElmChvHLJiqLZKGKYrDH51ICrCt1t+J6RHN4Ng
-kZWFRKxgyOLlO+0IcDop0m2YzEM2U2vLxnfw1KnX0pTg0QxnD1V1kkOYIESKjEew
-B37+M8/bmjJcpKuQ9pcIF2wMyRjVY1Aa80h5xh9SDK1JWaJHSclrtOXj/vFsQ0w=
-=QxYA
------END PGP SIGNATURE-----
-
---=-CkFP1YxgZBcpdGQmpAD/--
+Looking at the manpage for checkout in the hope that there might be a "=
+--safe"
+switch, I don't understand why
+  "-f  Proceed even if the index *or the working tree* differs from HEA=
+D."
+even exists, since it proceeds under those conditions anyway.
+"--safe" appears to be exactly what the behavior should be if you DON'T
+specify -f, except that -f nukes the working tree outright rather than =
+just
+bleeding it across. Hopefully it'll be clearer after some sleep.  :)
