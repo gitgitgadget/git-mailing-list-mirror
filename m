@@ -1,68 +1,69 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCH 2/4] git-gui: clear the goto line input when hiding
-Date: Thu, 13 Oct 2011 15:48:13 +0200
-Message-ID: <a59d40509d4f80a6dae99bae5ef6311bb607bd34.1318513492.git.bert.wesarg@googlemail.com>
-References: <1d1c91fdaa0bfd31067fd2e06f3f1ecf5597b8d3.1318513492.git.bert.wesarg@googlemail.com>
-Cc: David Fries <David@Fries.net>, git@vger.kernel.org,
-	Bert Wesarg <bert.wesarg@googlemail.com>
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Thu Oct 13 15:48:38 2011
+From: arQon <arqon@gmx.com>
+Subject: Re: [BUG] git checkout <branch> allowed with uncommitted changes
+Date: Thu, 13 Oct 2011 13:58:06 +0000 (UTC)
+Message-ID: <loom.20111013T152144-60@post.gmane.org>
+References: <loom.20111013T094053-111@post.gmane.org> <CACsJy8Dzy5-kOZAjwdx=ooUdnN0L2F3EiNQ7b==3AGQZYjEUXQ@mail.gmail.com> <20111013145924.2113c142@ashu.dyn.rarus.ru> <loom.20111013T130924-792@post.gmane.org> <4E96D819.20905@op5.se>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 13 15:58:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RELeC-0002Hq-06
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 15:48:32 +0200
+	id 1RELnl-0008DG-14
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 15:58:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755356Ab1JMNsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Oct 2011 09:48:22 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:33264 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755264Ab1JMNsW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Oct 2011 09:48:22 -0400
-Received: by mail-bw0-f46.google.com with SMTP id zt4so1464856bkb.19
-        for <git@vger.kernel.org>; Thu, 13 Oct 2011 06:48:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :in-reply-to:references;
-        bh=qevBwTgwmHZYINXBG35bsfc8dgxNg+tXbMVFeIDoo04=;
-        b=UcGpke+ZD8UWVr4xq9ImEs4kjTzSrANK+ex9FBQmG3YGt/61C1BYNj6hSlY4lRAIWy
-         lbWgEI6Du8mnlPzBW3lC27RzHCHQmicNYaZyKK3fvTJSaWm5GYYfNiQLOMwt5JlWaL45
-         G+azln8Ex9ywj/TpWGBM/yb9u1nWgmudh4z6M=
-Received: by 10.204.134.25 with SMTP id h25mr2985610bkt.2.1318513701580;
-        Thu, 13 Oct 2011 06:48:21 -0700 (PDT)
-Received: from localhost (m111.zih.tu-dresden.de. [141.30.68.111])
-        by mx.google.com with ESMTPS id k26sm3760121bks.1.2011.10.13.06.48.19
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 13 Oct 2011 06:48:19 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6.789.gb4599
-In-Reply-To: <1d1c91fdaa0bfd31067fd2e06f3f1ecf5597b8d3.1318513492.git.bert.wesarg@googlemail.com>
-In-Reply-To: <1d1c91fdaa0bfd31067fd2e06f3f1ecf5597b8d3.1318513492.git.bert.wesarg@googlemail.com>
-References: <1d1c91fdaa0bfd31067fd2e06f3f1ecf5597b8d3.1318513492.git.bert.wesarg@googlemail.com>
+	id S1755094Ab1JMN6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Oct 2011 09:58:20 -0400
+Received: from lo.gmane.org ([80.91.229.12]:56652 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753213Ab1JMN6U (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2011 09:58:20 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RELne-000878-P8
+	for git@vger.kernel.org; Thu, 13 Oct 2011 15:58:18 +0200
+Received: from 24-180-45-63.dhcp.crcy.nv.charter.com ([24.180.45.63])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 13 Oct 2011 15:58:18 +0200
+Received: from arqon by 24-180-45-63.dhcp.crcy.nv.charter.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 13 Oct 2011 15:58:18 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 24.180.45.63 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Ubuntu/10.04 (lucid) Firefox/3.6.23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183486>
 
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
----
- lib/line.tcl |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+Andreas Ericsson <ae <at> op5.se> writes:
+> there's no reason to refuse the branch change.
+> Partly because nothing will be lost
 
-diff --git a/lib/line.tcl b/lib/line.tcl
-index 4913bdd..692485a 100644
---- a/lib/line.tcl
-+++ b/lib/line.tcl
-@@ -41,6 +41,7 @@ method show {} {
- 
- method hide {} {
- 	if {[visible $this]} {
-+		$w.ent delete 0 end
- 		focus $ctext
- 		grid remove $w
- 	}
--- 
-1.7.6.789.gb4599
+Actually, this isn't true either, because of the second bug: doing a revert
+in branchA causes the changes in branchB to be lost. This can't possibly be
+the intended behavior: again, it completely violates the integrity of branches
+by allowing changes on one branch to impact a different branch.
+
+Your interpretation of the manpage doubtless matches the actual behavior of git,
+but I find it staggering if that truly is what was intended. It basically means
+that if you have local modifications, git will Break Your Entire Tree. That
+makes changing while you *do* have local mods more than a little undesirable,
+to put it mildly, which is something that a literal reading of the manpage would
+suggest is exactly what the "refuse to switch" is for. I guess only Linus knows
+what he actually meant.  :)
+
+Anyway, I guess it's all moot: call it a feature or call it a bug, this cross-
+branch destruction is a deal-breaker for me, especially given the bug above that
+actually loses data outright, rather than "only" putting multiple branches into
+an incorrect state.
+
+Thanks for your time and help.
