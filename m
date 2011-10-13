@@ -1,79 +1,80 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH] http_init: accept separate URL parameter
-Date: Thu, 13 Oct 2011 10:06:40 +0800
-Message-ID: <CALUzUxp-Qe05+VF_EDg3+iHBeqWcEfcSVp3fyV_fQjAUaCVjOA@mail.gmail.com>
-References: <4E95FDC8.5030009@drmicha.warpmail.net>
-	<20111012214316.GA4393@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] daemon: return "access denied" if a service is not
+ allowed
+Date: Wed, 12 Oct 2011 21:14:04 -0500
+Message-ID: <20111013021404.GA21045@elie.hsd1.il.comcast.net>
+References: <7vsjn9etm3.fsf@alter.siamese.dyndns.org>
+ <1317678909-19383-1-git-send-email-pclouds@gmail.com>
+ <20111012200916.GA1502@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Andreas Ericsson <ae@op5.se>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 13 04:06:47 2011
+X-From: git-owner@vger.kernel.org Thu Oct 13 04:14:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REAh4-0000WC-R7
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 04:06:47 +0200
+	id 1REAoU-0002sb-6d
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 04:14:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752079Ab1JMCGm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Oct 2011 22:06:42 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:56263 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752068Ab1JMCGl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Oct 2011 22:06:41 -0400
-Received: by bkbzt4 with SMTP id zt4so785637bkb.19
-        for <git@vger.kernel.org>; Wed, 12 Oct 2011 19:06:40 -0700 (PDT)
+	id S1752365Ab1JMCOW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Oct 2011 22:14:22 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:49670 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752348Ab1JMCOV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Oct 2011 22:14:21 -0400
+Received: by gyb13 with SMTP id 13so1311102gyb.19
+        for <git@vger.kernel.org>; Wed, 12 Oct 2011 19:14:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=te3zc3NUZkQJwJs4KlMnv7HVeIJnJ+G1LO/rEP2p1Wo=;
-        b=KdDi7NXhOoAc01oBTNOlyfbuD4GX+ALl0BcbX0itXYnfSt8HlgZX59J3w1IaJ6F1jO
-         gSoPe1fFHxcQDlUat+bgM6nZ68b6A2RbqBCrHK2CuKKtKQdLkkN72kBc70Fmoza3yY0H
-         FilUr44Jqg51jAuN2zCaOOII3YipJqt2jf1Uo=
-Received: by 10.223.62.19 with SMTP id v19mr2624820fah.27.1318471600354; Wed,
- 12 Oct 2011 19:06:40 -0700 (PDT)
-Received: by 10.223.83.2 with HTTP; Wed, 12 Oct 2011 19:06:40 -0700 (PDT)
-In-Reply-To: <20111012214316.GA4393@sigill.intra.peff.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=bYMquMs4GeGk3HCt4zZabQTRNe4PSPBU40nSrtqI4rU=;
+        b=fpJsmQ0PouWObrUrXiY8Sbo4N6R+Oaaoax9POhLGY8BMHG2jp2qMBm5M+VCYgygkgR
+         7MNmZFHKjiZgxvfwDL9mVyakTgp1k37ps/ZpO/2Ij2JuYbbeZV6mLra6+LazJZItIp0X
+         RG8M4qqenYGrko87Ihx2SehmPwYhHjOY7BUZw=
+Received: by 10.236.129.141 with SMTP id h13mr1962507yhi.120.1318472058831;
+        Wed, 12 Oct 2011 19:14:18 -0700 (PDT)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id z6sm11608695anf.22.2011.10.12.19.14.16
+        (version=SSLv3 cipher=OTHER);
+        Wed, 12 Oct 2011 19:14:17 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20111012200916.GA1502@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183434>
 
-On Thu, Oct 13, 2011 at 5:43 AM, Jeff King <peff@peff.net> wrote:
-> The http_init function takes a "struct remote". Part of its
-> initialization procedure is to look at the remote's url and
-> grab some auth-related parameters. However, using the url
-> included in the remote is:
->
-> =A0- wrong; the remote-curl helper may have a separate,
-> =A0 =A0unrelated URL (e.g., from remote.*.pushurl). Looking at
-> =A0 =A0the remote's configured url is incorrect.
->
-> =A0- incomplete; http-fetch doesn't have a remote, so passes
-> =A0 =A0NULL. So http_init never gets to see the URL we are
-> =A0 =A0actually going to use.
->
-> =A0- cumbersome; http-push has a similar problem to
-> =A0 =A0http-fetch, but actually builds a fake remote just to
-> =A0 =A0pass in the URL.
->
-> Instead, let's just add a separate URL parameter to
-> http_init, and all three callsites can pass in the
-> appropriate information.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+(+cc: Andreas[*])
+Jeff King wrote:
+> On Tue, Oct 04, 2011 at 08:55:09AM +1100, Nguyen Thai Ngoc Duy wrote:
 
-This is excellent.
+>> The message is chosen to avoid leaking information, yet let users know
+>> that they are deliberately not allowed to use the service, not a fault
+>> in service configuration or the service itself.
+>
+> I do think this is an improvement, but I wonder if the verbosity should
+> be configurable. Then open sites like kernel.org could be friendlier to
+> their users. Something like this instead:
 
-  Acked-by: Tay Ray Chuan <rctay89@gmail.com>
+FWIW the more verbose version you suggest also sounds fine to me.  A
+person trying to find the names of local users by checking for
+repositories with names like "/home/user" would always receive the
+error "no such repository", whether that user exists or not and
+whether the actual error encountered was ENOENT, EACCES, lack of git
+metadata, or the path running afoul of a whitelist or blacklist.
 
---=20
-Cheers,
-Ray Chuan
+Either Duy's patch or this patch sounds very good to me.  Thanks to
+both of you for working on it.
+
+[*] context:
+http://thread.gmane.org/gmane.comp.version-control.git/182529/focus=183409
