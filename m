@@ -1,97 +1,81 @@
-From: Alexey Shumkin <Alex.Crezoff@gmail.com>
+From: arQon <arqon@gmx.com>
 Subject: Re: [BUG] git checkout <branch> allowed with uncommitted changes
-Date: Thu, 13 Oct 2011 14:59:24 +0400
-Message-ID: <20111013145924.2113c142@ashu.dyn.rarus.ru>
-References: <loom.20111013T094053-111@post.gmane.org>
-	<CACsJy8Dzy5-kOZAjwdx=ooUdnN0L2F3EiNQ7b==3AGQZYjEUXQ@mail.gmail.com>
+Date: Thu, 13 Oct 2011 11:51:12 +0000 (UTC)
+Message-ID: <loom.20111013T130924-792@post.gmane.org>
+References: <loom.20111013T094053-111@post.gmane.org> <CACsJy8Dzy5-kOZAjwdx=ooUdnN0L2F3EiNQ7b==3AGQZYjEUXQ@mail.gmail.com> <20111013145924.2113c142@ashu.dyn.rarus.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: arQon <arqon@gmx.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 13 12:59:52 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 13 13:51:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REJ0w-000559-P0
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 12:59:51 +0200
+	id 1REJoy-00057r-Lx
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 13:51:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754803Ab1JMK7c convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Oct 2011 06:59:32 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:33561 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754277Ab1JMK7a convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Oct 2011 06:59:30 -0400
-Received: by wwf22 with SMTP id 22so1546644wwf.1
-        for <git@vger.kernel.org>; Thu, 13 Oct 2011 03:59:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rarus.ru; s=google;
-        h=sender:date:from:to:cc:subject:message-id:in-reply-to:references
-         :x-mailer:mime-version:content-type:content-transfer-encoding;
-        bh=YyfORn0bus+AddWRk7NQoUq1d729PqFXAZU4Q6VdS1g=;
-        b=Fic+Go24ojxATjEVKnw/08TCleX2z20pp3a3NOmP3xQABdbcYfSijjqJQc0vRTt4Er
-         46Ofqjuo4qC10y+SpWMSdaEV9VdSydBh/u3Gl+gh3tJWqwy9Eh4x+uQwD02FOBvZJxNa
-         nawW7lDicOloDTGpsAHVAoIj/lpv2Y/2tTKqE=
-Received: by 10.227.23.194 with SMTP id s2mr1048426wbb.99.1318503568885;
-        Thu, 13 Oct 2011 03:59:28 -0700 (PDT)
-Received: from ashu.dyn.rarus.ru (mail.rarus.ru. [213.247.194.83])
-        by mx.google.com with ESMTPS id es10sm5298346wbb.4.2011.10.13.03.59.26
-        (version=SSLv3 cipher=OTHER);
-        Thu, 13 Oct 2011 03:59:27 -0700 (PDT)
-In-Reply-To: <CACsJy8Dzy5-kOZAjwdx=ooUdnN0L2F3EiNQ7b==3AGQZYjEUXQ@mail.gmail.com>
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
+	id S1753282Ab1JMLv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Oct 2011 07:51:27 -0400
+Received: from lo.gmane.org ([80.91.229.12]:35952 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751384Ab1JMLv1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2011 07:51:27 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1REJoq-00053m-Gd
+	for git@vger.kernel.org; Thu, 13 Oct 2011 13:51:24 +0200
+Received: from 24-180-45-63.dhcp.crcy.nv.charter.com ([24.180.45.63])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 13 Oct 2011 13:51:24 +0200
+Received: from arqon by 24-180-45-63.dhcp.crcy.nv.charter.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 13 Oct 2011 13:51:24 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 24.180.45.63 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Ubuntu/10.04 (lucid) Firefox/3.6.23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183470>
 
-> On Thu, Oct 13, 2011 at 7:40 PM, arQon <arqon@gmx.com> wrote:
-> > $ git co master
-> > M =C2=A0 =C2=A0 =C2=A0 code/renderer/tr_font.cpp
-> > Switched to branch 'master'
-> > Your branch is ahead of 'origin/master' by 3 commits.
->=20
-> ...
->=20
-> > At this point, reverting the master with "checkout --" also wipes
-> > out the changes on the other branch. It's like the merge symlinked
-> > the two branches rather than, well, merging them.
->=20
-> It does show you that there are changes in the working tree and you
-> could have switched back with "git co -", done whatever you want with
-> your changes then switched to master again.
->=20
-> > A couple of days ago it DID complain
-> > when I tried to switch with uncommitted files still present, so it
-> > was working properly then. I have no idea what's made it happy to
-> > ignore them now: nothing's changed that I know of.
->=20
-> git tries to keep all changes on working tree you have. If you have
-> changes in file A and the new branch changes in file B, fine. If the
-> new branch also changes in file A too, it'll complain because
-> otherwise it may overwrite your changes. What it actual does is "Two
-> way merge", there is a table in "git read-tree" man page that
-> describes exactly how it is done, what cases would fail...
->=20
-> I see it as more choices. As I said above, it does tell you there are
-> changes and you could do something. You could make alias "co" that
-> check for worktree/index cleanliness before calling checkout.
-> Something like this maybe (I have not tested it)
->=20
-> git config alias.co '!git update-index --refresh && git diff-files
-> --quiet && git diff-index --cached --quiet HEAD && git checkout "$@"'
->=20
-> A config key to enforce this may be nice. I don't know, I have never
-> had problems with current behavior.
+Snipping the bug and focusing on one of the after-effects of the bug is,
+unfortunately, not helpful to me unless I'm missing your point (which is
+certainly possible).
 
-I agree with the explanation and I like current behavior, as well.
+git switched branches while there were uncommitted files. It's not supposed to
+do this, ever, unless given -f or -m, and it broke the tree as a result. Even
+*with* -f or -m, the behavior I described is incorrect.
+The git docs seem to agree with me, which is why there's git stash. If the docs
+are wrong, fine, though it seems pretty strange to have a change on BranchA
+appear by magic "in" BranchB without any merging.
 
-2arQon:
-Your expectations is based on SVN experience but as ex-SVN-user, too, I
-can (and I want to) say: Git is more flexible and powerful tool then SV=
-N
-is. Take is power and change your expectations, and your life will
-become better )))
+What I'm after is an understanding / explanation of how something that isn't
+supposed to happen, does. I don't care if it's "Because I'm an idiot", "Because
+git is broken", or even "Make sure your config has 'git.makebranchesworkproperly
+= true' in it, the default is false". If there is no explanation for why git
+switches branches when there are still uncommitted files, and there doesn't seem
+to be, then it's a pretty catastrophic bug and fixing it would be a Good Thing.
+
+*AFAICT*, committing *a* file is what triggers it.
+If you commit -a, which is what all the commits prior to this were, it works
+properly. You change branches, and the files on the disk become what they should
+be.
+If you commit nothing, you correctly get the "uncommitted files" error.
+If you do a partial commit though, your tree breaks.
+
+Like I say, if the man page, quote:
+"If you have local modifications to one or more files that are different between
+the current branch and the branch to which you are switching, the command
+refuses to switch branches in order to preserve your modifications in context."
+is wrong, and this behavior is deliberate, that's fine. Bizarre, but fine in
+the sense that git is doing what it's supposed to (regardless of how
+counterintuitive and destructive it is).
+If the man page is right though, this is a bug. Maybe it's only in msysgit,
+but this is the second time it's happened, so hopefully it's fairly easy to
+reproduce.
