@@ -1,129 +1,75 @@
-From: Brad King <brad.king@kitware.com>
-Subject: [PATCH 2/2] submodule: Search for merges only at end of recursive merge
-Date: Thu, 13 Oct 2011 08:59:05 -0400
-Message-ID: <e74e6d5fbff37c22d06329f63183cac766adcfd7.1318509069.git.brad.king@kitware.com>
-References: <7vipnu9hbj.fsf@alter.siamese.dyndns.org> <cover.1318509069.git.brad.king@kitware.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Heiko Voigt <hvoigt@hvoigt.net>
+From: arQon <arqon@gmx.com>
+Subject: Re: [BUG] git checkout <branch> allowed with uncommitted changes
+Date: Thu, 13 Oct 2011 13:09:00 +0000 (UTC)
+Message-ID: <loom.20111013T144822-277@post.gmane.org>
+References: <loom.20111013T094053-111@post.gmane.org> <CACsJy8Dzy5-kOZAjwdx=ooUdnN0L2F3EiNQ7b==3AGQZYjEUXQ@mail.gmail.com> <20111013145924.2113c142@ashu.dyn.rarus.ru> <loom.20111013T130924-792@post.gmane.org> <4E96D819.20905@op5.se>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 13 15:09:32 2011
+X-From: git-owner@vger.kernel.org Thu Oct 13 15:09:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REL2Q-0004ph-Ru
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 15:09:31 +0200
+	id 1REL2R-0004ph-Ur
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 15:09:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755110Ab1JMNJL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Oct 2011 09:09:11 -0400
-Received: from 66-194-253-20.static.twtelecom.net ([66.194.253.20]:57808 "EHLO
-	public.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752990Ab1JMNJK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Oct 2011 09:09:10 -0400
-X-Greylist: delayed 602 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 Oct 2011 09:09:10 EDT
-Received: from vesper (vesper.kitwarein.com [192.168.1.207])
-	by public.kitware.com (Postfix) with ESMTP id 78B553B2D9;
-	Thu, 13 Oct 2011 08:59:07 -0400 (EDT)
-Received: by vesper (Postfix, from userid 1000)
-	id A16C81A40; Thu, 13 Oct 2011 08:59:05 -0400 (EDT)
-X-Mailer: git-send-email 1.7.5.4
-In-Reply-To: <cover.1318509069.git.brad.king@kitware.com>
+	id S1755138Ab1JMNJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Oct 2011 09:09:16 -0400
+Received: from lo.gmane.org ([80.91.229.12]:58996 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755124Ab1JMNJN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2011 09:09:13 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1REL27-0004e8-VP
+	for git@vger.kernel.org; Thu, 13 Oct 2011 15:09:11 +0200
+Received: from 24-180-45-63.dhcp.crcy.nv.charter.com ([24.180.45.63])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 13 Oct 2011 15:09:11 +0200
+Received: from arqon by 24-180-45-63.dhcp.crcy.nv.charter.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 13 Oct 2011 15:09:11 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 24.180.45.63 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Ubuntu/10.04 (lucid) Firefox/3.6.23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183478>
 
-The submodule merge search is not useful during virtual merges because
-the results cannot be used automatically.  Furthermore any suggestions
-made by the search may apply to commits different than HEAD:sub and
-MERGE_HEAD:sub, thus confusing the user.  Skip searching for submodule
-merges during a virtual merge such as that between B and C while merging
-the heads of:
+Andreas Ericsson <ae <at> op5.se> writes:
+[snip]
+> This means that if fileX on branchA is different from fileX on branchB and you
+> *also* have local modifications to fileX, git will refuse to switch branches.
+> If, on the other hand branchA:fileX == branchB:fileX and you have modifications
+> to fileX in your work tree, there's no reason to refuse the branch change.
 
-    B---BC
-   / \ /
-  A   X
-   \ / \
-    C---CB
+There's an EXCELLENT reason to refuse the branch change: once it happens, what
+git is then telling is branchA, is not.
 
-Run the search only when the recursion level is zero (!o->call_depth).
-This fixes known breakage tested in t7405-submodule-merge.
+> It's not a bug. You just read the manpage a bit wrong.
+[snip]
+> So yes, this is a feature, and it's a handy one.
 
-Signed-off-by: Brad King <brad.king@kitware.com>
----
- merge-recursive.c          |    6 ++++--
- submodule.c                |    6 +++++-
- submodule.h                |    2 +-
- t/t7405-submodule-merge.sh |    2 +-
- 4 files changed, 11 insertions(+), 5 deletions(-)
+Thanks for the explanation. Unfortunately, I still can't see it as anything but
+a critical bug. Consider this:
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index c34a4f1..cc664c3 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -946,8 +946,10 @@ static struct merge_file_info merge_file_1(struct merge_options *o,
- 			free(result_buf.ptr);
- 			result.clean = (merge_status == 0);
- 		} else if (S_ISGITLINK(a->mode)) {
--			result.clean = merge_submodule(result.sha, one->path, one->sha1,
--						       a->sha1, b->sha1);
-+			result.clean = merge_submodule(result.sha,
-+						       one->path, one->sha1,
-+						       a->sha1, b->sha1,
-+						       !o->call_depth);
- 		} else if (S_ISLNK(a->mode)) {
- 			hashcpy(result.sha, a->sha1);
- 
-diff --git a/submodule.c b/submodule.c
-index 0b709bc..0fd10a0 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -794,7 +794,7 @@ static void print_commit(struct commit *commit)
- 
- int merge_submodule(unsigned char result[20], const char *path,
- 		    const unsigned char base[20], const unsigned char a[20],
--		    const unsigned char b[20])
-+		    const unsigned char b[20], int search)
- {
- 	struct commit *commit_base, *commit_a, *commit_b;
- 	int parent_count;
-@@ -849,6 +849,10 @@ int merge_submodule(unsigned char result[20], const char *path,
- 	 * user needs to confirm the resolution.
- 	 */
- 
-+	/* Skip the search if makes no sense to the calling context.  */
-+	if (!search)
-+		return 0;
-+
- 	/* find commit which merges them */
- 	parent_count = find_first_merges(&merges, path, commit_a, commit_b);
- 	switch (parent_count) {
-diff --git a/submodule.h b/submodule.h
-index 799c22d..80e04f3 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -28,7 +28,7 @@ int fetch_populated_submodules(int num_options, const char **options,
- 			       int quiet);
- unsigned is_submodule_modified(const char *path, int ignore_untracked);
- int merge_submodule(unsigned char result[20], const char *path, const unsigned char base[20],
--		    const unsigned char a[20], const unsigned char b[20]);
-+		    const unsigned char a[20], const unsigned char b[20], int search);
- int check_submodule_needs_pushing(unsigned char new_sha1[20], const char *remotes_name);
- 
- #endif
-diff --git a/t/t7405-submodule-merge.sh b/t/t7405-submodule-merge.sh
-index 14da2e3..0d5b42a 100755
---- a/t/t7405-submodule-merge.sh
-+++ b/t/t7405-submodule-merge.sh
-@@ -269,7 +269,7 @@ test_expect_success 'setup for recursive merge with submodule' '
- '
- 
- # merge should leave submodule unmerged in index
--test_expect_failure 'recursive merge with submodule' '
-+test_expect_success 'recursive merge with submodule' '
- 	(cd merge-recursive &&
- 	 test_must_fail git merge top-bc &&
- 	 echo "160000 $(git rev-parse top-cb:sub) 2	sub" > expect2 &&
--- 
-1.7.5.4
+You're working on branchA and you have a bunch of uncommitted changes.
+You can't remember some detail of the bug you're fixing, so you switch branches
+to the master. You have to rebuild that branch, because your last build was from
+your branch. git now builds the master with sources that were NEVER committed
+to it. How is that not a total failure to maintain branch integrity?
+
+If that's the way git is, then that's how it is; and if there isn't a setting
+that can make it actually preserve branches properly, then there isn't. Which
+sucks for me, because an SCCS that lies about what branch you're "really" on
+is worse than useless, so I'm stuck with SVN.  :(
+
+Thanks again for clearing it up for me though.
