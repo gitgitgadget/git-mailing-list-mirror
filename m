@@ -1,108 +1,124 @@
-From: arQon <arqon@gmx.com>
-Subject: Re: [BUG] git checkout <branch> allowed with uncommitted changes
-Date: Thu, 13 Oct 2011 12:42:42 +0000 (UTC)
-Message-ID: <loom.20111013T141239-151@post.gmane.org>
-References: <loom.20111013T094053-111@post.gmane.org> <CACsJy8Dzy5-kOZAjwdx=ooUdnN0L2F3EiNQ7b==3AGQZYjEUXQ@mail.gmail.com> <20111013145924.2113c142@ashu.dyn.rarus.ru> <loom.20111013T130924-792@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From: Brad King <brad.king@kitware.com>
+Subject: [PATCH 1/2] submodule: Demonstrate known breakage during recursive merge
+Date: Thu, 13 Oct 2011 08:59:04 -0400
+Message-ID: <6ad5c6b572e1756c51794aea87d72c3c1ea735ed.1318509069.git.brad.king@kitware.com>
+References: <7vipnu9hbj.fsf@alter.siamese.dyndns.org> <cover.1318509069.git.brad.king@kitware.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Heiko Voigt <hvoigt@hvoigt.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 13 14:43:05 2011
+X-From: git-owner@vger.kernel.org Thu Oct 13 15:09:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REKcq-0006t7-IX
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 14:43:04 +0200
+	id 1REL2E-0004hN-8j
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 15:09:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755028Ab1JMMm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Oct 2011 08:42:58 -0400
-Received: from lo.gmane.org ([80.91.229.12]:50779 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754499Ab1JMMm6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Oct 2011 08:42:58 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1REKci-0006pJ-58
-	for git@vger.kernel.org; Thu, 13 Oct 2011 14:42:56 +0200
-Received: from 24-180-45-63.dhcp.crcy.nv.charter.com ([24.180.45.63])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 13 Oct 2011 14:42:56 +0200
-Received: from arqon by 24-180-45-63.dhcp.crcy.nv.charter.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 13 Oct 2011 14:42:56 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 24.180.45.63 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Ubuntu/10.04 (lucid) Firefox/3.6.23)
+	id S1755116Ab1JMNJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Oct 2011 09:09:12 -0400
+Received: from 66-194-253-20.static.twtelecom.net ([66.194.253.20]:57807 "EHLO
+	public.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754325Ab1JMNJK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2011 09:09:10 -0400
+Received: from vesper (vesper.kitwarein.com [192.168.1.207])
+	by public.kitware.com (Postfix) with ESMTP id 6D13B3B2D8;
+	Thu, 13 Oct 2011 08:59:07 -0400 (EDT)
+Received: by vesper (Postfix, from userid 1000)
+	id 9BA27CAA; Thu, 13 Oct 2011 08:59:05 -0400 (EDT)
+X-Mailer: git-send-email 1.7.5.4
+In-Reply-To: <cover.1318509069.git.brad.king@kitware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183475>
 
-Simple testcase:
+Since commit 68d03e4a (Implement automatic fast-forward merge for
+submodules, 2010-07-07) we try to suggest submodule commits that resolve
+a conflict.  Consider a true recursive merge case
 
->git init
-Initialized empty Git repository in C:/git-test/.git/
->notepad file1
->notepad file2
->git st
- # On branch master
- # Initial commit
- # Untracked files:
- #   (use "git add <file>..." to include in what will be committed)
- #       file1.txt
- #       file2.txt
- nothing added to commit but untracked files present (use "git add" to track)
+    b---bc
+   / \ /
+  o   X
+   \ / \
+    c---cb
 
->git add .
->git st
- # On branch master
- # Initial commit
- # Changes to be committed:
- #       new file:   file1.txt
- #       new file:   file2.txt
+in which the two heads themselves (bc,cb) had resolved a submodule
+conflict (i.e. reference different commits than their parents).  The
+submodule merge search runs during the temporary merge of the two merge
+bases (b,c) and prints out a suggestion that is not meaningful to the
+user.  Then during the main merge the submodule merge search runs again
+but dies with the message
 
->git commit -am "init"
-  2 files changed, 2 insertions(+), 0 deletions(-)
-  create mode 100644 file1.txt
-  create mode 100644 file2.txt
+  fatal: --ancestry-path given but there are no bottom commits
 
->git co -b foo
- Switched to a new branch 'foo'
->notepad file1
-(edit stuff)
->git st
- # On branch foo
- # Changes not staged for commit:
- #       modified:   file1.txt
+while trying to enumerate candidates.  Demonstrate this known breakage
+with a new test in t7405-submodule-merge covering the case.
 
->git co master
- M       file1.txt
+Signed-off-by: Brad King <brad.king@kitware.com>
+---
+ t/t7405-submodule-merge.sh |   51 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 51 insertions(+), 0 deletions(-)
 
-file1 now has the wrong data in it for "master" branch.
-
-If I go back to "foo" branch and commit the file before doing anything else,
-it recovers, and changing branches works correctly again.
-
---
-
-"If you have local modifications to one or more files that are different
-between the current branch and the branch to which you are switching, the
-command refuses to switch branches in order to preserve your modifications
-in context."
-
-Maybe I'm just missing something obvious, but at the time that last "git
-co master" was issued:
-
-The file is locally modified.
-The file is different on the current branch (foo) than on the branch to which
-I am switching (master).
-The command fails to refuse to switch branches.
-
-So I guess the problem is that since the file wasn't re-added after the edit,
-git is ignoring it when trying to see if it's safe to branch or not?
+diff --git a/t/t7405-submodule-merge.sh b/t/t7405-submodule-merge.sh
+index a8fb30b..14da2e3 100755
+--- a/t/t7405-submodule-merge.sh
++++ b/t/t7405-submodule-merge.sh
+@@ -228,4 +228,55 @@ test_expect_success 'merging with a modify/modify conflict between merge bases'
+ 	git merge d
+ '
+ 
++# canonical criss-cross history in top and submodule
++test_expect_success 'setup for recursive merge with submodule' '
++	mkdir merge-recursive &&
++	(cd merge-recursive &&
++	 git init &&
++	 mkdir sub &&
++	 (cd sub &&
++	  git init &&
++	  test_commit a &&
++	  git checkout -b sub-b master &&
++	  test_commit b &&
++	  git checkout -b sub-c master &&
++	  test_commit c &&
++	  git checkout -b sub-bc sub-b &&
++	  git merge sub-c &&
++	  git checkout -b sub-cb sub-c &&
++	  git merge sub-b &&
++	  git checkout master) &&
++	 git add sub &&
++	 git commit -m a &&
++	 git checkout -b top-b master &&
++	 (cd sub && git checkout sub-b) &&
++	 git add sub &&
++	 git commit -m b &&
++	 git checkout -b top-c master &&
++	 (cd sub && git checkout sub-c) &&
++	 git add sub &&
++	 git commit -m c &&
++	 git checkout -b top-bc top-b &&
++	 git merge -s ours --no-commit top-c &&
++	 (cd sub && git checkout sub-bc) &&
++	 git add sub &&
++	 git commit -m bc &&
++	 git checkout -b top-cb top-c &&
++	 git merge -s ours --no-commit top-b &&
++	 (cd sub && git checkout sub-cb) &&
++	 git add sub &&
++	 git commit -m cb)
++'
++
++# merge should leave submodule unmerged in index
++test_expect_failure 'recursive merge with submodule' '
++	(cd merge-recursive &&
++	 test_must_fail git merge top-bc &&
++	 echo "160000 $(git rev-parse top-cb:sub) 2	sub" > expect2 &&
++	 echo "160000 $(git rev-parse top-bc:sub) 3	sub" > expect3 &&
++	 git ls-files -u > actual &&
++	 grep "$(cat expect2)" actual > /dev/null &&
++	 grep "$(cat expect3)" actual > /dev/null)
++'
++
+ test_done
+-- 
+1.7.5.4
