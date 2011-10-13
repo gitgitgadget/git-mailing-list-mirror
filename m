@@ -1,118 +1,117 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [BUG] git checkout <branch> allowed with uncommitted changes
-Date: Thu, 13 Oct 2011 14:22:49 +0200
-Message-ID: <4E96D819.20905@op5.se>
-References: <loom.20111013T094053-111@post.gmane.org> <CACsJy8Dzy5-kOZAjwdx=ooUdnN0L2F3EiNQ7b==3AGQZYjEUXQ@mail.gmail.com> <20111013145924.2113c142@ashu.dyn.rarus.ru> <loom.20111013T130924-792@post.gmane.org>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: [PATCH 07/14] is_refname_available(): remove the "quiet"
+	argument
+Date: Thu, 13 Oct 2011 08:41:25 -0400
+Message-ID: <1318509685.7231.6.camel@drew-northup.unet.maine.edu>
+References: <1318492715-5931-1-git-send-email-mhagger@alum.mit.edu>
+	 <1318492715-5931-8-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: arQon <arqon@gmx.com>
-X-From: git-owner@vger.kernel.org Thu Oct 13 14:22:54 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Thu Oct 13 14:42:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REKJK-0004ae-Cq
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 14:22:54 +0200
+	id 1REKbp-0006Ij-Qf
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 14:42:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752595Ab1JMMWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Oct 2011 08:22:50 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:61014 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751981Ab1JMMWt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Oct 2011 08:22:49 -0400
-Received: by bkbzt4 with SMTP id zt4so1361661bkb.19
-        for <git@vger.kernel.org>; Thu, 13 Oct 2011 05:22:46 -0700 (PDT)
-Received: by 10.204.139.85 with SMTP id d21mr2634475bku.15.1318508566577;
-        Thu, 13 Oct 2011 05:22:46 -0700 (PDT)
-Received: from vix.int.op5.se (sth-vpn1.op5.com. [193.201.96.49])
-        by mx.google.com with ESMTPS id rc12sm3426546bkb.10.2011.10.13.05.22.44
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 13 Oct 2011 05:22:45 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.23) Gecko/20110928 Fedora/3.1.15-1.fc14 Thunderbird/3.1.15 ThunderGit/0.1a
-In-Reply-To: <loom.20111013T130924-792@post.gmane.org>
+	id S1754878Ab1JMMl5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Oct 2011 08:41:57 -0400
+Received: from beryl.its.maine.edu ([130.111.32.94]:40089 "EHLO
+	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754499Ab1JMMl4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2011 08:41:56 -0400
+Received: from [IPv6:2610:48:100:827::97] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827::97])
+	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p9DCfSFI011217
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 13 Oct 2011 08:41:28 -0400
+In-Reply-To: <1318492715-5931-8-git-send-email-mhagger@alum.mit.edu>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=8 Fuz1=8
+	Fuz2=8
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p9DCfSFI011217
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1319114489.38004@0APxUV1do6kFfflWHXzsIg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183473>
 
-On 10/13/2011 01:51 PM, arQon wrote:
-> Snipping the bug and focusing on one of the after-effects of the bug is,
-> unfortunately, not helpful to me unless I'm missing your point (which is
-> certainly possible).
+
+On Thu, 2011-10-13 at 09:58 +0200, mhagger@alum.mit.edu wrote:
+> From: Michael Haggerty <mhagger@alum.mit.edu>
 > 
-> git switched branches while there were uncommitted files. It's not supposed to
-> do this, ever, unless given -f or -m, and it broke the tree as a result. Even
-> *with* -f or -m, the behavior I described is incorrect.
-> The git docs seem to agree with me, which is why there's git stash. If the docs
-> are wrong, fine, though it seems pretty strange to have a change on BranchA
-> appear by magic "in" BranchB without any merging.
-> 
-> What I'm after is an understanding / explanation of how something that isn't
-> supposed to happen, does. I don't care if it's "Because I'm an idiot", "Because
-> git is broken", or even "Make sure your config has 'git.makebranchesworkproperly
-> = true' in it, the default is false". If there is no explanation for why git
-> switches branches when there are still uncommitted files, and there doesn't seem
-> to be, then it's a pretty catastrophic bug and fixing it would be a Good Thing.
-> 
-> *AFAICT*, committing *a* file is what triggers it.
-> If you commit -a, which is what all the commits prior to this were, it works
-> properly. You change branches, and the files on the disk become what they should
-> be.
-> If you commit nothing, you correctly get the "uncommitted files" error.
-> If you do a partial commit though, your tree breaks.
-> 
-> Like I say, if the man page, quote:
-> "If you have local modifications to one or more files that are different between
-> the current branch and the branch to which you are switching, the command
-> refuses to switch branches in order to preserve your modifications in context."
+> quiet was always set to 0, so get rid of it.  Add a function docstring
+> for good measure.
 
+I would like to know if perhaps it was an unfinished project somewhere
+to propagate the "quiet" option down to this level before removing the
+function argument. Comments?
 
-This means that if fileX on branchA is different from fileX on branchB and you
-*also* have local modifications to fileX, git will refuse to switch branches.
-If, on the other hand branchA:fileX == branchB:fileX and you have modifications
-to fileX in your work tree, there's no reason to refuse the branch change.
-Partly because nothing will be lost and partly because you can just switch
-branches back if you decide you've switched branches before committing things
-to the first branch.
+> +/*
+> + * Return true iff a reference named refname could be created without
 
-> is wrong, and this behavior is deliberate, that's fine. Bizarre, but fine in
-> the sense that git is doing what it's supposed to (regardless of how
-> counterintuitive and destructive it is).
-> If the man page is right though, this is a bug. Maybe it's only in msysgit,
-> but this is the second time it's happened, so hopefully it's fairly easy to
-> reproduce.
-> 
+Did you really mean "iff" (as in "if and only if") or just plain "if"
+here?
 
-It's not a bug. You just read the manpage a bit wrong.
-
-Consider this scenario:
-$dev works on featureA on branchA, modifying fileX, fileZ and fileY and then
-does a commit of fileZ and fileY, but realizes that the changes in fileX
-will be good for developing featureB as well, so he changes to a separate
-branch to do the update to fileX and be able to merge those changes to
-both branchA and branchB.
-
-I've done this myself on numerous occasions when re-working small project-
-local API's, and it's very, very handy indeed. If git would refuse me to
-change branches without first committing everything I'd have to first
-commit the change separately, switch branch, cherrypick the change, go
-back to the first branch and remove the commit I made there, merge the
-other branch where the commit really belonged and only then I could go
-on about my business. If, on the other hand, I happen to switch branches
-before committing fileZ in the above example, I can just switch back and
-amend my last commit on the first branch.
-
-So yes, this is a feature, and it's a handy one.
-
+> + * conflicting with the name of an existing reference.  If oldrefname
+> + * is non-NULL, ignore potential conflicts with oldrefname (e.g.,
+> + * because oldrefname is scheduled for deletion in the same
+> + * operation).
+> + */
+>  static int is_refname_available(const char *refname, const char *oldrefname,
+> -				struct ref_array *array, int quiet)
+> +				struct ref_array *array)
+>  {
+>  	int i, namlen = strlen(refname); /* e.g. 'foo/bar' */
+>  	for (i = 0; i < array->nr; i++ ) {
+> @@ -1062,9 +1069,8 @@ static int is_refname_available(const char *refname, const char *oldrefname,
+>  			const char *lead = (namlen < len) ? entry->name : refname;
+>  			if (!strncmp(refname, entry->name, cmplen) &&
+>  			    lead[cmplen] == '/') {
+> -				if (!quiet)
+> -					error("'%s' exists; cannot create '%s'",
+> -					      entry->name, refname);
+> +				error("'%s' exists; cannot create '%s'",
+> +				      entry->name, refname);
+>  				return 0;
+>  			}
+>  		}
+> @@ -1117,7 +1123,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+>  	 * name is a proper prefix of our refname.
+>  	 */
+>  	if (missing &&
+> -	     !is_refname_available(refname, NULL, get_packed_refs(NULL), 0)) {
+> +	     !is_refname_available(refname, NULL, get_packed_refs(NULL))) {
+>  		last_errno = ENOTDIR;
+>  		goto error_return;
+>  	}
+> @@ -1272,10 +1278,10 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+>  	if (!symref)
+>  		return error("refname %s not found", oldrefname);
+>  
+> -	if (!is_refname_available(newrefname, oldrefname, get_packed_refs(NULL), 0))
+> +	if (!is_refname_available(newrefname, oldrefname, get_packed_refs(NULL)))
+>  		return 1;
+>  
+> -	if (!is_refname_available(newrefname, oldrefname, get_loose_refs(NULL), 0))
+> +	if (!is_refname_available(newrefname, oldrefname, get_loose_refs(NULL)))
+>  		return 1;
+>  
+>  	lock = lock_ref_sha1_basic(renamed_ref, NULL, 0, NULL);
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
