@@ -1,105 +1,188 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] t5403: do not use access repos with GIT_DIR when
- worktree is involved
-Date: Wed, 12 Oct 2011 21:27:30 -0700
-Message-ID: <7vwrc95xe5.fsf@alter.siamese.dyndns.org>
-References: <1318412105-13595-1-git-send-email-pclouds@gmail.com>
- <1318412105-13595-3-git-send-email-pclouds@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] daemon: return "access denied" if a service is not
+ allowed
+Date: Thu, 13 Oct 2011 15:45:44 +1100
+Message-ID: <20111013044544.GA27890@duynguyen-vnpc.dek-tpc.internal>
+References: <7vsjn9etm3.fsf@alter.siamese.dyndns.org>
+ <1317678909-19383-1-git-send-email-pclouds@gmail.com>
+ <20111012200916.GA1502@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 13 06:27:38 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 13 06:46:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RECtO-0007PK-Cc
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 06:27:38 +0200
+	id 1REDBH-0004bS-95
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Oct 2011 06:46:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751705Ab1JME1d convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Oct 2011 00:27:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36470 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751058Ab1JME1d convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Oct 2011 00:27:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 46DCC1150;
-	Thu, 13 Oct 2011 00:27:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=FH5ETsCK9jqD
-	U1AvFq2BB3yVGv4=; b=MWIaiMWqeLrztMnuGqMn8YvrCx3mevg6sq0sPFoxLh40
-	FcCB50XW/3CpPDRpm3EJwr9VWnroK5qDs3FauSsSTOJ4QDaXh2JgLeMiy1b3aQ/4
-	5OzsPZmx7AoD1Js6Fc+WdgGoyM05vWrlmh+4eEzOO/bUm6Ea6zA1+TsTZ+XKFnw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=cmndSm
-	zRtheazpZcFrdTP3ztXcOeLG1Jc60NTWtsXulwMd+/IjMnefErwr7Cv9BhPR3WAr
-	Ajj6uu5MFKFr3DpJmiuKNITb98IiYd5JqT6IR3XKXsqDB1+DuntVjA2yPOXAObSW
-	PQlb+3R4tzGOTbny3NIhDlHX5eBtOcljJgrC8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3ECC5114F;
-	Thu, 13 Oct 2011 00:27:32 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A5945114E; Thu, 13 Oct 2011
- 00:27:31 -0400 (EDT)
-In-Reply-To: <1318412105-13595-3-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 12 Oct
- 2011 20:35:05 +1100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AABF7446-F553-11E0-8D04-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752583Ab1JMEp4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Oct 2011 00:45:56 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:34600 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750789Ab1JMEpy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2011 00:45:54 -0400
+Received: by ywb5 with SMTP id 5so766286ywb.19
+        for <git@vger.kernel.org>; Wed, 12 Oct 2011 21:45:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=APEasraNF+WMjhTMCGI5+GPWxeLkChhRmrz3d/dtCGU=;
+        b=hhL/VEoU4+Bu2/TEG1g5jhp0Oibr2H9pogiNxCMQv0KEp/RfEty99sdk6bhf/KlRNL
+         YM/zQ/pam8PWi9CUpfqAu8hfsi+PA5VXqkDTI3jTv9VdqTTi0dynGC7c20mG1xWZaBp4
+         uEMicFPgVtYB4H01sv9Vr2YpTL09deITbaFsk=
+Received: by 10.236.124.11 with SMTP id w11mr2346430yhh.130.1318481154320;
+        Wed, 12 Oct 2011 21:45:54 -0700 (PDT)
+Received: from pclouds@gmail.com (dektec3.lnk.telstra.net. [165.228.202.174])
+        by mx.google.com with ESMTPS id p8sm5793768yhe.17.2011.10.12.21.45.48
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 12 Oct 2011 21:45:52 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 13 Oct 2011 15:45:44 +1100
+Content-Disposition: inline
+In-Reply-To: <20111012200916.GA1502@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183439>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+On Wed, Oct 12, 2011 at 04:09:16PM -0400, Jeff King wrote:
+> On Tue, Oct 04, 2011 at 08:55:09AM +1100, Nguyen Thai Ngoc Duy wrote:
+> 
+> > The message is chosen to avoid leaking information, yet let users know
+> > that they are deliberately not allowed to use the service, not a fault
+> > in service configuration or the service itself.
+> 
+> I do think this is an improvement, but I wonder if the verbosity should
+> be configurable. Then open sites like kernel.org could be friendlier to
+> their users. Something like this instead:
 
-> Setting GIT_DIR alone means worktree is current directory for legacy
-> reasons. Avoid using that, instead go to the worktree and execute
-> commands there.
->
-> The troublesome command is "GIT_DIR=3Dclone2/.git git add clone2/b". =
-The
-> real worktree is clone2, but that command tells git worktree is $(pwd=
-).
-> What does user expect to add then? Should the new entry in index be "=
-b"
-> or "clone2/b"?
+How about allow users to select which messages they want to print? We
+can even go further, allowing users to specify the messages themselves..
 
-There is no troublesomeness here, as the semantics has been clearly
-defined and (hopefully) stayed constant before the days when GIT_WORK_T=
-REE
-was invented.
+I don't know. I'm not a real server admin so maybe I'm just too
+paranoid. Any admins care to speak up?
 
-Assuming that there is no core.worktree in clone2/.git/config and there=
- is
-no GIT_WORK_TREE environment variable, "GIT_DIR=3D$anything git add
-clone2/b" should add a path "clone2/b" to the index controlled by that
-$GIT_DIR no matter where $anything is.
+On the other hand, grouping all messages at one place may be easier to
+audit, even if we don't allow customization.
 
-I would like to find out the motivation behind this patch. Even though =
-I
-find the ancient style stale and unsightly, we would want to keep the
-(GIT_DIR is set, GIT_WORK_TREE is not set anywhere) combination working
-for people who have work habits (read: old scripts) that rely on it. So=
- we
-would discourage new tests from using ancient style, but at the same ti=
-me,
-we would not want to remove _all_ existing ones.
+Anyway, two cents on top of your patch..
 
-Unless we are trying to break them without knowing, and declare that we
-deprecated it after the fact, which is not exactly the way we want to
-remove existing (mis)feature.
-
-Same comment applies to the other patch that removes the test that uses
-update-index && update-ref combination to a lessor degree.
-
-The [PATCH 2/3] is a genuine improvement, though.
-
-Thanks.
+-- 8< --
+diff --git a/daemon.c b/daemon.c
+index ec88fd0..a846ef1 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -17,10 +17,25 @@
+ #define initgroups(x, y) (0) /* nothing */
+ #endif
+ 
++/* Must match messages[] order below */
++#define MSG_SERVICE_NOT_ENABLED     0
++#define MSG_NO_SUCH_REPOSITORY      1
++#define MSG_REPOSITORY_NOT_EXPORTED 2
++
++static struct daemon_message
++{
++	const char *message;
++	const char *config;
++	int enabled;
++} messages[] = {
++	{ "service not enabled", "message.serviceNotEnabled" },
++	{ "no such repository", "message.noSuchRepository" },
++	{ "repository not exported", "message.repositoryNotExported" },
++};
++
+ static int log_syslog;
+ static int verbose;
+ static int reuseaddr;
+-static int informative_errors;
+ 
+ static const char daemon_usage[] =
+ "git daemon [--verbose] [--syslog] [--export-all]\n"
+@@ -238,20 +253,31 @@ static int service_enabled;
+ 
+ static int git_daemon_config(const char *var, const char *value, void *cb)
+ {
++	int i;
++
+ 	if (!prefixcmp(var, "daemon.") &&
+ 	    !strcmp(var + 7, service_looking_at->config_name)) {
+ 		service_enabled = git_config_bool(var, value);
+ 		return 0;
+ 	}
+ 
++	for (i = 0; i < ARRAY_SIZE(messages); i++)
++		if (!strcmp(var, messages[i].config)) {
++			messages[i].enabled = git_config_bool(var, value);
++			return 0;
++		}
++
+ 	/* we are not interested in parsing any other configuration here */
+ 	return 0;
+ }
+ 
+-static int daemon_error(const char *dir, const char *msg)
++static int daemon_error(const char *dir, int msg_id)
+ {
+-	if (!informative_errors)
++	const char *msg;
++	if (!messages[msg_id].enabled)
+ 		msg = "access denied";
++	else
++		msg = messages[msg_id].message;
+ 	packet_write(1, "ERR %s: %s", dir, msg);
+ 	return -1;
+ }
+@@ -266,11 +292,11 @@ static int run_service(char *dir, struct daemon_service *service)
+ 	if (!enabled && !service->overridable) {
+ 		logerror("'%s': service not enabled.", service->name);
+ 		errno = EACCES;
+-		return daemon_error(dir, "service not enabled");
++		return daemon_error(dir, MSG_SERVICE_NOT_ENABLED);
+ 	}
+ 
+ 	if (!(path = path_ok(dir)))
+-		return daemon_error(dir, "no such repository");
++		return daemon_error(dir, MSG_NO_SUCH_REPOSITORY);
+ 
+ 	/*
+ 	 * Security on the cheap.
+@@ -286,7 +312,7 @@ static int run_service(char *dir, struct daemon_service *service)
+ 	if (!export_all_trees && access("git-daemon-export-ok", F_OK)) {
+ 		logerror("'%s': repository not exported.", path);
+ 		errno = EACCES;
+-		return daemon_error(dir, "repository not exported");
++		return daemon_error(dir, MSG_REPOSITORY_NOT_EXPORTED);
+ 	}
+ 
+ 	if (service->overridable) {
+@@ -300,7 +326,7 @@ static int run_service(char *dir, struct daemon_service *service)
+ 		logerror("'%s': service not enabled for '%s'",
+ 			 service->name, path);
+ 		errno = EACCES;
+-		return daemon_error(dir, "service not enabled");
++		return daemon_error(dir, MSG_SERVICE_NOT_ENABLED);
+ 	}
+ 
+ 	/*
+@@ -1177,7 +1203,9 @@ int main(int argc, char **argv)
+ 			continue;
+ 		}
+ 		if (!prefixcmp(arg, "--informative-errors")) {
+-			informative_errors = 1;
++			int i;
++			for (i = 0; i < ARRAY_SIZE(messages); i++)
++				messages[i].enabled = 1;
+ 			continue;
+ 		}
+ 		if (!strcmp(arg, "--")) {
+-- 8< --
