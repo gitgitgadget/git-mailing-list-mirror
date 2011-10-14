@@ -1,41 +1,41 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 3/6] remote-curl: don't retry auth failures with dumb protocol
-Date: Fri, 14 Oct 2011 09:40:37 +0200
-Message-ID: <28d0c1017a10a93ce165a2d4e9fb6a691a933bd3.1318577792.git.git@drmicha.warpmail.net>
+Subject: [PATCH 6/6] http_init: accept separate URL parameter
+Date: Fri, 14 Oct 2011 09:40:40 +0200
+Message-ID: <57f0b2e5fedc91f22962517af620da8c209642ec.1318577792.git.git@drmicha.warpmail.net>
 References: <4E9692BF.8040705@drmicha.warpmail.net>
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 14 09:41:05 2011
+X-From: git-owner@vger.kernel.org Fri Oct 14 09:41:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REcO9-0006DO-C0
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 09:41:05 +0200
+	id 1REcOA-0006DO-W7
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 09:41:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932613Ab1JNHku (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Oct 2011 03:40:50 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:42095 "EHLO
+	id S932677Ab1JNHk4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Oct 2011 03:40:56 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:39406 "EHLO
 	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932327Ab1JNHkt (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Oct 2011 03:40:49 -0400
-Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id A02E120B93;
-	Fri, 14 Oct 2011 03:40:48 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute6.internal (MEProxy); Fri, 14 Oct 2011 03:40:48 -0400
+	by vger.kernel.org with ESMTP id S932654Ab1JNHky (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Oct 2011 03:40:54 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 55D9E20B99;
+	Fri, 14 Oct 2011 03:40:54 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute1.internal (MEProxy); Fri, 14 Oct 2011 03:40:54 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=from:to:cc:subject:date:message-id
-	:in-reply-to:references:in-reply-to:references; s=smtpout; bh=7M
-	vV3O924MGPUgIBZEIOi/KPm+Q=; b=cbSJtHbLCUcoXldv3yV7dHRU+mqq6JRWTD
-	6gRi+M0f0YBJF/APN4piEaF+ys65JcnjyA/nk3dcEtqQB8IqKWX/tpcUbUdvwDfJ
-	vX4pgKDQcHZVSnz1LkU/cbyCJYxuhVJrd1akwBsqtKs2jZ0NLmigFE7OYaZq6AlA
-	OwB//6ykQ=
-X-Sasl-enc: IAORNhYnAzywdbgoG3DJIFwsibQmj0XEDUnUMOTHAbXM 1318578048
+	:in-reply-to:references:in-reply-to:references; s=smtpout; bh=Ux
+	6+t4/O48C+7Tfd1nwNr625qyg=; b=STj2T1usqJ1y2SHccbkMG3FuIqvV6GLH3U
+	9PMbf9aDuhyuJrvsx3MjxpkDmCvVLXO6KYBoc3zwev6q9gB2g8BsEdlbHzGzBSBJ
+	mZHEAX3v31zowgWRiaGRqDl/Bt/6iYpWyyMH929YbaXdgQgyUPCLplG7Hh7WlDIn
+	ka0WMG8Hk=
+X-Sasl-enc: VkpXgxwth0X+vSrVcAolK1voCoOO5K17Xhq5CoSa8XaW 1318578053
 Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 1E595404987;
-	Fri, 14 Oct 2011 03:40:48 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id A92AB4833FD;
+	Fri, 14 Oct 2011 03:40:53 -0400 (EDT)
 X-Mailer: git-send-email 1.7.7.338.g0156b
 In-Reply-To: <4E9692BF.8040705@drmicha.warpmail.net>
 In-Reply-To: <cover.1318577792.git.git@drmicha.warpmail.net>
@@ -44,49 +44,135 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183550>
 
 From: Jeff King <peff@peff.net>
 
-When fetching an http URL, we first try fetching info/refs
-with an extra "service" parameter. This will work for a
-smart-http server, or a dumb server which ignores extra
-parameters when fetching files. If that fails, we retry
-without the extra parameter to remain compatible with dumb
-servers which didn't like our first request.
+The http_init function takes a "struct remote". Part of its
+initialization procedure is to look at the remote's url and
+grab some auth-related parameters. However, using the url
+included in the remote is:
 
-If the server returned a "401 Unauthorized", indicating that
-the credentials we provided were not good, there is not much
-point in retrying. With the current code, we just waste an
-extra round trip to the HTTP server before failing.
+  - wrong; the remote-curl helper may have a separate,
+    unrelated URL (e.g., from remote.*.pushurl). Looking at
+    the remote's configured url is incorrect.
 
-But as the http code becomes smarter about throwing away
-rejected credentials and re-prompting the user for new ones
-(which it will later in this series), this will become more
-confusing. At some point we will stop asking for credentials
-to retry smart http, and will be asking for credentials to
-retry dumb http. So now we're not only wasting an extra HTTP
-round trip for something that is unlikely to work, but we're
-making the user re-type their password for it.
+  - incomplete; http-fetch doesn't have a remote, so passes
+    NULL. So http_init never gets to see the URL we are
+    actually going to use.
+
+  - cumbersome; http-push has a similar problem to
+    http-fetch, but actually builds a fake remote just to
+    pass in the URL.
+
+Instead, let's just add a separate URL parameter to
+http_init, and all three callsites can pass in the
+appropriate information.
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
+ http-fetch.c  |    2 +-
+ http-push.c   |   10 +---------
+ http.c        |    8 ++++----
+ http.h        |    2 +-
  remote-curl.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 5 files changed, 8 insertions(+), 16 deletions(-)
 
+diff --git a/http-fetch.c b/http-fetch.c
+index 3af4c71..e341872 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -63,7 +63,7 @@ int main(int argc, const char **argv)
+ 
+ 	git_config(git_default_config, NULL);
+ 
+-	http_init(NULL);
++	http_init(NULL, url);
+ 	walker = get_http_walker(url);
+ 	walker->get_tree = get_tree;
+ 	walker->get_history = get_history;
+diff --git a/http-push.c b/http-push.c
+index 6e8f6d0..ecbfae5 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1747,7 +1747,6 @@ int main(int argc, char **argv)
+ 	int i;
+ 	int new_refs;
+ 	struct ref *ref, *local_refs;
+-	struct remote *remote;
+ 
+ 	git_extract_argv0_path(argv[0]);
+ 
+@@ -1821,14 +1820,7 @@ int main(int argc, char **argv)
+ 
+ 	memset(remote_dir_exists, -1, 256);
+ 
+-	/*
+-	 * Create a minimum remote by hand to give to http_init(),
+-	 * primarily to allow it to look at the URL.
+-	 */
+-	remote = xcalloc(sizeof(*remote), 1);
+-	ALLOC_GROW(remote->url, remote->url_nr + 1, remote->url_alloc);
+-	remote->url[remote->url_nr++] = repo->url;
+-	http_init(remote);
++	http_init(NULL, repo->url);
+ 
+ #ifdef USE_CURL_MULTI
+ 	is_running_queue = 0;
+diff --git a/http.c b/http.c
+index 149e116..b181c8a 100644
+--- a/http.c
++++ b/http.c
+@@ -367,7 +367,7 @@ static void set_from_env(const char **var, const char *envname)
+ 		*var = val;
+ }
+ 
+-void http_init(struct remote *remote)
++void http_init(struct remote *remote, const char *url)
+ {
+ 	char *low_speed_limit;
+ 	char *low_speed_time;
+@@ -431,11 +431,11 @@ void http_init(struct remote *remote)
+ 	if (getenv("GIT_CURL_FTP_NO_EPSV"))
+ 		curl_ftp_no_epsv = 1;
+ 
+-	if (remote && remote->url && remote->url[0]) {
+-		http_auth_init(remote->url[0]);
++	if (url) {
++		http_auth_init(url);
+ 		if (!ssl_cert_password_required &&
+ 		    getenv("GIT_SSL_CERT_PASSWORD_PROTECTED") &&
+-		    !prefixcmp(remote->url[0], "https://"))
++		    !prefixcmp(url, "https://"))
+ 			ssl_cert_password_required = 1;
+ 	}
+ 
+diff --git a/http.h b/http.h
+index 0bf8592..3c332a9 100644
+--- a/http.h
++++ b/http.h
+@@ -86,7 +86,7 @@ extern void add_fill_function(void *data, int (*fill)(void *));
+ extern void step_active_slots(void);
+ #endif
+ 
+-extern void http_init(struct remote *remote);
++extern void http_init(struct remote *remote, const char *url);
+ extern void http_cleanup(void);
+ 
+ extern int data_received;
 diff --git a/remote-curl.c b/remote-curl.c
-index faaeda4..6c24ab1 100644
+index 6c24ab1..d4d0910 100644
 --- a/remote-curl.c
 +++ b/remote-curl.c
-@@ -115,7 +115,7 @@ static struct discovery* discover_refs(const char *service)
- 	http_ret = http_get_strbuf(refs_url, &buffer, HTTP_NO_CACHE);
+@@ -850,7 +850,7 @@ int main(int argc, const char **argv)
  
- 	/* try again with "plain" url (no ? or & appended) */
--	if (http_ret != HTTP_OK) {
-+	if (http_ret != HTTP_OK && http_ret != HTTP_NOAUTH) {
- 		free(refs_url);
- 		strbuf_reset(&buffer);
+ 	url = strbuf_detach(&buf, NULL);
  
+-	http_init(remote);
++	http_init(remote, url);
+ 
+ 	do {
+ 		if (strbuf_getline(&buf, stdin, '\n') == EOF)
 -- 
 1.7.7.338.g0156b
