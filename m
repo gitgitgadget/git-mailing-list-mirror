@@ -1,105 +1,93 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: [PATCH 0/8] Some patches from msysGit
-Date: Fri, 14 Oct 2011 23:53:27 +0100
-Message-ID: <1318632815-29945-1-git-send-email-patthoyts@users.sourceforge.net>
+From: Andrei Warkentin <awarkentin@vmware.com>
+Subject: Re: [PATCH] Git-p4: git-p4.changeOnSubmit to do 'change' instead of
+ 'submit'.
+Date: Fri, 14 Oct 2011 15:55:57 -0700 (PDT)
+Message-ID: <811639890.180572.1318632957147.JavaMail.root@zimbra-prod-mbox-2.vmware.com>
+References: <CA+DMoH-HqA0DCyUSttO-iYO0rUHq1nLqM9W0imAOjHC5H1r_9w@mail.gmail.com>
 Mime-Version: 1.0
-Cc: Junio C Hamano <gitster@pobox.com>,
-	msysGit <msysgit@googlegroups.com>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>
-To: Git <git@vger.kernel.org>
-X-From: msysgit+bncCM7pyrzTCBDa--L0BBoEuDg-SA@googlegroups.com Sat Oct 15 00:55:56 2011
-Return-path: <msysgit+bncCM7pyrzTCBDa--L0BBoEuDg-SA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ww0-f58.google.com ([74.125.82.58])
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Andrei Warkentin <andreiw@vmware.com>
+To: Tor Arvid Lund <torarvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 15 00:56:02 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCM7pyrzTCBDa--L0BBoEuDg-SA@googlegroups.com>)
-	id 1REqfQ-0001EC-ET
-	for gcvm-msysgit@m.gmane.org; Sat, 15 Oct 2011 00:55:52 +0200
-Received: by mail-ww0-f58.google.com with SMTP id 25sf318097wwf.3
-        for <gcvm-msysgit@m.gmane.org>; Fri, 14 Oct 2011 15:55:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=mime-version:x-beenthere:received-spf:from:to:cc:subject:date
-         :message-id:x-mailer:x-cloudmark-analysis:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe;
-        bh=C2t3BDpiayv1qm5vSIN4h6Sn31bcaDEYZi8eY6nllBE=;
-        b=JLny6uwgL2VUDiZBZBQ4p6vVvWbbmxg9oU2jCQ+qHqCC1ZXPrStYpeOOVT88AbLDsS
-         ngqk4WpJEGxSdrpKaJESFyrh+gcH8FU05rCzjOGS84adbOwDsrWe3K4n43uVeIe/KT1i
-         rYwyMktcfzr4HkerzPI3MpZI+AbjtWC2bwZ6U=
-Received: by 10.216.137.25 with SMTP id x25mr1432080wei.20.1318632922958;
-        Fri, 14 Oct 2011 15:55:22 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.227.94.67 with SMTP id y3ls4648852wbm.1.gmail; Fri, 14 Oct
- 2011 15:55:22 -0700 (PDT)
-Received: by 10.216.229.207 with SMTP id h57mr268925weq.3.1318632922099;
-        Fri, 14 Oct 2011 15:55:22 -0700 (PDT)
-Received: by 10.216.150.224 with SMTP id z74mswej;
-        Fri, 14 Oct 2011 15:53:59 -0700 (PDT)
-Received: by 10.216.156.135 with SMTP id m7mr47524wek.11.1318632838946;
-        Fri, 14 Oct 2011 15:53:58 -0700 (PDT)
-Received: by 10.216.156.135 with SMTP id m7mr47523wek.11.1318632838911;
-        Fri, 14 Oct 2011 15:53:58 -0700 (PDT)
-Received: from mtaout03-winn.ispmail.ntl.com (mtaout03-winn.ispmail.ntl.com. [81.103.221.49])
-        by gmr-mx.google.com with ESMTP id es13si5618698wbb.3.2011.10.14.15.53.58;
-        Fri, 14 Oct 2011 15:53:58 -0700 (PDT)
-Received-SPF: pass (google.com: domain of pat@patthoyts.tk designates 81.103.221.49 as permitted sender) client-ip=81.103.221.49;
-Received: from know-smtpout-4.server.virginmedia.net ([62.254.123.3])
-          by mtaout03-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20111014225358.CLVU8898.mtaout03-winn.ispmail.ntl.com@know-smtpout-4.server.virginmedia.net>;
-          Fri, 14 Oct 2011 23:53:58 +0100
-Received: from [94.171.235.235] (helo=fox.patthoyts.tk)
-	by know-smtpout-4.server.virginmedia.net with esmtpa (Exim 4.63)
-	(envelope-from <pat@patthoyts.tk>)
-	id 1REqda-00086L-4Y; Fri, 14 Oct 2011 23:53:58 +0100
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 4B34B20A65; Fri, 14 Oct 2011 23:53:57 +0100 (BST)
-X-Mailer: git-send-email 1.7.5
-X-Cloudmark-Analysis: v=1.1 cv=R50lirqlHffDPPkwUlkuVa99MrvKdVWo//yz83qex8g= c=1 sm=0 a=FErwVMkzRTcA:10 a=BtgNS5OuHzJ8JZFTX5QA:9 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
-X-Original-Sender: patthoyts@users.sourceforge.net
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of pat@patthoyts.tk designates 81.103.221.49 as permitted sender) smtp.mail=pat@patthoyts.tk
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183627>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1REqfa-0001NK-4j
+	for gcvg-git-2@lo.gmane.org; Sat, 15 Oct 2011 00:56:02 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753202Ab1JNWz6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Oct 2011 18:55:58 -0400
+Received: from smtp-outbound-2.vmware.com ([65.115.85.73]:53355 "EHLO
+	smtp-outbound-2.vmware.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752572Ab1JNWz5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Oct 2011 18:55:57 -0400
+Received: from mailhost3.vmware.com (mailhost3.vmware.com [10.16.27.45])
+	by smtp-outbound-2.vmware.com (Postfix) with ESMTP id 6F67D1F00B;
+	Fri, 14 Oct 2011 15:55:57 -0700 (PDT)
+Received: from zimbra-prod-mta-3.vmware.com (zimbra-prod-mta-3.vmware.com [10.113.160.227])
+	by mailhost3.vmware.com (Postfix) with ESMTP id 67D14CD9B3;
+	Fri, 14 Oct 2011 15:55:57 -0700 (PDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zimbra-prod-mta-3.vmware.com (Postfix) with ESMTP id 5B9FBF3409;
+	Fri, 14 Oct 2011 15:55:57 -0700 (PDT)
+X-Virus-Scanned: amavisd-new at 
+Received: from zimbra-prod-mta-3.vmware.com ([127.0.0.1])
+	by localhost (zimbra-prod-mta-3.vmware.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id hwKvAoUMI47G; Fri, 14 Oct 2011 15:55:57 -0700 (PDT)
+Received: from zimbra-prod-mbox-2.vmware.com (zimbra-prod-mbox-2.vmware.com [10.113.160.202])
+	by zimbra-prod-mta-3.vmware.com (Postfix) with ESMTP id 400BEF3408;
+	Fri, 14 Oct 2011 15:55:57 -0700 (PDT)
+In-Reply-To: <CA+DMoH-HqA0DCyUSttO-iYO0rUHq1nLqM9W0imAOjHC5H1r_9w@mail.gmail.com>
+X-Originating-IP: [10.113.61.163]
+X-Mailer: Zimbra 7.1.1_GA_3225 (ZimbraWebClient - FF3.0 (Linux)/7.1.1_GA_3225)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183628>
 
-This series collects some recent patches required for msysGit
-applied onto 'next' for upstream application.
+Hi Tor,
 
-Johannes Schindelin (4):
-  t1020: disable the pwd test on MinGW
-  t1402: Ignore a few cases that must fail due to DOS path expansion
-  t9001: do not fail only due to CR/LF issues
-  t9300: do not run --cat-blob-fd related tests on MinGW
+Thanks for the review!
 
-Pat Thoyts (3):
-  t9901: fix line-ending dependency on windows
-  mergetools: use the correct tool for Beyond Compare 3 on Windows
-  mingw: ensure sockets are initialized before calling gethostname
+----- Original Message -----
+> Just out of curiosity... what is 'sd'?
+> 
 
-Sebastian Schuberth (1):
-  git-svn: On MSYS, escape and quote SVN_SSH also if set by the user
+SourceDepot, a p4 fork that is used elsewhere, not by me though ;).
 
- compat/mingw.c              |    7 +++++++
- compat/mingw.h              |    3 +++
- git-svn.perl                |   15 +++++++--------
- mergetools/bc3              |    9 ++++++++-
- t/t1020-subdirectory.sh     |    2 +-
- t/t1402-check-ref-format.sh |   15 +++++++++------
- t/t9001-send-email.sh       |    1 +
- t/t9300-fast-import.sh      |    8 ++++----
- t/t9901-git-web--browse.sh  |   10 +++++-----
- 9 files changed, 45 insertions(+), 25 deletions(-)
+> > This new config option lets a 'p4 change -i' run instead of
+> > the 'p4 submit -i'.
+> 
+> Well... I have to say that I'm not crazy about this patch... I don't
+> think it is very elegant to have a config flag that says that "when
+> the user says 'git p4 submit', then don't submit, but do something
+> else instead".
+> 
+> I would much rather have made a patch to introduce some new command
+> like 'git p4 change'.
+> 
 
--- 
-1.7.7.1.gbba15
+Agreed, how about something like this?
+
+The commands dict maps command name to class and optional dict passed to cmd.run(). That way 'change'
+can really mean P4Submit with an extra parameter not to submit but to do a changelist instead. The
+reason why I initially made the config flag was because I didn't want to copy-paste P4Submit into P4Change.
+
+commands = {
+    "debug" : [ P4Debug, {} ]
+    "submit" : [ P4Submit, { "doChange" : 0 } ]
+    "commit" : [ P4Submit, { "doChange" : 0 } ]
+    "change" : [ P4Submit, { "doChange" : 1 } ]
+    "sync" : [ P4Sync, {} ],
+    "rebase" : [ P4Rebase, {} ],
+    "clone" : [ P4Clone, {} ],
+    "rollback" : [ P4RollBack, {} ],
+    "branches" : [ P4Branches, {} ]
+}
+
+A
