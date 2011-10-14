@@ -1,105 +1,82 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] pack-objects: protect against disappearing packs
-Date: Thu, 13 Oct 2011 21:31:30 -0400
-Message-ID: <20111014013130.GA7163@sigill.intra.peff.net>
-References: <20111014012320.GA4395@sigill.intra.peff.net>
+Subject: Re: [BUG] git checkout <branch> allowed with uncommitted changes
+Date: Thu, 13 Oct 2011 21:38:30 -0400
+Message-ID: <20111014013830.GA7258@sigill.intra.peff.net>
+References: <20111013145924.2113c142@ashu.dyn.rarus.ru>
+ <loom.20111013T130924-792@post.gmane.org>
+ <4E96D819.20905@op5.se>
+ <loom.20111013T152144-60@post.gmane.org>
+ <1318517194.4646.30.camel@centaur.lab.cmartin.tk>
+ <loom.20111013T171530-970@post.gmane.org>
+ <1318525486.4646.53.camel@centaur.lab.cmartin.tk>
+ <loom.20111013T193054-868@post.gmane.org>
+ <7vzkh44ug1.fsf@alter.siamese.dyndns.org>
+ <loom.20111013T203610-130@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git-dev@github.com, "Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 14 03:32:14 2011
+Cc: git@vger.kernel.org
+To: arQon <arqon@gmx.com>
+X-From: git-owner@vger.kernel.org Fri Oct 14 03:38:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REWdB-0007hF-Hh
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 03:32:13 +0200
+	id 1REWjP-0001cz-Nk
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 03:38:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754531Ab1JNBbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Oct 2011 21:31:34 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60084
+	id S1755990Ab1JNBie (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Oct 2011 21:38:34 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60090
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752470Ab1JNBbd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Oct 2011 21:31:33 -0400
-Received: (qmail 32394 invoked by uid 107); 14 Oct 2011 01:31:37 -0000
+	id S1754664Ab1JNBie (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2011 21:38:34 -0400
+Received: (qmail 32752 invoked by uid 107); 14 Oct 2011 01:38:37 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 13 Oct 2011 21:31:37 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Oct 2011 21:31:30 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 13 Oct 2011 21:38:37 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Oct 2011 21:38:30 -0400
 Content-Disposition: inline
-In-Reply-To: <20111014012320.GA4395@sigill.intra.peff.net>
+In-Reply-To: <loom.20111013T203610-130@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183532>
 
-On Thu, Oct 13, 2011 at 09:23:20PM -0400, Jeff King wrote:
+On Thu, Oct 13, 2011 at 06:56:14PM +0000, arQon wrote:
 
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index 2b18de5..8681ccd 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -804,6 +804,10 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
->  		off_t offset = find_pack_entry_one(sha1, p);
->  		if (offset) {
->  			if (!found_pack) {
-> +				if (!is_pack_valid(p)) {
-> +					error("packfile %s cannot be accessed", p->pack_name);
-> +					continue;
-> +				}
+> I'll give a shot, though I don't know how good it'll be. Off the top of my
+> head, I don't see any good way to explain the inconsistency with LOCAL CHANGES
+> sometimes preventing switches and sometimes not, based on what is to the user
+> an arbitrary set of rules that has nothing to do with the *current state* of
+> the worktree, but rather the state of those files in prior commits.
 
-This message is modeled after the one in find_pack_entry. However,
-they're not really errors, since we will try to find the object
-elsewhere (and generally succeed). So the messages could just go away.
-Though they can also alert you to something fishy going on (like a
-packfile with bad permissions). But perhaps we should downgrade them
-like this:
+The rules are fairly straightforward.  You are moving from branch A to
+branch B. If path X is not changed going from A to B, git will not touch
+it, whether or not you have local changes. If path X is changed going
+from A to B, then git will refuse the checkout, and you have the option
+of:
 
--- >8 --
-Subject: [PATCH] downgrade "packfile cannot be accessed" errors to warnings
+  1. checkout -f: overwrite your local changes with what's in B
 
-These can happen if another process simultaneously prunes a
-pack. But that is not usually an error condition, because a
-properly-running prune should have repacked the object into
-a new pack. So we will notice that the pack has disappeared
-unexpectedly, print a message, try other packs (possibly
-after re-scanning the list of packs), and find it in the new
-pack.
+  2. checkout -m: merge your changes with what's in B (using A as a
+                  common ancestor)
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/pack-objects.c |    2 +-
- sha1_file.c            |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+> But sure, I'll see if I can come up with something. If nothing else,
+> having the manpage at least explain what "M" means; that it can be
+> potentially disastrous; and what you need to do to avoid it, would be
+> a definite plus.
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 8681ccd..ba3705d 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -805,7 +805,7 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
- 		if (offset) {
- 			if (!found_pack) {
- 				if (!is_pack_valid(p)) {
--					error("packfile %s cannot be accessed", p->pack_name);
-+					warning("packfile %s cannot be accessed", p->pack_name);
- 					continue;
- 				}
- 				found_offset = offset;
-diff --git a/sha1_file.c b/sha1_file.c
-index a22c5b4..27f3b9b 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2038,7 +2038,7 @@ static int find_pack_entry(const unsigned char *sha1, struct pack_entry *e)
- 			 * was loaded!
- 			 */
- 			if (!is_pack_valid(p)) {
--				error("packfile %s cannot be accessed", p->pack_name);
-+				warning("packfile %s cannot be accessed", p->pack_name);
- 				goto next;
- 			}
- 			e->offset = offset;
--- 
-1.7.6.4.37.g43b58b
+You keep saying things like "disastrous". Git's rules are specifically
+designed to be as flexible as possible without allowing the checkout
+command to cause data loss.
+
+Do you actually have a case that causes irrecoverable data loss?
+
+Note that I don't count "these changes were based on A, now they are
+based on B" as data loss. Your file content is still completely intact,
+and if you want to make them based on "A" again, you just need to
+"git checkout A" again.
+
+-Peff
