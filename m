@@ -1,65 +1,55 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] pack-objects: protect against disappearing packs
-Date: Fri, 14 Oct 2011 09:06:11 +0200
-Message-ID: <4E97DF63.104@viscovery.net>
-References: <20111014012320.GA4395@sigill.intra.peff.net>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: defined behaviour for multiple urls for a remote
+Date: Fri, 14 Oct 2011 12:37:51 +0530
+Message-ID: <CAMK1S_jZJuqC6_-eVT7LJFh+DEphbsypS6f4nRb6Qc4-xBa_wQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, git-dev@github.com,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 14 09:07:06 2011
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 14 09:07:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REbrF-00076K-Kg
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 09:07:05 +0200
+	id 1REbs3-0007QX-LK
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 09:07:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755042Ab1JNHGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Oct 2011 03:06:15 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:35120 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751326Ab1JNHGO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Oct 2011 03:06:14 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1REbqO-0007Ov-Fe; Fri, 14 Oct 2011 09:06:12 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 2DA3D1660F;
-	Fri, 14 Oct 2011 09:06:12 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.23) Gecko/20110920 Thunderbird/3.1.15
-In-Reply-To: <20111014012320.GA4395@sigill.intra.peff.net>
-X-Spam-Score: -1.4 (-)
+	id S1755858Ab1JNHHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Oct 2011 03:07:53 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:52104 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754196Ab1JNHHw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Oct 2011 03:07:52 -0400
+Received: by qadb15 with SMTP id b15so635598qad.19
+        for <git@vger.kernel.org>; Fri, 14 Oct 2011 00:07:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=99aeG6WqGiHuSfdgVn0LUAB894TuQwVfef9kysdXhkg=;
+        b=sYQ3bLp8gfbQ9Z1Su4FpjnylKKxSPuKtPQJL+srHFiV4LVfImcv1FkOkUJ46t1Jh6/
+         2HI32nVelTs19rQeT012SmPNIdgTi3p28PvbTWsybwlYRCjzNdOiWaMSoyqLMdUJxzJC
+         Eop/O5XCmvY+9h9OhH27vRMsN7YtCOQvpD3/0=
+Received: by 10.224.31.8 with SMTP id w8mr856175qac.43.1318576071839; Fri, 14
+ Oct 2011 00:07:51 -0700 (PDT)
+Received: by 10.224.20.67 with HTTP; Fri, 14 Oct 2011 00:07:51 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183544>
 
-Am 10/14/2011 3:23, schrieb Jeff King:
-> In practice, however, adding this check still has value, for
-> three reasons.
-> 
->   1. If you have a reasonable number of packs and/or a
->      reasonable file descriptor limit, you can keep all of
->      your packs open simultaneously. If this is the case,
->      then the race is impossible to trigger.
+Hi,
 
-On Windows, we cannot remove files that are open. If I understand
-correctly, this patch keeps more files open for a longer time. Is there
-any chance that packfiles remain now open until an unlink() call?
+What's the defined behaviour if I do this:
 
-I am not worried about parallel processes (we already have a problem
-there), but that this can now happen within a single process, i.e., that a
-single git-repack -a -d -f would now try to unlink a pack file that it
-opened itself and did not close timely.
+[remote "both"]
+	url = https://code.google.com/p/gitolite/
+        url = git@github.com:sitaramc/gitolite.git
 
-I'll test your patch later this weekend to see whether the test suite
-finds something. But perhaps you know the answer already?
+I know what I'm seeing (a fetch only goes to the first URL, and does a
+HEAD->FETCH_HEAD because I didn't provide a refspec line, while a push
+seems to push all to both), but I was curious what the official
+position is, because I couldn't find it in the docs.
 
--- Hannes
+-- 
+Sitaram
