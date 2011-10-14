@@ -1,71 +1,79 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 2/9] completion: optimize refs completion
-Date: Fri, 14 Oct 2011 14:16:09 +0200
-Message-ID: <20111014121609.GB2208@goldbirke>
-References: <1318085683-29830-1-git-send-email-szeder@ira.uka.de>
-	<1318085683-29830-3-git-send-email-szeder@ira.uka.de>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [BUG] send-email: alias expansion broken
+Date: Fri, 14 Oct 2011 14:29:27 +0200
+Message-ID: <4E982B27.8050807@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>, "Shawn O. Pearce" <spearce@spearce.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 14 14:21:53 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>,
+	Cord Seele <cowose@googlemail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 14 14:30:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REgls-0007hE-HZ
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 14:21:52 +0200
+	id 1REgtp-0003ba-0r
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 14:30:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932161Ab1JNMVn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Oct 2011 08:21:43 -0400
-Received: from ex-e-2.perimeter.fzi.de ([141.21.8.251]:30955 "EHLO
-	ex-e-2.perimeter.fzi.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932068Ab1JNMVm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Oct 2011 08:21:42 -0400
-X-Greylist: delayed 328 seconds by postgrey-1.27 at vger.kernel.org; Fri, 14 Oct 2011 08:21:41 EDT
-Received: from ex-ca-ht-1.fzi.de (141.21.32.98) by ex-e-2.perimeter.fzi.de
- (141.21.8.251) with Microsoft SMTP Server (TLS) id 14.1.339.1; Fri, 14 Oct
- 2011 14:16:07 +0200
-Received: from localhost6.localdomain6 (141.21.50.31) by ex-ca-ht-1.fzi.de
- (141.21.32.98) with Microsoft SMTP Server (TLS) id 14.1.339.1; Fri, 14 Oct
- 2011 14:16:09 +0200
-Content-Disposition: inline
-In-Reply-To: <1318085683-29830-3-git-send-email-szeder@ira.uka.de>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S932772Ab1JNM3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Oct 2011 08:29:31 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:33004 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932180Ab1JNM33 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Oct 2011 08:29:29 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 9812420A9A;
+	Fri, 14 Oct 2011 08:29:29 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 14 Oct 2011 08:29:29 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to
+	:subject:content-type:content-transfer-encoding; s=smtpout; bh=x
+	BZRzyW/HaKuTlz+INvbOCblocE=; b=eh6qY8jY2iGwcNocfmSM795csS92ZAlMp
+	9OTQ7JafN9hk+HF/sAIguV/Obi+OXzzis0bkl9iJu/ker4uOgbdIHHZOSdTdgCEc
+	8S9dZ9WlQwKf33lledlqP2GyRQabjaAHiI1k+inC2jNaVz9IzQMbdDOZ06dQhcjV
+	fg46oaINCs=
+X-Sasl-enc: Q4vPd5n0aVCxpXdgZcEH5k70CufnKRIJzWa3EdJojEai 1318595369
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 1BBFF404A7E;
+	Fri, 14 Oct 2011 08:29:28 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0) Gecko/20110927 Thunderbird/7.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183567>
 
-On Sat, Oct 08, 2011 at 04:54:36PM +0200, SZEDER G=E1bor wrote:
-> So, add a specialized variant of __gitcomp() that only deals with
-> possible completion words separated by a newline=20
+cec5dae (use new Git::config_path() for aliasesfile, 2011-09-30)
 
-> @@ -2635,7 +2659,7 @@ _git ()
->  			"
->  			;;
->  		*)     __git_compute_porcelain_commands
-> -		       __gitcomp "$__git_porcelain_commands $(__git_aliases)" ;;
-> +		       __gitcomp_nl "$__git_porcelain_commands $(__git_aliases)" ;=
-;
->  		esac
->  		return
->  	fi
+broke the expansion of aliases for me:
 
-Oops, this last hunk is wrong.
+./git-send-email --cc=junio  --dry-run
+0001-t7800-avoid-arithmetic-expansion-notation.patch
+0001-t7800-avoid-arithmetic-expansion-notation.patch
+Who should the emails appear to be from? [Michael J Gruber
+<git@drmicha.warpmail.net>]
+Emails will be sent from: Michael J Gruber <git@drmicha.warpmail.net>
+Dry-OK. Log says:
+Sendmail: /home/mjg/bin/msmtp-fastmail-git -i git@vger.kernel.org junio
+git@drmicha.warpmail.net
+From: Michael J Gruber <git@drmicha.warpmail.net>
+To: git@vger.kernel.org
+Cc: junio
+...
 
-I made the thinko that $__git_porcelain_commands is NL-separated and
-the output of __git_aliases() is NL-separated, so we can pass the two
-together to the new __gitcomp_nl() function.  But of course not,
-because the SP between the two joins the last command and the first
-alias.
+Happens with both "--cc junio" and "--cc=junio".
 
-I will resend in the evening with this hunk removed and the commit
-message updated.
+Reverting cec5dae brings my aliases back. Relevant config:
 
+git config --get-regexp sendemail.alias\*
+sendemail.aliasesfile /home/mjg/git/gitauthors
+sendemail.aliasfiletype mutt
 
-G=E1bor
+Can I please have alias expansion back?
+
+No, I don't know what cec5dae tries to achieve, and I lack the perl fu
+to fix it.
+
+Michael
