@@ -1,129 +1,216 @@
-From: Victor Engmark <victor.engmark@terreactive.ch>
-Subject: Re: [BUG] git checkout <branch> allowed with uncommitted changes
-Date: Fri, 14 Oct 2011 11:54:47 +0200
-Message-ID: <20111014095447.GC2856@victor.terreactive.ch>
-References: <4E96D819.20905@op5.se>
- <loom.20111013T152144-60@post.gmane.org>
- <1318517194.4646.30.camel@centaur.lab.cmartin.tk>
- <loom.20111013T171530-970@post.gmane.org>
- <1318525486.4646.53.camel@centaur.lab.cmartin.tk>
- <loom.20111013T193054-868@post.gmane.org>
- <7vzkh44ug1.fsf@alter.siamese.dyndns.org>
- <loom.20111013T203610-130@post.gmane.org>
- <20111014013830.GA7258@sigill.intra.peff.net>
- <4E980093.6040704@ira.uka.de>
+From: Daniele Segato <daniele.segato@gmail.com>
+Subject: Git shouldn't allow to push a new branch called HEAD
+Date: Fri, 14 Oct 2011 13:31:17 +0200
+Message-ID: <1318591877.2938.20.camel@mastroc3.mobc3.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, arQon <arqon@gmx.com>,
-	git@vger.kernel.org
-To: Holger Hellmuth <hellmuth@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Oct 14 11:55:04 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 14 13:30:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REeTn-0000XJ-Lg
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 11:55:04 +0200
+	id 1REfxh-0006ET-27
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 13:30:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932660Ab1JNJy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Oct 2011 05:54:57 -0400
-Received: from gate.terreactive.ch ([212.90.202.121]:50007 "EHLO
-	mail.terreactive.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932650Ab1JNJy4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Oct 2011 05:54:56 -0400
-Mail-Followup-To: Holger Hellmuth <hellmuth@ira.uka.de>,
-	Jeff King <peff@peff.net>, arQon <arqon@gmx.com>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <4E980093.6040704@ira.uka.de>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-terreActive-From: victor.engmark@terreactive.ch
-X-Spam-Status: No
+	id S1752387Ab1JNL34 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Oct 2011 07:29:56 -0400
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:43144 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750903Ab1JNL3z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Oct 2011 07:29:55 -0400
+Received: by wwn22 with SMTP id 22so631999wwn.1
+        for <git@vger.kernel.org>; Fri, 14 Oct 2011 04:29:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:subject:from:to:date:content-type:x-mailer
+         :content-transfer-encoding:mime-version;
+        bh=H6qq609BPnAAyJnZn0SolfTPRIPKU7o9B7K0GcWDfRE=;
+        b=ZR5xYqcYYBQIeb1KfKdtU8u6r5eBhryezlrRMq4Ip6JfbMi2kkJ2yBPP/gB92A9rB9
+         Rzi1pMZ8DjC9BmLi7CYd7eOsyso3G7MY68ps1zduHiqpVa2j5h5d57NxcTUVVBXkKY7u
+         gG/T5dTeGgIBtmoqy/UMJkkPG4mH5ZXgZ5lNQ=
+Received: by 10.227.129.77 with SMTP id n13mr2771579wbs.37.1318591794316;
+        Fri, 14 Oct 2011 04:29:54 -0700 (PDT)
+Received: from [192.168.1.69] (host182-72-dynamic.4-87-r.retail.telecomitalia.it. [87.4.72.182])
+        by mx.google.com with ESMTPS id es10sm13670965wbb.4.2011.10.14.04.29.51
+        (version=SSLv3 cipher=OTHER);
+        Fri, 14 Oct 2011 04:29:53 -0700 (PDT)
+X-Mailer: Evolution 3.0.3-2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183563>
 
-On Fri, Oct 14, 2011 at 11:27:47AM +0200, Holger Hellmuth wrote:
-> On 14.10.2011 03:38, Jeff King wrote:
-> >On Thu, Oct 13, 2011 at 06:56:14PM +0000, arQon wrote:
-> >
-> >>I'll give a shot, though I don't know how good it'll be. Off the top of my
-> >>head, I don't see any good way to explain the inconsistency with LOCAL CHANGES
-> >>sometimes preventing switches and sometimes not, based on what is to the user
-> >>an arbitrary set of rules that has nothing to do with the *current state* of
-> >>the worktree, but rather the state of those files in prior commits.
-> >
-> >The rules are fairly straightforward.
-> 
-> They are. But what arQon is getting at is that the normal
-> switchability depends on something that is often a game of chance:
-> Did I change a file that is different between the two branches? That
-> is only known by the user for branches not far removed.
-> 
-> Now the obvious answer is: It doesn't matter because git tells you.
-> At the right time to act upon it. But git says "M file" instead of
-> what 'git status' would say: "#  modified:   file". Is there a
-> reason for that? On one hand it should be familiar to svn users, on
-> the other hand it is an inconsistency. And personally I always hated
-> those cryptic status flags of svn
-> 
-> Another good point arQon made is that the case that you switched
-> with forgotten local changes is more common than the case that you
-> switched because you made changes in the wrong branch. If that were
-> the case the warning that you have local changes should be more
-> visible than that small "M file", at best something that looks
-> similar to 'git status' output.
+Hi all,
 
-Very good point. How about by default just running `git status` after a
-successful checkout, and only printing the result if there are any
-changes? That way:
-1) If no changes are pending, nothing is displayed.
-2) The user sees a *familiar* style output if anything changed.
-3) If there's an alias for "status", it would be used.
 
-Example:
+following from a discussion in IRC freenode #git between me, sitaram an
+shruggar
 
-$ mkdir /tmp/test
-$ cd /tmp/test
-$ git init
-Initialized empty Git repository in /tmp/test/.git/
-$ echo foo > foo
-$ echo bar > bar
-$ git add foo bar
-$ git commit -m "Initial commit"
-[master (root-commit) 55246c6] Initial commit
- 2 files changed, 2 insertions(+), 0 deletions(-)
- create mode 100644 bar
- create mode 100644 foo
-$ echo foobar > bar
-$ git branch --track test
-Branch test set up to track local branch master.
-$ git checkout test
-M   bar
-Switched to branch 'test'
 
-After `git checkout test`, we should instead see:
-# On branch test
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#   modified:   bar
-#
-no changes added to commit (use "git add" and/or "git commit -a")
+step to reproduce:
 
-2c,
-V
+$ mkdir /tmp/gitbug
+$ cd /tmp/gitbug/
 
--- 
-terreActive AG
-Kasinostrasse 30
-CH-5001 Aarau
-Tel: +41 62 834 00 55
-Fax: +41 62 823 93 56
-www.terreactive.ch
+$ # create a fake remote repo
+$ git init --bare remote.git
 
-Wir sichern Ihren Erfolg - seit 15 Jahren
+$ # clone it with the user that will generate the bug
+$ git clone remote.git buggenerator
+$ cd buggenerator/
+$ touch whatever
+$ git add .
+$ git commit -m "first commit"
+$ git push origin master 
+
+$ # now clone the same repo the other guy is the "victim" of this issue
+$ cd ..
+$ git clone remote.git victim
+
+$ # time to create the remote HEAD branch
+$ cd buggenerator/
+$ git push origin HEAD:HEAD
+
+$ # the remote refs has been created!
+$ git ls-remote
+
+$ # another commit
+$ echo 'any change' >> whatever 
+$ git commit -a -m "some change"
+$ git push origin master 
+
+$ # the refs/heads/HEAD is still where it was
+$ git ls-remote
+
+$ # now from the victim perspective
+$ cd ../victim/
+
+$ # every time executing a fetch he will get a force update
+$ # or maybe even an error, seen it my real repo, don't know how
+$ # to reproduce
+$ git fetch 
+$ git fetch 
+$ git ls-remote
+$ git fetch 
+$ git ls-remote
+$ git branch -a
+
+
+
+full console log:
+
+mastro@mastroc3 ~  $ mkdir /tmp/gitbug
+mastro@mastroc3 ~  $ cd /tmp/gitbug/
+mastro@mastroc3 /tmp/gitbug  $ git init --bare remote.git
+Initialized empty Git repository in /tmp/gitbug/remote.git/
+mastro@mastroc3 /tmp/gitbug  $ git clone remote.git buggenerator
+Cloning into buggenerator...
+done.
+warning: You appear to have cloned an empty repository.
+mastro@mastroc3 /tmp/gitbug  $ cd buggenerator/
+mastro@mastroc3 /tmp/gitbug/buggenerator (master #) $ touch whatever
+mastro@mastroc3 /tmp/gitbug/buggenerator (master #) $ git add .
+mastro@mastroc3 /tmp/gitbug/buggenerator (master #) $ git commit -m
+"first commit"
+[master (root-commit) 11d0a12] first commit
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 whatever
+mastro@mastroc3 /tmp/gitbug/buggenerator (master) $ git push origin
+master 
+Counting objects: 3, done.
+Writing objects: 100% (3/3), 213 bytes, done.
+Total 3 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+To /tmp/gitbug/remote.git
+ * [new branch]      master -> master
+mastro@mastroc3 /tmp/gitbug/buggenerator (master) $ cd ..
+mastro@mastroc3 /tmp/gitbug  $ git clone remote.git victim
+Cloning into victim...
+done.
+mastro@mastroc3 /tmp/gitbug  $ cd buggenerator/
+
+# now creating the HEAD remote branch
+
+mastro@mastroc3 /tmp/gitbug/buggenerator (master) $ git push origin
+HEAD:HEAD
+Total 0 (delta 0), reused 0 (delta 0)
+To /tmp/gitbug/remote.git
+ * [new branch]      HEAD -> HEAD
+mastro@mastroc3 /tmp/gitbug/buggenerator (master) $ git ls-remote
+From /tmp/gitbug/remote.git
+11d0a122125e50e78c7aa4aa81a3d6090dba648e	HEAD
+11d0a122125e50e78c7aa4aa81a3d6090dba648e	refs/heads/HEAD <-----
+shouldn't be there!
+11d0a122125e50e78c7aa4aa81a3d6090dba648e	refs/heads/master
+mastro@mastroc3 /tmp/gitbug/buggenerator (master) $ echo 'any change' >>
+whatever 
+mastro@mastroc3 /tmp/gitbug/buggenerator (master *) $ git commit -a -m
+"some change"
+[master 77852ef] some change
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+mastro@mastroc3 /tmp/gitbug/buggenerator (master) $ git push origin
+master 
+Counting objects: 5, done.
+Writing objects: 100% (3/3), 253 bytes, done.
+Total 3 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+To /tmp/gitbug/remote.git
+   11d0a12..77852ef  master -> master
+mastro@mastroc3 /tmp/gitbug/buggenerator (master) $ git ls-remote
+From /tmp/gitbug/remote.git
+77852effa972187d60d4c75145198991f1c0f868	HEAD
+11d0a122125e50e78c7aa4aa81a3d6090dba648e	refs/heads/HEAD
+77852effa972187d60d4c75145198991f1c0f868	refs/heads/master
+mastro@mastroc3 /tmp/gitbug/buggenerator (master) $ cd ../victim/
+mastro@mastroc3 /tmp/gitbug/victim (master) $ git fetch 
+remote: Counting objects: 5, done.
+remote: Total 3 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+From /tmp/gitbug/remote
+   11d0a12..77852ef  master     -> origin/master
+mastro@mastroc3 /tmp/gitbug/victim (master) $ git fetch 
+From /tmp/gitbug/remote
+ + 77852ef...11d0a12 HEAD       -> origin/HEAD  (forced update)
+mastro@mastroc3 /tmp/gitbug/victim (master) $ git fetch 
+From /tmp/gitbug/remote
+   11d0a12..77852ef  master     -> origin/master
+mastro@mastroc3 /tmp/gitbug/victim (master) $ git ls-remote
+From /tmp/gitbug/remote.git
+77852effa972187d60d4c75145198991f1c0f868	HEAD
+11d0a122125e50e78c7aa4aa81a3d6090dba648e	refs/heads/HEAD
+77852effa972187d60d4c75145198991f1c0f868	refs/heads/master
+mastro@mastroc3 /tmp/gitbug/victim (master) $ git fetch 
+From /tmp/gitbug/remote
+ + 77852ef...11d0a12 HEAD       -> origin/HEAD  (forced update)
+mastro@mastroc3 /tmp/gitbug/victim (master) $ git ls-remote
+From /tmp/gitbug/remote.git
+77852effa972187d60d4c75145198991f1c0f868	HEAD
+11d0a122125e50e78c7aa4aa81a3d6090dba648e	refs/heads/HEAD
+77852effa972187d60d4c75145198991f1c0f868	refs/heads/master
+mastro@mastroc3 /tmp/gitbug/victim (master) $ git branch -a
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+
+
+
+
+this can be fixed with:
+
+git push --delete origin HEAD
+(or git push origin :HEAD)
+
+then
+git remote prune origin
+
+
+
+But I think that git shouldn't allow the remote HEAD reference to be
+created in the first place
+
+regards,
+Daniele
