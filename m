@@ -1,56 +1,190 @@
-From: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
-Subject: Re: Bug? url.insteadOf overwrites remote.pushUrl
-Date: Fri, 14 Oct 2011 23:16:41 +0400
-Message-ID: <0656F8BA-3B41-473D-88A6-6A703C9A9CED@jetbrains.com>
-References: <CAB6D58F-A3C9-4532-A9CC-10E43CD34E4E@jetbrains.com> <4E9856BD.3010807@drmicha.warpmail.net>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Oct 14 21:16:50 2011
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] daemon: return "access denied" if a service is not
+ allowed
+Date: Fri, 14 Oct 2011 15:23:26 -0400
+Message-ID: <20111014192326.GA7713@sigill.intra.peff.net>
+References: <7vsjn9etm3.fsf@alter.siamese.dyndns.org>
+ <1317678909-19383-1-git-send-email-pclouds@gmail.com>
+ <20111012200916.GA1502@sigill.intra.peff.net>
+ <20111013044544.GA27890@duynguyen-vnpc.dek-tpc.internal>
+ <20111013182816.GA17573@sigill.intra.peff.net>
+ <7vvcrs181e.fsf@alter.siamese.dyndns.org>
+ <20111014131041.GC7808@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 14 21:23:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REnFR-0005yY-Od
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 21:16:50 +0200
+	id 1REnLz-0001O7-Gs
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 21:23:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756004Ab1JNTQp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Oct 2011 15:16:45 -0400
-Received: from mail1.intellij.net ([46.137.178.215]:51703 "EHLO
-	mail1.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755286Ab1JNTQo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Oct 2011 15:16:44 -0400
-Received: (qmail 20193 invoked by uid 89); 14 Oct 2011 19:16:43 -0000
-Received: by simscan 1.1.0 ppid: 20149, pid: 20184, t: 0.0842s
-         scanners: regex: 1.1.0 clamav: 0.97/m:53/d:13443
-Received: from unknown (HELO ?10.0.1.7?) (Kirill.Likhodedov@jetbrains.com@109.167.130.96)
-  by ip-10-48-137-145.eu-west-1.compute.internal with ESMTPA; 14 Oct 2011 19:16:42 -0000
-In-Reply-To: <4E9856BD.3010807@drmicha.warpmail.net>
-X-Mailer: Apple Mail (2.1084)
+	id S1756282Ab1JNTXb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Oct 2011 15:23:31 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60769
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756106Ab1JNTXa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Oct 2011 15:23:30 -0400
+Received: (qmail 13972 invoked by uid 107); 14 Oct 2011 19:23:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 14 Oct 2011 15:23:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Oct 2011 15:23:26 -0400
+Content-Disposition: inline
+In-Reply-To: <20111014131041.GC7808@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183599>
 
->> On the other hand, pushInsteadOf doesn't
->> override explicit pushUrl. Is it a bug?
-> 
-> That is as described in the thread (thanks for linking to it).
+On Fri, Oct 14, 2011 at 09:10:41AM -0400, Jeff King wrote:
 
-> pushurl predates pushinsteadof, and when the latter was introduced, one
-> could have argued for or against "insteadof" being applied to pushurls.
-> But that was necessary before, and existing behavior at the time when
-> pushinsteadof was introduced. So, I don't see a bug, nor anything we
-> could change now, though arguably most people use either pushinstead of
-> or pushurl, but not both.
+> Let's start with my original patch (which I'll clean and repost). And if
+> somebody really wants to push towards customized messages, that is easy
+> enough to do on top later.
 
+Here it is, with a few minor tweaks:
 
-Yeah, that's clear now. As I already answered to Junio in another thread, my question was only about insteadOf, not pushInsteadOf behavior. 
-The behavior of pushInsteadOf is completely clear from the thread and from t5516-fetch-push.sh
-Sorry for making it not clear enough. 
+  1. git-daemon respects --no-informative-errors, too
 
-Anyway, thanks for giving a one more explanation and example on how url, pushUrl and insteadOf configs work, it is always useful to go though it once again.
+  2. the new flag is documented
+
+  3. I switched the format from:
+
+       fatal: remote: /path/in/your/git/url: access denied
+
+     to:
+
+       fatal: remote: access denied: /path/in/your/git/url
+
+     I find the latter easier to read, and it would be easier for a
+     client to recognize.
+
+  4. there's now a commit message
+
+-- >8 --
+Subject: [PATCH] daemon: give friendlier error messages to clients
+
+When the git-daemon is asked about an inaccessible
+repository, it simply hangs up the connection without saying
+anything further. This makes it hard to distinguish between
+a repository we cannot access (e.g., due to typo), and a
+service or network outage.
+
+Instead, let's print an "ERR" line, which git clients
+understand since v1.6.1 (2008-12-24).
+
+Because there is a risk of leaking information about
+non-exported repositories, by default all errors simply say
+"access denied". Open sites can pass a flag to turn on more
+specific messages.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/git-daemon.txt |    8 ++++++++
+ daemon.c                     |   25 +++++++++++++++++++++----
+ 2 files changed, 29 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+index 69a1e4a..ac57c6d 100644
+--- a/Documentation/git-daemon.txt
++++ b/Documentation/git-daemon.txt
+@@ -161,6 +161,14 @@ the facility of inet daemon to achieve the same before spawning
+ 	repository configuration.  By default, all the services
+ 	are overridable.
+ 
++--informative-errors::
++	Return more verbose errors to the client, differentiating
++	conditions like "no such repository" from "repository not
++	exported". This is more convenient for clients, but may leak
++	information about the existence of unexported repositories.
++	Without this option, all errors report "access denied" to the
++	client.
++
+ <directory>::
+ 	A directory to add to the whitelist of allowed directories. Unless
+ 	--strict-paths is specified this will also include subdirectories
+diff --git a/daemon.c b/daemon.c
+index 4c8346d..e5869ec 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -20,6 +20,7 @@
+ static int log_syslog;
+ static int verbose;
+ static int reuseaddr;
++static int informative_errors;
+ 
+ static const char daemon_usage[] =
+ "git daemon [--verbose] [--syslog] [--export-all]\n"
+@@ -247,6 +248,14 @@ static int git_daemon_config(const char *var, const char *value, void *cb)
+ 	return 0;
+ }
+ 
++static int daemon_error(const char *dir, const char *msg)
++{
++	if (!informative_errors)
++		msg = "access denied";
++	packet_write(1, "ERR %s: %s", msg, dir);
++	return -1;
++}
++
+ static int run_service(char *dir, struct daemon_service *service)
+ {
+ 	const char *path;
+@@ -257,11 +266,11 @@ static int run_service(char *dir, struct daemon_service *service)
+ 	if (!enabled && !service->overridable) {
+ 		logerror("'%s': service not enabled.", service->name);
+ 		errno = EACCES;
+-		return -1;
++		return daemon_error(dir, "service not enabled");
+ 	}
+ 
+ 	if (!(path = path_ok(dir)))
+-		return -1;
++		return daemon_error(dir, "no such repository");
+ 
+ 	/*
+ 	 * Security on the cheap.
+@@ -277,7 +286,7 @@ static int run_service(char *dir, struct daemon_service *service)
+ 	if (!export_all_trees && access("git-daemon-export-ok", F_OK)) {
+ 		logerror("'%s': repository not exported.", path);
+ 		errno = EACCES;
+-		return -1;
++		return daemon_error(dir, "repository not exported");
+ 	}
+ 
+ 	if (service->overridable) {
+@@ -291,7 +300,7 @@ static int run_service(char *dir, struct daemon_service *service)
+ 		logerror("'%s': service not enabled for '%s'",
+ 			 service->name, path);
+ 		errno = EACCES;
+-		return -1;
++		return daemon_error(dir, "service not enabled");
+ 	}
+ 
+ 	/*
+@@ -1167,6 +1176,14 @@ int main(int argc, char **argv)
+ 			make_service_overridable(arg + 18, 0);
+ 			continue;
+ 		}
++		if (!prefixcmp(arg, "--informative-errors")) {
++			informative_errors = 1;
++			continue;
++		}
++		else if (!prefixcmp(arg, "--no-informative-errors")) {
++			informative_errors = 0;
++			continue;
++		}
+ 		if (!strcmp(arg, "--")) {
+ 			ok_paths = &argv[i+1];
+ 			break;
+-- 
+1.7.6.4.37.g43b58b
