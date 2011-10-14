@@ -1,299 +1,207 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t1402-check-ref-format: skip tests of refs beginning
- with slash on Windows
-Date: Thu, 13 Oct 2011 16:07:09 -0700
-Message-ID: <7vbotk32zm.fsf@alter.siamese.dyndns.org>
-References: <1318492715-5931-1-git-send-email-mhagger@alum.mit.edu>
- <4E969BFC.50706@viscovery.net> <7vfwiw33bf.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] pack-objects: protect against disappearing packs
+Date: Thu, 13 Oct 2011 21:23:20 -0400
+Message-ID: <20111014012320.GA4395@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: mhagger@alum.mit.edu, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Drew Northup <drew.northup@maine.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johan Herland <johan@herland.net>,
-	Julian Phillips <julian@quantumfyre.co.uk>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Oct 14 01:07:23 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git-dev@github.com, "Shawn O. Pearce" <spearce@spearce.org>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 14 03:25:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REUMy-0002Zv-4A
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 01:07:20 +0200
+	id 1REWWY-0005GX-KI
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 03:25:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755687Ab1JMXHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Oct 2011 19:07:14 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62410 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754654Ab1JMXHM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Oct 2011 19:07:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D37EB648C;
-	Thu, 13 Oct 2011 19:07:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=h9tLgyeBxyj6ybci8VfA0ruGvUY=; b=D7WB49
-	8UAoB566Xz6T3+bmqd1UcrwnUxQdN4EsUGFSXUE/U/zpdLz45dBoV1rU4B/bRCpU
-	Z/GjT1Ebs0MCBF75fH0NNMU6RjBjjiSuzXwKbBDlaAJ+wPw9o8fh0JELjwrBC7tt
-	hnJpfJPyUvGJudm17QhQORADTA836dnW7Ekvk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Hac+n12n/g3SaqU3k6QOsS6AoqUR+YwF
-	8BoXRasfoXAG15JwHIyHi4o5dM+7fpXbh1TLNYP5RDT6f+KG7yqMt6WJBJLhgm+G
-	QQTVUYH8fjrsq3R5aGRVbUaFhrY2z5pasepJqGhMAdAFU5dlNrGzA9bzFUTn3Vzg
-	hL3YjX7izHg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA501648B;
-	Thu, 13 Oct 2011 19:07:11 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 11A8F643E; Thu, 13 Oct 2011
- 19:07:11 -0400 (EDT)
-In-Reply-To: <7vfwiw33bf.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 13 Oct 2011 16:00:04 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 14CDBF7C-F5F0-11E0-BEA0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753391Ab1JNBXY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Oct 2011 21:23:24 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60074
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751067Ab1JNBXY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2011 21:23:24 -0400
+Received: (qmail 31842 invoked by uid 107); 14 Oct 2011 01:23:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 13 Oct 2011 21:23:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Oct 2011 21:23:20 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183530>
 
-Bash on Windows converts program arguments that look like absolute POSIX
-paths to their Windows form, i.e., drive-letter-colon format. For this
-reason, those tests in t1402 that check refs that begin with a slash do not
-work as expected on Windows: valid_ref tests are doomed to fail, and
-invalid_ref tests fail for the wrong reason (that there is a colon rather
-than that they begin with a slash).
+It's possible that while pack-objects is running, a
+simultaneously running prune process might delete a pack
+that we are interested in. Because we load the pack indices
+early on, we know that the pack contains our item, but by
+the time we try to open and map it, it is gone.
 
-Skip these tests.
+Since c715f78, we already protect against this in the normal
+object access code path, but pack-objects accesses the packs
+at a lower level.  In the normal access path, we call
+find_pack_entry, which will call find_pack_entry_one on each
+pack index, which does the actual lookup. If it gets a hit,
+we will actually open and verify the validity of the
+matching packfile (using c715f78's is_pack_valid). If we
+can't open it, we'll issue a warning and pretend that we
+didn't find it, causing us to go on to the next pack (or on
+to loose objects).
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Furthermore, we will cache the descriptor to the opened
+packfile. Which means that later, when we actually try to
+access the object, we are likely to still have that packfile
+opened, and won't care if it has been unlinked from the
+filesystem.
+
+Notice the "likely" above. If there is another pack access
+in the interim, and we run out of descriptors, we could
+close the pack. And then a later attempt to access the
+closed pack could fail (we'll try to re-open it, of course,
+but it may have been deleted). In practice, this doesn't
+happen because we tend to look up items and then access them
+immediately.
+
+Pack-objects does not follow this code path. Instead, it
+accesses the packs at a much lower level, using
+find_pack_entry_one directly. This means we skip the
+is_pack_valid check, and may end up with the name of a
+packfile, but no open descriptor.
+
+We can add the same is_pack_valid check here. Unfortunately,
+the access patterns of pack-objects are not quite as nice
+for keeping lookup and object access together. We look up
+each object as we find out about it, and the only later when
+writing the packfile do we necessarily access it. Which
+means that the opened packfile may be closed in the interim.
+
+In practice, however, adding this check still has value, for
+three reasons.
+
+  1. If you have a reasonable number of packs and/or a
+     reasonable file descriptor limit, you can keep all of
+     your packs open simultaneously. If this is the case,
+     then the race is impossible to trigger.
+
+  2. Even if you can't keep all packs open at once, you
+     may end up keeping the deleted one open (i.e., you may
+     get lucky).
+
+  3. The race window is shortened. You may notice early that
+     the pack is gone, and not try to access it. Triggering
+     the problem without this check means deleting the pack
+     any time after we read the list of index files, but
+     before we access the looked-up objects.  Triggering it
+     with this check means deleting the pack means deleting
+     the pack after we do a lookup (and successfully access
+     the packfile), but before we access the object. Which
+     is a smaller window.
 ---
+We're seeing this at GitHub because we prune pretty
+aggressively. We let pushes go into individual repositories,
+but then we kick off a job to move the resulting objects
+into the repository's "network" repo, which is basically a
+big alternates repository for related repos.
 
-Junio C Hamano <gitster@pobox.com> writes:
+You can reproduce locally with:
 
->> +invalid_ref NOT_MINGW '/'
->> ...
->> +valid_ref_normalized '/heads/foo' 'heads/foo' NOT_MINGW
->
-> The inconsistencies strikes me a bit.
+    push() {
+      (cd child &&
+       echo content >>file &&
+       git add file &&
+       git commit -q -m "change `wc -l <file`" &&
+       git push -q origin HEAD
+      ) &&
+      (cd network.git &&
+       git fetch -q ../parent refs/*:refs/* &&
+       git gc --auto
+      ) &&
+      (cd parent.git &&
+       git repack -qadl
+      )
+    }
 
-Here is what I tentatively will queue.
+    fetch() {
+      rm -rf clone$1
+      git.compile clone -q file://$PWD/parent.git clone$1 2>>output$1 ||
+      {
+        echo >&2 FAIL FAIL FAIL
+        exit 1
+      }
+    }
 
-The interdiff from yours looks like this:
+    git init --bare network.git &&
+    git --git-dir=network.git config transfer.unpacklimit 1 &&
+    git init --bare parent.git &&
+    git --git-dir=parent.git config transfer.unpacklimit 1 &&
+    echo "$PWD/network.git/objects" >parent.git/objects/info/alternates
+    git clone parent.git child &&
+    (for i in `seq 1 1000`; do push; done) &
+    (for i in `seq 1 1000`; do fetch 1; done) &
+    (for i in `seq 1 1000`; do fetch 2; done) &
+    wait
 
-    diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
-    index dba5e97..1ae4d87 100755
-    --- a/t/t1402-check-ref-format.sh
-    +++ b/t/t1402-check-ref-format.sh
-    @@ -11,8 +11,9 @@ valid_ref() {
-                    prereq=$1
-                    shift
-            esac
-    -	test_expect_success $prereq "ref name '$1' is valid${2:+ with options $2}" \
-    -			"git check-ref-format $2 '$1'"
-    +	test_expect_success $prereq "ref name '$1' is valid${2:+ with options $2}" "
-    +		git check-ref-format $2 '$1'
-    +	"
-     }
-     invalid_ref() {
-            prereq=
-    @@ -21,8 +22,9 @@ invalid_ref() {
-                    prereq=$1
-                    shift
-            esac
-    -	test_expect_success $prereq "ref name '$1' is invalid${2:+ with options $2}" \
-    -			"test_must_fail git check-ref-format $2 '$1'"
-    +	test_expect_success $prereq "ref name '$1' is invalid${2:+ with options $2}" "
-    +		test_must_fail git check-ref-format $2 '$1'
-    +	"
-     }
+One process repeatedly pushes new packs, then migrates the
+objects over to the network repo. Simultaneously, two
+processes are constantly cloning. After 10-20 seconds, I'll
+usually get unlucky and a clone will fail (because the
+remote pack-objects complains about the inaccessible
+packfile).
 
-     invalid_ref ''
-    @@ -155,21 +157,35 @@ test_expect_success 'check-ref-format --branch from subdir' '
-     '
+Another option would be to open the pack at point of use, and if that
+fails, try to find the object elsewhere. This throws off the rest of the
+code a bit, though, as we were expecting to get it from a pack, which
+went into our decision about what we should delta.
 
-     valid_ref_normalized() {
-    -	test_expect_success $3 "ref name '$1' simplifies to '$2'" "
-    +	prereq=
-    +	case $1 in
-    +	[A-Z]*)
-    +		prereq=$1
-    +		shift
-    +	esac
-    +	test_expect_success $prereq "ref name '$1' simplifies to '$2'" "
-                    refname=\$(git check-ref-format --normalize '$1') &&
-    -		test \"\$refname\" = '$2'"
-    +		test \"\$refname\" = '$2'
-    +	"
-     }
-     invalid_ref_normalized() {
-    -	test_expect_success $2 "check-ref-format --normalize rejects '$1'" "
-    -		test_must_fail git check-ref-format --normalize '$1'"
-    +	prereq=
-    +	case $1 in
-    +	[A-Z]*)
-    +		prereq=$1
-    +		shift
-    +	esac
-    +	test_expect_success $prereq "check-ref-format --normalize rejects '$1'" "
-    +		test_must_fail git check-ref-format --normalize '$1'
-    +	"
-     }
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/pack-objects.c |    4 ++++
+ cache.h                |    1 +
+ sha1_file.c            |    2 +-
+ 3 files changed, 6 insertions(+), 1 deletions(-)
 
-     valid_ref_normalized 'heads/foo' 'heads/foo'
-     valid_ref_normalized 'refs///heads/foo' 'refs/heads/foo'
-    -valid_ref_normalized '/heads/foo' 'heads/foo' NOT_MINGW
-    +valid_ref_normalized NOT_MINGW '/heads/foo' 'heads/foo'
-     valid_ref_normalized '///heads/foo' 'heads/foo'
-     invalid_ref_normalized 'foo'
-    -invalid_ref_normalized '/foo' NOT_MINGW
-    +invalid_ref_normalized NOT_MINGW '/foo'
-     invalid_ref_normalized 'heads/foo/../bar'
-     invalid_ref_normalized 'heads/./foo'
-     invalid_ref_normalized 'heads\foo'
-
-Thanks.
-
- t/t1402-check-ref-format.sh |   88 +++++++++++++++++++++++++-----------------
- 1 files changed, 52 insertions(+), 36 deletions(-)
-
-diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
-index 710fcca..1ae4d87 100755
---- a/t/t1402-check-ref-format.sh
-+++ b/t/t1402-check-ref-format.sh
-@@ -5,38 +5,40 @@ test_description='Test git check-ref-format'
- . ./test-lib.sh
- 
- valid_ref() {
--	if test "$#" = 1
--	then
--		test_expect_success "ref name '$1' is valid" \
--			"git check-ref-format '$1'"
--	else
--		test_expect_success "ref name '$1' is valid with options $2" \
--			"git check-ref-format $2 '$1'"
--	fi
-+	prereq=
-+	case $1 in
-+	[A-Z]*)
-+		prereq=$1
-+		shift
-+	esac
-+	test_expect_success $prereq "ref name '$1' is valid${2:+ with options $2}" "
-+		git check-ref-format $2 '$1'
-+	"
- }
- invalid_ref() {
--	if test "$#" = 1
--	then
--		test_expect_success "ref name '$1' is invalid" \
--			"test_must_fail git check-ref-format '$1'"
--	else
--		test_expect_success "ref name '$1' is invalid with options $2" \
--			"test_must_fail git check-ref-format $2 '$1'"
--	fi
-+	prereq=
-+	case $1 in
-+	[A-Z]*)
-+		prereq=$1
-+		shift
-+	esac
-+	test_expect_success $prereq "ref name '$1' is invalid${2:+ with options $2}" "
-+		test_must_fail git check-ref-format $2 '$1'
-+	"
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 2b18de5..8681ccd 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -804,6 +804,10 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
+ 		off_t offset = find_pack_entry_one(sha1, p);
+ 		if (offset) {
+ 			if (!found_pack) {
++				if (!is_pack_valid(p)) {
++					error("packfile %s cannot be accessed", p->pack_name);
++					continue;
++				}
+ 				found_offset = offset;
+ 				found_pack = p;
+ 			}
+diff --git a/cache.h b/cache.h
+index e39e160..495b468 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1055,6 +1055,7 @@ struct extra_have_objects {
+ extern const unsigned char *nth_packed_object_sha1(struct packed_git *, uint32_t);
+ extern off_t nth_packed_object_offset(const struct packed_git *, uint32_t);
+ extern off_t find_pack_entry_one(const unsigned char *, struct packed_git *);
++extern int is_pack_valid(struct packed_git *);
+ extern void *unpack_entry(struct packed_git *, off_t, enum object_type *, unsigned long *);
+ extern unsigned long unpack_object_header_buffer(const unsigned char *buf, unsigned long len, enum object_type *type, unsigned long *sizep);
+ extern unsigned long get_size_from_delta(struct packed_git *, struct pack_window **, off_t);
+diff --git a/sha1_file.c b/sha1_file.c
+index 3401301..a22c5b4 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1987,7 +1987,7 @@ off_t find_pack_entry_one(const unsigned char *sha1,
+ 	return 0;
  }
  
- invalid_ref ''
--invalid_ref '/'
--invalid_ref '/' --allow-onelevel
--invalid_ref '/' --normalize
--invalid_ref '/' '--allow-onelevel --normalize'
-+invalid_ref NOT_MINGW '/'
-+invalid_ref NOT_MINGW '/' --allow-onelevel
-+invalid_ref NOT_MINGW '/' --normalize
-+invalid_ref NOT_MINGW '/' '--allow-onelevel --normalize'
- valid_ref 'foo/bar/baz'
- valid_ref 'foo/bar/baz' --normalize
- invalid_ref 'refs///heads/foo'
- valid_ref 'refs///heads/foo' --normalize
- invalid_ref 'heads/foo/'
--invalid_ref '/heads/foo'
--valid_ref '/heads/foo' --normalize
-+invalid_ref NOT_MINGW '/heads/foo'
-+valid_ref NOT_MINGW '/heads/foo' --normalize
- invalid_ref '///heads/foo'
- valid_ref '///heads/foo' --normalize
- invalid_ref './foo'
-@@ -115,14 +117,14 @@ invalid_ref "$ref" --refspec-pattern
- invalid_ref "$ref" '--refspec-pattern --allow-onelevel'
- 
- ref='/foo'
--invalid_ref "$ref"
--invalid_ref "$ref" --allow-onelevel
--invalid_ref "$ref" --refspec-pattern
--invalid_ref "$ref" '--refspec-pattern --allow-onelevel'
--invalid_ref "$ref" --normalize
--valid_ref "$ref" '--allow-onelevel --normalize'
--invalid_ref "$ref" '--refspec-pattern --normalize'
--valid_ref "$ref" '--refspec-pattern --allow-onelevel --normalize'
-+invalid_ref NOT_MINGW "$ref"
-+invalid_ref NOT_MINGW "$ref" --allow-onelevel
-+invalid_ref NOT_MINGW "$ref" --refspec-pattern
-+invalid_ref NOT_MINGW "$ref" '--refspec-pattern --allow-onelevel'
-+invalid_ref NOT_MINGW "$ref" --normalize
-+valid_ref NOT_MINGW "$ref" '--allow-onelevel --normalize'
-+invalid_ref NOT_MINGW "$ref" '--refspec-pattern --normalize'
-+valid_ref NOT_MINGW "$ref" '--refspec-pattern --allow-onelevel --normalize'
- 
- test_expect_success "check-ref-format --branch @{-1}" '
- 	T=$(git write-tree) &&
-@@ -155,21 +157,35 @@ test_expect_success 'check-ref-format --branch from subdir' '
- '
- 
- valid_ref_normalized() {
--	test_expect_success "ref name '$1' simplifies to '$2'" "
-+	prereq=
-+	case $1 in
-+	[A-Z]*)
-+		prereq=$1
-+		shift
-+	esac
-+	test_expect_success $prereq "ref name '$1' simplifies to '$2'" "
- 		refname=\$(git check-ref-format --normalize '$1') &&
--		test \"\$refname\" = '$2'"
-+		test \"\$refname\" = '$2'
-+	"
- }
- invalid_ref_normalized() {
--	test_expect_success "check-ref-format --normalize rejects '$1'" "
--		test_must_fail git check-ref-format --normalize '$1'"
-+	prereq=
-+	case $1 in
-+	[A-Z]*)
-+		prereq=$1
-+		shift
-+	esac
-+	test_expect_success $prereq "check-ref-format --normalize rejects '$1'" "
-+		test_must_fail git check-ref-format --normalize '$1'
-+	"
- }
- 
- valid_ref_normalized 'heads/foo' 'heads/foo'
- valid_ref_normalized 'refs///heads/foo' 'refs/heads/foo'
--valid_ref_normalized '/heads/foo' 'heads/foo'
-+valid_ref_normalized NOT_MINGW '/heads/foo' 'heads/foo'
- valid_ref_normalized '///heads/foo' 'heads/foo'
- invalid_ref_normalized 'foo'
--invalid_ref_normalized '/foo'
-+invalid_ref_normalized NOT_MINGW '/foo'
- invalid_ref_normalized 'heads/foo/../bar'
- invalid_ref_normalized 'heads/./foo'
- invalid_ref_normalized 'heads\foo'
+-static int is_pack_valid(struct packed_git *p)
++int is_pack_valid(struct packed_git *p)
+ {
+ 	/* An already open pack is known to be valid. */
+ 	if (p->pack_fd != -1)
 -- 
-1.7.7.289.gd0d4bb
+1.7.6.4.37.g43b58b
