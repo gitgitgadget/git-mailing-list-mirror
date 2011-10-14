@@ -1,79 +1,102 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [BUG] send-email: alias expansion broken
-Date: Fri, 14 Oct 2011 14:29:27 +0200
-Message-ID: <4E982B27.8050807@drmicha.warpmail.net>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [RFC/PATCH 1/2] bundle: allowing to read from an unseekable fd
+Date: Fri, 14 Oct 2011 08:31:25 -0400
+Message-ID: <CABURp0qnhNQ06pNHw_6_PkT2+WNPdQ1WzUHF8p6q3Hx3JkoC8A@mail.gmail.com>
+References: <7vpqi034l0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>,
-	Cord Seele <cowose@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 14 14:30:05 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 14 14:31:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REgtp-0003ba-0r
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 14:30:05 +0200
+	id 1REgva-0004ds-5k
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 14:31:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932772Ab1JNM3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Oct 2011 08:29:31 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:33004 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932180Ab1JNM33 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Oct 2011 08:29:29 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 9812420A9A;
-	Fri, 14 Oct 2011 08:29:29 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 14 Oct 2011 08:29:29 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to
-	:subject:content-type:content-transfer-encoding; s=smtpout; bh=x
-	BZRzyW/HaKuTlz+INvbOCblocE=; b=eh6qY8jY2iGwcNocfmSM795csS92ZAlMp
-	9OTQ7JafN9hk+HF/sAIguV/Obi+OXzzis0bkl9iJu/ker4uOgbdIHHZOSdTdgCEc
-	8S9dZ9WlQwKf33lledlqP2GyRQabjaAHiI1k+inC2jNaVz9IzQMbdDOZ06dQhcjV
-	fg46oaINCs=
-X-Sasl-enc: Q4vPd5n0aVCxpXdgZcEH5k70CufnKRIJzWa3EdJojEai 1318595369
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 1BBFF404A7E;
-	Fri, 14 Oct 2011 08:29:28 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0) Gecko/20110927 Thunderbird/7.0
+	id S932741Ab1JNMbt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Oct 2011 08:31:49 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:33775 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932203Ab1JNMbq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Oct 2011 08:31:46 -0400
+Received: by wyg36 with SMTP id 36so14735wyg.19
+        for <git@vger.kernel.org>; Fri, 14 Oct 2011 05:31:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=6jrCt0XlW0588WTykU1dJ25c4C+2P5SIYLjBAHhfRa0=;
+        b=gBJvA1oVMQ4sonpzygqZa3J7QbWhpvyATmHx5ar66PxUqfL/Tjt8zpbWtb7n3AWoaz
+         BGZiCtIMgJicj/BUxpp8wfvS1l6UdRHHO7aA87jX++lKbXwVNSxJ3gz27mnOcY4QzJas
+         oDIUYgr3VGUlwG4+R5iuXdqrW+jxLDeq+OLZE=
+Received: by 10.216.159.12 with SMTP id r12mr1648003wek.87.1318595505333; Fri,
+ 14 Oct 2011 05:31:45 -0700 (PDT)
+Received: by 10.216.88.72 with HTTP; Fri, 14 Oct 2011 05:31:25 -0700 (PDT)
+In-Reply-To: <7vpqi034l0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183568>
 
-cec5dae (use new Git::config_path() for aliasesfile, 2011-09-30)
+On Thu, Oct 13, 2011 at 6:32 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> The current code opens a given file with fopen(), reads it until the =
+end
+> of the header and runs ftell(), and reopens the same file with open()=
+ and
+> seeks to skip the header. This structure makes it hard to retarget th=
+e
+> code to read from input that is not seekable, such as a network socke=
+t.
+>
+> This patch by itself does not reach that goal yet, but I think it is =
+a
+> right step in that direction.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+> =A0* It would be nice if we can avoid byte-by-byte reading from the f=
+ile
+> =A0 descriptor by over-reading into the strbuf and pass the remainder=
+ to
+> =A0 the caller of read_bundle_header(), but I suspect that it would r=
+equire
+> =A0 us to carry the "here is the remainder from the previous read" bu=
+ffer
+> =A0 around throughout the transport layer. Parsing of the header woul=
+dn't
+> =A0 be performance critical compared to the computation cost of actua=
+lly
+> =A0 reading the rest of the bundle, hopefully, so...
+>
+> =A0bundle.c | =A0 99 ++++++++++++++++++++++++++++++++++++++++--------=
+--------------
+> =A01 files changed, 64 insertions(+), 35 deletions(-)
+>
+> diff --git a/bundle.c b/bundle.c
+> index f48fd7d..3aa715c 100644
+> --- a/bundle.c
+> +++ b/bundle.c
+> @@ -23,49 +23,78 @@ static void add_to_ref_list(const unsigned char *=
+sha1, const char *name,
+> =A0 =A0 =A0 =A0list->nr++;
+> =A0}
+>
+> -/* returns an fd */
+> +/* Eventually this should go to strbuf.[ch] */
+> +static int strbuf_readline_fd(struct strbuf *sb, int fd)
 
-broke the expansion of aliases for me:
+A size limiter would be useful here.  Since it's readline, maybe the
+limit can even be hardcoded.
 
-./git-send-email --cc=junio  --dry-run
-0001-t7800-avoid-arithmetic-expansion-notation.patch
-0001-t7800-avoid-arithmetic-expansion-notation.patch
-Who should the emails appear to be from? [Michael J Gruber
-<git@drmicha.warpmail.net>]
-Emails will be sent from: Michael J Gruber <git@drmicha.warpmail.net>
-Dry-OK. Log says:
-Sendmail: /home/mjg/bin/msmtp-fastmail-git -i git@vger.kernel.org junio
-git@drmicha.warpmail.net
-From: Michael J Gruber <git@drmicha.warpmail.net>
-To: git@vger.kernel.org
-Cc: junio
-...
+Without a limit, calling this with something stupid like "/dev/zero"
+will consume all memory and never return.
 
-Happens with both "--cc junio" and "--cc=junio".
 
-Reverting cec5dae brings my aliases back. Relevant config:
-
-git config --get-regexp sendemail.alias\*
-sendemail.aliasesfile /home/mjg/git/gitauthors
-sendemail.aliasfiletype mutt
-
-Can I please have alias expansion back?
-
-No, I don't know what cec5dae tries to achieve, and I lack the perl fu
-to fix it.
-
-Michael
+Phil
