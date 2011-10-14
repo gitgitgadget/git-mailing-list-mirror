@@ -1,67 +1,156 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t7800: avoid arithmetic expansion notation
-Date: Fri, 14 Oct 2011 11:00:06 -0700
-Message-ID: <7v4nzb1mjd.fsf@alter.siamese.dyndns.org>
-References: <837ad77348b459aa5f5f79e556dbeeeba41027e7.1318594392.git.git@drmicha.warpmail.net>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 1/2] pack-objects: protect against disappearing packs
+Date: Fri, 14 Oct 2011 14:03:48 -0400
+Message-ID: <20111014180348.GA17412@sigill.intra.peff.net>
+References: <20111014012320.GA4395@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sitaram Chamarty <sitaramc@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Oct 14 20:00:22 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 14 20:03:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REm3O-00038T-OR
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 20:00:19 +0200
+	id 1REm6v-00056O-9T
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 20:03:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755841Ab1JNSAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Oct 2011 14:00:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56995 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751558Ab1JNSAM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Oct 2011 14:00:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9834A6471;
-	Fri, 14 Oct 2011 14:00:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4d5fVJl1EYMzC1K5tG0YVl9BkzU=; b=K8YJgV
-	64Q2VilClp8N2/Nuv/ly4WDLWqeYJVXvj5pHTFmoRFjMHVHAWnC2kxJu8/pXtM/6
-	xjPa07kU4YXJQ7KUnYddIdlKK9sdnJN3Dis/g0fe17eQ98PTwwexQTPXcAP0ouQ+
-	BHYiiM3/B+VhcU/69tHdywigrSGRovJ0FimqI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=isnFOY57fsHwUgnVVB8mnQKXEWNw1x6p
-	quCIqt3fd2d1ZXS+bzmCMTUClvdHGZOTbPjyUHdleTsnXaf1yCQeirpyP+zyv5b1
-	xeventNvpNItEr2sTOreI7O+2zka8hbuVXEzf+XCMaEtiX1EmQSIdZinmY1KFw66
-	9D0hdg0L9CE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8EC016470;
-	Fri, 14 Oct 2011 14:00:11 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 13C756457; Fri, 14 Oct 2011
- 14:00:07 -0400 (EDT)
-In-Reply-To: <837ad77348b459aa5f5f79e556dbeeeba41027e7.1318594392.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Fri, 14 Oct 2011 14:15:31 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5A415F5C-F68E-11E0-8E0D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756267Ab1JNSDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Oct 2011 14:03:53 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60706
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751945Ab1JNSDw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Oct 2011 14:03:52 -0400
+Received: (qmail 12713 invoked by uid 107); 14 Oct 2011 18:03:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 14 Oct 2011 14:03:56 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Oct 2011 14:03:48 -0400
+Content-Disposition: inline
+In-Reply-To: <20111014012320.GA4395@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183589>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+It's possible that while pack-objects is running, a
+simultaneously running prune process might delete a pack
+that we are interested in. Because we load the pack indices
+early on, we know that the pack contains our item, but by
+the time we try to open and map it, it is gone.
 
-> ba959de (git-difftool: allow skipping file by typing 'n' at prompt, 2011-10-08)
-> introduced shell code like
->
-> $((foo; bar) | baz)
->
-> which some shells (e.g. bash, dash) interpret as an unfinished arithmetic
-> evaluation $(( expr )).
+Since c715f78, we already protect against this in the normal
+object access code path, but pack-objects accesses the packs
+at a lower level.  In the normal access path, we call
+find_pack_entry, which will call find_pack_entry_one on each
+pack index, which does the actual lookup. If it gets a hit,
+we will actually open and verify the validity of the
+matching packfile (using c715f78's is_pack_valid). If we
+can't open it, we'll issue a warning and pretend that we
+didn't find it, causing us to go on to the next pack (or on
+to loose objects).
 
-Ahh, thanks, I should have caught this. I recall I rewrote a similar one
-to $( (command; command) | command ) more than once before.
+Furthermore, we will cache the descriptor to the opened
+packfile. Which means that later, when we actually try to
+access the object, we are likely to still have that packfile
+opened, and won't care if it has been unlinked from the
+filesystem.
+
+Notice the "likely" above. If there is another pack access
+in the interim, and we run out of descriptors, we could
+close the pack. And then a later attempt to access the
+closed pack could fail (we'll try to re-open it, of course,
+but it may have been deleted). In practice, this doesn't
+happen because we tend to look up items and then access them
+immediately.
+
+Pack-objects does not follow this code path. Instead, it
+accesses the packs at a much lower level, using
+find_pack_entry_one directly. This means we skip the
+is_pack_valid check, and may end up with the name of a
+packfile, but no open descriptor.
+
+We can add the same is_pack_valid check here. Unfortunately,
+the access patterns of pack-objects are not quite as nice
+for keeping lookup and object access together. We look up
+each object as we find out about it, and the only later when
+writing the packfile do we necessarily access it. Which
+means that the opened packfile may be closed in the interim.
+
+In practice, however, adding this check still has value, for
+three reasons.
+
+  1. If you have a reasonable number of packs and/or a
+     reasonable file descriptor limit, you can keep all of
+     your packs open simultaneously. If this is the case,
+     then the race is impossible to trigger.
+
+  2. Even if you can't keep all packs open at once, you
+     may end up keeping the deleted one open (i.e., you may
+     get lucky).
+
+  3. The race window is shortened. You may notice early that
+     the pack is gone, and not try to access it. Triggering
+     the problem without this check means deleting the pack
+     any time after we read the list of index files, but
+     before we access the looked-up objects.  Triggering it
+     with this check means deleting the pack means deleting
+     the pack after we do a lookup (and successfully access
+     the packfile), but before we access the object. Which
+     is a smaller window.
+
+Acked-by: Nicolas Pitre <nico@fluxnic.net>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Re-post with ack from Nicolas and my SOB fixed. No changes from earlier
+version in this thread.
+
+ builtin/pack-objects.c |    4 ++++
+ cache.h                |    1 +
+ sha1_file.c            |    2 +-
+ 3 files changed, 6 insertions(+), 1 deletions(-)
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 2b18de5..8681ccd 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -804,6 +804,10 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
+ 		off_t offset = find_pack_entry_one(sha1, p);
+ 		if (offset) {
+ 			if (!found_pack) {
++				if (!is_pack_valid(p)) {
++					error("packfile %s cannot be accessed", p->pack_name);
++					continue;
++				}
+ 				found_offset = offset;
+ 				found_pack = p;
+ 			}
+diff --git a/cache.h b/cache.h
+index e39e160..495b468 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1055,6 +1055,7 @@ struct extra_have_objects {
+ extern const unsigned char *nth_packed_object_sha1(struct packed_git *, uint32_t);
+ extern off_t nth_packed_object_offset(const struct packed_git *, uint32_t);
+ extern off_t find_pack_entry_one(const unsigned char *, struct packed_git *);
++extern int is_pack_valid(struct packed_git *);
+ extern void *unpack_entry(struct packed_git *, off_t, enum object_type *, unsigned long *);
+ extern unsigned long unpack_object_header_buffer(const unsigned char *buf, unsigned long len, enum object_type *type, unsigned long *sizep);
+ extern unsigned long get_size_from_delta(struct packed_git *, struct pack_window **, off_t);
+diff --git a/sha1_file.c b/sha1_file.c
+index 3401301..a22c5b4 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1987,7 +1987,7 @@ off_t find_pack_entry_one(const unsigned char *sha1,
+ 	return 0;
+ }
+ 
+-static int is_pack_valid(struct packed_git *p)
++int is_pack_valid(struct packed_git *p)
+ {
+ 	/* An already open pack is known to be valid. */
+ 	if (p->pack_fd != -1)
+-- 
+1.7.6.4.37.g43b58b
