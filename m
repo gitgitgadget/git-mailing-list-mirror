@@ -1,91 +1,203 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] daemon: return "access denied" if a service is not
- allowed
-Date: Fri, 14 Oct 2011 13:48:51 -0700
-Message-ID: <7vpqhzxpsc.fsf@alter.siamese.dyndns.org>
-References: <7vsjn9etm3.fsf@alter.siamese.dyndns.org>
- <1317678909-19383-1-git-send-email-pclouds@gmail.com>
- <20111012200916.GA1502@sigill.intra.peff.net>
- <20111013044544.GA27890@duynguyen-vnpc.dek-tpc.internal>
- <20111013182816.GA17573@sigill.intra.peff.net>
- <7vvcrs181e.fsf@alter.siamese.dyndns.org>
- <20111014131041.GC7808@sigill.intra.peff.net>
- <20111014192326.GA7713@sigill.intra.peff.net>
- <20111014192741.GA13029@sigill.intra.peff.net>
- <7v7h47z5i0.fsf@alter.siamese.dyndns.org>
- <20111014203438.GA15643@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] send-email: Fix %config_path_settings handling
+Date: Fri, 14 Oct 2011 22:53:31 +0200
+Message-ID: <201110142253.32695.jnareb@gmail.com>
+References: <4E982B27.8050807@drmicha.warpmail.net> <201110142049.32734.jnareb@gmail.com> <7vbotjz85o.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 14 22:48:59 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Cord Seele <cowose@gmail.com>,
+	Cord Seele <cowose@googlemail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 14 22:53:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REogc-0003qk-8a
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 22:48:58 +0200
+	id 1REoky-0006BV-CA
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 22:53:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755644Ab1JNUsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Oct 2011 16:48:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34199 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754258Ab1JNUsx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Oct 2011 16:48:53 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 14E874A75;
-	Fri, 14 Oct 2011 16:48:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0Esu2Q0wJD5FoWdFHR81M5EtGWY=; b=CSTMkZ
-	JObWl66JbW95GkZ7tQblDhaE5mvoX5yVdqFACKEo8eBZjb2BuOJrC5x9Z7/Bhr+w
-	7YHlLoVgbX+jKrzxSr2yKIHrJNBejeTFLJ1wlSHfao1VfsDFS1XRWpm3sEXUQue0
-	hU+W6gq/Ojep84wEqVIxjLApLhMHZgNSLbHYU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JcSQB3nzMAv6IdIXRUxmRQzzqTJSbBpt
-	0CQM1oCzPmnaeViYjQ48Gbr8fOuNIvOK/p8kQYkXCUFVuWO1Qedm+NdiP2BvRCUc
-	qmodcr9kH/1wTwSHuqt8v+4YPYk+qPbFsM/NwbJXYsyt3a9fo0OhCVIx4ADYL9f9
-	uQHWWCT4rSQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C4714A74;
-	Fri, 14 Oct 2011 16:48:53 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6CC424A73; Fri, 14 Oct 2011
- 16:48:52 -0400 (EDT)
-In-Reply-To: <20111014203438.GA15643@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 14 Oct 2011 16:34:38 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: ECDC41DA-F6A5-11E0-A56E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754638Ab1JNUxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Oct 2011 16:53:23 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:59731 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752157Ab1JNUxX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Oct 2011 16:53:23 -0400
+Received: by bkbzt19 with SMTP id zt19so423640bkb.19
+        for <git@vger.kernel.org>; Fri, 14 Oct 2011 13:53:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=gpoINo7JjUAokUihn5mY6BpZz2NdBgrFZKvL4pKZv2E=;
+        b=qTr6eab5ak/Av2yE/3HmfIZXEaDW7mjjVNkBPdWjkMyM+U9BB8uZAztLDA54TqZqMb
+         izhWDbahXJk2lDONiXeEuODbjzY1tHWNS3rNAWF7n/QKwWeKDxeDugqJEnn1jujXtYGG
+         8jU7Ae8EJra9gPtD0M5yVypSmT9il7soGzJ34=
+Received: by 10.223.17.91 with SMTP id r27mr6108604faa.20.1318625601458;
+        Fri, 14 Oct 2011 13:53:21 -0700 (PDT)
+Received: from [192.168.1.13] (abvw122.neoplus.adsl.tpnet.pl. [83.8.220.122])
+        by mx.google.com with ESMTPS id m26sm5830526fac.6.2011.10.14.13.53.19
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 14 Oct 2011 13:53:20 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vbotjz85o.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183608>
 
-Jeff King <peff@peff.net> writes:
+From: Cord Seele <cowose@gmail.com>
 
->> It would have been a better split to have the 1/2 patch to support both
->> informative and uninformative errors, with the default to say "access
->> denied", and 2/2 to flip the default to be more open.
->
-> Isn't that what I did? It was what I meant to do, anyway...
->
-> Or did you mean the options would have been better worded as:
->
->   --errors={terse,informative}
->
-> or something similar?
+cec5dae (use new Git::config_path() for aliasesfile, 2011-09-30) broke
+the expansion of aliases.
 
-Nothing that elaborate.
+This was caused by treating %config_path_settings, newly introduced in
+said patch, like %config_bool_settings instead of like %config_settings.
+Copy from %config_settings, making it more readable.
 
-Supporting --no-* variant even when the default is already no will allow
-people to prepare their daemon invocation command line beforehand to ensure
-that they won't be affected to a more lenient default that may or may not
-come in the future.  That's all.
+While at it add basic test for expansion of aliases, and for path
+expansion, which would catch this error.
+
+
+Nb. there were a few issues that were responsible for this error:
+
+1. %config_bool_settings and %config_settings despite similar name have
+   different semantic.
+
+   %config_bool_settings values are arrays where the first element is
+   (reference to) the variable to set, and second element is default
+   value... which admittedly is a bit cryptic.  More readable if more
+   verbose option would be to use hash reference, e.g.:
+
+        my %config_bool_settings = (
+            "thread" => { variable => \$thread, default => 1},
+            [...]
+
+   %config_settings values are either either reference to scalar variable
+   or reference to array.  In second case it means that option (or config
+   option) is multi-valued.  BTW. this is similar to what Getopt::Long does.
+
+2. In cec5dae (use new Git::config_path() for aliasesfile, 2011-09-30)
+   the setting "aliasesfile" was moved from %config_settings to newly
+   introduced %config_path_settings.  But the loop that parses settings
+   from %config_path_settings was copy'n'pasted *wrongly* from
+   %config_bool_settings instead of from %config_settings.
+
+   It looks like cec5dae author cargo-culted this change...
+
+3. 994d6c6 (send-email: address expansion for common mailers, 2006-05-14)
+   didn't add test for alias expansion to t9001-send-email.sh
+
+Signed-off-by: Cord Seele <cowose@gmail.com>
+Tested-by: Michael J Gruber <git@drmicha.warpmail.net>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > From: Cord Seele <cowose@gmail.com>
+> >    value... which admittedly is a bit cryptic.  More readable if more
+> >    verbose option would be to use hash reference, e.g.:
+> >
+> >         my %config_bool_settings = (
+> >             "thread" => { variable => \$thread, default => 1},
+> >             [...]
+> >
+> >    Or something like that.
+> 
+> Do you really want to leave this "Or something like that" here?
+
+Removed.  
+
+"e.g." should be enough.
+
+> > 3. 994d6c6 (send-email: address expansion for common mailers, 2006-05-14)
+> >    didn't add test for alias expansion to t9001-send-email.sh
+> 
+> I was hoping that an updated patch to have a new test or two here...
+
+Done.  I thought to add it in separate patch...
+ 
+> > Signed-off-by: Cord Seele <cowose@gmail.com>
+> > Tested-by: Michael J Gruber <git@drmicha.warpmail.net>
+> > Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> 
+> Is this the version tested by Michael?
+
+This one is.
+
+[cut previous version]
+
+ git-send-email.perl   |   12 ++++++++++--
+ t/t9001-send-email.sh |   28 ++++++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+), 2 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 91607c5..6885dfa 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -337,8 +337,16 @@ sub read_config {
+ 	}
+ 
+ 	foreach my $setting (keys %config_path_settings) {
+-		my $target = $config_path_settings{$setting}->[0];
+-		$$target = Git::config_path(@repo, "$prefix.$setting") unless (defined $$target);
++		my $target = $config_path_settings{$setting};
++		if (ref($target) eq "ARRAY") {
++			unless (@$target) {
++				my @values = Git::config_path(@repo, "$prefix.$setting");
++				@$target = @values if (@values && defined $values[0]);
++			}
++		}
++		else {
++			$$target = Git::config_path(@repo, "$prefix.$setting") unless (defined $$target);
++		}
+ 	}
+ 
+ 	foreach my $setting (keys %config_settings) {
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 579ddb7..87b4acc 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -1168,4 +1168,32 @@ test_expect_success $PREREQ '--force sends cover letter template anyway' '
+ 	test -n "$(ls msgtxt*)"
+ '
+ 
++test_expect_success $PREREQ 'sendemail.aliasfiletype=mailrc' '
++	clean_fake_sendmail &&
++	echo "alias sbd  somebody@example.org" >.mailrc &&
++	git config --replace-all sendemail.aliasesfile "$(pwd)/.mailrc" &&
++	git config sendemail.aliasfiletype mailrc &&
++	git send-email \
++	  --from="Example <nobody@example.com>" \
++	  --to=sbd \
++	  --smtp-server="$(pwd)/fake.sendmail" \
++	  outdir/0001-*.patch \
++	  2>errors >out &&
++	grep "^!somebody@example\.org!$" commandline1
++'
++
++test_expect_success $PREREQ 'sendemail.aliasfile=~/.mailrc' '
++	clean_fake_sendmail &&
++	echo "alias sbd  someone@example.org" >~/.mailrc &&
++	git config --replace-all sendemail.aliasesfile "~/.mailrc" &&
++	git config sendemail.aliasfiletype mailrc &&
++	git send-email \
++	  --from="Example <nobody@example.com>" \
++	  --to=sbd \
++	  --smtp-server="$(pwd)/fake.sendmail" \
++	  outdir/0001-*.patch \
++	  2>errors >out &&
++	grep "^!someone@example\.org!$" commandline1
++'
++
+ test_done
+-- 
+1.7.6
