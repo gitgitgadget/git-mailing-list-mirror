@@ -1,93 +1,72 @@
-From: Andrei Warkentin <awarkentin@vmware.com>
-Subject: Re: [PATCH] Git-p4: git-p4.changeOnSubmit to do 'change' instead of
- 'submit'.
-Date: Fri, 14 Oct 2011 15:55:57 -0700 (PDT)
-Message-ID: <811639890.180572.1318632957147.JavaMail.root@zimbra-prod-mbox-2.vmware.com>
-References: <CA+DMoH-HqA0DCyUSttO-iYO0rUHq1nLqM9W0imAOjHC5H1r_9w@mail.gmail.com>
+From: P Rouleau <prouleau72@gmail.com>
+Subject: Re: Git shouldn't allow to push a new branch called HEAD
+Date: Fri, 14 Oct 2011 23:00:04 +0000 (UTC)
+Message-ID: <loom.20111015T004856-72@post.gmane.org>
+References: <1318591877.2938.20.camel@mastroc3.mobc3.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Andrei Warkentin <andreiw@vmware.com>
-To: Tor Arvid Lund <torarvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 15 00:56:02 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 15 01:00:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REqfa-0001NK-4j
-	for gcvg-git-2@lo.gmane.org; Sat, 15 Oct 2011 00:56:02 +0200
+	id 1REqk0-00034Y-Sy
+	for gcvg-git-2@lo.gmane.org; Sat, 15 Oct 2011 01:00:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753202Ab1JNWz6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Oct 2011 18:55:58 -0400
-Received: from smtp-outbound-2.vmware.com ([65.115.85.73]:53355 "EHLO
-	smtp-outbound-2.vmware.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752572Ab1JNWz5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Oct 2011 18:55:57 -0400
-Received: from mailhost3.vmware.com (mailhost3.vmware.com [10.16.27.45])
-	by smtp-outbound-2.vmware.com (Postfix) with ESMTP id 6F67D1F00B;
-	Fri, 14 Oct 2011 15:55:57 -0700 (PDT)
-Received: from zimbra-prod-mta-3.vmware.com (zimbra-prod-mta-3.vmware.com [10.113.160.227])
-	by mailhost3.vmware.com (Postfix) with ESMTP id 67D14CD9B3;
-	Fri, 14 Oct 2011 15:55:57 -0700 (PDT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by zimbra-prod-mta-3.vmware.com (Postfix) with ESMTP id 5B9FBF3409;
-	Fri, 14 Oct 2011 15:55:57 -0700 (PDT)
-X-Virus-Scanned: amavisd-new at 
-Received: from zimbra-prod-mta-3.vmware.com ([127.0.0.1])
-	by localhost (zimbra-prod-mta-3.vmware.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hwKvAoUMI47G; Fri, 14 Oct 2011 15:55:57 -0700 (PDT)
-Received: from zimbra-prod-mbox-2.vmware.com (zimbra-prod-mbox-2.vmware.com [10.113.160.202])
-	by zimbra-prod-mta-3.vmware.com (Postfix) with ESMTP id 400BEF3408;
-	Fri, 14 Oct 2011 15:55:57 -0700 (PDT)
-In-Reply-To: <CA+DMoH-HqA0DCyUSttO-iYO0rUHq1nLqM9W0imAOjHC5H1r_9w@mail.gmail.com>
-X-Originating-IP: [10.113.61.163]
-X-Mailer: Zimbra 7.1.1_GA_3225 (ZimbraWebClient - FF3.0 (Linux)/7.1.1_GA_3225)
+	id S932430Ab1JNXAW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Oct 2011 19:00:22 -0400
+Received: from lo.gmane.org ([80.91.229.12]:39864 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757081Ab1JNXAV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Oct 2011 19:00:21 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1REqjh-0002w5-G9
+	for git@vger.kernel.org; Sat, 15 Oct 2011 01:00:17 +0200
+Received: from modemcable176.18-203-24.mc.videotron.ca ([24.203.18.176])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 15 Oct 2011 01:00:17 +0200
+Received: from prouleau72 by modemcable176.18-203-24.mc.videotron.ca with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 15 Oct 2011 01:00:17 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 24.203.18.176 (Opera/9.80 (Windows NT 6.0; U; en) Presto/2.9.168 Version/11.51)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183629>
 
-Hi Tor,
+Daniele Segato <daniele.segato <at> gmail.com> writes:
 
-Thanks for the review!
-
------ Original Message -----
-> Just out of curiosity... what is 'sd'?
 > 
-
-SourceDepot, a p4 fork that is used elsewhere, not by me though ;).
-
-> > This new config option lets a 'p4 change -i' run instead of
-> > the 'p4 submit -i'.
+> Hi all,
 > 
-> Well... I have to say that I'm not crazy about this patch... I don't
-> think it is very elegant to have a config flag that says that "when
-> the user says 'git p4 submit', then don't submit, but do something
-> else instead".
+> following from a discussion in IRC freenode #git between me, sitaram an
+> shruggar
 > 
-> I would much rather have made a patch to introduce some new command
-> like 'git p4 change'.
+> step to reproduce:
 > 
+> $ # time to create the remote HEAD branch
+> $ cd buggenerator/
+> $ git push origin HEAD:HEAD
+> 
+> But I think that git shouldn't allow the remote HEAD reference to be
+> created in the first place
 
-Agreed, how about something like this?
+Maybe git should also refuse to create a local branch named HEAD. I made a
+mistake recently where I used something likes this:
 
-The commands dict maps command name to class and optional dict passed to cmd.run(). That way 'change'
-can really mean P4Submit with an extra parameter not to submit but to do a changelist instead. The
-reason why I initially made the config flag was because I didn't want to copy-paste P4Submit into P4Change.
+for B in $(git branch -a|grep "remotes/origin/"); do git co -t $B ; done
 
-commands = {
-    "debug" : [ P4Debug, {} ]
-    "submit" : [ P4Submit, { "doChange" : 0 } ]
-    "commit" : [ P4Submit, { "doChange" : 0 } ]
-    "change" : [ P4Submit, { "doChange" : 1 } ]
-    "sync" : [ P4Sync, {} ],
-    "rebase" : [ P4Rebase, {} ],
-    "clone" : [ P4Clone, {} ],
-    "rollback" : [ P4RollBack, {} ],
-    "branches" : [ P4Branches, {} ]
-}
+After that, git st was giving a warning about an ambiguous HEAD ref. Hopefully,
+a simple "git branch -d HEAD" fixed it once I found the problem.
 
-A
+P.Rouleau
