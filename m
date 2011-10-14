@@ -1,113 +1,76 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH] pack-objects: protect against disappearing packs
-Date: Thu, 13 Oct 2011 22:43:54 -0400 (EDT)
-Message-ID: <alpine.LFD.2.02.1110132242540.17040@xanadu.home>
-References: <20111014012320.GA4395@sigill.intra.peff.net>
- <20111014013130.GA7163@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] daemon: return "access denied" if a service is not
+ allowed
+Date: Thu, 13 Oct 2011 22:01:01 -0700
+Message-ID: <7vvcrs181e.fsf@alter.siamese.dyndns.org>
+References: <7vsjn9etm3.fsf@alter.siamese.dyndns.org>
+ <1317678909-19383-1-git-send-email-pclouds@gmail.com>
+ <20111012200916.GA1502@sigill.intra.peff.net>
+ <20111013044544.GA27890@duynguyen-vnpc.dek-tpc.internal>
+ <20111013182816.GA17573@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, git-dev@github.com,
-	"Shawn O. Pearce" <spearce@spearce.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 14 04:44:04 2011
+X-From: git-owner@vger.kernel.org Fri Oct 14 07:02:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REXkg-0008GK-Ol
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 04:44:03 +0200
+	id 1REZuz-0007bQ-Tt
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 07:02:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755329Ab1JNCnz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Oct 2011 22:43:55 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:9838 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751614Ab1JNCny (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Oct 2011 22:43:54 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-VM-MR002.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0LT100GYKBBA47B0@VL-VM-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 13 Oct 2011 22:37:59 -0400 (EDT)
-In-reply-to: <20111014013130.GA7163@sigill.intra.peff.net>
-User-Agent: Alpine 2.02 (LFD 1266 2009-07-14)
+	id S932247Ab1JNFBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Oct 2011 01:01:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63899 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751385Ab1JNFBE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Oct 2011 01:01:04 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21AA52791;
+	Fri, 14 Oct 2011 01:01:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dRZWQTJmfw5BaezYqi0nniW4lng=; b=SmlPDQ
+	Eq7UBV+hQ//ehMrlLbYC673BwKoSaohgf/dwyXNQ7t9W0Kxf4LHbp3o58HRgLNSN
+	7sJdRAoWSK6z4WezqxGQPNyRKQeKvItFlEViXZz85XHQRmcUHprjm9czF6ctQZX/
+	ug88pE7uZPgUokql9pj5IJm/uy0y+/Z0Q3hIQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NG3LTQwKa1oEta3znJavYa9gQp3yy/mf
+	UZbZwJJWrSuBf/UJn7YdCuKR1Th55dcX07oylhHQqEyp26Kpt6eFUl7Dr0xm+pfV
+	In4lUg81DvrRU+GJxjoQapu2dIBxM6SCtiiFySzptqVdn6+IzWTV7ryBYDCpWkGI
+	+tjIDhlFsLA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 183042790;
+	Fri, 14 Oct 2011 01:01:03 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 99861278D; Fri, 14 Oct 2011
+ 01:01:02 -0400 (EDT)
+In-Reply-To: <20111013182816.GA17573@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 13 Oct 2011 14:28:16 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 83CD3F0C-F621-11E0-87C4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183537>
 
-On Thu, 13 Oct 2011, Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
-> On Thu, Oct 13, 2011 at 09:23:20PM -0400, Jeff King wrote:
-> 
-> > diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> > index 2b18de5..8681ccd 100644
-> > --- a/builtin/pack-objects.c
-> > +++ b/builtin/pack-objects.c
-> > @@ -804,6 +804,10 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
-> >  		off_t offset = find_pack_entry_one(sha1, p);
-> >  		if (offset) {
-> >  			if (!found_pack) {
-> > +				if (!is_pack_valid(p)) {
-> > +					error("packfile %s cannot be accessed", p->pack_name);
-> > +					continue;
-> > +				}
-> 
-> This message is modeled after the one in find_pack_entry. However,
-> they're not really errors, since we will try to find the object
-> elsewhere (and generally succeed). So the messages could just go away.
-> Though they can also alert you to something fishy going on (like a
-> packfile with bad permissions). But perhaps we should downgrade them
-> like this:
-> 
-> -- >8 --
-> Subject: [PATCH] downgrade "packfile cannot be accessed" errors to warnings
-> 
-> These can happen if another process simultaneously prunes a
-> pack. But that is not usually an error condition, because a
-> properly-running prune should have repacked the object into
-> a new pack. So we will notice that the pack has disappeared
-> unexpectedly, print a message, try other packs (possibly
-> after re-scanning the list of packs), and find it in the new
-> pack.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
+> So if we want to do anything, I would think it would be a hook. Except
+> that we may or may not have a repo, so it would not be a hook in
+> $GIT_DIR/hooks, but rather some script to be run passed on the command
+> line, like:
+>
+>   git daemon --informative-errors=/path/to/hook
 
-Acked-by: Nicolas Pitre <nico@fluxnic.net>
-
-
-> ---
->  builtin/pack-objects.c |    2 +-
->  sha1_file.c            |    2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index 8681ccd..ba3705d 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -805,7 +805,7 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
->  		if (offset) {
->  			if (!found_pack) {
->  				if (!is_pack_valid(p)) {
-> -					error("packfile %s cannot be accessed", p->pack_name);
-> +					warning("packfile %s cannot be accessed", p->pack_name);
->  					continue;
->  				}
->  				found_offset = offset;
-> diff --git a/sha1_file.c b/sha1_file.c
-> index a22c5b4..27f3b9b 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -2038,7 +2038,7 @@ static int find_pack_entry(const unsigned char *sha1, struct pack_entry *e)
->  			 * was loaded!
->  			 */
->  			if (!is_pack_valid(p)) {
-> -				error("packfile %s cannot be accessed", p->pack_name);
-> +				warning("packfile %s cannot be accessed", p->pack_name);
->  				goto next;
->  			}
->  			e->offset = offset;
-> -- 
-> 1.7.6.4.37.g43b58b
-> 
+I don't think it is necessarily good to have such a variation across
+hosting sites. Your "something like this" patch looked like it was giving
+a reasonable level of detail, IMO.
