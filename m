@@ -1,66 +1,74 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH 2/2] bundle: add parse_bundle_header() helper function
-Date: Fri, 14 Oct 2011 08:59:20 -0400
-Message-ID: <CABURp0otqxeKjLe-Rk3htZRa0M7+rerfrbVrXx-7Dr1tK3tTTg@mail.gmail.com>
-References: <7vpqi034l0.fsf@alter.siamese.dyndns.org> <7vliso34gc.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] pack-objects: protect against disappearing packs
+Date: Fri, 14 Oct 2011 09:02:48 -0400
+Message-ID: <20111014130247.GA7808@sigill.intra.peff.net>
+References: <20111014012320.GA4395@sigill.intra.peff.net>
+ <alpine.LFD.2.02.1110132234210.17040@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Phil Hord <hordp@cisco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 14 14:59:50 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, git-dev@github.com,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Fri Oct 14 15:02:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REhMZ-0003T4-IX
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 14:59:47 +0200
+	id 1REhPd-0005GH-5f
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 15:02:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756507Ab1JNM7n convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Oct 2011 08:59:43 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:54371 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752316Ab1JNM7m convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Oct 2011 08:59:42 -0400
-Received: by eye27 with SMTP id 27so1108724eye.19
-        for <git@vger.kernel.org>; Fri, 14 Oct 2011 05:59:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ePCU0dIzGITol+RU7Df9rXVTlXc2kXWpgKI42dcAtIQ=;
-        b=f5pA94XiFuV6gOB1hpgYVul9l+g9fEOHAfKbRcymxFDfvrK33NALuqfuAr7YsrGoKA
-         rPBVA2hWNYT48sgrTc62qJZ7aaDPH2NkdeZrFdiDq3LxzXNO6BhG4fvRNZP3Jj69uISC
-         U3TD68QtkFaF2LDfK8r+5046Br8ARpuCaIAZM=
-Received: by 10.216.138.221 with SMTP id a71mr3010371wej.102.1318597181134;
- Fri, 14 Oct 2011 05:59:41 -0700 (PDT)
-Received: by 10.216.88.72 with HTTP; Fri, 14 Oct 2011 05:59:20 -0700 (PDT)
-In-Reply-To: <7vliso34gc.fsf@alter.siamese.dyndns.org>
+	id S1756553Ab1JNNCw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Oct 2011 09:02:52 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60512
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756515Ab1JNNCw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Oct 2011 09:02:52 -0400
+Received: (qmail 8708 invoked by uid 107); 14 Oct 2011 13:02:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 14 Oct 2011 09:02:55 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Oct 2011 09:02:48 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.02.1110132234210.17040@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183570>
 
-On Thu, Oct 13, 2011 at 6:35 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Move most of the code from read_bundle_header() to parse_bundle_heade=
-r()
-> that takes a file descriptor that is already opened for reading, and =
-make
-> the former responsible only for opening the file and noticing errors.
-=2E..
+On Thu, Oct 13, 2011 at 10:42:28PM -0400, Nicolas Pitre wrote:
 
-> =A0* It generally is a bad practice to base a non-RFC patch on an RFC=
- one,
-> =A0 but in any case here is how I would do the is_bundle() helper.
+> > ---
+> 
+> you should put your SOB above that line I would think.
 
-I didn't label it RFC, but I did pose a question in the message
-section.  Is there a rule for what marks something as RFC (if not the
-RFC label in the subject line)?
+Thanks. I cheated and wrote my "---" cover letter in the commit message
+locally, knowing that it would get included by format-patch but stripped
+by am on Junio's end.  Which does work, except that "format-patch -s"
+puts the SOB in the wrong place. :)
 
-Your implementation looks fine to me.
+> Acked-by: Nicolas Pitre <nico@fluxnic.net>
 
-Phil
+Thanks for reviewing.
+
+> > We're seeing this at GitHub because we prune pretty
+> > aggressively. We let pushes go into individual repositories,
+> > but then we kick off a job to move the resulting objects
+> > into the repository's "network" repo, which is basically a
+> > big alternates repository for related repos.
+> 
+> While this patch certainly has value, it doesn't provide 100% 
+> reliability for that use case.  Maybe the github infrastructure should 
+> simply skip any auto-repack on push if some other object maintenance 
+> operation is ongoing, possibly via the pre-auto-gc hook.
+
+I'm not sure I understand the problem.  We already serialize the
+re-packing jobs in a queue, so you won't have two repacks going at once.
+The problematic pack-objects is the one started by upload-pack when
+somebody fetches. Or do you mean turning off receive.autogc? I'd have to
+check if we do that, but we definitely should; it's useless to us
+(though it would be unlikely to trigger anyway, because we are manually
+repacking so frequently).
+
+-Peff
