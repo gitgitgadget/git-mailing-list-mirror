@@ -1,82 +1,67 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: url.<base>.insteadOf with empty value
-Date: Fri, 14 Oct 2011 10:57:42 -0700
-Message-ID: <7v8von1mnd.fsf@alter.siamese.dyndns.org>
-References: <54556728-92C0-4992-9831-0D582C383235@jetbrains.com>
+Subject: Re: [PATCH] t7800: avoid arithmetic expansion notation
+Date: Fri, 14 Oct 2011 11:00:06 -0700
+Message-ID: <7v4nzb1mjd.fsf@alter.siamese.dyndns.org>
+References: <837ad77348b459aa5f5f79e556dbeeeba41027e7.1318594392.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Josh Triplett <josh@joshtriplett.org>
-To: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
-X-From: git-owner@vger.kernel.org Fri Oct 14 19:57:51 2011
+Cc: git@vger.kernel.org, Sitaram Chamarty <sitaramc@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Oct 14 20:00:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REm10-0001mG-DA
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 19:57:50 +0200
+	id 1REm3O-00038T-OR
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 20:00:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752557Ab1JNR5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Oct 2011 13:57:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55654 "EHLO
+	id S1755841Ab1JNSAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Oct 2011 14:00:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56995 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751091Ab1JNR5p (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Oct 2011 13:57:45 -0400
+	id S1751558Ab1JNSAM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Oct 2011 14:00:12 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 16CAE6398;
-	Fri, 14 Oct 2011 13:57:44 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9834A6471;
+	Fri, 14 Oct 2011 14:00:11 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OGK7URS/5PBZHuHiuULPGuyl4ts=; b=l+9cmV
-	JYZhLVIaN1aFlcjstHQct76iUmfojG5lukX99vhiQoS0PUpFsgGonDCObR+/FPdS
-	zSk/4WaykENYjo6sWyLVz5v0PQhas0pJPFO2BhZtbn8iUrEdRVPcggLeHbNCPjhT
-	9H63jHiQbo2HNdKKsHkoVyP0Gvh6AXFpzKO1k=
+	:content-type; s=sasl; bh=4d5fVJl1EYMzC1K5tG0YVl9BkzU=; b=K8YJgV
+	64Q2VilClp8N2/Nuv/ly4WDLWqeYJVXvj5pHTFmoRFjMHVHAWnC2kxJu8/pXtM/6
+	xjPa07kU4YXJQ7KUnYddIdlKK9sdnJN3Dis/g0fe17eQ98PTwwexQTPXcAP0ouQ+
+	BHYiiM3/B+VhcU/69tHdywigrSGRovJ0FimqI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DI/BR0KPdYCmsUjlDqVhPiD8TqRCPvMK
-	p0Y280rEjee63kPowjA52mtANVm7Uq4oaPwf0jjohp7PTINjSSNMiuVfC5CLaqU4
-	lY5GL7LK/FQ1y9hxyXQ1jnGakpcSJted9hMqbDr0fBikGMiZiRouFkUYGYRg2Z8H
-	Xut3wKdj4EA=
+	:content-type; q=dns; s=sasl; b=isnFOY57fsHwUgnVVB8mnQKXEWNw1x6p
+	quCIqt3fd2d1ZXS+bzmCMTUClvdHGZOTbPjyUHdleTsnXaf1yCQeirpyP+zyv5b1
+	xeventNvpNItEr2sTOreI7O+2zka8hbuVXEzf+XCMaEtiX1EmQSIdZinmY1KFw66
+	9D0hdg0L9CE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0ED866397;
-	Fri, 14 Oct 2011 13:57:44 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8EC016470;
+	Fri, 14 Oct 2011 14:00:11 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9A2976396; Fri, 14 Oct 2011
- 13:57:43 -0400 (EDT)
-In-Reply-To: <54556728-92C0-4992-9831-0D582C383235@jetbrains.com> (Kirill
- Likhodedov's message of "Fri, 14 Oct 2011 13:03:53 +0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 13C756457; Fri, 14 Oct 2011
+ 14:00:07 -0400 (EDT)
+In-Reply-To: <837ad77348b459aa5f5f79e556dbeeeba41027e7.1318594392.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Fri, 14 Oct 2011 14:15:31 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0424CAB4-F68E-11E0-8F29-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 5A415F5C-F68E-11E0-8E0D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183588>
 
-Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com> writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> If I don't specify any value for url.<base>.insteadOf or url.<base>.pushInsteadOf, Git substitutes all urls for remotes defined in .git/config
+> ba959de (git-difftool: allow skipping file by typing 'n' at prompt, 2011-10-08)
+> introduced shell code like
 >
-> Probably that's because any url starts with empty string and thus has to be substituted. 
-> But it might be a bit confusing, because on the other hand if no value is given to the property insteadOf, user may expect this property to be ignored.
+> $((foo; bar) | baz)
 >
-> Please check if current Git behavior is correct. 
->
-> If it is not a bug, I'd suggest to add a note to man git-config about this.
+> which some shells (e.g. bash, dash) interpret as an unfinished arithmetic
+> evaluation $(( expr )).
 
-Please assume that what the documentation says is clear enough for whoever
-wrote it and need no further clarification, so you would need to help them
-understand what additional things you may want the documentation to say,
-by clarifying "add a note" and "about this" a bit.
-
-The "insteadOf" replacement is meant to apply for any URL we use. I would
-be surprised if it did not affect pushURL; it would be a bug if it didn't.
-
-On the other hand, the rewrite done by "pushinsteadof" is meant to apply
-only when remote.<any>.url is used for pushing.  See t/t5516-fetch-push.sh
-part of the patch for 1c2eafb (Add url.<base>.pushInsteadOf: URL rewriting
-for push only, 2009-09-07). It would clarify what the intended interaction
-among these configuration variables.
-
-Thanks.
+Ahh, thanks, I should have caught this. I recall I rewrote a similar one
+to $( (command; command) | command ) more than once before.
