@@ -1,76 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] daemon: return "access denied" if a service is not
- allowed
-Date: Thu, 13 Oct 2011 22:01:01 -0700
-Message-ID: <7vvcrs181e.fsf@alter.siamese.dyndns.org>
-References: <7vsjn9etm3.fsf@alter.siamese.dyndns.org>
- <1317678909-19383-1-git-send-email-pclouds@gmail.com>
- <20111012200916.GA1502@sigill.intra.peff.net>
- <20111013044544.GA27890@duynguyen-vnpc.dek-tpc.internal>
- <20111013182816.GA17573@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: interrupting "git rebase" (Re: git rebase +)
+Date: Fri, 14 Oct 2011 00:26:53 -0500
+Message-ID: <20111014052653.GA5052@elie.hsd1.il.comcast.net>
+References: <loom.20111013T134405-495@post.gmane.org>
+ <4E96E5E1.7010103@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 14 07:02:51 2011
+Cc: Adam Piatyszek <ediap@wp.pl>, git@vger.kernel.org,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Oct 14 07:29:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REZuz-0007bQ-Tt
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 07:02:50 +0200
+	id 1REaKJ-00017g-5m
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 07:28:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932247Ab1JNFBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Oct 2011 01:01:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63899 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751385Ab1JNFBE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Oct 2011 01:01:04 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21AA52791;
-	Fri, 14 Oct 2011 01:01:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dRZWQTJmfw5BaezYqi0nniW4lng=; b=SmlPDQ
-	Eq7UBV+hQ//ehMrlLbYC673BwKoSaohgf/dwyXNQ7t9W0Kxf4LHbp3o58HRgLNSN
-	7sJdRAoWSK6z4WezqxGQPNyRKQeKvItFlEViXZz85XHQRmcUHprjm9czF6ctQZX/
-	ug88pE7uZPgUokql9pj5IJm/uy0y+/Z0Q3hIQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NG3LTQwKa1oEta3znJavYa9gQp3yy/mf
-	UZbZwJJWrSuBf/UJn7YdCuKR1Th55dcX07oylhHQqEyp26Kpt6eFUl7Dr0xm+pfV
-	In4lUg81DvrRU+GJxjoQapu2dIBxM6SCtiiFySzptqVdn6+IzWTV7ryBYDCpWkGI
-	+tjIDhlFsLA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 183042790;
-	Fri, 14 Oct 2011 01:01:03 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 99861278D; Fri, 14 Oct 2011
- 01:01:02 -0400 (EDT)
-In-Reply-To: <20111013182816.GA17573@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 13 Oct 2011 14:28:16 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 83CD3F0C-F621-11E0-87C4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752640Ab1JNF1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Oct 2011 01:27:09 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:34309 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752536Ab1JNF1I (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Oct 2011 01:27:08 -0400
+Received: by yws29 with SMTP id 29so260065yws.19
+        for <git@vger.kernel.org>; Thu, 13 Oct 2011 22:27:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Xb/sSz0NtSa/FqGiKjhM3XtcHc/prlsQGp1Ahkc+BrE=;
+        b=HxHBqZ/VhTrVXbFSoT+yWkcZkVzhx4SbXTrw8VHE5mHhFUJ7qymPoUYopNzS5Pf2V1
+         iJEYCffs+G/M/ptJV+gTqMtHACdhJxQBsF3I758NWv1QV4tbdYy12zC1Qa5Bn3oZVKrO
+         KCoYMbHfscozSMgXiRa1CD+gySZM933BAiNSk=
+Received: by 10.236.124.97 with SMTP id w61mr9099790yhh.106.1318570027418;
+        Thu, 13 Oct 2011 22:27:07 -0700 (PDT)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id s42sm3226150yhs.0.2011.10.13.22.27.04
+        (version=SSLv3 cipher=OTHER);
+        Thu, 13 Oct 2011 22:27:06 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4E96E5E1.7010103@viscovery.net>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183538>
 
-Jeff King <peff@peff.net> writes:
+Johannes Sixt wrote:
 
-> So if we want to do anything, I would think it would be a hook. Except
-> that we may or may not have a repo, so it would not be a hook in
-> $GIT_DIR/hooks, but rather some script to be run passed on the command
-> line, like:
+> Hitting Ctrl-C during git-rebase results undefined behavior. git-rebase is
+> a shell script and was never designed to operate in any form of atomicity.
 >
->   git daemon --informative-errors=/path/to/hook
+> You should have let it run until it stopped.
 
-I don't think it is necessarily good to have such a variation across
-hosting sites. Your "something like this" patch looked like it was giving
-a reasonable level of detail, IMO.
+Wait, really?  That's bad, and unlike most git commands.
+
+> Then you could have said 'git
+> rebase --abort' (if it didn't complete) or 'git reset --hard ORIG_HEAD'
+> (if it completed).
+
+If interrupting the rebase leaves the repository in a state that
+
+	rm -fr .git/rebase-apply
+	git reset --hard <appropriate commit name>
+
+cannot recover from, I'd consider it a serious problem.
+
+By the way, what happened to the "git rebase --abort-softly" synonym
+for "rm -fr .git/rebase-apply" discussed a while ago?
