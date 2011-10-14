@@ -1,72 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fix alias expansion with new Git::config_path()
-Date: Fri, 14 Oct 2011 08:05:18 -0700
-Message-ID: <7vd3dz1ump.fsf@alter.siamese.dyndns.org>
-References: <4E982B27.8050807@drmicha.warpmail.net>
- <20111014142557.GB13680@laptop> <4E984781.6050601@drmicha.warpmail.net>
- <20111014144203.GC13680@laptop>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Bug? url.insteadOf overwrites remote.pushUrl
+Date: Fri, 14 Oct 2011 17:35:25 +0200
+Message-ID: <4E9856BD.3010807@drmicha.warpmail.net>
+References: <CAB6D58F-A3C9-4532-A9CC-10E43CD34E4E@jetbrains.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Oct 14 17:05:29 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
+X-From: git-owner@vger.kernel.org Fri Oct 14 17:35:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REjKB-0001ty-6K
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 17:05:27 +0200
+	id 1REjnM-0002px-A1
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 17:35:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756925Ab1JNPFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Oct 2011 11:05:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48899 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753941Ab1JNPFW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Oct 2011 11:05:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 94F2845BE;
-	Fri, 14 Oct 2011 11:05:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=M6zhfvxyfmdlkLlwzdTax9A/v8g=; b=r0WcDL
-	OZiz3F75cr5x4G4euS5CS9yTPGznIyxfCaWWyWLDk3J6uhki8oCykRQkm/yovnHV
-	njI3lcHJNuuF+9c5jMu8pfVIb8POZOidqznlhQdM/s6Ut1i3FnIo1PQMsJgodi5W
-	72hmO4dyTIAcV25MdcVHG0wSZdRa6B/vVEQRE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=N/n98rrqY6u4xakviFRzo3w3wmF19Ocf
-	5hY9sLun4fqEbMjDRywNJK4b9iPidy1wBVjyFf2HC6bnOJ2d3/2HeT/8oMb0Mvvc
-	uAgmDhfP6+InhQ3XWFrzHULxdKNSED4g4CyOzhrI6NKywIouS8o5r3T3YGCEMcjR
-	L3DoM9VzYIc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 813F145BD;
-	Fri, 14 Oct 2011 11:05:20 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EB47A45BC; Fri, 14 Oct 2011
- 11:05:19 -0400 (EDT)
-In-Reply-To: <20111014144203.GC13680@laptop> (Cord Seele's message of "Fri,
- 14 Oct 2011 16:42:03 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EED66E0A-F675-11E0-BAC3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933254Ab1JNPf3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Oct 2011 11:35:29 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:34586 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933221Ab1JNPf1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Oct 2011 11:35:27 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id B6834210E1;
+	Fri, 14 Oct 2011 11:35:26 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute3.internal (MEProxy); Fri, 14 Oct 2011 11:35:26 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=4kkdlh5zm/BQxPnYsSvIYj
+	9iL8E=; b=oaCujy//DFgwYkta7a6wIBtxqkGx69teqs8dAEPRRcwL4FtzY3BWX5
+	D/YmVYo6Elg7YWxkYsAb137cbAyYcOQ+xpkSb+Br1XkTd3ijXL7tfKCC31qFuZcI
+	ZLZdsnzqO5up28xY8HutuPnXL5KlPF2Z4sdKtkr0RiabSCUhvEev4=
+X-Sasl-enc: 5MyWvViWdAmpd7SMmE0UH7W+ojYXepZSlAOBDH7ozGbL 1318606526
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 3F49248340E;
+	Fri, 14 Oct 2011 11:35:26 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0) Gecko/20110927 Thunderbird/7.0
+In-Reply-To: <CAB6D58F-A3C9-4532-A9CC-10E43CD34E4E@jetbrains.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183582>
 
-Cord Seele <cowose@googlemail.com> writes:
+Kirill Likhodedov venit, vidit, dixit 14.10.2011 15:55:
+> 
+> I've found that defining url.<base>.insteadOf overrides explicit
+> remote.<name>.pushUrl.
 
-> On Fri 14 Oct 2011 16:30:25 +0200, Michael J Gruber <git@drmicha.warpmail.net> wrote:
->
->> Tested-by: Michael J Gruber <git@drmicha.warpmail.net>
->
-> Great.
->
->> Thanks. (Though I'm still wondering what this is about overall.)
->
-> to make '~/' work in sendemail.aliasesfile
+It doesn't really override it. It is applied to it, i.e. transforms it.
 
-That is not an explanation.
+> On the other hand, pushInsteadOf doesn't
+> override explicit pushUrl. Is it a bug?
+
+That is as described in the thread (thanks for linking to it).
+
+> # cat .git/config [remote "origin"] fetch =
+> +refs/heads/*:refs/remotes/origin/* url = github.com/klikh/Test.git 
+> pushUrl = jetbrains.com/klikh/Test.git [url "http://"] insteadOf=jet
+> 
+> # git remote -v origin	github.com/klikh/Test.git (fetch) origin
+> http://brains.com/klikh/Test.git (push)
+
+The idea of "pushInsteadOf" was that, instead of having to define url
+and pushurl separately, you can use different rules, say
+
+github -> git://github.com (fetch)
+github -> https://username@github.com (push)
+github/ -> git@github.com: (push)
+
+used with "url = github/otheruser/repo.git" alone, without pushurl.
+
+pushurl predates pushinsteadof, and when the latter was introduced, one
+could have argued for or against "insteadof" being applied to pushurls.
+But that was necessary before, and existing behavior at the time when
+pushinsteadof was introduced. So, I don't see a bug, nor anything we
+could change now, though arguably most people use either pushinstead of
+or pushurl, but not both.
+
+Cheers,
+Michael
