@@ -1,91 +1,65 @@
-From: Alexey Shumkin <Alex.Crezoff@gmail.com>
-Subject: Re: [BUG] git checkout <branch> allowed with uncommitted changes
-Date: Fri, 14 Oct 2011 10:51:16 +0400
-Message-ID: <20111014105116.1e5afa5d@ashu.dyn.rarus.ru>
-References: <loom.20111013T094053-111@post.gmane.org>
-	<CACsJy8Dzy5-kOZAjwdx=ooUdnN0L2F3EiNQ7b==3AGQZYjEUXQ@mail.gmail.com>
-	<20111013145924.2113c142@ashu.dyn.rarus.ru>
-	<loom.20111013T130924-792@post.gmane.org>
-	<4E96D819.20905@op5.se>
-	<loom.20111013T152144-60@post.gmane.org>
-	<1318517194.4646.30.camel@centaur.lab.cmartin.tk>
-	<loom.20111013T171530-970@post.gmane.org>
-	<20111013201711.3d55c693@ashu.dyn.rarus.ru>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] pack-objects: protect against disappearing packs
+Date: Fri, 14 Oct 2011 09:06:11 +0200
+Message-ID: <4E97DF63.104@viscovery.net>
+References: <20111014012320.GA4395@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: arQon <arqon@gmx.com>
-X-From: git-owner@vger.kernel.org Fri Oct 14 08:51:41 2011
+Cc: git@vger.kernel.org, git-dev@github.com,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 14 09:07:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REbcJ-0000mR-Os
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 08:51:40 +0200
+	id 1REbrF-00076K-Kg
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 09:07:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755129Ab1JNGvY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Oct 2011 02:51:24 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:43504 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753119Ab1JNGvW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Oct 2011 02:51:22 -0400
-Received: by wyg34 with SMTP id 34so2653429wyg.19
-        for <git@vger.kernel.org>; Thu, 13 Oct 2011 23:51:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rarus.ru; s=google;
-        h=sender:date:from:to:cc:subject:message-id:in-reply-to:references
-         :x-mailer:mime-version:content-type:content-transfer-encoding;
-        bh=8wns3Ml7Lwt/LzaIdUZ9zZdm6HvPfOT+rPQjZ6oSi0Y=;
-        b=Q993Z2P1wMoFrrtDU17fhd5Waf3fy2MzF7JrUPQmGTekNlwjLyLPSpWLNF3l8zDXfj
-         Q0lJpyIcgZAxVM3WrwcJGanHUcNcuWsTe5bCI7P8aVFE2RNMv27wNWWh4RZnfrUWFswF
-         M05jjMMxSseasBkgVEBpRVh01TriaKpyB6oqc=
-Received: by 10.216.159.129 with SMTP id s1mr1198243wek.3.1318575080601;
-        Thu, 13 Oct 2011 23:51:20 -0700 (PDT)
-Received: from ashu.dyn.rarus.ru (mail.rarus.ru. [213.247.194.83])
-        by mx.google.com with ESMTPS id h39sm12440524wbo.0.2011.10.13.23.51.18
-        (version=SSLv3 cipher=OTHER);
-        Thu, 13 Oct 2011 23:51:19 -0700 (PDT)
-In-Reply-To: <20111013201711.3d55c693@ashu.dyn.rarus.ru>
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
+	id S1755042Ab1JNHGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Oct 2011 03:06:15 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:35120 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751326Ab1JNHGO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Oct 2011 03:06:14 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1REbqO-0007Ov-Fe; Fri, 14 Oct 2011 09:06:12 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 2DA3D1660F;
+	Fri, 14 Oct 2011 09:06:12 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.23) Gecko/20110920 Thunderbird/3.1.15
+In-Reply-To: <20111014012320.GA4395@sigill.intra.peff.net>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183543>
 
-> > Lucky you. :P  The most likely reason for me is, I'm working on
-> > something and I get interrupted and have to switch. Since the code
-> > may well not even compile at this point, the last thing I want to do
-> > is commit it. 
-> "git stash" helps here
-> With Git you can/have_to/must change your SVN-based habits.
-> DO NOT BE AFRAID OF FREQUENT COMMITS!
-> There are local until you push them.
+Am 10/14/2011 3:23, schrieb Jeff King:
+> In practice, however, adding this check still has value, for
+> three reasons.
 > 
-> >git's ability for that commit to be local is half the
-> > reason I'm trying to switch to it.
-> You always have a chance to modify/reedit you commits
-> see "git commit --amend" and "git rebase [-i]"
-> 
-> I'm telling you it as an ex-SVN user.
-> >(I'm not particularly keen on
-> > having to commit broken code to even a local repo, but that's still
-> > a hell of a lot better than having it pushed upstream as well).
-> 
-> Again, do not be afraid to commit your changes. Be afraid of losing
-> your changes. Git makes everything (as other discussion participants
-> already described) to keep your changes within workflow when you
-> switch between branches often.
-> 
-> Read some books which are describe Git's usual (and effective)
-> workflow, ProGit - http://progit.org/book/
-> Version Contol by Example (there is a chapter about Git) -
-> http://git-scm.com/course/svn.html
-oops,
-wrong url
+>   1. If you have a reasonable number of packs and/or a
+>      reasonable file descriptor limit, you can keep all of
+>      your packs open simultaneously. If this is the case,
+>      then the race is impossible to trigger.
 
-fixed link
-Version Contol by Example (there is a chapter about Git) -
-http://www.ericsink.com/vcbe/
+On Windows, we cannot remove files that are open. If I understand
+correctly, this patch keeps more files open for a longer time. Is there
+any chance that packfiles remain now open until an unlink() call?
+
+I am not worried about parallel processes (we already have a problem
+there), but that this can now happen within a single process, i.e., that a
+single git-repack -a -d -f would now try to unlink a pack file that it
+opened itself and did not close timely.
+
+I'll test your patch later this weekend to see whether the test suite
+finds something. But perhaps you know the answer already?
+
+-- Hannes
