@@ -1,99 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: Fix %config_path_settings handling
-Date: Fri, 14 Oct 2011 12:26:43 -0700
-Message-ID: <7vbotjz85o.fsf@alter.siamese.dyndns.org>
-References: <4E982B27.8050807@drmicha.warpmail.net>
- <201110141838.19118.jnareb@gmail.com>
- <7vwrc7zbk2.fsf@alter.siamese.dyndns.org>
- <201110142049.32734.jnareb@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] daemon: return "access denied" if a service is not
+ allowed
+Date: Fri, 14 Oct 2011 15:27:41 -0400
+Message-ID: <20111014192741.GA13029@sigill.intra.peff.net>
+References: <7vsjn9etm3.fsf@alter.siamese.dyndns.org>
+ <1317678909-19383-1-git-send-email-pclouds@gmail.com>
+ <20111012200916.GA1502@sigill.intra.peff.net>
+ <20111013044544.GA27890@duynguyen-vnpc.dek-tpc.internal>
+ <20111013182816.GA17573@sigill.intra.peff.net>
+ <7vvcrs181e.fsf@alter.siamese.dyndns.org>
+ <20111014131041.GC7808@sigill.intra.peff.net>
+ <20111014192326.GA7713@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Cord Seele <cowose@gmail.com>,
-	Cord Seele <cowose@googlemail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 14 21:26:51 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 14 21:27:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REnP9-0003HJ-5a
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 21:26:51 +0200
+	id 1REnQ6-0003nM-21
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 21:27:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756322Ab1JNT0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Oct 2011 15:26:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34063 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753731Ab1JNT0q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Oct 2011 15:26:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2ACF6387;
-	Fri, 14 Oct 2011 15:26:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Y8NG+6yBN2f/6Rpk48+AdLxAWkg=; b=ocFcho
-	C667VDgqv3KP4GU5eqa4MPGiql4gjHHJH67g48rh53oq6GJ8/pm2HzdD0yHcdolM
-	SlBv1MC2nNHvcsK7aeT+JxID4QiQwjMHingFEh7VrvkjC2b4Bo+1cTqQBDJiBQrg
-	YePYdg/zqbEB2/jAEq+7y+oCyCer9ADhAI9xE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XwVkYeK2xCeKRaWzUz0d18yer04rM5Og
-	lwYCJVoZ2dC1WmLE/bPEs3by/VWAAdSwRQHduTXizUF2ECLktCaLM44gLjauKDrU
-	9NyMXshN0HhEgOdLA6lpfkycRAdOvYF/944gOC6hQsnpM3RY8DspY4r0dpDL8KWt
-	gtucxOATp1U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AA5BE6386;
-	Fri, 14 Oct 2011 15:26:45 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 361A16385; Fri, 14 Oct 2011
- 15:26:45 -0400 (EDT)
-In-Reply-To: <201110142049.32734.jnareb@gmail.com> (Jakub Narebski's message
- of "Fri, 14 Oct 2011 20:49:32 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 73FFCED6-F69A-11E0-B95A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756345Ab1JNT1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Oct 2011 15:27:46 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60786
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753950Ab1JNT1p (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Oct 2011 15:27:45 -0400
+Received: (qmail 14137 invoked by uid 107); 14 Oct 2011 19:27:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 14 Oct 2011 15:27:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Oct 2011 15:27:41 -0400
+Content-Disposition: inline
+In-Reply-To: <20111014192326.GA7713@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183604>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Fri, Oct 14, 2011 at 03:23:26PM -0400, Jeff King wrote:
 
-> From: Cord Seele <cowose@gmail.com>
->    value... which admittedly is a bit cryptic.  More readable if more
->    verbose option would be to use hash reference, e.g.:
->
->         my %config_bool_settings = (
->             "thread" => { variable => \$thread, default => 1},
->             [...]
->
->    Or something like that.
+> Subject: [PATCH] daemon: give friendlier error messages to clients
+> 
+> When the git-daemon is asked about an inaccessible
+> repository, it simply hangs up the connection without saying
+> anything further. This makes it hard to distinguish between
+> a repository we cannot access (e.g., due to typo), and a
+> service or network outage.
+> 
+> Instead, let's print an "ERR" line, which git clients
+> understand since v1.6.1 (2008-12-24).
+> 
+> Because there is a risk of leaking information about
+> non-exported repositories, by default all errors simply say
+> "access denied". Open sites can pass a flag to turn on more
+> specific messages.
 
-Do you really want to leave this "Or something like that" here?
+I'm tempted to suggest this on top:
 
-> 3. 994d6c6 (send-email: address expansion for common mailers, 2006-05-14)
->    didn't add test for alias expansion to t9001-send-email.sh
+-- >8 --
+Subject: [PATCH] daemon: turn on informative errors by default
 
-I was hoping that an updated patch to have a new test or two here...
+These are only a problem if you have a bunch of inaccessible
+repositories served from the same root as your regular
+exported repositories, and you are sensitive about people
+learning about the existence of those repositories.
 
-> Signed-off-by: Cord Seele <cowose@gmail.com>
-> Tested-by: Michael J Gruber <git@drmicha.warpmail.net>
-> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+Git is foremost an open system, and our defaults should
+reflect that.
 
-Is this the version tested by Michael?
+Signed-off-by: Jeff King <peff@peff.net>
+---
+But since it is a potential security issue, it does seem kind of mean to
+closed sites to just flip the switch on them.
 
-> +		my $target = $config_path_settings{$setting};
-> +		if (ref($target) eq "ARRAY" && !@$target) {
-> +			# multi-valued and not set
-> +			my @values = Git::config_path(@repo, "$prefix.$setting");
-> +			@$target = @values if (@values && defined $values[0]);
-> +		} elsif (!defined $$target) {
-> +			# multi-valued and not set
-> +			$$target = Git::config_path(@repo, "$prefix.$setting");
-> +		}
+ Documentation/git-daemon.txt |    6 +++---
+ daemon.c                     |    2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-If the target is an array ref and for whatever reason the array is already
-populated, wouldn't you check "if (!defined $$target)" with this change?
+diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+index ac57c6d..2b17175 100644
+--- a/Documentation/git-daemon.txt
++++ b/Documentation/git-daemon.txt
+@@ -161,12 +161,12 @@ the facility of inet daemon to achieve the same before spawning
+ 	repository configuration.  By default, all the services
+ 	are overridable.
+ 
+---informative-errors::
+-	Return more verbose errors to the client, differentiating
++--no-informative-errors::
++	By default, we return verbose errors to the client, differentiating
+ 	conditions like "no such repository" from "repository not
+ 	exported". This is more convenient for clients, but may leak
+ 	information about the existence of unexported repositories.
+-	Without this option, all errors report "access denied" to the
++	With this option, all errors report "access denied" to the
+ 	client.
+ 
+ <directory>::
+diff --git a/daemon.c b/daemon.c
+index e5869ec..ba41a40 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -20,7 +20,7 @@
+ static int log_syslog;
+ static int verbose;
+ static int reuseaddr;
+-static int informative_errors;
++static int informative_errors = 1;
+ 
+ static const char daemon_usage[] =
+ "git daemon [--verbose] [--syslog] [--export-all]\n"
+-- 
+1.7.6.4.37.g43b58b
