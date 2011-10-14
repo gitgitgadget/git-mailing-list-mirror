@@ -1,134 +1,89 @@
 From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCH 3/3] git-gui: new config to control staging of untracked files
-Date: Fri, 14 Oct 2011 21:25:21 +0200
-Message-ID: <03727ea04f20c953e7de3f84ab1724a8360ca2c4.1318620267.git.bert.wesarg@googlemail.com>
+Subject: [PATCH 2/3] git-gui: use "untracked" for files which are not known to git
+Date: Fri, 14 Oct 2011 21:25:20 +0200
+Message-ID: <446a8233349fd7d084fd01bf1176a4073ff17593.1318620267.git.bert.wesarg@googlemail.com>
 References: <0f862de296a94b06495e4418bc731b5d201d5767.1318620267.git.bert.wesarg@googlemail.com>
- <446a8233349fd7d084fd01bf1176a4073ff17593.1318620267.git.bert.wesarg@googlemail.com>
 Cc: Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org,
 	Bert Wesarg <bert.wesarg@googlemail.com>
 To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Fri Oct 14 21:25:40 2011
+X-From: git-owner@vger.kernel.org Fri Oct 14 21:25:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REnNz-0002ST-N9
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 21:25:40 +0200
+	id 1REnNz-0002ST-6v
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 21:25:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932670Ab1JNTZc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Oct 2011 15:25:32 -0400
+	id S932646Ab1JNTZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Oct 2011 15:25:30 -0400
 Received: from mail-bw0-f46.google.com ([209.85.214.46]:59108 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932153Ab1JNTZb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Oct 2011 15:25:31 -0400
+	with ESMTP id S932153Ab1JNTZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Oct 2011 15:25:29 -0400
 Received: by mail-bw0-f46.google.com with SMTP id zt19so353915bkb.19
-        for <git@vger.kernel.org>; Fri, 14 Oct 2011 12:25:31 -0700 (PDT)
+        for <git@vger.kernel.org>; Fri, 14 Oct 2011 12:25:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :in-reply-to:references;
-        bh=83fCA4kLPKWS1oCZNv92AT+sZgdopR8E7Bmrac59CMk=;
-        b=Gbo8ykGVVphFwm2RIeOK7SNyMPgIGGO0nPnmiZ294zKAgoy2OSw5BSu8plMHfKIP+R
-         XtEOaJmoABlrGwBOycsmPVb9JwQ+qlIQ2zLLLa6++t5Hvr/hTrsWeuE831BEu3nmqNX0
-         VIVqRU8CBTlx7GqxD/H2xAnf/fUEoFkpAXYlw=
-Received: by 10.204.154.156 with SMTP id o28mr7799772bkw.12.1318620331200;
-        Fri, 14 Oct 2011 12:25:31 -0700 (PDT)
+        bh=jN83tcY5yDWPcUYdwCr3BsLs411eeGJSbU42tikSVj4=;
+        b=PMfAhi/1gEyAT88u7KjPkaKH0j+by+y01vO6+1u1trR16IOb2NgTaSwBNiqIEtD/5B
+         oWzypfRlKcI8cAHNcxz4IWATvkv/C213zE4kI/at74UlPZN+gh/gfU3Nb7SdgHacXtiV
+         PjqlTzN658a+yTgkXYDmYhaEDEqzA+6FEWoX8=
+Received: by 10.204.130.9 with SMTP id q9mr7900528bks.43.1318620328222;
+        Fri, 14 Oct 2011 12:25:28 -0700 (PDT)
 Received: from localhost (p5B2AD5F0.dip.t-dialin.net. [91.42.213.240])
-        by mx.google.com with ESMTPS id rc12sm9384788bkb.10.2011.10.14.12.25.29
+        by mx.google.com with ESMTPS id k26sm9427407bks.1.2011.10.14.12.25.26
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 14 Oct 2011 12:25:30 -0700 (PDT)
+        Fri, 14 Oct 2011 12:25:27 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.789.gb4599
-In-Reply-To: <446a8233349fd7d084fd01bf1176a4073ff17593.1318620267.git.bert.wesarg@googlemail.com>
+In-Reply-To: <0f862de296a94b06495e4418bc731b5d201d5767.1318620267.git.bert.wesarg@googlemail.com>
 In-Reply-To: <0f862de296a94b06495e4418bc731b5d201d5767.1318620267.git.bert.wesarg@googlemail.com>
 References: <0f862de296a94b06495e4418bc731b5d201d5767.1318620267.git.bert.wesarg@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183602>
 
-The default is the current "ask".
+"untracked" is the right phrase for files new to git. For example
+git-status uses this phrase. Also make the question shorter.
 
 Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 ---
- git-gui.sh     |    1 +
- lib/index.tcl  |   14 +++++++++++++-
- lib/option.tcl |   18 ++++++++++++++++++
- 3 files changed, 32 insertions(+), 1 deletions(-)
+ lib/index.tcl |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/git-gui.sh b/git-gui.sh
-index f897160..77deff7 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -859,6 +859,7 @@ set font_descs {
- 	{fontui   font_ui   {mc "Main Font"}}
- 	{fontdiff font_diff {mc "Diff/Console Font"}}
- }
-+set default_config(gui.stageuntracked) ask
- 
- ######################################################################
- ##
 diff --git a/lib/index.tcl b/lib/index.tcl
-index 014acf9..45094c2 100644
+index 3a9c8b7..014acf9 100644
 --- a/lib/index.tcl
 +++ b/lib/index.tcl
-@@ -367,7 +367,19 @@ proc do_add_all {} {
+@@ -356,20 +356,20 @@ proc do_add_all {} {
+ 	global file_states
+ 
+ 	set paths [list]
+-	set unknown_paths [list]
++	set untracked_paths [list]
+ 	foreach path [array names file_states] {
+ 		switch -glob -- [lindex $file_states($path) 0] {
+ 		U? {continue}
+ 		?M -
+ 		?T -
+ 		?D {lappend paths $path}
+-		?O {lappend unknown_paths $path}
++		?O {lappend untracked_paths $path}
  		}
  	}
- 	if {[llength $untracked_paths]} {
--		set reply [ask_popup [mc "Stage also untracked files?"]]
-+		set reply 0
-+		switch -- [get_config gui.stageuntracked] {
-+		no {
-+			set reply 0
-+		}
-+		yes {
-+			set reply 1
-+		}
-+		ask -
-+		default {
-+			set reply [ask_popup [mc "Stage also untracked files?"]]
-+		}
-+		}
+-	if {[llength $unknown_paths]} {
+-		set reply [ask_popup [mc "There are unknown files do you also want to stage those?"]]
++	if {[llength $untracked_paths]} {
++		set reply [ask_popup [mc "Stage also untracked files?"]]
  		if {$reply} {
- 			set paths [concat $paths $untracked_paths]
- 		}
-diff --git a/lib/option.tcl b/lib/option.tcl
-index 3807c8d..719103a 100644
---- a/lib/option.tcl
-+++ b/lib/option.tcl
-@@ -156,6 +156,7 @@ proc do_options {} {
- 		{i-0..99 gui.commitmsgwidth {mc "Commit Message Text Width"}}
- 		{t gui.newbranchtemplate {mc "New Branch Name Template"}}
- 		{c gui.encoding {mc "Default File Contents Encoding"}}
-+		{s gui.stageuntracked {mc "Staging of untracked files"} {list "yes" "no" "ask"}}
- 		} {
- 		set type [lindex $option 0]
- 		set name [lindex $option 1]
-@@ -208,6 +209,23 @@ proc do_options {} {
- 				}
- 				pack $w.$f.$optid -side top -anchor w -fill x
- 			}
-+			s {
-+				set opts [eval [lindex $option 3]]
-+				${NS}::frame $w.$f.$optid
-+				${NS}::label $w.$f.$optid.l -text "$text:"
-+				if {$use_ttk} {
-+					ttk::combobox $w.$f.$optid.v \
-+						-textvariable ${f}_config_new($name) \
-+						-values $opts -state readonly
-+				} else {
-+					eval tk_optionMenu $w.$f.$optid.v \
-+						${f}_config_new($name) \
-+						$opts
-+				}
-+				pack $w.$f.$optid.l -side left -anchor w -fill x
-+				pack $w.$f.$optid.v -side right -anchor e -padx 5
-+				pack $w.$f.$optid -side top -anchor w -fill x
-+			}
- 			}
+-			set paths [concat $paths $unknown_paths]
++			set paths [concat $paths $untracked_paths]
  		}
  	}
+ 	add_helper {Adding all changed files} $paths
 -- 
 1.7.6.789.gb4599
