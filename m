@@ -1,87 +1,71 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] t7800: avoid arithmetic expansion notation
-Date: Fri, 14 Oct 2011 14:15:31 +0200
-Message-ID: <837ad77348b459aa5f5f79e556dbeeeba41027e7.1318594392.git.git@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 14 14:15:56 2011
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 2/9] completion: optimize refs completion
+Date: Fri, 14 Oct 2011 14:16:09 +0200
+Message-ID: <20111014121609.GB2208@goldbirke>
+References: <1318085683-29830-1-git-send-email-szeder@ira.uka.de>
+	<1318085683-29830-3-git-send-email-szeder@ira.uka.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>, "Shawn O. Pearce" <spearce@spearce.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 14 14:21:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REgfr-0004OW-Q5
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 14:15:40 +0200
+	id 1REgls-0007hE-HZ
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Oct 2011 14:21:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754786Ab1JNMPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Oct 2011 08:15:35 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:52797 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751781Ab1JNMPe (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Oct 2011 08:15:34 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 2572120D19;
-	Fri, 14 Oct 2011 08:15:34 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute3.internal (MEProxy); Fri, 14 Oct 2011 08:15:34 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=from:to:cc:subject:date:message-id; s=
-	smtpout; bh=K2lbOEsE5MX/EfUEGLisUF0R2YM=; b=eluiSS0W+ymBB6x9IL/N
-	f2ZZxnIVsznKXvrYq0VyXSO9XX6Iyq7Gp/j7bH3Hd4mpJNg/UhheKXLn/lz41h/l
-	l7EsyvHL5BPUHsuGCh/1Ei4quQOpxIMQ+tAnKg4sZSV32PfRrlYEbGaiv9Xwnich
-	nJMNpu2TkWKclTS8FIa6PrE=
-X-Sasl-enc: QPLCnQf8kf+DoF+cVgO4VrYDmg+GstRfDNa2R+TmqLLO 1318594533
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 8CAD8404A4B;
-	Fri, 14 Oct 2011 08:15:33 -0400 (EDT)
-X-Mailer: git-send-email 1.7.7.338.g0156b
+	id S932161Ab1JNMVn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Oct 2011 08:21:43 -0400
+Received: from ex-e-2.perimeter.fzi.de ([141.21.8.251]:30955 "EHLO
+	ex-e-2.perimeter.fzi.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932068Ab1JNMVm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Oct 2011 08:21:42 -0400
+X-Greylist: delayed 328 seconds by postgrey-1.27 at vger.kernel.org; Fri, 14 Oct 2011 08:21:41 EDT
+Received: from ex-ca-ht-1.fzi.de (141.21.32.98) by ex-e-2.perimeter.fzi.de
+ (141.21.8.251) with Microsoft SMTP Server (TLS) id 14.1.339.1; Fri, 14 Oct
+ 2011 14:16:07 +0200
+Received: from localhost6.localdomain6 (141.21.50.31) by ex-ca-ht-1.fzi.de
+ (141.21.32.98) with Microsoft SMTP Server (TLS) id 14.1.339.1; Fri, 14 Oct
+ 2011 14:16:09 +0200
+Content-Disposition: inline
+In-Reply-To: <1318085683-29830-3-git-send-email-szeder@ira.uka.de>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183566>
 
-ba959de (git-difftool: allow skipping file by typing 'n' at prompt, 2011-10-08)
-introduced shell code like
+On Sat, Oct 08, 2011 at 04:54:36PM +0200, SZEDER G=E1bor wrote:
+> So, add a specialized variant of __gitcomp() that only deals with
+> possible completion words separated by a newline=20
 
-$((foo; bar) | baz)
+> @@ -2635,7 +2659,7 @@ _git ()
+>  			"
+>  			;;
+>  		*)     __git_compute_porcelain_commands
+> -		       __gitcomp "$__git_porcelain_commands $(__git_aliases)" ;;
+> +		       __gitcomp_nl "$__git_porcelain_commands $(__git_aliases)" ;=
+;
+>  		esac
+>  		return
+>  	fi
 
-which some shells (e.g. bash, dash) interpret as an unfinished arithmetic
-evaluation $(( expr )).
+Oops, this last hunk is wrong.
 
-Write this as
+I made the thinko that $__git_porcelain_commands is NL-separated and
+the output of __git_aliases() is NL-separated, so we can pass the two
+together to the new __gitcomp_nl() function.  But of course not,
+because the SP between the two joins the last command and the first
+alias.
 
-$({foo; bar; } | baz)
+I will resend in the evening with this hunk removed and the commit
+message updated.
 
-which is unambiguous and also avoids an unnecessary subshell.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- t/t7800-difftool.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index 7fc2b3a..76a8b70 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -289,7 +289,7 @@ test_expect_success PERL 'setup with 2 files different' '
- '
- 
- test_expect_success PERL 'say no to the first file' '
--	diff=$((echo n; echo) | git difftool -x cat branch) &&
-+	diff=$({ echo n; echo; } | git difftool -x cat branch) &&
- 
- 	echo "$diff" | stdin_contains m2 &&
- 	echo "$diff" | stdin_contains br2 &&
-@@ -298,7 +298,7 @@ test_expect_success PERL 'say no to the first file' '
- '
- 
- test_expect_success PERL 'say no to the second file' '
--	diff=$((echo; echo n) | git difftool -x cat branch) &&
-+	diff=$({ echo; echo n; } | git difftool -x cat branch) &&
- 
- 	echo "$diff" | stdin_contains master &&
- 	echo "$diff" | stdin_contains branch &&
--- 
-1.7.7.338.g0156b
+G=E1bor
