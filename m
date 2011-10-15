@@ -1,73 +1,100 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCHv3] daemon: give friendlier error messages to clients
-Date: Sat, 15 Oct 2011 11:51:15 +1100
-Message-ID: <CACsJy8CB4uBZkM8xPH6N+HPR-KX+KCCvfT4RrBV+gzTy=zz8og@mail.gmail.com>
-References: <7vsjn9etm3.fsf@alter.siamese.dyndns.org> <1317678909-19383-1-git-send-email-pclouds@gmail.com>
- <20111012200916.GA1502@sigill.intra.peff.net> <20111013044544.GA27890@duynguyen-vnpc.dek-tpc.internal>
- <20111013182816.GA17573@sigill.intra.peff.net> <7vvcrs181e.fsf@alter.siamese.dyndns.org>
- <20111014131041.GC7808@sigill.intra.peff.net> <20111014192326.GA7713@sigill.intra.peff.net>
- <20111014210251.GD16371@elie.hsd1.il.comcast.net> <20111014211244.GA16429@sigill.intra.peff.net>
- <20111014211921.GB16429@sigill.intra.peff.net>
+From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
+Subject: [PATCHv4 0/5] Be more careful when prunning
+Date: Sat, 15 Oct 2011 07:04:21 +0200
+Message-ID: <1318655066-29001-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Oct 15 02:51:53 2011
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	mathstuf@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 15 07:04:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REsTh-0002Bd-Jj
-	for gcvg-git-2@lo.gmane.org; Sat, 15 Oct 2011 02:51:53 +0200
+	id 1REwQM-0001QL-9F
+	for gcvg-git-2@lo.gmane.org; Sat, 15 Oct 2011 07:04:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755261Ab1JOAvs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Oct 2011 20:51:48 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:48291 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754196Ab1JOAvr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Oct 2011 20:51:47 -0400
-Received: by bkbzt19 with SMTP id zt19so608966bkb.19
-        for <git@vger.kernel.org>; Fri, 14 Oct 2011 17:51:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=gEIGSjgPiuZiwMrnKUlwLCieapG4H6S2Gih/tzSTbGQ=;
-        b=WaxhrXn1tZe8WoVtGa5Mt4POCFoCjfefRXRqERPZ4ram+3z1j4RYghl3ggcrLFZT0m
-         6w0YiazzWdSBJEmQNf8HcE9KTYXF1ZU1bOfHfPH8LCrWbUuvyMaFCIGZJJGN6IbbYXS0
-         j9cSb0pIeNqLZjh/qdRhRGpl64ewFdv9v5jA8=
-Received: by 10.204.140.78 with SMTP id h14mr8487822bku.29.1318639906166; Fri,
- 14 Oct 2011 17:51:46 -0700 (PDT)
-Received: by 10.204.120.75 with HTTP; Fri, 14 Oct 2011 17:51:15 -0700 (PDT)
-In-Reply-To: <20111014211921.GB16429@sigill.intra.peff.net>
+	id S1751606Ab1JOFE2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 Oct 2011 01:04:28 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:48770 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751502Ab1JOFE1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Oct 2011 01:04:27 -0400
+Received: from centaur.lab.cmartin.tk (brln-4dbc6671.pool.mediaWays.net [77.188.102.113])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id A063746100;
+	Sat, 15 Oct 2011 07:03:57 +0200 (CEST)
+Received: (nullmailer pid 29042 invoked by uid 1000);
+	Sat, 15 Oct 2011 05:04:26 -0000
+X-Mailer: git-send-email 1.7.5.2.354.g349bf
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183634>
 
-On Sat, Oct 15, 2011 at 8:19 AM, Jeff King <peff@peff.net> wrote:
-> @@ -257,11 +266,11 @@ static int run_service(char *dir, struct daemon=
-_service *service)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!enabled && !service->overridable) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0logerror("'%s'=
-: service not enabled.", service->name);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0errno =3D EACC=
-ES;
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -1;
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return daemon_erro=
-r(dir, "service not enabled");
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+Hello,
 
-Nit picking. In this case the service is disabled entirely regardless
-dir and it uses the same message with the case where service is
-disabled per repo later on. Maybe we could reword it a little bit to
-differentiate the two cases? Say the first case "service disabled",
-and the second one "service not enabled"?
+This version covers Junio's concerns about code and functionality
+duplication with the third patch. The order of arguments for
+get_stale_heads is not changed anymore in the fourth patch.
+
+The first patch is not that big a deal, but it's better if we're
+freeing the refspecs, we might as well free all of them.
+
+The second patch introduces expected failures for the features that
+this series fixes.
+
+The third patch is new and moves the logic out of remote_find_tracking
+into a query_refspecs function. remote_find_tracking and
+apply_refspecs are both changed to be wrappers around this
+function. This way, the logic is in one function instead of three
+different ones.
+
+The fourth patch changes prune_refs and get_stale_heads so the caller
+has to decide which refspecs are the appropriate ones to use. For
+example, running
+
+    git fetch --prune origin refs/heads/master:refs/heads/master
+
+doesn't remove the other branches anymore. For a more interesting (and
+believable) example, let's take
+
+    git fetch --prune origin refs/heads/b/*:refs/heads/b/*
+
+because you want to prune the refs inside the b/ namespace
+only. Currently git will delete all the refs that aren't under that
+namespace. With the second patch applied, git won't remove any refs
+outside the b/ namespace.
+
+What is probably the most usual case is covered by the fifth patch,
+which pretends that a "refs/tags/*:refs/tags/*" refspec was given on
+the command-line. That fixes the
+
+    git fetch --prune --tags origin
+
+case. The non-tag refs are kept now.
+
+Cheers,
+   cmn
+
+Carlos Mart=C3=ADn Nieto (5):
+  fetch: free all the additional refspecs
+  t5510: add tests for fetch --prune
+  remote: separate out the remote_find_tracking logic into
+    query_refspecs
+  fetch: honor the user-provided refspecs when pruning refs
+  fetch: treat --tags like refs/tags/*:refs/tags/* when pruning
+
+ builtin/fetch.c  |   33 ++++++++++++++---
+ builtin/remote.c |    3 +-
+ remote.c         |  106 +++++++++++++++++++++++++++++-----------------=
+-------
+ remote.h         |    2 +-
+ t/t5510-fetch.sh |   50 +++++++++++++++++++++++++
+ 5 files changed, 139 insertions(+), 55 deletions(-)
+
 --=20
-Duy
+1.7.5.2.354.g349bf
