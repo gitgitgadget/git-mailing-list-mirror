@@ -1,99 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 7/8] mergetools: use the correct tool for Beyond Compare
- 3 on Windows
-Date: Fri, 14 Oct 2011 22:50:31 -0700
-Message-ID: <7vobxix0pk.fsf@alter.siamese.dyndns.org>
-References: <1318632815-29945-1-git-send-email-patthoyts@users.sourceforge.net>
- <1318632815-29945-8-git-send-email-patthoyts@users.sourceforge.net>
+Subject: Re: [PATCHv3] daemon: give friendlier error messages to clients
+Date: Fri, 14 Oct 2011 22:55:13 -0700
+Message-ID: <7vk486x0hq.fsf@alter.siamese.dyndns.org>
+References: <7vsjn9etm3.fsf@alter.siamese.dyndns.org>
+ <1317678909-19383-1-git-send-email-pclouds@gmail.com>
+ <20111012200916.GA1502@sigill.intra.peff.net>
+ <20111013044544.GA27890@duynguyen-vnpc.dek-tpc.internal>
+ <20111013182816.GA17573@sigill.intra.peff.net>
+ <7vvcrs181e.fsf@alter.siamese.dyndns.org>
+ <20111014131041.GC7808@sigill.intra.peff.net>
+ <20111014192326.GA7713@sigill.intra.peff.net>
+ <20111014210251.GD16371@elie.hsd1.il.comcast.net>
+ <20111014211244.GA16429@sigill.intra.peff.net>
+ <20111014211921.GB16429@sigill.intra.peff.net>
+ <CAMK1S_g0aKUa=+ndAm7rqeoPAobjVb6oJ1Z4DqSeNrdauXNH3w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Sat Oct 15 07:50:42 2011
+Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 15 07:55:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1REx8p-0000I0-3v
-	for gcvg-git-2@lo.gmane.org; Sat, 15 Oct 2011 07:50:39 +0200
+	id 1RExDQ-0001wS-7Q
+	for gcvg-git-2@lo.gmane.org; Sat, 15 Oct 2011 07:55:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751129Ab1JOFue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Oct 2011 01:50:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37802 "EHLO
+	id S1751053Ab1JOFzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Oct 2011 01:55:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39142 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750800Ab1JOFud (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Oct 2011 01:50:33 -0400
+	id S1750818Ab1JOFzQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Oct 2011 01:55:16 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0099D35D2;
-	Sat, 15 Oct 2011 01:50:33 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A2DD436B2;
+	Sat, 15 Oct 2011 01:55:15 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mjFlPeg7/SpkWQDM5upd5qEe3NQ=; b=OORkyL
-	5Oo48vWvs+5tZVq8jLj8ZhWCDCQIKwBSKG8/ItTh6R8XvtSOknvuiFyY71d+YSMO
-	Lc+wfwd6fUy4XIj/39NJRBIX54cbrxpkjSalWIEg6C+oasJvFo8WyM+SX9P1nylh
-	Tfebjg9YoeuxpFroqx6QzVtgc4AYz8nTZA/HY=
+	:content-type; s=sasl; bh=JTSsYPnglrkZN1UTAR3l5irHlIg=; b=My5FVs
+	kdcaV2/cfQyOkqTJns+yETP/zqlETT3b33AkC/ikhFMrLFHRSNG+AbZ6U550v5m4
+	2DOoPtZN2csUjiVPhjELOV51g5DjLPXyrcGPV0oas6/ib3cogJwbimgzVbGMqIPt
+	nQMssBIK7rM9JyqBb5YGxS1VqIzLC2pwUvcYU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sSX4DD6p64sW1Ah8/nmKNTuG5Bh3tN4P
-	/YQNpyPpL/DTphp72vtzDL0T9tcoxRDTPwViekbTtS5ebo9GEz9xXn+0/O/A9ewF
-	PqKf7GTQG33J2RgcG5gAgy1pxEGEclkJwUfKrO/6uRH9eBGPmCfzl5YIh+vTkEDT
-	7kb0d5+TZeI=
+	:content-type; q=dns; s=sasl; b=WDJulLcwM56HAE459SP1Dtd0PMaQJJfL
+	4gT/MpljZd1bBHSHzOICUuyy1YR4VzMCkyXbi6Cd73HAMzZ5a5KKvSLvwswzhJUI
+	SgcuH9G5cmpiyHmgWSQ4yv3G1OzsDUvezI+GmBiGyfI9SanB7L/cPbybBm0LfV6o
+	NHNLZlx2MeU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED11E35D1;
-	Sat, 15 Oct 2011 01:50:32 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96FEE36B1;
+	Sat, 15 Oct 2011 01:55:15 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 753A635D0; Sat, 15 Oct 2011
- 01:50:32 -0400 (EDT)
-In-Reply-To: <1318632815-29945-8-git-send-email-patthoyts@users.sourceforge.net> (Pat
- Thoyts's message of "Fri, 14 Oct 2011 23:53:34 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2B8E136AF; Sat, 15 Oct 2011
+ 01:55:15 -0400 (EDT)
+In-Reply-To: <CAMK1S_g0aKUa=+ndAm7rqeoPAobjVb6oJ1Z4DqSeNrdauXNH3w@mail.gmail.com> (Sitaram
+ Chamarty's message of "Sat, 15 Oct 2011 05:09:33 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 985D6A34-F6F1-11E0-BE39-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 40DE007E-F6F2-11E0-AAEB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183644>
 
-Pat Thoyts <patthoyts@users.sourceforge.net> writes:
+Sitaram Chamarty <sitaramc@gmail.com> writes:
 
-> On Windows the bcompare tool launches a graphical program and does
-> not wait for it to terminate. A separate 'bcomp' tool is provided which
-> will wait for the view to exit so we use this instead.
-
-Hmm, does this only apply to Windows, or are there other platforms on
-which BC3 supplies bcomp for the exact same reason? What I am trying to
-get at is that it might be nicer if we do not have to check uname, e.g.
-
-	if type bcomp >/dev/null 2>/dev/null
-        then
-        	echo bcomp
-	else
-        	echo bcompare
-	fi
-
-> Reported-by: Werner BEROUX <werner@beroux.com>
-> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
-> ---
->  mergetools/bc3 |    9 ++++++++-
->  1 files changed, 8 insertions(+), 1 deletions(-)
+>> Because there is a risk of leaking information about
+>> non-exported repositories, by default all errors simply say
+>> "access denied". Sites which don't have hidden repositories,
 >
-> diff --git a/mergetools/bc3 b/mergetools/bc3
-> index 27b3dd4..b642bf2 100644
-> --- a/mergetools/bc3
-> +++ b/mergetools/bc3
-> @@ -16,5 +16,12 @@ merge_cmd () {
->  }
->  
->  translate_merge_tool_path() {
-> -	echo bcompare
-> +	case $(uname -s) in
-> +	*MINGW*)
-> +		echo bcomp
-> +		;;
-> +	*)
-> +		echo bcompare
-> +		;;
-> +	esac
->  }
+> I suggest that even the "secure" version of the message say something
+> like "access denied or repository not exported".  You're still not
+> leaking anything, but it reduces confusion to the user, who otherwise
+> may not realise it *could be* the latter.
+
+I kind of like the suggestion, but I am afraid that "access denied,
+repository nonexistent or not exported" can soon easily get long enough to
+be unmanageable.
