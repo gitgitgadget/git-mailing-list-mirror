@@ -1,101 +1,93 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: interrupting "git rebase" (Re: git rebase +)
-Date: Sat, 15 Oct 2011 14:44:14 -0500
-Message-ID: <20111015194414.GB12893@elie.hsd1.il.comcast.net>
-References: <loom.20111013T134405-495@post.gmane.org>
- <4E96E5E1.7010103@viscovery.net>
- <20111014052653.GA5052@elie.hsd1.il.comcast.net>
- <CAOeW2eFK5vSKmf+nxzD-6yh5CWZRv4WqSerbSXTPtXmtNeNjxg@mail.gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH v2 0/6] git-p4 tests, filetypes, shell metacharacters
+Date: Sat, 15 Oct 2011 21:00:12 +0100
+Message-ID: <4E99E64C.9@diamand.org>
+References: <20111015155358.GA29436@arf.padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>, Adam Piatyszek <ediap@wp.pl>,
-	git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 15 21:44:35 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Chris Li <git@chrisli.org>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Sat Oct 15 22:01:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RFA9q-0003R1-VY
-	for gcvg-git-2@lo.gmane.org; Sat, 15 Oct 2011 21:44:35 +0200
+	id 1RFAQL-00019s-Er
+	for gcvg-git-2@lo.gmane.org; Sat, 15 Oct 2011 22:01:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754786Ab1JOTo1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 Oct 2011 15:44:27 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:48312 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754657Ab1JOTo0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 15 Oct 2011 15:44:26 -0400
-Received: by ywp31 with SMTP id 31so1220119ywp.19
-        for <git@vger.kernel.org>; Sat, 15 Oct 2011 12:44:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=3QRLsDzVbavZkCnTRBbHNz4CQSuByPH53DdIvU38u+o=;
-        b=dbwHsieQFMiH/WM4jKBfKGPKMiIBmlKBvE7SltQLn/73uiVDQt8y8FCUrOrD8Flk9A
-         Jm/KYmTiZ0Eu2cUeLkIRl+Jk+9ZRLeoREmQ4DqGnHSXR8fOP7SoZ7scDhlWaTAopckAf
-         2HEl6hbWOtvd6N/EK8m8F2PLtEVAMHGIBmvP4=
-Received: by 10.236.154.3 with SMTP id g3mr17595485yhk.18.1318707865713;
-        Sat, 15 Oct 2011 12:44:25 -0700 (PDT)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id d63sm411931yhl.10.2011.10.15.12.44.24
+	id S1754806Ab1JOUAQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Oct 2011 16:00:16 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:42449 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751217Ab1JOUAP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Oct 2011 16:00:15 -0400
+Received: by wwe6 with SMTP id 6so426485wwe.1
+        for <git@vger.kernel.org>; Sat, 15 Oct 2011 13:00:13 -0700 (PDT)
+Received: by 10.227.38.200 with SMTP id c8mr4524415wbe.101.1318708813827;
+        Sat, 15 Oct 2011 13:00:13 -0700 (PDT)
+Received: from [86.26.7.206] (cpc1-cmbg14-2-0-cust973.5-4.cable.virginmedia.com. [86.26.7.206])
+        by mx.google.com with ESMTPS id e7sm21600182wbh.12.2011.10.15.13.00.11
         (version=SSLv3 cipher=OTHER);
-        Sat, 15 Oct 2011 12:44:24 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAOeW2eFK5vSKmf+nxzD-6yh5CWZRv4WqSerbSXTPtXmtNeNjxg@mail.gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        Sat, 15 Oct 2011 13:00:12 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+In-Reply-To: <20111015155358.GA29436@arf.padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183673>
 
-(+cc: Ram)
-Martin von Zweigbergk wrote:
-> On Thu, Oct 13, 2011 at 10:26 PM, Jonathan Nieder <jrnieder@gmail.com=
-> wrote:
->> Johannes Sixt wrote:
-
->>> Hitting Ctrl-C during git-rebase results undefined behavior.
-[...]
->> Wait, really? =C2=A0That's bad, and unlike most git commands.
+On 15/10/11 16:53, Pete Wyckoff wrote:
+> This series of six patches has been reviewed on the mailing list
+> and should be ready for inclusion.
 >
-> If Ctrl-C is pressed while the state is being written, it could be
-> left with incomplete information, yes. It has been like that forever =
-I
-> think. I'll put it on my todo list, but it will not be my top priorit=
-y
-> (and I have very little git time now anyways).
-
-Sorry for the lack of clarity.  That actually sounds fine to me
-already, as long as the intermediate state is easy to recover from
-(which doesn't match what I usually think of as "undefined behavior").
-
-So it sounds like I was worrying needlessly.
-
-[...]
->> By the way, what happened to the "git rebase --abort-softly" synonym
->> for "rm -fr .git/rebase-apply" discussed a while ago?
+> 1    - Clean up git-p4 tests, including Junio review comments
 >
-> I think we simply did not agree on a syntax, but here was also some
-> discussion about future plans for the sequencer. I remember seeing
-> some discussions about making "git reset --hard" remove the sequencer
-> state, but I don't remember the conclusion. It is not clear to me wha=
-t
-> is ok to implement in git-rebase nowadays and what would just be
-> double work if it needs to be re-implemented in the sequencer.
+> 2..4 - Handle p4 filetypes better, including Chris's suggested
+>         utf16 fix
+>
+> 5    - Fix p4 keyword parsing
+>
+> 6    - From Luke: avoid using the shell, so filenames with metacharacters
+>         are not errantly expanded
 
-I believe a good rule of thumb is that you can always pretend the
-sequencer just doesn't exist, and cc Ram when you are unsure. :)
+I've just tried running the tests in parallel (master branch) and it 
+works a treat.
 
-Certainly, a lot of sequencer features were inspired by "git rebase".
-Improvements to "git rebase" are only likely to make future
-improvements to "git sequencer" easier.  Part of what helps here is
-that "git rebase" is a shell script, so it is a little easier to
-prototype features there.
+You've also tidied up my earlier test cases very nicely.
 
-Thanks!
-Jonathan
+There doesn't seem to be any way to cope with multiple instances of the 
+same test running at the same time. If p4d could write its pid somewhere 
+then something better could be done, but it doesn't.
+
+Ack.
+
+Thanks
+Luke
+
+
+>
+> Luke Diamand (1):
+>        git-p4: handle files with shell metacharacters
+>
+> Pete Wyckoff (5):
+>        git-p4 tests: refactor and cleanup
+>        git-p4: handle utf16 filetype properly
+>        git-p4: recognize all p4 filetypes
+>        git-p4: stop ignoring apple filetype
+>        git-p4: keyword flattening fixes
+>
+>   contrib/fast-import/git-p4     |  287 +++++++++++++-------
+>   t/lib-git-p4.sh                |   74 +++++
+>   t/t9800-git-p4.sh              |  574 ++++++++++++++++++----------------------
+>   t/t9801-git-p4-branch.sh       |  233 ++++++++++++++++
+>   t/t9802-git-p4-filetype.sh     |  108 ++++++++
+>   t/t9803-git-shell-metachars.sh |   64 +++++
+>   6 files changed, 918 insertions(+), 422 deletions(-)
+>   create mode 100644 t/lib-git-p4.sh
+>   create mode 100755 t/t9801-git-p4-branch.sh
+>   create mode 100755 t/t9802-git-p4-filetype.sh
+>   create mode 100755 t/t9803-git-shell-metachars.sh
