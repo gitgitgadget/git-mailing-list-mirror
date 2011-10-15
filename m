@@ -1,206 +1,166 @@
 From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH 2/6] git-p4: handle utf16 filetype properly
-Date: Sat, 15 Oct 2011 11:56:41 -0400
-Message-ID: <20111015155641.GC29436@arf.padd.com>
+Subject: [PATCH 3/6] git-p4: recognize all p4 filetypes
+Date: Sat, 15 Oct 2011 11:57:54 -0400
+Message-ID: <20111015155754.GD29436@arf.padd.com>
 References: <20111015155358.GA29436@arf.padd.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Luke Diamand <luke@diamand.org>, Chris Li <git@chrisli.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 15 17:57:12 2011
+X-From: git-owner@vger.kernel.org Sat Oct 15 17:58:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RF6bn-0000YW-MB
-	for gcvg-git-2@lo.gmane.org; Sat, 15 Oct 2011 17:57:12 +0200
+	id 1RF6cy-00012B-3U
+	for gcvg-git-2@lo.gmane.org; Sat, 15 Oct 2011 17:58:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753526Ab1JOP5G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Oct 2011 11:57:06 -0400
-Received: from honk.padd.com ([74.3.171.149]:35780 "EHLO honk.padd.com"
+	id S1753515Ab1JOP6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Oct 2011 11:58:20 -0400
+Received: from honk.padd.com ([74.3.171.149]:35786 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753390Ab1JOP5F (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Oct 2011 11:57:05 -0400
+	id S1753390Ab1JOP6T (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Oct 2011 11:58:19 -0400
 Received: from arf.padd.com (unknown [50.55.131.180])
-	by honk.padd.com (Postfix) with ESMTPSA id DDC612822;
-	Sat, 15 Oct 2011 08:57:04 -0700 (PDT)
+	by honk.padd.com (Postfix) with ESMTPSA id 6F9592822;
+	Sat, 15 Oct 2011 08:58:18 -0700 (PDT)
 Received: by arf.padd.com (Postfix, from userid 7770)
-	id 89D8D31465; Sat, 15 Oct 2011 11:56:41 -0400 (EDT)
+	id A36C131465; Sat, 15 Oct 2011 11:57:54 -0400 (EDT)
 Content-Disposition: inline
 In-Reply-To: <20111015155358.GA29436@arf.padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183666>
 
-One of the filetypes that p4 supports is utf16.  Its behavior is
-odd in this case.  The data delivered through "p4 -G print" is
-not encoded in utf16, although "p4 print -o" will produce the
-proper utf16-encoded file.
+The previous code was approximate in the filetypes it recognized.
+Put in the canonical list and be more careful about matching
+elements of the file type.
 
-When dealing with this filetype, discard the data from -G, and
-instead read the contents directly.
+This might change behavior in some cases, hopefully for the
+better.  Windows newline mangling will now happen on all
+text files.  Previously some like "text+ko" were oddly exempt.
 
-An alternate approach would be to try to encode the data in
-python.  That worked for true utf16 files, but for other files
-marked as utf16, p4 delivers mangled text in no recognizable encoding.
+Files with multiple combinations of modifiers, like "text+klx",
+are now recognized for keyword expansion.  I expect these to be
+seen only rarely.
 
-Add a test case to check utf16 handling, and +k and +ko handling.
-
-Reported-by: Chris Li <git@chrisli.org>
 Acked-by: Luke Diamand <luke@diamand.org>
 Signed-off-by: Pete Wyckoff <pw@padd.com>
 ---
- contrib/fast-import/git-p4 |   11 +++++
- t/t9802-git-p4-filetype.sh |  108 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 119 insertions(+), 0 deletions(-)
- create mode 100755 t/t9802-git-p4-filetype.sh
+ contrib/fast-import/git-p4 |   71 ++++++++++++++++++++++++++++++++------------
+ 1 files changed, 52 insertions(+), 19 deletions(-)
 
 diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 2f7b270..e69caf3 100755
+index e69caf3..0490ca5 100755
 --- a/contrib/fast-import/git-p4
 +++ b/contrib/fast-import/git-p4
-@@ -1238,6 +1238,15 @@ class P4Sync(Command, P4UserMap):
+@@ -118,13 +118,41 @@ def p4_system(cmd):
+     real_cmd = p4_build_cmd(cmd)
+     return system(real_cmd)
+ 
+-def isP4Exec(kind):
+-    """Determine if a Perforce 'kind' should have execute permission
++#
++# Canonicalize the p4 type and return a tuple of the
++# base type, plus any modifiers.  See "p4 help filetypes"
++# for a list and explanation.
++#
++def split_p4_type(p4type):
++
++    p4_filetypes_historical = {
++        "ctempobj": "binary+Sw",
++        "ctext": "text+C",
++        "cxtext": "text+Cx",
++        "ktext": "text+k",
++        "kxtext": "text+kx",
++        "ltext": "text+F",
++        "tempobj": "binary+FSw",
++        "ubinary": "binary+F",
++        "uresource": "resource+F",
++        "uxbinary": "binary+Fx",
++        "xbinary": "binary+x",
++        "xltext": "text+Fx",
++        "xtempobj": "binary+Swx",
++        "xtext": "text+x",
++        "xunicode": "unicode+x",
++        "xutf16": "utf16+x",
++    }
++    if p4type in p4_filetypes_historical:
++        p4type = p4_filetypes_historical[p4type]
++    mods = ""
++    s = p4type.split("+")
++    base = s[0]
++    mods = ""
++    if len(s) > 1:
++        mods = s[1]
++    return (base, mods)
+ 
+-    'p4 help filetypes' gives a list of the types.  If it starts with 'x',
+-    or x follows one of a few letters.  Otherwise, if there is an 'x' after
+-    a plus sign, it is also executable"""
+-    return (re.search(r"(^[cku]?x)|\+.*x", kind) != None)
+ 
+ def setP4ExecBit(file, mode):
+     # Reopens an already open file and changes the execute bit to match
+@@ -1229,16 +1257,18 @@ class P4Sync(Command, P4UserMap):
+         if verbose:
+             sys.stderr.write("%s\n" % relPath)
+ 
+-        mode = "644"
+-        if isP4Exec(file["type"]):
+-            mode = "755"
+-        elif file["type"] == "symlink":
+-            mode = "120000"
+-            # p4 print on a symlink contains "target\n", so strip it off
++        (type_base, type_mods) = split_p4_type(file["type"])
++
++        git_mode = "100644"
++        if "x" in type_mods:
++            git_mode = "100755"
++        if type_base == "symlink":
++            git_mode = "120000"
++            # p4 print on a symlink contains "target\n"; remove the newline
              data = ''.join(contents)
              contents = [data[:-1]]
  
-+        if file['type'].startswith("utf16"):
-+            # p4 delivers different text in the python output to -G
-+            # than it does when using "print -o", or normal p4 client
-+            # operations.  utf16 is converted to ascii or utf8, perhaps.
-+            # But ascii text saved as -t utf16 is completely mangled.
-+            # Invoke print -o to get the real contents.
-+            text = p4_read_pipe('print -q -o - "%s"' % file['depotFile'])
-+            contents = [ text ]
-+
-         if self.isWindows and file["type"].endswith("text"):
+-        if file['type'].startswith("utf16"):
++        if type_base == "utf16":
+             # p4 delivers different text in the python output to -G
+             # than it does when using "print -o", or normal p4 client
+             # operations.  utf16 is converted to ascii or utf8, perhaps.
+@@ -1247,7 +1277,9 @@ class P4Sync(Command, P4UserMap):
+             text = p4_read_pipe('print -q -o - "%s"' % file['depotFile'])
+             contents = [ text ]
+ 
+-        if self.isWindows and file["type"].endswith("text"):
++        # Perhaps windows wants unicode, utf16 newlines translated too;
++        # but this is not doing it.
++        if self.isWindows and type_base == "text":
              mangled = []
              for data in contents:
-@@ -1245,6 +1254,8 @@ class P4Sync(Command, P4UserMap):
-                 mangled.append(data)
-             contents = mangled
+                 data = data.replace("\r\n", "\n")
+@@ -1256,12 +1288,13 @@ class P4Sync(Command, P4UserMap):
  
-+        # Note that we do not try to de-mangle keywords on utf16 files,
-+        # even though in theory somebody may want that.
-         if file['type'] in ('text+ko', 'unicode+ko', 'binary+ko'):
-             contents = map(lambda text: re.sub(r'(?i)\$(Id|Header):[^$]*\$',r'$\1$', text), contents)
-         elif file['type'] in ('text+k', 'ktext', 'kxtext', 'unicode+k', 'binary+k'):
-diff --git a/t/t9802-git-p4-filetype.sh b/t/t9802-git-p4-filetype.sh
-new file mode 100755
-index 0000000..cf07e6d
---- /dev/null
-+++ b/t/t9802-git-p4-filetype.sh
-@@ -0,0 +1,108 @@
-+#!/bin/sh
-+
-+test_description='git-p4 p4 filetype tests'
-+
-+. ./lib-git-p4.sh
-+
-+test_expect_success 'start p4d' '
-+	start_p4d
-+'
-+
-+test_expect_success 'utf-16 file create' '
-+	(
-+		cd "$cli" &&
-+
-+		# p4 saves this verbatim
-+		echo -e "three\nline\ntext" >f-ascii &&
-+		p4 add -t text f-ascii &&
-+
-+		# p4 adds \377\376 header
-+		cp f-ascii f-ascii-as-utf16 &&
-+		p4 add -t utf16 f-ascii-as-utf16 &&
-+
-+		# p4 saves this exactly as iconv produced it
-+		echo -e "three\nline\ntext" | iconv -f ascii -t utf-16 >f-utf16 &&
-+		p4 add -t utf16 f-utf16 &&
-+
-+		# this also is unchanged
-+		cp f-utf16 f-utf16-as-text &&
-+		p4 add -t text f-utf16-as-text &&
-+
-+		p4 submit -d "f files" &&
-+
-+		# force update of client files
-+		p4 sync -f
-+	)
-+'
-+
-+test_expect_success 'utf-16 file test' '
-+	test_when_finished cleanup_git &&
-+	"$GITP4" clone --dest="$git" //depot@all &&
-+	(
-+		cd "$git" &&
-+
-+		test_cmp "$cli/f-ascii" f-ascii &&
-+		test_cmp "$cli/f-ascii-as-utf16" f-ascii-as-utf16 &&
-+		test_cmp "$cli/f-utf16" f-utf16 &&
-+		test_cmp "$cli/f-utf16-as-text" f-utf16-as-text
-+	)
-+'
-+
-+test_expect_success 'keyword file create' '
-+	(
-+		cd "$cli" &&
-+
-+		echo -e "id\n\$Id\$\n\$Author\$\ntext" >k-text-k &&
-+		p4 add -t text+k k-text-k &&
-+
-+		cp k-text-k k-text-ko &&
-+		p4 add -t text+ko k-text-ko &&
-+
-+		cat k-text-k | iconv -f ascii -t utf-16 >k-utf16-k &&
-+		p4 add -t utf16+k k-utf16-k &&
-+
-+		cp k-utf16-k k-utf16-ko &&
-+		p4 add -t utf16+ko k-utf16-ko &&
-+
-+		p4 submit -d "k files" &&
-+		p4 sync -f
-+	)
-+'
-+
-+build_smush() {
-+	cat >k_smush.py <<-EOF &&
-+	import re, sys
-+	sys.stdout.write(re.sub(r'(?i)\\\$(Id|Header|Author|Date|DateTime|Change|File|Revision):[^$]*\\\$', r'$\1$', sys.stdin.read()))
-+	EOF
-+	cat >ko_smush.py <<-EOF
-+	import re, sys
-+	sys.stdout.write(re.sub(r'(?i)\\\$(Id|Header):[^$]*\\\$', r'$\1$', sys.stdin.read()))
-+	EOF
-+}
-+
-+test_expect_success 'keyword file test' '
-+	build_smush &&
-+	test_when_finished rm -f k_smush.py ko_smush.py &&
-+	test_when_finished cleanup_git &&
-+	"$GITP4" clone --dest="$git" //depot@all &&
-+	(
-+		cd "$git" &&
-+
-+		# text, ensure unexpanded
-+		python "$TRASH_DIRECTORY/k_smush.py" <"$cli/k-text-k" >cli-k-text-k-smush &&
-+		test_cmp cli-k-text-k-smush k-text-k &&
-+		python "$TRASH_DIRECTORY/ko_smush.py" <"$cli/k-text-ko" >cli-k-text-ko-smush &&
-+		test_cmp cli-k-text-ko-smush k-text-ko &&
-+
-+		# utf16, even though p4 expands keywords, git-p4 does not
-+		# try to undo that
-+		test_cmp "$cli/k-utf16-k" k-utf16-k &&
-+		test_cmp "$cli/k-utf16-ko" k-utf16-ko
-+	)
-+'
-+
-+test_expect_success 'kill p4d' '
-+	kill_p4d
-+'
-+
-+test_done
+         # Note that we do not try to de-mangle keywords on utf16 files,
+         # even though in theory somebody may want that.
+-        if file['type'] in ('text+ko', 'unicode+ko', 'binary+ko'):
+-            contents = map(lambda text: re.sub(r'(?i)\$(Id|Header):[^$]*\$',r'$\1$', text), contents)
+-        elif file['type'] in ('text+k', 'ktext', 'kxtext', 'unicode+k', 'binary+k'):
+-            contents = map(lambda text: re.sub(r'\$(Id|Header|Author|Date|DateTime|Change|File|Revision):[^$\n]*\$',r'$\1$', text), contents)
++        if type_base in ("text", "unicode", "binary"):
++            if "ko" in type_mods:
++                contents = map(lambda text: re.sub(r'(?i)\$(Id|Header):[^$]*\$', r'$\1$', text), contents)
++            elif "k" in type_mods:
++                contents = map(lambda text: re.sub(r'\$(Id|Header|Author|Date|DateTime|Change|File|Revision):[^$\n]*\$', r'$\1$', text), contents)
+ 
+-        self.gitStream.write("M %s inline %s\n" % (mode, relPath))
++        self.gitStream.write("M %s inline %s\n" % (git_mode, relPath))
+ 
+         # total length...
+         length = 0
 -- 
 1.7.6.3
