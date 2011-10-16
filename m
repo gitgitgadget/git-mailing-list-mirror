@@ -1,217 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] git checkout <branch> allowed with uncommitted changes
-Date: Sun, 16 Oct 2011 13:37:04 -0700
-Message-ID: <7vy5wkptan.fsf@alter.siamese.dyndns.org>
-References: <4E96D819.20905@op5.se> <loom.20111013T152144-60@post.gmane.org>
- <1318517194.4646.30.camel@centaur.lab.cmartin.tk>
- <loom.20111013T171530-970@post.gmane.org>
- <1318525486.4646.53.camel@centaur.lab.cmartin.tk>
- <loom.20111013T193054-868@post.gmane.org>
- <7vzkh44ug1.fsf@alter.siamese.dyndns.org>
- <loom.20111013T203610-130@post.gmane.org>
- <20111014013830.GA7258@sigill.intra.peff.net> <4E980093.6040704@ira.uka.de>
- <20111014095447.GC2856@victor.terreactive.ch>
- <loom.20111016T201930-426@post.gmane.org>
+From: =?iso-8859-1?q?L=E9na=EFc_Huard?= <lenaic@lhuard.fr.eu.org>
+Subject: [PATCH] gitweb: provide a way to customize html headers
+Date: Sun, 16 Oct 2011 22:56:41 +0200
+Message-ID: <201110162256.41431.lenaic@lhuard.fr.eu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: arQon <arqon@gmx.com>
-X-From: git-owner@vger.kernel.org Sun Oct 16 22:37:35 2011
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 16 23:00:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RFXSg-0008SP-J5
-	for gcvg-git-2@lo.gmane.org; Sun, 16 Oct 2011 22:37:34 +0200
+	id 1RFXpK-00006V-Gb
+	for gcvg-git-2@lo.gmane.org; Sun, 16 Oct 2011 23:00:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752585Ab1JPUha (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Oct 2011 16:37:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43620 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751667Ab1JPUhH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Oct 2011 16:37:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A349557F;
-	Sun, 16 Oct 2011 16:37:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=agqaGQfjaoxy67jxMMa7knXdJO8=; b=YAtNiR
-	0ZBMyAPZABwsN7WbD2wI+tMRqqpB4yrkVZ1h+vOoKob9Ftis+EjJhdnGp9bucvMC
-	ACkhfWV2AdW2B5NvfAoS1imlmWnj2qxkcjpL6L2jF4pmjeiKRBGnGiIhXKUIfMIq
-	gvSvqlWLGo3ey9Cfv8P2+JzFtgR9A7SRYIv4Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fHeL7vMHuqgbOkBl/tcbIcQNUbZmgskD
-	bfaE334rZvINoCwKWCYNi+wIYSaueNlNhg6HZSy1pTUXPuAHvugL0O1n5e9Z8UlA
-	giQY+9PP32pzvEzB/EK+Sj1ORlb+ogXMzyr0qs/THZjiA1bhQ/7Eje3pTBPJSa8w
-	qcEYqGYhUB4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62277557E;
-	Sun, 16 Oct 2011 16:37:06 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC96D557D; Sun, 16 Oct 2011
- 16:37:05 -0400 (EDT)
-In-Reply-To: <loom.20111016T201930-426@post.gmane.org> (arqon@gmx.com's
- message of "Sun, 16 Oct 2011 18:25:03 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9C694490-F836-11E0-A11C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751481Ab1JPU4o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Oct 2011 16:56:44 -0400
+Received: from freebox.lhuard.fr.eu.org ([88.182.161.122]:40164 "EHLO
+	coruscant.lhuard.fr.eu.org" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751188Ab1JPU4n convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Oct 2011 16:56:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lhuard.fr.eu.org; s=dkim;
+	h=Message-Id:Content-Transfer-Encoding:Content-Type:MIME-Version:Date:Subject:To:From; bh=OAaFPIW1HiCS0Nqax/bQdx8dBR8CYVbg11WAAaYeryo=;
+	b=YTNGKSU3Z1ex7s2PoX6cQngY/E0reeVViTgR1BJ7l/w1sYXPZG5aeiHDZsEKYj09SJk6OoNEZylSl4UKWDVRktb4b1XoNQi2VFR4/44tPaaPymsTIUwr7VAbintOkMMV6KBwUUvbdfvCU0L8PKAZHANKjZdL42ygYiYVVdw0Wf0=;
+Received: from lenaic by coruscant.lhuard.fr.eu.org with local (Exim 4.76)
+	(envelope-from <lenaic@lhuard.fr.eu.org>)
+	id 1RFXlB-0003LL-HZ
+	for git@vger.kernel.org; Sun, 16 Oct 2011 22:56:41 +0200
+User-Agent: KMail/1.13.7 (Linux/3.0.0-2-amd64; KDE/4.6.5; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183735>
 
-arQon <arqon@gmx.com> writes:
+This allows web sites to add some specific html headers to the pages
+generated by gitweb.
 
-> ... better *behavior* is a
-> clear win either way.
+The new variable $site_htmlheader can be set to a filename the content
+of which will be inserted at the end of the <head> section of each
+page generated by gitweb.
 
-I doubt the full status output is better behaviour. For one thing, you do
-not need full status as by definition branch switching would only have
-local changes as a result (i.e. you will not see "Changes to be committed"
-section).
+Signed-off-by: L=E9na=EFc Huard <lenaic@lhuard.fr.eu.org>
+---
+ gitweb/INSTALL     |    3 +++
+ gitweb/Makefile    |    2 ++
+ gitweb/gitweb.perl |    7 +++++++
+ t/gitweb-lib.sh    |    1 +
+ 4 files changed, 13 insertions(+), 0 deletions(-)
 
-But if you really do not want to learn how to read "diff --name-status"
-output, here is a patch to allow you say "git checkout -v other_branch".
-Hopefully it will help you convince yourself why it is not a better
-behaviour.
-
- builtin/checkout.c |   46 +++++++++++++++++++++++++++++++++-------------
- 1 files changed, 33 insertions(+), 13 deletions(-)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 49a547a..0c21556 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -28,7 +28,7 @@ static const char * const checkout_usage[] = {
- };
- 
- struct checkout_opts {
--	int quiet;
-+	int verbosity;
- 	int merge;
- 	int force;
- 	int force_detach;
-@@ -291,10 +291,10 @@ static int checkout_paths(struct tree *source_tree, const char **pathspec,
- 	return errs;
- }
- 
--static void show_local_changes(struct object *head, struct diff_options *opts)
-+static void show_local_changes_brief(struct object *head, struct diff_options *opts)
- {
- 	struct rev_info rev;
--	/* I think we want full paths, even if we're in a subdirectory. */
+diff --git a/gitweb/INSTALL b/gitweb/INSTALL
+index f5efe74..e23eafa 100644
+--- a/gitweb/INSTALL
++++ b/gitweb/INSTALL
+@@ -130,6 +130,9 @@ You can specify the following configuration variabl=
+es when building GIT:
+    Points to an .html file which is included on the gitweb project
+    overview page ('projects_list' view), if it exists.  Relative to
+    gitweb.cgi script.  [Default: indextext.html]
++ * GITWEB_SITE_HTMLHEADER
++   Filename of html code to include in the <head> section of each page=
+=2E
++   Relative to gitweb.cgi script.  [No default]
+  * GITWEB_SITE_HEADER
+    Filename of html text to include at top of each page.  Relative to
+    gitweb.cgi script.  [No default]
+diff --git a/gitweb/Makefile b/gitweb/Makefile
+index 1c85b5f..ecfb311 100644
+--- a/gitweb/Makefile
++++ b/gitweb/Makefile
+@@ -34,6 +34,7 @@ GITWEB_CSS =3D static/gitweb.css
+ GITWEB_LOGO =3D static/git-logo.png
+ GITWEB_FAVICON =3D static/git-favicon.png
+ GITWEB_JS =3D static/gitweb.js
++GITWEB_SITE_HTMLHEADER =3D
+ GITWEB_SITE_HEADER =3D
+ GITWEB_SITE_FOOTER =3D
+ HIGHLIGHT_BIN =3D highlight
+@@ -144,6 +145,7 @@ GITWEB_REPLACE =3D \
+        -e 's|++GITWEB_LOGO++|$(GITWEB_LOGO)|g' \
+        -e 's|++GITWEB_FAVICON++|$(GITWEB_FAVICON)|g' \
+        -e 's|++GITWEB_JS++|$(GITWEB_JS)|g' \
++       -e 's|++GITWEB_SITE_HTMLHEADER++|$(GITWEB_SITE_HTMLHEADER)|g' \
+        -e 's|++GITWEB_SITE_HEADER++|$(GITWEB_SITE_HEADER)|g' \
+        -e 's|++GITWEB_SITE_FOOTER++|$(GITWEB_SITE_FOOTER)|g' \
+        -e 's|++HIGHLIGHT_BIN++|$(HIGHLIGHT_BIN)|g'
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 85d64b2..63b0115 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -85,6 +85,8 @@ our $home_link_str =3D "++GITWEB_HOME_LINK_STR++";
+ our $site_name =3D "++GITWEB_SITENAME++"
+                  || ($ENV{'SERVER_NAME'} || "Untitled") . " Git";
+=20
++# filename of html code to include in the <head> section of each page
++our $site_htmlheader =3D "++GITWEB_SITE_HTMLHEADER++";
+ # filename of html text to include at top of each page
+ our $site_header =3D "++GITWEB_SITE_HEADER++";
+ # html text to include at home page
+@@ -3879,6 +3881,11 @@ EOF
+                print "<base href=3D\"".esc_url($base_url)."\" />\n";
+        }
+        print_header_links($status);
 +
- 	init_revisions(&rev, NULL);
- 	rev.diffopt.flags = opts->flags;
- 	rev.diffopt.output_format |= DIFF_FORMAT_NAME_STATUS;
-@@ -304,6 +304,26 @@ static void show_local_changes(struct object *head, struct diff_options *opts)
- 	run_diff_index(&rev, 0);
- }
- 
-+static void show_local_changes_status(void)
-+{
-+	const char *argv[] = { "status", NULL };
++       if (defined $site_htmlheader && -f $site_htmlheader) {
++               insert_file($site_htmlheader);
++       }
 +
-+	run_command_v_opt(argv, RUN_GIT_CMD);
-+}
-+
-+static void show_local_changes(struct checkout_opts *opts,
-+			       struct object *head,
-+			       struct diff_options *diffopts)
-+{
-+	if (opts->force || opts->verbosity < 0)
-+		return;
-+
-+	if (0 < opts->verbosity)
-+		show_local_changes_status();
-+	else
-+		show_local_changes_brief(head, diffopts);
-+}
-+
- static void describe_detached_head(const char *msg, struct commit *commit)
- {
- 	struct strbuf sb = STRBUF_INIT;
-@@ -326,7 +346,7 @@ static int reset_tree(struct tree *tree, struct checkout_opts *o, int worktree)
- 	opts.reset = 1;
- 	opts.merge = 1;
- 	opts.fn = oneway_merge;
--	opts.verbose_update = !o->quiet;
-+	opts.verbose_update = (0 <= o->verbosity);
- 	opts.src_index = &the_index;
- 	opts.dst_index = &the_index;
- 	parse_tree(tree);
-@@ -403,7 +423,7 @@ static int merge_working_tree(struct checkout_opts *opts,
- 		topts.update = 1;
- 		topts.merge = 1;
- 		topts.gently = opts->merge && old->commit;
--		topts.verbose_update = !opts->quiet;
-+		topts.verbose_update = (0 <= opts->verbosity);
- 		topts.fn = twoway_merge;
- 		topts.dir = xcalloc(1, sizeof(*topts.dir));
- 		topts.dir->flags |= DIR_SHOW_IGNORED;
-@@ -478,9 +498,6 @@ static int merge_working_tree(struct checkout_opts *opts,
- 	    commit_locked_index(lock_file))
- 		die(_("unable to write new index file"));
- 
--	if (!opts->force && !opts->quiet)
--		show_local_changes(&new->commit->object, &opts->diff_options);
--
- 	return 0;
- }
- 
-@@ -552,14 +569,14 @@ static void update_refs_for_switch(struct checkout_opts *opts,
- 	} else if (opts->force_detach || !new->path) {	/* No longer on any branch. */
- 		update_ref(msg.buf, "HEAD", new->commit->object.sha1, NULL,
- 			   REF_NODEREF, DIE_ON_ERR);
--		if (!opts->quiet) {
-+		if (0 <= opts->verbosity) {
- 			if (old->path && advice_detached_head)
- 				detach_advice(old->path, new->name);
- 			describe_detached_head(_("HEAD is now at"), new->commit);
- 		}
- 	} else if (new->path) {	/* Switch branches. */
- 		create_symref("HEAD", new->path, msg.buf);
--		if (!opts->quiet) {
-+		if (0 <= opts->verbosity) {
- 			if (old->path && !strcmp(new->path, old->path)) {
- 				fprintf(stderr, _("Already on '%s'\n"),
- 					new->name);
-@@ -584,7 +601,7 @@ static void update_refs_for_switch(struct checkout_opts *opts,
- 	}
- 	remove_branch_state();
- 	strbuf_release(&msg);
--	if (!opts->quiet &&
-+	if (0 <= opts->verbosity &&
- 	    (new->path || (!opts->force_detach && !strcmp(new->name, "HEAD"))))
- 		report_tracking(new);
- }
-@@ -717,13 +734,16 @@ static int switch_branches(struct checkout_opts *opts, struct branch_info *new)
- 	if (ret)
- 		return ret;
- 
--	if (!opts->quiet && !old.path && old.commit && new->commit != old.commit)
-+	if (0 <= opts->verbosity && !old.path && old.commit && new->commit != old.commit)
- 		orphaned_commit_warning(old.commit);
- 
- 	update_refs_for_switch(opts, &old, new);
- 
- 	ret = post_checkout_hook(old.commit, new->commit, 1);
- 	free((char *)old.path);
-+
-+	show_local_changes(opts, &new->commit->object, &opts->diff_options);
-+
- 	return ret || opts->writeout_error;
- }
- 
-@@ -906,7 +926,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	int patch_mode = 0;
- 	int dwim_new_local_branch = 1;
- 	struct option options[] = {
--		OPT__QUIET(&opts.quiet, "suppress progress reporting"),
-+		OPT__VERBOSITY(&opts.verbosity),
- 		OPT_STRING('b', NULL, &opts.new_branch, "branch",
- 			   "create and checkout a new branch"),
- 		OPT_STRING('B', NULL, &opts.new_branch_force, "branch",
+        print "</head>\n" .
+              "<body>\n";
+=20
+diff --git a/t/gitweb-lib.sh b/t/gitweb-lib.sh
+index 292753f..cfe5d74 100644
+--- a/t/gitweb-lib.sh
++++ b/t/gitweb-lib.sh
+@@ -16,6 +16,7 @@ our \$projectroot =3D "$safe_pwd";
+ our \$project_maxdepth =3D 8;
+ our \$home_link_str =3D 'projects';
+ our \$site_name =3D '[localhost]';
++our \$site_htmlheader =3D '';
+ our \$site_header =3D '';
+ our \$site_footer =3D '';
+ our \$home_text =3D 'indextext.html';
+--=20
+1.7.7
