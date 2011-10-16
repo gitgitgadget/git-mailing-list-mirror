@@ -1,84 +1,146 @@
-From: Dave Abrahams <dave-xT6NqnoQrPdWk0Htik3J/w@public.gmane.org>
-Subject: Higher-level change review?
-Date: Sun, 16 Oct 2011 10:31:51 -0400
-Message-ID: <m27h450zzc.fsf@pluto.luannocracy.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH 1/6] git-p4 tests: refactor and cleanup
+Date: Sun, 16 Oct 2011 10:35:33 -0400
+Message-ID: <20111016143533.GA22144@arf.padd.com>
+References: <20111015155358.GA29436@arf.padd.com>
+ <20111015155517.GB29436@arf.padd.com>
+ <201110161138.58396.stefano.lattarini@gmail.com>
+ <201110161154.11898.stefano.lattarini@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, magit <magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-X-From: magit+bncCJa5_IbRBBDZ1ev0BBoEVw5ZmA-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Sun Oct 16 16:31:56 2011
-Return-path: <magit+bncCJa5_IbRBBDZ1ev0BBoEVw5ZmA-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvgm-magit-3@m.gmane.org
-Received: from mail-qy0-f186.google.com ([209.85.216.186])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Luke Diamand <luke@diamand.org>, Chris Li <git@chrisli.org>
+To: Stefano Lattarini <stefano.lattarini@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 16 16:35:57 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <magit+bncCJa5_IbRBBDZ1ev0BBoEVw5ZmA-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
-	id 1RFRkq-00013s-FJ
-	for gcvgm-magit-3@m.gmane.org; Sun, 16 Oct 2011 16:31:56 +0200
-Received: by qyk35 with SMTP id 35sf1632428qyk.3
-        for <gcvgm-magit-3@m.gmane.org>; Sun, 16 Oct 2011 07:31:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:from:to:subject:date:message-id:user-agent
-         :mime-version:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:x-google-group-id:list-post
-         :list-help:list-archive:sender:list-subscribe:list-unsubscribe
-         :content-type;
-        bh=x84yIoeZPVht3zQxV7NIC/yKT1jxrQm/aoCuVUiGQgI=;
-        b=p2ed7M3qadZOg6+uxc224cVVzErLlnJ0ur9ioEBxerdUzb/5YbiyZWx2JcyDYJwMI3
-         VB4v9g/Ogh5cI/4izoc2zLFx8UZ8ATq0HIIZy+DT/iFVHxT3NmV4z4fPeNuV3dK116tr
-         BVCzKnRrwCwA+521TDkyl2KUD0jT1q08n0/AQ=
-Received: by 10.229.73.130 with SMTP id q2mr613835qcj.14.1318775513725;
-        Sun, 16 Oct 2011 07:31:53 -0700 (PDT)
-X-BeenThere: magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.224.199.7 with SMTP id eq7ls9682289qab.3.gmail; Sun, 16 Oct
- 2011 07:31:53 -0700 (PDT)
-Received: by 10.224.33.205 with SMTP id i13mr10105760qad.5.1318775513117;
-        Sun, 16 Oct 2011 07:31:53 -0700 (PDT)
-Received: by 10.224.33.205 with SMTP id i13mr10105759qad.5.1318775513110;
-        Sun, 16 Oct 2011 07:31:53 -0700 (PDT)
-Received: from mail-vx0-f173.google.com (mail-vx0-f173.google.com [209.85.220.173])
-        by gmr-mx.google.com with ESMTPS id j6si5639782qct.1.2011.10.16.07.31.53
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 16 Oct 2011 07:31:53 -0700 (PDT)
-Received-SPF: pass (google.com: domain of dave-xT6NqnoQrPdWk0Htik3J/w@public.gmane.org designates 209.85.220.173 as permitted sender) client-ip=209.85.220.173;
-Received: by vcbfl17 with SMTP id fl17so2819234vcb.18
-        for <magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Sun, 16 Oct 2011 07:31:52 -0700 (PDT)
-Received: by 10.52.21.67 with SMTP id t3mr16005013vde.104.1318775512804;
-        Sun, 16 Oct 2011 07:31:52 -0700 (PDT)
-Received: from pluto.luannocracy.com (207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com. [207.172.223.249])
-        by mx.google.com with ESMTPS id r5sm1585791vdw.2.2011.10.16.07.31.51
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 16 Oct 2011 07:31:52 -0700 (PDT)
-Received: by pluto.luannocracy.com (Postfix, from userid 501)
-	id 4953F1116CC7; Sun, 16 Oct 2011 10:31:51 -0400 (EDT)
-User-Agent: Gnus/5.110018 (No Gnus v0.18) Emacs/23.3 (darwin)
-X-Original-Sender: dave-xT6NqnoQrPdWk0Htik3J/w@public.gmane.org
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of dave-xT6NqnoQrPdWk0Htik3J/w@public.gmane.org designates 209.85.220.173 as permitted sender) smtp.mail=dave-xT6NqnoQrPdWk0Htik3J/w@public.gmane.org
-Precedence: list
-Mailing-list: list magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact magit+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-ID: <magit.googlegroups.com>
-X-Google-Group-Id: 752745291123
-List-Post: <http://groups.google.com/group/magit/post?hl=en_US>, <mailto:magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:magit+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Archive: <http://groups.google.com/group/magit?hl=en_US>
-Sender: magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Subscribe: <http://groups.google.com/group/magit/subscribe?hl=en_US>, <mailto:magit+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://groups.google.com/group/magit/subscribe?hl=en_US>, <mailto:magit+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183712>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1RFRoi-0002ba-NJ
+	for gcvg-git-2@lo.gmane.org; Sun, 16 Oct 2011 16:35:57 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754435Ab1JPOfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Oct 2011 10:35:52 -0400
+Received: from honk.padd.com ([74.3.171.149]:48053 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753705Ab1JPOfv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Oct 2011 10:35:51 -0400
+Received: from arf.padd.com (unknown [50.55.131.180])
+	by honk.padd.com (Postfix) with ESMTPSA id 06B8D2822;
+	Sun, 16 Oct 2011 07:35:50 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id D0663313B8; Sun, 16 Oct 2011 10:35:33 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <201110161154.11898.stefano.lattarini@gmail.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183713>
+
+stefano.lattarini@gmail.com wrote on Sun, 16 Oct 2011 11:54 +0200:
+> OK, I have to partially correct myself here ...
+> 
+> On Sunday 16 October 2011, Stefano Lattarini wrote:
+> >
+> > This won't work with older versions of the Almquist shell (without
+> > prepending `testid' and `git_p4_test_start' with a `$', that is):
+> > 
+> >   $ ash-0.5.2 -c 'a=4; b=2; echo $(( 1 + (a - b) ))'
+> >   ash-0.5.2: arith: syntax error: " 1 + (a - b) "
+> > 
+> OTOH, this behaviour seems in contrast with the POSIX standard, which
+> says that:
+> 
+>   ``If the shell variable x contains a value that forms a valid integer
+>     constant, then the arithmetic expansions "$((x))" and "$(($x))" shall
+>     return the same value.''
+> 
+> Reference:
+>  <http://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html#tag_02_06_04>
+> 
+> So, since the git testsuite explicitly requires a POSIX shell, there is
+> probably nothing to fix here.
+> 
+> Sorry for the noise,
+>   Stefano
+
+No, this is a good catch.  The use of $x inside arithmetic
+expansions is indeed called out in the CodingGuidlines.  Thanks
+for the careful read.
+
+I'm going to resend the series, since it's not in next yet.
+Here's the patch for this bit, fyi.
+
+		-- Pete
 
 
-I've been working on a fairly large Org outline and also merging
-upstream code changes in a project that does a lot of refactoring, and
-I've discovered that Git's diff format is poorly-suited to reviewing the
-kinds of structural modifications I often deal with, where indentation
-changes and large parts of documents are reorganized.  Are there better
-ways to review, stage, etc. this kind of change than by using
-straight-ahead diffs?  And, for the magit list, has anyone integrated
-an improved review capability with magit?
+-------------------8<-------------------
+From 53d5ad0761cda36da97bf1498ab1dc1a80a52772 Mon Sep 17 00:00:00 2001
+From: Pete Wyckoff <pw@padd.com>
+Date: Sun, 16 Oct 2011 09:59:05 -0400
+Subject: [PATCH] git-p4 tests: use explicit $ for variables in $(( .. ))
 
-Hints most appreciated,
 
+Signed-off-by: Pete Wyckoff <pw@padd.com>
+---
+ t/lib-git-p4.sh   |    2 +-
+ t/t9800-git-p4.sh |    8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
+index 412adec..a870f9a 100644
+--- a/t/lib-git-p4.sh
++++ b/t/lib-git-p4.sh
+@@ -22,7 +22,7 @@ GITP4="$GIT_BUILD_DIR/contrib/fast-import/git-p4"
+ # same tests and has chosen the same ports.
+ testid=${this_test#t}
+ git_p4_test_start=9800
+-P4DPORT=$((10669 + (testid - git_p4_test_start)))
++P4DPORT=$((10669 + ($testid - $git_p4_test_start)))
+ 
+ export P4PORT=localhost:$P4DPORT
+ export P4CLIENT=client
+diff --git a/t/t9800-git-p4.sh b/t/t9800-git-p4.sh
+index 296aee9..8fbed66 100755
+--- a/t/t9800-git-p4.sh
++++ b/t/t9800-git-p4.sh
+@@ -293,7 +293,7 @@ test_expect_success 'detect renames' '
+ 		git diff-tree -r -M HEAD &&
+ 		level=$(git diff-tree -r -M HEAD | sed 1d | cut -f1 | cut -d" " -f5 | sed "s/R0*//") &&
+ 		test -n "$level" && test "$level" -gt 0 && test "$level" -lt 98 &&
+-		git config git-p4.detectRenames $((level + 2)) &&
++		git config git-p4.detectRenames $(($level + 2)) &&
+ 		"$GITP4" submit &&
+ 		p4 filelog //depot/file6 &&
+ 		p4 filelog //depot/file6 | test_must_fail grep -q "branch from" &&
+@@ -305,7 +305,7 @@ test_expect_success 'detect renames' '
+ 		git diff-tree -r -M HEAD &&
+ 		level=$(git diff-tree -r -M HEAD | sed 1d | cut -f1 | cut -d" " -f5 | sed "s/R0*//") &&
+ 		test -n "$level" && test "$level" -gt 2 && test "$level" -lt 100 &&
+-		git config git-p4.detectRenames $((level - 2)) &&
++		git config git-p4.detectRenames $(($level - 2)) &&
+ 		"$GITP4" submit &&
+ 		p4 filelog //depot/file7 &&
+ 		p4 filelog //depot/file7 | grep -q "branch from //depot/file6"
+@@ -376,7 +376,7 @@ test_expect_success 'detect copies' '
+ 		test -n "$level" && test "$level" -gt 0 && test "$level" -lt 98 &&
+ 		src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
+ 		test "$src" = file10 &&
+-		git config git-p4.detectCopies $((level + 2)) &&
++		git config git-p4.detectCopies $(($level + 2)) &&
+ 		"$GITP4" submit &&
+ 		p4 filelog //depot/file12 &&
+ 		p4 filelog //depot/file12 | test_must_fail grep -q "branch from" &&
+@@ -390,7 +390,7 @@ test_expect_success 'detect copies' '
+ 		test -n "$level" && test "$level" -gt 2 && test "$level" -lt 100 &&
+ 		src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
+ 		test "$src" = file10 &&
+-		git config git-p4.detectCopies $((level - 2)) &&
++		git config git-p4.detectCopies $(($level - 2)) &&
+ 		"$GITP4" submit &&
+ 		p4 filelog //depot/file13 &&
+ 		p4 filelog //depot/file13 | grep -q "branch from //depot/file"
 -- 
-Dave Abrahams
-BoostPro Computing
-http://www.boostpro.com
+1.7.7
