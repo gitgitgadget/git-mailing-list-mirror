@@ -1,63 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Oct 2011, #05; Fri, 14)
-Date: Sun, 16 Oct 2011 12:53:29 -0400
-Message-ID: <20111016165329.GA14226@sigill.intra.peff.net>
-References: <7vd3dzximu.fsf@alter.siamese.dyndns.org>
+From: =?iso-8859-1?q?L=E9na=EFc_Huard?= <lenaic@lhuard.fr.eu.org>
+Subject: [PATCH] gitweb: add extensions to highlight feature map
+Date: Sun, 16 Oct 2011 18:59:49 +0200
+Message-ID: <201110161859.49817.lenaic@lhuard.fr.eu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 16 18:53:46 2011
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 16 19:00:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RFTy5-0005S7-52
-	for gcvg-git-2@lo.gmane.org; Sun, 16 Oct 2011 18:53:45 +0200
+	id 1RFU47-0007po-16
+	for gcvg-git-2@lo.gmane.org; Sun, 16 Oct 2011 18:59:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754745Ab1JPQxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Oct 2011 12:53:33 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33472
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754669Ab1JPQxd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Oct 2011 12:53:33 -0400
-Received: (qmail 31519 invoked by uid 107); 16 Oct 2011 16:53:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 16 Oct 2011 12:53:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 16 Oct 2011 12:53:29 -0400
-Content-Disposition: inline
-In-Reply-To: <7vd3dzximu.fsf@alter.siamese.dyndns.org>
+	id S1754811Ab1JPQ7y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Oct 2011 12:59:54 -0400
+Received: from freebox.lhuard.fr.eu.org ([88.182.161.122]:37769 "EHLO
+	coruscant.lhuard.fr.eu.org" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754751Ab1JPQ7y convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Oct 2011 12:59:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lhuard.fr.eu.org; s=dkim;
+	h=Message-Id:Content-Transfer-Encoding:Content-Type:MIME-Version:Date:Subject:To:From; bh=Amz89GahGwbTbcx39k8QE1juIKV2PbJxHkIU+l8J0/8=;
+	b=MJO4XGBlxtfM/9j0MjSTP83U4GydsetzzIgNgNZZfndjkxdz9RQyaRj+w/bwlGis1B6beLIOBao8AnD0wTt8iBWU/Lu9NsR40xAmtQYElB9OpYwEu+0ganpPDgIaOAYYki4obOBfws+r7UvZDeqM4kB/XOOiVUHgE+ZHB6BWXbk=;
+Received: from lenaic by coruscant.lhuard.fr.eu.org with local (Exim 4.76)
+	(envelope-from <lenaic@lhuard.fr.eu.org>)
+	id 1RFU3x-0002ju-Sf
+	for git@vger.kernel.org; Sun, 16 Oct 2011 18:59:50 +0200
+User-Agent: KMail/1.13.7 (Linux/3.0.0-2-amd64; KDE/4.6.5; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183726>
 
-On Fri, Oct 14, 2011 at 04:23:21PM -0700, Junio C Hamano wrote:
+added: hpp, m
 
-> * jk/pull-rebase-with-work-tree (2011-10-13) 1 commit
->  - pull,rebase: handle GIT_WORK_TREE better
-> 
-> Looked reasonable.
-> Will merge to 'next'.
+Signed-off-by: L=E9na=EFc Huard <lenaic@lhuard.fr.eu.org>
+---
+ gitweb/gitweb.perl |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-I'm not so sure. Didn't you demonstrate that cd_to_toplevel as-is will
-not actually go to the toplevel if we're outside of the work tree?
-
-And changing it is non-trivial, because there may be weird cases that
-rely on staying there? See my final note in the thread:
-
-  http://article.gmane.org/gmane.comp.version-control.git/183519
-
-> * jk/daemon-msgs (2011-10-14) 1 commit
->  - daemon: give friendlier error messages to clients
-> 
-> Will merge to 'next'.
-
-I'm happy to tweak the "access denied" message if other people want. I
-kind of hoped it wouldn't matter, and that most sites would use
---informative-errors.
-
--Peff
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 85d64b2..75e4854 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -262,11 +262,12 @@ our %highlight_ext =3D (
+        # alternate extensions, see /etc/highlight/filetypes.conf
+        'h' =3D> 'c',
+        map { $_ =3D> 'sh'  } qw(bash zsh ksh),
+-       map { $_ =3D> 'cpp' } qw(cxx c++ cc),
++       map { $_ =3D> 'cpp' } qw(cxx c++ cc hpp),
+        map { $_ =3D> 'php' } qw(php3 php4 php5 phps),
+        map { $_ =3D> 'pl'  } qw(perl pm), # perhaps also 'cgi'
+        map { $_ =3D> 'make'} qw(mak mk),
+        map { $_ =3D> 'xml' } qw(xhtml html htm),
++       'm' =3D> 'objc',
+ );
+=20
+ # You define site-wide feature defaults here; override them with
+--=20
+1.7.7
