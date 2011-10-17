@@ -1,100 +1,135 @@
 From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH 3/3] git-gui: new config to control staging of untracked files
-Date: Mon, 17 Oct 2011 23:51:09 +0100
-Message-ID: <87r52bgrky.fsf@fox.patthoyts.tk>
-References: <0f862de296a94b06495e4418bc731b5d201d5767.1318620267.git.bert.wesarg@googlemail.com>
-	<03727ea04f20c953e7de3f84ab1724a8360ca2c4.1318620267.git.bert.wesarg@googlemail.com>
-	<20111017183430.GA2540@sandbox-rc>
-	<CAKPyHN3pKUSLTs8_5QMo5i+=3w7KXAHJjDOfQ1XYG92ZbQ1SeA@mail.gmail.com>
-	<20111017192706.GB3168@sandbox-rc>
+Subject: Re: [PATCH 1/4] git-gui: handle config booleans without value
+Date: Tue, 18 Oct 2011 00:13:59 +0100
+Message-ID: <87mxczgqiw.fsf@fox.patthoyts.tk>
+References: <94b050c4cf7ae8df8d79112e13613244ebff4037.1318579823.git.bert.wesarg@googlemail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Tue Oct 18 00:51:25 2011
+Cc: git@vger.kernel.org
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 18 01:14:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RFw1g-0007UH-Gs
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 00:51:20 +0200
+	id 1RFwNl-0005l7-71
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 01:14:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756129Ab1JQWvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Oct 2011 18:51:14 -0400
-Received: from mtaout01-winn.ispmail.ntl.com ([81.103.221.47]:12599 "EHLO
+	id S1756208Ab1JQXOD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Oct 2011 19:14:03 -0400
+Received: from mtaout01-winn.ispmail.ntl.com ([81.103.221.47]:20482 "EHLO
 	mtaout01-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756099Ab1JQWvN (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Oct 2011 18:51:13 -0400
-Received: from know-smtpout-4.server.virginmedia.net ([62.254.123.4])
+	by vger.kernel.org with ESMTP id S1752453Ab1JQXOC (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Oct 2011 19:14:02 -0400
+Received: from know-smtpout-4.server.virginmedia.net ([62.254.123.1])
           by mtaout01-winn.ispmail.ntl.com
           (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20111017225110.RYK13501.mtaout01-winn.ispmail.ntl.com@know-smtpout-4.server.virginmedia.net>;
-          Mon, 17 Oct 2011 23:51:10 +0100
+          id <20111017231400.BWJD13501.mtaout01-winn.ispmail.ntl.com@know-smtpout-4.server.virginmedia.net>;
+          Tue, 18 Oct 2011 00:14:00 +0100
 Received: from [94.171.235.235] (helo=fox.patthoyts.tk)
 	by know-smtpout-4.server.virginmedia.net with esmtpa (Exim 4.63)
 	(envelope-from <patthoyts@users.sourceforge.net>)
-	id 1RFw1W-0000Fx-Pd; Mon, 17 Oct 2011 23:51:10 +0100
+	id 1RFwNc-0006V4-0a; Tue, 18 Oct 2011 00:14:00 +0100
 Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 08A2A201AC; Mon, 17 Oct 2011 23:51:09 +0100 (BST)
+	id 4A182201AC; Tue, 18 Oct 2011 00:13:59 +0100 (BST)
 X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
  qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
  '?a?.s#@hl7CiTo'F"O!fvbL0
 X-Url: http://www.patthoyts.tk/
 X-Home-Page: http://www.patthoyts.tk/
 X-Web: http://www.patthoyts.tk/
-In-Reply-To: <20111017192706.GB3168@sandbox-rc> (Heiko Voigt's message of
-	"Mon, 17 Oct 2011 21:27:07 +0200")
+In-Reply-To: <94b050c4cf7ae8df8d79112e13613244ebff4037.1318579823.git.bert.wesarg@googlemail.com>
+	(Bert Wesarg's message of "Fri, 14 Oct 2011 10:14:49 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
-X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=O9HYxzjLEG8A:10 a=OtpQyoxz0-8A:10 a=kj9zAlcOel0A:10 a=Y7828TS4AAAA:8 a=Rf460ibiAAAA:8 a=E6a1MfeHReUmRMKJy-sA:9 a=TRMQW9OnHJyVXuxz1agA:7 a=CjuIK1q_8ugA:10 a=IUdvcfx5MVUA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=O9HYxzjLEG8A:10 a=F7pDX9lBjJ0A:10 a=kj9zAlcOel0A:10 a=mK_AVkanAAAA:8 a=Rf460ibiAAAA:8 a=shVeskzBdJgyAGMCh80A:9 a=nzrbkkectRT378UVyZYA:7 a=CjuIK1q_8ugA:10 a=9xyTavCNlvEA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183840>
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
+Bert Wesarg <bert.wesarg@googlemail.com> writes:
 
->Hi,
+>When git interprets a config variable without a value as bool it is considered
+>as true. But git-gui doesn't so until yet.
 >
->On Mon, Oct 17, 2011 at 08:47:50PM +0200, Bert Wesarg wrote:
->> On Mon, Oct 17, 2011 at 20:34, Heiko Voigt <hvoigt@hvoigt.net> wrote:
->> > Here I am wondering whether we have a similar mechanism in git gui like
->> > in core git that makes yes,true,1 equivalents (and similar with other
->> > values) ?
->> 
->> But it is not only yes,true,1 or no,false,0 its a tristate with the
->> third state 'ask'. For booleans, there is such functionality in git
->> gui. See is_config_true and is_config_false. Reusing these for this
->> tristate wouldn't work. The current check here is indeed very strict
->> and should be loosen by at least ignoring the case, surrounding
->> spaces, and allow also true/false. But also note, that this variable
->> can be set via the Options menu, so you can't mistype it.
+>The value for boolean configs are also case-insensitive.
 >
->Well if using git config you can ;-). I just wanted to ask whether we
->may already have machinery which supports such tristate.
->If we do not I think the current "strict" configuration is fine. In most
->cases the user will use the gui itself to configure such behavior so
->thats no big deal.
->If someone needs that it can be added later on.
+>Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+>---
+> git-gui.sh |   16 ++++++++++++++--
+> 1 files changed, 14 insertions(+), 2 deletions(-)
 >
->Thanks, Heiko
->
+>diff --git a/git-gui.sh b/git-gui.sh
+>index f897160..d687871 100755
+>--- a/git-gui.sh
+>+++ b/git-gui.sh
+>@@ -299,7 +299,9 @@ proc is_config_true {name} {
+> 	global repo_config
+> 	if {[catch {set v $repo_config($name)}]} {
+> 		return 0
+>-	} elseif {$v eq {true} || $v eq {1} || $v eq {yes}} {
+>+	}
+>+	set v [string tolower $v]
+>+	if {$v eq {} || $v eq {true} || $v eq {1} || $v eq {yes} || $v eq {on}} {
+> 		return 1
+> 	} else {
+> 		return 0
 
-This set of 3 patches looks fine. I was a bit dubious of the new
-phrasing for the ask condition but it is growing on me. I wonder it it
-might be worth including the number of untracked files to be staged too
-eg: "Stage 15 untracked files?"
-
-   set reply [ask_popup [mc "Stage %d untracked files?" \
-                             [llength $untracked_paths]]]
-
-Loosening the check we can do using
-  switch -glob -- [get_config gui.stageuntracked] {
-    [Nn]* { set reply 0}
-    [Yy]* { set reply 1}
-    default { ... }
+This looks ok - we actually have a [string is boolean $v] test we could
+use eg:
+  if {[string is boolean $v]} {
+    return [expr {$v eq {} ? 1 : !!$v}]
   }
+although I'm not sure it gains us much. This would match everything Tcl
+believes to be a boolean - yes/no, on/off, true/false and 1/0. Without
+-strict the [string is] test will consider {} to be a boolean.
+
+
+>@@ -310,7 +312,9 @@ proc is_config_false {name} {
+> 	global repo_config
+> 	if {[catch {set v $repo_config($name)}]} {
+> 		return 0
+>-	} elseif {$v eq {false} || $v eq {0} || $v eq {no}} {
+>+	}
+>+	set v [string tolower $v]
+>+	if {$v eq {false} || $v eq {0} || $v eq {no} || $v eq {off}} {
+> 		return 1
+> 	} else {
+> 		return 0
+>@@ -1060,6 +1064,10 @@ git-version proc _parse_config {arr_name args} {
+> 				} else {
+> 					set arr($name) $value
+> 				}
+>+			} elseif {[regexp {^([^\n]+)$} $line line name]} {
+>+				# no value given, but interpreting them as
+>+				# boolean will be handled as true
+>+				set arr($name) {}
+> 			}
+> 		}
+> 	}
+>@@ -1075,6 +1083,10 @@ git-version proc _parse_config {arr_name args} {
+> 					} else {
+> 						set arr($name) $value
+> 					}
+>+				} elseif {[regexp {^([^=]+)$} $line line name]} {
+>+					# no value given, but interpreting them as
+>+					# boolean will be handled as true
+>+					set arr($name) {}
+> 				}
+> 			}
+> 			close $fd_rc
+
+Is this really how git treats boolean config values? I can't seem to
+demonstrate that to myself:
+pat@frog:/opt/src/git-gui$ git config --unset core.xyzzy
+pat@frog:/opt/src/git-gui$ git config --bool --get core.xyzzy
+pat@frog:/opt/src/git-gui$ git config --bool core.xyzzy 1
+pat@frog:/opt/src/git-gui$ git config --bool --get core.xyzzy
+true
+
+I assume I'm using the wrong test for this.
 
 -- 
 Pat Thoyts                            http://www.patthoyts.tk/
