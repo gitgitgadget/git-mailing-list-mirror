@@ -1,136 +1,79 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH 1/4] git-gui: handle config booleans without value
-Date: Tue, 18 Oct 2011 00:13:59 +0100
-Message-ID: <87mxczgqiw.fsf@fox.patthoyts.tk>
-References: <94b050c4cf7ae8df8d79112e13613244ebff4037.1318579823.git.bert.wesarg@googlemail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] resolve_gitlink_packed_ref(): fix mismerge
+Date: Mon, 17 Oct 2011 16:14:30 -0700
+Message-ID: <7vipnnjjmx.fsf@alter.siamese.dyndns.org>
+References: <4E9B1E32.7030101@gmail.com>
+ <7vfwispi8u.fsf@alter.siamese.dyndns.org> <4E9B8719.1090203@gmail.com>
+ <4E9BA39B.709@alum.mit.edu> <4E9BFE66.5070906@gmail.com>
+ <4E9C2F3C.7080405@alum.mit.edu> <7v4nz7o7mg.fsf@alter.siamese.dyndns.org>
+ <7vbotfmpbh.fsf_-_@alter.siamese.dyndns.org> <4E9CA853.10107@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 18 01:14:11 2011
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 18 01:14:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RFwNl-0005l7-71
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 01:14:09 +0200
+	id 1RFwOG-0005qU-3b
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 01:14:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756208Ab1JQXOD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Oct 2011 19:14:03 -0400
-Received: from mtaout01-winn.ispmail.ntl.com ([81.103.221.47]:20482 "EHLO
-	mtaout01-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752453Ab1JQXOC (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Oct 2011 19:14:02 -0400
-Received: from know-smtpout-4.server.virginmedia.net ([62.254.123.1])
-          by mtaout01-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20111017231400.BWJD13501.mtaout01-winn.ispmail.ntl.com@know-smtpout-4.server.virginmedia.net>;
-          Tue, 18 Oct 2011 00:14:00 +0100
-Received: from [94.171.235.235] (helo=fox.patthoyts.tk)
-	by know-smtpout-4.server.virginmedia.net with esmtpa (Exim 4.63)
-	(envelope-from <patthoyts@users.sourceforge.net>)
-	id 1RFwNc-0006V4-0a; Tue, 18 Oct 2011 00:14:00 +0100
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 4A182201AC; Tue, 18 Oct 2011 00:13:59 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-In-Reply-To: <94b050c4cf7ae8df8d79112e13613244ebff4037.1318579823.git.bert.wesarg@googlemail.com>
-	(Bert Wesarg's message of "Fri, 14 Oct 2011 10:14:49 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
-X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=O9HYxzjLEG8A:10 a=F7pDX9lBjJ0A:10 a=kj9zAlcOel0A:10 a=mK_AVkanAAAA:8 a=Rf460ibiAAAA:8 a=shVeskzBdJgyAGMCh80A:9 a=nzrbkkectRT378UVyZYA:7 a=CjuIK1q_8ugA:10 a=9xyTavCNlvEA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1756608Ab1JQXOg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Oct 2011 19:14:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38337 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752453Ab1JQXOf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Oct 2011 19:14:35 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4996F509D;
+	Mon, 17 Oct 2011 19:14:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uAKGZOKVPGjqM9XjAZ9uaKyCQ50=; b=oQcdBS
+	f5ZjjTqj3nqFdeKxLryOWMV3ZVy83MAUkG3cTWlBXNNUYEkElmcnA9HqQnVAaZVz
+	usrOrAd1+2Twbrl0jKXDhLpbgEKdcG0YyFdnfFs1hnZ90zDDlWxq+s4ikCZDBT6u
+	l3ymnrOiCT03i80nIO4EcYpFYAjVtT7aTYlpk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rmvTIcKp83Toi3u/kpUv9WyzGhS/LjBf
+	wr8DMJaKi//oj6uMORRIDFBZ0aBKoVX1LZfRtRcV1ZT1kjNJvl3VjcMNeLFpZ7oI
+	RlI5w9+1wazLdEp+GmqzAeoJMyc+Azdh3y4YsavLeLfHTVlkEDTUy48gExxtRm31
+	GqK4n30zW2k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 40391509C;
+	Mon, 17 Oct 2011 19:14:32 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C7230509B; Mon, 17 Oct 2011
+ 19:14:31 -0400 (EDT)
+In-Reply-To: <4E9CA853.10107@gmail.com> (Mark Levedahl's message of "Mon, 17
+ Oct 2011 18:12:35 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C524EF30-F915-11E0-BCFF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183841>
 
-Bert Wesarg <bert.wesarg@googlemail.com> writes:
+Mark Levedahl <mlevedahl@gmail.com> writes:
 
->When git interprets a config variable without a value as bool it is considered
->as true. But git-gui doesn't so until yet.
->
->The value for boolean configs are also case-insensitive.
->
->Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
->---
-> git-gui.sh |   16 ++++++++++++++--
-> 1 files changed, 14 insertions(+), 2 deletions(-)
->
->diff --git a/git-gui.sh b/git-gui.sh
->index f897160..d687871 100755
->--- a/git-gui.sh
->+++ b/git-gui.sh
->@@ -299,7 +299,9 @@ proc is_config_true {name} {
-> 	global repo_config
-> 	if {[catch {set v $repo_config($name)}]} {
-> 		return 0
->-	} elseif {$v eq {true} || $v eq {1} || $v eq {yes}} {
->+	}
->+	set v [string tolower $v]
->+	if {$v eq {} || $v eq {true} || $v eq {1} || $v eq {yes} || $v eq {on}} {
-> 		return 1
-> 	} else {
-> 		return 0
+> On 10/17/2011 02:43 PM, Junio C Hamano wrote:
+>> 2c5c66b (Merge branch 'jp/get-ref-dir-unsorted', 2011-10-10) merged a
+>> topic that forked from the mainline before a new helper function
+>> get_packed_refs() refactored code to read packed-refs file. The merge made
+>> the call to the helper function with an incorrect argument. The parameter
+>> to the function has to be a path to the submodule.
+>>
+>> Fix the mismerge.
+>>
+>> Helped-by: Mark Levedahl<mlevedahl@gmail.com>
+>> Helped-by: Michael Haggerty<mhagger@alum.mit.edu>
+>> Signed-off-by: Junio C Hamano<gitster@pobox.com>
+>> ---
+>>
+> Thank you, this fixes the problem for me.
 
-This looks ok - we actually have a [string is boolean $v] test we could
-use eg:
-  if {[string is boolean $v]} {
-    return [expr {$v eq {} ? 1 : !!$v}]
-  }
-although I'm not sure it gains us much. This would match everything Tcl
-believes to be a boolean - yes/no, on/off, true/false and 1/0. Without
--strict the [string is] test will consider {} to be a boolean.
-
-
->@@ -310,7 +312,9 @@ proc is_config_false {name} {
-> 	global repo_config
-> 	if {[catch {set v $repo_config($name)}]} {
-> 		return 0
->-	} elseif {$v eq {false} || $v eq {0} || $v eq {no}} {
->+	}
->+	set v [string tolower $v]
->+	if {$v eq {false} || $v eq {0} || $v eq {no} || $v eq {off}} {
-> 		return 1
-> 	} else {
-> 		return 0
->@@ -1060,6 +1064,10 @@ git-version proc _parse_config {arr_name args} {
-> 				} else {
-> 					set arr($name) $value
-> 				}
->+			} elseif {[regexp {^([^\n]+)$} $line line name]} {
->+				# no value given, but interpreting them as
->+				# boolean will be handled as true
->+				set arr($name) {}
-> 			}
-> 		}
-> 	}
->@@ -1075,6 +1083,10 @@ git-version proc _parse_config {arr_name args} {
-> 					} else {
-> 						set arr($name) $value
-> 					}
->+				} elseif {[regexp {^([^=]+)$} $line line name]} {
->+					# no value given, but interpreting them as
->+					# boolean will be handled as true
->+					set arr($name) {}
-> 				}
-> 			}
-> 			close $fd_rc
-
-Is this really how git treats boolean config values? I can't seem to
-demonstrate that to myself:
-pat@frog:/opt/src/git-gui$ git config --unset core.xyzzy
-pat@frog:/opt/src/git-gui$ git config --bool --get core.xyzzy
-pat@frog:/opt/src/git-gui$ git config --bool core.xyzzy 1
-pat@frog:/opt/src/git-gui$ git config --bool --get core.xyzzy
-true
-
-I assume I'm using the wrong test for this.
-
--- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+Thanks for a quick bug report and helping with the test.
