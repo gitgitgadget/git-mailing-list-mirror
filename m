@@ -1,90 +1,167 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: What should "git fetch origin +next" should do?
-Date: Mon, 17 Oct 2011 18:02:10 -0400
-Message-ID: <4E9CA5E2.2020701@xiplink.com>
-References: <7v7h45s8rh.fsf@alter.siamese.dyndns.org> <20111017171041.GA12837@sigill.intra.peff.net> <7vipnnmppx.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH/RFC 1/2] gitweb: change format_diff_line() to remove leading SP from $diff_class
+Date: Tue, 18 Oct 2011 00:07:30 +0200
+Message-ID: <201110180007.31008.jnareb@gmail.com>
+References: <CAFo4x0LP4fXgSNAnss_WRLo-TH_qe=esYn7P+=iS6t87tdzcbw@mail.gmail.com> <m38voj72xy.fsf@localhost.localdomain> <7v62jnl3ef.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc: Kato Kazuyoshi <kato.kazuyoshi@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 18 00:02:22 2011
+X-From: git-owner@vger.kernel.org Tue Oct 18 00:07:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RFvGI-0007ES-1a
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 00:02:22 +0200
+	id 1RFvLU-0000qA-9C
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 00:07:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751985Ab1JQWCR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Oct 2011 18:02:17 -0400
-Received: from smtp132.iad.emailsrvr.com ([207.97.245.132]:33453 "EHLO
-	smtp132.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751303Ab1JQWCQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Oct 2011 18:02:16 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp43.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id 3DB9E2D04F6;
-	Mon, 17 Oct 2011 18:02:16 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp43.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 0B7EB2D04FB;
-	Mon, 17 Oct 2011 18:02:13 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
-In-Reply-To: <7vipnnmppx.fsf@alter.siamese.dyndns.org>
+	id S1753008Ab1JQWHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Oct 2011 18:07:39 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:64910 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752486Ab1JQWHi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Oct 2011 18:07:38 -0400
+Received: by eye27 with SMTP id 27so3424569eye.19
+        for <git@vger.kernel.org>; Mon, 17 Oct 2011 15:07:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=jg5E/72p5XdM/IvtLTzLral3fht/XbyqgQ1oqzTbEm8=;
+        b=I3VwTcn/oy7KEDhvYuCWmKbVu7prRqv2CqYbCH0k68jTERdihRggHRJ3ZR7eC1YsTb
+         pTN1+4oYpTbA2lVu+Eww0Bl3XZhvJjl6IXL7AUKUYU7EYo/9bTflI9j32yzJF8NZKgy/
+         iQnFtwP3NXOrVktWcXi7+X924+TiWKaUqmCxA=
+Received: by 10.223.77.26 with SMTP id e26mr17560960fak.37.1318889257172;
+        Mon, 17 Oct 2011 15:07:37 -0700 (PDT)
+Received: from [192.168.1.13] (absh126.neoplus.adsl.tpnet.pl. [83.8.127.126])
+        by mx.google.com with ESMTPS id a1sm25671151fab.4.2011.10.17.15.07.34
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 17 Oct 2011 15:07:35 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7v62jnl3ef.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183829>
 
-On 11-10-17 02:34 PM, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
+On Mon, 17 Oct 2011, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
 > 
->> I think the exact same confusion exists. I told git to update 'next'
->> from origin, but it didn't touch refs/remotes/origin/next.
+>> By the way, it is common to either have following patches to be chain
+>> reply to first patch, or better provide cover letter for patch series
+>> and have all patches be reply to cover letter.
 > 
-> Except that you didn't tell git to *update* the remote tracking branch for
-> 'next'; you merely told it to fetch 'next' at the remote.
+> It may be a good discipline for 14 patch series, but it doesn't matter for
+> something this small.
+
+Well, cover letter for 2-patch series might be overkill, but having
+patches in series connected e.g. chain-replied-to, or all replies to
+first patch in series, is IMHO a good idea.
+
+>>>  gitweb/gitweb.perl |   24 +++++++++++++-----------
+>>>  1 files changed, 13 insertions(+), 11 deletions(-)
+>>> 
+>>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>>> index 85d64b2..095adda 100755
+>>> --- a/gitweb/gitweb.perl
+>>> +++ b/gitweb/gitweb.perl
+>>> @@ -2235,28 +2235,30 @@ sub format_diff_line {
+>>>  		# combined diff
+>>>  		my $prefix = substr($line, 0, scalar @{$from->{'href'}});
+>>>  		if ($line =~ m/^\@{3}/) {
+>>> -			$diff_class = " chunk_header";
+>>> +			$diff_class = "chunk_header";
+>>>  		} elsif ($line =~ m/^\\/) {
+>>> -			$diff_class = " incomplete";
+>>> +			$diff_class = "incomplete";
+>>>  		} elsif ($prefix =~ tr/+/+/) {
+>>> -			$diff_class = " add";
+>>> +			$diff_class = "add";
+>>>  		} elsif ($prefix =~ tr/-/-/) {
+>>> -			$diff_class = " rem";
+>>> +			$diff_class = "rem";
+>>>  		}
+>>
+>> Hmmm... that reminds me: this if-elsif chain is a bit ugly, but would
+>> be hard to replace without given ... when, I think.
 > 
->> ...  But I suspect that is not how many git users think of it.
+> I wasn't reading the existing context line, but now that you mention it,
+> they are not just ugly but are borderline of being incorrect (e.g. it does
+> not catch a broken hunk-header that begins with "@@@@" for a two-way
+> merge).
 > 
-> I am inclined to agree that it might be the case; see my other message in
-> this thread.
+> Assuming that $from->{'href'} has all the parents (i.e. 2 for two-way
+> merge), shouldn't the code be more like this?
+> 
+> 	# combined diff
 
-Indeed.  Apologies for missing that subtlety.
+Wouldn't that cover not only combined diff, but an "ordinary" diff as
+well then (i.e. comment should change)?  I think that was the intent,
+isn't it?
 
-So now I think option (2) is the best choice.  To support one-off fetches,
-teach fetch to accept "foo:" refspecs as "fetch ref foo from the remote and
-only update FETCH_HEAD" -- maybe allow "foo:FETCH_HEAD" too, for folks who
-like to be explicit and can't remember the shorthand syntax.
+>       my $num_sign = @{$from->{'href'}} + 1;
 
-The rest of this post explains my reasoning, which I think pretty much just
-rehashes what Junio said more efficiently in his initial message.
+$from->{'href'} is array reference only for combined diff (>= 2 parents).
+For ordinary diff it is a scalar.
 
-Overall I'd expect "git fetch origin next" to be a subset of "git fetch
-origin".  That is, since the default fetch refspec is
-	+refs/heads/*:refs/remotes/origin/*
-normally "git fetch origin" gets all of origin's updated refs (ff or not) and
-puts them under the local remotes/origin/ space.  So I would expect "git
-fetch origin next" to only fetch the "next" ref from origin and update the
-local remotes/origin/next ref.
+> 	my @cc_classifier = (
+> 		  ["\@{$num_sign} ", "chunk_header"],
 
-Given the default fetch refspec, I'd expect "git fetch origin +next" to do
-the exact same thing.  The + on the command line is basically redundant.
+O.K.
 
-But removing the + from the fetch refspec changes things.  Now I'd expect
-plain "git fetch origin" to fail if there are any non-ff updates, and "git
-fetch origin next" should also fail if origin's next ref is non-ff.  But "git
-fetch origin +next" would succeed.
+Nb., it is "chunk_header", or "hunk_header"?
 
-In all cases if the command-line refspec has no RHS then git should try to
-figure out which local ref to update from the config, and it should die if it
-can't figure out a local ref to create or update.  (As I said above, maybe
-allow "git fetch origin foo:" to let the user put the tip of origin's foo ref
-into FETCH_HEAD.)
+>                 ['\\', "incomplete"],
 
-All this gets a bit more complicated if the user has currently checked out
-the a ref that should be updated (regardless of the presence of a LHS +).
-But really only old-style git gurus should run in to that problem.
+O.K.
 
-		M.
+>                 [" {$num_sign}", ""],
+
+O.K.
+
+>                 ["[+ ]{$num_sign}", "add"],
+>                 ["[- ]{$num_sign}", "rem"],
+
+It would be slightly different to what current code does.
+
+Current code for combined diff uses "add" if there is at least one '+',
+"rem" if there are no '+' and at least one '-', and context otherwise.
+
+
+I wonder if with sufficiently evil merge we can have a line that is
+added (changed) in some children, and removed in other, i.e. pluses
+and minuses combined.
+
+Nb. we can put regexp here, not only stringification of regexp.
+i.e.
+
+                  [qr/[+ ]{$num_sign}/, "add"],
+                  [qr/[- ]{$num_sign}/, "rem"],
+
+
+>         );
+>         for my $cls (@cc_classifier) {
+>                 if ($line =~ /^$cls->[0]$/) {
+>                 	$diff_class = $cls->[1];
+>                         last;
+> 		}
+> 	}
+
+Nice trick.
+ 
+> Also don't we want to use "context" or something for the css class for the
+> context lines, instead of assuming that we won't want to paint it in any
+> special color?
+
+Right.  We use "diff" class without anything else for context, but probably
+it would be better to state this explicitly.
+
+-- 
+Jakub Narebski
+Poland
