@@ -1,96 +1,90 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC 3/2] Refactor Git::config_*
-Date: Mon, 17 Oct 2011 23:47:41 +0200
-Message-ID: <201110172347.42568.jnareb@gmail.com>
-References: <vpqty7wk9km.fsf@bauges.imag.fr> <201110072317.17436.jnareb@gmail.com> <7vsjmrl4ur.fsf@alter.siamese.dyndns.org>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: What should "git fetch origin +next" should do?
+Date: Mon, 17 Oct 2011 18:02:10 -0400
+Message-ID: <4E9CA5E2.2020701@xiplink.com>
+References: <7v7h45s8rh.fsf@alter.siamese.dyndns.org> <20111017171041.GA12837@sigill.intra.peff.net> <7vipnnmppx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Cord Seele <cowose@googlemail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org, Cord Seele <cowose@gmail.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 17 23:47:55 2011
+X-From: git-owner@vger.kernel.org Tue Oct 18 00:02:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RFv2J-0001Zv-Dc
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Oct 2011 23:47:55 +0200
+	id 1RFvGI-0007ES-1a
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 00:02:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755377Ab1JQVrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Oct 2011 17:47:51 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:50955 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754115Ab1JQVru (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Oct 2011 17:47:50 -0400
-Received: by bkbzt19 with SMTP id zt19so4163962bkb.19
-        for <git@vger.kernel.org>; Mon, 17 Oct 2011 14:47:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=4pDd3vCNFkvusxpGPwQ9zM3U6NHaDSbx35BJX6HfUBQ=;
-        b=lyDhnxeh1qSB/kZU6EmJu6Vv7KOHUuTmErtzQakt4Y4/f4d5Mh4td7L90YWT33CP65
-         4F2Qk5H1148GyiblG4E3hX3Gb2KNasZyuEfHH9lPt+P0n+KyR7oGQSdj4YEkmmDy5kjr
-         gqfxmQerOn3+Pk85cpWs0NCxn3ThLE+rb3DiU=
-Received: by 10.223.7.14 with SMTP id b14mr27733861fab.10.1318888068695;
-        Mon, 17 Oct 2011 14:47:48 -0700 (PDT)
-Received: from [192.168.1.13] (absh126.neoplus.adsl.tpnet.pl. [83.8.127.126])
-        by mx.google.com with ESMTPS id v19sm7784635faa.13.2011.10.17.14.47.46
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 17 Oct 2011 14:47:47 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vsjmrl4ur.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751985Ab1JQWCR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Oct 2011 18:02:17 -0400
+Received: from smtp132.iad.emailsrvr.com ([207.97.245.132]:33453 "EHLO
+	smtp132.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751303Ab1JQWCQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Oct 2011 18:02:16 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp43.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id 3DB9E2D04F6;
+	Mon, 17 Oct 2011 18:02:16 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp43.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 0B7EB2D04FB;
+	Mon, 17 Oct 2011 18:02:13 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+In-Reply-To: <7vipnnmppx.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183828>
 
-On Mon, 17 Oct 2011, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
+On 11-10-17 02:34 PM, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
 > 
-> > This is version which has fixed style to be more Perl-ish, and which
-> > actually works (i.e. t9700 passes).
-> >
-> > I have also moved _config_common() after commands that use it, just like
-> > it is done with other "private" methods (methods with names starting with
-> > '_'), and excluded this private detail of implementation from docs.
+>> I think the exact same confusion exists. I told git to update 'next'
+>> from origin, but it didn't touch refs/remotes/origin/next.
 > 
-> It seems that this breaks many tests in t9xxx series for me, especially
-> the 9100 series that cover git-svn.
+> Except that you didn't tell git to *update* the remote tracking branch for
+> 'next'; you merely told it to fetch 'next' at the remote.
+> 
+>> ...  But I suspect that is not how many git users think of it.
+> 
+> I am inclined to agree that it might be the case; see my other message in
+> this thread.
 
-Sorry about that, I have ran only t9700-perl-git.sh, which runs all right.
+Indeed.  Apologies for missing that subtlety.
 
-The problem was with duplicated _maybe_self(@_), which should be run only
-once.  t9700-perl-git.sh passed because it uses only (recommended) object
-form, and not procedural form like git-svn.
+So now I think option (2) is the best choice.  To support one-off fetches,
+teach fetch to accept "foo:" refspecs as "fetch ref foo from the remote and
+only update FETCH_HEAD" -- maybe allow "foo:FETCH_HEAD" too, for folks who
+like to be explicit and can't remember the shorthand syntax.
 
-The following amend fixes the issue for me:
+The rest of this post explains my reasoning, which I think pretty much just
+rehashes what Junio said more efficiently in his initial message.
 
--- >8 --
-diff --git i/perl/Git.pm w/perl/Git.pm
-index 8e52290..32f6533 100644
---- i/perl/Git.pm
-+++ w/perl/Git.pm
-@@ -653,7 +653,7 @@ sub config_int {
- # Common subroutine to implement bulk of what the config* family of methods
- # do. This wraps command('config') so it is not so fast.
- sub _config_common {
--	my ($self, $var, $opts) = _maybe_self(@_);
-+	my ($self, $var, $opts) = @_;
- 
- 	try {
- 		my @cmd = ('config', $opts->{'kind'} ? $opts->{'kind'} : ());
--- 8< --
+Overall I'd expect "git fetch origin next" to be a subset of "git fetch
+origin".  That is, since the default fetch refspec is
+	+refs/heads/*:refs/remotes/origin/*
+normally "git fetch origin" gets all of origin's updated refs (ff or not) and
+puts them under the local remotes/origin/ space.  So I would expect "git
+fetch origin next" to only fetch the "next" ref from origin and update the
+local remotes/origin/next ref.
 
-I'll resend amended commit.
--- 
-Jakub Narebski
-Poland
+Given the default fetch refspec, I'd expect "git fetch origin +next" to do
+the exact same thing.  The + on the command line is basically redundant.
+
+But removing the + from the fetch refspec changes things.  Now I'd expect
+plain "git fetch origin" to fail if there are any non-ff updates, and "git
+fetch origin next" should also fail if origin's next ref is non-ff.  But "git
+fetch origin +next" would succeed.
+
+In all cases if the command-line refspec has no RHS then git should try to
+figure out which local ref to update from the config, and it should die if it
+can't figure out a local ref to create or update.  (As I said above, maybe
+allow "git fetch origin foo:" to let the user put the tip of origin's foo ref
+into FETCH_HEAD.)
+
+All this gets a bit more complicated if the user has currently checked out
+the a ref that should be updated (regardless of the presence of a LHS +).
+But really only old-style git gurus should run in to that problem.
+
+		M.
