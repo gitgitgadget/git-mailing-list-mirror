@@ -1,123 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 2/2] push: teach --recurse-submodules the on-demand
- option
-Date: Mon, 17 Oct 2011 15:33:26 -0700
-Message-ID: <7vr52bjljd.fsf@alter.siamese.dyndns.org>
-References: <1313791728-11328-1-git-send-email-iveqy@iveqy.com>
- <1313791728-11328-3-git-send-email-iveqy@iveqy.com>
- <7vmxemls8z.fsf@alter.siamese.dyndns.org> <20111017190749.GA3126@sandbox-rc>
+From: Andrei Warkentin <awarkentin@vmware.com>
+Subject: Re: [PATCH] Git-p4: git-p4.changeOnSubmit to do 'change' instead of
+ 'submit'.
+Date: Mon, 17 Oct 2011 15:37:31 -0700 (PDT)
+Message-ID: <1987300386.27372.1318891051633.JavaMail.root@zimbra-prod-mbox-2.vmware.com>
+References: <20111017223202.GA1834@arf.padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <jens.lehmann@web.de>,
-	Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Tue Oct 18 00:33:43 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Andrei Warkentin <andreiw@vmware.com>,
+	Tor Arvid Lund <torarvid@gmail.com>,
+	Luke Diamand <luke@diamand.org>, gitster@pobox.com
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Tue Oct 18 00:37:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RFvkd-0001mt-1R
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 00:33:43 +0200
+	id 1RFvoP-00031H-JG
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 00:37:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756562Ab1JQWdd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Oct 2011 18:33:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55452 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756533Ab1JQWdb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Oct 2011 18:33:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 92F8B665C;
-	Mon, 17 Oct 2011 18:33:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jKe4P60D3Ykllc5oFS5RMHs5Dd4=; b=r9r6sF
-	sGRbn/Pr5DTBSuXuBmTDohBqvgY3kj7ORiIpeHeum/9cxvw5J+4zzvAP4y8V6r+p
-	6wgD/0NIuh70m/1cnbBEuI+vsHfS0ecO5+yogroRkC5gkEbK1d8HkCJBdi/A4Ym7
-	bcykwJX4EePdbJ4mSG9KIxzEAfI37I1nmwhY8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=k+FL4XDTrDXVcbM7pshLTSoWJqjtra3U
-	XFOI+gmxoQXhHuCFw7aHDehlFKXAd3GKeJK3tHfmQRcl89vtrtVadtUwgKOjX/RF
-	6YJ9A8Q2lxPs/0rpjGAbRmDell6utHxbVD6w/A/b+IgqXMwtclr662Vi/e5aagOH
-	MGLpSUDkRfU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 89BAD665B;
-	Mon, 17 Oct 2011 18:33:30 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CD0E4665A; Mon, 17 Oct 2011
- 18:33:29 -0400 (EDT)
-In-Reply-To: <20111017190749.GA3126@sandbox-rc> (Heiko Voigt's message of
- "Mon, 17 Oct 2011 21:07:49 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 09B14C30-F910-11E0-906A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756330Ab1JQWhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Oct 2011 18:37:32 -0400
+Received: from smtp-outbound-1.vmware.com ([65.115.85.69]:26580 "EHLO
+	smtp-outbound-1.vmware.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753917Ab1JQWhc (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Oct 2011 18:37:32 -0400
+Received: from mailhost4.vmware.com (mailhost4.vmware.com [10.16.67.124])
+	by smtp-outbound-1.vmware.com (Postfix) with ESMTP id F16B41A003;
+	Mon, 17 Oct 2011 15:37:31 -0700 (PDT)
+Received: from zimbra-prod-mta-3.vmware.com (zimbra-prod-mta-3.vmware.com [10.113.160.227])
+	by mailhost4.vmware.com (Postfix) with ESMTP id E6816CA0D1;
+	Mon, 17 Oct 2011 15:37:31 -0700 (PDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zimbra-prod-mta-3.vmware.com (Postfix) with ESMTP id D50F1F9E08;
+	Mon, 17 Oct 2011 15:37:31 -0700 (PDT)
+X-Virus-Scanned: amavisd-new at 
+Received: from zimbra-prod-mta-3.vmware.com ([127.0.0.1])
+	by localhost (zimbra-prod-mta-3.vmware.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id N8DTspKmJNp2; Mon, 17 Oct 2011 15:37:31 -0700 (PDT)
+Received: from zimbra-prod-mbox-2.vmware.com (zimbra-prod-mbox-2.vmware.com [10.113.160.202])
+	by zimbra-prod-mta-3.vmware.com (Postfix) with ESMTP id B7A96F9E06;
+	Mon, 17 Oct 2011 15:37:31 -0700 (PDT)
+In-Reply-To: <20111017223202.GA1834@arf.padd.com>
+X-Originating-IP: [10.113.61.163]
+X-Mailer: Zimbra 7.1.1_GA_3225 (ZimbraWebClient - FF3.0 (Linux)/7.1.1_GA_3225)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183838>
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
+Hi,
 
-> since we have not heard anything from Fredrik I will probably look into
-> cleaning this up. Should I do that with follow-up patches since this
-> patch is already in next?
+----- Original Message -----
+> From: "Pete Wyckoff" <pw@padd.com>
+> To: "Andrei Warkentin" <awarkentin@vmware.com>
+> Cc: git@vger.kernel.org, "Andrei Warkentin" <andreiw@vmware.com>, "Tor Arvid Lund" <torarvid@gmail.com>, "Luke
+> Diamand" <luke@diamand.org>, gitster@pobox.com
+> Sent: Monday, October 17, 2011 6:32:02 PM
+> Subject: Re: [PATCH] Git-p4: git-p4.changeOnSubmit to do 'change' instead of 'submit'.
+> 
+> Git can have multiple commits outstanding that touch the same
+> file, but p4 cannot really have multiple pending changes in the
+> same workspace that touch the same file.
+> 
+> If you call "git-p4 change", it would build a p4 change for each
+> of those commits.  If the commits happen to touch the same file,
+> the changes get rearranged as far as p4 is concerned so that all
+> changes to a given file are lumped in the first change that sees
+> the file.  This is highly counterintuitive from a git mindset.
+> 
+> The most restrictive implementation would have to:
+> 
+>     1.  ensure no pending changes in the P4 clientPath
+>     2.  ensure number of commits ("git rev-list") is 1
+> 
+> You could be more permissive, allowing multiple pending changes
+> if the file sets do not conflict.  In that case, the first test
+> would look at the files in pending changes and allow the
+> operation if they did not intersect with files in origin..master.
+> The second would make sure that each file appears in no more than
+> 1 commit in origin..master.
 
-I thought we kicked it back to 'pu' after 1.7.7 cycle.
+Hmmm...I see. I'll think some more about it, then!
 
-I would personally want to put a freeze on "recursively do anything to
-submodule" topic (including but not limited to "checkout") for now, until
-we know how we would want to support "floating submodule" model. For
-existing code in-flight, I would like to see us at least have a warm and
-fuzzy feeling that we know which part of the code such a support would
-need to undo and how the update would look like before moving forward.
+> 
+> Also make sure this works with preserveUser.  Not sure if an
+> unsubmitted change can be handled the same way.
+> 
+> Because it feels like a delicate operation that could have big
+> negative consequences, this needs a few unit tests.
+> 
+> For the code structure, I'd like to see a proper subclass instead
+> of the dictionary idea.  Something like, e.g.:
+> 
+> class P4Submit(...):
+>     def __init__(self, change_only=0)
+> 	...
+> 	self.change_only = change_only
+> 
+> class P4Change(P4Submit):
+>     def __init__(self):
+> 	P4Submit.__init__(self, change_only=1)
+> 
+> Sorry this is looking so difficult now.
 
-There are two camps that use submodules in their large-ish projects.
+No problem!
 
-One is mostly happy with the traditional "submodule trees checked out must
-match what the superproject says, otherwise you have local changes and the
-build product cannot be called to have emerged from that particular
-superproject commit" model. Let's call this "exact submodules" model.
-
-The other prefers "submodule trees checked out are whatever submodule
-commits that happen to sit at the tips of the designated branches the
-superproject wants to use" model. The superproject tree does not exactly
-know or care what commit to use from each of its submodules, and I would
-imagine that it may be more convenient for developers. They do not have to
-care the entire build product while they commit---only the integration
-process that could be separate and perhaps automated needs to know.
-
-We haven't given any explicit support to the latter "floating submodules"
-model so far. There may be easy workarounds to many of the potential
-issues, (e.g. at "git diff/status" level, there may be some configuration
-variables to tell the tools to ignore differences between the commit the
-superproject records for the submodule path and the HEAD in the
-submodule), but with recent work on submodules such as "allow pushing
-superproject only after submodule commits are pushed out", I am afraid
-that we seem to be piling random new things with the assumption that we
-would never support anything but "exact submodules" model. Continuing the
-development that way would require retrofitting support for "floating
-submodules" model to largely undo the unwarranted assumptions existing
-code makes. That is the reason why I would like to see people think about
-the need to support the other "floating submodules" model, before making
-the existing mess even worse.
-
-The very first step for floating submodules support would be relatively
-simple. We could declare that an entry in the .gitmodules file in the
-superproject can optionally specify which branch needs to be checked out
-with something like:
-
-	[submodule "libfoo"]
-		branch = master
-                path = include/foo
-                url = git://foo.com/git/lib.git
-                
-and when such an entry is defined, a command at the superproject level
-would largely ignore what is at include/foo in the tree object recorded in
-the superproject commit and in the index. When we show "git status" in the
-superproject, instead of using the commit bound to the superproject, we
-would use include/foo/.git/HEAD as the basis for detecting "local" changes
-to the submodule. We could even declare that the gitlink for such a
-submodule should record 0{40} SHA-1 in the superproject, but I do not
-think that is necessary.
+A
