@@ -1,67 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Oct 2011, #05; Fri, 14)
-Date: Sun, 16 Oct 2011 21:20:22 -0700
-Message-ID: <7v39esp7uh.fsf@alter.siamese.dyndns.org>
-References: <7vd3dzximu.fsf@alter.siamese.dyndns.org>
- <20111016165329.GA14226@sigill.intra.peff.net>
- <7vvcrorh49.fsf@alter.siamese.dyndns.org>
- <20111017033706.GA26326@sigill.intra.peff.net>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH 2/4] git-gui: add smart case search mode in searchbar
+Date: Mon, 17 Oct 2011 07:32:29 +0200
+Message-ID: <CAKPyHN2XQYrGDhfjX4G12Ggw6DuJasuYbLQvfbmikBbMezp4=g@mail.gmail.com>
+References: <94b050c4cf7ae8df8d79112e13613244ebff4037.1318579823.git.bert.wesarg@googlemail.com>
+	<9350c86dc58e6345b237de5af186718d97fdd19b.1318579823.git.bert.wesarg@googlemail.com>
+	<CAH5451=jUS5PpMddwML36F-mH=pxxh8FsP2ZiRH2_NFBBy+Q5g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 17 06:20:31 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>, git@vger.kernel.org
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 17 07:32:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RFegg-0004B2-MU
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Oct 2011 06:20:31 +0200
+	id 1RFfoR-0006tz-F5
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Oct 2011 07:32:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751286Ab1JQEU0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Oct 2011 00:20:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41289 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751105Ab1JQEUZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Oct 2011 00:20:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 27EA8667F;
-	Mon, 17 Oct 2011 00:20:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iobq0IDPVaPOyR8rozeNPGZwHCk=; b=ogwFoF
-	mj184qvrIjVmnB/OJkz6nxp9nGt1VJYkTxypWoYUfWomBPPcjqs0sLsnGEcX86xJ
-	ojOPmob+n0oMzdVrMJNZkWNkR2GZ3aYiccUWtrLUQNvbVNu9K09yWZ8NwxG1O3Of
-	Z3RKH80U0g9K/X2zY4Yf5Qjlpvdv8jMd7uYX0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BXELLn1q/K7rmUsBTLYGf8b6BqKy0MMM
-	CN9frOhfYrsTOiHlT/x1XE99mO88OstmeEHkKPVBIXtW72otY/Z3V2yk20w1FMBs
-	MGro9OSgLOblpuUTxQlj7MmEHRvrG9xZQZT4vPryoTIgx4mhP8yxghDyv63yH1dL
-	kT6dzHNaLbo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E818667E;
-	Mon, 17 Oct 2011 00:20:25 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B2C28667D; Mon, 17 Oct 2011
- 00:20:23 -0400 (EDT)
-In-Reply-To: <20111017033706.GA26326@sigill.intra.peff.net> (Jeff King's
- message of "Sun, 16 Oct 2011 23:37:06 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 55532BD4-F877-11E0-A1F4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753641Ab1JQFca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Oct 2011 01:32:30 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:63651 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753087Ab1JQFca (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Oct 2011 01:32:30 -0400
+Received: by vws1 with SMTP id 1so2241089vws.19
+        for <git@vger.kernel.org>; Sun, 16 Oct 2011 22:32:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Uyr5pbkvsulm3KfT1No+E0Hluarbo982qN1rnQ9MHBc=;
+        b=jHUWgY8fJS/ba29oF9cP1nEmCXJaf/nuA6Ks2BIEhAdYXa7uylZmDHfryvFgivmG+G
+         L35Frz8drcZuU4nFmQncKClDkpDkIFXlFclLsclqudIHfHQ1ZTRtU7tcXhQR9pneIlbh
+         ST7gcQethdFoP69duoOZIkUOEev4GNPMO8/D8=
+Received: by 10.52.92.212 with SMTP id co20mr18595478vdb.119.1318829549243;
+ Sun, 16 Oct 2011 22:32:29 -0700 (PDT)
+Received: by 10.52.186.36 with HTTP; Sun, 16 Oct 2011 22:32:29 -0700 (PDT)
+In-Reply-To: <CAH5451=jUS5PpMddwML36F-mH=pxxh8FsP2ZiRH2_NFBBy+Q5g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183766>
 
-Jeff King <peff@peff.net> writes:
+On Mon, Oct 17, 2011 at 00:32, Andrew Ardill <andrew.ardill@gmail.com> wrote:
+> I don't really know tcl so I'm not certain, but it looks like you
+> never reset the case sensitive flag once it has been set by entering
+> an upper case letter. If I accidentally enter an upper case letter and
+> have set smartcase true, I would expect that deleting that character
+> would turn case sensitivity off again.
+>
 
-> What you queued in d5570f4 looks sane, but the merge into next is
-> curious.
+I never reset it, because your case is a way to search case-sensitive
+for an expression in all lower-case. For example, if you would like to
+search for 'git' case-sensitively, you would type: 'gitA^H'. A direct
+shortcut to toggle the case flag could also be of use. The other idea
+which come to mind, is to reset the case flag, if you clear the input
+field. I.e. type 'G^Hgit' would still seach case-insensitive.
 
-Thanks for spotting. I think I had rerere that recorded the conflict
-resolution with an older iteration of the topic with looser message
-default or something.
+Bert
+
+> Regards,
+>
+> Andrew Ardill
+>
