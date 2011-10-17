@@ -1,123 +1,117 @@
-From: Andrei Warkentin <awarkentin@vmware.com>
-Subject: Re: [PATCH] Git-p4: git-p4.changeOnSubmit to do 'change' instead of
- 'submit'.
-Date: Mon, 17 Oct 2011 09:18:39 -0700 (PDT)
-Message-ID: <83923897.7841.1318868319131.JavaMail.root@zimbra-prod-mbox-2.vmware.com>
-References: <4E99E8D2.6020107@diamand.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What should "git fetch origin +next" should do?
+Date: Mon, 17 Oct 2011 10:09:26 -0700
+Message-ID: <7v8vojo88p.fsf@alter.siamese.dyndns.org>
+References: <7v7h45s8rh.fsf@alter.siamese.dyndns.org>
+ <4E9C3D27.3060504@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com, Pete Wyckoff <pw@padd.com>,
-	Andrei Warkentin <andreiw@vmware.com>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Mon Oct 17 18:18:46 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Mon Oct 17 19:09:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RFptk-0008UD-R8
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Oct 2011 18:18:45 +0200
+	id 1RFqgx-0006bZ-Jj
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Oct 2011 19:09:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753467Ab1JQQSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Oct 2011 12:18:40 -0400
-Received: from smtp-outbound-2.vmware.com ([65.115.85.73]:19350 "EHLO
-	smtp-outbound-2.vmware.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752614Ab1JQQSk (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Oct 2011 12:18:40 -0400
-Received: from mailhost4.vmware.com (mailhost4.vmware.com [10.16.67.124])
-	by smtp-outbound-2.vmware.com (Postfix) with ESMTP id 889984B002;
-	Mon, 17 Oct 2011 09:18:39 -0700 (PDT)
-Received: from zimbra-prod-mta-2.vmware.com (zimbra-prod-mta-2.vmware.com [10.113.160.174])
-	by mailhost4.vmware.com (Postfix) with ESMTP id 806B5CA00E;
-	Mon, 17 Oct 2011 09:18:39 -0700 (PDT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by zimbra-prod-mta-2.vmware.com (Postfix) with ESMTP id 69FD531C6B;
-	Mon, 17 Oct 2011 09:18:39 -0700 (PDT)
-X-Virus-Scanned: amavisd-new at 
-Received: from zimbra-prod-mta-2.vmware.com ([127.0.0.1])
-	by localhost (zimbra-prod-mta-2.vmware.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Ee1AgBgCpBtO; Mon, 17 Oct 2011 09:18:39 -0700 (PDT)
-Received: from zimbra-prod-mbox-2.vmware.com (zimbra-prod-mbox-2.vmware.com [10.113.160.202])
-	by zimbra-prod-mta-2.vmware.com (Postfix) with ESMTP id 39A1731725;
-	Mon, 17 Oct 2011 09:18:39 -0700 (PDT)
-In-Reply-To: <4E99E8D2.6020107@diamand.org>
-X-Originating-IP: [10.113.61.163]
-X-Mailer: Zimbra 7.1.1_GA_3225 (ZimbraWebClient - FF3.0 (Linux)/7.1.1_GA_3225)
+	id S1756477Ab1JQRJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Oct 2011 13:09:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54029 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753476Ab1JQRJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Oct 2011 13:09:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B39F558EF;
+	Mon, 17 Oct 2011 13:09:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WUM+O5adSRPQ5bSBdfz0TqMkYKg=; b=IACPgD
+	6J2/zCvDuDB9TPy7wh1NqCzejVJSmpycP+pkJjEmjBIpz/9w9AdUFfD6NIVwid/V
+	2l5VgIVd+qcQENHmGgDDXVQnBKaP7orXB+xtuP0MMZie5SKAVy9mI6u7lv7GHa1C
+	mv0Xw8p/0DzvM2s6pUPoshLcBTwdpNXRz1y0c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=s77aBrQHa73UOXhQSEJsUVEJKrR1Xw4i
+	ZnNtMzDI3lzjjRRWhYmIbEz6lTYC/YO+i6MOMxfybzm2Ew0FUMNv45Cw34hluyRl
+	amXaQjSOPdV/+hNtMRd15y0ai515nqHxJyyz/KMJNr4XWkrehj6NW5M9ZiTK6Wb3
+	xU7KKI8LYjs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ABCD358EE;
+	Mon, 17 Oct 2011 13:09:28 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0354858EC; Mon, 17 Oct 2011
+ 13:09:27 -0400 (EDT)
+In-Reply-To: <4E9C3D27.3060504@xiplink.com> (Marc Branchaud's message of
+ "Mon, 17 Oct 2011 10:35:19 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C575D82E-F8E2-11E0-BA78-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183798>
 
-Hi,
+Marc Branchaud <marcnarc@xiplink.com> writes:
 
------ Original Message -----
-> From: "Luke Diamand" <luke@diamand.org>
-> To: "Andrei Warkentin" <andreiw@vmware.com>
-> Cc: git@vger.kernel.org, gitster@pobox.com, "Pete Wyckoff" <pw@padd.com>
-> Sent: Saturday, October 15, 2011 4:10:58 PM
-> Subject: Re: [PATCH] Git-p4: git-p4.changeOnSubmit to do 'change' instead of 'submit'.
-> 
-> On 14/10/11 22:51, Andrei Warkentin wrote:
-> > Many users of p4/sd use changelists for review, regression
-> > tests and batch builds, thus changes are almost never directly
-> > submitted.
-> >
-> > This new config option lets a 'p4 change -i' run instead of
-> > the 'p4 submit -i'.
-> >
-> > Signed-off-by: Andrei Warkentin<andreiw@vmware.com>
-> > ---
-> >   contrib/fast-import/git-p4     |   16 ++++++++++++----
-> >   contrib/fast-import/git-p4.txt |   10 ++++++++++
-> >   2 files changed, 22 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/contrib/fast-import/git-p4
-> > b/contrib/fast-import/git-p4
-> > index 2f7b270..19c295b 100755
-> > --- a/contrib/fast-import/git-p4
-> > +++ b/contrib/fast-import/git-p4
-> > @@ -959,7 +959,10 @@ class P4Submit(Command, P4UserMap):
-> >                   submitTemplate =
-> >                   message[:message.index(separatorLine)]
-> >                   if self.isWindows:
-> >                       submitTemplate =
-> >                       submitTemplate.replace("\r\n", "\n")
-> > -                p4_write_pipe("submit -i", submitTemplate)
-> > +                if gitConfig("git-p4.changeOnSubmit"):
-> > +                    p4_write_pipe("change -i", submitTemplate)
-> > +                else:
-> > +                    p4_write_pipe("subadasdmit -i",
-> > submitTemplate)
-> 
-> 
-> What does "p4 subadasmit" do? That's a new command to me!
-> 
+> On 11-10-16 03:20 AM, Junio C Hamano wrote:
+>> As some might know, I use the traditional non-separate-remotes layout in
+>> many of my working trees. I am old fashioned.
+>
+> Being hip and modern :) I use separate remote refspecs.  As I read your post,
+> I kept thinking that it makes no sense for fetch to ever update local refs
+> and that you're a victim of your stodgy old ways.
 
-Ack, that's emabarrasing. How did that get there :-)?
+Imagine a scenario where I run the same "git fetch origin +next" in a
+repository with separate remotes layout, expecting that the remote
+tracking branch refs/remotes/origin/next to be force updated. The fetched
+value will be stored only in FETCH_HEAD, and I would feel exactly the same
+minor irritation.
 
-Anyway, the other suggestion I had was to create a new command
-instead of overriding behaviour of an existing one. Of course,
-copy-pasting P4Submit into P4Change is silly, so...
+In other words, the issue does not have anything to do with the layout.
+My mention of layout variants was only to clarify that the ref to be force
+updated on the local side is determined by the suggested behaviours (2)
+and (3) based on the fetch refspec (i.e. refs/heads/next in the
+traditional layout, refs/remotes/origin/next in the separate remotes
+layout).
 
-How about something like this?
+This is a tangent but we have seen in the past some new people wonder why
+their configured remote tracking refs are not updated when they do
 
-The commands dict maps command name to class and optional dict passed to cmd.run(). That way 'change'
-can really mean P4Submit with an extra parameter not to submit but to do a changelist instead. The
-reason why I initially made the config flag was because I didn't want to copy-paste P4Submit into P4Change.
+	$ git fetch origin next
 
-commands = {
-    "debug" : [ P4Debug, {} ]
-    "submit" : [ P4Submit, { "doChange" : 0 } ]
-    "commit" : [ P4Submit, { "doChange" : 0 } ]
-    "change" : [ P4Submit, { "doChange" : 1 } ]
-    "sync" : [ P4Sync, {} ],
-    "rebase" : [ P4Rebase, {} ],
-    "clone" : [ P4Clone, {} ],
-    "rollback" : [ P4RollBack, {} ],
-    "branches" : [ P4Branches, {} ]
-}
+This is a variant without '+', and in such a case, in addition to list the
+fetched tip in FETCH_HEAD, it might be more natural for the user to expect
+that the usual remote tracking branch update to happen.  And I suspect
+that the suggested semantics (2) might better match what the users expect
+in general.
 
-Thanks for the review,
-A
+That is, when fetching from a remote that has configured fetch refspecs,
+colon-less refspecs are given from the command line, are first matched
+against the configured fetch refspecs for the remote, and used to update
+the remote tracking branches. IOW, with the separate remote layout fetch
+refspec, the above command line is re-written to
+
+	$ git fetch origin refs/heads/next:refs/remotes/origin/next
+
+and leaves the fetched tip of 'next' in FETCH_HEAD and updates the remote
+tracking branch; nothing else is fetched.
+
+
+And if we apply the '+' prefix in this context, as the natural
+consequence, my original example would be rewritten to:
+
+	$ git fetch origin +refs/heads/next:refs/remotes/origin/next
+
+in a repository with the separate remote layout fetch refspec, and in a
+repository with the non-separate remote layout, it would be rewritten to:
+
+	$ git fetch origin +refs/heads/next:refs/heads/next
+
+Historically, we never used configured fetch refspecs when refspecs are
+given on the command line, so such a change definitely breaks backward
+compatibility, but possibly in a good way, and might deserve consideration
+for Git 2.0.
