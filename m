@@ -1,116 +1,88 @@
-From: Kato Kazuyoshi <kato.kazuyoshi@gmail.com>
-Subject: [PATCH/RFC 1/2] gitweb: change format_diff_line() to remove leading
- SP from $diff_class
-Date: Mon, 17 Oct 2011 15:59:55 +0900
-Message-ID: <CAFo4x0LP4fXgSNAnss_WRLo-TH_qe=esYn7P+=iS6t87tdzcbw@mail.gmail.com>
+From: =?utf-8?q?L=C3=A9na=C3=AFc_Huard?= <lenaic@lhuard.fr.eu.org>
+Subject: Re: [PATCH] gitweb: provide a way to customize html headers
+Date: Mon, 17 Oct 2011 09:28:55 +0200
+Message-ID: <201110170928.56075.lenaic@lhuard.fr.eu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 17 09:00:57 2011
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 17 09:29:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RFhBu-0001Ly-4R
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Oct 2011 09:00:54 +0200
+	id 1RFhdD-0003O9-Dx
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Oct 2011 09:29:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752921Ab1JQHAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Oct 2011 03:00:45 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:50862 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752436Ab1JQHAo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Oct 2011 03:00:44 -0400
-Received: by mail-bw0-f46.google.com with SMTP id zt19so3346473bkb.19
-        for <git@vger.kernel.org>; Mon, 17 Oct 2011 00:00:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=5QPwlW5MDt1u4UulfSia8uVGUlgm3dQ0pZt7mTKEeJ8=;
-        b=q3KdLrrRXehMu+7d09ZLEcHKh52YZ0tQq5Y1RxqRlc1XxsMywkakNhv+9QhsQVQIkR
-         Bh5KdsIw+aOunmGbobUKbPwk2w59DbdyUKGbzp3X1QaZwslbx/XoZTOE3kHS0Sp3RKpC
-         lL4c8i3kUvMfDJXY/6juXQ6P8NLahCZT33Dd4=
-Received: by 10.204.13.68 with SMTP id b4mr9518663bka.96.1318834844186; Mon,
- 17 Oct 2011 00:00:44 -0700 (PDT)
-Received: by 10.204.36.132 with HTTP; Sun, 16 Oct 2011 23:59:55 -0700 (PDT)
+	id S1752532Ab1JQH3A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Oct 2011 03:29:00 -0400
+Received: from freebox.lhuard.fr.eu.org ([88.182.161.122]:43775 "EHLO
+	coruscant.lhuard.fr.eu.org" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751368Ab1JQH27 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Oct 2011 03:28:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lhuard.fr.eu.org; s=dkim;
+	h=Message-Id:Content-Transfer-Encoding:Content-Type:MIME-Version:In-Reply-To:References:Cc:Date:Subject:To:From; bh=mgVLmdHehrIDoaIsciZvq6Jc4dqP75r2yMwDgWGOoY4=;
+	b=G10Z6/ztor1xBHo2a1otR2OY+CGcekAI+PIIm6VtoxVDaya1LbwbhBWXgX2c1v0xYyAHa2yYngdTpIwhe0tEumyKFiWdnywQ44Uj4s33bK5bZQzJB7mpu/MHSgRMAIo2xUZFIWs+m1e47nTvb3l+XDdcjbpB29zhujs/KUd4Mv0=;
+Received: from lenaic by coruscant.lhuard.fr.eu.org with local (Exim 4.76)
+	(envelope-from <lenaic@lhuard.fr.eu.org>)
+	id 1RFhd2-00044m-3s; Mon, 17 Oct 2011 09:28:56 +0200
+User-Agent: KMail/1.13.7 (Linux/3.0.0-2-amd64; KDE/4.6.5; x86_64; ; )
+References: ???????????????????
+In-Reply-To: =?utf-8?b?47Gt442k442k55y35qGv45Cu5pmz5pmA5rGv5o2h5rGo5r2z55Cu5rGv5o2h5rGk?=
+ =?utf-8?b?5r2t5oWp5ri+?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183771>
 
-The format_diff_line() will return $diff_class and HTML in upcoming changes.
----
- gitweb/gitweb.perl |   24 +++++++++++++-----------
- 1 files changed, 13 insertions(+), 11 deletions(-)
+Jakub Narebski <jnareb@gmail.com> writes:
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 85d64b2..095adda 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2235,28 +2235,30 @@ sub format_diff_line {
- 		# combined diff
- 		my $prefix = substr($line, 0, scalar @{$from->{'href'}});
- 		if ($line =~ m/^\@{3}/) {
--			$diff_class = " chunk_header";
-+			$diff_class = "chunk_header";
- 		} elsif ($line =~ m/^\\/) {
--			$diff_class = " incomplete";
-+			$diff_class = "incomplete";
- 		} elsif ($prefix =~ tr/+/+/) {
--			$diff_class = " add";
-+			$diff_class = "add";
- 		} elsif ($prefix =~ tr/-/-/) {
--			$diff_class = " rem";
-+			$diff_class = "rem";
- 		}
- 	} else {
- 		# assume ordinary diff
- 		my $char = substr($line, 0, 1);
- 		if ($char eq '+') {
--			$diff_class = " add";
-+			$diff_class = "add";
- 		} elsif ($char eq '-') {
--			$diff_class = " rem";
-+			$diff_class = "rem";
- 		} elsif ($char eq '@') {
--			$diff_class = " chunk_header";
-+			$diff_class = "chunk_header";
- 		} elsif ($char eq "\\") {
--			$diff_class = " incomplete";
-+			$diff_class = "incomplete";
- 		}
- 	}
- 	$line = untabify($line);
-+
-+	my $div_open = '<div class="' . (join ' ', ('diff', $diff_class)) . '">';
- 	if ($from && $to && $line =~ m/^\@{2} /) {
- 		my ($from_text, $from_start, $from_lines, $to_text, $to_start,
-$to_lines, $section) =
- 			$line =~ m/^\@{2} (-(\d+)(?:,(\d+))?) (\+(\d+)(?:,(\d+))?) \@{2}(.*)$/;
-@@ -2274,7 +2276,7 @@ sub format_diff_line {
- 		}
- 		$line = "<span class=\"chunk_info\">@@ $from_text $to_text @@</span>" .
- 		        "<span class=\"section\">" . esc_html($section, -nbsp=>1) .
-"</span>";
--		return "<div class=\"diff$diff_class\">$line</div>\n";
-+		return "$div_open$line</div>\n";
- 	} elsif ($from && $to && $line =~ m/^\@{3}/) {
- 		my ($prefix, $ranges, $section) = $line =~ m/^(\@+) (.*?) \@+(.*)$/;
- 		my (@from_text, @from_start, @from_nlines, $to_text, $to_start, $to_nlines);
-@@ -2307,9 +2309,9 @@ sub format_diff_line {
- 		}
- 		$line .= " $prefix</span>" .
- 		         "<span class=\"section\">" . esc_html($section, -nbsp=>1)
-. "</span>";
--		return "<div class=\"diff$diff_class\">$line</div>\n";
-+		return "$div_open$line</div>\n";
- 	}
--	return "<div class=\"diff$diff_class\">" . esc_html($line, -nbsp=>1)
-. "</div>\n";
-+	return $div_open . esc_html($line, -nbsp=>1) . "</div>\n";
- }
+> L=C3=A9na=C3=AFc Huard <lenaic@lhuard.fr.eu.org> writes:
 
- # Generates undef or something like "_snapshot_" or "snapshot (_tbz2_ _zip_)",
--- 
-1.7.7.213.g8b0e1.dirty
+> > This allows web sites to add some specific html headers to the page=
+s
+> > generated by gitweb.
+
+> What do you need this for?
+
+I want to decorate the gitweb pages with the =E2=80=9CGoogle Analytics=E2=
+=80=9D tracking code.
+In order to do so, today, Google is recommending to add a <script> tag =
+just=20
+before the closing </head> tag.
+
+https://www.google.com/support/analyticshelp/bin/answer.py?answer=3D100=
+8080&hl=3Den
+
+> > The new variable $site_htmlheader can be set to a filename the cont=
+ent
+> > of which will be inserted at the end of the <head> section of each
+> > page generated by gitweb.
+
+> Hmmm... I wonder if a file with html header fragment (which is quite
+> specific subset of HTML) is a best solution.
+
+That=E2=80=99s true. The piece of code to be inserted in <head> is mayb=
+e small enough=20
+so that we don=E2=80=99t need a file. Maybe $site_htmlheader could cont=
+ain directly=20
+the html snippet to be inserted in the pages?
+
+> > Signed-off-by: L=3DFE=3DFF=3D00=3DE9na=3DFE=3DFF=3D00=3DEFc Huard <=
+lenaic@lhuard.fr.eu.or=3D
+g>
+> > ---
+> >  gitweb/INSTALL     |    3 +++
+
+> Nb. there is patch in flight adding gitweb.conf(5) and gitweb(1)
+> manpages...
+
+Ok. So, I=E2=80=99ll update them once a decision will be taken concerni=
+ng this=20
+$site_htmlheader.
+--=20
+L=C3=A9na=C3=AFc Huard
