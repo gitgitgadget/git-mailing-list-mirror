@@ -1,73 +1,185 @@
-From: Kato Kazuyoshi <kato.kazuyoshi@gmail.com>
-Subject: Re: [PATCH/RFC] gitweb: add the ability to show side-by-side diff on commitdiff.
-Date: Mon, 17 Oct 2011 11:33:49 +0900
-Message-ID: <CAFo4x0KPP1yZec+98_rn9tG_fhtB-DYAcdi90TwiwUPq+DP90g@mail.gmail.com>
-References: <CAFo4x0Kb651CyxoP8wxR36aDe5=Md2UV3qjh+HPo4ad6NB=Emg@mail.gmail.com>
- <7vobxgpixo.fsf@alter.siamese.dyndns.org> <CAFo4x0+_Uy=yjbO61qj8krS0-iovzC5WnBE8-1n5OzxgGeg6JA@mail.gmail.com>
- <7vbotgper8.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+From: mhagger@alum.mit.edu
+Subject: [PATCH v4 1/7] invalidate_ref_cache(): rename function from invalidate_cached_refs()
+Date: Mon, 17 Oct 2011 04:38:05 +0200
+Message-ID: <1318819091-7066-2-git-send-email-mhagger@alum.mit.edu>
+References: <1318819091-7066-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Drew Northup <drew.northup@maine.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 17 04:36:09 2011
+X-From: git-owner@vger.kernel.org Mon Oct 17 04:38:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RFd3f-0001OH-Qc
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Oct 2011 04:36:08 +0200
+	id 1RFd6I-0001z5-6v
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Oct 2011 04:38:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754164Ab1JQCeL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Oct 2011 22:34:11 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:56759 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753798Ab1JQCeK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Oct 2011 22:34:10 -0400
-Received: by bkbzt19 with SMTP id zt19so3120685bkb.19
-        for <git@vger.kernel.org>; Sun, 16 Oct 2011 19:34:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ubCV0JrWFSRZsAwrLlBfBAu++qGstkkTY6NoIiE6cyg=;
-        b=gDJyTgI1F+SUV5l9tXJCqxTO2qf0qVnBW1du7jw03jRXysN4gCnWRjd0ONNLl2tpKa
-         sLTZg4v7RgbS/nYl0N0hkRs6g8be7abnSbYCTCqZ7PkU7Gci6vUN7bJykbOWQTSWmOg2
-         q0CCrvqlJ4AvkTRY2PE+bBgLC6vQswMUIBmYU=
-Received: by 10.204.157.142 with SMTP id b14mr3740684bkx.44.1318818849128;
- Sun, 16 Oct 2011 19:34:09 -0700 (PDT)
-Received: by 10.204.36.132 with HTTP; Sun, 16 Oct 2011 19:33:49 -0700 (PDT)
-In-Reply-To: <7vbotgper8.fsf@alter.siamese.dyndns.org>
+	id S1754240Ab1JQCip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Oct 2011 22:38:45 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:45401 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754134Ab1JQCin (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Oct 2011 22:38:43 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from michael.fritz.box (p54BECB73.dip.t-dialin.net [84.190.203.115])
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p9H2cN3T013403;
+	Mon, 17 Oct 2011 04:38:28 +0200
+X-Mailer: git-send-email 1.7.7.rc2
+In-Reply-To: <1318819091-7066-1-git-send-email-mhagger@alum.mit.edu>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183753>
 
-On Mon, Oct 17, 2011 at 10:51 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->
-> I think a better organization would be
->
-> =A0[1/2] change code so that $diff_class does not have leading SP
-> =A0 =A0 =A0 optionally catch a case where $diff_class stays empty as =
-an error?
->
+From: Michael Haggerty <mhagger@alum.mit.edu>
 
-I think we don't have to treat empty $diff_class as an error because
-$diff_class will be an empty when $line is around modification
-(ex. foo or quux).
+It is the cache that is being invalidated, not the references, and the
+new name makes this unambiguous.  Rename other items analogously:
 
-  foo
-- bar
-+ baz
-  quuz
+* struct cached_refs -> struct ref_cache
+* cached_refs (the variable) -> ref_cache
+* clear_cached_refs() -> clear_ref_cache()
+* create_cached_refs() -> create_ref_cache()
+* get_cached_refs() -> get_ref_cache()
 
-And class attributes are CDATA. "diff[SP]" and "diff" have same
-meanings.
-http://www.w3.org/TR/html401/struct/global.html#h-7.5.2
-http://www.w3.org/TR/html401/types.html#type-cdata
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ refs.c |   40 ++++++++++++++++++++--------------------
+ 1 files changed, 20 insertions(+), 20 deletions(-)
 
---=20
-Kato Kazuyoshi
+diff --git a/refs.c b/refs.c
+index 9911c97..02b1ef0 100644
+--- a/refs.c
++++ b/refs.c
+@@ -134,15 +134,15 @@ static struct ref_entry *search_ref_array(struct ref_array *array, const char *n
+  * Future: need to be in "struct repository"
+  * when doing a full libification.
+  */
+-static struct cached_refs {
+-	struct cached_refs *next;
++static struct ref_cache {
++	struct ref_cache *next;
+ 	char did_loose;
+ 	char did_packed;
+ 	struct ref_array loose;
+ 	struct ref_array packed;
+ 	/* The submodule name, or "" for the main repo. */
+ 	char name[FLEX_ARRAY];
+-} *cached_refs;
++} *ref_cache;
+ 
+ static struct ref_entry *current_ref;
+ 
+@@ -158,7 +158,7 @@ static void free_ref_array(struct ref_array *array)
+ 	array->refs = NULL;
+ }
+ 
+-static void clear_cached_refs(struct cached_refs *ca)
++static void clear_ref_cache(struct ref_cache *ca)
+ {
+ 	if (ca->did_loose)
+ 		free_ref_array(&ca->loose);
+@@ -167,27 +167,27 @@ static void clear_cached_refs(struct cached_refs *ca)
+ 	ca->did_loose = ca->did_packed = 0;
+ }
+ 
+-static struct cached_refs *create_cached_refs(const char *submodule)
++static struct ref_cache *create_ref_cache(const char *submodule)
+ {
+ 	int len;
+-	struct cached_refs *refs;
++	struct ref_cache *refs;
+ 	if (!submodule)
+ 		submodule = "";
+ 	len = strlen(submodule) + 1;
+-	refs = xcalloc(1, sizeof(struct cached_refs) + len);
++	refs = xcalloc(1, sizeof(struct ref_cache) + len);
+ 	memcpy(refs->name, submodule, len);
+ 	return refs;
+ }
+ 
+ /*
+- * Return a pointer to a cached_refs for the specified submodule. For
++ * Return a pointer to a ref_cache for the specified submodule. For
+  * the main repository, use submodule==NULL. The returned structure
+  * will be allocated and initialized but not necessarily populated; it
+  * should not be freed.
+  */
+-static struct cached_refs *get_cached_refs(const char *submodule)
++static struct ref_cache *get_ref_cache(const char *submodule)
+ {
+-	struct cached_refs *refs = cached_refs;
++	struct ref_cache *refs = ref_cache;
+ 	if (!submodule)
+ 		submodule = "";
+ 	while (refs) {
+@@ -196,17 +196,17 @@ static struct cached_refs *get_cached_refs(const char *submodule)
+ 		refs = refs->next;
+ 	}
+ 
+-	refs = create_cached_refs(submodule);
+-	refs->next = cached_refs;
+-	cached_refs = refs;
++	refs = create_ref_cache(submodule);
++	refs->next = ref_cache;
++	ref_cache = refs;
+ 	return refs;
+ }
+ 
+-static void invalidate_cached_refs(void)
++static void invalidate_ref_cache(void)
+ {
+-	struct cached_refs *refs = cached_refs;
++	struct ref_cache *refs = ref_cache;
+ 	while (refs) {
+-		clear_cached_refs(refs);
++		clear_ref_cache(refs);
+ 		refs = refs->next;
+ 	}
+ }
+@@ -257,7 +257,7 @@ void clear_extra_refs(void)
+ 
+ static struct ref_array *get_packed_refs(const char *submodule)
+ {
+-	struct cached_refs *refs = get_cached_refs(submodule);
++	struct ref_cache *refs = get_ref_cache(submodule);
+ 
+ 	if (!refs->did_packed) {
+ 		const char *packed_refs_file;
+@@ -379,7 +379,7 @@ void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
+ 
+ static struct ref_array *get_loose_refs(const char *submodule)
+ {
+-	struct cached_refs *refs = get_cached_refs(submodule);
++	struct ref_cache *refs = get_ref_cache(submodule);
+ 
+ 	if (!refs->did_loose) {
+ 		get_ref_dir(submodule, "refs", &refs->loose);
+@@ -1228,7 +1228,7 @@ int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
+ 	ret |= repack_without_ref(refname);
+ 
+ 	unlink_or_warn(git_path("logs/%s", lock->ref_name));
+-	invalidate_cached_refs();
++	invalidate_ref_cache();
+ 	unlock_ref(lock);
+ 	return ret;
+ }
+@@ -1527,7 +1527,7 @@ int write_ref_sha1(struct ref_lock *lock,
+ 		unlock_ref(lock);
+ 		return -1;
+ 	}
+-	invalidate_cached_refs();
++	invalidate_ref_cache();
+ 	if (log_ref_write(lock->ref_name, lock->old_sha1, sha1, logmsg) < 0 ||
+ 	    (strcmp(lock->ref_name, lock->orig_ref_name) &&
+ 	     log_ref_write(lock->orig_ref_name, lock->old_sha1, sha1, logmsg) < 0)) {
+-- 
+1.7.7.rc2
