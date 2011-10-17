@@ -1,73 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: regression in git-gui since 2c5c66b... Merge branch
- 'jp/get-ref-dir-unsorted
-Date: Mon, 17 Oct 2011 09:55:01 -0400
-Message-ID: <20111017135501.GA4171@sigill.intra.peff.net>
-References: <4E9B1E32.7030101@gmail.com>
- <7vfwispi8u.fsf@alter.siamese.dyndns.org>
- <4E9B8719.1090203@gmail.com>
- <4E9BA39B.709@alum.mit.edu>
- <4E9BFE66.5070906@gmail.com>
- <4E9C2F3C.7080405@alum.mit.edu>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: What should "git fetch origin +next" should do?
+Date: Mon, 17 Oct 2011 10:35:19 -0400
+Message-ID: <4E9C3D27.3060504@xiplink.com>
+References: <7v7h45s8rh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Mark Levedahl <mlevedahl@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Oct 17 15:55:15 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 17 16:36:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RFnes-000773-9o
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Oct 2011 15:55:14 +0200
+	id 1RFoIx-0001x8-2t
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Oct 2011 16:36:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755756Ab1JQNzH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Oct 2011 09:55:07 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33853
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753203Ab1JQNzF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Oct 2011 09:55:05 -0400
-Received: (qmail 6853 invoked by uid 107); 17 Oct 2011 13:55:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 17 Oct 2011 09:55:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Oct 2011 09:55:01 -0400
-Content-Disposition: inline
-In-Reply-To: <4E9C2F3C.7080405@alum.mit.edu>
+	id S1756072Ab1JQOgd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Oct 2011 10:36:33 -0400
+Received: from smtp132.iad.emailsrvr.com ([207.97.245.132]:60965 "EHLO
+	smtp132.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756024Ab1JQOfc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Oct 2011 10:35:32 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp23.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id B173C3486B0;
+	Mon, 17 Oct 2011 10:35:31 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp23.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 83E93348630;
+	Mon, 17 Oct 2011 10:35:31 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.23) Gecko/20110922 Thunderbird/3.1.15
+In-Reply-To: <7v7h45s8rh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183794>
 
-On Mon, Oct 17, 2011 at 03:35:56PM +0200, Michael Haggerty wrote:
+On 11-10-16 03:20 AM, Junio C Hamano wrote:
+> As some might know, I use the traditional non-separate-remotes layout in
+> many of my working trees. I am old fashioned.
 
-> On 10/17/2011 12:07 PM, Mark Levedahl wrote:
-> > Your modification of my script does not show the error for me, unless I
-> > have *installed* a version of git with the failure: I suspect git-gui
-> > invokes installed components, and not what is in the build directory, so
-> > having a good version of git installed with the bad version in the build
-> > directory does not show the error. And yes, I am quite sure that all of
-> > the git commands I am running are from the one version.
+Being hip and modern :) I use separate remote refspecs.  As I read your post,
+I kept thinking that it makes no sense for fetch to ever update local refs
+and that you're a victim of your stodgy old ways.
+
+> I just tried to update one of them with "git pull --ff-only", and after
+> seeing that the fetch phase failed with non-ff on 'next', ran
 > 
-> Yes, you seem to be right.  Even if I set PATH to list my git build
-> directory before the directory where it is installed, "git-gui"
-> sometimes invokes git-rev-parse from the libexec path of the installed
-> version.
+> 	$ git fetch origin +next
+> 
+> which happily copied the tip of updated next to FETCH_HEAD and nowhere
+> else. Of course, a colon-less refspec means do not store it anywhere,
+> i.e. "<colon-less-refspec>" === "<colon-less refspec>:", so prefixing it
+> with '+' to force would logically be a no-op.  But it nevertheless was
+> somewhat surprising and irritating.
+> 
+> This is one of the many things that is so minor that it probably is not
+> worth risking backward compatibility issues to change, but something that
+> we would design differently if we were starting from scratch. Maybe in Git
+> 2.0.
+> 
+> The question however is what should it do. I can see three possibilities:
+> 
+>  (1) Forcing to fetch into FETCH_HEAD does not make any sense, so instead
+>      of silently ignoring the '+' prefix, error it out and do not fetch
+>      anything. This is easy to explain and logically makes more sense than
+>      the current behaviour.
 
-If you are testing directly out of the build directory, you need to set
-GIT_EXEC_PATH, too. The bin-wrappers/git script will do this for you
-(and is what the test scripts use).
+I think this makes the most sense.
 
-But note that there's a catch with git-gui, as its built version doesn't
-live in the top-level. So running:
+I'd even go so far as to make fetch error out if there's a colon in the
+refspec.  Fetch has no business updating local refs.  There are other
+commands for that, and which command you use depends on how you want your
+local ref updated.  I think it would be a mistake to start going down a path
+where fetch learns different ways to update a local ref.  Madness!
 
-  bin-wrappers/git gui
-
-will try to exec the git-gui directory. You can work around it with:
-
-  bin-wrappers/git gui/git-gui
-
--Peff
+		M.
