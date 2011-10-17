@@ -1,8 +1,7 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH v2 06/14] is_refname_available(): remove the "quiet" argument
-Date: Mon, 17 Oct 2011 09:39:15 +0200
-Message-ID: <1318837163-27112-7-git-send-email-mhagger@alum.mit.edu>
-References: <1318837163-27112-1-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 00/14] Tidying up references code
+Date: Mon, 17 Oct 2011 09:39:09 +0200
+Message-ID: <1318837163-27112-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Drew Northup <drew.northup@maine.edu>,
 	Jakub Narebski <jnareb@gmail.com>,
@@ -17,90 +16,87 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RFhnW-0007hN-7S
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Oct 2011 09:39:46 +0200
+	id 1RFhnW-0007hN-NX
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Oct 2011 09:39:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754924Ab1JQHjl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754913Ab1JQHjl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 17 Oct 2011 03:39:41 -0400
-Received: from mail.berlin.jpk.com ([212.222.128.130]:33548 "EHLO
+Received: from mail.berlin.jpk.com ([212.222.128.130]:33560 "EHLO
 	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752708Ab1JQHji (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1752687Ab1JQHji (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 17 Oct 2011 03:39:38 -0400
 Received: from michael.berlin.jpk.com ([192.168.100.152])
 	by mail.berlin.jpk.com with esmtp (Exim 4.50)
-	id 1RFhhY-0000eM-46; Mon, 17 Oct 2011 09:33:36 +0200
+	id 1RFhhR-0000eM-4P; Mon, 17 Oct 2011 09:33:29 +0200
 X-Mailer: git-send-email 1.7.7.rc2
-In-Reply-To: <1318837163-27112-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183774>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
-quiet was always set to 0, so get rid of it.  Add a function docstring
-for good measure.
+Patch series re-rolled against v4 of "Provide API to invalidate refs
+cache", with the following additional changes to address Junio's
+comments (thanks!):
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs.c |   20 +++++++++++++-------
- 1 files changed, 13 insertions(+), 7 deletions(-)
+* Tweaked the comments for git_path() and git_path_submodule().
 
-diff --git a/refs.c b/refs.c
-index 30e505a..597800a 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1049,8 +1049,15 @@ static int remove_empty_directories(const char *file)
- 	return result;
- }
- 
-+/*
-+ * Return true iff a reference named refname could be created without
-+ * conflicting with the name of an existing reference.  If oldrefname
-+ * is non-NULL, ignore potential conflicts with oldrefname (e.g.,
-+ * because oldrefname is scheduled for deletion in the same
-+ * operation).
-+ */
- static int is_refname_available(const char *refname, const char *oldrefname,
--				struct ref_array *array, int quiet)
-+				struct ref_array *array)
- {
- 	int i, namlen = strlen(refname); /* e.g. 'foo/bar' */
- 	for (i = 0; i < array->nr; i++ ) {
-@@ -1062,9 +1069,8 @@ static int is_refname_available(const char *refname, const char *oldrefname,
- 			const char *lead = (namlen < len) ? entry->name : refname;
- 			if (!strncmp(refname, entry->name, cmplen) &&
- 			    lead[cmplen] == '/') {
--				if (!quiet)
--					error("'%s' exists; cannot create '%s'",
--					      entry->name, refname);
-+				error("'%s' exists; cannot create '%s'",
-+				      entry->name, refname);
- 				return 0;
- 			}
- 		}
-@@ -1117,7 +1123,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 	 * name is a proper prefix of our refname.
- 	 */
- 	if (missing &&
--	     !is_refname_available(refname, NULL, get_packed_refs(NULL), 0)) {
-+	     !is_refname_available(refname, NULL, get_packed_refs(NULL))) {
- 		last_errno = ENOTDIR;
- 		goto error_return;
- 	}
-@@ -1272,10 +1278,10 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 	if (!symref)
- 		return error("refname %s not found", oldrefname);
- 
--	if (!is_refname_available(newrefname, oldrefname, get_packed_refs(NULL), 0))
-+	if (!is_refname_available(newrefname, oldrefname, get_packed_refs(NULL)))
- 		return 1;
- 
--	if (!is_refname_available(newrefname, oldrefname, get_loose_refs(NULL), 0))
-+	if (!is_refname_available(newrefname, oldrefname, get_loose_refs(NULL)))
- 		return 1;
- 
- 	lock = lock_ref_sha1_basic(renamed_ref, NULL, 0, NULL);
+* Several (clerical!) fixes to comments and log messages that still
+  referred to "ref_list".
+
+* Clarified log message for patch "refs: rename parameters result ->
+  sha1".
+
+* Improved comment for resolve_gitlink_ref().
+
+I also moved patch "resolve_gitlink_ref(): improve docstring" later in
+the patch series to put it closer to other changes to that area of the
+code.
+
+BTW, whenever I add comments to existing code, it is just an attempt
+to record information that I have inferred from reverse-engineering.
+My belief is that even a phenomenological description of the behavior
+of a function is usually better than nothing (which is often the
+status quo).  But I will be delighted if somebody improves/rewrites
+the comments to be more insightful or simply more consistent with the
+terminology used elsewhere.
+
+Original description of patch series:
+
+This is the next installment of the reference changes that I have been
+working on.  This batch includes a lot of tidying up in preparation
+for the real changes.
+
+The last few patches have a little bit of meat on them.  They start
+changing the innards of refs.c to work less with strings and more with
+objects.  This work will continue in later patches with the ultimate
+goal of swapping the data structure used to store cached references
+out from under the module--changing it from a sorted array of pointers
+into a hierarchical tree shaped like the reference namespace
+tree.
+
+Michael Haggerty (14):
+  cache.h: add comments for git_path() and git_path_submodule()
+  struct ref_entry: document name member
+  refs: rename "refname" variables
+  refs: rename parameters result -> sha1
+  clear_ref_array(): rename from free_ref_array()
+  is_refname_available(): remove the "quiet" argument
+  parse_ref_line(): add docstring
+  add_ref(): add docstring
+  is_dup_ref(): extract function from sort_ref_array()
+  refs: change signatures of get_packed_refs() and get_loose_refs()
+  get_ref_dir(): change signature
+  resolve_gitlink_ref(): improve docstring
+  Pass a (ref_cache *) to the resolve_gitlink_*() helper functions
+  resolve_gitlink_ref_recursive(): change to work with struct ref_cache
+
+ cache.h |   18 +++
+ refs.c  |  416 +++++++++++++++++++++++++++++++++-----------------------------
+ refs.h  |   34 +++--
+ 3 files changed, 260 insertions(+), 208 deletions(-)
+
 -- 
 1.7.7.rc2
