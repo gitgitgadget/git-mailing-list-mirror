@@ -1,107 +1,243 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH] git-gui: fix multi selected file operation
-Date: Mon, 17 Oct 2011 07:54:10 +0200
-Message-ID: <CAKPyHN0iaS301r_d+kc-AVRNVKUprhdMwDpdD0HDf7nKbsPR3Q@mail.gmail.com>
-References: <87cab38f99075f149a9abe7caf4ec139a0a48213.1318580310.git.bert.wesarg@googlemail.com>
-	<87ehydhnwk.fsf@fox.patthoyts.tk>
+From: Kato Kazuyoshi <kato.kazuyoshi@gmail.com>
+Subject: [PATCH 2/2] gitweb: add a feature to show side-by-side diff
+Date: Mon, 17 Oct 2011 16:00:18 +0900
+Message-ID: <CAFo4x0L4BAKnCDa1uEK0Rskd9kTsR-94D4mkYKnLGqVDnuyuBA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Mon Oct 17 08:00:00 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 17 09:00:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RFgEu-00061A-IG
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Oct 2011 07:59:56 +0200
+	id 1RFhBm-0001Iv-5h
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Oct 2011 09:00:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754634Ab1JQFyM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Oct 2011 01:54:12 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:57454 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754453Ab1JQFyL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Oct 2011 01:54:11 -0400
-Received: by vws1 with SMTP id 1so2247389vws.19
-        for <git@vger.kernel.org>; Sun, 16 Oct 2011 22:54:10 -0700 (PDT)
+	id S1752696Ab1JQHAk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Oct 2011 03:00:40 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:50862 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752436Ab1JQHAj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Oct 2011 03:00:39 -0400
+Received: by bkbzt19 with SMTP id zt19so3346473bkb.19
+        for <git@vger.kernel.org>; Mon, 17 Oct 2011 00:00:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Adz/sixC2Dr41uDvPnbdW2zVWVKvneqV17DPVcI8Jl0=;
-        b=ADdxnjfel2YeRvoSBXMKE0l3sxYbI7v5m1KbJj5++OAf3RBWxLZV2AfRQP19EP9Nl4
-         lwqcGGm6IFH4dgfmV7NvqbmYWDjYKBA7feh/oSgD7VONfVFsnu+c5gkHy5kFuTZSaWpa
-         5F4bL9gUJZLhJgoB/uN3jzlGygykzxIEePhHk=
-Received: by 10.52.112.135 with SMTP id iq7mr19126865vdb.51.1318830850465;
- Sun, 16 Oct 2011 22:54:10 -0700 (PDT)
-Received: by 10.52.186.36 with HTTP; Sun, 16 Oct 2011 22:54:10 -0700 (PDT)
-In-Reply-To: <87ehydhnwk.fsf@fox.patthoyts.tk>
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=1VIcLEvcCex+mOiRsZBLG5JMkd1oavUr5e2kEoBg24o=;
+        b=AWYvf6vfPL4ceErnjoTl6sdbOVHVftqA7+OK7jdM8WI82AgzIbfaLVpuC++3swfbwW
+         B3M08zeYTHNHz043heT1mneleWbMZdOb/mfSbXMRk7qamYGlqZD7zoJw9wH/B24VNaxo
+         HGvDXOshSySj9ozfdCXEDk+CK8VeBnzNGY/VU=
+Received: by 10.204.156.1 with SMTP id u1mr13370757bkw.18.1318834838092; Mon,
+ 17 Oct 2011 00:00:38 -0700 (PDT)
+Received: by 10.204.36.132 with HTTP; Mon, 17 Oct 2011 00:00:18 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183769>
 
-Hi,
+gitweb currently has a feature to show diff but it doesn't support
+"side-by-side" style. This modification introduces:
 
-On Sun, Oct 16, 2011 at 00:48, Pat Thoyts
-<patthoyts@users.sourceforge.net> wrote:
-> Bert Wesarg <bert.wesarg@googlemail.com> writes:
->
->>The current path for what we see the diff is not in the list of selec=
-ted
->>paths. But when we add single paths (with Ctrl) to the set the curren=
-t path
->>would not be used when the action is performed.
->>
->>Fix this by explicitly putting the path into the list before we start
->>showing the diff.
->>
->>Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
->>---
->> git-gui.sh | =C2=A0 =C2=A01 +
->> 1 files changed, 1 insertions(+), 0 deletions(-)
->>
->>diff --git a/git-gui.sh b/git-gui.sh
->>index f897160..e5dd8bc 100755
->>--- a/git-gui.sh
->>+++ b/git-gui.sh
->>@@ -2474,6 +2474,7 @@ proc toggle_or_diff {w x y} {
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 [concat $after [list ui_ready]]
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
->> =C2=A0 =C2=A0 =C2=A0 } else {
->>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0set selected_paths(=
-$path) 1
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 show_diff $path $w =
-$lno
->> =C2=A0 =C2=A0 =C2=A0 }
->> }
->
-> It is not clear what I should be looking for to test this. Can you
-> re-write the commit message to be more clear about what you are
-> fixing. Is this multiple unstaged files in the staging box? If so I
-> don't see what path display is changing.
+ * The "ds" query parameter to specify the style of diff.
+ * The format_diff_chunk() to reorganize an output of diff.
+ * The diff_nav() for form.
+---
+ gitweb/gitweb.perl       |   81 +++++++++++++++++++++++++++++++++++++++++----
+ gitweb/static/gitweb.css |   15 ++++++++
+ 2 files changed, 88 insertions(+), 8 deletions(-)
 
-Sorry, for this bad description. I will give you a recipe here what to
-do to expose the problem. I try later to form this into a new commit
-message:
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 095adda..dca09dc 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -757,6 +757,7 @@ our @cgi_param_mapping = (
+ 	extra_options => "opt",
+ 	search_use_regexp => "sr",
+ 	ctag => "by_tag",
++	diff_style => "ds",
+ 	# this must be last entry (for manipulation from JavaScript)
+ 	javascript => "js"
+ );
+@@ -1072,6 +1073,8 @@ sub evaluate_and_validate_params {
+ 		}
+ 		$search_regexp = $search_use_regexp ? $searchtext : quotemeta $searchtext;
+ 	}
++
++	$input_params{diff_style} ||= 'inline';
+ }
 
-You have 2 modified, not staged files A and B. Your current view shows
-the diff for A. Adding B to the selection via Ctrl+Button1 and than
-perform the "Stage To Commit" action from the "Commit" menu results
-only in the staging of B.
+ # path to the current git repository
+@@ -2276,7 +2279,7 @@ sub format_diff_line {
+ 		}
+ 		$line = "<span class=\"chunk_info\">@@ $from_text $to_text @@</span>" .
+ 		        "<span class=\"section\">" . esc_html($section, -nbsp=>1) .
+"</span>";
+-		return "$div_open$line</div>\n";
++		return $diff_class, "$div_open$line</div>\n";
+ 	} elsif ($from && $to && $line =~ m/^\@{3}/) {
+ 		my ($prefix, $ranges, $section) = $line =~ m/^(\@+) (.*?) \@+(.*)$/;
+ 		my (@from_text, @from_start, @from_nlines, $to_text, $to_start, $to_nlines);
+@@ -2309,9 +2312,9 @@ sub format_diff_line {
+ 		}
+ 		$line .= " $prefix</span>" .
+ 		         "<span class=\"section\">" . esc_html($section, -nbsp=>1)
+. "</span>";
+-		return "$div_open$line</div>\n";
++		return $diff_class, "$div_open$line</div>\n";
+ 	}
+-	return $div_open . esc_html($line, -nbsp=>1) . "</div>\n";
++	return $diff_class, $div_open . esc_html($line, -nbsp=>1) . "</div>\n";
+ }
 
-Note, using Shift+Button1 (i.e. 'adding a range of files to the
-selection') results in the staging of both files A and B.
+ # Generates undef or something like "_snapshot_" or "snapshot (_tbz2_ _zip_)",
+@@ -4828,8 +4831,32 @@ sub git_difftree_body {
+ 	print "</table>\n";
+ }
 
-Bert
++sub format_diff_chunk {
++	my @chunk = @_;
++
++	my $first_class = $chunk[0]->[0];
++	my @partial = map { $_->[1] } grep { $_->[0] eq $first_class } @chunk;
++
++	if (scalar @partial < scalar @chunk) {
++		return join '', ("<div class='chunk'><div class='old'>",
++		             @partial,
++		             "</div>",
++		             "<div class='new'>",
++		             (map {
++		                 $_->[1];
++		             } @chunk[scalar @partial..scalar @chunk-1]),
++		             "</div></div>");
++	} else {
++		return join '', ("<div class='chunk'><div class='",
++		             ($first_class eq 'add' ? 'new' : 'old'),
++		             "'>",
++		             @partial,
++		             "</div></div>");
++	}
++}
++
+ sub git_patchset_body {
+-	my ($fd, $difftree, $hash, @hash_parents) = @_;
++	my ($fd, $is_inline, $difftree, $hash, @hash_parents) = @_;
+ 	my ($hash_parent) = $hash_parents[0];
 
->
-> --
-> Pat Thoyts =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0http://www.patthoyts.tk/
-> PGP fingerprint 2C 6E 98 07 2C 59 C8 97 =C2=A010 CE 11 E6 04 E0 B9 DD
->
+ 	my $is_combined = (@hash_parents > 1);
+@@ -4940,12 +4967,31 @@ sub git_patchset_body {
+
+ 		# the patch itself
+ 	LINE:
++		my @chunk;
+ 		while ($patch_line = <$fd>) {
+ 			chomp $patch_line;
+
+ 			next PATCH if ($patch_line =~ m/^diff /);
+
+-			print format_diff_line($patch_line, \%from, \%to);
++			my ($class, $line) = format_diff_line($patch_line, \%from, \%to);
++			if ($is_inline) {
++				print $line;
++			} elsif ($class eq 'add' || $class eq 'rem') {
++				push @chunk, [ $class, $line ];
++			} else {
++				if (@chunk) {
++					print format_diff_chunk(@chunk);
++					@chunk = ();
++				} elsif ($class eq 'chunk_header') {
++					print $line;
++				} else {
++					print '<div class="chunk"><div class="old">',
++					      $line,
++					      '</div><div class="new">',
++					      $line,
++					      '</div></div>';
++				}
++			}
+ 		}
+
+ 	} continue {
+@@ -7053,7 +7099,8 @@ sub git_blobdiff {
+ 	if ($format eq 'html') {
+ 		print "<div class=\"page_body\">\n";
+
+-		git_patchset_body($fd, [ \%diffinfo ], $hash_base, $hash_parent_base);
++		git_patchset_body($fd, $input_params{diff_style} eq 'inline',
++		                  [ \%diffinfo ], $hash_base, $hash_parent_base);
+ 		close $fd;
+
+ 		print "</div>\n"; # class="page_body"
+@@ -7078,6 +7125,22 @@ sub git_blobdiff_plain {
+ 	git_blobdiff('plain');
+ }
+
++sub diff_nav {
++	my ($style) = @_;
++
++	my %pairs = (inline => 'inline', 'sidebyside' => 'side by side');
++	join '', ($cgi->start_form({ method => 'get' }),
++	          $cgi->hidden('p'),
++	          $cgi->hidden('a'),
++	          $cgi->hidden('h'),
++	          $cgi->hidden('hp'),
++	          $cgi->hidden('hb'),
++	          $cgi->hidden('hpb'),
++	          $cgi->popup_menu('ds', [keys %pairs], $style, \%pairs),
++	          $cgi->submit('change'),
++	          $cgi->end_form);
++}
++
+ sub git_commitdiff {
+ 	my %params = @_;
+ 	my $format = $params{-format} || 'html';
+@@ -7230,7 +7293,8 @@ sub git_commitdiff {
+ 		my $ref = format_ref_marker($refs, $co{'id'});
+
+ 		git_header_html(undef, $expires);
+-		git_print_page_nav('commitdiff','', $hash,$co{'tree'},$hash, $formats_nav);
++		git_print_page_nav('commitdiff','', $hash,$co{'tree'},$hash,
++		                   $formats_nav . diff_nav($input_params{diff_style}));
+ 		git_print_header_div('commit', esc_html($co{'title'}) . $ref, $hash);
+ 		print "<div class=\"title_text\">\n" .
+ 		      "<table class=\"object_header\">\n";
+@@ -7284,7 +7348,8 @@ sub git_commitdiff {
+ 		                  $use_parents ? @{$co{'parents'}} : $hash_parent);
+ 		print "<br/>\n";
+
+-		git_patchset_body($fd, \@difftree, $hash,
++		git_patchset_body($fd, $input_params{diff_style} eq 'inline',
++		                  \@difftree, $hash,
+ 		                  $use_parents ? @{$co{'parents'}} : $hash_parent);
+ 		close $fd;
+ 		print "</div>\n"; # class="page_body"
+diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
+index 7d88509..dc84db2 100644
+--- a/gitweb/static/gitweb.css
++++ b/gitweb/static/gitweb.css
+@@ -618,6 +618,21 @@ div.remote {
+ 	cursor: pointer;
+ }
+
++/* side-by-side diff */
++div.chunk {
++	overflow: hidden;
++}
++
++div.chunk div.old {
++	float: left;
++	width: 50%;
++	overflow: hidden;
++}
++
++div.chunk div.new {
++	margin-left: 50%;
++	width: 50%;
++}
+
+ /* Style definition generated by highlight 2.4.5, http://www.andre-simon.de/ */
+
+-- 
+1.7.7.213.g8b0e1.dirty
