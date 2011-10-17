@@ -1,63 +1,114 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 6/6] revert: Simplify passing command-line arguments around
-Date: Mon, 17 Oct 2011 15:40:34 +0530
-Message-ID: <CALkWK0msrEYPzpR1rgx0BzHpGiBiP9+doDKV+2N5mEruzhPqUg@mail.gmail.com>
-References: <1318095407-26429-1-git-send-email-artagnon@gmail.com>
- <1318095407-26429-7-git-send-email-artagnon@gmail.com> <CALUzUxo=xN735+=Yz9eS_VSW3fpiTeng9s-66qM0Jno40-DPXQ@mail.gmail.com>
- <CALkWK0kA=zhpsmYhjMwv11xyHNhA0Ps=BjUDao0+HFLMKnADUg@mail.gmail.com>
- <20111009085306.GA9209@elie.hsd1.il.comcast.net> <CALkWK0niwg1Ogs+xBr8NHEce-MUUzPc_Upn0ZKRi3iCZ6fA4BQ@mail.gmail.com>
- <20111009092432.GB29150@elie.hsd1.il.comcast.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: provide a way to customize html headers
+Date: Mon, 17 Oct 2011 13:56:59 +0200
+Message-ID: <201110171357.00278.jnareb@gmail.com>
+References: <201110170928.56075.lenaic@lhuard.fr.eu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tay Ray Chuan <rctay89@gmail.com>, Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 17 12:11:02 2011
+Cc: git@vger.kernel.org
+To: =?utf-8?q?L=C3=A9na=C3=AFc_Huard?= <lenaic@lhuard.fr.eu.org>
+X-From: git-owner@vger.kernel.org Mon Oct 17 13:57:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RFk9s-0001Z9-HB
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Oct 2011 12:11:00 +0200
+	id 1RFloi-0005KF-6p
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Oct 2011 13:57:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755235Ab1JQKK4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Oct 2011 06:10:56 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:39817 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751720Ab1JQKKz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Oct 2011 06:10:55 -0400
-Received: by wyg36 with SMTP id 36so2018731wyg.19
-        for <git@vger.kernel.org>; Mon, 17 Oct 2011 03:10:54 -0700 (PDT)
+	id S1751363Ab1JQL5M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Oct 2011 07:57:12 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:48371 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750760Ab1JQL5K (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Oct 2011 07:57:10 -0400
+Received: by ywf7 with SMTP id 7so507896ywf.19
+        for <git@vger.kernel.org>; Mon, 17 Oct 2011 04:57:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Ink14UvQAWkrAfleMHJBhrQlEH4F6GJaKWLmRagTftI=;
-        b=EcQp5mKfm1ZNs0pw3rCw2058VGDj9JsJ3zr0YLKP45paAvyZRCzXRjEMx0qr3CEeiR
-         wJCTNWlgccktcNhveFYpHT3DaEQT4eQUTSu9JO4+Gi5g9InMRTckrNdAtz+neNidQ6nr
-         ockweb2HZdyf7VoT7RD5An6mT3trEK77gq5tY=
-Received: by 10.216.203.69 with SMTP id e47mr3537574weo.60.1318846254110; Mon,
- 17 Oct 2011 03:10:54 -0700 (PDT)
-Received: by 10.216.51.75 with HTTP; Mon, 17 Oct 2011 03:10:34 -0700 (PDT)
-In-Reply-To: <20111009092432.GB29150@elie.hsd1.il.comcast.net>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=ZZCGagslAVRqINeaxn4Jt08MgDVnZMsqSTmTEDYrtIM=;
+        b=Hzb4+SYnP34zJXUAyVo2/omIJEWq21m5RarS+naEzvbPVHyRQ97K7hUiBAsgNsU4Pr
+         qjm3eyS8r+JW8zuZZF99k/CGLqKXMDq+pG6s35MAK3n+PGm7Brn7lf4SKmgeKlYBce1O
+         ggMO2ZsX2ZthrIPXDXnk2AU70BgIrW3wI3eh4=
+Received: by 10.223.81.196 with SMTP id y4mr4643835fak.6.1318852630088;
+        Mon, 17 Oct 2011 04:57:10 -0700 (PDT)
+Received: from [192.168.1.13] (absh126.neoplus.adsl.tpnet.pl. [83.8.127.126])
+        by mx.google.com with ESMTPS id t13sm9396795fae.0.2011.10.17.04.57.07
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 17 Oct 2011 04:57:08 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <201110170928.56075.lenaic@lhuard.fr.eu.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183791>
 
-Hi Jonathan,
+On Mon, 17 Oct 2011, L=C3=A9na=C3=AFc Huard wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>=20
+> > L=C3=A9na=C3=AFc Huard <lenaic@lhuard.fr.eu.org> writes:
+>=20
+> > > This allows web sites to add some specific html headers to the pa=
+ges
+> > > generated by gitweb.
+>=20
+> > What do you need this for?
+>=20
+> I want to decorate the gitweb pages with the =E2=80=9CGoogle Analytic=
+s=E2=80=9D tracking code.
+> In order to do so, today, Google is recommending to add a <script> ta=
+g just=20
+> before the closing </head> tag.
+>=20
+> https://www.google.com/support/analyticshelp/bin/answer.py?answer=3D1=
+008080&hl=3Den
 
-Jonathan Nieder writes:
-> Thanks, but I shouldn't have had to ask. =C2=A0Care to fix the commit
-> message? :)
+Hmmm... the modern recommendation from both Google and Yahoo is to put
+script tags at the end of HTML, just before closing </body>, which you
+can do nowadays with $site_footer / GITWEB_SITE_FOOTER.
 
-Ah, yes- my persistent lack of clarity in commit messages :|
-Hopefully, the next iteration will have better commit messages.
+But I guess that analytics script needs to be loaded earlier.
 
--- Ram
+> > > The new variable $site_htmlheader can be set to a filename the co=
+ntent
+> > > of which will be inserted at the end of the <head> section of eac=
+h
+> > > page generated by gitweb.
+>=20
+> > Hmmm... I wonder if a file with html header fragment (which is quit=
+e
+> > specific subset of HTML) is a best solution.
+>=20
+> That=E2=80=99s true. The piece of code to be inserted in <head> is ma=
+ybe small enough=20
+> so that we don=E2=80=99t need a file. Maybe $site_htmlheader could co=
+ntain directly=20
+> the html snippet to be inserted in the pages?
+
+I think it might be a better solution.
+=20
+
+> > > ---
+> > >  gitweb/INSTALL     |    3 +++
+>=20
+> > Nb. there is patch in flight adding gitweb.conf(5) and gitweb(1)
+> > manpages...
+>=20
+> Ok. So, I=E2=80=99ll update them once a decision will be taken concer=
+ning this=20
+> $site_htmlheader.
+
+You might have to wait a bit till patches containing gitweb.conf(5)
+manpage are merged in, and rebase your patch to add information about
+new config variable not to gitweb/INSTALL, but to Documentation/gitweb.=
+conf.txt
+
+--=20
+Jakub Narebski
+Poland
