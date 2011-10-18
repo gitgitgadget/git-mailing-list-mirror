@@ -1,119 +1,66 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH 1/4] git-gui: handle config booleans without value
-Date: Tue, 18 Oct 2011 08:39:26 +0200
-Message-ID: <CAKPyHN3dQ+qWeJtGzigEm=fZe62ZeRW-QGq0jnycKEBVaWn=mA@mail.gmail.com>
-References: <94b050c4cf7ae8df8d79112e13613244ebff4037.1318579823.git.bert.wesarg@googlemail.com>
-	<87mxczgqiw.fsf@fox.patthoyts.tk>
+From: Alexey Shumkin <Alex.Crezoff@gmail.com>
+Subject: Re: Compiling on Windows
+Date: Tue, 18 Oct 2011 10:39:55 +0400
+Message-ID: <20111018103955.1db40b5e@ashu.dyn.rarus.ru>
+References: <CAH5451=7Em7sPzknVx8i2VBSAZxZwg1Awr8s3Nr2W=A6SDEZEw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Tue Oct 18 08:39:33 2011
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 18 08:40:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RG3Km-0007Ei-IF
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 08:39:33 +0200
+	id 1RG3LL-0007RB-Hv
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 08:40:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751897Ab1JRGj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Oct 2011 02:39:28 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:39692 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751347Ab1JRGj1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Oct 2011 02:39:27 -0400
-Received: by vws1 with SMTP id 1so85423vws.19
-        for <git@vger.kernel.org>; Mon, 17 Oct 2011 23:39:26 -0700 (PDT)
+	id S1752193Ab1JRGkB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Oct 2011 02:40:01 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:43266 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751347Ab1JRGkA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Oct 2011 02:40:00 -0400
+Received: by wyg36 with SMTP id 36so227899wyg.19
+        for <git@vger.kernel.org>; Mon, 17 Oct 2011 23:39:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=UhzU3HoPXYhiF/I0zM/ep4VaNKugFBSBN3hM/lzEIGI=;
-        b=PGW9tafhDf4F0OIKEUdYQlMZW1Hg/acEpmXlUyeH5scBxKOD34s8P5HMhu2a8TB5EW
-         tbyrOPbpdtC0dSXhzBIM9N9i3FgW6S10fd0OmKugjgJAZAXpJFxhJNB+0NWlYca1BX2+
-         +t7xEbaoP0gMjvm0IvIIE9lYf4EjWyb9L1nCE=
-Received: by 10.52.72.196 with SMTP id f4mr964510vdv.68.1318919966785; Mon, 17
- Oct 2011 23:39:26 -0700 (PDT)
-Received: by 10.52.186.36 with HTTP; Mon, 17 Oct 2011 23:39:26 -0700 (PDT)
-In-Reply-To: <87mxczgqiw.fsf@fox.patthoyts.tk>
+        d=rarus.ru; s=google;
+        h=sender:date:from:to:cc:subject:message-id:in-reply-to:references
+         :x-mailer:mime-version:content-type:content-transfer-encoding;
+        bh=cysK7OsLWLYf1spDQTzdCelf0hboK5F7Y41u/0xxkfo=;
+        b=evFwQkOzffv6Z7LNuLGN2jjx39W8iBJDdlGbU4qViZe4BKhsUJSoQR+Ejl+YtLjspi
+         y7sq797ee8yApvsXRdV+J5axUPD4SirES9ePXkoRFu3X73StA7pBeCLMS3GVhpGlndCp
+         SMv8TnW732xzSXIVCxF1u6E7MW7mWw2jIsjbQ=
+Received: by 10.227.55.65 with SMTP id t1mr351326wbg.90.1318919998809;
+        Mon, 17 Oct 2011 23:39:58 -0700 (PDT)
+Received: from ashu.dyn.rarus.ru (mail.rarus.ru. [213.247.194.83])
+        by mx.google.com with ESMTPS id b5sm1617137wbh.4.2011.10.17.23.39.57
+        (version=SSLv3 cipher=OTHER);
+        Mon, 17 Oct 2011 23:39:57 -0700 (PDT)
+In-Reply-To: <CAH5451=7Em7sPzknVx8i2VBSAZxZwg1Awr8s3Nr2W=A6SDEZEw@mail.gmail.com>
+X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183865>
 
-T24gVHVlLCBPY3QgMTgsIDIwMTEgYXQgMDE6MTMsIFBhdCBUaG95dHMKPHBhdHRob3l0c0B1c2Vy
-cy5zb3VyY2Vmb3JnZS5uZXQ+IHdyb3RlOgo+IEJlcnQgV2VzYXJnIDxiZXJ0Lndlc2FyZ0Bnb29n
-bGVtYWlsLmNvbT4gd3JpdGVzOgo+Cj4+V2hlbiBnaXQgaW50ZXJwcmV0cyBhIGNvbmZpZyB2YXJp
-YWJsZSB3aXRob3V0IGEgdmFsdWUgYXMgYm9vbCBpdCBpcyBjb25zaWRlcmVkCj4+YXMgdHJ1ZS4g
-QnV0IGdpdC1ndWkgZG9lc24ndCBzbyB1bnRpbCB5ZXQuCj4+Cj4+VGhlIHZhbHVlIGZvciBib29s
-ZWFuIGNvbmZpZ3MgYXJlIGFsc28gY2FzZS1pbnNlbnNpdGl2ZS4KPj4KPj5TaWduZWQtb2ZmLWJ5
-OiBCZXJ0IFdlc2FyZyA8YmVydC53ZXNhcmdAZ29vZ2xlbWFpbC5jb20+Cj4+LS0tCj4+IGdpdC1n
-dWkuc2ggfCDCoCAxNiArKysrKysrKysrKysrKy0tCj4+IDEgZmlsZXMgY2hhbmdlZCwgMTQgaW5z
-ZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkKPj4KPj5kaWZmIC0tZ2l0IGEvZ2l0LWd1aS5zaCBi
-L2dpdC1ndWkuc2gKPj5pbmRleCBmODk3MTYwLi5kNjg3ODcxIDEwMDc1NQo+Pi0tLSBhL2dpdC1n
-dWkuc2gKPj4rKysgYi9naXQtZ3VpLnNoCj4+QEAgLTI5OSw3ICsyOTksOSBAQCBwcm9jIGlzX2Nv
-bmZpZ190cnVlIHtuYW1lfSB7Cj4+IMKgIMKgIMKgIGdsb2JhbCByZXBvX2NvbmZpZwo+PiDCoCDC
-oCDCoCBpZiB7W2NhdGNoIHtzZXQgdiAkcmVwb19jb25maWcoJG5hbWUpfV19IHsKPj4gwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgcmV0dXJuIDAKPj4tIMKgIMKgIMKgfSBlbHNlaWYgeyR2IGVxIHt0cnVl
-fSB8fCAkdiBlcSB7MX0gfHwgJHYgZXEge3llc319IHsKPj4rIMKgIMKgIMKgfQo+PisgwqAgwqAg
-wqBzZXQgdiBbc3RyaW5nIHRvbG93ZXIgJHZdCj4+KyDCoCDCoCDCoGlmIHskdiBlcSB7fSB8fCAk
-diBlcSB7dHJ1ZX0gfHwgJHYgZXEgezF9IHx8ICR2IGVxIHt5ZXN9IHx8ICR2IGVxIHtvbn19IHsK
-Pj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgcmV0dXJuIDEKPj4gwqAgwqAgwqAgfSBlbHNlIHsKPj4g
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgcmV0dXJuIDAKPgo+IFRoaXMgbG9va3Mgb2sgLSB3ZSBhY3R1
-YWxseSBoYXZlIGEgW3N0cmluZyBpcyBib29sZWFuICR2XSB0ZXN0IHdlIGNvdWxkCj4gdXNlIGVn
-Ogo+IMKgaWYge1tzdHJpbmcgaXMgYm9vbGVhbiAkdl19IHsKPiDCoCDCoHJldHVybiBbZXhwciB7
-JHYgZXEge30gPyAxIDogISEkdn1dCj4gwqB9Cj4gYWx0aG91Z2ggSSdtIG5vdCBzdXJlIGl0IGdh
-aW5zIHVzIG11Y2guIFRoaXMgd291bGQgbWF0Y2ggZXZlcnl0aGluZyBUY2wKPiBiZWxpZXZlcyB0
-byBiZSBhIGJvb2xlYW4gLSB5ZXMvbm8sIG9uL29mZiwgdHJ1ZS9mYWxzZSBhbmQgMS8wLiBXaXRo
-b3V0Cj4gLXN0cmljdCB0aGUgW3N0cmluZyBpc10gdGVzdCB3aWxsIGNvbnNpZGVyIHt9IHRvIGJl
-IGEgYm9vbGVhbi4KPgo+Cj4+QEAgLTMxMCw3ICszMTIsOSBAQCBwcm9jIGlzX2NvbmZpZ19mYWxz
-ZSB7bmFtZX0gewo+PiDCoCDCoCDCoCBnbG9iYWwgcmVwb19jb25maWcKPj4gwqAgwqAgwqAgaWYg
-e1tjYXRjaCB7c2V0IHYgJHJlcG9fY29uZmlnKCRuYW1lKX1dfSB7Cj4+IMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIHJldHVybiAwCj4+LSDCoCDCoCDCoH0gZWxzZWlmIHskdiBlcSB7ZmFsc2V9IHx8ICR2
-IGVxIHswfSB8fCAkdiBlcSB7bm99fSB7Cj4+KyDCoCDCoCDCoH0KPj4rIMKgIMKgIMKgc2V0IHYg
-W3N0cmluZyB0b2xvd2VyICR2XQo+PisgwqAgwqAgwqBpZiB7JHYgZXEge2ZhbHNlfSB8fCAkdiBl
-cSB7MH0gfHwgJHYgZXEge25vfSB8fCAkdiBlcSB7b2ZmfX0gewo+PiDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCByZXR1cm4gMQo+PiDCoCDCoCDCoCB9IGVsc2Ugewo+PiDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCByZXR1cm4gMAo+PkBAIC0xMDYwLDYgKzEwNjQsMTAgQEAgZ2l0LXZlcnNpb24gcHJvYyBfcGFy
-c2VfY29uZmlnIHthcnJfbmFtZSBhcmdzfSB7Cj4+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIH0gZWxzZSB7Cj4+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHNldCBhcnIoJG5hbWUpICR2YWx1ZQo+PiDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9Cj4+KyDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoH0gZWxzZWlmIHtbcmVnZXhwIHteKFteXG5dKykkfSAk
-bGluZSBsaW5lIG5hbWVdfSB7Cj4+KyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCMgbm8gdmFsdWUgZ2l2ZW4sIGJ1dCBpbnRlcnByZXRpbmcgdGhlbSBhcwo+Pisg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAjIGJvb2xlYW4gd2ls
-bCBiZSBoYW5kbGVkIGFzIHRydWUKPj4rIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgc2V0IGFycigkbmFtZSkge30KPj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgfQo+PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9Cj4+IMKgIMKgIMKgIH0KPj5AQCAt
-MTA3NSw2ICsxMDgzLDEwIEBAIGdpdC12ZXJzaW9uIHByb2MgX3BhcnNlX2NvbmZpZyB7YXJyX25h
-bWUgYXJnc30gewo+PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCB9IGVsc2Ugewo+PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBzZXQgYXJyKCRuYW1lKSAkdmFs
-dWUKPj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgfQo+PisgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB9
-IGVsc2VpZiB7W3JlZ2V4cCB7XihbXj1dKykkfSAkbGluZSBsaW5lIG5hbWVdfSB7Cj4+KyDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCMgbm8g
-dmFsdWUgZ2l2ZW4sIGJ1dCBpbnRlcnByZXRpbmcgdGhlbSBhcwo+PisgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAjIGJvb2xlYW4gd2lsbCBi
-ZSBoYW5kbGVkIGFzIHRydWUKPj4rIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgc2V0IGFycigkbmFtZSkge30KPj4gwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCB9Cj4+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNsb3NlICRm
-ZF9yYwo+Cj4gSXMgdGhpcyByZWFsbHkgaG93IGdpdCB0cmVhdHMgYm9vbGVhbiBjb25maWcgdmFs
-dWVzPyBJIGNhbid0IHNlZW0gdG8KPiBkZW1vbnN0cmF0ZSB0aGF0IHRvIG15c2VsZjoKPiBwYXRA
-ZnJvZzovb3B0L3NyYy9naXQtZ3VpJCBnaXQgY29uZmlnIC0tdW5zZXQgY29yZS54eXp6eQo+IHBh
-dEBmcm9nOi9vcHQvc3JjL2dpdC1ndWkkIGdpdCBjb25maWcgLS1ib29sIC0tZ2V0IGNvcmUueHl6
-enkKPiBwYXRAZnJvZzovb3B0L3NyYy9naXQtZ3VpJCBnaXQgY29uZmlnIC0tYm9vbCBjb3JlLnh5
-enp5IDEKPiBwYXRAZnJvZzovb3B0L3NyYy9naXQtZ3VpJCBnaXQgY29uZmlnIC0tYm9vbCAtLWdl
-dCBjb3JlLnh5enp5Cj4gdHJ1ZQo+Cj4gSSBhc3N1bWUgSSdtIHVzaW5nIHRoZSB3cm9uZyB0ZXN0
-IGZvciB0aGlzLgoKSXQgbG9va3MgbGlrZSB5b3UgY2FuJ3Qgc2V0IGl0IHdpdGggZ2l0LWNvbmZp
-Zy4gQnV0IEkga25vdywgdGhhdCB3cml0aW5nOgoKW2NvcmVdCiAgICAgICAgeHl5enkKCmludG8g
-dGhlIGdpdCBjb25maWcgZmlsZSBhbmQgdGhhbiBjYWxsaW5nIGdpdCBjb25maWcgLS1ib29sIC0t
-Z2V0CmNvcmUueHl6enksIHdpbGwgZ2l2ZSB5b3UgdHJ1ZS4KCkJlcnQKCj4KPiAtLQo+IFBhdCBU
-aG95dHMgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBodHRwOi8vd3d3
-LnBhdHRob3l0cy50ay8KPiBQR1AgZmluZ2VycHJpbnQgMkMgNkUgOTggMDcgMkMgNTkgQzggOTcg
-wqAxMCBDRSAxMSBFNiAwNCBFMCBCOSBERAo+Cg==
+Take a look at Cygwin.
+On Windows I use Git under Cygwin.
+And, of course, Git can be compiled there (with dependencies installed 
+like openssl-dev, curl-dev, etc)
+
+> Hi list, I have been searching for details on what is required to
+> compile on Windows, but haven't found anything conclusive. Perhaps
+> there is something on the wiki, but unfortunately it is down at the
+> moment.
+> 
+> Can anyone point me in the right direction? I would like to be able to
+> compile and test topic branches, and perhaps even do some dev work on
+> my windows machine.
+> 
+> Regards,
+> 
+> Andrew Ardill
