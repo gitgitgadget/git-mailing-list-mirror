@@ -1,66 +1,80 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: What's cooking in git.git (Oct 2011, #06; Tue, 18)
-Date: Tue, 18 Oct 2011 10:09:17 -0400
-Message-ID: <CABURp0po3C9-a4_cGm8gq71=gq2ELzHWBK0y7H=OEcY1=DUdsw@mail.gmail.com>
-References: <7vzkgyhh6n.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] completion: match ctags symbol names in grep patterns
+Date: Tue, 18 Oct 2011 11:04:23 -0400
+Message-ID: <20111018150423.GA11593@sigill.intra.peff.net>
+References: <20111018044955.GA8976@sigill.intra.peff.net>
+ <20111018050105.GC9008@sigill.intra.peff.net>
+ <7vd3duixdg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 18 16:10:08 2011
+X-From: git-owner@vger.kernel.org Tue Oct 18 17:04:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGAMo-000105-U9
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 16:10:07 +0200
+	id 1RGBDW-00032h-Je
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 17:04:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932267Ab1JROJ4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Oct 2011 10:09:56 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:35042 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932250Ab1JROJz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Oct 2011 10:09:55 -0400
-Received: by wyg36 with SMTP id 36so634690wyg.19
-        for <git@vger.kernel.org>; Tue, 18 Oct 2011 07:09:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=JP/G+GCUar5SMXCKAvNiiDMFUfg9v/WAcguBySo10Os=;
-        b=gzp3YOv++OJoJ5CZ+tNKR3Wbj4XOg/L93J8cLCBbWpeOcE5w0AcirU0O9FjUWcIq+3
-         ZuvDGexwVEhMurXaBx8+b9aSXr6zYvB4MIikC8Sws80D7qNdZPXDFSMfEEFYliIk885v
-         2sA3AcvSSaGUvcz5W+wFro8xvLwX4GvhoQ8mE=
-Received: by 10.216.229.225 with SMTP id h75mr790435weq.87.1318946977160; Tue,
- 18 Oct 2011 07:09:37 -0700 (PDT)
-Received: by 10.216.88.72 with HTTP; Tue, 18 Oct 2011 07:09:17 -0700 (PDT)
-In-Reply-To: <7vzkgyhh6n.fsf@alter.siamese.dyndns.org>
+	id S932490Ab1JRPE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Oct 2011 11:04:28 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35024
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932324Ab1JRPE2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Oct 2011 11:04:28 -0400
+Received: (qmail 20800 invoked by uid 107); 18 Oct 2011 15:04:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 18 Oct 2011 11:04:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Oct 2011 11:04:23 -0400
+Content-Disposition: inline
+In-Reply-To: <7vd3duixdg.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183884>
 
-On Tue, Oct 18, 2011 at 3:50 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> What's cooking in git.git (Oct 2011, #06; Tue, 18)
-> --------------------------------------------------
-[...]
-> * ph/transport-with-gitfile (2011-10-11) 5 commits
-> =A0(merged to 'next' on 2011-10-12 at 6d58417)
-> =A0+ Fix is_gitfile() for files too small or larger than PATH_MAX to =
-be a gitfile
-> =A0(merged to 'next' on 2011-10-06 at 891b8b6)
-> =A0+ Add test showing git-fetch groks gitfiles
-> =A0+ Teach transport about the gitfile mechanism
-> =A0+ Learn to handle gitfiles in enter_repo
-> =A0+ enter_repo: do not modify input
->
-> Will merge to 'master' in the fifth wave.
+On Tue, Oct 18, 2011 at 12:15:23AM -0700, Junio C Hamano wrote:
 
-Do you want a re-roll of this with your is_bundle() changes added in?
-I do like them better.
+> > It's debatable whether this belongs in the generic completion code, as
+> > it really only works if your project uses ctags. But I find it to be a
+> > huge timesaver for finding callsites of functions, especially when
+> > coupled with "git jump grep" from the previous patch.
+> 
+> Could you elaborate a bit more on how this would help for finding
+> callsites? You are looking at a function and do not want to break its
+> callers, so at that point presumably you already know the name of the
+> function, no?
+> 
+> Ahh, Ok, you do not necessarily want to type the long function name.
 
-Phil
+Exactly. Actually, it is often not so much "do not want to type" as
+"cannot remember the exact name", but the effect is the same. :)
+
+I use the same completion for "vim -t" which will jump to the
+definition.
+
+> By the way, I notice that "make tags" runs "find ." looking for any files
+> and directories that match "*.[hcS]" (so do $(ETAGS_TARGET) and cscope),
+> without even excluding .git metadirectory.
+> 
+> Perhaps something like this is in order?
+> [...]
+> +FIND_SOURCE_FILES = git ls-files '*.[hcS]'
+
+Makes sense to me. I doubt it matters much in practice, though, as we
+don't tend to have random untracked source files lying around.
+
+My version of ctags will actually do the recursion itself with "ctags
+-R", picking out any files with with languages it knows about. But maybe
+not all versions do that.
+
+Also, I have often found myself trying to do completion on shell
+functions. I wonder if it's worth adding them to the list (again, my
+version of ctags understands bourne shell just fine, but I don't know if
+all do).
+
+-Peff
