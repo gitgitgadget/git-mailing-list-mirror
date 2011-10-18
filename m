@@ -1,193 +1,178 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH/RFC 3/2 (fixed)] Refactor Git::config_*
-Date: Tue, 18 Oct 2011 11:47:01 +0200
-Message-ID: <201110181147.02397.jnareb@gmail.com>
-References: <vpqty7wk9km.fsf@bauges.imag.fr> <7vsjmrl4ur.fsf@alter.siamese.dyndns.org> <201110172347.42568.jnareb@gmail.com>
+Subject: Re: [PATCH 2/2] gitweb: add a feature to show side-by-side diff
+Date: Tue, 18 Oct 2011 03:36:02 -0700 (PDT)
+Message-ID: <m3zkgy6103.fsf@localhost.localdomain>
+References: <CAFo4x0L4BAKnCDa1uEK0Rskd9kTsR-94D4mkYKnLGqVDnuyuBA@mail.gmail.com>
+	<m34nz771mj.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Cord Seele <cowose@googlemail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org, Cord Seele <cowose@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 18 11:47:22 2011
+Content-Type: text/plain; charset=iso-8859-4
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: Kato Kazuyoshi <kato.kazuyoshi@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 18 12:36:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RG6GX-00035k-Q2
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 11:47:22 +0200
+	id 1RG71o-0005HC-3c
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 12:36:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757361Ab1JRJrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Oct 2011 05:47:20 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:36512 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757096Ab1JRJrO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Oct 2011 05:47:14 -0400
-Received: by eye27 with SMTP id 27so362316eye.19
-        for <git@vger.kernel.org>; Tue, 18 Oct 2011 02:47:13 -0700 (PDT)
+	id S1754513Ab1JRKgH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Oct 2011 06:36:07 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:36097 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750823Ab1JRKgF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Oct 2011 06:36:05 -0400
+Received: by ggnb1 with SMTP id b1so412411ggn.19
+        for <git@vger.kernel.org>; Tue, 18 Oct 2011 03:36:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=rJwUELl2u4Nr7KNRccyz3W5ehWIgEtVsN5DCXqQrhHc=;
-        b=Rm/+suviFUySU9aKQ/e+Cbz4wcsAV3swdpk2R5LlWI9jn7PDZAj3n/W7I1wOqZE9Hq
-         iYDQV+kAXaHd13f9OY16/Y2KDdX/wquGm4yWimpnPYk94pc5+RvuAOElM8pBFQtXLMpZ
-         KYWdP46OWSpo/u8N2ClkY7DMfChwu2bv9WfAY=
-Received: by 10.223.7.14 with SMTP id b14mr3119375fab.10.1318931233031;
-        Tue, 18 Oct 2011 02:47:13 -0700 (PDT)
-Received: from [192.168.1.13] (abvu235.neoplus.adsl.tpnet.pl. [83.8.218.235])
-        by mx.google.com with ESMTPS id n12sm2692450fan.9.2011.10.18.02.47.09
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=ucHkMMdTpdsyec2svZXJ0lPr3lKqB2f/GJyB8w0oxws=;
+        b=hyMmgGhYPRYhTx5P7zi91yYsE23XZePyI3DSxbzip/MuZq+YvqZ+MwFSyWGVtx2yUI
+         5HtEQGz7+Xj+sBvidIPmd1aVyGcMlyvv0YhH5A9XTCVb9/wqsMBIh1Q4j64SjjQgwMgk
+         t1KcEViv/B7BPzbzLsns7W1cj3bIyp+ih/FnA=
+Received: by 10.223.76.135 with SMTP id c7mr3243942fak.16.1318934164075;
+        Tue, 18 Oct 2011 03:36:04 -0700 (PDT)
+Received: from localhost.localdomain (abvu235.neoplus.adsl.tpnet.pl. [83.8.218.235])
+        by mx.google.com with ESMTPS id k26sm2875443fab.12.2011.10.18.03.36.01
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 18 Oct 2011 02:47:10 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201110172347.42568.jnareb@gmail.com>
-Content-Disposition: inline
+        Tue, 18 Oct 2011 03:36:02 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p9IAZZWb011058;
+	Tue, 18 Oct 2011 12:35:45 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p9IAZOv5011055;
+	Tue, 18 Oct 2011 12:35:24 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <m34nz771mj.fsf@localhost.localdomain>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183877>
 
-From: Junio C Hamano <gitster@pobox.com>
+Jakub Narebski <jnareb@gmail.com> writes:
 
-There is, especially with addition of Git::config_path(), much code
-repetition in the Git::config_* family of subroutines.
+> Kato Kazuyoshi <kato.kazuyoshi@gmail.com> writes:
+>=20
+> > gitweb currently has a feature to show diff but it doesn't support
+> > "side-by-side" style. This modification introduces:
+> >=20
+> >  * The "ds" query parameter to specify the style of diff.
+> >  * The format_diff_chunk() to reorganize an output of diff.
+> >  * The diff_nav() for form.
+>=20
+> I would state it a bit differently.
+>=20
+> I would say that this patch introduces support for side-by-side diff
+> in git_patchset_body, and that style of diff is controlled by newly
+> introduces 'diff_style' ("ds") parameter.
+>=20
+> I would say a bit later that navigation bar got extended to make it
+> easy to switch between 'inline' and 'sidebyside' diff.
 
-Refactor common parts of Git::config(), Git::config_bool(),
-Git::config_int() and Git::config_path() into _config_common()
-helper method, reducing code duplication.
+I think it would be good idea to explain algorithm here, and perhaps
+also layout used.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Jakub Narebski wrote:
->
-> I'll resend amended commit.
+When I was thinking about implementing side-by-side diff in gitweb, I
+was always stopped by the problem of aligning changes.  In your
+solution changes are always aligned to top, which is a simple
+solution.
 
-Here it is.
+> > +sub format_diff_chunk {
+> > +	my @chunk =3D @_;
+> > +
+> > +	my $first_class =3D $chunk[0]->[0];
+> > +	my @partial =3D map { $_->[1] } grep { $_->[0] eq $first_class } =
+@chunk;
+> > +
+> > +	if (scalar @partial < scalar @chunk) {
+> > +		return join '', ("<div class=3D'chunk'><div class=3D'old'>",
+> > +		             @partial,
+> > +		             "</div>",
+> > +		             "<div class=3D'new'>",
+> > +		             (map {
+> > +		                 $_->[1];
+> > +		             } @chunk[scalar @partial..scalar @chunk-1]),
+> > +		             "</div></div>");
+> > +	} else {
+> > +		return join '', ("<div class=3D'chunk'><div class=3D'",
+> > +		             ($first_class eq 'add' ? 'new' : 'old'),
+> > +		             "'>",
+> > +		             @partial,
+> > +		             "</div></div>");
+> > +	}
+> > +}
 
- perl/Git.pm |   74 ++++++++++++++--------------------------------------------
- 1 files changed, 18 insertions(+), 56 deletions(-)
+This is I think unnecessary complicated.  What you do here is
+separating removed and added lines (either can be empty), and putting
+removed on left (as "old"), and added on right (as "new").
 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index c775b4f..8e1e2fd 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -576,24 +576,7 @@ This currently wraps command('config') so it is not so fast.
- 
- sub config {
- 	my ($self, $var) = _maybe_self(@_);
--
--	try {
--		my @cmd = ('config');
--		unshift @cmd, $self if $self;
--		if (wantarray) {
--			return command(@cmd, '--get-all', $var);
--		} else {
--			return command_oneline(@cmd, '--get', $var);
--		}
--	} catch Git::Error::Command with {
--		my $E = shift;
--		if ($E->value() == 1) {
--			# Key not found.
--			return;
--		} else {
--			throw $E;
--		}
--	};
-+	return _config_common($self, $var);
- }
- 
- 
-@@ -609,25 +592,10 @@ This currently wraps command('config') so it is not so fast.
- 
- sub config_bool {
- 	my ($self, $var) = _maybe_self(@_);
--
--	try {
--		my @cmd = ('config', '--bool', '--get', $var);
--		unshift @cmd, $self if $self;
--		my $val = command_oneline(@cmd);
--		return undef unless defined $val;
--		return $val eq 'true';
--	} catch Git::Error::Command with {
--		my $E = shift;
--		if ($E->value() == 1) {
--			# Key not found.
--			return undef;
--		} else {
--			throw $E;
--		}
--	};
-+	my $val = scalar _config_common($self, $var, {'kind' => '--bool'});
-+	return (defined $val && $val eq 'true');
- }
- 
--
- =item config_path ( VARIABLE )
- 
- Retrieve the path configuration C<VARIABLE>. The return value
-@@ -639,24 +607,7 @@ This currently wraps command('config') so it is not so fast.
- 
- sub config_path {
- 	my ($self, $var) = _maybe_self(@_);
--
--	try {
--		my @cmd = ('config', '--path');
--		unshift @cmd, $self if $self;
--		if (wantarray) {
--			return command(@cmd, '--get-all', $var);
--		} else {
--			return command_oneline(@cmd, '--get', $var);
--		}
--	} catch Git::Error::Command with {
--		my $E = shift;
--		if ($E->value() == 1) {
--			# Key not found.
--			return undef;
--		} else {
--			throw $E;
--		}
--	};
-+	return _config_common($self, $var, {'kind' => '--path'});
- }
- 
- 
-@@ -705,16 +656,27 @@ This currently wraps command('config') so it is not so fast.
- 
- sub config_int {
- 	my ($self, $var) = _maybe_self(@_);
-+	return scalar _config_common($self, $var, {'kind' => '--int'});
-+}
-+
-+# Common subroutine to implement bulk of what the config* family of methods
-+# do. This curently wraps command('config') so it is not so fast.
-+sub _config_common {
-+	my ($self, $var, $opts) = @_;
- 
- 	try {
--		my @cmd = ('config', '--int', '--get', $var);
-+		my @cmd = ('config', $opts->{'kind'} ? $opts->{'kind'} : ());
- 		unshift @cmd, $self if $self;
--		return command_oneline(@cmd);
-+		if (wantarray) {
-+			return command(@cmd, '--get-all', $var);
-+		} else {
-+			return command_oneline(@cmd, '--get', $var);
-+		}
- 	} catch Git::Error::Command with {
- 		my $E = shift;
- 		if ($E->value() == 1) {
- 			# Key not found.
--			return undef;
-+			return;
- 		} else {
- 			throw $E;
- 		}
--- 
-1.7.6
+It means that the following unified diff:
+
+     --- a/foo
+     +++ b/foo
+     @@ -1,5 +1,4 @@
+     -foo
+     -FOO
+      bar
+     -baz
+     +b
+     +baZ
+      quux
+
+would be turned into following side by side diff:
+
+      foo             |=20
+      FOO             |
+      bar             |  bar
+      baz             |  b
+                      |  baZ
+      quux            |  quux
+
+It's a bit strange that context is put line by line, and changed lines
+are put in "blocks".
+
+> > @@ -4940,12 +4967,31 @@ sub git_patchset_body {
+> >=20
+> >  		# the patch itself
+> >  	LINE:
+> > +		my @chunk;
+> >  		while ($patch_line =3D <$fd>) {
+> >  			chomp $patch_line;
+> >=20
+> >  			next PATCH if ($patch_line =3D~ m/^diff /);
+> >=20
+> > -			print format_diff_line($patch_line, \%from, \%to);
+> > +			my ($class, $line) =3D format_diff_line($patch_line, \%from, \%=
+to);
+> > +			if ($is_inline) {
+> > +				print $line;
+> > +			} elsif ($class eq 'add' || $class eq 'rem') {
+> > +				push @chunk, [ $class, $line ];
+> > +			} else {
+> > +				if (@chunk) {
+> > +					print format_diff_chunk(@chunk);
+> > +					@chunk =3D ();
+> > +				} elsif ($class eq 'chunk_header') {
+> > +					print $line;
+> > +				} else {
+> > +					print '<div class=3D"chunk"><div class=3D"old">',
+> > +					      $line,
+> > +					      '</div><div class=3D"new">',
+> > +					      $line,
+> > +					      '</div></div>';
+> > +				}
+> > +			}
+
+Note that your side by side diff wouldn't work for combined diff,
+which gitweb supports.  You should show 'unified' / 'inline' format
+for combined diff (more than one parent / from).
+
+--=20
+Jakub Nar=EAbski
