@@ -1,132 +1,96 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] completion: match ctags symbol names in grep
- patterns
-Date: Tue, 18 Oct 2011 10:14:15 -0700
-Message-ID: <7vipnmgr2w.fsf@alter.siamese.dyndns.org>
-References: <20111018044955.GA8976@sigill.intra.peff.net>
- <20111018050105.GC9008@sigill.intra.peff.net>
- <7vd3duixdg.fsf@alter.siamese.dyndns.org>
- <20111018072655.GA22309@elie.hsd1.il.comcast.net>
- <7v8voiiwfo.fsf@alter.siamese.dyndns.org>
- <20111018075521.GB20976@elie.hsd1.il.comcast.net>
+Subject: Re: [PATCH] inet_ntop.c: Work around GCC 4.6's detection of
+ uninitialized variables
+Date: Tue, 18 Oct 2011 10:32:45 -0700
+Message-ID: <7vehyagq82.fsf@alter.siamese.dyndns.org>
+References: <4E9DA88E.40500@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 18 19:14:26 2011
+Cc: git@vger.kernel.org, mschub@elegosoft.com
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 18 19:32:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGDFB-0001wA-Sn
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 19:14:26 +0200
+	id 1RGDX3-0002h3-Ca
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 19:32:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932219Ab1JRROU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Oct 2011 13:14:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59770 "EHLO
+	id S933380Ab1JRRct (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Oct 2011 13:32:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34545 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755490Ab1JRROT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Oct 2011 13:14:19 -0400
+	id S1756242Ab1JRRcs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Oct 2011 13:32:48 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B6CF6D64;
-	Tue, 18 Oct 2011 13:14:19 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B1915239;
+	Tue, 18 Oct 2011 13:32:47 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=prnqzqOZPTt4rppl/4SKegkUAQc=; b=i1HTVM
-	HxFdgUUhrYOCo92XDN1+75OnndXcGr0XkbAEdaHfmSGUfIV/25tVzv7j3OdX13jO
-	RmDj401MwZX6+YIam8be6Qq/effYf6CHjM27TARgjtFs3v0KFjfwFjxUOp5VKpft
-	cTgyqq3gzyXZ4mlChi2Zl+IQB5Wkl26qM7LVg=
+	:content-type; s=sasl; bh=FHcMuD2y12r0/WbHrk52DaOykJA=; b=a/we1n
+	9W/knxRZWkYqPEgJe4q8P/ZFqgMtHTmzHuJGXvtUJNyCqfu2qss/Vu945ezuLW23
+	yFUJNY+VjE0SlEoZAaEYosRZS2t34Vvw25n8mMm1KYoQg9SybuRzZS+xhFE2cTjJ
+	3676Z738rTlKgaB1bfUzMrdmfvMAHC85V+xT8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qj2R6hTtcj3ObjE0zFbI8PnAuGbqYQAD
-	7Iu4XXKCoWq8nu9NMq8uUSmz/BGVmOnKECK9Sm2A6nX0tICJmYHdB8Qk9G5YNYSe
-	zvy+z2yxaFhmgDpFnzPP9m4zFw9jIaFDB+Gcn+vlvkhXA7Vs3bZ0HZK5L3Dz6aSf
-	LOVvjTa19hM=
+	:content-type; q=dns; s=sasl; b=KxbCHB0/2YFNwKwJQave/AibwwItlyj8
+	1DsijzkxxKJYJi180lwE6DENRBFTfVWvW3l3E+9HWWMWkMukbw+/ay3XRkZrjGtT
+	6BWl7aa9O07+h/5rXhcU17nfiOWMvfJ3K1pfmb16Mc99fiL/nl8sF7RwoQFpVdGz
+	pMVdJLh0fUE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 512D86D63;
-	Tue, 18 Oct 2011 13:14:19 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 92D3B5238;
+	Tue, 18 Oct 2011 13:32:47 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BB3526D5F; Tue, 18 Oct 2011
- 13:14:18 -0400 (EDT)
-In-Reply-To: <20111018075521.GB20976@elie.hsd1.il.comcast.net> (Jonathan
- Nieder's message of "Tue, 18 Oct 2011 02:55:21 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 249845237; Tue, 18 Oct 2011
+ 13:32:47 -0400 (EDT)
+In-Reply-To: <4E9DA88E.40500@gmail.com> (Sebastian Schuberth's message of
+ "Tue, 18 Oct 2011 18:25:50 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9D2CFC38-F9AC-11E0-8501-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 31D2EBDE-F9AF-11E0-8590-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183890>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Sebastian Schuberth <sschuberth@gmail.com> writes:
 
-> In this new tags/cscope example, one could make an argument that
-> running exactly once is similarly better than running as needed (as in
-> (ii) above), by pointing out that
+> GCC 4.6 claims that
 >
-> 	make tags TAGS cscope
+>     error: 'best.len' may be used uninitialized in this function
 >
-> would have to check for a working "git ls-files" once instead of three
-> times.
+> so silence that warning which is treated as an error by also initializing
+> the "len" members of the struct.
+>
+> Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+> ---
+>  compat/inet_ntop.c |    2 ++
+>  1 files changed, 2 insertions(+), 0 deletions(-)
+>
+> diff --git a/compat/inet_ntop.c b/compat/inet_ntop.c
+> index ea249c6..60b5a1d 100644
+> --- a/compat/inet_ntop.c
+> +++ b/compat/inet_ntop.c
+> @@ -98,7 +98,9 @@ inet_ntop6(const u_char *src, char *dst, size_t size)
+>  	for (i = 0; i < NS_IN6ADDRSZ; i++)
+>  		words[i / 2] |= (src[i] << ((1 - (i % 2)) << 3));
+>  	best.base = -1;
+> +	best.len = 0;
+>  	cur.base = -1;
+> +	cur.len = 0;
 
-I tend to agree that once instead of three times is not such an
-improvement, especially given how cheap builtin-invocation of ls-files is,
-but then once every invocation of $(MAKE) would also be negligible (it is
-not once every internal target evaluation).
+It may be just the "taste" thing, but I wonder if
 
-In any case, here is what I'll queue. I like the fact that your suggestion
-avoids an extra "test invocation" that spends cycles to read the full
-index without contributing to the end result.
+	best.base = -1;
+        best.len = 0;
+        cur = best;
 
-By the way, did anybody know that "git ls-files >/dev/null" is more
-expensive than "git ls-files '~/' >/dev/null" as a way to see if there is
-ls-files command available?
+might be easier on the eyes.
 
--- >8 --
-Subject: [PATCH] Makefile: ask "ls-files" to list source files if available
+Will queue as-is anyway. Thanks.
 
-The [ce]tags and cscope targets used to run "find" looking for any paths
-that match '*.[chS]' to feed the list of source files to downstream xargs.
-
-Use "git ls-files" if it is already available to us, and otherwise use a
-tighter "find" expression that does not list directories and does not go
-into our .git directory.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Makefile |   10 +++++++---
- 1 files changed, 7 insertions(+), 3 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 8d6d451..badfb77 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2115,17 +2115,21 @@ po/git.pot: $(LOCALIZED_C)
- 
- pot: po/git.pot
- 
-+FIND_SOURCE_FILES = ( git ls-files '*.[hcS]' 2>/dev/null || \
-+			$(FIND) . \( -name .git -type d -prune \) \
-+				-o \( -name '*.[hcS]' -type f -print \) )
-+
- $(ETAGS_TARGET): FORCE
- 	$(RM) $(ETAGS_TARGET)
--	$(FIND) . -name '*.[hcS]' -print | xargs etags -a -o $(ETAGS_TARGET)
-+	$(FIND_SOURCE_FILES) | xargs etags -a -o $(ETAGS_TARGET)
- 
- tags: FORCE
- 	$(RM) tags
--	$(FIND) . -name '*.[hcS]' -print | xargs ctags -a
-+	$(FIND_SOURCE_FILES) | xargs ctags -a
- 
- cscope:
- 	$(RM) cscope*
--	$(FIND) . -name '*.[hcS]' -print | xargs cscope -b
-+	$(FIND_SOURCE_FILES) | xargs cscope -b
- 
- ### Detect prefix changes
- TRACK_CFLAGS = $(CC):$(subst ','\'',$(ALL_CFLAGS)):\
--- 
-1.7.7.388.g3a4b7
+>  	for (i = 0; i < (NS_IN6ADDRSZ / NS_INT16SZ); i++) {
+>  		if (words[i] == 0) {
+>  			if (cur.base == -1)
