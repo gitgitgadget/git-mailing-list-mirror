@@ -1,64 +1,66 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: Compiling on Windows
-Date: Tue, 18 Oct 2011 16:02:27 +0200
-Message-ID: <CABPQNSZhWOa5wken4vh6Hcza8EM4VnekE3VUFJNmaEJvWME=ew@mail.gmail.com>
-References: <CAH5451=7Em7sPzknVx8i2VBSAZxZwg1Awr8s3Nr2W=A6SDEZEw@mail.gmail.com>
- <op.v3i8rauz0aolir@keputer.lokaal> <CAH5451=VPzkFZyyUUdj+=dXDCHKQbWTTob_=JJFBCwaDsp1n7Q@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2011, #06; Tue, 18)
+Date: Tue, 18 Oct 2011 10:09:17 -0400
+Message-ID: <CABURp0po3C9-a4_cGm8gq71=gq2ELzHWBK0y7H=OEcY1=DUdsw@mail.gmail.com>
+References: <7vzkgyhh6n.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Frans Klaver <fransklaver@gmail.com>, git@vger.kernel.org
-To: Andrew Ardill <andrew.ardill@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 18 16:03:16 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 18 16:10:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGAGB-00064G-87
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 16:03:16 +0200
+	id 1RGAMo-000105-U9
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 16:10:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755439Ab1JRODJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Oct 2011 10:03:09 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:65342 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754548Ab1JRODI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Oct 2011 10:03:08 -0400
-Received: by pzk36 with SMTP id 36so1604406pzk.1
-        for <git@vger.kernel.org>; Tue, 18 Oct 2011 07:03:08 -0700 (PDT)
+	id S932267Ab1JROJ4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Oct 2011 10:09:56 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:35042 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932250Ab1JROJz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Oct 2011 10:09:55 -0400
+Received: by wyg36 with SMTP id 36so634690wyg.19
+        for <git@vger.kernel.org>; Tue, 18 Oct 2011 07:09:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=a/6OaiWjudvWZPuVnMJF8Uv46SrRZzaDF0w9xWjHCl4=;
-        b=E78YgNEhWaM2RgZauNwP7+XsqJnSXSmQI5a55bPUmteQJAtNI2sOm4evcErEzg+j5q
-         lGwhpCiJYj6Z09MBrJ9TGiEmeAbwWnm0H1DZbByyGj6FpyjYhsmmgrNfGyBTyMCotQQG
-         BEu99cL/EHF2nBhYsapBxPiLgXg2jVdiJ8Wls=
-Received: by 10.68.34.137 with SMTP id z9mr5060017pbi.76.1318946588047; Tue,
- 18 Oct 2011 07:03:08 -0700 (PDT)
-Received: by 10.68.63.166 with HTTP; Tue, 18 Oct 2011 07:02:27 -0700 (PDT)
-In-Reply-To: <CAH5451=VPzkFZyyUUdj+=dXDCHKQbWTTob_=JJFBCwaDsp1n7Q@mail.gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=JP/G+GCUar5SMXCKAvNiiDMFUfg9v/WAcguBySo10Os=;
+        b=gzp3YOv++OJoJ5CZ+tNKR3Wbj4XOg/L93J8cLCBbWpeOcE5w0AcirU0O9FjUWcIq+3
+         ZuvDGexwVEhMurXaBx8+b9aSXr6zYvB4MIikC8Sws80D7qNdZPXDFSMfEEFYliIk885v
+         2sA3AcvSSaGUvcz5W+wFro8xvLwX4GvhoQ8mE=
+Received: by 10.216.229.225 with SMTP id h75mr790435weq.87.1318946977160; Tue,
+ 18 Oct 2011 07:09:37 -0700 (PDT)
+Received: by 10.216.88.72 with HTTP; Tue, 18 Oct 2011 07:09:17 -0700 (PDT)
+In-Reply-To: <7vzkgyhh6n.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183883>
 
-On Tue, Oct 18, 2011 at 8:17 AM, Andrew Ardill <andrew.ardill@gmail.com> wrote:
-> Thanks for the replies all - I think my main issue was that the wiki
-> is down and msysgit has very little use-able documentation otherwise.
-> I had cloned the msysgit project, but was lost on what to do from
-> there. Foolishly, I had glossed over the msysgit installers on the
-> project home (I think I thought they were Git for Windows installers).
+On Tue, Oct 18, 2011 at 3:50 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> What's cooking in git.git (Oct 2011, #06; Tue, 18)
+> --------------------------------------------------
+[...]
+> * ph/transport-with-gitfile (2011-10-11) 5 commits
+> =A0(merged to 'next' on 2011-10-12 at 6d58417)
+> =A0+ Fix is_gitfile() for files too small or larger than PATH_MAX to =
+be a gitfile
+> =A0(merged to 'next' on 2011-10-06 at 891b8b6)
+> =A0+ Add test showing git-fetch groks gitfiles
+> =A0+ Teach transport about the gitfile mechanism
+> =A0+ Learn to handle gitfiles in enter_repo
+> =A0+ enter_repo: do not modify input
 >
+> Will merge to 'master' in the fifth wave.
 
-Yeah, the installer sets up a fully self-contained MSYS-based
-development environment to hack on Git for Windows.
+Do you want a re-roll of this with your is_bundle() changes added in?
+I do like them better.
 
-> I have now installed everything, and am ready to hack. Perhaps the
-> first port of call is adding a README to msysgit :D
-
-Not at all a bad idea!
-
-It'd be awesome if it even worked with the GitHub markup-stuff as
-well, since we moved the project there :)
+Phil
