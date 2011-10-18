@@ -1,119 +1,119 @@
 From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH 3/3] git-gui: new config to control staging of untracked files
-Date: Tue, 18 Oct 2011 08:34:31 +0200
-Message-ID: <CAKPyHN2g2aVTB_Q7ZmpjfdznmUmkf=aodDmFEWgq6_KCMQe62w@mail.gmail.com>
-References: <0f862de296a94b06495e4418bc731b5d201d5767.1318620267.git.bert.wesarg@googlemail.com>
-	<03727ea04f20c953e7de3f84ab1724a8360ca2c4.1318620267.git.bert.wesarg@googlemail.com>
-	<20111017183430.GA2540@sandbox-rc>
-	<CAKPyHN3pKUSLTs8_5QMo5i+=3w7KXAHJjDOfQ1XYG92ZbQ1SeA@mail.gmail.com>
-	<20111017192706.GB3168@sandbox-rc>
-	<87r52bgrky.fsf@fox.patthoyts.tk>
+Subject: Re: [PATCH 1/4] git-gui: handle config booleans without value
+Date: Tue, 18 Oct 2011 08:39:26 +0200
+Message-ID: <CAKPyHN3dQ+qWeJtGzigEm=fZe62ZeRW-QGq0jnycKEBVaWn=mA@mail.gmail.com>
+References: <94b050c4cf7ae8df8d79112e13613244ebff4037.1318579823.git.bert.wesarg@googlemail.com>
+	<87mxczgqiw.fsf@fox.patthoyts.tk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org
+Content-Transfer-Encoding: base64
+Cc: git@vger.kernel.org
 To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Tue Oct 18 08:34:38 2011
+X-From: git-owner@vger.kernel.org Tue Oct 18 08:39:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RG3G1-0005ih-AV
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 08:34:37 +0200
+	id 1RG3Km-0007Ei-IF
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 08:39:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751442Ab1JRGec convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Oct 2011 02:34:32 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:60566 "EHLO
+	id S1751897Ab1JRGj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Oct 2011 02:39:28 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:39692 "EHLO
 	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750859Ab1JRGec convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Oct 2011 02:34:32 -0400
-Received: by vws1 with SMTP id 1so83929vws.19
-        for <git@vger.kernel.org>; Mon, 17 Oct 2011 23:34:31 -0700 (PDT)
+	with ESMTP id S1751347Ab1JRGj1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Oct 2011 02:39:27 -0400
+Received: by vws1 with SMTP id 1so85423vws.19
+        for <git@vger.kernel.org>; Mon, 17 Oct 2011 23:39:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=submmjAG1+srCs4IEfE2+32ZgRrrdp+ZTUG59kbt0lg=;
-        b=b2PMfFr6lVs/WrtGPSR4FeHh6LX3RwVhNypcKrFCwlHMCPqWgyEeC4NK5ET1qKIHlh
-         3yd4gYvkP4f00VFTPVeq0c4m7zswnj5EjXLQ1m3aCTPT95WgZ98WTpaW37dK6n73YjmM
-         NLhHegT8gpy4ZIBI5MLYfaY9Wyrvl2Ja/HPpc=
-Received: by 10.52.92.212 with SMTP id co20mr910826vdb.119.1318919671286; Mon,
- 17 Oct 2011 23:34:31 -0700 (PDT)
-Received: by 10.52.186.36 with HTTP; Mon, 17 Oct 2011 23:34:31 -0700 (PDT)
-In-Reply-To: <87r52bgrky.fsf@fox.patthoyts.tk>
+        bh=UhzU3HoPXYhiF/I0zM/ep4VaNKugFBSBN3hM/lzEIGI=;
+        b=PGW9tafhDf4F0OIKEUdYQlMZW1Hg/acEpmXlUyeH5scBxKOD34s8P5HMhu2a8TB5EW
+         tbyrOPbpdtC0dSXhzBIM9N9i3FgW6S10fd0OmKugjgJAZAXpJFxhJNB+0NWlYca1BX2+
+         +t7xEbaoP0gMjvm0IvIIE9lYf4EjWyb9L1nCE=
+Received: by 10.52.72.196 with SMTP id f4mr964510vdv.68.1318919966785; Mon, 17
+ Oct 2011 23:39:26 -0700 (PDT)
+Received: by 10.52.186.36 with HTTP; Mon, 17 Oct 2011 23:39:26 -0700 (PDT)
+In-Reply-To: <87mxczgqiw.fsf@fox.patthoyts.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183864>
 
-On Tue, Oct 18, 2011 at 00:51, Pat Thoyts
-<patthoyts@users.sourceforge.net> wrote:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
->
->>Hi,
->>
->>On Mon, Oct 17, 2011 at 08:47:50PM +0200, Bert Wesarg wrote:
->>> On Mon, Oct 17, 2011 at 20:34, Heiko Voigt <hvoigt@hvoigt.net> wrot=
-e:
->>> > Here I am wondering whether we have a similar mechanism in git gu=
-i like
->>> > in core git that makes yes,true,1 equivalents (and similar with o=
-ther
->>> > values) ?
->>>
->>> But it is not only yes,true,1 or no,false,0 its a tristate with the
->>> third state 'ask'. For booleans, there is such functionality in git
->>> gui. See is_config_true and is_config_false. Reusing these for this
->>> tristate wouldn't work. The current check here is indeed very stric=
-t
->>> and should be loosen by at least ignoring the case, surrounding
->>> spaces, and allow also true/false. But also note, that this variabl=
-e
->>> can be set via the Options menu, so you can't mistype it.
->>
->>Well if using git config you can ;-). I just wanted to ask whether we
->>may already have machinery which supports such tristate.
->>If we do not I think the current "strict" configuration is fine. In m=
-ost
->>cases the user will use the gui itself to configure such behavior so
->>thats no big deal.
->>If someone needs that it can be added later on.
->>
->>Thanks, Heiko
->>
->
-> This set of 3 patches looks fine. I was a bit dubious of the new
-> phrasing for the ask condition but it is growing on me. I wonder it i=
-t
-> might be worth including the number of untracked files to be staged t=
-oo
-> eg: "Stage 15 untracked files?"
->
-> =C2=A0 set reply [ask_popup [mc "Stage %d untracked files?" \
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 [llength $untracked_paths]]]
-
-I thought about to list the untracked files in the dialog, but
-couldn't find a good template dialog for this. But the number is
-definitely worth I think.
-
->
-> Loosening the check we can do using
-> =C2=A0switch -glob -- [get_config gui.stageuntracked] {
-> =C2=A0 =C2=A0[Nn]* { set reply 0}
-> =C2=A0 =C2=A0[Yy]* { set reply 1}
-> =C2=A0 =C2=A0default { ... }
-> =C2=A0}
-
-I think this is too loose ;-)
-
-Bert
-
->
-> --
-> Pat Thoyts =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0http://www.patthoyts.tk/
-> PGP fingerprint 2C 6E 98 07 2C 59 C8 97 =C2=A010 CE 11 E6 04 E0 B9 DD
->
+T24gVHVlLCBPY3QgMTgsIDIwMTEgYXQgMDE6MTMsIFBhdCBUaG95dHMKPHBhdHRob3l0c0B1c2Vy
+cy5zb3VyY2Vmb3JnZS5uZXQ+IHdyb3RlOgo+IEJlcnQgV2VzYXJnIDxiZXJ0Lndlc2FyZ0Bnb29n
+bGVtYWlsLmNvbT4gd3JpdGVzOgo+Cj4+V2hlbiBnaXQgaW50ZXJwcmV0cyBhIGNvbmZpZyB2YXJp
+YWJsZSB3aXRob3V0IGEgdmFsdWUgYXMgYm9vbCBpdCBpcyBjb25zaWRlcmVkCj4+YXMgdHJ1ZS4g
+QnV0IGdpdC1ndWkgZG9lc24ndCBzbyB1bnRpbCB5ZXQuCj4+Cj4+VGhlIHZhbHVlIGZvciBib29s
+ZWFuIGNvbmZpZ3MgYXJlIGFsc28gY2FzZS1pbnNlbnNpdGl2ZS4KPj4KPj5TaWduZWQtb2ZmLWJ5
+OiBCZXJ0IFdlc2FyZyA8YmVydC53ZXNhcmdAZ29vZ2xlbWFpbC5jb20+Cj4+LS0tCj4+IGdpdC1n
+dWkuc2ggfCDCoCAxNiArKysrKysrKysrKysrKy0tCj4+IDEgZmlsZXMgY2hhbmdlZCwgMTQgaW5z
+ZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkKPj4KPj5kaWZmIC0tZ2l0IGEvZ2l0LWd1aS5zaCBi
+L2dpdC1ndWkuc2gKPj5pbmRleCBmODk3MTYwLi5kNjg3ODcxIDEwMDc1NQo+Pi0tLSBhL2dpdC1n
+dWkuc2gKPj4rKysgYi9naXQtZ3VpLnNoCj4+QEAgLTI5OSw3ICsyOTksOSBAQCBwcm9jIGlzX2Nv
+bmZpZ190cnVlIHtuYW1lfSB7Cj4+IMKgIMKgIMKgIGdsb2JhbCByZXBvX2NvbmZpZwo+PiDCoCDC
+oCDCoCBpZiB7W2NhdGNoIHtzZXQgdiAkcmVwb19jb25maWcoJG5hbWUpfV19IHsKPj4gwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgcmV0dXJuIDAKPj4tIMKgIMKgIMKgfSBlbHNlaWYgeyR2IGVxIHt0cnVl
+fSB8fCAkdiBlcSB7MX0gfHwgJHYgZXEge3llc319IHsKPj4rIMKgIMKgIMKgfQo+PisgwqAgwqAg
+wqBzZXQgdiBbc3RyaW5nIHRvbG93ZXIgJHZdCj4+KyDCoCDCoCDCoGlmIHskdiBlcSB7fSB8fCAk
+diBlcSB7dHJ1ZX0gfHwgJHYgZXEgezF9IHx8ICR2IGVxIHt5ZXN9IHx8ICR2IGVxIHtvbn19IHsK
+Pj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgcmV0dXJuIDEKPj4gwqAgwqAgwqAgfSBlbHNlIHsKPj4g
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgcmV0dXJuIDAKPgo+IFRoaXMgbG9va3Mgb2sgLSB3ZSBhY3R1
+YWxseSBoYXZlIGEgW3N0cmluZyBpcyBib29sZWFuICR2XSB0ZXN0IHdlIGNvdWxkCj4gdXNlIGVn
+Ogo+IMKgaWYge1tzdHJpbmcgaXMgYm9vbGVhbiAkdl19IHsKPiDCoCDCoHJldHVybiBbZXhwciB7
+JHYgZXEge30gPyAxIDogISEkdn1dCj4gwqB9Cj4gYWx0aG91Z2ggSSdtIG5vdCBzdXJlIGl0IGdh
+aW5zIHVzIG11Y2guIFRoaXMgd291bGQgbWF0Y2ggZXZlcnl0aGluZyBUY2wKPiBiZWxpZXZlcyB0
+byBiZSBhIGJvb2xlYW4gLSB5ZXMvbm8sIG9uL29mZiwgdHJ1ZS9mYWxzZSBhbmQgMS8wLiBXaXRo
+b3V0Cj4gLXN0cmljdCB0aGUgW3N0cmluZyBpc10gdGVzdCB3aWxsIGNvbnNpZGVyIHt9IHRvIGJl
+IGEgYm9vbGVhbi4KPgo+Cj4+QEAgLTMxMCw3ICszMTIsOSBAQCBwcm9jIGlzX2NvbmZpZ19mYWxz
+ZSB7bmFtZX0gewo+PiDCoCDCoCDCoCBnbG9iYWwgcmVwb19jb25maWcKPj4gwqAgwqAgwqAgaWYg
+e1tjYXRjaCB7c2V0IHYgJHJlcG9fY29uZmlnKCRuYW1lKX1dfSB7Cj4+IMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIHJldHVybiAwCj4+LSDCoCDCoCDCoH0gZWxzZWlmIHskdiBlcSB7ZmFsc2V9IHx8ICR2
+IGVxIHswfSB8fCAkdiBlcSB7bm99fSB7Cj4+KyDCoCDCoCDCoH0KPj4rIMKgIMKgIMKgc2V0IHYg
+W3N0cmluZyB0b2xvd2VyICR2XQo+PisgwqAgwqAgwqBpZiB7JHYgZXEge2ZhbHNlfSB8fCAkdiBl
+cSB7MH0gfHwgJHYgZXEge25vfSB8fCAkdiBlcSB7b2ZmfX0gewo+PiDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCByZXR1cm4gMQo+PiDCoCDCoCDCoCB9IGVsc2Ugewo+PiDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCByZXR1cm4gMAo+PkBAIC0xMDYwLDYgKzEwNjQsMTAgQEAgZ2l0LXZlcnNpb24gcHJvYyBfcGFy
+c2VfY29uZmlnIHthcnJfbmFtZSBhcmdzfSB7Cj4+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIH0gZWxzZSB7Cj4+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHNldCBhcnIoJG5hbWUpICR2YWx1ZQo+PiDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9Cj4+KyDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoH0gZWxzZWlmIHtbcmVnZXhwIHteKFteXG5dKykkfSAk
+bGluZSBsaW5lIG5hbWVdfSB7Cj4+KyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCMgbm8gdmFsdWUgZ2l2ZW4sIGJ1dCBpbnRlcnByZXRpbmcgdGhlbSBhcwo+Pisg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAjIGJvb2xlYW4gd2ls
+bCBiZSBoYW5kbGVkIGFzIHRydWUKPj4rIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgc2V0IGFycigkbmFtZSkge30KPj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgfQo+PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9Cj4+IMKgIMKgIMKgIH0KPj5AQCAt
+MTA3NSw2ICsxMDgzLDEwIEBAIGdpdC12ZXJzaW9uIHByb2MgX3BhcnNlX2NvbmZpZyB7YXJyX25h
+bWUgYXJnc30gewo+PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCB9IGVsc2Ugewo+PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBzZXQgYXJyKCRuYW1lKSAkdmFs
+dWUKPj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgfQo+PisgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB9
+IGVsc2VpZiB7W3JlZ2V4cCB7XihbXj1dKykkfSAkbGluZSBsaW5lIG5hbWVdfSB7Cj4+KyDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCMgbm8g
+dmFsdWUgZ2l2ZW4sIGJ1dCBpbnRlcnByZXRpbmcgdGhlbSBhcwo+PisgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAjIGJvb2xlYW4gd2lsbCBi
+ZSBoYW5kbGVkIGFzIHRydWUKPj4rIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgc2V0IGFycigkbmFtZSkge30KPj4gwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCB9Cj4+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNsb3NlICRm
+ZF9yYwo+Cj4gSXMgdGhpcyByZWFsbHkgaG93IGdpdCB0cmVhdHMgYm9vbGVhbiBjb25maWcgdmFs
+dWVzPyBJIGNhbid0IHNlZW0gdG8KPiBkZW1vbnN0cmF0ZSB0aGF0IHRvIG15c2VsZjoKPiBwYXRA
+ZnJvZzovb3B0L3NyYy9naXQtZ3VpJCBnaXQgY29uZmlnIC0tdW5zZXQgY29yZS54eXp6eQo+IHBh
+dEBmcm9nOi9vcHQvc3JjL2dpdC1ndWkkIGdpdCBjb25maWcgLS1ib29sIC0tZ2V0IGNvcmUueHl6
+enkKPiBwYXRAZnJvZzovb3B0L3NyYy9naXQtZ3VpJCBnaXQgY29uZmlnIC0tYm9vbCBjb3JlLnh5
+enp5IDEKPiBwYXRAZnJvZzovb3B0L3NyYy9naXQtZ3VpJCBnaXQgY29uZmlnIC0tYm9vbCAtLWdl
+dCBjb3JlLnh5enp5Cj4gdHJ1ZQo+Cj4gSSBhc3N1bWUgSSdtIHVzaW5nIHRoZSB3cm9uZyB0ZXN0
+IGZvciB0aGlzLgoKSXQgbG9va3MgbGlrZSB5b3UgY2FuJ3Qgc2V0IGl0IHdpdGggZ2l0LWNvbmZp
+Zy4gQnV0IEkga25vdywgdGhhdCB3cml0aW5nOgoKW2NvcmVdCiAgICAgICAgeHl5enkKCmludG8g
+dGhlIGdpdCBjb25maWcgZmlsZSBhbmQgdGhhbiBjYWxsaW5nIGdpdCBjb25maWcgLS1ib29sIC0t
+Z2V0CmNvcmUueHl6enksIHdpbGwgZ2l2ZSB5b3UgdHJ1ZS4KCkJlcnQKCj4KPiAtLQo+IFBhdCBU
+aG95dHMgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBodHRwOi8vd3d3
+LnBhdHRob3l0cy50ay8KPiBQR1AgZmluZ2VycHJpbnQgMkMgNkUgOTggMDcgMkMgNTkgQzggOTcg
+wqAxMCBDRSAxMSBFNiAwNCBFMCBCOSBERAo+Cg==
