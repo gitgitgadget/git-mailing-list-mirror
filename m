@@ -1,130 +1,126 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH v4 2/2] push: teach --recurse-submodules the on-demand
- option
-Date: Tue, 18 Oct 2011 22:58:43 +0200
-Message-ID: <4E9DE883.9050105@web.de>
-References: <1313791728-11328-1-git-send-email-iveqy@iveqy.com> <1313791728-11328-3-git-send-email-iveqy@iveqy.com> <7vmxemls8z.fsf@alter.siamese.dyndns.org> <20111017190749.GA3126@sandbox-rc> <7vr52bjljd.fsf@alter.siamese.dyndns.org>
+From: Andrea Gelmini <andrea.gelmini@gmail.com>
+Subject: Git --reference bug(?)
+Date: Wed, 19 Oct 2011 00:04:09 +0200
+Message-ID: <CAK-xaQaUxJ5c_kN48g7-J9fosDv6awbAFQSFLpF2fA+hc-i-MA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 18 22:59:47 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Wed Oct 19 00:04:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGGlD-0004p9-Sp
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 22:59:44 +0200
+	id 1RGHly-0005yO-Sy
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Oct 2011 00:04:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754092Ab1JRU7i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Oct 2011 16:59:38 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:40759 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753926Ab1JRU7h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Oct 2011 16:59:37 -0400
-Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 4822D1A4C09F5
-	for <git@vger.kernel.org>; Tue, 18 Oct 2011 22:58:44 +0200 (CEST)
-Received: from [192.168.178.43] ([79.247.255.167]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0McneT-1RXWeA2OKP-00HiqI; Tue, 18 Oct 2011 22:58:43
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
-In-Reply-To: <7vr52bjljd.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:855eTPjkVAno4ZSZ/eS5Mzu/KDkj3RCJGsWumixVE85
- ZJbdDxu4bSmz1b1nCJ+/CXeEMYi8u4M6aHMN1tdRzWz58DLtE1
- QkAKIhjtJQ4qt7EyOOS4g6ChVXuJ2JHPMNo/slztof12r/SP7z
- bBr0xUAiyC9/zrPmmhhU/aQUTZm/PKS8JrsmzcPZQY82uWRbYr
- C8Mx/BtfqajJ7xcKI/+Bg==
+	id S1754611Ab1JRWEa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Oct 2011 18:04:30 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:37883 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752681Ab1JRWE3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Oct 2011 18:04:29 -0400
+Received: by pzk36 with SMTP id 36so2673560pzk.1
+        for <git@vger.kernel.org>; Tue, 18 Oct 2011 15:04:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=4aMUmUV5C8u2Y2rmINi1hJSG00nmvEqtNUwrctHBuBQ=;
+        b=U4j84m33xlIhNRZZfy429e+T7p0ngtnEMcFQTbNZ0dVz0zqGUJimgh3wXo4wnLJcKf
+         V7QnJmiVXO4pKBd7bP4/dF6Wm4uwVjsoXcmnJwmaj66WryYOWy9lxnjmKCamOjEC2hEa
+         jC7HHxEPOyQtJGxrgWnfHLZ/49pbubcrggc5Q=
+Received: by 10.68.44.168 with SMTP id f8mr2814959pbm.11.1318975469078; Tue,
+ 18 Oct 2011 15:04:29 -0700 (PDT)
+Received: by 10.68.46.230 with HTTP; Tue, 18 Oct 2011 15:04:09 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183905>
 
-Am 18.10.2011 00:33, schrieb Junio C Hamano:
-> I would personally want to put a freeze on "recursively do anything to
-> submodule" topic (including but not limited to "checkout") for now, until
-> we know how we would want to support "floating submodule" model. For
-> existing code in-flight, I would like to see us at least have a warm and
-> fuzzy feeling that we know which part of the code such a support would
-> need to undo and how the update would look like before moving forward.
+Hi Michael,
+   and thanks a lot for your time on Git.
+   I have a problem with latest Git tree:
 
-Makes sense.
+git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+/tmp/3.1 --reference /home/gelma/dev/kernel/linus/
+Cloning into /tmp/3.1...
+fatal: Reference has invalid format: 'refs/tags/3.1.1.1^{}'
+fatal: The remote end hung up unexpectedly
 
-> There are two camps that use submodules in their large-ish projects.
-> 
-> One is mostly happy with the traditional "submodule trees checked out must
-> match what the superproject says, otherwise you have local changes and the
-> build product cannot be called to have emerged from that particular
-> superproject commit" model. Let's call this "exact submodules" model.
-> 
-> The other prefers "submodule trees checked out are whatever submodule
-> commits that happen to sit at the tips of the designated branches the
-> superproject wants to use" model. The superproject tree does not exactly
-> know or care what commit to use from each of its submodules, and I would
-> imagine that it may be more convenient for developers. They do not have to
-> care the entire build product while they commit---only the integration
-> process that could be separate and perhaps automated needs to know.
->
-> We haven't given any explicit support to the latter "floating submodules"
-> model so far. There may be easy workarounds to many of the potential
-> issues, (e.g. at "git diff/status" level, there may be some configuration
-> variables to tell the tools to ignore differences between the commit the
-> superproject records for the submodule path and the HEAD in the
-> submodule), but with recent work on submodules such as "allow pushing
-> superproject only after submodule commits are pushed out", I am afraid
-> that we seem to be piling random new things with the assumption that we
-> would never support anything but "exact submodules" model.
+   It works with Ubuntu Git version 1.7.4.1, of course.
 
-It's not about never supporting anything else, but right now we are
-scratching our own itch ;-)
+  Well, bisecting I've got this:
 
-> Continuing the
-> development that way would require retrofitting support for "floating
-> submodules" model to largely undo the unwarranted assumptions existing
-> code makes. That is the reason why I would like to see people think about
-> the need to support the other "floating submodules" model, before making
-> the existing mess even worse.
+dce4bab6567de7c458b334e029e3dedcab5f2648 is the first bad commit
+commit dce4bab6567de7c458b334e029e3dedcab5f2648
+Author: Michael Haggerty <mhagger@alum.mit.edu>
+Date:   Thu Sep 15 23:10:43 2011 +0200
 
-If you configure diff.ignoreSubmodules=all and fetch.recurseSubmodules=false
-and write a script fetching and checking out the branch(es) of your choice
-in the submodule(s) you run each time you want to update the branch tip
-there, you should be almost there with current Git. But yes, we could do
-better.
+    add_ref(): verify that the refname is formatted correctly
 
-> The very first step for floating submodules support would be relatively
-> simple. We could declare that an entry in the .gitmodules file in the
-> superproject can optionally specify which branch needs to be checked out
-> with something like:
-> 
-> 	[submodule "libfoo"]
-> 		branch = master
->                 path = include/foo
->                 url = git://foo.com/git/lib.git
->                 
-> and when such an entry is defined, a command at the superproject level
-> would largely ignore what is at include/foo in the tree object recorded in
-> the superproject commit and in the index. When we show "git status" in the
-> superproject, instead of using the commit bound to the superproject, we
-> would use include/foo/.git/HEAD as the basis for detecting "local" changes
-> to the submodule.
+    In add_ref(), verify that the refname is formatted correctly before
+    adding it to the ref_list.  Here we have to allow refname components
+    that start with ".", since (for example) the remote protocol uses
+    synthetic reference name ".have".  So add a new REFNAME_DOT_COMPONENT
+    flag that can be passed to check_refname_format() to allow leading
+    dots.
 
-Yup. And the presence of the "branch" config could tell "git submodule
-update" to fetch and advance that branch to the tip every time it is run.
-And it could tell the diff machinery (which is also used by status) to
-ignore the differences between a submodule's HEAD and the SHA-1 in the
-superproject (while still allowing to silence the presence of untracked
-and/or modified files by using the diff.ignoreSubmodules option) and
-fetch would just stop doing any on-demand action for such submodules.
-Anything I missed?
+    Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-> We could even declare that the gitlink for such a
-> submodule should record 0{40} SHA-1 in the superproject, but I do not
-> think that is necessary.
+:100644 100644 096b42c5e993193dd83a02128be4b90ebc59edd1
+832a52f7818369bca969d49317718714a5bcabac M	refs.c
+:100644 100644 b0da5fc95dff025a8dd5c1f299ee25efc6141e81
+d5ac133336dc0da45cd916207d12a5e0e4237ae3 M	refs.h
+bisect run success
 
-Me neither, e.g. the SHA-1 which was the submodules HEAD when it was added
-should do nicely. And that would avoid referencing a non-existing commit
-in case you later want to turn a floating submodule into an exact one.
+git bisect log
+git bisect start
+# bad: [85bb77ed056057b727ba8dc7965fbfcde987d189] Merge branch
+'master' of git://git.kernel.org/pub/scm/git/git
+git bisect bad 85bb77ed056057b727ba8dc7965fbfcde987d189
+# good: [9971d6d52c5afeb8ba60ae6ddcffb34af23eeadd] Git 1.7.4.1
+git bisect good 9971d6d52c5afeb8ba60ae6ddcffb34af23eeadd
+# good: [456a4c08b8d8ddefda939014c15877ace3e3f499] Merge branch
+'jk/diff-not-so-quick'
+git bisect good 456a4c08b8d8ddefda939014c15877ace3e3f499
+# good: [18dce8d4226c56b10d2b783b476008117d60a23e] Merge branch
+'master' of git://git.kernel.org/pub/scm/git/git
+git bisect good 18dce8d4226c56b10d2b783b476008117d60a23e
+# good: [821b315ebebd5371abd9124478261064b36a6592] Merge branch
+'da/make-auto-header-dependencies'
+git bisect good 821b315ebebd5371abd9124478261064b36a6592
+# bad: [e579a5d398744e8182decff1329c468d59e6974c] Merge branch
+'mh/maint-notes-merge-pathbuf-fix'
+git bisect bad e579a5d398744e8182decff1329c468d59e6974c
+# good: [17e2b114a8f9d66d7c9263755f89cc503c94c38c] Merge branch
+'jn/gitweb-highlite-sanitise'
+git bisect good 17e2b114a8f9d66d7c9263755f89cc503c94c38c
+# good: [5fbdb9c2e8cc7226d9a9e7de5ad09ac5f0a0b906] Merge branch
+'jm/mergetool-pathspec'
+git bisect good 5fbdb9c2e8cc7226d9a9e7de5ad09ac5f0a0b906
+# good: [f989fea0e0b47873de62a355f4766f03a88fb01b] resolve_ref(): also
+treat a too-long SHA1 as invalid
+git bisect good f989fea0e0b47873de62a355f4766f03a88fb01b
+# bad: [9bd500048d467791902b1a5e8c22165325952fde] Merge branch
+'mh/check-ref-format-3'
+git bisect bad 9bd500048d467791902b1a5e8c22165325952fde
+# good: [ce40979cf83c4c92421f9dd56cc4eabb67c85f29] Store the submodule
+name in struct cached_refs
+git bisect good ce40979cf83c4c92421f9dd56cc4eabb67c85f29
+# good: [11fa509957025cc30c063d75014b701dd9ae235d] Merge branch
+'mh/iterate-refs'
+git bisect good 11fa509957025cc30c063d75014b701dd9ae235d
+# bad: [dce4bab6567de7c458b334e029e3dedcab5f2648] add_ref(): verify
+that the refname is formatted correctly
+git bisect bad dce4bab6567de7c458b334e029e3dedcab5f2648
+# good: [7cb368421f62318f2c0f0e19a83ca34c201aebaa] resolve_ref():
+expand documentation
+git bisect good 7cb368421f62318f2c0f0e19a83ca34c201aebaa
+
+   If I revert it, everything's ok.
+
+Thanks a lot,
+Andrea Gelmini
