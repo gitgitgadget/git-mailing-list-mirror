@@ -1,126 +1,292 @@
-From: Andrea Gelmini <andrea.gelmini@gmail.com>
-Subject: Git --reference bug(?)
-Date: Wed, 19 Oct 2011 00:04:09 +0200
-Message-ID: <CAK-xaQaUxJ5c_kN48g7-J9fosDv6awbAFQSFLpF2fA+hc-i-MA@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH/RFC 3/2 v3] Refactor Git::config_*
+Date: Wed, 19 Oct 2011 00:09:39 +0200
+Message-ID: <201110190009.40470.jnareb@gmail.com>
+References: <vpqty7wk9km.fsf@bauges.imag.fr> <201110181147.02397.jnareb@gmail.com> <7vty76f57d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Wed Oct 19 00:04:35 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Cord Seele <cowose@googlemail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git@vger.kernel.org, Cord Seele <cowose@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 19 00:09:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGHly-0005yO-Sy
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Oct 2011 00:04:35 +0200
+	id 1RGHr8-00087e-Kb
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Oct 2011 00:09:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754611Ab1JRWEa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Oct 2011 18:04:30 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:37883 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752681Ab1JRWE3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Oct 2011 18:04:29 -0400
-Received: by pzk36 with SMTP id 36so2673560pzk.1
-        for <git@vger.kernel.org>; Tue, 18 Oct 2011 15:04:29 -0700 (PDT)
+	id S1754640Ab1JRWJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Oct 2011 18:09:50 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:59861 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754545Ab1JRWJs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Oct 2011 18:09:48 -0400
+Received: by eye27 with SMTP id 27so1022179eye.19
+        for <git@vger.kernel.org>; Tue, 18 Oct 2011 15:09:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=4aMUmUV5C8u2Y2rmINi1hJSG00nmvEqtNUwrctHBuBQ=;
-        b=U4j84m33xlIhNRZZfy429e+T7p0ngtnEMcFQTbNZ0dVz0zqGUJimgh3wXo4wnLJcKf
-         V7QnJmiVXO4pKBd7bP4/dF6Wm4uwVjsoXcmnJwmaj66WryYOWy9lxnjmKCamOjEC2hEa
-         jC7HHxEPOyQtJGxrgWnfHLZ/49pbubcrggc5Q=
-Received: by 10.68.44.168 with SMTP id f8mr2814959pbm.11.1318975469078; Tue,
- 18 Oct 2011 15:04:29 -0700 (PDT)
-Received: by 10.68.46.230 with HTTP; Tue, 18 Oct 2011 15:04:09 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=POzXRZdV2XYmKnC5ePrgCuFwL9GYDuB04Wwuw4L0Ikg=;
+        b=aOGYojZyLbGu73mK2y3HzDfz6ON69lP70MJ2OvKjJpvHytyKh9c2ydLqH8rvtx7uG1
+         o80X+mUfHU1lapFJjLaHBZgc9JD6DaY3/senOAIKqKGlNUMEjVT/1nXXSYPawbInRuD6
+         i2BRTo7m9N484CsQpS1l8WrrxhEN4X3SSm+RE=
+Received: by 10.223.14.134 with SMTP id g6mr6720961faa.11.1318975787476;
+        Tue, 18 Oct 2011 15:09:47 -0700 (PDT)
+Received: from [192.168.1.13] (abwe113.neoplus.adsl.tpnet.pl. [83.8.228.113])
+        by mx.google.com with ESMTPS id r24sm1202387faa.8.2011.10.18.15.09.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 18 Oct 2011 15:09:45 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vty76f57d.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183906>
 
-Hi Michael,
-   and thanks a lot for your time on Git.
-   I have a problem with latest Git tree:
+On Tue, 18 Oct 2011, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> > From: Junio C Hamano <gitster@pobox.com>
+> >
+> > There is, especially with addition of Git::config_path(), much code
+> > repetition in the Git::config_* family of subroutines.
+> >
+> > Refactor common parts of Git::config(), Git::config_bool(),
+> > Git::config_int() and Git::config_path() into _config_common()
+> > helper method, reducing code duplication.
+> >
+> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> > Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> > ---
+> > Jakub Narebski wrote:
+> > >
+> > > I'll resend amended commit.
+> >
+> > Here it is.
+> 
+> Well, this breaks t9001 and I ended up spending an hour and half figuring
+> out why. Admittedly, I was doing something else on the side, so it is not
+> like the whole 90 minutes is the billable hour for reviewing this patch,
+> but as far as the Git project is concerned, I didn't have any other branch
+> checked out in my working tree, so that whole time was what ended up
+> costing.
 
-git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-/tmp/3.1 --reference /home/gelma/dev/kernel/linus/
-Cloning into /tmp/3.1...
-fatal: Reference has invalid format: 'refs/tags/3.1.1.1^{}'
-fatal: The remote end hung up unexpectedly
+I'm sorry about that.  I have checked t9700-perl-git.sh and 
+t9100-git-svn-basic.sh that the version before fixup had problems with,
+but for some reason I had many spurious test failures, so I have not run
+the full test suite (well, it would be enough to run those that require
+Git.pm).
 
-   It works with Ubuntu Git version 1.7.4.1, of course.
+Nb. I still have:
 
-  Well, bisecting I've got this:
+  Test Summary Report
+  -------------------
+  t1402-check-ref-format.sh                        (Wstat: 256 Tests: 93 Failed: 1)
+    Failed test:  31
+    Non-zero exit status: 1
+  t4034-diff-words.sh                              (Wstat: 256 Tests: 34 Failed: 2)
+    Failed tests:  21, 25
+    Non-zero exit status: 1
+ 
+> The real problem was here.
+> 
+> > @@ -609,25 +592,10 @@ This currently wraps command('config') so it is not so fast.
+> >  
+> >  sub config_bool {
+> >  	my ($self, $var) = _maybe_self(@_);
+> > -
+> > -	try {
+> > -		my @cmd = ('config', '--bool', '--get', $var);
+> > -		unshift @cmd, $self if $self;
+> > -		my $val = command_oneline(@cmd);
+> > -		return undef unless defined $val;
+> > -		return $val eq 'true';
+> > ...
+> > -	};
+> > +	my $val = scalar _config_common($self, $var, {'kind' => '--bool'});
+> > +	return (defined $val && $val eq 'true');
+> >  }
+> 
+> Can you spot the difference?
 
-dce4bab6567de7c458b334e029e3dedcab5f2648 is the first bad commit
-commit dce4bab6567de7c458b334e029e3dedcab5f2648
-Author: Michael Haggerty <mhagger@alum.mit.edu>
-Date:   Thu Sep 15 23:10:43 2011 +0200
+Damn.
 
-    add_ref(): verify that the refname is formatted correctly
+I really should have done refactoring from scratch myself, instead of basing
+it on "how about that" throwaway patch.
 
-    In add_ref(), verify that the refname is formatted correctly before
-    adding it to the ref_list.  Here we have to allow refname components
-    that start with ".", since (for example) the remote protocol uses
-    synthetic reference name ".have".  So add a new REFNAME_DOT_COMPONENT
-    flag that can be passed to check_refname_format() to allow leading
-    dots.
+Fixed now in the version below.
+ 
+> This is the reason why I do not particularly like a rewrite for the sake
+> of rewriting.
 
-    Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+The goal was to reduce code duplication to _avoid_ errors.
 
-:100644 100644 096b42c5e993193dd83a02128be4b90ebc59edd1
-832a52f7818369bca969d49317718714a5bcabac M	refs.c
-:100644 100644 b0da5fc95dff025a8dd5c1f299ee25efc6141e81
-d5ac133336dc0da45cd916207d12a5e0e4237ae3 M	refs.h
-bisect run success
+What I have noticed is that there is slight difference between original
+Git::config_path and the one after refactoring.  In the version before
+this patch the error catching part of config_path() looks like this:
 
-git bisect log
-git bisect start
-# bad: [85bb77ed056057b727ba8dc7965fbfcde987d189] Merge branch
-'master' of git://git.kernel.org/pub/scm/git/git
-git bisect bad 85bb77ed056057b727ba8dc7965fbfcde987d189
-# good: [9971d6d52c5afeb8ba60ae6ddcffb34af23eeadd] Git 1.7.4.1
-git bisect good 9971d6d52c5afeb8ba60ae6ddcffb34af23eeadd
-# good: [456a4c08b8d8ddefda939014c15877ace3e3f499] Merge branch
-'jk/diff-not-so-quick'
-git bisect good 456a4c08b8d8ddefda939014c15877ace3e3f499
-# good: [18dce8d4226c56b10d2b783b476008117d60a23e] Merge branch
-'master' of git://git.kernel.org/pub/scm/git/git
-git bisect good 18dce8d4226c56b10d2b783b476008117d60a23e
-# good: [821b315ebebd5371abd9124478261064b36a6592] Merge branch
-'da/make-auto-header-dependencies'
-git bisect good 821b315ebebd5371abd9124478261064b36a6592
-# bad: [e579a5d398744e8182decff1329c468d59e6974c] Merge branch
-'mh/maint-notes-merge-pathbuf-fix'
-git bisect bad e579a5d398744e8182decff1329c468d59e6974c
-# good: [17e2b114a8f9d66d7c9263755f89cc503c94c38c] Merge branch
-'jn/gitweb-highlite-sanitise'
-git bisect good 17e2b114a8f9d66d7c9263755f89cc503c94c38c
-# good: [5fbdb9c2e8cc7226d9a9e7de5ad09ac5f0a0b906] Merge branch
-'jm/mergetool-pathspec'
-git bisect good 5fbdb9c2e8cc7226d9a9e7de5ad09ac5f0a0b906
-# good: [f989fea0e0b47873de62a355f4766f03a88fb01b] resolve_ref(): also
-treat a too-long SHA1 as invalid
-git bisect good f989fea0e0b47873de62a355f4766f03a88fb01b
-# bad: [9bd500048d467791902b1a5e8c22165325952fde] Merge branch
-'mh/check-ref-format-3'
-git bisect bad 9bd500048d467791902b1a5e8c22165325952fde
-# good: [ce40979cf83c4c92421f9dd56cc4eabb67c85f29] Store the submodule
-name in struct cached_refs
-git bisect good ce40979cf83c4c92421f9dd56cc4eabb67c85f29
-# good: [11fa509957025cc30c063d75014b701dd9ae235d] Merge branch
-'mh/iterate-refs'
-git bisect good 11fa509957025cc30c063d75014b701dd9ae235d
-# bad: [dce4bab6567de7c458b334e029e3dedcab5f2648] add_ref(): verify
-that the refname is formatted correctly
-git bisect bad dce4bab6567de7c458b334e029e3dedcab5f2648
-# good: [7cb368421f62318f2c0f0e19a83ca34c201aebaa] resolve_ref():
-expand documentation
-git bisect good 7cb368421f62318f2c0f0e19a83ca34c201aebaa
+        } catch Git::Error::Command with {
+                my $E = shift;
+                if ($E->value() == 1) {
+                        # Key not found.
+                        return undef;
+                } else {
+                        throw $E;
+                }
+        };
 
-   If I revert it, everything's ok.
+while after this patch (and in config()) it looks like this:
 
-Thanks a lot,
-Andrea Gelmini
+        } catch Git::Error::Command with {
+                my $E = shift;
+                if ($E->value() == 1) {
+                        # Key not found.
+                        return;
+                } else {
+                        throw $E;
+                }
+        };
+
+I am not sure which one is right, but I suspect the latter.
+Cord?
+
+-- >8 ------------ >8 -------------- >8 --
+From: Junio C Hamano <gitster@pobox.com>
+
+There is, especially with addition of Git::config_path(), much code
+repetition in the Git::config_* family of subroutines.
+
+Refactor common parts of Git::config(), Git::config_bool(),
+Git::config_int() and Git::config_path() into _config_common()
+helper method, reducing code duplication.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ perl/Git.pm |   73 ++++++++++++++++------------------------------------------
+ 1 files changed, 20 insertions(+), 53 deletions(-)
+
+diff --git a/perl/Git.pm b/perl/Git.pm
+index c279bfb..b7035ad 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -577,23 +577,7 @@ This currently wraps command('config') so it is not so fast.
+ sub config {
+ 	my ($self, $var) = _maybe_self(@_);
+ 
+-	try {
+-		my @cmd = ('config');
+-		unshift @cmd, $self if $self;
+-		if (wantarray) {
+-			return command(@cmd, '--get-all', $var);
+-		} else {
+-			return command_oneline(@cmd, '--get', $var);
+-		}
+-	} catch Git::Error::Command with {
+-		my $E = shift;
+-		if ($E->value() == 1) {
+-			# Key not found.
+-			return;
+-		} else {
+-			throw $E;
+-		}
+-	};
++	return _config_common($self, $var);
+ }
+ 
+ 
+@@ -610,24 +594,11 @@ This currently wraps command('config') so it is not so fast.
+ sub config_bool {
+ 	my ($self, $var) = _maybe_self(@_);
+ 
+-	try {
+-		my @cmd = ('config', '--bool', '--get', $var);
+-		unshift @cmd, $self if $self;
+-		my $val = command_oneline(@cmd);
+-		return undef unless defined $val;
+-		return $val eq 'true';
+-	} catch Git::Error::Command with {
+-		my $E = shift;
+-		if ($E->value() == 1) {
+-			# Key not found.
+-			return undef;
+-		} else {
+-			throw $E;
+-		}
+-	};
++	my $val = scalar _config_common($self, $var, {'kind' => '--bool'});
++	return undef unless defined $val;
++	return $val eq 'true';
+ }
+ 
+-
+ =item config_path ( VARIABLE )
+ 
+ Retrieve the path configuration C<VARIABLE>. The return value
+@@ -640,23 +611,7 @@ This currently wraps command('config') so it is not so fast.
+ sub config_path {
+ 	my ($self, $var) = _maybe_self(@_);
+ 
+-	try {
+-		my @cmd = ('config', '--path');
+-		unshift @cmd, $self if $self;
+-		if (wantarray) {
+-			return command(@cmd, '--get-all', $var);
+-		} else {
+-			return command_oneline(@cmd, '--get', $var);
+-		}
+-	} catch Git::Error::Command with {
+-		my $E = shift;
+-		if ($E->value() == 1) {
+-			# Key not found.
+-			return undef;
+-		} else {
+-			throw $E;
+-		}
+-	};
++	return _config_common($self, $var, {'kind' => '--path'});
+ }
+ 
+ =item config_int ( VARIABLE )
+@@ -674,15 +629,27 @@ This currently wraps command('config') so it is not so fast.
+ sub config_int {
+ 	my ($self, $var) = _maybe_self(@_);
+ 
++	return scalar _config_common($self, $var, {'kind' => '--int'});
++}
++
++# Common subroutine to implement bulk of what the config* family of methods
++# do. This curently wraps command('config') so it is not so fast.
++sub _config_common {
++	my ($self, $var, $opts) = @_;
++
+ 	try {
+-		my @cmd = ('config', '--int', '--get', $var);
++		my @cmd = ('config', $opts->{'kind'} ? $opts->{'kind'} : ());
+ 		unshift @cmd, $self if $self;
+-		return command_oneline(@cmd);
++		if (wantarray) {
++			return command(@cmd, '--get-all', $var);
++		} else {
++			return command_oneline(@cmd, '--get', $var);
++		}
+ 	} catch Git::Error::Command with {
+ 		my $E = shift;
+ 		if ($E->value() == 1) {
+ 			# Key not found.
+-			return undef;
++			return;
+ 		} else {
+ 			throw $E;
+ 		}
+-- 
+1.7.6
