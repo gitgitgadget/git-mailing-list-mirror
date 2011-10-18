@@ -1,93 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] completion: match ctags symbol names in grep
- patterns
-Date: Tue, 18 Oct 2011 00:35:39 -0700
-Message-ID: <7v8voiiwfo.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 3/3] completion: match ctags symbol names in grep patterns
+Date: Tue, 18 Oct 2011 09:41:10 +0200
+Message-ID: <vpqpqhug31l.fsf@bauges.imag.fr>
 References: <20111018044955.GA8976@sigill.intra.peff.net>
- <20111018050105.GC9008@sigill.intra.peff.net>
- <7vd3duixdg.fsf@alter.siamese.dyndns.org>
- <20111018072655.GA22309@elie.hsd1.il.comcast.net>
+	<20111018050105.GC9008@sigill.intra.peff.net>
+	<7vd3duixdg.fsf@alter.siamese.dyndns.org>
+	<20111018072655.GA22309@elie.hsd1.il.comcast.net>
+	<7v8voiiwfo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 18 09:35:48 2011
+Content-Type: text/plain
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 18 09:41:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RG4DD-0002TA-Er
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 09:35:47 +0200
+	id 1RG4J8-0004zL-MG
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Oct 2011 09:41:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757312Ab1JRHfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Oct 2011 03:35:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44991 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753464Ab1JRHfm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Oct 2011 03:35:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA6483B39;
-	Tue, 18 Oct 2011 03:35:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ukvz4hdpta16zWyhW335D7DGVfw=; b=CDdV3z
-	RG83AQxGjtuEqDwoq3CH4xvskRkRHo/QTW27ldGQttp+JSXi3UwKrWtRcog6RDvs
-	Rx1zYZ8uBIaorQM/QB67wnEhg9PpIvyGC+2qbmp+jqIQR+fLzj4uboBITm7DPHah
-	LutEC6b5HjycAa6vnkohXuVWTLdF0KhzVvrNw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Bt0/OVZCSv5zpGYjPhdUSuA5QGG7Mick
-	08VU/Rn/s1Hwx1asxmTRnqypfli5yYP9/twRr73GTikNo4oYNsUFkl28npA65uCv
-	Pgy1wt4yVWMuO8qv2isIJtyTn25kwxapzOW4BqH+Ornb22jFqmCBpkzbCUhLUKUF
-	F1wL8JuiMTs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D17BF3B38;
-	Tue, 18 Oct 2011 03:35:41 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5E1E43B37; Tue, 18 Oct 2011
- 03:35:41 -0400 (EDT)
-In-Reply-To: <20111018072655.GA22309@elie.hsd1.il.comcast.net> (Jonathan
- Nieder's message of "Tue, 18 Oct 2011 02:26:55 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C801133C-F95B-11E0-8E4E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757349Ab1JRHlu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Oct 2011 03:41:50 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:35306 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753473Ab1JRHlt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Oct 2011 03:41:49 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p9I7c8Gq016411
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 18 Oct 2011 09:38:08 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1RG4IR-0006Qi-6L; Tue, 18 Oct 2011 09:41:11 +0200
+In-Reply-To: <7v8voiiwfo.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 18 Oct 2011 00:35:39 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 18 Oct 2011 09:38:09 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p9I7c8Gq016411
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1319528292.54765@cL6Pmy/+QGu+iqtECutNww
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183869>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Junio C Hamano wrote:
->
->> Perhaps something like this is in order?
-> [...]
->> +++ b/Makefile
->> @@ -2127,17 +2127,25 @@ po/git.pot: $(LOCALIZED_C)
->>  
->>  pot: po/git.pot
->>  
->> +git_check = $(shell git ls-files >/dev/null 2>&1; echo $$?)
->> +ifeq ($(git_check),0)
->> +FIND_SOURCE_FILES = git ls-files '*.[hcS]'
->> +else
->> +FIND_SOURCE_FILES = $(FIND) . \( -name .git -type d -prune \) \
->> +		-o \( -name '*.[hcS]' -type f -print \)
->> +endif
->
-> Neat.  I'd prefer something like
->
-> 	FIND_SOURCE_FILES = \
-> 		git ls-files '*.[hcS]' 2>/dev/null || \
-> 		$(FIND) . -name .git -prune -o -name '*.[hcS]' -type f -print
->
-> that avoid punishing people who were using the makefile for some
-> purpose unrelated to tags and cscope, though. ;)
+>>> +git_check = $(shell git ls-files >/dev/null 2>&1; echo $$?)
+>>> +ifeq ($(git_check),0)
 
-Hmm, how would this punish anybody exactly (I just took the structure
-from the way how the auto-depend is done)?
+> Hmm, how would this punish anybody exactly (I just took the structure
+> from the way how the auto-depend is done)?
 
-Besides, you would need to have the whole thing in a subshell or
-something, as this is used as the upstream to "| xargs".
+The "shell git ls-files" is ran unconditionnally, hence a small
+performance penality even if you don't run ctags.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
