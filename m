@@ -1,54 +1,96 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] t/t3000-ls-files-others.sh: use $SHELL_PATH to run git-new-workdir script
-Date: Wed, 19 Oct 2011 09:26:02 -0700
-Message-ID: <jKc1nei6yQLMU5upFxa60klqkQwEDsUHt5jcsbbnbL-TuvERAV3NOSvVH9yzlpgnPdDi0-5rPkBeDx7SQF7CEqlyj9UX6NqKccGu9kUyq1SFu2oCzI2xkRSoDmDBH66WbRZaTWHtj8ubURHpkyEvMA@cipher.nrlssc.navy.mil>
-Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Oct 19 18:26:45 2011
+From: Jeff King <peff@peff.net>
+Subject: Re: How to verify that lines were only moved, not edited?
+Date: Wed, 19 Oct 2011 12:33:54 -0400
+Message-ID: <20111019163354.GB3157@sigill.intra.peff.net>
+References: <4E9EDFEC.3040009@viscovery.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Oct 19 18:34:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGYya-00089m-Jp
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Oct 2011 18:26:44 +0200
+	id 1RGZ5e-0003Fp-Pj
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Oct 2011 18:34:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754345Ab1JSQ0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Oct 2011 12:26:40 -0400
-Received: from mail4.nrlssc.navy.mil ([128.160.11.9]:46519 "EHLO
-	mail3.nrlssc.navy.mil" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752240Ab1JSQ0k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2011 12:26:40 -0400
-Received: by mail3.nrlssc.navy.mil id p9JGQOf4029178; Wed, 19 Oct 2011 11:26:24 -0500
-X-OriginalArrivalTime: 19 Oct 2011 16:26:23.0414 (UTC) FILETIME=[D77A4D60:01CC8E7B]
-X-Virus-Scanned: clamav-milter 0.97.2 at mail4
-X-Virus-Status: Clean
+	id S1756655Ab1JSQd6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Oct 2011 12:33:58 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35688
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756386Ab1JSQd5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2011 12:33:57 -0400
+Received: (qmail 30480 invoked by uid 107); 19 Oct 2011 16:34:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 19 Oct 2011 12:34:03 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Oct 2011 12:33:54 -0400
+Content-Disposition: inline
+In-Reply-To: <4E9EDFEC.3040009@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183935>
 
-From: Brandon Casey <drafnel@gmail.com>
+On Wed, Oct 19, 2011 at 04:34:20PM +0200, Johannes Sixt wrote:
 
+> I thought there was a way to use git-blame to find out whether a change
+> only shuffled lines, but otherwise did not modify them. I tried "git blame
+> -M -- the/file", but it does not work as expected, neither with a toy file
+> nor with a 5000+ lines file (with 55 lines moved).
+> 
+> git init
+> echo A > foo
+> echo B >> foo
+> git add foo
+> git commit -m initial
+> echo B > foo
+> echo A >> foo
+> git commit -a -m swapped
+> 
+> The results are:
+> $ git blame -M -s -- foo
+> ^e3abca2 1) B
+> 6189cb46 2) A
+> 
+> I would have expected:
+> ^e3abca2 1) B
+> ^e3abca2 2) A
+> 
+> Oh, look! This produces the expected result:
+> $ git blame -M1 -s -- foo
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
- t/t3000-ls-files-others.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Right. Your toy lines aren't long enough to be considered "interesting"
+by the default score. From git-blame(1):
 
-diff --git a/t/t3000-ls-files-others.sh b/t/t3000-ls-files-others.sh
-index e9160df..88be904 100755
---- a/t/t3000-ls-files-others.sh
-+++ b/t/t3000-ls-files-others.sh
-@@ -77,7 +77,7 @@ test_expect_success SYMLINKS 'ls-files --others with symlinked submodule' '
- 	) &&
- 	(
- 		cd super &&
--		"$TEST_DIRECTORY/../contrib/workdir/git-new-workdir" ../sub sub
-+		"$SHELL_PATH" "$TEST_DIRECTORY/../contrib/workdir/git-new-workdir" ../sub sub
- 		git ls-files --others --exclude-standard >../actual
- 	) &&
- 	echo sub/ >expect &&
--- 
-1.7.7
+  -M[<num>]
+  [...]
+  <num> is optional but it is the lower bound on the number of
+  alphanumeric characters that git must detect as moving/copying within
+  a file for it to associate those lines with the parent commit. The
+  default value is 20.
+
+Whereas with a longer sample:
+
+  git init
+  seq 1 5000 >foo
+  git add foo
+  git commit -m initial
+  sed -i '/^2..$/d' foo
+  seq 200 299 >>foo
+  git commit -a -m 'move 200-299 to end'
+
+I get the expected result from "git blame -M" (i.e., everything
+attributed to the root commit).
+
+> But neither helps with my 5000+ lines file. Does it mean that the lines
+> were changed? But I'm sure they were just moved! Please help!
+
+What does the file look like? I think blame has some heuristics about
+lines which are uninteresting, and maybe you are triggering a corner
+case there.
+
+-Peff
