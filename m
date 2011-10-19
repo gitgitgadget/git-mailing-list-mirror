@@ -1,7 +1,7 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH 05/12] add_ref(): take a (struct ref_entry *) parameter
-Date: Wed, 19 Oct 2011 23:44:45 +0200
-Message-ID: <1319060692-27216-6-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 08/12] do_for_each_ref_in_arrays(): new function
+Date: Wed, 19 Oct 2011 23:44:48 +0200
+Message-ID: <1319060692-27216-9-git-send-email-mhagger@alum.mit.edu>
 References: <1319060692-27216-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Drew Northup <drew.northup@maine.edu>,
@@ -11,89 +11,132 @@ Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Julian Phillips <julian@quantumfyre.co.uk>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 19 23:45:32 2011
+X-From: git-owner@vger.kernel.org Wed Oct 19 23:45:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGdx5-0000Co-N9
+	id 1RGdx6-0000Co-87
 	for gcvg-git-2@lo.gmane.org; Wed, 19 Oct 2011 23:45:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754724Ab1JSVpT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754736Ab1JSVpT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Wed, 19 Oct 2011 17:45:19 -0400
-Received: from mail.berlin.jpk.com ([212.222.128.130]:33131 "EHLO
+Received: from mail.berlin.jpk.com ([212.222.128.130]:33138 "EHLO
 	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754574Ab1JSVpN (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1754585Ab1JSVpN (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 19 Oct 2011 17:45:13 -0400
 Received: from michael.berlin.jpk.com ([192.168.100.152])
 	by mail.berlin.jpk.com with esmtp (Exim 4.50)
-	id 1RGdqr-0004K1-II; Wed, 19 Oct 2011 23:39:05 +0200
+	id 1RGdqr-0004K1-Jz; Wed, 19 Oct 2011 23:39:05 +0200
 X-Mailer: git-send-email 1.7.7
 In-Reply-To: <1319060692-27216-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183974>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
-Take a pointer to the ref_entry to add to the array, rather than
-creating the ref_entry within the function.  This opens the way to
-having multiple kinds of ref_entries.
+Extract function do_for_each_ref_in_arrays() from do_for_each_ref().
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c |   14 +++++---------
- 1 files changed, 5 insertions(+), 9 deletions(-)
+ refs.c |   71 +++++++++++++++++++++++++++++++++++++--------------------------
+ 1 files changed, 42 insertions(+), 29 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index acb098c..ae90993 100644
+index 4e60edb..cd3acf8 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -75,13 +75,8 @@ static struct ref_entry *create_ref_entry(const char *refname,
+@@ -709,45 +709,58 @@ static int do_for_each_ref_in_array(struct ref_array *array, int offset,
+ 	return 0;
  }
  
- /* Add a ref_entry to the end of the ref_array (unsorted). */
--static void add_ref(const char *refname, const unsigned char *sha1,
--		    int flag, struct ref_array *refs,
--		    struct ref_entry **new_ref)
-+static void add_ref(struct ref_array *refs, struct ref_entry *ref)
+-static int do_for_each_ref(const char *submodule, const char *base, each_ref_fn fn,
+-			   int trim, int flags, void *cb_data)
++static int do_for_each_ref_in_arrays(struct ref_array *array1,
++				     struct ref_array *array2,
++				     const char *base, each_ref_fn fn, int trim,
++				     int flags, void *cb_data)
  {
--	struct ref_entry *ref = create_ref_entry(refname, sha1, flag);
--	if (new_ref)
--		*new_ref = ref;
- 	ALLOC_GROW(refs->refs, refs->nr + 1, refs->alloc);
- 	refs->refs[refs->nr++] = ref;
- }
-@@ -266,7 +261,8 @@ static void read_packed_refs(FILE *f, struct ref_array *array)
+-	int retval = 0, p = 0, l = 0;
+-	struct ref_cache *refs = get_ref_cache(submodule);
+-	struct ref_array *packed = get_packed_refs(refs);
+-	struct ref_array *loose = get_loose_refs(refs);
+-
+-	retval = do_for_each_ref_in_array(&extra_refs, 0,
+-					  base, fn, trim, flags, cb_data);
+-	if (retval)
+-		goto end_each;
++	int retval;
++	int i1 = 0, i2 = 0;
  
- 		refname = parse_ref_line(refline, sha1);
- 		if (refname) {
--			add_ref(refname, sha1, flag, array, &last);
-+			last = create_ref_entry(refname, sha1, flag);
-+			add_ref(array, last);
+-	while (p < packed->nr && l < loose->nr) {
+-		struct ref_entry *entry;
+-		int cmp = strcmp(packed->refs[p]->name, loose->refs[l]->name);
+-		if (!cmp) {
+-			p++;
++	while (1) {
++		struct ref_entry *e1, *e2;
++		int cmp;
++		if (i1 == array1->nr) {
++			return do_for_each_ref_in_array(array2, i2,
++							base, fn, trim, flags, cb_data);
++		}
++		if (i2 == array2->nr) {
++			return do_for_each_ref_in_array(array1, i1,
++							base, fn, trim, flags, cb_data);
++		}
++		e1 = array1->refs[i1];
++		e2 = array2->refs[i2];
++		cmp = strcmp(e1->name, e2->name);
++		if (cmp == 0) {
++			/* Two refs with the same name; ignore the one from array1. */
++			i1++;
  			continue;
  		}
- 		if (last &&
-@@ -281,7 +277,7 @@ static void read_packed_refs(FILE *f, struct ref_array *array)
- 
- void add_extra_ref(const char *refname, const unsigned char *sha1, int flag)
- {
--	add_ref(refname, sha1, flag, &extra_refs, NULL);
-+	add_ref(&extra_refs, create_ref_entry(refname, sha1, flag));
- }
- 
- void clear_extra_refs(void)
-@@ -368,7 +364,7 @@ static void get_ref_dir(struct ref_cache *refs, const char *base,
- 					hashclr(sha1);
- 					flag |= REF_BROKEN;
- 				}
--			add_ref(refname, sha1, flag, array, NULL);
-+			add_ref(array, create_ref_entry(refname, sha1, flag));
+-		if (cmp > 0) {
+-			entry = loose->refs[l++];
++		if (cmp < 0) {
++			retval = do_one_ref(base, fn, trim, flags, cb_data, e1);
++			i1++;
+ 		} else {
+-			entry = packed->refs[p++];
++			retval = do_one_ref(base, fn, trim, flags, cb_data, e2);
++			i2++;
  		}
- 		free(refname);
- 		closedir(dir);
+-		retval = do_one_ref(base, fn, trim, flags, cb_data, entry);
+ 		if (retval)
+-			goto end_each;
++			return retval;
+ 	}
++}
+ 
+-	if (l < loose->nr) {
+-		retval = do_for_each_ref_in_array(loose, l,
+-						  base, fn, trim, flags, cb_data);
+-	} else {
+-		retval = do_for_each_ref_in_array(packed, p,
+-						  base, fn, trim, flags, cb_data);
+-	}
++static int do_for_each_ref(const char *submodule, const char *base, each_ref_fn fn,
++			   int trim, int flags, void *cb_data)
++{
++	int retval = 0;
++	struct ref_cache *refs = get_ref_cache(submodule);
++
++	retval = do_for_each_ref_in_array(&extra_refs, 0,
++					  base, fn, trim, flags, cb_data);
++	if (!retval)
++		retval = do_for_each_ref_in_arrays(get_packed_refs(refs),
++						   get_loose_refs(refs),
++						   base, fn, trim, flags, cb_data);
+ 
+-end_each:
+ 	current_ref = NULL;
+ 	return retval;
+ }
 -- 
 1.7.7
