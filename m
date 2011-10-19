@@ -1,179 +1,62 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH] t1300: attempting to remove a non-existent .git/config is
- not an error
-Date: Wed, 19 Oct 2011 09:37:06 +0200
-Message-ID: <4E9E7E22.7010905@viscovery.net>
-References: <20111012182742.GA14543@sigill.intra.peff.net> <20111012182920.GA18948@sigill.intra.peff.net> <4E9E7115.60303@viscovery.net> <7vzkgxcviz.fsf@alter.siamese.dyndns.org>
+From: Vincent van Ravesteijn <vfr@lyx.org>
+Subject: Re: Compiling on Windows
+Date: Wed, 19 Oct 2011 09:49:48 +0200
+Message-ID: <4E9E811C.10205@lyx.org>
+References: <CAH5451=7Em7sPzknVx8i2VBSAZxZwg1Awr8s3Nr2W=A6SDEZEw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 19 09:37:25 2011
+Cc: git@vger.kernel.org
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 19 09:50:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGQiH-00005s-FF
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Oct 2011 09:37:21 +0200
+	id 1RGQuY-0005Fr-5t
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Oct 2011 09:50:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754298Ab1JSHhO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Oct 2011 03:37:14 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:57823 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753349Ab1JSHhN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2011 03:37:13 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1RGQi3-00048h-B7; Wed, 19 Oct 2011 09:37:07 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id E1D3F1660F;
-	Wed, 19 Oct 2011 09:37:06 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.23) Gecko/20110920 Thunderbird/3.1.15
-In-Reply-To: <7vzkgxcviz.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.1.1
-X-Spam-Score: -1.4 (-)
+	id S1754273Ab1JSHtz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Oct 2011 03:49:55 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:47875 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751396Ab1JSHty (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2011 03:49:54 -0400
+Received: by eye27 with SMTP id 27so1341014eye.19
+        for <git@vger.kernel.org>; Wed, 19 Oct 2011 00:49:53 -0700 (PDT)
+Received: by 10.213.101.4 with SMTP id a4mr729016ebo.32.1319010592552;
+        Wed, 19 Oct 2011 00:49:52 -0700 (PDT)
+Received: from [145.94.171.116] (wlan-145-94-171-116.wlan.tudelft.nl. [145.94.171.116])
+        by mx.google.com with ESMTPS id w58sm13043664eeb.4.2011.10.19.00.49.50
+        (version=SSLv3 cipher=OTHER);
+        Wed, 19 Oct 2011 00:49:51 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+In-Reply-To: <CAH5451=7Em7sPzknVx8i2VBSAZxZwg1Awr8s3Nr2W=A6SDEZEw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183926>
 
-From: Johannes Sixt <j6t@kdbg.org>
+Op 18-10-2011 6:08, Andrew Ardill schreef:
+> Hi list, I have been searching for details on what is required to
+> compile on Windows, but haven't found anything conclusive. Perhaps
+> there is something on the wiki, but unfortunately it is down at the
+> moment.
+>
+> Can anyone point me in the right direction? I would like to be able to
+> compile and test topic branches, and perhaps even do some dev work on
+> my windows machine.
 
-Since some tests before test number 79 ("quoting") are skipped, .git/config
-does not exist and 'rm .git/config' fails. Fix this particular case.
+I once wrote a little step-by-step tutorial on how to compile the native 
+Windows Git with MSVC (Express).
 
-While at it, move other instance of 'rm .git/config' that occur in this
-file inside the test function to document that the test cases want to
-protect themselves from remnants of earlier tests.
+http://blog.vfrconsultancy.nl/#post0
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- You may think that the justification of this change would be the
- other way round: protect test cases, then incidentally this fixes
- a failure on Windows. But for me it is as described: The motivation
- is the fix for Windows, and without that, the "protect test cases"
- part would not have happened. :-)
+Be aware that git runs without apparent problems, but that all 
+functionality written in shell scripts can't be used.
 
- t/t1300-repo-config.sh |   19 +++++++------------
- 1 files changed, 7 insertions(+), 12 deletions(-)
+HTH,
 
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index fba5ae0..51caff0 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -558,8 +558,6 @@ EOF
- test_expect_success "section was removed properly" \
- 	"test_cmp expect .git/config"
- 
--rm .git/config
--
- cat > expect << EOF
- [gitcvs]
- 	enabled = true
-@@ -570,6 +568,7 @@ EOF
- 
- test_expect_success 'section ending' '
- 
-+	rm -f .git/config &&
- 	git config gitcvs.enabled true &&
- 	git config gitcvs.ext.dbname %Ggitcvs1.%a.%m.sqlite &&
- 	git config gitcvs.dbname %Ggitcvs2.%a.%m.sqlite &&
-@@ -642,8 +641,6 @@ test_expect_success 'invalid bool (set)' '
- 
- 	test_must_fail git config --bool bool.nobool foobar'
- 
--rm .git/config
--
- cat > expect <<\EOF
- [bool]
- 	true1 = true
-@@ -658,6 +655,7 @@ EOF
- 
- test_expect_success 'set --bool' '
- 
-+	rm -f .git/config &&
- 	git config --bool bool.true1 01 &&
- 	git config --bool bool.true2 -1 &&
- 	git config --bool bool.true3 YeS &&
-@@ -668,8 +666,6 @@ test_expect_success 'set --bool' '
- 	git config --bool bool.false4 FALSE &&
- 	cmp expect .git/config'
- 
--rm .git/config
--
- cat > expect <<\EOF
- [int]
- 	val1 = 1
-@@ -679,13 +675,12 @@ EOF
- 
- test_expect_success 'set --int' '
- 
-+	rm -f .git/config &&
- 	git config --int int.val1 01 &&
- 	git config --int int.val2 -1 &&
- 	git config --int int.val3 5m &&
- 	cmp expect .git/config'
- 
--rm .git/config
--
- cat >expect <<\EOF
- [bool]
- 	true1 = true
-@@ -699,6 +694,7 @@ cat >expect <<\EOF
- EOF
- 
- test_expect_success 'get --bool-or-int' '
-+	rm -f .git/config &&
- 	(
- 		echo "[bool]"
- 		echo true1
-@@ -718,7 +714,6 @@ test_expect_success 'get --bool-or-int' '
- 
- '
- 
--rm .git/config
- cat >expect <<\EOF
- [bool]
- 	true1 = true
-@@ -732,6 +727,7 @@ cat >expect <<\EOF
- EOF
- 
- test_expect_success 'set --bool-or-int' '
-+	rm -f .git/config &&
- 	git config --bool-or-int bool.true1 true &&
- 	git config --bool-or-int bool.false1 false &&
- 	git config --bool-or-int bool.true2 yes &&
-@@ -742,8 +738,6 @@ test_expect_success 'set --bool-or-int' '
- 	test_cmp expect .git/config
- '
- 
--rm .git/config
--
- cat >expect <<\EOF
- [path]
- 	home = ~/
-@@ -752,6 +746,7 @@ cat >expect <<\EOF
- EOF
- 
- test_expect_success NOT_MINGW 'set --path' '
-+	rm -f .git/config &&
- 	git config --path path.home "~/" &&
- 	git config --path path.normal "/dev/null" &&
- 	git config --path path.trailingtilde "foo~" &&
-@@ -800,7 +795,7 @@ cat > expect << EOF
- 	hash = "test#test"
- EOF
- test_expect_success 'quoting' '
--	rm .git/config &&
-+	rm -f .git/config &&
- 	git config quote.leading " test" &&
- 	git config quote.ending "test " &&
- 	git config quote.semicolon "test;test" &&
--- 
-1.7.7.1507.g94722
+Vincent
