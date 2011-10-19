@@ -1,115 +1,92 @@
-From: mhagger@alum.mit.edu
-Subject: [PATCH 10/12] names_conflict(): new function, extracted from is_refname_available()
-Date: Wed, 19 Oct 2011 23:44:50 +0200
-Message-ID: <1319060692-27216-11-git-send-email-mhagger@alum.mit.edu>
-References: <1319060692-27216-1-git-send-email-mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Drew Northup <drew.northup@maine.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johan Herland <johan@herland.net>,
-	Julian Phillips <julian@quantumfyre.co.uk>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 19 23:50:27 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC 09/13] new_branch(): verify that new branch name is a valid
+ full refname
+Date: Wed, 19 Oct 2011 14:52:09 -0700
+Message-ID: <7vobxcbqeu.fsf@alter.siamese.dyndns.org>
+References: <1319057716-28094-1-git-send-email-mhagger@alum.mit.edu>
+ <1319057716-28094-10-git-send-email-mhagger@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, cmn@elego.de,
+	A Large Angry SCM <gitzilla@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Wed Oct 19 23:52:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGe1q-0002G0-Am
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Oct 2011 23:50:26 +0200
+	id 1RGe3c-00039b-W3
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Oct 2011 23:52:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754748Ab1JSVuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Oct 2011 17:50:20 -0400
-Received: from mail.berlin.jpk.com ([212.222.128.130]:33249 "EHLO
-	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753787Ab1JSVuT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2011 17:50:19 -0400
-Received: from michael.berlin.jpk.com ([192.168.100.152])
-	by mail.berlin.jpk.com with esmtp (Exim 4.50)
-	id 1RGdqr-0004K1-Le; Wed, 19 Oct 2011 23:39:05 +0200
-X-Mailer: git-send-email 1.7.7
-In-Reply-To: <1319060692-27216-1-git-send-email-mhagger@alum.mit.edu>
+	id S1754176Ab1JSVwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Oct 2011 17:52:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64039 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752957Ab1JSVwM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2011 17:52:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 17FF662CB;
+	Wed, 19 Oct 2011 17:52:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+SSdh3bLnjYVWn7lvmUawQ+7xBU=; b=rQOteg
+	CQhgR7/UizMegiVNzEZPgnG4qRBiQzaEyLg5P378qNadSMiHYNEAho+V4yR+qgh3
+	wLjNPzc8g8/I3NeCjKf7u+mshSYAilIsjtPsdlKgl/NtK3IxKICoPXEdJxGR4Ide
+	0BK/NkCUglVO+E675v2d4QhqVoYaAxvmxlGQE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hHeqfOcWZvhXbp/+7Jaeh5KWZw9NyEXe
+	83zVWXFWhosgAaYyZMOo/PK/zxRg8Hnp/iir0O9/OAXpg183IQ+EmfVic2lRgOu9
+	si6egn3yMekpTLr3v+FZLKjoE6u07wsN6chtkCobeTCV3qWHZPC+lJH+K/qO7KKL
+	sRQv07+zZ7c=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F74662CA;
+	Wed, 19 Oct 2011 17:52:11 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8261862C6; Wed, 19 Oct 2011
+ 17:52:10 -0400 (EDT)
+In-Reply-To: <1319057716-28094-10-git-send-email-mhagger@alum.mit.edu>
+ (mhagger@alum.mit.edu's message of "Wed, 19 Oct 2011 22:55:12 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 98BFB1EA-FA9C-11E0-9881-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183984>
 
-From: Michael Haggerty <mhagger@alum.mit.edu>
+mhagger@alum.mit.edu writes:
 
+> From: Michael Haggerty <mhagger@alum.mit.edu>
+>
+>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>
+> Is it possible to omit the REFNAME_ALLOW_ONELEVEL option from this
+> call?
 
-This costs an extra strlen() in the loop, but even that small price
-will be clawed back in the next patch.
+I _think_ it takes an unadorned branch name, so the most prudent would be
+to check the result of prefixing "refs/heads/" to *name with REFNAME_FULL.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs.c |   43 +++++++++++++++++++++++++++++++------------
- 1 files changed, 31 insertions(+), 12 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 7c2bcab..ada691b 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1088,6 +1088,30 @@ static int remove_empty_directories(const char *file)
- }
- 
- /*
-+ * Return true iff refname1 and refname2 conflict with each other.
-+ * Two reference names conflict if one of them exactly matches the
-+ * leading components of the other; e.g., "foo/bar" conflicts with
-+ * both "foo" and with "foo/bar/baz" but not with "foo/bar" or
-+ * "foo/barbados".
-+ */
-+static int names_conflict(const char *refname1, const char *refname2)
-+{
-+	int len1 = strlen(refname1);
-+	int len2 = strlen(refname2);
-+	int cmplen;
-+	const char *lead;
-+
-+	if (len1 < len2) {
-+		cmplen = len1;
-+		lead = refname2;
-+	} else {
-+		cmplen = len2;
-+		lead = refname1;
-+	}
-+	return !strncmp(refname1, refname2, cmplen) && lead[cmplen] == '/';
-+}
-+
-+/*
-  * Return true iff a reference named refname could be created without
-  * conflicting with the name of an existing reference.  If oldrefname
-  * is non-NULL, ignore potential conflicts with oldrefname (e.g.,
-@@ -1097,20 +1121,15 @@ static int remove_empty_directories(const char *file)
- static int is_refname_available(const char *refname, const char *oldrefname,
- 				struct ref_array *array)
- {
--	int i, namlen = strlen(refname); /* e.g. 'foo/bar' */
-+	int i;
- 	for (i = 0; i < array->nr; i++ ) {
- 		struct ref_entry *entry = array->refs[i];
--		/* entry->name could be 'foo' or 'foo/bar/baz' */
--		if (!oldrefname || strcmp(oldrefname, entry->name)) {
--			int len = strlen(entry->name);
--			int cmplen = (namlen < len) ? namlen : len;
--			const char *lead = (namlen < len) ? entry->name : refname;
--			if (!strncmp(refname, entry->name, cmplen) &&
--			    lead[cmplen] == '/') {
--				error("'%s' exists; cannot create '%s'",
--				      entry->name, refname);
--				return 0;
--			}
-+		if (oldrefname && !strcmp(oldrefname, entry->name))
-+			continue;
-+		if (names_conflict(refname, entry->name)) {
-+			error("'%s' exists; cannot create '%s'",
-+			      entry->name, refname);
-+			return 0;
- 		}
- 	}
- 	return 1;
--- 
-1.7.7
+>  fast-import.c |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/fast-import.c b/fast-import.c
+> index 8d8ea3c..51cf898 100644
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -722,7 +722,7 @@ static struct branch *new_branch(const char *name)
+>  
+>  	if (b)
+>  		die("Invalid attempt to create duplicate branch: %s", name);
+> -	if (check_refname_format(name, REFNAME_ALLOW_ONELEVEL))
+> +	if (check_refname_format(name, REFNAME_FULL|REFNAME_ALLOW_ONELEVEL))
+>  		die("Branch name doesn't conform to GIT standards: %s", name);
+>  
+>  	b = pool_calloc(1, sizeof(struct branch));
