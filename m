@@ -1,74 +1,79 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] git-remote-mediawiki: don't include HTTP login/password in author
-Date: Thu, 20 Oct 2011 19:04:59 +0200
-Message-ID: <1319130299-13259-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Oct 20 19:05:18 2011
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] builtin/pack-objects.c: Fix a printf format compiler warning
+Date: Wed, 19 Oct 2011 20:10:37 +0100
+Message-ID: <4E9F20AD.4020209@ramsay1.demon.co.uk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: dpmcgee@gmail.com
+X-From: git-owner@vger.kernel.org Thu Oct 20 19:08:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGw3R-0002yL-JF
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 19:05:17 +0200
+	id 1RGw6Z-0004gh-2g
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 19:08:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754108Ab1JTRFL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Oct 2011 13:05:11 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:33969 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751903Ab1JTRFK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2011 13:05:10 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p9KH1e7W003492
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 20 Oct 2011 19:01:40 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1RGw3E-0005bE-19; Thu, 20 Oct 2011 19:05:04 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1RGw3D-0003Sj-Tz; Thu, 20 Oct 2011 19:05:03 +0200
-X-Mailer: git-send-email 1.7.7.140.ge3099
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 20 Oct 2011 19:01:41 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p9KH1e7W003492
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1319734903.49846@uA1etkEQPqv4k+64KFchZQ
+	id S1755260Ab1JTRI1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Oct 2011 13:08:27 -0400
+Received: from lon1-post-2.mail.demon.net ([195.173.77.149]:42770 "EHLO
+	lon1-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754108Ab1JTRI0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2011 13:08:26 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by lon1-post-2.mail.demon.net with esmtp (Exim 4.69)
+	id 1RGw6S-0000fo-bm; Thu, 20 Oct 2011 17:08:25 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184030>
 
-On the MediaWiki side, the author information is just the MediaWiki login
-of the contributor. The import turns it into login@$wiki_name to create
-the author's email address on the wiki side. But we don't want this to
-include the HTTP password if it's present in the URL ...
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+In particular, on systems that define uint32_t as an unsigned long,
+gcc complains as follows:
+
+        CC builtin/pack-objects.o
+    pack-objects.c: In function `compute_write_order':
+    pack-objects.c:600: warning: unsigned int format, uint32_t arg (arg 3)
+
+In order to suppress the warning, we use the C99 format specifier
+macro PRIu32.
+
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 ---
- contrib/mw-to-git/git-remote-mediawiki |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
 
-diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
-index 0b32d18..c18bfa1 100755
---- a/contrib/mw-to-git/git-remote-mediawiki
-+++ b/contrib/mw-to-git/git-remote-mediawiki
-@@ -109,6 +109,10 @@ $dumb_push = ($dumb_push eq "true");
+Hi Dan,
+
+If you need to re-roll your pack-objects series (dm/pack-objects-update
+branch in pu), could you please squash this change into your final commit
+0a8145bd (pack-objects: don't traverse objects unnecessarily, 18-10-2011).
+
+If you don't need to re-roll, then I'm hoping Junio will notice and squash
+this in before it hits next. ;-)
+
+ATB,
+Ramsay Jones
+
+ builtin/pack-objects.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 6db45fa..4bbd815 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -597,7 +597,7 @@ static struct object_entry **compute_write_order(void)
+ 	}
  
- my $wiki_name = $url;
- $wiki_name =~ s/[^\/]*:\/\///;
-+# If URL is like http://user:password@example.com/, we clearly don't
-+# want the password in $wiki_name. While we're there, also remove user
-+# and '@' sign, to avoid author like MWUser@HTTPUser@host.com
-+$wiki_name =~ s/^.*@//;
+ 	if (wo_end != nr_objects)
+-		die("ordered %u objects, expected %u", wo_end, nr_objects);
++		die("ordered %u objects, expected %"PRIu32, wo_end, nr_objects);
  
- # Commands parser
- my $entry;
+ 	return wo;
+ }
 -- 
-1.7.7.140.ge3099
+1.7.7
