@@ -1,87 +1,179 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] t1300: put git invocations inside test function
-Date: Wed, 19 Oct 2011 00:04:04 -0700
-Message-ID: <7vzkgxcviz.fsf@alter.siamese.dyndns.org>
-References: <20111012182742.GA14543@sigill.intra.peff.net>
- <20111012182920.GA18948@sigill.intra.peff.net> <4E9E7115.60303@viscovery.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] t1300: attempting to remove a non-existent .git/config is
+ not an error
+Date: Wed, 19 Oct 2011 09:37:06 +0200
+Message-ID: <4E9E7E22.7010905@viscovery.net>
+References: <20111012182742.GA14543@sigill.intra.peff.net> <20111012182920.GA18948@sigill.intra.peff.net> <4E9E7115.60303@viscovery.net> <7vzkgxcviz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: Jeff King <peff@peff.net>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
 	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Oct 19 09:04:13 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 19 09:37:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGQCC-0003aX-KE
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Oct 2011 09:04:12 +0200
+	id 1RGQiH-00005s-FF
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Oct 2011 09:37:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755109Ab1JSHEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Oct 2011 03:04:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65364 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752187Ab1JSHEG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2011 03:04:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0947535F4;
-	Wed, 19 Oct 2011 03:04:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ewMXUtWGl1Dreh/YOZ5hELq+hBA=; b=ttxohK
-	O9cDGmEsX1XhLD+VKNDfXKmQh7XRL2xsz6k+RYUgOiOKpsqw0K1001xd+TbngbI8
-	/VpxDn/g9pK38IavDngkAzPM6bHoqcG56kRGCXDXcoD5NzcOl+GPH7Odx5KH0sHs
-	Yqbqq71FLZtWfc0mRlAtYIza8KF7Eak/PHv0Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mXrHtNyHwsD+D5jYGay63Iw7fK0y3XrI
-	qGZti8LcGVn/9/+ty7agQ+4mD/H2FMQBeEOEFPLLyqnpuUf2MXBb4QdHp2CGfUY/
-	cfDNSxwRlcJWSvvlcO+qiCzD7pRDNlL8ftVI9L4Tz6XV5l/L8IM3mBWndZTbFZbA
-	kntRHTAJ/28=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0053B35F3;
-	Wed, 19 Oct 2011 03:04:06 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 851A435F2; Wed, 19 Oct 2011
- 03:04:05 -0400 (EDT)
-In-Reply-To: <4E9E7115.60303@viscovery.net> (Johannes Sixt's message of "Wed,
- 19 Oct 2011 08:41:25 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 88689EC8-FA20-11E0-A8DD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754298Ab1JSHhO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Oct 2011 03:37:14 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:57823 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753349Ab1JSHhN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2011 03:37:13 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1RGQi3-00048h-B7; Wed, 19 Oct 2011 09:37:07 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id E1D3F1660F;
+	Wed, 19 Oct 2011 09:37:06 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.23) Gecko/20110920 Thunderbird/3.1.15
+In-Reply-To: <7vzkgxcviz.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.1.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183925>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+From: Johannes Sixt <j6t@kdbg.org>
 
-> This innocently looking hunk fails on Windows, because the preceding tests
-> are skipped, and .git/config does not exist. I was tempted to just change
-> this to 'rm -f'. But there are a few other instances of 'rm .git/config'
-> in this file that were *not* moved inside the test function.
->
-> How would you like this solved?
->
-> - Move this one out again
-> - Add -f to just this one
-> - Add -f everywhere
-> - a combination of the above?
+Since some tests before test number 79 ("quoting") are skipped, .git/config
+does not exist and 'rm .git/config' fails. Fix this particular case.
 
-Probably "rm -f .git/config" to all tests would be the most appropriate,
-as the desire to start from an empty config file is a sign that each test
-wants to be as independent as possible from previous tests.
+While at it, move other instance of 'rm .git/config' that occur in this
+file inside the test function to document that the test cases want to
+protect themselves from remnants of earlier tests.
 
-An alternative approach to achieve the independence would be to make each
-test responsible for cleaning up after itself, with test_when_finished,
-but that won't work for the first one, as the test framework would give
-you the original one. Besides, that's trying to be cooperative when each
-test can fail in an unexpected way (after all the purpose of tests is to
-fail when things go wrong). In order to achieve isolation, each test
-protecting themselves from others, as long as it can be easily and
-reasonably done (e.g. a single "rm -f"), is probably far more preferrable
-than each test trying to clean after itself, risking possible failure to
-do so.
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ You may think that the justification of this change would be the
+ other way round: protect test cases, then incidentally this fixes
+ a failure on Windows. But for me it is as described: The motivation
+ is the fix for Windows, and without that, the "protect test cases"
+ part would not have happened. :-)
+
+ t/t1300-repo-config.sh |   19 +++++++------------
+ 1 files changed, 7 insertions(+), 12 deletions(-)
+
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index fba5ae0..51caff0 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -558,8 +558,6 @@ EOF
+ test_expect_success "section was removed properly" \
+ 	"test_cmp expect .git/config"
+ 
+-rm .git/config
+-
+ cat > expect << EOF
+ [gitcvs]
+ 	enabled = true
+@@ -570,6 +568,7 @@ EOF
+ 
+ test_expect_success 'section ending' '
+ 
++	rm -f .git/config &&
+ 	git config gitcvs.enabled true &&
+ 	git config gitcvs.ext.dbname %Ggitcvs1.%a.%m.sqlite &&
+ 	git config gitcvs.dbname %Ggitcvs2.%a.%m.sqlite &&
+@@ -642,8 +641,6 @@ test_expect_success 'invalid bool (set)' '
+ 
+ 	test_must_fail git config --bool bool.nobool foobar'
+ 
+-rm .git/config
+-
+ cat > expect <<\EOF
+ [bool]
+ 	true1 = true
+@@ -658,6 +655,7 @@ EOF
+ 
+ test_expect_success 'set --bool' '
+ 
++	rm -f .git/config &&
+ 	git config --bool bool.true1 01 &&
+ 	git config --bool bool.true2 -1 &&
+ 	git config --bool bool.true3 YeS &&
+@@ -668,8 +666,6 @@ test_expect_success 'set --bool' '
+ 	git config --bool bool.false4 FALSE &&
+ 	cmp expect .git/config'
+ 
+-rm .git/config
+-
+ cat > expect <<\EOF
+ [int]
+ 	val1 = 1
+@@ -679,13 +675,12 @@ EOF
+ 
+ test_expect_success 'set --int' '
+ 
++	rm -f .git/config &&
+ 	git config --int int.val1 01 &&
+ 	git config --int int.val2 -1 &&
+ 	git config --int int.val3 5m &&
+ 	cmp expect .git/config'
+ 
+-rm .git/config
+-
+ cat >expect <<\EOF
+ [bool]
+ 	true1 = true
+@@ -699,6 +694,7 @@ cat >expect <<\EOF
+ EOF
+ 
+ test_expect_success 'get --bool-or-int' '
++	rm -f .git/config &&
+ 	(
+ 		echo "[bool]"
+ 		echo true1
+@@ -718,7 +714,6 @@ test_expect_success 'get --bool-or-int' '
+ 
+ '
+ 
+-rm .git/config
+ cat >expect <<\EOF
+ [bool]
+ 	true1 = true
+@@ -732,6 +727,7 @@ cat >expect <<\EOF
+ EOF
+ 
+ test_expect_success 'set --bool-or-int' '
++	rm -f .git/config &&
+ 	git config --bool-or-int bool.true1 true &&
+ 	git config --bool-or-int bool.false1 false &&
+ 	git config --bool-or-int bool.true2 yes &&
+@@ -742,8 +738,6 @@ test_expect_success 'set --bool-or-int' '
+ 	test_cmp expect .git/config
+ '
+ 
+-rm .git/config
+-
+ cat >expect <<\EOF
+ [path]
+ 	home = ~/
+@@ -752,6 +746,7 @@ cat >expect <<\EOF
+ EOF
+ 
+ test_expect_success NOT_MINGW 'set --path' '
++	rm -f .git/config &&
+ 	git config --path path.home "~/" &&
+ 	git config --path path.normal "/dev/null" &&
+ 	git config --path path.trailingtilde "foo~" &&
+@@ -800,7 +795,7 @@ cat > expect << EOF
+ 	hash = "test#test"
+ EOF
+ test_expect_success 'quoting' '
+-	rm .git/config &&
++	rm -f .git/config &&
+ 	git config quote.leading " test" &&
+ 	git config quote.ending "test " &&
+ 	git config quote.semicolon "test;test" &&
+-- 
+1.7.7.1507.g94722
