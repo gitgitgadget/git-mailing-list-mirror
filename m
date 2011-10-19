@@ -1,96 +1,88 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: How to verify that lines were only moved, not edited?
-Date: Wed, 19 Oct 2011 12:33:54 -0400
-Message-ID: <20111019163354.GB3157@sigill.intra.peff.net>
+Date: Wed, 19 Oct 2011 10:07:46 -0700
+Message-ID: <7vvcrkdi59.fsf@alter.siamese.dyndns.org>
 References: <4E9EDFEC.3040009@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Oct 19 18:34:07 2011
+X-From: git-owner@vger.kernel.org Wed Oct 19 19:07:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGZ5e-0003Fp-Pj
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Oct 2011 18:34:03 +0200
+	id 1RGZcQ-0003Du-JD
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Oct 2011 19:07:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756655Ab1JSQd6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Oct 2011 12:33:58 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35688
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756386Ab1JSQd5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2011 12:33:57 -0400
-Received: (qmail 30480 invoked by uid 107); 19 Oct 2011 16:34:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 19 Oct 2011 12:34:03 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Oct 2011 12:33:54 -0400
-Content-Disposition: inline
-In-Reply-To: <4E9EDFEC.3040009@viscovery.net>
+	id S1756760Ab1JSRHu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Oct 2011 13:07:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41166 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755659Ab1JSRHt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2011 13:07:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B142480E;
+	Wed, 19 Oct 2011 13:07:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8a6FyRYZhJsBik/hR2KtlmqFnxY=; b=WYqFkv
+	mMj9Ireb/C6hgoM+lnWjOLubcbtQnbfUJ4yXX+h7GRpmmgT+8f6nAgW9HIpEFAGA
+	surLTXCHL9I5x3Kc/xH9cWTJjefmvM6g6GFiM551Zoxa7ED5PgnSHZcZC26BsmEu
+	j7PkzDY9/LojHUNE5usEnajUsJgfAr0zUtN2I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wFaErzXsKC19kWuh6xqusurru7IW1INO
+	MEQnRsmBWYZbC6CTFsaOsQ/q+uxZJAx+Aghxmx4yscxPKq2jvZpqY3KjCQvcCkh+
+	YEu/uwbVR8vqDfoknncqGF0h8yCTC7kZeusV8AUwBU9G5YAFFMpyIVWfiaK1umXN
+	yfnwvkA4jp4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 91E8B480D;
+	Wed, 19 Oct 2011 13:07:48 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 27733480C; Wed, 19 Oct 2011
+ 13:07:48 -0400 (EDT)
+In-Reply-To: <4E9EDFEC.3040009@viscovery.net> (Johannes Sixt's message of
+ "Wed, 19 Oct 2011 16:34:20 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DEC51694-FA74-11E0-8046-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183936>
 
-On Wed, Oct 19, 2011 at 04:34:20PM +0200, Johannes Sixt wrote:
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
 > I thought there was a way to use git-blame to find out whether a change
 > only shuffled lines, but otherwise did not modify them. I tried "git blame
-> -M -- the/file", but it does not work as expected, neither with a toy file
-> nor with a 5000+ lines file (with 55 lines moved).
-> 
-> git init
-> echo A > foo
-> echo B >> foo
-> git add foo
-> git commit -m initial
-> echo B > foo
-> echo A >> foo
-> git commit -a -m swapped
-> 
-> The results are:
-> $ git blame -M -s -- foo
-> ^e3abca2 1) B
-> 6189cb46 2) A
-> 
-> I would have expected:
-> ^e3abca2 1) B
-> ^e3abca2 2) A
-> 
-> Oh, look! This produces the expected result:
-> $ git blame -M1 -s -- foo
+> -M -- the/file",...
 
-Right. Your toy lines aren't long enough to be considered "interesting"
-by the default score. From git-blame(1):
+You said "a change" and I somehow expected that such a blame would be done
+with a revision range, e.g. "git blame -M HEAD^..HEAD -- the/file".
 
-  -M[<num>]
-  [...]
-  <num> is optional but it is the lower bound on the number of
-  alphanumeric characters that git must detect as moving/copying within
-  a file for it to associate those lines with the parent commit. The
-  default value is 20.
+If the two endpoints you are comparing have other commits in between that
+make changes then revert them in such a way that the end result cancels
+out, "git diff A B -- the/file" won't see such intermediate changes, but
+they may interfere with "git blame A..B -- the/file", i.e. when A is not a
+direct parent of B.
 
-Whereas with a longer sample:
+> ... nor with a 5000+ lines file (with 55 lines moved).
 
-  git init
-  seq 1 5000 >foo
-  git add foo
-  git commit -m initial
-  sed -i '/^2..$/d' foo
-  seq 200 299 >>foo
-  git commit -a -m 'move 200-299 to end'
+> ... while this produces the same as with just -M:
+> $ git blame -M2 -s -- foo
 
-I get the expected result from "git blame -M" (i.e., everything
-attributed to the root commit).
+Yes, blame tries to omit matches that consists only of non words, so that
+you won't see "all those lines with a single "}" on them that close
+definitions for your 100 new functions were copied from the closing brace
+of one function you originally had in the file" symptom, and -M<level>
+controls it.
 
 > But neither helps with my 5000+ lines file. Does it mean that the lines
 > were changed? But I'm sure they were just moved! Please help!
 
-What does the file look like? I think blame has some heuristics about
-lines which are uninteresting, and maybe you are triggering a corner
-case there.
-
--Peff
+When reviewing a "supposedly move-only" change, I typically just grab +/-
+blocks from the patch, remove the +/- prefix and run comparison between
+them.
