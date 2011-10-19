@@ -1,140 +1,101 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC 3/2 v3] Refactor Git::config_*
-Date: Wed, 19 Oct 2011 02:19:37 +0200
-Message-ID: <201110190219.38331.jnareb@gmail.com>
-References: <vpqty7wk9km.fsf@bauges.imag.fr> <201110190009.40470.jnareb@gmail.com> <7vmxcxg9wr.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Cord Seele <cowose@googlemail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org, Cord Seele <cowose@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 19 02:19:50 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 0/3] Signed-commit
+Date: Tue, 18 Oct 2011 17:20:42 -0700
+Message-ID: <1318983645-18897-1-git-send-email-gitster@pobox.com>
+References: <7vaa9f3pk8.fsf@alter.siamese.dyndns.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 19 02:20:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGJsr-0006wi-QW
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Oct 2011 02:19:50 +0200
+	id 1RGJtt-0007BK-5w
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Oct 2011 02:20:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752042Ab1JSATp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Oct 2011 20:19:45 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:37179 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751217Ab1JSATo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Oct 2011 20:19:44 -0400
-Received: by bkbzt19 with SMTP id zt19so1392141bkb.19
-        for <git@vger.kernel.org>; Tue, 18 Oct 2011 17:19:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=yhMoVdOgKN/Gr7633t1rq1wpJn8V12tVQ76YcsiTOTo=;
-        b=NACtZ1snISxj8QxPJSQCMB3pghTzRFaJsWGPXEkH8ZF5yhFD4s+9o9tabLov4iLn6D
-         RjJx6j0yBzS9j5xFGQTRld6kuXl5VZ6jl1U1DeZcY6yiAUBJjYhjHR0X+CnQF7Zpi6br
-         OZtfS3YaTXQ5f0ZhZliLCAoUfoT5fa525b+BY=
-Received: by 10.223.5.139 with SMTP id 11mr7325646fav.21.1318983583374;
-        Tue, 18 Oct 2011 17:19:43 -0700 (PDT)
-Received: from [192.168.1.13] (abwe113.neoplus.adsl.tpnet.pl. [83.8.228.113])
-        by mx.google.com with ESMTPS id x22sm6422846faa.5.2011.10.18.17.19.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 18 Oct 2011 17:19:42 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vmxcxg9wr.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751968Ab1JSAUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Oct 2011 20:20:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48265 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751269Ab1JSAUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Oct 2011 20:20:48 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8AA4644DA
+	for <git@vger.kernel.org>; Tue, 18 Oct 2011 20:20:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=EY1I
+	1hrrwA6kmx+Jwx2QvLRZwOY=; b=I4wkIEG6l6ADx6PcpPJsY/t5DOEqEGreUokW
+	59qy61nxddQMDSK/aXvUie9COwXMXLwuMkRFQXqIX0wt44MvE5doKS2k6oEByupd
+	kvt6WaQoOO/RHgyfm7V7fDmEdNToBEVBjWIDdDkLHkz0K7d5KWc6Jc6BLF8cfnAQ
+	heE3aRE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=Ge2Qo7
+	uYn6fE+a0UVRKkY78I8wiq2yrxFQVzniX35umODN+FGvw3QxeS7IGpCdQmsW1ZQa
+	30NANU50uaqKboFJYjFcpKlLIuEIepuDVUAwrkz6xPuyjLy3+ccfKfI/3/sj/mol
+	cingNZaRUx/R3pfJRAD87IiHOA7x+0JZKvoi4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 81BE844D9
+	for <git@vger.kernel.org>; Tue, 18 Oct 2011 20:20:47 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 05D4E44D8 for
+ <git@vger.kernel.org>; Tue, 18 Oct 2011 20:20:46 -0400 (EDT)
+X-Mailer: git-send-email 1.7.7.388.g3a4b7
+In-Reply-To: <7vaa9f3pk8.fsf@alter.siamese.dyndns.org>
+X-Pobox-Relay-ID: 30F7055E-F9E8-11E0-96C7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183909>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
->>> The real problem was here.
->>> ...
->>>> -		my $val = command_oneline(@cmd);
->>>> -		return undef unless defined $val;
->>>> -		return $val eq 'true';
->>>> ...
->>>> -	};
->>>> +	my $val = scalar _config_common($self, $var, {'kind' => '--bool'});
->>>> +	return (defined $val && $val eq 'true');
->>>>  }
->>> 
->>> Can you spot the difference?
->>
->> Damn.
-> 
-> For people following from the sideline, the difference that bit us was
-> that
-> 
->     return $val eq 'true';
-> 
-> yields "" (not undef) for false, but some callers care the distinction
-> between undef kind of false and other kinds of false. It is not really the
-> fault of the language per-se, but still... 
+This is another re-roll of the signed-commit topic.
 
-And Git::config* family of commands return 'undef' if key was not found.
-So Git::config_bool() can return true, false or undef, and the last part
-is important. 
- 
->> What I have noticed is that there is slight difference between original
->> Git::config_path and the one after refactoring.  In the version before
->> this patch the error catching part of config_path() looks like this:
->> ...
->>                         return undef;
->> ...
->> while after this patch (and in config()) it looks like this:
->> ...
->>                         return;
->> ...
->> 
->> I am not sure which one is right, but I suspect the latter.
-> 
-> This is Perl---"return;" returns undef, so there is no right or wrong.
+ - The first patch refactors where the current code invokes gpg for
+   signing and verification of tags;
 
-Actually this is not true: "return;" returns undef in scalar context,
-and empty list in list context.  This means that result always evaluates
-to false...
- 
-> Having said that, I tend to prefer being explicit so that people not so
-> familiar with the language do not have to waste time wondering about such
-> differences. Especially where it matters, like this case where some
-> callers may care about different kinds of falsehood.
-> 
-> That is another reason I tend to hate the kind of "this makes it more
-> Perl-ish" changes, as they tend to force readers to spend extra brain
-> cells to see what is going on. I'd rather spell things more explicit,
-> especially when the distinction matters.
+ - The second patch introduces signed commit objects;
 
-...and that is why "return;" is more Perl-ish, and usually safer.
+ - The third patch teaches "git log/show" to show the signature.
 
-There might be exceptions where we want to return one-element list
-containing single undef element in list context, but I guess they
-are exceedingly rare.
- 
-> I've already pushed out the fixed one as 6942a3d (libperl-git: refactor
-> Git::config_*, 2011-10-18), with this bit:
-> 
->     - ...
->     -               my $val = command_oneline(@cmd);
->     -               return undef unless defined $val;
->     +       # Do not rewrite this as return (defined $val && $val eq 'true')
->     +       # as some callers do care what kind of falsehood they receive.
->     +       if (!defined $val) {
->     +               return undef;
->     +       } else {
->                     return $val eq 'true';
->       ...
+The internal API to drive "gpg" has been updated to better suit the
+verification side, but I suspect that it needs another round of revamp to
+slurp in the diagnostic message "gpg" produces to give us better control
+of the formatting of the output. e.g.
 
-I like mine better... ;-))))
+    $ git show --format="%h %s%n%gpgsign" -s HEAD
+
+might want to say:
+
+    a030b7cf log: --show-signature
+    RSA key ID 96AFE6CB, Good signature from "Junio C Hamano <gitster@pobox.com>"
+
+or something like that, but the series is not there yet.
+
+Junio C Hamano (3):
+  Split GPG interface into its own helper library
+  commit: teach --gpg-sign option
+  log: --show-signature
+
+ Makefile              |    2 +
+ builtin/commit-tree.c |   24 ++++++++-
+ builtin/commit.c      |   12 ++++-
+ builtin/merge.c       |   16 +++++-
+ builtin/tag.c         |   76 ++-------------------------
+ builtin/verify-tag.c  |   36 ++-----------
+ commit.c              |   74 ++++++++++++++++++++++++++-
+ commit.h              |    5 ++-
+ gpg-interface.c       |  137 +++++++++++++++++++++++++++++++++++++++++++++++++
+ gpg-interface.h       |   10 ++++
+ log-tree.c            |   17 ++++++
+ notes-cache.c         |    2 +-
+ notes-merge.c         |    2 +-
+ revision.c            |    2 +
+ revision.h            |    1 +
+ tag.c                 |    5 ++
+ 16 files changed, 310 insertions(+), 111 deletions(-)
+ create mode 100644 gpg-interface.c
+ create mode 100644 gpg-interface.h
 
 -- 
-Jakub Narebski
-Poland
+1.7.7.388.g3a4b7
