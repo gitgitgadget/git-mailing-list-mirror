@@ -1,80 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Restrict ref-like names immediately below $GIT_DIR
-Date: Wed, 19 Oct 2011 13:39:21 -0700
-Message-ID: <7vwrc0bts6.fsf@alter.siamese.dyndns.org>
-References: <1316121043-29367-1-git-send-email-mhagger@alum.mit.edu>
- <1316121043-29367-20-git-send-email-mhagger@alum.mit.edu>
- <20111011161652.GA15629@sigill.intra.peff.net>
- <7vr52jfm8i.fsf@alter.siamese.dyndns.org>
- <7vmxd7flkw.fsf@alter.siamese.dyndns.org>
- <7v39ezffq5.fsf_-_@alter.siamese.dyndns.org>
- <20111011230749.GA29785@sigill.intra.peff.net>
- <7vehyjcckp.fsf@alter.siamese.dyndns.org>
- <20111012021128.GA32149@sigill.intra.peff.net>
- <7v39eyddoc.fsf@alter.siamese.dyndns.org>
- <20111012045004.GA22413@sigill.intra.peff.net>
- <7vvcru9k22.fsf_-_@alter.siamese.dyndns.org> <4E95D60B.5030904@alum.mit.edu>
- <7vr52i9j8g.fsf@alter.siamese.dyndns.org> <4E9609E3.1000300@alum.mit.edu>
- <7v39epft32.fsf@alter.siamese.dyndns.org>
- <7vaa8wdbld.fsf@alter.siamese.dyndns.org> <4E9F33B9.4040803@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: mhagger@alum.mit.edu
+Subject: [RFC 00/13] Checking full vs. partial refnames
+Date: Wed, 19 Oct 2011 22:55:03 +0200
+Message-ID: <1319057716-28094-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, cmn@elego.de,
 	A Large Angry SCM <gitzilla@gmail.com>,
 	Daniel Barkalow <barkalow@iabervon.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Oct 19 22:39:43 2011
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 19 22:55:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGcvO-0004jA-N0
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Oct 2011 22:39:43 +0200
+	id 1RGdAf-0003R0-JU
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Oct 2011 22:55:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753802Ab1JSUj0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Oct 2011 16:39:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33542 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753767Ab1JSUjZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2011 16:39:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AA094DCA;
-	Wed, 19 Oct 2011 16:39:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lU7q4BENS+aO9CNi1xrv/sZ9d2Q=; b=dkIfnl
-	KOjcM924lEUNyyAx6upYZGQItdT9A04wHCoXK0JETpi5I5nAl90agxM5+67pfC2Q
-	4xmj95XxSxtwUMzwMQuckxkxO1UQwyK+i2f7Aj/KKMkR9xY3PCxwc0ZgpxrA5XmK
-	kLgdaRNSlzufwIyOz+EneAXBjFQ2cXjuVwy6g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=G2HWVNiciPtzFD0gUys8VYpuhtURC/e3
-	gziAV2Z5eTEzP/J6B+VMmlGwnWDKm7F2WC0Vk6DQ0cGtPZHzBvgwe698QHPHasIw
-	m+J7TbuuZyUaxJ6Uy9L4k016kV+siGGlCYywTGVzhTeo01MpC9+nT0F6WUOjiavr
-	Bho7nTFGmWQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 108944DC9;
-	Wed, 19 Oct 2011 16:39:24 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8A44C4DC8; Wed, 19 Oct 2011
- 16:39:23 -0400 (EDT)
-In-Reply-To: <4E9F33B9.4040803@alum.mit.edu> (Michael Haggerty's message of
- "Wed, 19 Oct 2011 22:31:53 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6DD79B96-FA92-11E0-A14C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753883Ab1JSUzY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Oct 2011 16:55:24 -0400
+Received: from mail.berlin.jpk.com ([212.222.128.130]:60883 "EHLO
+	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753733Ab1JSUzX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2011 16:55:23 -0400
+Received: from michael.berlin.jpk.com ([192.168.100.152])
+	by mail.berlin.jpk.com with esmtp (Exim 4.50)
+	id 1RGd4c-000423-0L; Wed, 19 Oct 2011 22:49:14 +0200
+X-Mailer: git-send-email 1.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/183948>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+From: Michael Haggerty <mhagger@alum.mit.edu>
 
-> I would have preferred this change being applied on top of your first
-> patch in jc/check-ref-format-fixup, because moving these functions to
-> refs.c makes sense.
+There are many places where it is necessary to determine whether a
+refname is a complete, valid, top-level reference name in the "refs/"
+tree, one of the special refnames like "HEAD" or "FETCH_HEAD", or
+whether it is potentially a valid fragment of a refname that can be
+DWIMed into a true reference.  Until now such checks have been
+incomplete and/or scattered around.
 
-Thanks for a quick sanity check, and I agree.
+The first three patches in this series beef up check_refname_format()
+(and adds another static function, parse_refname_prefix()) with the
+ability to make such checks when the REFNAME_FULL flag is used.
+
+The fourth patch removes the checking of refnames passed to
+add_extra_ref(), allowing the function to tolerate oddities like
+"refs/tags/3.1.1.1^{}".
+
+The rest of the patches consist of wild-assed guesses about some
+callers of check_refname_format() that I suppose can use the
+REFNAME_FULL option, thereby tightening up what they accept.  About
+all I can say is that the test suite passes with these patches
+applied.  But recent experience indicates that the test suite has a
+lot of holes.  Therefore, it would be great if experts would look over
+these suggestions.
+
+There are many other callers of check_refname_format() that I haven't
+touched, because I'm not even brave enough to make wild-assed guesses
+about them.  (Since I left them without the REFNAME_FULL option, they
+rather allow too many references through than too few.)  It would be
+great if a more experienced developer would look at the other callers
+and decide which need to be changed.
+
+BTW, this patch series does *not* fix the specific problem that Junio
+mentioned (that "git update-ref tmp/junk HEAD" does not reject the
+bogus refname), nor probably many others.  The gruelling work is not
+this patch series; it is the effort of tracking down all of the code
+paths that might try to pass bogus refnames to the refs API.
+
+This patch series applies on top of jc/check-ref-format-fixup, and
+also rebases smoothly to the current "next".
+
+Michael Haggerty (13):
+  check_refname_component(): iterate via index rather than via pointer
+  parse_refname_prefix(): new function
+  Teach check_refname_format() to check full refnames
+  add_ref(): move the call of check_refname_format() to callers
+  receive-pack::update(): use check_refname_format(..., REFNAME_FULL)
+  strbuf_check_branch_ref(): use check_refname_format(...,
+    REFNAME_FULL)
+  one_local_ref(): use check_refname_format(..., REFNAME_FULL)
+  expand_namespace(): the refname is full, so use REFNAME_FULL option
+  new_branch(): verify that new branch name is a valid full refname
+  strbuf_check_tag_ref(): the refname is full, so use REFNAME_FULL
+    option
+  replace_object(): the refname is full, so use REFNAME_FULL option
+  resolve_ref: use check_refname_format(..., REFNAME_FULL)
+  filter_refs(): the refname is full, so use REFNAME_FULL option
+
+ Documentation/git-check-ref-format.txt |   14 ++++
+ builtin/check-ref-format.c             |    4 +
+ builtin/fetch-pack.c                   |    2 +-
+ builtin/receive-pack.c                 |    2 +-
+ builtin/replace.c                      |    2 +-
+ builtin/tag.c                          |    2 +-
+ environment.c                          |    2 +-
+ fast-import.c                          |    2 +-
+ refs.c                                 |  124 ++++++++++++++++++++------------
+ refs.h                                 |   12 ++-
+ remote.c                               |    2 +-
+ sha1_name.c                            |    2 +-
+ t/t1402-check-ref-format.sh            |   31 ++++++++
+ 13 files changed, 143 insertions(+), 58 deletions(-)
+
+-- 
+1.7.7
