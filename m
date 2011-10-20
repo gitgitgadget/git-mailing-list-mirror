@@ -1,108 +1,67 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCH] git-gui: delegate selection from gutter columns to text output
-Date: Thu, 20 Oct 2011 21:45:09 +0200
-Message-ID: <5fc6f5d088e37508f1911f89b4d82932071045e0.1319139888.git.bert.wesarg@googlemail.com>
-Cc: git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Thu Oct 20 21:45:37 2011
+From: Vincent van Ravesteijn <vfr@lyx.org>
+Subject: Re: Compiling on Windows
+Date: Thu, 20 Oct 2011 23:38:26 +0200
+Message-ID: <4EA094D2.7050807@lyx.org>
+References: <CAH5451=7Em7sPzknVx8i2VBSAZxZwg1Awr8s3Nr2W=A6SDEZEw@mail.gmail.com> <4E9E811C.10205@lyx.org> <2015B7F2CEAE4B449EA4EF744F9B8FD9@PhilipOakley>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Andrew Ardill <andrew.ardill@gmail.com>,
+	Git MsysGit <msysgit@googlegroups.com>, git@vger.kernel.org
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Thu Oct 20 23:38:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGyYa-00046c-VW
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 21:45:37 +0200
+	id 1RH0Jy-0002co-Mu
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 23:38:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752137Ab1JTTpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Oct 2011 15:45:15 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:58172 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752056Ab1JTTpO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2011 15:45:14 -0400
-Received: by bkbzt19 with SMTP id zt19so3933140bkb.19
-        for <git@vger.kernel.org>; Thu, 20 Oct 2011 12:45:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=lCCOEtcVAxvkfXYK4SWNuPUGlbvQtMfgfUdbWxnJM5M=;
-        b=mbOXCaUxTVGiKRhSR6T4DycqUNuNbV208kNkAwxuuqmG7H/mbMG5ZNyw//760bgYrM
-         FhTgG1291gBDRUPjfH/abvOkRCBFZLOdTUetlqFUkgp7nW4alFCjwEGSx0PqGORwR1jQ
-         H+3F9BZHChehf9Zlgvpyl5k23Kxjwo8Cntdho=
-Received: by 10.204.29.8 with SMTP id o8mr8650104bkc.48.1319139913002;
-        Thu, 20 Oct 2011 12:45:13 -0700 (PDT)
-Received: from localhost (p5B2AD78D.dip.t-dialin.net. [91.42.215.141])
-        by mx.google.com with ESMTPS id w8sm10924862bks.11.2011.10.20.12.45.11
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 20 Oct 2011 12:45:12 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7.759.gfc8c6
+	id S1751457Ab1JTVid (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Oct 2011 17:38:33 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:59108 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751140Ab1JTVid (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Oct 2011 17:38:33 -0400
+Received: by wyg36 with SMTP id 36so3357870wyg.19
+        for <git@vger.kernel.org>; Thu, 20 Oct 2011 14:38:31 -0700 (PDT)
+Received: by 10.216.229.18 with SMTP id g18mr4955294weq.45.1319146711786;
+        Thu, 20 Oct 2011 14:38:31 -0700 (PDT)
+Received: from [192.168.1.4] (j175101.upc-j.chello.nl. [24.132.175.101])
+        by mx.google.com with ESMTPS id a21sm17959557wbo.10.2011.10.20.14.38.29
+        (version=SSLv3 cipher=OTHER);
+        Thu, 20 Oct 2011 14:38:30 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+In-Reply-To: <2015B7F2CEAE4B449EA4EF744F9B8FD9@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184042>
 
-Selecting in the gutter columns of the blame view should make no sense,
-so delegate any selection action in these columns to the text output
-by selecting whole lines there.
 
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
----
- git-gui.sh    |   20 ++++++++++++++++++++
- lib/blame.tcl |    4 +++-
- 2 files changed, 23 insertions(+), 1 deletions(-)
+>> I once wrote a little step-by-step tutorial on how to compile the 
+>> native Windows Git with MSVC (Express).
+>>
+>> http://blog.vfrconsultancy.nl/#post0
+>
+> The blog post filled in a few gaps in the Msysgit README instructions 
+> about where to place the various downloads described.
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 21033cb..cf5ed79 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -2077,6 +2077,26 @@ proc many2scrollbar {list mode sb top bottom} {
- 	foreach w $list {$w $mode moveto $top}
- }
- 
-+proc delegate_sel_to {w from} {
-+	set bind_list [list \
-+		<Button-1> \
-+		<B1-Motion> \
-+		<Double-Button-1> \
-+		<Triple-Button-1> \
-+		<Shift-Button-1> \
-+		<Double-Shift-Button-1> \
-+		<Triple-Shift-Button-1> \
-+	]
-+
-+	foreach seq $bind_list {
-+		set script [bind Text $seq]
-+		set new_script [string map [list %W $w %x 0 word line] $script]
-+		foreach f $from {
-+			bind $f $seq "$new_script; break"
-+		}
-+	}
-+}
-+
- proc incr_font_size {font {amt 1}} {
- 	set sz [font configure $font -size]
- 	incr sz $amt
-diff --git a/lib/blame.tcl b/lib/blame.tcl
-index 49eae19..9ab0da5 100644
---- a/lib/blame.tcl
-+++ b/lib/blame.tcl
-@@ -210,6 +210,8 @@ constructor new {i_commit i_path i_jump} {
- 
- 	set w_columns [list $w_amov $w_asim $w_line $w_file]
- 
-+	delegate_sel_to $w_file [list $w_amov $w_asim $w_line]
-+
- 	${NS}::scrollbar $w.file_pane.out.sbx \
- 		-orient h \
- 		-command [list $w_file xview]
-@@ -315,7 +317,7 @@ constructor new {i_commit i_path i_jump} {
- 		$i conf -yscrollcommand \
- 			"[list ::searchbar::scrolled $finder]
- 			 [list many2scrollbar $w_columns yview $w.file_pane.out.sby]"
--		bind $i <Button-1> "
-+		bind $i <Button-1> "+
- 			[cb _hide_tooltip]
- 			[cb _click $i @%x,%y]
- 			focus $i
--- 
-1.7.7.759.gfc8c6
+I updated the post a little so that it actually works again. I somehow 
+like to have a real native Windows compilation of Git.
+
+To successfully compile Git, we also need to change
+> #include <sys/resource.h>
+into
+> #include <io.h>
+
+I have seen some communication about this in the past, but nobody cared 
+enough to fix this.
+
+Shall I sent a patch that adds a file "compat/win32/sys/resource.h" 
+which just includes "io.h" ? Or is there another more prefered way to 
+fix this ?
+
+Vincent
