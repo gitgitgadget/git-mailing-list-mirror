@@ -1,72 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [IGNORETHIS/PATCH] Choosing the sha1 prefix of your commits
-Date: Thu, 20 Oct 2011 00:34:48 -0400
-Message-ID: <20111020043448.GA7628@sigill.intra.peff.net>
-References: <CACBZZX5PqYa0uWiGgs952rk2cy+QRCU95kF63qzSi3fKK-YrCQ@mail.gmail.com>
- <20111019190114.GA4670@sigill.intra.peff.net>
- <20111019193834.GA14168@sigill.intra.peff.net>
- <7vvcrk9td7.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: How to verify that lines were only moved, not edited?
+Date: Thu, 20 Oct 2011 08:20:23 +0200
+Message-ID: <4E9FBDA7.3000904@viscovery.net>
+References: <4E9EDFEC.3040009@viscovery.net> <20111019163354.GB3157@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 20 06:34:57 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 20 08:24:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGkLI-0007FN-MK
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 06:34:57 +0200
+	id 1RGm3T-0003gh-1T
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 08:24:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751693Ab1JTEew (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Oct 2011 00:34:52 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35999
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751292Ab1JTEev (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2011 00:34:51 -0400
-Received: (qmail 6615 invoked by uid 107); 20 Oct 2011 04:34:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Oct 2011 00:34:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Oct 2011 00:34:48 -0400
-Content-Disposition: inline
-In-Reply-To: <7vvcrk9td7.fsf@alter.siamese.dyndns.org>
+	id S1755941Ab1JTGUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Oct 2011 02:20:33 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:8209 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755440Ab1JTGU1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Oct 2011 02:20:27 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1RGlzM-0003T1-Hc; Thu, 20 Oct 2011 08:20:24 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 411191660F;
+	Thu, 20 Oct 2011 08:20:24 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.23) Gecko/20110920 Thunderbird/3.1.15
+In-Reply-To: <20111019163354.GB3157@sigill.intra.peff.net>
+X-Enigmail-Version: 1.1.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184007>
 
-On Wed, Oct 19, 2011 at 09:31:16PM -0700, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
+Am 10/19/2011 18:33, schrieb Jeff King:
+>   git init
+>   seq 1 5000 >foo
+>   git add foo
+>   git commit -m initial
+>   sed -i '/^2..$/d' foo
+>   seq 200 299 >>foo
+>   git commit -a -m 'move 200-299 to end'
 > 
-> > And nothing shows up in the body, because git truncates at the NUL we
-> > added:
-> >
-> >   $ git show
-> >   commit 31337a1093af2d97eb2e6c08b261c2946395fdd3
-> >   Author: Jeff King <peff@peff.net>
-> >   Date:   Wed Oct 19 15:34:00 2011 -0400
-> >
-> >       10
-> >
-> >   diff --git a/file b/file
-> 
-> But you cannot hide from "cat-file commit" ;-)
+> I get the expected result from "git blame -M" (i.e., everything
+> attributed to the root commit).
 
-Yes. The implementation is a horrible hack, second only in grossness to
-the original idea. :)
+I see. My example is more like this:
 
-> With the recent push to more (perceived) security, it may probably make
-> sense to teach "log" family commands to quote-show ^@ and what is behind
-> in their output by default, perhaps with an option to turn it off.
+ for i in `seq 1 20`; do md5sum - <<< $i; done > foo
+ git commit -a -m foo
+ for i in `seq 1 20`; do md5sum - <<< $i; done | sort > foo
+ git commit -a -m foo\ sorted
 
-Agreed. Having hidden cruft makes birthday collision attacks easier (or
-it will, if sha1 ever gets broken to that point).  Unfortunately, there
-is a _ton_ of code which assumes that commit messages are
-NUL-terminated, as they always have been since e871b64 (2005-05-25).
+i.e., the sort order of a block of lines was changed "in place". Here,
+most of the lines are attributed to the last commit. Am I expecting too
+much from git-blame to detect line motions in such a case?
 
--Peff
+-- Hannes
