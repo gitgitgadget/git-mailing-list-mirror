@@ -1,69 +1,112 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Re* [IGNORETHIS/PATCH] Choosing the sha1 prefix of your commits
-Date: Thu, 20 Oct 2011 15:00:52 -0400
-Message-ID: <20111020190052.GA25360@sigill.intra.peff.net>
-References: <CACBZZX5PqYa0uWiGgs952rk2cy+QRCU95kF63qzSi3fKK-YrCQ@mail.gmail.com>
- <20111019190114.GA4670@sigill.intra.peff.net>
- <20111019193834.GA14168@sigill.intra.peff.net>
- <7vvcrk9td7.fsf@alter.siamese.dyndns.org>
- <20111020043448.GA7628@sigill.intra.peff.net>
- <7vr5289mlu.fsf@alter.siamese.dyndns.org>
- <20111020071356.GA14945@sigill.intra.peff.net>
- <7vehy7a4sf.fsf_-_@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 20 21:00:59 2011
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: [PATCH] git-gui: use a tristate to control the case mode in the searchbar
+Date: Thu, 20 Oct 2011 21:27:27 +0200
+Message-ID: <9193677f1fef348d5b081653840e8a829ddd3e50.1319138692.git.bert.wesarg@googlemail.com>
+References: <CAKPyHN0KCwDu2-JXAEk4wAvfOqE3jHY63aG6R9YSOoLoKwWGgQ@mail.gmail.com>
+Cc: Andrew Ardill <andrew.ardill@gmail.com>, git@vger.kernel.org,
+	Bert Wesarg <bert.wesarg@googlemail.com>
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Thu Oct 20 21:27:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGxrP-000860-4t
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 21:00:59 +0200
+	id 1RGyHD-0004Av-BT
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 21:27:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751728Ab1JTTAz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Oct 2011 15:00:55 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36281
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751715Ab1JTTAy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2011 15:00:54 -0400
-Received: (qmail 12150 invoked by uid 107); 20 Oct 2011 19:01:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Oct 2011 15:01:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Oct 2011 15:00:52 -0400
-Content-Disposition: inline
-In-Reply-To: <7vehy7a4sf.fsf_-_@alter.siamese.dyndns.org>
+	id S1752021Ab1JTT1e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Oct 2011 15:27:34 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:63450 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751295Ab1JTT1e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Oct 2011 15:27:34 -0400
+Received: by bkbzt19 with SMTP id zt19so3916722bkb.19
+        for <git@vger.kernel.org>; Thu, 20 Oct 2011 12:27:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=QRC0Yx8SYQfn5mv/wawHKRTt5MklNhhmNt/wRjJB4dY=;
+        b=Sxld/8I1VnhzOYGc76FGVLKntd1p81+cboTN6ISp4JudWSxu3L671uiladRc5uO+AI
+         u+JPkf1szm9nMu7W2tTb1djd5kXFOOsAE1jkCxQ3Vg6RZ+uIL2IAW8xDp3KA49NDcKZJ
+         QRnLJEEHpyNNyFYCj1MEi5DTHqXfwKVkfy+tk=
+Received: by 10.204.148.68 with SMTP id o4mr9001264bkv.21.1319138852405;
+        Thu, 20 Oct 2011 12:27:32 -0700 (PDT)
+Received: from localhost (p5B2AD78D.dip.t-dialin.net. [91.42.215.141])
+        by mx.google.com with ESMTPS id a27sm10883813bku.9.2011.10.20.12.27.29
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 20 Oct 2011 12:27:31 -0700 (PDT)
+X-Mailer: git-send-email 1.7.7.759.gfc8c6
+In-Reply-To: <CAKPyHN0KCwDu2-JXAEk4wAvfOqE3jHY63aG6R9YSOoLoKwWGgQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184037>
 
-On Thu, Oct 20, 2011 at 11:36:48AM -0700, Junio C Hamano wrote:
+The config is now called gui.search.case and can have the three values:
+no/yes/smart. yes is the default.
 
-> It probably is not worth it for most applications, but this fix-up to a
-> fairly recent one is worth doing, I would suspect.
-> 
-> -- >8 --
-> Subject: parse_signed_commit: really use the entire commit log message
->
-> ... even beyond the first NUL in the buffer, when checking the commit
-> against the detached signature in the header.
+It also resets the case detection in smart mode, when the entry field was
+cleared by the use.
 
-Yeah, that is worth fixing, I think. It's one thing to be a little lazy
-in pretty-printing for "git log", but I think signature verification
-should be more careful.
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+---
+ lib/search.tcl |   24 +++++++++++++++++-------
+ 1 files changed, 17 insertions(+), 7 deletions(-)
 
-Patch itself looks sane to me. There's still some use of str-like
-functions, but they would prevent us from even seeing the signature
-headers in the first place, so anything with a NUL that high is just
-broken and crappy.
-
-I didn't check, but I wonder if fsck does/should check that there is a
-proper end-of-header blank line before we hit any NUL.
-
--Peff
+diff --git a/lib/search.tcl b/lib/search.tcl
+index 04a316b..ef1e555 100644
+--- a/lib/search.tcl
++++ b/lib/search.tcl
+@@ -26,11 +26,20 @@ constructor new {i_w i_text args} {
+ 	set ctext  $i_text
+ 
+ 	set default_regexpsearch [is_config_true gui.search.regexp]
+-	set smartcase [is_config_true gui.search.smartcase]
+-	if {$smartcase} {
++	switch -- [get_config gui.search.case] {
++	no {
+ 		set default_casesensitive 0
+-	} else {
++		set smartcase 0
++	}
++	smart {
++		set default_casesensitive 0
++		set smartcase 1
++	}
++	yes -
++	default {
+ 		set default_casesensitive 1
++		set smartcase 0
++	}
+ 	}
+ 
+ 	set history [list]
+@@ -157,12 +166,10 @@ method _incrsearch {} {
+ 	if {[catch {$ctext index anchor}]} {
+ 		$ctext mark set anchor [_get_new_anchor $this]
+ 	}
+-	if {$smartcase} {
+-		if {[regexp {[[:upper:]]} $searchstring]} {
++	if {$searchstring ne {}} {
++		if {$smartcase && [regexp {[[:upper:]]} $searchstring]} {
+ 			set casesensitive 1
+ 		}
+-	}
+-	if {$searchstring ne {}} {
+ 		set here [_do_search $this anchor mlen]
+ 		if {$here ne {}} {
+ 			$ctext see $here
+@@ -175,6 +182,9 @@ method _incrsearch {} {
+ 			#$w.ent configure -background lightpink
+ 			$w.ent state pressed
+ 		}
++	} elseif {$smartcase} {
++		# clearing the field resets the smart case detection
++		set casesensitive 0
+ 	}
+ }
+ 
+-- 
+1.7.7.759.gfc8c6
