@@ -1,79 +1,94 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] builtin/pack-objects.c: Fix a printf format compiler warning
-Date: Wed, 19 Oct 2011 20:10:37 +0100
-Message-ID: <4E9F20AD.4020209@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/6] revert: fix buffer overflow in insn sheet parser
+Date: Thu, 20 Oct 2011 10:15:26 -0700
+Message-ID: <7vmxcva8k1.fsf@alter.siamese.dyndns.org>
+References: <1319058208-17923-1-git-send-email-artagnon@gmail.com>
+ <1319058208-17923-4-git-send-email-artagnon@gmail.com>
+ <7v8vogbgai.fsf@alter.siamese.dyndns.org>
+ <20111020080328.GA12337@elie.hsd1.il.comcast.net>
+ <4E9FE061.3080601@gmail.com>
+ <20111020090912.GA21471@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: dpmcgee@gmail.com
-X-From: git-owner@vger.kernel.org Thu Oct 20 19:08:32 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 20 19:15:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGw6Z-0004gh-2g
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 19:08:31 +0200
+	id 1RGwDR-00089f-4w
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 19:15:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755260Ab1JTRI1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Oct 2011 13:08:27 -0400
-Received: from lon1-post-2.mail.demon.net ([195.173.77.149]:42770 "EHLO
-	lon1-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754108Ab1JTRI0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2011 13:08:26 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-2.mail.demon.net with esmtp (Exim 4.69)
-	id 1RGw6S-0000fo-bm; Thu, 20 Oct 2011 17:08:25 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+	id S1756829Ab1JTRPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Oct 2011 13:15:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59906 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753861Ab1JTRPb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Oct 2011 13:15:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF1535338;
+	Thu, 20 Oct 2011 13:15:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Q1aQrGUftncHz9JWY5OIlgy4hYg=; b=epaCU4
+	KDnOpm+Xi/OM+RhW5A5xawa0f9olAWY/ku5I4hU58+PYoaT2u/9ojdS17OwNMILw
+	GMjC5A/XAD17Tibj3uXSPQKplGN86I4ApbLWKOj44ob9V1qc9tKNzB5+7bSqZSnq
+	oEyZemJuBJMV8g9NqCuwAsLbsvsQyMz34J3EE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UlgRCNtAZeRZweQBXGq3A305W5ljkqet
+	EefZzHbHduIK3PKI8agNvYuye+cFSTvLCpYFhVn2paRhE8oo4k1XVkzol34oI54i
+	IMwwCxDcl6B9cud3KGWCUoeeJb6ne4olGZ1lsjFlw7ZdAI0tQXbIjFNM+geFxRoZ
+	R7wzn5/2TrY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52FAC5337;
+	Thu, 20 Oct 2011 13:15:28 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DC0505336; Thu, 20 Oct 2011
+ 13:15:27 -0400 (EDT)
+In-Reply-To: <20111020090912.GA21471@elie.hsd1.il.comcast.net> (Jonathan
+ Nieder's message of "Thu, 20 Oct 2011 04:09:12 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1B35AD44-FB3F-11E0-9799-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184031>
 
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-In particular, on systems that define uint32_t as an unsigned long,
-gcc complains as follows:
+> Looks good, except I would explain it differently, to avoid referring
+> to hypothetical implementation details ("What buffer overflow?"):
+>
+> 	test: git cherry-pick --continue should cope with long object names
+>
+> 	A naive implementation that uses a commit-id-shaped buffer
+> 	to store the word after "pick" in .git/sequencer/todo lines
+> 	would crash often.  Our implementation is not so naive, but
+> 	add a test anyway to futureproof it.
+>
+> Or:
+>
+> 	test: make sure the "cherry-pick --continue" buffer overflow doesn't come back
+>
+> 	Before commit ..., "git cherry-pick --continue" would overflow
+> 	under ... circumstance.  Add a test to make sure it doesn't
+> 	happen again.
 
-        CC builtin/pack-objects.o
-    pack-objects.c: In function `compute_write_order':
-    pack-objects.c:600: warning: unsigned int format, uint32_t arg (arg 3)
+I doubt you would need any of that.
 
-In order to suppress the warning, we use the C99 format specifier
-macro PRIu32.
+You can just explain the commit that stops copying the lines into a
+private, fixed buffer a bit better (e.g. "such copying is not just
+wasteful but is wrong by unnecessary placing an artificial limit on the
+line length"), and say "Incidentally, this fixes a bug in the earlier
+round of this series that failed to read lines that are too long to fit on
+the buffer, demonstrated by the test added by this patch", or something.
 
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
-
-Hi Dan,
-
-If you need to re-roll your pack-objects series (dm/pack-objects-update
-branch in pu), could you please squash this change into your final commit
-0a8145bd (pack-objects: don't traverse objects unnecessarily, 18-10-2011).
-
-If you don't need to re-roll, then I'm hoping Junio will notice and squash
-this in before it hits next. ;-)
-
-ATB,
-Ramsay Jones
-
- builtin/pack-objects.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 6db45fa..4bbd815 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -597,7 +597,7 @@ static struct object_entry **compute_write_order(void)
- 	}
- 
- 	if (wo_end != nr_objects)
--		die("ordered %u objects, expected %u", wo_end, nr_objects);
-+		die("ordered %u objects, expected %"PRIu32, wo_end, nr_objects);
- 
- 	return wo;
- }
--- 
-1.7.7
+Then the additional test can become part of the patch that corrects the
+parsing logic, no?
