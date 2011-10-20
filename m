@@ -1,81 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/6] revert: fix buffer overflow in insn sheet parser
-Date: Thu, 20 Oct 2011 11:55:17 -0700
-Message-ID: <7vaa8va3xm.fsf@alter.siamese.dyndns.org>
-References: <1319058208-17923-1-git-send-email-artagnon@gmail.com>
- <1319058208-17923-4-git-send-email-artagnon@gmail.com>
- <7v8vogbgai.fsf@alter.siamese.dyndns.org>
- <20111020080328.GA12337@elie.hsd1.il.comcast.net>
- <4E9FE061.3080601@gmail.com>
- <20111020090912.GA21471@elie.hsd1.il.comcast.net>
- <7vmxcva8k1.fsf@alter.siamese.dyndns.org>
- <20111020180533.GA5563@elie.hsd1.il.comcast.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Re* [IGNORETHIS/PATCH] Choosing the sha1 prefix of your commits
+Date: Thu, 20 Oct 2011 15:00:52 -0400
+Message-ID: <20111020190052.GA25360@sigill.intra.peff.net>
+References: <CACBZZX5PqYa0uWiGgs952rk2cy+QRCU95kF63qzSi3fKK-YrCQ@mail.gmail.com>
+ <20111019190114.GA4670@sigill.intra.peff.net>
+ <20111019193834.GA14168@sigill.intra.peff.net>
+ <7vvcrk9td7.fsf@alter.siamese.dyndns.org>
+ <20111020043448.GA7628@sigill.intra.peff.net>
+ <7vr5289mlu.fsf@alter.siamese.dyndns.org>
+ <20111020071356.GA14945@sigill.intra.peff.net>
+ <7vehy7a4sf.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 20 20:55:26 2011
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 20 21:00:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGxm1-00057N-DM
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 20:55:25 +0200
+	id 1RGxrP-000860-4t
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 21:00:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751422Ab1JTSzV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Oct 2011 14:55:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50709 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751127Ab1JTSzU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2011 14:55:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF45F53CD;
-	Thu, 20 Oct 2011 14:55:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FoBpTIkfW9dx99r35x+6ZGQLDy8=; b=YjQ/wT
-	YchpXsNRIeDXLk6VMN611B/bzz66VEtEvcC6ScoSEapfCEe1zfOokj1cI7Kh+yZT
-	laBAw0lCgUHQJPiUzOuoj/gOwQrFkZQ8GzQmKmToZ4zH8TTqlbbXMzzT1Up0jytF
-	GeextdDK+slXe8LZVyyOMtikXChwjJoBurdwc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yCXKrpoBbDGraBZesDcFUEWVCUdpa9eB
-	FwK1Q6d0lZAC1tMDTq4oGSkJYp4yWGmmIAoKECt+DLFl6vDMlMCSpYnU6ERvIqrC
-	7kB+wwQpTmUeJt6b/MgD5H5NYYr2yDQ1pajggqKdmuwNcjbJG38I1kU+9Dgt6FGN
-	qqsghNmjtH8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A6A9553CC;
-	Thu, 20 Oct 2011 14:55:19 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 10C7553CB; Thu, 20 Oct 2011
- 14:55:18 -0400 (EDT)
-In-Reply-To: <20111020180533.GA5563@elie.hsd1.il.comcast.net> (Jonathan
- Nieder's message of "Thu, 20 Oct 2011 13:05:33 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0E396D84-FB4D-11E0-A020-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751728Ab1JTTAz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Oct 2011 15:00:55 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36281
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751715Ab1JTTAy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Oct 2011 15:00:54 -0400
+Received: (qmail 12150 invoked by uid 107); 20 Oct 2011 19:01:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Oct 2011 15:01:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Oct 2011 15:00:52 -0400
+Content-Disposition: inline
+In-Reply-To: <7vehy7a4sf.fsf_-_@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184036>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Thu, Oct 20, 2011 at 11:36:48AM -0700, Junio C Hamano wrote:
 
-> Incidentally, Ram might wonder why I fuss so much about commit
-> messages.  It's actually very simple --- I think of them as part of
-> the code.
+> It probably is not worth it for most applications, but this fix-up to a
+> fairly recent one is worth doing, I would suspect.
+> 
+> -- >8 --
+> Subject: parse_signed_commit: really use the entire commit log message
+>
+> ... even beyond the first NUL in the buffer, when checking the commit
+> against the detached signature in the header.
 
-And another reason is because I do fuss about them too ;-)
+Yeah, that is worth fixing, I think. It's one thing to be a little lazy
+in pretty-printing for "git log", but I think signature verification
+should be more careful.
 
-It is easy to tell a good patch from a bad one by just reading the message
-without actually reading the patch text itself.
+Patch itself looks sane to me. There's still some use of str-like
+functions, but they would prevent us from even seeing the signature
+headers in the first place, so anything with a NUL that high is just
+broken and crappy.
 
-When the log message justifies the cause and the approach in the right
-way, the actual patch becomes self evident. Also I often find myself
-coming up with a _better_ solution than the patch I originally prepared
-while writing the commit log message to explain it, and redoing the patch
-text to match the description.
+I didn't check, but I wonder if fsck does/should check that there is a
+proper end-of-header blank line before we hit any NUL.
+
+-Peff
