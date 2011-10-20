@@ -1,87 +1,162 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/6] revert: fix buffer overflow in insn sheet parser
-Date: Thu, 20 Oct 2011 13:05:33 -0500
-Message-ID: <20111020180533.GA5563@elie.hsd1.il.comcast.net>
-References: <1319058208-17923-1-git-send-email-artagnon@gmail.com>
- <1319058208-17923-4-git-send-email-artagnon@gmail.com>
- <7v8vogbgai.fsf@alter.siamese.dyndns.org>
- <20111020080328.GA12337@elie.hsd1.il.comcast.net>
- <4E9FE061.3080601@gmail.com>
- <20111020090912.GA21471@elie.hsd1.il.comcast.net>
- <7vmxcva8k1.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re* [IGNORETHIS/PATCH] Choosing the sha1 prefix of your commits
+Date: Thu, 20 Oct 2011 11:36:48 -0700
+Message-ID: <7vehy7a4sf.fsf_-_@alter.siamese.dyndns.org>
+References: <CACBZZX5PqYa0uWiGgs952rk2cy+QRCU95kF63qzSi3fKK-YrCQ@mail.gmail.com>
+ <20111019190114.GA4670@sigill.intra.peff.net>
+ <20111019193834.GA14168@sigill.intra.peff.net>
+ <7vvcrk9td7.fsf@alter.siamese.dyndns.org>
+ <20111020043448.GA7628@sigill.intra.peff.net>
+ <7vr5289mlu.fsf@alter.siamese.dyndns.org>
+ <20111020071356.GA14945@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 20 20:05:52 2011
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 20 20:36:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGwzz-0006zi-IE
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 20:05:47 +0200
+	id 1RGxU8-0004JX-G8
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 20:36:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753935Ab1JTSFn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Oct 2011 14:05:43 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:58190 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750755Ab1JTSFm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2011 14:05:42 -0400
-Received: by iaek3 with SMTP id k3so3705036iae.19
-        for <git@vger.kernel.org>; Thu, 20 Oct 2011 11:05:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=jQQnfJvycXtC6/fu4YDuGHIjOyzffdHn8qpTXOCjMEU=;
-        b=dw0EZtHLxt0kdH11gTdpb+2EFjydHsoAwsL5k2edzMDZWREPeo2T3RYwp74xi2VMEE
-         buxJ9Iq1c4xS+YXwZblf5Q9ejLQssLv/DFyMBfM+S5jOfAlpvmIqfhGk8ICPmIY0VlqS
-         el/cD+rDHd5h2CWjudX/1AihMy/GrVQ8kst4E=
-Received: by 10.231.27.203 with SMTP id j11mr4707477ibc.10.1319133941966;
-        Thu, 20 Oct 2011 11:05:41 -0700 (PDT)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id n30sm25517812ibl.4.2011.10.20.11.05.40
-        (version=SSLv3 cipher=OTHER);
-        Thu, 20 Oct 2011 11:05:41 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vmxcva8k1.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1751354Ab1JTSgw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Oct 2011 14:36:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36781 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751042Ab1JTSgv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Oct 2011 14:36:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 979DB4DAD;
+	Thu, 20 Oct 2011 14:36:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HvPgPPqhqREx0bwJMP2Orre6n7g=; b=fzw48G
+	Rp1wUZ4LsmWF7scltjcbDy4XLeSoeOe593cIKcXxgyslrX3q+jYtM8ph26UZteon
+	xeSjMvYxT8kh1+zNyUXgSIHPgRgoqD9+RbwzZ0EW7B25yMQrHed4UZaWawpvlwm1
+	t8PTTkZlGGF1SIyipiwcSUH192LjWtmXRbsI4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bcK32CmYhpo8AkI3fr4pNGwDhF2O/4U1
+	cCfVlGTuR3YQL4BgTaUGP+NSED4OM6RPeI/uEcPJvAYwBphlqLAnsd867Eto6D6r
+	uZf4pThaJEWc2e+P/nIQpb38e63pO1eS3REBOh5BJMbej7IL/P6Nhr57jM9vyHak
+	onZXh6dDriI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8EA2D4DAB;
+	Thu, 20 Oct 2011 14:36:50 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C7A354DAA; Thu, 20 Oct 2011
+ 14:36:49 -0400 (EDT)
+In-Reply-To: <20111020071356.GA14945@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 20 Oct 2011 03:13:56 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 790EDCDC-FB4A-11E0-B879-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184033>
 
-Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-[...]
-> Then the additional test can become part of the patch that corrects the
-> parsing logic, no?
+> It's not that the commit is bad or the source of problems. My point is
+> that the assumption that commit messages are NUL-terminated has been
+> there for a really long time, so there are lots of spots in the code
+> that sloppily run string functions on them. Every one of those needs to
+> be found and fixed (e.g., I remember seeing this in
+> for-each-ref.c:find_subpos recently).
+>
+> It's not impossible, of course, or even really that hard. It's just a
+> giant pain, and I wonder if the effort is worth it.
 
-Yes, that works, too.  All I was trying to say was that the
-description in the patch I quoted didn't make sense to me, since it
-included a mention of a buffer overflow without giving any explanation
-of what it was talking about.  I don't actually care in this case
-whether it is fixed by mentioning which patch this is testing the fix
-from or by squashing the two patches (though the latter certainly
-seems reasonable).
+True.
 
-Incidentally, Ram might wonder why I fuss so much about commit
-messages.  It's actually very simple --- I think of them as part of
-the code.  Suppose someone discovers a regression was introduced by
-such-and-such part of the patch 1.7.7 -> 1.7.8, but at first glance it
-is not clear whether that code change was supposed to have any effect
-on the behavior of the code at all.  Such a person is likely to make
-mistakes in fixing it, right?  So after getting the right behavior,
-patch authors spend a few extra minutes to make sure the code is
-intuitive to humans, too, and this includes making sure the rationale
-description is clear.
+It probably is not worth it for most applications, but this fix-up to a
+fairly recent one is worth doing, I would suspect.
 
-Just like the code for the computer, this is very much something that
-isn't always going to be right the first time and sometimes takes some
-debugging.  So, sorry for the fuss, but I hope it helps.
+-- >8 --
+Subject: parse_signed_commit: really use the entire commit log message
 
-Jonathan
+... even beyond the first NUL in the buffer, when checking the commit
+against the detached signature in the header.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ commit.c                 |   11 +++++------
+ t/t7510-signed-commit.sh |   21 ++++++++++++++++-----
+ 2 files changed, 21 insertions(+), 11 deletions(-)
+
+diff --git a/commit.c b/commit.c
+index 93045a2..6ec49fa 100644
+--- a/commit.c
++++ b/commit.c
+@@ -854,28 +854,27 @@ int parse_signed_commit(const unsigned char *sha1,
+ 	unsigned long size;
+ 	enum object_type type;
+ 	char *buffer = read_sha1_file(sha1, &type, &size);
+-	int in_header, saw_signature = -1;
++	int saw_signature = -1;
+ 	char *line;
+ 
+ 	if (!buffer || type != OBJ_COMMIT)
+ 		goto cleanup;
+ 
+ 	line = buffer;
+-	in_header = 1;
+ 	saw_signature = 0;
+-	while (*line) {
++	while (line < buffer + size) {
+ 		char *next = strchrnul(line, '\n');
+ 		if (*next)
+ 			next++;
+-		if (in_header && !prefixcmp(line, gpg_sig_header)) {
++		if (!prefixcmp(line, gpg_sig_header)) {
+ 			const char *sig = line + gpg_sig_header_len;
+ 			strbuf_add(signature, sig, next - sig);
+ 			saw_signature = 1;
+ 		} else {
++			if (*line == '\n')
++				next = buffer + size; /* dump the whole remainder */
+ 			strbuf_add(payload, line, next - line);
+ 		}
+-		if (*line == '\n')
+-			in_header = 0;
+ 		line = next;
+ 	}
+  cleanup:
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 5c7475d..30401ce 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -50,11 +50,22 @@ test_expect_success GPG 'show signatures' '
+ 
+ test_expect_success GPG 'detect fudged signature' '
+ 	git cat-file commit master >raw &&
+-	sed -e "s/fourth signed/4th forged/" raw >forged &&
+-	git hash-object -w -t commit forged >forged.commit &&
+-	git show --pretty=short --show-signature $(cat forged.commit) >actual &&
+-	grep "BAD signature from" actual &&
+-	! grep "Good signature from" actual
++
++	sed -e "s/fourth signed/4th forged/" raw >forged1 &&
++	git hash-object -w -t commit forged1 >forged1.commit &&
++	git show --pretty=short --show-signature $(cat forged1.commit) >actual1 &&
++	grep "BAD signature from" actual1 &&
++	! grep "Good signature from" actual1
++'
++
++test_expect_success GPG 'detect fudged signature with NUL' '
++	git cat-file commit master >raw &&
++	cat raw >forged2 &&
++	echo Qwik | tr "Q" "\000" >>forged2 &&
++	git hash-object -w -t commit forged2 >forged2.commit &&
++	git show --pretty=short --show-signature $(cat forged2.commit) >actual2 &&
++	grep "BAD signature from" actual2 &&
++	! grep "Good signature from" actual2
+ '
+ 
+ test_done
