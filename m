@@ -1,91 +1,80 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/6] revert: fix buffer overflow in insn sheet parser
-Date: Thu, 20 Oct 2011 04:09:12 -0500
-Message-ID: <20111020090912.GA21471@elie.hsd1.il.comcast.net>
-References: <1319058208-17923-1-git-send-email-artagnon@gmail.com>
- <1319058208-17923-4-git-send-email-artagnon@gmail.com>
- <7v8vogbgai.fsf@alter.siamese.dyndns.org>
- <20111020080328.GA12337@elie.hsd1.il.comcast.net>
- <4E9FE061.3080601@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [IGNORETHIS/PATCH] Choosing the sha1 prefix of your commits
+Date: Thu, 20 Oct 2011 20:14:56 +1100
+Message-ID: <CACsJy8B7CJ3VO-UKCym2kgfOOPadL25gt2sxApk95nKoWVk2yQ@mail.gmail.com>
+References: <CACBZZX5PqYa0uWiGgs952rk2cy+QRCU95kF63qzSi3fKK-YrCQ@mail.gmail.com>
+ <20111019190114.GA4670@sigill.intra.peff.net> <20111019193834.GA14168@sigill.intra.peff.net>
+ <7vvcrk9td7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 20 11:09:27 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 20 11:15:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGocv-0000Fb-RE
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 11:09:26 +0200
+	id 1RGoir-0002yO-34
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 11:15:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755373Ab1JTJJV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Oct 2011 05:09:21 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:61100 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751268Ab1JTJJU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2011 05:09:20 -0400
-Received: by ggnb1 with SMTP id b1so2566395ggn.19
-        for <git@vger.kernel.org>; Thu, 20 Oct 2011 02:09:20 -0700 (PDT)
+	id S1756133Ab1JTJP2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Oct 2011 05:15:28 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:57934 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751268Ab1JTJP1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2011 05:15:27 -0400
+Received: by bkbzt19 with SMTP id zt19so3275223bkb.19
+        for <git@vger.kernel.org>; Thu, 20 Oct 2011 02:15:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=5dtDnlUP0R8ouolXU3nEaDV+djVlM1s4C3W4xCYrIrQ=;
-        b=po1csIcFpdwYoJ4HiAJaJpthHkHw787z0Wj6sQObg8ZxZtwj6baao6l8hr5R2/GSIO
-         GtXwfBGPbp0cRJge/1HaszC5MWsR4z0vaoF12A0HhgpPkfOtfSm58cvoSJJnKRsPO3K3
-         SMNS/BP4TI6ST77h1klTDZUALopIOjEXalOUo=
-Received: by 10.42.148.198 with SMTP id s6mr17930695icv.56.1319101759983;
-        Thu, 20 Oct 2011 02:09:19 -0700 (PDT)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id bu33sm22079125ibb.11.2011.10.20.02.09.18
-        (version=SSLv3 cipher=OTHER);
-        Thu, 20 Oct 2011 02:09:19 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4E9FE061.3080601@gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=RV6xjw7gWiNWOxkwQ2jqgeUynYDMO7/gk3pgrHSuhTU=;
+        b=gOYNom/4BUs8t1I7QJfhUZpZPKUETk2l3Out/a0d9lnfyBpXkm8tP1xdJ1UgnzjLKC
+         Vh4YGQXWDjqFYt3uZ6iOIwLqY4SRrSQjq1zcRRD2dumr0IARvuEuOV+hYt3yuDLxG8sq
+         t8tW+JtsY+GC5ORMNy7BWmT0AzsbZd7GAXrCE=
+Received: by 10.205.112.6 with SMTP id eq6mr7471097bkc.16.1319102126129; Thu,
+ 20 Oct 2011 02:15:26 -0700 (PDT)
+Received: by 10.204.120.75 with HTTP; Thu, 20 Oct 2011 02:14:56 -0700 (PDT)
+In-Reply-To: <7vvcrk9td7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184018>
 
-Ramkumar Ramachandra wrote:
-
-> Okay.  How about putting this after 5/6?
+On Thu, Oct 20, 2011 at 3:31 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Jeff King <peff@peff.net> writes:
 >
-> -- 8< --
-> Subject: [PATCH] t3510: guard against buffer overflows in parser
-> 
-> To guard against a buffer overflow in the parser, verify that
-> instruction sheets with overly long object names are parsed.
+>> And nothing shows up in the body, because git truncates at the NUL w=
+e
+>> added:
+>>
+>> =C2=A0 $ git show
+>> =C2=A0 commit 31337a1093af2d97eb2e6c08b261c2946395fdd3
+>> =C2=A0 Author: Jeff King <peff@peff.net>
+>> =C2=A0 Date: =C2=A0 Wed Oct 19 15:34:00 2011 -0400
+>>
+>> =C2=A0 =C2=A0 =C2=A0 10
+>>
+>> =C2=A0 diff --git a/file b/file
+>
+> But you cannot hide from "cat-file commit" ;-)
+>
+> With the recent push to more (perceived) security, it may probably ma=
+ke
+> sense to teach "log" family commands to quote-show ^@ and what is beh=
+ind
+> in their output by default, perhaps with an option to turn it off.
 
-Looks good, except I would explain it differently, to avoid referring
-to hypothetical implementation details ("What buffer overflow?"):
-
-	test: git cherry-pick --continue should cope with long object names
-
-	A naive implementation that uses a commit-id-shaped buffer
-	to store the word after "pick" in .git/sequencer/todo lines
-	would crash often.  Our implementation is not so naive, but
-	add a test anyway to futureproof it.
-
-Or:
-
-	test: make sure the "cherry-pick --continue" buffer overflow doesn't come back
-
-	Before commit ..., "git cherry-pick --continue" would overflow
-	under ... circumstance.  Add a test to make sure it doesn't
-	happen again.
-
-Though the implementation is actually better than that --- it can even
-cope with a valid object name (e.g., a long name of a branch, or
-something like "HEAD^{/refs.c: ensure struct whose member}") that is
-that long, without truncating it.  So if you have time for it, I think
-it would be worth a test where the "git cherry-pick --continue"
-succeeds, too.
-
-Thanks,
-Jonathan
+What about NUL in file name in tree objects? Suppose the original tree
+has an entry named "goodthing". With luck, they might be able to
+create a new tree object with the entry renamed to "evil\x001234" that
+has the same SHA-1. Could that possibly cause any problems?
+--=20
+Duy
