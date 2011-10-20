@@ -1,75 +1,72 @@
-From: Kyle Moffett <kyle@moffetthome.net>
+From: Jeff King <peff@peff.net>
 Subject: Re: [IGNORETHIS/PATCH] Choosing the sha1 prefix of your commits
-Date: Thu, 20 Oct 2011 00:32:55 -0400
-Message-ID: <CAGZ=bq+y1Q1KKUwyBJmWMoAWn_+M+CBNVBh-UBtLttqN6_gjew@mail.gmail.com>
+Date: Thu, 20 Oct 2011 00:34:48 -0400
+Message-ID: <20111020043448.GA7628@sigill.intra.peff.net>
 References: <CACBZZX5PqYa0uWiGgs952rk2cy+QRCU95kF63qzSi3fKK-YrCQ@mail.gmail.com>
- <20111019190114.GA4670@sigill.intra.peff.net> <20111019193834.GA14168@sigill.intra.peff.net>
- <20111020025149.GA31549@sigill.intra.peff.net> <CAGZ=bqK2oVPxW3mm-WHMd1+KSiPquympJyhRqLWr1F=G74p+BA@mail.gmail.com>
- <7vzkgw9tjw.fsf@alter.siamese.dyndns.org>
+ <20111019190114.GA4670@sigill.intra.peff.net>
+ <20111019193834.GA14168@sigill.intra.peff.net>
+ <7vvcrk9td7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 20 06:33:30 2011
+X-From: git-owner@vger.kernel.org Thu Oct 20 06:34:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGkJt-0006uC-Vq
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 06:33:30 +0200
+	id 1RGkLI-0007FN-MK
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 06:34:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751101Ab1JTEdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Oct 2011 00:33:25 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:62689 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750821Ab1JTEdZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2011 00:33:25 -0400
-Received: by ywf7 with SMTP id 7so2410164ywf.19
-        for <git@vger.kernel.org>; Wed, 19 Oct 2011 21:33:24 -0700 (PDT)
-Received: by 10.68.32.2 with SMTP id e2mr17608584pbi.68.1319085196109; Wed, 19
- Oct 2011 21:33:16 -0700 (PDT)
-Received: by 10.142.77.10 with HTTP; Wed, 19 Oct 2011 21:32:55 -0700 (PDT)
-In-Reply-To: <7vzkgw9tjw.fsf@alter.siamese.dyndns.org>
+	id S1751693Ab1JTEew (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Oct 2011 00:34:52 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35999
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751292Ab1JTEev (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Oct 2011 00:34:51 -0400
+Received: (qmail 6615 invoked by uid 107); 20 Oct 2011 04:34:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Oct 2011 00:34:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Oct 2011 00:34:48 -0400
+Content-Disposition: inline
+In-Reply-To: <7vvcrk9td7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184005>
 
-On Thu, Oct 20, 2011 at 00:27, Junio C Hamano <gitster@pobox.com> wrote:
-> Kyle Moffett <kyle@moffetthome.net> writes:
->
->> Heh, there's one other practical downside I can think of...
->>
->> If you create a bunch of commits with the same 8-hex-character prefix
->> then suddenly the "git describe" logic for using the first 7 commit ID
->> characters gets a whole lot less useful.
->
-> In the sense that you need to cut and paste a lot more characters, you are
-> correct that it would make it less useful, but if you are talking about
-> uniqueness, you are mistaken.
->
-> The rule is not "using the first 7 hexdigits", but is "using as many
-> hexdigits to make assure uniqueness, but use at least 7".
+On Wed, Oct 19, 2011 at 09:31:16PM -0700, Junio C Hamano wrote:
 
-Well, yes, but if you generate some 10 commits with the same
-7-character prefix, run "git describe", and then generate another
-several with the same prefix... Chances are the previously-unique
-output of "git describe" is no longer unique.
+> Jeff King <peff@peff.net> writes:
+> 
+> > And nothing shows up in the body, because git truncates at the NUL we
+> > added:
+> >
+> >   $ git show
+> >   commit 31337a1093af2d97eb2e6c08b261c2946395fdd3
+> >   Author: Jeff King <peff@peff.net>
+> >   Date:   Wed Oct 19 15:34:00 2011 -0400
+> >
+> >       10
+> >
+> >   diff --git a/file b/file
+> 
+> But you cannot hide from "cat-file commit" ;-)
 
-Also, even if you do use enough characters for it to be reliably
-unique, it's not really an abbreviation if your commit description is
-"v2.0.3-42-gdeadbeef04a69f", with that many characters you might as
-well just paste the whole SHA1 sum.
+Yes. The implementation is a horrible hack, second only in grossness to
+the original idea. :)
 
-With all that said, it is a very clever (and ugly) hack :-D.  Kudos!
+> With the recent push to more (perceived) security, it may probably make
+> sense to teach "log" family commands to quote-show ^@ and what is behind
+> in their output by default, perhaps with an option to turn it off.
 
-Cheers,
-Kyle Moffett
+Agreed. Having hidden cruft makes birthday collision attacks easier (or
+it will, if sha1 ever gets broken to that point).  Unfortunately, there
+is a _ton_ of code which assumes that commit messages are
+NUL-terminated, as they always have been since e871b64 (2005-05-25).
 
--- 
-Curious about my work on the Debian powerpcspe port?
-I'm keeping a blog here: http://pureperl.blogspot.com/
+-Peff
