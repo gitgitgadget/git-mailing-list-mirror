@@ -1,78 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Kyle Moffett <kyle@moffetthome.net>
 Subject: Re: [IGNORETHIS/PATCH] Choosing the sha1 prefix of your commits
-Date: Wed, 19 Oct 2011 21:31:16 -0700
-Message-ID: <7vvcrk9td7.fsf@alter.siamese.dyndns.org>
+Date: Thu, 20 Oct 2011 00:32:55 -0400
+Message-ID: <CAGZ=bq+y1Q1KKUwyBJmWMoAWn_+M+CBNVBh-UBtLttqN6_gjew@mail.gmail.com>
 References: <CACBZZX5PqYa0uWiGgs952rk2cy+QRCU95kF63qzSi3fKK-YrCQ@mail.gmail.com>
- <20111019190114.GA4670@sigill.intra.peff.net>
- <20111019193834.GA14168@sigill.intra.peff.net>
+ <20111019190114.GA4670@sigill.intra.peff.net> <20111019193834.GA14168@sigill.intra.peff.net>
+ <20111020025149.GA31549@sigill.intra.peff.net> <CAGZ=bqK2oVPxW3mm-WHMd1+KSiPquympJyhRqLWr1F=G74p+BA@mail.gmail.com>
+ <7vzkgw9tjw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 20 06:31:26 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 20 06:33:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGkHs-0006Ly-2W
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 06:31:24 +0200
+	id 1RGkJt-0006uC-Vq
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 06:33:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752252Ab1JTEbT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Oct 2011 00:31:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56286 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751257Ab1JTEbS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2011 00:31:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 211002341;
-	Thu, 20 Oct 2011 00:31:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9R2K1BWzXEIlkCYA0NGiy4r1Mzo=; b=pT1bOr
-	W38tczr89t2kEkzVEcMJpaEkilv7C2UmQhOVLTK0bvVDYEaENXAUSp1quCKRdOV1
-	cppK5kpONIRkEY3eU0tWSICwmOES87pPtTp4yM9ixHQLuDcijuuuipbr2Ou9cfko
-	6nPSLguWe6NBqNnIlMSberu/kSn5kB0o5Kyj0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=juvYjqmzUnNCZ7/4O6XvMFsOmPrha8QU
-	OZd5Mj5K+AptpLrc+fqvFjZJVwf+dhN1LQuJOCJ/ptvlrv8ob17lDiTv7Lmop7Z0
-	VuqeI8ehQHDoB3a6GcNUHofADmHXlCArIbftZIke18PVYl/l3Tk/Y0YA7zVxplXg
-	VFrIu6foiwk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 17D622340;
-	Thu, 20 Oct 2011 00:31:18 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8C9A9233F; Thu, 20 Oct 2011
- 00:31:17 -0400 (EDT)
-In-Reply-To: <20111019193834.GA14168@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 19 Oct 2011 15:38:34 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5A49208A-FAD4-11E0-A375-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751101Ab1JTEdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Oct 2011 00:33:25 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:62689 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750821Ab1JTEdZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Oct 2011 00:33:25 -0400
+Received: by ywf7 with SMTP id 7so2410164ywf.19
+        for <git@vger.kernel.org>; Wed, 19 Oct 2011 21:33:24 -0700 (PDT)
+Received: by 10.68.32.2 with SMTP id e2mr17608584pbi.68.1319085196109; Wed, 19
+ Oct 2011 21:33:16 -0700 (PDT)
+Received: by 10.142.77.10 with HTTP; Wed, 19 Oct 2011 21:32:55 -0700 (PDT)
+In-Reply-To: <7vzkgw9tjw.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184004>
 
-Jeff King <peff@peff.net> writes:
-
-> And nothing shows up in the body, because git truncates at the NUL we
-> added:
+On Thu, Oct 20, 2011 at 00:27, Junio C Hamano <gitster@pobox.com> wrote:
+> Kyle Moffett <kyle@moffetthome.net> writes:
 >
->   $ git show
->   commit 31337a1093af2d97eb2e6c08b261c2946395fdd3
->   Author: Jeff King <peff@peff.net>
->   Date:   Wed Oct 19 15:34:00 2011 -0400
+>> Heh, there's one other practical downside I can think of...
+>>
+>> If you create a bunch of commits with the same 8-hex-character prefix
+>> then suddenly the "git describe" logic for using the first 7 commit ID
+>> characters gets a whole lot less useful.
 >
->       10
+> In the sense that you need to cut and paste a lot more characters, you are
+> correct that it would make it less useful, but if you are talking about
+> uniqueness, you are mistaken.
 >
->   diff --git a/file b/file
+> The rule is not "using the first 7 hexdigits", but is "using as many
+> hexdigits to make assure uniqueness, but use at least 7".
 
-But you cannot hide from "cat-file commit" ;-)
+Well, yes, but if you generate some 10 commits with the same
+7-character prefix, run "git describe", and then generate another
+several with the same prefix... Chances are the previously-unique
+output of "git describe" is no longer unique.
 
-With the recent push to more (perceived) security, it may probably make
-sense to teach "log" family commands to quote-show ^@ and what is behind
-in their output by default, perhaps with an option to turn it off.
+Also, even if you do use enough characters for it to be reliably
+unique, it's not really an abbreviation if your commit description is
+"v2.0.3-42-gdeadbeef04a69f", with that many characters you might as
+well just paste the whole SHA1 sum.
+
+With all that said, it is a very clever (and ugly) hack :-D.  Kudos!
+
+Cheers,
+Kyle Moffett
+
+-- 
+Curious about my work on the Debian powerpcspe port?
+I'm keeping a blog here: http://pureperl.blogspot.com/
