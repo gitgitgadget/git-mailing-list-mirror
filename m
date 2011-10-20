@@ -1,71 +1,105 @@
 From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCH] git-gui: guitools: add the path in the confirmation dialog for tools which needs one
-Date: Thu, 20 Oct 2011 21:32:30 +0200
-Message-ID: <2fef219736a0787ed864b5c18adf31f7a4e8acda.1319139139.git.bert.wesarg@googlemail.com>
+Subject: Re: [PATCH 2v2/2] git-gui: support for diff3 conflict style
+Date: Thu, 20 Oct 2011 21:35:25 +0200
+Message-ID: <CAKPyHN2pOJfm=Ys+giv-4ERjzzje1VigxfEKKY-yPsE03A0NNA@mail.gmail.com>
+References: <56c38bdfd71d8af5633bea00cb130256d6981af5.1301467146.git.bert.wesarg@googlemail.com>
+	<c761e522cce009a70d9131f0a5a1a2fc6aa6d9ac.1301469420.git.bert.wesarg@googlemail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 Cc: git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
 To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Thu Oct 20 21:32:40 2011
+X-From: git-owner@vger.kernel.org Thu Oct 20 21:35:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGyM3-0006Z8-IQ
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 21:32:39 +0200
+	id 1RGyOp-0007r9-8A
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 21:35:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752058Ab1JTTcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Oct 2011 15:32:35 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:35732 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751295Ab1JTTce (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2011 15:32:34 -0400
-Received: by bkbzt19 with SMTP id zt19so3920979bkb.19
-        for <git@vger.kernel.org>; Thu, 20 Oct 2011 12:32:33 -0700 (PDT)
+	id S1752021Ab1JTTf1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Oct 2011 15:35:27 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:55865 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750884Ab1JTTf0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Oct 2011 15:35:26 -0400
+Received: by vcge1 with SMTP id e1so2760640vcg.19
+        for <git@vger.kernel.org>; Thu, 20 Oct 2011 12:35:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=zHWZLj6zYqnQz5P/Aj0q0qVvS92nL6fk1sJINrVyVn4=;
-        b=WznU+6hLdDjUJb+hd7XZf4FGjCXXvXvb6vszs+9sKXmXWPj3RR5yut4sJsCEQ3CW00
-         Pd2MJXpmA2PpV/uBJpxrutS5LFeHZrOK4/KOlfhEwP4pmGqsqBQa8AWKY9TOV2eMZMsE
-         k5Tuy1AsSN/ySPKNVIdFiuDJ5syvRVULPFCUk=
-Received: by 10.204.154.209 with SMTP id p17mr9058218bkw.20.1319139153286;
-        Thu, 20 Oct 2011 12:32:33 -0700 (PDT)
-Received: from localhost (p5B2AD78D.dip.t-dialin.net. [91.42.215.141])
-        by mx.google.com with ESMTPS id f7sm2154812bkc.1.2011.10.20.12.32.31
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 20 Oct 2011 12:32:32 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7.759.gfc8c6
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=IKwdBkOJRhHL/IJDUN/zlKIoeb5CSHEeP5Wu7WQb9Rw=;
+        b=SLMS/GZKJsFmh5gx0RZQ6/mpKOIJRi4Tl3hnVBaewZKReBbAP4apED6RjADEJFqPII
+         jEOLZ8pKbE07HNQAvceac9yyqNgAssM1Z2i1SdNGg827ny2qgdQX90Ji0gz4pvI/HI7v
+         3zgzGqph3ZJQrXpRX+4YELXBrHnlvDGvfve1Q=
+Received: by 10.52.69.52 with SMTP id b20mr1879756vdu.85.1319139325793; Thu,
+ 20 Oct 2011 12:35:25 -0700 (PDT)
+Received: by 10.52.186.36 with HTTP; Thu, 20 Oct 2011 12:35:25 -0700 (PDT)
+In-Reply-To: <c761e522cce009a70d9131f0a5a1a2fc6aa6d9ac.1301469420.git.bert.wesarg@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184040>
 
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
----
- lib/tools.tcl |   10 ++++++++--
- 1 files changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/lib/tools.tcl b/lib/tools.tcl
-index 95e6e55..39e08f0 100644
---- a/lib/tools.tcl
-+++ b/lib/tools.tcl
-@@ -87,8 +87,14 @@ proc tools_exec {fullname} {
- 			return
- 		}
- 	} elseif {[is_config_true "guitool.$fullname.confirm"]} {
--		if {[ask_popup [mc "Are you sure you want to run %s?" $fullname]] ne {yes}} {
--			return
-+		if {[is_config_true "guitool.$fullname.needsfile"]} {
-+			if {[ask_popup [mc "Are you sure you want to run %s on file \"%s\"?" $fullname $current_diff_path]] ne {yes}} {
-+				return
-+			}
-+		} else {
-+			if {[ask_popup [mc "Are you sure you want to run %s?" $fullname]] ne {yes}} {
-+				return
-+			}
- 		}
- 	}
- 
--- 
-1.7.7.759.gfc8c6
+UGluZy4KCk9uIFdlZCwgTWFyIDMwLCAyMDExIGF0IDA5OjE4LCBCZXJ0IFdlc2FyZyA8YmVydC53
+ZXNhcmdAZ29vZ2xlbWFpbC5jb20+IHdyb3RlOgo+IFRoaXMgYWRkcyBoaWdobGlnaHQgc3VwcG9y
+dCBmb3IgdGhlIGRpZmYzIGNvbmZsaWN0IHN0eWxlLgo+Cj4gVGhlIGNvbW1vbiBwcmUtaW1hZ2Ug
+d2lsbCBiZSByZXZlcnNlZCB0byAtLSwgYmVjYXVzZSBpdCBoYXMgYmVlbiByZW1vdmVkCj4gYW5k
+IGVpdGhlciByZXBsYWNlZCB3aXRoIG91ciBvciB0aGVpciBzaWRlLgo+Cj4gU2lnbmVkLW9mZi1i
+eTogQmVydCBXZXNhcmcgPGJlcnQud2VzYXJnQGdvb2dsZW1haWwuY29tPgo+IC0tLQo+Cj4gU29y
+cnksIEkgaGFkIGFuIHN5bnRheCBlcnJvciBpbiB0aGUgbGFzdCB2ZXJzaW9uLgo+Cj4gwqBnaXQt
+Z3VpLnNoIMKgIHwgwqAgwqAzICsrKwo+IMKgbGliL2RpZmYudGNsIHwgwqAgMTIgKysrKysrKysr
+KysrCj4gwqAyIGZpbGVzIGNoYW5nZWQsIDE1IGluc2VydGlvbnMoKyksIDAgZGVsZXRpb25zKC0p
+Cj4KPiBkaWZmIC0tZ2l0IGEvZ2l0LWd1aS5zaCBiL2dpdC1ndWkuc2gKPiBpbmRleCBkNWMxNTM1
+Li42YWRjZGE2IDEwMDc1NQo+IC0tLSBhL2dpdC1ndWkuc2gKPiArKysgYi9naXQtZ3VpLnNoCj4g
+QEAgLTMzODgsNiArMzM4OCw5IEBAICR1aV9kaWZmIHRhZyBjb25mIGRfcy0gXAo+IMKgJHVpX2Rp
+ZmYgdGFnIGNvbmYgZDwgXAo+IMKgIMKgIMKgIMKgLWZvcmVncm91bmQgb3JhbmdlIFwKPiDCoCDC
+oCDCoCDCoC1mb250IGZvbnRfZGlmZmJvbGQKPiArJHVpX2RpZmYgdGFnIGNvbmYgZHwgXAo+ICsg
+wqAgwqAgwqAgLWZvcmVncm91bmQgb3JhbmdlIFwKPiArIMKgIMKgIMKgIC1mb250IGZvbnRfZGlm
+ZmJvbGQKPiDCoCR1aV9kaWZmIHRhZyBjb25mIGQ9IFwKPiDCoCDCoCDCoCDCoC1mb3JlZ3JvdW5k
+IG9yYW5nZSBcCj4gwqAgwqAgwqAgwqAtZm9udCBmb250X2RpZmZib2xkCj4gZGlmZiAtLWdpdCBh
+L2xpYi9kaWZmLnRjbCBiL2xpYi9kaWZmLnRjbAo+IGluZGV4IDM5ZTRkOTAuLmNhYTRiZTcgMTAw
+NjQ0Cj4gLS0tIGEvbGliL2RpZmYudGNsCj4gKysrIGIvbGliL2RpZmYudGNsCj4gQEAgLTMzOSw2
+ICszMzksNyBAQCBwcm9jIHN0YXJ0X3Nob3dfZGlmZiB7Y29udF9pbmZvIHthZGRfb3B0cyB7fX19
+IHsKPiDCoCDCoCDCoCDCoH0KPgo+IMKgIMKgIMKgIMKgc2V0IDo6Y3VycmVudF9kaWZmX2luaGVh
+ZGVyIDEKPiArIMKgIMKgIMKgIHNldCA6OmluX2NvbmZsaWN0X3ByZV9pbWFnZSAwCj4gwqAgwqAg
+wqAgwqBmY29uZmlndXJlICRmZCBcCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAtYmxvY2tpbmcg
+MCBcCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAtZW5jb2RpbmcgW2dldF9wYXRoX2VuY29kaW5n
+ICRwYXRoXSBcCj4gQEAgLTQzOSwxMCArNDQwLDIxIEBAIHByb2MgcmVhZF9kaWZmIHtmZCBjb25m
+bGljdF9zaXplIGNvbnRfaW5mb30gewo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgeysrfSB7Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqBzZXQgcmVnZXhwIFtzdHJpbmcgbWFwIFtsaXN0ICVjb25mbGljdF9zaXplICRjb25mbGljdF9z
+aXplXVwKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHteXCtcKyhbPD49
+XSl7JWNvbmZsaWN0X3NpemV9KD86IHwkKX1dCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCBzZXQgcmVnZXhwX3ByZV9pbWFnZSBbc3RyaW5nIG1hcCBbbGlz
+dCAlY29uZmxpY3Rfc2l6ZSAkY29uZmxpY3Rfc2l6ZV1cCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCB7XlwrXCtcfHslY29uZmxpY3Rfc2l6ZX0oPzogfCQpfV0KPiDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGlmIHtbcmVnZXhwICRy
+ZWdleHAgJGxpbmUgX2cgb3BdfSB7Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBzZXQgaXNfY29uZmxpY3RfZGlmZiAxCj4gwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBzZXQg
+bGluZSBbc3RyaW5nIHJlcGxhY2UgJGxpbmUgMCAxIHsgwqB9XQo+IMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgc2V0IHRhZ3MgZCRvcAo+
+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgc2V0IDo6aW5fY29uZmxpY3RfcHJlX2ltYWdlIDAKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0gZWxzZWlmIHtbcmVnZXhwICRyZWdleHBfcHJlX2lt
+YWdlICRsaW5lXX0gewo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgc2V0IGlzX2NvbmZsaWN0X2RpZmYgMQo+ICsgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgc2V0IGxpbmUgW3N0
+cmluZyByZXBsYWNlICRsaW5lIDAgMSB7IMKgfV0KPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHNldCB0YWdzIGR8Cj4gKyDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBzZXQgOjpp
+bl9jb25mbGljdF9wcmVfaW1hZ2UgMQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgfSBlbHNlaWYgKCQ6OmluX2NvbmZsaWN0X3ByZV9pbWFnZSkgewo+ICsg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+c2V0IGxpbmUgW3N0cmluZyByZXBsYWNlICRsaW5lIDAgMSB7LS19XQo+ICsgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgc2V0IHRhZ3MgZF8t
+LQo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfSBlbHNl
+IHsKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoHNldCB0YWdzIGRfKysKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoH0KPiAtLQo+IDEuNy40LjIuNzQzLmc1MzlhYgo+Cj4K
