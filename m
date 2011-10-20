@@ -1,87 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [IGNORETHIS/PATCH] Choosing the sha1 prefix of your commits
-Date: Thu, 20 Oct 2011 11:56:11 -0400
-Message-ID: <20111020155611.GB16114@sigill.intra.peff.net>
-References: <CACBZZX5PqYa0uWiGgs952rk2cy+QRCU95kF63qzSi3fKK-YrCQ@mail.gmail.com>
- <20111019190114.GA4670@sigill.intra.peff.net>
- <20111019193834.GA14168@sigill.intra.peff.net>
- <7vvcrk9td7.fsf@alter.siamese.dyndns.org>
- <20111020043448.GA7628@sigill.intra.peff.net>
- <7vr5289mlu.fsf@alter.siamese.dyndns.org>
- <20111020071356.GA14945@sigill.intra.peff.net>
- <20111020131454.GB7464@thunk.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Ted Ts'o <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Oct 20 17:56:22 2011
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] git-remote-mediawiki: don't include HTTP login/password in author
+Date: Thu, 20 Oct 2011 19:04:59 +0200
+Message-ID: <1319130299-13259-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Oct 20 19:05:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RGuyk-0002iH-HB
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 17:56:22 +0200
+	id 1RGw3R-0002yL-JF
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Oct 2011 19:05:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756664Ab1JTP4O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Oct 2011 11:56:14 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36226
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756613Ab1JTP4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2011 11:56:14 -0400
-Received: (qmail 10422 invoked by uid 107); 20 Oct 2011 15:56:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Oct 2011 11:56:20 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Oct 2011 11:56:11 -0400
-Content-Disposition: inline
-In-Reply-To: <20111020131454.GB7464@thunk.org>
+	id S1754108Ab1JTRFL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Oct 2011 13:05:11 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:33969 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751903Ab1JTRFK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Oct 2011 13:05:10 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p9KH1e7W003492
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 20 Oct 2011 19:01:40 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1RGw3E-0005bE-19; Thu, 20 Oct 2011 19:05:04 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1RGw3D-0003Sj-Tz; Thu, 20 Oct 2011 19:05:03 +0200
+X-Mailer: git-send-email 1.7.7.140.ge3099
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 20 Oct 2011 19:01:41 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p9KH1e7W003492
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1319734903.49846@uA1etkEQPqv4k+64KFchZQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184029>
 
-On Thu, Oct 20, 2011 at 09:14:55AM -0400, Ted Ts'o wrote:
+On the MediaWiki side, the author information is just the MediaWiki login
+of the contributor. The import turns it into login@$wiki_name to create
+the author's email address on the wiki side. But we don't want this to
+include the HTTP password if it's present in the URL ...
 
-> Another possibility is to warn if the commit messages are not NULL
-> terminated.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ contrib/mw-to-git/git-remote-mediawiki |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-A minor nit, but it's not whether they are terminated with NUL, but
-rather whether they have embedded NUL. But yeah, this could maybe just
-be something fsck looks for.
-
-> Note though that if we're really worried about a bad guy trying to
-> attack us with a hash collision, he/she could always use "invisible"
-> non-printing characters in the commit message, and/or just mess with
-> one or both of the timestamps.  The more bits and more degrees of
-> flexibility the attacker has, the easier it would be, of course.  In
-> the grand scheme of things it's not clear to me how big of a deal this
-> would be.
-
-Good point. Append-only attacks are cheaper, because you can avoid doing
-most of the hash computation on each iteration (like my patch does). But
-that's not a big-O speedup, it just makes the constant smaller.  So you
-could assume that any feasible appending attack would probably become
-feasible for recomputing the full hash eventually.
-
-> If people were really concerned it would probably be easier to use
-> backup crypto checksum using something stronger (say, SHA-2 or the
-> eventual SHA-3).  Just store the backup checksums of the parent
-> commitments in some backwardly compatible place that old git
-> implementations wouldn't look (say, after the NULL in the commit
-> message if there isn't a better place :-), and new implementations
-> would know to generate the checksums, and old implementations would
-> ignore it.
-
-Yeah, if birthday attacks against sha1 become possible, the sensible
-thing is probably not to worry too much about the file format, but to
-use a better hash.
-
-Commits can hide extra hashes in a header pretty easily. But what about
-trees and blobs? I don't think there's any "ignored" space in either
-one.
-
--Peff
+diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
+index 0b32d18..c18bfa1 100755
+--- a/contrib/mw-to-git/git-remote-mediawiki
++++ b/contrib/mw-to-git/git-remote-mediawiki
+@@ -109,6 +109,10 @@ $dumb_push = ($dumb_push eq "true");
+ 
+ my $wiki_name = $url;
+ $wiki_name =~ s/[^\/]*:\/\///;
++# If URL is like http://user:password@example.com/, we clearly don't
++# want the password in $wiki_name. While we're there, also remove user
++# and '@' sign, to avoid author like MWUser@HTTPUser@host.com
++$wiki_name =~ s/^.*@//;
+ 
+ # Commands parser
+ my $entry;
+-- 
+1.7.7.140.ge3099
