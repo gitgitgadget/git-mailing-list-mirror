@@ -1,84 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: provide a way to customize html headers
-Date: Thu, 20 Oct 2011 17:37:02 -0700
-Message-ID: <7vmxcv89jl.fsf@alter.siamese.dyndns.org>
-References: <201110170928.56075.lenaic@lhuard.fr.eu.org>
- <201110171357.00278.jnareb@gmail.com>
- <201110210046.34679.lenaic@lhuard.fr.eu.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: shallow&single-branch clone?
+Date: Thu, 20 Oct 2011 21:22:59 -0400
+Message-ID: <20111021012259.GA13421@sigill.intra.peff.net>
+References: <4E9ED108.5020505@native-instruments.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr.eu.org>
-X-From: git-owner@vger.kernel.org Fri Oct 21 02:37:18 2011
+Cc: git@vger.kernel.org
+To: Norbert Nemec <norbert.nemec@native-instruments.de>
+X-From: git-owner@vger.kernel.org Fri Oct 21 03:24:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RH36r-00070U-GD
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Oct 2011 02:37:17 +0200
+	id 1RH3qV-00023Z-HX
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Oct 2011 03:24:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752276Ab1JUAhG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Oct 2011 20:37:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62847 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751980Ab1JUAhF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2011 20:37:05 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A6A696E82;
-	Thu, 20 Oct 2011 20:37:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=yG82G6BJSbBJ
-	FuljiOI+623kwsA=; b=Foiy6nCiBSgsUZab9nmmIc6jMMHMH/oQAG46XS7R/h5w
-	wjB/zDzofDYNr21jhP9wYZbjnzZtHJTBnOXS22PsyCNQsdiou34YhHujZKcfGYyz
-	/Ofb/C5hB2deC28UYZzjTo4rIApzAvAgrkkQZgCmY0ou8x/g27Q62W4w1jFHdJE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=w358Bp
-	qcGGPoTDVKEkkcrvAdeYMU1HsWtFvKdL6mB5argqR93n9Pfv9D5a91BoJ1t0KPud
-	zt+njnFgDmbQbqWMPbBycLiOcsNdMLX8slTay/ffF4Ox8JZ53FfedC+lc4F0Hjya
-	mr6wC95Pud11FynJUfLJ7ZOtUfu0ECUc3bQx8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D9566E81;
-	Thu, 20 Oct 2011 20:37:04 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 048996E80; Thu, 20 Oct 2011
- 20:37:03 -0400 (EDT)
-In-Reply-To: <201110210046.34679.lenaic@lhuard.fr.eu.org> (=?utf-8?B?Ikw=?=
- =?utf-8?B?w6luYcOvYw==?= Huard"'s message of "Fri, 21 Oct 2011 00:46:34
- +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CC203FE2-FB7C-11E0-A6A8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751969Ab1JUBXD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Oct 2011 21:23:03 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36422
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750933Ab1JUBXC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Oct 2011 21:23:02 -0400
+Received: (qmail 15858 invoked by uid 107); 21 Oct 2011 01:23:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Oct 2011 21:23:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Oct 2011 21:22:59 -0400
+Content-Disposition: inline
+In-Reply-To: <4E9ED108.5020505@native-instruments.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184047>
 
-L=C3=A9na=C3=AFc Huard <lenaic@lhuard.fr.eu.org> writes:
+On Wed, Oct 19, 2011 at 03:30:48PM +0200, Norbert Nemec wrote:
 
-> +GITWEB_SITE_HTMLHEADER =3D
->  GITWEB_SITE_HEADER =3D
->  GITWEB_SITE_FOOTER =3D
+> Truncating history is done by 'git clone --depth 1', there is not way
+> to restrict 'clone' to a single branch (the --branch option still
+> downloads all branches and only then chooses something other than
+> HEAD as active branch).
+> 
+> The manual sequence
+> 	git init
+> 	git remote add -t master -f origin URL
+> 	git checkout
+> allows a clone of a single branch but offers no means to truncate history.
 
-Is it just me or does the inconsistency between the existing two variab=
-les
-and this new one with a very similar name stand out like a sore somethi=
-ng?
+You can do:
 
-It might have been better if GITWEB_SITE_(HEADER|FOOTER) were named wit=
-h
-"_FILE" suffix, but as long as we consider/declare insert_file is the n=
-orm
-and in-place inclusion of mini-string is an oddball, it is sufficient t=
-o
-call this GITWEB_SITE_HTML_HEAD_STRING to avoid confusion?
+  git init
+  git remote add -t master origin URL
+  git fetch --depth=1
+  git checkout
 
-Perhaps GITWEB_SITE_HEADER_STRING and GITWEB_SITE_FOOTER_STRING might t=
-urn
-out to be useful in the future for in-place inclusion of mini-strings, =
-and
-when that happens, you two would thank me for this suggestion ;-)
+But obviously that's not as nice as an option to clone.
+
+> The least intrusive solution would be an additional option to clone,
+> perhaps '--branch-only'.
+
+Agreed, that would be better. We might want to make it more flexible,
+like:
+
+  git clone --fetch=branch1 --fetch=branch2
+
+and then by default choose "-b branch1" since it was mentioned first.
+
+> More user friendly, this options should be on by default when --depth
+> is set. After all: who would expect branches to be cloned when the
+> history is explicitely truncated?
+
+Yeah, that probably makes sense. If the branches are related, it's
+probably not saving much, but if you have unrelated branches, it would
+be a nice convenience. OTOH, how would you tell git "no, I really do
+want the tip of every branch"?
+
+-Peff
