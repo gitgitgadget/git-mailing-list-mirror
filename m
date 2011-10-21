@@ -1,54 +1,94 @@
-From: "Melisa Taufiq" <ys0514@mail.tbcnet.net>
-Subject: REACH DANIEL GOH AT sch@soyof.com
-Date: Sat, 22 Oct 2011 01:46:43 +0800
-Message-ID: <20111021174650.ZMDZ1564.viefep18-int.chello.at@edge03.upcmail.net>
-Reply-To: <sch@soyof.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] Add simple test for Git::config_path() in t/t9700-perl-git.sh
+Date: Fri, 21 Oct 2011 20:42:44 +0200
+Message-ID: <20111021184202.26990.45856.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="Windows-1251"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Fri Oct 21 19:47:50 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Wong <normalperson@yhbt.net>,
+	Cord Seele <cowose@googlemail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Cord Seele <cowose@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 21 20:43:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RHJC9-0005OJ-88
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Oct 2011 19:47:49 +0200
+	id 1RHK4D-00057z-Ik
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Oct 2011 20:43:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754516Ab1JURro (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Oct 2011 13:47:44 -0400
-Received: from fep27.mx.upcmail.net ([62.179.121.47]:37716 "EHLO
-	fep27.mx.upcmail.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754462Ab1JURrn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Oct 2011 13:47:43 -0400
-Received: from edge03.upcmail.net ([192.168.13.238])
-          by viefep18-int.chello.at
-          (InterMail vM.8.01.02.02 201-2260-120-106-20100312) with ESMTP
-          id <20111021174650.ZMDZ1564.viefep18-int.chello.at@edge03.upcmail.net>;
-          Fri, 21 Oct 2011 19:46:50 +0200
-Received: from User ([212.78.230.242])
-	by edge03.upcmail.net with edge
-	id nVl21h01g5ESaNC03VlDy2; Fri, 21 Oct 2011 19:46:49 +0200
-X-SourceIP: 212.78.230.242
-X-Authenticated-Sender: j.kozar@chello.sk
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-X-Cloudmark-Analysis: v=1.1 cv=7AjrSHUygkxmgKj9+ZdWPzZoKYzIcpgZMIt1Yxqn8hE= c=1 sm=0 a=Dyoqhi_TatcA:10 a=1LAUW2tjPz0A:10 a=0bicMkPa-zgA:10 a=8EU9Q7FnrCoA:10 a=4uWrRWkKGv0A:10 a=Cfj4BQAnxiAA:10 a=f3Il6Yc7hXqisMLtOI8A:9 a=Ft8UYL4EG9YA:10 a=I_bH52LkH1k75gGV:21 a=RL03ltgFIPZTDIIC:21 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1751834Ab1JUSnh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Oct 2011 14:43:37 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:38260 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751804Ab1JUSng (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Oct 2011 14:43:36 -0400
+Received: by bkbzt19 with SMTP id zt19so5162136bkb.19
+        for <git@vger.kernel.org>; Fri, 21 Oct 2011 11:43:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:subject:to:cc:date:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        bh=+cAOUDRl0yu1IHNypQz3Nph9DCBaGYKwDnLaNVh+QsA=;
+        b=qiOQRQluLnKrOxsNyjl6iJOPmS++DIjJTgo2md6KVV7BSw4QW5sbfyIqXG6k43RKB3
+         nf9ylJ3+WqyIQKqzdQyL/DwOkSixT+VEa2cVDxRIxhj3IW05X1amDSWjFkxZX9nK+9K9
+         5dHF9FwZAxhrXUf/m2rysBh3YLhGVrllymcE8=
+Received: by 10.204.7.199 with SMTP id e7mr11335547bke.40.1319222614774;
+        Fri, 21 Oct 2011 11:43:34 -0700 (PDT)
+Received: from localhost.localdomain (abwe57.neoplus.adsl.tpnet.pl. [83.8.228.57])
+        by mx.google.com with ESMTPS id v20sm2553364faf.1.2011.10.21.11.43.32
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 21 Oct 2011 11:43:33 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p9LIgirA027051;
+	Fri, 21 Oct 2011 20:42:55 +0200
+User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 5.5 points;
- *  1.5 MILLION_USD BODY: Talks about millions of dollars
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4954]
- *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
- *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184077>
 
-My name is Melisa Taufiq, i am going on a cancer surgery today. I have WILL Seventeen Million United States Dollars to you for the work of the lord. Contact my 
-attorney with my reference number FZ/XXR/729/0537/BKH0/613X1/UK  for further info. Barr.Daniel Goh at sch(at)soyof com. Melisa Taufiq
+Tests "~/foo" path expansion and multiple values.
+
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ t/t9700-perl-git.sh |    6 +++++-
+ t/t9700/test.pl     |    4 ++++
+ 2 files changed, 9 insertions(+), 1 deletions(-)
+
+diff --git a/t/t9700-perl-git.sh b/t/t9700-perl-git.sh
+index 3787186..435d896 100755
+--- a/t/t9700-perl-git.sh
++++ b/t/t9700-perl-git.sh
+@@ -43,7 +43,11 @@ test_expect_success \
+      git config --add test.booltrue true &&
+      git config --add test.boolfalse no &&
+      git config --add test.boolother other &&
+-     git config --add test.int 2k
++     git config --add test.int 2k &&
++     git config --add test.path "~/foo" &&
++     git config --add test.pathexpanded "$HOME/foo" &&
++     git config --add test.pathmulti foo &&
++     git config --add test.pathmulti bar
+      '
+ 
+ # The external test will outputs its own plan
+diff --git a/t/t9700/test.pl b/t/t9700/test.pl
+index 13ba96e..3b9b484 100755
+--- a/t/t9700/test.pl
++++ b/t/t9700/test.pl
+@@ -33,6 +33,10 @@ is($r->config_int("test.int"), 2048, "config_int: integer");
+ is($r->config_int("test.nonexistent"), undef, "config_int: nonexistent");
+ ok($r->config_bool("test.booltrue"), "config_bool: true");
+ ok(!$r->config_bool("test.boolfalse"), "config_bool: false");
++is($r->config_path("test.path"), $r->config("test.pathexpanded"),
++   "config_path: ~/foo expansion");
++is_deeply([$r->config_path("test.pathmulti")], ["foo", "bar"],
++   "config_path: multiple values");
+ our $ansi_green = "\x1b[32m";
+ is($r->get_color("color.test.slot1", "red"), $ansi_green, "get_color");
+ # Cannot test $r->get_colorbool("color.foo")) because we do not
