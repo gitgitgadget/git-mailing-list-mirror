@@ -1,89 +1,125 @@
-From: Lars Noschinski <lars@public.noschinski.de>
-Subject: Re: git grep --no-index and absolute paths don't work?
-Date: Fri, 21 Oct 2011 13:49:52 +0200
-Message-ID: <20111021114952.GA2797@lars.home.noschinski.de>
-References: <CAKPyHN138OZRt_3PT5ChuTpSEuOdybnyAj8Baqr=3OD=y==jgw@mail.gmail.com>
- <1319180973.5352.8.camel@bee.lab.cmartin.tk>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Breakage in master since 6d4bb3833c
+Date: Fri, 21 Oct 2011 14:10:53 +0200
+Message-ID: <4EA1614D.3090202@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Bert Wesarg <bert.wesarg@googlemail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Fri Oct 21 13:55:39 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>,
+	git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 21 14:11:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RHDhK-0004WP-UB
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Oct 2011 13:55:39 +0200
+	id 1RHDwK-00031u-On
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Oct 2011 14:11:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754572Ab1JULze convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Oct 2011 07:55:34 -0400
-Received: from smtprelay05.ispgateway.de ([80.67.31.98]:59155 "EHLO
-	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754537Ab1JULze (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Oct 2011 07:55:34 -0400
-X-Greylist: delayed 336 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Oct 2011 07:55:33 EDT
-Received: from [138.246.44.128] (helo=zwergkolibri.home.noschinski.de)
-	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <lars@public.noschinski.de>)
-	id 1RHDbj-0002WI-J1; Fri, 21 Oct 2011 13:49:51 +0200
-Received: from lars by zwergkolibri.home.noschinski.de with local (Exim 4.76)
-	(envelope-from <lars@public.noschinski.de>)
-	id 1RHDbk-00010M-LQ; Fri, 21 Oct 2011 13:49:52 +0200
-Content-Disposition: inline
-In-Reply-To: <1319180973.5352.8.camel@bee.lab.cmartin.tk>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: bGFyc0Bub3NjaGluc2tpLmRl
+	id S1754626Ab1JUMK7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Oct 2011 08:10:59 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:48769 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751117Ab1JUMK6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Oct 2011 08:10:58 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p9LCAs4E006152
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 21 Oct 2011 14:10:55 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184057>
 
-* Carlos Mart=EDn Nieto <cmn@elego.de> [11-10-21 09:09]:
-> On Fri, 2011-10-21 at 08:34 +0200, Bert Wesarg wrote:
-> > I'm currently  totally confused, that a
-> >=20
-> >     git grep --no-index foo /usr/include
-> >=20
-> > does not work. I know that the documentation says "in the current
-> > directory" for the --no-index flag. But this does not work ether:
->=20
-> The rest of the sentence reads ", not just those tracked by git" whic=
-h
-> implies that the files tracked by git are also searched. This require=
-s a
-> git repository.
+When testing reference-handling performance using my refperf script [1],
+I noticed that there is a problem in master that I bisected down to
 
-git grep --no-index works outside of git repositories (at least with
-relative paths).
+6d4bb3833c "fetch: verify we have everything we need before updating our
+ref"
 
-> >     cd ~; git grep --no-index foo ~/.bashrc
-> >=20
-> > They all fail with 'is outside repository'. Which is for itself var=
-y
-> > misleading, because I intentionally said --no-index.
->=20
-> Git is a tool that works on git repositories. Some commands may work
-> outside of a repository, like ls-remote when given an URL or init (fo=
-r
-> obvious reasons) but it's not something that should be expected,
-> especially for commands that read files from the working tree.
->=20
-> Why are you trying to use git's grep command outside a repository? Wh=
-y
-> isn't 'grep -nr foo /usr/include/' good enough?
+When I run the following commands
 
-There are a few nice things about git's grep, which GNU grep does not
-have:
+=======================================================
+GIT=$(pwd)/git
+ORIG=bug-6d4bb383-repo
+REPO=bug-6d4bb383-clone
+URL=file://$(pwd)/$ORIG
 
-  - automatic usage of pager
-  - support for pathspecs (can be emulated with `find ...`)
-  - support for boolean combinations of regular expressions
+$GIT init $ORIG
+cd $ORIG
+$GIT config gc.auto 0
+$GIT config gc.packrefs false
+touch a.txt
+$GIT add a.txt
+$GIT commit -am 'Add file'
+cd ..
 
-  -- Lars.
+mkdir $REPO
+cd $REPO
+$GIT init
+$GIT remote add origin $URL
+$GIT fetch origin
+=======================================================
+
+Then the last "git fetch origin" command gives the following output:
+
+=======================================================
+remote: Counting objects: 3, done.
+remote: Total 3 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+usage: git rev-list [OPTION] <commit-id>... [ -- paths... ]
+  limiting output:
+    --max-count=<n>
+    --max-age=<epoch>
+    --min-age=<epoch>
+    --sparse
+    --no-merges
+    --min-parents=<n>
+    --no-min-parents
+    --max-parents=<n>
+    --no-max-parents
+    --remove-empty
+    --all
+    --branches
+    --tags
+    --remotes
+    --stdin
+    --quiet
+  ordering output:
+    --topo-order
+    --date-order
+    --reverse
+  formatting output:
+    --parents
+    --children
+    --objects | --objects-edge
+    --unpacked
+    --header | --pretty
+    --abbrev=<n> | --no-abbrev
+    --abbrev-commit
+    --left-right
+  special purpose:
+    --bisect
+    --bisect-vars
+    --bisect-all
+error: file:///home/mhagger/self/proj/git/git/bug-6d4bb383-repo did not
+send all necessary objects
+
+=======================================================
+
+The same error occurs if all of the steps *except* the last one are done
+with a release version of git.
+
+Michael
+
+[1] branch "refperf" at git://github.com/mhagger/git.git
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
