@@ -1,75 +1,80 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH v2 2/2] submodule::module_clone(): silence die() message from module_name()
-Date: Fri, 21 Oct 2011 21:49:36 +0800
-Message-ID: <1319204976-5076-3-git-send-email-rctay89@gmail.com>
-References: <1317978295-4796-2-git-send-email-rctay89@gmail.com>
- <1319204976-5076-1-git-send-email-rctay89@gmail.com>
- <1319204976-5076-2-git-send-email-rctay89@gmail.com>
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 21 15:50:02 2011
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Breakage in master since 6d4bb3833c
+Date: Fri, 21 Oct 2011 16:01:01 +0200
+Message-ID: <4EA17B1D.9000900@alum.mit.edu>
+References: <4EA1614D.3090202@alum.mit.edu> <20111021122801.GA3799@goldbirke>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	git discussion list <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri Oct 21 16:01:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RHFU1-0004wg-JX
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Oct 2011 15:50:01 +0200
+	id 1RHFet-00021c-Tf
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Oct 2011 16:01:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754711Ab1JUNt5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Oct 2011 09:49:57 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:35352 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753238Ab1JUNt4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Oct 2011 09:49:56 -0400
-Received: by ggnb1 with SMTP id b1so3864130ggn.19
-        for <git@vger.kernel.org>; Fri, 21 Oct 2011 06:49:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=URAfv6U/RxvDMpmTNzyMTZjMhEXWV3e9j3flOGSPp8Q=;
-        b=JtBpDlPnlps0O9AZNboqGyJvMQjFOJxmSl12TqkHgMmt0fMF+2T/jQD8ElFK/8ie2b
-         mrvy53tpnYK7TdN2z3Fk+GF5uIIJC1HGD8anV9rpKfFrK+uPg0A3NOXi5x2DpK2sQcyu
-         k78A4uvLpZzq9V2YCwO0AgDkDlLIhcLtq0SZ8=
-Received: by 10.68.73.103 with SMTP id k7mr18636248pbv.30.1319204995797;
-        Fri, 21 Oct 2011 06:49:55 -0700 (PDT)
-Received: from localhost (s80216.pc.nus.edu.sg. [137.132.36.216])
-        by mx.google.com with ESMTPS id w4sm30771014pbf.6.2011.10.21.06.49.52
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 21 Oct 2011 06:49:53 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6.msysgit.0.584.g2cbf
-In-Reply-To: <1319204976-5076-2-git-send-email-rctay89@gmail.com>
+	id S1754614Ab1JUOBK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Oct 2011 10:01:10 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:49978 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751541Ab1JUOBJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Oct 2011 10:01:09 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p9LE13AS021543
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 21 Oct 2011 16:01:03 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
+In-Reply-To: <20111021122801.GA3799@goldbirke>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184065>
 
-The die() message that may occur in module_name() is not really relevant
-to the user when called from module_clone(); the latter handles the
-"failure" (no submodule mapping) anyway.
+On 10/21/2011 02:28 PM, SZEDER G=E1bor wrote:
+> On Fri, Oct 21, 2011 at 02:10:53PM +0200, Michael Haggerty wrote:
+>> When testing reference-handling performance using my refperf script =
+[1],
+>> I noticed that there is a problem in master that I bisected down to
+>>
+>> 6d4bb3833c "fetch: verify we have everything we need before updating=
+ our
+>> ref"
+>>
+>> When I run the following commands
+>>
+>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D
+>> GIT=3D$(pwd)/git
+>=20
+>> $GIT fetch origin
+>> Then the last "git fetch origin" command gives the following output:
+>> remote: Counting objects: 3, done.
+>> remote: Total 3 (delta 0), reused 0 (delta 0)
+>> Unpacking objects: 100% (3/3), done.
+>> usage: git rev-list [OPTION] <commit-id>... [ -- paths... ]
+>=20
+> I suspect this is the same issue as here:
+>=20
+>   http://thread.gmane.org/gmane.comp.version-control.git/182339/focus=
+=3D182357
 
-Analysis of other callsites is left to future work.
+Yes, you are right.  Setting GIT=3D$(pwd)/bin-wrappers/git fixes the pr=
+oblem.
 
-Acked-by: Jens Lehmann <Jens.Lehmann@web.de>
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
----
- git-submodule.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Thanks,
+Michael
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 8e9e5ea..5d29f82 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -124,7 +124,7 @@ module_clone()
- 	reference="$3"
- 	gitdir=
- 	gitdir_base=
--	name=$(module_name "$path")
-+	name=$(module_name "$path" 2>/dev/null)
- 	base_path=$(dirname "$path")
- 
- 	gitdir=$(git rev-parse --git-dir)
--- 
-1.7.6.msysgit.0.584.g2cbf
+--=20
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
