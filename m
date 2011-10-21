@@ -1,95 +1,60 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: Compiling on Windows
-Date: Fri, 21 Oct 2011 13:41:25 +0200
-Message-ID: <CABPQNSYkBg9pc15kCgzcoqhHFVom48zxYmT4N1GbyRsdLvC9iA@mail.gmail.com>
-References: <CAH5451=7Em7sPzknVx8i2VBSAZxZwg1Awr8s3Nr2W=A6SDEZEw@mail.gmail.com>
- <4E9E811C.10205@lyx.org> <2015B7F2CEAE4B449EA4EF744F9B8FD9@PhilipOakley> <4EA094D2.7050807@lyx.org>
-Reply-To: kusmabite@gmail.com
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: Links not working
+Date: Fri, 21 Oct 2011 07:52:01 -0400
+Message-ID: <CAEBDL5VWu38CSBEA4LmJnUWBL235WbxM_-XeOe1Ta7EkfapHWQ@mail.gmail.com>
+References: <686C8AC851FB48E78B12E0BB04A66FCF@DracoMain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Andrew Ardill <andrew.ardill@gmail.com>,
-	Git MsysGit <msysgit@googlegroups.com>, git@vger.kernel.org
-To: Vincent van Ravesteijn <vfr@lyx.org>
-X-From: git-owner@vger.kernel.org Fri Oct 21 13:42:13 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: andy@soon.com
+X-From: git-owner@vger.kernel.org Fri Oct 21 13:52:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RHDUJ-0006xt-Ts
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Oct 2011 13:42:12 +0200
+	id 1RHDdw-00030A-Sv
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Oct 2011 13:52:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754477Ab1JULmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Oct 2011 07:42:06 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:44889 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754435Ab1JULmF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Oct 2011 07:42:05 -0400
-Received: by pzk36 with SMTP id 36so9335130pzk.1
-        for <git@vger.kernel.org>; Fri, 21 Oct 2011 04:42:05 -0700 (PDT)
+	id S1754559Ab1JULwD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Oct 2011 07:52:03 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:64438 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754451Ab1JULwC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Oct 2011 07:52:02 -0400
+Received: by vcge1 with SMTP id e1so3205853vcg.19
+        for <git@vger.kernel.org>; Fri, 21 Oct 2011 04:52:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=jPljP6BPtVG+kNk7F7DXxnbGKnWYu89BOgyUbFN19oM=;
-        b=vDQ/xk3GDJ0d0nECSlrwpTTfDJWpzcjAkxFEaWXXibr9k6tPR1pJCtfgjXgfvawehO
-         vyQgQbPyQ0yI3P3cc7ncUJ0MhXl1AMsb17Hc99lt1gH2kZ9IaNaWU6jHHgZvrroLba6/
-         28h0vryj6gOMtufkQHJed/MPD+qsPJa8mfLLM=
-Received: by 10.68.17.197 with SMTP id q5mr18147118pbd.25.1319197325031; Fri,
- 21 Oct 2011 04:42:05 -0700 (PDT)
-Received: by 10.68.71.135 with HTTP; Fri, 21 Oct 2011 04:41:25 -0700 (PDT)
-In-Reply-To: <4EA094D2.7050807@lyx.org>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=G8e+2ATKkfY6/Z5lZ1LZK0Hcp8ca0O+UWULz5X/eEdU=;
+        b=DYzW12vYqVqi3i2ChkKnXM393mwPZsEOUvJy3kBJ2PC3Tw7HpFrSe4Bl7C7JA+MLMV
+         Fpziy0gwE1oLHjah/SfrVdyid+I0gMBTdXJQSC/Y/VwXwGSq3b3Hnah/dNZTP2TEj4lJ
+         SOi1xNtKPTmeZeLSymToK5rTN7WP7rNwJhZPs=
+Received: by 10.220.140.195 with SMTP id j3mr966108vcu.273.1319197921528; Fri,
+ 21 Oct 2011 04:52:01 -0700 (PDT)
+Received: by 10.220.94.67 with HTTP; Fri, 21 Oct 2011 04:52:01 -0700 (PDT)
+In-Reply-To: <686C8AC851FB48E78B12E0BB04A66FCF@DracoMain>
+X-Google-Sender-Auth: z8CgK7opw1oJA2Ha1GjoQR0fLTA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184055>
 
-On Thu, Oct 20, 2011 at 11:38 PM, Vincent van Ravesteijn <vfr@lyx.org> wrote:
+On Fri, Oct 21, 2011 at 3:29 AM, Andy Hartley <andy@soon.com> wrote:
+> Hi,
 >
->>> I once wrote a little step-by-step tutorial on how to compile the native
->>> Windows Git with MSVC (Express).
->>>
->>> http://blog.vfrconsultancy.nl/#post0
->>
->> The blog post filled in a few gaps in the Msysgit README instructions
->> about where to place the various downloads described.
+> I have been tying to get to the install msysGit link
+> https://git.wiki.kernel.org/index.php/MSysGit:InstallMSysGit
 >
-> I updated the post a little so that it actually works again. I somehow like
-> to have a real native Windows compilation of Git.
-
-Git for Windows is a "real native Windows compilation of Git". You
-don't need a MSVC-compiled binary for that.
-
-> To successfully compile Git, we also need to change
->>
->> #include <sys/resource.h>
+> for about a week now. The page load fails after about one minute with
+> connection lost.
 >
-> into
->>
->> #include <io.h>
->
-> I have seen some communication about this in the past, but nobody cared
-> enough to fix this.
->
+> This from your http://code.google.com/p/msysgit/ main page.
 
-There's been some patches dealing with this recently on the msysgit
-mailing list. Look for the patches prefixed with "MSVC" in Karsten
-Blees' Unicode series. They will be kicked out of the next iteration
-of the Unicode series, but if you want to pick them up, clean up the
-issues pointed out and re-submit them, that'd be very welcome.
+You might find GitHub's page useful in the meantime:
+    <http://help.github.com/win-set-up-git/>
 
-> Shall I sent a patch that adds a file "compat/win32/sys/resource.h" which
-> just includes "io.h" ? Or is there another more prefered way to fix this ?
-
-I would prefer <io.h> to be included from compat/msvc.h instead,
-because <io.h> isn't a <sys/resource.h> replacement.
-
-As for the missing <sys/resource.h>, I'm not so sure. We don't have
-<sys/resource.h> in msysGit either, and I personally don't like the
-whole adding-stub-headers approach too much, but it does seem to be
-the precedence set for the MSVC-build...
-
-In general I'd say that no-one have worked the MSVC-support in a
-while, patches would be welcome :)
+-John
