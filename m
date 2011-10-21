@@ -1,60 +1,89 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: Links not working
-Date: Fri, 21 Oct 2011 07:52:01 -0400
-Message-ID: <CAEBDL5VWu38CSBEA4LmJnUWBL235WbxM_-XeOe1Ta7EkfapHWQ@mail.gmail.com>
-References: <686C8AC851FB48E78B12E0BB04A66FCF@DracoMain>
+From: Lars Noschinski <lars@public.noschinski.de>
+Subject: Re: git grep --no-index and absolute paths don't work?
+Date: Fri, 21 Oct 2011 13:49:52 +0200
+Message-ID: <20111021114952.GA2797@lars.home.noschinski.de>
+References: <CAKPyHN138OZRt_3PT5ChuTpSEuOdybnyAj8Baqr=3OD=y==jgw@mail.gmail.com>
+ <1319180973.5352.8.camel@bee.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: andy@soon.com
-X-From: git-owner@vger.kernel.org Fri Oct 21 13:52:10 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Bert Wesarg <bert.wesarg@googlemail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Fri Oct 21 13:55:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RHDdw-00030A-Sv
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Oct 2011 13:52:09 +0200
+	id 1RHDhK-0004WP-UB
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Oct 2011 13:55:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754559Ab1JULwD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Oct 2011 07:52:03 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:64438 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754451Ab1JULwC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Oct 2011 07:52:02 -0400
-Received: by vcge1 with SMTP id e1so3205853vcg.19
-        for <git@vger.kernel.org>; Fri, 21 Oct 2011 04:52:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=G8e+2ATKkfY6/Z5lZ1LZK0Hcp8ca0O+UWULz5X/eEdU=;
-        b=DYzW12vYqVqi3i2ChkKnXM393mwPZsEOUvJy3kBJ2PC3Tw7HpFrSe4Bl7C7JA+MLMV
-         Fpziy0gwE1oLHjah/SfrVdyid+I0gMBTdXJQSC/Y/VwXwGSq3b3Hnah/dNZTP2TEj4lJ
-         SOi1xNtKPTmeZeLSymToK5rTN7WP7rNwJhZPs=
-Received: by 10.220.140.195 with SMTP id j3mr966108vcu.273.1319197921528; Fri,
- 21 Oct 2011 04:52:01 -0700 (PDT)
-Received: by 10.220.94.67 with HTTP; Fri, 21 Oct 2011 04:52:01 -0700 (PDT)
-In-Reply-To: <686C8AC851FB48E78B12E0BB04A66FCF@DracoMain>
-X-Google-Sender-Auth: z8CgK7opw1oJA2Ha1GjoQR0fLTA
+	id S1754572Ab1JULze convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Oct 2011 07:55:34 -0400
+Received: from smtprelay05.ispgateway.de ([80.67.31.98]:59155 "EHLO
+	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754537Ab1JULze (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Oct 2011 07:55:34 -0400
+X-Greylist: delayed 336 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Oct 2011 07:55:33 EDT
+Received: from [138.246.44.128] (helo=zwergkolibri.home.noschinski.de)
+	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <lars@public.noschinski.de>)
+	id 1RHDbj-0002WI-J1; Fri, 21 Oct 2011 13:49:51 +0200
+Received: from lars by zwergkolibri.home.noschinski.de with local (Exim 4.76)
+	(envelope-from <lars@public.noschinski.de>)
+	id 1RHDbk-00010M-LQ; Fri, 21 Oct 2011 13:49:52 +0200
+Content-Disposition: inline
+In-Reply-To: <1319180973.5352.8.camel@bee.lab.cmartin.tk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: bGFyc0Bub3NjaGluc2tpLmRl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184056>
 
-On Fri, Oct 21, 2011 at 3:29 AM, Andy Hartley <andy@soon.com> wrote:
-> Hi,
->
-> I have been tying to get to the install msysGit link
-> https://git.wiki.kernel.org/index.php/MSysGit:InstallMSysGit
->
-> for about a week now. The page load fails after about one minute with
-> connection lost.
->
-> This from your http://code.google.com/p/msysgit/ main page.
+* Carlos Mart=EDn Nieto <cmn@elego.de> [11-10-21 09:09]:
+> On Fri, 2011-10-21 at 08:34 +0200, Bert Wesarg wrote:
+> > I'm currently  totally confused, that a
+> >=20
+> >     git grep --no-index foo /usr/include
+> >=20
+> > does not work. I know that the documentation says "in the current
+> > directory" for the --no-index flag. But this does not work ether:
+>=20
+> The rest of the sentence reads ", not just those tracked by git" whic=
+h
+> implies that the files tracked by git are also searched. This require=
+s a
+> git repository.
 
-You might find GitHub's page useful in the meantime:
-    <http://help.github.com/win-set-up-git/>
+git grep --no-index works outside of git repositories (at least with
+relative paths).
 
--John
+> >     cd ~; git grep --no-index foo ~/.bashrc
+> >=20
+> > They all fail with 'is outside repository'. Which is for itself var=
+y
+> > misleading, because I intentionally said --no-index.
+>=20
+> Git is a tool that works on git repositories. Some commands may work
+> outside of a repository, like ls-remote when given an URL or init (fo=
+r
+> obvious reasons) but it's not something that should be expected,
+> especially for commands that read files from the working tree.
+>=20
+> Why are you trying to use git's grep command outside a repository? Wh=
+y
+> isn't 'grep -nr foo /usr/include/' good enough?
+
+There are a few nice things about git's grep, which GNU grep does not
+have:
+
+  - automatic usage of pager
+  - support for pathspecs (can be emulated with `find ...`)
+  - support for boolean combinations of regular expressions
+
+  -- Lars.
