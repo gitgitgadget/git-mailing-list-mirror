@@ -1,80 +1,82 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Breakage in master since 6d4bb3833c
-Date: Fri, 21 Oct 2011 16:01:01 +0200
-Message-ID: <4EA17B1D.9000900@alum.mit.edu>
-References: <4EA1614D.3090202@alum.mit.edu> <20111021122801.GA3799@goldbirke>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git grep --no-index and absolute paths don't work?
+Date: Fri, 21 Oct 2011 10:00:21 -0700
+Message-ID: <7vipni8el6.fsf@alter.siamese.dyndns.org>
+References: <CAKPyHN138OZRt_3PT5ChuTpSEuOdybnyAj8Baqr=3OD=y==jgw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	git discussion list <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Oct 21 16:01:17 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 21 19:00:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RHFet-00021c-Tf
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Oct 2011 16:01:16 +0200
+	id 1RHISM-0002hs-5a
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Oct 2011 19:00:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754614Ab1JUOBK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Oct 2011 10:01:10 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:49978 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751541Ab1JUOBJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Oct 2011 10:01:09 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p9LE13AS021543
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 21 Oct 2011 16:01:03 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
-In-Reply-To: <20111021122801.GA3799@goldbirke>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1753146Ab1JURAZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Oct 2011 13:00:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44351 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751518Ab1JURAY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Oct 2011 13:00:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7BFEA5D2E;
+	Fri, 21 Oct 2011 13:00:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rKm1OaYpxTJceuYFWZQ/liaqBQ4=; b=CPtoPs
+	iZbydiApOlPXI3G6KMhhPg3LEKmlmxMGgcnpKu/sL1bVpTLPBNb3Ipj4hm7sUlRd
+	hyMIR+x43qfzlY6HpEm9quaERW8QmnVuXFMOVA7oL9ALitIHkmM36pXblFL6h2mc
+	KqQwaTW02553mGP61IbXDvi2dCDriScob1I+o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EZcBOaqixi/vzKMqwy5S01X0f6zTS1Kt
+	va8fvq1NRjNE3J9Y8UhaMUg993I6agd/kIhPG0MVsjqOwUdnIpyZO1gRE7MGKBac
+	C3J7Nx59RAdrF8uqekpRm3mbqIUNTcNJwSZScU253yQcOwuynFQvM5t7Uf14Bw6a
+	nv2tLfZHhlM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 715665D2D;
+	Fri, 21 Oct 2011 13:00:23 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E07DA5D2A; Fri, 21 Oct 2011
+ 13:00:22 -0400 (EDT)
+In-Reply-To: <CAKPyHN138OZRt_3PT5ChuTpSEuOdybnyAj8Baqr=3OD=y==jgw@mail.gmail.com> (Bert
+ Wesarg's message of "Fri, 21 Oct 2011 08:34:10 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2A36207C-FC06-11E0-8192-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184067>
 
-On 10/21/2011 02:28 PM, SZEDER G=E1bor wrote:
-> On Fri, Oct 21, 2011 at 02:10:53PM +0200, Michael Haggerty wrote:
->> When testing reference-handling performance using my refperf script =
-[1],
->> I noticed that there is a problem in master that I bisected down to
->>
->> 6d4bb3833c "fetch: verify we have everything we need before updating=
- our
->> ref"
->>
->> When I run the following commands
->>
->> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
->> GIT=3D$(pwd)/git
->=20
->> $GIT fetch origin
->> Then the last "git fetch origin" command gives the following output:
->> remote: Counting objects: 3, done.
->> remote: Total 3 (delta 0), reused 0 (delta 0)
->> Unpacking objects: 100% (3/3), done.
->> usage: git rev-list [OPTION] <commit-id>... [ -- paths... ]
->=20
-> I suspect this is the same issue as here:
->=20
->   http://thread.gmane.org/gmane.comp.version-control.git/182339/focus=
-=3D182357
+Bert Wesarg <bert.wesarg@googlemail.com> writes:
 
-Yes, you are right.  Setting GIT=3D$(pwd)/bin-wrappers/git fixes the pr=
-oblem.
+> I'm currently  totally confused, that a
+>
+>     git grep --no-index foo /usr/include
+>
+> does not work. I know that the documentation says "in the current
+> directory" for the --no-index flag.
 
-Thanks,
-Michael
+I think "in the current directory" is just contrasting with "in the work
+tree, ..." at the beginning of the DESCRIPTION section. We could say "in
+the files" instead for clarity, and then add "when pathspec is not given,
+files in the current directory is searched" or something.
 
---=20
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+The intent of "--no-index", originating from "git diff --no-index", is to
+allow git tools to be used in non-git context, i.e. to files on the
+filesystem.
+
+"git grep --no-index" which is a later invention in the 1.7.0 era didn't
+fully ignore "git"ness, and one such instance you fixed in this thread:
+
+    http://thread.gmane.org/gmane.comp.version-control.git/181484/focus=181485
+
+I think this path normalization is another instance of us knowing a bit too
+much of "git" even when we are told with "--no-index" that we are not
+operating on a working tree associated with git.
