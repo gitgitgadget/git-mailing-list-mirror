@@ -1,67 +1,95 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Tracking cherry picks
-Date: Fri, 21 Oct 2011 04:52:34 -0500
-Message-ID: <20111021095234.GA17219@elie.hsd1.il.comcast.net>
-References: <4EA02E6C.2040608@cfl.rr.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: Compiling on Windows
+Date: Fri, 21 Oct 2011 13:41:25 +0200
+Message-ID: <CABPQNSYkBg9pc15kCgzcoqhHFVom48zxYmT4N1GbyRsdLvC9iA@mail.gmail.com>
+References: <CAH5451=7Em7sPzknVx8i2VBSAZxZwg1Awr8s3Nr2W=A6SDEZEw@mail.gmail.com>
+ <4E9E811C.10205@lyx.org> <2015B7F2CEAE4B449EA4EF744F9B8FD9@PhilipOakley> <4EA094D2.7050807@lyx.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Kirill Likhodedov <klikh.list@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Phillip Susi <psusi@cfl.rr.com>
-X-From: git-owner@vger.kernel.org Fri Oct 21 11:53:08 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Philip Oakley <philipoakley@iee.org>,
+	Andrew Ardill <andrew.ardill@gmail.com>,
+	Git MsysGit <msysgit@googlegroups.com>, git@vger.kernel.org
+To: Vincent van Ravesteijn <vfr@lyx.org>
+X-From: git-owner@vger.kernel.org Fri Oct 21 13:42:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RHBml-0005rY-TB
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Oct 2011 11:53:08 +0200
+	id 1RHDUJ-0006xt-Ts
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Oct 2011 13:42:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754175Ab1JUJwo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Oct 2011 05:52:44 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:64273 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754055Ab1JUJwo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Oct 2011 05:52:44 -0400
-Received: by iaek3 with SMTP id k3so4523987iae.19
-        for <git@vger.kernel.org>; Fri, 21 Oct 2011 02:52:43 -0700 (PDT)
+	id S1754477Ab1JULmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Oct 2011 07:42:06 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:44889 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754435Ab1JULmF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Oct 2011 07:42:05 -0400
+Received: by pzk36 with SMTP id 36so9335130pzk.1
+        for <git@vger.kernel.org>; Fri, 21 Oct 2011 04:42:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Zz3IGLQ8p+I+eKPLvmIDKXw+tnbx2eqiWo2uBYUxrEw=;
-        b=gFalmVZDRR25Jahi9iV0F/BtftTwNfXGD2/yUnCLnkQEeF6m0YBQTp5kbggdKIYReY
-         WAw1DWMPkap4UDxBAgx+7CF4B2q3MstEMC1+k+/pC8vjBH5lahZNzreb827w+G0l14qo
-         9np1aR5/Ag+LHt58DjrbANprdyaBcsvD8FVxk=
-Received: by 10.231.84.8 with SMTP id h8mr5772703ibl.47.1319190763672;
-        Fri, 21 Oct 2011 02:52:43 -0700 (PDT)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id e2sm31713785ibe.0.2011.10.21.02.52.42
-        (version=SSLv3 cipher=OTHER);
-        Fri, 21 Oct 2011 02:52:43 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4EA02E6C.2040608@cfl.rr.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=jPljP6BPtVG+kNk7F7DXxnbGKnWYu89BOgyUbFN19oM=;
+        b=vDQ/xk3GDJ0d0nECSlrwpTTfDJWpzcjAkxFEaWXXibr9k6tPR1pJCtfgjXgfvawehO
+         vyQgQbPyQ0yI3P3cc7ncUJ0MhXl1AMsb17Hc99lt1gH2kZ9IaNaWU6jHHgZvrroLba6/
+         28h0vryj6gOMtufkQHJed/MPD+qsPJa8mfLLM=
+Received: by 10.68.17.197 with SMTP id q5mr18147118pbd.25.1319197325031; Fri,
+ 21 Oct 2011 04:42:05 -0700 (PDT)
+Received: by 10.68.71.135 with HTTP; Fri, 21 Oct 2011 04:41:25 -0700 (PDT)
+In-Reply-To: <4EA094D2.7050807@lyx.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184054>
 
-Hi,
+On Thu, Oct 20, 2011 at 11:38 PM, Vincent van Ravesteijn <vfr@lyx.org> wrote:
+>
+>>> I once wrote a little step-by-step tutorial on how to compile the native
+>>> Windows Git with MSVC (Express).
+>>>
+>>> http://blog.vfrconsultancy.nl/#post0
+>>
+>> The blog post filled in a few gaps in the Msysgit README instructions
+>> about where to place the various downloads described.
+>
+> I updated the post a little so that it actually works again. I somehow like
+> to have a real native Windows compilation of Git.
 
-Phillip Susi wrote:
+Git for Windows is a "real native Windows compilation of Git". You
+don't need a MSVC-compiled binary for that.
 
-> Sometimes a bug is found and the fix needs applied to multiple
-> branches.  I would like to be able to list what branches the fix has been
-> applied to to validate that it went in everywhere it was needed, but after
-> cherry-picking the fix from master to the stable branches, the SHA1 of the
-> commit is different, and so git branch --contains does not think the commit
-> was applied to each of the stable branches.
+> To successfully compile Git, we also need to change
+>>
+>> #include <sys/resource.h>
+>
+> into
+>>
+>> #include <io.h>
+>
+> I have seen some communication about this in the past, but nobody cared
+> enough to fix this.
+>
 
-If you base the fix on the oldest commit you think you might ever want to
-apply it to, then you can reuse the same bugfix commit in all branches.
-See gitworkflows(7) for more on this.
+There's been some patches dealing with this recently on the msysgit
+mailing list. Look for the patches prefixed with "MSVC" in Karsten
+Blees' Unicode series. They will be kicked out of the next iteration
+of the Unicode series, but if you want to pick them up, clean up the
+issues pointed out and re-submit them, that'd be very welcome.
 
-Hope that helps, and good luck,
-Jonathan
+> Shall I sent a patch that adds a file "compat/win32/sys/resource.h" which
+> just includes "io.h" ? Or is there another more prefered way to fix this ?
+
+I would prefer <io.h> to be included from compat/msvc.h instead,
+because <io.h> isn't a <sys/resource.h> replacement.
+
+As for the missing <sys/resource.h>, I'm not so sure. We don't have
+<sys/resource.h> in msysGit either, and I personally don't like the
+whole adding-stub-headers approach too much, but it does seem to be
+the precedence set for the MSVC-build...
+
+In general I'd say that no-one have worked the MSVC-support in a
+while, patches would be welcome :)
