@@ -1,74 +1,57 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: Breakage in master since 6d4bb3833c
-Date: Fri, 21 Oct 2011 14:28:01 +0200
-Message-ID: <20111021122801.GA3799@goldbirke>
-References: <4EA1614D.3090202@alum.mit.edu>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: git grep --no-index and absolute paths don't work?
+Date: Fri, 21 Oct 2011 14:44:00 +0200
+Message-ID: <CAKPyHN2hM9jDWkJwaP5ETfJnupQ6kAZjvAL_oaDumApup0-zOQ@mail.gmail.com>
+References: <CAKPyHN138OZRt_3PT5ChuTpSEuOdybnyAj8Baqr=3OD=y==jgw@mail.gmail.com>
+	<1319180973.5352.8.camel@bee.lab.cmartin.tk>
+	<20111021114952.GA2797@lars.home.noschinski.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	git discussion list <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Oct 21 14:28:14 2011
+Cc: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Lars Noschinski <lars@public.noschinski.de>
+X-From: git-owner@vger.kernel.org Fri Oct 21 14:44:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RHECr-0002ML-ST
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Oct 2011 14:28:14 +0200
+	id 1RHESt-0000nD-Kr
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Oct 2011 14:44:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754105Ab1JUM2J convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Oct 2011 08:28:09 -0400
-Received: from ex-e-1.perimeter.fzi.de ([141.21.8.250]:3451 "EHLO
-	EX-E-1.perimeter.fzi.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751597Ab1JUM2I (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Oct 2011 08:28:08 -0400
-Received: from ex-ca-ht-1.fzi.de (141.21.32.98) by EX-E-1.perimeter.fzi.de
- (141.21.8.250) with Microsoft SMTP Server (TLS) id 14.1.339.1; Fri, 21 Oct
- 2011 14:28:55 +0200
-Received: from localhost6.localdomain6 (141.21.50.31) by ex-ca-ht-1.fzi.de
- (141.21.32.98) with Microsoft SMTP Server (TLS) id 14.1.339.1; Fri, 21 Oct
- 2011 14:28:01 +0200
-Content-Disposition: inline
-In-Reply-To: <4EA1614D.3090202@alum.mit.edu>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754062Ab1JUMon convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Oct 2011 08:44:43 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:54450 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752159Ab1JUMom convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Oct 2011 08:44:42 -0400
+Received: by vws1 with SMTP id 1so2875959vws.19
+        for <git@vger.kernel.org>; Fri, 21 Oct 2011 05:44:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=rtuOMlI4yMVkVBud43LgAY3gPNHJ0HYNxx5nhjJjx7U=;
+        b=OVe5+7gmSyJMZi3u2Qq247+j0qgZegt5KEc4397rZYqYK8yJiwAThfSVvjP3lWpP19
+         my+eYt7lEoupfB3g80+sv+Y8jbEbx1YodDDZ5xP9THTftHGSR5ApTUKUwP/LFnzwuDV4
+         QjQSNc3z7hbDEwBfamfRHGPvmukYxNYNSHjFM=
+Received: by 10.52.69.9 with SMTP id a9mr14899523vdu.17.1319201081009; Fri, 21
+ Oct 2011 05:44:41 -0700 (PDT)
+Received: by 10.52.186.36 with HTTP; Fri, 21 Oct 2011 05:44:00 -0700 (PDT)
+In-Reply-To: <20111021114952.GA2797@lars.home.noschinski.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184059>
 
-Hi,
+On Fri, Oct 21, 2011 at 13:49, Lars Noschinski
+<lars@public.noschinski.de> wrote:
+> =C2=A0- automatic usage of pager
+> =C2=A0- support for pathspecs (can be emulated with `find ...`)
+> =C2=A0- support for boolean combinations of regular expressions
+- thread parallel
 
-On Fri, Oct 21, 2011 at 02:10:53PM +0200, Michael Haggerty wrote:
-> When testing reference-handling performance using my refperf script [=
-1],
-> I noticed that there is a problem in master that I bisected down to
->=20
-> 6d4bb3833c "fetch: verify we have everything we need before updating =
-our
-> ref"
->=20
-> When I run the following commands
->=20
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
-> GIT=3D$(pwd)/git
-
-> $GIT fetch origin
-> Then the last "git fetch origin" command gives the following output:
-> remote: Counting objects: 3, done.
-> remote: Total 3 (delta 0), reused 0 (delta 0)
-> Unpacking objects: 100% (3/3), done.
-> usage: git rev-list [OPTION] <commit-id>... [ -- paths... ]
-
-I suspect this is the same issue as here:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/182339/focus=3D=
-182357
-
-
-Best,
-G=E1bor
+bert
