@@ -1,103 +1,107 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: Re: [PATCH] make the sample pre-commit hook script reject names with newlines, too
-Date: Sat, 22 Oct 2011 19:44:40 +0200
-Message-ID: <87aa8sgbuf.fsf@rho.meyering.net>
-References: <87obx9eygk.fsf@rho.meyering.net> <m262jhoro1.fsf@igel.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 7/5] pretty: %G[?GS] placeholders
+Date: Sat, 22 Oct 2011 10:55:21 -0700
+Message-ID: <7vsjmk6hdi.fsf@alter.siamese.dyndns.org>
+References: <1318983645-18897-1-git-send-email-gitster@pobox.com>
+ <1319071023-31919-1-git-send-email-gitster@pobox.com>
+ <7v7h3x7h6j.fsf_-_@alter.siamese.dyndns.org>
+ <CA+EOSB=EowzV5B9jjq9D9rshPt8LmO9K_GbwNWo_x3Uv9+kwxg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git list <git@vger.kernel.org>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sat Oct 22 19:44:58 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 22 20:04:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RHfcu-0007VB-Ti
-	for gcvg-git-2@lo.gmane.org; Sat, 22 Oct 2011 19:44:57 +0200
+	id 1RHfvk-0005ZC-AP
+	for gcvg-git-2@lo.gmane.org; Sat, 22 Oct 2011 20:04:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754497Ab1JVRou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Oct 2011 13:44:50 -0400
-Received: from smtp5-g21.free.fr ([212.27.42.5]:48054 "EHLO smtp5-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754485Ab1JVRot (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Oct 2011 13:44:49 -0400
-Received: from mx.meyering.net (unknown [88.168.87.75])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 5C6B6D480B3
-	for <git@vger.kernel.org>; Sat, 22 Oct 2011 19:44:42 +0200 (CEST)
-Received: from rho.meyering.net (localhost.localdomain [127.0.0.1])
-	by rho.meyering.net (Acme Bit-Twister) with ESMTP id 657D86007E;
-	Sat, 22 Oct 2011 19:44:40 +0200 (CEST)
-In-Reply-To: <m262jhoro1.fsf@igel.home> (Andreas Schwab's message of "Sat, 22
-	Oct 2011 19:35:42 +0200")
+	id S1754133Ab1JVRzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Oct 2011 13:55:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53203 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751773Ab1JVRzY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Oct 2011 13:55:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A3514555;
+	Sat, 22 Oct 2011 13:55:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bcFBB8T6l3YBY1dFU3qalKa42uo=; b=WImDcl
+	k71JyStJvoh2F4QKlQ4cR4ShKH0m214XmkMIaDANLoL2XXLjh9Sf41bZPZ8NKxxg
+	sWn9s5e6jUUlcXM1Jv+PEJ3GZ0f9uHdeM3dLkfpEPlLRBMM9wQc/mx/vN2KgFsgs
+	OxCwsMQFRMkw9l1ogVG6wMDNi7sNBSrJY7+p0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=M/yGEQFrCFOPyEZhZrRXL0krB+D6xbol
+	rMl8Z6TH6UaVawnOR1f2xOBdlDZ6ABFYpMwq/mg9oIT3yFA1o8Bba7vtp2UL0Yzw
+	qSDhhuCx7KwZH1njWYxE3PpOO55gBeMO1U6rEfr6pkioVQbYI1pJy5UlrLjNQ2Zq
+	/DYXbIaTzUs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22F3B4554;
+	Sat, 22 Oct 2011 13:55:23 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7E8444552; Sat, 22 Oct 2011
+ 13:55:22 -0400 (EDT)
+In-Reply-To: <CA+EOSB=EowzV5B9jjq9D9rshPt8LmO9K_GbwNWo_x3Uv9+kwxg@mail.gmail.com> (Elia
+ Pinto's message of "Sat, 22 Oct 2011 12:47:07 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 03569A8C-FCD7-11E0-B544-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184108>
 
-Andreas Schwab wrote:
-> Jim Meyering <jim@meyering.net> writes:
->
->> @@ -26,7 +29,7 @@ if [ "$allownonascii" != "true" ] &&
->>  	# even required, for portability to Solaris 10's /usr/bin/tr), since
->>  	# the square bracket bytes happen to fall in the designated range.
->>  	test "$(git diff --cached --name-only --diff-filter=A -z $against |
->> -	  LC_ALL=C tr -d '[ -~]\0')"
->> +	  LC_ALL=C tr -d '[ -~]\0' | wc -c)" != 0
->
-> This will fail if the output of wc contains leading spaces.
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
-Good point.  Thanks.  That's a portability bug.
-GNU wc outputs no leading spaces, but others certainly do.
+> Can you suggest what do you think can be useful placeholders ? Thanks.
 
-Removing the double quotes fixes that:
+That is a weird question.
 
--- >8 --
-Subject: [PATCH] make the sample pre-commit hook script reject names with
- newlines, too
+> 2011/10/22, Junio C Hamano <gitster@pobox.com>:
+>> Add new placeholders related to the GPG signature on signed commits.
+>>
+>>  - %GG to show the raw verification message from GPG;
+>>  - %G? to show either "G" for Good, "B" for Bad;
+>>  - %GS to show the name of the signer.
+>>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>  * The 6th is the one that works with a bogus commit with NUL in it I sent
+>>    out previously.
+>>
+>>    This concludes the series; I'll leave the design and implementation of
+>>    other useful placeholders to the list for now.
 
-The sample pre-commit hook script would fail to reject a file name
-like "a\nb" because of the way newlines are handled in "$(...)".
-Adjust the test to count filtered bytes and require there be 0.
-Also print all diagnostics to standard error, not stdout, so they
-will actually be seen.
+I can think of random other placeholders off the top of my head purely by
+speculation without having real need [*1*], but they won't be much useful.
 
-Signed-off-by: Jim Meyering <meyering@redhat.com>
----
- templates/hooks--pre-commit.sample |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
+People on the list who *want* to use this feature in their projects may
+have specific needs and they would be closer to what is needed in the real
+world use cases than what comes out of thin air by imagination.
 
-diff --git a/templates/hooks--pre-commit.sample b/templates/hooks--pre-commit.sample
-index b187c4b..18c4829 100755
---- a/templates/hooks--pre-commit.sample
-+++ b/templates/hooks--pre-commit.sample
-@@ -18,6 +18,9 @@ fi
- # If you want to allow non-ascii filenames set this variable to true.
- allownonascii=$(git config hooks.allownonascii)
+That is the reason why I left the enhancement to the list.
 
-+# Redirect output to stderr.
-+exec 1>&2
-+
- # Cross platform projects tend to avoid non-ascii filenames; prevent
- # them from being added to the repository. We exploit the fact that the
- # printable range starts at the space character and ends with tilde.
-@@ -25,8 +28,8 @@ if [ "$allownonascii" != "true" ] &&
- 	# Note that the use of brackets around a tr range is ok here, (it's
- 	# even required, for portability to Solaris 10's /usr/bin/tr), since
- 	# the square bracket bytes happen to fall in the designated range.
--	test "$(git diff --cached --name-only --diff-filter=A -z $against |
--	  LC_ALL=C tr -d '[ -~]\0')"
-+	test $(git diff --cached --name-only --diff-filter=A -z $against |
-+	  LC_ALL=C tr -d '[ -~]\0' | wc -c) != 0
- then
- 	echo "Error: Attempt to add a non-ascii file name."
- 	echo
-@@ -43,4 +46,5 @@ then
- 	exit 1
- fi
+If you have to ask that question because you do not have any specific need
+yourself, and especially if you have to ask it to *me*, then you should
+wait for others to come up with their real needs, just like what I am
+doing right now ;-).
 
-+# If there are whitespace errors, print the offending file names and fail.
- exec git diff-index --check --cached $against --
---
-1.7.7.419.g87009
+
+[Footnote]
+
+*1*
+
+ - %GC that is replaced with COLOR_GREEN when Good signature is found,
+   COLOR_RED when BAD signature is found, and COLOR_RESET when there is no
+   signature;
+
+ - %GD for the date the signature was made on (with date format variants);
+
+ - %Gk for the type of the key and the Key-ID.
+ 
