@@ -1,67 +1,78 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 3/6] revert: fix buffer overflow in insn sheet parser
-Date: Sun, 23 Oct 2011 00:27:05 +0530
-Message-ID: <CALkWK0n3srWcsDxaWvgd7s7jHVuSKv+aLJ1n0inae2hMA_C3kQ@mail.gmail.com>
-References: <1319058208-17923-1-git-send-email-artagnon@gmail.com>
- <1319058208-17923-4-git-send-email-artagnon@gmail.com> <7v8vogbgai.fsf@alter.siamese.dyndns.org>
- <20111020080328.GA12337@elie.hsd1.il.comcast.net> <4E9FE061.3080601@gmail.com>
- <20111020090912.GA21471@elie.hsd1.il.comcast.net> <7vmxcva8k1.fsf@alter.siamese.dyndns.org>
- <20111020180533.GA5563@elie.hsd1.il.comcast.net> <7vaa8va3xm.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 00/22] Refactor to accept NUL in commit messages
+Date: Sat, 22 Oct 2011 15:09:15 -0400
+Message-ID: <20111022190914.GA1785@sigill.intra.peff.net>
+References: <1319277881-4128-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 22 20:59:32 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 22 21:09:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RHgn5-0006AW-G4
-	for gcvg-git-2@lo.gmane.org; Sat, 22 Oct 2011 20:59:31 +0200
+	id 1RHgwg-00017w-Aq
+	for gcvg-git-2@lo.gmane.org; Sat, 22 Oct 2011 21:09:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751583Ab1JVS51 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Oct 2011 14:57:27 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:41358 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750758Ab1JVS50 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Oct 2011 14:57:26 -0400
-Received: by wyg36 with SMTP id 36so4965502wyg.19
-        for <git@vger.kernel.org>; Sat, 22 Oct 2011 11:57:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=grY7KZxV66arxNkPrtoAi2IlnjK3mNgNdNMazUQGxt8=;
-        b=XMBVY5erxvWyYGRcsB2VF6kCFFq+Jh1eW/QwrVjxQtXKPKO984jNXoMq/m3/a/BGeY
-         zLHBqySifxVuUIRmKHjlA9mcYpbAnMe0MvvO+r7TBorgQKUDN8fBc8vldYB3Oa1ZAUY4
-         VaZBlxZetK3xNtSYyJRvbL91qjNoa5GwtL/8o=
-Received: by 10.216.131.161 with SMTP id m33mr1707243wei.55.1319309845147;
- Sat, 22 Oct 2011 11:57:25 -0700 (PDT)
-Received: by 10.216.159.78 with HTTP; Sat, 22 Oct 2011 11:57:05 -0700 (PDT)
-In-Reply-To: <7vaa8va3xm.fsf@alter.siamese.dyndns.org>
+	id S1752080Ab1JVTJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Oct 2011 15:09:22 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39586
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751792Ab1JVTJV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Oct 2011 15:09:21 -0400
+Received: (qmail 30124 invoked by uid 107); 22 Oct 2011 19:09:29 -0000
+Received: from mc64036d0.tmodns.net (HELO sigill.intra.peff.net) (208.54.64.198)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 22 Oct 2011 15:09:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 22 Oct 2011 15:09:15 -0400
+Content-Disposition: inline
+In-Reply-To: <1319277881-4128-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184110>
 
-Hi Junio and Jonathan,
+On Sat, Oct 22, 2011 at 09:04:19PM +1100, Nguyen Thai Ngoc Duy wrote:
 
-Thanks for the good suggestions.  Will post the next iteration in a
-few minutes (some tests running now).
+> This series helps pass commit message size up to output functions,
+> though it does not change any output functions to print ^@.
 
-Junio C Hamano writes:
-> [...]
-> When the log message justifies the cause and the approach in the right
-> way, the actual patch becomes self evident. Also I often find myself
-> coming up with a _better_ solution than the patch I originally prepared
-> while writing the commit log message to explain it, and redoing the patch
-> text to match the description.
+Can we take a step back for a second and discuss what git _should_ do
+with commits that contain NUL?
 
-Wow.  It looks like I have a long way to go :/
-Maybe I should practice writing more Haskell.
+If all of the pretty-print functions are just going consider "foo\0bar"
+to be "foo^@bar", then maybe it would be much simpler to just
+"normalize" the commit message into a C string at a lower level, and
+pass it around as a string as we currently do.
 
--- Ram
+On the other hand, if we are eventually looking to add an option like
+"--include-NUL-in-commit-message", then it would make sense for the
+real contents and size to get passed around.
+
+> All functions up to the last patch learn to accept a string as a pair
+> <const char *start, const char *end> as a preparation step. These
+> changes are relatively simple. Or it could have been so if I did not
+> attempt to reduce some code duplication found while working on this
+> series.
+
+Great. Reducing code duplication is always a plus.
+
+> The last patch turns commit_buffer field in struct commit to "struct
+> strbuf *". This approach costs us 12 bytes more each commit. We can
+> choose not to use strbuf to save memory.
+
+I think 12 bytes in the commit struct might be noticeable. But it looks
+like you've done the sane thing, and replaced the pointer-to-char with a
+pointer-to-strbuf. And that I don't think should be a big deal. The
+buffer itself is way bigger than 12 bytes, so we don't care so much
+about the "we have a buffer" case, but more about the 100,000 other
+commits that we're not currently printing right now.
+
+Of course, some timings on things like "rev-list" and "pack-objects"
+would be nice to double-check.
+
+-Peff
