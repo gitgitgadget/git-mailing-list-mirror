@@ -1,107 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 7/5] pretty: %G[?GS] placeholders
-Date: Sat, 22 Oct 2011 10:55:21 -0700
-Message-ID: <7vsjmk6hdi.fsf@alter.siamese.dyndns.org>
-References: <1318983645-18897-1-git-send-email-gitster@pobox.com>
- <1319071023-31919-1-git-send-email-gitster@pobox.com>
- <7v7h3x7h6j.fsf_-_@alter.siamese.dyndns.org>
- <CA+EOSB=EowzV5B9jjq9D9rshPt8LmO9K_GbwNWo_x3Uv9+kwxg@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 3/6] revert: fix buffer overflow in insn sheet parser
+Date: Sun, 23 Oct 2011 00:27:05 +0530
+Message-ID: <CALkWK0n3srWcsDxaWvgd7s7jHVuSKv+aLJ1n0inae2hMA_C3kQ@mail.gmail.com>
+References: <1319058208-17923-1-git-send-email-artagnon@gmail.com>
+ <1319058208-17923-4-git-send-email-artagnon@gmail.com> <7v8vogbgai.fsf@alter.siamese.dyndns.org>
+ <20111020080328.GA12337@elie.hsd1.il.comcast.net> <4E9FE061.3080601@gmail.com>
+ <20111020090912.GA21471@elie.hsd1.il.comcast.net> <7vmxcva8k1.fsf@alter.siamese.dyndns.org>
+ <20111020180533.GA5563@elie.hsd1.il.comcast.net> <7vaa8va3xm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 22 20:04:24 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 22 20:59:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RHfvk-0005ZC-AP
-	for gcvg-git-2@lo.gmane.org; Sat, 22 Oct 2011 20:04:24 +0200
+	id 1RHgn5-0006AW-G4
+	for gcvg-git-2@lo.gmane.org; Sat, 22 Oct 2011 20:59:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754133Ab1JVRzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Oct 2011 13:55:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53203 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751773Ab1JVRzY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Oct 2011 13:55:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A3514555;
-	Sat, 22 Oct 2011 13:55:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bcFBB8T6l3YBY1dFU3qalKa42uo=; b=WImDcl
-	k71JyStJvoh2F4QKlQ4cR4ShKH0m214XmkMIaDANLoL2XXLjh9Sf41bZPZ8NKxxg
-	sWn9s5e6jUUlcXM1Jv+PEJ3GZ0f9uHdeM3dLkfpEPlLRBMM9wQc/mx/vN2KgFsgs
-	OxCwsMQFRMkw9l1ogVG6wMDNi7sNBSrJY7+p0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M/yGEQFrCFOPyEZhZrRXL0krB+D6xbol
-	rMl8Z6TH6UaVawnOR1f2xOBdlDZ6ABFYpMwq/mg9oIT3yFA1o8Bba7vtp2UL0Yzw
-	qSDhhuCx7KwZH1njWYxE3PpOO55gBeMO1U6rEfr6pkioVQbYI1pJy5UlrLjNQ2Zq
-	/DYXbIaTzUs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22F3B4554;
-	Sat, 22 Oct 2011 13:55:23 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7E8444552; Sat, 22 Oct 2011
- 13:55:22 -0400 (EDT)
-In-Reply-To: <CA+EOSB=EowzV5B9jjq9D9rshPt8LmO9K_GbwNWo_x3Uv9+kwxg@mail.gmail.com> (Elia
- Pinto's message of "Sat, 22 Oct 2011 12:47:07 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 03569A8C-FCD7-11E0-B544-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751583Ab1JVS51 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Oct 2011 14:57:27 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:41358 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750758Ab1JVS50 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Oct 2011 14:57:26 -0400
+Received: by wyg36 with SMTP id 36so4965502wyg.19
+        for <git@vger.kernel.org>; Sat, 22 Oct 2011 11:57:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=grY7KZxV66arxNkPrtoAi2IlnjK3mNgNdNMazUQGxt8=;
+        b=XMBVY5erxvWyYGRcsB2VF6kCFFq+Jh1eW/QwrVjxQtXKPKO984jNXoMq/m3/a/BGeY
+         zLHBqySifxVuUIRmKHjlA9mcYpbAnMe0MvvO+r7TBorgQKUDN8fBc8vldYB3Oa1ZAUY4
+         VaZBlxZetK3xNtSYyJRvbL91qjNoa5GwtL/8o=
+Received: by 10.216.131.161 with SMTP id m33mr1707243wei.55.1319309845147;
+ Sat, 22 Oct 2011 11:57:25 -0700 (PDT)
+Received: by 10.216.159.78 with HTTP; Sat, 22 Oct 2011 11:57:05 -0700 (PDT)
+In-Reply-To: <7vaa8va3xm.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184109>
 
-Elia Pinto <gitter.spiros@gmail.com> writes:
+Hi Junio and Jonathan,
 
-> Can you suggest what do you think can be useful placeholders ? Thanks.
+Thanks for the good suggestions.  Will post the next iteration in a
+few minutes (some tests running now).
 
-That is a weird question.
+Junio C Hamano writes:
+> [...]
+> When the log message justifies the cause and the approach in the right
+> way, the actual patch becomes self evident. Also I often find myself
+> coming up with a _better_ solution than the patch I originally prepared
+> while writing the commit log message to explain it, and redoing the patch
+> text to match the description.
 
-> 2011/10/22, Junio C Hamano <gitster@pobox.com>:
->> Add new placeholders related to the GPG signature on signed commits.
->>
->>  - %GG to show the raw verification message from GPG;
->>  - %G? to show either "G" for Good, "B" for Bad;
->>  - %GS to show the name of the signer.
->>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->>  * The 6th is the one that works with a bogus commit with NUL in it I sent
->>    out previously.
->>
->>    This concludes the series; I'll leave the design and implementation of
->>    other useful placeholders to the list for now.
+Wow.  It looks like I have a long way to go :/
+Maybe I should practice writing more Haskell.
 
-I can think of random other placeholders off the top of my head purely by
-speculation without having real need [*1*], but they won't be much useful.
-
-People on the list who *want* to use this feature in their projects may
-have specific needs and they would be closer to what is needed in the real
-world use cases than what comes out of thin air by imagination.
-
-That is the reason why I left the enhancement to the list.
-
-If you have to ask that question because you do not have any specific need
-yourself, and especially if you have to ask it to *me*, then you should
-wait for others to come up with their real needs, just like what I am
-doing right now ;-).
-
-
-[Footnote]
-
-*1*
-
- - %GC that is replaced with COLOR_GREEN when Good signature is found,
-   COLOR_RED when BAD signature is found, and COLOR_RESET when there is no
-   signature;
-
- - %GD for the date the signature was made on (with date format variants);
-
- - %Gk for the type of the key and the Key-ID.
- 
+-- Ram
