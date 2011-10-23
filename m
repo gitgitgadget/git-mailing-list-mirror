@@ -1,80 +1,108 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 2/2] pretty.c: use original commit message if reencoding fails
-Date: Sun, 23 Oct 2011 22:51:35 +1100
-Message-ID: <1319370695-12638-2-git-send-email-pclouds@gmail.com>
-References: <1319370695-12638-1-git-send-email-pclouds@gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: a bug when execute "git status" in git version 1.7.7.431.g89633
+Date: Sun, 23 Oct 2011 15:25:17 +0200
+Message-ID: <4EA415BD.1040109@lsrfire.ath.cx>
+References: <4EA20C5B.3090808@gmail.com> <vpqfwiknmh3.fsf@bauges.imag.fr> <4EA3D1BB.2010802@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 23 13:53:30 2011
+Cc: Matthieu Moy <matthieu.moy@grenoble-inp.fr>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: John Hsing <tsyj2007@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 23 15:25:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RHwcL-0000sr-5b
-	for gcvg-git-2@lo.gmane.org; Sun, 23 Oct 2011 13:53:29 +0200
+	id 1RHy3c-0005j5-86
+	for gcvg-git-2@lo.gmane.org; Sun, 23 Oct 2011 15:25:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755436Ab1JWLxZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Oct 2011 07:53:25 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:49523 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755398Ab1JWLxY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Oct 2011 07:53:24 -0400
-Received: by gyb13 with SMTP id 13so4973220gyb.19
-        for <git@vger.kernel.org>; Sun, 23 Oct 2011 04:53:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=08FnE12URgww9vg+XvZjIWtRTE4msBUxSTRvds6xcf0=;
-        b=mg43QTfaAh+ZvWPzijjUzKcHL5dQD28j2TZMHjxqALJHR0/kj6XkPy3gfYIDiWeaTY
-         wNGG5z8S7ZZxXyAF8Iynmo9UhQGP3nufGRt8XqxllrXwcI1d5QzVyHxRK6GbboB8EQor
-         De7XG5BtRFw2aE8AJc/+t4+ANy+8Ta7DFiV7s=
-Received: by 10.68.71.229 with SMTP id y5mr13313104pbu.37.1319370803382;
-        Sun, 23 Oct 2011 04:53:23 -0700 (PDT)
-Received: from pclouds@gmail.com (220-244-161-237.static.tpgi.com.au. [220.244.161.237])
-        by mx.google.com with ESMTPS id ko15sm54503495pbb.9.2011.10.23.04.53.19
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 23 Oct 2011 04:53:22 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 23 Oct 2011 22:51:44 +1100
-X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
-In-Reply-To: <1319370695-12638-1-git-send-email-pclouds@gmail.com>
+	id S1755520Ab1JWNZZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Oct 2011 09:25:25 -0400
+Received: from india601.server4you.de ([85.25.151.105]:60069 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755441Ab1JWNZZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Oct 2011 09:25:25 -0400
+Received: from [192.168.2.104] (p4FFD9D8D.dip.t-dialin.net [79.253.157.141])
+	by india601.server4you.de (Postfix) with ESMTPSA id 1C1E42F8061;
+	Sun, 23 Oct 2011 15:25:23 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+In-Reply-To: <4EA3D1BB.2010802@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184139>
+
+Am 23.10.2011 10:35, schrieb John Hsing:
+> ok,when i finish compiling git 1.7.7.431.g89633=EF=BC=8CI use it to c=
+heck
+> Cyanogenod=EF=BC=88an Android mod source=EF=BC=89 by =E2=80=9Cgit sta=
+tus=E2=80=9D=EF=BC=8Cit happend this
+> error=EF=BC=81but when i reuse git v1.7.7=EF=BC=8Cit is OK=EF=BC=81so=
+ i think it is a bug in
+> git 1.7.7.431.g89633=EF=BC=81My OS is Ubuntu Linux 10.10=EF=BC=8Csorr=
+y for my bad
+> english=EF=BC=81 If you want to reproduce this error,please excute "g=
+it status"
+> in https://github.com/CyanogenMod/android_packages_apps_DSPManager.gi=
+t
+> repo!
+
+I can reproduce the malloc crash on Ubuntu 11.10 with these simple step=
+s:
+
+	$ a=3Dandroid_packages_apps_DSPManager
+	$ git-v1.7.7 clone https://github.com/CyanogenMod/$a.git
+	Cloning into android_packages_apps_DSPManager...
+	remote: Counting objects: 902, done.
+	remote: Compressing objects: 100% (412/412), done.
+	remote: Total 902 (delta 367), reused 838 (delta 324)
+	Receiving objects: 100% (902/902), 136.78 KiB | 264 KiB/s, done.
+	Resolving deltas: 100% (367/367), done.
+	$ cd $a
+
+	$ git-v1.7.7 status
+	# On branch gingerbread
+	nothing to commit (working directory clean)
+
+	$ git-master status
+	git: malloc.c:3096: sYSMALLOc: Assertion `(old_top =3D=3D (((mbinptr) =
+(((char *) &((av)->bins[((1) - 1) * 2])) - __builtin_offsetof (struct m=
+alloc_chunk, fd)))) && old_size =3D=3D 0) || ((unsigned long) (old_size=
+) >=3D (unsigned long)((((__builtin_offsetof (struct malloc_chunk, fd_n=
+extsize))+((2 * (sizeof(size_t))) - 1)) & ~((2 * (sizeof(size_t))) - 1)=
+)) && ((old_top)->size & 0x1) && ((unsigned long)old_end & pagemask) =3D=
+=3D 0)' failed.
+	Aborted
+
+Bisect points to 2548183ba, "fix phantom untracked files when
+core.ignorecase is set" from Jeff (cc:d).  If I revert that patch from
+master (8963314c), git status works fine.
+
+The following experimental patch fixes it for me as well, but I can't
+claim to know exactly why.  In any case, estimate_cache_size() seems
+to guess too low.
+
+Ren=C3=A9
 
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
 ---
- pretty.c |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+ read-cache.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/pretty.c b/pretty.c
-index 375ff7b..230fe1c 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1103,8 +1103,11 @@ void format_commit_message(const struct commit *=
-commit,
- 	context.message =3D commit->buffer;
- 	if (output_enc) {
- 		char *enc =3D get_header(commit, "encoding");
--		if (strcmp(enc ? enc : utf8, output_enc))
-+		if (strcmp(enc ? enc : utf8, output_enc)) {
- 			context.message =3D logmsg_reencode(commit, output_enc);
-+			if (!context.message)
-+				context.message =3D commit->buffer;
-+		}
- 		free(enc);
- 	}
+diff --git a/read-cache.c b/read-cache.c
+index 01a0e25..b143bd3 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1257,7 +1257,7 @@ static inline size_t estimate_cache_size(size_t o=
+ndisk_size, unsigned int entrie
+ 	 * Alignment can cause differences. This should be "alignof", but
+ 	 * since that's a gcc'ism, just use the size of a pointer.
+ 	 */
+-	per_entry +=3D sizeof(void *);
++	per_entry +=3D 2 * sizeof(void *);
+ 	return ondisk_size + entries*per_entry;
+ }
 =20
---=20
-1.7.3.1.256.g2539c.dirty
