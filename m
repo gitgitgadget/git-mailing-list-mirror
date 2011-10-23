@@ -1,64 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 00/22] Refactor to accept NUL in commit messages
-Date: Sun, 23 Oct 2011 12:09:15 -0400
-Message-ID: <20111023160914.GB22444@sigill.intra.peff.net>
-References: <1319277881-4128-1-git-send-email-pclouds@gmail.com>
- <20111022190914.GA1785@sigill.intra.peff.net>
- <4EA3F00E.9040006@gmail.com>
+From: Peter Oberndorfer <kumbayo84@arcor.de>
+Subject: git gui: adding bare remotes on local filesystem reports error
+Date: Sun, 23 Oct 2011 18:14:59 +0200
+Message-ID: <2536790.zI3kRoQihV@soybean>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
-To: Robin Rosenberg <robin.rosenberg@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 23 18:09:27 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 23 18:16:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RI0c0-00077J-FD
-	for gcvg-git-2@lo.gmane.org; Sun, 23 Oct 2011 18:09:24 +0200
+	id 1RI0jD-00019a-Jv
+	for gcvg-git-2@lo.gmane.org; Sun, 23 Oct 2011 18:16:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751994Ab1JWQJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Oct 2011 12:09:20 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39927
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751550Ab1JWQJT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Oct 2011 12:09:19 -0400
-Received: (qmail 3534 invoked by uid 107); 23 Oct 2011 16:09:28 -0000
-Received: from 75-147-138-244-SFBA.hfc.comcastbusiness.net (HELO sigill.intra.peff.net) (75.147.138.244)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 23 Oct 2011 12:09:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 23 Oct 2011 12:09:15 -0400
-Content-Disposition: inline
-In-Reply-To: <4EA3F00E.9040006@gmail.com>
+	id S1752035Ab1JWQQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Oct 2011 12:16:46 -0400
+Received: from mail-in-01.arcor-online.net ([151.189.21.41]:36010 "EHLO
+	mail-in-01.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751726Ab1JWQQq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 Oct 2011 12:16:46 -0400
+Received: from mail-in-06-z2.arcor-online.net (mail-in-06-z2.arcor-online.net [151.189.8.18])
+	by mx.arcor.de (Postfix) with ESMTP id 614175A008;
+	Sun, 23 Oct 2011 18:16:44 +0200 (CEST)
+Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
+	by mail-in-06-z2.arcor-online.net (Postfix) with ESMTP id 5D0471575C2;
+	Sun, 23 Oct 2011 18:16:44 +0200 (CEST)
+Received: from soybean.localnet (188-23-124-43.adsl.highway.telekom.at [188.23.124.43])
+	(Authenticated sender: kumbayo84@arcor.de)
+	by mail-in-01.arcor-online.net (Postfix) with ESMTPSA id 42E275A336;
+	Sun, 23 Oct 2011 18:16:44 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-01.arcor-online.net 42E275A336
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1319386604; bh=alARDqk674GH6XjqtjdJLsMy5hJUCWCVltWaUaU2YdA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:
+	 Content-Transfer-Encoding:Content-Type;
+	b=j+eUEHm8o3+UV5byrFYSaqFi0ssBFoanLWDbfFjWEtGJLbva/NIQjnv/oGm3rjA+a
+	 fYpCSA0ZAyXRiH0j5XCzx9B96q4CUG6TQww6FjXVbmhFb9vCKHRca+DjISztuvhwnF
+	 qp11Nlig78RzzADIfrfryccc7K2luwLiUPKm4W8s=
+User-Agent: KMail/4.7.2 (Linux/3.0.0-12-generic-pae; KDE/4.7.1; i686; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184143>
 
-On Sun, Oct 23, 2011 at 12:44:30PM +0200, Robin Rosenberg wrote:
+Hi,
 
-> Jeff King skrev 2011-10-22 21.09:
-> >On Sat, Oct 22, 2011 at 09:04:19PM +1100, Nguyen Thai Ngoc Duy wrote:
-> >
-> >>This series helps pass commit message size up to output functions,
-> >>though it does not change any output functions to print ^@.
-> >Can we take a step back for a second and discuss what git _should_ do
-> >with commits that contain NUL?
-> Yes please. I don't think allowing NUL makes sense, but it makes sense
-> to state how NUL should be handled when anyone attempt it, so there
-> might be things to fix even if NUL is banned.
-> 
-> Are there any such commits in the wild?
+i just tried using git gui to add a remote on the local file system
+and push to it.
+(set Location to /tmp/blah.git, select "Initialize Remote Repository and Push")
 
-Adding an arbitrary NUL, no, I don't think I've ever seen it outside of
-people (myself included) trying to break git in interesting ways.
+but git gui reported:
+fatal: GIT_WORK_TREE (or --work-tree=<directory>) not allowed without specifying GIT_DIR (or --git-dir=<directory>)
 
-But utf16 may contains NUL bytes, so I expect configuring your editor to
-output utf16 and running "git commit" would give you the most likely
-example.
+I bisected the error to
+a9fa11fe5bd5978bb175b3b5663f6477a345d428 git-gui: set GIT_DIR and GIT_WORK_TREE after setup
 
--Peff
+I guess it is necessary to unset the GIT_DIR and GIT_WORKTREE env vars before calling
+git --git-dir=$location init --bare
+
+On a side note i am wondering why it is necessary to call mkdir -p?
+And why it is not using git init --bare <path>
+During some tests it created all leading directories.
+
+Thanks,
+Greetings Peter
