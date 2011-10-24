@@ -1,119 +1,286 @@
 From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH v4 2/3] compat/win32/poll.c: upgrade from upstream
-Date: Mon, 24 Oct 2011 18:02:10 +0200
-Message-ID: <1319472131-3968-3-git-send-email-kusmabite@gmail.com>
+Subject: [PATCH v4 3/3] upload-archive: use start_command instead of fork
+Date: Mon, 24 Oct 2011 18:02:11 +0200
+Message-ID: <1319472131-3968-4-git-send-email-kusmabite@gmail.com>
 References: <1319472131-3968-1-git-send-email-kusmabite@gmail.com>
 Cc: gitster@pobox.com, j6t@kdbg.org, peff@peff.net,
 	rene.scharfe@lsrfire.ath.cx
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 24 18:02:23 2011
+X-From: git-owner@vger.kernel.org Mon Oct 24 18:02:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RIMyk-0008WM-UK
+	id 1RIMyl-0008WM-GY
 	for gcvg-git-2@lo.gmane.org; Mon, 24 Oct 2011 18:02:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932945Ab1JXQCR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Oct 2011 12:02:17 -0400
+	id S932954Ab1JXQCV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Oct 2011 12:02:21 -0400
 Received: from mail-bw0-f46.google.com ([209.85.214.46]:38696 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932826Ab1JXQCQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Oct 2011 12:02:16 -0400
+	with ESMTP id S932826Ab1JXQCT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Oct 2011 12:02:19 -0400
 Received: by mail-bw0-f46.google.com with SMTP id zt19so8365950bkb.19
-        for <git@vger.kernel.org>; Mon, 24 Oct 2011 09:02:15 -0700 (PDT)
+        for <git@vger.kernel.org>; Mon, 24 Oct 2011 09:02:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=G54NvUXGMAgW0ZIqPyZybY+cVhqbLB29aUVKQUzsgK4=;
-        b=PgpBRLRtoZnXaOEnWFbtia7eTD+1BSZwWdgZUYlaL/PGeGGqVHYVApYeuJ5vbVIOb2
-         w/u/DIm8e1Tg6ZSGdo0dwAtc+fHJCeGpuFZFBOtpLRIPWn91/xclPslxvq/ygd6sAPvb
-         MZsvpgWtvCl3j9/kmnNsDAERHus/mw+DT9fYE=
-Received: by 10.204.15.80 with SMTP id j16mr1087750bka.26.1319472135438;
-        Mon, 24 Oct 2011 09:02:15 -0700 (PDT)
+        bh=hgQRyvkbiCHG5qDLIXEb2KqnuarLvNe/kIEke4MT6ao=;
+        b=Z/TBsobfI+iaSeEY0bp09/6gk0EdvCBsR33T97vqJipbotf1mxsa66swuszscgyopr
+         4WiOiMfvRqHIW0/yV55SK1keue1OVqaz+no3EeGxNfCiaKL3w7pcXeJwQ3MdlDyjNdhQ
+         eIMd/VetYAHfzl+l6ToHPoGyqaE1+FV+NOf6U=
+Received: by 10.204.149.151 with SMTP id t23mr5044373bkv.13.1319472139026;
+        Mon, 24 Oct 2011 09:02:19 -0700 (PDT)
 Received: from localhost ([77.40.159.131])
-        by mx.google.com with ESMTPS id f7sm15540411bkc.1.2011.10.24.09.02.12
+        by mx.google.com with ESMTPS id f7sm7916099bkv.4.2011.10.24.09.02.16
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 24 Oct 2011 09:02:13 -0700 (PDT)
+        Mon, 24 Oct 2011 09:02:17 -0700 (PDT)
 X-Mailer: git-send-email 1.7.7.msysgit.1.1.g7b316
 In-Reply-To: <1319472131-3968-1-git-send-email-kusmabite@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184179>
 
-poll.c is updated from revision adc3a5b in
-git://git.savannah.gnu.org/gnulib.git
+The POSIX-function fork is not supported on Windows. Use our
+start_command API instead.
 
-The changes are applied with --whitespace=fix to reduce noise.
+As this is the last call-site that depends on the fork-stub in
+compat/mingw.h, remove that as well.
 
-poll.h is not upgraded, because the most recent version now
-contains template-stuff that breaks compilation for us.
+Add an undocumented flag to git-archive that tells it that the
+action originated from a remote, so features can be disabled.
+Thanks to Jeff King for work on this part.
+
+Remove the NOT_MINGW-prereq for t5000, as git-archive --remote
+now works.
 
 Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+Helped-by: Jeff King <peff@peff.net>
 ---
- compat/win32/poll.c |   19 +++++++++++++------
- 1 files changed, 13 insertions(+), 6 deletions(-)
+ builtin/archive.c        |    6 +++-
+ builtin/upload-archive.c |   68 ++++++++++++++-------------------------------
+ compat/mingw.h           |    2 -
+ t/t5000-tar-tree.sh      |   10 +++---
+ 4 files changed, 31 insertions(+), 55 deletions(-)
 
-diff --git a/compat/win32/poll.c b/compat/win32/poll.c
-index 708a6c9..403eaa7 100644
---- a/compat/win32/poll.c
-+++ b/compat/win32/poll.c
-@@ -1,7 +1,7 @@
- /* Emulation for poll(2)
-    Contributed by Paolo Bonzini.
+diff --git a/builtin/archive.c b/builtin/archive.c
+index 931956d..e405566 100644
+--- a/builtin/archive.c
++++ b/builtin/archive.c
+@@ -87,6 +87,7 @@ int cmd_archive(int argc, const char **argv, const char *prefix)
+ 	const char *exec = "git-upload-archive";
+ 	const char *output = NULL;
+ 	const char *remote = NULL;
++	int is_remote = 0;
+ 	struct option local_opts[] = {
+ 		OPT_STRING('o', "output", &output, "file",
+ 			"write the archive to this file"),
+@@ -94,6 +95,9 @@ int cmd_archive(int argc, const char **argv, const char *prefix)
+ 			"retrieve the archive from remote repository <repo>"),
+ 		OPT_STRING(0, "exec", &exec, "cmd",
+ 			"path to the remote git-upload-archive command"),
++		{ OPTION_BOOLEAN, 0, "remote-request", &is_remote, NULL,
++			"indicate we are serving a remote request",
++			PARSE_OPT_NOARG | PARSE_OPT_HIDDEN },
+ 		OPT_END()
+ 	};
  
--   Copyright 2001-2003, 2006-2010 Free Software Foundation, Inc.
-+   Copyright 2001-2003, 2006-2011 Free Software Foundation, Inc.
+@@ -108,5 +112,5 @@ int cmd_archive(int argc, const char **argv, const char *prefix)
  
-    This file is part of gnulib.
+ 	setvbuf(stderr, NULL, _IOLBF, BUFSIZ);
  
-@@ -27,7 +27,10 @@
- #include <malloc.h>
- 
- #include <sys/types.h>
--#include "poll.h"
-+
-+/* Specification.  */
-+#include <poll.h>
-+
- #include <errno.h>
- #include <limits.h>
- #include <assert.h>
-@@ -314,10 +317,7 @@ compute_revents (int fd, int sought, fd_set *rfds, fd_set *wfds, fd_set *efds)
- #endif /* !MinGW */
- 
- int
--poll (pfd, nfd, timeout)
--     struct pollfd *pfd;
--     nfds_t nfd;
--     int timeout;
-+poll (struct pollfd *pfd, nfds_t nfd, int timeout)
- {
- #ifndef WIN32_NATIVE
-   fd_set rfds, wfds, efds;
-@@ -454,6 +454,7 @@ poll (pfd, nfd, timeout)
-   if (!hEvent)
-     hEvent = CreateEvent (NULL, FALSE, FALSE, NULL);
- 
-+restart:
-   handle_array[0] = hEvent;
-   nhandles = 1;
-   FD_ZERO (&rfds);
-@@ -594,6 +595,12 @@ poll (pfd, nfd, timeout)
- 	rc++;
-     }
- 
-+  if (!rc && timeout == INFTIM)
-+    {
-+      SwitchToThread();
-+      goto restart;
-+    }
-+
-   return rc;
- #endif
+-	return write_archive(argc, argv, prefix, 1, output, 0);
++	return write_archive(argc, argv, prefix, 1, output, is_remote);
  }
+diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
+index 2d0b383..c57e8bd 100644
+--- a/builtin/upload-archive.c
++++ b/builtin/upload-archive.c
+@@ -6,6 +6,7 @@
+ #include "archive.h"
+ #include "pkt-line.h"
+ #include "sideband.h"
++#include "run-command.h"
+ 
+ static const char upload_archive_usage[] =
+ 	"git upload-archive <repo>";
+@@ -18,28 +19,17 @@ static const char lostchild[] =
+ 
+ #define MAX_ARGS (64)
+ 
+-static int run_upload_archive(int argc, const char **argv, const char *prefix)
++static void prepare_argv(const char **sent_argv, const char **argv)
+ {
+-	const char *sent_argv[MAX_ARGS];
+ 	const char *arg_cmd = "argument ";
+ 	char *p, buf[4096];
+ 	int sent_argc;
+ 	int len;
+ 
+-	if (argc != 2)
+-		usage(upload_archive_usage);
+-
+-	if (strlen(argv[1]) + 1 > sizeof(buf))
+-		die("insanely long repository name");
+-
+-	strcpy(buf, argv[1]); /* enter-repo smudges its argument */
+-
+-	if (!enter_repo(buf, 0))
+-		die("'%s' does not appear to be a git repository", buf);
+-
+ 	/* put received options in sent_argv[] */
+-	sent_argc = 1;
+-	sent_argv[0] = "git-upload-archive";
++	sent_argc = 2;
++	sent_argv[0] = "archive";
++	sent_argv[1] = "--remote-request";
+ 	for (p = buf;;) {
+ 		/* This will die if not enough free space in buf */
+ 		len = packet_read_line(0, p, (buf + sizeof buf) - p);
+@@ -62,9 +52,6 @@ static int run_upload_archive(int argc, const char **argv, const char *prefix)
+ 		*p++ = 0;
+ 	}
+ 	sent_argv[sent_argc] = NULL;
+-
+-	/* parse all options sent by the client */
+-	return write_archive(sent_argc, sent_argv, prefix, 0, NULL, 1);
+ }
+ 
+ __attribute__((format (printf, 1, 2)))
+@@ -96,38 +83,25 @@ static ssize_t process_input(int child_fd, int band)
+ 
+ int cmd_upload_archive(int argc, const char **argv, const char *prefix)
+ {
+-	pid_t writer;
+-	int fd1[2], fd2[2];
+-	/*
+-	 * Set up sideband subprocess.
+-	 *
+-	 * We (parent) monitor and read from child, sending its fd#1 and fd#2
+-	 * multiplexed out to our fd#1.  If the child dies, we tell the other
+-	 * end over channel #3.
+-	 */
+-	if (pipe(fd1) < 0 || pipe(fd2) < 0) {
+-		int err = errno;
+-		packet_write(1, "NACK pipe failed on the remote side\n");
+-		die("upload-archive: %s", strerror(err));
+-	}
+-	writer = fork();
+-	if (writer < 0) {
++	const char *sent_argv[MAX_ARGS];
++	struct child_process cld = { sent_argv };
++	cld.out = cld.err = -1;
++	cld.git_cmd = 1;
++
++	if (argc != 2)
++		usage(upload_archive_usage);
++
++	if (!enter_repo(argv[1], 0))
++		die("'%s' does not appear to be a git repository", argv[1]);
++
++	prepare_argv(sent_argv, argv);
++	if (start_command(&cld)) {
+ 		int err = errno;
+ 		packet_write(1, "NACK fork failed on the remote side\n");
+ 		die("upload-archive: %s", strerror(err));
+ 	}
+-	if (!writer) {
+-		/* child - connect fd#1 and fd#2 to the pipe */
+-		dup2(fd1[1], 1);
+-		dup2(fd2[1], 2);
+-		close(fd1[1]); close(fd2[1]);
+-		close(fd1[0]); close(fd2[0]); /* we do not read from pipe */
+-
+-		exit(run_upload_archive(argc, argv, prefix));
+-	}
+ 
+ 	/* parent - read from child, multiplex and send out to fd#1 */
+-	close(fd1[1]); close(fd2[1]); /* we do not write to pipe */
+ 	packet_write(1, "ACK\n");
+ 	packet_flush(1);
+ 
+@@ -135,9 +109,9 @@ int cmd_upload_archive(int argc, const char **argv, const char *prefix)
+ 		struct pollfd pfd[2];
+ 		int status;
+ 
+-		pfd[0].fd = fd1[0];
++		pfd[0].fd = cld.out;
+ 		pfd[0].events = POLLIN;
+-		pfd[1].fd = fd2[0];
++		pfd[1].fd = cld.err;
+ 		pfd[1].events = POLLIN;
+ 		if (poll(pfd, 2, -1) < 0) {
+ 			if (errno != EINTR) {
+@@ -156,7 +130,7 @@ int cmd_upload_archive(int argc, const char **argv, const char *prefix)
+ 			if (process_input(pfd[0].fd, 1))
+ 				continue;
+ 
+-		if (waitpid(writer, &status, 0) < 0)
++		if (waitpid(cld.pid, &status, 0) < 0)
+ 			error_clnt("%s", lostchild);
+ 		else if (!WIFEXITED(status) || WEXITSTATUS(status) > 0)
+ 			error_clnt("%s", deadchild);
+diff --git a/compat/mingw.h b/compat/mingw.h
+index fecf0d0..dfb0e87 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -85,8 +85,6 @@ static inline int symlink(const char *oldpath, const char *newpath)
+ { errno = ENOSYS; return -1; }
+ static inline int fchmod(int fildes, mode_t mode)
+ { errno = ENOSYS; return -1; }
+-static inline pid_t fork(void)
+-{ errno = ENOSYS; return -1; }
+ static inline unsigned int alarm(unsigned int seconds)
+ { return 0; }
+ static inline int fsync(int fd)
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index d906898..889842e 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -96,7 +96,7 @@ test_expect_success 'git archive with --output' \
+     'git archive --output=b4.tar HEAD &&
+     test_cmp b.tar b4.tar'
+ 
+-test_expect_success NOT_MINGW 'git archive --remote' \
++test_expect_success 'git archive --remote' \
+     'git archive --remote=. HEAD >b5.tar &&
+     test_cmp b.tar b5.tar'
+ 
+@@ -266,7 +266,7 @@ test_expect_success 'archive --list mentions user filter' '
+ 	grep "^bar\$" output
+ '
+ 
+-test_expect_success NOT_MINGW 'archive --list shows only enabled remote filters' '
++test_expect_success 'archive --list shows only enabled remote filters' '
+ 	git archive --list --remote=. >output &&
+ 	! grep "^tar\.foo\$" output &&
+ 	grep "^bar\$" output
+@@ -298,7 +298,7 @@ test_expect_success 'extension matching requires dot' '
+ 	test_cmp b.tar config-implicittar.foo
+ '
+ 
+-test_expect_success NOT_MINGW 'only enabled filters are available remotely' '
++test_expect_success 'only enabled filters are available remotely' '
+ 	test_must_fail git archive --remote=. --format=tar.foo HEAD \
+ 		>remote.tar.foo &&
+ 	git archive --remote=. --format=bar >remote.bar HEAD &&
+@@ -341,12 +341,12 @@ test_expect_success GZIP,GUNZIP 'extract tgz file' '
+ 	test_cmp b.tar j.tar
+ '
+ 
+-test_expect_success GZIP,NOT_MINGW 'remote tar.gz is allowed by default' '
++test_expect_success GZIP 'remote tar.gz is allowed by default' '
+ 	git archive --remote=. --format=tar.gz HEAD >remote.tar.gz &&
+ 	test_cmp j.tgz remote.tar.gz
+ '
+ 
+-test_expect_success GZIP,NOT_MINGW 'remote tar.gz can be disabled' '
++test_expect_success GZIP 'remote tar.gz can be disabled' '
+ 	git config tar.tar.gz.remote false &&
+ 	test_must_fail git archive --remote=. --format=tar.gz HEAD \
+ 		>remote.tar.gz
 -- 
 1.7.7.msysgit.1.1.g7b316
