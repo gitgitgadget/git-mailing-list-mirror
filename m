@@ -1,131 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] read-cache.c: fix index memory allocation
-Date: Mon, 24 Oct 2011 00:28:46 -0700
-Message-ID: <7vaa8q4zm9.fsf@alter.siamese.dyndns.org>
-References: <4EA20C5B.3090808@gmail.com> <vpqfwiknmh3.fsf@bauges.imag.fr>
- <4EA3D1BB.2010802@gmail.com> <4EA415BD.1040109@lsrfire.ath.cx>
- <20111023162944.GB28156@sigill.intra.peff.net>
- <4EA453D3.7080002@lsrfire.ath.cx> <4EA4B8E7.5070106@lsrfire.ath.cx>
+From: Franz Schrober <franzschrober@yahoo.de>
+Subject: Possible diff regression in v1.7.6-473-g27af01d
+Date: Mon, 24 Oct 2011 10:23:47 +0100 (BST)
+Message-ID: <1319448227.70497.YahooMailNeo@web29402.mail.ird.yahoo.com>
+Reply-To: Franz Schrober <franzschrober@yahoo.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, John Hsing <tsyj2007@gmail.com>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Oct 24 09:28:58 2011
+Content-Type: multipart/mixed; boundary="921974003-1989850134-1319448227=:70497"
+Cc: "marat@slonopotamus.org" <marat@slonopotamus.org>,
+	"rctay89@gmail.com" <rctay89@gmail.com>,
+	"gitster@pobox.com" <gitster@pobox.com>,
+	"franzschrober@yahoo.de" <franzschrober@yahoo.de>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 24 11:23:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RIExr-0006zw-IG
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Oct 2011 09:28:55 +0200
+	id 1RIGl8-0003S4-Lt
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Oct 2011 11:23:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753436Ab1JXH2u convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Oct 2011 03:28:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50506 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753326Ab1JXH2t convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Oct 2011 03:28:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 024B22CB7;
-	Mon, 24 Oct 2011 03:28:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=iGUU5fX/wH6u
-	LFw+ku4yMfqdLFI=; b=suTR7vb1PlsNuq/QvKQGnHiWoKJ7dahqGNfxIDRNM9ta
-	/rcWMA7biBVb9GfuXuvo05ia79Da8Nr7gY+PQisLwPBR6bmzUBCvMUKAoyf7/Ztr
-	ACVS1bsYCuZmwyGlSPcV50/1vXR3srCoKl7PxN77w5vPffs9w8P3lemuNZxfKHc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=PokWpt
-	t3nxZ2UZ9bzdVda54cUrxwyV4U0j5jnAmamkVF6XhdA+h7e3iGkl+ad9e6Uzk7Em
-	PWQT0a2Kh3vPNfgn6IHwZufwKze+12rPLpHqWuoeSyq9/HeWGpjOd+5N0vDA+TE2
-	ZTgUSQL8Bi3gx2IUQhvJjCo/MqBAhaXPPojsg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EDEE02CB6;
-	Mon, 24 Oct 2011 03:28:48 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6ACC22CB5; Mon, 24 Oct 2011
- 03:28:48 -0400 (EDT)
-In-Reply-To: <4EA4B8E7.5070106@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Mon, 24 Oct 2011 03:01:27 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D058B76E-FE11-11E0-9308-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753955Ab1JXJXt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Oct 2011 05:23:49 -0400
+Received: from nm3-vm0.bullet.mail.ird.yahoo.com ([77.238.189.213]:38381 "HELO
+	nm3-vm0.bullet.mail.ird.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753833Ab1JXJXt (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Oct 2011 05:23:49 -0400
+Received: from [77.238.189.53] by nm3.bullet.mail.ird.yahoo.com with NNFMP; 24 Oct 2011 09:23:47 -0000
+Received: from [212.82.108.121] by tm6.bullet.mail.ird.yahoo.com with NNFMP; 24 Oct 2011 09:23:47 -0000
+Received: from [127.0.0.1] by omp1030.mail.ird.yahoo.com with NNFMP; 24 Oct 2011 09:23:47 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 644499.79768.bm@omp1030.mail.ird.yahoo.com
+Received: (qmail 71306 invoked by uid 60001); 24 Oct 2011 09:23:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.de; s=s1024; t=1319448227; bh=GT2rK+lBEECvLvRE0Fgj1e6d4CIfuhkMcCwO5GGUQac=; h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Reply-To:Subject:To:Cc:MIME-Version:Content-Type; b=VBPABMw3DeRw6Bx1hAUVaj/qtDBVTBVKu8iJPHJLD5nnZPEA4VofsHREF4Nm2JfLcBCtHnR6/M9iJxlL4HuMKRlm4X33vt6/RGANUmmG7EOBbUlalFhgohf114A5U1AMFBJFqThPs5tOxf9PnR2b/1hXrfv2bNfRBroARsKndXQ=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.de;
+  h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Reply-To:Subject:To:Cc:MIME-Version:Content-Type;
+  b=W5QUiHHtKoUvfDgIFd1CcE0TkA710VOyXq655wrjUkHot1vHynUuEVkUm1o+2M+xScF+yiTDUVkAnEGXf460MgoVSytYA4L3qLbIptO5hEpgvrAMyArA8HlRx5mnlwvOmHxCmjzOgHE6m0YL5pq5aHYTJsDvY+U3/g+Ei6hu6gA=;
+X-YMail-OSG: kJOsrRcVM1nHZnUSWFIpInyl0aAbVKgSlZt2odZUdK_g7K4
+ aWLpjDltylj9YeIXDfdCTnZ9lW2wDp.w6vJLMrZRr60OY0zT65u1ae5U8n6X
+ 7aBKc1zvjjTwgY0YLYL0pDD1mv4dNJUt2Rlw4ib4TzQVULxw1wnTpoqCmqvn
+ w4bOCaUlJVw2Iuw3jIlRhlfPHqn.8myofn0tuFQ5Vukg4CQOfyQIGcY0AQwG
+ ANQwV68mcmGLze2XDQqVY75srTPEM10V8pDtUvnBUlZ.aQs2uKyh9u.XnEbQ
+ xb05CDGKDdt0s_gS8zVQsoFuAeeX6poH1RcvCUJCstiaKCGC52K_b3itm1xq
+ A6ZfgwOMwbKqPDHDvfjB1
+Received: from [134.109.192.185] by web29402.mail.ird.yahoo.com via HTTP; Mon, 24 Oct 2011 10:23:47 BST
+X-Mailer: YahooMailWebService/0.8.114.317681
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184168>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+--921974003-1989850134-1319448227=:70497
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: quoted-printable
 
->  t/t7510-status-index.sh |   50 +++++++++++++++++++++++++++++++++++++=
-++++++++++
->  2 files changed, 53 insertions(+), 3 deletions(-)
->  create mode 100755 t/t7510-status-index.sh
+Hi,=0A=0AI am using git to manage some patches on top of the actual upstrea=
+m files, but noticed that the result of git-format-patch changed between 4b=
+fe7cb6668c43c1136304bbb17eea1b3ddf0237=A0and=A027af01d552331eacf1ed2671b2b4=
+b6ad4c268106=0A=0AI've attached two input files (I tried to provide a minim=
+al example... I am not sure if a smaller example is possible but at least b=
+oth files are smaller than 10 lines) and the results with version 1.7.6.3 a=
+nd and 1.7.7. The diffs were created using:=A0git diff anonymized_orig anon=
+ymized_new=0A=0AMy .gitconfig file is empty.=0A=0AThanks
+--921974003-1989850134-1319448227=:70497
+Content-Type: application/octet-stream; name=anonymized_orig
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="anonymized_orig"
 
-> diff --git a/t/t7510-status-index.sh b/t/t7510-status-index.sh
-> new file mode 100755
-> index 0000000..bca359d
-> --- /dev/null
-> +++ b/t/t7510-status-index.sh
-> @@ -0,0 +1,50 @@
+MAowCjAKMAo=
 
-Hmm, I cannot seem to make this fail this test without the fix on my
-=46edora 14 i686 VM when applied to v1.7.6.4 (estimation code originate=
-s
-cf55870 back in v1.7.6.1 days), but it does break on 'master'.
+--921974003-1989850134-1319448227=:70497
+Content-Type: application/octet-stream; name=anonymized_new
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="anonymized_new"
 
-By the way, I'll move this to 7511.
+MQoyCjAKMwo0CjUKNgo3Cg==
 
-Also would a patch like this help?
+--921974003-1989850134-1319448227=:70497
+Content-Type: application/octet-stream; name="diff.1.7.6.3"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="diff.1.7.6.3"
 
--- >8 --
-Subject: [PATCH] read_index(): die on estimation error
+ZGlmZiAtLWdpdCBhL2Fub255bWl6ZWRfb3JpZyBiL2Fub255bWl6ZWRfbmV3
+CmluZGV4IDQ0ZTBiZTguLmFkMGY4NTkgMTAwNjQ0Ci0tLSBhL2Fub255bWl6
+ZWRfb3JpZworKysgYi9hbm9ueW1pemVkX25ldwpAQCAtMSw0ICsxLDggQEAK
+LTAKLTAKLTAKLTAKKzEKKzIKKzAKKzMKKzQKKzUKKzYKKzcK
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- read-cache.c |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
+--921974003-1989850134-1319448227=:70497
+Content-Type: application/octet-stream; name="diff.1.7.7"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="diff.1.7.7"
 
-diff --git a/read-cache.c b/read-cache.c
-index 0a64103..2926615 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1270,6 +1270,7 @@ int read_index_from(struct index_state *istate, c=
-onst char *path)
- 	int fd, i;
- 	struct stat st;
- 	unsigned long src_offset, dst_offset;
-+	size_t bulk_alloc_size;
- 	struct cache_header *hdr;
- 	void *mmap;
- 	size_t mmap_size;
-@@ -1315,7 +1316,8 @@ int read_index_from(struct index_state *istate, c=
-onst char *path)
- 	 * has room for a few  more flags, we can allocate using the same
- 	 * index size
- 	 */
--	istate->alloc =3D xmalloc(estimate_cache_size(mmap_size, istate->cach=
-e_nr));
-+	bulk_alloc_size =3D estimate_cache_size(mmap_size, istate->cache_nr);
-+	istate->alloc =3D xmalloc(bulk_alloc_size);
- 	istate->initialized =3D 1;
-=20
- 	src_offset =3D sizeof(*hdr);
-@@ -1331,7 +1333,9 @@ int read_index_from(struct index_state *istate, c=
-onst char *path)
-=20
- 		src_offset +=3D ondisk_ce_size(ce);
- 		dst_offset +=3D ce_size(ce);
-+		if (bulk_alloc_size <=3D dst_offset)
-+			die("cache size estimation error");
- 	}
- 	istate->timestamp.sec =3D st.st_mtime;
- 	istate->timestamp.nsec =3D ST_MTIME_NSEC(st);
-=20
---=20
-1.7.7.1.504.gcc718
+ZGlmZiAtLWdpdCBhL2Fub255bWl6ZWRfb3JpZyBiL2Fub255bWl6ZWRfbmV3
+CmluZGV4IDQ0ZTBiZTguLmFkMGY4NTkgMTAwNjQ0Ci0tLSBhL2Fub255bWl6
+ZWRfb3JpZworKysgYi9hbm9ueW1pemVkX25ldwpAQCAtMSw0ICsxLDggQEAK
+KzEKKzIKIDAKLTAKLTAKLTAKKzMKKzQKKzUKKzYKKzcK
+
+--921974003-1989850134-1319448227=:70497--
