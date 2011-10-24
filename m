@@ -1,125 +1,82 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: Possible diff regression in v1.7.6-473-g27af01d
-Date: Mon, 24 Oct 2011 18:11:02 +0800
-Message-ID: <CALUzUxoc00DxB75Qu5qz+R9k4_xHx13RJGwwX8vJpbet1jf0Aw@mail.gmail.com>
-References: <1319448227.70497.YahooMailNeo@web29402.mail.ird.yahoo.com>
-	<201110241138.51448.trast@student.ethz.ch>
+From: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
+Subject: Re: [PATCH 00/22] Refactor to accept NUL in commit messages
+Date: Mon, 24 Oct 2011 13:09:19 +0200
+Message-ID: <87wrbu4peo.fsf@gmail.com>
+References: <1319277881-4128-1-git-send-email-pclouds@gmail.com>
+	<7vobx863v3.fsf@alter.siamese.dyndns.org>
+	<CACsJy8B=TsC4A=R6b3jyYBCvorEDBYHQ8uA864WrB0-3pgNyKA@mail.gmail.com>
+	<7vipng5k80.fsf@alter.siamese.dyndns.org>
+	<CACsJy8CA2cqJqt7cUN1CdnOb3=qE6B2XTd1oQKZ7osVz09kSGg@mail.gmail.com>
+	<7vehy459bg.fsf@alter.siamese.dyndns.org>
+	<20111023160744.GA22444@sigill.intra.peff.net>
+	<7v39ej5uqb.fsf@alter.siamese.dyndns.org>
+	<7vy5wb3sto.fsf@alter.siamese.dyndns.org>
+	<CACsJy8AsfQnS3L1fabzB-z7BdH=jvB=XNnmP2RZu0qp7C1uGYQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Franz Schrober <franzschrober@yahoo.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"marat@slonopotamus.org" <marat@slonopotamus.org>,
-	"gitster@pobox.com" <gitster@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Oct 24 12:11:12 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 24 13:15:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RIHUt-00048O-Gh
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Oct 2011 12:11:11 +0200
+	id 1RIIUs-0002oQ-U8
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Oct 2011 13:15:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754708Ab1JXKLF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Oct 2011 06:11:05 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:35614 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753938Ab1JXKLD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Oct 2011 06:11:03 -0400
-Received: by ggnb1 with SMTP id b1so5561527ggn.19
-        for <git@vger.kernel.org>; Mon, 24 Oct 2011 03:11:03 -0700 (PDT)
+	id S1755140Ab1JXLPI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Oct 2011 07:15:08 -0400
+Received: from mail-dy0-f46.google.com ([209.85.220.46]:36339 "EHLO
+	mail-dy0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754565Ab1JXLPH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Oct 2011 07:15:07 -0400
+Received: by dyk29 with SMTP id 29so57180dyk.19
+        for <git@vger.kernel.org>; Mon, 24 Oct 2011 04:15:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=sXT0RfZ/HLwBaE4SAiJr1m0tvSdwfkAKDXV9iulBJhU=;
-        b=xCXPtZOMn7suRz09a4+Rbfu1TR1CEhGHPAuUX8k+HxOSeFPGjyZU1CCB7EtPpYosYu
-         VZAtL5plF2VI7sEkQbP+StqBIC1LIvbtKpuDjn0TamgW/Ec4BPfEqXf0MnIn78SDEJoH
-         1SjuAfB21io3XxYFQUflIXc6GnIq2uRs0Ng3c=
-Received: by 10.223.63.206 with SMTP id c14mr42555878fai.7.1319451062982; Mon,
- 24 Oct 2011 03:11:02 -0700 (PDT)
-Received: by 10.223.83.2 with HTTP; Mon, 24 Oct 2011 03:11:02 -0700 (PDT)
-In-Reply-To: <201110241138.51448.trast@student.ethz.ch>
+        h=from:to:cc:subject:in-reply-to:references:user-agent:date
+         :message-id:mime-version:content-type:content-transfer-encoding;
+        bh=gWAT20jVY+SES86vQlFzKXlEUCtJKqVSd7b+C9/tShI=;
+        b=RoghKipglaVjG6oZRTceLCq20PoPLH/f04cOBoJbHkFTsoYdryDUY1qqwM/CeXEeuL
+         SBz0FGDefLxmFg5Bwj3QNdxF+PzITM6lSw+8Xgfx3JEpmCqhJz3knESCYyS22XaXSdWG
+         B0Smoyq2fSh3JIYCirXnC9vFnAbgZWQrGf7Os=
+Received: by 10.223.16.82 with SMTP id n18mr42761791faa.2.1319454904945;
+        Mon, 24 Oct 2011 04:15:04 -0700 (PDT)
+Received: from localhost (176.119.broadband10.iol.cz. [90.177.119.176])
+        by mx.google.com with ESMTPS id n25sm31208050fah.15.2011.10.24.04.15.02
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 24 Oct 2011 04:15:03 -0700 (PDT)
+In-Reply-To: <CACsJy8AsfQnS3L1fabzB-z7BdH=jvB=XNnmP2RZu0qp7C1uGYQ@mail.gmail.com>
+	(Nguyen Thai Ngoc Duy's message of "Mon, 24 Oct 2011 16:10:08 +1100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184171>
 
-On Mon, Oct 24, 2011 at 5:38 PM, Thomas Rast <trast@student.ethz.ch> wr=
-ote:
->
-> I'm not sure why you call this a regression. =A0For the benefit of
-> people who hate saving attachments, you used
->
-> =A0$ paste anonymized_orig anonymized_new =A0| xclip
-> =A00 =A0 =A0 =A0 1
-> =A00 =A0 =A0 =A0 2
-> =A00 =A0 =A0 =A0 0
-> =A00 =A0 =A0 =A0 3
-> =A0 =A0 =A0 =A0 =A04
-> =A0 =A0 =A0 =A0 =A05
-> =A0 =A0 =A0 =A0 =A06
-> =A0 =A0 =A0 =A0 =A07
->
-> the old diff was
->
-> =A0--- a/anonymized_orig
-> =A0+++ b/anonymized_new
-> =A0@@ -1,4 +1,8 @@
-> =A0-0
-> =A0-0
-> =A0-0
-> =A0-0
-> =A0+1
-> =A0+2
-> =A0+0
-> =A0+3
-> =A0+4
-> =A0+5
-> =A0+6
-> =A0+7
->
-> and the new diff is
->
-> =A0--- a/anonymized_orig
-> =A0+++ b/anonymized_new
-> =A0@@ -1,4 +1,8 @@
-> =A0+1
-> =A0+2
-> =A0 0
-> =A0-0
-> =A0-0
-> =A0-0
-> =A0+3
-> =A0+4
-> =A0+5
-> =A0+6
-> =A0+7
->
-> So the new diff correctly represents the change, and on top of that i=
-s
-> shorter (by only one line, admittedly). =A0What makes it a regression=
-?
+On Mon, 24 Oct 2011 07:10:08 +0200
+Nguyen Thai Ngoc Duy wrote:
 
-Thanks for inlining it, Thomas.
+> This is argument for the sake of argument because I don't use utf-16
+> and do not care much. UTF-16 can have more code points and some may
+> prefer utf-16 to utf-8.
 
-> Franz Schrober wrote:>> Hi,>>>> I am using git to manage some patches=
- on top of the actual upstream files, but noticed that the result of gi=
-t-format-patch changed between 4bfe7cb6668c43c1136304bbb17eea1b3ddf0237=
- and 27af01d552331eacf1ed2671b2b4b6ad4c268106>>>> I've attached two inp=
-ut files (I tried to provide a minimal example... I am not sure if a sm=
-aller example is possible but at least both files are smaller than 10 l=
-ines) and the results with version 1.7.6.3 and and 1.7.7. The diffs wer=
-e created using: git diff anonymized_orig anonymized_new>>>> My .gitcon=
-fig file is empty.
-This has been "fixed" in v1.7.7.1, with 713b85c (Merge branch
-'rs/diff-cleanup-records-fix' into maint) - "fixed" in that it gives
-back the old behaviour, not that the diff produced is incorrect and
-needs fixing.
-(I'm running 1.7.7.1.599.g03eec, I get the same diff as diff.1.7.6.3)
+I suspect this is really tangential to this thread, but I can't make
+much sense of that last sentence -- if you meant that UTF-16 is somehow
+more apt at encoding Unicode code points than UTF-8, then that's not th=
+e
+case. Both can represent all Unicode characters. If anything, things ar=
+e
+_more_, not less complicated in UTF-16, which apart from the NUL and
+endianness complications has to jump through the "surrogate pairs" hoop
+for code points bigger than U+FFFF (so you'll actually find many apps
+with buggy UTF-16 implementation which break for those code points,
+unlike when using UTF-8).
 
 --=20
-Cheers,
-Ray Chuan
+=C5=A0t=C4=9Bp=C3=A1n
