@@ -1,86 +1,84 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] read-cache.c: fix index memory allocation
-Date: Tue, 25 Oct 2011 20:00:04 +0200
-Message-ID: <4EA6F924.6060208@lsrfire.ath.cx>
-References: <4EA20C5B.3090808@gmail.com> <vpqfwiknmh3.fsf@bauges.imag.fr> <4EA3D1BB.2010802@gmail.com> <4EA415BD.1040109@lsrfire.ath.cx> <20111023162944.GB28156@sigill.intra.peff.net> <4EA453D3.7080002@lsrfire.ath.cx> <4EA4B8E7.5070106@lsrfire.ath.cx> <7vipne50lz.fsf@alter.siamese.dyndns.org> <4EA5DFB2.3050406@lsrfire.ath.cx> <20111024233427.GA24956@duynguyen-vnpc.dektech.internal> <CACsJy8A7yVk15aAgqDkKTz31rChA7Oj-kS2VT2y2tWS6h01GyA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	John Hsing <tsyj2007@gmail.com>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 25 20:00:25 2011
+From: Stefan Naewe <stefan.naewe@gmail.com>
+Subject: [PATCH] completion: fix issue with process substitution not working on Git for Windows
+Date: Tue, 25 Oct 2011 20:01:35 +0200
+Message-ID: <1319565695-5976-1-git-send-email-stefan.naewe@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Stefan Naewe <stefan.naewe@gmail.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Tue Oct 25 20:01:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RIlIU-0004P6-M9
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 20:00:23 +0200
+	id 1RIlJr-0005Ei-TQ
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 20:01:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751990Ab1JYSAQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Oct 2011 14:00:16 -0400
-Received: from india601.server4you.de ([85.25.151.105]:60281 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751827Ab1JYSAP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Oct 2011 14:00:15 -0400
-Received: from [192.168.2.104] (p4FFD9607.dip.t-dialin.net [79.253.150.7])
-	by india601.server4you.de (Postfix) with ESMTPSA id 89C2A2F806B;
-	Tue, 25 Oct 2011 20:00:13 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
-In-Reply-To: <CACsJy8A7yVk15aAgqDkKTz31rChA7Oj-kS2VT2y2tWS6h01GyA@mail.gmail.com>
+	id S1752115Ab1JYSBo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Oct 2011 14:01:44 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:50977 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751583Ab1JYSBn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Oct 2011 14:01:43 -0400
+Received: by faan17 with SMTP id n17so777523faa.19
+        for <git@vger.kernel.org>; Tue, 25 Oct 2011 11:01:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=md62sXa4JPrJs75X00/QDbN0tNisht3MTMuYfRov/LM=;
+        b=pCR2jAB7sjDpJckvJliuTakMmnGTD/VFnhhGvrkERrSHKMIBkEgyKlaaP6bk4FBN8/
+         hGR4oqlcisZ9xi/Om1rWbjY/+6HmWTU/poWjh+gWbHd4uuQM6cYse50AnVlx2JNBiXBw
+         eG61lWDEzZI5N9vyFc7zE8qamQqVyI8wteV+Q=
+Received: by 10.223.77.69 with SMTP id f5mr52884994fak.3.1319565702140;
+        Tue, 25 Oct 2011 11:01:42 -0700 (PDT)
+Received: from localhost.localdomain (dslc-082-083-206-079.pools.arcor-ip.net. [82.83.206.79])
+        by mx.google.com with ESMTPS id j5sm16749034faf.14.2011.10.25.11.01.40
+        (version=SSLv3 cipher=OTHER);
+        Tue, 25 Oct 2011 11:01:41 -0700 (PDT)
+X-Mailer: git-send-email 1.7.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184229>
 
-Am 25.10.2011 02:01, schrieb Nguyen Thai Ngoc Duy:
-> On Tue, Oct 25, 2011 at 10:34 AM, Nguyen Thai Ngoc Duy
-> <pclouds@gmail.com> wrote:
->> "git status" is slow. If your changes causes slowdown, it won't likely
->> stand out while other fast commands may show (read_cache() is used in
->> nearly all commands). So I tested using the following patch.
->>
->> The result on linux-2.6 shows about 10-20 us slowdown per each
->> read_cache() call (30-40 us on webkit, ~50k files) I think your patch
->> is good enough :-)
-> 
-> That was with -O0 by the way. valgrind/massif shows about 200kb memory
-> more with your patch on webkit repository (7.497 MB vs 7.285 MB),
-> using the same test, so memory overhead is ok too.
+Git for Windows comes with a bash that doesn't support process substitution.
+It issues the following error when using git-completion.bash with
+GIT_PS1_SHOWUPSTREAM set:
 
-We can reduce that a bit -- unless block allocation of index entries
-is still done somewhere.
+$ export GIT_PS1_SHOWUPSTREAM=1
+sh.exe": cannot make pipe for process substitution: Function not implemented
+sh.exe": cannot make pipe for process substitution: Function not implemented
+sh.exe": <(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n '): ambiguous redirect
 
--- >8 --
-Subject: [PATCH 2/1] cache.h: put single NUL at end of struct cache_entry
+Replace the process substitution with a simple "echo $var | while...".
 
-Since in-memory index entries are allocated individually now, the
-variable slack at the end meant to provide an eight byte alignment
-is not needed anymore.  Have a single NUL instead.  This saves zero
-to seven bytes for an entry, depending on its filename length.
-
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Signed-off-by: Stefan Naewe <stefan.naewe@gmail.com>
 ---
+ contrib/completion/git-completion.bash |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
- cache.h |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index ec0e571..bd106b5 100644
---- a/cache.h
-+++ b/cache.h
-@@ -306,7 +306,7 @@ static inline unsigned int canon_mode(unsigned int mode)
- }
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 8648a36..926db80 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -110,6 +110,8 @@ __git_ps1_show_upstream ()
+ 	local upstream=git legacy="" verbose=""
  
- #define flexible_size(STRUCT,len) ((offsetof(struct STRUCT,name) + (len) + 8) & ~7)
--#define cache_entry_size(len) flexible_size(cache_entry,len)
-+#define cache_entry_size(len) (offsetof(struct cache_entry,name) + (len) + 1)
- #define ondisk_cache_entry_size(len) flexible_size(ondisk_cache_entry,len)
- #define ondisk_cache_entry_extended_size(len) flexible_size(ondisk_cache_entry_extended,len)
+ 	# get some config options from git-config
++	output="$(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
++	echo "$output" | \
+ 	while read key value; do
+ 		case "$key" in
+ 		bash.showupstream)
+@@ -125,7 +127,7 @@ __git_ps1_show_upstream ()
+ 			upstream=svn+git # default upstream is SVN if available, else git
+ 			;;
+ 		esac
+-	done < <(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')
++	done
  
+ 	# parse configuration values
+ 	for option in ${GIT_PS1_SHOWUPSTREAM}; do
 -- 
-1.7.7
+1.7.7.1
