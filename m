@@ -1,84 +1,89 @@
-From: Stefan Naewe <stefan.naewe@gmail.com>
-Subject: [PATCH] completion: fix issue with process substitution not working on Git for Windows
-Date: Tue, 25 Oct 2011 20:01:35 +0200
-Message-ID: <1319565695-5976-1-git-send-email-stefan.naewe@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Stefan Naewe <stefan.naewe@gmail.com>
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Tue Oct 25 20:01:49 2011
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: pull is not a git command - 1.7.6.4
+Date: Tue, 25 Oct 2011 14:10:33 -0400
+Message-ID: <CAPZPVFZKNdDcnaVn237gArqdBuc4ek77vxsp8BMaicARBTKqBg@mail.gmail.com>
+References: <CAPZPVFbakHo0hgz3bo+SLMuYnQSEA=ab+4W92+Lr5Fq4XZy2PA@mail.gmail.com>
+	<7vipnd3trk.fsf@alter.siamese.dyndns.org>
+	<CAPZPVFanWTpCDO+A0dV4TWUVx-22VjFOdk6f7cmgfU59GqG3sQ@mail.gmail.com>
+	<vpqr521j98h.fsf@bauges.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Oct 25 20:10:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RIlJr-0005Ei-TQ
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 20:01:48 +0200
+	id 1RIlSR-0000dT-M2
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 20:10:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752115Ab1JYSBo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Oct 2011 14:01:44 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:50977 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751583Ab1JYSBn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Oct 2011 14:01:43 -0400
-Received: by faan17 with SMTP id n17so777523faa.19
-        for <git@vger.kernel.org>; Tue, 25 Oct 2011 11:01:42 -0700 (PDT)
+	id S1752702Ab1JYSKf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Oct 2011 14:10:35 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:45858 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752542Ab1JYSKe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Oct 2011 14:10:34 -0400
+Received: by iaby12 with SMTP id y12so826715iab.19
+        for <git@vger.kernel.org>; Tue, 25 Oct 2011 11:10:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=md62sXa4JPrJs75X00/QDbN0tNisht3MTMuYfRov/LM=;
-        b=pCR2jAB7sjDpJckvJliuTakMmnGTD/VFnhhGvrkERrSHKMIBkEgyKlaaP6bk4FBN8/
-         hGR4oqlcisZ9xi/Om1rWbjY/+6HmWTU/poWjh+gWbHd4uuQM6cYse50AnVlx2JNBiXBw
-         eG61lWDEzZI5N9vyFc7zE8qamQqVyI8wteV+Q=
-Received: by 10.223.77.69 with SMTP id f5mr52884994fak.3.1319565702140;
-        Tue, 25 Oct 2011 11:01:42 -0700 (PDT)
-Received: from localhost.localdomain (dslc-082-083-206-079.pools.arcor-ip.net. [82.83.206.79])
-        by mx.google.com with ESMTPS id j5sm16749034faf.14.2011.10.25.11.01.40
-        (version=SSLv3 cipher=OTHER);
-        Tue, 25 Oct 2011 11:01:41 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7.1
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=oxzTpxOqGULr1WNvMcJEdAVJLPtlbvS/6Rz2AysHNDg=;
+        b=XRe/RemlICaenC8b6uJef2fyARNCMQIEW2mlxrr8VZXvVOsgYlJGXb9zgzdMN2iSBu
+         FDWV3NnxXmQWL7VF+dXEzH9/gNcQCjv2uaXVtU+/83AAriGb/HyQZipvHoazILGB+TtK
+         tETta/5nA9APjYUM1O342ooql3qE0ZW83XjuA=
+Received: by 10.231.5.225 with SMTP id 33mr688487ibw.3.1319566233792; Tue, 25
+ Oct 2011 11:10:33 -0700 (PDT)
+Received: by 10.231.199.17 with HTTP; Tue, 25 Oct 2011 11:10:33 -0700 (PDT)
+In-Reply-To: <vpqr521j98h.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184230>
 
-Git for Windows comes with a bash that doesn't support process substitution.
-It issues the following error when using git-completion.bash with
-GIT_PS1_SHOWUPSTREAM set:
+On Tue, Oct 25, 2011 at 1:01 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Eugene Sajine <euguess@gmail.com> writes:
+>
+>> On Tue, Oct 25, 2011 at 12:45 PM, Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>>
+>>> Just a wild guess. perhaps you specified prefix=3D/usr/local/git-1.=
+7.4.1/
+>>> eons ago when you built and installed 1.7.4.1 like this:
+>>>
+>>> =C2=A0 =C2=A0make prefix=3D/usr/local/git-1.7.4.1 all install
+>>>
+>>> and then you did it differently when you installed 1.7.6.4, e.g.
+>>>
+>>> =C2=A0 =C2=A0make all
+>>> =C2=A0 =C2=A0make prefix=3D/usr/local/git-1.7.6.4 install
+>>>
+>>>
+>>
+>>
+>> Are you saying that the first command is more correct?
+>> I will check it.
+>
+> At build time, Git registers the "exec path" (i.e. where to find
+> git-<command> executables). So, if you run "make all" without specify=
+ing
+> the install path, Git will set an arbitrary exec-path, and the
+> installation won't work.
+>
+> --
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
+>
 
-$ export GIT_PS1_SHOWUPSTREAM=1
-sh.exe": cannot make pipe for process substitution: Function not implemented
-sh.exe": cannot make pipe for process substitution: Function not implemented
-sh.exe": <(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n '): ambiguous redirect
+Matthieu/Junio,
 
-Replace the process substitution with a simple "echo $var | while...".
+Thank you very much for your help - there was a mistake made during
+the build where the exec path folder was incorrect and unreachable.
 
-Signed-off-by: Stefan Naewe <stefan.naewe@gmail.com>
----
- contrib/completion/git-completion.bash |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 8648a36..926db80 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -110,6 +110,8 @@ __git_ps1_show_upstream ()
- 	local upstream=git legacy="" verbose=""
- 
- 	# get some config options from git-config
-+	output="$(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
-+	echo "$output" | \
- 	while read key value; do
- 		case "$key" in
- 		bash.showupstream)
-@@ -125,7 +127,7 @@ __git_ps1_show_upstream ()
- 			upstream=svn+git # default upstream is SVN if available, else git
- 			;;
- 		esac
--	done < <(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')
-+	done
- 
- 	# parse configuration values
- 	for option in ${GIT_PS1_SHOWUPSTREAM}; do
--- 
-1.7.7.1
+Thanks!
