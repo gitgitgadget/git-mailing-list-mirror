@@ -1,77 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Eugene Sajine <euguess@gmail.com>
 Subject: Re: pull is not a git command - 1.7.6.4
-Date: Tue, 25 Oct 2011 09:45:03 -0700
-Message-ID: <7vipnd3trk.fsf@alter.siamese.dyndns.org>
+Date: Tue, 25 Oct 2011 12:50:48 -0400
+Message-ID: <CAPZPVFZCQdOsAUMdbcZjmGxVgX5LuKKwcob=qBuNmyX7kYwA4A@mail.gmail.com>
 References: <CAPZPVFbakHo0hgz3bo+SLMuYnQSEA=ab+4W92+Lr5Fq4XZy2PA@mail.gmail.com>
+	<vpqpqhlox45.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 25 18:45:40 2011
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Oct 25 18:50:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RIk8B-00020z-6j
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 18:45:39 +0200
+	id 1RIkDG-0004Kh-Bv
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 18:50:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751876Ab1JYQpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Oct 2011 12:45:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49212 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751625Ab1JYQpH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Oct 2011 12:45:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EE0F54C0;
-	Tue, 25 Oct 2011 12:45:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jFx32PxAiFdGbXj8Ud/qXdNxDAY=; b=nmh2JX
-	+2Xk0hrZbJtn77dECHyJ2HZzQOOuGZ8ijsdTicSQP12UXC8ICdY+B5X5451peIIA
-	2m+bRU+d6VDW59NXlagIqtmVWLCPmHomBU8SlzbLx02PfeIQG/iF5uvPDV43TLie
-	abKVNB8pxpjMH0132QpeKhhVdwOg+ENXsCJ/0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kavhbOIlJHSIs+6lhvyhfRa6xhx3Yag0
-	OgD5H3biLWNU4cmlnWV+uTbEHZD5db6JWjT1sSXIza/GSPYtumBJHGEZWkgdImms
-	Zylx44Yhepzqkuuk9wNK1I0QbJAlFngvPGlskm9/10ckmU1DelwkSj6WKx48mP1E
-	14WDeEF6Gds=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 71F1254BF;
-	Tue, 25 Oct 2011 12:45:06 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0051F54BC; Tue, 25 Oct 2011
- 12:45:04 -0400 (EDT)
-In-Reply-To: <CAPZPVFbakHo0hgz3bo+SLMuYnQSEA=ab+4W92+Lr5Fq4XZy2PA@mail.gmail.com> (Eugene
- Sajine's message of "Tue, 25 Oct 2011 11:58:06 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B0C1A754-FF28-11E0-9B69-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751961Ab1JYQut convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Oct 2011 12:50:49 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:52665 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751913Ab1JYQus convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Oct 2011 12:50:48 -0400
+Received: by iaby12 with SMTP id y12so754866iab.19
+        for <git@vger.kernel.org>; Tue, 25 Oct 2011 09:50:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=VJft3E+YEIzLmFu+26GuYaSy/RIVTAzCfFkyjkeqeAg=;
+        b=w8vekfq62vLBl8CY7wBWdY6XZZqsGlwwUxRggb3hs6/lrRnqMuX6kvJNr+biUCJKkx
+         pyqXL/aWYI/FRfZAXcTGkXYOg4gv+3WCVV2vTPFyMXn9RMeklC3tGyzIgTxF1Cb7b4Uk
+         A18KMryl95wWuhHepCtMf35+SzDgt6+8cX37A=
+Received: by 10.42.151.196 with SMTP id f4mr45546634icw.17.1319561448330; Tue,
+ 25 Oct 2011 09:50:48 -0700 (PDT)
+Received: by 10.231.199.17 with HTTP; Tue, 25 Oct 2011 09:50:48 -0700 (PDT)
+In-Reply-To: <vpqpqhlox45.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184221>
 
-Eugene Sajine <euguess@gmail.com> writes:
-
-> We have built git 1.7.6.4 and we have a following problem with it:
-> .,,
-> It doesn't seem to be the case with 1.7.4.1
+On Tue, Oct 25, 2011 at 12:27 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Eugene Sajine <euguess@gmail.com> writes:
 >
-> Was there any change between those versions that i missed, or may be
-> there is some property we have to specify during build?
+>> Hi,
+>>
+>>
+>> We have built git 1.7.6.4 and we have a following problem with it:
+>
+> Which command did you use to compile it? What does
+>
+> =C2=A0git --exec-path
+>
+> say?
+>
+> --
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
+>
 
-Nothing I can think of offhand that you need to specify _differently_
-between the build procedures of these two versions.
+I was not building it myself so i cannot say what command exactly was
+used, but i will check it.
+OTOH git --exec-path shows:
+for version 1.7.4.1 that works properly -
+/usr/local/git-1.7.4.1/libexec/git-core
+=46or version 1.7.6.4 libexec is located in some other folder...
 
-Just a wild guess. perhaps you specified prefix=/usr/local/git-1.7.4.1/
-eons ago when you built and installed 1.7.4.1 like this:
+Let me check what is this all about.
 
-    make prefix=/usr/local/git-1.7.4.1 all install
-
-and then you did it differently when you installed 1.7.6.4, e.g.
-
-    make all
-    make prefix=/usr/local/git-1.7.6.4 install
+Thanks,
+Eugene
