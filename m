@@ -1,77 +1,78 @@
-From: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
-Subject: Re: [PATCH 00/22] Refactor to accept NUL in commit messages
-Date: Tue, 25 Oct 2011 12:16:00 +0200
-Message-ID: <87sjmh4brz.fsf@gmail.com>
-References: <1319277881-4128-1-git-send-email-pclouds@gmail.com>
-	<7vobx863v3.fsf@alter.siamese.dyndns.org>
-	<CACsJy8B=TsC4A=R6b3jyYBCvorEDBYHQ8uA864WrB0-3pgNyKA@mail.gmail.com>
-	<7vipng5k80.fsf@alter.siamese.dyndns.org>
-	<CACsJy8CA2cqJqt7cUN1CdnOb3=qE6B2XTd1oQKZ7osVz09kSGg@mail.gmail.com>
-	<7vehy459bg.fsf@alter.siamese.dyndns.org>
-	<20111023160744.GA22444@sigill.intra.peff.net>
-	<7v39ej5uqb.fsf@alter.siamese.dyndns.org>
-	<7vy5wb3sto.fsf@alter.siamese.dyndns.org>
-	<20111024224558.GB10481@sigill.intra.peff.net>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Behavior of "git push --mirror repo"
+Date: Tue, 25 Oct 2011 12:25:10 +0200
+Message-ID: <j862ts$d75$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 25 12:21:53 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 25 12:27:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RIe8m-0004Ev-OR
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 12:21:53 +0200
+	id 1RIeEA-0006H0-3g
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 12:27:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754282Ab1JYKVs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Oct 2011 06:21:48 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:45011 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753298Ab1JYKVr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Oct 2011 06:21:47 -0400
-Received: by faan17 with SMTP id n17so343905faa.19
-        for <git@vger.kernel.org>; Tue, 25 Oct 2011 03:21:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type:content-transfer-encoding;
-        bh=mgUDu5Bvtdo0wJjH4Xq4l6bQmVN5yuTAcCFO01CTocQ=;
-        b=C+Q399bUr4qLvFa6PqoSNUqHnIwIjbE3MV4gSwijG+yABo4bZTAJ2NT8cykdCo7TUn
-         dDYzU8BSMe7QckFikCjVSmja8acFuyQLSSDY1JtJGhie8h2fgPCdN81lAVgNW6/mBTgE
-         01Ls5KcAcXswIYnPcR/g38PxNXh4fti3k1Yf4=
-Received: by 10.223.76.201 with SMTP id d9mr50140266fak.12.1319538106443;
-        Tue, 25 Oct 2011 03:21:46 -0700 (PDT)
-Received: from localhost (176.119.broadband10.iol.cz. [90.177.119.176])
-        by mx.google.com with ESMTPS id n25sm37551308fah.15.2011.10.25.03.21.44
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 25 Oct 2011 03:21:44 -0700 (PDT)
-In-Reply-To: <20111024224558.GB10481@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 24 Oct 2011 15:45:58 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+	id S1754282Ab1JYK1V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Oct 2011 06:27:21 -0400
+Received: from lo.gmane.org ([80.91.229.12]:45769 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753465Ab1JYK1U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Oct 2011 06:27:20 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RIeE3-0006F9-6z
+	for git@vger.kernel.org; Tue, 25 Oct 2011 12:27:19 +0200
+Received: from jambul.zib.de ([130.73.68.203])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 25 Oct 2011 12:27:19 +0200
+Received: from sschuberth by jambul.zib.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 25 Oct 2011 12:27:19 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: jambul.zib.de
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184201>
 
-On Tue, 25 Oct 2011 00:45:58 +0200
-Jeff King wrote:
+Hi,
 
-> [1] English is my first language, so it's rare for me to even step
-> outside of ASCII, let alone latin1. But aren't there some languages i=
-n
-> which utf-16 is more efficient than utf-8?
+I cloned a repository from "origin" to my local disk. I only have a local branch for "master", although there are more remote branches. Now I want to initialize a new empty bare repository with an exact copy of the repository, including all branches, also those remote branches that I have no local branch for. So I did:
 
-You sometimes hear something along the lines of the second
-"disadvantage" listed in the article below, i.e. "Characters U+0800
-through U+FFFF use three bytes in UTF-8, but only two in UTF-16.":
+$ git remote add sf <url>
+$ git push --mirror sf
 
-https://en.wikipedia.org/wiki/UTF-8#Disadvantages_4
+Which prints:
 
---=20
-=C5=A0t=C4=9Bp=C3=A1n
+ * [new branch]      master -> master
+ * [new branch]      refs/notes/commits -> refs/notes/commits
+ * [new branch]      refs/original/refs/heads/master -> refs/original/refs/heads/master
+ * [new branch]      origin/HEAD -> origin/HEAD
+ * [new branch]      origin/bourke -> origin/bourke
+ * [new branch]      origin/colorscheme -> origin/colorscheme
+ * [new branch]      origin/cpuinfo -> origin/cpuinfo
+ * [new branch]      origin/demo-ssao -> origin/demo-ssao
+ * [new branch]      origin/master -> origin/master
+ * [new branch]      origin/mesh-improvements -> origin/mesh-improvements
+ * [new branch]      origin/mesh-iterators-subdiv -> origin/mesh-iterators-subdiv
+ * [new tag]         gale2-static-dummy-window -> gale2-static-dummy-window
+
+In the target repository "sf" I now alony have the "master" branch and the "gale2-static-dummy-window" tag, but none of the remote branches from "origin". I was reading the --mirror option as if this should happen:
+
+ * [new branch]      origin/bourke -> sf/bourke
+
+etc.
+
+Is this behavior expected? If yes, what the correct way to mirror a repository then (without creating a local branch for each remote branch first)?
+
+Thanks.
+
+-- 
+Sebastian Schuberth
