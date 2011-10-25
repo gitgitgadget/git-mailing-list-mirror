@@ -1,61 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: general protection faults with "git grep" version 1.7.7.1
-Date: Tue, 25 Oct 2011 08:37:20 -0700
-Message-ID: <20111025153720.GA6640@sigill.intra.peff.net>
-References: <20111024201153.GA1647@x4.trippels.de>
- <20111024214949.GA5237@amd.home.annexia.org>
- <201110251550.22248.trast@student.ethz.ch>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH/RFC] mingw: implement PTHREAD_MUTEX_INITIALIZER
+Date: Tue, 25 Oct 2011 17:42:53 +0200
+Message-ID: <CABPQNSZ8wesy-px-n1LYbVwFT3gBNcrHfe+_553sinTferqsog@mail.gmail.com>
+References: <1319554509-6532-1-git-send-email-kusmabite@gmail.com> <4EA6D594.90402@viscovery.net>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Richard W.M. Jones" <rjones@redhat.com>,
-	Markus Trippelsdorf <markus@trippelsdorf.de>,
-	meyering@redhat.com, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Oct 25 17:37:36 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: msysgit@googlegroups.com, git@vger.kernel.org,
+	johannes.schindelin@gmx.de
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Oct 25 17:43:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RIj4F-0001rm-KV
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 17:37:31 +0200
+	id 1RIjAA-0004p3-Mi
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 17:43:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756624Ab1JYPh1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Oct 2011 11:37:27 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55957
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752752Ab1JYPh0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Oct 2011 11:37:26 -0400
-Received: (qmail 15485 invoked by uid 107); 25 Oct 2011 15:43:12 -0000
-Received: from 75-147-138-244-SFBA.hfc.comcastbusiness.net (HELO sigill.intra.peff.net) (75.147.138.244)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 25 Oct 2011 11:43:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Oct 2011 08:37:20 -0700
-Content-Disposition: inline
-In-Reply-To: <201110251550.22248.trast@student.ethz.ch>
+	id S1756650Ab1JYPne convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Oct 2011 11:43:34 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:45404 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752606Ab1JYPnd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Oct 2011 11:43:33 -0400
+Received: by pzk36 with SMTP id 36so1785826pzk.1
+        for <git@vger.kernel.org>; Tue, 25 Oct 2011 08:43:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=ItuKX/U5pFDegnI/lIVolb6tT8aJXS6BcloFI5Zz7jk=;
+        b=jjWzG2nJU5hT8okRFai4SgyPOXU8OZPyeUQdi2ysouKQPtydc9Abn/VTUI+lyeT6ud
+         ntqdSOyuEmr1pqva/AqUA+qEVsVf4r9qaXtmDicpFGmU73BlhJX9YhP92BQeuvmz39FV
+         LU8dtTN994/hoYwDGwlpNQeOhM4WOcLRG2Exg=
+Received: by 10.68.28.9 with SMTP id x9mr51851753pbg.8.1319557413042; Tue, 25
+ Oct 2011 08:43:33 -0700 (PDT)
+Received: by 10.68.71.135 with HTTP; Tue, 25 Oct 2011 08:42:53 -0700 (PDT)
+In-Reply-To: <4EA6D594.90402@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184213>
 
-On Tue, Oct 25, 2011 at 03:50:21PM +0200, Thomas Rast wrote:
+On Tue, Oct 25, 2011 at 5:28 PM, Johannes Sixt <j.sixt@viscovery.net> w=
+rote:
+> Am 10/25/2011 16:55, schrieb Erik Faye-Lund:
+>> +int pthread_mutex_lock(pthread_mutex_t *mutex)
+>> +{
+>> + =A0 =A0 if (mutex->autoinit) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 if (InterlockedCompareExchange(&mutex->aut=
+oinit, -1, 1) !=3D -1) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 pthread_mutex_init(mutex, =
+NULL);
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 mutex->autoinit =3D 0;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 } else
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 while (mutex->autoinit !=3D=
+ 0)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ; /* wait =
+for other thread */
+>> + =A0 =A0 }
+>
+> The double-checked locking idiom. Very suspicious. Can you explain wh=
+y it
+> works in this case? Why are no Interlocked functions needed for the o=
+ther
+> accesses of autoinit? ("It is volatile" is the wrong answer to this l=
+ast
+> question, BTW.)
 
-> That being said, I'm not entirely convinced that the code in
-> builtin/grep.c works in the face of memory pressure.  It guards
-> against concurrent access to read_sha1_file() with the
-> read_sha1_mutex, but any call to xmalloc() outside of that mutex can
-> still potentially invoke the try_to_free_routine.  Maybe one of the
-> pack experts can say whether this is safe.  (However, I implemented
-> locking around try_to_free_routine as a quick hack and it did not fix
-> the issue discussed in the bug report.)
+I agree that it should look a bit suspicious; I'm generally skeptical
+whenever I see 'volatile' in threading-code myself. But I think it's
+the right answer in this case. "volatile" means that the compiler
+cannot optimize away accesses, which is sufficient in this case.
 
-Yes, I think it needs to set try_to_free_routine. See this thread:
+Basically, the thread that gets the original 1 returned from
+InterlockedCompareExchange is the only one who writes to
+mutex->autoinit. All other threads only read the value, and the
+volatile should make sure they actually do. Since all 32-bit reads and
+writes are atomic on Windows (see
+http://msdn.microsoft.com/en-us/library/windows/desktop/ms684122(v=3Dvs=
+=2E85).aspx
+"Simple reads and writes to properly-aligned 32-bit variables are
+atomic operations.") and mutex->autoinit is a LONG, this should be
+safe AFAICT. In fact, Windows specifically does not have any
+explicitly atomic writes exactly for this reason.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/180446
+The only ways mutex->autoinit can be updated is:
+- InterlockedCompareExchange compares it to 1, finds it's identical
+and inserts -1
+- intialization is done
+Both these updates happens from the same thread.
 
-which discusses a possible subtlety with doing so.
+Yes, details like this should probably go into the commit message ;)
 
--Peff
+If there's something I'm missing, please let me know.
