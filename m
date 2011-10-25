@@ -1,85 +1,86 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] git grep: be careful to use mutices only when they are
- initialized
-Date: Tue, 25 Oct 2011 12:25:20 -0500 (CDT)
-Message-ID: <alpine.DEB.1.00.1110251223500.32316@s15462909.onlinehome-server.info>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] read-cache.c: fix index memory allocation
+Date: Tue, 25 Oct 2011 20:00:04 +0200
+Message-ID: <4EA6F924.6060208@lsrfire.ath.cx>
+References: <4EA20C5B.3090808@gmail.com> <vpqfwiknmh3.fsf@bauges.imag.fr> <4EA3D1BB.2010802@gmail.com> <4EA415BD.1040109@lsrfire.ath.cx> <20111023162944.GB28156@sigill.intra.peff.net> <4EA453D3.7080002@lsrfire.ath.cx> <4EA4B8E7.5070106@lsrfire.ath.cx> <7vipne50lz.fsf@alter.siamese.dyndns.org> <4EA5DFB2.3050406@lsrfire.ath.cx> <20111024233427.GA24956@duynguyen-vnpc.dektech.internal> <CACsJy8A7yVk15aAgqDkKTz31rChA7Oj-kS2VT2y2tWS6h01GyA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: msysgit@googlegroups.com
-X-From: git-owner@vger.kernel.org Tue Oct 25 19:25:31 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	John Hsing <tsyj2007@gmail.com>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 25 20:00:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RIkki-0004U2-KN
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 19:25:28 +0200
+	id 1RIlIU-0004P6-M9
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 20:00:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752291Ab1JYRZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Oct 2011 13:25:24 -0400
-Received: from mailout-de.gmx.net ([213.165.64.22]:46063 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751827Ab1JYRZX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Oct 2011 13:25:23 -0400
-Received: (qmail invoked by alias); 25 Oct 2011 17:25:20 -0000
-Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
-  by mail.gmx.net (mp052) with SMTP; 25 Oct 2011 19:25:20 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18IOSUI34wIie3hnH+WV6Tdw1hcSfkT2ZSLxslB90
-	xYNH5fnbUZkrlY
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751990Ab1JYSAQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Oct 2011 14:00:16 -0400
+Received: from india601.server4you.de ([85.25.151.105]:60281 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751827Ab1JYSAP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Oct 2011 14:00:15 -0400
+Received: from [192.168.2.104] (p4FFD9607.dip.t-dialin.net [79.253.150.7])
+	by india601.server4you.de (Postfix) with ESMTPSA id 89C2A2F806B;
+	Tue, 25 Oct 2011 20:00:13 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+In-Reply-To: <CACsJy8A7yVk15aAgqDkKTz31rChA7Oj-kS2VT2y2tWS6h01GyA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184228>
 
+Am 25.10.2011 02:01, schrieb Nguyen Thai Ngoc Duy:
+> On Tue, Oct 25, 2011 at 10:34 AM, Nguyen Thai Ngoc Duy
+> <pclouds@gmail.com> wrote:
+>> "git status" is slow. If your changes causes slowdown, it won't likely
+>> stand out while other fast commands may show (read_cache() is used in
+>> nearly all commands). So I tested using the following patch.
+>>
+>> The result on linux-2.6 shows about 10-20 us slowdown per each
+>> read_cache() call (30-40 us on webkit, ~50k files) I think your patch
+>> is good enough :-)
+> 
+> That was with -O0 by the way. valgrind/massif shows about 200kb memory
+> more with your patch on webkit repository (7.497 MB vs 7.285 MB),
+> using the same test, so memory overhead is ok too.
 
-Rather nasty things happen when a mutex is not initialized but locked
-nevertheless. Now, when we're not running in a threaded manner, the mutex
-is not initialized, which is correct. But then we went and used the mutex
-anyway, which -- at least on Windows -- leads to a hard crash (ordinarily
-it would be called a segmentation fault, but in Windows speak it is an
-access violation).
+We can reduce that a bit -- unless block allocation of index entries
+is still done somewhere.
 
-This problem was identified by our faithful tests when run in the msysGit
-environment.
+-- >8 --
+Subject: [PATCH 2/1] cache.h: put single NUL at end of struct cache_entry
 
-To avoid having to wrap the line due to the 80 column limit, we use
-the name "WHEN_THREADED" instead of "IF_USE_THREADS" because it is one
-character shorter. Which is all we need in this case.
+Since in-memory index entries are allocated individually now, the
+variable slack at the end meant to provide an eight byte alignment
+is not needed anymore.  Have a single NUL instead.  This saves zero
+to seven bytes for an entry, depending on its filename length.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 ---
 
-	I looked around a bit but ran out of time to identify the reason why
-	this was not caught earlier.
+ cache.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
- builtin/grep.c |    9 +++++----
- 1 files changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 92eeada..e94c5fe 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -78,10 +78,11 @@ static pthread_mutex_t grep_mutex;
- /* Used to serialize calls to read_sha1_file. */
- static pthread_mutex_t read_sha1_mutex;
+diff --git a/cache.h b/cache.h
+index ec0e571..bd106b5 100644
+--- a/cache.h
++++ b/cache.h
+@@ -306,7 +306,7 @@ static inline unsigned int canon_mode(unsigned int mode)
+ }
  
--#define grep_lock() pthread_mutex_lock(&grep_mutex)
--#define grep_unlock() pthread_mutex_unlock(&grep_mutex)
--#define read_sha1_lock() pthread_mutex_lock(&read_sha1_mutex)
--#define read_sha1_unlock() pthread_mutex_unlock(&read_sha1_mutex)
-+#define WHEN_THREADED(x) do { if (use_threads) (x); } while (0)
-+#define grep_lock() WHEN_THREADED(pthread_mutex_lock(&grep_mutex))
-+#define grep_unlock() WHEN_THREADED(pthread_mutex_unlock(&grep_mutex))
-+#define read_sha1_lock() WHEN_THREADED(pthread_mutex_lock(&read_sha1_mutex))
-+#define read_sha1_unlock() WHEN_THREADED(pthread_mutex_unlock(&read_sha1_mutex))
+ #define flexible_size(STRUCT,len) ((offsetof(struct STRUCT,name) + (len) + 8) & ~7)
+-#define cache_entry_size(len) flexible_size(cache_entry,len)
++#define cache_entry_size(len) (offsetof(struct cache_entry,name) + (len) + 1)
+ #define ondisk_cache_entry_size(len) flexible_size(ondisk_cache_entry,len)
+ #define ondisk_cache_entry_extended_size(len) flexible_size(ondisk_cache_entry_extended,len)
  
- /* Signalled when a new work_item is added to todo. */
- static pthread_cond_t cond_add;
 -- 
-1.7.5.3.4540.g15f89
+1.7.7
