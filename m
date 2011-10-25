@@ -1,62 +1,77 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: Re: general protection faults with "git grep" version 1.7.7.1
-Date: Tue, 25 Oct 2011 18:37:19 +0200
-Message-ID: <87sjmhauyo.fsf@rho.meyering.net>
-References: <20111024201153.GA1647@x4.trippels.de>
-	<201110251550.22248.trast@student.ethz.ch>
-	<87y5w9ayoa.fsf@rho.meyering.net>
-	<201110251800.28054.trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: pull is not a git command - 1.7.6.4
+Date: Tue, 25 Oct 2011 09:45:03 -0700
+Message-ID: <7vipnd3trk.fsf@alter.siamese.dyndns.org>
+References: <CAPZPVFbakHo0hgz3bo+SLMuYnQSEA=ab+4W92+Lr5Fq4XZy2PA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "Richard W.M. Jones" <rjones@redhat.com>,
-	Markus Trippelsdorf <markus@trippelsdorf.de>,
-	<git@vger.kernel.org>, "Shawn O. Pearce" <spearce@spearce.org>,
-	Jeff King <peff@peff.net>, Nicolas Pitre <nico@fluxnic.net>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Oct 25 18:37:34 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 25 18:45:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RIk0L-0006N6-Lg
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 18:37:34 +0200
+	id 1RIk8B-00020z-6j
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 18:45:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751835Ab1JYQh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Oct 2011 12:37:29 -0400
-Received: from smtp5-g21.free.fr ([212.27.42.5]:41038 "EHLO smtp5-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751573Ab1JYQh2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Oct 2011 12:37:28 -0400
-Received: from mx.meyering.net (unknown [88.168.87.75])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 6B613D48260
-	for <git@vger.kernel.org>; Tue, 25 Oct 2011 18:37:21 +0200 (CEST)
-Received: from rho.meyering.net (localhost.localdomain [127.0.0.1])
-	by rho.meyering.net (Acme Bit-Twister) with ESMTP id 56D796008E;
-	Tue, 25 Oct 2011 18:37:19 +0200 (CEST)
-In-Reply-To: <201110251800.28054.trast@student.ethz.ch> (Thomas Rast's message
-	of "Tue, 25 Oct 2011 18:00:27 +0200")
+	id S1751876Ab1JYQpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Oct 2011 12:45:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49212 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751625Ab1JYQpH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Oct 2011 12:45:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EE0F54C0;
+	Tue, 25 Oct 2011 12:45:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jFx32PxAiFdGbXj8Ud/qXdNxDAY=; b=nmh2JX
+	+2Xk0hrZbJtn77dECHyJ2HZzQOOuGZ8ijsdTicSQP12UXC8ICdY+B5X5451peIIA
+	2m+bRU+d6VDW59NXlagIqtmVWLCPmHomBU8SlzbLx02PfeIQG/iF5uvPDV43TLie
+	abKVNB8pxpjMH0132QpeKhhVdwOg+ENXsCJ/0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kavhbOIlJHSIs+6lhvyhfRa6xhx3Yag0
+	OgD5H3biLWNU4cmlnWV+uTbEHZD5db6JWjT1sSXIza/GSPYtumBJHGEZWkgdImms
+	Zylx44Yhepzqkuuk9wNK1I0QbJAlFngvPGlskm9/10ckmU1DelwkSj6WKx48mP1E
+	14WDeEF6Gds=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 71F1254BF;
+	Tue, 25 Oct 2011 12:45:06 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0051F54BC; Tue, 25 Oct 2011
+ 12:45:04 -0400 (EDT)
+In-Reply-To: <CAPZPVFbakHo0hgz3bo+SLMuYnQSEA=ab+4W92+Lr5Fq4XZy2PA@mail.gmail.com> (Eugene
+ Sajine's message of "Tue, 25 Oct 2011 11:58:06 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B0C1A754-FF28-11E0-9B69-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184220>
 
-Thomas Rast wrote:
-> Jim Meyering wrote:
->> Thomas Rast wrote:
->> > [GCC moves access to a file-static variable across pthread_mutex_lock()]
->>
->> Thanks for the investigation.
->> Actually, isn't gcc -O2's code-motion justified?
->> While we *know* that those globals may be modified asynchronously,
->> builtin/grep.c forgot to tell gcc about that.
+Eugene Sajine <euguess@gmail.com> writes:
+
+> We have built git 1.7.6.4 and we have a following problem with it:
+> .,,
+> It doesn't seem to be the case with 1.7.4.1
 >
-> I'm somewhat unwilling to believe that:
+> Was there any change between those versions that i missed, or may be
+> there is some property we have to specify during build?
 
-You're right to be skeptical.
-I should have stuck with "using volatile works around the problem for me".
-The real problem seems to be in glibc, with its addition of
-the "leaf" attribute to those synchronization primitives:
+Nothing I can think of offhand that you need to specify _differently_
+between the build procedures of these two versions.
 
-  http://bugzilla.redhat.com/747377#c22
+Just a wild guess. perhaps you specified prefix=/usr/local/git-1.7.4.1/
+eons ago when you built and installed 1.7.4.1 like this:
+
+    make prefix=/usr/local/git-1.7.4.1 all install
+
+and then you did it differently when you installed 1.7.6.4, e.g.
+
+    make all
+    make prefix=/usr/local/git-1.7.6.4 install
