@@ -1,58 +1,61 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: Behavior of "git push --mirror repo"
-Date: Tue, 25 Oct 2011 14:46:22 +0200
-Message-ID: <4EA6AF9E.30201@gmail.com>
-References: <j862ts$d75$1@dough.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Tue Oct 25 14:48:31 2011
+From: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
+Subject: git stash show doesn't show stashed untracked files
+Date: Tue, 25 Oct 2011 17:21:36 +0400
+Message-ID: <5284251B-7265-493B-981D-DD10B80F85B1@jetbrains.com>
+Mime-Version: 1.0 (Apple Message framework v1084)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 25 15:21:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RIgQg-00064X-6H
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 14:48:30 +0200
+	id 1RIgwq-0004En-79
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 15:21:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933418Ab1JYMs2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Oct 2011 08:48:28 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:55349 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933397Ab1JYMsZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Oct 2011 08:48:25 -0400
-Received: by bkbzt19 with SMTP id zt19so461327bkb.19
-        for <git@vger.kernel.org>; Tue, 25 Oct 2011 05:48:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=1OYWizfnNcEIWo3jpNyFWZfxGb9DlbG1w2KAcv1rmrY=;
-        b=DuI8fu7IGhkZiUoPKOhmCD84ktdNjgAuiTG7vjQ4VQ9B/jv5+Bxw+lnqOijUAo8xgl
-         Xgbg9B1AL2W+KKrRciCNTwl89TrKnDgCwnZEAoMxSGxhxZltRU0/7TWjIMa7qkBYRPfV
-         rDXS1aUglHa4fvlzOx0opAxjoJCLzKsIbv+Eg=
-Received: by 10.204.154.149 with SMTP id o21mr20120957bkw.84.1319546904318;
-        Tue, 25 Oct 2011 05:48:24 -0700 (PDT)
-Received: from [130.73.68.203] (jambul.zib.de. [130.73.68.203])
-        by mx.google.com with ESMTPS id u18sm27565577bkn.6.2011.10.25.05.48.21
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 25 Oct 2011 05:48:22 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <j862ts$d75$1@dough.gmane.org>
+	id S933408Ab1JYNVk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Oct 2011 09:21:40 -0400
+Received: from mail1.intellij.net ([46.137.178.215]:56817 "EHLO
+	mail1.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933399Ab1JYNVj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Oct 2011 09:21:39 -0400
+Received: (qmail 26669 invoked by uid 89); 25 Oct 2011 13:21:37 -0000
+Received: by simscan 1.1.0 ppid: 26562, pid: 26647, t: 0.0830s
+         scanners: regex: 1.1.0 clamav: 0.97/m:53/d:13443
+Received: from unknown (HELO loki.labs.intellij.net) (Kirill.Likhodedov@jetbrains.com@195.5.138.42)
+  by ip-10-48-137-145.eu-west-1.compute.internal with ESMTPA; 25 Oct 2011 13:21:37 -0000
+X-Mailer: Apple Mail (2.1084)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184204>
 
-On 25.10.2011 12:25, Sebastian Schuberth wrote:
 
-> I cloned a repository from "origin" to my local disk. I only have a
+Git 1.7.7 introduced a very useful feature - stashing untracked files via "-u" option.
 
-Got it: I was missing "--bare" when doing my clone.
+However, there is a problems with it:
+'git stash show' doesn't show stashed untracked files.
 
--- 
-Sebastian Schuberth
+# git version
+git version 1.7.7
+# touch untracked.txt
+# git stash save -u
+# git stash show         // no output
+
+If changes in tracked files are stashed along with untracked files, then only tracked changes are shown in "git stash show" output.
+
+Moreover, if I have the same file in the working tree, I wouldn't be able to 'git stash pop':
+# git stash pop -v
+untracked.txt already exists, no checkout
+Could not restore untracked files from stash
+
+In this case the only way to access the stashed content is to remove the tracked file and pop the stash again.
+
+----------------------------------
+Kirill Likhodedov
+JetBrains, Inc
+http://www.jetbrains.com
+"Develop with pleasure!"
