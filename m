@@ -1,79 +1,83 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: pull is not a git command - 1.7.6.4
-Date: Tue, 25 Oct 2011 12:52:14 -0400
-Message-ID: <CAPZPVFanWTpCDO+A0dV4TWUVx-22VjFOdk6f7cmgfU59GqG3sQ@mail.gmail.com>
-References: <CAPZPVFbakHo0hgz3bo+SLMuYnQSEA=ab+4W92+Lr5Fq4XZy2PA@mail.gmail.com>
-	<7vipnd3trk.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: general protection faults with "git grep" version 1.7.7.1
+Date: Tue, 25 Oct 2011 18:54:43 +0200
+Message-ID: <201110251854.43369.trast@student.ethz.ch>
+References: <20111024201153.GA1647@x4.trippels.de> <201110251800.28054.trast@student.ethz.ch> <87sjmhauyo.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 25 18:52:23 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "Richard W.M. Jones" <rjones@redhat.com>,
+	Markus Trippelsdorf <markus@trippelsdorf.de>,
+	<git@vger.kernel.org>, "Shawn O. Pearce" <spearce@spearce.org>,
+	Jeff King <peff@peff.net>, Nicolas Pitre <nico@fluxnic.net>
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Tue Oct 25 18:54:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RIkEg-0004yJ-H3
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 18:52:22 +0200
+	id 1RIkH2-0006CQ-2c
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 18:54:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752066Ab1JYQwP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Oct 2011 12:52:15 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:43186 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751573Ab1JYQwO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Oct 2011 12:52:14 -0400
-Received: by iaby12 with SMTP id y12so756306iab.19
-        for <git@vger.kernel.org>; Tue, 25 Oct 2011 09:52:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=QVuhEAKu1bpKn1Z06zI00ehsmuJbmSMNqCrI4Hrq7iI=;
-        b=vrSm/7g+wwGWjzDcFemwzjSLtU760z96dZMUcOzjjuCGCSoaJBWemS4J7ZJeS+kT9M
-         P+PRJ4MAgrpilF5yxkssEJ+uDlnBneJ+YfIcsmSoJIYcTiTwHB4NzkAEpmXpf51SRX1n
-         BHQ0IRDnC2iy+LOwnc8wOMuT39tItzJOBs2nU=
-Received: by 10.231.21.149 with SMTP id j21mr592870ibb.29.1319561534150; Tue,
- 25 Oct 2011 09:52:14 -0700 (PDT)
-Received: by 10.231.199.17 with HTTP; Tue, 25 Oct 2011 09:52:14 -0700 (PDT)
-In-Reply-To: <7vipnd3trk.fsf@alter.siamese.dyndns.org>
+	id S1752355Ab1JYQyq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Oct 2011 12:54:46 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:28106 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752094Ab1JYQyp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Oct 2011 12:54:45 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.339.1; Tue, 25 Oct
+ 2011 18:54:43 +0200
+Received: from thomas.inf.ethz.ch (188.155.176.28) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.339.1; Tue, 25 Oct
+ 2011 18:54:43 +0200
+User-Agent: KMail/1.13.7 (Linux/3.0.6-44-desktop; KDE/4.6.5; x86_64; ; )
+In-Reply-To: <87sjmhauyo.fsf@rho.meyering.net>
+X-Originating-IP: [188.155.176.28]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184223>
 
-On Tue, Oct 25, 2011 at 12:45 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Eugene Sajine <euguess@gmail.com> writes:
->
->> We have built git 1.7.6.4 and we have a following problem with it:
->> .,,
->> It doesn't seem to be the case with 1.7.4.1
->>
->> Was there any change between those versions that i missed, or may be
->> there is some property we have to specify during build?
->
-> Nothing I can think of offhand that you need to specify _differently_
-> between the build procedures of these two versions.
->
-> Just a wild guess. perhaps you specified prefix=3D/usr/local/git-1.7.=
-4.1/
-> eons ago when you built and installed 1.7.4.1 like this:
->
-> =C2=A0 =C2=A0make prefix=3D/usr/local/git-1.7.4.1 all install
->
-> and then you did it differently when you installed 1.7.6.4, e.g.
->
-> =C2=A0 =C2=A0make all
-> =C2=A0 =C2=A0make prefix=3D/usr/local/git-1.7.6.4 install
->
->
+Jim Meyering wrote:
+> Thomas Rast wrote:
+> > Jim Meyering wrote:
+> >> Thomas Rast wrote:
+> >> > [GCC moves access to a file-static variable across pthread_mutex_lock()]
+> >>
+> >> Thanks for the investigation.
+> >> Actually, isn't gcc -O2's code-motion justified?
+> >> While we *know* that those globals may be modified asynchronously,
+> >> builtin/grep.c forgot to tell gcc about that.
+> >
+> > I'm somewhat unwilling to believe that:
+> 
+> You're right to be skeptical.
+> I should have stuck with "using volatile works around the problem for me".
+> The real problem seems to be in glibc, with its addition of
+> the "leaf" attribute to those synchronization primitives:
+> 
+>   http://bugzilla.redhat.com/747377#c22
 
+Aha.  Glad you found it :-)
 
-Are you saying that the first command is more correct?
-I will check it.
+Meanwhile I read
 
-Thanks a lot,
-Eugene
+  http://www.hpl.hp.com/techreports/2004/HPL-2004-209.html
+
+which discusses a similar issue in section 4.3, but is very
+interesting on its own.  It's funny how it says
+
+  We know of at least three optimizing compilers (two of them
+  production compilers) that performed this transformation at some
+  point during their lifetime; usually at least partially reversing
+  the decision when the implications on multi-threaded code became
+  known.
+
+I guess that would be four now if it was literally the same problem.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
