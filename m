@@ -1,59 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: general protection faults with "git grep" version 1.7.7.1
-Date: Mon, 24 Oct 2011 22:53:11 -0700
-Message-ID: <20111025055310.GB1902@sigill.intra.peff.net>
-References: <20111024201153.GA1647@x4.trippels.de>
- <20111024214949.GA5237@amd.home.annexia.org>
- <20111024225836.GA1678@x4.trippels.de>
- <878voaym7k.fsf@norang.ca>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: [PATCH v0] fast-import: Add drop command
+Date: Tue, 25 Oct 2011 10:56:15 +0100
+Message-ID: <CAOpHH-VEhtOg6ai5p9VxWBKA3AFpG3meiJVGrWR4j68ffyQ6Bg@mail.gmail.com>
+References: <1316878065-11782-1-git-send-email-vitor.hda@gmail.com>
+ <1316878065-11782-2-git-send-email-vitor.hda@gmail.com> <20110924193733.GB10955@elie>
+ <CA+gfSn8Z7Xn1hdpqNHiP3bd2KGRqcAc6O683Z4O+G=jNNYJtBA@mail.gmail.com>
+ <CAOpHH-WSyD23GKtZ2nLiSsJfLU-+7ibyGhGccyvtAhKQ-jffBw@mail.gmail.com>
+ <CAOpHH-WxhvEP58KkGhnJbATbzU6PDBeQB1_fhbQ+0fzDXznaYw@mail.gmail.com> <CAGdFq_heamPfKpK2sQ1RUvceaeGRVAwkv=KAn-ByPyPkNtoZBA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Markus Trippelsdorf <markus@trippelsdorf.de>,
-	"Richard W.M. Jones" <rjones@redhat.com>, meyering@redhat.com,
-	git@vger.kernel.org
-To: Bernt Hansen <bernt@norang.ca>
-X-From: git-owner@vger.kernel.org Tue Oct 25 07:53:43 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Dmitry Ivankov <divanorama@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	David Barr <davidbarr@google.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 25 11:56:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RIZxH-00006v-6R
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 07:53:43 +0200
+	id 1RIdkZ-0001zl-L3
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 11:56:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751876Ab1JYFxQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Oct 2011 01:53:16 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55795
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751522Ab1JYFxQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Oct 2011 01:53:16 -0400
-Received: (qmail 12211 invoked by uid 107); 25 Oct 2011 05:59:02 -0000
-Received: from 75-147-138-244-SFBA.hfc.comcastbusiness.net (HELO sigill.intra.peff.net) (75.147.138.244)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 25 Oct 2011 01:59:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Oct 2011 22:53:11 -0700
-Content-Disposition: inline
-In-Reply-To: <878voaym7k.fsf@norang.ca>
+	id S1755880Ab1JYJ4q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Oct 2011 05:56:46 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:57662 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753863Ab1JYJ4p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Oct 2011 05:56:45 -0400
+Received: by pzk36 with SMTP id 36so965280pzk.1
+        for <git@vger.kernel.org>; Tue, 25 Oct 2011 02:56:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=thy2mdrrvw2IbvenmncZu6+fmgKiZ6ORy8Zj7Pc+VAc=;
+        b=r9HWDn7VEHi4Nkjs4rz7OhZYPPaaRAVWJgTei9WMNTLd1hDh/gas1O02Ea21/o3qPH
+         IyTV9eGBycYnYrWhyYU0/sa3eyKSCKPiX08GKZYOXF4dXdBOJDn01MYCI6H5l68pm+9O
+         vmE2+Y7z/XXC1ON3TkUmzu0tMIm8da6JMZmUA=
+Received: by 10.68.73.103 with SMTP id k7mr45768691pbv.30.1319536605079; Tue,
+ 25 Oct 2011 02:56:45 -0700 (PDT)
+Received: by 10.68.54.3 with HTTP; Tue, 25 Oct 2011 02:56:15 -0700 (PDT)
+In-Reply-To: <CAGdFq_heamPfKpK2sQ1RUvceaeGRVAwkv=KAn-ByPyPkNtoZBA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184199>
 
-On Mon, Oct 24, 2011 at 08:00:15PM -0400, Bernt Hansen wrote:
+On Mon, Oct 24, 2011 at 7:01 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+> I for one welcome our new branch deleting overlords :).
+>
+> You mention that checkpointing solves some of the concerns raised by
+> others in this thread, would automatic checkpointing be way to make
+> sure everything is as it should be?
 
-> I updated from an old commit 2883969 (Sync with maint, 2011-10-15)
-> to origin/master 10b2a48 (Merge branch 'maint', 2011-10-23) today and
-> promptly got segfaults on git status in my org-mode repository.
-> 
-> Going back to the old commit makes it work again.
-> 
-> Git bisect identifies the following commit as the problem:
-> 
-> [2548183badb98d62079beea62f9d2e1f47e99902] fix phantom untracked files when core.ignorecase is set
+Apparently I did not explain myself correctly. Let me try again :)
 
-I think this is a separate problem. See this thread and patch:
+This is what I am doing:
 
-  http://thread.gmane.org/gmane.comp.version-control.git/184094/focus=184148
+1) import topic
+2) checkpoint
+3) diff-tree and processing
+4) exit if processing returns ok
+5) reset topic to another HEAD
+6) goto 1)
 
--Peff
+In this scenario it is the checkpoint that "breaks" everything because
+it will write the original tree to disk. When fast-import exits it will
+find the old tree on disk but not within "topic" tree.
+
+So, no, I don't think that automatic checkpointing would make anything
+easier. Quite the opposite!
+
+-- 
+Vitor Antunes
