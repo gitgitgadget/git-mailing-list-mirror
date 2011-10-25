@@ -1,161 +1,136 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH/RFC] mingw: implement PTHREAD_MUTEX_INITIALIZER
-Date: Tue, 25 Oct 2011 16:55:09 +0200
-Message-ID: <1319554509-6532-1-git-send-email-kusmabite@gmail.com>
-Cc: git@vger.kernel.org, johannes.schindelin@gmx.de,
-	j.sixt@viscovery.net
-To: msysgit@googlegroups.com
-X-From: git-owner@vger.kernel.org Tue Oct 25 16:55:20 2011
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: general protection faults with "git grep" version 1.7.7.1
+Date: Tue, 25 Oct 2011 17:17:09 +0200
+Message-ID: <87y5w9ayoa.fsf@rho.meyering.net>
+References: <20111024201153.GA1647@x4.trippels.de>
+	<20111024214949.GA5237@amd.home.annexia.org>
+	<201110251550.22248.trast@student.ethz.ch>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: "Richard W.M. Jones" <rjones@redhat.com>,
+	Markus Trippelsdorf <markus@trippelsdorf.de>,
+	<git@vger.kernel.org>, "Shawn O. Pearce" <spearce@spearce.org>,
+	Jeff King <peff@peff.net>, Nicolas Pitre <nico@fluxnic.net>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Oct 25 17:17:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RIiPO-00064C-RZ
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 16:55:19 +0200
+	id 1RIikm-0000kk-Hu
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Oct 2011 17:17:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756574Ab1JYOzM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Oct 2011 10:55:12 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:63922 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751243Ab1JYOzL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Oct 2011 10:55:11 -0400
-Received: by bkbzt19 with SMTP id zt19so603112bkb.19
-        for <git@vger.kernel.org>; Tue, 25 Oct 2011 07:55:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=8MQ1dbda57HcoZ5YdpK0m+E5m7V4Dpye+0HcstvGk08=;
-        b=HwWVrrEO2iYmybkEj44qeS/gbXiZ6FHqjlV/LizNOkwww16g0Y2h38U2CodN110gIx
-         HggpzkCsPePCX7ZhceBR4LWZCOWoFCSFp45tgq1Rw/GRmh3Fg4LeZrA6RnOe59sBrvNF
-         2+ZWrk1c45KqEf/dNegIhyyl848Q37JDV+Vts=
-Received: by 10.204.156.73 with SMTP id v9mr21009690bkw.58.1319554509627;
-        Tue, 25 Oct 2011 07:55:09 -0700 (PDT)
-Received: from localhost ([77.40.159.131])
-        by mx.google.com with ESMTPS id f7sm11647931bkv.4.2011.10.25.07.55.07
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 25 Oct 2011 07:55:08 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7.msysgit.1.1.g7b316
+	id S1752672Ab1JYPRU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Oct 2011 11:17:20 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:38342 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751969Ab1JYPRT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Oct 2011 11:17:19 -0400
+Received: from mx.meyering.net (unknown [88.168.87.75])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 44A6CD4808F
+	for <git@vger.kernel.org>; Tue, 25 Oct 2011 17:17:10 +0200 (CEST)
+Received: from rho.meyering.net (localhost.localdomain [127.0.0.1])
+	by rho.meyering.net (Acme Bit-Twister) with ESMTP id 7615D6008E;
+	Tue, 25 Oct 2011 17:17:09 +0200 (CEST)
+In-Reply-To: <201110251550.22248.trast@student.ethz.ch> (Thomas Rast's message
+	of "Tue, 25 Oct 2011 15:50:21 +0200")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184209>
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+Thomas Rast wrote:
+> [Shawn, Peff, Nicolas: maybe you can say something on the
+> (non)raciness of xmalloc() in parallel with read_sha1_file().  See the
+> last paragraph below.]
+>
+> Richard W.M. Jones wrote:
+>> On Mon, Oct 24, 2011 at 10:11:53PM +0200, Markus Trippelsdorf wrote:
+>> > Suddenly I'm getting strange protection faults when I run "git grep" on
+>> > the gcc tree:
+>>
+>> Jim Meyering and I are trying to chase what looks like a similar or
+>> identical bug in git-grep.  We've not got much further than gdb and
+>> valgrind so far, but see:
+>>
+>> https://bugzilla.redhat.com/show_bug.cgi?id=747377
+>>
+>> It's slightly suspicious that this bug only started to happen with the
+>> latest glibc, but that could be coincidence, or could be just that
+>> glibc exposes a latent bug in git-grep.
+>
+> I'm tempted to write this off as a GCC bug.  If that's ok for you,
+> I'll leave further investigation and communication with the GCC folks
+> to you.
+>
+> My findings are as follows:
+>
+> It's easy to reproduce the behavior described in the above bug report,
+> using an F16 beta install in a VM.  I gave the VM two cores, but
+> didn't test what happens with only one.  By "easy" I mean I didn't
+> have to do any fiddling and it crashes at least one out of two times.
+>
+> I looked at how git builds grep.o by saying
+>
+>   rm builtin/grep.o; make V=1
+>
+> I then modified this to give me the assembly output from the compiler
+>
+>   gcc -S -s builtin/grep.o -c -MF builtin/.depend/grep.o.d -MMD -MP  -g -O2 -Wall -I.  -DHAVE_PATHS_H -DSHA1_HEADER='<openssl/sha.h>'  -DNO_STRLCPY -DNO_MKSTEMPS  builtin/grep.c
+...
+> So AFAICS, we're just unlucky to hit a GCC optimizer bug that voids
+> all guarantees given on locks.
+
+Thanks for the investigation.
+Actually, isn't gcc -O2's code-motion justified?
+While we *know* that those globals may be modified asynchronously,
+builtin/grep.c forgot to tell gcc about that.
+Once you do that (via "volatile"), gcc knows not to move things.
+
+This patch solved the problem for me:
+
+>From 8521b8033b8ecbff2e459f9e0070beb712b9b73d Mon Sep 17 00:00:00 2001
+From: Jim Meyering <meyering@redhat.com>
+Date: Tue, 25 Oct 2011 17:07:05 +0200
+Subject: [PATCH] declare grep's thread-related global scalars to be
+ "volatile"
+
+This avoids heap corruption problems that would otherwise
+arise when gcc -O2 moves code out of critical sections.
+For details, see http://bugzilla.redhat.com/747377 and
+http://thread.gmane.org/gmane.comp.version-control.git/184184/focus=184205
+
+Signed-off-by: Jim Meyering <meyering@redhat.com>
 ---
-Every now and then, someone suggest using PTHREAD_MUTEX_INITIALIZER,
-but some times gets show down by our lack of support on Windows.
+ builtin/grep.c |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
 
-I'm working on something myself that could benefit from this, so I
-gave it a stab. The result looks promising to me, but I haven't
-really debugged it yet.
-
-But is there a fundamental reason why we haven't done something like
-this before? :)
-
- compat/win32/pthread.c |   28 +++++++++++++++++++++++++---
- compat/win32/pthread.h |   18 ++++++++++++------
- 2 files changed, 37 insertions(+), 9 deletions(-)
-
-diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
-index 010e875..14f91d5 100644
---- a/compat/win32/pthread.c
-+++ b/compat/win32/pthread.c
-@@ -57,6 +57,28 @@ pthread_t pthread_self(void)
- 	return t;
- }
- 
-+int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr)
-+{
-+	InitializeCriticalSection(&mutex->cs);
-+	mutex->autoinit = 0;
-+	return 0;
-+}
-+
-+int pthread_mutex_lock(pthread_mutex_t *mutex)
-+{
-+	if (mutex->autoinit) {
-+		if (InterlockedCompareExchange(&mutex->autoinit, -1, 1) != -1) {
-+			pthread_mutex_init(mutex, NULL);
-+			mutex->autoinit = 0;
-+		} else
-+			while (mutex->autoinit != 0)
-+				; /* wait for other thread */
-+	}
-+
-+	EnterCriticalSection(&mutex->cs);
-+	return 0;
-+}
-+
- int pthread_cond_init(pthread_cond_t *cond, const void *unused)
- {
- 	cond->waiters = 0;
-@@ -85,7 +107,7 @@ int pthread_cond_destroy(pthread_cond_t *cond)
- 	return 0;
- }
- 
--int pthread_cond_wait(pthread_cond_t *cond, CRITICAL_SECTION *mutex)
-+int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex)
- {
- 	int last_waiter;
- 
-@@ -99,7 +121,7 @@ int pthread_cond_wait(pthread_cond_t *cond, CRITICAL_SECTION *mutex)
- 	 * waiters count above, so there's no problem with
- 	 * leaving mutex unlocked before we wait on semaphore.
- 	 */
--	LeaveCriticalSection(mutex);
-+	LeaveCriticalSection(&mutex->cs);
- 
- 	/* let's wait - ignore return value */
- 	WaitForSingleObject(cond->sema, INFINITE);
-@@ -133,7 +155,7 @@ int pthread_cond_wait(pthread_cond_t *cond, CRITICAL_SECTION *mutex)
- 		 */
- 	}
- 	/* lock external mutex again */
--	EnterCriticalSection(mutex);
-+	EnterCriticalSection(&mutex->cs);
- 
- 	return 0;
- }
-diff --git a/compat/win32/pthread.h b/compat/win32/pthread.h
-index 2e20548..647e6d4 100644
---- a/compat/win32/pthread.h
-+++ b/compat/win32/pthread.h
-@@ -16,14 +16,20 @@
- /*
-  * Defines that adapt Windows API threads to pthreads API
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 7d0779f..38f92de 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -64,14 +64,14 @@ struct work_item {
   */
--#define pthread_mutex_t CRITICAL_SECTION
-+typedef struct {
-+	CRITICAL_SECTION cs;
-+	LONG volatile autoinit;
-+} pthread_mutex_t;
- 
--#define pthread_mutex_init(a,b) (InitializeCriticalSection((a)), 0)
--#define pthread_mutex_destroy(a) DeleteCriticalSection((a))
--#define pthread_mutex_lock EnterCriticalSection
--#define pthread_mutex_unlock LeaveCriticalSection
-+#define PTHREAD_MUTEX_INITIALIZER { { 0 }, 1 }
- 
- typedef int pthread_mutexattr_t;
-+
-+int pthread_mutex_init(pthread_mutex_t *, const pthread_mutexattr_t *);
-+#define pthread_mutex_destroy(a) DeleteCriticalSection(&(a)->cs)
-+int pthread_mutex_lock(pthread_mutex_t *);
-+#define pthread_mutex_unlock(a) LeaveCriticalSection(&(a)->cs)
-+
- #define pthread_mutexattr_init(a) (*(a) = 0)
- #define pthread_mutexattr_destroy(a) do {} while (0)
- #define pthread_mutexattr_settype(a, t) 0
-@@ -47,7 +53,7 @@ typedef struct {
- 
- extern int pthread_cond_init(pthread_cond_t *cond, const void *unused);
- extern int pthread_cond_destroy(pthread_cond_t *cond);
--extern int pthread_cond_wait(pthread_cond_t *cond, CRITICAL_SECTION *mutex);
-+extern int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex);
- extern int pthread_cond_signal(pthread_cond_t *cond);
- extern int pthread_cond_broadcast(pthread_cond_t *cond);
- 
--- 
-1.7.7.msysgit.1.1.g7b316
+ #define TODO_SIZE 128
+ static struct work_item todo[TODO_SIZE];
+-static int todo_start;
+-static int todo_end;
+-static int todo_done;
++static volatile int todo_start;
++static volatile int todo_end;
++static volatile int todo_done;
+
+-/* Has all work items been added? */
+-static int all_work_added;
++/* Have all work items been added? */
++static volatile int all_work_added;
+
+-/* This lock protects all the variables above. */
++/* This lock protects all of the above variables. */
+ static pthread_mutex_t grep_mutex;
+
+ /* Used to serialize calls to read_sha1_file. */
+--
+1.7.7.419.g87009
