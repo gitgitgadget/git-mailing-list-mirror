@@ -1,78 +1,64 @@
-From: Richard Hartmann <richih.mailinglist@gmail.com>
-Subject: [PATCH] Fix 'Cloning into' message
-Date: Wed, 26 Oct 2011 19:05:48 +0200
-Message-ID: <1319648748-9150-1-git-send-email-richih.mailinglist@gmail.com>
-Cc: Richard Hartmann <richih.mailinglist@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 26 19:06:27 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git grep: be careful to use mutices only when they are
+ initialized
+Date: Wed, 26 Oct 2011 10:17:18 -0700
+Message-ID: <7vvcrb3c69.fsf@alter.siamese.dyndns.org>
+References: <alpine.DEB.1.00.1110251223500.32316@s15462909.onlinehome-server.info>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: msysgit@googlegroups.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 26 19:17:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJ6vq-0001ev-3C
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Oct 2011 19:06:26 +0200
+	id 1RJ76V-0006vm-42
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Oct 2011 19:17:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933309Ab1JZRGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Oct 2011 13:06:21 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:57819 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932953Ab1JZRGV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Oct 2011 13:06:21 -0400
-Received: by faan17 with SMTP id n17so1748108faa.19
-        for <git@vger.kernel.org>; Wed, 26 Oct 2011 10:06:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=XS+Ee9K1eYrZHORa5JkehObclO1g8JsmD/puP/Gj1lM=;
-        b=HTFykoNE7nCYiN3MC+rkDWHkKNLhwnSe6b0NOwoqRmtYEdfcYQAQwqaUGiaij9bDRT
-         eZKcRIZXmS/TtSqOq1xelN2VRB8KZ97yy+snGWP7Ln4dhPPbfkx0eYEq0lZ4r4K2IdP/
-         QNBlBK7VfwoW7XllJAHT4ZLfd06cJMfeSWcBc=
-Received: by 10.223.75.25 with SMTP id w25mr62170782faj.15.1319648779761;
-        Wed, 26 Oct 2011 10:06:19 -0700 (PDT)
-Received: from localhost.localdomain (fw3.globalways.net. [94.186.137.245])
-        by mx.google.com with ESMTPS id y17sm5168267faf.1.2011.10.26.10.06.18
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 26 Oct 2011 10:06:19 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7
+	id S933618Ab1JZRRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Oct 2011 13:17:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43342 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933584Ab1JZRRV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Oct 2011 13:17:21 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F341422E;
+	Wed, 26 Oct 2011 13:17:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+7BruijQXWSLeCieoPuTfq9xuhA=; b=DRZRBF
+	EkVenub7q+KIAwETKI1o4fzlSo4XCHUBBFht6NZCEkr8eseNGvexw6pl7fXtfjpd
+	UPnL+RVgRHpCDUX7q4IrAgpqNRH0S8iWbmDhNkqk09cndWQtah2F9YLnyv0Z0cXc
+	bATBTTFZX4Kh+ty6J6ZYCbaZrKLtfNS1Jm9io=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZOUxLxd9/qAlwQMcOnw3ecUhiN8nUt7T
+	Mzz8pVCaYp/8LS/qIEWbILC3hqnOLmJZSmOtGHM5L+vk7DJISH4A3zqmUWVxQG45
+	yPp+cOzKx5+ZA3V0V/I4Kd38D0CyOqcRPa6ahcAkx/9xtTQIKkH1+ODxo/0MMpKj
+	1y4OsOtPEO0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 43E84422D;
+	Wed, 26 Oct 2011 13:17:20 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CF140422C; Wed, 26 Oct 2011
+ 13:17:19 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.1110251223500.32316@s15462909.onlinehome-server.info>
+ (Johannes Schindelin's message of "Tue, 25 Oct 2011 12:25:20 -0500 (CDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5C69D7DE-FFF6-11E0-A6DD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184267>
 
-Without this patch,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-    git clone foo .
+> Rather nasty things happen when a mutex is not initialized but locked
+> nevertheless. Now, when we're not running in a threaded manner, the mutex
+> is not initialized, which is correct.
 
-results in this:
-
-    Cloning into ....
-    done.
-
-With it:
-
-    Cloning into '.'...
-    done.
----
- builtin/clone.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 488f48e..efe8b6c 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -577,9 +577,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 
- 	if (0 <= option_verbosity) {
- 		if (option_bare)
--			printf(_("Cloning into bare repository %s...\n"), dir);
-+			printf(_("Cloning into bare repository '%s'...\n"), dir);
- 		else
--			printf(_("Cloning into %s...\n"), dir);
-+			printf(_("Cloning into '%s'...\n"), dir);
- 	}
- 	init_db(option_template, INIT_DB_QUIET);
- 	write_config(&option_config);
--- 
-1.7.7
+Thanks; I wonder why pack-objects does not have the same issue, though.
