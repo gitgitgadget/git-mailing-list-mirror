@@ -1,53 +1,66 @@
-From: Thomas Rast <trast@student.ethz.ch>
+From: Lynn Lin <lynn.xin.lin@gmail.com>
 Subject: Re: git merge successfully however this is still issue from logical perspective
-Date: Wed, 26 Oct 2011 14:27:03 +0200
-Message-ID: <201110261427.03585.trast@student.ethz.ch>
+Date: Wed, 26 Oct 2011 20:29:25 +0800
+Message-ID: <CAPgpnMR6_pRxMSLcdS=M4Cfj=dqk6KTXr3VGhk3LrnPHyv2waA@mail.gmail.com>
 References: <CAPgpnMSSOss=YxsMUZJ3E5TynDfHJG1i6PKitLBo_Tm7f=_+fQ@mail.gmail.com>
+	<201110261427.03585.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Lynn Lin <lynn.xin.lin@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 26 14:27:17 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Oct 26 14:29:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJ2Ze-0007Op-CX
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Oct 2011 14:27:14 +0200
+	id 1RJ2br-0008OL-Rk
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Oct 2011 14:29:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932897Ab1JZM1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Oct 2011 08:27:09 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:39938 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932751Ab1JZM1H (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Oct 2011 08:27:07 -0400
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.339.1; Wed, 26 Oct
- 2011 14:27:03 +0200
-Received: from thomas.inf.ethz.ch (188.155.176.28) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.339.1; Wed, 26 Oct
- 2011 14:27:04 +0200
-User-Agent: KMail/1.13.7 (Linux/3.0.6-44-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <CAPgpnMSSOss=YxsMUZJ3E5TynDfHJG1i6PKitLBo_Tm7f=_+fQ@mail.gmail.com>
-X-Originating-IP: [188.155.176.28]
+	id S932880Ab1JZM31 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Oct 2011 08:29:27 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:48889 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932831Ab1JZM30 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Oct 2011 08:29:26 -0400
+Received: by vws1 with SMTP id 1so1359478vws.19
+        for <git@vger.kernel.org>; Wed, 26 Oct 2011 05:29:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=oczLwIiQdt5GoyFZAbySytdnfIKRdTpTImVz57lm6jM=;
+        b=WfvT17s+bxWOJY71sL2+QpMjbaRpjd9Oaf0ymmJ89vOo3H8zM4X2TVIB3Yn/opafSt
+         pDo0ngxTiaujkJ2wVrX4bcQx9I85K3FPMdFMY1l+XM9ElDO/3FhFHgQCsAtR+cOtxzZW
+         b1aebNydX2EUKTeGQJuq+DQK6Aj9Ysze4VQLg=
+Received: by 10.52.64.169 with SMTP id p9mr32074556vds.99.1319632165640; Wed,
+ 26 Oct 2011 05:29:25 -0700 (PDT)
+Received: by 10.52.167.201 with HTTP; Wed, 26 Oct 2011 05:29:25 -0700 (PDT)
+In-Reply-To: <201110261427.03585.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184258>
 
-Lynn Lin wrote:
-> Hi all,
->    Do this case can happen? When I do merge from one branch to master
-> branch,merge successfully however from code logical perspective it
-> fails and It cause code compile (our project is using C++ language)
+On Wed, Oct 26, 2011 at 8:27 PM, Thomas Rast <trast@student.ethz.ch> wr=
+ote:
+> Lynn Lin wrote:
+>> Hi all,
+>> =A0 =A0Do this case can happen? When I do merge from one branch to m=
+aster
+>> branch,merge successfully however from code logical perspective it
+>> fails and It cause code compile (our project is using C++ language)
+>
+> Sure. =A0The easiest example is when one side of a merge renames foo(=
+)
+> to bar(), while the other side introduces another call to foo() in an
+> unrelated part of the code.
+Does this mean we shouldn't trust merge result  ?
 
-Sure.  The easiest example is when one side of a merge renames foo()
-to bar(), while the other side introduces another call to foo() in an
-unrelated part of the code.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+>
+> --
+> Thomas Rast
+> trast@{inf,student}.ethz.ch
+>
