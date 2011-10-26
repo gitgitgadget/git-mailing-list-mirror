@@ -1,119 +1,154 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Is there a place for benchmarking scripts?
-Date: Wed, 26 Oct 2011 11:50:27 +0200
-Message-ID: <4EA7D7E3.2020009@alum.mit.edu>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] replace sha1 with another algorithm
+Date: Wed, 26 Oct 2011 11:59:22 +0200
+Message-ID: <4EA7D9FA.6070505@drmicha.warpmail.net>
+References: <20111026001237.GA22195@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 26 11:50:45 2011
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 26 11:59:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJ08D-0003VI-8b
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Oct 2011 11:50:45 +0200
+	id 1RJ0Gi-00070A-1w
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Oct 2011 11:59:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932634Ab1JZJub (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Oct 2011 05:50:31 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:54036 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932616Ab1JZJua (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Oct 2011 05:50:30 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p9Q9oRLn028746
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 26 Oct 2011 11:50:28 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S932644Ab1JZJ70 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Oct 2011 05:59:26 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:57406 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932616Ab1JZJ70 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Oct 2011 05:59:26 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 0B8E120B20;
+	Wed, 26 Oct 2011 05:59:25 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute3.internal (MEProxy); Wed, 26 Oct 2011 05:59:25 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=8qyPVsKigSnLl7LoZM1pBJ
+	q7hhk=; b=SQWCq73+2hL/jK3ENWTPfRdcWWdw07sm7zdCkH1P8d11aKQzJUFqSm
+	alSmnGjdX/9QxpIwpRtGzdxdY1hBMIzzCbA8RZFvKf+JU8pp9CjXCM+w6bmu6M/2
+	0AMDm22A271ijAPoikrqWRdcn/hBlTm3CQS5YQ/SSl+LDmZp0dCz4=
+X-Sasl-enc: NrjXTGpUSYaRwHlOm+YK4/vNcfKYYbTitDSueiaDAFm2 1319623164
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 649FC40CE04;
+	Wed, 26 Oct 2011 05:59:24 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0) Gecko/20110927 Thunderbird/7.0
+In-Reply-To: <20111026001237.GA22195@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184254>
 
-I've been doing a lot of benchmarking of git performance in the presence
-of lots of references.  I've written a few scripts to automate the
-benchmarking [1].  They are not beautiful and would require a couple of
-local adjustments [2,3].  They are too time-consuming to be made part of
-the usual test suite.  I wouldn't want to commit to maintaining them.
-But they have certainly been useful to me, and they generate readable
-output [4].
+Jeff King venit, vidit, dixit 26.10.2011 02:12:
+> SHA-1 is due to be cryptographically broken sometime in the
+> next decade, with collision attacks becoming possible. But
+> we don't have to wait! We can act now and replace it,
+> treating us to all of the pain of a flag day without any
+> delay!
+> 
+> We could of course use the SHA-2 family, or wait for the
+> upcoming SHA-3. But any good cryptographer knows that you
+> should _never_ use a standard algorithm. It's always better
+> to roll your own. After all, if _you_ can't break it, how
+> could anyone else?
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> Reviewed-by: Brandon Casey <drafnel@gmail.com>
+> Mocked-by: Rick Balocca <richard.balocca@ericsson.com>
+> Enjoyed-by: Elijah Newren <newren@gmail.com>
+Awaited-by: Michael J Gruber <git@drmicha.warpmail.net>
 
-My question is: would such benchmarking scripts be welcome within the
-git project?  If so, where should I put it?  Is any benchmarking
-code/framework already in use?
+Still remembering an earlier GitTogether's l33t l10n....
+> ---
+>  block-sha1/sha1.h |    2 +-
+>  cache.h           |    4 +++-
+>  sha1_file.c       |   32 ++++++++++++++++++++++++++++++++
+>  3 files changed, 36 insertions(+), 2 deletions(-)
+> 
+> diff --git a/block-sha1/sha1.h b/block-sha1/sha1.h
+> index b864df6..49331e3 100644
+> --- a/block-sha1/sha1.h
+> +++ b/block-sha1/sha1.h
+> @@ -19,4 +19,4 @@
+>  #define git_SHA_CTX	blk_SHA_CTX
+>  #define git_SHA1_Init	blk_SHA1_Init
+>  #define git_SHA1_Update	blk_SHA1_Update
+> -#define git_SHA1_Final	blk_SHA1_Final
+> +#define real_git_SHA1_Final	blk_SHA1_Final
+> diff --git a/cache.h b/cache.h
+> index 2e6ad36..068062b 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -13,9 +13,11 @@
+>  #define git_SHA_CTX	SHA_CTX
+>  #define git_SHA1_Init	SHA1_Init
+>  #define git_SHA1_Update	SHA1_Update
+> -#define git_SHA1_Final	SHA1_Final
+> +#define real_git_SHA1_Final	SHA1_Final
+>  #endif
+>  
+> +void git_SHA1_Final(unsigned char out[20], git_SHA_CTX *ctx);
+> +
+>  #include <zlib.h>
+>  typedef struct git_zstream {
+>  	z_stream z;
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 27f3b9b..23e0107 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -2833,3 +2833,35 @@ void assert_sha1_type(const unsigned char *sha1, enum object_type expect)
+>  		die("%s is not a valid '%s' object", sha1_to_hex(sha1),
+>  		    typename(expect));
+>  }
+> +
+> +static void xor_bytes(unsigned char *out, unsigned char *a, unsigned char *b,
+> +		      unsigned n)
+> +{
+> +	unsigned i;
+> +	for (i = 0; i < n; i++)
+> +		out[i] = a[i] ^ b[i];
+> +}
+> +
+> +static void mix_hash(unsigned char *h, unsigned n)
+> +{
+> +	unsigned char out[20];
 
-Michael
+unsigned char out[n];
 
-[1] Branch "refperf" at git://github.com/mhagger/git.git
+;)
 
-[2] For example, one script checks out specified git revisions, merges
-in the "refperf" branch to get the benchmarking code, then runs tests.
-This script has to be adjusted with the local name of the "refperf"
-branch (e.g., "refperf" vs. "origin/refperf" vs. ...)
+> +	unsigned mid = n / 2;
+> +
+> +	if (2*mid < n)
+> +		return;
+> +
+> +	xor_bytes(out, h, h + mid, mid);
+> +	xor_bytes(out + mid, h + mid, h, mid);
+> +	memcpy(h, out, n);
+> +
+> +	/* If a little bit of mixing is good, then a lot must be GREAT! */
+> +	mix_hash(h, mid);
+> +	mix_hash(h + mid, mid);
 
-[3] I wanted the tests to include cases with a cold disk cache and with
-a warm disk cache.  For the former, I have the script run "sync; sudo sh
--c 'echo 3 >/proc/sys/vm/drop_caches'" which obviously only works on
-Linux and only when the user has password-less sudo permissions.
+n a power of 2 anyone...
 
-[4] Example (numbers are times in seconds):
+> +}
+> +
+> +void git_SHA1_Final(unsigned char out[20], git_SHA_CTX *ctx)
+> +{
+> +	/* We build on top of the regular SHA1, but then "enhance" it. */
+> +	real_git_SHA1_Final(out, ctx);
+> +	mix_hash(out, 20);
+> +}
+>--
+>1.7.7.troll
 
-===================================  ========  ========  ========
-Test name                                 [0]       [1]       [2]
-===================================  ========  ========  ========
-branch-loose-cold                        3.32      3.25      0.55
-branch-loose-warm                        0.60      0.22      0.00
-for-each-ref-loose-cold                  3.71      3.46      3.45
-for-each-ref-loose-warm                  0.83      0.46      0.47
-checkout-loose-cold                      3.82      3.23      0.63
-checkout-loose-warm                      0.58      0.21      0.01
-checkout-orphan-loose                    0.58      0.20      0.00
-checkout-from-detached-loose-cold        4.54      4.20      3.75
-checkout-from-detached-loose-warm        1.41      1.07      0.63
-branch-contains-loose-cold               4.04      3.71      3.67
-branch-contains-loose-warm               0.93      0.57      0.56
-pack-refs-loose                          2.31      1.92      1.91
-branch-packed-cold                       0.53      0.50      0.49
-branch-packed-warm                       0.02      0.02      0.03
-for-each-ref-packed-cold                 1.01      0.92      0.94
-for-each-ref-packed-warm                 0.26      0.27      0.28
-checkout-packed-cold                    14.37      1.51      1.27
-checkout-packed-warm                     0.04      0.03      0.03
-checkout-orphan-packed                   0.02      0.02      0.03
-checkout-from-detached-packed-cold      14.54      1.51      1.12
-checkout-from-detached-packed-warm      13.85      0.82      0.46
-branch-contains-packed-cold              1.03      1.04      1.01
-branch-contains-packed-warm              0.37      0.38      0.39
-clone-loose-cold                        13.17     11.97     12.45
-clone-loose-warm                         6.86      5.40      5.83
-fetch-nothing-loose                      1.24      1.11      1.52
-pack-refs                                0.27      0.27      0.29
-fetch-nothing-packed                     1.23      1.11      1.52
-clone-packed-cold                        1.89      1.84      1.80
-clone-packed-warm                        0.62      0.63      0.70
-fetch-everything-cold                   12.85     13.07     13.40
-fetch-everything-warm                    6.53      6.92      6.88
-filter-branch-warm                   35383.91  15869.38    748.01
-===================================  ========  ========  ========
-
-
-[0] 703f05a (tag: v1.7.7) Git 1.7.7
-    Test repository created using: t/make-refperf-repo --commits 20000
---refs 10000 --shard
-[1] 2c5c66b Merge branch 'jp/get-ref-dir-unsorted'
-    Test repository created using: t/make-refperf-repo --commits 20000
---refs 10000 --shard
-[2] f579019 (ref-api-D) sort_ref_dir(): remove the recurse argument
-    Test repository created using: t/make-refperf-repo --commits 20000
---refs 10000 --shard
-
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+;)
