@@ -1,140 +1,66 @@
-From: Atsushi Nakagawa <atnak@chejz.com>
-Subject: Re: [PATCH/RFC] mingw: implement PTHREAD_MUTEX_INITIALIZER
-Date: Tue, 25 Oct 2011 20:05:19 -0700 (PDT)
-Message-ID: <16520370.401.1319598319120.JavaMail.geo-discussion-forums@prms22>
-References: <1319554509-6532-1-git-send-email-kusmabite@gmail.com>
-Reply-To: msysgit@googlegroups.com
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [msysGit] [PATCH] git grep: be careful to use mutices only when
+ they are initialized
+Date: Wed, 26 Oct 2011 17:10:10 +0800
+Message-ID: <CALUzUxpVWHL8LyqYkYazxSxDr6i=kitACFfVRQsTxQHHYjiOyA@mail.gmail.com>
+References: <alpine.DEB.1.00.1110251223500.32316@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_400_8158501.1319598319117"
-Cc: git@vger.kernel.org, johannes.schindelin@gmx.de, j.sixt@viscovery.net
-To: msysgit@googlegroups.com
-X-From: msysgit+bncCL3AtdjPFhDK_p71BBoEVZbnlg@googlegroups.com Wed Oct 26 10:05:39 2011
-Return-path: <msysgit+bncCL3AtdjPFhDK_p71BBoEVZbnlg@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-gy0-f186.google.com ([209.85.160.186])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysgit@googlegroups.com, gitster@pobox.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 26 11:10:21 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCL3AtdjPFhDK_p71BBoEVZbnlg@googlegroups.com>)
-	id 1RIyUU-0003SU-Bo
-	for gcvm-msysgit@m.gmane.org; Wed, 26 Oct 2011 10:05:38 +0200
-Received: by gyd8 with SMTP id 8sf2638864gyd.3
-        for <gcvm-msysgit@m.gmane.org>; Wed, 26 Oct 2011 01:05:37 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1RIzV7-0003uO-Aj
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Oct 2011 11:10:21 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932584Ab1JZJKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Oct 2011 05:10:13 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:61170 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932413Ab1JZJKM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Oct 2011 05:10:12 -0400
+Received: by faan17 with SMTP id n17so1341665faa.19
+        for <git@vger.kernel.org>; Wed, 26 Oct 2011 02:10:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:date:from:reply-to:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:x-original-sender:precedence
-         :mailing-list:list-id:x-google-group-id:list-post:list-help
-         :list-archive:sender:list-subscribe:list-unsubscribe:content-type;
-        bh=6pJ4sZHYA32MPYS1YQO1l0QvzxuBLpj4srWd5MHLwAo=;
-        b=p8rZKfaMbQhQXbF2Ys6FW2Wyc14SYq45vpe0FXQEXyrrkg6iS5Mrb2kZZiJmT7Tb4O
-         CyNABRYM2eT66R5PaGCH4yymGn8FcpRsDVGTJoCx0/a+y3huzCjI6vE7bR9Dgo+u1BCZ
-         cIHIxORej9JmEJS2hZt58055KsCW6Dyu6xpHM=
-Received: by 10.236.161.34 with SMTP id v22mr8211314yhk.9.1319616330145;
-        Wed, 26 Oct 2011 01:05:30 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.101.2.12 with SMTP id e12ls1085080ani.3.gmail; Wed, 26 Oct
- 2011 01:05:29 -0700 (PDT)
-Received: by 10.100.236.38 with SMTP id j38mr4320888anh.42.1319616329307;
-        Wed, 26 Oct 2011 01:05:29 -0700 (PDT)
-Received: by 10.150.167.20 with SMTP id p20msybe;
-        Tue, 25 Oct 2011 20:05:20 -0700 (PDT)
-Received: by 10.100.19.8 with SMTP id 8mr1833173ans.26.1319598319807;
-        Tue, 25 Oct 2011 20:05:19 -0700 (PDT)
-In-Reply-To: <1319554509-6532-1-git-send-email-kusmabite@gmail.com>
-X-Original-Sender: atnak@chejz.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184248>
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=AgCrKU9Myt4IQsB9EoSaxMX621PKmgnvEGBuMw9f3do=;
+        b=vjEZ5dFMHNut2dbV3mrg5/3WIOs6pX7NKAcrVrjw9ne+xOC5M2CvIEk7G3sMZN0B9K
+         DfZ7G0XYhCgNVDIOyxVjJUBZPeIgfRQDx9O2N+rvDZEX6Og6L+k3RktueJjGx9ncFPKn
+         FmDen3OfQJa9fTcThVQ9z3vIorgq8XWKlZlBM=
+Received: by 10.223.16.82 with SMTP id n18mr57535958faa.2.1319620210997; Wed,
+ 26 Oct 2011 02:10:10 -0700 (PDT)
+Received: by 10.223.83.2 with HTTP; Wed, 26 Oct 2011 02:10:10 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.1110251223500.32316@s15462909.onlinehome-server.info>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184249>
 
-------=_Part_400_8158501.1319598319117
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+On Wed, Oct 26, 2011 at 1:25 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Rather nasty things happen when a mutex is not initialized but locked
+> nevertheless. Now, when we're not running in a threaded manner, the mutex
+> is not initialized, which is correct. But then we went and used the mutex
+> anyway, which -- at least on Windows -- leads to a hard crash (ordinarily
+> it would be called a segmentation fault, but in Windows speak it is an
+> access violation).
+>
+> This problem was identified by our faithful tests when run in the msysGit
+> environment.
 
-On Oct 25, 11:55 pm, Erik Faye-Lund <kusmab...@gmail.com> wrote:
-> [...]
-> +int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t 
-*attr)
-> +{
-> +       InitializeCriticalSection(&mutex->cs);
-> +       mutex->autoinit = 0;
-> +       return 0;
-> +}
-> +
-> +int pthread_mutex_lock(pthread_mutex_t *mutex)
-> +{
-> +       if (mutex->autoinit) {
-> +               if (InterlockedCompareExchange(&mutex->autoinit, -1, 1) 
-!= -1) {
+May I ask which test are you talking about specifically?
 
-I'm making the assumption that mutex->autoinit starts off as 1 before 
-things get multi-threaded..
-
-I've only looked at what's in the patch so I could be missing vital 
-context..  Anyways, is there a reason why you made this 
-"InterlockedCompareExchange(..., -1, 1) != -1" and not 
-"InterlockedCompareExchange(..., -1, 1) == 1"?
-
-It looks to me the former adds a race condition after "if (mutex->autoinit) 
-{".  e.g. A second thread could reinitialize mutex->cs after the first 
-thread has already entered EnterCriticalSection(...).
-
-> +                       pthread_mutex_init(mutex, NULL);
-> +                       mutex->autoinit = 0;
-> +               } else
-> +                       while (mutex->autoinit != 0)
-> +                               ; /* wait for other thread */
-> +       }
-> +
-> +       EnterCriticalSection(&mutex->cs);
-> +       return 0;
-> +}
-> [...]
+I ask as I'm curious how this is triggered; git-grep works fine for me
+so far (1.7.6.msysgit.0.584.g2cbf)
 
 -- 
-Atsushi Nakagawa
-
-
-------=_Part_400_8158501.1319598319117
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-<div><div>On Oct 25, 11:55 pm, Erik Faye-Lund &lt;kusmab...@gmail.com&gt; w=
-rote:<br></div><div>&gt; [...]</div><div>&gt; +int pthread_mutex_init(pthre=
-ad_mutex_t *mutex, const pthread_mutexattr_t *attr)</div><div>&gt; +{</div>=
-<div>&gt; + &nbsp; &nbsp; &nbsp; InitializeCriticalSection(&amp;mutex-&gt;c=
-s);</div><div>&gt; + &nbsp; &nbsp; &nbsp; mutex-&gt;autoinit =3D 0;</div><d=
-iv>&gt; + &nbsp; &nbsp; &nbsp; return 0;</div><div>&gt; +}</div><div>&gt; +=
-</div><div>&gt; +int pthread_mutex_lock(pthread_mutex_t *mutex)</div><div>&=
-gt; +{</div><div>&gt; + &nbsp; &nbsp; &nbsp; if (mutex-&gt;autoinit) {</div=
-><div>&gt; + &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (Interlock=
-edCompareExchange(&amp;mutex-&gt;autoinit, -1, 1) !=3D -1) {</div><div><br>=
-</div><div>I'm making the assumption that mutex-&gt;autoinit starts off as =
-1 before things get multi-threaded..</div><div><br></div><div>I've only loo=
-ked at what's in the patch so I could be missing vital context.. &nbsp;Anyw=
-ays, is there a reason why you made this "InterlockedCompareExchange(..., -=
-1, 1) !=3D -1" and not "InterlockedCompareExchange(..., -1, 1) =3D=3D 1"?</=
-div><div><br></div><div>It looks to me the former adds a race condition aft=
-er "if (mutex-&gt;autoinit) {". &nbsp;e.g. A second thread could reinitiali=
-ze mutex-&gt;cs after the first thread has already entered EnterCriticalSec=
-tion(...).</div><div><br></div><div>&gt; + &nbsp; &nbsp; &nbsp; &nbsp; &nbs=
-p; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; pthread_mutex_init(mutex, NULL=
-);</div><div>&gt; + &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;=
- &nbsp; &nbsp; &nbsp; mutex-&gt;autoinit =3D 0;</div><div>&gt; + &nbsp; &nb=
-sp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else</div><div>&gt; + &nbsp; &nbsp=
-; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; while (mut=
-ex-&gt;autoinit !=3D 0)</div><div>&gt; + &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;=
- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ; /*=
- wait for other thread */</div><div>&gt; + &nbsp; &nbsp; &nbsp; }</div><div=
->&gt; +</div><div>&gt; + &nbsp; &nbsp; &nbsp; EnterCriticalSection(&amp;mut=
-ex-&gt;cs);</div><div>&gt; + &nbsp; &nbsp; &nbsp; return 0;</div><div>&gt; =
-+}</div><div>&gt; [...]</div><div><br></div><div>--&nbsp;</div><div>Atsushi=
- Nakagawa</div></div><div><br></div>
-------=_Part_400_8158501.1319598319117--
+Cheers,
+Ray Chuan
