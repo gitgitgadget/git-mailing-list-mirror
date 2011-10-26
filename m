@@ -1,168 +1,260 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [msysGit] Re: [PATCH/RFC] mingw: implement PTHREAD_MUTEX_INITIALIZER
-Date: Wed, 26 Oct 2011 15:16:03 +0200
-Message-ID: <CABPQNSY9LdqOK=1nN_61ZRMv-ieXzSDYgNsQe0w21RAOw_D7yA@mail.gmail.com>
-References: <1319554509-6532-1-git-send-email-kusmabite@gmail.com>
- <4EA6D594.90402@viscovery.net> <CABPQNSZ8wesy-px-n1LYbVwFT3gBNcrHfe+_553sinTferqsog@mail.gmail.com>
- <4EA716FC.2010804@kdbg.org> <CABPQNSY6-j7iNagsJc3WKVZ94=yZHdfBswA-v0XY7vH+RxyjYQ@mail.gmail.com>
- <CAGZ=bqJ7k5h_-62M3y-Jype4a7mOTe+FxeU13JreGj0mOnSRSg@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: fREW Schmidt <frioux@gmail.com>
+Subject: Re: git-fixup-assigner.perl -- automatically decide where to "fixup!"
+Date: Wed, 26 Oct 2011 09:37:56 -0500
+Message-ID: <CADVrmKT1woYpJoe=L9sAbQ30TUw44zMc7y4WF=PMrT5Gj9kDNw@mail.gmail.com>
+References: <201012140309.59378.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j6t@kdbg.org>, msysgit@googlegroups.com,
-	git@vger.kernel.org, johannes.schindelin@gmx.de
-To: Kyle Moffett <kyle@moffetthome.net>
-X-From: git-owner@vger.kernel.org Wed Oct 26 15:16:50 2011
+Cc: git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Oct 26 16:38:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJ3Ld-0004hW-GP
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Oct 2011 15:16:49 +0200
+	id 1RJ4cZ-0002ys-Qo
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Oct 2011 16:38:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932213Ab1JZNQo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Oct 2011 09:16:44 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:65241 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753927Ab1JZNQo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Oct 2011 09:16:44 -0400
-Received: by vws1 with SMTP id 1so1404268vws.19
-        for <git@vger.kernel.org>; Wed, 26 Oct 2011 06:16:43 -0700 (PDT)
+	id S933176Ab1JZOiS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Oct 2011 10:38:18 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:64144 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932772Ab1JZOiR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Oct 2011 10:38:17 -0400
+Received: by vcge1 with SMTP id e1so1484368vcg.19
+        for <git@vger.kernel.org>; Wed, 26 Oct 2011 07:38:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=0YQ7cafQr2HzwAKhQGkZK8s7iDQnQXqjhtmShatl3Pc=;
-        b=ZssMHW8xH1h6uM0l7Bw5ODYr67Ijy0OyAoq6vmUmEqKKgOZ/6qZ+5IsMXoJNlLtiOn
-         1v8lKJuE+2OVW9A+vtSql4TjhcWSBvUipclXNfNGMet/1+lewVe3+zyNSYe8dkbaPQs4
-         nihr65D3xyUujN1NPMFUVdc/lyEsOeL4e2Bwo=
-Received: by 10.68.72.9 with SMTP id z9mr6227927pbu.93.1319635003053; Wed, 26
- Oct 2011 06:16:43 -0700 (PDT)
-Received: by 10.68.71.135 with HTTP; Wed, 26 Oct 2011 06:16:03 -0700 (PDT)
-In-Reply-To: <CAGZ=bqJ7k5h_-62M3y-Jype4a7mOTe+FxeU13JreGj0mOnSRSg@mail.gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=jNQipkQ6e6SYCJeJDJCM500ag+wzjt6ujRMuaZtwfzY=;
+        b=AEQxm7oJKcQKeoduYqhsCHWAKYsSja49Zo3SNQTMgz/yaJU7sT2IHf/qT4Yepfxlu0
+         XSHuFLsv32ix/DZwTFhGW3NrDV/tQw8A5yU8Py6yhdO7CD7/SfHz6EA2Zq/GSZ4nVzbZ
+         yWhFNau5FcfADuFLxOVb7X6B4E1ESlnURFqtM=
+Received: by 10.68.33.42 with SMTP id o10mr3989180pbi.52.1319639896114; Wed,
+ 26 Oct 2011 07:38:16 -0700 (PDT)
+Received: by 10.142.155.7 with HTTP; Wed, 26 Oct 2011 07:37:56 -0700 (PDT)
+In-Reply-To: <201012140309.59378.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184262>
 
-On Wed, Oct 26, 2011 at 5:44 AM, Kyle Moffett <kyle@moffetthome.net> wr=
+On Mon, Dec 13, 2010 at 8:09 PM, Thomas Rast <trast@student.ethz.ch> wr=
 ote:
-> On Tue, Oct 25, 2011 at 16:51, Erik Faye-Lund <kusmabite@gmail.com> w=
-rote:
->> On Tue, Oct 25, 2011 at 10:07 PM, Johannes Sixt <j6t@kdbg.org> wrote=
-:
->>> Am 25.10.2011 17:42, schrieb Erik Faye-Lund:
->>>> On Tue, Oct 25, 2011 at 5:28 PM, Johannes Sixt <j.sixt@viscovery.n=
-et> wrote:
->>>>> Am 10/25/2011 16:55, schrieb Erik Faye-Lund:
->>>>>> +int pthread_mutex_lock(pthread_mutex_t *mutex)
->>>>>> +{
->>>>>> + =A0 =A0 if (mutex->autoinit) {
->>>>>> + =A0 =A0 =A0 =A0 =A0 =A0 if (InterlockedCompareExchange(&mutex-=
->autoinit, -1, 1) !=3D -1) {
->>>>>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 pthread_mutex_init(mut=
-ex, NULL);
->>>>>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 mutex->autoinit =3D 0;
->>>>>> + =A0 =A0 =A0 =A0 =A0 =A0 } else
->>>>>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 while (mutex->autoinit=
- !=3D 0)
->>>>>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ; /* w=
-ait for other thread */
->>>>>> + =A0 =A0 }
->>>>>
->>>>> The double-checked locking idiom. Very suspicious. Can you explai=
-n why it
->>>>> works in this case? Why are no Interlocked functions needed for t=
-he other
->>>>> accesses of autoinit? ("It is volatile" is the wrong answer to th=
-is last
->>>>> question, BTW.)
->>>>
->>>> I agree that it should look a bit suspicious; I'm generally skepti=
-cal
->>>> whenever I see 'volatile' in threading-code myself. But I think it=
-'s
->>>> the right answer in this case. "volatile" means that the compiler
->>>> cannot optimize away accesses, which is sufficient in this case.
->>>
->>> No, it is not, and it took me a train ride to see what's wrong. It =
-has
->>> nothing to do with autoinit, but with all the other memory location=
-s
->>> that are written. See here, with pthread_mutex_init() inlined:
->>>
->>> =A0if (mutex->autoinit) {
->>>
->>> Assume two threads enter this block.
->>>
->>> =A0 =A0 if (InterlockedCompareExchange(&mutex->autoinit, -1, 1) !=3D=
- -1) {
->>>
->>> Only one thread, A, say on CPU A, will enter this block.
->>>
->>> =A0 =A0 =A0 =A0InitializeCriticalSection(&mutex->cs);
->>>
->>> Thread A writes some values. Note that there are no memory barriers
->>> involved here. Not that I know of or that they would be documented.
->>>
->>> =A0 =A0 =A0 =A0mutex->autoinit =3D 0;
->>>
->>> And it writes another one. Thread A continues below to contend for =
-the
->>> mutex it just initialized.
->>>
->>> =A0 =A0 } else
->>>
->>> Meanwhile, thread B, say on CPU B, spins in this loop:
->>>
->>> =A0 =A0 =A0 =A0while (mutex->autoinit !=3D 0)
->>> =A0 =A0 =A0 =A0 =A0 ; /* wait for other thread */
->>>
->>> When thread B arrives here, it sees the value of autoinit that thre=
-ad A
->>> has written above.
->>>
->>> HOWEVER, when it continues, there is NO [*] guarantee that it will =
-also
->>> see the values that InitializeCriticalSection() has written, becaus=
-e
->>> there were no memory barriers involved. When it continues, there is=
- a
->>> chance that it calls EnterCriticalSection() with uninitialized valu=
-es!
->>>
->>
->> Thanks for pointing this out, I completely forgot about write re-ord=
-ering.
->>
->> This is indeed a problem. So, shouldn't replacing "mutex->autoinit =3D
->> 0;" with "InterlockedExchange(&mutex->autoinit, 0)" solve the proble=
-m?
->> InterlockedExchange generates a full memory barrier:
->> http://msdn.microsoft.com/en-us/library/windows/desktop/ms683590(v=3D=
-vs.85).aspx
 >
-> No, I'm afraid that won't solve the issue (at least in GCC, not sure =
-about MSVC)
+> While cleaning up the 'log -L' series I gathered a large number of
+> little fixups, and decided it would be smart if git could
+> automatically figure out where to put them.
 >
-> A write barrier in one thread is only effective if it is paired with =
-a
-> read barrier in the other thread.
+> It works like this:
 >
-> Since there's no read barrier in the "while(mutex->autoinit !=3D 0)",
-> you don't have any guaranteed ordering.
+> * Split the diff by hunk. =A0I'm using -U1 here for finer splits, but=
+ it
+> =A0could be tunable.
 >
-> I guess if MSVC assumes that volatile reads imply barriers then it mi=
-ght work...
+> * For each hunk, run blame to find out which commit's lines were
+> =A0affected.
+>
+> * Group the hunks by this commit, and output them with a suitable
+> =A0command to make a fixup.
+>
+> My git-fixup is
+>
+> =A0$ g config alias.fixup
+> =A0!sh -c 'r=3D$1; git commit -m"fixup! $(git log -1 --pretty=3D%s $r=
+)"' -
+>
+> so that is "suitable".
+>
+> You would run it with the changes unstaged in your tree as
+>
+> =A0./git-fixup-assigner.perl > fixups
+>
+> and can then review with 'less fixups', or run 'sh fixups' to commit
+> them.
+>
+> It's certainly not perfect, notably the detection logic should ignore
+> context, but it got the job done.
+>
+> --- 8< ---
+> #!/usr/bin/perl
+>
+> use warnings;
+> use strict;
+>
+> sub parse_hunk_header {
+> =A0 =A0 =A0 =A0my ($line) =3D @_;
+> =A0 =A0 =A0 =A0my ($o_ofs, $o_cnt, $n_ofs, $n_cnt) =3D
+> =A0 =A0 =A0 =A0 =A0 =A0$line =3D~ /^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(=
+\d+))? @@/;
+> =A0 =A0 =A0 =A0$o_cnt =3D 1 unless defined $o_cnt;
+> =A0 =A0 =A0 =A0$n_cnt =3D 1 unless defined $n_cnt;
+> =A0 =A0 =A0 =A0return ($o_ofs, $o_cnt, $n_ofs, $n_cnt);
+> }
+>
+> sub find_commit {
+> =A0 =A0 =A0 =A0my ($file, $begin, $end) =3D @_;
+> =A0 =A0 =A0 =A0my $blame;
+> =A0 =A0 =A0 =A0open($blame, '-|', 'git', '--no-pager', 'blame', 'HEAD=
+', "-L$begin,$end", $file) or die;
+> =A0 =A0 =A0 =A0my %candidate;
+> =A0 =A0 =A0 =A0while (<$blame>) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0$candidate{$1} +=3D 1 if /^([0-9a-f]+)=
+/;
+> =A0 =A0 =A0 =A0}
+> =A0 =A0 =A0 =A0close $blame or die;
+> =A0 =A0 =A0 =A0my @sorted =3D sort { $candidate{$b} <=3D> $candidate{=
+$a} } keys %candidate;
+> =A0 =A0 =A0 =A0if (1 < scalar @sorted) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0print STDERR "ambiguous split $file:$b=
+egin..$end\n";
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0foreach my $c (@sorted) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0print STDERR "\t$candi=
+date{$c}\t$c\n";
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0}
+> =A0 =A0 =A0 =A0}
+> =A0 =A0 =A0 =A0return $sorted[0];
+> }
+>
+> my $diff;
+> open($diff, '-|', 'git', '--no-pager', 'diff', '-U1') or die;
+>
+> my %by_commit;
+> my @cur_hunk =3D ();
+> my $cur_commit;
+> my ($filename, $prefilename, $postfilename);
+>
+> while (<$diff>) {
+> =A0 =A0 =A0 =A0if (m{^diff --git ./(.*) ./\1$}) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (@cur_hunk) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0push @{$by_commit{$cur=
+_commit}{$filename}}, @cur_hunk;
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0@cur_hunk =3D ();
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0}
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0$filename =3D $1;
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0$prefilename =3D "./" . $1;
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0$postfilename =3D "./" . $1;
+> =A0 =A0 =A0 =A0} elsif (m{^index}) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0# ignore
+> =A0 =A0 =A0 =A0} elsif (m{^new file}) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0$prefilename =3D '/dev/null';
+> =A0 =A0 =A0 =A0} elsif (m{^delete file}) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0$postfilename =3D '/dev/null';
+> =A0 =A0 =A0 =A0} elsif (m{^--- $prefilename$}) {
+> =A0 =A0 =A0 =A0} elsif (m{^\+\+\+ $postfilename$}) {
+> =A0 =A0 =A0 =A0} elsif (m{^@@ }) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (@cur_hunk) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0push @{$by_commit{$cur=
+_commit}{$filename}}, @cur_hunk;
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0@cur_hunk =3D ();
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0}
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0push @cur_hunk, $_;
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0die "I don't handle this diff" if ($pr=
+efilename ne $postfilename);
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0my ($o_ofs, $o_cnt, $n_ofs, $n_cnt)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=3D parse_hunk_header(=
+$_);
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0my $o_end =3D $o_ofs + $o_cnt - 1;
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0$cur_commit =3D find_commit($filename,=
+ $o_ofs, $o_end);
+> =A0 =A0 =A0 =A0} elsif (m{^[-+ \\]}) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0push @cur_hunk, $_;
+> =A0 =A0 =A0 =A0} else {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0die "unhandled diff line: '$_'";
+> =A0 =A0 =A0 =A0}
+> }
+>
+> close $diff or die;
+>
+> if (@cur_hunk) {
+> =A0 =A0 =A0 =A0push @{$by_commit{$cur_commit}{$filename}}, @cur_hunk;
+> =A0 =A0 =A0 =A0@cur_hunk =3D ();
+> }
+>
+> print "#!/bin/sh\n\n";
+>
+> foreach my $commit (keys %by_commit) {
+> =A0 =A0 =A0 =A0print "git apply --cached <<EOF\n";
+> =A0 =A0 =A0 =A0foreach my $filename (keys %{$by_commit{$commit}}) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0print "diff --git a/$filename b/$filen=
+ame\n";
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0print "--- a/$filename\n";
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0print "+++ b/$filename\n";
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0print @{$by_commit{$commit}{$filename}=
+};
+> =A0 =A0 =A0 =A0}
+> =A0 =A0 =A0 =A0print "EOF\n\n";
+> =A0 =A0 =A0 =A0print "git fixup $commit\n\n";
+> }
+> --- >8 ---
 
-OK, so I should probably do something like this instead?
+This is super neat, but I'm having trouble getting it to work.
 
-while (InterlockedCompareExchange(&mutex->autoinit, 0, 0) !=3D 0)
-	; /* wait for other thread */
+=46irst, I made one small change:
 
-I really appreciate getting some extra eyes on this, thanks.
-Concurrent programming is not my strong-suit (as this exercise has
-shown) ;)
+  -=A0=A0 =A0 =A0=A0 print "git fixup $commit\n\n";
+  +=A0 =A0 =A0=A0 print "git commit --fixup $commit\n\n";
+
+To try it out I made a very simple change:
+
+  $ git diff
+  diff --git a/App/lib/MyApp/Controller/DashboardTemplates.pm
+b/App/lib/MyApp/Controller/DashboardTemplates.pm
+  index aefdc3c..a53b534 100644
+  --- a/App/lib/MyApp/Controller/DashboardTemplates.pm
+  +++ b/App/lib/MyApp/Controller/DashboardTemplates.pm
+  @@ -13,7 +13,7 @@ cat_has $_ =3D> ( is =3D> 'rw' ) for qw(set);
+
+   sub base : Chained('/') PathPart('dashboard_templates') CaptureArgs(=
+0) {
+      my ($self, $c) =3D @_;
+  -   $self->set($c,
+$c->model('DB')->schema->kiokudb_handle->lookup('dashboard
+templates'));
+  +   $self->set($c, $c->model('Kioku')->lookup('dashboard templates'))=
+;
+   }
+
+   my $renderer =3D sub {
+
+
+Then I tried it out
+
+  $ git fixup-assigner.pl > fixups && less fixups
+  #!/bin/sh
+
+  git apply --cached <<EOF
+  diff --git a/App/lib/MyApp/Controller/DashboardTemplates.pm
+b/App/lib/MyApp/Controller/DashboardTemplates.pm
+  --- a/App/lib/MyApp/Controller/DashboardTemplates.pm
+  +++ b/App/lib/MyApp/Controller/DashboardTemplates.pm
+  @@ -15,3 +15,3 @@ sub base : Chained('/')
+PathPart('dashboard_templates') CaptureArgs(0) {
+      my ($self, $c) =3D @_;
+  -   $self->set($c,
+$c->model('DB')->schema->kiokudb_handle->lookup('dashboard
+templates'));
+  +   $self->set($c, $c->model('Kioku')->lookup('dashboard templates'))=
+;
+   }
+  EOF
+
+  git commit --fixup 7765cbd2
+
+Looks fine to me.  But then I try to use it:
+
+  $ git checkout . && sh fixups
+  error: patch failed: App/lib/MyApp/Controller/DashboardTemplates.pm:1=
+5
+  error: App/lib/MyApp/Controller/DashboardTemplates.pm: patch does not=
+ apply
+
+Any ideas what I'm doing wrong?
+
+--
+fREW Schmidt
+http://blog.afoolishmanifesto.com
