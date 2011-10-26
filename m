@@ -1,65 +1,87 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: git-fixup-assigner.perl -- automatically decide where to "fixup!"
-Date: Wed, 26 Oct 2011 21:40:50 +0200
-Message-ID: <201110262140.50786.trast@student.ethz.ch>
-References: <201012140309.59378.trast@student.ethz.ch> <CADVrmKT1woYpJoe=L9sAbQ30TUw44zMc7y4WF=PMrT5Gj9kDNw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] replace sha1 with another algorithm
+Date: Wed, 26 Oct 2011 12:44:15 -0700
+Message-ID: <7vaa8n35dc.fsf@alter.siamese.dyndns.org>
+References: <20111026001237.GA22195@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: fREW Schmidt <frioux@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 26 21:40:59 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 26 21:44:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJ9LO-0006eE-UP
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Oct 2011 21:40:59 +0200
+	id 1RJ9Oh-0008Oi-Oo
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Oct 2011 21:44:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751394Ab1JZTky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Oct 2011 15:40:54 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:29587 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751146Ab1JZTkx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Oct 2011 15:40:53 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.339.1; Wed, 26 Oct
- 2011 21:40:47 +0200
-Received: from thomas.inf.ethz.ch (188.155.176.28) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.339.1; Wed, 26 Oct
- 2011 21:40:50 +0200
-User-Agent: KMail/1.13.7 (Linux/3.0.6-44-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <CADVrmKT1woYpJoe=L9sAbQ30TUw44zMc7y4WF=PMrT5Gj9kDNw@mail.gmail.com>
-X-Originating-IP: [188.155.176.28]
+	id S1751944Ab1JZToT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Oct 2011 15:44:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47830 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751394Ab1JZToS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Oct 2011 15:44:18 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 67F086779;
+	Wed, 26 Oct 2011 15:44:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+q7nNEKT4haBe2yRoETbkph1lIE=; b=Bz8ttr
+	D8r6Ue0vebGKYYFZrx5muMEDuLoLnepIl/5nJg8SCdqB956KP7OeqzRjSCoy31M2
+	fjKlW221rV5cZ6uVEbadWVZ7y+ZiocUxEtyPtTmItwqg0I5HM8ikDOotQmB4wWpU
+	akdQ0aSpTmHF18qYP/vRGqtInlyUCszQXNCA0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ar/7DYD03NayzKPAQFh0/kO66j61z7wN
+	IxrA62r+mD/1rjYb46rcX7GQFr7QQKwSIM3/wJ5OdcIvCJ8Q49MmlWVYUi9Buyv4
+	eIleAK8Ik4xyGMk0zE546wmrpQK8f5vms/VC0QHldXHN/6Dq8PVsOFNUIaQHz0En
+	IJjC/EdjYnI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59B1B6778;
+	Wed, 26 Oct 2011 15:44:17 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BC9246777; Wed, 26 Oct 2011
+ 15:44:16 -0400 (EDT)
+In-Reply-To: <20111026001237.GA22195@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 25 Oct 2011 17:12:37 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E3B596CE-000A-11E1-A5A6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184273>
 
-fREW Schmidt wrote:
-> 
->   $ git fixup-assigner.pl > fixups && less fixups
->   #!/bin/sh
-> 
->   git apply --cached <<EOF
-[...]
->   -   $self->set($c,
-> $c->model('DB')->schema->kiokudb_handle->lookup('dashboard
-> templates'));
->   +   $self->set($c, $c->model('Kioku')->lookup('dashboard templates'));
->    }
->   EOF
-> 
->   git commit --fixup 7765cbd2
-> 
-> Looks fine to me.  But then I try to use it:
+Jeff King <peff@peff.net> writes:
 
-The shell will expand variables in the <<EOF section above.  You can
-fix that by changing it to output <<\EOF instead, which is clearly a
-bug in the original script.
+> +static void xor_bytes(unsigned char *out, unsigned char *a, unsigned char *b,
+> +		      unsigned n)
+> +{
+> +	unsigned i;
+> +	for (i = 0; i < n; i++)
+> +		out[i] = a[i] ^ b[i];
+> +}
+> +
+> +static void mix_hash(unsigned char *h, unsigned n)
+> +{
+> +	unsigned char out[20];
+> +	unsigned mid = n / 2;
+> +
+> +	if (2*mid < n)
+> +		return;
+> +
+> +	xor_bytes(out, h, h + mid, mid);
+> +	xor_bytes(out + mid, h + mid, h, mid);
+> +	memcpy(h, out, n);
+> +
+> +	/* If a little bit of mixing is good, then a lot must be GREAT! */
+> +	mix_hash(h, mid);
+> +	mix_hash(h + mid, mid);
+> +}
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+You seem to want to reduce the hash down to 5-bytes by duplicating the
+same value on the left and right half, and duplicate that four times to
+fill 20-byte buffer, but doesn't this look unnecessarily inefficient way
+to achieve that?
