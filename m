@@ -1,101 +1,86 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/2] pack-objects: optimize "recency order"
-Date: Thu, 27 Oct 2011 15:32:06 -0700 (PDT)
-Message-ID: <m3ehxy5aoe.fsf@localhost.localdomain>
-References: <1310084657-16790-1-git-send-email-gitster@pobox.com>
-	<1310084657-16790-3-git-send-email-gitster@pobox.com>
-	<CACBZZX6Ss4jLtdrDhLUNKCUjEHjHHKzfv-LMkOyTPDhRUXm4sQ@mail.gmail.com>
-	<CACBZZX6ZWOF=j-k8o-4NHmjS2HpyS+PmKjJh_QKevWurBf9pbA@mail.gmail.com>
-	<CACBZZX7tghoHhxCygEj9DZSxvKyTvybawVA2HwHBkjBaH73Ujg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git alias and --help
+Date: Thu, 27 Oct 2011 15:50:41 -0700
+Message-ID: <7v8vo6xd4u.fsf@alter.siamese.dyndns.org>
+References: <j8clg9$ldh$1@dough.gmane.org>
+ <7vfwiexe6m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 28 00:32:16 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Gelonida N <gelonida@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 28 00:50:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJYUh-00029V-4T
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 00:32:15 +0200
+	id 1RJYmj-0008Ml-3i
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 00:50:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754400Ab1J0WcK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Oct 2011 18:32:10 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:43790 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751770Ab1J0WcJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Oct 2011 18:32:09 -0400
-Received: by faan17 with SMTP id n17so3121769faa.19
-        for <git@vger.kernel.org>; Thu, 27 Oct 2011 15:32:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=f9637zOIG+u4jzjsTJ59mUftNMPxkGPI6PocMgVp00g=;
-        b=iJSsYGxlxGGBeBuhCbonQN6VrblCf9xqYzjioxte9UHZGHFOR8/EBkYvvzLGKk7bDS
-         Iscir70oRPyz3Zy+f0pXl8WOweqvJ/6u2+V3pbkHhi3m4+41hnTpTTWAZB8jC0XMoSJO
-         VYZwa/nBJjXsmJDLH8dUlwjI71lSCnNumkHzU=
-Received: by 10.223.64.207 with SMTP id f15mr1293780fai.7.1319754727931;
-        Thu, 27 Oct 2011 15:32:07 -0700 (PDT)
-Received: from localhost.localdomain (abwc229.neoplus.adsl.tpnet.pl. [83.8.226.229])
-        by mx.google.com with ESMTPS id n25sm13586121fah.15.2011.10.27.15.32.06
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 27 Oct 2011 15:32:06 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p9RMVcDq024463;
-	Fri, 28 Oct 2011 00:31:48 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p9RMVEKt024458;
-	Fri, 28 Oct 2011 00:31:14 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <CACBZZX7tghoHhxCygEj9DZSxvKyTvybawVA2HwHBkjBaH73Ujg@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752832Ab1J0Wup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Oct 2011 18:50:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47718 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750861Ab1J0Wuo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Oct 2011 18:50:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4DCE6E91;
+	Thu, 27 Oct 2011 18:50:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Vgdu1mVUxtvnrK/5qJ8wKP2Vnwg=; b=UM88G7
+	vjVI1I5V4eVdERb4GNEZOwTBlud8/ulWxNXaipANMDoOQtxwMfS+gBjqRJ/6nXJC
+	hOEXWwj1je5XeYZlrtZsuYxp8tmdrgJMDJTd5pLlFwRQBKWg0BuLZqsYB0QvO4E5
+	ytxAtjXh81EFuSCls8LGtQsHXyRBB8mX4Edoc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VXr1HbOFpoiRW2xExWpiH6dioXEMD/F0
+	EYZfIkOpdOhzhm+Wi0tllMPIq/YwXDLTDBC2zdNgUFyCeAYWBGU66vdIN0ZuaX8+
+	l9RQEAZyL2b01wOKOeeMBhnWp580T8EX9TwVWTIklRIsz7lXCRUSGkK7a8MH6h92
+	wRfw62s4Y9Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D4646E90;
+	Thu, 27 Oct 2011 18:50:43 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 353096E8F; Thu, 27 Oct 2011
+ 18:50:43 -0400 (EDT)
+In-Reply-To: <7vfwiexe6m.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 27 Oct 2011 15:28:01 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 19C377C0-00EE-11E1-B6E5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184328>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Thu, Oct 27, 2011 at 23:49, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason=
- <avarab@gmail.com> wrote:
->=20
-> > Actually it just seems slow in general, not just on repositories wi=
-th
-> > a lot of tags, on linux-2.6.git with this patch:
->=20
-> Here's profiling with gprof for everything with >1% of execution time
-> with the patch applied:
->=20
->     Each sample counts as 0.01 seconds.
->       %   cumulative   self              self     total
->      time   seconds   seconds    calls   s/call   s/call  name
->      21.07     15.99    15.99  2184059     0.00     0.00  add_descend=
-ants_to_write_order
->      20.25     31.35    15.37 1146371554     0.00     0.00  add_to_wr=
-ite_order
-[...]
->=20
-> And without:
->=20
->     Each sample counts as 0.01 seconds.
->       %   cumulative   self              self     total
->      time   seconds   seconds    calls   s/call   s/call  name
->      21.29      9.13     9.13 142180385     0.00     0.00  hashcmp
->      10.59     13.67     4.54 90592818     0.00     0.00  lookup_obje=
-ct
-[...]
+> Gelonida N <gelonida@gmail.com> writes:
+>
+>> Is there any trick to get the help text of git branch without
+>> having to type
+>>
+>> git branch --help
+>
+> How about "git help branch"?
 
-Errr... do or do not gprof results include time spend in libraries?
-Though that might not matter for this case.
+It was bad of me to write a tongue-in-cheek answer, get distracted and
+ended up sending it without the real answer.
 
-Can you repeat profiling using "perf events" or something using it
-(e.g. via PAPI library like HPCToolkit)?
+The reason why we do not do what you seem to be suggesting is because
+giving the same behaviour to "git b --help" as "git branch --help" is
+wrong.
 
---=20
-Jakub Nar=C4=99bski
+To see why, imagine you have configured an alias that is not a simple and
+stupid substitution "b == branch", but something like "bt == branch -t",
+and then want to know what you should write after "git bt".  Giving the
+manpage for branch without giving them any hint that they configured that
+alias to produce customized behaviour that is different from plain vanilla
+"branch" is not quite acceptable.
+
+I think you _could_ make a patch that special cases a simple and straight
+substitution and skip the "foo is aliased to bar" step, but I doubt it is
+worth it to lose consistency between "git b --help" vs "git bt --help"
+that way.
