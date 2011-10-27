@@ -1,93 +1,98 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH/WIP 03/11] t5403: avoid doing "git add foo/bar" where
- foo/.git exists
-Date: Thu, 27 Oct 2011 19:06:34 +1100
-Message-ID: <CACsJy8C2nUJkN5=E7p2u_wjHqWy7EC_BS3Sr4+_QgunWHDdtKg@mail.gmail.com>
-References: <1319438176-7304-1-git-send-email-pclouds@gmail.com>
- <1319438176-7304-4-git-send-email-pclouds@gmail.com> <7vd3dk516p.fsf@alter.siamese.dyndns.org>
- <CACsJy8CjJnO6rDVTV1tC9rWXP51LHBtUvNsgVWNfwC+HuNQ-6Q@mail.gmail.com> <7vr51z3bqx.fsf@alter.siamese.dyndns.org>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH v2] completion: fix issue with process substitution not
+	working on Git for Windows
+Date: Thu, 27 Oct 2011 11:05:30 +0200
+Message-ID: <20111027090530.GA23424@goldbirke>
+References: <CAJzBP5QYKOf4OUMm4vfVay=b7F_fHJf40JgzDAZZa7p0fxLpyA@mail.gmail.com>
+	<1319656389-9515-1-git-send-email-stefan.naewe@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 27 10:07:16 2011
+Cc: spearce@spearce.org, git@vger.kernel.org, gitster@pobox.com
+To: Stefan Naewe <stefan.naewe@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 27 11:05:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJKzb-000266-M0
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Oct 2011 10:07:16 +0200
+	id 1RJLu9-0006ci-Qe
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Oct 2011 11:05:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754592Ab1J0IHI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Oct 2011 04:07:08 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:41178 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753612Ab1J0IHG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Oct 2011 04:07:06 -0400
-Received: by faan17 with SMTP id n17so2350675faa.19
-        for <git@vger.kernel.org>; Thu, 27 Oct 2011 01:07:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=SEysptOkstDXa2fRdRiNx3SIfySbHRDpyYlm+XcK1T4=;
-        b=WBlK+7lj5c1S9QPhDBY8DyrQp0g0kn0Lu0nNV+huoX06pglXQc+9axwQXej0DhJn/n
-         p3e6rp59c9zUOsBgnm5ZxNnI+ZmTcgtSYoNpCJKmof+0cryJNvkdKEfDQwxwR29yQpQD
-         0SFTVgsh/iDV1PRNhx9T62O/bd97lMHauS3Cc=
-Received: by 10.223.77.66 with SMTP id f2mr11181573fak.24.1319702824210; Thu,
- 27 Oct 2011 01:07:04 -0700 (PDT)
-Received: by 10.223.113.143 with HTTP; Thu, 27 Oct 2011 01:06:34 -0700 (PDT)
-In-Reply-To: <7vr51z3bqx.fsf@alter.siamese.dyndns.org>
+	id S1754731Ab1J0JFg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Oct 2011 05:05:36 -0400
+Received: from moutng.kundenserver.de ([212.227.126.187]:49742 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753732Ab1J0JFg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Oct 2011 05:05:36 -0400
+Received: from localhost6.localdomain6 (p5B1310B5.dip0.t-ipconnect.de [91.19.16.181])
+	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
+	id 0Lo3GS-1QmSv51UXg-00gcDN; Thu, 27 Oct 2011 11:05:31 +0200
+Content-Disposition: inline
+In-Reply-To: <1319656389-9515-1-git-send-email-stefan.naewe@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:s92jjYS9AzTDKdYgUzmYYN58VDao90X4vC2wa1J25WX
+ OYCioAVzn2oZlX+oodKn+gau56MyhzAU52Qak1Yd8En1wwUg0R
+ yjZbJbgS+GdTEbGz7LOu39V2tXluI8wwh7KAj55vWYHyTPscFY
+ Q5k8mSUleIZJtMYxw4OcfGzaFUWfEc9V/uMq3AdBEBl+shLVXI
+ 89+KmoxIN2LMYPCDjZWN70dYNfnXwqsy/UUTDtXSLllqM+NJWW
+ Lnq0bf54vXDATqzpkMgCyk7xS7TOxr/uiG+xhPvVkpnflbtDeF
+ wfyn8/IZTqrldnSPdzKDqXBHRWvb5EjimEsIkymgAuv1IR0lgm
+ IJq0WBPt0Od2a4Au65rssaZPY+TjoRVhJ4/I3d1OF
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184290>
 
-On Thu, Oct 27, 2011 at 4:26 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
->> =C2=A0- reads content of current directory, it sees "clone2" as a di=
-rectory
->> =C2=A0- it descends in and see ".git" so "clone2" must be a git link
->> =C2=A0- because clone2 is a separate repository (again $GIT_DIR is n=
-ot
->> consulted), "b" should be managed by "clone2"
->> =C2=A0- so it stops.
->>
->> This is the only place I see a submodule (from the first glance) is
->> actually top level repository. Yes I guess we can support this, but
->> it's just too weird to be widely used in pratice..
->
-> Where did you get this idea that submodule is somehow involved in thi=
-s test?
+On Wed, Oct 26, 2011 at 09:13:09PM +0200, Stefan Naewe wrote:
+> Git for Windows comes with a bash that doesn't support process substi=
+tution.
+> It issues the following error when using git-completion.bash with
+> GIT_PS1_SHOWUPSTREAM set:
+>=20
+> $ export GIT_PS1_SHOWUPSTREAM=3D1
+> sh.exe": cannot make pipe for process substitution: Function not impl=
+emented
+> sh.exe": cannot make pipe for process substitution: Function not impl=
+emented
+> sh.exe": <(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.sh=
+owupstream)$' 2>/dev/null | tr '\0\n' '\n '): ambiguous redirect
+>=20
+> Replace the process substitution with a 'here string'.
+>=20
+> Signed-off-by: Stefan Naewe <stefan.naewe@gmail.com>
+> ---
+>  contrib/completion/git-completion.bash |    3 ++-
+>  1 files changed, 2 insertions(+), 1 deletions(-)
+>=20
+> diff --git a/contrib/completion/git-completion.bash b/contrib/complet=
+ion/git-completion.bash
+> index 8648a36..0b3d47e 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -110,6 +110,7 @@ __git_ps1_show_upstream ()
+>  	local upstream=3Dgit legacy=3D"" verbose=3D""
+> =20
+>  	# get some config options from git-config
+> +	output=3D"$(git config -z --get-regexp '^(svn-remote\..*\.url|bash\=
+=2Eshowupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
+>  	while read key value; do
+>  		case "$key" in
+>  		bash.showupstream)
+> @@ -125,7 +126,7 @@ __git_ps1_show_upstream ()
+>  			upstream=3Dsvn+git # default upstream is SVN if available, else g=
+it
+>  			;;
+>  		esac
+> -	done < <(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.sh=
+owupstream)$' 2>/dev/null | tr '\0\n' '\n ')
+> +	done <<< "$output"
 
-Because "clone2" looks like a submodule (it has ".git" inside with vali=
-d HEAD)
+The $output variable is not declared as local and therefore it leaks
+into the environment.  But instead of declaring it local, why not
+eliminate it altogether, and use the "$(git config ....)" command
+substitution as here string?
 
-> I do not see there is any submodules involved; the test uses two
-> repositories 1 and 2 that appear in the working tree of the main
-> repository test infrastructure created, but otherwise there is no
-> sub/super relation among these three, and there are many other tests =
-with
-> "clone" or "mkdir+init" or "init <newdir>" in the main test repositor=
-y.
 
-If I tweak the test a bit
-
-git clone ./. clone2 &&
-GIT_DIR=3Dclone2/.git git add clone2 &&
-GIT_DIR=3Dclone2/.git git add clone2/b
-
-then the last command fails with "Path 'clone2/b' is in submodule
-'clone2'". So clone2 could be a submodule from that perspective. Doing
-the the other way around
-
-git clone ./. clone2 &&
-GIT_DIR=3Dclone2/.git git add clone2/b &&
-GIT_DIR=3Dclone2/.git git add clone2
-
-"clone2" is not just a normal path. Should we stick with one way only?
---=20
-Duy
+G=E1bor
