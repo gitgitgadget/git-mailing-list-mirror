@@ -1,110 +1,66 @@
-From: edman747 <edman747@gmail.com>
-Subject: Problem with git svn clone --authors-file
-Date: Wed, 26 Oct 2011 18:51:04 -0500
-Message-ID: <CABDh3gSsi9xwvw-6stw7URGK112LvF8Rt4XJeTwGM3q-tML=2Q@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] replace sha1 with another algorithm
+Date: Wed, 26 Oct 2011 17:01:17 -0700
+Message-ID: <20111027000117.GA24161@sigill.intra.peff.net>
+References: <20111026001237.GA22195@sigill.intra.peff.net>
+ <7vaa8n35dc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 27 01:52:22 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 27 02:01:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJDGf-0002bP-Tu
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Oct 2011 01:52:22 +0200
+	id 1RJDPR-0005Hh-Qx
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Oct 2011 02:01:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753435Ab1JZXvG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Oct 2011 19:51:06 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:54085 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753334Ab1JZXvF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Oct 2011 19:51:05 -0400
-Received: by eye27 with SMTP id 27so1978669eye.19
-        for <git@vger.kernel.org>; Wed, 26 Oct 2011 16:51:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=Yen7BKYeSqF1y5UCoIAKBnfLw8lRmdEon19yvaejLeY=;
-        b=SA6q/ajHqgCvQMn/NfjtiY8UicKQ1fYiiwgzJv010pkpbSFtfnh3135035PsrfZ8Rv
-         adn3JJbdDL7947bbWlqbMBr9534egAWMvhehOtE1CjftE8yQ4RNi400pIgDm6SJSABm1
-         3fAPqOHNMb4jNwRUXMRKYQEIIW/y77iCXP3RI=
-Received: by 10.213.28.78 with SMTP id l14mr86843ebc.19.1319673064723; Wed, 26
- Oct 2011 16:51:04 -0700 (PDT)
-Received: by 10.213.28.80 with HTTP; Wed, 26 Oct 2011 16:51:04 -0700 (PDT)
+	id S1753503Ab1J0ABV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Oct 2011 20:01:21 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56430
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753470Ab1J0ABU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Oct 2011 20:01:20 -0400
+Received: (qmail 28955 invoked by uid 107); 27 Oct 2011 00:07:07 -0000
+Received: from 99-189-169-83.lightspeed.snjsca.sbcglobal.net (HELO sigill.intra.peff.net) (99.189.169.83)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Oct 2011 20:07:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Oct 2011 17:01:17 -0700
+Content-Disposition: inline
+In-Reply-To: <7vaa8n35dc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184280>
 
-Hello,
-Attempting to clone a remote svn repo where I don't know all the
-previous SVN author names.
-installed msysgit (vista)
-gitbash,
-$ mkdir test
-$ cd test
+On Wed, Oct 26, 2011 at 12:44:15PM -0700, Junio C Hamano wrote:
 
-create authors file with a few known authors.
+> > +static void mix_hash(unsigned char *h, unsigned n)
+> > +{
+> > +	unsigned char out[20];
+> > +	unsigned mid = n / 2;
+> > +
+> > +	if (2*mid < n)
+> > +		return;
+> > +
+> > +	xor_bytes(out, h, h + mid, mid);
+> > +	xor_bytes(out + mid, h + mid, h, mid);
+> > +	memcpy(h, out, n);
+> > +
+> > +	/* If a little bit of mixing is good, then a lot must be GREAT! */
+> > +	mix_hash(h, mid);
+> > +	mix_hash(h + mid, mid);
+> > +}
+> 
+> You seem to want to reduce the hash down to 5-bytes by duplicating the
+> same value on the left and right half, and duplicate that four times to
+> fill 20-byte buffer, but doesn't this look unnecessarily inefficient way
+> to achieve that?
 
-$ git svn clone --authors-file=authors http://svn.repo/trunk
-...
-runs fine until
-Author: (no author) not defined in authors file
+Well, yeah. But when you're writing a really bad hashing algorithm, I
+feel like obfuscating the bugs is key.
 
-edit authors file add line: (no author) = none <email>
-
-------
-rerun previous git svn command
-
-$ git svn clone --authors-file=authors http://svn.repo/trunk
-Using existing [svn-remote "svn"]
-svn-remote.svn.fetch already set to track :refs/remotes/git-svn
-
-It stops.
-$ vi trunk/.git/config
-delete line: fetch = :refs/remotes/git-svn
-
------
-rerun previous git svn command
-
-$ git svn clone --authors-file=authors http://svn.repo/trunk
-...
-runs fine until
-Author: Bob not defined in authors file
-
-edit authors file add line: Bob = bobby jones <email>
-
------
-rerun previous git svn command
-
-$ git svn clone --authors-file=authors http://svn.repo/trunk
-Using existing [svn-remote "svn"]
-svn-remote.svn.fetch already set to track :refs/remotes/git-svn
-
-Each time it encounters an SVN committer name that is not in the
-authors-file it aborts. As expected, edit the authors file and re-run
-the previous git svn command to continue
-
-And it quits with
-svn-remote.svn.fetch already set to track :refs/remotes/git-svn
-
-Would like for it to continue without having to edit the trunk/.get/config file.
-Did I miss a flag or option?
-
-Thank You,
-
-
->From git-svn(1)
---authors-file=<filename>
-
-Syntx is compatible with the file used by git cvsimport:
-
-loginname
-
-If this option is specified and git svn encounters an SVN committer
-name that does not exist in the authors-file, git svn will abort
-operation. The user will then have to add the appropriate entry.
-Re-running the previous git svn command after the authors-file is
-modified should continue operation.
+-Peff
