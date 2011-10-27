@@ -1,60 +1,60 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: Is there a place for benchmarking scripts?
-Date: Thu, 27 Oct 2011 18:01:40 +0200
-Message-ID: <4EA98064.3060706@lsrfire.ath.cx>
-References: <4EA7D7E3.2020009@alum.mit.edu>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Credentials and the Secrets API...
+Date: Thu, 27 Oct 2011 12:05:03 -0400
+Message-ID: <CAEBDL5Udooim_3Za76Q1Rt_aGXtsSv76nxRegGWRBE=WJQzfZA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Oct 27 18:02:00 2011
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 27 18:05:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJSP1-0006ca-UG
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Oct 2011 18:02:00 +0200
+	id 1RJSS8-00085Q-FG
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Oct 2011 18:05:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753132Ab1J0QBy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Oct 2011 12:01:54 -0400
-Received: from india601.server4you.de ([85.25.151.105]:60395 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752901Ab1J0QBy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Oct 2011 12:01:54 -0400
-Received: from [192.168.2.104] (p4FFDAB8C.dip.t-dialin.net [79.253.171.140])
-	by india601.server4you.de (Postfix) with ESMTPSA id 7F04B2F8034;
-	Thu, 27 Oct 2011 18:01:52 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
-In-Reply-To: <4EA7D7E3.2020009@alum.mit.edu>
+	id S1752792Ab1J0QFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Oct 2011 12:05:05 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:54678 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751235Ab1J0QFE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Oct 2011 12:05:04 -0400
+Received: by vcge1 with SMTP id e1so2601771vcg.19
+        for <git@vger.kernel.org>; Thu, 27 Oct 2011 09:05:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        bh=egkmMS86TB70oCb5LvYzQiJPv7iITxIaUpjgtxJEIUg=;
+        b=a+ukva4+06yBy35/QGe7kBKbBZLFXTW/73o17Bcbz8ZkgfGaKIdDGsQHDabDhbOus6
+         Jq6V7osj8h6FWf2+zB0WdJraL9FpExUMgprf5AgkwH3dCTRgR1SRBlPJl3VScW+tsXdg
+         Kakr1NB4NcYLMKi/zOwCA7Ta24jzvrwY4L3tI=
+Received: by 10.220.154.11 with SMTP id m11mr1071578vcw.133.1319731503357;
+ Thu, 27 Oct 2011 09:05:03 -0700 (PDT)
+Received: by 10.220.94.67 with HTTP; Thu, 27 Oct 2011 09:05:03 -0700 (PDT)
+X-Google-Sender-Auth: zxvbMBShjJnDqFaFXjmEhealats
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184298>
 
-Am 26.10.2011 11:50, schrieb Michael Haggerty:
-> I've been doing a lot of benchmarking of git performance in the prese=
-nce
-> of lots of references.  I've written a few scripts to automate the
-> benchmarking [1].  They are not beautiful and would require a couple =
-of
-> local adjustments [2,3].  They are too time-consuming to be made part=
- of
-> the usual test suite.  I wouldn't want to commit to maintaining them.
-> But they have certainly been useful to me, and they generate readable
-> output [4].
->=20
-> My question is: would such benchmarking scripts be welcome within the
-> git project?  If so, where should I put it?  Is any benchmarking
-> code/framework already in use?
+Just wanted to keep folks in the loop.  It turns out that the Secrets
+API is still to young.  I asked about the format to store credentials
+in (as far as attributes), and got a response from a KDE developer
+that says it's still to young on their front.  They hope to have
+support in the next release of KDE.  But there's still the issue of
+what attributes to use.
 
-That would be nice.  A whole performance regression testing suite would
-be even nicer and can perhaps be built piece by piece.
+With that information, I went ahead and created a
+gnome-credential-keyring that uses Gnome's Keyring facility.  I still
+need to do a few more things (mainly run it against Jeff's tests), but
+it's generally working.  Just wanted to keep folks in the loop.
+Hopefully, I can get patches out this weekend.
 
-We have contrib/ and we have the test-* commands; t/ doesn't seem to fi=
-t
-too well with its focus on OK or fail.
+Jeff: it would be really excellent to break out the various pieces.  I
+think it would also be better to split the asking for passwords from
+the storing of passwords.
 
-Ren=E9
+-John
