@@ -1,82 +1,76 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Problem with git svn clone --authors-file
-Date: Thu, 27 Oct 2011 08:58:17 +0200
-Message-ID: <4EA90109.4070504@alum.mit.edu>
-References: <CABDh3gSsi9xwvw-6stw7URGK112LvF8Rt4XJeTwGM3q-tML=2Q@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Recent gits corrupts repository
+Date: Thu, 27 Oct 2011 09:00:51 +0200
+Message-ID: <vpqk47qc40s.fsf@bauges.imag.fr>
+References: <CAA787rnrG-mLRpq_a3xbbUyYuHz1kfdOzMqHQpxhBwc0rjt3Ww@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: edman747 <edman747@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 27 08:58:30 2011
+To: "=?iso-8859-1?Q?=D8yvind?= A. Holm" <sunny@sunbase.org>
+X-From: git-owner@vger.kernel.org Thu Oct 27 09:01:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJJv3-00035v-LZ
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Oct 2011 08:58:29 +0200
+	id 1RJJxZ-0003qN-A8
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Oct 2011 09:01:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752434Ab1J0G6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Oct 2011 02:58:20 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:59553 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750889Ab1J0G6T (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Oct 2011 02:58:19 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p9R6wH2G031505
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 27 Oct 2011 08:58:17 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
-In-Reply-To: <CABDh3gSsi9xwvw-6stw7URGK112LvF8Rt4XJeTwGM3q-tML=2Q@mail.gmail.com>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1752353Ab1J0HAz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Oct 2011 03:00:55 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:37372 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751943Ab1J0HAz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Oct 2011 03:00:55 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p9R6v6dc011864
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 27 Oct 2011 08:57:06 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1RJJxL-0004Z2-ET; Thu, 27 Oct 2011 09:00:51 +0200
+In-Reply-To: <CAA787rnrG-mLRpq_a3xbbUyYuHz1kfdOzMqHQpxhBwc0rjt3Ww@mail.gmail.com>
+	(=?iso-8859-1?Q?=22=D8yvind?= A. Holm"'s message of "Thu, 27 Oct 2011
+ 08:50:44 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 27 Oct 2011 08:57:06 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p9R6v6dc011864
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1320303427.47014@K/g8W79rpz8jbY9slLI3RA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184286>
 
-On 10/27/2011 01:51 AM, edman747 wrote:
-> Hello,
-> Attempting to clone a remote svn repo where I don't know all the
-> previous SVN author names.
-> installed msysgit (vista)
-> gitbash,
-> $ mkdir test
-> $ cd test
-> 
-> create authors file with a few known authors.
-> 
-> $ git svn clone --authors-file=authors http://svn.repo/trunk
-> ...
-> runs fine until
-> Author: (no author) not defined in authors file
-> 
-> edit authors file add line: (no author) = none <email>
-> 
-> ------
-> rerun previous git svn command
-> 
-> $ git svn clone --authors-file=authors http://svn.repo/trunk
-> Using existing [svn-remote "svn"]
-> svn-remote.svn.fetch already set to track :refs/remotes/git-svn
+=D8yvind A. Holm <sunny@sunbase.org> writes:
 
-I'm not quite sure what your complaint is.
+>   $ git status
+>   git: malloc.c:3096: sYSMALLOc: Assertion `(old_top =3D=3D (((mbinpt=
+r)
+> (((char *) &((av)->bins[((1) - 1) * 2])) - __builtin_offsetof (struct
+> malloc_chunk, fd)))) && old_size =3D=3D 0) || ((unsigned long) (old_s=
+ize)
+>>=3D (unsigned long)((((__builtin_offsetof (struct malloc_chunk,
+> fd_nextsize))+((2 * (sizeof(size_t))) - 1)) & ~((2 * (sizeof(size_t))=
+)
+> - 1))) && ((old_top)->size & 0x1) && ((unsigned long)old_end &
+> pagemask) =3D=3D 0)' failed.
+>   Aborted
 
-"git svn clone" is equivalent to a "git svn init" followed by "git svn
-fetch".  I would have thought that by the time "git svn clone" notices a
-problem with the authors file, it would already be in the "git svn
-fetch" phase.  So it seems to me that after the first "clone" fails, one
-should probably run "git svn fetch" instead of "git svn clone" again.
+This looks very much like
 
-If this is the case (and the cause of your problem), then the
-documentation and error message should be made clearer.
+  http://thread.gmane.org/gmane.comp.version-control.git/184094
 
-Michael
+for which a patch is pending in "next":
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+  8f41c07 read-cache.c: fix index memory allocation
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
