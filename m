@@ -1,91 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 00/22] Refactor to accept NUL in commit messages
-Date: Thu, 27 Oct 2011 11:13:03 -0700
-Message-ID: <20111027181303.GF1967@sigill.intra.peff.net>
-References: <7vobx863v3.fsf@alter.siamese.dyndns.org>
- <CACsJy8B=TsC4A=R6b3jyYBCvorEDBYHQ8uA864WrB0-3pgNyKA@mail.gmail.com>
- <7vipng5k80.fsf@alter.siamese.dyndns.org>
- <CACsJy8CA2cqJqt7cUN1CdnOb3=qE6B2XTd1oQKZ7osVz09kSGg@mail.gmail.com>
- <7vehy459bg.fsf@alter.siamese.dyndns.org>
- <20111023160744.GA22444@sigill.intra.peff.net>
- <7v39ej5uqb.fsf@alter.siamese.dyndns.org>
- <7vy5wb3sto.fsf@alter.siamese.dyndns.org>
- <20111024224558.GB10481@sigill.intra.peff.net>
- <7vvcrd411x.fsf@alter.siamese.dyndns.org>
+From: Richard Hartmann <richih.mailinglist@gmail.com>
+Subject: Re: [PATCH] Fix 'Cloning into' message
+Date: Thu, 27 Oct 2011 20:34:36 +0200
+Message-ID: <CAD77+gQWhatFyo22au-k_ygjohPJ_HhkNvNSgqzX1wRaoiWgBw@mail.gmail.com>
+References: <1319648748-9150-1-git-send-email-richih.mailinglist@gmail.com>
+ <1319734013-8956-1-git-send-email-richih.mailinglist@gmail.com> <7vvcraz64i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 27 20:13:16 2011
+X-From: git-owner@vger.kernel.org Thu Oct 27 20:35:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJUS2-0001Ws-0u
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Oct 2011 20:13:14 +0200
+	id 1RJUn9-0002bS-To
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Oct 2011 20:35:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754532Ab1J0SNI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Oct 2011 14:13:08 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56770
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754348Ab1J0SNH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Oct 2011 14:13:07 -0400
-Received: (qmail 4080 invoked by uid 107); 27 Oct 2011 18:18:54 -0000
-Received: from c-67-169-41-183.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (67.169.41.183)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 27 Oct 2011 14:18:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Oct 2011 11:13:03 -0700
-Content-Disposition: inline
-In-Reply-To: <7vvcrd411x.fsf@alter.siamese.dyndns.org>
+	id S1754535Ab1J0Se7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Oct 2011 14:34:59 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:42079 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754221Ab1J0Se6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Oct 2011 14:34:58 -0400
+Received: by wyg36 with SMTP id 36so3150060wyg.19
+        for <git@vger.kernel.org>; Thu, 27 Oct 2011 11:34:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=W10v52VZA0lJkjjwWVCaYx+E5yn17UjUuxfsH0khTjg=;
+        b=g9SssSmNv9x2D0HYlweHGMei4bQHdxcSwSwSdg2AGOItxpphMkai+sDHlpuXJ24Cpx
+         y1yfZv71mbEBwpQxFe4/mXHndu/zlEDT1EClLU0RoFoQhsrE2prbjU8EHK9mzR3N8pQf
+         nqho5OBhNl88ZulclMuooFSCCC246re7NqCzI=
+Received: by 10.216.134.93 with SMTP id r71mr9733996wei.59.1319740497081; Thu,
+ 27 Oct 2011 11:34:57 -0700 (PDT)
+Received: by 10.216.24.136 with HTTP; Thu, 27 Oct 2011 11:34:36 -0700 (PDT)
+In-Reply-To: <7vvcraz64i.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184313>
 
-On Tue, Oct 25, 2011 at 07:07:38AM -0700, Junio C Hamano wrote:
+On Thu, Oct 27, 2011 at 19:39, Junio C Hamano <gitster@pobox.com> wrote=
+:
 
-> Jeff King <peff@peff.net> writes:
->=20
-> > I mean, besides the obvious that UTF-16 is ...
->=20
-> Yes, you could, besides the obvious. But that obvious reason makes it
-> sufficiently different that it may not be so outrageous to draw the l=
-ine
-> between it and all the others.
 
-Yeah, and I'm OK with that. It's just not a satisfying answer to give
-Windows people who think UTF-16 is a good idea. But at the very least,
-it's still unicode. It should be lossless for them to convert to utf8
-and back if they want.
+> We try to be consistent and many places do quote user supplied paths =
+in
+> pair of single quotes in human readable messages, and this is in line=
+ with
+> that pattern.
 
-Speaking of which, I've been looking at handling diffing of utf-16
-files. Right now we generally just consider them binary, which sucks.
-It's easy to identify them by BOM in the is_buffer_binary() code, but
-that's only part of it. We do an OK job of diffing them, except that:
+Exactly. That is why I chose single quotes. Sorry for not including
+the signed-off the first time.
 
-  1. The BOM makes some diffs a little noisier.
 
-  2. We split lines on 0x0a. But this byte can appear in other code
-     points, like 0x010a (=C4=8A), or the entire entire 0x0a* code poin=
-t (the
-     entire Gurmukhi charset).
+> =C2=A0 =C2=A0$ git clone foo "joey's foo"
 
-I'm tempted to detect the UTF-{16,32}{LE,BE} by their BOM, reencode the=
-m
-to utf8, and then display them in utf8. Is that too gross for us to
-consider?
+In that case, the user has other problems ;)
 
-You can kind-of implement this outside of git using textconv. But you
-have to manually mark each file as utf-16, as there's no way to trigger
-an alternative diff driver on something like a BOM.
 
-I'm really not clear on how people with utf-16 files work. Even if we
-did treat utf-16 like text, the _rest_ of git is outputting ascii, so
-it's not like their terminals are utf-16. But we do have projects on
-github with utf-16 and utf-32 encodings.
-
--Peff
+Richard
