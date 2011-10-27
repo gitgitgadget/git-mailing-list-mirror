@@ -1,75 +1,58 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH] gitweb/Makefile: Remove static/gitweb.js in the clean
- target
-Date: Wed, 26 Oct 2011 22:30:46 +0100
-Message-ID: <4EA87C06.8080808@ramsay1.demon.co.uk>
-References: <4EA6EEA8.3000204@ramsay1.demon.co.uk> <1319583484.10399.41.camel@drew-northup.unet.maine.edu> <201110260236.59509.jnareb@gmail.com>
+Subject: Re: [PATCH 0/2] git-credential-cache--daemon on Cygwin
+Date: Thu, 27 Oct 2011 18:18:30 +0100
+Message-ID: <4EA99266.7030002@ramsay1.demon.co.uk>
+References: <4EA2FC0D.5060404@ramsay1.demon.co.uk> <20111022191509.GB1785@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Drew Northup <drew.northup@maine.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 27 19:31:27 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 27 19:31:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJTna-0006zI-9F
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Oct 2011 19:31:26 +0200
+	id 1RJTni-00072s-W5
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Oct 2011 19:31:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752202Ab1J0RbU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Oct 2011 13:31:20 -0400
-Received: from anchor-post-2.mail.demon.net ([195.173.77.133]:48660 "EHLO
-	anchor-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751486Ab1J0RbT (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Oct 2011 13:31:19 -0400
+	id S1753998Ab1J0Rb3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Oct 2011 13:31:29 -0400
+Received: from anchor-post-1.mail.demon.net ([195.173.77.132]:55166 "EHLO
+	anchor-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753524Ab1J0Rb3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Oct 2011 13:31:29 -0400
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-2.mail.demon.net with esmtp (Exim 4.69)
-	id 1RJTnR-0002mW-kl; Thu, 27 Oct 2011 17:31:18 +0000
+	by anchor-post-1.mail.demon.net with esmtp (Exim 4.69)
+	id 1RJTnb-0007NC-hn; Thu, 27 Oct 2011 17:31:28 +0000
 User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <201110260236.59509.jnareb@gmail.com>
+In-Reply-To: <20111022191509.GB1785@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184302>
 
-Jakub Narebski wrote:
-> Drew Northup napisa=B3:
->> On Tue, 2011-10-25 at 18:15 +0100, Ramsay Jones wrote:
->>> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
->>> ---
->>>  gitweb/Makefile |    4 +++-
->>>  1 files changed, 3 insertions(+), 1 deletions(-)
->>>
->>> diff --git a/gitweb/Makefile b/gitweb/Makefile
->>> index 1c85b5f..4191c6b 100644
->>> --- a/gitweb/Makefile
->>> +++ b/gitweb/Makefile
->>> @@ -185,7 +185,9 @@ install: all
->>>  ### Cleaning rules
->>> =20
->>>  clean:
->>> -	$(RM) gitweb.cgi static/gitweb.min.js static/gitweb.min.css GITWE=
-B-BUILD-OPTIONS
->>> +	$(RM) gitweb.cgi static/gitweb.js \
->>> +		static/gitweb.min.js static/gitweb.min.css \
->>> +		GITWEB-BUILD-OPTIONS
->>> =20
->>>  .PHONY: all clean install test test-installed .FORCE-GIT-VERSION-F=
-ILE FORCE
->>> =20
->> Forgive me for sounding a bit numb, but what does this fix? I don't =
-see
->> it in the commit message.
->=20
-> gitweb.js is nowadays a generated file.  Though that bit should be
-> in commit message...
+Jeff King wrote:
+> On Sat, Oct 22, 2011 at 06:23:25PM +0100, Ramsay Jones wrote:
+> 
+>> Assuming that a modified http-auth-keyring series will make a return to pu
+>> sometime, could you please squash these patches into (the patch corresponding to)
+>> commit 2d6874d (credentials: add "cache" helper, 18-07-2011). Thanks!
+> 
+> I'm planning a reroll, so I'll squash them (or something similar) in.
 
-Yep, will do ...
+Thanks!
+
+> It's definitely coming back, so if you feel like working on it, please
+> do. Also note that if it would be easier to have an alternate
+> abstraction for inter-process communication on windows, I'm open to
+> doing that in the cache daemon.
+
+My initial reaction was to use a "named pipe" (aka fifo), but on reflection,
+I don't think it would be any easier; the unix socket emulation should not be too
+difficult (famous last words!).  :-D
 
 ATB,
 Ramsay Jones
