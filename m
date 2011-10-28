@@ -1,158 +1,95 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 00/28] Store references hierarchically in cache
-Date: Fri, 28 Oct 2011 18:37:13 +0530
-Message-ID: <CALkWK0=Hsq_yg1Vyr-3_jf9n=WcB_XNYRQa0SEhSWD5VxKBXQg@mail.gmail.com>
-References: <1319804921-17545-1-git-send-email-mhagger@alum.mit.edu>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Q: "git diff" using tag names
+Date: Fri, 28 Oct 2011 06:21:51 -0700 (PDT)
+Message-ID: <m3aa8l5k1y.fsf@localhost.localdomain>
+References: <4EAABC15020000A100007D9D@gwsmtp1.uni-regensburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-4
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Drew Northup <drew.northup@maine.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johan Herland <johan@herland.net>,
-	Julian Phillips <julian@quantumfyre.co.uk>
-To: mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Fri Oct 28 15:07:41 2011
+Cc: <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>
+To: "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
+X-From: git-owner@vger.kernel.org Fri Oct 28 15:22:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJm9t-0005mR-6a
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 15:07:41 +0200
+	id 1RJmNj-0004Ew-3o
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 15:21:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932273Ab1J1NHh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Oct 2011 09:07:37 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:48001 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751706Ab1J1NHf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Oct 2011 09:07:35 -0400
-Received: by eye27 with SMTP id 27so3494487eye.19
-        for <git@vger.kernel.org>; Fri, 28 Oct 2011 06:07:34 -0700 (PDT)
+	id S1755777Ab1J1NVy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Oct 2011 09:21:54 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:64825 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755369Ab1J1NVx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Oct 2011 09:21:53 -0400
+Received: by faan17 with SMTP id n17so3606460faa.19
+        for <git@vger.kernel.org>; Fri, 28 Oct 2011 06:21:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=iugUGTVCRkhrDPxyVVB5LoRqXSwRvQwlIFPzmLei5ds=;
-        b=jwIDnxgQOosrFKLffL0xVJ3CGfDx8k1TruhkaJITZwc5tEr5Ogb7+wcjGNRGTHm8z9
-         PZDUCY+hVICDc7Ho///vBZnSfvXIV4groJaq/083CADeS8nXbuNnOLeQTa+sCoFUL7sn
-         o7r/FKbaVUnt9DlS6+aEW92XfS5JpXCNHXW9M=
-Received: by 10.216.160.72 with SMTP id t50mr950824wek.10.1319807254194; Fri,
- 28 Oct 2011 06:07:34 -0700 (PDT)
-Received: by 10.216.52.197 with HTTP; Fri, 28 Oct 2011 06:07:13 -0700 (PDT)
-In-Reply-To: <1319804921-17545-1-git-send-email-mhagger@alum.mit.edu>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=0JzUDFa9cxwfHWTgQKEoB8GDkMKvvFzmGGVeCknuvAM=;
+        b=VIH7CilFBJUzjegWi+QOWoKA8gYhuFU2IIZJUM73iqcb8s5IzlwRZy0bnsuTnt4LZi
+         H/UgoV70GJwWsjcrqEBq0CN9mmwfMoffGTSeSorUNHXvpX2ojXIY9ZRXhhu4ln2XHyDT
+         bRoxIHVouMmb6KpRDGoTnFjs6DzDNVAXNtr1g=
+Received: by 10.223.15.10 with SMTP id i10mr6101079faa.17.1319808112466;
+        Fri, 28 Oct 2011 06:21:52 -0700 (PDT)
+Received: from localhost.localdomain (abvy192.neoplus.adsl.tpnet.pl. [83.8.222.192])
+        by mx.google.com with ESMTPS id y17sm17430118faf.1.2011.10.28.06.21.50
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 28 Oct 2011 06:21:51 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p9SDLI07032122;
+	Fri, 28 Oct 2011 15:21:28 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p9SDKvZ0032118;
+	Fri, 28 Oct 2011 15:20:57 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <4EAABC15020000A100007D9D@gwsmtp1.uni-regensburg.de>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184406>
 
-Hi Michael,
+"Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de> writes:
 
-Michael Haggerty writes:
-> Therefore, this patch series changes the data structure used to store
-> the reference cache from a single array of pointers-to-struct into a
-> tree-like structure in which each subdirectory of the reference
-> namespace is stored as an array of pointers-to-entry and entries can
-> be either references or subdirectories containing more references.
+> When using a somewhat older git (of SLES11 SP1 SDK),
 
-Very nice! I like the idea. Can't wait to start reading the series.
+Nb. you can check version of git with "git --version".
 
-> =C2=A0* refs/replace is almost *always* needed even though it often
-> =C2=A0 =C2=A0doesn't even exist. =C2=A0Thus the presence of many loos=
-e references
-> =C2=A0 =C2=A0slows down *many* git commands for no reason whatsoever.
-
-Was this one of your primary inspirations for writing this series?
-
-> =C2=A0* When a new reference is created, is_refname_available() is ca=
-lled
-> =C2=A0 =C2=A0to see whether there is another another reference whose =
-name
-> =C2=A0 =C2=A0conflicts with the new one. =C2=A0Currently this loads a=
-nd iterates
-> =C2=A0 =C2=A0through *all* references. =C2=A0But there are only a few=
- refnames that
-> =C2=A0 =C2=A0can possibly conflict; for example, given the refname
-> =C2=A0 =C2=A0"refs/heads/foo/bar", the only possible conflicts are wi=
-th
-> =C2=A0 =C2=A0"refs/heads/foo" and "refs/heads/foo/bar/*". =C2=A0There=
-fore it is
-> =C2=A0 =C2=A0silly to load and iterate through the whole refname hier=
-archy.
-
-Hm, the original design does sound quite sub-optimal.  I suppose it
-was written when Git didn't have so many refs in so many
-subdirectories.
-
-> =C2=A0* "git for-each-ref" is capable of searching a subtree of the
-> =C2=A0 =C2=A0references. =C2=A0But currently this causes all referenc=
-es to be
-> =C2=A0 =C2=A0loaded.
-
-Ah.  I was using git for-each-ref to write a filter-branch like thing
-earlier, and I was wondering why it was so slow.
-
-> * the time to create a new branch goes from 180 ms to less than 10 ms
-> =C2=A0(my test resolution only includes two decimal places) and the t=
-ime
-> =C2=A0to checkout a new branch does the same.
-
-I'm interested in seeing how the callgraph changed.  Assuming you used
-Valgrind to profile it, could you publish the outputs?
-
-> * the time for a "git filter-branch" of all commits (which used to
-> =C2=A0scale like N^2) goes from 4 hours to 13 minutes. =C2=A0(Since
-> =C2=A0filter-branch necessarily *creates* lots of loose references, t=
-he
-> =C2=A0savings are also there if the references are originally packed.=
-)
-
-This is seriously awesome.
-
-> The efficiency gains are such that some operations are now faster wit=
-h
-> loose references than with packed references; however, some operation=
-s
-> with packed references slow down a bit.
-
-Curiously, why do operations with packed references slow down?  (I'll
-probably find out in a few minutes after reading the series, but I'm
-asking anyway because it it's very non-obvious to me now)
-
-> These changes do not increase the amount of space per reference neede=
-d
-> for the reference cache, but they do add one similarly-sized entry fo=
-r
-> each subdirectory (for each of loose and packed). =C2=A0I don't think=
- that
-> the space increase should be significant in any reasonable situation.
+>                                                      I could not
+> find a way to "git diff" between two tag names; I can only diff
+> between two commit numbers. I can display a changeset using "git
+> show", but that's not what I wanted.
 >
-> After these changes, there is a benefit to sharding the reference
-> namespace, especially for loose references.
+> Is it possible to get the diff I want using older versions, and is
+> such a feature implemented in the current version? If so, since
+> when?
 
-Hm, I wonder what this means for Git hosting services.
+=46rom the very beginning in Git you can use tag name where you need
+commit identifier; Git would use commit that tag points to (will
+dereference or peel a tag).
 
-> Patches 11-24 change most of the internal functions to work with
-> "struct ref_entry *" (namely the kind of ref_entry that holds a
-> directory of references) instead of "struct ref_dir *". =C2=A0The rea=
-son
-> for this change it to allow these functions access to the "flag" and
-> "name" fields that are stored in ref_entry and thereby avoid having t=
-o
-> store redundant information in "struct ref_dir" (which would increase
-> the size of *every* ref_entry because of its presence in the union).
+That is not possible in some [censored] version control systems; I am
+looking at you, Subversion!
 
-Hm, I was wondering why the series was looking so intimidating.  Is it
-not possible to squash all (or atleast some) of these together?
 
-> From: Michael Haggerty <mhagger@alum.mit.edu>
+So if you can do
 
-Nit: Can't you configure your email client to put this in the "From: "
-header of your emails?
+  $ git show v0.9
+  $ git show v1.0
 
-Thanks for the interesting read.
+you can also do
 
--- Ram
+  $ git diff v0.9 v1.0
+
+and
+
+  $ git log v0.9..v1.0
+
+--=20
+Jakub Nar=EAbski
