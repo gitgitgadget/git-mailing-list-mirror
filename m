@@ -1,7 +1,7 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH v3 14/14] resolve_gitlink_ref_recursive(): change to work with struct ref_cache
-Date: Fri, 28 Oct 2011 13:14:41 +0200
-Message-ID: <1319800481-15138-15-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v3 11/14] get_ref_dir(): change signature
+Date: Fri, 28 Oct 2011 13:14:38 +0200
+Message-ID: <1319800481-15138-12-git-send-email-mhagger@alum.mit.edu>
 References: <1319800481-15138-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Drew Northup <drew.northup@maine.edu>,
@@ -11,113 +11,97 @@ Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Julian Phillips <julian@quantumfyre.co.uk>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 28 13:21:39 2011
+X-From: git-owner@vger.kernel.org Fri Oct 28 13:21:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJkVF-0007n0-W6
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 13:21:38 +0200
+	id 1RJkVY-0007xy-MY
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 13:21:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932325Ab1J1LV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Oct 2011 07:21:27 -0400
-Received: from mail.berlin.jpk.com ([212.222.128.130]:54868 "EHLO
+	id S932324Ab1J1LUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Oct 2011 07:20:51 -0400
+Received: from mail.berlin.jpk.com ([212.222.128.130]:54852 "EHLO
 	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932368Ab1J1LVI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Oct 2011 07:21:08 -0400
+	with ESMTP id S932310Ab1J1LUt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Oct 2011 07:20:49 -0400
 Received: from michael.berlin.jpk.com ([192.168.100.152])
 	by mail.berlin.jpk.com with esmtp (Exim 4.50)
-	id 1RJkIZ-00076m-C7; Fri, 28 Oct 2011 13:08:31 +0200
+	id 1RJkIZ-00076m-AJ; Fri, 28 Oct 2011 13:08:31 +0200
 X-Mailer: git-send-email 1.7.7
 In-Reply-To: <1319800481-15138-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184358>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
-resolve_gitlink_ref() and resolve_gitlink_ref_recursive(), together,
-basically duplicated the code in git_path_submodule().  So use that
-function instead.
+Change get_ref_dir() to take a (struct ref_cache *) in place of the
+submodule name.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c |   34 ++++++++++------------------------
- 1 files changed, 10 insertions(+), 24 deletions(-)
+ refs.c |   18 +++++++++---------
+ 1 files changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 1867ff0..1c6de61 100644
+index 4131d53..7d58ef9 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -433,17 +433,19 @@ static int resolve_gitlink_packed_ref(struct ref_cache *refs,
+@@ -299,14 +299,14 @@ static struct ref_array *get_packed_refs(struct ref_cache *refs)
+ 	return &refs->packed;
  }
  
- static int resolve_gitlink_ref_recursive(struct ref_cache *refs,
--					 char *name, int pathlen,
- 					 const char *refname, unsigned char *sha1,
- 					 int recursion)
+-static void get_ref_dir(const char *submodule, const char *base,
++static void get_ref_dir(struct ref_cache *refs, const char *base,
+ 			struct ref_array *array)
  {
--	int fd, len = strlen(refname);
-+	int fd, len;
- 	char buffer[128], *p;
-+	char *path;
+ 	DIR *dir;
+ 	const char *path;
  
--	if (recursion > MAXDEPTH || len > MAXREFLEN)
-+	if (recursion > MAXDEPTH || strlen(refname) > MAXREFLEN)
- 		return -1;
--	memcpy(name + pathlen, refname, len+1);
--	fd = open(name, O_RDONLY);
-+	path = *refs->name
-+		? git_path_submodule(refs->name, "%s", refname)
-+		: git_path("%s", refname);
-+	fd = open(path, O_RDONLY);
- 	if (fd < 0)
- 		return resolve_gitlink_packed_ref(refs, refname, sha1);
+-	if (*submodule)
+-		path = git_path_submodule(submodule, "%s", base);
++	if (*refs->name)
++		path = git_path_submodule(refs->name, "%s", base);
+ 	else
+ 		path = git_path("%s", base);
  
-@@ -466,15 +468,14 @@ static int resolve_gitlink_ref_recursive(struct ref_cache *refs,
- 	while (isspace(*p))
- 		p++;
- 
--	return resolve_gitlink_ref_recursive(refs, name, pathlen, p, sha1, recursion+1);
-+	return resolve_gitlink_ref_recursive(refs, p, sha1, recursion+1);
- }
- 
- int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sha1)
+@@ -337,19 +337,19 @@ static void get_ref_dir(const char *submodule, const char *base,
+ 			if (has_extension(de->d_name, ".lock"))
+ 				continue;
+ 			memcpy(ref + baselen, de->d_name, namelen+1);
+-			refdir = submodule
+-				? git_path_submodule(submodule, "%s", ref)
++			refdir = *refs->name
++				? git_path_submodule(refs->name, "%s", ref)
+ 				: git_path("%s", ref);
+ 			if (stat(refdir, &st) < 0)
+ 				continue;
+ 			if (S_ISDIR(st.st_mode)) {
+-				get_ref_dir(submodule, ref, array);
++				get_ref_dir(refs, ref, array);
+ 				continue;
+ 			}
+-			if (submodule) {
++			if (*refs->name) {
+ 				hashclr(sha1);
+ 				flag = 0;
+-				if (resolve_gitlink_ref(submodule, ref, sha1) < 0) {
++				if (resolve_gitlink_ref(refs->name, ref, sha1) < 0) {
+ 					hashclr(sha1);
+ 					flag |= REF_ISBROKEN;
+ 				}
+@@ -402,7 +402,7 @@ void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
+ static struct ref_array *get_loose_refs(struct ref_cache *refs)
  {
- 	int len = strlen(path), retval;
--	char *submodule, *gitdir;
-+	char *submodule;
- 	struct ref_cache *refs;
--	const char *tmp;
- 
- 	while (len && path[len-1] == '/')
- 		len--;
-@@ -484,22 +485,7 @@ int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sh
- 	refs = get_ref_cache(submodule);
- 	free(submodule);
- 
--	gitdir = xmalloc(len + MAXREFLEN + 8);
--	memcpy(gitdir, path, len);
--	memcpy(gitdir + len, "/.git", 6);
--	len += 5;
--
--	tmp = read_gitfile(gitdir);
--	if (tmp) {
--		free(gitdir);
--		len = strlen(tmp);
--		gitdir = xmalloc(len + MAXREFLEN + 3);
--		memcpy(gitdir, tmp, len);
--	}
--	gitdir[len] = '/';
--	gitdir[++len] = '\0';
--	retval = resolve_gitlink_ref_recursive(refs, gitdir, len, refname, sha1, 0);
--	free(gitdir);
-+	retval = resolve_gitlink_ref_recursive(refs, refname, sha1, 0);
- 	return retval;
- }
- 
+ 	if (!refs->did_loose) {
+-		get_ref_dir(refs->name, "refs", &refs->loose);
++		get_ref_dir(refs, "refs", &refs->loose);
+ 		sort_ref_array(&refs->loose);
+ 		refs->did_loose = 1;
+ 	}
 -- 
 1.7.7
