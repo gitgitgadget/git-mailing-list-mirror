@@ -1,92 +1,56 @@
-From: Gelonida N <gelonida@gmail.com>
-Subject: Re: git alias and --help
-Date: Fri, 28 Oct 2011 22:23:58 +0200
-Message-ID: <j8f30u$ghe$2@dough.gmane.org>
-References: <j8clg9$ldh$1@dough.gmane.org>	<7vfwiexe6m.fsf@alter.siamese.dyndns.org>	<7v8vo6xd4u.fsf@alter.siamese.dyndns.org>	<buoty6t9937.fsf@dhlpc061.dev.necel.com> <m362j95jv3.fsf@localhost.localdomain>
+From: Jeff King <peff@peff.net>
+Subject: Re: imap-send badly handles commit bodies beginning with "From <"
+Date: Fri, 28 Oct 2011 13:32:57 -0700
+Message-ID: <20111028203256.GA15082@sigill.intra.peff.net>
+References: <20111028180044.GA3966@foghorn.codeweavers.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-4
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 28 22:25:17 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Andrew Eikum <aeikum@codeweavers.com>
+X-From: git-owner@vger.kernel.org Fri Oct 28 22:33:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJszM-00086G-Ue
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 22:25:17 +0200
+	id 1RJt6w-0002u7-6e
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 22:33:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933259Ab1J1UZK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Oct 2011 16:25:10 -0400
-Received: from lo.gmane.org ([80.91.229.12]:50327 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752993Ab1J1UZJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Oct 2011 16:25:09 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RJszE-00083x-Dv
-	for git@vger.kernel.org; Fri, 28 Oct 2011 22:25:08 +0200
-Received: from unicorn.dungeon.de ([81.56.82.123])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 28 Oct 2011 22:25:08 +0200
-Received: from gelonida by unicorn.dungeon.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 28 Oct 2011 22:25:08 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: unicorn.dungeon.de
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 ""
-In-Reply-To: <m362j95jv3.fsf@localhost.localdomain>
+	id S1755343Ab1J1UdA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Oct 2011 16:33:00 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57303
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754829Ab1J1UdA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Oct 2011 16:33:00 -0400
+Received: (qmail 16002 invoked by uid 107); 28 Oct 2011 20:38:47 -0000
+Received: from c-67-169-41-183.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (67.169.41.183)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 28 Oct 2011 16:38:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Oct 2011 13:32:57 -0700
+Content-Disposition: inline
+In-Reply-To: <20111028180044.GA3966@foghorn.codeweavers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184431>
 
-On 10/28/2011 03:26 PM, Jakub Narebski wrote:
-> Miles Bader <miles@gnu.org> writes:
->> Junio C Hamano <gitster@pobox.com> writes:
-> 
->>>>> git branch --help
->>>>
->>>> How about "git help branch"?
->>>
->>> The reason why we do not do what you seem to be suggesting is because
->>> giving the same behaviour to "git b --help" as "git branch --help" is
->>> wrong.
->>
->> I agree with Gelonida's followup:  although what you say makes sense,
->> it's still pretty annoying behavior for the very common case of a
->> simple renaming alias...
->>
->> E.g., I have "co" aliased to "checkout", and so my fingers are very
->> very inclined to say "co" when I mean checkout... including when
->> asking for help.  I actually end up typing "git co --help", grumbling,
->> and retyping with the full command name, quite reguarly.
->>
->> What I've often wished is that git's help system would output
->> something like:
->>
->>    $ git help co
->>    `git co' is aliased to `checkout'
->>
->>    Here's the help entry for `checkout':
->>
->>    GIT-CHECKOUT(1)                   Git Manual                   GIT-CHECKOUT(1)
-> 
-> Wouldn't it be more useful to say something like this:
-> 
->   $ git co --help
->   `git co' is aliased to `checkout'
->  
->   You can see help entry for `checkout' with "git checkout --help"
-> 
-> Then help is only copy'n'paste away.  
-> 
-> (This helping text probably should be controlled by some advice.*
-> config variable).
+On Fri, Oct 28, 2011 at 01:00:44PM -0500, Andrew Eikum wrote:
 
-This is definitely an option and something which I suggested as one
-option myself (however my example had a typo and was perhaps therefore
-not understandable)
+> On the server side, it was split into two mails on either side of that
+> commit message's From line with neither mail actually containing the
+> From line. To fix it, I just changed it to "Copied from <url>:" :-P
+> 
+> Ain't mbox grand?
+
+Mbox does have this problem, but I think in this case it is a
+particularly crappy implementation of mbox in imap-send. Look at
+imap-send.c:split_msg; it just looks for "From ".
+
+It should at least check for something that looks like a timestamp, like
+git-mailsplit does. Maybe mailsplit's is_from_line should be factored
+out so that it can be reused in imap-send.
+
+Want to work on a patch?
+
+-Peff
