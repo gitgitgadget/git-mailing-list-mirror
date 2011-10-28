@@ -1,8 +1,7 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH v2 09/12] repack_without_ref(): reimplement using do_for_each_ref_in_array()
-Date: Fri, 28 Oct 2011 13:28:01 +0200
-Message-ID: <1319801284-15625-10-git-send-email-mhagger@alum.mit.edu>
-References: <1319801284-15625-1-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 00/12] Use refs API more consistently
+Date: Fri, 28 Oct 2011 13:27:52 +0200
+Message-ID: <1319801284-15625-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Drew Northup <drew.northup@maine.edu>,
 	Jakub Narebski <jnareb@gmail.com>,
@@ -17,105 +16,75 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJkc6-0002WA-CY
+	id 1RJkc5-0002WA-Sm
 	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 13:28:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932398Ab1J1L2c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Oct 2011 07:28:32 -0400
-Received: from mail.berlin.jpk.com ([212.222.128.130]:54961 "EHLO
+	id S932262Ab1J1L2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Oct 2011 07:28:17 -0400
+Received: from mail.berlin.jpk.com ([212.222.128.130]:54965 "EHLO
 	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755435Ab1J1L2O (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1755443Ab1J1L2O (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 28 Oct 2011 07:28:14 -0400
 Received: from michael.berlin.jpk.com ([192.168.100.152])
 	by mail.berlin.jpk.com with esmtp (Exim 4.50)
-	id 1RJkVI-0007Cx-La; Fri, 28 Oct 2011 13:21:40 +0200
+	id 1RJkVI-0007Cx-Cr; Fri, 28 Oct 2011 13:21:40 +0200
 X-Mailer: git-send-email 1.7.7
-In-Reply-To: <1319801284-15625-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184368>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
+This is a re-roll of the patch series on top of v3 of "Tidying up
+references code", which in turn applies to gitster/master.
 
-It costs a bit of boilerplate, but it means that the function can be
-ignorant of how cached refs are stored.
+This series conflicts with the "Checking full vs. partial refnames"
+series but not in a fundamental way.  Unless there is an important
+reason to merge the latter to master before this patch series, I
+suggest that I reroll "Checking full vs. partial refnames" on top of
+these ref-api changes after they hit master.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs.c |   46 ++++++++++++++++++++++++++++------------------
- 1 files changed, 28 insertions(+), 18 deletions(-)
+This patch series primarily has to do with using the refs API more
+consistently within refs.c itself.  We want to minimize the surface
+area for accessing the ref_cache data structure so that when it is
+changed into a tree (we're on the verge of that change now, I
+promise!) we don't have to change callers more than necessary.  There
+is also a bit of an eat-your-own-dogfood thing going on here; if
+for_each_ref() and its friends are good enough for "outsiders", they
+should be good enough for most internal use.
 
-diff --git a/refs.c b/refs.c
-index ad7538a..d56f265 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1305,36 +1305,46 @@ struct ref_lock *lock_any_ref_for_update(const char *refname,
- 	return lock_ref_sha1_basic(refname, old_sha1, flags, NULL);
- }
- 
-+struct repack_without_ref_sb {
-+	const char *refname;
-+	int fd;
-+};
-+
-+static int repack_without_ref_fn(const char *refname, const unsigned char *sha1,
-+				 int flags, void *cb_data)
-+{
-+	struct repack_without_ref_sb *data = cb_data;
-+	char line[PATH_MAX + 100];
-+	int len;
-+
-+	if (!strcmp(data->refname, refname))
-+		return 0;
-+	len = snprintf(line, sizeof(line), "%s %s\n",
-+		       sha1_to_hex(sha1), refname);
-+	/* this should not happen but just being defensive */
-+	if (len > sizeof(line))
-+		die("too long a refname '%s'", refname);
-+	write_or_die(data->fd, line, len);
-+	return 0;
-+}
-+
- static struct lock_file packlock;
- 
- static int repack_without_ref(const char *refname)
- {
-+	struct repack_without_ref_sb data;
- 	struct ref_array *packed;
--	int fd, i;
- 
- 	packed = get_packed_refs(get_ref_cache(NULL));
- 	if (search_ref_array(packed, refname) == NULL)
- 		return 0;
--	fd = hold_lock_file_for_update(&packlock, git_path("packed-refs"), 0);
--	if (fd < 0) {
-+	data.refname = refname;
-+	data.fd = hold_lock_file_for_update(&packlock, git_path("packed-refs"), 0);
-+	if (data.fd < 0) {
- 		unable_to_lock_error(git_path("packed-refs"), errno);
- 		return error("cannot delete '%s' from packed refs", refname);
- 	}
--
--	for (i = 0; i < packed->nr; i++) {
--		char line[PATH_MAX + 100];
--		int len;
--		struct ref_entry *ref = packed->refs[i];
--
--		if (!strcmp(refname, ref->name))
--			continue;
--		len = snprintf(line, sizeof(line), "%s %s\n",
--			       sha1_to_hex(ref->sha1), ref->name);
--		/* this should not happen but just being defensive */
--		if (len > sizeof(line))
--			die("too long a refname '%s'", ref->name);
--		write_or_die(fd, line, len);
--	}
-+	do_for_each_ref_in_array(packed, 0, "", repack_without_ref_fn, 0, 0, &data);
- 	return commit_lock_file(&packlock);
- }
- 
+The first two patches are trivial preparation cleanups.
+
+The third verifies that refnames read from packed-ref files are
+properly formatted.  When the REFNAME_FULL changes become available,
+this check can be tightened up.
+
+The do_for_each_ref_in_{array,arrays}() functions provide an
+iterator-like interface to iterating over a single ref_array and
+iterating over two ref_arrays in parallel.  These are useful
+abstractions in and of themselves (the former is used to reimplement
+repack_without_ref() and is_refname_available() in patches 9 and 12
+respectively).  And they will be even more useful when references are
+stored hierarchically.
+
+Michael Haggerty (12):
+  Rename another local variable name -> refname
+  repack_without_ref(): remove temporary
+  parse_ref_line(): add a check that the refname is properly formatted
+  create_ref_entry(): extract function from add_ref()
+  add_ref(): take a (struct ref_entry *) parameter
+  do_for_each_ref(): correctly terminate while processesing extra_refs
+  do_for_each_ref_in_array(): new function
+  do_for_each_ref_in_arrays(): new function
+  repack_without_ref(): reimplement using do_for_each_ref_in_array()
+  names_conflict(): new function, extracted from is_refname_available()
+  names_conflict(): simplify implementation
+  is_refname_available(): reimplement using do_for_each_ref_in_array()
+
+ refs.c |  255 ++++++++++++++++++++++++++++++++++++++++------------------------
+ 1 files changed, 160 insertions(+), 95 deletions(-)
+
 -- 
 1.7.7
