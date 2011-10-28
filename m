@@ -1,7 +1,7 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH v3 01/14] cache.h: add comments for git_path() and git_path_submodule()
-Date: Fri, 28 Oct 2011 13:14:28 +0200
-Message-ID: <1319800481-15138-2-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v3 05/14] clear_ref_array(): rename from free_ref_array()
+Date: Fri, 28 Oct 2011 13:14:32 +0200
+Message-ID: <1319800481-15138-6-git-send-email-mhagger@alum.mit.edu>
 References: <1319800481-15138-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Drew Northup <drew.northup@maine.edu>,
@@ -11,69 +11,80 @@ Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Julian Phillips <julian@quantumfyre.co.uk>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 28 13:15:39 2011
+X-From: git-owner@vger.kernel.org Fri Oct 28 13:15:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJkPQ-00050t-8s
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 13:15:36 +0200
+	id 1RJkPY-00055g-CB
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 13:15:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755407Ab1J1LP3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755400Ab1J1LP3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Fri, 28 Oct 2011 07:15:29 -0400
-Received: from mail.berlin.jpk.com ([212.222.128.130]:54705 "EHLO
+Received: from mail.berlin.jpk.com ([212.222.128.130]:54694 "EHLO
 	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755311Ab1J1LPH (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1755315Ab1J1LPH (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 28 Oct 2011 07:15:07 -0400
 Received: from michael.berlin.jpk.com ([192.168.100.152])
 	by mail.berlin.jpk.com with esmtp (Exim 4.50)
-	id 1RJkIY-00076m-UW; Fri, 28 Oct 2011 13:08:30 +0200
+	id 1RJkIZ-00076m-2a; Fri, 28 Oct 2011 13:08:31 +0200
 X-Mailer: git-send-email 1.7.7
 In-Reply-To: <1319800481-15138-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184352>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
+Rename the function since it doesn't actually free the array object
+that is passed to it.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- cache.h |   18 ++++++++++++++++++
- 1 files changed, 18 insertions(+), 0 deletions(-)
+ refs.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 2e6ad36..5e807b9 100644
---- a/cache.h
-+++ b/cache.h
-@@ -662,7 +662,25 @@ extern char *git_pathdup(const char *fmt, ...)
+diff --git a/refs.c b/refs.c
+index 564070c..c9e14fd 100644
+--- a/refs.c
++++ b/refs.c
+@@ -148,7 +148,7 @@ static struct ref_entry *current_ref;
  
- /* Return a statically allocated filename matching the sha1 signature */
- extern char *mkpath(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
-+
-+/*
-+ * Return the path of a file within get_git_dir().  The arguments
-+ * should be printf-like arguments that produce the filename relative
-+ * to get_git_dir().  Return the resulting path, or "/bad-path/" if
-+ * there is an error.  The return value is a pointer into a temporary
-+ * buffer that will be overwritten without notice.
-+ */
- extern char *git_path(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
-+
-+/*
-+ * Return the path of a file within the git_dir of the submodule
-+ * located at path.  The other arguments should be printf-like
-+ * arguments that produce the filename relative to "<path>/.git".  If
-+ * "<path>/.git" is a gitlink file, follow it to find the actual
-+ * submodule git_dir.  Return the resulting path, or "/bad-path/" if
-+ * there is an error.  The return value is a pointer into a temporary
-+ * buffer that will be overwritten without notice.
-+ */
- extern char *git_path_submodule(const char *path, const char *fmt, ...)
- 	__attribute__((format (printf, 2, 3)));
+ static struct ref_array extra_refs;
  
+-static void free_ref_array(struct ref_array *array)
++static void clear_ref_array(struct ref_array *array)
+ {
+ 	int i;
+ 	for (i = 0; i < array->nr; i++)
+@@ -161,14 +161,14 @@ static void free_ref_array(struct ref_array *array)
+ static void clear_packed_ref_cache(struct ref_cache *refs)
+ {
+ 	if (refs->did_packed)
+-		free_ref_array(&refs->packed);
++		clear_ref_array(&refs->packed);
+ 	refs->did_packed = 0;
+ }
+ 
+ static void clear_loose_ref_cache(struct ref_cache *refs)
+ {
+ 	if (refs->did_loose)
+-		free_ref_array(&refs->loose);
++		clear_ref_array(&refs->loose);
+ 	refs->did_loose = 0;
+ }
+ 
+@@ -255,7 +255,7 @@ void add_extra_ref(const char *refname, const unsigned char *sha1, int flag)
+ 
+ void clear_extra_refs(void)
+ {
+-	free_ref_array(&extra_refs);
++	clear_ref_array(&extra_refs);
+ }
+ 
+ static struct ref_array *get_packed_refs(const char *submodule)
 -- 
 1.7.7
