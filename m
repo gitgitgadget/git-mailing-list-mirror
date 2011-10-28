@@ -1,7 +1,8 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH v2 00/12] Use refs API more consistently
-Date: Fri, 28 Oct 2011 13:27:52 +0200
-Message-ID: <1319801284-15625-1-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 05/12] add_ref(): take a (struct ref_entry *) parameter
+Date: Fri, 28 Oct 2011 13:27:57 +0200
+Message-ID: <1319801284-15625-6-git-send-email-mhagger@alum.mit.edu>
+References: <1319801284-15625-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Drew Northup <drew.northup@maine.edu>,
 	Jakub Narebski <jnareb@gmail.com>,
@@ -10,81 +11,89 @@ Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Julian Phillips <julian@quantumfyre.co.uk>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 28 13:28:42 2011
+X-From: git-owner@vger.kernel.org Fri Oct 28 13:28:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJkc5-0002WA-Sm
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 13:28:42 +0200
+	id 1RJkc6-0002WA-Sc
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 13:28:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932262Ab1J1L2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Oct 2011 07:28:17 -0400
-Received: from mail.berlin.jpk.com ([212.222.128.130]:54965 "EHLO
+	id S932425Ab1J1L2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Oct 2011 07:28:33 -0400
+Received: from mail.berlin.jpk.com ([212.222.128.130]:54968 "EHLO
 	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755443Ab1J1L2O (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1755434Ab1J1L2O (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 28 Oct 2011 07:28:14 -0400
 Received: from michael.berlin.jpk.com ([192.168.100.152])
 	by mail.berlin.jpk.com with esmtp (Exim 4.50)
-	id 1RJkVI-0007Cx-Cr; Fri, 28 Oct 2011 13:21:40 +0200
+	id 1RJkVI-0007Cx-Hy; Fri, 28 Oct 2011 13:21:40 +0200
 X-Mailer: git-send-email 1.7.7
+In-Reply-To: <1319801284-15625-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184369>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
-This is a re-roll of the patch series on top of v3 of "Tidying up
-references code", which in turn applies to gitster/master.
+Take a pointer to the ref_entry to add to the array, rather than
+creating the ref_entry within the function.  This opens the way to
+having multiple kinds of ref_entries.
 
-This series conflicts with the "Checking full vs. partial refnames"
-series but not in a fundamental way.  Unless there is an important
-reason to merge the latter to master before this patch series, I
-suggest that I reroll "Checking full vs. partial refnames" on top of
-these ref-api changes after they hit master.
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ refs.c |   14 +++++---------
+ 1 files changed, 5 insertions(+), 9 deletions(-)
 
-This patch series primarily has to do with using the refs API more
-consistently within refs.c itself.  We want to minimize the surface
-area for accessing the ref_cache data structure so that when it is
-changed into a tree (we're on the verge of that change now, I
-promise!) we don't have to change callers more than necessary.  There
-is also a bit of an eat-your-own-dogfood thing going on here; if
-for_each_ref() and its friends are good enough for "outsiders", they
-should be good enough for most internal use.
-
-The first two patches are trivial preparation cleanups.
-
-The third verifies that refnames read from packed-ref files are
-properly formatted.  When the REFNAME_FULL changes become available,
-this check can be tightened up.
-
-The do_for_each_ref_in_{array,arrays}() functions provide an
-iterator-like interface to iterating over a single ref_array and
-iterating over two ref_arrays in parallel.  These are useful
-abstractions in and of themselves (the former is used to reimplement
-repack_without_ref() and is_refname_available() in patches 9 and 12
-respectively).  And they will be even more useful when references are
-stored hierarchically.
-
-Michael Haggerty (12):
-  Rename another local variable name -> refname
-  repack_without_ref(): remove temporary
-  parse_ref_line(): add a check that the refname is properly formatted
-  create_ref_entry(): extract function from add_ref()
-  add_ref(): take a (struct ref_entry *) parameter
-  do_for_each_ref(): correctly terminate while processesing extra_refs
-  do_for_each_ref_in_array(): new function
-  do_for_each_ref_in_arrays(): new function
-  repack_without_ref(): reimplement using do_for_each_ref_in_array()
-  names_conflict(): new function, extracted from is_refname_available()
-  names_conflict(): simplify implementation
-  is_refname_available(): reimplement using do_for_each_ref_in_array()
-
- refs.c |  255 ++++++++++++++++++++++++++++++++++++++++------------------------
- 1 files changed, 160 insertions(+), 95 deletions(-)
-
+diff --git a/refs.c b/refs.c
+index 163ce91..c76d8b5 100644
+--- a/refs.c
++++ b/refs.c
+@@ -74,13 +74,8 @@ static struct ref_entry *create_ref_entry(const char *refname,
+ }
+ 
+ /* Add a ref_entry to the end of the ref_array (unsorted). */
+-static void add_ref(const char *refname, const unsigned char *sha1,
+-		    int flag, struct ref_array *refs,
+-		    struct ref_entry **new_ref)
++static void add_ref(struct ref_array *refs, struct ref_entry *ref)
+ {
+-	struct ref_entry *ref = create_ref_entry(refname, sha1, flag);
+-	if (new_ref)
+-		*new_ref = ref;
+ 	ALLOC_GROW(refs->refs, refs->nr + 1, refs->alloc);
+ 	refs->refs[refs->nr++] = ref;
+ }
+@@ -265,7 +260,8 @@ static void read_packed_refs(FILE *f, struct ref_array *array)
+ 
+ 		refname = parse_ref_line(refline, sha1);
+ 		if (refname) {
+-			add_ref(refname, sha1, flag, array, &last);
++			last = create_ref_entry(refname, sha1, flag);
++			add_ref(array, last);
+ 			continue;
+ 		}
+ 		if (last &&
+@@ -280,7 +276,7 @@ static void read_packed_refs(FILE *f, struct ref_array *array)
+ 
+ void add_extra_ref(const char *refname, const unsigned char *sha1, int flag)
+ {
+-	add_ref(refname, sha1, flag, &extra_refs, NULL);
++	add_ref(&extra_refs, create_ref_entry(refname, sha1, flag));
+ }
+ 
+ void clear_extra_refs(void)
+@@ -367,7 +363,7 @@ static void get_ref_dir(struct ref_cache *refs, const char *base,
+ 					hashclr(sha1);
+ 					flag |= REF_ISBROKEN;
+ 				}
+-			add_ref(refname, sha1, flag, array, NULL);
++			add_ref(array, create_ref_entry(refname, sha1, flag));
+ 		}
+ 		free(refname);
+ 		closedir(dir);
 -- 
 1.7.7
