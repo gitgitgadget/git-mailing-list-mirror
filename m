@@ -1,83 +1,128 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: git alias and --help
-Date: Sat, 29 Oct 2011 03:25:09 +0900
-Message-ID: <CADCnXoaPbCK0B=XZwdAY=yEb61YhvyQ6FA=BAxkADJ6hra-_Lg@mail.gmail.com>
-References: <j8clg9$ldh$1@dough.gmane.org> <7vfwiexe6m.fsf@alter.siamese.dyndns.org>
- <7v8vo6xd4u.fsf@alter.siamese.dyndns.org> <buoty6t9937.fsf@dhlpc061.dev.necel.com>
- <m362j95jv3.fsf@localhost.localdomain> <7v62j9t2gj.fsf@alter.siamese.dyndns.org>
+From: Atsushi Nakagawa <atnak@chejz.com>
+Subject: Re: [msysGit] Re: [PATCH/RFC] mingw: implement PTHREAD_MUTEX_INITIALIZER
+Date: Sat, 29 Oct 2011 03:35:46 +0900
+Message-ID: <20111029033542.5C66.B013761@chejz.com>
+References: <20111028080033.57FC.B013761@chejz.com> <CAGZ=bqKA7P_FJz447AZA5HjWdghKnZqAWGuKAuvjsGp5bAGC1w@mail.gmail.com>
+Reply-To: Atsushi Nakagawa <atnak@chejz.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>, Gelonida N <gelonida@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 28 20:25:57 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Cc: kusmabite@gmail.com, Johannes Sixt <j6t@kdbg.org>,
+	msysgit@googlegroups.com, git@vger.kernel.org,
+	johannes.schindelin@gmx.de
+To: Kyle Moffett <kyle@moffetthome.net>
+X-From: git-owner@vger.kernel.org Fri Oct 28 20:35:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJr7s-0004p4-Gj
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 20:25:56 +0200
+	id 1RJrHb-0000e5-3r
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 20:35:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754512Ab1J1SZw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Oct 2011 14:25:52 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:33739 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754037Ab1J1SZv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Oct 2011 14:25:51 -0400
-Received: by eye27 with SMTP id 27so3789641eye.19
-        for <git@vger.kernel.org>; Fri, 28 Oct 2011 11:25:50 -0700 (PDT)
+	id S932091Ab1J1Sfy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Oct 2011 14:35:54 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:60867 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754077Ab1J1Sfx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Oct 2011 14:35:53 -0400
+Received: by qyk27 with SMTP id 27so4842278qyk.19
+        for <git@vger.kernel.org>; Fri, 28 Oct 2011 11:35:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=hwNWvzhCBmwgnqbEuZaTfwLM045njC64IkodmJb3ZfE=;
-        b=Sqc87bVgjvRpcMGLv5k2HROLcv80cWpJI1oKMxl/EMhbr3ufQXC6IW0ckwy4rCI1il
-         ybnhK32XlRIiArDdTJyirJLJG8sIgrLPRnCG3uzLFGkRVLPac8ygIq76i71Eo4mzNfMS
-         QLy5Cllk1gntp6J0w5BXNf344BFM/kYbkq1CI=
-Received: by 10.14.17.27 with SMTP id i27mr407190eei.133.1319826350260; Fri,
- 28 Oct 2011 11:25:50 -0700 (PDT)
-Received: by 10.14.100.76 with HTTP; Fri, 28 Oct 2011 11:25:09 -0700 (PDT)
-In-Reply-To: <7v62j9t2gj.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: fTVTnyZ7sMq_qoFOgmC_80MjxFs
+        d=chejz.com; s=google;
+        h=date:from:to:subject:cc:reply-to:in-reply-to:references:message-id
+         :mime-version:content-type:content-transfer-encoding:x-mailer;
+        bh=mM+XpA8Il9IigpNLz/cxA3IUakbvgKQuspXL9lRXSgo=;
+        b=k2OvQPGzOH9qyoU7G43uDAoRQBxr8uuBUJLX7zfgcSbGA8Lj5cQ6GrXx3VD10uNTNA
+         661lrNh+327beD7B/rOwtxKVxpScSJi2p5LdPWy5KpC3hHvTAYkx7vw7arGnOFWknnbB
+         ackfcAQItmylXQRp+wJTTPjCmhsaeeeOl+W0k=
+Received: by 10.68.42.39 with SMTP id k7mr5495076pbl.71.1319826952230;
+        Fri, 28 Oct 2011 11:35:52 -0700 (PDT)
+Received: from [127.0.0.1] (KD113155065059.ppp-bb.dion.ne.jp. [113.155.65.59])
+        by mx.google.com with ESMTPS id p5sm25657609pbk.12.2011.10.28.11.35.46
+        (version=SSLv3 cipher=OTHER);
+        Fri, 28 Oct 2011 11:35:48 -0700 (PDT)
+In-Reply-To: <CAGZ=bqKA7P_FJz447AZA5HjWdghKnZqAWGuKAuvjsGp5bAGC1w@mail.gmail.com>
+X-Mailer: Becky! ver. 2.57.01 [en]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184424>
 
-2011/10/29 Junio C Hamano <gitster@pobox.com>:
-> =A0 =A0$ git lgf --help
-> =A0 =A0'git lgf' is aliased to 'log --oneline --boundary --first-pare=
-nt'
->
-> with "git log --help", but that is aiming too low for my taste.
->
-> If you are redesigning the help system, isn't it a shame that you are
-> discarding other tokens in the alias when giving help? Wouldn't it be
-> wonderful if you extracted the option descriptions for these three op=
-tions
-> specified and showing only that, for example?
+Thanks for the explanation. :)
 
-I think that would be the wrong thing in most cases though:  an alias
-like the above happily allows the user to specify other git-log
-options on the command line; when I get help on an aliased option,
-it's often precisely because I want to see the _other_ options I can
-use...
+Kyle Moffett <kyle@moffetthome.net> wrote:
+> On Thu, Oct 27, 2011 at 19:00, Atsushi Nakagawa <atnak@chejz.com> wrote:
+> > Erik Faye-Lund <kusmabite@gmail.com> wrote:
+> >> On Wed, Oct 26, 2011 at 5:44 AM, Kyle Moffett <kyle@moffetthome.net> wrote:
+> >> > On Tue, Oct 25, 2011 at 16:51, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+> >> >> [...]
+> >> >
+> >> > No, I'm afraid that won't solve the issue (at least in GCC, not sure about MSVC)
+> >> >
+> >> > A write barrier in one thread is only effective if it is paired with a
+> >> > read barrier in the other thread.
+> >> >
+> >> > Since there's no read barrier in the "while(mutex->autoinit != 0)",
+> >> > you don't have any guaranteed ordering.
+> >
+> > Out of curiosity, where could re-ordering be a problem here?  I'm
+> > thinking probably at "EnterCriticalSection(&mutex->cs)" and the contents
+> > of "mutex->cs" not being propagated to the waiting thread.  However,
+> > shouldn't that be a non-problem, as far as compiler reordering goes,
+> > because it's an external function call and only the address of mutex->cs
+> > is passed?
+> >
+> > [...]
+> 
+> Ok, so here's the race condition:
+> 
+> Thread1				Thread2
+> 				/* Speculative prefetch */
+> 				prefetch(*mutex);
+> 
+> if (mutex->autoinit) {
+> if (ICE(&mutex->autoinit, -1, 1) != -1) {
+> /* Now mutex->autoinit == -1 */
+> pthread_mutex_init(mutex, NULL);
+> /* This forces writes out to memory */
+> ICE(&mutex->autoinit, 0, -1);
+> 
+> 				if (mutex->autoinit) {} /* false */
+> 				/* No read barrier here */
+> 				EnterCriticalSection(&mutex->cs);
+> 				/* Use cached mutex->cs from earlier */
 
-E.g., I have:
+Ok, so there's no way of skimping on that one memory barrier in every
+visit to pthread_mutex_lock().  Interesting.  Makes me wonder how it
+trades off to lazy initialization.
+> 
+> Even though you forced the memory write to be ordered in Thread 1 you
+> did not ensure that the read of autoinit occurred before the read of
+> mutex->cs in Thread 2.  If the first thing that EnterCriticalSection
+> does is follow a pointer or read a mutex key value in mutex->cs then
+> won't necessarily get the right answer.
+> 
+> The rule of memory barriers is the ALWAYS come in pairs.  This simple
+> example guarantees that Thread2 will read "tmp_a" == 1 if it
+> previously read "tmp_b" == 1, although getting "tmp_a" == 1 and
+> "tmp_b" != 1 is still possible.
+> 
+> Thread1:
+> a = 1;
+> write_barrier();
+> b = 1;
+> 
+> Thread2:
+> tmp_b = b;
+> read_barrier();
+> tmp_a = a;
+> 
+> I think there's a Documentation/memory-barriers.txt file in the kernel
+> source code with more helpful info.
 
-   $ git slog --help
-   `git slog' is aliased to `log --date=3Dshort --pretty=3Dtformat:"%h
-%ad  %s" --abbrev-commit'
-
-But the typical question I want to answer is something like "OK, how
-do I reverse the output order of slog?" or "how do I limit the output
-of slog to a certain date range?"
-
--miles
-
---=20
-Cat is power. =A0Cat is peace.
+-- 
+Atsushi Nakagawa
+<atnak@chejz.com>
+Changes are made when there is inconvenience.
