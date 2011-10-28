@@ -1,110 +1,59 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [RFC/PATCH] define the way new representation types are encoded
- in the pack
-Date: Fri, 28 Oct 2011 08:44:56 -0700
-Message-ID: <CAJo=hJt-YZcdxw+D=1S4haPmY-8-LLjXD=MvDGeWbdJ88_VOGw@mail.gmail.com>
-References: <7v62j9veh3.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] blame.c: Properly initialize strbuf after calling,
+ textconv_object()
+Date: Fri, 28 Oct 2011 09:00:36 -0700
+Message-ID: <7vlis5t8bf.fsf@alter.siamese.dyndns.org>
+References: <4EAACA1C.6020302@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 28 17:45:25 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 28 18:00:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJocW-0005Nk-AZ
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 17:45:24 +0200
+	id 1RJorM-0004gc-QC
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 18:00:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755996Ab1J1PpT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Oct 2011 11:45:19 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:33043 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755983Ab1J1PpS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Oct 2011 11:45:18 -0400
-Received: by ywm3 with SMTP id 3so3775217ywm.19
-        for <git@vger.kernel.org>; Fri, 28 Oct 2011 08:45:17 -0700 (PDT)
-Received: by 10.236.192.132 with SMTP id i4mr4665007yhn.80.1319816717248; Fri,
- 28 Oct 2011 08:45:17 -0700 (PDT)
-Received: by 10.147.125.20 with HTTP; Fri, 28 Oct 2011 08:44:56 -0700 (PDT)
-In-Reply-To: <7v62j9veh3.fsf@alter.siamese.dyndns.org>
+	id S932212Ab1J1QAk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Oct 2011 12:00:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36625 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751313Ab1J1QAj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Oct 2011 12:00:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C4C0A5E23;
+	Fri, 28 Oct 2011 12:00:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=aBA4h4AsR4/UciCtoNIx0JYTRww=; b=TRPlgB
+	9uYcIY7j0XJpCKkFYj2he4NTsdW5j5Lw7ECtwVXYoqHNhFMXJcv2gaKO/Nv5KqoF
+	oRwcthGjl0f/35x5kUpsyZtl576nsHbinNx2+D8bzGKF0CJBO+2ltmm9fko2Rgv2
+	UIEoXoTvmnH47wtQydyl2CimdNl7j/jh6MPZs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ObIAg6aulQSUc9k5L53OSyq5ckNKDwsJ
+	ZCxTwZBXfl0JmO0v+1POU21mUqWaxJRFlcDAtqZ93kIwU42gamC4o6xfHy670S6X
+	VGG39rBSRLreHgSaIX7uLdst3ebmHTtMnG9DTCzHySXMJ9I/5IXlWlWympLJjHsN
+	SL+7DWkryD0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC1DC5E22;
+	Fri, 28 Oct 2011 12:00:38 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4F8755E1F; Fri, 28 Oct 2011
+ 12:00:38 -0400 (EDT)
+In-Reply-To: <4EAACA1C.6020302@gmail.com> (Sebastian Schuberth's message of
+ "Fri, 28 Oct 2011 17:28:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FA84B1AE-017D-11E1-A4C9-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184415>
 
-On Thu, Oct 27, 2011 at 23:04, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> In addition to four basic types (commit, tree, blob and tag), the pac=
-k
-> stream can encode a few other "representation" types, such as REF_DEL=
-TA
-> and OFS_DELTA. As we allocate 3 bits in the first byte for this purpo=
-se,
-> we do not have much room to add new representation types in place, bu=
-t we
-> do have one value reserved for future expansion.
-
-We have 2 values reserved, 0 and 5.
-
-> When bit 4-6 encodes type 5, the first byte is used this way:
->
-> =A0- Bit 0-3 denotes the real "extended" representation type. Because=
- types
-> =A0 0-7 can already be encoded without using the extended format, we =
-can
-> =A0 offset the type by 8 (i.e. if bit 0-3 says 3, it means representa=
-tion
-> =A0 type 11 =3D 3 + 8);
->
-> =A0- Bit 4-6 has the value "5";
->
-> =A0- Bit 7 is used to signal if the _third_ byte needs to be read for=
- larger
-> =A0 size that cannot be represented with 8-bit.
-
-This is very complicated. We don't need more complex logic in the pack
-encoding. We _especially_ do not need yet another variant of how to
-store a variable length integer in the pack file. I'm sorry, but we
-already have two different variants and this just adds a third. It is
-beyond crazy.
-
-Last time (this is now years ago but whatever) Nico and I discussed
-adding a new type to packs it was for the alternate tree encoding in
-"pack v4". Trees happen so often that type code 5 is a good value to
-use for these. Later you talked about using the extended type to store
-a cattree blob thing, which would not appear nearly as often as a
-normal directory listing type tree that was encoded using the pack v4
-style encoding... I think saving type 5 for a small frequently
-occurring type is a good thing.
-
-> As it is unlikely for us to pack things that do not need to record an=
-y
-> size, the second byte is always used in full to encode the low 8-bit =
-of
-> the size.
->
-> I haven't started using type=3D8 and upwards for anything yet, but be=
-cause
-> we have only one "future expansion" value left, I want us to be extre=
-mely
-> careful in order to avoid painting us into a corner that we cannot ge=
-t out
-> of, so I am sending this out early for a preliminary review.
-
-I would have said something more like:
-
-When bit 4-6 encodes "0", then:
-
-- Bit 0-3 and bit 7 are used normally to encode a variable length
-"size" integer. These may be 0 indicating no size information.
-
-- 2nd-nth bytes store remaining "size" information, if bit 7 was set.
-
-- The immediate next byte encodes the extended type. This type is
-stored using the OFS_DELTA offset varint encoding, and thus may be
-larger than 256 if we ever need it to be.
+Thanks; do you have no addition to the test suite to demonstrate the
+breakage?
