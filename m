@@ -1,7 +1,7 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH v3 11/14] get_ref_dir(): change signature
-Date: Fri, 28 Oct 2011 13:14:38 +0200
-Message-ID: <1319800481-15138-12-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v3 10/14] refs: change signatures of get_packed_refs() and get_loose_refs()
+Date: Fri, 28 Oct 2011 13:14:37 +0200
+Message-ID: <1319800481-15138-11-git-send-email-mhagger@alum.mit.edu>
 References: <1319800481-15138-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Drew Northup <drew.northup@maine.edu>,
@@ -11,97 +11,173 @@ Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Julian Phillips <julian@quantumfyre.co.uk>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 28 13:21:57 2011
+X-From: git-owner@vger.kernel.org Fri Oct 28 13:22:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJkVY-0007xy-MY
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 13:21:57 +0200
+	id 1RJkVs-000871-78
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 13:22:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932324Ab1J1LUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Oct 2011 07:20:51 -0400
-Received: from mail.berlin.jpk.com ([212.222.128.130]:54852 "EHLO
+	id S1755605Ab1J1LUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Oct 2011 07:20:41 -0400
+Received: from mail.berlin.jpk.com ([212.222.128.130]:54832 "EHLO
 	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932310Ab1J1LUt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Oct 2011 07:20:49 -0400
+	with ESMTP id S1755589Ab1J1LUk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Oct 2011 07:20:40 -0400
 Received: from michael.berlin.jpk.com ([192.168.100.152])
 	by mail.berlin.jpk.com with esmtp (Exim 4.50)
-	id 1RJkIZ-00076m-AJ; Fri, 28 Oct 2011 13:08:31 +0200
+	id 1RJkIZ-00076m-9V; Fri, 28 Oct 2011 13:08:31 +0200
 X-Mailer: git-send-email 1.7.7
 In-Reply-To: <1319800481-15138-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184359>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
-Change get_ref_dir() to take a (struct ref_cache *) in place of the
-submodule name.
+Change get_packed_refs() and get_loose_refs() to take a (struct
+ref_cache *) instead of the name of the submodule.
+
+Change get_ref_dir() to take a submodule name (i.e., "" for the main
+module) rather than a submodule pointer (i.e., NULL for the main
+module) so that refs->name can be used as its argument.  (In a moment
+this function will also be changed to take a (struct ref_cache *),
+too.)
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c |   18 +++++++++---------
- 1 files changed, 9 insertions(+), 9 deletions(-)
+ refs.c |   36 +++++++++++++++++-------------------
+ 1 files changed, 17 insertions(+), 19 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 4131d53..7d58ef9 100644
+index 50fc567..4131d53 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -299,14 +299,14 @@ static struct ref_array *get_packed_refs(struct ref_cache *refs)
- 	return &refs->packed;
+@@ -279,16 +279,14 @@ void clear_extra_refs(void)
+ 	clear_ref_array(&extra_refs);
  }
  
--static void get_ref_dir(const char *submodule, const char *base,
-+static void get_ref_dir(struct ref_cache *refs, const char *base,
- 			struct ref_array *array)
+-static struct ref_array *get_packed_refs(const char *submodule)
++static struct ref_array *get_packed_refs(struct ref_cache *refs)
  {
+-	struct ref_cache *refs = get_ref_cache(submodule);
+-
+ 	if (!refs->did_packed) {
+ 		const char *packed_refs_file;
+ 		FILE *f;
+ 
+-		if (submodule)
+-			packed_refs_file = git_path_submodule(submodule, "packed-refs");
++		if (*refs->name)
++			packed_refs_file = git_path_submodule(refs->name, "packed-refs");
+ 		else
+ 			packed_refs_file = git_path("packed-refs");
+ 		f = fopen(packed_refs_file, "r");
+@@ -307,7 +305,7 @@ static void get_ref_dir(const char *submodule, const char *base,
  	DIR *dir;
  	const char *path;
  
--	if (*submodule)
--		path = git_path_submodule(submodule, "%s", base);
-+	if (*refs->name)
-+		path = git_path_submodule(refs->name, "%s", base);
+-	if (submodule)
++	if (*submodule)
+ 		path = git_path_submodule(submodule, "%s", base);
  	else
  		path = git_path("%s", base);
+@@ -401,12 +399,10 @@ void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
+ 	for_each_rawref(warn_if_dangling_symref, &data);
+ }
  
-@@ -337,19 +337,19 @@ static void get_ref_dir(const char *submodule, const char *base,
- 			if (has_extension(de->d_name, ".lock"))
- 				continue;
- 			memcpy(ref + baselen, de->d_name, namelen+1);
--			refdir = submodule
--				? git_path_submodule(submodule, "%s", ref)
-+			refdir = *refs->name
-+				? git_path_submodule(refs->name, "%s", ref)
- 				: git_path("%s", ref);
- 			if (stat(refdir, &st) < 0)
- 				continue;
- 			if (S_ISDIR(st.st_mode)) {
--				get_ref_dir(submodule, ref, array);
-+				get_ref_dir(refs, ref, array);
- 				continue;
- 			}
--			if (submodule) {
-+			if (*refs->name) {
- 				hashclr(sha1);
- 				flag = 0;
--				if (resolve_gitlink_ref(submodule, ref, sha1) < 0) {
-+				if (resolve_gitlink_ref(refs->name, ref, sha1) < 0) {
- 					hashclr(sha1);
- 					flag |= REF_ISBROKEN;
- 				}
-@@ -402,7 +402,7 @@ void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
- static struct ref_array *get_loose_refs(struct ref_cache *refs)
+-static struct ref_array *get_loose_refs(const char *submodule)
++static struct ref_array *get_loose_refs(struct ref_cache *refs)
  {
+-	struct ref_cache *refs = get_ref_cache(submodule);
+-
  	if (!refs->did_loose) {
--		get_ref_dir(refs->name, "refs", &refs->loose);
-+		get_ref_dir(refs, "refs", &refs->loose);
+-		get_ref_dir(submodule, "refs", &refs->loose);
++		get_ref_dir(refs->name, "refs", &refs->loose);
  		sort_ref_array(&refs->loose);
  		refs->did_loose = 1;
  	}
+@@ -433,7 +429,7 @@ static int resolve_gitlink_packed_ref(char *name, int pathlen,
+ 	if (pathlen < 6 || memcmp(name + pathlen - 6, "/.git/", 6))
+ 		die("Oops");
+ 	name[pathlen - 6] = '\0'; /* make it path to the submodule */
+-	array = get_packed_refs(name);
++	array = get_packed_refs(get_ref_cache(name));
+ 	ref = search_ref_array(array, refname);
+ 	if (ref != NULL) {
+ 		memcpy(sha1, ref->sha1, 20);
+@@ -513,7 +509,7 @@ int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sh
+  */
+ static int get_packed_ref(const char *refname, unsigned char *sha1)
+ {
+-	struct ref_array *packed = get_packed_refs(NULL);
++	struct ref_array *packed = get_packed_refs(get_ref_cache(NULL));
+ 	struct ref_entry *entry = search_ref_array(packed, refname);
+ 	if (entry) {
+ 		hashcpy(sha1, entry->sha1);
+@@ -692,7 +688,7 @@ int peel_ref(const char *refname, unsigned char *sha1)
+ 		return -1;
+ 
+ 	if ((flag & REF_ISPACKED)) {
+-		struct ref_array *array = get_packed_refs(NULL);
++		struct ref_array *array = get_packed_refs(get_ref_cache(NULL));
+ 		struct ref_entry *r = search_ref_array(array, refname);
+ 
+ 		if (r != NULL && r->flag & REF_KNOWS_PEELED) {
+@@ -717,8 +713,9 @@ static int do_for_each_ref(const char *submodule, const char *base, each_ref_fn
+ 			   int trim, int flags, void *cb_data)
+ {
+ 	int retval = 0, i, p = 0, l = 0;
+-	struct ref_array *packed = get_packed_refs(submodule);
+-	struct ref_array *loose = get_loose_refs(submodule);
++	struct ref_cache *refs = get_ref_cache(submodule);
++	struct ref_array *packed = get_packed_refs(refs);
++	struct ref_array *loose = get_loose_refs(refs);
+ 
+ 	struct ref_array *extra = &extra_refs;
+ 
+@@ -1242,7 +1239,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 	 * name is a proper prefix of our refname.
+ 	 */
+ 	if (missing &&
+-	     !is_refname_available(refname, NULL, get_packed_refs(NULL))) {
++	     !is_refname_available(refname, NULL, get_packed_refs(get_ref_cache(NULL)))) {
+ 		last_errno = ENOTDIR;
+ 		goto error_return;
+ 	}
+@@ -1302,7 +1299,7 @@ static int repack_without_ref(const char *refname)
+ 	struct ref_entry *ref;
+ 	int fd, i;
+ 
+-	packed = get_packed_refs(NULL);
++	packed = get_packed_refs(get_ref_cache(NULL));
+ 	ref = search_ref_array(packed, refname);
+ 	if (ref == NULL)
+ 		return 0;
+@@ -1385,6 +1382,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 	struct stat loginfo;
+ 	int log = !lstat(git_path("logs/%s", oldrefname), &loginfo);
+ 	const char *symref = NULL;
++	struct ref_cache *refs = get_ref_cache(NULL);
+ 
+ 	if (log && S_ISLNK(loginfo.st_mode))
+ 		return error("reflog for %s is a symlink", oldrefname);
+@@ -1396,10 +1394,10 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 	if (!symref)
+ 		return error("refname %s not found", oldrefname);
+ 
+-	if (!is_refname_available(newrefname, oldrefname, get_packed_refs(NULL)))
++	if (!is_refname_available(newrefname, oldrefname, get_packed_refs(refs)))
+ 		return 1;
+ 
+-	if (!is_refname_available(newrefname, oldrefname, get_loose_refs(NULL)))
++	if (!is_refname_available(newrefname, oldrefname, get_loose_refs(refs)))
+ 		return 1;
+ 
+ 	if (log && rename(git_path("logs/%s", oldrefname), git_path(TMP_RENAMED_LOG)))
 -- 
 1.7.7
