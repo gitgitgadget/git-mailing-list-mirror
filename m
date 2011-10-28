@@ -1,7 +1,7 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH 23/28] struct ref_dir: store a reference to the enclosing ref_cache
-Date: Fri, 28 Oct 2011 14:28:36 +0200
-Message-ID: <1319804921-17545-24-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 26/28] is_refname_available(): query only possibly-conflicting references
+Date: Fri, 28 Oct 2011 14:28:39 +0200
+Message-ID: <1319804921-17545-27-git-send-email-mhagger@alum.mit.edu>
 References: <1319804921-17545-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Drew Northup <drew.northup@maine.edu>,
@@ -11,122 +11,114 @@ Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Julian Phillips <julian@quantumfyre.co.uk>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 28 14:32:26 2011
+X-From: git-owner@vger.kernel.org Fri Oct 28 14:32:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJlbi-0005AX-HZ
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 14:32:22 +0200
+	id 1RJlbp-0005Dk-BE
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 14:32:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932447Ab1J1McQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Oct 2011 08:32:16 -0400
-Received: from ssh.berlin.jpk.com ([212.222.128.135]:55977 "EHLO
-	homer.berlin.jpk.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932387Ab1J1McO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Oct 2011 08:32:14 -0400
+	id S932484Ab1J1McW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Oct 2011 08:32:22 -0400
+Received: from mail.berlin.jpk.com ([212.222.128.130]:55991 "EHLO
+	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932387Ab1J1McU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Oct 2011 08:32:20 -0400
 Received: from michael.berlin.jpk.com ([192.168.100.152])
 	by mail.berlin.jpk.com with esmtp (Exim 4.50)
-	id 1RJlRw-0007Ud-RK; Fri, 28 Oct 2011 14:22:16 +0200
+	id 1RJlRw-0007Ud-Tu; Fri, 28 Oct 2011 14:22:16 +0200
 X-Mailer: git-send-email 1.7.7
 In-Reply-To: <1319804921-17545-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184402>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
-This means that it contains enough information to serve as the sole
-argument to get_ref_dir(), which will be changed in the next commit.
+Instead of iterating through all of the references, inquire more
+pointedly about the references that could conflict with the new name.
+This requires checking for a few individual references, plus iterating
+through a small subtree of the rest of the references (and usually the
+subtree iteration ends without having to recurse).  A big benefit is
+that populating the whole loose reference cache (which can be very
+expensive) can usually be avoided.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c |   21 ++++++++++++++++-----
- 1 files changed, 16 insertions(+), 5 deletions(-)
+ refs.c |   40 +++++++++++++++++++++++++++++++++-------
+ 1 files changed, 33 insertions(+), 7 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 98c8569..6b2b2f6 100644
+index 88ef9dd..6a7f9c3 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -143,6 +143,8 @@ struct ref_value {
- 	unsigned char peeled[20];
- };
+@@ -658,7 +658,7 @@ static int name_conflict_fn(const char *existingrefname, const unsigned char *sh
+ 			    int flags, void *cb_data)
+ {
+ 	struct name_conflict_cb *data = (struct name_conflict_cb *)cb_data;
+-	if (data->oldrefname && !strcmp(data->oldrefname, existingrefname))
++	if (!strcmp(data->oldrefname, existingrefname))
+ 		return 0;
+ 	if (names_conflict(data->refname, existingrefname)) {
+ 		data->conflicting_refname = existingrefname;
+@@ -669,22 +669,48 @@ static int name_conflict_fn(const char *existingrefname, const unsigned char *sh
  
-+struct ref_cache;
-+
- struct ref_dir {
- 	int nr, alloc;
- 
-@@ -150,6 +152,12 @@ struct ref_dir {
- 	int sorted;
- 
- 	struct ref_entry **entries;
-+
-+	/*
-+	 * A pointer to the ref_cache that contains this ref_dir, or
-+	 * NULL if this ref_dir is used for extra_refs.
-+	 */
-+	struct ref_cache *ref_cache;
- };
- 
- /* ISSYMREF=0x01, ISPACKED=0x02, and ISBROKEN=0x04 are public interfaces */
-@@ -261,7 +269,8 @@ static void clear_ref_dir(struct ref_dir *dir)
-  * dirname is the name of the directory with a trailing slash (e.g.,
-  * "refs/heads/") or "" for the top-level directory.
+ /*
+  * Return true iff a reference named refname could be created without
+- * conflicting with the name of an existing reference.  If oldrefname
+- * is non-NULL, ignore potential conflicts with oldrefname (e.g.,
+- * because oldrefname is scheduled for deletion in the same
++ * conflicting with the name of an existing reference in direntry.  If
++ * oldrefname is non-NULL, ignore potential conflicts with oldrefname
++ * (e.g., because oldrefname is scheduled for deletion in the same
+  * operation).
   */
--static struct ref_entry *create_dir_entry(const char *dirname)
-+static struct ref_entry *create_dir_entry(struct ref_cache *ref_cache,
-+					  const char *dirname)
+ static int is_refname_available(const char *refname, const char *oldrefname,
+ 				struct ref_entry *direntry)
  {
- 	struct ref_entry *direntry;
- 	if (*dirname) {
-@@ -275,6 +284,7 @@ static struct ref_entry *create_dir_entry(const char *dirname)
- 		direntry->name[0] = '\0';
- 	}
- 	direntry->flag = REF_DIR;
-+	direntry->u.subdir.ref_cache = ref_cache;
- 	return direntry;
- }
++	int prefixlen = strlen(refname);
++	char *prefix;
++	char *slash;
+ 	struct name_conflict_cb data;
++
++	assert(direntry->flag & REF_DIR);
++
++	if (!oldrefname)
++		oldrefname = ""; /* invalid; cannot match any existing refname */
++
++	/* Check whether a prefix of refname is an existing reference: */
++	prefix = xmalloc(prefixlen + 2);
++	memcpy(prefix, refname, prefixlen + 1);
++	for (slash = strchr(prefix, '/'); slash; slash = strchr(slash + 1, '/')) {
++		*slash = '\0';
++		if (strcmp(oldrefname, prefix)) {
++			struct ref_entry *entry = find_ref(direntry, prefix);
++			if (entry) {
++				error("'%s' exists; cannot create '%s'", prefix, refname);
++				free(prefix);
++				return 0;
++			}
++		}
++		*slash = '/';
++	}
++
++	/* Check whether refname is a proper prefix of an existing reference: */
++	prefix[prefixlen++] = '/';
++	prefix[prefixlen] = '\0';
+ 	data.refname = refname;
+ 	data.oldrefname = oldrefname;
+ 	data.conflicting_refname = NULL;
  
-@@ -354,7 +364,8 @@ static struct ref_entry *find_containing_direntry(struct ref_entry *direntry,
- 				direntry = NULL;
- 				break;
- 			}
--			entry = create_dir_entry(refname_copy);
-+			entry = create_dir_entry(direntry->u.subdir.ref_cache,
-+						 refname_copy);
- 			add_entry(direntry, entry);
- 		}
- 		slash[1] = tmp;
-@@ -771,7 +782,7 @@ static void read_packed_refs(FILE *f, struct ref_entry *direntry)
- void add_extra_ref(const char *refname, const unsigned char *sha1, int flag)
- {
- 	if (!extra_refs)
--		extra_refs = create_dir_entry("");
-+		extra_refs = create_dir_entry(NULL, "");
- 	add_ref(extra_refs, create_ref_entry(refname, sha1, flag));
- }
- 
-@@ -789,7 +800,7 @@ static struct ref_entry *get_packed_refs(struct ref_cache *refs)
- 		const char *packed_refs_file;
- 		FILE *f;
- 
--		refs->packed = create_dir_entry("");
-+		refs->packed = create_dir_entry(refs, "");
- 		if (*refs->name)
- 			packed_refs_file = git_path_submodule(refs->name, "packed-refs");
- 		else
-@@ -881,7 +892,7 @@ static void get_ref_dir(struct ref_cache *refs, const char *dirname)
- static struct ref_entry *get_loose_refs(struct ref_cache *refs)
- {
- 	if (!refs->loose) {
--		refs->loose = create_dir_entry("");
-+		refs->loose = create_dir_entry(refs, "");
- 		get_ref_dir(refs, "refs/");
- 	}
- 	return refs->loose;
+-	assert(direntry->flag & REF_DIR);
+-
+-	if (do_for_each_ref_in_dir(direntry, 0, "", name_conflict_fn,
++	if (do_for_each_ref_in_dir(direntry, 0, prefix, name_conflict_fn,
+ 				   0, DO_FOR_EACH_INCLUDE_BROKEN,
+ 				   &data)) {
+ 		error("'%s' exists; cannot create '%s'",
 -- 
 1.7.7
