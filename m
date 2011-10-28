@@ -1,128 +1,104 @@
-From: Atsushi Nakagawa <atnak@chejz.com>
-Subject: Re: [msysGit] Re: [PATCH/RFC] mingw: implement PTHREAD_MUTEX_INITIALIZER
-Date: Sat, 29 Oct 2011 03:35:46 +0900
-Message-ID: <20111029033542.5C66.B013761@chejz.com>
-References: <20111028080033.57FC.B013761@chejz.com> <CAGZ=bqKA7P_FJz447AZA5HjWdghKnZqAWGuKAuvjsGp5bAGC1w@mail.gmail.com>
-Reply-To: Atsushi Nakagawa <atnak@chejz.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH] blame.c: Properly initialize strbuf after calling, textconv_object()
+Date: Fri, 28 Oct 2011 20:36:45 +0200
+Message-ID: <4EAAF63D.7050401@gmail.com>
+References: <4EAACA1C.6020302@gmail.com> <7vlis5t8bf.fsf@alter.siamese.dyndns.org> <CAHGBnuPUGfOe1D_OZ0ga4s8EiS_=GZeBG7WLmyOHt7vNg+w3Fw@mail.gmail.com> <7vhb2tt6ag.fsf@alter.siamese.dyndns.org> <CAHGBnuNpwZCpQxZQNRZ-pYpLMHMi1O4d0hsR9MKM3=7Hw5A=zw@mail.gmail.com> <7vd3dht4ms.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-Cc: kusmabite@gmail.com, Johannes Sixt <j6t@kdbg.org>,
-	msysgit@googlegroups.com, git@vger.kernel.org,
-	johannes.schindelin@gmx.de
-To: Kyle Moffett <kyle@moffetthome.net>
-X-From: git-owner@vger.kernel.org Fri Oct 28 20:35:59 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 28 20:37:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJrHb-0000e5-3r
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 20:35:59 +0200
+	id 1RJrIb-0001AI-3n
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 20:37:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932091Ab1J1Sfy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Oct 2011 14:35:54 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:60867 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754077Ab1J1Sfx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Oct 2011 14:35:53 -0400
-Received: by qyk27 with SMTP id 27so4842278qyk.19
-        for <git@vger.kernel.org>; Fri, 28 Oct 2011 11:35:52 -0700 (PDT)
+	id S932507Ab1J1Sgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Oct 2011 14:36:55 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:32824 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754077Ab1J1Sgx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Oct 2011 14:36:53 -0400
+Received: by faan17 with SMTP id n17so3878291faa.19
+        for <git@vger.kernel.org>; Fri, 28 Oct 2011 11:36:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chejz.com; s=google;
-        h=date:from:to:subject:cc:reply-to:in-reply-to:references:message-id
-         :mime-version:content-type:content-transfer-encoding:x-mailer;
-        bh=mM+XpA8Il9IigpNLz/cxA3IUakbvgKQuspXL9lRXSgo=;
-        b=k2OvQPGzOH9qyoU7G43uDAoRQBxr8uuBUJLX7zfgcSbGA8Lj5cQ6GrXx3VD10uNTNA
-         661lrNh+327beD7B/rOwtxKVxpScSJi2p5LdPWy5KpC3hHvTAYkx7vw7arGnOFWknnbB
-         ackfcAQItmylXQRp+wJTTPjCmhsaeeeOl+W0k=
-Received: by 10.68.42.39 with SMTP id k7mr5495076pbl.71.1319826952230;
-        Fri, 28 Oct 2011 11:35:52 -0700 (PDT)
-Received: from [127.0.0.1] (KD113155065059.ppp-bb.dion.ne.jp. [113.155.65.59])
-        by mx.google.com with ESMTPS id p5sm25657609pbk.12.2011.10.28.11.35.46
-        (version=SSLv3 cipher=OTHER);
-        Fri, 28 Oct 2011 11:35:48 -0700 (PDT)
-In-Reply-To: <CAGZ=bqKA7P_FJz447AZA5HjWdghKnZqAWGuKAuvjsGp5bAGC1w@mail.gmail.com>
-X-Mailer: Becky! ver. 2.57.01 [en]
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=B+X/BL1oYIZ3T4mkTfClYkSNBv79IKZDy7BYZWx3sO8=;
+        b=U0XLTgLuXtyK7I4FUJce3LjKw890LKzYeoAdKTIuIeLUQ0KnjtdD4bBZANpzmdtHVA
+         bQejh9iJWo8u+ht4n3BH7rihbLNHJKYZU2gWCj0jAmIVLJZF7ldnTtA30QQuqXlrWXOe
+         UlbUc4fk8HKWD8109iQGqR0yIEbtT54VCw7WI=
+Received: by 10.223.5.66 with SMTP id 2mr7602437fau.26.1319827012554;
+        Fri, 28 Oct 2011 11:36:52 -0700 (PDT)
+Received: from [192.168.178.22] (p5DDB0F41.dip0.t-ipconnect.de. [93.219.15.65])
+        by mx.google.com with ESMTPS id x19sm11125027fag.5.2011.10.28.11.36.51
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 28 Oct 2011 11:36:51 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+Newsgroups: gmane.comp.version-control.git,gmane.comp.version-control.msysgit
+In-Reply-To: <7vd3dht4ms.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184425>
 
-Thanks for the explanation. :)
+On 28.10.2011 19:20, Junio C Hamano wrote:
 
-Kyle Moffett <kyle@moffetthome.net> wrote:
-> On Thu, Oct 27, 2011 at 19:00, Atsushi Nakagawa <atnak@chejz.com> wrote:
-> > Erik Faye-Lund <kusmabite@gmail.com> wrote:
-> >> On Wed, Oct 26, 2011 at 5:44 AM, Kyle Moffett <kyle@moffetthome.net> wrote:
-> >> > On Tue, Oct 25, 2011 at 16:51, Erik Faye-Lund <kusmabite@gmail.com> wrote:
-> >> >> [...]
-> >> >
-> >> > No, I'm afraid that won't solve the issue (at least in GCC, not sure about MSVC)
-> >> >
-> >> > A write barrier in one thread is only effective if it is paired with a
-> >> > read barrier in the other thread.
-> >> >
-> >> > Since there's no read barrier in the "while(mutex->autoinit != 0)",
-> >> > you don't have any guaranteed ordering.
-> >
-> > Out of curiosity, where could re-ordering be a problem here?  I'm
-> > thinking probably at "EnterCriticalSection(&mutex->cs)" and the contents
-> > of "mutex->cs" not being propagated to the waiting thread.  However,
-> > shouldn't that be a non-problem, as far as compiler reordering goes,
-> > because it's an external function call and only the address of mutex->cs
-> > is passed?
-> >
-> > [...]
+>>>>> Thanks; do you have no addition to the test suite to demonstrate the
+>>>>> breakage?
+>>>>
+>>>> Not yet. I'll try to come up with something.
+>>>
+>>> Let's do this.
+>>
+>> Thanks, but that does not seem to work for me. The test breaks both
+>> without and with my patch. I'll look into it.
 > 
-> Ok, so here's the race condition:
-> 
-> Thread1				Thread2
-> 				/* Speculative prefetch */
-> 				prefetch(*mutex);
-> 
-> if (mutex->autoinit) {
-> if (ICE(&mutex->autoinit, -1, 1) != -1) {
-> /* Now mutex->autoinit == -1 */
-> pthread_mutex_init(mutex, NULL);
-> /* This forces writes out to memory */
-> ICE(&mutex->autoinit, 0, -1);
-> 
-> 				if (mutex->autoinit) {} /* false */
-> 				/* No read barrier here */
-> 				EnterCriticalSection(&mutex->cs);
-> 				/* Use cached mutex->cs from earlier */
+> Thanks. I suspect the difference is because you are on a crlf-native
+> platform while I am not...
 
-Ok, so there's no way of skimping on that one memory barrier in every
-visit to pthread_mutex_lock().  Interesting.  Makes me wonder how it
-trades off to lazy initialization.
-> 
-> Even though you forced the memory write to be ordered in Thread 1 you
-> did not ensure that the read of autoinit occurred before the read of
-> mutex->cs in Thread 2.  If the first thing that EnterCriticalSection
-> does is follow a pointer or read a mutex key value in mutex->cs then
-> won't necessarily get the right answer.
-> 
-> The rule of memory barriers is the ALWAYS come in pairs.  This simple
-> example guarantees that Thread2 will read "tmp_a" == 1 if it
-> previously read "tmp_b" == 1, although getting "tmp_a" == 1 and
-> "tmp_b" != 1 is still possible.
-> 
-> Thread1:
-> a = 1;
-> write_barrier();
-> b = 1;
-> 
-> Thread2:
-> tmp_b = b;
-> read_barrier();
-> tmp_a = a;
-> 
-> I think there's a Documentation/memory-barriers.txt file in the kernel
-> source code with more helpful info.
+I also didn't have any luck. I've created a test that should fail without my patch, but it succeeds when running the test script. However, if I copy and paste the lines from the test to the command line, the test fails as expected ("blame" is empty). I'm out of ideas right now.
+
+diff --git a/t/t8006-blame-textconv.sh b/t/t8006-blame-textconv.sh
+index 32ec82a..4fee5aa 100755
+--- a/t/t8006-blame-textconv.sh
++++ b/t/t8006-blame-textconv.sh
+@@ -14,6 +14,13 @@ sed 's/^bin: /converted: /' "$1"
+ EOF
+ chmod +x helper
+ 
++cat >helper-dos-line-endings <<'EOF'
++#!/bin/sh
++grep -q '^bin: ' "$1" || { echo "E: $1 is not \"binary\" file" 1>&2; exit 1; }
++sed 's/^bin: \(.*\)$/converted: \1\r/' "$1"
++EOF
++chmod +x helper-dos-line-endings
++
+ test_expect_success 'setup ' '
+ 	echo "bin: test 1" >one.bin &&
+ 	echo "bin: test number 2" >two.bin &&
+@@ -74,6 +81,14 @@ test_expect_success 'blame --textconv going through revisions' '
+ 	test_cmp expected result
+ '
+ 
++test_expect_success 'blame --textconv with DOS line endings' '
++	git config diff.test.textconv ./helper-dos-line-endings &&
++	git blame --textconv two.bin >blame &&
++	git config diff.test.textconv ./helper &&
++	find_blame <blame >result &&
++	test_cmp expected result
++'
++
+ test_expect_success 'setup +cachetextconv' '
+ 	git config diff.test.cachetextconv true
+ '
 
 -- 
-Atsushi Nakagawa
-<atnak@chejz.com>
-Changes are made when there is inconvenience.
+Sebastian Schuberth
