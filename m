@@ -1,73 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] define the way new representation types are encoded
- in the pack
-Date: Fri, 28 Oct 2011 08:24:15 -0700
-Message-ID: <7vsjmdta00.fsf@alter.siamese.dyndns.org>
-References: <7v62j9veh3.fsf@alter.siamese.dyndns.org>
- <m3wrbp44kr.fsf@localhost.localdomain>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: [PATCH] blame.c: Properly initialize strbuf after calling, textconv_object()
+Date: Fri, 28 Oct 2011 17:28:28 +0200
+Message-ID: <4EAACA1C.6020302@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 28 17:24:27 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: msysgit@googlegroups.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 28 17:30:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJoIF-0002xc-BZ
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 17:24:27 +0200
+	id 1RJoOO-0006Ta-Gg
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 17:30:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932418Ab1J1PYX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Oct 2011 11:24:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48896 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932381Ab1J1PYW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Oct 2011 11:24:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C8E052E3;
-	Fri, 28 Oct 2011 11:24:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UvWy0tbmQd3Kpwa+Ju/JrA3SAlA=; b=Zxs/Th
-	zKxjF5V8gyXVRPHFRGMvC9VoOb2FtDETZ+7Lw+xSHOV5VtVXd7vQB6w0uVYGAwTF
-	eMTtzpgdSna3xeRd1bMQO+RtIqHdYXHBgsLwn/Sh6RinShtgYmNf6oxAtC3FN1bp
-	fJ1lL/pblRQOnGHjUKRcf/0xcXO7WnokCDneA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FgHbKtJ7MF76DUU0m9JW8zRg3QIZOzkO
-	H1o3VgtZattYT/6bPnxGzqDs+MvwsSdZnVBOobe6IAB3ZMD6Ma6AMxNPoeXaDrSI
-	zr9qfFROWjBgZdmRXmR2uyKtkaLylXjIjiVat+cHmqoGtNuXljisqbhU2TQ+UJ0U
-	KHtz3YofvgI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5455952E2;
-	Fri, 28 Oct 2011 11:24:21 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D3C3552DF; Fri, 28 Oct 2011
- 11:24:20 -0400 (EDT)
-In-Reply-To: <m3wrbp44kr.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Fri, 28 Oct 2011 06:41:57 -0700 (PDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E8AAAC86-0178-11E1-B0DB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932418Ab1J1Pao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Oct 2011 11:30:44 -0400
+Received: from lo.gmane.org ([80.91.229.12]:42993 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753637Ab1J1Pan (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Oct 2011 11:30:43 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RJoOF-0006ML-Ov
+	for git@vger.kernel.org; Fri, 28 Oct 2011 17:30:39 +0200
+Received: from jambul.zib.de ([130.73.68.203])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 28 Oct 2011 17:30:39 +0200
+Received: from sschuberth by jambul.zib.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 28 Oct 2011 17:30:39 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: jambul.zib.de
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184412>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+For a plain string where only the length is known, strbuf.alloc needs to
+be initialized to the length. Otherwise strbuf.alloc is 0 and a later
+call to strbuf_setlen() will fail.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> When bit 4-6 encodes type 5, the first byte is used this way:
->> 
->>  - Bit 0-3 denotes the real "extended" representation type. Because types
->>    0-7 can already be encoded without using the extended format, we can
->>    offset the type by 8 (i.e. if bit 0-3 says 3, it means representation
->>    type 11 = 3 + 8);
->
-> Why not use third byte for that instead?
+This bug surfaced when calling git blame under Windows on a *.doc file.
+The *.doc file is converted to plain text by antiword via the textconv
+mechanism. However, the plain text returned by antiword contains DOS line
+endings instead of Unix line endings which triggered the strbuf_setlen()
+which previous to this patch failed.
 
-Is it a good enough reason that there is no upside for doing so?
+Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+---
+ builtin/blame.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 26a5d42..86c0537 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2113,8 +2113,10 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
+ 		switch (st.st_mode & S_IFMT) {
+ 		case S_IFREG:
+ 			if (DIFF_OPT_TST(opt, ALLOW_TEXTCONV) &&
+-			    textconv_object(read_from, mode, null_sha1, &buf.buf, &buf_len))
++			    textconv_object(read_from, mode, null_sha1, &buf.buf, &buf_len)) {
++				buf.alloc = buf_len;
+ 				buf.len = buf_len;
++			}
+ 			else if (strbuf_read_file(&buf, read_from, st.st_size) != st.st_size)
+ 				die_errno("cannot open or read '%s'", read_from);
+ 			break;
+-- 
+1.7.7.msysgit.1.4.gcc6bb.dirty
