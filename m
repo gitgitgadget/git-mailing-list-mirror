@@ -1,78 +1,102 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git alias and --help
-Date: Fri, 28 Oct 2011 11:00:31 +0200
-Message-ID: <4EAA6F2F.5020301@drmicha.warpmail.net>
-References: <j8clg9$ldh$1@dough.gmane.org> <7vfwiexe6m.fsf@alter.siamese.dyndns.org> <7v8vo6xd4u.fsf@alter.siamese.dyndns.org> <buoty6t9937.fsf@dhlpc061.dev.necel.com> <7vvcr9wyje.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 2/2] pack-objects: optimize "recency order"
+Date: Fri, 28 Oct 2011 11:17:44 +0200
+Message-ID: <CACBZZX7taoaRWALYd_scf6Z2Hr-xo3voNh=vx8LoPvU8Xo290w@mail.gmail.com>
+References: <1310084657-16790-1-git-send-email-gitster@pobox.com>
+ <1310084657-16790-3-git-send-email-gitster@pobox.com> <CACBZZX6Ss4jLtdrDhLUNKCUjEHjHHKzfv-LMkOyTPDhRUXm4sQ@mail.gmail.com>
+ <7vy5w6xf7n.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Miles Bader <miles@gnu.org>, Gelonida N <gelonida@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Dan McGee <dpmcgee@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 28 11:01:03 2011
+X-From: git-owner@vger.kernel.org Fri Oct 28 11:18:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJiJC-00010N-3F
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 11:01:02 +0200
+	id 1RJiZp-0007YN-I8
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 11:18:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751586Ab1J1JAf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Oct 2011 05:00:35 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:51154 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750915Ab1J1JAe (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Oct 2011 05:00:34 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 2DCF020CA1;
-	Fri, 28 Oct 2011 05:00:34 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute4.internal (MEProxy); Fri, 28 Oct 2011 05:00:34 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=yCRLR6B2aVxeNuDWqjjLHG
-	v0lyo=; b=f1q+qacwQQFMsxaXQ+R9bufBgyW+CVhS04Y0gx0D/K6kvxjc3q4GUI
-	LQcjtH1bq2DE9dbdVkUdYlbzarfE1267pASGKtV+032X/g4KnQoEWMUNcKhk7T/H
-	LAbA/U443Ww7nRUSCQcISJobAhHfiuWbLXwaI2qi6juRsYjhpQz5I=
-X-Sasl-enc: lAfgQT9+Rp6qtYxmtqNTvRbePuZ4EtsQQZ5rY/kz5RZW 1319792433
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 463AD40DE92;
-	Fri, 28 Oct 2011 05:00:33 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0) Gecko/20110927 Thunderbird/7.0
-In-Reply-To: <7vvcr9wyje.fsf@alter.siamese.dyndns.org>
+	id S1752424Ab1J1JSI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Oct 2011 05:18:08 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:44154 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750915Ab1J1JSH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Oct 2011 05:18:07 -0400
+Received: by bkbzt4 with SMTP id zt4so260309bkb.19
+        for <git@vger.kernel.org>; Fri, 28 Oct 2011 02:18:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=YMKNs/m5uQJGzZazPTLKFmaVW7vvGIRffXroBDZmOrU=;
+        b=u/+6vdTDgAcqv9DT4Px4FxMk4FMXPpR4mPhb4QFf4SZw0wUxN68oogFUhWX/g7ACIe
+         395QD2FghPiqropSfxHVZBxFgKmceItQETSK+VQ8MJpaTQbGWQlAvKGkIt4TSMyyG4rX
+         plaoSeFyrR2tomt2N7FR7aMTV+WBKmEioMTBI=
+Received: by 10.204.141.134 with SMTP id m6mr1524444bku.91.1319793485185; Fri,
+ 28 Oct 2011 02:18:05 -0700 (PDT)
+Received: by 10.204.112.79 with HTTP; Fri, 28 Oct 2011 02:17:44 -0700 (PDT)
+In-Reply-To: <7vy5w6xf7n.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184344>
 
-Junio C Hamano venit, vidit, dixit 28.10.2011 06:05:
-> Miles Bader <miles@gnu.org> writes:
-> 
->> Of course, that would be the wrong thing for somebody that just wants
->> to be reminded what an alias expands too, but my intuition is that
->> this is a very tiny minority compared to people that want to examine
->> the options for the underlying command...
-> 
-> And it is doubly wrong if help backend is configured to be anything but
-> manpages, no?
-> 
-> As I said, you should be able to come up with a patch that detects and
-> special cases the no frills case (replacement to single token) to get what
-> you want.
+On Fri, Oct 28, 2011 at 00:05, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> We recently upgraded to 1.7.7 and I've traced a very large slowdown =
+in
+>> packing down to this commit.
+>
+> Does Dan McGee's series leading to 38d4deb (pack-objects: don't trave=
+rse
+> objects unnecessarily, 2011-10-18) help?
 
-But "help" is still too much to type for the OP ;) How about this in
-your config:
+Yes it does!
 
-[alias]
-	h = help
-	hh = "!sh -c 'a=$(git config --get alias.$1); : ${a:=$1}; git help
-${a%% *}' -"
+When I do:
 
-Ugly as hell, I know, and works only for aliases whose first word is the
-name of a git command, as well as for non-aliases. Catching "!command"
-type aliases is left as an exercise to the reader.
+    git cherry-pick 703f05ad5835cff92b12c29aecf8d724c8c847e2..38d4deb
 
-Michael
+Here's the time on the linux-2.6.git repack with that series:
+
+    real    0m53.969s
+    user    0m47.063s
+    sys     0m3.020s
+
+On the repository I was having troubles with this was the result on
+master:
+
+    Total 911023 (delta 687744), reused 905500 (delta 683064)
+
+    real    6m0.487s
+    user    4m1.751s
+    sys     1m56.331s
+
+And with the cherry-pick:
+
+    Total 911023 (delta 687744), reused 911023 (delta 687744)
+
+    real    1m44.192s
+    user    0m32.169s
+    sys     0m4.383s
+
+And with 1b4bb16b9ec331c91e28d2e3e7dee5070534b6a2 reverted:
+
+    Total 911023 (delta 687744), reused 911023 (delta 687744)
+
+    real    1m23.796s
+    user    0m31.931s
+    sys     0m3.549s
+
+So it's still slower, but not intolerably slower. I'd be interested to
+find out why we have that 20% difference that doesn't show up on
+linux-2.6.git though, the repository is mostly source code but there
+are some binary blobs in it as well, although not very large, the
+overall size of the entire repository is <500MB.
