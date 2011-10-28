@@ -1,154 +1,169 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv2 3/3] completion: match ctags symbol names in grep
- patterns
-Date: Thu, 27 Oct 2011 23:05:20 -0700
-Message-ID: <20111028060517.GA3993@sigill.intra.peff.net>
-References: <20111021172239.GA22289@sigill.intra.peff.net>
- <20111021173021.GC24417@sigill.intra.peff.net>
- <20111023212928.GG22551@goldbirke>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] define the way new representation types are encoded
+ in the pack
+Date: Thu, 27 Oct 2011 23:12:29 -0700
+Message-ID: <7vwrbptzjm.fsf@alter.siamese.dyndns.org>
+References: <7v62j9veh3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Oct 28 08:05:32 2011
+Cc: Nicolas Pitre <nico@fluxnic.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 28 08:12:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJfZL-00007l-DJ
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 08:05:31 +0200
+	id 1RJfgC-0001ub-Qw
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Oct 2011 08:12:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754609Ab1J1GF1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Oct 2011 02:05:27 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56924
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754388Ab1J1GF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Oct 2011 02:05:27 -0400
-Received: (qmail 8050 invoked by uid 107); 28 Oct 2011 06:11:14 -0000
-Received: from m9a4036d0.tmodns.net (HELO sigill.intra.peff.net) (208.54.64.154)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 28 Oct 2011 02:11:14 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Oct 2011 23:05:20 -0700
-Content-Disposition: inline
-In-Reply-To: <20111023212928.GG22551@goldbirke>
+	id S1755208Ab1J1GMc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Oct 2011 02:12:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57242 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754918Ab1J1GMc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Oct 2011 02:12:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 94C5F30BC;
+	Fri, 28 Oct 2011 02:12:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=LyJ/9qBFEjJb
+	sHkauEgpy5Mkfos=; b=UN2JUa4Yfu6Ovg537QrXUxC5htxnN27HfwuE60bH1KZR
+	re9TWgnOj7l7N3hVgFPdavkNEf53yRVKDZj7OP0ByEtEMRosiaYygr7YMNQBhltI
+	ZkB3utL6+ZLh7/itjPRJC0biwOXEBCYWzi5xuKSb5NbIiJyd5ASNcgeMQpTXm0c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=AU8YYv
+	OakO10IP3p+YLCXMOHj2pWhIv5uEt68a+VfezNMuIMM+I7WK1g8MK960ave/yr9m
+	WwYjtsJ9iWPGXR4PatxseJamgDnDP95DFkEwxK4WGQVFZ53q0l+qNpGOOhDH+KSu
+	owHruQumbGX35mdXm7+FwWSM9V51Quy7XLTg4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8CB0230BB;
+	Fri, 28 Oct 2011 02:12:31 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B37A330B8; Fri, 28 Oct 2011
+ 02:12:30 -0400 (EDT)
+In-Reply-To: <7v62j9veh3.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 27 Oct 2011 23:04:40 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D179BD9C-012B-11E1-84F0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184341>
 
-On Sun, Oct 23, 2011 at 11:29:28PM +0200, SZEDER G=C3=A1bor wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Fri, Oct 21, 2011 at 01:30:21PM -0400, Jeff King wrote:
-> > This incorporates the suggestions from G=C3=A1bor's review, with on=
+> I haven't started using type=3D8 and upwards for anything yet, but be=
+cause
+> we have only one "future expansion" value left, I want us to be extre=
+mely
+> careful in order to avoid painting us into a corner that we cannot ge=
+t out
+> of, so I am sending this out early for a preliminary review.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  cache.h     |    3 ++-
+>  sha1_file.c |   36 ++++++++++++++++++++++++++++++++----
+>  2 files changed, 34 insertions(+), 5 deletions(-)
+>
+> diff --git a/cache.h b/cache.h
+> index 2e6ad36..b02139b 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -380,9 +380,10 @@ enum object_type {
+>  	OBJ_TREE =3D 2,
+>  	OBJ_BLOB =3D 3,
+>  	OBJ_TAG =3D 4,
+> -	/* 5 for future expansion */
+> +	OBJ_EXT =3D 5, /* 5 for future expansion */
+>  	OBJ_OFS_DELTA =3D 6,
+>  	OBJ_REF_DELTA =3D 7,
+> +	OBJ_CAT_TREE =3D 8,
+>  	OBJ_ANY,
+>  	OBJ_MAX
+>  };
+
+As people may be able to guess from the name, CAT_TREE is envisioned to
+encode a large data (primarily of type "blob") by recording the object
+name of a tree object and probably the total length, and would represen=
+t
+the concatenation of all blobs contained in the tree object when the tr=
+ee
+is traversed in some fixed order (e.g. Avery's "bup split"). I am guess=
+ing
+that the payload for CAT_TREE representation type will be:
+
+ - 20-byte object name for the top-level tree object;
+
+ - type of the basic object (commit, tree, blob, or tag) it represents,
+   even though it is unlikely that we would want to record such a large
+   commit or tag that needs CAT_TREE representation;
+
+ - the total length of the basic object it represents, even though it i=
+s
+   redundant (you could traverse and sum the sizes of blobs contained i=
+n
+   the tree object), it would help sha1_object_info() and friends. This
+   will be the "some size" I mentioned in the previous message for this
+   representation type.
+
+We would probably add loose object representation for CAT_TREE, which m=
+ay
+look like:
+
+    "cattree" <size of this cat-tree in decimal> NUL
+    <basic object type> <size of the basic object> NUL
+    <object name of the top-level tree>
+
+and would need to teach unpack_sha1_file() about it. One caveat is that
+we would want to keep the "contents name the object" invariant, so even=
+ if
+a large blob is expressed as a CAT_TREE, its object name must still be
+what we would get by hashing '"blob" <size> NUL <payload>'.
+
+A loose object file in "cattree" representation will not hash to the va=
+lue
+a na=C3=AFve implementation would expect, and fsck_sha1() needs to be a=
+ware of
+it. I haven't thought things through in this area.
+
+=46urther work would involve (no way exhaustive, of course):
+
+ - Teach fsck and connectivity tools that objects that are reachable fr=
+om
+   any object (even a blob) that is represented as a CAT_TREE are neede=
+d
+   and reachable by that object;
+
+ - Teach pack-objects that anything that is represented as a CAT_TREE d=
+oes
+   not need to be deltified (the objects used as its representation wou=
+ld
+   go through the usual deltification rules);
+
+ - Teach unpack-objects to expand CAT_TREE representation into a "cattr=
+ee"
+   loose object.
+
+ - Perhaps teach the attributes mechanism to lie to anybody who asks th=
+at
+   any object in CAT_TREE representation is a binary file to trigger th=
 e
-> > exception: it still looks only in the current directory for the "ta=
-gs"
-> > files. I think that might have some performance implications, so I'=
-d
-> > rather add it separately, if at all.
->=20
-> I agree that scanning through a whole working tree for tags files
-> would cost too much.  But I think that a tags file at the top of the
-> working tree is common enough to be supported, and checking its
-> existence is fairly cheap.
+   "we do not unnecessarily look at binary" logic in "git diff" machine=
+ry.
 
-Actually, it's not too expensive. Asking git for the top of the working
-tree means it has to traverse up to there anyway. So the trick is just
-doing our search without invoking too many external tools which would
-cause unnecessary forks.
+ - Teach fast-import to write out CAT_TREE representation. This is
+   probably the quickest and least-impact way to exploit existing suppo=
+rt
+   for large files in index_fd().
 
-The patch is below, but I'm still not sure it's a good idea.
-
-Grep only looks in the current subdirectory for matches. So if I am in
-"src/foo/bar/", and the tags file is in "src/", then is it really a goo=
-d
-way to generate completions? Most of what's in the tags file will
-probably be in _other_ subdirectories of "src/", and won't be matched b=
-y
-grep at all. So we will give useless entries to bash to complete.
-
-> So how about something like this for the case arm? (I didn't actually
-> tested it.)
->=20
-> 		local tagsfile
-> 		if test -r tags; then
-> 			tagsfile=3Dtags
-> 		else
-> 			local dir=3D"$(__gitdir)"
-
-You don't want __gitdir here, but rather "git rev-parse --show-cdup".
-
-> Btw, there is a bug in the case statement: 'git --no-pager grep <TAB>=
-'
-> offers refs instead of symbols, because $cword is not 2 and $prev
-> doesn't start with a dash.  But it's not worse than the current
-> behavior, so I don't think this bug is a show-stopper for the patch.
-
-Yeah. The intent of the "$cword is 2" thing is to know that we are the
-first non-option argument. Arguably, _get_comp_words_by_ref should
-somehow tell us which position we are completing relative to the actual
-command name.
-
--Peff
-
----
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index af283cb..b0ed657 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1429,6 +1429,39 @@ _git_gitk ()
- 	_gitk
- }
+ - Update grep.c::grep_buffer() to take not <buf,size> but git_istream,
+   and rewrite builtin/grep.c::grep_sha1() to use streaming interface.
 =20
-+__git_cdup_dirs() {
-+	local prefix=3D$(git rev-parse --show-cdup 2>/dev/null)
-+	local oldifs=3D$IFS
-+	local dots
-+	local i
-+	IFS=3D/
-+	for i in $prefix; do
-+		dots=3D$dots../
-+		echo "$dots"
-+	done
-+	IFS=3D$oldifs
-+}
-+
-+__git_find_in_cdup_one() {
-+	local dir=3D$1; shift
-+	for i in "$@"; do
-+		if test -r "$dir$i"; then
-+			echo "$dir$i"
-+			return 0
-+		fi
-+	done
-+	return 1
-+}
-+
-+__git_find_in_cdup() {
-+	__git_find_in_cdup_one "" "$@" && return
-+
-+	local dir
-+	for dir in $(__git_cdup_dirs); do
-+		__git_find_in_cdup_one "$dir" "$@" && return
-+	done
-+}
-+
- __git_match_ctag() {
- 	awk "/^${1////\\/}/ { print \$1 }" "$2"
- }
-@@ -1457,8 +1490,9 @@ _git_grep ()
-=20
- 	case "$cword,$prev" in
- 	2,*|*,-*)
--		if test -r tags; then
--			__gitcomp "$(__git_match_ctag "$cur" tags)"
-+		local tags=3D$(__git_find_in_cdup tags)
-+		if test -n "$tags"; then
-+			__gitcomp "$(__git_match_ctag "$cur" "$tags")"
- 			return
- 		fi
- 		;;
