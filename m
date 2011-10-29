@@ -1,47 +1,54 @@
-From: Eric Raible <raible@nextest.com>
-Subject: sparse checkout using exclusions
-Date: Fri, 28 Oct 2011 17:17:54 -0700
-Message-ID: <4EAB4632.5080101@nextest.com>
+From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
+Subject: Git is exploding
+Date: Sat, 29 Oct 2011 02:39:15 +0200
+Message-ID: <CAA787r=jeBv9moineaJVY=urYzEX+d7n23ED-txAGhLS+OPbmg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Oct 29 02:22:28 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 29 02:46:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RJwgt-0000vn-15
-	for gcvg-git-2@lo.gmane.org; Sat, 29 Oct 2011 02:22:27 +0200
+	id 1RJx3l-00079U-J2
+	for gcvg-git-2@lo.gmane.org; Sat, 29 Oct 2011 02:46:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932808Ab1J2AR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Oct 2011 20:17:57 -0400
-Received: from exchange.domain1.nextest.com ([12.96.234.114]:55074 "EHLO
-	exchange.DOMAIN1.nextest.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755931Ab1J2AR4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Oct 2011 20:17:56 -0400
-Received: from [131.101.151.102] (131.101.151.102) by
- Exchange.DOMAIN1.nextest.com (131.101.21.39) with Microsoft SMTP Server (TLS)
- id 8.2.176.0; Fri, 28 Oct 2011 17:17:55 -0700
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+	id S1755964Ab1J2AjS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Oct 2011 20:39:18 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:58024 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751610Ab1J2AjR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Oct 2011 20:39:17 -0400
+Received: by gyb13 with SMTP id 13so4142277gyb.19
+        for <git@vger.kernel.org>; Fri, 28 Oct 2011 17:39:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=fjfZMTZURawvEiT7dYVpdo0wxOSHu12UqGEPkVbEI3E=;
+        b=iB+RICVebGAN+eBIaqCDr6FaBChHQhytdkkc410pMAmoeYFLv0fu7Ok+vNjB0Ky9HA
+         trgfNr2plrnDpnnCg1esdGf0wrW88PiR3+QOcw8S+dshNmVjXjAVliNnJhxkWkZqN89K
+         I4/8vUsiAJ0XSc5vEJDP7ZGif9fMBz9+MGO8w=
+Received: by 10.68.34.226 with SMTP id c2mr6625390pbj.99.1319848756155; Fri,
+ 28 Oct 2011 17:39:16 -0700 (PDT)
+Received: by 10.142.135.5 with HTTP; Fri, 28 Oct 2011 17:39:15 -0700 (PDT)
+X-Google-Sender-Auth: x-o3vonDk_Kzn530zOgKd--qaek
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184445>
 
-Hi all.
+=46ound an interesting "Popularity Contest" graph on debian.org (via
+Thomas Bassetto on G+):
 
-I was just about to send a long message about using exclusions
-in sparse-checkout, when I did one last search and saw that all
-of my problems were fixed by using '/*' instead of '*' as the
-first line in .git/info/sparse-checkout.
+http://bit.ly/rNxVN0
 
-Might it make sense for the example in git-read-tree.html to be
-updated to include the leading slash?
+Very cool indeed. Maybe it's the rise of GitHub, or simply that the
+user interface is mature enough that also "regular" users feel
+comfortable with it.
 
-    /*
-    !unwanted
-
-- Eric
+Regards,
+=C3=98yvind
