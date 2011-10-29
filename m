@@ -1,86 +1,69 @@
-From: Mika Fischer <mika.fischer@zoopnet.de>
-Subject: [PATCH] http.c: Use curl_multi_fdset to select on curl fds instead of just sleeping
-Date: Sat, 29 Oct 2011 17:20:21 +0200
-Message-ID: <1319901621-482-1-git-send-email-mika.fischer@zoopnet.de>
-Cc: Mika Fischer <mika.fischer@zoopnet.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 29 17:20:47 2011
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2011, #11; Fri, 28)
+Date: Sat, 29 Oct 2011 17:42:36 +0200
+Message-ID: <CABPQNSYi7gJKbUb7y2hNvF9KXXyt8ShgJD8AoBhryGwAxp6ejw@mail.gmail.com>
+References: <7vzkglrnmc.fsf@alter.siamese.dyndns.org>
+Reply-To: kusmabite@gmail.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 29 17:43:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RKAiE-0007NG-3o
-	for gcvg-git-2@lo.gmane.org; Sat, 29 Oct 2011 17:20:46 +0200
+	id 1RKB4B-0006dz-Tb
+	for gcvg-git-2@lo.gmane.org; Sat, 29 Oct 2011 17:43:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933323Ab1J2PU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Oct 2011 11:20:28 -0400
-Received: from trillian.zoopnet.de ([85.214.111.199]:42981 "EHLO
-	trillian.zoopnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932753Ab1J2PU2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Oct 2011 11:20:28 -0400
-Received: from ford.Speedport_W_723V_Typ_A (p5B39E0B3.dip.t-dialin.net [91.57.224.179])
-	by trillian.zoopnet.de (Postfix) with ESMTPSA id 0497426E42FD;
-	Sat, 29 Oct 2011 17:20:25 +0200 (CEST)
-X-Mailer: git-send-email 1.7.7.1.489.g1fee
+	id S933458Ab1J2PnV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 Oct 2011 11:43:21 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:36745 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932484Ab1J2PnS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 29 Oct 2011 11:43:18 -0400
+Received: by gyb13 with SMTP id 13so4552699gyb.19
+        for <git@vger.kernel.org>; Sat, 29 Oct 2011 08:43:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=dJExrdlFydZWQ391DzsWElkWfMMSb5cW0Y0dSaRVm5s=;
+        b=LPBOvu3A/Z/mdP8DZjgxqSqooJn6CyjV8hqz/E2zdAj546buwgSgpVXgO1UcV3otfW
+         rIZB1dGMsv8HIcTdoRzFWZu+qDLf1Xhe8hIGgghi+d8UxDIZHUL8iI5FWBokUUiSy51F
+         Yd6Fjb/IkPkgX0eI+XMvpTJ2bMvchwzseUXD4=
+Received: by 10.68.38.8 with SMTP id c8mr11157471pbk.42.1319902997070; Sat, 29
+ Oct 2011 08:43:17 -0700 (PDT)
+Received: by 10.68.71.135 with HTTP; Sat, 29 Oct 2011 08:42:36 -0700 (PDT)
+In-Reply-To: <7vzkglrnmc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184456>
 
-Previously, when nothing could be read from the connections curl had
-open, git would just sleep unconditionally for 50ms. This patch changes
-this behavior and instead obtains the recommended timeout and the actual
-file descriptors from curl. This should eliminate time spent sleeping when
-data could actually be read/written on the socket.
+Cc'ing the msysgit list.
 
-Signed-off-by: Mika Fischer <mika.fischer@zoopnet.de>
----
- http.c |   21 ++++++++++++++++-----
- 1 files changed, 16 insertions(+), 5 deletions(-)
+On Fri, Oct 28, 2011 at 8:12 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> * ef/mingw-upload-archive (2011-10-26) 3 commits
+> =A0- upload-archive: use start_command instead of fork
+> =A0- compat/win32/poll.c: upgrade from upstream
+> =A0- mingw: move poll out of sys-folder
+>
+> Are msysgit folks OK with this series (I didn't see msysgit list Cc'e=
+d on
+> these patches)? If so let's move this forward, as the changes to the =
+core
+> part seem solid.
+>
 
-diff --git a/http.c b/http.c
-index a4bc770..12180f3 100644
---- a/http.c
-+++ b/http.c
-@@ -649,6 +649,7 @@ void run_active_slot(struct active_request_slot *slot)
- 	fd_set excfds;
- 	int max_fd;
- 	struct timeval select_timeout;
-+	long int curl_timeout;
- 	int finished = 0;
- 
- 	slot->finished = &finished;
-@@ -664,14 +665,24 @@ void run_active_slot(struct active_request_slot *slot)
- 		}
- 
- 		if (slot->in_use && !data_received) {
--			max_fd = 0;
-+			curl_multi_timeout(curlm, &curl_timeout);
-+			if (curl_timeout == 0) {
-+				continue;
-+			} else if (curl_timeout == -1) {
-+				select_timeout.tv_sec  = 0;
-+				select_timeout.tv_usec = 50000;
-+			} else {
-+				select_timeout.tv_sec  =  curl_timeout / 1000;
-+				select_timeout.tv_usec = (curl_timeout % 1000) * 1000;
-+			}
-+
-+			max_fd = -1;
- 			FD_ZERO(&readfds);
- 			FD_ZERO(&writefds);
- 			FD_ZERO(&excfds);
--			select_timeout.tv_sec = 0;
--			select_timeout.tv_usec = 50000;
--			select(max_fd, &readfds, &writefds,
--			       &excfds, &select_timeout);
-+			curl_multi_fdset(curlm, &readfds, &writefds, &excfds, &max_fd);
-+
-+			select(max_fd+1, &readfds, &writefds, &excfds, &select_timeout);
- 		}
- 	}
- #else
--- 
-1.7.7.1.489.g1fee
+The msysgit list not being Cc'ed on the patches was a slip-up on my
+behalf. I believe the changes are relatively uncontroversial from an
+msysgit point of view, though. However, an ack/nack would be
+appreciated ;)
+
+Or does people prefer me re-sending the series, with the msysgit list C=
+c'ed?
