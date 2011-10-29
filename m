@@ -1,74 +1,86 @@
 From: Mika Fischer <mika.fischer@zoopnet.de>
-Subject: Re: git slow over https
-Date: Sat, 29 Oct 2011 17:15:17 +0200
-Message-ID: <CAOs=hR+hWPRBNqmwwnizMkux_84MOu1=GrS6kkQRFe5mt0MNvw@mail.gmail.com>
-References: <CAOs=hR+K_YZcjdAUq_jaz0wc9k8BRQ2-ny7A=GFaNL4R-W0UBw@mail.gmail.com>
- <alpine.DEB.2.00.1110282019510.28338@tvnag.unkk.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Daniel Stenberg <daniel@haxx.se>
-X-From: git-owner@vger.kernel.org Sat Oct 29 17:19:11 2011
+Subject: [PATCH] http.c: Use curl_multi_fdset to select on curl fds instead of just sleeping
+Date: Sat, 29 Oct 2011 17:20:21 +0200
+Message-ID: <1319901621-482-1-git-send-email-mika.fischer@zoopnet.de>
+Cc: Mika Fischer <mika.fischer@zoopnet.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 29 17:20:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RKAgg-0006ng-O8
-	for gcvg-git-2@lo.gmane.org; Sat, 29 Oct 2011 17:19:11 +0200
+	id 1RKAiE-0007NG-3o
+	for gcvg-git-2@lo.gmane.org; Sat, 29 Oct 2011 17:20:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932944Ab1J2PPm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 Oct 2011 11:15:42 -0400
-Received: from trillian.zoopnet.de ([85.214.111.199]:33117 "EHLO
+	id S933323Ab1J2PU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Oct 2011 11:20:28 -0400
+Received: from trillian.zoopnet.de ([85.214.111.199]:42981 "EHLO
 	trillian.zoopnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932744Ab1J2PPm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 29 Oct 2011 11:15:42 -0400
-Received: from mail-gx0-f174.google.com (mail-gx0-f174.google.com [209.85.161.174])
-	by trillian.zoopnet.de (Postfix) with ESMTPSA id 9AE3926E42FD
-	for <git@vger.kernel.org>; Sat, 29 Oct 2011 17:15:40 +0200 (CEST)
-Received: by ggnb1 with SMTP id b1so4553000ggn.19
-        for <git@vger.kernel.org>; Sat, 29 Oct 2011 08:15:39 -0700 (PDT)
-Received: by 10.236.152.2 with SMTP id c2mr9197954yhk.36.1319901339163; Sat,
- 29 Oct 2011 08:15:39 -0700 (PDT)
-Received: by 10.236.60.135 with HTTP; Sat, 29 Oct 2011 08:15:17 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.00.1110282019510.28338@tvnag.unkk.fr>
+	with ESMTP id S932753Ab1J2PU2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Oct 2011 11:20:28 -0400
+Received: from ford.Speedport_W_723V_Typ_A (p5B39E0B3.dip.t-dialin.net [91.57.224.179])
+	by trillian.zoopnet.de (Postfix) with ESMTPSA id 0497426E42FD;
+	Sat, 29 Oct 2011 17:20:25 +0200 (CEST)
+X-Mailer: git-send-email 1.7.7.1.489.g1fee
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184455>
 
-Thanks for the pointer. Doing it this way fixes things for me. I'll
-send a patch soon. I'd appreciate it if you could check it quicky.
+Previously, when nothing could be read from the connections curl had
+open, git would just sleep unconditionally for 50ms. This patch changes
+this behavior and instead obtains the recommended timeout and the actual
+file descriptors from curl. This should eliminate time spent sleeping when
+data could actually be read/written on the socket.
 
-Best,
- Mika
+Signed-off-by: Mika Fischer <mika.fischer@zoopnet.de>
+---
+ http.c |   21 ++++++++++++++++-----
+ 1 files changed, 16 insertions(+), 5 deletions(-)
 
-On Fri, Oct 28, 2011 at 20:28, Daniel Stenberg <daniel@haxx.se> wrote:
-> On Fri, 28 Oct 2011, Mika Fischer wrote:
->
->> 1) What's the purpose of the select in http.c:673? Can it be removed=
-?
->> 2) If it serves a useful purpose, what can be the reason that it hur=
-ts
->> performance so much in my case?
->
-> The purpose must be to avoid busy-looping in case there's nothing to =
-read.
->
-> It should probably use curl_multi_fdset [1] to get a decent set to wa=
-it for
-> instead so that it'll return fast if there is pending data. The timeo=
-ut for
-> select can in fact also get extended with the use of curl_multi_timeo=
-ut [2].
->
-> 1 =3D http://curl.haxx.se/libcurl/c/curl_multi_fdset.html
-> 2 =3D http://curl.haxx.se/libcurl/c/curl_multi_timeout.html
->
-> --
->
-> =C2=A0/ daniel.haxx.se
->
->
+diff --git a/http.c b/http.c
+index a4bc770..12180f3 100644
+--- a/http.c
++++ b/http.c
+@@ -649,6 +649,7 @@ void run_active_slot(struct active_request_slot *slot)
+ 	fd_set excfds;
+ 	int max_fd;
+ 	struct timeval select_timeout;
++	long int curl_timeout;
+ 	int finished = 0;
+ 
+ 	slot->finished = &finished;
+@@ -664,14 +665,24 @@ void run_active_slot(struct active_request_slot *slot)
+ 		}
+ 
+ 		if (slot->in_use && !data_received) {
+-			max_fd = 0;
++			curl_multi_timeout(curlm, &curl_timeout);
++			if (curl_timeout == 0) {
++				continue;
++			} else if (curl_timeout == -1) {
++				select_timeout.tv_sec  = 0;
++				select_timeout.tv_usec = 50000;
++			} else {
++				select_timeout.tv_sec  =  curl_timeout / 1000;
++				select_timeout.tv_usec = (curl_timeout % 1000) * 1000;
++			}
++
++			max_fd = -1;
+ 			FD_ZERO(&readfds);
+ 			FD_ZERO(&writefds);
+ 			FD_ZERO(&excfds);
+-			select_timeout.tv_sec = 0;
+-			select_timeout.tv_usec = 50000;
+-			select(max_fd, &readfds, &writefds,
+-			       &excfds, &select_timeout);
++			curl_multi_fdset(curlm, &readfds, &writefds, &excfds, &max_fd);
++
++			select(max_fd+1, &readfds, &writefds, &excfds, &select_timeout);
+ 		}
+ 	}
+ #else
+-- 
+1.7.7.1.489.g1fee
