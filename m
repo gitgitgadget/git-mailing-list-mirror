@@ -1,77 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] define the way new representation types are encoded
- in the pack
-Date: Sun, 30 Oct 2011 00:13:51 -0700
-Message-ID: <7vzkgjq7dc.fsf@alter.siamese.dyndns.org>
-References: <7v62j9veh3.fsf@alter.siamese.dyndns.org>
- <7vwrbptzjm.fsf@alter.siamese.dyndns.org>
- <CACsJy8Cz0R_s+VYRd+1wTTfbt_vH5dd3ALgZip0xn7rfYf6gpw@mail.gmail.com>
- <7v4nyrrm1w.fsf@alter.siamese.dyndns.org>
+From: Mika Fischer <mika.fischer@zoopnet.de>
+Subject: Re: [PATCH] http.c: Use curl_multi_fdset to select on curl fds
+ instead of just sleeping
+Date: Sun, 30 Oct 2011 08:19:23 +0100
+Message-ID: <CAOs=hR+YuF+HP0n0132Ktm3RdeWsnVp0Bgt89LNn+VyT6W0mcw@mail.gmail.com>
+References: <1319901621-482-1-git-send-email-mika.fischer@zoopnet.de> <alpine.DEB.2.00.1110292230500.28196@tvnag.unkk.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 30 08:14:00 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Daniel Stenberg <daniel@haxx.se>
+X-From: git-owner@vger.kernel.org Sun Oct 30 08:20:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RKPah-0006P7-32
-	for gcvg-git-2@lo.gmane.org; Sun, 30 Oct 2011 08:13:59 +0100
+	id 1RKPhN-0007wm-9B
+	for gcvg-git-2@lo.gmane.org; Sun, 30 Oct 2011 08:20:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752408Ab1J3HNy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Oct 2011 03:13:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52315 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752279Ab1J3HNx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Oct 2011 03:13:53 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E7324DD8;
-	Sun, 30 Oct 2011 03:13:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xSgy4q3hsmQQtZQtNmYez4GDB1g=; b=rIhxH3
-	4f+MVWkYL+fnTj9/FkJmZl0LBGmD413eShld0KS0UuogWmnzyszuno+DwnU4QDvP
-	c4ldo5e9yRlOnymxJyvNCzbn9zZOsC/VhRloUBfqY9tn6O4n2frcWfETtTvMgh4y
-	M+Q+g6AqqCGpmAQxOMse+Thnc/qUeQcsvTQds=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mjElGN9RrHfd84h4ydF0BBU/piquvkCW
-	wQyGfePK+wOg/N+d5vPR8P0FA8BPjfZDkwBmAIP44gNMI+o4qpRO8AftKj/T+lCz
-	+irJcI2vYakADdFo5XIXWkvfE/4SeI0KJLSHbFkydhbCTtQqn3ShtZBuuBFsoN9w
-	ta1KVuANSVI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 367904DD7;
-	Sun, 30 Oct 2011 03:13:53 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C1F584DD6; Sun, 30 Oct 2011
- 03:13:52 -0400 (EDT)
-In-Reply-To: <7v4nyrrm1w.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 30 Oct 2011 00:11:23 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B8FAEE3E-02C6-11E1-A1F6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752830Ab1J3HTs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Oct 2011 03:19:48 -0400
+Received: from trillian.zoopnet.de ([85.214.111.199]:49353 "EHLO
+	trillian.zoopnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752625Ab1J3HTr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 30 Oct 2011 03:19:47 -0400
+Received: from mail-gy0-f174.google.com (mail-gy0-f174.google.com [209.85.160.174])
+	by trillian.zoopnet.de (Postfix) with ESMTPSA id BD3D626E42FD
+	for <git@vger.kernel.org>; Sun, 30 Oct 2011 08:19:45 +0100 (CET)
+Received: by gyb13 with SMTP id 13so4897782gyb.19
+        for <git@vger.kernel.org>; Sun, 30 Oct 2011 00:19:44 -0700 (PDT)
+Received: by 10.236.176.199 with SMTP id b47mr11022532yhm.104.1319959184287;
+ Sun, 30 Oct 2011 00:19:44 -0700 (PDT)
+Received: by 10.236.60.135 with HTTP; Sun, 30 Oct 2011 00:19:23 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.00.1110292230500.28196@tvnag.unkk.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184467>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+On Sat, Oct 29, 2011 at 22:33, Daniel Stenberg <daniel@haxx.se> wrote:
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 curl_multi_fdset(curlm, &readfds, &writefds,
+>> &excfds, &max_fd);
+>> +
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 select(max_fd+1, &readfds, &writefds, &excfds,
+>> &select_timeout);
 >
->> Because all blobs in this tree object must be in a fixed order, and
->> they won't likely have meaningful names nor permission, should
->> CAT_TREE payload is a SHA-1 sequence of all blobs (or cat-trees if we
->> want nested trees) instead? IOW the tree is integrated into cat-tree
->> object, not as a separate tree object.
+> At times, curl_multi_fdset() might return -1 in max_fd, as when there=
+'s no
+> internal socket around to provide to the application to wait for.
 >
-> I have no problem with that (I am not worried about minor details of the
-> actual implementation of cat-tree yet).
+> Calling select() with max_fd+1 (=3D=3D 0) will then not be appreciate=
+d by all
+> implementations of select() so that case should probably also be cove=
+red by
+> the 50ms sleep approach...
 
-Side note. It should be renamed "split-object" or something if we go the
-route you suggest, as "tree"-ness of the actual representation is not
-essential.
+Actually, the 50ms sleep was also implemented using select(0, ...)
+before the patch. I tried to keep the previous behavior when curl does
+not give us any information.
+I assumed that the select(0, ...) was some portable way to sleep with
+microsecond granularity.
+Is there some other way to tell select not to check any fds, or should
+I just call select(1, ...)?
+
+Best,
+ Mika
