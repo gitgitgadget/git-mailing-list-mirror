@@ -1,100 +1,112 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH/WIP 03/11] t5403: avoid doing "git add foo/bar" where
- foo/.git exists
-Date: Sun, 30 Oct 2011 16:55:54 +0700
-Message-ID: <CACsJy8Ae1MPYzjoouZoFCU6Ltr9UznukfuTrJb=OUJYr9VTYSg@mail.gmail.com>
-References: <1319438176-7304-1-git-send-email-pclouds@gmail.com>
- <1319438176-7304-4-git-send-email-pclouds@gmail.com> <7vd3dk516p.fsf@alter.siamese.dyndns.org>
- <CACsJy8CjJnO6rDVTV1tC9rWXP51LHBtUvNsgVWNfwC+HuNQ-6Q@mail.gmail.com>
- <7vr51z3bqx.fsf@alter.siamese.dyndns.org> <CACsJy8C2nUJkN5=E7p2u_wjHqWy7EC_BS3Sr4+_QgunWHDdtKg@mail.gmail.com>
- <7vobx2z60w.fsf@alter.siamese.dyndns.org> <CACsJy8DdQXXoYT2gB2L5z6pdCNU_vL2w7c8eJvKRGX2T9iAC3Q@mail.gmail.com>
- <7vaa8jrm6a.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?RGVqYW4gUmliacSN?= <dejan.ribic@gmail.com>
+Subject: [PATCH] typo in git-gui/lib/sshkeys.tcl
+Date: Sun, 30 Oct 2011 11:15:06 +0100
+Message-ID: <4EAD23AA.8000400@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 30 10:56:33 2011
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigDB2197085D6DB814599471D8"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 30 11:15:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RKS7z-0004i7-OQ
-	for gcvg-git-2@lo.gmane.org; Sun, 30 Oct 2011 10:56:32 +0100
+	id 1RKSQJ-0001br-KC
+	for gcvg-git-2@lo.gmane.org; Sun, 30 Oct 2011 11:15:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933299Ab1J3J41 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Oct 2011 05:56:27 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:47598 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932481Ab1J3J40 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 30 Oct 2011 05:56:26 -0400
-Received: by bkbzt4 with SMTP id zt4so1419288bkb.19
-        for <git@vger.kernel.org>; Sun, 30 Oct 2011 02:56:25 -0700 (PDT)
+	id S933790Ab1J3KPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Oct 2011 06:15:22 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:33343 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933363Ab1J3KPV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Oct 2011 06:15:21 -0400
+Received: by faan17 with SMTP id n17so4757242faa.19
+        for <git@vger.kernel.org>; Sun, 30 Oct 2011 03:15:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=5zC4BPRQGHkWStx6pS4pxOm8+jaVS4UMRI97NPi/tMU=;
-        b=EkfDgY1mX9j4ucBPc4GL7oNjzY0Phne6L+YOlngnLU1C9Ad7xCtFz1jrTvMZZMAlwg
-         IkUfTC5E2DrdwpVZN/hNw8GW0vQa+wa/Z/VUmv9XL0sCV3LNhXx+x6ywLcCf1GRg708f
-         HdgzGgUOCV63Yqh7bQkqn6Uu99eZvmW0Lry6g=
-Received: by 10.204.147.215 with SMTP id m23mr7127595bkv.84.1319968585090;
- Sun, 30 Oct 2011 02:56:25 -0700 (PDT)
-Received: by 10.204.114.2 with HTTP; Sun, 30 Oct 2011 02:55:54 -0700 (PDT)
-In-Reply-To: <7vaa8jrm6a.fsf@alter.siamese.dyndns.org>
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :x-enigmail-version:content-type;
+        bh=imbCrEsa94wRz6zRU2oMiU98lueyLIn6cE4pnm1WhdE=;
+        b=Cx/1Ne2vpDdgNjVvh6T2LXaJvTUVLD2jcKNyZF8/z9SusjlOMK7Enr/k2W7YnofwYc
+         Uj95AtoV3bgUuVcdG+LtnzQk2NCtbhNt1rEAdrtADvYH4zzvFM5IzvQYPZ0TL33AmukD
+         UzyJXu9IsunZQIf0rQir2jY5Xmsj4Xrjsrh3k=
+Received: by 10.223.16.82 with SMTP id n18mr20620979faa.2.1319969720246;
+        Sun, 30 Oct 2011 03:15:20 -0700 (PDT)
+Received: from [192.168.2.136] (cpe-46-164-0-113.dynamic.amis.net. [46.164.0.113])
+        by mx.google.com with ESMTPS id y17sm30368826faa.22.2011.10.30.03.15.19
+        (version=SSLv3 cipher=OTHER);
+        Sun, 30 Oct 2011 03:15:19 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+X-Enigmail-Version: 1.4a1pre
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184472>
 
-On Sun, Oct 30, 2011 at 2:08 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0Side note. I just did this and I am not ge=
-tting what you saw above.
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ mkdir -p /var/tmp/j/y && cd /var/tmp/j/y
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git init; git init clone2
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ : >3; : >clone2/2
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ GIT_DIR=3Dclone2/.git git add clone2/2 3
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ GIT_DIR=3Dclone2/.git git ls-files
-> =C2=A0 =C2=A0 =C2=A0 =C2=A03
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0clone2/2
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0The behavour is different when clone2/.git=
- already has commit, and
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0whatever codepath that gives these two dif=
-ferent behaviour needs
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0to be fixed.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigDB2197085D6DB814599471D8
+Content-Type: multipart/mixed;
+ boundary="------------090402080602050100010109"
 
-It's resolve_gitlink_ref() in treat_directory(). I think replacing
-that call() with is_git_directory() would fix this problem. We may
-want to do the same with remove_dir_recursively().
+This is a multi-part message in MIME format.
+--------------090402080602050100010109
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> When GIT_DIR=3Dclone2/.git is given, however, the caller explicitly d=
-eclines
-> the repository discovery. We do not know how the repository we are de=
-aling
-> with (which we were explicitly told with $GIT_DIR) and a directory wh=
-ose
-> name is ".git" under "clone2" we happened to find in read_directory()
-> relates to each other, especially when our index does not have clone2=
- as
-> our submodule.
->
-> We however *do* know that our working tree is our current directory, =
-so
-> it would be wrong to do this:
->
-> =C2=A0 =C2=A0$ GIT_DIR=3Dclone2/.git git add clone2/2 3; echo $?
-> =C2=A0 =C2=A0error: 3 is outside our repository, possibly goverened b=
-y .git
-> =C2=A0 =C2=A01
->
-> The command should just add clone2/2 and 3 as it was told to.
+Hi,
 
-I am concerned about clone2/2 in this case, not 3. I guess we can
-check if clone2/.git is the repo we are using. If it is, skip it.
---=20
-Duy
+   I am new at this, but I am trying to fix a few "bitesize" bugs in
+Ubuntu for start and somebody suggested, that I post this patch to
+Upstream, so I'm doing this.
+
+Cheers,
+
+Dejan
+
+P.S.: I am not subscribed to this list, so please CC to me.
+
+--------------090402080602050100010109
+Content-Type: text/x-patch;
+ name="sshkeys.tcl.diff"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+ filename="sshkeys.tcl.diff"
+
+=3D=3D=3D modified file 'git-gui/lib/sshkey.tcl'
+--- git-gui/lib/sshkey.tcl	2010-04-03 15:07:19 +0000
++++ git-gui/lib/sshkey.tcl	2011-10-29 23:08:15 +0000
+@@ -117,7 +117,7 @@
+ 	} else {
+ 		set finfo [find_ssh_key]
+ 		if {$finfo eq {}} {
+-			set sshkey_title [mc "Generation succeded, but no keys found."]
++			set sshkey_title [mc "Generation succeeded, but no keys found."]
+ 			$w.contents insert end $sshkey_output
+ 		} else {
+ 			set sshkey_title [mc "Your key is in: %s" [lindex $finfo 0]]
+
+
+--------------090402080602050100010109--
+
+--------------enigDB2197085D6DB814599471D8
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQEcBAEBAgAGBQJOrSO2AAoJEE81mVwDgtRlnWYIAK8WqTL0DE7z/MowG5Q2//WA
+MsxSsmfuM/5ZLCc1wPHjD8t8sjsBPSm3FS8SQnmc2CX66HC7rzvJSYeGgt0oIkha
+oQOuhYra1iV3Cj5IgpTcp85VBehIk/L2A8+flhbU0nElt3PKhh0HdqxAXEsx7bHd
+yo1fj98Sp4HXMM3efe91ODU1TYdEUFL2BLJb0chqtje2lO2xwPL/htSfmfWt7lHK
+XNXnrucv44/BTBYa+01a/l50BkQBLBJtLRH+hFTda3GfNJkZ6PFx9Jdei6ehgOUe
+rdQcMMhzSAzvaJHoBA4hdsEA4PaiFJZg7rXVgvWlIvY9WpWT7nU9u5kD0ut8vTc=
+=PoYa
+-----END PGP SIGNATURE-----
+
+--------------enigDB2197085D6DB814599471D8--
