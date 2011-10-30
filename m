@@ -1,95 +1,68 @@
-From: Magnus =?iso-8859-1?Q?B=E4ck?= <magnus.back@sonyericsson.com>
-Subject: Re: imap-send badly handles commit bodies beginning with "From <"
-Date: Sun, 30 Oct 2011 10:01:11 +0100
-Message-ID: <20111030090111.GA1624@jpl.local>
-References: <20111028180044.GA3966@foghorn.codeweavers.com>
- <20111028203256.GA15082@sigill.intra.peff.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH/WIP 05/11] symbolize return values of tree_entry_interesting()
+Date: Sun, 30 Oct 2011 16:17:43 +0700
+Message-ID: <CACsJy8BshQT=iZRHXLaaVaohYRX5tYvCvVZSPPVbVuMX2gSW9w@mail.gmail.com>
+References: <1319438176-7304-1-git-send-email-pclouds@gmail.com>
+ <1319438176-7304-6-git-send-email-pclouds@gmail.com> <7vbot2z3gf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andrew Eikum <aeikum@codeweavers.com>, Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 30 10:05:05 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 30 10:18:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RKRKD-0007oe-G4
-	for gcvg-git-2@lo.gmane.org; Sun, 30 Oct 2011 10:05:05 +0100
+	id 1RKRX3-0003FJ-Lr
+	for gcvg-git-2@lo.gmane.org; Sun, 30 Oct 2011 10:18:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755463Ab1J3JBQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Oct 2011 05:01:16 -0400
-Received: from smtprelay-b12.telenor.se ([62.127.194.21]:40065 "EHLO
-	smtprelay-b12.telenor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755458Ab1J3JBP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Oct 2011 05:01:15 -0400
-Received: from iph3.telenor.se (iph3.telenor.se [195.54.127.134])
-	by smtprelay-b12.telenor.se (Postfix) with ESMTP id 897871476F
-	for <git@vger.kernel.org>; Sun, 30 Oct 2011 10:01:13 +0100 (CET)
-X-SMTPAUTH-B2: [b627879]
-X-SENDER-IP: [83.227.167.132]
-X-LISTENER: [smtp.bredband.net]
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AhsTALIRrU5T46eEPGdsb2JhbABDmWtDjEWCSxkBAQEBNzKBcgEBBAEyASMjBQsLGBwSFBgBDAotiAICBrFriCFhBKVu
-X-IronPort-AV: E=Sophos;i="4.69,426,1315173600"; 
-   d="scan'208";a="140015892"
-Received: from ua-83-227-167-132.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.167.132])
-  by iph3.telenor.se with ESMTP; 30 Oct 2011 10:01:13 +0100
-Received: by elwood.jpl.local (Postfix, from userid 1000)
-	id E88EF423AE; Sun, 30 Oct 2011 10:01:11 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20111028203256.GA15082@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S932472Ab1J3JSQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Oct 2011 05:18:16 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:36730 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932110Ab1J3JSP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Oct 2011 05:18:15 -0400
+Received: by bkbzt4 with SMTP id zt4so1410049bkb.19
+        for <git@vger.kernel.org>; Sun, 30 Oct 2011 02:18:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=2SmxNpvDe9zLkAK7XWIBTU8l8fVJA5QHfKInrqGuuPA=;
+        b=MHqWN/fTcRIPE9IglKald8cGjWtxCYM3m8/bISdSKbM/TAuyiOC+pP6G+uDrJT+zMc
+         JKfIICRFeprMnVzJsLh9eDmzXPHViHdUbWBtLww1WAxnD2tk9W7woCfNk6FOZY9Se0Rr
+         nWfj5Jq9yAnbFCQpzVuY/gzQGRZCWdM4fy3kc=
+Received: by 10.204.147.215 with SMTP id m23mr7061613bkv.84.1319966294213;
+ Sun, 30 Oct 2011 02:18:14 -0700 (PDT)
+Received: by 10.204.114.2 with HTTP; Sun, 30 Oct 2011 02:17:43 -0700 (PDT)
+In-Reply-To: <7vbot2z3gf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184469>
 
-On Friday, October 28, 2011 at 22:32 CEST,
-     Jeff King <peff@peff.net> wrote:
-
-> On Fri, Oct 28, 2011 at 01:00:44PM -0500, Andrew Eikum wrote:
->=20
-> > On the server side, it was split into two mails on either side
-> > of that commit message's From line with neither mail actually
-> > containing the From line. To fix it, I just changed it to "Copied
-> > from <url>:" :-P
-> >=20
-> > Ain't mbox grand?
->=20
-> Mbox does have this problem, but I think in this case it is a
-> particularly crappy implementation of mbox in imap-send. Look at
-> imap-send.c:split_msg; it just looks for "From ".
-
-While there seems to be about a million different implementations of
-mbox creation and parsing, the relevant RFC[0] points to [1] as an
-authoritative source. The latter claims that lines matching "^From "
-denote a message boundary and that lines within a message that match
-the same pattern should be quoted with ">". That would suggest that
-the problem isn't imap-send.c but whatever code produces the mbox
-file in the first place. Of course, if that software isn't part of
-Git I guess we'll have to deal with the situation anyway. And whatever
-the RFCs say, we still need to be as compatible is possible with
-whatever software is out there.
-
-> It should at least check for something that looks like a timestamp,
-> like git-mailsplit does. Maybe mailsplit's is_from_line should be
-> factored out so that it can be reused in imap-send.
-
-I guess that's a reasonable "liberal in what you accept" mitigation.
-
-(As a sidenote, I'm getting the ">From" quoting in my maildir message
-files where no such quoting is expected, so "From" lines are shown as
-">From" in my MUA. I don't know if it's Procmail screwing things up or
-what's going on.)
-
-[0] http://tools.ietf.org/html/rfc4155
-[1] http://qmail.org./man/man5/mbox.html
-
---=20
-Magnus B=E4ck                   Opinions are my own and do not necessar=
-ily
-SW Configuration Manager      represent the ones of my employer, etc.
-Sony Ericsson
+MjAxMS8xMC8yOCBKdW5pbyBDIEhhbWFubyA8Z2l0c3RlckBwb2JveC5jb20+Ogo+PiDCoHN0YXRp
+YyB2b2lkIHNraXBfdW5pbnRlcmVzdGluZyhzdHJ1Y3QgdHJlZV9kZXNjICp0LCBzdHJ1Y3Qgc3Ry
+YnVmICpiYXNlLAo+PiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+c3RydWN0IGRpZmZfb3B0aW9ucyAqb3B0LCBpbnQgKm1hdGNoKQo+PiArIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgc3RydWN0IGRpZmZfb3B0aW9ucyAqb3B0LAo+PiAr
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgZW51bSBpbnRlcmVzdGlu
+ZyAqbWF0Y2gpCj4+IMKgewo+PiDCoCDCoCDCoCB3aGlsZSAodC0+c2l6ZSkgewo+PiDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCAqbWF0Y2ggPSB0cmVlX2VudHJ5X2ludGVyZXN0aW5nKCZ0LT5lbnRyeSwg
+YmFzZSwgMCwgJm9wdC0+cGF0aHNwZWMpOwo+PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoKm1h
+dGNoKSB7Cj4+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKCptYXRjaCA8IDAp
+Cj4+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKCptYXRjaCA9PSBhbGxfZW50
+cmllc19ub3RfaW50ZXJlc3RpbmcpCj4+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIHQtPnNpemUgPSAwOwo+PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCBicmVhazsKPj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+Cj4gVGhlIGNhbGxlciBvZiB0
+aGlzIGZ1bmN0aW9uIG5lZWRzIHRvIGJlIHVwZGF0ZWQgYXMgd2VsbC4KClllYWgsIHRoYW5rcy4K
+Cj4gQnV0IEkgaGF2ZSB0byB3b25kZXIgd2h5IHRoaXMgc2tpcF91bmludGVyZXN0aW5nKCkgZG9l
+cyBub3QgcGVlayB0aGUKPiBvcmlnaW5hbCB2YWx1ZSBvZiAqbWF0Y2ggYW5kIHNraXAsIHdoaWNo
+IGlzIHRoZSBsb29wIHN0cnVjdHVyZSB0aGUgb3RoZXIKPiBjYWxsZXIgb2YgdHJlZV9lbnRyeV9p
+bnRlcmVzdGluZygpIGluIHRoaXMgZmlsZSBoYXMuCgpQcm9iYWJseSBiZWNhdXNlIG5vIG9uZSBh
+c2tlZCB0aGF0IHF1ZXN0aW9uIGJlZm9yZS4gSSB0aGluayBpdCBtYWtlcwpzZW5zZSBmb3Igc2tp
+cF91bmludGVyZXN0aW5nKCkgdG8gc2tpcCB0X2VfaSgpIHdoZW4gKm1hdGNoID09IC0xIG9yIDIu
+ClRoYW5rcy4KLS0gCkR1eQo=
