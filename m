@@ -1,83 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: jc/lookup-object-hash from pu crashes on ARM
-Date: Mon, 31 Oct 2011 13:28:22 -0700
-Message-ID: <7vhb2oq521.fsf@alter.siamese.dyndns.org>
-References: <7vzkglrnmc.fsf@alter.siamese.dyndns.org>
- <20111031125648.GA1757@elie.hsd1.il.comcast.net>
+From: Ted Ts'o <tytso@mit.edu>
+Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
+Date: Mon, 31 Oct 2011 16:30:59 -0400
+Message-ID: <20111031203059.GJ16825@thunk.org>
+References: <20111026202235.GA20928@havoc.gtf.org>
+ <1319969101.5215.20.camel@dabdike>
+ <CA+55aFx1NGWfNJAKDTvZfsHDDKiEtS4t4RydSgHurBeyGPyhXg@mail.gmail.com>
+ <1320049150.8283.19.camel@dabdike>
+ <CA+55aFz3=cbciRfTYodNhdEetXYxTARGTfpP9GL9RZK222XmKQ@mail.gmail.com>
+ <7vy5w1ow90.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 31 21:28:33 2011
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	Jeff Garzik <jeff@garzik.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 31 21:31:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RKyT9-0000Nn-L1
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Oct 2011 21:28:31 +0100
+	id 1RKyVi-0001Rp-08
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Oct 2011 21:31:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934563Ab1JaU20 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Oct 2011 16:28:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64221 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933843Ab1JaU2Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Oct 2011 16:28:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D3C3751A8;
-	Mon, 31 Oct 2011 16:28:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZbGEewLG0jQ5Kpmnqdlps9+zmB8=; b=Qbyzhq
-	OtbYbAVZEMNzgzYz7NpLR2VQ84461D7+JiMpH4oVATwVOLDZ+EREFvUXR1i1yHK2
-	Ffe/+L4R9TduBvRcb3DvIGefyYJQV0PlBLCq7LolCjYobscQUpRu+Q+EN1XmI8B3
-	0vExBvgpTbgrv75pxxyrX3GMnAr5kt/6UUF5U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=L0cvHulQLxSiCtoCFptMt8LttyIw7Pue
-	cO4o+DWN8mBalQBm5LvH3QkhKbBbvuYd89poKejlG0fhlGtbQDaNtDQvWVr8otUK
-	MozVC+Vyxiu6ZhspO602pOcoIDaEmfYq+9LOUxzWu9iCtmh77VKQ7gamkM2gjvYp
-	GmVK7/h2GUc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C4E5E51A7;
-	Mon, 31 Oct 2011 16:28:24 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3E86F51A6; Mon, 31 Oct 2011
- 16:28:24 -0400 (EDT)
-In-Reply-To: <20111031125648.GA1757@elie.hsd1.il.comcast.net> (Jonathan
- Nieder's message of "Mon, 31 Oct 2011 07:56:48 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E1CC4018-03FE-11E1-84AF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S934002Ab1JaUbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Oct 2011 16:31:05 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:50736 "EHLO
+	test.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933617Ab1JaUbD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Oct 2011 16:31:03 -0400
+Received: from root (helo=tytso-glaptop.cam.corp.google.com)
+	by test.thunk.org with local-esmtp (Exim 4.69)
+	(envelope-from <tytso@thunk.org>)
+	id 1RKyVY-0000wG-TW; Mon, 31 Oct 2011 20:31:00 +0000
+Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1RKyVX-0008ML-QB; Mon, 31 Oct 2011 16:30:59 -0400
+Content-Disposition: inline
+In-Reply-To: <7vy5w1ow90.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on test.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184522>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+(removing linux-ide and linux-kernel)
 
-> Even better could be to start aligning the hashes we pass around,
-> using something like this:
->
-> 	union object_hash {
-> 		unsigned char sha1[20];
-> 		uint32_t chunk[5];
-> 	};
->
-> which could speed up functions like hashcpy(), hashcmp(), and
-> hasheq().  But it's probably not worth the fuss.
+On Mon, Oct 31, 2011 at 11:23:55AM -0700, Junio C Hamano wrote:
+> On the other hand, the consumers of "Linus kernel" may want to say that
+> they trust your tree and your tags because they can verify them with your
+> GPG signature, but also they can independently verify the lieutenants'
+> trees you pulled from are genuine. Keeping signed tags and publishing them
+> is one way to make it possible, but 400 extra tags in 3 months feels like
+> an approach with too much downside (i.e. noise) for that benefit.
 
-The "flag" field in struct ref_list should be moved down to assure
-alignment.
+I wouldn't put it as "we don't trust Linus's tree", because it's not
+true.  In general, we do trust Linus's tree.  On the other hand, it's
+useful if the proof which was submitted at the time of the push could
+be verified by third parties.
 
-        struct ref_list {
-                struct ref_list *next;
-                unsigned char flag; /* ISSYMREF? ISPACKED? */
-                unsigned char sha1[20];
-                unsigned char peeled[20];
-                char name[FLEX_ARRAY];
-        };
+Suppose the project wasn't Linus, but some other project, say, a
+hypothetical Desktop system called Troll3.  Let's assume that it's run
+by a sole dictator, S. Crew Powerusers, who blindly assumes that any
+tree on github is secure, and is confident he or she can detect social
+engineering attacks caused by a bad guy grabbing a developer's SSH key
+used to push to github, and who can fake a pull request to Linus that
+looks real but is really originated by the bad guy.  Let's assume
+further that the pull request has a signed tag which could be used to
+detect such forgeries, but because Mr. Powerusers can't be bothered to
+check the tag, because he can't figure out how to update his GPG
+keyring and besides, he hates crypto stuff --- and the bad guys know
+this, and are good (Kevin Mitnick or better) at social engineering
+attacks.
 
-I am very tempted to take that "union" approach (modulo that I would call
-that an "object_name") in the longer run, though.
+In this sort of scenario, it's useful if *other* people could
+independently verify the Troll3 git tree via the crypto signatures,
+even though the central maintainer couldn't be bothered to check the
+crypto signatures.
+
+
+Here's an idea.... what if the "signed push" information could be
+embedded into the merge commit's description?  That is, the
+information could sent via a signed git tag, or some other mechanism,
+but then part of the git merge would incorporate the GPG signature
+into the merge commit's description field (and we could always create
+a merge commit so there's a place to put the digital siganture).  That
+way, it's mostly out of the way, but it's in a well-defined place
+where it will always easy to have a third party independently verify
+the source of a set of commits in the git tree.
+
+The problem with notes and tags is that they have to be pushed
+separately, and might get lost; where as if they are stored in the
+merge commit's description, they will always be there.
+
+							- Ted
