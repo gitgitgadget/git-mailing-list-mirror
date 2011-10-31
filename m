@@ -1,125 +1,68 @@
-From: Roland Kaufmann <rlndkfmn+git@gmail.com>
-Subject: Re: [PATCH] Display change history as a diff between two dirs
-Date: Mon, 31 Oct 2011 10:21:16 +0100
-Message-ID: <4EAE688C.8010502@gmail.com>
-References: <4EAC6765.4030003@gmail.com> <7vty6rrow8.fsf@alter.siamese.dyndns.org>
+From: Hannu Koivisto <azure@iki.fi>
+Subject: Re: Out of memory error with git rebase
+Date: Mon, 31 Oct 2011 12:33:45 +0200
+Organization: NOYB
+Message-ID: <83r51ta1rq.fsf@kalahari.s2.org>
+References: <83vcrc9kh7.fsf@kalahari.s2.org> <4EA7E710.1020006@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 31 10:20:53 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 31 11:34:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RKo33-0006f9-3W
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Oct 2011 10:20:53 +0100
+	id 1RKpBx-0006H9-L0
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Oct 2011 11:34:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932316Ab1JaJUs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Oct 2011 05:20:48 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:55772 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932260Ab1JaJUr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Oct 2011 05:20:47 -0400
-Received: by bkbzt4 with SMTP id zt4so1917570bkb.19
-        for <git@vger.kernel.org>; Mon, 31 Oct 2011 02:20:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=8bPaAwCzvk5Y5D2lagGFhgiDC5oSAp2cZB/ql0e6yOM=;
-        b=Y92R2BTBvY676hKM9xTLeTCE8/0pgAXl/l8FAXJuGHLX7bEMwN8fiPXucktdME6WQa
-         /thHWBhWlfdK3Ic0SuG6MuGHwiryzTYu4KTB/UTzqmhMfksNEJF+cghmFxHNgeFLLdYh
-         5+nTSmiDCLZ51i1WYZRlnL43sFf7R1gMOOLi8=
-Received: by 10.204.14.208 with SMTP id h16mr10275610bka.2.1320052845741;
-        Mon, 31 Oct 2011 02:20:45 -0700 (PDT)
-Received: from [192.168.1.7] (33.72.34.95.customer.cdi.no. [95.34.72.33])
-        by mx.google.com with ESMTPS id w8sm16380785bks.11.2011.10.31.02.20.43
-        (version=SSLv3 cipher=OTHER);
-        Mon, 31 Oct 2011 02:20:43 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
-In-Reply-To: <7vty6rrow8.fsf@alter.siamese.dyndns.org>
+	id S933378Ab1JaKeE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Oct 2011 06:34:04 -0400
+Received: from lo.gmane.org ([80.91.229.12]:36329 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932685Ab1JaKeD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Oct 2011 06:34:03 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RKpBn-0006BT-8e
+	for git@vger.kernel.org; Mon, 31 Oct 2011 11:33:59 +0100
+Received: from s2.org ([80.83.7.53])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 31 Oct 2011 11:33:59 +0100
+Received: from azure by s2.org with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 31 Oct 2011 11:33:59 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: s2.org
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.3 (gnu/linux)
+Cancel-Lock: sha1:iCfXBfpQcijwXlOvsUeOUnx1P+M=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184501>
 
-On 2011-10-30 07:09, Junio C Hamano wrote:
-> I do not think any of our scripted Porcelains use "set -e"; rather
-> they try to catch errors and produce messages that are more
-> appropriate for specific error sites.
+Johannes Sixt <j6t@kdbg.org> writes:
 
-git-dirdiff being a wrapper script, I reasoned that the underlaying
-command would already have printed a sufficient error message, so what
-was left was just to exit. But you're right in that some of the commands
-will not give sufficient context. I'll put in some more detailed error
-handling.
+> Am 26.10.2011 11:21, schrieb Hannu Koivisto:
+>> If 'git rebase origin/master' dies with an out of memory error
+>> (probably due to a few of large binary files in the repository, the
+>
+> Try 'git rebase -m origin/master'. Without -m, rebase uses
+> format-patch+am, i.e., assuming there are changes to the binary files
+> that are to be rebased, a binary patch file would have to be generated
+> and applied later. This is very likely where git bails out.
 
-> I do not think any of our scripted Porcelains use "mktemp"
-> especially "mktemp -d". How portable is it?
+Thanks, -m seems to help, even though the large binary files are
+not touched by the rebased commits (instead, they are touched by
+the commits on top of which I'm rebasing).
 
-Even if it is not part of Posix, I reckon since it is a part of the
-coreutils, it is available in most GNU userlands, inclusive GnuWin32.
-I don't have any live BSD systems available, but based on the man pages
-it seems to be available there too, albeit with some different options.
-
---tmpdir seems to be more of a problem in than respect than -d. I'll see
-if I can find a set of options that are digestable to most platforms.
-
-I think it is unfortunate to use the current directory as scratch space;
-it can be a network disk, or even read-only. mktemp can in contrast make
-a directory in a place which is not spilled to disk.
-
-> It is not clear to me why you need to grab the list of paths in toc
-> and iterate over them one by one. IOW, why isn't this sufficient?
-
-This design decision was probably appropriate in an earlier iteration,
-but as you point out, it is indeed superfluous now! I apologize for not
-realizing that myself.
-
-> suspect is true), we would probably want to make it an option to
-> "git diff" itself, and not a separate git subcommand like "dirdiff".
-> I can see
-
-Although being an able *user* of Git, I am not (yet) familiar enough
-with the codebase to have a patch ready for `git diff` itself. It would
-certainly require more rigorous testing.
-
-> "git diff" (and possibly even things like "git log -p") populating
-> two temporary directories (your old/ and new/) and running a custom
-> program specified by GIT_EXTERNAL_TREEDIFF environment variable,
-> instead of doing
-
-Would it be better to have yet another configuration available for this 
-option instead of reusing the existing infrastructure for `git difftool`?
-
-> It also is not clear what could be used in "$@". Obviously you would
->  not want things like "-U20" and "--stat" fed to the first "list of
-> paths" phase, but there may be some options you may want to give to
-> the inner "external diff" thing.
-
-Ideally, it should work the same way as `git difftool`.
-
-> For example, how well does this approach work with -M/-C (I do not
-> think it would do anything useful, but I haven't thought things
-> through).  It would be nice if we gave the hint to the external
-
-As of now, files that are moved will turn up a different places in the
-tree without any annotations, and off the top of my head I don't see any
-obvious way to propagate such hints. If the diff tool is sophisticated
-can probably use the same heuristics as Git currently does, but I am
-unaware of any that is able to do that yet.
-
-> I wouldn't mind carrying a polished version of this in contrib/ for
-> a cycle or two in order to let people try it out and get kinks out of
->  its design.
-
-I would appreciate that! I'll submit a reworked proposal taking you
-comments into account. It may take a few days due to unrelated
-engagements, though.
+>From the documentation I can't figure out any reason why one
+wouldn't always want to use -m.  Why is it not the default?  I
+think it's pretty much impossible for ordinary users to figure out
+that they need -m in a situation like this.
 
 -- 
-   Roland.
+Hannu
