@@ -1,77 +1,56 @@
-From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
-Subject: Re: [ANNOUNCE] Git 1.7.8.rc0
-Date: Mon, 31 Oct 2011 15:17:55 +0100
-Message-ID: <4EAEAE13.50101@atlas-elektronik.com>
-References: <7vfwi9rc0g.fsf@alter.siamese.dyndns.org>
+From: "Dmitry V. Levin" <ldv@altlinux.org>
+Subject: git rev-parse --since=1970-01-01 does not work reliably
+Date: Mon, 31 Oct 2011 20:17:09 +0400
+Message-ID: <20111031161708.GA29924@altlinux.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Linux Kernel <linux-kernel@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 31 15:18:05 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 31 17:25:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RKsge-0001jW-14
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Oct 2011 15:18:04 +0100
+	id 1RKufV-0007Cs-Fl
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Oct 2011 17:25:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754594Ab1JaOR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Oct 2011 10:17:59 -0400
-Received: from mail96.atlas.de ([194.156.172.86]:25083 "EHLO mail96.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754554Ab1JaOR6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Oct 2011 10:17:58 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail96.atlas.de (Postfix) with ESMTP id 77891100BF;
-	Mon, 31 Oct 2011 15:17:57 +0100 (CET)
-X-Virus-Scanned: amavisd-new at lxsrv96.atlas.de
-Received: from mail96.atlas.de ([127.0.0.1])
-	by localhost (lxsrv96.atlas.de [127.0.0.1]) (amavisd-new, port 10124)
-	with ESMTP id XXGb21Cwh7ai; Mon, 31 Oct 2011 15:17:57 +0100 (CET)
-Received: from mgsrv01.atlas.de (mailrelay-atlas.atlas.de [10.200.101.16])
-	by mail96.atlas.de (Postfix) with ESMTP;
-	Mon, 31 Oct 2011 15:17:56 +0100 (CET)
-Received: from [141.200.19.108] (as112671.atlas.de [141.200.19.108])
-	by mgsrv01.atlas.de (Postfix) with ESMTP id B70F52717B;
-	Mon, 31 Oct 2011 15:17:56 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
-In-Reply-To: <7vfwi9rc0g.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.3.2
+	id S1752170Ab1JaQY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Oct 2011 12:24:56 -0400
+Received: from vint.altlinux.org ([194.107.17.35]:46987 "EHLO
+	vint.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751370Ab1JaQYz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Oct 2011 12:24:55 -0400
+X-Greylist: delayed 465 seconds by postgrey-1.27 at vger.kernel.org; Mon, 31 Oct 2011 12:24:55 EDT
+Received: from wo.int.altlinux.org (wo.int.altlinux.org [192.168.1.4])
+	by vint.altlinux.org (Postfix) with ESMTP id 2D898226C057
+	for <git@vger.kernel.org>; Mon, 31 Oct 2011 16:17:09 +0000 (UTC)
+Received: by wo.int.altlinux.org (Postfix, from userid 508)
+	id 211B33F485E2; Mon, 31 Oct 2011 20:17:09 +0400 (MSK)
+Content-Disposition: inline
+X-fingerprint: FE4C 93AB E19A 2E4C CB5D  3E4E 7CAB E6AC 9E35 361E
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184508>
 
-Am 31.10.2011 06:00, schrieb Junio C Hamano:
-> A release candidate Git 1.7.8.rc0 is available for testing.
-> 
-> [...]
-> 
-> 
-> Git v1.7.8 Release Notes (draft)
-> ================================
-> 
-> Updates since v1.7.7
-> --------------------
-> 
-> [...]
-> 
->  * HTTP transport did not use pushurl correctly, and also did not tell
->    what host it is trying to authenticate with when asking for
->    credentials.
->    (merge deba493 jk/http-auth later to maint).
+Hi,
 
-This seems to break pushing with https for me.
-It never uses values from my '~/.netrc'.
-I'll come up with a detailed scenario later.
+git rev-parse --since=1970-01-01 (and other git commands that take
+date string arguments like --since) may fail when --since=1970-01-01 is
+given.  Whether it fails or not depends on current time and timezone data.
+For example, "TZ=Europe/Paris git rev-parse --since=1970-01-01" fails two
+hours a day (between 00:00 and 02:00 CET), and those who use more eastern
+timezones are even less lucky.  In artificial timezones like UTC-24 it
+always fails:
 
- 
-Stefan
+$ TZ=UTC-24 git rev-parse --since=1970-01-01
+--max-age=18446744073709523490
+
+The problem is that several internal git functions implicitly convert
+time_t to unsigned long, so when time_t gets negative, all date string
+processing breaks.
+
+
 -- 
-----------------------------------------------------------------
-/dev/random says: Justice is incidental to law and order.
-python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6e696b2e636f6d'.decode('hex')"
+ldv
