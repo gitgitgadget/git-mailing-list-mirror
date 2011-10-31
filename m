@@ -1,157 +1,78 @@
-From: Vincent van Ravesteijn <vfr@lyx.org>
-Subject: [PATCH 3/3] MSVC: Remove unneeded header stubs
-Date: Mon, 31 Oct 2011 20:12:44 +0100
-Message-ID: <1320088364-25916-4-git-send-email-vfr@lyx.org>
-References: <1320088364-25916-1-git-send-email-vfr@lyx.org>
-Cc: kusmabite@gmail.com, ramsay@ramsay1.demon.co.uk,
-	msysgit@googlegroups.com, gitster@pobox.com,
-	Vincent van Ravesteijn <vfr@lyx.org>
+From: Peter Oberndorfer <kumbayo84@arcor.de>
+Subject: Reference has invalid format: check maybe a bit to harsh?
+Date: Mon, 31 Oct 2011 20:14:25 +0100
+Message-ID: <60007404.ge1WXNp2Qn@soybean>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 31 20:13:45 2011
+X-From: git-owner@vger.kernel.org Mon Oct 31 20:15:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RKxIm-0004Bs-D3
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Oct 2011 20:13:44 +0100
+	id 1RKxKP-0004ry-Pm
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Oct 2011 20:15:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933987Ab1JaTNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Oct 2011 15:13:36 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:60415 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933236Ab1JaTNf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Oct 2011 15:13:35 -0400
-Received: by mail-ey0-f174.google.com with SMTP id 27so5598224eye.19
-        for <git@vger.kernel.org>; Mon, 31 Oct 2011 12:13:35 -0700 (PDT)
-Received: by 10.14.15.80 with SMTP id e56mr1392978eee.3.1320088415207;
-        Mon, 31 Oct 2011 12:13:35 -0700 (PDT)
-Received: from localhost.localdomain (j175101.upc-j.chello.nl. [24.132.175.101])
-        by mx.google.com with ESMTPS id d6sm25272860eec.10.2011.10.31.12.13.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 31 Oct 2011 12:13:34 -0700 (PDT)
-X-Mailer: git-send-email 1.7.4.1
-In-Reply-To: <1320088364-25916-1-git-send-email-vfr@lyx.org>
+	id S934132Ab1JaTPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Oct 2011 15:15:20 -0400
+Received: from mail-in-06.arcor-online.net ([151.189.21.46]:53932 "EHLO
+	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933236Ab1JaTPT (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Oct 2011 15:15:19 -0400
+Received: from mail-in-12-z2.arcor-online.net (mail-in-12-z2.arcor-online.net [151.189.8.29])
+	by mx.arcor.de (Postfix) with ESMTP id 673C610BBB6;
+	Mon, 31 Oct 2011 20:15:18 +0100 (CET)
+Received: from mail-in-17.arcor-online.net (mail-in-17.arcor-online.net [151.189.21.57])
+	by mail-in-12-z2.arcor-online.net (Postfix) with ESMTP id 59A381DF134;
+	Mon, 31 Oct 2011 20:15:18 +0100 (CET)
+Received: from soybean.localnet (178-191-141-246.adsl.highway.telekom.at [178.191.141.246])
+	(Authenticated sender: kumbayo84@arcor.de)
+	by mail-in-17.arcor-online.net (Postfix) with ESMTPSA id 45436CBE0E;
+	Mon, 31 Oct 2011 20:15:18 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-17.arcor-online.net 45436CBE0E
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1320088518; bh=v9CtOoQn+jC/I6yWlePokDvgNLpCndvoS8Yegdbg1ao=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:
+	 Content-Transfer-Encoding:Content-Type;
+	b=Mvj3clt6PLJQoua8xCdwTxndGrD/h3TrLUDaerY7GLRlidNn3WsLmUayOs+moF49f
+	 HRDELEBgSVozrIXUlH3mE1cb6I9rOPQggkjGpIuRKrO7aQkbSmTF3mPITUQCw1zfWd
+	 GDzNSJiYuQ+LM8BoGtI6TxBgN2cTUfRTGMgHJCK8=
+User-Agent: KMail/4.7.2 (Linux/3.0.0-12-generic-pae; KDE/4.7.2; i686; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184516>
 
-These headers are no longer needed since they are no longer
-unnecessarily included in git-compat-util.h.
+Hi,
 
-Signed-off-by: Vincent van Ravesteijn <vfr@lyx.org>
----
- compat/vcbuild/include/arpa/inet.h   |    1 -
- compat/vcbuild/include/grp.h         |    1 -
- compat/vcbuild/include/inttypes.h    |    1 -
- compat/vcbuild/include/netdb.h       |    1 -
- compat/vcbuild/include/netinet/in.h  |    1 -
- compat/vcbuild/include/netinet/tcp.h |    1 -
- compat/vcbuild/include/pwd.h         |    1 -
- compat/vcbuild/include/sys/ioctl.h   |    1 -
- compat/vcbuild/include/sys/select.h  |    1 -
- compat/vcbuild/include/sys/socket.h  |    1 -
- compat/vcbuild/include/sys/wait.h    |    1 -
- compat/vcbuild/include/termios.h     |    1 -
- 12 files changed, 0 insertions(+), 12 deletions(-)
- delete mode 100644 compat/vcbuild/include/arpa/inet.h
- delete mode 100644 compat/vcbuild/include/grp.h
- delete mode 100644 compat/vcbuild/include/inttypes.h
- delete mode 100644 compat/vcbuild/include/netdb.h
- delete mode 100644 compat/vcbuild/include/netinet/in.h
- delete mode 100644 compat/vcbuild/include/netinet/tcp.h
- delete mode 100644 compat/vcbuild/include/pwd.h
- delete mode 100644 compat/vcbuild/include/sys/ioctl.h
- delete mode 100644 compat/vcbuild/include/sys/select.h
- delete mode 100644 compat/vcbuild/include/sys/socket.h
- delete mode 100644 compat/vcbuild/include/sys/wait.h
- delete mode 100644 compat/vcbuild/include/termios.h
+i am using the next branch for testing and i noticed the following:
+about any git command i execute in a certain repo dies with
+fatal: Reference has invalid format: 
+'refs/patches/obd_development/blah:_various_improvements_remote_debugging'
 
-diff --git a/compat/vcbuild/include/arpa/inet.h b/compat/vcbuild/include/arpa/inet.h
-deleted file mode 100644
-index 0d8552a..0000000
---- a/compat/vcbuild/include/arpa/inet.h
-+++ /dev/null
-@@ -1 +0,0 @@
--/* Intentionally empty file to support building git with MSVC */
-diff --git a/compat/vcbuild/include/grp.h b/compat/vcbuild/include/grp.h
-deleted file mode 100644
-index 0d8552a..0000000
---- a/compat/vcbuild/include/grp.h
-+++ /dev/null
-@@ -1 +0,0 @@
--/* Intentionally empty file to support building git with MSVC */
-diff --git a/compat/vcbuild/include/inttypes.h b/compat/vcbuild/include/inttypes.h
-deleted file mode 100644
-index 0d8552a..0000000
---- a/compat/vcbuild/include/inttypes.h
-+++ /dev/null
-@@ -1 +0,0 @@
--/* Intentionally empty file to support building git with MSVC */
-diff --git a/compat/vcbuild/include/netdb.h b/compat/vcbuild/include/netdb.h
-deleted file mode 100644
-index 0d8552a..0000000
---- a/compat/vcbuild/include/netdb.h
-+++ /dev/null
-@@ -1 +0,0 @@
--/* Intentionally empty file to support building git with MSVC */
-diff --git a/compat/vcbuild/include/netinet/in.h b/compat/vcbuild/include/netinet/in.h
-deleted file mode 100644
-index 0d8552a..0000000
---- a/compat/vcbuild/include/netinet/in.h
-+++ /dev/null
-@@ -1 +0,0 @@
--/* Intentionally empty file to support building git with MSVC */
-diff --git a/compat/vcbuild/include/netinet/tcp.h b/compat/vcbuild/include/netinet/tcp.h
-deleted file mode 100644
-index 0d8552a..0000000
---- a/compat/vcbuild/include/netinet/tcp.h
-+++ /dev/null
-@@ -1 +0,0 @@
--/* Intentionally empty file to support building git with MSVC */
-diff --git a/compat/vcbuild/include/pwd.h b/compat/vcbuild/include/pwd.h
-deleted file mode 100644
-index 0d8552a..0000000
---- a/compat/vcbuild/include/pwd.h
-+++ /dev/null
-@@ -1 +0,0 @@
--/* Intentionally empty file to support building git with MSVC */
-diff --git a/compat/vcbuild/include/sys/ioctl.h b/compat/vcbuild/include/sys/ioctl.h
-deleted file mode 100644
-index 0d8552a..0000000
---- a/compat/vcbuild/include/sys/ioctl.h
-+++ /dev/null
-@@ -1 +0,0 @@
--/* Intentionally empty file to support building git with MSVC */
-diff --git a/compat/vcbuild/include/sys/select.h b/compat/vcbuild/include/sys/select.h
-deleted file mode 100644
-index 0d8552a..0000000
---- a/compat/vcbuild/include/sys/select.h
-+++ /dev/null
-@@ -1 +0,0 @@
--/* Intentionally empty file to support building git with MSVC */
-diff --git a/compat/vcbuild/include/sys/socket.h b/compat/vcbuild/include/sys/socket.h
-deleted file mode 100644
-index 0d8552a..0000000
---- a/compat/vcbuild/include/sys/socket.h
-+++ /dev/null
-@@ -1 +0,0 @@
--/* Intentionally empty file to support building git with MSVC */
-diff --git a/compat/vcbuild/include/sys/wait.h b/compat/vcbuild/include/sys/wait.h
-deleted file mode 100644
-index 0d8552a..0000000
---- a/compat/vcbuild/include/sys/wait.h
-+++ /dev/null
-@@ -1 +0,0 @@
--/* Intentionally empty file to support building git with MSVC */
-diff --git a/compat/vcbuild/include/termios.h b/compat/vcbuild/include/termios.h
-deleted file mode 100644
-index 0d8552a..0000000
---- a/compat/vcbuild/include/termios.h
-+++ /dev/null
-@@ -1 +0,0 @@
--/* Intentionally empty file to support building git with MSVC */
--- 
-1.7.4.1
+This is probably caused by
+dce4bab6567de7c458b334e029e3dedcab5f2648 add_ref(): verify that the refname is 
+formatted correctly
+
+The invalid refs(about 30, loose and packed) containing a ':' were created by 
+stgit a long time ago(Dec 2006)
+
+Personally i do not care too much, i patched my git to not die at this point 
+but to only display a error.
+-> The invalid refs are not accessible, but the rest of the repo still works.
+
+But i'm just wondering if dieing when seeing a single invalid ref might be a 
+bit too harsh since no git tools can be used anymore on this repo at all.
+
+
+Small side note:
+It seems t1402-check-ref-format.sh contains not test
+for the invalid ref char ':' yet.
+(i do not know if it is tested somewhere else...)
+
+Thanks,
+Greetings Peter
