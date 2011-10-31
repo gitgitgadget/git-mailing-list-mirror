@@ -1,74 +1,94 @@
-From: Ted Percival <ted.percival@quest.com>
-Subject: [PATCH] svn: Quote repository root in regex match
-Date: Mon, 31 Oct 2011 16:37:12 -0600
-Message-ID: <1320100632-10058-1-git-send-email-ted.percival@quest.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
+Date: Mon, 31 Oct 2011 15:44:25 -0700
+Message-ID: <7vzkggok6u.fsf@alter.siamese.dyndns.org>
+References: <20111026202235.GA20928@havoc.gtf.org>
+ <1319969101.5215.20.camel@dabdike>
+ <CA+55aFx1NGWfNJAKDTvZfsHDDKiEtS4t4RydSgHurBeyGPyhXg@mail.gmail.com>
+ <1320049150.8283.19.camel@dabdike>
+ <CA+55aFz3=cbciRfTYodNhdEetXYxTARGTfpP9GL9RZK222XmKQ@mail.gmail.com>
+ <7vy5w1ow90.fsf@alter.siamese.dyndns.org>
+ <CA+55aFwL_s=DcT46dprcYVWEAm_=WkuTV6K9dAn3wc_bDQU8vA@mail.gmail.com>
+ <4EAF1F40.3030907@zytor.com>
+ <CA+55aFxprv9JR4gtt_UDXheHR5G8PrUA3-Mj0CPsU6E5EzNYeg@mail.gmail.com>
+ <4EAF2245.90308@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Ted Percival <ted.percival@quest.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 31 23:42:44 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	Jeff Garzik <jeff@garzik.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Mon Oct 31 23:44:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RL0Z1-0007gx-9m
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Oct 2011 23:42:43 +0100
+	id 1RL0am-0008Er-CL
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Oct 2011 23:44:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934648Ab1JaWmi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Oct 2011 18:42:38 -0400
-Received: from alvetxw02.quest.com ([12.106.87.94]:20687 "EHLO
-	alvetxw02.quest.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934441Ab1JaWmh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Oct 2011 18:42:37 -0400
-X-Greylist: delayed 308 seconds by postgrey-1.27 at vger.kernel.org; Mon, 31 Oct 2011 18:42:37 EDT
-Received: from ALVHTXW02.prod.quest.corp (10.1.135.18) by alvetxw02.quest.com
- (10.1.100.94) with Microsoft SMTP Server (TLS) id 14.1.255.0; Mon, 31 Oct
- 2011 15:28:32 -0700
-Received: from slc21znqg1.ipv6.vintela.com (10.1.0.6) by
- ALVHTXW02.prod.quest.corp (10.1.135.28) with Microsoft SMTP Server id
- 14.1.255.0; Mon, 31 Oct 2011 15:37:28 -0700
-Received: from ted by slc21znqg1.ipv6.vintela.com with local (Exim 4.72)
-	(envelope-from <ted@slc21znqg1.prod.quest.corp>)	id 1RL0Tw-0002cr-24; Mon, 31
- Oct 2011 16:37:28 -0600
-X-Mailer: git-send-email 1.7.7
+	id S934690Ab1JaWoa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Oct 2011 18:44:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36462 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934441Ab1JaWo2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Oct 2011 18:44:28 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 80FB66CC2;
+	Mon, 31 Oct 2011 18:44:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cnHL1araHZtygn3PksdS/JPrbvE=; b=j73O7w
+	g1eAkLOK8uEeE9/E2+mujw7J0fN6zXtM7TNpTEQKcw3EVD2pBFwfcTLOlwFlgoeB
+	UfgVLBL12uP5+bn2dHqyyYY/ZmuBVGzKxuXtKjVq+NGvWo7vJzL1Y06Chd/zqoRv
+	gdixg9Lsmb4+x6j3wOBgQpe6D37g1i/PJpfO4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Yr6FhON2Yyi9/QA/E3WF7UhK1nySIKJk
+	EEo5uSbmOAH6gr0yyzJEsvdkRoKpD6Qwmz8N+aCcbPomKO2kZcwQPWJBgJmigreU
+	vdaq0FDYzkAJtXNHBYSY7J8C2U1Rl2hz5RpF9TM/7ENDiBukmGkDE0Df+mL4tgt6
+	hJJSYQU6vtA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 74DCE6CC1;
+	Mon, 31 Oct 2011 18:44:27 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EFB046CC0; Mon, 31 Oct 2011
+ 18:44:26 -0400 (EDT)
+In-Reply-To: <4EAF2245.90308@zytor.com> (H. Peter Anvin's message of "Mon, 31
+ Oct 2011 15:33:41 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E32F54AA-0411-11E1-A693-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184534>
 
-Fixes a problem matching repository URLs, especially those with a '+' in
-the URL, such as svn+ssh:// URLs. Parts of the URL were interpreted as
-special characters by the regex matching.
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
-Signed-off-by: Ted Percival <ted.percival@quest.com>
----
- git-svn.perl |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+> On 10/31/2011 03:30 PM, Linus Torvalds wrote:
+>> 
+>> But if you do the normal "git pull git://git.kernel.org/name/of/repo"
+>> - which is how things happen as a result of a pull request - you won't
+>> get tags at all - you have to ask for them by name or use "--tags" to
+>> get them all.
+>> 
+>
+> Didn't realize that... I guess I'm too used to named remotes.
+>
+> If so, just using a tag should be fine, no?
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 351e743..4e95450 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -629,7 +629,7 @@ sub populate_merge_info {
- 				fatal "merge commit $d has ancestor $parent, but that change "
-                      ."does not have git-svn metadata!";
- 			}
--			unless ($branchurl =~ /^$rooturl(.*)/) {
-+			unless ($branchurl =~ /^\Q$rooturl\E(.*)/) {
- 				fatal "commit $parent git-svn metadata changed mid-run!";
- 			}
- 			my $branchpath = $1;
-@@ -791,7 +791,7 @@ sub cmd_dcommit {
- 							 ."has uuid $uuid!";
- 					}
- 
--					unless ($branchurl =~ /^$rooturl(.*)/) {
-+					unless ($branchurl =~ /^\Q$rooturl\E(.*)/) {
- 						# This branch is very strange indeed.
- 						fatal "merge parent $parent for $d is on branch "
- 							 ."$branchurl, which is not under the "
--- 
-1.7.7
+So nobody is worried about this (quoting from my earlier message)?
+
+   On the other hand, the consumers of "Linus kernel" may want to say that
+   they trust your tree and your tags because they can verify them with your
+   GPG signature, but also they can independently verify the lieutenants'
+   trees you pulled from are genuine.
+
+A signed emphemeral tag is usable as means to verify authenticity in a
+hop-by-hop fashion, but that does not leave a permanent trail that can be
+used for auditing.
