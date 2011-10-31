@@ -1,66 +1,77 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: [PATCH] t7511: avoid use of reserved filename on Windows.
-Date: Mon, 31 Oct 2011 14:07:27 +0000
-Message-ID: <1320070047-22844-1-git-send-email-patthoyts@users.sourceforge.net>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	msysGit <msysgit@googlegroups.com>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 31 15:07:41 2011
+From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
+Subject: Re: [ANNOUNCE] Git 1.7.8.rc0
+Date: Mon, 31 Oct 2011 15:17:55 +0100
+Message-ID: <4EAEAE13.50101@atlas-elektronik.com>
+References: <7vfwi9rc0g.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Linux Kernel <linux-kernel@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 31 15:18:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RKsWb-0005tp-FC
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Oct 2011 15:07:41 +0100
+	id 1RKsge-0001jW-14
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Oct 2011 15:18:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752138Ab1JaOHg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Oct 2011 10:07:36 -0400
-Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:51481 "EHLO
-	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750779Ab1JaOHg (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Oct 2011 10:07:36 -0400
-Received: from know-smtpout-4.server.virginmedia.net ([62.254.123.2])
-          by mtaout02-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20111031140734.XUNV21463.mtaout02-winn.ispmail.ntl.com@know-smtpout-4.server.virginmedia.net>;
-          Mon, 31 Oct 2011 14:07:34 +0000
-Received: from [94.171.235.235] (helo=fox.patthoyts.tk)
-	by know-smtpout-4.server.virginmedia.net with esmtpa (Exim 4.63)
-	(envelope-from <patthoyts@users.sourceforge.net>)
-	id 1RKsWU-0007n8-NZ; Mon, 31 Oct 2011 14:07:34 +0000
-Received: from frog.patthoyts.tk (unknown [192.168.0.15])
-	by fox.patthoyts.tk (Postfix) with ESMTP id 14E8420318;
-	Mon, 31 Oct 2011 14:07:34 +0000 (GMT)
-X-Mailer: git-send-email 1.7.8.rc0.200.gbcc18
-X-Cloudmark-Analysis: v=1.1 cv=R50lirqlHffDPPkwUlkuVa99MrvKdVWo//yz83qex8g= c=1 sm=0 a=2yG2c2T6X4kA:10 a=FP58Ms26AAAA:8 a=zQzoeaHK40RFc-Xk93wA:9 a=pKggWt3XUzjZPa_1uCIA:7 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1754594Ab1JaOR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Oct 2011 10:17:59 -0400
+Received: from mail96.atlas.de ([194.156.172.86]:25083 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754554Ab1JaOR6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Oct 2011 10:17:58 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail96.atlas.de (Postfix) with ESMTP id 77891100BF;
+	Mon, 31 Oct 2011 15:17:57 +0100 (CET)
+X-Virus-Scanned: amavisd-new at lxsrv96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (lxsrv96.atlas.de [127.0.0.1]) (amavisd-new, port 10124)
+	with ESMTP id XXGb21Cwh7ai; Mon, 31 Oct 2011 15:17:57 +0100 (CET)
+Received: from mgsrv01.atlas.de (mailrelay-atlas.atlas.de [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP;
+	Mon, 31 Oct 2011 15:17:56 +0100 (CET)
+Received: from [141.200.19.108] (as112671.atlas.de [141.200.19.108])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id B70F52717B;
+	Mon, 31 Oct 2011 15:17:56 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+In-Reply-To: <7vfwi9rc0g.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184507>
 
-PRN is a special filename on Windows to send data to the printer. As
-this is generated during test 3 substitute an alternate prefix to avoid this.
+Am 31.10.2011 06:00, schrieb Junio C Hamano:
+> A release candidate Git 1.7.8.rc0 is available for testing.
+> 
+> [...]
+> 
+> 
+> Git v1.7.8 Release Notes (draft)
+> ================================
+> 
+> Updates since v1.7.7
+> --------------------
+> 
+> [...]
+> 
+>  * HTTP transport did not use pushurl correctly, and also did not tell
+>    what host it is trying to authenticate with when asking for
+>    credentials.
+>    (merge deba493 jk/http-auth later to maint).
 
-Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
----
- t/t7511-status-index.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+This seems to break pushing with https for me.
+It never uses values from my '~/.netrc'.
+I'll come up with a detailed scenario later.
 
-diff --git a/t/t7511-status-index.sh b/t/t7511-status-index.sh
-index bca359d..b5fdc04 100755
---- a/t/t7511-status-index.sh
-+++ b/t/t7511-status-index.sh
-@@ -24,7 +24,7 @@ check() {
  
- check  1
- check  2 p
--check  3 pr
-+check  3 px
- check  4 pre
- check  5 pref
- check  6 prefi
+Stefan
 -- 
-1.7.8.rc0.200.gbcc18
+----------------------------------------------------------------
+/dev/random says: Justice is incidental to law and order.
+python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6e696b2e636f6d'.decode('hex')"
