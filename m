@@ -1,80 +1,69 @@
-From: Junio C Hamano <junio@pobox.com>
-Subject: Re: [ANNOUNCE] Git 1.7.8.rc0
-Date: Mon, 31 Oct 2011 10:19:12 -0700
-Message-ID: <7v8vo1qdtb.fsf@alter.siamese.dyndns.org>
-References: <7vfwi9rc0g.fsf@alter.siamese.dyndns.org>
- <4EAEAE13.50101@atlas-elektronik.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH] blame.c: Properly initialize strbuf after calling, textconv_object()
+Date: Mon, 31 Oct 2011 18:57:04 +0100
+Message-ID: <CAHGBnuPN9z_yntJPqGOWVFWc7PteWMfC8HV9UZoEYN-Z56xwyQ@mail.gmail.com>
+References: <4EAACA1C.6020302@gmail.com>
+	<7vlis5t8bf.fsf@alter.siamese.dyndns.org>
+	<CAHGBnuPUGfOe1D_OZ0ga4s8EiS_=GZeBG7WLmyOHt7vNg+w3Fw@mail.gmail.com>
+	<7vhb2tt6ag.fsf@alter.siamese.dyndns.org>
+	<CAHGBnuNpwZCpQxZQNRZ-pYpLMHMi1O4d0hsR9MKM3=7Hw5A=zw@mail.gmail.com>
+	<7vd3dht4ms.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	Linux Kernel <linux-kernel@vger.kernel.org>
-To: Stefan =?utf-8?Q?N=C3=A4we?= <stefan.naewe@atlas-elektronik.com>
-X-From: linux-kernel-owner@vger.kernel.org Mon Oct 31 18:19:31 2011
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 31 18:57:19 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1RKvWC-0005Zd-6S
-	for glk-linux-kernel-3@lo.gmane.org; Mon, 31 Oct 2011 18:19:28 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1RKw6j-0005MQ-Nu
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Oct 2011 18:57:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933498Ab1JaRTS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 31 Oct 2011 13:19:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64612 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932861Ab1JaRTP convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 31 Oct 2011 13:19:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4DF55D2F;
-	Mon, 31 Oct 2011 13:19:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=CmQ4c5uq/YAm
-	MC5Fr96fw8XUTyY=; b=UAVBhsF+VOo/lNwwEWfZOpHN4FTdxexYRz5zCH0AfNQt
-	34hAT+3Hz2Ljl69TCpG2VzI+dJnP3/vSNuGB2RyyxfAxNWI8HX0j+KinsIsXg1U5
-	jJjk8ZkOBRyJv63nspFDMSaCr2cKIZWkNEh9wEgskt/UQ+5R6a0u8mpEDPKMOic=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=vjItZZ
-	95zb8d5U6zVUYjAbGaFigJw2+KAFfN09fqP0GztUwMv2Ep2UzeEPlBzUpgnvpMir
-	i1IaGtYd/3LRJmSHltgmdSbi+EGCPq2uffDF1dOm9pN67VpfxGniuc9Lfobpgzgw
-	d0tc80zT2CP+lKjDC4cnrZS7Bk3TfCV4DHyX0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C9F85D2E;
-	Mon, 31 Oct 2011 13:19:14 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 352F15D2D; Mon, 31 Oct 2011
- 13:19:14 -0400 (EDT)
-In-Reply-To: <4EAEAE13.50101@atlas-elektronik.com> ("Stefan =?utf-8?Q?N?=
- =?utf-8?Q?=C3=A4we=22's?= message of "Mon, 31 Oct 2011 15:17:55 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 74A5FAC0-03E4-11E1-9430-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S933624Ab1JaR5G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Oct 2011 13:57:06 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:34880 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933567Ab1JaR5F (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Oct 2011 13:57:05 -0400
+Received: by vcge1 with SMTP id e1so5026983vcg.19
+        for <git@vger.kernel.org>; Mon, 31 Oct 2011 10:57:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Kix4fkoOUChGlKHum7TBZc6W4z3Gv7a4fGZ/SvF7/M8=;
+        b=m5e+q1QCx9AFKXqYaYOcj/jZ8zEYvQXgENvmVd6KdW4jbPu++o9xVUdRtBHLSZPfTV
+         qVNVj0WPXKNXb51MKfdEaUDYAIU/gtKrgdU6fQSOzwwLwCSNxVuVpSM7vPLvsbTHq7Ci
+         mjVkIf8Teu/wHTorfnTCq8JLplWx9j6ufeR1s=
+Received: by 10.220.142.73 with SMTP id p9mr2564594vcu.157.1320083824544; Mon,
+ 31 Oct 2011 10:57:04 -0700 (PDT)
+Received: by 10.220.175.202 with HTTP; Mon, 31 Oct 2011 10:57:04 -0700 (PDT)
+In-Reply-To: <7vd3dht4ms.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184509>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184510>
 
-Stefan N=C3=A4we <stefan.naewe@atlas-elektronik.com> writes:
+On Fri, Oct 28, 2011 at 19:20, Junio C Hamano <gitster@pobox.com> wrote:
 
->>  * HTTP transport did not use pushurl correctly, and also did not te=
-ll
->>    what host it is trying to authenticate with when asking for
->>    credentials.
->>    (merge deba493 jk/http-auth later to maint).
+>>>>> Thanks; do you have no addition to the test suite to demonstrate the
+>>>>> breakage?
+>>>>
+>>>> Not yet. I'll try to come up with something.
+>>>
+>>> Let's do this.
+>>
+>> Thanks, but that does not seem to work for me. The test breaks both
+>> without and with my patch. I'll look into it.
 >
-> This seems to break pushing with https for me.
-> It never uses values from my '~/.netrc'.
-> I'll come up with a detailed scenario later.
+> Thanks. I suspect the difference is because you are on a crlf-native
+> platform while I am not...
 
-Thanks.
+I've got a test now. However, that test revealed some more related
+issues. I'll come up with a v2 of the patch this week.
 
-I have been pushing my updates out to code.google.com via authenticatio=
-n
-token stored in ~/.netrc over https, so it would be nice to see what
-breaks for you that works for me. There probably is something subtly
-different.
+-- 
+Sebastian Schuberth
