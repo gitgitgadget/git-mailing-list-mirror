@@ -1,53 +1,67 @@
-From: Rick Bragg <lists@gmnet.net>
-Subject: {Spam?} Electronic Voting could take a lesson from GIT
-Date: Mon, 31 Oct 2011 23:46:54 -0400
-Message-ID: <1320119214.23391.68.camel@thor>
+From: Michael Wookey <michaelwookey@gmail.com>
+Subject: Re: git-p4: problem with commit 97a21ca50ef8
+Date: Tue, 1 Nov 2011 15:50:31 +1100
+Message-ID: <CAOk9v+_xXRGAGWg2L5u=r9qBS=H+ZmdF=TwumSyq7WKf-15okw@mail.gmail.com>
+References: <CAOk9v+-==GwDQaZ=4BW1QfEF7+5SfhNF409Xom0bHdT_qKaiFA@mail.gmail.com>
+ <20111101020841.GA8116@arf.padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 01 04:59:25 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Pete Wyckoff <pw@padd.com>, Git Mailing List <git@vger.kernel.org>,
+	Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Tue Nov 01 05:51:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RL5VU-0005PF-RX
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Nov 2011 04:59:25 +0100
+	id 1RL6Jk-0002Yd-Qd
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Nov 2011 05:51:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753993Ab1KAD7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Oct 2011 23:59:20 -0400
-Received: from smtp.gmnet.net ([207.136.225.2]:43285 "EHLO smtp.gmnet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753289Ab1KAD7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Oct 2011 23:59:19 -0400
-X-Greylist: delayed 665 seconds by postgrey-1.27 at vger.kernel.org; Mon, 31 Oct 2011 23:59:19 EDT
-MailScanner-NULL-Check: 1320724044.15496@6Y10vA3f3PWNor5Cavi60g
-Received: from [192.168.1.36] (pool-64-223-104-159.burl.east.myfairpoint.net [64.223.104.159])
-	(authenticated bits=0)
-	by smtp.gmnet.net (8.14.2/8.14.2/Debian-2build1) with ESMTP id pA13l2Jb000579
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Mon, 31 Oct 2011 23:47:18 -0400
-X-Mailer: Evolution 2.28.3 
-X-MailScanner-ID: pA13l2Jb000579
-X-GreenMountainNetwork-MailScanner: Found to be clean
-X-GreenMountainNetwork-MailScanner-From: lists@gmnet.net
-X-Spam-Status: Yes
+	id S1751437Ab1KAEvP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Nov 2011 00:51:15 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:49988 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750945Ab1KAEvO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Nov 2011 00:51:14 -0400
+Received: by eye27 with SMTP id 27so5947009eye.19
+        for <git@vger.kernel.org>; Mon, 31 Oct 2011 21:51:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        bh=K2jrk0oWqo0cwc97ZPDCUfZDXzi9yy5fgh4HlQDjVTo=;
+        b=LURs+ZDsJgyIIbdAvl1B55L0Yn636eT7cN7sbEI/+ShRUuOHgEqCEf7bhzFxUu6ULn
+         enP1y2FA28CkB0Rh4hWNt/4CPKVrTRteqwU2D+2/0oPfxwHFbkO9YeHRi2L5xd+BoSbf
+         CJOSItQQLLI6ubZRFCeL0rPOkgAybvndr0o0U=
+Received: by 10.213.33.210 with SMTP id i18mr21812ebd.25.1320123072156; Mon,
+ 31 Oct 2011 21:51:12 -0700 (PDT)
+Received: by 10.213.17.209 with HTTP; Mon, 31 Oct 2011 21:50:31 -0700 (PDT)
+In-Reply-To: <20111101020841.GA8116@arf.padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184556>
 
-I don't want to get off topic, but here goes:
-I wrote up a very simple idea and put it here:
-https://github.com/rbragg/PeerElect
+> Would it be good if git-p4 understood how to identify and create
+> AppleDouble files on Mac? =C2=A0If yes, eventually, we can revert the
+> commit and explain how this feature doesn't quite work yet.
+> Even if no, it seems like we should revert and complain that
+> this apple support is broken.
 
-It could start off very small (in-house votes as to what food to buy for
-example) and grow as large as a full scale presidential election. It can
-also run along side of real paper votes.
+I've used git-p4 for many years, and have always had to work around
+the limitation of the "apple" filetype and the resulting lack of files
+added to the git repo.
 
-Anyway, just an Idea, and I think it's time has come. Seeing the
-electronic voting systems out there now, in real use, I shutter!
+Of course, I'd love to have git-p4 work seamlessly for this scenario.
+Even Perforce have a KB article on the limitation of the "apple"
+filetype with git-p4:
 
-Rick
+  http://kb.perforce.com/article/1417/git-p4
+
+At least with 97a21ca50ef8 reverted, there is a warning that files
+will be missing. The current behaviour results in a git repo with
+unusable files without any warning whatsoever. I think having unusable
+files, and without warnings, is worse as there is no indication that
+there is a problem with files in the working tree.
