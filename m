@@ -1,69 +1,106 @@
-From: Vincent van Ravesteijn <vfr@lyx.org>
-Subject: Re: checking out later commits from rolled back state
-Date: Tue, 01 Nov 2011 15:58:58 +0100
-Message-ID: <4EB00932.1090604@lyx.org>
-References: <1320158207959-6951892.post@n2.nabble.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv2 3/3] completion: match ctags symbol names in grep
+ patterns
+Date: Tue, 1 Nov 2011 08:21:48 -0700
+Message-ID: <20111101152148.GA5552@sigill.intra.peff.net>
+References: <20111021172239.GA22289@sigill.intra.peff.net>
+ <20111021173021.GC24417@sigill.intra.peff.net>
+ <20111023212928.GG22551@goldbirke>
+ <20111028060517.GA3993@sigill.intra.peff.net>
+ <20111029124755.GE2345@goldbirke>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: photoshop_nerd <JBreuer@consumercredit.com>
-X-From: git-owner@vger.kernel.org Tue Nov 01 15:59:13 2011
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Tue Nov 01 16:21:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLFnz-0003FK-9u
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Nov 2011 15:59:11 +0100
+	id 1RLGA0-0005Fg-84
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Nov 2011 16:21:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755087Ab1KAO7G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Nov 2011 10:59:06 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:57859 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751170Ab1KAO7F (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Nov 2011 10:59:05 -0400
-Received: by eye27 with SMTP id 27so6278300eye.19
-        for <git@vger.kernel.org>; Tue, 01 Nov 2011 07:59:03 -0700 (PDT)
-Received: by 10.14.12.209 with SMTP id 57mr1789116eez.59.1320159543765;
-        Tue, 01 Nov 2011 07:59:03 -0700 (PDT)
-Received: from [145.94.168.80] (wlan-145-94-168-080.wlan.tudelft.nl. [145.94.168.80])
-        by mx.google.com with ESMTPS id 54sm60745746eex.8.2011.11.01.07.59.02
-        (version=SSLv3 cipher=OTHER);
-        Tue, 01 Nov 2011 07:59:02 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
-In-Reply-To: <1320158207959-6951892.post@n2.nabble.com>
+	id S1752406Ab1KAPVv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Nov 2011 11:21:51 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59317
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751266Ab1KAPVu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Nov 2011 11:21:50 -0400
+Received: (qmail 4791 invoked by uid 107); 1 Nov 2011 15:27:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 01 Nov 2011 11:27:40 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Nov 2011 08:21:48 -0700
+Content-Disposition: inline
+In-Reply-To: <20111029124755.GE2345@goldbirke>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184571>
 
-Op 1-11-2011 15:36, photoshop_nerd schreef:
-> Hello, I a m relatively new to git, and my question pertains to moving back
-> and forth through the history of my commits.
->
-> Here is how I open a previous commit:
->
-> 1)$ git log
->
-> 2) (get sha1 hash of previous commit)
->
-> 3)$ git checkout<hash of my previous commit>
->
-> the problem is that once I am working with that commit, git log only shows
-> the hash tags up to the time that the commit was made, but not any of the
-> later commits. Is there a way to get the hash tags of my later commits when
-> I am in that rolled back state?
->
+On Sat, Oct 29, 2011 at 02:47:55PM +0200, SZEDER G=C3=A1bor wrote:
 
-If your are on branch 'master':
+> > Grep only looks in the current subdirectory for matches.
+>=20
+> Unless the user explicitly specifies the path(s)...  But that comes a=
+t
+> the end of the command line, so the completion script could have no
+> idea about it at the time of 'git grep <TAB>'.
 
-git log
-git checkout <hash of previous commit>
+True. But that's a more general problem. You have a 'tags' file that
+presumably represents the working tree. But you are not necessarily
+grepping there. You might be grepping something related (e.g., what's i=
+n
+the index), which makes the tags file still a good guess.
 
-then
+But you might also be grepping some totally unrelated branch, in which
+case this is not helpful.
 
-"git log master" will show you the log from the tip of the master branch.
+I tend to think that we are OK erring on the side of using the 'tags'
+file, even if it might be wrong, since otherwise we have nothing to
+tab-complete. When the user hits <Tab>, they are asking us to make our
+best guess, and if they know there is nothing to complete, they won't
+hit <Tab>. So it's not like we're hurting some existing workflow.
 
-Vincent
+And in that sense, maybe we should just do the "search back up the
+working tree" thing. Sure, it may be return way more matches than are
+accurate, but even that's better than having no tab-completion at all.
+
+> > You don't want __gitdir here, but rather "git rev-parse --show-cdup=
+".
+>=20
+> Oh, yes, indeed.
+>=20
+> But there was a point in using __gitdir() here: it respects the
+> --git-dir=3D option.  Which brings up the question: what
+> should 'git --git-dir=3D/some/where/.git grep <TAB>' offer?
+
+I guess if core.worktree is set, it would look there instead (and ditto
+for specifying --work-tree on the command line).  Handling those is suc=
+h
+a corner case that I'm not too concerned if we don't. And if somebody
+really cares, they can fix the completion later to pick up magic like
+that from the early part of the command line. I don't see it as a
+blocker for an initial version of the patch.
+
+> _get_comp_words_by_ref() is a general completion function, the purpos=
+e
+> of which is to provide a bash-version-independent equivalent of
+> $COMP_WORDS and $COMP_CWORD by working around the different word
+> splitting rules.  It doesn't know about git and its commands at all.
+>=20
+> But there is the while loop in _git() that looks for the git command
+> (among other things) on the command line, which could store the index
+> of the command name in $words in a variable.  This variable could the=
+n
+> be used in that case statement (and probably in a couple of other
+> places, too).
+
+Yeah, that makes sense. Again, my inclination is to just leave that for
+a further patch if somebody really wants to make the completion (for
+this and any other positional slots) more accurate.
+
+-Peff
