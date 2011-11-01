@@ -1,65 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git is exploding
-Date: Tue, 01 Nov 2011 13:14:59 -0700
-Message-ID: <7vsjm7lhvg.fsf@alter.siamese.dyndns.org>
-References: <CAA787r=jeBv9moineaJVY=urYzEX+d7n23ED-txAGhLS+OPbmg@mail.gmail.com>
- <vpqty6n1ybs.fsf@bauges.imag.fr>
+From: Stefan Naewe <stefan.naewe@gmail.com>
+Subject: Re: [ANNOUNCE] Git 1.7.8.rc0
+Date: Tue, 1 Nov 2011 20:06:19 +0000 (UTC)
+Message-ID: <loom.20111101T205618-231@post.gmane.org>
+References: <7vfwi9rc0g.fsf@alter.siamese.dyndns.org> <4EAEAE13.50101@atlas-elektronik.com> <4EAFC18A.1070502@atlas-elektronik.com> <7vmxcfn23i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?Q?=C3=98yvind_A=2E_Holm?= <sunny@sunbase.org>,
-	git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Nov 01 21:15:15 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 01 21:15:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLKjq-0001J3-Q6
+	id 1RLKjr-0001J3-Av
 	for gcvg-git-2@lo.gmane.org; Tue, 01 Nov 2011 21:15:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932065Ab1KAUPH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Nov 2011 16:15:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39192 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755076Ab1KAUPG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Nov 2011 16:15:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7092D53B7;
-	Tue,  1 Nov 2011 16:15:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/7/MT1r9ffarRPFhJ3CwQyAljKc=; b=ltuMfM
-	9OX4wyHNC6Cb0gcOG+xvKbrRrMVlo/mXqA+2LeyPwNv+gc7OhPmjrM6KaLorC6OV
-	Yuz4DmNYW1eHjpFkZWxCIvJB2RSm2bLk1DOSbOpiefJdSNRR9xYJh+LwpNZPiye6
-	5XGJ1q+SX9EDCFXI09KFNQlYAqZ8l9jTgfOGg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BNkl7WSkjPuynBi9OKKQn7RgzhtXFG+h
-	xp/78l02dLmZhQhYWXfPKty7pphM0+8DfvfoLMwQQsSW9udgkEC7/ZXoRQfi8DtB
-	Yz4ZLeNedxWdrrnLXmC5JmluQfkg7xTiCyxtYBj6S7R4oWUIZl2uk3DYAhUf7BCc
-	wHZ3ulMR8X0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6353953B6;
-	Tue,  1 Nov 2011 16:15:05 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6885553AE; Tue,  1 Nov 2011
- 16:15:01 -0400 (EDT)
-In-Reply-To: <vpqty6n1ybs.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Tue, 01 Nov 2011 19:39:51 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2DB04E08-04C6-11E1-81D4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932235Ab1KAUPK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Nov 2011 16:15:10 -0400
+Received: from lo.gmane.org ([80.91.229.12]:44965 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932159Ab1KAUPJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Nov 2011 16:15:09 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RLKjj-0001HL-Tj
+	for git@vger.kernel.org; Tue, 01 Nov 2011 21:15:08 +0100
+Received: from dslc-082-083-197-091.pools.arcor-ip.net ([82.83.197.91])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 01 Nov 2011 21:15:07 +0100
+Received: from stefan.naewe by dslc-082-083-197-091.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 01 Nov 2011 21:15:07 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 82.83.197.91 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.106 Safari/535.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184585>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Junio C Hamano <gitster <at> pobox.com> writes:
 
-> http://www.ohloh.net/p/compare?project_0=Git&project_1=Subversion&project_2=mercurial&submit_2=Go
-> => Git has 2,659 users on ohloh, Subversion has 7,667 and Mercurial has
-> 795.
+>=20
+> [administrivia: dropped the kernel mailing list from and added Peff t=
+o Cc]
+>=20
+> Stefan N=C3=A4we <stefan.naewe <at> atlas-elektronik.com> writes:
+>=20
+> >>>  * HTTP transport did not use pushurl correctly, and also did not=
+ tell
+> >>>    what host it is trying to authenticate with when asking for
+> >>>    credentials.
+> >>>    (merge deba493 jk/http-auth later to maint).
+> >>=20
+> >> This seems to break pushing with https for me.
+> >> It never uses values from my '~/.netrc'.
+> >> I'll come up with a detailed scenario later.
+> >
+> > Update:
+> >
+> > git push prompts for the password but just pressing return succeeds=
+=2E
+> >
+> > Weird...
+>=20
+> There are only handful of commits that even remotely touch http relat=
+ed
+> codepath between v1.7.7 and v1.7.8-rc0:
+>=20
+> [...]
+>=20
+> Could you try reverting deba493 and retest, and then if the behaviour=
+ is
+> the same "need ENTER", further revert 070b4dd and retest?
 
-Git costs $11M (6 years old) while Subversion costs $6.7M (11 years old)?
+Did some tests again at my home machine with v1.7.8-rc0.
+
+Push with https works, if the URL looks e.g. like this:
+
+  https://github.com/user/repo.git
+
+rather than this
+
+  https://user@github.com/user/repo.git
+
+and having a ~/.netrc like this
+
+  machine github.com login user password YouDontWantToKnow
+
+If the URL contains 'user@' I get the 'need ENTER' behaviour.
+
+I'll recheck everything at work, where I live behind a very restrictive
+firewall (Don't know if that makes any difference).
+
+Regards,
+  Stefan
