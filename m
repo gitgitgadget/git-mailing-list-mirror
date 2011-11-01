@@ -1,53 +1,66 @@
-From: photoshop_nerd <JBreuer@consumercredit.com>
-Subject: checking out later commits from rolled back state
-Date: Tue, 1 Nov 2011 07:36:47 -0700 (PDT)
-Message-ID: <1320158207959-6951892.post@n2.nabble.com>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: Recovery after interrupted repack
+Date: Tue, 01 Nov 2011 10:49:17 -0400
+Message-ID: <1320158957.14775.7.camel@drew-northup.unet.maine.edu>
+References: <8339egazbf.fsf@kalahari.s2.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 01 15:36:54 2011
+Cc: git@vger.kernel.org
+To: Hannu Koivisto <azure@iki.fi>
+X-From: git-owner@vger.kernel.org Tue Nov 01 15:50:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLFSP-0001lI-Fa
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Nov 2011 15:36:53 +0100
+	id 1RLFfa-0007WG-0k
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Nov 2011 15:50:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754838Ab1KAOgt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Nov 2011 10:36:49 -0400
-Received: from sam.nabble.com ([216.139.236.26]:40203 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754780Ab1KAOgs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Nov 2011 10:36:48 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <JBreuer@consumercredit.com>)
-	id 1RLFSK-0004Q2-0M
-	for git@vger.kernel.org; Tue, 01 Nov 2011 07:36:48 -0700
+	id S1755152Ab1KAOuT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Nov 2011 10:50:19 -0400
+Received: from basalt.its.maine.edu ([130.111.32.66]:50627 "EHLO
+	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755080Ab1KAOuT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Nov 2011 10:50:19 -0400
+Received: from [IPv6:2610:48:100:827::97] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827::97])
+	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id pA1EnL7l000321
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 1 Nov 2011 10:49:26 -0400
+In-Reply-To: <8339egazbf.fsf@kalahari.s2.org>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=2
+	Fuz1=2 Fuz2=2
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: pA1EnL7l000321
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1320763774.09337@1YN38bOdHPaZPQY+oi2qwQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184568>
 
-Hello, I a m relatively new to git, and my question pertains to moving back
-and forth through the history of my commits.
+On Wed, 2011-10-26 at 12:15 +0300, Hannu Koivisto wrote:
+> Hi,
+> 
+> I interrupted git repack -a -f -d and now most commands say "fatal:
+> bad object HEAD".  Additionally an attempt to run git repack again
+> says a bunch of "error: refs/heads/foo does not point to a valid
+> object!" messages.
+> 
+> git fsck prints a huge list of "missing blob <sha-1>" lines.
+> 
+> I'm using a Cygwin build of git 1.7.5.1 (I also have a build of the
+> latest master available).
 
-Here is how I open a previous commit:
+Was the result any different after running git fsck on it? If all else
+fails you can probably still use the contents of the reflog to fix
+things, but I'm not the best reference on such matters.
 
-1)$ git log
-
-2) (get sha1 hash of previous commit)
-
-3)$ git checkout <hash of my previous commit>
-
-the problem is that once I am working with that commit, git log only shows
-the hash tags up to the time that the commit was made, but not any of the
-later commits. Is there a way to get the hash tags of my later commits when
-I am in that rolled back state?
-
---
-View this message in context: http://git.661346.n2.nabble.com/checking-out-later-commits-from-rolled-back-state-tp6951892p6951892.html
-Sent from the git mailing list archive at Nabble.com.
+-- 
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
