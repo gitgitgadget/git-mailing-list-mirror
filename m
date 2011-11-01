@@ -1,135 +1,303 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
-Date: Tue, 1 Nov 2011 14:21:59 -0700
-Message-ID: <CA+55aFx_rAA6TJkZn1Zvu6u9UjxnmTVt0HpMnvaE_q9Sx-jzPg@mail.gmail.com>
-References: <20111026202235.GA20928@havoc.gtf.org> <1319969101.5215.20.camel@dabdike>
- <CA+55aFx1NGWfNJAKDTvZfsHDDKiEtS4t4RydSgHurBeyGPyhXg@mail.gmail.com>
- <1320049150.8283.19.camel@dabdike> <CA+55aFz3=cbciRfTYodNhdEetXYxTARGTfpP9GL9RZK222XmKQ@mail.gmail.com>
- <7vy5w1ow90.fsf@alter.siamese.dyndns.org> <CA+55aFwL_s=DcT46dprcYVWEAm_=WkuTV6K9dAn3wc_bDQU8vA@mail.gmail.com>
- <7vwrbjlj5r.fsf@alter.siamese.dyndns.org>
+From: Roland Kaufmann <rlndkfmn+git@gmail.com>
+Subject: [PATCH v3] Display change history as a diff between two dirs
+Date: Tue, 01 Nov 2011 22:37:07 +0100
+Message-ID: <4EB06683.2020900@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	James Bottomley <James.Bottomley@hansenpartnership.com>,
-	Jeff Garzik <jeff@garzik.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-ide-owner@vger.kernel.org Tue Nov 01 22:22:27 2011
-Return-path: <linux-ide-owner@vger.kernel.org>
-Envelope-to: lnx-linux-ide@lo.gmane.org
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Nov 01 22:36:42 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-ide-owner@vger.kernel.org>)
-	id 1RLLms-00055u-0v
-	for lnx-linux-ide@lo.gmane.org; Tue, 01 Nov 2011 22:22:26 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1RLM0f-0002eG-7a
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Nov 2011 22:36:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755991Ab1KAVWY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;lnx-linux-ide@m.gmane.org>); Tue, 1 Nov 2011 17:22:24 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:56288 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753188Ab1KAVWW convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-ide@vger.kernel.org>); Tue, 1 Nov 2011 17:22:22 -0400
-Received: by wwi36 with SMTP id 36so3713958wwi.1
-        for <multiple recipients>; Tue, 01 Nov 2011 14:22:20 -0700 (PDT)
+	id S1753565Ab1KAVgg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Nov 2011 17:36:36 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:35113 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752553Ab1KAVgf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Nov 2011 17:36:35 -0400
+Received: by bke11 with SMTP id 11so823734bke.19
+        for <git@vger.kernel.org>; Tue, 01 Nov 2011 14:36:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RrXc6B/7ka5PPc4cbaMxXK12btFS74qL/ZyPkKbABRc=;
-        b=RxnVuG9qEwKP6/oYnWi2RpvT9I0EJTjLDZIkSGvAVj4TgS54lyKMSsZiR0Yypmrh/m
-         Lf/3nO/+gm3rFVAxqCqXJOMh2qcRiNW4l0vUwCQW9HG4IR0vwRjc1QYzxxbfEBdrRCLl
-         zt1qblB3n18XUBS6dPoXF7b3w8HHYbfflGTgk=
-Received: by 10.216.54.20 with SMTP id h20mr339623wec.97.1320182540082; Tue,
- 01 Nov 2011 14:22:20 -0700 (PDT)
-Received: by 10.216.166.3 with HTTP; Tue, 1 Nov 2011 14:21:59 -0700 (PDT)
-In-Reply-To: <7vwrbjlj5r.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: SY85fzXpLhlzxB8zaWPG5u67P9Q
-Sender: linux-ide-owner@vger.kernel.org
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        bh=blW8HEuMVyZh08CKx5UPNePNg1bvhMxzqkAZ15MJ+jk=;
+        b=SvTEIcKaG3GwDSKN5J2crx9m/Eq31MF19M2C11gdLaLpft+Zd5tREYFK21KhvqJkfV
+         MgRvWQ+7TSGZteDIAyjtS+Mgkl0AbEUmVZVlkUJqgtBgEGs5ueHX8pk9UlmFtPQ2XGJD
+         u/qhgN8fOLg0+7Dxnygz4yiXmtcKO6Mbnmi+8=
+Received: by 10.204.133.194 with SMTP id g2mr1196356bkt.46.1320183394085;
+        Tue, 01 Nov 2011 14:36:34 -0700 (PDT)
+Received: from [192.168.1.7] (33.72.34.95.customer.cdi.no. [95.34.72.33])
+        by mx.google.com with ESMTPS id r12sm253425bkw.5.2011.11.01.14.36.32
+        (version=SSLv3 cipher=OTHER);
+        Tue, 01 Nov 2011 14:36:33 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-ide.vger.kernel.org>
-X-Mailing-List: linux-ide@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184593>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184594>
 
-On Tue, Nov 1, 2011 at 12:47 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
->
-> While I like the "an ephemeral tag is used only for hop-to-hop
-> communication to carry information to be recorded in the resulting
-> history" approach, I see a few downsides.
+Watching patches serially it can be difficult to get an overview of how
+a pervasive change is distributed through-out different modules. Thus;
 
-So I do agree.
+Extract snapshots of the files that have changed between two revisions
+into temporary directories and launch a graphical tool to show the diff
+between them.
 
-I'd actually be *happier* with a generic multi-line "branch
-description" thing that involves no git objects at all, just a nice
-description of what the branch is.
+Use existing functionality in git-diff to get the files themselves, and
+git-difftool to launch the diff viewer.
 
-The fact that you could also hide a signed version of the
-top-of-branch there would be kind of a side effect, and wouldn't be a
-requirement.
+Based on a script called 'git-diffc' by Nitin Gupta.
 
-I hate how anonymous our branches are. Sure, we can use good names for
-them, but it was a mistake to think we should describe the repository
-(for gitweb), rather than the branch.
+Signed-off-by: Roland Kaufmann <rlndkfmn+git@gmail.com>
+---
+Issues addressed in this revision are:
 
-Ok, "hate" is a strong word. I don't "hate" it. I don't even think
-it's a major design issue. But I do think that it would have been
-nicer if we had had some branch description model.
+* Diff-viewer is searched for in order: env. var. GIT_EXTERNAL_TREEDIFF,
+  env. var. GIT_EXTERNAL_DIFF, conf. of git-difftool.
 
-The only reason I suggest a tag is really because it would fit with
-existing tooling - especially the git transport protocol. So it's not
-that I actually think that a tag is the right way to describe (and
-sign) the branch, it's just that it's the way that wouldn't require
-any changes other than in "git push -s" and "git pull".
+  If dir. comp. is found useful, there should probably be some config
+  var. to control it too, but I think that will require some refactoring
+  of git-mergetool--lib.
 
-> =A0* To verify the commit C that was taken from the tip of lieutenant=
-'s tree
-> =A0 some time ago, one has to find the merge commit that has C as a p=
-arent,
-> =A0 and look at the merge commit. =A0For example "git log --show-sign=
-ature"
-> =A0 would either show or not show the authenticity of C depending on =
-where
-> =A0 the traversal comes from. You certainly can implement it that way=
-, but
-> =A0 "some child describes an aspect of its parent, but not necessaril=
-y all
-> =A0 children do so" feels philosophically less correct than "the comm=
-it has
-> =A0 data to describe itself".
+* Only platforms where mktemp is known to exist (and have sane options)
+  are explicitly tested for; the default is to fallback to a Perl module
+  implementation which is heavier, but has a greater chance of working
+  I reckon (git-send-email uses this module).
 
-Yeah.
+* Less convoluted testing of empty directory.
 
-Having thought about it, I'm also not convinced I really want to
-pollute the "git log" output with information that realistically
-almost nobody cares about. The primary use is just for the person who
-pulls things to verify it, after that the information is largely stale
-and almost certain to never be interesting to anybody ever again. It's
-*theoretically* useful if somebody wants to go back and re-verify, but
-at the same time that really isn't expected to be the common case.
+ contrib/dirdiff/README                 |   10 ++++
+ contrib/dirdiff/git-dirdiff--helper.sh |   37 ++++++++++++++++
+ contrib/dirdiff/git-dirdiff.sh         |   72 ++++++++++++++++++++++++++++++++
+ contrib/dirdiff/git-dirdiff.txt        |   71 +++++++++++++++++++++++++++++++
+ 4 files changed, 190 insertions(+), 0 deletions(-)
+ create mode 100644 contrib/dirdiff/README
+ create mode 100755 contrib/dirdiff/git-dirdiff--helper.sh
+ create mode 100755 contrib/dirdiff/git-dirdiff.sh
+ create mode 100644 contrib/dirdiff/git-dirdiff.txt
 
-So I'm wondering if we want to save it at all. it's quite possible
-that realistically speaking "google the mailing list archives" is the
-*right* way to look up the signature if it is ever needed later.
-
-Maybe just verifying the email message (with the suggested kind of
-change to "git request-pull") is actually the right approach. And what
-I should do is to just wrap my "git pull" in some script that I can
-just cut-and-paste the gpg-signed thing into, and which just does the
-"gpg --verify" on it, and then does the "git pull" after that.
-
-Because in many ways, "git request-pull" is when you do want to sign
-stuff. A developer might well want to push out his stuff for some
-random internal testing (linux-next, for example), and then only later
-decide "Ok, it was all good, now I want to make it 'official' and ask
-Linus to pull it", and sign it at *that* time, rather than when
-actually pushing it out.
-
-And I suspect signing the pull request fits better into peoples
-existing workflow anyway - sending out the email to ask the maintainer
-to pull really is the "special event", rather than pushing out the
-code itself.
-
-                      Linus
+diff --git a/contrib/dirdiff/README b/contrib/dirdiff/README
+new file mode 100644
+index 0000000..d06461a
+--- /dev/null
++++ b/contrib/dirdiff/README
+@@ -0,0 +1,10 @@
++# install on GNU, BSD:
++for f in "" "--helper"; do
++  b=git-dirdiff$f
++  sudo install -m 0755 contrib/dirdiff/$b.sh $(git --exec-path)/$b
++done
++
++# install on Windows
++for /f %a in ('git --exec-path') do set GIT_PATH=%a
++set GIT_PATH=%GIT_PATH:/=\%
++for %a in ("" "--helper") do copy contrib\dirdiff\git-dirdiff%~a.sh "%GIT_PATH%\%~a" /y
+diff --git a/contrib/dirdiff/git-dirdiff--helper.sh b/contrib/dirdiff/git-dirdiff--helper.sh
+new file mode 100755
+index 0000000..8ff0124
+--- /dev/null
++++ b/contrib/dirdiff/git-dirdiff--helper.sh
+@@ -0,0 +1,37 @@
++#!/bin/sh
++#
++# Accumulate files in a changeset into a pre-defined directory.
++#
++# Copyright (C) 2011 Roland Kaufmann
++#
++# Based on a script called git-diffc by Nitin Gupta and valuable
++# suggestions by Junio C. Hamano.
++#
++# This file is licensed under the GPL v2, or a later version
++# at the discretion of the official Git maintainer.
++
++. git-sh-setup
++
++# check that we are called by git-dirdiff
++test -z "$__GIT_DIFF_DIR" &&
++  die Error: Do not call $(basename "$0") directly
++
++# what is the directory name of the file that has changed
++RELDIR=$(dirname "$1") ||
++  exit $?
++
++# don't attempt to copy new or removed files
++if test "$2" != "/dev/null"
++then
++  mkdir -p "$__GIT_DIFF_DIR/old/$RELDIR" ||
++    exit $?
++  cp "$2" "$__GIT_DIFF_DIR/old/$1" ||
++    exit $?
++fi
++if test "$5" != "/dev/null"
++then
++  mkdir -p "$__GIT_DIFF_DIR/new/$RELDIR" ||
++    exit $?
++  cp "$5" "$__GIT_DIFF_DIR/new/$1" ||
++    exit $?
++fi
+diff --git a/contrib/dirdiff/git-dirdiff.sh b/contrib/dirdiff/git-dirdiff.sh
+new file mode 100755
+index 0000000..c5834ae
+--- /dev/null
++++ b/contrib/dirdiff/git-dirdiff.sh
+@@ -0,0 +1,72 @@
++#!/bin/sh
++#
++# Display differences between two commits with a directory comparison.
++#
++# Copyright (C) 2011 Roland Kaufmann
++#
++# Based on a script called git-diffc by Nitin Gupta and valuable
++# suggestions by Junio C. Hamano.
++#
++# This file is licensed under the GPL v2, or a later version
++# at the discretion of the official Git maintainer.
++
++. git-sh-setup
++
++# TMPDIR points to the designated space for temporary files; only if
++# not set use /tmp (MSYS even mounts %TEMP% to there)
++test -z "$TMPDIR" && TMPDIR=/tmp
++
++# create a temporary directory to hold snapshots of changed files
++# fallback on crippled platforms is to use a Perl module
++case $(uname -s) in
++Linux | *BSD | Darwin | windows* | CYGWIN_NT*)
++  __GIT_DIFF_DIR=$(mktemp -d "$TMPDIR/git-dirdiff.XXXXXX")
++  ;;
++*)
++  __GIT_DIFF_DIR=$(perl -e "use File::Temp qw/tempdir/; print tempdir(\"git-dirdiff.XXXXXX\", DIR=>\"$TMPDIR\")")
++  ;;
++esac
++test -d "$__GIT_DIFF_DIR" -a -w "$__GIT_DIFF_DIR" ||
++  die Error: Could not create a temporary subdir in $TMPDIR
++
++# cleanup after we're done
++trap 'rm -rf $__GIT_DIFF_DIR' 0
++
++# export this variable so that scripts called indirectly can access it
++export __GIT_DIFF_DIR
++
++# let the helper script accumulate all changed files into the temporary
++# directory letting 'git diff' do all the heavy lifting
++GIT_EXTERNAL_DIFF=git-dirdiff--helper git --no-pager diff "$@" ||
++  exit $?
++
++# first and second argument will always be the special directory links
++# if there are no hidden files nor regular files, then $3 will be the
++# second wildcard unexpanded
++isempty () {
++  set - $1/.* $1/*
++  test ! -f "$3"
++}
++
++# no-op if no files were changed
++isempty "$__GIT_DIFF_DIR/old" && isempty "$__GIT_DIFF_DIR/new" &&
++  exit 0
++
++# if a different tool is setup for tree comparison, launch that instead
++# if GIT_EXTERNAL_TREEDIFF is not set, then use GIT_EXTERNAL_DIFF
++if test -n "$GIT_EXTERNAL_DIFF"
++then
++  GIT_DIFFTOOL_EXTCMD=$GIT_EXTERNAL_DIFF
++  export GIT_DIFFTOOL_EXTCMD
++fi
++if test -n "$GIT_EXTERNAL_TREEDIFF"
++then
++  GIT_DIFFTOOL_EXTCMD=$GIT_EXTERNAL_TREEDIFF
++  export GIT_DIFFTOOL_EXTCMD
++fi
++
++# run original diff program, reckoning it will understand directories
++# modes and shas does not apply to the root directories so submit dummy
++# values for those, hoping that the diff tool does not use them.
++git-difftool--helper - "$__GIT_DIFF_DIR/old" deadbeef 0755 "$__GIT_DIFF_DIR/new" babeface 0755 ||
++  exit $?
+diff --git a/contrib/dirdiff/git-dirdiff.txt b/contrib/dirdiff/git-dirdiff.txt
+new file mode 100644
+index 0000000..b80430a
+--- /dev/null
++++ b/contrib/dirdiff/git-dirdiff.txt
+@@ -0,0 +1,71 @@
++git-dirdiff(1)
++==============
++
++NAME
++----
++git-dirdiff - Show changes using directory compare
++
++SYNOPSIS
++--------
++[verse]
++'git dirdiff' [<options>] [<commit> [<commit>]] [--] [<path>...]
++
++DESCRIPTION
++-----------
++'git dirdiff' is a git command that allows you to compare revisions
++as a difference between two directories. 'git dirdiff' is a frontend
++to linkgit:git-diff[1].
++
++OPTIONS
++-------
++See linkgit:git-diff[1] for the list of supported options.
++
++ENVIRONMENT VARIABLES
++---------------------
++'GIT_EXTERNAL_TREEDIFF'::
++	When 'GIT_EXTERNAL_TREEDIFF' is set, the program named by it is
++	used as a diff viewer. The program must accept 7 parameters, where
++	parameter 2 is the path to a temporary directory containing the
++	"old" revision, and parameter 5 is the path of the "new" revision.
++	The other five parameters will only contain dummy values, and their
++	contents are subject to change.
++
++'GIT_EXTERNAL_DIFF'::
++	If and only if 'GIT_EXTERNAL_TREEDIFF' is not set, 'git dirdiff'
++	will use the contents of 'GIT_EXTERNAL_DIFF' as the name of the
++	diff viewer.
++
++CONFIG VARIABLES
++----------------
++If none of the above environment variables are set, 'git dirdiff' will
++use the same config variables as linkgit:git-difftool[1] to determine
++which difftool should be used.
++
++TEMPORARY FILES
++---------------
++'git dirdiff' creates a directory with 'mktemp' to hold snapshots of the
++files which are different in the two revisions. This directory is removed
++when the diff viewer terminates.
++
++NOTES
++-----
++The diff viewer must support being passed directories instead of files
++as its arguments.
+++
++Files that are not put under version control are not included when
++viewing the difference between a revision and the working directory.
++
++SEE ALSO
++--------
++linkgit:git-diff[1]::
++	 Show changes between commits, commit and working tree, etc
++
++linkgit:git-difftool[1]::
++	Show changes using common diff tools
++
++linkgit:git-config[1]::
++	 Get and set repository or global options
++
++GIT
++---
++Part of the linkgit:git[1] suite
+-- 
+1.7.1
