@@ -1,107 +1,101 @@
-From: Vincent van Ravesteijn <vfr@lyx.org>
-Subject: Re: Re: [PATCHv2] Compile fix for MSVC
-Date: Tue, 1 Nov 2011 23:32:56 +0100
-Message-ID: <CAAH6HY8WfOQQ4g54y7mriq6BKoJCWYsVPrQUTMndqpKdniLAtw@mail.gmail.com>
-References: <1320088364-25916-1-git-send-email-vfr@lyx.org>
-	<7vd3dcq4s5.fsf@alter.siamese.dyndns.org>
-	<alpine.DEB.1.00.1110311908240.1930@bonsai2>
-	<CABPQNSaCRRRpEQPG1Mb4DovkMdQSBhHTm-i7y5M4iT+ndHX4XA@mail.gmail.com>
-	<alpine.DEB.1.00.1111011332400.32316@s15462909.onlinehome-server.info>
+From: Ted Ts'o <tytso@mit.edu>
+Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
+Date: Tue, 1 Nov 2011 18:39:17 -0400
+Message-ID: <20111101223917.GG32161@thunk.org>
+References: <20111026202235.GA20928@havoc.gtf.org>
+ <1319969101.5215.20.camel@dabdike>
+ <CA+55aFx1NGWfNJAKDTvZfsHDDKiEtS4t4RydSgHurBeyGPyhXg@mail.gmail.com>
+ <1320049150.8283.19.camel@dabdike>
+ <CA+55aFz3=cbciRfTYodNhdEetXYxTARGTfpP9GL9RZK222XmKQ@mail.gmail.com>
+ <7vy5w1ow90.fsf@alter.siamese.dyndns.org>
+ <CA+55aFwL_s=DcT46dprcYVWEAm_=WkuTV6K9dAn3wc_bDQU8vA@mail.gmail.com>
+ <7vwrbjlj5r.fsf@alter.siamese.dyndns.org>
+ <CA+55aFx_rAA6TJkZn1Zvu6u9UjxnmTVt0HpMnvaE_q9Sx-jzPg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/alternative; boundary=bcaec54858cad9669804b0b3ef34
-Cc: ramsay@ramsay1.demon.co.uk, msysgit@googlegroups.com, 
-	Karsten Blees <blees@dcon.de>, git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: msysgit+bncCKSyzO6oChD058H1BBoEcNP9Cg@googlegroups.com Tue Nov 01 23:35:00 2011
-Return-path: <msysgit+bncCKSyzO6oChD058H1BBoEcNP9Cg@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qw0-f58.google.com ([209.85.216.58])
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	Jeff Garzik <jeff@garzik.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: linux-ide-owner@vger.kernel.org Tue Nov 01 23:39:25 2011
+Return-path: <linux-ide-owner@vger.kernel.org>
+Envelope-to: lnx-linux-ide@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCKSyzO6oChD058H1BBoEcNP9Cg@googlegroups.com>)
-	id 1RLMv4-0000VX-L2
-	for gcvm-msysgit@m.gmane.org; Tue, 01 Nov 2011 23:34:58 +0100
-Received: by qabg27 with SMTP id g27sf777222qab.3
-        for <gcvm-msysgit@m.gmane.org>; Tue, 01 Nov 2011 15:34:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=TthN5WPsdbi0KdjHllxU7QCMXIlCk5pU0YThY7WbYi0=;
-        b=H3uHeXZ0Juyp9TtzRp/emaUj8eolQmFo4HhTcxlHfV8sIR096npOxxg82DFpAP8auN
-         jvEYZ9EX4vHumgnwsg4rFVZRj7nBcmx1Xby4qT+C3iwkR6LR/PZJOaA/NwZdEXtuXlpj
-         YGBUvD/N8t0JhpPV/0GUCoHfDAP/V4O1qjLVs=
-Received: by 10.224.52.81 with SMTP id h17mr470127qag.0.1320186868427;
-        Tue, 01 Nov 2011 15:34:28 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.224.209.134 with SMTP id gg6ls324745qab.2.gmail; Tue, 01 Nov
- 2011 15:34:27 -0700 (PDT)
-Received: by 10.224.111.129 with SMTP id s1mr481117qap.3.1320186867886;
-        Tue, 01 Nov 2011 15:34:27 -0700 (PDT)
-Received: by 10.224.137.13 with SMTP id u13msqat;
-        Tue, 1 Nov 2011 15:32:56 -0700 (PDT)
-Received: by 10.52.64.173 with SMTP id p13mr2068557vds.0.1320186776771;
-        Tue, 01 Nov 2011 15:32:56 -0700 (PDT)
-Received: by 10.52.64.173 with SMTP id p13mr2068556vds.0.1320186776763;
-        Tue, 01 Nov 2011 15:32:56 -0700 (PDT)
-Received: from mail-vw0-f44.google.com (mail-vw0-f44.google.com [209.85.212.44])
-        by gmr-mx.google.com with ESMTPS id cn4si197262vdb.3.2011.11.01.15.32.56
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 01 Nov 2011 15:32:56 -0700 (PDT)
-Received-SPF: neutral (google.com: 209.85.212.44 is neither permitted nor denied by best guess record for domain of vfr@lyx.org) client-ip=209.85.212.44;
-Received: by mail-vw0-f44.google.com with SMTP id 5so9334726vws.17
-        for <msysgit@googlegroups.com>; Tue, 01 Nov 2011 15:32:56 -0700 (PDT)
-Received: by 10.52.186.230 with SMTP id fn6mr1608218vdc.76.1320186776479; Tue,
- 01 Nov 2011 15:32:56 -0700 (PDT)
-Received: by 10.220.189.68 with HTTP; Tue, 1 Nov 2011 15:32:56 -0700 (PDT)
-Received: by 10.220.189.68 with HTTP; Tue, 1 Nov 2011 15:32:56 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.1111011332400.32316@s15462909.onlinehome-server.info>
-X-Original-Sender: vfr@lyx.org
-X-Original-Authentication-Results: gmr-mx.google.com; spf=neutral (google.com:
- 209.85.212.44 is neither permitted nor denied by best guess record for domain
- of vfr@lyx.org) smtp.mail=vfr@lyx.org
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184601>
+	(envelope-from <linux-ide-owner@vger.kernel.org>)
+	id 1RLMzM-0001pr-IG
+	for lnx-linux-ide@lo.gmane.org; Tue, 01 Nov 2011 23:39:24 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753905Ab1KAWjX (ORCPT <rfc822;lnx-linux-ide@m.gmane.org>);
+	Tue, 1 Nov 2011 18:39:23 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:48895 "EHLO
+	test.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753887Ab1KAWjW (ORCPT <rfc822;linux-ide@vger.kernel.org>);
+	Tue, 1 Nov 2011 18:39:22 -0400
+Received: from root (helo=tytso-glaptop.cam.corp.google.com)
+	by test.thunk.org with local-esmtp (Exim 4.69)
+	(envelope-from <tytso@thunk.org>)
+	id 1RLMzF-0003vg-Df; Tue, 01 Nov 2011 22:39:17 +0000
+Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1RLMzF-0000F9-Ow; Tue, 01 Nov 2011 18:39:17 -0400
+Mail-Followup-To: Ted Ts'o <tytso@mit.edu>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	Jeff Garzik <jeff@garzik.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <CA+55aFx_rAA6TJkZn1Zvu6u9UjxnmTVt0HpMnvaE_q9Sx-jzPg@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on test.thunk.org); SAEximRunCond expanded to false
+Sender: linux-ide-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <linux-ide.vger.kernel.org>
+X-Mailing-List: linux-ide@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184602>
 
---bcaec54858cad9669804b0b3ef34
-Content-Type: text/plain; charset=ISO-8859-1
+On Tue, Nov 01, 2011 at 02:21:59PM -0700, Linus Torvalds wrote:
+> So I'm wondering if we want to save it at all. it's quite possible
+> that realistically speaking "google the mailing list archives" is the
+> *right* way to look up the signature if it is ever needed later.
 
-> Maybe if someone donates Jenkins resources, we could make an automatic
-> branch in the future that has git.sln in it (similar to the 'html' branch
-> in git.git).
->
+Given the number of trees that you merge in every merge window (never
+mind over an entire release), I don't think "google the mailing list
+archives" is going to scale.  Finding some way to keep it along with
+the merge window seems the right thing.  I agree that it should hidden
+normally, but that's a UI display issue.  Heck, we could just hide
+after the terminating NULL in the commit description, per a discussion
+on the git list 2-3 weeks ago.  :-)
 
-As long as this means to just run a not so complicated perl script, this
-Could even be done in a commit hook.
+> Because in many ways, "git request-pull" is when you do want to sign
+> stuff. A developer might well want to push out his stuff for some
+> random internal testing (linux-next, for example), and then only later
+> decide "Ok, it was all good, now I want to make it 'official' and ask
+> Linus to pull it", and sign it at *that* time, rather than when
+> actually pushing it out.
 
-Just another question. How does the (msys)git community feel about adding
-CMake support ? I can probably do that quite easily.
+Sure, the signed content should be buried in the commit that it
+describes.  Whether we carry it in an emphemeral tag or in the git
+request-pull is not really important from a security perspective.  The
+tag is nicer simply because the person doing the pull won't need to
+cut and paste the signature information.
 
-Vincent
+One approach which might work is if git request-pull sends the e-mail
+message with the git shortlog and diffstat, *and* an MIME attachment
+that contained all of the necessary information.  The maintainer would
+then save the attachment, and feed it to git, which will display the
+git shortlog and diffstat, ask for confirmation, and then embed the
+digital signature into the merge commit.
 
---bcaec54858cad9669804b0b3ef34
-Content-Type: text/html; charset=ISO-8859-1
+The only problem with that is (a) you'd have to get over your hatred
+of attachment (but if you're using Gmail hopefully that's relative
+convenient :-), and (b) LKML list filter would have to be taught to
+tolerate git-generated attachments.
 
-<p><br>
-&gt; Maybe if someone donates Jenkins resources, we could make an automatic<br>
-&gt; branch in the future that has git.sln in it (similar to the &#39;html&#39; branch<br>
-&gt; in git.git).<br>
-&gt;</p>
-<p>As long as this means to just run a not so complicated perl script, this Could even be done in a commit hook.</p>
-<p>Just another question. How does the (msys)git community feel about adding CMake support ? I can probably do that quite easily.</p>
-<p>Vincent<br>
-</p>
-
---bcaec54858cad9669804b0b3ef34--
+						- Ted
