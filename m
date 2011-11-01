@@ -1,144 +1,67 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: git-p4: problem with commit 97a21ca50ef8
-Date: Mon, 31 Oct 2011 22:08:41 -0400
-Message-ID: <20111101020841.GA8116@arf.padd.com>
-References: <CAOk9v+-==GwDQaZ=4BW1QfEF7+5SfhNF409Xom0bHdT_qKaiFA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [msysGit] Re: [PATCHv2] Compile fix for MSVC
+Date: Mon, 31 Oct 2011 20:30:23 -0700
+Message-ID: <7vd3dco6y8.fsf@alter.siamese.dyndns.org>
+References: <1320088364-25916-1-git-send-email-vfr@lyx.org>
+ <7vd3dcq4s5.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.1110311908240.1930@bonsai2>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Luke Diamand <luke@diamand.org>
-To: Michael Wookey <michaelwookey@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 01 03:08:54 2011
+Cc: Vincent van Ravesteijn <vfr@lyx.org>, git@vger.kernel.org,
+	kusmabite@gmail.com, ramsay@ramsay1.demon.co.uk,
+	msysgit@googlegroups.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Nov 01 04:30:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RL3mV-0007Hl-Bg
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Nov 2011 03:08:51 +0100
+	id 1RL53a-0007nE-8g
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Nov 2011 04:30:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752626Ab1KACIq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Oct 2011 22:08:46 -0400
-Received: from honk.padd.com ([74.3.171.149]:54423 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752491Ab1KACIp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Oct 2011 22:08:45 -0400
-Received: from arf.padd.com (unknown [50.55.131.180])
-	by honk.padd.com (Postfix) with ESMTPSA id 6F5F33BB;
-	Mon, 31 Oct 2011 19:08:44 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id AA1DC31412; Mon, 31 Oct 2011 22:08:41 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <CAOk9v+-==GwDQaZ=4BW1QfEF7+5SfhNF409Xom0bHdT_qKaiFA@mail.gmail.com>
+	id S1753782Ab1KADa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Oct 2011 23:30:29 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38144 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753511Ab1KADa2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Oct 2011 23:30:28 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EEDB36566;
+	Mon, 31 Oct 2011 23:30:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dojqScV7IDZrwRYr839kS2FcBD8=; b=q0ism/
+	yQ03nNTfZXs3FJlFlc3EHwxSWn/u92br16MOKNQ4TiSDjh1LYHZ7rTo8Hr3Izooo
+	rhoto6nsBE8WLrkasyecy9JQJRXLleIgM64fL1H0HJF1m/G+UJPmzDCPi9RXZIIV
+	Ofw+QOye3xXgY1to40Hc0qvx/T220Dnt+ITrk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RtnPStptkt+RH1LSIu7J5pA2IFpHyrS9
+	0Yt4juRh2GyrCXlEcW3p5DWGxxo0eH64VLPTesc9l3TfnVNxyoNWYBMaead41V9y
+	AQXlfjOyvODJohN7VYphag36tp69JPT5NEC5zXR3BZQBe5dsA3o7fwmSIbY+Gzc3
+	ymDI+AeDD/w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E5C8D6565;
+	Mon, 31 Oct 2011 23:30:25 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 64A5D6563; Mon, 31 Oct 2011
+ 23:30:25 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.1110311908240.1930@bonsai2> (Johannes
+ Schindelin's message of "Mon, 31 Oct 2011 19:09:27 -0500 (CDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D6625D8A-0439-11E1-8E36-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184552>
 
-michaelwookey@gmail.com wrote on Tue, 01 Nov 2011 10:11 +1100:
-> [ please CC me as I am not subscribed to the list ]
-> 
-> Hi,
-> 
-> Commit 97a21ca50ef893a171a50c863fe21a924935fd2a "git-p4: stop ignoring
-> apple filetype" isn't correct. Without knowing too much about how
-> git-p4 works, it appears that the "apple" filetype includes the
-> resource fork, and the "p4 print" that is used to obtain the content
-> from the perforce server doesn't take this into account, or maybe some
-> post processing of the file needs to be done to include the data, but
-> not the resource fork, before inclusion into the git repo.
-> 
-> With the above commit, a binary blob that literally contains the
-> resource fork and data is included within the git repo. Of course,
-> without the above commit, the intended file was never included in the
-> git repo at all. Perhaps the resource fork issue was a known problem
-> by the original git-p4 author.
-> 
-> A sample file that that demonstrates what the above commit produces is
-> here (use curl/wget):
-> 
->   http://dl.dropbox.com/u/1006983/sample_image_fail.png
-> 
-> This is literally a binary blob with about 110 KiB of resource fork
-> plus the PNG data. The same image, minus about 110 KiB of resource
-> fork is here:
-> 
->   http://dl.dropbox.com/u/1006983/sample_image_correct.png
-> 
-> I'm happy to test patches as we have a perforce repository with files
-> of the "apple" filetype.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Thanks so much for taking the time to find this and to narrow it
-down.
+> As my virtual machine still ran the test suite after my latest rebasing 
+> merge when I left work, I could not test the MSVC stuff just yet. I wanted 
+> to do that tomorrow and either merge or come back with suggestions.
 
-I found icnsutils that shows the fail.png file has a bunch of
-icons glued onto the front of the correct image file.
-
-We can certainly revert this commit, but first I'd like to
-understand what the right behavior should be.
-
-I managed to include an apple filetype in a repo from a linux box
-by hacking:
-
-    $ cp /tmp/sample_image_fail.png fail.png
-    $ p4 add -t apple fail.png 
-    $ p4 submit -dfail-apple
-    Submitting change 2.
-    Locking 1 files ...
-    add //depot/fail.png#1
-    Unable to read AppleDouble Header.
-    open for read: /home/pw/src/perforce/cli/%fail.png: No such
-    file or directory
-    Submit aborted -- fix problems then use 'p4 submit -c 2'.
-    Some file(s) could not be transferred from client.
-
-Hrm.  Fake it by copying your example apple file to what it asks
-for:
-
-    $ cp fail.png %fail.png
-    $ p4 submit -c 2
-    Submitting change 2.
-    add //depot/fail.png#1
-    Change 2 submitted.
-
-(But later p4 sync -f destroy both files.)
-
-Voila:
-
-    $ p4 fstat //depot/fail.png
-    ... depotFile //depot/fail.png
-    ... clientFile /home/pw/src/perforce/cli/fail.png
-    ... isMapped 
-    ... headAction add
-    ... headType apple
-    ... headTime 1320111844
-    ... headRev 1
-    ... headChange 2
-    ... headModTime 1320111842
-    ... haveRev 1
-
-And git-p4 checks it out intact:
-
-    $ git p4 clone //depot
-    [..]
-    $ sha1sum depot/fail.png /tmp/sample_image_fail.png 
-    93d175ad906147f4d75296bd2adb6d706f798c64  depot/fail.png
-    93d175ad906147f4d75296bd2adb6d706f798c64  /tmp/sample_image_fail.png
-
-Which is what I thought an apple-filetype user would want.
-Reverting the patch causes _no_ file to be created.  Is
-this better?  Maybe the single-blob file, since it no longer
-appears in AppleDouble format, is just as useless as no file?
-
-The other option is to use "p4 print" without the -G, which
-seems to retrieve only the data fork, and leave that in the repo.
-Of course, if you change it, and submit it, it makes a mess.
-
-Would it be good if git-p4 understood how to identify and create
-AppleDouble files on Mac?  If yes, eventually, we can revert the
-commit and explain how this feature doesn't quite work yet.
-Even if no, it seems like we should revert and complain that
-this apple support is broken.
-
-		-- Pete
+Thanks.
