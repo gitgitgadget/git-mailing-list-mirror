@@ -1,99 +1,166 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: t5800-*.sh: Intermittent test failures
-Date: Wed, 2 Nov 2011 00:02:29 +0100
-Message-ID: <CALxABCbKSi-aHezjyn5wJ0-BPW1PvvaC2i9VeV7yXOf4yCdx4Q@mail.gmail.com>
-References: <4E417CB4.50007@ramsay1.demon.co.uk> <CAGdFq_jv_T-x7VGqm_j-fDfeW6TsBG95=1TWn91Yk9B3TGZdsQ@mail.gmail.com>
- <7vpqjgyvn1.fsf@alter.siamese.dyndns.org> <4E68FE73.4000005@ramsay1.demon.co.uk>
- <20110908182055.GA16500@sigill.intra.peff.net> <4E6D089C.4090006@ramsay1.demon.co.uk>
- <CALxABCbnZp-y0Fqzoa=Ab92P+hsT7hs3nXZsnA=ph3yGfkXhdA@mail.gmail.com> <7vfwi7lc54.fsf@alter.siamese.dyndns.org>
+From: Vincent van Ravesteijn <vfr@lyx.org>
+Subject: Re: Re: [PATCHv2] Compile fix for MSVC
+Date: Wed, 2 Nov 2011 00:33:07 +0100
+Message-ID: <CAAH6HY81WNWu2Dj7RA+Rwm8avNzC7TyS0rMJwZECNZuuSO-WVQ@mail.gmail.com>
+References: <1320088364-25916-1-git-send-email-vfr@lyx.org>
+	<7vd3dcq4s5.fsf@alter.siamese.dyndns.org>
+	<alpine.DEB.1.00.1110311908240.1930@bonsai2>
+	<CABPQNSaCRRRpEQPG1Mb4DovkMdQSBhHTm-i7y5M4iT+ndHX4XA@mail.gmail.com>
+	<alpine.DEB.1.00.1111011332400.32316@s15462909.onlinehome-server.info>
+	<CAAH6HY8WfOQQ4g54y7mriq6BKoJCWYsVPrQUTMndqpKdniLAtw@mail.gmail.com>
+	<alpine.DEB.1.00.1111011738550.32316@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 02 00:02:56 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: multipart/alternative; boundary=20cf30780e5c105c1f04b0b4c7f2
+Cc: ramsay@ramsay1.demon.co.uk, msysgit@googlegroups.com, 
+	Karsten Blees <blees@dcon.de>, git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: msysgit+bncCKSyzO6oChChosL1BBoE8XOnxQ@googlegroups.com Wed Nov 02 01:39:28 2011
+Return-path: <msysgit+bncCKSyzO6oChChosL1BBoE8XOnxQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qw0-f58.google.com ([209.85.216.58])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLNM8-0002Bn-F9
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 00:02:56 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932259Ab1KAXCv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Nov 2011 19:02:51 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:51614 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754057Ab1KAXCu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Nov 2011 19:02:50 -0400
-Received: by qabj40 with SMTP id j40so6257624qab.19
-        for <git@vger.kernel.org>; Tue, 01 Nov 2011 16:02:50 -0700 (PDT)
+	(envelope-from <msysgit+bncCKSyzO6oChChosL1BBoE8XOnxQ@googlegroups.com>)
+	id 1RLOrY-0000fr-0Y
+	for gcvm-msysgit@m.gmane.org; Wed, 02 Nov 2011 01:39:28 +0100
+Received: by qabg27 with SMTP id g27sf839438qab.3
+        for <gcvm-msysgit@m.gmane.org>; Tue, 01 Nov 2011 17:39:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=xLitmQ4jDHbgSBoo59fZh0opF+yr/Bdjv4g8AiQ5qvc=;
-        b=XRQz/tkcSLqHwzGuIO9Qsx7BK/3b4fsWPGg+7wKMIBR4HkcFf3sQ8p+e+3eCTsHRkX
-         ANHmqoCkhhTNrCFf6PYhfeJ5f94DAKw85AkQxIm1pXjoei63+2Irtn0CIYstBA94q1Mo
-         JZ8css4juqR//do/LtzHhlU8jre3M243OdH6s=
-Received: by 10.182.77.193 with SMTP id u1mr356628obw.33.1320188570107; Tue,
- 01 Nov 2011 16:02:50 -0700 (PDT)
-Received: by 10.182.193.100 with HTTP; Tue, 1 Nov 2011 16:02:29 -0700 (PDT)
-In-Reply-To: <7vfwi7lc54.fsf@alter.siamese.dyndns.org>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184606>
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=w0dMnkSD2bSm1/KuqoK+4KIsvNv8cKtfGHK1jQYm+x8=;
+        b=XP7kAxpgTQut1YYeL2A6o9kc/MBCsxs4OCB08A2oKovsW8piZBYlS18NO41iAjFawh
+         qySR8m0QU6+Dzy8PySKUva4sW7JPMGRJVIvjNswI4/GtgJ8HTTpyONRMxnXBi6n5mv9E
+         3Hkn08qdO8rkWbVnc+1ghyqwr2cS2b3iv6N+g=
+Received: by 10.224.191.1 with SMTP id dk1mr583674qab.9.1320194337935;
+        Tue, 01 Nov 2011 17:38:57 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.224.209.134 with SMTP id gg6ls445936qab.2.gmail; Tue, 01 Nov
+ 2011 17:38:57 -0700 (PDT)
+Received: by 10.224.187.197 with SMTP id cx5mr603723qab.1.1320194337298;
+        Tue, 01 Nov 2011 17:38:57 -0700 (PDT)
+Received: by 10.224.137.13 with SMTP id u13msqat;
+        Tue, 1 Nov 2011 16:33:08 -0700 (PDT)
+Received: by 10.52.30.195 with SMTP id u3mr2295210vdh.3.1320190387844;
+        Tue, 01 Nov 2011 16:33:07 -0700 (PDT)
+Received: by 10.52.30.195 with SMTP id u3mr2295209vdh.3.1320190387834;
+        Tue, 01 Nov 2011 16:33:07 -0700 (PDT)
+Received: from mail-vw0-f48.google.com (mail-vw0-f48.google.com [209.85.212.48])
+        by gmr-mx.google.com with ESMTPS id bu17si278932vdc.0.2011.11.01.16.33.07
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 01 Nov 2011 16:33:07 -0700 (PDT)
+Received-SPF: neutral (google.com: 209.85.212.48 is neither permitted nor denied by best guess record for domain of vfr@lyx.org) client-ip=209.85.212.48;
+Received: by mail-vw0-f48.google.com with SMTP id 7so1962126vws.7
+        for <msysgit@googlegroups.com>; Tue, 01 Nov 2011 16:33:07 -0700 (PDT)
+Received: by 10.52.30.69 with SMTP id q5mr1740470vdh.110.1320190387182; Tue,
+ 01 Nov 2011 16:33:07 -0700 (PDT)
+Received: by 10.220.189.68 with HTTP; Tue, 1 Nov 2011 16:33:07 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.1111011738550.32316@s15462909.onlinehome-server.info>
+X-Original-Sender: vfr@lyx.org
+X-Original-Authentication-Results: gmr-mx.google.com; spf=neutral (google.com:
+ 209.85.212.48 is neither permitted nor denied by best guess record for domain
+ of vfr@lyx.org) smtp.mail=vfr@lyx.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184608>
 
-On Tue, Nov 1, 2011 at 23:18, Junio C Hamano <gitster@pobox.com> wrote:
-> Alex Riesen <raa.lkml@gmail.com> writes:
+--20cf30780e5c105c1f04b0b4c7f2
+Content-Type: text/plain; charset=ISO-8859-1
+
 >
->> On Sun, Sep 11, 2011 at 21:14, Ramsay Jones <ramsay@ramsay1.demon.co=
-=2Euk> wrote:
->>> ... these hangs *are* the failures of which I speak! =C2=A0Yes, the=
- script
->>> doesn't get to declare a failure, but AFAIAC a hanging test (and it
->>> isn't the same test # each time) is a failing test. :-D
->>
->> Was there any outcome of this discussion? I'm asking because I
->> can reproduce this very reliably on a little server here.
 >
-> I do remember this discussion and recall seeing _no_ outcome.
+> > > Maybe if someone donates Jenkins resources, we could make an automatic
+> > > branch in the future that has git.sln in it (similar to the 'html'
+> > > branch in git.git).
+> >
+> > As long as this means to just run a not so complicated perl script, this
+> > Could even be done in a commit hook.
 >
-> I did see the hang myself once or twice but did not and do not have a
-> reliable reproduction. I have been waiting for somebody to raise the =
-issue
-> again ;-).
+> I actually was thinking about something automatic which does not require
+> any of the busy msysGit developers to do something manual every once in a
+> while.
+
+
+I thought that a commit hook, was something automatic (iff the busy
+developers
+do commit something once in a while). I guess I can even set this up very
+easily
+(given push rights, otherwise it will involve manual labor again).
+
+
+
+> > Just another question. How does the (msys)git community feel about
+> > adding CMake support ? I can probably do that quite easily.
+>
+> There was somebody who strongly favored CMake over any other solution but
+> was not willing to maintain it in the long run (also, I have to admit that
+> I have had quite a few problems with CMake, but maybe I am just pampered
+> by projects that Just Compile...)
 >
 
-I think I managed to bisect it (between 1.7.6 and 1.7.7):
+The current way of generating a MSVC project is rather outdated, so the
+worst
+thing that can happen is that you have a different build system which is not
+maintained. At least the CMake people will continue to improve on their
+side.
 
-$ git bisect start v1.7.7 v1.7.6
-=2E..
-$ git bisect good
-a515ebe9f1ac9bc248c12a291dc008570de505ca is the first bad commit
-commit a515ebe9f1ac9bc248c12a291dc008570de505ca
-Author: Sverre Rabbelier <srabbelier@gmail.com>
-Date:   Sat Jul 16 15:03:40 2011 +0200
+Vincent
 
-    transport-helper: implement marks location as capability
+--20cf30780e5c105c1f04b0b4c7f2
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-    Now that the gitdir location is exported as an environment variable
-    this can be implemented elegantly without requiring any explicit
-    flushes nor an ad-hoc exchange of values.
+<div class=3D"gmail_quote"><blockquote style=3D"margin: 0px 0px 0px 0.8ex; =
+padding-left: 1ex; border-left-color: rgb(204, 204, 204); border-left-width=
+: 1px; border-left-style: solid;" class=3D"gmail_quote"><div class=3D"im"><=
+br>
+&gt; &gt; Maybe if someone donates Jenkins resources, we could make an auto=
+matic<br>
+&gt; &gt; branch in the future that has git.sln in it (similar to the &#39;=
+html&#39;<br>
+&gt; &gt; branch in git.git).<br>
+&gt;<br>
+&gt; As long as this means to just run a not so complicated perl script, th=
+is<br>
+&gt; Could even be done in a commit hook.<br>
+<br>
+</div>I actually was thinking about something automatic which does not requ=
+ire<br>
+any of the busy msysGit developers to do something manual every once in a<b=
+r>
+while.</blockquote><div>=A0</div><div>I thought that a commit hook, was som=
+ething automatic (iff the busy developers</div><div>do commit something onc=
+e in a while). I guess I can even set this up very easily</div><div>(given=
+=A0push rights, otherwise it will involve manual labor again).</div>
+<div>=A0</div><div>=A0</div><blockquote style=3D"margin: 0px 0px 0px 0.8ex;=
+ padding-left: 1ex; border-left-color: rgb(204, 204, 204); border-left-widt=
+h: 1px; border-left-style: solid;" class=3D"gmail_quote"><div class=3D"im">
+&gt; Just another question. How does the (msys)git community feel about<br>
+&gt; adding CMake support ? I can probably do that quite easily.<br>
+<br>
+</div>There was somebody who strongly favored CMake over any other solution=
+ but<br>
+was not willing to maintain it in the long run (also, I have to admit that<=
+br>
+I have had quite a few problems with CMake, but maybe I am just pampered<br=
+>
+by projects that Just Compile...)<br></blockquote><div>=A0</div><div>The cu=
+rrent way of generating a MSVC project is rather outdated, so the worst </d=
+iv><div>thing that can happen is that you have a different build system whi=
+ch is not</div>
+<div>maintained.=A0At least the CMake people will continue to improve on th=
+eir side.</div><div>=A0</div><div>Vincent</div></div>
 
-    Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
-    Acked-by: Jeff King <peff@peff.net>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-:100644 100644 1ed7a5651ef5a2320c56856b5a1fe784e178ab23
-e9c832bfd3da7db771cc2113027d3e590dc51d59 M	git-remote-testgit.py
-:100644 100644 0cfc9ae9059ce121b567406d7941b71cd54b961c
-74c3122df1835c45a6b621205fb18b4fc89af366 M	transport-helper.c
-
-Sadly, I'm going to be able to repeat the test in about 20 hours.
+--20cf30780e5c105c1f04b0b4c7f2--
