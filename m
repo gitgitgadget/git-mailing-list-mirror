@@ -1,95 +1,90 @@
-From: James Bottomley <James.Bottomley@HansenPartnership.com>
-Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
-Date: Tue, 01 Nov 2011 09:39:01 +0400
-Message-ID: <1320125941.7701.14.camel@dabdike>
-References: <20111026202235.GA20928@havoc.gtf.org>
-	 <1319969101.5215.20.camel@dabdike>
-	 <CA+55aFx1NGWfNJAKDTvZfsHDDKiEtS4t4RydSgHurBeyGPyhXg@mail.gmail.com>
-	 <1320049150.8283.19.camel@dabdike>
-	 <CA+55aFz3=cbciRfTYodNhdEetXYxTARGTfpP9GL9RZK222XmKQ@mail.gmail.com>
-	 <7vy5w1ow90.fsf@alter.siamese.dyndns.org>
-	 <CA+55aFwL_s=DcT46dprcYVWEAm_=WkuTV6K9dAn3wc_bDQU8vA@mail.gmail.com>
-	 <4EAF1F40.3030907@zytor.com>
-	 <CA+55aFxprv9JR4gtt_UDXheHR5G8PrUA3-Mj0CPsU6E5EzNYeg@mail.gmail.com>
-	 <4EAF2245.90308@zytor.com> <7vzkggok6u.fsf@alter.siamese.dyndns.org>
-	 <CA+55aFwnVZ-mK3FChvFn778Z-cT107f4v-h0CDmwkP88=Z9aHA@mail.gmail.com>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: Credentials and the Secrets API...
+Date: Tue, 1 Nov 2011 02:39:07 -0400
+Message-ID: <CAEBDL5XOnsq1zBRq+f1zKJqQvxJjRPywCRbPKn77x9Yaa4QVkA@mail.gmail.com>
+References: <CAEBDL5Udooim_3Za76Q1Rt_aGXtsSv76nxRegGWRBE=WJQzfZA@mail.gmail.com>
+	<20111027174807.GD1967@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org,
-	Jeff Garzik <jeff@garzik.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: linux-ide-owner@vger.kernel.org Tue Nov 01 06:39:21 2011
-Return-path: <linux-ide-owner@vger.kernel.org>
-Envelope-to: lnx-linux-ide@lo.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 01 07:39:15 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-ide-owner@vger.kernel.org>)
-	id 1RL74C-00073D-Pe
-	for lnx-linux-ide@lo.gmane.org; Tue, 01 Nov 2011 06:39:21 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1RL80A-0003nN-Qs
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Nov 2011 07:39:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750817Ab1KAFjI (ORCPT <rfc822;lnx-linux-ide@m.gmane.org>);
-	Tue, 1 Nov 2011 01:39:08 -0400
-Received: from bedivere.hansenpartnership.com ([66.63.167.143]:36477 "EHLO
-	bedivere.hansenpartnership.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750742Ab1KAFjH (ORCPT
-	<rfc822;linux-ide@vger.kernel.org>); Tue, 1 Nov 2011 01:39:07 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by bedivere.hansenpartnership.com (Postfix) with ESMTP id 137648EE0D8;
-	Mon, 31 Oct 2011 22:39:07 -0700 (PDT)
-Received: from bedivere.hansenpartnership.com ([127.0.0.1])
-	by localhost (bedivere.hansenpartnership.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id dAVloe6kw6+X; Mon, 31 Oct 2011 22:39:06 -0700 (PDT)
-Received: from [10.0.0.38] (unknown [194.186.187.194])
-	by bedivere.hansenpartnership.com (Postfix) with ESMTPSA id AB4368EE0A4;
-	Mon, 31 Oct 2011 22:39:04 -0700 (PDT)
-In-Reply-To: <CA+55aFwnVZ-mK3FChvFn778Z-cT107f4v-h0CDmwkP88=Z9aHA@mail.gmail.com>
-X-Mailer: Evolution 2.32.1 
-Sender: linux-ide-owner@vger.kernel.org
+	id S1751565Ab1KAGjJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Nov 2011 02:39:09 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:64928 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750987Ab1KAGjI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Nov 2011 02:39:08 -0400
+Received: by vws1 with SMTP id 1so5521949vws.19
+        for <git@vger.kernel.org>; Mon, 31 Oct 2011 23:39:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=m7OJfy6WoOpJUQISVzdF+6RSK9YTZvoRuPkXPTexKKI=;
+        b=CJ0MuXJJkMse8dmACjCbYKqzotS/SnXhhH4YNQZbsvyWZYfLrl4FhXjPJm2ISweVhT
+         cmb96RCTmZv/9Ph4oj22aOiXLi7MPg64C39wyjqGa+t4fjmoESkBBNCQKPBDtAoi7nxY
+         YCy9xneMlIZO0Ez8bwNfUw88I7rqo2Y+Vhmwg=
+Received: by 10.52.38.4 with SMTP id c4mr7088473vdk.123.1320129547722; Mon, 31
+ Oct 2011 23:39:07 -0700 (PDT)
+Received: by 10.220.184.65 with HTTP; Mon, 31 Oct 2011 23:39:07 -0700 (PDT)
+In-Reply-To: <20111027174807.GD1967@sigill.intra.peff.net>
+X-Google-Sender-Auth: bl6ow65KE9QTLfFB5rwRaiFntaM
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-ide.vger.kernel.org>
-X-Mailing-List: linux-ide@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184557>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184558>
 
-On Mon, 2011-10-31 at 15:52 -0700, Linus Torvalds wrote:
-> On Mon, Oct 31, 2011 at 3:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > So nobody is worried about this (quoting from my earlier message)?
-> 
-> No, because you haven't been reading what we write.
-> 
-> The tag is useless.
+On Thu, Oct 27, 2011 at 1:48 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Oct 27, 2011 at 12:05:03PM -0400, John Szakmeister wrote:
+[snip]
+>> With that information, I went ahead and created a
+>> gnome-credential-keyring that uses Gnome's Keyring facility. =C2=A0I=
+ still
+>> need to do a few more things (mainly run it against Jeff's tests), b=
+ut
+>> it's generally working. =C2=A0Just wanted to keep folks in the loop.
+>> Hopefully, I can get patches out this weekend.
+>
+> Great, I'm looking forward to reading it.
 
-It's not useless to people who want to verify the tree after it's been
-released by you (say for forensics or something).  As Peter said, we can
-put it in a normally invisible namespace, but having a flag to make it
-visible allows tools like git describe --contains to tell me which
-signed tag was used to send a particular commit.
+I've pushed up the work I've done to:
+   <https://github.com/jszakmeister/git-credential-keyring>
 
-> The information *in* the tag is not. But it shouldn't be saved in the
-> tag (or note, or whatever). Because that's just an annoying place for
-> it to be, with no upside.
-> 
-> Save it in the commit we generate. BAM! Useful, readable, permanent,
-> and independently verifiable.
-> 
-> And the advantage is that we can make that same mechanism add
-> "maintainer notes" to the merge message too. Right now some
-> maintainers write good notes about what the merge will bring in, but
-> they are basically lost, because git is so good at merging and doesn't
-> even stop to ask people to edit the merge message.
+There's not much to it.  It also doesn't handle certs and that sort of
+thing.  I think we need to figure out which protocols need to be
+handled differently so that we can use the appropriate api for the
+keyring-like api. :-)
 
-A signed empty commit containing the merge message as a comment also
-looks fine to me.  We'd need extra tooling to say which signed merge
-corresponds to this patch, but I'd say its workable.  The only slightly
-counter intuitive thing is that for a non-trivial merge, my signed merge
-description will have to be the next commit below rather than in the
-actual merge you do (because we can't alter a cryptographically signed
-commit).
+I also chose this way instead of a patch to git, because it appears
+your work is no longer in pu (I must have missed the fact that it was
+removed).  Once your work makes it way back in, I can look into
+getting it into the contrib area, if that's desired.
 
-James
+>> Jeff: it would be really excellent to break out the various pieces. =
+=C2=A0I
+>> think it would also be better to split the asking for passwords from
+>> the storing of passwords.
+>
+> That's my current plan. I just need to stop dragging my feet on
+> re-rolling the series.
 
+Sounds good!  I'll be happy to update when you do re-roll it.  The
+test you sent out was very helpful, BTW.  I do think the test cases
+with no context are a bit broken though.  It doesn't seem right to ask
+the storage backend to retrieve a password without any context at all,
+IMHO.  My implementation doesn't pass those two tests.  It does pass
+the rest of them though.
 
+-John
