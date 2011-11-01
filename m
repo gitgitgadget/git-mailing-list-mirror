@@ -1,93 +1,88 @@
-From: Roland Kaufmann <rlndkfmn+git@gmail.com>
-Subject: Re: [PATCH] Display change history as a diff between two dirs
-Date: Tue, 1 Nov 2011 10:01:33 +0100
-Message-ID: <CANEMaQRoXRygmrYsu0xF6mWq50r9Qhh-YuXXNAhyQewd+fDtsQ@mail.gmail.com>
-References: <4EAC6765.4030003@gmail.com> <7vty6rrow8.fsf@alter.siamese.dyndns.org>
- <4EAE688C.8010502@gmail.com> <7v39e8o61s.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
+Subject: Re: [ANNOUNCE] Git 1.7.8.rc0
+Date: Tue, 01 Nov 2011 10:53:14 +0100
+Message-ID: <4EAFC18A.1070502@atlas-elektronik.com>
+References: <7vfwi9rc0g.fsf@alter.siamese.dyndns.org> <4EAEAE13.50101@atlas-elektronik.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Linux Kernel <linux-kernel@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 01 10:02:09 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+X-From: linux-kernel-owner@vger.kernel.org Tue Nov 01 10:53:15 2011
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLAEN-0003Hi-5S
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Nov 2011 10:02:03 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1RLB1u-00054n-Fi
+	for glk-linux-kernel-3@lo.gmane.org; Tue, 01 Nov 2011 10:53:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752544Ab1KAJB6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Nov 2011 05:01:58 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:34817 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752134Ab1KAJB5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Nov 2011 05:01:57 -0400
-Received: by wwi36 with SMTP id 36so2765326wwi.1
-        for <git@vger.kernel.org>; Tue, 01 Nov 2011 02:01:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Jw3WoCFD48UJ1D7LkTAx+aQG0T0lFOtdqKBahiwspnI=;
-        b=YdYMY755SfUqir2DcBWrylItMfPL1v3jHxaylwTorsUNdOsf58KEbeL3xIktaD9FZe
-         SovpaNjLp+Jw4UywdNzsVABn3PI1o+5MM5q5uSC+OY4vBBk1tQa9kqywrU236bTHJZCr
-         vpAXcvq0djg4Zb7DloTzAHoOQ+8cpDmKOL1cM=
-Received: by 10.216.168.203 with SMTP id k53mr1451321wel.15.1320138115946;
- Tue, 01 Nov 2011 02:01:55 -0700 (PDT)
-Received: by 10.217.7.66 with HTTP; Tue, 1 Nov 2011 02:01:33 -0700 (PDT)
-In-Reply-To: <7v39e8o61s.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: IUwWVo83ia52Vr35kRqzhg1PcNk
-Sender: git-owner@vger.kernel.org
+	id S1753254Ab1KAJxF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 1 Nov 2011 05:53:05 -0400
+Received: from mail96.atlas.de ([194.156.172.86]:29993 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752861Ab1KAJxE (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 1 Nov 2011 05:53:04 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail96.atlas.de (Postfix) with ESMTP id 6F93E100BF;
+	Tue,  1 Nov 2011 10:53:01 +0100 (CET)
+X-Virus-Scanned: amavisd-new at lxsrv96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (lxsrv96.atlas.de [127.0.0.1]) (amavisd-new, port 10124)
+	with ESMTP id 7X6j3VrG-AzW; Tue,  1 Nov 2011 10:53:01 +0100 (CET)
+Received: from mgsrv01.atlas.de (mailrelay-atlas.atlas.de [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP;
+	Tue,  1 Nov 2011 10:53:00 +0100 (CET)
+Received: from [141.200.19.108] (as112671.atlas.de [141.200.19.108])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id BD3932717B;
+	Tue,  1 Nov 2011 10:53:00 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+In-Reply-To: <4EAEAE13.50101@atlas-elektronik.com>
+X-Enigmail-Version: 1.3.2
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184561>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184562>
 
-On Tue, Nov 1, 2011 at 04:49, Junio C Hamano <gitster@pobox.com> wrote:
-> Roland Kaufmann <rlndkfmn+git@gmail.com> writes:
->> Would it be better to have yet another configuration available for
->> this option instead of reusing the existing infrastructure for `git
->> difftool`?
+Am 31.10.2011 15:17, schrieb Stefan N=C3=A4we:
+> Am 31.10.2011 06:00, schrieb Junio C Hamano:
+>> A release candidate Git 1.7.8.rc0 is available for testing.
+>>
+>> [...]
+>>
+>>
+>> Git v1.7.8 Release Notes (draft)
+>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>>
+>> Updates since v1.7.7
+>> --------------------
+>>
+>> [...]
+>>
+>>  * HTTP transport did not use pushurl correctly, and also did not te=
+ll
+>>    what host it is trying to authenticate with when asking for
+>>    credentials.
+>>    (merge deba493 jk/http-auth later to maint).
+>=20
+> This seems to break pushing with https for me.
+> It never uses values from my '~/.netrc'.
+> I'll come up with a detailed scenario later.
 
-> It probably is OK for "git diff --dirdiff" to use GIT_EXTERNAL_TREEDI=
-=46F if
-> and only if GIT_EXTERNAL_DIFF is not defined, and use GIT_EXTERNAL_DI=
-=46F
-> otherwise. People who have GIT_EXTERNAL_DIFF set to a tool capable of
-> handing directory pair can just add "--dirdiff" to the command line, =
-and
+Update:
 
-Did you perhaps mean the other way around: GIT_EXTERNAL_TREEDIFF
-if set, and GIT_EXTERNAL_DIFF otherwise?
+git push prompts for the password but just pressing return succeeds.
 
-I will revise the patch to incorporate that, and at the same time fix
-the isempty
-function (it can be done simpler).
+Weird...
 
->>> It also is not clear what could be used in "$@". Obviously you woul=
-d
->>> =A0not want things like "-U20" and "--stat" fed to the first "list =
-of
->>> paths" phase, but there may be some options you may want to give to
->>> the inner "external diff" thing.
 
->> Ideally, it should work the same way as `git difftool`.
-
-> I am not so sure about that; difftool is another way to drive a tool =
-one
-> filepair at a time. You want to drive a tool that takes them as two _=
-sets_
-> of files, one in each directory.
-
-I was thinking about the behaviour when you send options that are not
-applicable to files at all, such as "--stat". In that case, it just sto=
-ps after
-`git diff`. Options that only applies to one file and not to a set
-have I admittedly
-not thought about (yet).
-
+Stefan
 --=20
-   Roland.
+----------------------------------------------------------------
+/dev/random says: Budget: A method for going broke methodically.
+python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6=
+e696b2e636f6d'.decode('hex')"
