@@ -1,93 +1,106 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: Re: [PATCH] Escape file:// URL's to meet subversion SVN::Ra requirements
-Date: Wed, 02 Nov 2011 15:05:00 -0400
-Message-ID: <1320260449-sup-479@pinkfloyd.chass.utoronto.ca>
-References: <1320251895-6348-1-git-send-email-bwalton@artsci.utoronto.ca> <1320251895-6348-2-git-send-email-bwalton@artsci.utoronto.ca> <20111102182015.GA11401@elie.hsd1.il.comcast.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: normalperson <normalperson@yhbt.net>, git <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 02 20:05:09 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] Git 1.7.8.rc0
+Date: Wed, 02 Nov 2011 12:13:48 -0700
+Message-ID: <7vwrbiibgz.fsf@alter.siamese.dyndns.org>
+References: <7vfwi9rc0g.fsf@alter.siamese.dyndns.org>
+ <4EAEAE13.50101@atlas-elektronik.com> <4EAFC18A.1070502@atlas-elektronik.com>
+ <7vmxcfn23i.fsf@alter.siamese.dyndns.org>
+ <loom.20111101T205618-231@post.gmane.org>
+ <loom.20111101T211624-511@post.gmane.org>
+ <20111102180327.GA30668@sigill.intra.peff.net>
+ <20111102181041.GA5366@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Naewe <stefan.naewe@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 02 20:14:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLg7X-0000NT-GV
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 20:05:07 +0100
+	id 1RLgG4-0004dJ-9w
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 20:13:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932553Ab1KBTFB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Nov 2011 15:05:01 -0400
-Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:33554 "EHLO
-	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756326Ab1KBTFB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Nov 2011 15:05:01 -0400
-Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:35381 ident=93)
-	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1RLg7Q-0004Ko-4z; Wed, 02 Nov 2011 15:05:00 -0400
-Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1RLg7Q-0002bA-41; Wed, 02 Nov 2011 15:05:00 -0400
-In-reply-to: <20111102182015.GA11401@elie.hsd1.il.comcast.net>
-User-Agent: Sup/git
+	id S933422Ab1KBTNw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Nov 2011 15:13:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59965 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932164Ab1KBTNv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Nov 2011 15:13:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 568A96048;
+	Wed,  2 Nov 2011 15:13:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vDW6cW7GXOGko3gLZj4cdGeuY4A=; b=Ku1Goj
+	HE1qRtqsxc5Wjf7Ss4v55BGGOgfGIJi0qxnMpBbs64UGHEyqNOTp1FLju7ocUjGq
+	xeTU5XdQyXvhsVBCQYHt8Pn8jEgxPiI70EhS2uKkQa+Qf2VZA+gTTO2bvhmtmZAE
+	YDud6XyGdl0IQYJ2yIdoUucKu5JQ7T0TcGt7E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wfzLK6dgunNP8w9mU2yO8DvnIClI43mZ
+	erKzHl6b5kTzuEY7PFj9ct9EaaKWL4P821F0iDk25VCuB05K2qMlN4Fu2x3XS5+a
+	o5nQvfsZAs/TTOHpfhAp2Wnq14vr2FIqCoiXh1j6vtRlptK2Xw/R0h83nvmqfCz9
+	KsoO47OAgbk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D81B6047;
+	Wed,  2 Nov 2011 15:13:50 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C86A36046; Wed,  2 Nov 2011
+ 15:13:49 -0400 (EDT)
+In-Reply-To: <20111102181041.GA5366@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 2 Nov 2011 14:10:41 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CBA755AA-0586-11E1-ADDB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184657>
 
-Excerpts from Jonathan Nieder's message of Wed Nov 02 14:20:38 -0400 2011:
+Jeff King <peff@peff.net> writes:
 
-> Thanks for your work on this!  I'm not really sure how one can
-> decide that the problem is not in svn --- some existing functions
-> changed ABI in such a way as to break existing applications and
-> require code changes and a recompile.  It would be better for
-> Subversion to silently fix up paths provided by bad callers, or at
-> least to return a sensible error code.
+> So the ideal logic is:
+>
+>   1. look in netrc
+>
+>   2. If we have a username and no password, ask for password
+>
+>   3. Otherwise, try it and see if we get a 401.
+>
+> But we can't do that, because (1) and (3) happen atomically inside of
+> curl.
+>
+> The simplest thing is to just drop the behavior in (2), and let it drop
+> to a 401. The extra round trip probably isn't that big a deal.
 
-Yes, my apologies.  I wrote this commit message before fully realizing
-just how wrong the response on the svn list was.  It core dumps, after
-all...If the patch is useful, I'll resubmit with a better commit
-message.
+That is essentially what Stefan's fix is about.
 
-> So the problem is that nobody who cared was testing prereleases of
-> subversion and reporting bugs early enough for it to get this fixed
-> before the 1.7 release.  But yes, that's water under the bridge and
-> git-svn (and libsvn-perl, and pysvn, and ...) should just adjust to
-> the new world order.
-> 
-> > [1] http://news.gmane.org/gmane.comp.version-control.subversion.devel
-> 
-> Do you mean
-> http://thread.gmane.org/gmane.comp.version-control.subversion.devel/132250
-> ?
+The cases we have "extra" roundtrip are:
 
-No, the link should have been:
-http://article.gmane.org/gmane.comp.version-control.subversion.devel/132227
+ - when you have username@ in URL but no password is stored in .netrc;
+ - when you have username@ in URL and no $HOME/.netrc file.
 
-I'm not sure how it got mangled like that.
+and in such a case using URL without username@ in it as a workaround would
+save the roundtrip but forces you to type your username@ over and over
+again, which is _not_ a real workaround.
 
-> | # failed 1 among 2 test(s)
-> | 1..2
-> | make[3]: *** [t9145-git-svn-master-branch.sh] Error 1
-> 
-> Does it work for you?  This is with a merge of git 1.7.8-rc0 and
-> 1.7.7.2.
+A workaround for people who want ultimate convenience is to use .netrc to
+have both username:password, but that is at the cost of potentially
+reduced security. Having username@ in URL and typing password
+interactively, if it worked properly, would have been the best of both
+worlds.
 
-Yikes...I had svn tests turned off in my global build script still and
-only validated this against t9134.  My apologies.  I'll submit
-something proper later this evening.  (Assuming I get a working patch
-that passes the whole suite.)
+> The other option is to start parsing netrc ourselves, or do the extra
+> round trip if we detect ~/.netrc or something. But that last one is
+> getting pretty hackish.
 
-Sorry for the clumsy patch.
+I tend to agree that we wouldn't want to parse netrc ourselves (that is
+what library support e.g. CURLOPT_NETRC is for). The latter is hackish but
+on the other hand it is a cheap, simple and useful hack.
 
-Thanks
--Ben
-
-
---
-Ben Walton
-Systems Programmer - CHASS
-University of Toronto
-C:416.407.5610 | W:416.978.4302
+How would the upcoming keystore support fit in this picture, by the way?
