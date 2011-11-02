@@ -1,69 +1,108 @@
-From: Alexey Shumkin <alex.crezoff@gmail.com>
-Subject: Re: Q: "git diff" using tag names
-Date: Thu, 3 Nov 2011 00:08:46 +0400
-Message-ID: <20111103000846.784cba29@zappedws>
-References: <4EAABC15020000A100007D9D@gwsmtp1.uni-regensburg.de>
-	<20111028165943.2cc8253d@ashu.dyn.rarus.ru>
-	<4EB0FFCA020000A100007DE2@gwsmtp1.uni-regensburg.de>
-	<20111102132945.582707aa@ashu.dyn.rarus.ru>
-	<7vty6mkgsg.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [ANNOUNCE] Git 1.7.8.rc0
+Date: Wed, 2 Nov 2011 16:09:47 -0400
+Message-ID: <20111102200947.GA5628@sigill.intra.peff.net>
+References: <7vfwi9rc0g.fsf@alter.siamese.dyndns.org>
+ <4EAEAE13.50101@atlas-elektronik.com>
+ <4EAFC18A.1070502@atlas-elektronik.com>
+ <7vmxcfn23i.fsf@alter.siamese.dyndns.org>
+ <loom.20111101T205618-231@post.gmane.org>
+ <loom.20111101T211624-511@post.gmane.org>
+ <20111102180327.GA30668@sigill.intra.peff.net>
+ <20111102181041.GA5366@sigill.intra.peff.net>
+ <7vwrbiibgz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>,
-	<git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Naewe <stefan.naewe@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 02 21:09:13 2011
+X-From: git-owner@vger.kernel.org Wed Nov 02 21:09:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLh7U-0006D3-2n
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 21:09:08 +0100
+	id 1RLh8F-0006f4-Cs
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 21:09:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750991Ab1KBUJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Nov 2011 16:09:04 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:43722 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750920Ab1KBUJC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Nov 2011 16:09:02 -0400
-Received: by mail-bw0-f46.google.com with SMTP id 11so476422bke.19
-        for <git@vger.kernel.org>; Wed, 02 Nov 2011 13:09:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        bh=iMXEZjuATZnNmxEGR1nG44Wf1ltxHrNEvkaja2lRpBk=;
-        b=htOcPHsoJ73NBKSGQmaTRHMSCPBt00pBK9GbTfejaG1leWNFyNEa3ySrJjmPbWAnVN
-         934rq2Tg26Wv0tYZZwd/Cd/W6r74ls8cKiOWseYGShIijaNPS1HRkGv2oRwX3AndD1wY
-         UP7vws6IA+W9qxjtqle59hh12D0PNvVKI0jcc=
-Received: by 10.204.141.134 with SMTP id m6mr5138013bku.91.1320264541947;
-        Wed, 02 Nov 2011 13:09:01 -0700 (PDT)
-Received: from zappedws (ppp91-77-25-108.pppoe.mtu-net.ru. [91.77.25.108])
-        by mx.google.com with ESMTPS id j9sm3380545bkd.2.2011.11.02.13.08.58
-        (version=SSLv3 cipher=OTHER);
-        Wed, 02 Nov 2011 13:09:01 -0700 (PDT)
-In-Reply-To: <7vty6mkgsg.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
+	id S1751422Ab1KBUJv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Nov 2011 16:09:51 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60355
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750975Ab1KBUJu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Nov 2011 16:09:50 -0400
+Received: (qmail 15897 invoked by uid 107); 2 Nov 2011 20:15:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 02 Nov 2011 16:15:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Nov 2011 16:09:47 -0400
+Content-Disposition: inline
+In-Reply-To: <7vwrbiibgz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184663>
 
-Oh, I see
+On Wed, Nov 02, 2011 at 12:13:48PM -0700, Junio C Hamano wrote:
 
-> Alexey Shumkin <alex.crezoff@gmail.com> writes:
+> > The simplest thing is to just drop the behavior in (2), and let it drop
+> > to a 401. The extra round trip probably isn't that big a deal.
 > 
-> >> Also it seems that both syntaxes work:
-> >> git diff v0.4..v0.5
-> >> git diff v0.4 v0.5
-> > honestly, I do not know the difference (at the moment :))
-> > may be gurus or manual will help to discover it
+> That is essentially what Stefan's fix is about.
+
+Right. I think it may be the sanest thing to do.
+
+> The cases we have "extra" roundtrip are:
 > 
-> The latter is the kosher version, as diff is about two "endpoints"
-> and not about "ranges". The only reason the former is parsed without
-> erroring out is because too many people are used to type .. between
-> two things without thinking, learned the notation from "git log",
-> which _is_ about ranges.
+>  - when you have username@ in URL but no password is stored in .netrc;
+>  - when you have username@ in URL and no $HOME/.netrc file.
+> 
+> and in such a case using URL without username@ in it as a workaround would
+> save the roundtrip but forces you to type your username@ over and over
+> again, which is _not_ a real workaround.
+
+Yeah. There's no way for us to know before we hand off to curl what you
+have in netrc. So these netrc cases will always be at odds with the
+no-netrc case.
+
+Normally I would say to implement in favor of the no-netrc case, as it
+is probably more common (and will hopefully be more so after the auth
+helpers are finished). But the problem is that the penalties are
+different. On the one hand, we have the extra http round-trip. Which is
+annoying, but mostly invisible to the user. But on the other, we have
+git prompting the user unnecessarily, which is just awful.
+
+> > The other option is to start parsing netrc ourselves, or do the extra
+> > round trip if we detect ~/.netrc or something. But that last one is
+> > getting pretty hackish.
+> 
+> I tend to agree that we wouldn't want to parse netrc ourselves (that is
+> what library support e.g. CURLOPT_NETRC is for). The latter is hackish but
+> on the other hand it is a cheap, simple and useful hack.
+
+Note that it's not always right, of course. You might have a .netrc but
+no entry for that host. But at least it lets the common case people
+(i.e., people who never heard of or touched netrc) to avoid the round
+trip.
+
+> How would the upcoming keystore support fit in this picture, by the way?
+
+Any time we would call getpass(), we ask the helper for the credential.
+So for user@host, we would call out to the helper for the password
+proactively, and otherwise wait for a 401.
+
+We _could_ be proactive and actually ask the helpers for a username and
+password even for "https://host/repo", which would save a round-trip to
+get the 401 in some cases. But that assumes that asking the helper is
+cheap. It might actually require the user inputting a password to unlock
+the keystore, which would be annoying if the remote doesn't require
+auth at all.
+
+We could try to be clever and use a heuristic that fetch probably
+doesn't need auth, but push does. Then fetch gets the extra round-trip
+but push doesn't. But that just seems needlessly complex to save one
+http round-trip on push.
+
+-Peff
