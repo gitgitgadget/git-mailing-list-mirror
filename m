@@ -1,86 +1,112 @@
-From: Mika Fischer <mika.fischer@zoopnet.de>
-Subject: [PATCH] http.c: Use curl_multi_fdset to select on curl fds instead of just sleeping
-Date: Wed,  2 Nov 2011 11:45:34 +0100
-Message-ID: <1320230734-5933-1-git-send-email-mika.fischer@zoopnet.de>
-Cc: Mika Fischer <mika.fischer@zoopnet.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 02 11:45:48 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
+Date: Wed, 02 Nov 2011 11:53:22 +0100
+Message-ID: <4EB12122.7010803@drmicha.warpmail.net>
+References: <20111026202235.GA20928@havoc.gtf.org> <1319969101.5215.20.camel@dabdike> <CA+55aFx1NGWfNJAKDTvZfsHDDKiEtS4t4RydSgHurBeyGPyhXg@mail.gmail.com> <1320049150.8283.19.camel@dabdike> <CA+55aFz3=cbciRfTYodNhdEetXYxTARGTfpP9GL9RZK222XmKQ@mail.gmail.com> <7vy5w1ow90.fsf@alter.siamese.dyndns.org> <CA+55aFwL_s=DcT46dprcYVWEAm_=WkuTV6K9dAn3wc_bDQU8vA@mail.gmail.com> <7vwrbjlj5r.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	Jeff Garzik <jeff@garzik.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: linux-ide-owner@vger.kernel.org Wed Nov 02 11:53:38 2011
+Return-path: <linux-ide-owner@vger.kernel.org>
+Envelope-to: lnx-linux-ide@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLYKH-0003JT-Cr
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 11:45:45 +0100
+	(envelope-from <linux-ide-owner@vger.kernel.org>)
+	id 1RLYRt-0005tm-BK
+	for lnx-linux-ide@lo.gmane.org; Wed, 02 Nov 2011 11:53:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753508Ab1KBKpk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Nov 2011 06:45:40 -0400
-Received: from trillian.zoopnet.de ([85.214.111.199]:37619 "EHLO
-	trillian.zoopnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751572Ab1KBKpk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Nov 2011 06:45:40 -0400
-Received: from localhost.localdomain (pD9E9BFF2.dip.t-dialin.net [217.233.191.242])
-	by trillian.zoopnet.de (Postfix) with ESMTPSA id 16ED426E42FD;
-	Wed,  2 Nov 2011 11:45:39 +0100 (CET)
-X-Mailer: git-send-email 1.7.7.1.489.g1fee
-Sender: git-owner@vger.kernel.org
+	id S1754074Ab1KBKxg (ORCPT <rfc822;lnx-linux-ide@m.gmane.org>);
+	Wed, 2 Nov 2011 06:53:36 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:58754 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752143Ab1KBKxf (ORCPT
+	<rfc822;linux-ide@vger.kernel.org>); Wed, 2 Nov 2011 06:53:35 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id DFA4620FE9;
+	Wed,  2 Nov 2011 06:53:34 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute2.internal (MEProxy); Wed, 02 Nov 2011 06:53:34 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=A37YnJdafeqNbKaATrHxqL
+	OdrNA=; b=HWrVkss0+p3baCrEj25ebn/F9Wdz6TwJnOJrVUXH7RmUKWckYO2kcf
+	Z5GMYJJKvs8HpIXvjsxZ5tGGXu05WW7aOonPpLggXKaH7aCJBPjWyRW2nt4v8K3c
+	tnntKfMQRwnJbNSS3SPRxIiCc7RxkjfzhpcgzcnuMdykusqSwuBgU=
+X-Sasl-enc: LYd+91UGSjdk4U8KllJikXu+i0xoqCcp49C4rK4em5Gz 1320231214
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id AF46A8E1008;
+	Wed,  2 Nov 2011 06:53:24 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0) Gecko/20110927 Thunderbird/7.0
+In-Reply-To: <7vwrbjlj5r.fsf@alter.siamese.dyndns.org>
+Sender: linux-ide-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184626>
+List-ID: <linux-ide.vger.kernel.org>
+X-Mailing-List: linux-ide@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184627>
 
-Previously, when nothing could be read from the connections curl had
-open, git would just sleep unconditionally for 50ms. This patch changes
-this behavior and instead obtains the recommended timeout and the actual
-file descriptors from curl. This should eliminate time spent sleeping when
-data could actually be read/written on the socket.
+Junio C Hamano venit, vidit, dixit 01.11.2011 20:47:
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> 
+>> But what would be nice is that "git pull" would fetch the tag (based on
+>> name) *automatically*, and not actually create a tag in my repository at
+>> all. Instead, if would use the tag to check the signature, and - if we
+>> do this right - also use the tag contents to populate the merge commit
+>> message.
+>>
+>> In other words, no actual tag would ever be left around as a turd, it
+>> would simply be used as an automatic communication channel between the
+>> "git push -s" of the submitter and my subsequent "git pull". Neither
+>> side would have to do anything special, and the tag would never show
+>> up in any relevant tree (it could even be in a totally separate
+>> namespace like "refs/pullmarker/<branchname>" or something).
+> 
+> While I like the "an ephemeral tag is used only for hop-to-hop
+> communication to carry information to be recorded in the resulting
+> history" approach, I see a few downsides.
+> 
+>  * The ephemeral tag needs to stay somewhere under refs/ hierarchy of the
+>    lieutenant's tree until you pick it up, even if they are out of the way
+>    in refs/pullmarker/$branchname. The next time the same lieutenant makes
+>    a pull request, either it will be overwritten or multiple versions of
+>    them refs/pullmarker/$branchname/$serial need to be kept.
 
-Signed-off-by: Mika Fischer <mika.fischer@zoopnet.de>
----
- http.c |   21 ++++++++++++++++-----
- 1 files changed, 16 insertions(+), 5 deletions(-)
+If we are interested in commit sigs, the easiest tag-based approach is
+to name the sig carrying tag by the commit's sha1. Just like the sig is
+tied (in)to a commit in Junio's approach, it would be indexed by it. We
+can do that now:
 
-diff --git a/http.c b/http.c
-index a4bc770..12180f3 100644
---- a/http.c
-+++ b/http.c
-@@ -649,6 +649,7 @@ void run_active_slot(struct active_request_slot *slot)
- 	fd_set excfds;
- 	int max_fd;
- 	struct timeval select_timeout;
-+	long int curl_timeout;
- 	int finished = 0;
- 
- 	slot->finished = &finished;
-@@ -664,14 +665,24 @@ void run_active_slot(struct active_request_slot *slot)
- 		}
- 
- 		if (slot->in_use && !data_received) {
--			max_fd = 0;
-+			curl_multi_timeout(curlm, &curl_timeout);
-+			if (curl_timeout == 0) {
-+				continue;
-+			} else if (curl_timeout == -1) {
-+				select_timeout.tv_sec  = 0;
-+				select_timeout.tv_usec = 50000;
-+			} else {
-+				select_timeout.tv_sec  =  curl_timeout / 1000;
-+				select_timeout.tv_usec = (curl_timeout % 1000) * 1000;
-+			}
-+
-+			max_fd = -1;
- 			FD_ZERO(&readfds);
- 			FD_ZERO(&writefds);
- 			FD_ZERO(&excfds);
--			select_timeout.tv_sec = 0;
--			select_timeout.tv_usec = 50000;
--			select(max_fd, &readfds, &writefds,
--			       &excfds, &select_timeout);
-+			curl_multi_fdset(curlm, &readfds, &writefds, &excfds, &max_fd);
-+
-+			select(max_fd+1, &readfds, &writefds, &excfds, &select_timeout);
- 		}
- 	}
- #else
--- 
-1.7.7.1.489.g1fee
+git config --global alias.sign '!f() { c=$(git rev-parse "$1") || exit;
+shift; git tag -s $@ sigs/$c $c; }; f'
+
+But a different place rather than refs/tags/sigs/<sha1> will be more
+appropriate, so that we don't pollute the tag namespace. (Yes, this is
+similar to storing them in notes.) tags have a message etc.
+
+With an appropriate refspec, these sigs can be pushed out automatically
+(by the lieutenant).
+
+pull-request as in next will list the expected <sha1> at tip.
+
+git pull needs to learn to (fetch and) use refs/<whatever>/<sha1> to
+verify that the tip is signed.
+
+git log --show-signature can do the same tricks as with in-commit sigs.
+
+Some things to decide in this approach:
+- Should git-pull (pull sigs and) verify by default?
+- Should we worry about overwriting existings sigs? We have union-merge
+for notes already, and that would be appropriate for sigs. (Yes, our
+tags code does verify multiple concatenated sigs.)
+
+The advantage of tags is that they can be added without rewriting the
+commit, of course.
+
+Michael
