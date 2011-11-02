@@ -1,67 +1,62 @@
-From: "Richard Hughes" <info@info.com>
-Subject: TREAT AS URGENT..
-Date: Wed, 2 Nov 2011 15:20:57 -0000
-Message-ID: <20111102152101.FPSD1724.viefep12-int.chello.at@edge03.upcmail.net>
-Reply-To: <mailrichard@inmail24.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Wed Nov 02 17:17:38 2011
+From: Nick Alcock <nix@esperi.org.uk>
+Subject: [PATCH 0/2] Support sizes >=2G in various config options, v2
+Date: Wed,  2 Nov 2011 15:46:21 +0000
+Message-ID: <1320248783-29577-1-git-send-email-nix@esperi.org.uk>
+Cc: Nick Alcock <nix@esperi.org.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 02 17:25:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLdVQ-0007z1-Tf
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 17:17:37 +0100
+	id 1RLdck-0003kb-9Z
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 17:25:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932540Ab1KBQRc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Nov 2011 12:17:32 -0400
-Received: from fep23.mx.upcmail.net ([62.179.121.43]:36325 "EHLO
-	fep23.mx.upcmail.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755772Ab1KBQRb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Nov 2011 12:17:31 -0400
-Received: from edge03.upcmail.net ([192.168.13.238])
-          by viefep12-int.chello.at
-          (InterMail vM.8.01.02.02 201-2260-120-106-20100312) with ESMTP
-          id <20111102152101.FPSD1724.viefep12-int.chello.at@edge03.upcmail.net>;
-          Wed, 2 Nov 2011 16:21:01 +0100
-Received: from User ([188.29.99.218])
-	by edge03.upcmail.net with edge
-	id sFLk1h00G4iidzQ03FLlk1; Wed, 02 Nov 2011 16:21:01 +0100
-X-SourceIP: 188.29.99.218
-X-Authenticated-Sender: frantisek.paszto@chello.sk
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2800.1081
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1081
-X-Cloudmark-Analysis: v=1.1 cv=7AjrSHUygkxmgKj9+ZdWPzZoKYzIcpgZMIt1Yxqn8hE= c=1 sm=0 a=Dyoqhi_TatcA:10 a=BwVQVwQTPqIA:10 a=iI8TGnYjKrkA:10 a=8EU9Q7FnrCoA:10 a=qWDWllL-ZssA:10 a=Cfj4BQAnxiAA:10 a=1SSfVejSAAAA:8 a=b_8m8qpHMdPynWcIyUMA:9 a=Ft8UYL4EG9YA:10 a=igw3fcx_9lEA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S932870Ab1KBQZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Nov 2011 12:25:05 -0400
+Received: from icebox.esperi.org.uk ([81.187.191.129]:42917 "EHLO
+	mail.esperi.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932431Ab1KBQZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Nov 2011 12:25:03 -0400
+X-Greylist: delayed 2294 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Nov 2011 12:25:03 EDT
+Received: from esperi.org.uk (compiler@spindle.srvr.nix [192.168.14.15])
+	by mail.esperi.org.uk (8.14.5/8.14.5) with ESMTP id pA2FkjP0032571;
+	Wed, 2 Nov 2011 15:46:45 GMT
+Received: (from compiler@localhost)
+	by esperi.org.uk (8.14.5/8.14.5/Submit) id pA2Fkjl8029621;
+	Wed, 2 Nov 2011 15:46:45 GMT
+X-Mailer: git-send-email 1.7.6.1.138.g03ab.dirty
+X-DCC-URT-Metrics: spindle 1060; Body=2 Fuz1=2 Fuz2=2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 9.0 points;
- *  2.1 SUBJ_ALL_CAPS Subject is all capitals
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5000]
- *  2.0 URIBL_SC_SWINOG URI's listed in uribl.swinog.ch.
- *      [URIs: alive.it]
- *  1.0 XMAILER_MIMEOLE_OL_1ECD5 XMAILER_MIMEOLE_OL_1ECD5
- *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
- *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184641>
 
-Hello,
+New in this version:
 
-Good Day,I am Richard Hughes Attorney to your relative whom was my client whilst alive.it is paramount and urgent we speak.
-please reach me on mailrichard@inmail24.com
+ - overflow detection, as suggested by Johannes Sixt (on 32-bit
+   platforms too).
+ - no renaming of NO_STRTOUMAX nor NO_STRTOULL.
 
+I think this covers all the bases, including detection of configuration
+values that overflow signed but not unsigned type only after
+factor-application (as '3g' would on a 32-bit Linux box).
 
-I await your response.
+No new git testsuite failures. (No tests either, because I can't think
+of one that will reliably induce overflow on a 64-bit box without being
+totally ludicrous.)
 
-Thank you.
+Nick Alcock (2):
+  Add strtoimax() compatibility function.
+  Support sizes >=2G in various config options accepting 'g' sizes.
 
-Regards,
-Richard Hughes(Esq)
+ Makefile           |    6 +++---
+ compat/strtoimax.c |   10 ++++++++++
+ config.c           |   43 +++++++++++++++++++++++++++++++++----------
+ 3 files changed, 46 insertions(+), 13 deletions(-)
+ create mode 100644 compat/strtoimax.c
+
+-- 
+1.7.6.1.138.g03ab.dirty
