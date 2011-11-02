@@ -1,94 +1,132 @@
-From: Stefan Roas <sroas@roath.org>
-Subject: Re: [ANNOUNCE] Git 1.7.7.2
-Date: Wed, 2 Nov 2011 22:47:25 +0100
-Message-ID: <20111102214725.GA2860@geminga.roas.networks.roath.org>
-References: <7v7h3jl3kw.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: New Feature wanted: Is it possible to let git clone continue
+ last break point?
+Date: Wed, 2 Nov 2011 18:06:14 -0400
+Message-ID: <20111102220614.GB14108@sigill.intra.peff.net>
+References: <CAEZo+gfKVY-YgMjd=bEYzRV4-460kqDik-yVcQ9Xs=DoCZOMDg@mail.gmail.com>
+ <CAEZo+gcj5q2UYnak1+1UG7pPzoeaUr=QLsiCiNXbC_n+JQbKQQ@mail.gmail.com>
+ <20111031090717.GA24978@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="YZ5djTAD1cGYuMQK"
-Cc: git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-kernel-owner@vger.kernel.org Wed Nov 02 22:57:15 2011
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=utf-8
+Cc: netroby <hufeng1987@gmail.com>,
+	Git Mail List <git@vger.kernel.org>,
+	Tomas Carnecky <tom@dbservice.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 02 23:06:23 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1RLio6-00010a-LR
-	for glk-linux-kernel-3@lo.gmane.org; Wed, 02 Nov 2011 22:57:14 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1RLiww-0005IC-Qs
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 23:06:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752910Ab1KBV5F (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 2 Nov 2011 17:57:05 -0400
-Received: from roath.org ([87.106.182.47]:44871 "EHLO mail.roath.org"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751023Ab1KBV5D (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 2 Nov 2011 17:57:03 -0400
-X-Greylist: delayed 568 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Nov 2011 17:57:03 EDT
-Received: by mail.roath.org (Postfix, from userid 200)
-	id 95BB31428; Wed,  2 Nov 2011 22:47:33 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on antares.roath.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.4 required=3.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.3.1
-Received: from geminga.roas.networks.roath.org (p5B08B308.dip.t-dialin.net [91.8.179.8])
-	by mail.roath.org (Postfix) with ESMTPSA id 3D9B27E6;
-	Wed,  2 Nov 2011 22:47:27 +0100 (CET)
-Received: by geminga.roas.networks.roath.org (Postfix, from userid 1000)
-	id 14A621003A005; Wed,  2 Nov 2011 22:47:25 +0100 (CET)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Linux Kernel <linux-kernel@vger.kernel.org>
+	id S1752593Ab1KBWGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Nov 2011 18:06:18 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60440
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750991Ab1KBWGR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Nov 2011 18:06:17 -0400
+Received: (qmail 16672 invoked by uid 107); 2 Nov 2011 22:12:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 02 Nov 2011 18:12:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Nov 2011 18:06:14 -0400
 Content-Disposition: inline
-In-Reply-To: <7v7h3jl3kw.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-Sender: linux-kernel-owner@vger.kernel.org
+In-Reply-To: <20111031090717.GA24978@elie.hsd1.il.comcast.net>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184673>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184674>
 
+On Mon, Oct 31, 2011 at 04:07:18AM -0500, Jonathan Nieder wrote:
 
---YZ5djTAD1cGYuMQK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Something like Jeff's "priming the well with a server-specified
+> bundle" proposal[2] might be a good way to make the same trick
+> transparent to clients in the future.
 
-Hi Junio,
+Yes, that is one of the use cases I hope to address. But it will require
+the publisher specifying a mirror location (it's possible we could add
+some kind of automagic "hit a bundler service first" config option,
+though I fear that the existing small-time bundler services would
+crumble under the load).
 
-is it possible that you forgot to update the GIT-VERSION-GEN with the
-release of 1.7.7.2? I stll get version 1.7.7.1 from the tarball on
-http://git-scm.com/ and when building from the git repository itself.
+So in the general case (and in the meantime), you may have to learn to
+manually prime the repo using a bundle.
 
-Regards,
-  Stefan
+I haven't started on the patches for communicating mirror sites between
+the server and client, but I did just write some patches to handle "git
+fetch http://host/path/to/file.bundle" automatically, which is the first
+step. They need a few finishing touches and some testing, though.
 
---=20
-Stefan Roas                                         sroas@roath.org
-Joh.-Seb.-Bach-Str. 4                            D-91083 Baiersdorf
--------------------------------------------------------------------
-Key fingerprint =3D 557C 99BE 865B 1463 2A44  7936 C662 8970 4DA5 50B8
+> Even with that, later fetches, which grab a pack generated on the fly
+> to only contain the objects not already fetched, are generally not
+> resumable.  Overcoming that would presumably require larger protocol
+> changes, and I don't know of anyone working on it.  (My workaround
+> when in a setup where this mattered was to use the old-fashioned
+> "dumb" http protocol.  It worked fine.)
 
+My goal was for the mirror communication between client and server to be
+something like:
 
---YZ5djTAD1cGYuMQK
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+  - if you don't have object XXXXXX, then prime with URL
+    http://host/bundle1
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+  - if you don't have object YYYYYY, then prime with URL
+    http://host/bundle2
 
-iQIcBAEBCgAGBQJOsbptAAoJEMZiiXBNpVC4nCcP/jANxPSeiu+Bub9RD6RcLyTr
-q+IP/mlnMQGgdsbGq6AjPjr8aWBZBV4Y6Gpkk6sUw2cByup2amVeXDt98U0Adzse
-Nvpd8sGVIhPajLEAsd/JW0KV9hjA09Jy7ds00Zb6iO/8WOfIAEf46kIOx2L3rBEX
-2jsEgVQpCJhM0mhPKP1p1rGMHc3KxkiOftpwNVV+ZXInZE/yVTxcs0lWZcKd7Qfn
-TtAmnf35iUfXyLJQojWb3CzPw5uQjnwb6FaOo2N4AV5PXsgsEV0MYT8rYXCWHsPE
-GRyAP+7WGtoqQf79ksNtUFMUkQjUPK5kPKZnbm/M/W9/3SXcry2nj5UiuttrEC8Y
-AkOdRB1ozihGf8IXIO/18wA3leyG6iXbvjAdIes7kNb8XisrcP+hqkc9WV7/NKp/
-IxQH/+X8+2ylWI4GeHds1mvpBh7pWDBVwaK/XDIhEWYHyAMGb9xxTJnZv3vU28l5
-QnSo1/rat68mQm8wTNn3kflLJvtDVr9W/8hkD9e+5lqF+c6dpAwZSbbFo9AZlK11
-7ZJ8Ic46fK0dMFkncLNJCTmsbbXHclTkdHeqggLtKRmXjGQVZ6gkoT2dqH7iG5WF
-K56CukUhdTRUmOqY1/Xvrk1/Yfj93vTCdnCu9Qnz0vpFOouLZwOBVDSl3wDyjgH9
-qTEmaHqg/P2vjrS6GUB3
-=rhhI
------END PGP SIGNATURE-----
+and so forth. A cloning client would grab the first bundle, then the
+second, and then hit the real repo via the git protocol. A client who
+had previously cloned might have XXX, but would now grab bundle2, and
+then hit the real repo.
 
---YZ5djTAD1cGYuMQK--
+So depending on how often the server side feels like creating new
+bundles, you would get most of the changes via bundles, and then only
+be getting a small number of objects via git.
+
+The downside of cumulative fetching is that the bundles can only serve
+well-known checkpoints. So if you have a timeline like this:
+
+  t0: server publishes bundle/mirror config with one line (the XXX bit
+      above)
+
+  t1: you clone, getting the whole bundle. No waste, because you had
+      nothing in the first place, and you needed everything.
+
+  t2: you fetch again, getting N commits worth of history via the git
+      protocol
+
+  t3: server decides a lot of new objects (let's say M commits worth)
+      have accumulated, and generates a new line (the YYY line).
+
+  t4: you fetch, see that you don't yet have YYY, and grab the second
+      bundle
+
+But in t4 you grabbed a bundle containing M commits, when you already
+had the first N of them. So you actually wasted bandwidth getting
+objects you already had. The only benefit is that you grabbed a static
+file, which is resumable.
+
+So I suspect there is some black magic involved in deciding when to
+create a new bundle, and at what tip. If you create a bundle once a
+month, but include only commits up to a week ago, then people pulling
+weekly will never grab the bundle, but people pulling less frequently
+will get the whole month as a bundle.
+
+A secondary issue is also that in a scheme like this, your mirror list
+will grow without bound. So you'd want to periodically repack everything
+into a single bundle. But then people who are fetching wouldn't want
+that, as it is just an exacerbated version of the same problem above.
+
+Which is all a roundabout way of saying that the git protocol is really
+the sane way to do efficient transfers. An alternative, much simpler
+scheme would be for the server to just say:
+
+  - if you have nothing, then prime with URL http://host/bundle
+
+And then _only_ clone would bother with checking mirrors. People doing
+fetch would be expected to do it often enough that not being resumable
+isn't a big deal.
+
+-Peff
