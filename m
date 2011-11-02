@@ -1,149 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: long fsck time
-Date: Wed, 2 Nov 2011 17:33:32 -0400
-Message-ID: <20111102213332.GA14108@sigill.intra.peff.net>
-References: <CACsJy8D04Hw0_OoV01g2xtNK2d6fmZD_+YNEOR3A8aMUTpG5Lw@mail.gmail.com>
- <CACsJy8B=5mEWoOBkrTfmJ+p7HxqJM97zdG-k71oW81-3XxuO_Q@mail.gmail.com>
+From: Stefan Roas <sroas@roath.org>
+Subject: Re: [ANNOUNCE] Git 1.7.7.2
+Date: Wed, 2 Nov 2011 22:47:25 +0100
+Message-ID: <20111102214725.GA2860@geminga.roas.networks.roath.org>
+References: <7v7h3jl3kw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 02 22:33:43 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="YZ5djTAD1cGYuMQK"
+Cc: git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: linux-kernel-owner@vger.kernel.org Wed Nov 02 22:57:15 2011
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLiRJ-00071b-2T
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 22:33:41 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1RLio6-00010a-LR
+	for glk-linux-kernel-3@lo.gmane.org; Wed, 02 Nov 2011 22:57:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751519Ab1KBVdg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Nov 2011 17:33:36 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60422
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750817Ab1KBVdf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Nov 2011 17:33:35 -0400
-Received: (qmail 16556 invoked by uid 107); 2 Nov 2011 21:39:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 02 Nov 2011 17:39:26 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Nov 2011 17:33:32 -0400
+	id S1752910Ab1KBV5F (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Wed, 2 Nov 2011 17:57:05 -0400
+Received: from roath.org ([87.106.182.47]:44871 "EHLO mail.roath.org"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751023Ab1KBV5D (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 2 Nov 2011 17:57:03 -0400
+X-Greylist: delayed 568 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Nov 2011 17:57:03 EDT
+Received: by mail.roath.org (Postfix, from userid 200)
+	id 95BB31428; Wed,  2 Nov 2011 22:47:33 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on antares.roath.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.4 required=3.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.3.1
+Received: from geminga.roas.networks.roath.org (p5B08B308.dip.t-dialin.net [91.8.179.8])
+	by mail.roath.org (Postfix) with ESMTPSA id 3D9B27E6;
+	Wed,  2 Nov 2011 22:47:27 +0100 (CET)
+Received: by geminga.roas.networks.roath.org (Postfix, from userid 1000)
+	id 14A621003A005; Wed,  2 Nov 2011 22:47:25 +0100 (CET)
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Linux Kernel <linux-kernel@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <CACsJy8B=5mEWoOBkrTfmJ+p7HxqJM97zdG-k71oW81-3XxuO_Q@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
+In-Reply-To: <7v7h3jl3kw.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184672>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184673>
 
-On Wed, Nov 02, 2011 at 07:10:26PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-> On Wed, Nov 2, 2011 at 7:06 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> > On git.git
-> >
-> > $ /usr/bin/time git fsck
-> > 333.25user 4.28system 5:37.59elapsed 99%CPU (0avgtext+0avgdata
-> > 420080maxresident)k
-> > 0inputs+0outputs (0major+726560minor)pagefaults 0swaps
-> >
-> > That's really long time, perhaps we should print progress so users
-> > know it's still running?
-> 
-> Ahh.. --verbose. Sorry for the noise. Still good to show the number of
-> checked objects though.
+--YZ5djTAD1cGYuMQK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-fsck --verbose is _really_ verbose. It could probably stand to have some
-progress meters sprinkled throughout. The patch below produces this on
-my git.git repo:
+Hi Junio,
 
-  $ git fsck
-  Checking object directories: 100% (256/256), done.
-  Verifying packs: 100% (7/7), done.
-  Checking objects (pack 1/7): 100% (241/241), done.
-  Checking objects (pack 2/7): 100% (176/176), done.
-  Checking objects (pack 3/7): 100% (312/312), done.
-  Checking objects (pack 4/7): 100% (252/252), done.
-  Checking objects (pack 5/7): 100% (353/353), done.
-  Checking objects (pack 6/7): 100% (375/375), done.
-  Checking objects (pack 7/7): 100% (171079/171079), done.
+is it possible that you forgot to update the GIT-VERSION-GEN with the
+release of 1.7.7.2? I stll get version 1.7.7.1 from the tarball on
+http://git-scm.com/ and when building from the git repository itself.
 
-which gives reasonably smooth progress. The longest hang is that
-"Verifying pack" 7 is slow (I believe it's doing a sha1 over the whole
-thing). If you really wanted to get fancy, you could probably do a
-throughput meter as we sha1 the whole contents.
+Regards,
+  Stefan
 
-Patch is below. It would need --{no-,}progress support on the command
-line, and to check isatty(2) before it would be acceptable.
+--=20
+Stefan Roas                                         sroas@roath.org
+Joh.-Seb.-Bach-Str. 4                            D-91083 Baiersdorf
+-------------------------------------------------------------------
+Key fingerprint =3D 557C 99BE 865B 1463 2A44  7936 C662 8970 4DA5 50B8
 
----
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index df1a88b..481de4e 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -11,6 +11,7 @@
- #include "fsck.h"
- #include "parse-options.h"
- #include "dir.h"
-+#include "progress.h"
- 
- #define REACHABLE 0x0001
- #define SEEN      0x0002
-@@ -512,15 +513,19 @@ static void get_default_heads(void)
- static void fsck_object_dir(const char *path)
- {
- 	int i;
-+	struct progress *progress;
- 
- 	if (verbose)
- 		fprintf(stderr, "Checking object directory\n");
- 
-+	progress = start_progress("Checking object directories", 256);
- 	for (i = 0; i < 256; i++) {
- 		static char dir[4096];
- 		sprintf(dir, "%s/%02x", path, i);
- 		fsck_dir(i, dir);
-+		display_progress(progress, i+1);
- 	}
-+	stop_progress(&progress);
- 	fsck_sha1_list();
- }
- 
-@@ -622,19 +627,36 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
- 
- 	if (check_full) {
- 		struct packed_git *p;
-+		int i, nr_packs = 0;
-+		struct progress *progress;
- 
- 		prepare_packed_git();
- 		for (p = packed_git; p; p = p->next)
-+			nr_packs++;
-+
-+		progress = start_progress("Verifying packs", nr_packs);
-+		for (i = 1, p = packed_git; p; p = p->next, i++) {
- 			/* verify gives error messages itself */
- 			verify_pack(p);
-+			display_progress(progress, i);
-+		}
-+		stop_progress(&progress);
- 
--		for (p = packed_git; p; p = p->next) {
-+		for (i = 1, p = packed_git; p; p = p->next, i++) {
-+			char buf[32];
- 			uint32_t j, num;
- 			if (open_pack_index(p))
- 				continue;
- 			num = p->num_objects;
--			for (j = 0; j < num; j++)
-+
-+			snprintf(buf, sizeof(buf), "Checking objects (pack %d/%d)",
-+				 i, nr_packs);
-+			progress = start_progress(buf, num);
-+			for (j = 0; j < num; j++) {
- 				fsck_sha1(nth_packed_object_sha1(p, j));
-+				display_progress(progress, j+1);
-+			}
-+			stop_progress(&progress);
- 		}
- 	}
- 
+
+--YZ5djTAD1cGYuMQK
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQIcBAEBCgAGBQJOsbptAAoJEMZiiXBNpVC4nCcP/jANxPSeiu+Bub9RD6RcLyTr
+q+IP/mlnMQGgdsbGq6AjPjr8aWBZBV4Y6Gpkk6sUw2cByup2amVeXDt98U0Adzse
+Nvpd8sGVIhPajLEAsd/JW0KV9hjA09Jy7ds00Zb6iO/8WOfIAEf46kIOx2L3rBEX
+2jsEgVQpCJhM0mhPKP1p1rGMHc3KxkiOftpwNVV+ZXInZE/yVTxcs0lWZcKd7Qfn
+TtAmnf35iUfXyLJQojWb3CzPw5uQjnwb6FaOo2N4AV5PXsgsEV0MYT8rYXCWHsPE
+GRyAP+7WGtoqQf79ksNtUFMUkQjUPK5kPKZnbm/M/W9/3SXcry2nj5UiuttrEC8Y
+AkOdRB1ozihGf8IXIO/18wA3leyG6iXbvjAdIes7kNb8XisrcP+hqkc9WV7/NKp/
+IxQH/+X8+2ylWI4GeHds1mvpBh7pWDBVwaK/XDIhEWYHyAMGb9xxTJnZv3vU28l5
+QnSo1/rat68mQm8wTNn3kflLJvtDVr9W/8hkD9e+5lqF+c6dpAwZSbbFo9AZlK11
+7ZJ8Ic46fK0dMFkncLNJCTmsbbXHclTkdHeqggLtKRmXjGQVZ6gkoT2dqH7iG5WF
+K56CukUhdTRUmOqY1/Xvrk1/Yfj93vTCdnCu9Qnz0vpFOouLZwOBVDSl3wDyjgH9
+qTEmaHqg/P2vjrS6GUB3
+=rhhI
+-----END PGP SIGNATURE-----
+
+--YZ5djTAD1cGYuMQK--
