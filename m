@@ -1,135 +1,74 @@
-From: Alexey Shumkin <alex.crezoff@gmail.com>
+From: Frans Klaver <fransklaver@gmail.com>
 Subject: Re: Q: "git diff" using tag names
-Date: Wed, 2 Nov 2011 13:29:45 +0400
-Message-ID: <20111102132945.582707aa@ashu.dyn.rarus.ru>
+Date: Wed, 2 Nov 2011 10:34:11 +0100
+Message-ID: <CAH6sp9OdjNZ6_j-eSFMpecUcxW_y6fpkDZ0cRds62wOrc12x-Q@mail.gmail.com>
 References: <4EAABC15020000A100007D9D@gwsmtp1.uni-regensburg.de>
 	<20111028165943.2cc8253d@ashu.dyn.rarus.ru>
 	<4EB0FFCA020000A100007DE2@gwsmtp1.uni-regensburg.de>
+	<20111102132945.582707aa@ashu.dyn.rarus.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
-X-From: git-owner@vger.kernel.org Wed Nov 02 10:30:01 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
+	git@vger.kernel.org
+To: Alexey Shumkin <alex.crezoff@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 02 10:34:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLX8x-0007Cl-Nj
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 10:30:00 +0100
+	id 1RLXD7-0000N8-T3
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 10:34:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755167Ab1KBJ3v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Nov 2011 05:29:51 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:65309 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755151Ab1KBJ3t (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Nov 2011 05:29:49 -0400
-Received: by faao14 with SMTP id o14so210888faa.19
-        for <git@vger.kernel.org>; Wed, 02 Nov 2011 02:29:48 -0700 (PDT)
+	id S1754811Ab1KBJeN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Nov 2011 05:34:13 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:36495 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754292Ab1KBJeM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Nov 2011 05:34:12 -0400
+Received: by qabj40 with SMTP id j40so6488026qab.19
+        for <git@vger.kernel.org>; Wed, 02 Nov 2011 02:34:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        bh=8ntLN9eOZjeUlbpSYg05sRwgkxuagKVNmgNStNLRl20=;
-        b=w8hcWn2zQNZSyuiK9wh8+rpk9zkd9Q3S5YdQ/I43AZGL6c8VSHVPx7bmk5WK2R0VYB
-         cOwMZ4UdoGdUAiiD4CUXq+YZbA89VNqXUhxi53fjrhzxGStKfFGzJuthk1SLnYWoibB5
-         ZyEy6HBOK87pXF6+jrczWHaH43l/c+RzKQQ8M=
-Received: by 10.223.5.66 with SMTP id 2mr7229255fau.26.1320226188090;
-        Wed, 02 Nov 2011 02:29:48 -0700 (PDT)
-Received: from ashu.dyn.rarus.ru ([85.21.218.130])
-        by mx.google.com with ESMTPS id l26sm4314565fad.17.2011.11.02.02.29.47
-        (version=SSLv3 cipher=OTHER);
-        Wed, 02 Nov 2011 02:29:47 -0700 (PDT)
-In-Reply-To: <4EB0FFCA020000A100007DE2@gwsmtp1.uni-regensburg.de>
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=YHc8kHRTm4HZFqfrg//STLBThLuUR0lb1aSXJnBP55I=;
+        b=G/FxF5hHrcN5kuQzRjjwKK5WNh4//08r2uQYgvzbuy3TTNRTQoVP1C0cD9ewx7i5oQ
+         fIFw+QLTDwE3ZSYYvQyrQz4qRC5NaT4aEELwhGtqVsDyOvfaPqsYH32PlP0GPQ40JBKg
+         XGqhCDOjnjiBi1Pxr7UduExR5TyMTDedoYHG4=
+Received: by 10.224.210.130 with SMTP id gk2mr1645542qab.23.1320226451877;
+ Wed, 02 Nov 2011 02:34:11 -0700 (PDT)
+Received: by 10.224.80.149 with HTTP; Wed, 2 Nov 2011 02:34:11 -0700 (PDT)
+In-Reply-To: <20111102132945.582707aa@ashu.dyn.rarus.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184622>
 
-> Hello Alexey,
-> 
-> thank you very much for your reply. I felt I did something wrong, but
-> couldn't find out what it was. Actually it turned out that I had just
-> mistyped one tag name.
-> 
-> Also it seems that both syntaxes work:
-> git diff v0.4..v0.5
-> git diff v0.4 v0.5
-> 
-> The question is: How does git disambiguate between tag names, commits
-> and file names? (All may start with a letter) This seems to work
-> automagically, and I was desparately looking for an option like "--"
-> to separate revisions from file names. I found "SPECIFYING REVISIONS"
-> in git-rev-parse(1), so you don't really have to answer.
+On Wed, Nov 2, 2011 at 10:29 AM, Alexey Shumkin <alex.crezoff@gmail.com=
+> wrote:
 
-Yes, you found right answer. "--" option separates file names from
-"commits' names". but it usually necessary when you have branches or
-tags named as some of your files.
-E.g. you have file "test" and you name branch "test"
-so "git log test" will complain that it cannot understand your
-intention to see log of what and will fail
+>> Also it seems that both syntaxes work:
+>> git diff v0.4..v0.5
+>> git diff v0.4 v0.5
+> honestly, I do not know the difference (at the moment :))
+> may be gurus or manual will help to discover it
 
-$ git log test
-fatal: ambiguous argument 'test': both revision and filename
-Use '--' to separate filenames from revisions
+As per the git-diff documentation, these two versions behave equally
+-- i.e. no differences.
 
-$ git log -- test
-will show log of file test
+Comparing branches
+$ git diff topic master    <1>
+$ git diff topic..master   <2>
+$ git diff topic...master  <3>
+=E2=80=AA1.=E2=80=AC Changes between the tips of the topic and the mast=
+er branches.
+=E2=80=AA2.=E2=80=AC Same as above.
+=E2=80=AA3.=E2=80=AC Changes that occurred on the master branch since w=
+hen the topic
+branch was started off it.
 
-$ git log test --
-will show log of branch test
-
-
-> Also it seems that both syntaxes work:
-> git diff v0.4..v0.5
-> git diff v0.4 v0.5
-honestly, I do not know the difference (at the moment :))
-may be gurus or manual will help to discover it
-> 
-> Regards,
-> Ulrich
-> 
-> >>> Alexey Shumkin <Alex.Crezoff@gmail.com> schrieb am 28.10.2011 um
-> >>> 14:59 in
-> Nachricht <20111028165943.2cc8253d@ashu.dyn.rarus.ru>:
-> > Tag is a pointer to a commit (if to say simply)
-> > 
-> > e.g. in my repo
-> > $ git show-ref --tags --abbrev=7
-> > -->8--
-> > 676f194 refs/tags/v2.6.7
-> > b23c481 refs/tags/v2.6.8
-> > -->8--
-> > 
-> > so
-> > 
-> > $ git diff v2.6.7..v2.6.8
-> > is equivalent to
-> > $ git diff 676f194..b23c481
-> > 
-> > etc
-> > > Hi,
-> > > 
-> > > when using a somewhat older git (of SLES11 SP1 SDK), I could not
-> > > find a way to "git diff" between two tag names; I can only diff
-> > > between two commit numbers. I can display a changeset using "git
-> > > show", but that's not what I wanted. Is it possible to get the
-> > > diff I want using older versions, and is such a feature
-> > > implemented in the current version? If so, since when?
-> > > 
-> > > As I'm not subscribed to the list, I'd appreciate CC'ed replies.
-> > > Thank you.
-> > > 
-> > > Greeting
-> > > Ulrich
-> > > 
-> > > 
-> > 
-> > 
-> 
->  
->  
-> 
+Cheers,
+=46rans
