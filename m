@@ -1,134 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] http.c: Use curl_multi_fdset to select on curl fds
- instead of just sleeping
-Date: Wed, 02 Nov 2011 11:29:14 -0700
-Message-ID: <7v62j2js3p.fsf@alter.siamese.dyndns.org>
-References: <1320230734-5933-1-git-send-email-mika.fischer@zoopnet.de>
+Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
+Date: Wed, 02 Nov 2011 11:58:13 -0700
+Message-ID: <7v1utqjqre.fsf@alter.siamese.dyndns.org>
+References: <20111026202235.GA20928@havoc.gtf.org>
+ <1319969101.5215.20.camel@dabdike>
+ <CA+55aFx1NGWfNJAKDTvZfsHDDKiEtS4t4RydSgHurBeyGPyhXg@mail.gmail.com>
+ <1320049150.8283.19.camel@dabdike>
+ <CA+55aFz3=cbciRfTYodNhdEetXYxTARGTfpP9GL9RZK222XmKQ@mail.gmail.com>
+ <7vy5w1ow90.fsf@alter.siamese.dyndns.org>
+ <CA+55aFwL_s=DcT46dprcYVWEAm_=WkuTV6K9dAn3wc_bDQU8vA@mail.gmail.com>
+ <7vwrbjlj5r.fsf@alter.siamese.dyndns.org>
+ <4EB12122.7010803@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Daniel Stenberg <daniel@haxx.se>
-To: Mika Fischer <mika.fischer@zoopnet.de>
-X-From: git-owner@vger.kernel.org Wed Nov 02 19:29:24 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	Jeff Garzik <jeff@garzik.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: linux-ide-owner@vger.kernel.org Wed Nov 02 19:58:18 2011
+Return-path: <linux-ide-owner@vger.kernel.org>
+Envelope-to: lnx-linux-ide@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLfYx-00085C-Kd
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 19:29:24 +0100
+	(envelope-from <linux-ide-owner@vger.kernel.org>)
+	id 1RLg0v-0005FW-HJ
+	for lnx-linux-ide@lo.gmane.org; Wed, 02 Nov 2011 19:58:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755831Ab1KBS3S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Nov 2011 14:29:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40598 "EHLO
+	id S1756319Ab1KBS6Q (ORCPT <rfc822;lnx-linux-ide@m.gmane.org>);
+	Wed, 2 Nov 2011 14:58:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53018 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752834Ab1KBS3S (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Nov 2011 14:29:18 -0400
+	id S1756065Ab1KBS6P (ORCPT <rfc822;linux-ide@vger.kernel.org>);
+	Wed, 2 Nov 2011 14:58:15 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 228335140;
-	Wed,  2 Nov 2011 14:29:17 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F62C5B0B;
+	Wed,  2 Nov 2011 14:58:15 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yV4gzPg5abEJu9l/fZ0BY6NuBaI=; b=PpIU2f
-	TYg83T5T1DYHDwOfOYRHkommTXNA9+s4mFL/4XqqGpTr6XDjcKeCjGskReX9UaGb
-	9jAUPV6yuOcUtwdfFxOhDVjWGRL1EqIjj5szCvy1fngsC+8FvZJnooDZ7uHm2m0N
-	4UQWOQir1+IYeES/zeZdLSlzvFAIuKXWVrTV4=
+	:content-type; s=sasl; bh=TfGyWAJcmKoW1ijvhno+omCXioM=; b=rTNV8l
+	el6WaAecfS7LLGe4cXgbUDplrCSRU0hPvWtLeZr7Y+/pFrkBVvFXB9KqqctXbWGf
+	yFtvdz0WXrom14Gr+eEB5V2uUDuATp/9vj7JcC9c75PcPP5p0Z72zLZsStfRissp
+	UVYzg4ZEIpTRkkEObdPlluDTv0JKMKcrDNxEg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fjAAgIFNzKozLsNVlJ6eksDk223CAgjZ
-	bxpkM9kAZ0bTGJqcj05xm4DUOfec7zRMC3pXJW9Rij99KBIHzmaDbe5vYQabOPJl
-	fZoopICooSXbdCEZAW3zJdEiDUFrqgwd4OTs/Hi5iY8qWMXrGSHKDNWR9alkwwU7
-	lv3t7VNCICI=
+	:content-type; q=dns; s=sasl; b=N38ibDY4Vy3CEZY0J+7IF5y4i2o/S0Vt
+	MH/pT0NhxYMw90hjIThztZk/cQHhlQ8CoOsWJuEc272E1bZifOOY4X21uxFfNFiy
+	qKK1AsYc9W8CgyhQmPNLn7WPCSF19Q6L0dr1taRIKwQ60tTeSCmmbwY3NFlfERCU
+	oU99M0O4Nfw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 196F8513F;
-	Wed,  2 Nov 2011 14:29:17 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1619E5B0A;
+	Wed,  2 Nov 2011 14:58:15 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7B310513E; Wed,  2 Nov 2011
- 14:29:16 -0400 (EDT)
-In-Reply-To: <1320230734-5933-1-git-send-email-mika.fischer@zoopnet.de> (Mika
- Fischer's message of "Wed, 2 Nov 2011 11:45:34 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9B1415B09; Wed,  2 Nov 2011
+ 14:58:14 -0400 (EDT)
+In-Reply-To: <4EB12122.7010803@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Wed, 02 Nov 2011 11:53:22 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 923B8F3A-0580-11E1-962E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
+X-Pobox-Relay-ID: 9E4139C0-0584-11E1-914C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-ide-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184654>
+List-ID: <linux-ide.vger.kernel.org>
+X-Mailing-List: linux-ide@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184655>
 
-Mika Fischer <mika.fischer@zoopnet.de> writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> Previously, when nothing could be read from the connections curl had
-> open, git would just sleep unconditionally for 50ms. This patch changes
-> this behavior and instead obtains the recommended timeout and the actual
-> file descriptors from curl. This should eliminate time spent sleeping when
-> data could actually be read/written on the socket.
->
-> Signed-off-by: Mika Fischer <mika.fischer@zoopnet.de>
-> ---
+> The advantage of tags is that they can be added without rewriting the
+> commit, of course.
 
-Thanks. I added Daniel back to Cc: list as I know he is the area expert
-when it comes to the use of libcurl, and also his input helped to polish
-this patch during the initial round of discussion.
-
->  http.c |   21 ++++++++++++++++-----
->  1 files changed, 16 insertions(+), 5 deletions(-)
->
-> diff --git a/http.c b/http.c
-> index a4bc770..12180f3 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -649,6 +649,7 @@ void run_active_slot(struct active_request_slot *slot)
->  	fd_set excfds;
->  	int max_fd;
->  	struct timeval select_timeout;
-> +	long int curl_timeout;
-
-Just a style nit, but we usually spell this "long" not "long int" in our
-codebase.
-
-> @@ -664,14 +665,24 @@ void run_active_slot(struct active_request_slot *slot)
->  		}
->  
->  		if (slot->in_use && !data_received) {
-> -			max_fd = 0;
-> +			curl_multi_timeout(curlm, &curl_timeout);
-
-According to http://curl.haxx.se/libcurl/c/curl_multi_timeout.html
-this was added in 7.15.4 which may be much newer than some of the versions
-the existing code checks LIBCURL_VERSION_NUM against (grep for it in http.c).
-
-Shouldn't you make this conditional?
-
-> +			if (curl_timeout == 0) {
-> +				continue;
-> +			} else if (curl_timeout == -1) {
-> +				select_timeout.tv_sec  = 0;
-> +				select_timeout.tv_usec = 50000;
-> +			} else {
-> +				select_timeout.tv_sec  =  curl_timeout / 1000;
-> +				select_timeout.tv_usec = (curl_timeout % 1000) * 1000;
-> +			}
-> +
-> +			max_fd = -1;
->  			FD_ZERO(&readfds);
->  			FD_ZERO(&writefds);
->  			FD_ZERO(&excfds);
-> -			select_timeout.tv_sec = 0;
-> -			select_timeout.tv_usec = 50000;
-> -			select(max_fd, &readfds, &writefds,
-> -			       &excfds, &select_timeout);
-> +			curl_multi_fdset(curlm, &readfds, &writefds, &excfds, &max_fd);
-
-I couldn't find in http://curl.haxx.se/libcurl/c/curl_multi_fdset.html
-what the version requirement for using this function is, but the same
-comment as above applies here.
-
-By the way, I think I saw Daniel posting a link to a nicely formatted
-table that lists each and every functions and CURLOPT_* symbol with
-ranges of version it is usable, but I seem to be unable to find it.
-
-> +
-> +			select(max_fd+1, &readfds, &writefds, &excfds, &select_timeout);
->  		}
->  	}
->  #else
+And you did neither think about the downsides of tags, nor read what
+others already explained for you?
