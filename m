@@ -1,79 +1,96 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: Git is exploding
-Date: Wed, 02 Nov 2011 13:51:31 +0900
-Message-ID: <buo8vnzgm98.fsf@dhlpc061.dev.necel.com>
-References: <CAA787r=jeBv9moineaJVY=urYzEX+d7n23ED-txAGhLS+OPbmg@mail.gmail.com>
- <vpqfwi8tary.fsf@bauges.imag.fr>
+From: "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
+Subject: Antw: Re: Q: "git diff" using tag names
+Date: Wed, 02 Nov 2011 08:31:06 +0100
+Message-ID: <4EB0FFCA020000A100007DE2@gwsmtp1.uni-regensburg.de>
+References: <4EAABC15020000A100007D9D@gwsmtp1.uni-regensburg.de>
+ <20111028165943.2cc8253d@ashu.dyn.rarus.ru>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: =?iso-8859-1?Q?=D8yvind_A=2E_Holm?= <sunny@sunbase.org>,
-	git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Nov 02 05:51:47 2011
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Alexey Shumkin" <Alex.Crezoff@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 02 08:31:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLSnf-0006DV-2l
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 05:51:43 +0100
+	id 1RLVI6-0008Ul-Fi
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 08:31:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751428Ab1KBEvi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Nov 2011 00:51:38 -0400
-Received: from relmlor3.renesas.com ([210.160.252.173]:48041 "EHLO
-	relmlor3.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751274Ab1KBEvh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Nov 2011 00:51:37 -0400
-Received: from relmlir3.idc.renesas.com ([10.200.68.153])
- by relmlor3.idc.renesas.com ( SJSMS)
- with ESMTP id <0LU000J01O60CU80@relmlor3.idc.renesas.com> for
- git@vger.kernel.org; Wed, 02 Nov 2011 13:51:36 +0900 (JST)
-Received: from relmlac2.idc.renesas.com ([10.200.69.22])
- by relmlir3.idc.renesas.com ( SJSMS)
- with ESMTP id <0LU000IBLO6002F0@relmlir3.idc.renesas.com> for
- git@vger.kernel.org; Wed, 02 Nov 2011 13:51:36 +0900 (JST)
-Received: by relmlac2.idc.renesas.com (Postfix, from userid 0)
-	id D649528088; Wed, 02 Nov 2011 13:51:35 +0900 (JST)
-Received: from relmlac2.idc.renesas.com (localhost [127.0.0.1])
-	by relmlac2.idc.renesas.com (Postfix) with ESMTP id D0E8428076; Wed,
- 02 Nov 2011 13:51:35 +0900 (JST)
-Received: from relmlii2.idc.renesas.com [10.200.68.66]	by
- relmlac2.idc.renesas.com with ESMTP id PAG13561; Wed,
- 02 Nov 2011 13:51:35 +0900
-X-IronPort-AV: E=Sophos;i="4.69,441,1315148400";   d="scan'208";a="53108115"
-Received: from unknown (HELO relay41.aps.necel.com) ([10.29.19.9])
- by relmlii2.idc.renesas.com with ESMTP; Wed, 02 Nov 2011 13:51:35 +0900
-Received: from dhlpc061 (dhlpc061.dev.necel.com [10.114.96.50])
-	by relay41.aps.necel.com (8.14.4+Sun/8.14.4) with ESMTP id pA24pX19019112;
- Wed, 02 Nov 2011 13:51:33 +0900 (JST)
-Received: by dhlpc061 (Postfix, from userid 31295)	id 2A26A52E1F5; Wed,
- 02 Nov 2011 13:51:32 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-reply-to: <vpqfwi8tary.fsf@bauges.imag.fr>
+	id S1752101Ab1KBHbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Nov 2011 03:31:13 -0400
+Received: from rrzmta2.uni-regensburg.de ([194.94.155.52]:41458 "EHLO
+	rrzmta2.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751792Ab1KBHbN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Nov 2011 03:31:13 -0400
+Received: from rrzmta2.uni-regensburg.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 4F8984CCD
+	for <git@vger.kernel.org>; Wed,  2 Nov 2011 08:31:10 +0100 (CET)
+Received: from gwsmtp1.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
+	by rrzmta2.uni-regensburg.de (Postfix) with ESMTP id 22F134621
+	for <git@vger.kernel.org>; Wed,  2 Nov 2011 08:31:09 +0100 (CET)
+Received: from uni-regensburg-smtp1-MTA by gwsmtp1.uni-regensburg.de
+	with Novell_GroupWise; Wed, 02 Nov 2011 08:31:10 +0100
+X-Mailer: Novell GroupWise Internet Agent 2012.0.0 Beta 
+In-Reply-To: <20111028165943.2cc8253d@ashu.dyn.rarus.ru>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184612>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-> The recent rise is essentially due to the git-core package renamed to
-> git, and people doing updates:
+Hello Alexey,
 
-The renaming would obviously explain the extreme initial steepness of
-the rise, but it shouldn't have much effect on the absolute values or
-the more recent numbers.
+thank you very much for your reply. I felt I did something wrong, but couldn't find out what it was. Actually it turned out that I had just mistyped one tag name.
 
-[Look at git-core+git, basically it makes the initial part of the
-graph fill in a bit, getting rid of the weird kink and making it more
-smoothly exponential but doesn't really change the conclusion.]
+Also it seems that both syntaxes work:
+git diff v0.4..v0.5
+git diff v0.4 v0.5
 
-Probably the main distortion is just the fact that it counts Debian
-users ... subversion has a lot of stodgy corporate users etc that are
-unlikely to use Debian!  :]
+The question is: How does git disambiguate between tag names, commits and file names? (All may start with a letter)
+This seems to work automagically, and I was desparately looking for an option like "--" to separate revisions from file names. I found "SPECIFYING REVISIONS" in git-rev-parse(1), so you don't really have to answer.
 
---Miles
+Regards,
+Ulrich
 
--- 
-Twice, adv. Once too often.
+>>> Alexey Shumkin <Alex.Crezoff@gmail.com> schrieb am 28.10.2011 um 14:59 in
+Nachricht <20111028165943.2cc8253d@ashu.dyn.rarus.ru>:
+> Tag is a pointer to a commit (if to say simply)
+> 
+> e.g. in my repo
+> $ git show-ref --tags --abbrev=7
+> -->8--
+> 676f194 refs/tags/v2.6.7
+> b23c481 refs/tags/v2.6.8
+> -->8--
+> 
+> so
+> 
+> $ git diff v2.6.7..v2.6.8
+> is equivalent to
+> $ git diff 676f194..b23c481
+> 
+> etc
+> > Hi,
+> > 
+> > when using a somewhat older git (of SLES11 SP1 SDK), I could not find
+> > a way to "git diff" between two tag names; I can only diff between
+> > two commit numbers. I can display a changeset using "git show", but
+> > that's not what I wanted. Is it possible to get the diff I want using
+> > older versions, and is such a feature implemented in the current
+> > version? If so, since when?
+> > 
+> > As I'm not subscribed to the list, I'd appreciate CC'ed replies.
+> > Thank you.
+> > 
+> > Greeting
+> > Ulrich
+> > 
+> > 
+> 
+> 
+
+ 
+ 
