@@ -1,64 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] Git 1.7.7.2
-Date: Wed, 02 Nov 2011 15:30:01 -0700
-Message-ID: <7v1utqi2dy.fsf@alter.siamese.dyndns.org>
-References: <7v7h3jl3kw.fsf@alter.siamese.dyndns.org>
- <20111102214725.GA2860@geminga.roas.networks.roath.org>
+From: Mika Fischer <mika.fischer@zoopnet.de>
+Subject: Re: [PATCH 1/2] http.c: Use curl_multi_fdset to select on curl fds
+ instead of just sleeping
+Date: Wed, 2 Nov 2011 23:22:48 +0100
+Message-ID: <CAOs=hR+QqUpYuth8Uvi2o7pm1LO8ogO2pN7nrMchYj96Cutmww@mail.gmail.com>
+References: <1320265288-12647-1-git-send-email-mika.fischer@zoopnet.de>
+ <1320265288-12647-2-git-send-email-mika.fischer@zoopnet.de> <20111102203221.GB5628@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>
-To: Stefan Roas <sroas@roath.org>
-X-From: linux-kernel-owner@vger.kernel.org Wed Nov 02 23:30:22 2011
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com, daniel@haxx.se
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 02 23:34:10 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1RLjK9-0006uQ-0y
-	for glk-linux-kernel-3@lo.gmane.org; Wed, 02 Nov 2011 23:30:21 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1RLjNl-0008WB-KQ
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 23:34:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752935Ab1KBWaJ (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 2 Nov 2011 18:30:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57426 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750786Ab1KBWaG (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 2 Nov 2011 18:30:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8315D6984;
-	Wed,  2 Nov 2011 18:30:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HQvKckIwIS+6/sHuiUSbqEFFYFU=; b=V5AscV
-	VGbvsSJO9Sl5G95WZ3YJe9nmp6IzxtFN7A/SS7JD2dRiGgY2aguda1h/7iWkn8zj
-	1LOGKwCEZyNSvc7CMi5ZgG8niYJTzwjmHmAqp7U5Z/d5u34/rRK7gZYZ965hmj1I
-	HPC9VxNiR31mNunsRq+vvSpaLnZD0/s0iXVeA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tt0c6NL5dPy2P0P1bLyeJ3fyfvrWRhov
-	X9OBW6S/830lrY5tH9hd2bX1LDrDVgCpEzJGPe4F/z5OggzrhMpydEm6qf52YT+q
-	iMrI1dS/ImLlgW+Z4IRQy9rcwdMQODTVONQZ7I0+1wa3ReQXbgsAUgI29gzzXN4I
-	QFE0BrzKaHA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 711226983;
-	Wed,  2 Nov 2011 18:30:05 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C91D96980; Wed,  2 Nov 2011
- 18:30:03 -0400 (EDT)
-In-Reply-To: <20111102214725.GA2860@geminga.roas.networks.roath.org> (Stefan
- Roas's message of "Wed, 2 Nov 2011 22:47:25 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3581956A-05A2-11E1-9146-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1752191Ab1KBWeA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Nov 2011 18:34:00 -0400
+Received: from trillian.zoopnet.de ([85.214.111.199]:59143 "EHLO
+	trillian.zoopnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751907Ab1KBWeA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Nov 2011 18:34:00 -0400
+Received: from mail-ey0-f174.google.com (mail-ey0-f174.google.com [209.85.215.174])
+	by trillian.zoopnet.de (Postfix) with ESMTPSA id 67235249C2BD
+	for <git@vger.kernel.org>; Wed,  2 Nov 2011 23:33:59 +0100 (CET)
+Received: by eye27 with SMTP id 27so587833eye.19
+        for <git@vger.kernel.org>; Wed, 02 Nov 2011 15:33:58 -0700 (PDT)
+Received: by 10.236.124.105 with SMTP id w69mr10363138yhh.2.1320273055271;
+ Wed, 02 Nov 2011 15:30:55 -0700 (PDT)
+Received: by 10.236.60.135 with HTTP; Wed, 2 Nov 2011 15:22:48 -0700 (PDT)
+In-Reply-To: <20111102203221.GB5628@sigill.intra.peff.net>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184676>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184677>
 
-Stefan Roas <sroas@roath.org> writes:
+On Wed, Nov 2, 2011 at 21:32, Jeff King <peff@peff.net> wrote:
+> Do we still need to care about data_received?
+>
+> My understanding was that the code was originally trying to do:
+>
+> =C2=A01. Call curl, maybe get some data.
+>
+> =C2=A02. If we got data, then ask curl against immediately for some d=
+ata.
+>
+> =C2=A03. Otherwise, sleep 50ms and then ask curl again.
 
-> is it possible that you forgot to update the GIT-VERSION-GEN with the
-> release of 1.7.7.2? I stll get version 1.7.7.1 from the tarball on
-> http://git-scm.com/ and when building from the git repository itself.
+Yes, that's exactly what it did.
 
-Probably.
+> But now that we are actually selecting on the proper descriptors, it
+> should now be safe to just do:
+>
+> =C2=A01. Call curl, maybe get some data.
+>
+> =C2=A02. Call select, which will wake immediately if curl is going to=
+ get
+> =C2=A0 =C2=A0 data.
+
+The only problem I can see is that curl_multi_fdset is not guaranteed
+to return any fds. So in theory it could be possible that we don't get
+fds, but we're actually reading stuff. In this case things would get
+slow, because we would sleep for 50ms after every read...
+
+However, I don't know if this is a case that actually comes up in the
+real world. Maybe Daniel has some advice on this.
+
+Best,
+ Mika
