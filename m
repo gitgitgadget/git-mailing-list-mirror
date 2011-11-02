@@ -1,80 +1,68 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
-Date: Wed, 2 Nov 2011 10:11:26 +0100
-Message-ID: <20111102091126.GG18903@elte.hu>
-References: <1320049150.8283.19.camel@dabdike>
- <CA+55aFz3=cbciRfTYodNhdEetXYxTARGTfpP9GL9RZK222XmKQ@mail.gmail.com>
- <7vy5w1ow90.fsf@alter.siamese.dyndns.org>
- <CA+55aFwL_s=DcT46dprcYVWEAm_=WkuTV6K9dAn3wc_bDQU8vA@mail.gmail.com>
- <4EAF1F40.3030907@zytor.com>
- <CA+55aFxprv9JR4gtt_UDXheHR5G8PrUA3-Mj0CPsU6E5EzNYeg@mail.gmail.com>
- <4EAF2245.90308@zytor.com>
- <CA+55aFzedaAzzWfzhqVf8y8ZW0jeb56hZwdV3UodSp8Q_Qhc2A@mail.gmail.com>
- <7vvcr4ojvp.fsf@alter.siamese.dyndns.org>
- <CA+55aFyKWLUMQFfaeKJKGFPV_7kfOGjf+pSZ1Y8afzkT4OYQ9Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] http.c: Use curl_multi_fdset to select on curl fds
+ instead of just sleeping
+Date: Wed, 02 Nov 2011 02:17:54 -0700
+Message-ID: <7v39e6lw71.fsf@alter.siamese.dyndns.org>
+References: <1319901621-482-1-git-send-email-mika.fischer@zoopnet.de>
+ <alpine.DEB.2.00.1110292230500.28196@tvnag.unkk.fr>
+ <CAOs=hR+YuF+HP0n0132Ktm3RdeWsnVp0Bgt89LNn+VyT6W0mcw@mail.gmail.com>
+ <CAOs=hR+u_MrHK4iNFZj4pLVhZ6-_75YpqN7tqWnSjh+di8Lzxw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org,
-	James Bottomley <James.Bottomley@hansenpartnership.com>,
-	Jeff Garzik <jeff@garzik.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: linux-kernel-owner@vger.kernel.org Wed Nov 02 10:13:20 2011
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Cc: Daniel Stenberg <daniel@haxx.se>, git@vger.kernel.org
+To: Mika Fischer <mika.fischer@zoopnet.de>
+X-From: git-owner@vger.kernel.org Wed Nov 02 10:18:05 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1RLWsq-0000fm-5T
-	for glk-linux-kernel-3@lo.gmane.org; Wed, 02 Nov 2011 10:13:20 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1RLWxQ-0002dp-1U
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 10:18:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755953Ab1KBJNN (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 2 Nov 2011 05:13:13 -0400
-Received: from mx2.mail.elte.hu ([157.181.151.9]:50949 "EHLO mx2.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753522Ab1KBJNL (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 2 Nov 2011 05:13:11 -0400
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1RLWsW-0002jx-P8
-	from <mingo@elte.hu>; Wed, 02 Nov 2011 10:13:02 +0100
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id B539D3E25A4; Wed,  2 Nov 2011 10:12:54 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <CA+55aFyKWLUMQFfaeKJKGFPV_7kfOGjf+pSZ1Y8afzkT4OYQ9Q@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Received-SPF: neutral (mx2.mail.elte.hu: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-SpamScore: -2.0
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-2.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.3.1
-	-2.0 BAYES_00               BODY: Bayes spam probability is 0 to 1%
-	[score: 0.0000]
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1751703Ab1KBJR6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Nov 2011 05:17:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35749 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751115Ab1KBJR5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Nov 2011 05:17:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A6BC24956;
+	Wed,  2 Nov 2011 05:17:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DhG+9p/5MrgON4HWHe4OsZG3naQ=; b=oNx1lA
+	HvtUs5nQnjICAMny5Dl4K08r/AjHvHHLBobEvefPwdHeMcVLPSvyJvsv5CjTYWz5
+	sigHzAwZS+cxl+BVoQel/0qEZgVilVFx8/6QaEoYziYT12ru316+kOmP/eKCM20c
+	Spqj7pi2DCd1euBkcY5aYkyApAIyTbqPawEzE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eDrqUpPZX5Lj//T+oYk/YoWY1KrJJYB5
+	BwOUN1NjXMSMg4WewUp7km+EpyJKixLdgfRbtv3mQNI6GOzSydZl/+2A1A9h0Aod
+	hlCm18ziuojXOE3S/KwW12rQhPQI3zhPlIWlUeaoEaAXqyWk489l1ieqwp/G/kqx
+	ivJjGK53c/E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9ACAB4955;
+	Wed,  2 Nov 2011 05:17:56 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1ABFD4953; Wed,  2 Nov 2011
+ 05:17:56 -0400 (EDT)
+In-Reply-To: <CAOs=hR+u_MrHK4iNFZj4pLVhZ6-_75YpqN7tqWnSjh+di8Lzxw@mail.gmail.com> (Mika
+ Fischer's message of "Wed, 2 Nov 2011 09:21:37 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8CC7DF2E-0533-11E1-B600-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184618>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184619>
 
+Mika Fischer <mika.fischer@zoopnet.de> writes:
 
-* Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> Since I'm new here, I don't really know what the next steps are for
+> the patch, should I just wait? Or send it directly to someone?
 
-> And the receiving side would just do the "git pull" and 
-> automatically just get notified that "Yes, this push has been 
-> signed by key Xyz Abcdef"
+Resend to the list for re-evaluation, and then we can take it from there.
 
-If this approach is used then it would be nice to have a .gitconfig 
-switch to require trusted pulls by default: to not allow doing 
-non-signed or untrusted pulls accidentally, or for Git to warn in a 
-visible, hard to miss way if there's a non-signed pull.
-
-This adds social uncertainty (and an element of a silent alarm) to a 
-realistic attack: the attacker wouldnt know exactly how the puller 
-checks signed pull requests, it's kept private.
-
-Thanks,
-
-	Ingo
+Thanks.
