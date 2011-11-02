@@ -1,58 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t3200: add test case for 'branch -m'
-Date: Wed, 02 Nov 2011 12:43:25 -0700
-Message-ID: <7vpqhaia3m.fsf@alter.siamese.dyndns.org>
-References: <4EB153B4.6070404@atlas-elektronik.com>
- <1320246425-2141-1-git-send-email-stefan.naewe@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
+Date: Wed, 2 Nov 2011 13:04:30 -0700
+Message-ID: <CA+55aFz7TeQQH3D4Tpp31cZYZoQKeK37jouo+2Kh61Wa07knfw@mail.gmail.com>
+References: <20111026202235.GA20928@havoc.gtf.org> <1319969101.5215.20.camel@dabdike>
+ <CA+55aFx1NGWfNJAKDTvZfsHDDKiEtS4t4RydSgHurBeyGPyhXg@mail.gmail.com>
+ <1320049150.8283.19.camel@dabdike> <CA+55aFz3=cbciRfTYodNhdEetXYxTARGTfpP9GL9RZK222XmKQ@mail.gmail.com>
+ <7vy5w1ow90.fsf@alter.siamese.dyndns.org> <CA+55aFwL_s=DcT46dprcYVWEAm_=WkuTV6K9dAn3wc_bDQU8vA@mail.gmail.com>
+ <7vwrbjlj5r.fsf@alter.siamese.dyndns.org> <CA+55aFx_rAA6TJkZn1Zvu6u9UjxnmTVt0HpMnvaE_q9Sx-jzPg@mail.gmail.com>
+ <7vk47jld5s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Tay Ray Chuan <rctay89@gmail.com>
-To: Stefan Naewe <stefan.naewe@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 02 20:43:37 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	Jeff Garzik <jeff@garzik.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: linux-ide-owner@vger.kernel.org Wed Nov 02 21:04:58 2011
+Return-path: <linux-ide-owner@vger.kernel.org>
+Envelope-to: lnx-linux-ide@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLgij-0002Kc-Ed
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 20:43:33 +0100
+	(envelope-from <linux-ide-owner@vger.kernel.org>)
+	id 1RLh3P-0004BZ-Hs
+	for lnx-linux-ide@lo.gmane.org; Wed, 02 Nov 2011 21:04:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750778Ab1KBTn3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Nov 2011 15:43:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40564 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750704Ab1KBTn2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Nov 2011 15:43:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5D7F686D;
-	Wed,  2 Nov 2011 15:43:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=N7WuDyLeDcKHEHRrtjsCNHTD4jw=; b=eIeCT6
-	N7fmdqayyIyPvRXlWOPc0wkV+TXljZM8OEgX75UzBLCMM93BGe6bjkRfJ58puGG2
-	sqAQlTopVtFDg2AYcTiE+2bRRnDvHTsgSHS0246Z+FW8Sdy2a7l2v4XpRc4JKvAN
-	eZXDPJ4fZ/0UzAKkK5i8XsjkmWmwntqMdRVO8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nHtA4W3UXFvrzQkcuXYc9gpgRxAe1VQM
-	CXEPWGNzJC1duqQgkb/bhUihvWswy6LYV8N6vDtaWqwN0JDKsEtVDPHdFbOQYq6u
-	uO8EfYnylR7iokU/1BBPU0ga7ApXNl88XEaDPTyfqq3vA0xU9ek0JeG0xFp93G7j
-	4dsZnjRtPmE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CBF0E686C;
-	Wed,  2 Nov 2011 15:43:27 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 61666686B; Wed,  2 Nov 2011
- 15:43:27 -0400 (EDT)
-In-Reply-To: <1320246425-2141-1-git-send-email-stefan.naewe@gmail.com>
- (Stefan Naewe's message of "Wed, 2 Nov 2011 16:07:05 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EF2C26DC-058A-11E1-AC3B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
+	id S1751174Ab1KBUEy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;lnx-linux-ide@m.gmane.org>); Wed, 2 Nov 2011 16:04:54 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:54456 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750840Ab1KBUEx convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-ide@vger.kernel.org>); Wed, 2 Nov 2011 16:04:53 -0400
+Received: by wyh15 with SMTP id 15so521211wyh.19
+        for <multiple recipients>; Wed, 02 Nov 2011 13:04:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=SV4uJPgTyZKyWVKVGXehDubw/YegELxjJ7TNvR98pWE=;
+        b=WXnMO3/MiLs7hk7naH4NOw0lo1kMuui98P56LEKeIB2sTzPmogOmAhV/L377F8qhyg
+         iL6NEg2P6FE44hXUNIxOoxm1p8Eefm/ca7D6BAx6ecWnqveul3JnpISPbidOT2WCGwPl
+         7juI5UOZuOVyvoN4MPkXDSy+t2pXqlHfdOzug=
+Received: by 10.216.24.39 with SMTP id w39mr6532026wew.67.1320264291116; Wed,
+ 02 Nov 2011 13:04:51 -0700 (PDT)
+Received: by 10.216.166.3 with HTTP; Wed, 2 Nov 2011 13:04:30 -0700 (PDT)
+In-Reply-To: <7vk47jld5s.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: _zKSswQEQMX8QTtG301TtzynOoo
+Sender: linux-ide-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184659>
+List-ID: <linux-ide.vger.kernel.org>
+X-Mailing-List: linux-ide@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184660>
 
-Thanks, both.
+On Tue, Nov 1, 2011 at 2:56 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+>
+> But on the other hand, in many ways, publishing your commit to the ou=
+tside
+> world, not necessarily for getting pulled into the final destination
+> (i.e. your tree) but merely for other people to try it out, is the po=
+int
+> of no return (aka "don't rewind or rebase once you publish"). =A0"pus=
+hing
+> out" might be less special than "please pull", but it still is specia=
+l.
+
+So I really think that signing the top commit itself is fundamentally w=
+rong.
+
+That commit may not even be *yours*. You may have pulled it from a
+sub-lieutenant as a fast-forward, or similar. Amending it later would
+be actively very very *wrong*.
+
+So quite frankly, I think the stuff in pu (or next?) is completely
+mis-designed. Doing it in the commit is wrong for fundamental reasons,
+which all boil down to a simple issue:
+
+ - you absolutely *need* to add the signature later. You *cannot* do
+it at "git commit" time.
+
+That's a fundamental issue both from a "workflow model" issue (ie you
+want to sign stuff after it has passed testing etc, but you may need
+to commit it in order to *get* testing), as well as from a
+"fundamental git datastructures" issue (ie you would want to sign
+commits that aren't yours.
+
+"git commit --amend" is not the answer - that destroys the fundamental
+concept of history being immutable, and while it works for your local
+commits, it doesn't work for anybody elses commits, or for stuff you
+already pushed out.
+
+And "add a fake empty commit just for the signature" is not the answer
+either - because that is clearly inferior to the tags we already had.
+
+I dunno. Did I miss something? As far as I can tell, the signed tags
+that we've had since day one are *clearly* much better in very
+fundamental ways.
+
+                             Linus
