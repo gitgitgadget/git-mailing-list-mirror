@@ -1,69 +1,58 @@
-From: Daniel Stenberg <daniel@haxx.se>
-Subject: Re: [PATCH] http.c: Use curl_multi_fdset to select on curl fds
- instead of just sleeping
-Date: Wed, 2 Nov 2011 20:34:19 +0100 (CET)
-Message-ID: <alpine.DEB.2.00.1111022026390.7774@tvnag.unkk.fr>
-References: <1320230734-5933-1-git-send-email-mika.fischer@zoopnet.de> <7v62j2js3p.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t3200: add test case for 'branch -m'
+Date: Wed, 02 Nov 2011 12:43:25 -0700
+Message-ID: <7vpqhaia3m.fsf@alter.siamese.dyndns.org>
+References: <4EB153B4.6070404@atlas-elektronik.com>
+ <1320246425-2141-1-git-send-email-stefan.naewe@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Mika Fischer <mika.fischer@zoopnet.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 02 20:34:33 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Tay Ray Chuan <rctay89@gmail.com>
+To: Stefan Naewe <stefan.naewe@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 02 20:43:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLga0-0006MN-KB
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 20:34:33 +0100
+	id 1RLgij-0002Kc-Ed
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 20:43:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750838Ab1KBTe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Nov 2011 15:34:28 -0400
-Received: from giant.haxx.se ([80.67.6.50]:49820 "EHLO giant.haxx.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750708Ab1KBTe1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Nov 2011 15:34:27 -0400
-Received: from giant.haxx.se (localhost.localdomain [127.0.0.1])
-	by giant.haxx.se (8.14.4/8.14.4/Debian-2) with ESMTP id pA2JYKXx016811
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 2 Nov 2011 20:34:20 +0100
-Received: from localhost (dast@localhost)
-	by giant.haxx.se (8.14.4/8.14.4/Submit) with ESMTP id pA2JYJdI016800;
-	Wed, 2 Nov 2011 20:34:19 +0100
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-X-X-Sender: dast@giant.haxx.se
-In-Reply-To: <7v62j2js3p.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-fromdanielhimself: yes
+	id S1750778Ab1KBTn3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Nov 2011 15:43:29 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40564 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750704Ab1KBTn2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Nov 2011 15:43:28 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5D7F686D;
+	Wed,  2 Nov 2011 15:43:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=N7WuDyLeDcKHEHRrtjsCNHTD4jw=; b=eIeCT6
+	N7fmdqayyIyPvRXlWOPc0wkV+TXljZM8OEgX75UzBLCMM93BGe6bjkRfJ58puGG2
+	sqAQlTopVtFDg2AYcTiE+2bRRnDvHTsgSHS0246Z+FW8Sdy2a7l2v4XpRc4JKvAN
+	eZXDPJ4fZ/0UzAKkK5i8XsjkmWmwntqMdRVO8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nHtA4W3UXFvrzQkcuXYc9gpgRxAe1VQM
+	CXEPWGNzJC1duqQgkb/bhUihvWswy6LYV8N6vDtaWqwN0JDKsEtVDPHdFbOQYq6u
+	uO8EfYnylR7iokU/1BBPU0ga7ApXNl88XEaDPTyfqq3vA0xU9ek0JeG0xFp93G7j
+	4dsZnjRtPmE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CBF0E686C;
+	Wed,  2 Nov 2011 15:43:27 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 61666686B; Wed,  2 Nov 2011
+ 15:43:27 -0400 (EDT)
+In-Reply-To: <1320246425-2141-1-git-send-email-stefan.naewe@gmail.com>
+ (Stefan Naewe's message of "Wed, 2 Nov 2011 16:07:05 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EF2C26DC-058A-11E1-AC3B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184659>
 
-On Wed, 2 Nov 2011, Junio C Hamano wrote:
-
-I'm totally fine with the patch's approach with respect to how it uses libcurl 
-and it should be an improvement compared to the previous way.
-
->> + curl_multi_fdset(curlm, &readfds, &writefds, &excfds, &max_fd);
->
-> I couldn't find in http://curl.haxx.se/libcurl/c/curl_multi_fdset.html
-> what the version requirement for using this function is, but the same
-> comment as above applies here.
-
-That function has been around for as long as the multi interface has, so it 
-should be safe to use it just as widely as curl_multi_perform().
-
-> By the way, I think I saw Daniel posting a link to a nicely formatted table 
-> that lists each and every functions and CURLOPT_* symbol with ranges of 
-> version it is usable, but I seem to be unable to find it.
-
-Right, the document is a bit hard to find and I should figure out a more 
-prominent place to link to it. But it can be found here:
-
-https://github.com/bagder/curl/blob/master/docs/libcurl/symbols-in-versions
-
--- 
-
-  / daniel.haxx.se
+Thanks, both.
