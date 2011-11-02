@@ -1,96 +1,60 @@
-From: "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
-Subject: Antw: Re: Q: "git diff" using tag names
-Date: Wed, 02 Nov 2011 08:35:41 +0100
-Message-ID: <4EB100DD020000A100007DE7@gwsmtp1.uni-regensburg.de>
-References: <4EAABC15020000A100007D9D@gwsmtp1.uni-regensburg.de>
- <m3aa8l5k1y.fsf@localhost.localdomain>
+From: Mika Fischer <mika.fischer@zoopnet.de>
+Subject: Re: [PATCH] http.c: Use curl_multi_fdset to select on curl fds
+ instead of just sleeping
+Date: Wed, 2 Nov 2011 09:21:37 +0100
+Message-ID: <CAOs=hR+u_MrHK4iNFZj4pLVhZ6-_75YpqN7tqWnSjh+di8Lzxw@mail.gmail.com>
+References: <1319901621-482-1-git-send-email-mika.fischer@zoopnet.de>
+ <alpine.DEB.2.00.1110292230500.28196@tvnag.unkk.fr> <CAOs=hR+YuF+HP0n0132Ktm3RdeWsnVp0Bgt89LNn+VyT6W0mcw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 02 08:35:57 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Daniel Stenberg <daniel@haxx.se>
+X-From: git-owner@vger.kernel.org Wed Nov 02 09:22:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLVMZ-0001Ky-GW
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 08:35:55 +0100
+	id 1RLW5H-0007BA-RX
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 09:22:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752430Ab1KBHfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Nov 2011 03:35:51 -0400
-Received: from rrzmta1.uni-regensburg.de ([194.94.155.51]:48175 "EHLO
-	rrzmta1.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751301Ab1KBHfv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Nov 2011 03:35:51 -0400
-Received: from rrzmta1.uni-regensburg.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id 6898F33ED
-	for <git@vger.kernel.org>; Wed,  2 Nov 2011 08:35:46 +0100 (CET)
-Received: from gwsmtp1.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
-	by rrzmta1.uni-regensburg.de (Postfix) with ESMTP id 01930335F
-	for <git@vger.kernel.org>; Wed,  2 Nov 2011 08:35:45 +0100 (CET)
-Received: from uni-regensburg-smtp1-MTA by gwsmtp1.uni-regensburg.de
-	with Novell_GroupWise; Wed, 02 Nov 2011 08:35:46 +0100
-X-Mailer: Novell GroupWise Internet Agent 2012.0.0 Beta 
-In-Reply-To: <m3aa8l5k1y.fsf@localhost.localdomain>
-Content-Disposition: inline
+	id S1754127Ab1KBIWC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Nov 2011 04:22:02 -0400
+Received: from trillian.zoopnet.de ([85.214.111.199]:34542 "EHLO
+	trillian.zoopnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752530Ab1KBIWB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Nov 2011 04:22:01 -0400
+Received: from mail-gx0-f174.google.com (mail-gx0-f174.google.com [209.85.161.174])
+	by trillian.zoopnet.de (Postfix) with ESMTPSA id 6CF62249C2BB
+	for <git@vger.kernel.org>; Wed,  2 Nov 2011 09:21:59 +0100 (CET)
+Received: by ggnb2 with SMTP id b2so329499ggn.19
+        for <git@vger.kernel.org>; Wed, 02 Nov 2011 01:21:58 -0700 (PDT)
+Received: by 10.236.152.2 with SMTP id c2mr5512827yhk.36.1320222118101; Wed,
+ 02 Nov 2011 01:21:58 -0700 (PDT)
+Received: by 10.236.60.135 with HTTP; Wed, 2 Nov 2011 01:21:37 -0700 (PDT)
+In-Reply-To: <CAOs=hR+YuF+HP0n0132Ktm3RdeWsnVp0Bgt89LNn+VyT6W0mcw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184615>
 
->>> Jakub Narebski <jnareb@gmail.com> schrieb am 28.10.2011 um 15:21 in Nachricht
-<m3aa8l5k1y.fsf@localhost.localdomain>:
-> "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de> writes:
-> 
-> > When using a somewhat older git (of SLES11 SP1 SDK),
-> 
-> Nb. you can check version of git with "git --version".
+>> Calling select() with max_fd+1 (== 0) will then not be appreciated by all
+>> implementations of select() so that case should probably also be covered by
+>> the 50ms sleep approach...
+>
+> Actually, the 50ms sleep was also implemented using select(0, ...)
+> before the patch. I tried to keep the previous behavior when curl does
+> not give us any information.
+> I assumed that the select(0, ...) was some portable way to sleep with
+> microsecond granularity.
 
-Hi!
+Upon a bit of research, it seems that select(0, ...) is indeed quite
+commonly used. So I'd just keep it as it was unless you know of a
+problem it causes.
 
-For the records, it's "1.6.0.2"...
+Since I'm new here, I don't really know what the next steps are for
+the patch, should I just wait? Or send it directly to someone?
 
-> 
-> >                                                      I could not
-> > find a way to "git diff" between two tag names; I can only diff
-> > between two commit numbers. I can display a changeset using "git
-> > show", but that's not what I wanted.
-> >
-> > Is it possible to get the diff I want using older versions, and is
-> > such a feature implemented in the current version? If so, since
-> > when?
-> 
-> From the very beginning in Git you can use tag name where you need
-> commit identifier; Git would use commit that tag points to (will
-> dereference or peel a tag).
-
-As said before, I was confused by the simplicity: I was looking for an option to specify revisions (as opposed to file names), like "-r" for RCS, but found none. To make things complicated, I had mistyped one tag name without noticing, so I failed to diff, making me think that tag names won't work the way they actually do.
-
-Sorry, and thanks to everybody who helped!
-
-Ulrich
-
-> 
-> That is not possible in some [censored] version control systems; I am
-> looking at you, Subversion!
-> 
-> 
-> So if you can do
-> 
->   $ git show v0.9
->   $ git show v1.0
-> 
-> you can also do
-> 
->   $ git diff v0.9 v1.0
-> 
-> and
-> 
->   $ git log v0.9..v1.0
-
-
-
- 
+Best,
+ Mika
