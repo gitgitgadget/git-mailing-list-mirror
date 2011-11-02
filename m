@@ -1,114 +1,134 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Escape file:// URL's to meet subversion SVN::Ra
- requirements
-Date: Wed, 2 Nov 2011 13:20:38 -0500
-Message-ID: <20111102182015.GA11401@elie.hsd1.il.comcast.net>
-References: <1320251895-6348-1-git-send-email-bwalton@artsci.utoronto.ca>
- <1320251895-6348-2-git-send-email-bwalton@artsci.utoronto.ca>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] http.c: Use curl_multi_fdset to select on curl fds
+ instead of just sleeping
+Date: Wed, 02 Nov 2011 11:29:14 -0700
+Message-ID: <7v62j2js3p.fsf@alter.siamese.dyndns.org>
+References: <1320230734-5933-1-git-send-email-mika.fischer@zoopnet.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: normalperson@yhbt.net, git@vger.kernel.org
-To: Ben Walton <bwalton@artsci.utoronto.ca>
-X-From: git-owner@vger.kernel.org Wed Nov 02 19:20:57 2011
+Cc: git@vger.kernel.org, Daniel Stenberg <daniel@haxx.se>
+To: Mika Fischer <mika.fischer@zoopnet.de>
+X-From: git-owner@vger.kernel.org Wed Nov 02 19:29:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLfQn-00049o-2M
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 19:20:57 +0100
+	id 1RLfYx-00085C-Kd
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 19:29:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754793Ab1KBSUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Nov 2011 14:20:51 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:65077 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753382Ab1KBSUv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Nov 2011 14:20:51 -0400
-Received: by ggnb2 with SMTP id b2so413505ggn.19
-        for <git@vger.kernel.org>; Wed, 02 Nov 2011 11:20:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ZBlo1zGded17vwxiWAW6vZKSZPBjf3Jyw1BoOCtE77Q=;
-        b=uqitdLLr3kGdSDeNVm2068xXiGJ5HgHiDKC052AFY7doT2khtx0gPV2oq5a+jewGJc
-         eBMVmtd+aH2/rg9UEV8htKHmYmYzRzMK8CAcF2k4HZ3NeA0SCppEheX8ueFwuif89MpZ
-         zwXf+PFkcbYZxKWoNvteZhvQ0htnFl86XcIAQ=
-Received: by 10.236.129.82 with SMTP id g58mr2166055yhi.54.1320258049284;
-        Wed, 02 Nov 2011 11:20:49 -0700 (PDT)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id k3sm9473683ann.0.2011.11.02.11.20.46
-        (version=SSLv3 cipher=OTHER);
-        Wed, 02 Nov 2011 11:20:48 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1320251895-6348-2-git-send-email-bwalton@artsci.utoronto.ca>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1755831Ab1KBS3S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Nov 2011 14:29:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40598 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752834Ab1KBS3S (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Nov 2011 14:29:18 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 228335140;
+	Wed,  2 Nov 2011 14:29:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yV4gzPg5abEJu9l/fZ0BY6NuBaI=; b=PpIU2f
+	TYg83T5T1DYHDwOfOYRHkommTXNA9+s4mFL/4XqqGpTr6XDjcKeCjGskReX9UaGb
+	9jAUPV6yuOcUtwdfFxOhDVjWGRL1EqIjj5szCvy1fngsC+8FvZJnooDZ7uHm2m0N
+	4UQWOQir1+IYeES/zeZdLSlzvFAIuKXWVrTV4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fjAAgIFNzKozLsNVlJ6eksDk223CAgjZ
+	bxpkM9kAZ0bTGJqcj05xm4DUOfec7zRMC3pXJW9Rij99KBIHzmaDbe5vYQabOPJl
+	fZoopICooSXbdCEZAW3zJdEiDUFrqgwd4OTs/Hi5iY8qWMXrGSHKDNWR9alkwwU7
+	lv3t7VNCICI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 196F8513F;
+	Wed,  2 Nov 2011 14:29:17 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7B310513E; Wed,  2 Nov 2011
+ 14:29:16 -0400 (EDT)
+In-Reply-To: <1320230734-5933-1-git-send-email-mika.fischer@zoopnet.de> (Mika
+ Fischer's message of "Wed, 2 Nov 2011 11:45:34 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 923B8F3A-0580-11E1-962E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184654>
 
-Hi,
+Mika Fischer <mika.fischer@zoopnet.de> writes:
 
-Ben Walton wrote:
-
-> After a colleague reported this problem to the subversion list, it
-> was determined that the problem is in git, not svn.[1]  The SVN code
-> expects URL's and paths to be pre-escaped.
-
-Thanks for your work on this!  I'm not really sure how one can decide
-that the problem is not in svn --- some existing functions changed ABI
-in such a way as to break existing applications and require code
-changes and a recompile.  It would be better for Subversion to
-silently fix up paths provided by bad callers, or at least to return a
-sensible error code.
-
-So the problem is that nobody who cared was testing prereleases of
-subversion and reporting bugs early enough for it to get this fixed
-before the 1.7 release.  But yes, that's water under the bridge and
-git-svn (and libsvn-perl, and pysvn, and ...) should just adjust to
-the new world order.
-
-> [1] http://news.gmane.org/gmane.comp.version-control.subversion.devel
-
-Do you mean
-http://thread.gmane.org/gmane.comp.version-control.subversion.devel/132250
-?
-
-> Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+> Previously, when nothing could be read from the connections curl had
+> open, git would just sleep unconditionally for 50ms. This patch changes
+> this behavior and instead obtains the recommended timeout and the actual
+> file descriptors from curl. This should eliminate time spent sleeping when
+> data could actually be read/written on the socket.
+>
+> Signed-off-by: Mika Fischer <mika.fischer@zoopnet.de>
 > ---
->  git-svn.perl |    3 +++
->  1 files changed, 3 insertions(+), 0 deletions(-)
 
-Sounds sensible in principle, though I haven't checked the patch in
-detail.  When I run "make test" with svn 1.7 with this patch applied,
-I get the following result, unfortunately:
+Thanks. I added Daniel back to Cc: list as I know he is the area expert
+when it comes to the use of libcurl, and also his input helped to polish
+this patch during the initial round of discussion.
 
-| expecting success: 
-|         git svn clone -s "$svnrepo" g &&
-|         (
-|                 cd g &&
-|                 test x`git rev-parse --verify refs/remotes/trunk^0` = \
-|                      x`git rev-parse --verify refs/heads/master^0`
-|         )
-|
-| Initialized empty Git repository in /home/jrn/src/git2/t/trash directory.t9145-git-svn-master-branch/g/.git/
-| Using higher level of URL: file:///home/jrn/src/git2/t/trash directory.t9145-git-svn-master-branch/svnrepo => file:///home/jrn/src/git2/t/trash%20directory.t9145-git-svn-master-branch/svnrepo
-| svn-remote.svn: remote ref '///home/jrn/src/git2/t/trash directory.t9145-git-svn-master-branch/svnrepo/trunk:refs/remotes/trunk' must start with 'refs/'
-|
-| not ok - 2 git svn clone --stdlayout sets up trunk as master
-| #
-| #               git svn clone -s "$svnrepo" g &&
-| #               (
-| #                       cd g &&
-| #                       test x`git rev-parse --verify refs/remotes/trunk^0` = \
-| #                            x`git rev-parse --verify refs/heads/master^0`
-| #               )
-| #
-|
-| # failed 1 among 2 test(s)
-| 1..2
-| make[3]: *** [t9145-git-svn-master-branch.sh] Error 1
+>  http.c |   21 ++++++++++++++++-----
+>  1 files changed, 16 insertions(+), 5 deletions(-)
+>
+> diff --git a/http.c b/http.c
+> index a4bc770..12180f3 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -649,6 +649,7 @@ void run_active_slot(struct active_request_slot *slot)
+>  	fd_set excfds;
+>  	int max_fd;
+>  	struct timeval select_timeout;
+> +	long int curl_timeout;
 
-Does it work for you?  This is with a merge of git 1.7.8-rc0 and 1.7.7.2.
+Just a style nit, but we usually spell this "long" not "long int" in our
+codebase.
+
+> @@ -664,14 +665,24 @@ void run_active_slot(struct active_request_slot *slot)
+>  		}
+>  
+>  		if (slot->in_use && !data_received) {
+> -			max_fd = 0;
+> +			curl_multi_timeout(curlm, &curl_timeout);
+
+According to http://curl.haxx.se/libcurl/c/curl_multi_timeout.html
+this was added in 7.15.4 which may be much newer than some of the versions
+the existing code checks LIBCURL_VERSION_NUM against (grep for it in http.c).
+
+Shouldn't you make this conditional?
+
+> +			if (curl_timeout == 0) {
+> +				continue;
+> +			} else if (curl_timeout == -1) {
+> +				select_timeout.tv_sec  = 0;
+> +				select_timeout.tv_usec = 50000;
+> +			} else {
+> +				select_timeout.tv_sec  =  curl_timeout / 1000;
+> +				select_timeout.tv_usec = (curl_timeout % 1000) * 1000;
+> +			}
+> +
+> +			max_fd = -1;
+>  			FD_ZERO(&readfds);
+>  			FD_ZERO(&writefds);
+>  			FD_ZERO(&excfds);
+> -			select_timeout.tv_sec = 0;
+> -			select_timeout.tv_usec = 50000;
+> -			select(max_fd, &readfds, &writefds,
+> -			       &excfds, &select_timeout);
+> +			curl_multi_fdset(curlm, &readfds, &writefds, &excfds, &max_fd);
+
+I couldn't find in http://curl.haxx.se/libcurl/c/curl_multi_fdset.html
+what the version requirement for using this function is, but the same
+comment as above applies here.
+
+By the way, I think I saw Daniel posting a link to a nicely formatted
+table that lists each and every functions and CURLOPT_* symbol with
+ranges of version it is usable, but I seem to be unable to find it.
+
+> +
+> +			select(max_fd+1, &readfds, &writefds, &excfds, &select_timeout);
+>  		}
+>  	}
+>  #else
