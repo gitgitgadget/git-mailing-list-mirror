@@ -1,88 +1,51 @@
-From: Jochen Striepe <jochen@tolot.escape.de>
-Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
-Date: Wed, 2 Nov 2011 12:20:18 +0100
-Message-ID: <20111102112018.GF17259@pompeji.miese-zwerge.org>
-References: <CA+55aFz3=cbciRfTYodNhdEetXYxTARGTfpP9GL9RZK222XmKQ@mail.gmail.com>
- <7vy5w1ow90.fsf@alter.siamese.dyndns.org>
- <CA+55aFwL_s=DcT46dprcYVWEAm_=WkuTV6K9dAn3wc_bDQU8vA@mail.gmail.com>
- <4EAF1F40.3030907@zytor.com>
- <CA+55aFxprv9JR4gtt_UDXheHR5G8PrUA3-Mj0CPsU6E5EzNYeg@mail.gmail.com>
- <4EAF2245.90308@zytor.com>
- <CA+55aFzedaAzzWfzhqVf8y8ZW0jeb56hZwdV3UodSp8Q_Qhc2A@mail.gmail.com>
- <7vvcr4ojvp.fsf@alter.siamese.dyndns.org>
- <CA+55aFyKWLUMQFfaeKJKGFPV_7kfOGjf+pSZ1Y8afzkT4OYQ9Q@mail.gmail.com>
- <20111102091126.GG18903@elte.hu>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: long fsck time
+Date: Wed, 2 Nov 2011 19:06:42 +0700
+Message-ID: <CACsJy8D04Hw0_OoV01g2xtNK2d6fmZD_+YNEOR3A8aMUTpG5Lw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org,
-	James Bottomley <James.Bottomley@hansenpartnership.com>,
-	Jeff Garzik <jeff@garzik.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
-To: Ingo Molnar <mingo@elte.hu>
-X-From: linux-ide-owner@vger.kernel.org Wed Nov 02 12:33:16 2011
-Return-path: <linux-ide-owner@vger.kernel.org>
-Envelope-to: lnx-linux-ide@lo.gmane.org
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 02 13:07:20 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-ide-owner@vger.kernel.org>)
-	id 1RLZ4F-0005Rr-LM
-	for lnx-linux-ide@lo.gmane.org; Wed, 02 Nov 2011 12:33:16 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1RLZbD-0002ot-B2
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Nov 2011 13:07:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754222Ab1KBLdN (ORCPT <rfc822;lnx-linux-ide@m.gmane.org>);
-	Wed, 2 Nov 2011 07:33:13 -0400
-Received: from oker.escape.de ([194.120.234.254]:39795 "EHLO oker.escape.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753060Ab1KBLdN (ORCPT <rfc822;linux-ide@vger.kernel.org>);
-	Wed, 2 Nov 2011 07:33:13 -0400
-X-Greylist: delayed 538 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Nov 2011 07:33:12 EDT
-Received: from oker.escape.de (localhost [127.0.0.1])
-	(envelope-sender: jochen@tolot.escape.de)
-	by oker.escape.de (8.14.3/8.14.3/$Revision: 1.76 $) with ESMTP id pA2BNW74026752
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 2 Nov 2011 12:23:32 +0100
-Received: (from uucp@localhost)
-	by oker.escape.de (8.14.3/8.14.3/Submit) with UUCP id pA2BNWMV026749;
-	Wed, 2 Nov 2011 12:23:32 +0100
-Received: from pompeji.miese-zwerge.org (localhost [127.0.0.1])
-	by pompeji.miese-zwerge.org (8.14.4/8.14.4/Debian-2) with ESMTP id pA2BKKVW014077;
-	Wed, 2 Nov 2011 12:20:20 +0100
-Received: (from jochen@localhost)
-	by pompeji.miese-zwerge.org (8.14.4/8.14.4/Submit) id pA2BKIk2014076;
-	Wed, 2 Nov 2011 12:20:18 +0100
-Content-Disposition: inline
-In-Reply-To: <20111102091126.GG18903@elte.hu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: linux-ide-owner@vger.kernel.org
+	id S1755379Ab1KBMHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Nov 2011 08:07:14 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:42397 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754811Ab1KBMHN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Nov 2011 08:07:13 -0400
+Received: by bke11 with SMTP id 11so70497bke.19
+        for <git@vger.kernel.org>; Wed, 02 Nov 2011 05:07:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=g3m6q97Dkt6Aw/RdoJL0wPwc4WGKSfQSRf1gWAFKpQU=;
+        b=dj+53VZ/Jv/b4T01Xp/roRG6Gpe0g6UUkOzQs0KC/F9AKB3hBJfUvjykwpiM4Q2VyF
+         IJno86avSgOaqsy4MtF33Jk2qpp6Q5wA2WJc0wt6Nl5LzGsNMo7zjczuOYSLXy/Vzg3C
+         JtB4f2OBxlGfIHvVdccviD3lDem+hkwYjIWgw=
+Received: by 10.204.16.67 with SMTP id n3mr3512983bka.6.1320235632157; Wed, 02
+ Nov 2011 05:07:12 -0700 (PDT)
+Received: by 10.204.114.2 with HTTP; Wed, 2 Nov 2011 05:06:42 -0700 (PDT)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-ide.vger.kernel.org>
-X-Mailing-List: linux-ide@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184628>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184629>
 
-	Hi,
+On git.git
 
-On Wed, Nov 02, 2011 at 10:11:26AM +0100, Ingo Molnar wrote:
-> If this approach is used then it would be nice to have a .gitconfig 
-> switch to require trusted pulls by default: to not allow doing 
-> non-signed or untrusted pulls accidentally, or for Git to warn in a 
-> visible, hard to miss way if there's a non-signed pull.
-> 
-> This adds social uncertainty (and an element of a silent alarm) to a 
-> realistic attack: the attacker wouldnt know exactly how the puller 
-> checks signed pull requests, it's kept private.
+$ /usr/bin/time git fsck
+333.25user 4.28system 5:37.59elapsed 99%CPU (0avgtext+0avgdata
+420080maxresident)k
+0inputs+0outputs (0major+726560minor)pagefaults 0swaps
 
-But that way you get a false sense of alarm when someone sent a
-perfectly trustable pull request, e.g. by signed email.
-
-
-Another question: If store the actual pgp/gpg signatures in the git tree,
-how do you handle signatures by keys which were valid by the time the
-signature was made but expired when checking some time afterwards? AFAICT,
-gpg will only tell you the key is expired _now_, and will make no statement
-regarding the time the actual signature was made.
-
-
-Thanks,
-Jochen.
+That's really long time, perhaps we should print progress so users
+know it's still running?
+-- 
+Duy
