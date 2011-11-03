@@ -1,153 +1,220 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: New Feature wanted: Is it possible to let git clone continue last
- break point?
-Date: Wed, 2 Nov 2011 17:06:53 -0700
-Message-ID: <CAJo=hJtt8vjB5oU+tEabN2AS7c-24bMHNwQSoWtZYtjjrR3d7Q@mail.gmail.com>
-References: <CAEZo+gfKVY-YgMjd=bEYzRV4-460kqDik-yVcQ9Xs=DoCZOMDg@mail.gmail.com>
- <CAEZo+gcj5q2UYnak1+1UG7pPzoeaUr=QLsiCiNXbC_n+JQbKQQ@mail.gmail.com>
- <20111031090717.GA24978@elie.hsd1.il.comcast.net> <20111102220614.GB14108@sigill.intra.peff.net>
- <7vwrbigna7.fsf@alter.siamese.dyndns.org> <20111102232735.GA17466@sigill.intra.peff.net>
+Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
+Date: Wed, 2 Nov 2011 18:02:37 -0700
+Message-ID: <CAJo=hJv5nAKH_ptYSWfMvFQv0Dj+naPXK35wSzKYkfPOYsWkxg@mail.gmail.com>
+References: <20111026202235.GA20928@havoc.gtf.org> <1319969101.5215.20.camel@dabdike>
+ <CA+55aFx1NGWfNJAKDTvZfsHDDKiEtS4t4RydSgHurBeyGPyhXg@mail.gmail.com>
+ <1320049150.8283.19.camel@dabdike> <CA+55aFz3=cbciRfTYodNhdEetXYxTARGTfpP9GL9RZK222XmKQ@mail.gmail.com>
+ <7vy5w1ow90.fsf@alter.siamese.dyndns.org> <CA+55aFwL_s=DcT46dprcYVWEAm_=WkuTV6K9dAn3wc_bDQU8vA@mail.gmail.com>
+ <7vwrbjlj5r.fsf@alter.siamese.dyndns.org> <CA+55aFx_rAA6TJkZn1Zvu6u9UjxnmTVt0HpMnvaE_q9Sx-jzPg@mail.gmail.com>
+ <7vk47jld5s.fsf@alter.siamese.dyndns.org> <CA+55aFz7TeQQH3D4Tpp31cZYZoQKeK37jouo+2Kh61Wa07knfw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	netroby <hufeng1987@gmail.com>,
-	Git Mail List <git@vger.kernel.org>,
-	Tomas Carnecky <tom@dbservice.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 03 01:07:22 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	Jeff Garzik <jeff@garzik.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: linux-ide-owner@vger.kernel.org Thu Nov 03 02:03:02 2011
+Return-path: <linux-ide-owner@vger.kernel.org>
+Envelope-to: lnx-linux-ide@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLkq1-0003hi-Go
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Nov 2011 01:07:22 +0100
+	(envelope-from <linux-ide-owner@vger.kernel.org>)
+	id 1RLlht-00064f-9N
+	for lnx-linux-ide@lo.gmane.org; Thu, 03 Nov 2011 02:03:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753442Ab1KCAHQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Nov 2011 20:07:16 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:39458 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752742Ab1KCAHO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Nov 2011 20:07:14 -0400
-Received: by ywf7 with SMTP id 7so704258ywf.19
-        for <git@vger.kernel.org>; Wed, 02 Nov 2011 17:07:14 -0700 (PDT)
-Received: by 10.147.154.20 with SMTP id g20mr1638144yao.15.1320278834148; Wed,
- 02 Nov 2011 17:07:14 -0700 (PDT)
-Received: by 10.147.167.9 with HTTP; Wed, 2 Nov 2011 17:06:53 -0700 (PDT)
-In-Reply-To: <20111102232735.GA17466@sigill.intra.peff.net>
-Sender: git-owner@vger.kernel.org
+	id S1753474Ab1KCBC7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;lnx-linux-ide@m.gmane.org>); Wed, 2 Nov 2011 21:02:59 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:49610 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752013Ab1KCBC7 convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-ide@vger.kernel.org>); Wed, 2 Nov 2011 21:02:59 -0400
+Received: by ggnb2 with SMTP id b2so746209ggn.19
+        for <multiple recipients>; Wed, 02 Nov 2011 18:02:58 -0700 (PDT)
+Received: by 10.147.154.20 with SMTP id g20mr1661767yao.15.1320282178109; Wed,
+ 02 Nov 2011 18:02:58 -0700 (PDT)
+Received: by 10.147.167.9 with HTTP; Wed, 2 Nov 2011 18:02:37 -0700 (PDT)
+In-Reply-To: <CA+55aFz7TeQQH3D4Tpp31cZYZoQKeK37jouo+2Kh61Wa07knfw@mail.gmail.com>
+Sender: linux-ide-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184687>
+List-ID: <linux-ide.vger.kernel.org>
+X-Mailing-List: linux-ide@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184688>
 
-On Wed, Nov 2, 2011 at 16:27, Jeff King <peff@peff.net> wrote:
-> On Wed, Nov 02, 2011 at 03:41:36PM -0700, Junio C Hamano wrote:
->> Jeff King <peff@peff.net> writes:
+On Wed, Nov 2, 2011 at 13:04, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+> On Tue, Nov 1, 2011 at 2:56 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
 >>
->> > Which is all a roundabout way of saying that the git protocol is r=
-eally
->> > the sane way to do efficient transfers. An alternative, much simpl=
-er
->> > scheme would be for the server to just say:
->> >
->> > =A0 - if you have nothing, then prime with URL http://host/bundle
->> >
->> > And then _only_ clone would bother with checking mirrors. People d=
-oing
->> > fetch would be expected to do it often enough that not being resum=
-able
->> > isn't a big deal.
->>
->> I think that is a sensible place to start.
-
-Yup, I agree. The "repo" tool used by Android does this in Python
-right now[1].  Its a simple hack, if the protocol is HTTP or HTTPS the
-client first tries to download $URL/clone.bundle. My servers have
-rules that trap on */clone.bundle and issue an HTTP 302 Found response
-to direct the client to a CDN. Works. :-)
-
-[1] http://code.google.com/p/git-repo/source/detail?r=3Df322b9abb4cadc6=
-7b991baf6ba1b9f2fbd5d7812&name=3Dstable
-
-> OK. That had been my original intent, but somebody (you?) mentioned t=
-he
-> "if you have X" thing at the GitTogether, which got me thinking.
+>> But on the other hand, in many ways, publishing your commit to the o=
+utside
+>> world, not necessarily for getting pulled into the final destination
+>> (i.e. your tree) but merely for other people to try it out, is the p=
+oint
+>> of no return (aka "don't rewind or rebase once you publish"). =A0"pu=
+shing
+>> out" might be less special than "please pull", but it still is speci=
+al.
 >
-> I don't mind starting slow, as long as we don't paint ourselves into =
-a
-> corner for future expansion. I'll try to design the data format for
-> specifying the mirror locations with that extension in mind.
+> So I really think that signing the top commit itself is fundamentally=
+ wrong.
 
-Right. Aside from the fact that $URL/clone.bundle is perhaps a bad way
-to decide on the URL to actually fetch (and isn't supportable over
-git:// or ssh://)... we should start with the clone case and worry
-about incremental updates later.
+I really disagree. I like the signed commit approach. It allows for a
+lot more workflows than just providing a way for you to validate a
+pull from a trusted lieutenant. Debian/Gentoo folks want a way to sign
+every commit in their workflow. Just because you don't want that and
+think its crazy doesn't mean its not a valid workflow for that
+community and is something Git shouldn't support. I never use `git
+stash`. I hate the damn command. Yet its still there. I just choose
+not to use it. Junio's gpgsig header on each commit is also optional,
+and communities/contributors can choose to use (or ignore) the feature
+as they need to.
 
-> Even if the bundle thing ends up too wasteful, it may still be useful=
- to
-> offer a "if you don't have X, go see Y" type of mirror when "Y" is
-> something efficient, like git:// at a faster host (i.e., the "I built=
- 3
-> commits on top of Linus" case).
+> That commit may not even be *yours*. You may have pulled it from a
+> sub-lieutenant as a fast-forward, or similar. Amending it later would
+> be actively very very *wrong*.
 
-Actually, I really think the bundle thing is wasteful. Its a ton of
-additional disk. Hosts like kernel.org want to use sendfile() when
-possible to handle bulk transfers. git:// is not efficient for them
-because we don't have sendfile() capability.
+Obviously you shouldn't amend a commit that would otherwise be a
+fast-forward. But why not write a new empty signed commit on top, and
+teach `git log` without the verify signatures flag to skip over
+commits that have a gpgsig header line, have exactly one parent, and
+whose parent tree matches the commit's own tree? This removes these
+commits from the normal `git log` revision output, but yet the flow of
+changes is still very visible within the history.
 
-Its also expensive for kernel.org to create each Git repository twice
-on disk. The disk is cheap. Its the kernel buffer cache that is damned
-expensive. Assume for a minute that Linus' kernel repository is a
-popular thing to access. If 400M of that history is available in a
-normal pack file on disk, and again 400M is available as a "clone
-bundle thingy", kernel.org now has to eat 800M of disk buffer cache
-for that one Git repository, because both of those files are going to
-be hot.
+As I understand it, the point of multiple Signed-off-by lines in
+commit message bodies is to show the flow of a change, who reviewed
+and applied a given commit, until it finally lands in a tree where its
+commit SHA-1 is frozen in stone and you can later pull it. The empty
+signed commit on top of a fast-forward provides that same flow of a
+change, readily visible with standard `git log` tools, but doesn't
+have to clutter up history if we teach log how to skip this particular
+type. Similar to the --no-merges way to skip merges. :-)
 
-I think I messed up with "repo" using a Git bundle file as its data
-source. What we should have done was a bog standard pack file. Then
-the client can download the pack file into the .git/objects/pack
-directory and just generate the index, reusing the entire dumb
-protocol transport logic. It also allows the server to pass out the
-same file the server retains for the repository itself, and thus makes
-the disk buffer cache only 400M for Linus' repository.
+> So quite frankly, I think the stuff in pu (or next?) is completely
+> mis-designed. Doing it in the commit is wrong for fundamental reasons=
+,
+> which all boil down to a simple issue:
 
-> Agreed. I was really trying to avoid protocol extensions, though, at
-> least for an initial version. I'd like to see how far we can get doin=
-g
-> the simplest thing.
+Totally disagree. I'm really in favor of embedding these into the
+commit headers the way Junio has done.
 
-One (maybe dumb idea I had) was making the $GIT_DIR/objects/info/packs
-file contain other lines to list reference tips at the time the pack
-was made. The client just needs the SHA-1s, it doesn't necessarily
-need the branch names themselves. A client could initialize itself by
-getting this set of references, creating temporary dummy references at
-those SHA-1s, and downloading the corresponding pack file, indexing
-it, then resuming with a normal fetch.
+> =A0- you absolutely *need* to add the signature later. You *cannot* d=
+o
+> it at "git commit" time.
 
-Then we wind up with a git:// or ssh:// protocol extension that
-enables sendfile() on an entire pack, and to provide the matching
-objects/info/packs data to help a client over git:// or ssh://
-initialize off the existing pack files.
+Why can't you add it at commit time? What is stopping me from running
+`git commit -S` every time I make a commit? Is it that my fingers will
+wear out more quickly because I have to type my pass-phrase too often?
 
+What is wrong with making a signed commit on a commit I have a high
+level of confidence in, but not signing the others? In my own workflow
+I make a lot of commit --amends  / rebases until I am pretty confident
+in the code being written and organized the way I think it should be
+for distribution to others. But at some point in that workflow I'm
+doing an --amend or a rebase to make that last final touch, and during
+that commit I can add -S to make it signed, because I'm pretty certain
+its ready to go. At that point, barring some horrific bug or reviewer
+comments, I am unlikely to change the commit. I know at the time I
+make that commit that I am pretty confident in the commit, so I take
+the extra few key strokes to sign it.
 
-Obviously there is the existing security feature that over git:// or
-ssh:// (or even smart HTTP), a deleted or rewound reference stops
-exposing the content in the repository that isn't reachable from the
-other reference tips. The repository owner / server administrator will
-have to make a choice here, either the existing packs are not exposed
-as available via sendfile() until after GC can be run to rebuild them
-around the right content set, or they are exposed and the time to
-expunge/hide an unreferenced object is expanded until the GC completes
-(rather than being immediate after the reference updates).
+> That's a fundamental issue both from a "workflow model" issue (ie you
+> want to sign stuff after it has passed testing etc,
 
-But either way, I like the idea of coupling the "resumable pack
-download" to the *existing* pack files, because this is easy to deal
-with. If you do have a rewind/delete and need to expunge content,
-users/administrators already know how to run `git gc --expire=3Dnow` to
-accomplish a full erase. Adding another thing with bundle files
-somewhere else that may or may not contain the data you want to erase
-and remembering to clean that up is not a good idea.
+Why do I have to wait until its tested to sign it? The gpgsig
+signature isn't any more special than the Signed-off-by line I put
+into my commit message to agree to the developer's certificate of
+origin, nor is it any more special than the committer line in the
+commit header. Its just a statement on the commit that I have a
+reasonable enough confidence in the value of this particular commit
+and its ancestors that I should take the time to unlock my GPG key and
+sign the content in case I do distribute this to others.
+
+If you are going to spend time testing a commit, its probably going to
+take longer to perform that testing than it is to perform the GPG key
+unlock and signature. So why are you complaining about the time it
+takes to sign something you think is worthy of testing?  If the tests
+fail, you'll need to rewind/amend/whatever to address the breakage. If
+the tests pass, the commit is already signed and ready for
+distribution. If you are spending a lot of time signing commits that
+are highly likely to fail tests, well, maybe you should look at other
+ways to improve your workflow so that you have a higher level of
+confidence in the code you record and assume will be a permanent part
+of the project's history.
+
+> but you may need
+> to commit it in order to *get* testing),
+
+Maybe consider allowing a ".dirty" suffix like git-core does on
+builds? Or if you are submitting the code to a remote test cluster
+that auto-compiles the code for you (and that is why you need a
+commit), it sounds like the time it takes for that to push, compile,
+test, and report back is way higher than the time it takes to make the
+signature. So you probably should only be submitting something that
+you had a reasonable level of confidence in. So you should go ahead
+and sign it before sending it for testing, in case the tests do pass
+and you want to publish that commit.
+
+> as well as from a
+> "fundamental git datastructures" issue (ie you would want to sign
+> commits that aren't yours.
+
+Sure. But this is why you can make an empty commit and sign that.
+
+> "git commit --amend" is not the answer - that destroys the fundamenta=
+l
+> concept of history being immutable, and while it works for your local
+> commits, it doesn't work for anybody elses commits, or for stuff you
+> already pushed out.
+
+Nobody said you had to amend everything. You can add an empty commit.
+
+> And "add a fake empty commit just for the signature" is not the answe=
+r
+> either - because that is clearly inferior to the tags we already had.
+
+Really? I disagree. The commit DAG scales quite well. The tag
+namespace does not. A refs/signatures/$COMMIT_SHA1 namespace also does
+not scale well.
+
+An empty commit with a gpgsig header has about the same object cost as
+an annotated tag once packed. But it has the advantage that the damn
+thing doesn't clog up the reference space, the reference handling
+code, or the advertisements in the native protocol. As history goes
+on, older signatures are less relevant, and automatically are
+avoided/skipped/bypassed by the normal DAG walking code. Tags don't do
+this well because they have no relationship to the project history.
+
+The only downside to an empty commit with the gpgsig header is I
+cannot grab an arbitrarily deep ancestor and say "Who has signed a
+commit that depends on this"? Today we already have this with git
+describe --contains (aka git name-rev) for annotated tags. Its a new
+feature we have to teach to some part of the log machinery, but the
+algorithm will be easier because it doesn't have to mess with the
+mapping table of tag objects. It just has to start digging from roots,
+remembering each commit that has a gpgsig on any given branch path,
+and then outputting the matches when it finds the commit in question.
+
+The commit approach also has the advantage that your tree
+automatically carries any lieutenant's signatures, by virtue of them
+already being frozen in the commits.  This allows anyone downstream of
+you to verify the same signatures, and check them against their own
+keyring contents. If the signatures are all detached in some transient
+annotated tag space, its impossible for anyone other than you to
+verify pull requests. I would hate to say we have this nice
+distributed version control system, but only Linus can prove the pull
+requests in his repository are what they claim, and we have to then
+implicitly trust you to resign that data without the original
+signatures being present. $DAY_JOB would feel a lot better about the
+integrity of the Linux kernel repository if _ANYONE_ can validate pull
+requests offline after they have happened.
+
+> I dunno. Did I miss something? As far as I can tell, the signed tags
+> that we've had since day one are *clearly* much better in very
+> fundamental ways.
+
+Completely disagree. :-)
