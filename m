@@ -1,104 +1,153 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
-Date: Wed, 2 Nov 2011 16:42:22 -0700
-Message-ID: <CA+55aFxeMgpVDPJ1aEza5oeKYhBTbbZQ4wdjVG-t8MFBjuOK7w@mail.gmail.com>
-References: <20111026202235.GA20928@havoc.gtf.org> <1319969101.5215.20.camel@dabdike>
- <CA+55aFx1NGWfNJAKDTvZfsHDDKiEtS4t4RydSgHurBeyGPyhXg@mail.gmail.com>
- <1320049150.8283.19.camel@dabdike> <CA+55aFz3=cbciRfTYodNhdEetXYxTARGTfpP9GL9RZK222XmKQ@mail.gmail.com>
- <7vy5w1ow90.fsf@alter.siamese.dyndns.org> <CA+55aFwL_s=DcT46dprcYVWEAm_=WkuTV6K9dAn3wc_bDQU8vA@mail.gmail.com>
- <7vwrbjlj5r.fsf@alter.siamese.dyndns.org> <CA+55aFx_rAA6TJkZn1Zvu6u9UjxnmTVt0HpMnvaE_q9Sx-jzPg@mail.gmail.com>
- <7vsjm6gkte.fsf@alter.siamese.dyndns.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: New Feature wanted: Is it possible to let git clone continue last
+ break point?
+Date: Wed, 2 Nov 2011 17:06:53 -0700
+Message-ID: <CAJo=hJtt8vjB5oU+tEabN2AS7c-24bMHNwQSoWtZYtjjrR3d7Q@mail.gmail.com>
+References: <CAEZo+gfKVY-YgMjd=bEYzRV4-460kqDik-yVcQ9Xs=DoCZOMDg@mail.gmail.com>
+ <CAEZo+gcj5q2UYnak1+1UG7pPzoeaUr=QLsiCiNXbC_n+JQbKQQ@mail.gmail.com>
+ <20111031090717.GA24978@elie.hsd1.il.comcast.net> <20111102220614.GB14108@sigill.intra.peff.net>
+ <7vwrbigna7.fsf@alter.siamese.dyndns.org> <20111102232735.GA17466@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	James Bottomley <James.Bottomley@hansenpartnership.com>,
-	Jeff Garzik <jeff@garzik.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-ide-owner@vger.kernel.org Thu Nov 03 00:42:48 2011
-Return-path: <linux-ide-owner@vger.kernel.org>
-Envelope-to: lnx-linux-ide@lo.gmane.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	netroby <hufeng1987@gmail.com>,
+	Git Mail List <git@vger.kernel.org>,
+	Tomas Carnecky <tom@dbservice.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 03 01:07:22 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-ide-owner@vger.kernel.org>)
-	id 1RLkSG-0002xZ-0r
-	for lnx-linux-ide@lo.gmane.org; Thu, 03 Nov 2011 00:42:48 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1RLkq1-0003hi-Go
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Nov 2011 01:07:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754137Ab1KBXmq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;lnx-linux-ide@m.gmane.org>); Wed, 2 Nov 2011 19:42:46 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:54193 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752923Ab1KBXmp convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-ide@vger.kernel.org>); Wed, 2 Nov 2011 19:42:45 -0400
-Received: by wyh15 with SMTP id 15so678434wyh.19
-        for <multiple recipients>; Wed, 02 Nov 2011 16:42:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ggNt0AAuiQWN6EklJ/nBhZBaF8CZg0gXhxBQ9E2i5Zs=;
-        b=dW0gjgTffTPgN2TRCqyjXD43FBBRorlmD1r/Y0hZClDwBA6j9skDnkAfUxZsqJ6yJv
-         kbQimW8W9frzV/cxO8ZcTqb3LaEifWXBayVw87kSL1emUZGI8KY/pNV1pphmyDJL8Ccs
-         hmEvYTja8qbDNYkABfGKaBPJgQZZFWQb3+VOA=
-Received: by 10.216.161.17 with SMTP id v17mr1847219wek.112.1320277364124;
- Wed, 02 Nov 2011 16:42:44 -0700 (PDT)
-Received: by 10.216.166.3 with HTTP; Wed, 2 Nov 2011 16:42:22 -0700 (PDT)
-In-Reply-To: <7vsjm6gkte.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: s63sGhWr-UFkHpiPO08dG21AxL4
-Sender: linux-ide-owner@vger.kernel.org
+	id S1753442Ab1KCAHQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Nov 2011 20:07:16 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:39458 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752742Ab1KCAHO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Nov 2011 20:07:14 -0400
+Received: by ywf7 with SMTP id 7so704258ywf.19
+        for <git@vger.kernel.org>; Wed, 02 Nov 2011 17:07:14 -0700 (PDT)
+Received: by 10.147.154.20 with SMTP id g20mr1638144yao.15.1320278834148; Wed,
+ 02 Nov 2011 17:07:14 -0700 (PDT)
+Received: by 10.147.167.9 with HTTP; Wed, 2 Nov 2011 17:06:53 -0700 (PDT)
+In-Reply-To: <20111102232735.GA17466@sigill.intra.peff.net>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-ide.vger.kernel.org>
-X-Mailing-List: linux-ide@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184686>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184687>
 
-On Wed, Nov 2, 2011 at 4:34 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
+On Wed, Nov 2, 2011 at 16:27, Jeff King <peff@peff.net> wrote:
+> On Wed, Nov 02, 2011 at 03:41:36PM -0700, Junio C Hamano wrote:
+>> Jeff King <peff@peff.net> writes:
+>>
+>> > Which is all a roundabout way of saying that the git protocol is r=
+eally
+>> > the sane way to do efficient transfers. An alternative, much simpl=
+er
+>> > scheme would be for the server to just say:
+>> >
+>> > =A0 - if you have nothing, then prime with URL http://host/bundle
+>> >
+>> > And then _only_ clone would bother with checking mirrors. People d=
+oing
+>> > fetch would be expected to do it often enough that not being resum=
+able
+>> > isn't a big deal.
+>>
+>> I think that is a sensible place to start.
+
+Yup, I agree. The "repo" tool used by Android does this in Python
+right now[1].  Its a simple hack, if the protocol is HTTP or HTTPS the
+client first tries to download $URL/clone.bundle. My servers have
+rules that trap on */clone.bundle and issue an HTTP 302 Found response
+to direct the client to a CDN. Works. :-)
+
+[1] http://code.google.com/p/git-repo/source/detail?r=3Df322b9abb4cadc6=
+7b991baf6ba1b9f2fbd5d7812&name=3Dstable
+
+> OK. That had been my original intent, but somebody (you?) mentioned t=
+he
+> "if you have X" thing at the GitTogether, which got me thinking.
 >
-> You keep saying cut-and-paste, but do you mind feeding the e-mail tex=
-t
-> itself to a tool, instead of cut-and-paste?
+> I don't mind starting slow, as long as we don't paint ourselves into =
+a
+> corner for future expansion. I'll try to design the data format for
+> specifying the mirror locations with that extension in mind.
 
-=46eeding the email to a tool is actually a fair amount of extra work.
-It would have worked well in the days when I used text-based email
-clients that just had a "pipe email to command" model, but that's long
-gone.
+Right. Aside from the fact that $URL/clone.bundle is perhaps a bad way
+to decide on the URL to actually fetch (and isn't supportable over
+git:// or ssh://)... we should start with the clone case and worry
+about incremental updates later.
 
-In contrast, cut-and-paste to another program is easy - but then you
-really can't depend on whitespace or headers or other subtle things.
+> Even if the bundle thing ends up too wasteful, it may still be useful=
+ to
+> offer a "if you don't have X, go see Y" type of mirror when "Y" is
+> something efficient, like git:// at a faster host (i.e., the "I built=
+ 3
+> commits on top of Linus" case).
 
-> A respond-to-request-pull wrapper you would use could be:
->
-> =A0- Get the e-mail from the standard input;
-> =A0- Pick up the signed bits and validate the signature;
-> =A0- Perform the requested fetch; and
-> =A0- Record the merge (or prepare .git/MERGE_MSG) with both the signe=
-d bits.
+Actually, I really think the bundle thing is wasteful. Its a ton of
+additional disk. Hosts like kernel.org want to use sendfile() when
+possible to handle bulk transfers. git:// is not efficient for them
+because we don't have sendfile() capability.
 
-So is there any reason this couldn't be cut-and-paste? Make the signed
-part small (*not* including diffstat and shortlog), and make it
-whitespace-safe, and I wouldn't mind a tool at all.
+Its also expensive for kernel.org to create each Git repository twice
+on disk. The disk is cheap. Its the kernel buffer cache that is damned
+expensive. Assume for a minute that Linus' kernel repository is a
+popular thing to access. If 400M of that history is available in a
+normal pack file on disk, and again 400M is available as a "clone
+bundle thingy", kernel.org now has to eat 800M of disk buffer cache
+for that one Git repository, because both of those files are going to
+be hot.
 
-If it *can* take the whole email, that would probably be a good design
-(so that a "pipe email to command"  model would still work), but it
-would be much better if it doesn't require it.
+I think I messed up with "repo" using a Git bundle file as its data
+source. What we should have done was a bog standard pack file. Then
+the client can download the pack file into the .git/objects/pack
+directory and just generate the index, reusing the entire dumb
+protocol transport logic. It also allows the server to pass out the
+same file the server retains for the repository itself, and thus makes
+the disk buffer cache only 400M for Linus' repository.
 
-> and the "signed bits" could include:
->
-> =A0 - the repository and the branch you were expected to pull;
-> =A0 - the topic description.
->
-> among other things the requestor can edit when request-pull message i=
-s
-> prepared.
+> Agreed. I was really trying to avoid protocol extensions, though, at
+> least for an initial version. I'd like to see how far we can get doin=
+g
+> the simplest thing.
 
-One thing I'd like is that it would also fire up an editor for the
-merge, even if it gets the topic description from the email or
-cut-and-paste. I often want to fix up peoples grammar etc. That's a
-separate argument for trying to keep the signed part minimal - because
- I really don't want to have to maintain spelin errors just because
-they are part of what was signed..
+One (maybe dumb idea I had) was making the $GIT_DIR/objects/info/packs
+file contain other lines to list reference tips at the time the pack
+was made. The client just needs the SHA-1s, it doesn't necessarily
+need the branch names themselves. A client could initialize itself by
+getting this set of references, creating temporary dummy references at
+those SHA-1s, and downloading the corresponding pack file, indexing
+it, then resuming with a normal fetch.
 
-                  Linus
+Then we wind up with a git:// or ssh:// protocol extension that
+enables sendfile() on an entire pack, and to provide the matching
+objects/info/packs data to help a client over git:// or ssh://
+initialize off the existing pack files.
+
+
+Obviously there is the existing security feature that over git:// or
+ssh:// (or even smart HTTP), a deleted or rewound reference stops
+exposing the content in the repository that isn't reachable from the
+other reference tips. The repository owner / server administrator will
+have to make a choice here, either the existing packs are not exposed
+as available via sendfile() until after GC can be run to rebuild them
+around the right content set, or they are exposed and the time to
+expunge/hide an unreferenced object is expanded until the GC completes
+(rather than being immediate after the reference updates).
+
+But either way, I like the idea of coupling the "resumable pack
+download" to the *existing* pack files, because this is easy to deal
+with. If you do have a rewind/delete and need to expunge content,
+users/administrators already know how to run `git gc --expire=3Dnow` to
+accomplish a full erase. Adding another thing with bundle files
+somewhere else that may or may not contain the data you want to erase
+and remembering to clean that up is not a good idea.
