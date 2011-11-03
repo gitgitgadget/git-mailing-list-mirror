@@ -1,131 +1,93 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] log: support --full-diff=<pathspec>
-Date: Thu,  3 Nov 2011 17:01:14 +0700
-Message-ID: <1320314474-19536-1-git-send-email-pclouds@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v3 2/7] invalidate_ref_cache(): take the submodule as
+ parameter
+Date: Thu, 03 Nov 2011 11:23:28 +0100
+Message-ID: <4EB26BA0.9030609@alum.mit.edu>
+References: <7vty7ggzum.fsf@alter.siamese.dyndns.org> <1318445067-19279-1-git-send-email-mhagger@alum.mit.edu> <1318445067-19279-3-git-send-email-mhagger@alum.mit.edu> <7vwrca81c7.fsf@alter.siamese.dyndns.org> <4E960F91.5020103@alum.mit.edu> <7vmxczmrb0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 03 11:01:32 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Drew Northup <drew.northup@maine.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 03 11:23:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLu6z-0003RZ-TH
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Nov 2011 11:01:30 +0100
+	id 1RLuSj-000401-Sg
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Nov 2011 11:23:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755255Ab1KCKBZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Nov 2011 06:01:25 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:45205 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754740Ab1KCKBY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Nov 2011 06:01:24 -0400
-Received: by iage36 with SMTP id e36so1148494iag.19
-        for <git@vger.kernel.org>; Thu, 03 Nov 2011 03:01:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=NHzeFDV9uLQfVgTl75rMxHmiG/5ib7mMA4iLshs5TJY=;
-        b=mvGEoTiHIDuQlKljV8Xry5uM2hwI/Jcg2mNXXBvE/ElRh9FGZg1llEgAp/vIIBLl+n
-         X90R1MA4wRXgfWXDCchmQbHHjm76H8ptWHq7eW59LuoPhTC9WdrZuhnhT+ZFwwGWODgQ
-         MmYoWFL8e7sjU+p07Cq1KaCgFw093Km/NlvFk=
-Received: by 10.42.163.200 with SMTP id d8mr5174135icy.41.1320314483918;
-        Thu, 03 Nov 2011 03:01:23 -0700 (PDT)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id el2sm7309092ibb.10.2011.11.03.03.01.19
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 03 Nov 2011 03:01:22 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 03 Nov 2011 17:01:16 +0700
-X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
+	id S1753021Ab1KCKXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Nov 2011 06:23:52 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:40470 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750974Ab1KCKXw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Nov 2011 06:23:52 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pA3ANSJS027784
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 3 Nov 2011 11:23:29 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
+In-Reply-To: <7vmxczmrb0.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184712>
 
-I wanted to check if any patches that update builtin/fsck.c also
-update 't' directory and git seemed not support this case
-(true?). With this I can do
+On 10/17/2011 08:00 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>> On 10/12/2011 09:19 PM, Junio C Hamano wrote:
+>>> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>>>  ...
+>>> Probably that is what all the existing callers want, but I would have
+>>> expected that an existing feature would be kept, perhaps like this
+>>> instead:
+>>>
+>>> 	if (!submodule) {
+>>> 		struct ref_cache *c;
+>>>                 for (c = ref_cache; c; c = c->next)
+>>>                 	clear_ref_cache(c);
+>>> 	} else {
+>>> 		clear_ref_cache(get_ref_cache(submodule);
+>>> 	}
+>> ...
+>> Your specific suggestion would not work because currently
+>> submodule==NULL signifies the main module.  However, it would be easy to
+>> add the few-line function when/if it is needed.
+> 
+> I think "submodule==NULL" is probably a mistake; "" would make more sense
+> given that you are storing the string in name[FLEX_ARRAY] field.
 
-  git log --patch --full-diff=3D"'builtin/fsck.c' 't'" -- builtin/fsck.=
-c
+Sorry I didn't respond to this earlier.
 
-I guess this may be something people find useful.
+The public API convention (which predates my changes) is that "char
+*submodule" arguments either point at the relative path to the submodule
+or are NULL to denote the main module.  But since these are stored
+internally in a name[FLEX_ARRAY] field, I have been using "" internally
+to denote the main module.  I believe that everything is done correctly,
+but I admit that the use of different conventions internally and
+externally is a potential source of programming errors.
 
-This patch is a bit inconvenient though because <pathspec> is parsed
-with sq_dequote_to_argv() and all arguments must be wrapped by ''.
-Also "full-diff" name does not make much sense when it comes with
-pathspec.
+If this is viewed as something that needs changing, the easiest thing
+would probably be to add a "const char *submodule" in the ref_cache data
+structure that either contains NULL or points at the name field, and to
+consistently use the convention that the main module must always be
+denoted by NULL.  The space overhead would be negligible because the
+number of ref_cache objects is limited to the number of submodules plus 1.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- revision.c |   19 +++++++++++++++++++
- revision.h |    1 +
- 2 files changed, 20 insertions(+), 0 deletions(-)
+Michael
 
-diff --git a/revision.c b/revision.c
-index 8764dde..f508953 100644
---- a/revision.c
-+++ b/revision.c
-@@ -13,6 +13,7 @@
- #include "decorate.h"
- #include "log-tree.h"
- #include "string-list.h"
-+#include "quote.h"
-=20
- volatile show_early_output_fn_t show_early_output;
-=20
-@@ -1531,6 +1532,10 @@ static int handle_revision_opt(struct rev_info *=
-revs, int argc, const char **arg
- 	} else if (!strcmp(arg, "--full-diff")) {
- 		revs->diff =3D 1;
- 		revs->full_diff =3D 1;
-+	} else if (!prefixcmp(arg, "--full-diff=3D")) {
-+		revs->diff =3D 1;
-+		revs->full_diff =3D 1;
-+		revs->full_diff_opt =3D arg + strlen("--full-diff=3D");
- 	} else if (!strcmp(arg, "--full-history")) {
- 		revs->simplify_history =3D 0;
- 	} else if (!strcmp(arg, "--relative-date")) {
-@@ -1819,6 +1824,20 @@ int setup_revisions(int argc, const char **argv,=
- struct rev_info *revs, struct s
- 			revs->prune =3D 1;
- 		if (!revs->full_diff)
- 			diff_tree_setup_paths(revs->prune_data.raw, &revs->diffopt);
-+		else if (revs->full_diff_opt) {
-+			const char **argv =3D NULL;
-+			int alloc =3D 0, nr =3D 0;
-+			char *arg;
-+
-+			arg =3D xstrdup(revs->full_diff_opt);
-+			sq_dequote_to_argv(arg, &argv, &nr, &alloc);
-+
-+			ALLOC_GROW(argv, nr + 1, alloc);
-+			argv[nr] =3D NULL;
-+			argv =3D get_pathspec(revs->prefix, argv);
-+
-+			diff_tree_setup_paths(argv, &revs->diffopt);
-+		}
- 	}
- 	if (revs->combine_merges)
- 		revs->ignore_merges =3D 0;
-diff --git a/revision.h b/revision.h
-index 6aa53d1..baa709c 100644
---- a/revision.h
-+++ b/revision.h
-@@ -137,6 +137,7 @@ struct rev_info {
- 	const char	*subject_prefix;
- 	int		no_inline;
- 	int		show_log_size;
-+	const char      *full_diff_opt;
-=20
- 	/* Filter by commit log message */
- 	struct grep_opt	grep_filter;
---=20
-1.7.3.1.256.g2539c.dirty
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
