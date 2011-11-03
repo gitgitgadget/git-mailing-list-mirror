@@ -1,84 +1,134 @@
-From: Joshua Jensen <jjensen@workspacewhiz.com>
-Subject: Re: Repository data loss in fast-export with a merge of a deleted
- submodule
-Date: Thu, 03 Nov 2011 10:05:09 -0600
-Message-ID: <4EB2BBB5.3030908@workspacewhiz.com>
-References: <4EA9B0B5.6060005@workspacewhiz.com>
+From: Hong-Ming Su <halleyinvent@gmail.com>
+Subject: Re: How to make "git push/pull" work in non-clone repo?
+Date: Fri, 4 Nov 2011 00:10:27 +0800
+Message-ID: <CANiMyiF=C_uBXf3kV8ix=CY9Mi=cxHU-J3dn5UyJ87gu3Sm0dg@mail.gmail.com>
+References: <CANiMyiFfiLnK8-q7vTZ9VAtkW8ip2NQfpR4iaU2oSnnonVDuUA@mail.gmail.com>
+	<F802D297-95A0-4B1E-894D-9681E0EEF3AD@jetbrains.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 03 17:04:17 2011
+Content-Type: text/plain; charset=KOI8-R
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
+X-From: git-owner@vger.kernel.org Thu Nov 03 17:10:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLzm3-0003FU-A9
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Nov 2011 17:04:15 +0100
+	id 1RLzsA-0006hU-FQ
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Nov 2011 17:10:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933739Ab1KCQEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Nov 2011 12:04:09 -0400
-Received: from hsmail.qwknetllc.com ([208.71.137.138]:50338 "EHLO
-	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932244Ab1KCQEI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Nov 2011 12:04:08 -0400
-Received: (qmail 6205 invoked by uid 399); 3 Nov 2011 10:04:06 -0600
-Received: from unknown (HELO ?192.168.1.11?) (jjensen@workspacewhiz.com@50.8.110.77)
-  by hsmail.qwknetllc.com with ESMTPAM; 3 Nov 2011 10:04:06 -0600
-X-Originating-IP: 50.8.110.77
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
-In-Reply-To: <4EA9B0B5.6060005@workspacewhiz.com>
+	id S933849Ab1KCQK3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Nov 2011 12:10:29 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:51382 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933820Ab1KCQK3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Nov 2011 12:10:29 -0400
+Received: by eye27 with SMTP id 27so1276483eye.19
+        for <git@vger.kernel.org>; Thu, 03 Nov 2011 09:10:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=8P3KC39VaZ03hpJ5OobVjEKhGTikK6LjfBP9Zt+R/io=;
+        b=X+RMkUltkroJNIdVO/gj20QqhIvQjYEEk3iAZlRQQfED4Fx1duu+pmI9Cyy3Cf44Zf
+         68evoj3R1FGDyXV8UHUTIJ7Ew6g2l93+1tLitiKrWGXuMy5P5QzmK/chr9fCbVUdkMWH
+         K/Da7HxhYRc6O2K/CQ7W5ltTUUo+zVuXmtXn8=
+Received: by 10.14.15.195 with SMTP id f43mr963206eef.233.1320336627904; Thu,
+ 03 Nov 2011 09:10:27 -0700 (PDT)
+Received: by 10.14.127.4 with HTTP; Thu, 3 Nov 2011 09:10:27 -0700 (PDT)
+In-Reply-To: <F802D297-95A0-4B1E-894D-9681E0EEF3AD@jetbrains.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184726>
 
------ Original Message -----
-From: Joshua Jensen
-Date: 10/27/2011 1:27 PM
-> We had a submodule that we deleted and then added back into the 
-> repository at the same location as the former submodule.  When running 
-> fast-export, the newly 'added' files for the merge commit are listed 
-> and then are followed with a:
+Thank for your hints. I get "git push" work. The "git pull" need argume=
+nt.
+
+/d/workspace/git
+$ ls
+depot  work1  work2
+
+/d/workspace/git
+$ git clone --bare work1 depot
+Cloning into bare repository depot...
+done.
+
+/d/workspace/git/work1 (master)
+$ git push
+fatal: No destination configured to push to.
+
+/d/workspace/git/work1 (master)
+$ git pull
+fatal: No remote repository specified.  Please, specify either a URL or=
+ a
+remote name from which new revisions should be fetched.
+
+/d/workspace/git/work1 (master)
+$ git remote add origin ../depot
+
+/d/workspace/git/work1 (master)
+$ git push
+Everything up-to-date
+
+/d/workspace/git/work1 (master)
+$ git pull
+=46rom ../depot
+ * [new branch]      master     -> origin/master
+You asked me to pull without telling me which branch you
+want to merge with, and 'branch.master.merge' in
+your configuration file does not tell me, either. Please
+specify which branch you want to use on the command line and
+try again (e.g. 'git pull <repository> <refspec>').
+See git-pull(1) for details.
+
+If you often merge with the same branch, you may want to
+use something like the following in your configuration file:
+
+    [branch "master"]
+    remote =3D <nickname>
+    merge =3D <remote-ref>
+
+    [remote "<nickname>"]
+    url =3D <url>
+    fetch =3D <refspec>
+
+/d/workspace/git/work1 (master)
+$ git pull origin master:master
+Already up-to-date.
+2011/11/4 Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>:
 >
-> M ... path/to/submodule/file
-> D path/to/submodule
 >
-> On fast-import, the resultant repository becomes corrupt due to the 
-> Delete instruction above occurring AFTER the file adds/modifications.  
-> The new repository does not match the old repository where the 
-> fast-export was performed.
+> 03.11.2011, =D7 17:59, Hong-Ming Su:
 >
-> I am not familiar with the fast-export code.  Can anyone help out?
-Okay, I looked into this further, and I came up with a patch that works 
-for me.  Nevertheless, I do not understand exactly what is going on 
-here, so I would like to defer to someone else's patch to fix the issue.
-
--Josh
-
-
----
-builtin/fast-export.c |    8 ++++++++
-1 files changed, 8 insertions(+), 0 deletions(-)
-
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 9836e6b..1abc470 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -161,6 +161,14 @@ static int depth_first(const void *a_, const void *b_)
-                name_a = a->one ? a->one->path : a->two->path;
-                name_b = b->one ? b->one->path : b->two->path;
-+             /*
-+             * Move 'D'elete entries first.
-+             */
-+             if (a->status == 'D')
-+                             return -1;
-+             else if (b->status == 'D')
-+                             return 1;
-+
-                len_a = strlen(name_a);
-                len_b = strlen(name_b);
-                len = (len_a < len_b) ? len_a : len_b;
--- 
+>> I create a repo X with git init. After several commit in X, I clone =
+a
+>> bare repo Y from X.
+>> I try to continue work in X, and push to/pull from Y. The command gi=
+t
+>> push and git pull fails. I see the error message but I do not know
+>> which git command can fix that problem.
+>> Then I clone Z from Y. git push/pull works in Z.
+>> How to make "git push/pull" the same in X as in Z?
+>>
+>
+>
+> By cloning Y from X you made X to be a parent of Y while you need vic=
+e versa.
+> To fix this add Y as a remote to X and set up tracking for you master=
+ branch.
+>
+> By the way, in such cases you'd better write commands you've executed=
+, and the error report you've got.
+> " I see the error message but I do not know which git command can fix=
+ that problem" - this is zero of useful information.
+>
+> ----------------------------------
+> Kirill Likhodedov
+> JetBrains, Inc
+> http://www.jetbrains.com
+> "Develop with pleasure!"
+>
+>
