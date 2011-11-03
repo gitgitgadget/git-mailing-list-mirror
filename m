@@ -1,85 +1,70 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/7] invalidate_ref_cache(): take the submodule as
- parameter
-Date: Thu, 03 Nov 2011 11:57:01 -0700
-Message-ID: <7vr51pf30i.fsf@alter.siamese.dyndns.org>
-References: <7vty7ggzum.fsf@alter.siamese.dyndns.org>
- <1318445067-19279-1-git-send-email-mhagger@alum.mit.edu>
- <1318445067-19279-3-git-send-email-mhagger@alum.mit.edu>
- <7vwrca81c7.fsf@alter.siamese.dyndns.org> <4E960F91.5020103@alum.mit.edu>
- <7vmxczmrb0.fsf@alter.siamese.dyndns.org> <4EB26BA0.9030609@alum.mit.edu>
+Subject: Re: error from 'git push' on v1.7.8-rc0
+Date: Thu, 03 Nov 2011 11:59:00 -0700
+Message-ID: <7vmxcdf2x7.fsf@alter.siamese.dyndns.org>
+References: <CAJzBP5Q1_zX+H0jeBZNB81KLYAbtJWhUuHA3rf8CuW-_OSFXbg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Drew Northup <drew.northup@maine.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johan Herland <johan@herland.net>,
-	Julian Phillips <julian@quantumfyre.co.uk>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Nov 03 19:57:15 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitlist <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Stefan =?utf-8?Q?N=C3=A4we?= <stefan.naewe@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 03 19:59:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RM2TT-0007RX-6W
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Nov 2011 19:57:15 +0100
+	id 1RM2VJ-0008Jo-S7
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Nov 2011 19:59:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756478Ab1KCS5F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Nov 2011 14:57:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48926 "EHLO
+	id S934349Ab1KCS7F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Nov 2011 14:59:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49803 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756455Ab1KCS5E (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Nov 2011 14:57:04 -0400
+	id S933865Ab1KCS7D convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Nov 2011 14:59:03 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 049256132;
-	Thu,  3 Nov 2011 14:57:04 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EF85D6221;
+	Thu,  3 Nov 2011 14:59:02 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rvrwHnhh95KUBD2qberaC0yw8lo=; b=XhJ7+K
-	hdk7UwWRja+jvPdFSzq00EKUTQEDpKbKxGPTD35/jCvZpF69YQsGAQw+758M46+Z
-	/739guXLI21co1nU/q4IWyuJd7gODs4PMJiwhiwow8un+E22k8fdoK+o/pvvg/2L
-	l4MFOKiH638DJXWsuD/nRWsqYW1VDO/1ovXYc=
+	:content-type:content-transfer-encoding; s=sasl; bh=KMJrPmN7Y1At
+	vZdqX5ACF07H2rA=; b=EHEQlqb2Yf8TNX/RCDi32AWFoRsc7GYEvWP2c12woGUg
+	gbfzCRYbXUX3lxxdGOQZ4hU9kxNBd9K7LKeNChTBJxtM+Y1CWuZTL7Z59LQBWLwu
+	GJ2R+NWLDCU7+vnwMtWcYfPT1EE+WXZtOkVFpXvcH8ZYyDhdE1QfXDhydJShThY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LD2jCiIpZjXi8wWSqj6QQKiDW3sAsZ0R
-	IO3FYlYklELa+ZfRBIH4PV0fQQ2Mm/Gs7MrosayCWLFSQKQcDUUo0A5QopVtH655
-	YynSyW1GOtrrMVVCKfJtkumtUZN+gOTnupnGWQYvW95I1NJyNsledtpRjsemW0hy
-	O2yIxjctQ9A=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Gllf5c
+	3LDf2bWVEtA/rJ8s1F+Rz5U6PzDb7s3qmdqpY5a02DXjURtcv6EEwcwByScgJd62
+	x8M4Nfx1na8Cs9TlKUdzw6/DRewo9F9eA5FIkN+YPTMc7RVlpRpDnfT1YNAVzbQY
+	Ep0g3EtltCiRoRtYlNxEbKY/c94Dc42EuK+NA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EFA026131;
-	Thu,  3 Nov 2011 14:57:03 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E725D6220;
+	Thu,  3 Nov 2011 14:59:02 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2B7E0612F; Thu,  3 Nov 2011
- 14:57:03 -0400 (EDT)
-In-Reply-To: <4EB26BA0.9030609@alum.mit.edu> (Michael Haggerty's message of
- "Thu, 03 Nov 2011 11:23:28 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 176FA621F; Thu,  3 Nov 2011
+ 14:59:01 -0400 (EDT)
+In-Reply-To: <CAJzBP5Q1_zX+H0jeBZNB81KLYAbtJWhUuHA3rf8CuW-_OSFXbg@mail.gmail.com> ("Stefan
+ =?utf-8?Q?N=C3=A4we=22's?= message of "Thu, 3 Nov 2011 12:43:54 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9E13A3B0-064D-11E1-8431-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: E4F0ED92-064D-11E1-ADDB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184737>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Stefan N=C3=A4we <stefan.naewe@gmail.com> writes:
 
-> Sorry I didn't respond to this earlier.
+> I get errors from git push when trying to delete a (remote) branch:
 >
-> The public API convention (which predates my changes) is that "char
-> *submodule" arguments either point at the relative path to the submodule
-> or are NULL to denote the main module.  But since these are stored
-> internally in a name[FLEX_ARRAY] field, I have been using "" internally
-> to denote the main module.  I believe that everything is done correctly,
-> but I admit that the use of different conventions internally and
-> externally is a potential source of programming errors.
+> $ ./bin-wrappers/git versiongit version 1.7.8.rc0
+> $ ./bin-wrappers/git push -q . :refs/heads/nogofatal: bad object
+> 0000000000000000000000000000000000000000fatal: bad object
+> 0000000000000000000000000000000000000000remote: warning: Allowing
+> deletion of corrupt ref.
 
-Yes, it would have been better if the original also used "". After all,
-that would make it more consistent---"sub/" means the repository goverend
-by "sub/.git", and "" would mean the repository governed by ".git".
-
-Is it hard to change to do so now, given that we won't be rushing this for
-the upcoming release and we have plenty of time?
+Thanks. I think the operation does _not_ error out and fail to delete, =
+but
+I agree that the "fatal:" message should be squelched.
