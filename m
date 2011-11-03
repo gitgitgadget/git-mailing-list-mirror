@@ -1,89 +1,77 @@
-From: Jochen Striepe <jochen@tolot.escape.de>
-Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
-Date: Thu, 3 Nov 2011 04:22:05 +0100
-Message-ID: <20111103032205.GA25888@pompeji.miese-zwerge.org>
-References: <CA+55aFwL_s=DcT46dprcYVWEAm_=WkuTV6K9dAn3wc_bDQU8vA@mail.gmail.com>
- <7vwrbjlj5r.fsf@alter.siamese.dyndns.org>
- <CA+55aFx_rAA6TJkZn1Zvu6u9UjxnmTVt0HpMnvaE_q9Sx-jzPg@mail.gmail.com>
- <7vk47jld5s.fsf@alter.siamese.dyndns.org>
- <CA+55aFz7TeQQH3D4Tpp31cZYZoQKeK37jouo+2Kh61Wa07knfw@mail.gmail.com>
- <CAJo=hJv5nAKH_ptYSWfMvFQv0Dj+naPXK35wSzKYkfPOYsWkxg@mail.gmail.com>
- <CA+55aFx0oCd6-sh0psYxho-s=sHAK0RHXJHfLewRuUcdXzxZbg@mail.gmail.com>
- <CA+55aFwXu=+HdQ5nW11Ts5p-V=KgpxjyagKqB+Xv+qBOEEWXvQ@mail.gmail.com>
- <CAJo=hJsXvSyB65KBp8sfciT=h5uZSqSUdxkpWtZJRtr4hXAh5A@mail.gmail.com>
- <CA+55aFyXg32mko8TOGCfGHpr3jHBEgcKiK7HdVwq0Wez0fAs9A@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] fsck: print progress
+Date: Wed, 2 Nov 2011 23:33:25 -0400
+Message-ID: <20111103033325.GA10230@sigill.intra.peff.net>
+References: <CACsJy8DN74QWYA_NzBCGgp_VdQpV5PqGMgAFUKYbOecVqw6HYQ@mail.gmail.com>
+ <1320290513-8878-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	James Bottomley <James.Bottomley@hansenpartnership.com>,
-	Jeff Garzik <jeff@garzik.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: linux-kernel-owner@vger.kernel.org Thu Nov 03 04:24:31 2011
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 03 04:33:43 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1RLnun-0000Nn-Pu
-	for glk-linux-kernel-3@lo.gmane.org; Thu, 03 Nov 2011 04:24:30 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1RLo3i-0003FM-Ty
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Nov 2011 04:33:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932794Ab1KCDY0 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 2 Nov 2011 23:24:26 -0400
-Received: from oker.escape.de ([194.120.234.254]:34689 "EHLO oker.escape.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932193Ab1KCDYZ (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 2 Nov 2011 23:24:25 -0400
-Received: from oker.escape.de (localhost [127.0.0.1])
-	(envelope-sender: jochen@tolot.escape.de)
-	by oker.escape.de (8.14.3/8.14.3/$Revision: 1.76 $) with ESMTP id pA33Nx2e026181
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 3 Nov 2011 04:23:59 +0100
-Received: (from uucp@localhost)
-	by oker.escape.de (8.14.3/8.14.3/Submit) with UUCP id pA33NwDC026180;
-	Thu, 3 Nov 2011 04:23:58 +0100
-Received: from pompeji.miese-zwerge.org (localhost [127.0.0.1])
-	by pompeji.miese-zwerge.org (8.14.4/8.14.4/Debian-2) with ESMTP id pA33M65m029973;
-	Thu, 3 Nov 2011 04:22:06 +0100
-Received: (from jochen@localhost)
-	by pompeji.miese-zwerge.org (8.14.4/8.14.4/Submit) id pA33M5b3029972;
-	Thu, 3 Nov 2011 04:22:05 +0100
+	id S1754957Ab1KCDda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Nov 2011 23:33:30 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60656
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754422Ab1KCDd3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Nov 2011 23:33:29 -0400
+Received: (qmail 19908 invoked by uid 107); 3 Nov 2011 03:39:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 02 Nov 2011 23:39:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Nov 2011 23:33:25 -0400
 Content-Disposition: inline
-In-Reply-To: <CA+55aFyXg32mko8TOGCfGHpr3jHBEgcKiK7HdVwq0Wez0fAs9A@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: linux-kernel-owner@vger.kernel.org
+In-Reply-To: <1320290513-8878-1-git-send-email-pclouds@gmail.com>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184701>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184702>
 
-	Hi,
+On Thu, Nov 03, 2011 at 10:21:53AM +0700, Nguyen Thai Ngoc Duy wrote:
 
-On Wed, Nov 02, 2011 at 07:25:17PM -0700, Linus Torvalds wrote:
-> To me, the point of the tag is so that the person doing the merge can
-> verify that he merges something trusted.
-> 
-> However, everybody else seems to disagree, and wants that stupid
-> signature to live along in the repository.
+> fsck is usually a long process and it would be nice if it prints
+> progress from time to time.
 
-It seems quite useless and leading to false conclusions in several cases
-where the merger's gpg output differs from someone's checking later on,
-e.g. when
+The output looks good to me. Code looks sane overall, with one comment:
 
- - the signing key has been revoked in the mean time (for whatever
-   reasons)
- - the signing key has expired
- - the public part of the signing key is not available for the general
-   public.
+> +		for (i = 1, p = packed_git; p; p = p->next, i++) {
+> +			if (show_progress) {
+> +				char buf[32];
+> +				snprintf(buf, sizeof(buf), "Verifying pack %d/%d",
+> +					 i, nr_packs);
+> +				if (open_pack_index(p))
+> +					continue;
+> +				progress = start_progress(buf, p->num_objects);
+> +			}
+>  			/* verify gives error messages itself */
+> -			verify_pack(p);
+> +			verify_pack(p, progress);
+> +
+> +			/*
+> +			 * we do not stop progress here, let the next
+> +			 * progress line overwrite the current one for
+> +			 * the next pack.
+> +			 */
+> +		}
+> +		stop_progress(&progress);
 
-AFAIK gpg just gives you an error code and a message like e.g. "Key has
-expired" without stating if the key was valid _when signing the commit_.
+We're actually leaking some memory here, since stop_progress will also
+free() the progress object and any associated resources. It's not a lot,
+but it's kind of ugly.
 
-How do you plan to handle this when keeping the signature in the
-repository? Or am I overlooking something?
+Perhaps there should be a special version of stop_progress that handles
+this better? Or perhaps we could even come up with a total object count
+before starting.  I guess it would involve mapping each pack index
+simultaneously, though by my reading of the code, I think we do that
+anyway (the opened index is cached in the pack object).
 
-
-Thanks,
-Jochen.
+-Peff
