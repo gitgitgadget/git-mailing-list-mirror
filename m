@@ -1,118 +1,182 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: t5800-*.sh: Intermittent test failures
-Date: Wed, 02 Nov 2011 18:30:28 -0700
-Message-ID: <7vobwugfgr.fsf@alter.siamese.dyndns.org>
-References: <4E417CB4.50007@ramsay1.demon.co.uk>
- <CAGdFq_jv_T-x7VGqm_j-fDfeW6TsBG95=1TWn91Yk9B3TGZdsQ@mail.gmail.com>
- <7vpqjgyvn1.fsf@alter.siamese.dyndns.org>
- <4E68FE73.4000005@ramsay1.demon.co.uk>
- <20110908182055.GA16500@sigill.intra.peff.net>
- <4E6D089C.4090006@ramsay1.demon.co.uk>
- <CALxABCbnZp-y0Fqzoa=Ab92P+hsT7hs3nXZsnA=ph3yGfkXhdA@mail.gmail.com>
- <7vfwi7lc54.fsf@alter.siamese.dyndns.org>
- <CALxABCbKSi-aHezjyn5wJ0-BPW1PvvaC2i9VeV7yXOf4yCdx4Q@mail.gmail.com>
- <CAGdFq_h+Hpv9perLTU2rbdT6oZ3kZy22t5nghJQeEjNGvunL+A@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
+Date: Wed, 2 Nov 2011 18:45:26 -0700
+Message-ID: <CA+55aFwXu=+HdQ5nW11Ts5p-V=KgpxjyagKqB+Xv+qBOEEWXvQ@mail.gmail.com>
+References: <20111026202235.GA20928@havoc.gtf.org> <1319969101.5215.20.camel@dabdike>
+ <CA+55aFx1NGWfNJAKDTvZfsHDDKiEtS4t4RydSgHurBeyGPyhXg@mail.gmail.com>
+ <1320049150.8283.19.camel@dabdike> <CA+55aFz3=cbciRfTYodNhdEetXYxTARGTfpP9GL9RZK222XmKQ@mail.gmail.com>
+ <7vy5w1ow90.fsf@alter.siamese.dyndns.org> <CA+55aFwL_s=DcT46dprcYVWEAm_=WkuTV6K9dAn3wc_bDQU8vA@mail.gmail.com>
+ <7vwrbjlj5r.fsf@alter.siamese.dyndns.org> <CA+55aFx_rAA6TJkZn1Zvu6u9UjxnmTVt0HpMnvaE_q9Sx-jzPg@mail.gmail.com>
+ <7vk47jld5s.fsf@alter.siamese.dyndns.org> <CA+55aFz7TeQQH3D4Tpp31cZYZoQKeK37jouo+2Kh61Wa07knfw@mail.gmail.com>
+ <CAJo=hJv5nAKH_ptYSWfMvFQv0Dj+naPXK35wSzKYkfPOYsWkxg@mail.gmail.com> <CA+55aFx0oCd6-sh0psYxho-s=sHAK0RHXJHfLewRuUcdXzxZbg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Jeff King <peff@peff.net>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 03 02:30:37 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	Jeff Garzik <jeff@garzik.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Nov 03 02:48:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLm8a-0006xo-Mu
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Nov 2011 02:30:37 +0100
+	id 1RLmQF-0004Sa-RV
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Nov 2011 02:48:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754190Ab1KCBac convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Nov 2011 21:30:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35212 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753793Ab1KCBab convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Nov 2011 21:30:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 415EC2A38;
-	Wed,  2 Nov 2011 21:30:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=dcXYRXHqfs+z
-	rKb74Fh79ZMYoRU=; b=Bj6oYkcxdnJRyO8kjknZreAgsKOr1O1vG8bQJIpk3938
-	EXkw9Khr2r8sq7qb2GDNrmWIzxwJ0UZZF0UlPvnCM82K4CGq5/JGWk28U5G9142u
-	FhSKZTvQ/6kcGIHK+mLuX4FhLrfGFC3jl9/3++q6PHoFfFK47somiJdFr/+vZx4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ePQzJs
-	0KHx4GYy0Ru37lVLQClJufcbJObOZMiGbqh7htY2TLdFP79MMWFxxlyYFJ/u7McE
-	5Mbi0nrRj30TTxMVZ/450lTu5PEDYJgdTHk73VyZIvj/ab6yltGqJZnFhpwI2OGi
-	GtpXVNF2tsOHGvFElC4+xElfOK8m/ha2TKGlo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3831B2A37;
-	Wed,  2 Nov 2011 21:30:30 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B7F822A36; Wed,  2 Nov 2011
- 21:30:29 -0400 (EDT)
-In-Reply-To: <CAGdFq_h+Hpv9perLTU2rbdT6oZ3kZy22t5nghJQeEjNGvunL+A@mail.gmail.com> (Sverre
- Rabbelier's message of "Thu, 3 Nov 2011 00:35:12 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6A483740-05BB-11E1-A961-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932789Ab1KCBpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Nov 2011 21:45:52 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:65435 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932082Ab1KCBps (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Nov 2011 21:45:48 -0400
+Received: by wwi36 with SMTP id 36so1104657wwi.1
+        for <multiple recipients>; Wed, 02 Nov 2011 18:45:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=SLTD719DMGqU98Rss8Aq4sYWfd3lNsuMJ6OiAIolwD8=;
+        b=L14f7OY4N052KbHcl0o3DXs0SfQqmY4YYvL25SyDRbJ3k7I44Q+uZJyv0q3i56DTF2
+         R2WWKRu6gWw8R4dBBe5q3cJsvYgDmqU+P+SzjXXJ4UoaaV7Rp/vIi50BqCWoLdqaUhuJ
+         iO+RL3Y5Yl7pTLciP9lOlSAEZh+K6LbGB4G5Y=
+Received: by 10.216.24.39 with SMTP id w39mr6863433wew.67.1320284747097; Wed,
+ 02 Nov 2011 18:45:47 -0700 (PDT)
+Received: by 10.216.166.3 with HTTP; Wed, 2 Nov 2011 18:45:26 -0700 (PDT)
+In-Reply-To: <CA+55aFx0oCd6-sh0psYxho-s=sHAK0RHXJHfLewRuUcdXzxZbg@mail.gmail.com>
+X-Google-Sender-Auth: NexF_CEO01POkkpg0icIMAkGwZI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184691>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+On Wed, Nov 2, 2011 at 6:19 PM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+>
+> I'm not saying that you shouldn't use them - go ahead and use the
+> feature if you like it. But please spare me your excuses for stupid
+> workarounds that come from the fact that they aren't a good match for
+> sane workflows.
 
-> =C3=86var, this seems like something we could look at during the mini
-> GitTogether in Amsterdam this Saturday, no?
+Btw, having now done odd things with signed tags (because we've used
+them as a side-band verification mechanism), I can certainly also say
+that the signed tags have their set of problems too.
 
-Have fun.
+So signed tags aren't perfect. They were designed for making releases,
+and that shows very clearly in how git works with them. The default
+choices that git makes are very awkward indeed when you use signed
+tags as "security tokens".
 
-I think I happened to hit this while testing today's 'pu' that hasn't b=
-een
-pushed out. The process chain looks like this:
+But unlike the "sign the commit" approach, those are implementation
+and UI issues, not "fundamentally broken design" issues.
 
-pid  command                     stuck at
-4767 sh t5800-remote-helpers.sh  wait4(-1)
- 4793 git push                   read(6)
-  4809 git-remote-testgit        wait4(4906)
-   4906 git fast-import          wait4(4912)
-    4912 git-fast-import         read(0)
+For example, fetching a single signed tag with git is surprisingly
+hard. It *shouldn't* be hard - and there's no underlying technical or
+design reason why it would be hard, but it is. Why? Because all the
+git actions when it comes to tags are all geared towards one
+particular use, that is *not* about the signature checking aspect of
+them.
 
-lr-x------ 1 junio junio 64 Nov  2 18:21 /proc/4793/fd/6 -> pipe:[13303=
-7701]
-l-wx------ 1 junio junio 64 Nov  2 18:21 /proc/4793/fd/7 -> pipe:[13303=
-7700]
-lr-x------ 1 junio junio 64 Nov  2 18:21 /proc/4793/fd/8 -> pipe:[13303=
-7701]
-lr-x------ 1 junio junio 64 Nov  2 18:05 /proc/4809/fd/0 -> pipe:[13303=
-7700]
-l-wx------ 1 junio junio 64 Nov  2 18:05 /proc/4809/fd/1 -> pipe:[13303=
-7701]
-lr-x------ 1 junio junio 64 Nov  2 18:05 /proc/4906/fd/0 -> pipe:[13303=
-7700]
-l-wx------ 1 junio junio 64 Nov  2 18:05 /proc/4906/fd/1 -> pipe:[13303=
-7701]
-lr-x------ 1 junio junio 64 Nov  2 18:03 /proc/4912/fd/0 -> pipe:[13303=
-7700]
-l-wx------ 1 junio junio 64 Nov  2 18:03 /proc/4912/fd/1 -> pipe:[13303=
-7701]
+Here's an example: Rusty Russell now makes nice signed tags for the
+things he asks me to pull, and then states them in the pull message.
+So he will mention that he has a tag named
 
-So "git push (4793)" is stuck reading from pipe:[133037701], expecting =
-the
-innermost "git-fast-import (4912)" to write to it via its standard outp=
-ut,
-but the latter is waiting to read from pipe:[133037700], hoping the for=
-mer
-to write to it via its fd#7.
+   rusty@rustcorp.com.au-v3.1-8068-g5087a50
 
-Does this deadlock ring a bell to anybody who's involved in these
-codepaths?
+in his git repository at
+
+   git://github.com/rustyrussell/linux.git
+
+and while I don't think his tag names are all that wonderful, it makes
+sense from an automated script kind of standpoint.
+
+Now, let's try to get that tag:
+
+  [torvalds@i5 linux]$ git fetch
+git://github.com/rustyrussell/linux.git
+rusty@rustcorp.com.au-v3.1-8068-g5087a50
+  fatal: Couldn't find remote ref rusty@rustcorp.com.au-v3.1-8068-g5087a50
+
+oops. Ok, so his tag naming is *really* akward. Whatever. Let's try again:
+
+   [torvalds@i5 linux]$ git fetch
+git://github.com/rustyrussell/linux.git
+refs/tags/rusty@rustcorp.com.au-v3.1-8068-g5087a50
+   From git://github.com/rustyrussell/linux
+    * tag
+rusty@rustcorp.com.au-v3.1-8068-g5087a50 -> FETCH_HEAD
+
+Ahh, success!
+
+Oops. Nope. It turns out that git will *peel* the tag when you fetch
+it, so FETCH_HEAD actually doesn't contain the tag object at all, but
+the commit object that the tag pointed to. MAJOR FAIL.
+
+Quite frankly, I think that's a git bug, but it's a git bug because
+"git fetch" was designed to get the commit to merge. Fair enough.
+Let's work around it, and rename the tag at the same time:
+
+   [torvalds@i5 linux]$ git fetch
+git://github.com/rustyrussell/linux.git
+refs/tags/rusty@rustcorp.com.au-v3.1-8068-g5087a50:refs/tags/rusty
+   From git://github.com/rustyrussell/linux
+    * [new tag]
+rusty@rustcorp.com.au-v3.1-8068-g5087a50 -> rusty
+    * [new tag]
+rusty@rustcorp.com.au-v3.1-2-gb1e4d20 ->
+rusty@rustcorp.com.au-v3.1-2-gb1e4d20
+    * [new tag]
+rusty@rustcorp.com.au-v3.1-4896-g0acf000 ->
+rusty@rustcorp.com.au-v3.1-4896-g0acf000
+    * [new tag]
+rusty@rustcorp.com.au-v3.1-8068-g5087a50 ->
+rusty@rustcorp.com.au-v3.1-8068-g5087a50
+
+WTF? Now we finally *did* get the tag, and we can do
+
+   git verify-tag rusty
+
+and that will work. But what the hell happened? We got three other
+tags too that we didn't even ask for!
+
+So we have actual git bugs here, that relate to the fact that we've
+treated signed tags specially, and have magic code to basically say
+"if there's a signed tag that is reachable from the thing you pull,
+and you're not just doing a temporary pull into FETCH_HEAD, we'll
+fetch that signed tag too".
+
+Again - not a fundamental design mistake in the data structures, and
+it actually made sense from a "signed tags are important release
+points" standpoint, but it makes it *really* inconvenient to use
+signed tags for signature verification.
+
+Also, the fact that the signed tag gets peeled when we do fetch into
+FETCH_HEAD also means that we can't actually save the signature in
+resulting the merge commit. The merge, instead of being able to
+perhaps save the information that we merged a nice trusted signed
+point, only has the commit.
+
+But practically, all of these issues should be pretty easily solvable.
+So it should be quite easy to make
+
+    git pull <repo> <tag-name>
+
+just do the right thing - including verifying the tag, and adding the
+information in the tag into the merge commit message.
+
+So signed tags are not mis-designed from a conceptual standpoint -
+they just work really really awkwardly right now for what the kernel
+would like to do with them.
+
+With a few UI fixes, I think the signed tag thing would "just work".
+
+That said, I do think that the "signature in the pull request" should
+also "just work", and I'm not entirely sure which one is better. It
+might be more convenient to get the signature data from the pull
+request. So I'm not at all married the the notion of using signed tags
+for this.
+
+                       Linus
