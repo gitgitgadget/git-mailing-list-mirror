@@ -1,126 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: error from 'git push' on v1.7.8-rc0
-Date: Thu, 03 Nov 2011 12:15:08 -0700
-Message-ID: <7vhb2lf26b.fsf@alter.siamese.dyndns.org>
-References: <CAJzBP5Q1_zX+H0jeBZNB81KLYAbtJWhUuHA3rf8CuW-_OSFXbg@mail.gmail.com>
- <7vmxcdf2x7.fsf@alter.siamese.dyndns.org>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: Folder level Acces in git
+Date: Thu, 3 Nov 2011 15:28:53 -0400
+Message-ID: <CAPZPVFY15AqCpWcRbv0tjXBz4G2kQTm+nMGpsYzCKe0niHV_dA@mail.gmail.com>
+References: <1320300655224-6958047.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitlist <git@vger.kernel.org>
-To: Stefan =?utf-8?Q?N=C3=A4we?= <stefan.naewe@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 03 20:15:23 2011
+Cc: git@vger.kernel.org
+To: redhat1981 <redhat1981@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 03 20:29:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RM2ky-0007kL-6b
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Nov 2011 20:15:20 +0100
+	id 1RM2yA-0005wS-RG
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Nov 2011 20:28:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934432Ab1KCTPN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Nov 2011 15:15:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59163 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933862Ab1KCTPL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Nov 2011 15:15:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 51A54669F;
-	Thu,  3 Nov 2011 15:15:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=k/0c3nj751GM
-	mkviG3c43Y/im34=; b=fiSE9uik+4VW9boeAqtZNJ/kqQ4BeovyqztvGXMKBkRi
-	M3U9wmean+6ZO2Jk7hWtkwUO+B76/6rRrWyaSer1LYGmaw0ABu1jNqYsBAdTAWAe
-	ExHgeAv64BEY9LbESTLd5raPeufpMMKJErkUXNwVghLBMbPVn03NuTMRG8GtWmM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=FJO2uF
-	cVt4PgyIFg/jJTiOnxYWz9pa8tzCAVRhLLVbxQLIDUC9uBO5XfdxGqtrFeVLTxXZ
-	TRzI+8pifpTxCxiSU2qAF0nLexyihWhasKG5yhA3Uya7a//M678wkgUNU0GXB/hN
-	2fdjBS3qsHD9nvQSHCmnO1sl/60Zt6hxx7BEM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 49658669E;
-	Thu,  3 Nov 2011 15:15:10 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B0597669D; Thu,  3 Nov 2011
- 15:15:09 -0400 (EDT)
-In-Reply-To: <7vmxcdf2x7.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 03 Nov 2011 11:59:00 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 25B0EB0A-0650-11E1-9E3D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S934508Ab1KCT2y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Nov 2011 15:28:54 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:34091 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755060Ab1KCT2x convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Nov 2011 15:28:53 -0400
+Received: by iage36 with SMTP id e36so1690560iag.19
+        for <git@vger.kernel.org>; Thu, 03 Nov 2011 12:28:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=HMAuj7OVkzTU5XzFfspI2XOjWNKpOidQXzYtqO4X37Q=;
+        b=GiCnp3eKVM2eYffq7vzJk1C23GKyHH623HF3J7GeRu2RHcHdjseb3C9oASNDc3M7i+
+         ODoPtTmmw0YGAvsvnyzXcPrvmg3U0xWkspg7lure7Q/iCJOz25yghtyk/PNKipkolJ4U
+         FNAGIwfBgVsXPH6p7gLODG/DKBbfdh5jCtMMc=
+Received: by 10.231.21.211 with SMTP id k19mr2690104ibb.13.1320348533345; Thu,
+ 03 Nov 2011 12:28:53 -0700 (PDT)
+Received: by 10.231.103.6 with HTTP; Thu, 3 Nov 2011 12:28:53 -0700 (PDT)
+In-Reply-To: <1320300655224-6958047.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184741>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Stefan N=C3=A4we <stefan.naewe@gmail.com> writes:
+On Thu, Nov 3, 2011 at 2:10 AM, redhat1981 <redhat1981@gmail.com> wrote=
+:
+> Hi,
 >
->> I get errors from git push when trying to delete a (remote) branch:
->>
->> $ ./bin-wrappers/git versiongit version 1.7.8.rc0
->> $ ./bin-wrappers/git push -q . :refs/heads/nogofatal: bad object
->> 0000000000000000000000000000000000000000fatal: bad object
->> 0000000000000000000000000000000000000000remote: warning: Allowing
->> deletion of corrupt ref.
+> I am using Gitosis, Adding the gitosis conf file
 >
-> Thanks. I think the operation does _not_ error out and fail to delete=
-, but
-> I agree that the "fatal:" message should be squelched.
+> [group testabc]
+> writable =3D testabc
+> members =3D =C2=A0 shrii Abhijeet premkumar
+> add cgit =3D yes
+> gitweb =3D yes
+>
+>
+> [group testabc-readonly]
+> readonly =3D testabc
+> members =3D =C2=A0Ganesh Shweta
+> add cgit =3D yes
+> gitweb =3D yes
+>
+> Inside the repository, testabc let us say there are folders folder1, =
+folder
+> 2 etc, I want some users to have read/write, read or no access to the
+> folder1 or folder2, Is this possible in Git, I have done it in SVN, P=
+lease
+> help!!
+>
+> redhat1981@gmail.com
+>
 
--- >8 --
-Subject: receive-pack: do not expect object 0{40} to exist
 
-When pushing to delete a ref, it uses 0{40} as an object name to signal
-that the request is a deletion. We shouldn't trigger "deletion of a
-corrupt ref" warning in such a case, which was designed to notice that =
-a
-ref points at an object that is truly missing from the repository.
+Are you sure that the way your have organized the repository is
+actually correct? If you need to manage the access on folder level why
+don't you simply split up the project into several
+repositories/projects which each team is going to work with
+independently?
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/receive-pack.c |   17 +++++++++++------
- 1 files changed, 11 insertions(+), 6 deletions(-)
+This seems to me to be much simpler and cleaner solution then any
+other alternative.
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 261b610..7ec68a1 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -634,7 +634,7 @@ static int command_singleton_iterator(void *cb_data=
-, unsigned char sha1[20])
- 	struct command **cmd_list =3D cb_data;
- 	struct command *cmd =3D *cmd_list;
-=20
--	if (!cmd)
-+	if (!cmd || is_null_sha1(cmd->new_sha1))
- 		return -1; /* end of list */
- 	*cmd_list =3D NULL; /* this returns only one */
- 	hashcpy(sha1, cmd->new_sha1);
-@@ -659,11 +659,16 @@ static int iterate_receive_command_list(void *cb_=
-data, unsigned char sha1[20])
- 	struct command **cmd_list =3D cb_data;
- 	struct command *cmd =3D *cmd_list;
-=20
--	if (!cmd)
--		return -1; /* end of list */
--	*cmd_list =3D cmd->next;
--	hashcpy(sha1, cmd->new_sha1);
--	return 0;
-+	while (cmd) {
-+		if (!is_null_sha1(cmd->new_sha1)) {
-+			hashcpy(sha1, cmd->new_sha1);
-+			*cmd_list =3D cmd->next;
-+			return 0;
-+		}
-+		cmd =3D cmd->next;
-+	}
-+	*cmd_list =3D NULL;
-+	return -1; /* end of list */
- }
-=20
- static void execute_commands(struct command *commands, const char *unp=
-acker_error)
+Thanks,
+Eugene
