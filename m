@@ -1,89 +1,65 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: git svn dcommit COMMIT silently checks in everything if COMMIT is not a complete revision
-Date: Thu, 3 Nov 2011 17:28:05 +0100
-Message-ID: <201111031728.05121.trast@student.ethz.ch>
-References: <CAOnWdoj1eUipRd8M=jsAPdDTNcgEbT7adWR78iU5Oac9DvODkQ@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: How to make "git push/pull" work in non-clone repo?
+Date: Thu, 03 Nov 2011 18:00:35 +0100
+Message-ID: <m2fwi5nnt8.fsf@igel.home>
+References: <CANiMyiFfiLnK8-q7vTZ9VAtkW8ip2NQfpR4iaU2oSnnonVDuUA@mail.gmail.com>
+	<F802D297-95A0-4B1E-894D-9681E0EEF3AD@jetbrains.com>
+	<CANiMyiF=C_uBXf3kV8ix=CY9Mi=cxHU-J3dn5UyJ87gu3Sm0dg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Reuben Thomas <rrt@sc3d.org>
-X-From: git-owner@vger.kernel.org Thu Nov 03 17:28:17 2011
+Content-Type: text/plain
+Cc: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>,
+	git <git@vger.kernel.org>
+To: Hong-Ming Su <halleyinvent@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 03 18:00:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RM09J-00088b-7k
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Nov 2011 17:28:17 +0100
+	id 1RM0ej-0007xN-AC
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Nov 2011 18:00:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933967Ab1KCQ2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Nov 2011 12:28:12 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:14984 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933454Ab1KCQ2M (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Nov 2011 12:28:12 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.339.1; Thu, 3 Nov
- 2011 17:28:05 +0100
-Received: from thomas.inf.ethz.ch (188.155.176.28) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.339.1; Thu, 3 Nov
- 2011 17:28:05 +0100
-User-Agent: KMail/1.13.7 (Linux/3.1.0-46-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <CAOnWdoj1eUipRd8M=jsAPdDTNcgEbT7adWR78iU5Oac9DvODkQ@mail.gmail.com>
-X-Originating-IP: [188.155.176.28]
+	id S934132Ab1KCRAl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Nov 2011 13:00:41 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:40008 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934085Ab1KCRAk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Nov 2011 13:00:40 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id BAE3F1C0242A;
+	Thu,  3 Nov 2011 18:00:37 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id B65C71C00087;
+	Thu,  3 Nov 2011 18:00:37 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id xnm8Glf9+Fxt; Thu,  3 Nov 2011 18:00:37 +0100 (CET)
+Received: from igel.home (ppp-88-217-126-198.dynamic.mnet-online.de [88.217.126.198])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Thu,  3 Nov 2011 18:00:36 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 2715CCA29C; Thu,  3 Nov 2011 18:00:36 +0100 (CET)
+X-Yow: Is this my STOP??
+In-Reply-To: <CANiMyiF=C_uBXf3kV8ix=CY9Mi=cxHU-J3dn5UyJ87gu3Sm0dg@mail.gmail.com>
+	(Hong-Ming Su's message of "Fri, 4 Nov 2011 00:10:27 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184729>
 
-Reuben Thomas wrote:
-> If I run
-> 
-> git svn dcommit COMMIT
-> 
-> with COMMIT being an unambiguous, but partial revision string, it
-> behaves like git svn dcommit, i.e. commits everything.
+Hong-Ming Su <halleyinvent@gmail.com> writes:
 
-In what git version?  How do I reproduce?  I just ran a simple test
-and can't:
+> /d/workspace/git/work1 (master)
+> $ git remote add origin ../depot
 
-  svnadmin create svnrepo
-  svn co file://$(pwd)/svnrepo svnwt
-  cd svnwt
-  echo a > a
-  svn add a
-  svn ci -m'do a'
-  cd ..
-  git svn clone file://$(pwd)/svnrepo gitwt
-  cd gitwt
-  echo b > a
-  git add a
-  git commit -mb
-  echo c>a
-  git add a
-  git commit -mc
-  git log --oneline
-  git svn dcommit 1b4c4e1
+$ git branch --set-upstream master origin/master
 
-where 1b4c4e1 was the abbreviated hash of the parent commit (i.e., the
-commit 'b').  As expected, it commits everything *up to* 1b4c4e1 from
-a detached HEAD, not affecting the current branch.
-
-Note that this is different from what you describe:
-
-> (If I remember to copy and paste the whole nine yards of the
-> revision string, it works as expected, i.e. commits just that
-> revision.)
-
-It was never designed to commit "just that revision".
-
-By "it" I mean 5eec27e (git-svn: let 'dcommit $rev' work on $rev
-instead of HEAD, 2009-05-29), which changed it to the current
-semantics and went into 1.6.4.  Before that, 'git svn dcommit <foo>'
-did something weird and you should avoid giving it arguments.
+Andreas.
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
