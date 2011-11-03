@@ -1,76 +1,89 @@
-From: Vijay Lakshminarayanan <laksvij@gmail.com>
-Subject: Re: How to find a commit that introduces (not removes) a string?
-Date: Thu, 03 Nov 2011 21:43:21 +0530
-Message-ID: <87zkgdgp5q.fsf@gmail.com>
-References: <j8to8h$vqd$1@dough.gmane.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: git svn dcommit COMMIT silently checks in everything if COMMIT is not a complete revision
+Date: Thu, 3 Nov 2011 17:28:05 +0100
+Message-ID: <201111031728.05121.trast@student.ethz.ch>
+References: <CAOnWdoj1eUipRd8M=jsAPdDTNcgEbT7adWR78iU5Oac9DvODkQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 03 17:13:37 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Reuben Thomas <rrt@sc3d.org>
+X-From: git-owner@vger.kernel.org Thu Nov 03 17:28:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RLzv6-0008P4-A7
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Nov 2011 17:13:37 +0100
+	id 1RM09J-00088b-7k
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Nov 2011 17:28:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933917Ab1KCQNc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Nov 2011 12:13:32 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:49735 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933739Ab1KCQNb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Nov 2011 12:13:31 -0400
-Received: by ywf7 with SMTP id 7so1480688ywf.19
-        for <git@vger.kernel.org>; Thu, 03 Nov 2011 09:13:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=cE8awlUxUcDdtz4ALUqSOzR9SVCGgMqeN6ohZDfMEOE=;
-        b=TgJD0/+RxbqtU2xD6ll9A8j0f3hXYc+10Futd7tHoTCiKr07B0FfkOUYQ2zuRuACxx
-         BntWVa8HeG5LTArRTjsD15EKpY6pHprcisqQkF7RD/+qTx/oo748r0WJZwJUzU92b0H+
-         Cy8Lz76Q6fDg4qJF/cXkYgNgpSBFgOww7TDvU=
-Received: by 10.236.200.201 with SMTP id z49mr14619842yhn.20.1320336810541;
-        Thu, 03 Nov 2011 09:13:30 -0700 (PDT)
-Received: from BALROG ([59.92.14.5])
-        by mx.google.com with ESMTPS id x3sm18420945anl.6.2011.11.03.09.13.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 03 Nov 2011 09:13:29 -0700 (PDT)
-In-Reply-To: <j8to8h$vqd$1@dough.gmane.org> (Sebastian Schuberth's message of
-	"Thu, 03 Nov 2011 10:50:18 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (windows-nt)
+	id S933967Ab1KCQ2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Nov 2011 12:28:12 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:14984 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933454Ab1KCQ2M (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Nov 2011 12:28:12 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.339.1; Thu, 3 Nov
+ 2011 17:28:05 +0100
+Received: from thomas.inf.ethz.ch (188.155.176.28) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.339.1; Thu, 3 Nov
+ 2011 17:28:05 +0100
+User-Agent: KMail/1.13.7 (Linux/3.1.0-46-desktop; KDE/4.6.5; x86_64; ; )
+In-Reply-To: <CAOnWdoj1eUipRd8M=jsAPdDTNcgEbT7adWR78iU5Oac9DvODkQ@mail.gmail.com>
+X-Originating-IP: [188.155.176.28]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184728>
 
-Sebastian Schuberth <sschuberth@gmail.com> writes:
+Reuben Thomas wrote:
+> If I run
+> 
+> git svn dcommit COMMIT
+> 
+> with COMMIT being an unambiguous, but partial revision string, it
+> behaves like git svn dcommit, i.e. commits everything.
 
-> Hi all,
->
-> I know about git log's -S / -G, but I'm unable to make these search through *introduced* strings only. Is there a way to do so?
+In what git version?  How do I reproduce?  I just ran a simple test
+and can't:
 
-This appears to work:
+  svnadmin create svnrepo
+  svn co file://$(pwd)/svnrepo svnwt
+  cd svnwt
+  echo a > a
+  svn add a
+  svn ci -m'do a'
+  cd ..
+  git svn clone file://$(pwd)/svnrepo gitwt
+  cd gitwt
+  echo b > a
+  git add a
+  git commit -mb
+  echo c>a
+  git add a
+  git commit -mc
+  git log --oneline
+  git svn dcommit 1b4c4e1
 
-$ for ref in `git log -SWORD --pretty=format:"%h"` ; do 
-    git log -1 -p $ref | grep WORD | grep -E '^[+]' > /dev/null ; 
-    if [ $? -eq 0 ]; then 
-        echo $ref; 
-    fi ;
-  done
+where 1b4c4e1 was the abbreviated hash of the parent commit (i.e., the
+commit 'b').  As expected, it commits everything *up to* 1b4c4e1 from
+a detached HEAD, not affecting the current branch.
 
-substitute WORD for what you're looking for.  Note that it is repeated
-twice.
+Note that this is different from what you describe:
 
-> Thanks!
->
-> PS: I also read [1], but although the author claims to be interested in introduced strings only, he seems to be satisfied with -G, which slightly puzzles me.
->
-> [1] http://stackoverflow.com/questions/5816134/git-finding-a-commit-that-introduced-a-string
+> (If I remember to copy and paste the whole nine yards of the
+> revision string, it works as expected, i.e. commits just that
+> revision.)
+
+It was never designed to commit "just that revision".
+
+By "it" I mean 5eec27e (git-svn: let 'dcommit $rev' work on $rev
+instead of HEAD, 2009-05-29), which changed it to the current
+semantics and went into 1.6.4.  Before that, 'git svn dcommit <foo>'
+did something weird and you should avoid giving it arguments.
 
 -- 
-Cheers
-~vijay
+Thomas Rast
+trast@{inf,student}.ethz.ch
