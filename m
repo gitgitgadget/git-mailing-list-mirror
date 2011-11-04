@@ -1,62 +1,107 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: How to find a commit that introduces (not removes) a string?
-Date: Fri, 04 Nov 2011 11:59:20 +0100
-Message-ID: <4EB3C588.501@gmail.com>
-References: <j8to8h$vqd$1@dough.gmane.org>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: important upgrade info for Fedora/EPEL RPM of gitolite
+Date: Fri, 4 Nov 2011 19:27:37 +0530
+Message-ID: <20111104135737.GA15986@sita-lt.atc.tcs.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, nkreitzinger@gmail.com, laksvij@gmail.com
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Fri Nov 04 12:01:35 2011
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="8t9RHnE3ZwKMSgU+"
+Cc: limb@jcomserv.net
+To: gitolite@googlegroups.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 04 14:57:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RMHWe-0000ZM-RS
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Nov 2011 12:01:33 +0100
+	id 1RMKHN-00020x-3v
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Nov 2011 14:57:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751048Ab1KDLBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Nov 2011 07:01:25 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:41302 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750862Ab1KDLBY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Nov 2011 07:01:24 -0400
-Received: by bke11 with SMTP id 11so1816176bke.19
-        for <git@vger.kernel.org>; Fri, 04 Nov 2011 04:01:23 -0700 (PDT)
+	id S932453Ab1KDN5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Nov 2011 09:57:52 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:60007 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932253Ab1KDN5w (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Nov 2011 09:57:52 -0400
+Received: by iage36 with SMTP id e36so2570926iag.19
+        for <git@vger.kernel.org>; Fri, 04 Nov 2011 06:57:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=ZjlgWqT4nHH6Yxu89cFOmlqptu9AUmIi97S+5MToorE=;
-        b=GzzVvxEdBESfOc6qNTJ24etRW8ZXJTAecX7kmfvLRnx7z/AfQaPHqfcPe1mb5b1s4X
-         BuqP62E7uriM/aaIyjXl53q8izhRnG5itbYtXINlsnuJgIPjaQPWry6O4su51XSQsxmz
-         dXavm8isGH8OVxACri+BZCjjW+mlMeqr/WVwU=
-Received: by 10.204.145.151 with SMTP id d23mr11535151bkv.100.1320404483315;
-        Fri, 04 Nov 2011 04:01:23 -0700 (PDT)
-Received: from [130.73.68.203] (jambul.zib.de. [130.73.68.203])
-        by mx.google.com with ESMTPS id z15sm8486107bkv.4.2011.11.04.04.01.21
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=09aUDBXAxEgXU4spt+ZNjYnpXwdPeQ2/43n8QpdY+8s=;
+        b=UQ66I2EafRzogmcA8isGx1n524oYj8mJs44cqhhMlk8qTgL80aBl/l3a1RmFJ6wKTf
+         pkplRe5/QMzQllqYxwZSBQfKf0PW45nbfHYgTdL2Q2bWobrOOrDol6Il0xw8ulcQhqtP
+         3vZ6hr7B4dPzZPYAVdxSC93ayhUSpv0ne/gjU=
+Received: by 10.42.123.212 with SMTP id t20mr15797522icr.12.1320415071498;
+        Fri, 04 Nov 2011 06:57:51 -0700 (PDT)
+Received: from sita-lt.atc.tcs.com ([14.97.63.96])
+        by mx.google.com with ESMTPS id dd36sm21119984ibb.7.2011.11.04.06.57.48
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 04 Nov 2011 04:01:22 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <j8to8h$vqd$1@dough.gmane.org>
+        Fri, 04 Nov 2011 06:57:50 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184768>
 
-On 03.11.2011 10:50, Sebastian Schuberth wrote:
 
-> I know about git log's -S / -G, but I'm unable to make these search through *introduced* strings only. Is there a way to do so?
+--8t9RHnE3ZwKMSgU+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Thanks for your suggestions. However, I ended up simply doing
+Hello,
 
-$ git diff --no-color FROM..TO | grep ^+[^+] | grep WORD
+If you're using a Fedora/EPEL RPM of gitolite, and
+upgraded/upgrading from 1.5.* to 2.*, then please do this as
+soon as possible after the upgrade.
 
-which works well for my case.
+(1) look in ~/.gitolite.rc on the server for these variables:
 
--- 
-Sebastian Schuberth
+   $GL_PACKAGE_CONF
+   $GL_PACKAGE_HOOKS
+
+If they are both defined, (and uncommented), you should be ok.
+
+(2) if they are not defined, please add these lines at or near
+the top of the file:
+
+   $GL_PACKAGE_CONF="/usr/share/gitolite/conf";
+   $GL_PACKAGE_HOOKS="/usr/share/gitolite/hooks";
+
+Save the file, then run gl-setup (without any arguments).
+
+This will fix up some issues related to the upgrade that
+required variables in the rc which the RPM would not
+automatically insert (per policy and for sanity in general!)
+
+----
+
+Thanks, and sorry for the trouble.  If you have any questions
+please feel free to ask.
+
+Sitaram
+
+--8t9RHnE3ZwKMSgU+
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIcBAEBAgAGBQJOs+9QAAoJEKRCkIUIgjelRhwP/RC5ZtiMJ4O/sZt5pSG2kDSV
+PwASsoMNvB3VeBPzJBHCCnk0I0ecX61oJiiD1Nof9ZbxqEsW3/QLE7wOfLC+fgZ9
+uZPcGEgw2Y3dJ5+vU76bMRRpzF0o6ZGyLdKokEIS/2fn+3UXLoX+Pw8M4MDmxJZM
+c+CE1a0UEJ7JKIengZrsLA3gXU1fGqo175cjncd50jv28hdE/Y3Pws3DI2wquKtz
+zC4j/NpnFs3g0Mu6fcIFPwU08w/IIwLEDTVvriC/luBhQfcpTEy9n3i8F9Wa7m+8
+WMHdnPPuqKeLL2qEAtzTvlqecj4NJ6gMU9efJbswneLJAROs7AlQYcBaQLGQhMtv
+U/a1wU6IO6pt2Q5g7h7Yvd9z9l/0C1yIZFrzoDVqx7cObDKUbaDPLM4qH8Qz9Nvv
+gXCaa67+AKhta221xHE6pgJ8B1b5LhJ2K+6f3lnnzHZ67nVAsVkxRG1b+eOQHq1I
+C1q9SZ9Cg9VSTTDmmYSuW3vEFjxGuJuPgUykO4b2ZRoSdLOv9vx5UODYUuNLIZpB
+9h9p4jj6vvgKfqlwCN2YNuA3bnTkOh4lmEOJHWw9qZ0+PfYKNbiEQs+DtHGpz1j9
+Am31VDzEz6ybDQcxraO6P21BGXt/dUwe/pAm2u1VwFq0FzZLPkP9qxR2q4ToJPUX
+oYFti9dH8CSQ0eEcjcxh
+=xa3E
+-----END PGP SIGNATURE-----
+
+--8t9RHnE3ZwKMSgU+--
