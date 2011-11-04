@@ -1,76 +1,90 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: New Feature wanted: Is it possible to let git clone continue last
- break point?
-Date: Fri, 4 Nov 2011 07:22:20 -0700
-Message-ID: <CAJo=hJtsiEEHA33CQn1MCvb7vFv7uEF+U292YgBa7EWv7P8Jng@mail.gmail.com>
-References: <CAEZo+gfKVY-YgMjd=bEYzRV4-460kqDik-yVcQ9Xs=DoCZOMDg@mail.gmail.com>
- <CAEZo+gcj5q2UYnak1+1UG7pPzoeaUr=QLsiCiNXbC_n+JQbKQQ@mail.gmail.com>
- <20111031090717.GA24978@elie.hsd1.il.comcast.net> <20111102220614.GB14108@sigill.intra.peff.net>
- <7vwrbigna7.fsf@alter.siamese.dyndns.org> <20111102232735.GA17466@sigill.intra.peff.net>
- <CAJo=hJtt8vjB5oU+tEabN2AS7c-24bMHNwQSoWtZYtjjrR3d7Q@mail.gmail.com>
- <20111103024248.GA9492@sigill.intra.peff.net> <CAJo=hJt2kU10r5rq23qgimtW8dmzu-N92vjO_hNBbVVsKSpDmg@mail.gmail.com>
- <20111104085633.GA13924@ecki> <4EB3B1E7.7080507@viscovery.net>
+From: Ted Ts'o <tytso@mit.edu>
+Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
+Date: Fri, 4 Nov 2011 10:59:08 -0400
+Message-ID: <20111104145908.GA3903@thunk.org>
+References: <7vwrbjlj5r.fsf@alter.siamese.dyndns.org>
+ <CA+55aFx_rAA6TJkZn1Zvu6u9UjxnmTVt0HpMnvaE_q9Sx-jzPg@mail.gmail.com>
+ <7vk47jld5s.fsf@alter.siamese.dyndns.org>
+ <CA+55aFz7TeQQH3D4Tpp31cZYZoQKeK37jouo+2Kh61Wa07knfw@mail.gmail.com>
+ <CAJo=hJv5nAKH_ptYSWfMvFQv0Dj+naPXK35wSzKYkfPOYsWkxg@mail.gmail.com>
+ <CA+55aFx0oCd6-sh0psYxho-s=sHAK0RHXJHfLewRuUcdXzxZbg@mail.gmail.com>
+ <CA+55aFwXu=+HdQ5nW11Ts5p-V=KgpxjyagKqB+Xv+qBOEEWXvQ@mail.gmail.com>
+ <7v62j1gitn.fsf@alter.siamese.dyndns.org>
+ <7vvcr1f38j.fsf@alter.siamese.dyndns.org>
+ <CA+55aFyRawm9CoJMiEXDFCX4YTidPOiV4oqSS2d7nNv7Ecw8BQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Clemens Buchacher <drizzd@aon.at>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	netroby <hufeng1987@gmail.com>,
-	Git Mail List <git@vger.kernel.org>,
-	Tomas Carnecky <tom@dbservice.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Nov 04 15:22:56 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	Jeff Garzik <jeff@garzik.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: linux-ide-owner@vger.kernel.org Fri Nov 04 15:59:23 2011
+Return-path: <linux-ide-owner@vger.kernel.org>
+Envelope-to: lnx-linux-ide@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RMKfV-0006e6-5L
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Nov 2011 15:22:53 +0100
+	(envelope-from <linux-ide-owner@vger.kernel.org>)
+	id 1RMLEo-0000r6-Hv
+	for lnx-linux-ide@lo.gmane.org; Fri, 04 Nov 2011 15:59:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932618Ab1KDOWo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Nov 2011 10:22:44 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:47145 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932551Ab1KDOWm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Nov 2011 10:22:42 -0400
-Received: by gyc15 with SMTP id 15so1462937gyc.19
-        for <git@vger.kernel.org>; Fri, 04 Nov 2011 07:22:42 -0700 (PDT)
-Received: by 10.236.77.104 with SMTP id c68mr20533588yhe.69.1320416562138;
- Fri, 04 Nov 2011 07:22:42 -0700 (PDT)
-Received: by 10.147.167.9 with HTTP; Fri, 4 Nov 2011 07:22:20 -0700 (PDT)
-In-Reply-To: <4EB3B1E7.7080507@viscovery.net>
-Sender: git-owner@vger.kernel.org
+	id S1750841Ab1KDO7V (ORCPT <rfc822;lnx-linux-ide@m.gmane.org>);
+	Fri, 4 Nov 2011 10:59:21 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:44307 "EHLO
+	test.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750749Ab1KDO7U (ORCPT <rfc822;linux-ide@vger.kernel.org>);
+	Fri, 4 Nov 2011 10:59:20 -0400
+Received: from root (helo=tytso-glaptop.cam.corp.google.com)
+	by test.thunk.org with local-esmtp (Exim 4.69)
+	(envelope-from <tytso@thunk.org>)
+	id 1RMLEc-0007D0-AJ; Fri, 04 Nov 2011 14:59:10 +0000
+Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1RMLEa-00019z-Rk; Fri, 04 Nov 2011 10:59:08 -0400
+Mail-Followup-To: Ted Ts'o <tytso@mit.edu>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	Jeff Garzik <jeff@garzik.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <CA+55aFyRawm9CoJMiEXDFCX4YTidPOiV4oqSS2d7nNv7Ecw8BQ@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on test.thunk.org); SAEximRunCond expanded to false
+Sender: linux-ide-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184773>
+List-ID: <linux-ide.vger.kernel.org>
+X-Mailing-List: linux-ide@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184774>
 
-On Fri, Nov 4, 2011 at 02:35, Johannes Sixt <j.sixt@viscovery.net> wrot=
-e:
-> Am 11/4/2011 9:56, schrieb Clemens Buchacher:
->> Cache ... not the pack but the information
->> =A0 =A0to re-create it...
->
-> It has been discussed. It doesn't work. Because with threaded pack
-> generation, the resulting pack is not deterministic.
+On Thu, Nov 03, 2011 at 12:09:55PM -0700, Linus Torvalds wrote:
+> I personally dislike it, and don't really think it's a wonderful thing
+> at all. I really does have real downsides:
+> 
+>  - internal signatures really *are* a disaster for maintenance. You
+> can never fix them if they need fixing (and "need fixing" may well be
+> "you want to re-sign things after a repository format change")
 
-The information to create a pack for a repository with 2M objects
-(e.g. Linux kernel tree) is *at least* 152M of data. This is just a
-first order approximation of what it takes to write out the 2M SHA-1s,
-along with say a 4 byte length so you can find given an offset
-provided by the client roughly where to resumse in the object stream.
-This is like 25% of the pack size itself. Ouch.
+Note that a repository format change will break a bunch of other
+things as well, including references in commit descriptions ("This
+fixes a regression introduced in commit 42DEADBEEF") So if SHA-1 is in
+danger of failing in way that would threaten git's use of it (highly
+unlikely), we'd probably be well advised to find a way to add a new
+crypto checksum (i.e., SHA-256) in parallel, but keep the original
+SHA-1 checksum for UI purposes.
 
-This data is still insufficient to resume from. A correct solution
-would allow you to resume in the middle of an object, which means we
-also need to store some sort of indicator of which representation was
-chosen from an existing pack file for object reuse. Which adds more
-data to the stream. And then there is the not so simple problem of how
-to resume in the middle of an object that was being recompressed on
-the fly, such as a large loose object.
+>  - they are ugly as heck, and you really don't want to see them in
+> 99.999% of all cases.
 
-By the time you get done with all of that, your "ticket" might as well
-be the name of a pack file. And your "resume information" is just a
-pack file itself. Which would be very expensive to recreate.
+So we can make them be hidden from "git log" and "gik" by default.
+That bit is a bit gross, I agree, but 3rd party verification really is
+a good thing, which I'm hoping can be added in a relatively clean
+fashion.
+
+						- Ted
