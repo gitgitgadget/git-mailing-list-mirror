@@ -1,102 +1,69 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: Folder level Acces in git
-Date: Fri, 4 Nov 2011 11:59:28 -0400
-Message-ID: <CAPZPVFZwW1VF2qb8YVQjBixRzZgz+HSz6NjJBUimuC-nx7LwZQ@mail.gmail.com>
-References: <1320300655224-6958047.post@n2.nabble.com>
-	<CAPZPVFY15AqCpWcRbv0tjXBz4G2kQTm+nMGpsYzCKe0niHV_dA@mail.gmail.com>
-	<4EB36855.8000802@workspacewhiz.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: New Feature wanted: Is it possible to let git clone continue last
+ break point?
+Date: Fri, 4 Nov 2011 23:05:07 +0700
+Message-ID: <CACsJy8C1JxoCsCoGW8kOVEtOGUjAUGL0G68qLEZ484yRJGgAkA@mail.gmail.com>
+References: <CAEZo+gfKVY-YgMjd=bEYzRV4-460kqDik-yVcQ9Xs=DoCZOMDg@mail.gmail.com>
+ <CAEZo+gcj5q2UYnak1+1UG7pPzoeaUr=QLsiCiNXbC_n+JQbKQQ@mail.gmail.com>
+ <20111031090717.GA24978@elie.hsd1.il.comcast.net> <20111102220614.GB14108@sigill.intra.peff.net>
+ <7vwrbigna7.fsf@alter.siamese.dyndns.org> <20111102232735.GA17466@sigill.intra.peff.net>
+ <CAJo=hJtt8vjB5oU+tEabN2AS7c-24bMHNwQSoWtZYtjjrR3d7Q@mail.gmail.com>
+ <20111103024248.GA9492@sigill.intra.peff.net> <CAJo=hJt2kU10r5rq23qgimtW8dmzu-N92vjO_hNBbVVsKSpDmg@mail.gmail.com>
+ <20111104085633.GA13924@ecki> <4EB3B1E7.7080507@viscovery.net> <CAJo=hJtsiEEHA33CQn1MCvb7vFv7uEF+U292YgBa7EWv7P8Jng@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: redhat1981 <redhat1981@gmail.com>, git@vger.kernel.org
-To: Joshua Jensen <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Fri Nov 04 16:59:35 2011
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Clemens Buchacher <drizzd@aon.at>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	netroby <hufeng1987@gmail.com>,
+	Git Mail List <git@vger.kernel.org>,
+	Tomas Carnecky <tom@dbservice.com>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Nov 04 17:05:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RMMB3-0008NU-RE
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Nov 2011 16:59:34 +0100
+	id 1RMMH3-00038f-Fv
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Nov 2011 17:05:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755841Ab1KDP73 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Nov 2011 11:59:29 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:50620 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755241Ab1KDP73 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Nov 2011 11:59:29 -0400
-Received: by iage36 with SMTP id e36so2692985iag.19
-        for <git@vger.kernel.org>; Fri, 04 Nov 2011 08:59:28 -0700 (PDT)
+	id S932615Ab1KDQFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Nov 2011 12:05:40 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:45135 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932455Ab1KDQFj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Nov 2011 12:05:39 -0400
+Received: by bke11 with SMTP id 11so2074099bke.19
+        for <git@vger.kernel.org>; Fri, 04 Nov 2011 09:05:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=tUB8Zl4u+UMu8em9fVr8tjXJ01HoJO/RWUR6j8i0pCs=;
-        b=t9Fy/TP+8Te++H+T+vFtvTRk4tW4mICqx7pMe1myFjztC61WutyH4KoQjlGE5/fEI8
-         DQJegGovY6oCUgLsx74ny/EtHSxiJJLt4zgbNqxlPay6B+RPyiBSNWdxm7eo3ZZ7B7Xm
-         Afc3+5ls1Dq6xMieAqeThf77IAIEhr54aV6L0=
-Received: by 10.231.0.208 with SMTP id 16mr3848836ibc.50.1320422368386; Fri,
- 04 Nov 2011 08:59:28 -0700 (PDT)
-Received: by 10.231.103.6 with HTTP; Fri, 4 Nov 2011 08:59:28 -0700 (PDT)
-In-Reply-To: <4EB36855.8000802@workspacewhiz.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Hm2ipoiuiIO+oVMacdPNdNL4j4auX5Ok92etJfmlGAM=;
+        b=K8g9BgP6zIT6Mlyaxl01z/VlgboxTJXDwxCIVyQ8lH94CErOqdWd87eweCqefdWrhe
+         KzrC8jPaDEzRP1AYlr96hQxS4rV2/wSNSmorpDekGbcccqissYwp4kx1QEawCSlXjva9
+         jos3mnwKJ51xxqDmYqDVYvGm7putG5KxIAM6A=
+Received: by 10.204.143.74 with SMTP id t10mr1773383bku.45.1320422738128; Fri,
+ 04 Nov 2011 09:05:38 -0700 (PDT)
+Received: by 10.204.177.79 with HTTP; Fri, 4 Nov 2011 09:05:07 -0700 (PDT)
+In-Reply-To: <CAJo=hJtsiEEHA33CQn1MCvb7vFv7uEF+U292YgBa7EWv7P8Jng@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184784>
 
-On Fri, Nov 4, 2011 at 12:21 AM, Joshua Jensen
-<jjensen@workspacewhiz.com> wrote:
-> ----- Original Message -----
-> From: Eugene Sajine
-> Date: 11/3/2011 1:28 PM
->>
->> Are you sure that the way your have organized the repository is
->> actually correct? If you need to manage the access on folder level w=
-hy
->> don't you simply split up the project into several
->> repositories/projects which each team is going to work with
->> independently?
->>
->> This seems to me to be much simpler and cleaner solution then any
->> other alternative.
->>
-> Submodules are _not_ simple at all. =C2=A0Our organization of nearly =
-100
-> developers using Git pretty much let out a collective cheer when we f=
-inally
-> removed the submodules. =C2=A0Submodules are an absolute pain to deve=
-lop within;
-> there are a number of Git mailing list exchanges about that, but I'd =
-be
-> happy to go into great detail if anybody cares. =C2=A0Even submodules=
- that are
-> read-only are a pain as it takes two steps (git pull + git submodule =
-update)
-> to actually get them up to date.
->
-> Ick.
->
-> In short, if it is an absolute requirement to manage access to a repo=
-sitory
-> on a folder level, get Subversion or Perforce. =C2=A0DVCS is not for =
-you...
->
-> Josh
->
+2011/11/4 Shawn Pearce <spearce@spearce.org>:
+> By the time you get done with all of that, your "ticket" might as well
+> be the name of a pack file. And your "resume information" is just a
+> pack file itself. Which would be very expensive to recreate.
 
-That is exactly what i wanted to say. I suggest OP not to go into
-submodules, but just have separate repositories. I think if they need
-this kind of granularity in permissions it means that their repository
-is too big and incorrectly organized. I think they are trying to
-migrate to better VCS (as git is superior by definition;) ), but they
-still think in central VCS terms and that's what causing this folder
-level management requirement to appear. We  at $work have hundreds of
-repositories and never had any need of submodules or folder level
-permissions. (One repo =3D one project =3D one artifact) + Ivy as
-dependency manager works just fine and if we will need to fine tune
-the permissions it will be always pretty easy to do.
-
-
-Thanks,
-Eugene
+I'll deal with initial clone case only here. Can we make git protocol
+send multiple packs, then send on-disk packs one by one together with
+pack SHA1? This way we do not need to recreate anything. If new packs
+are created during cloning, git client should be able to construct
+"have" list from good packs and fetch updates from server again.
+-- 
+Duy
