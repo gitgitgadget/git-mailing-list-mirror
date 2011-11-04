@@ -1,90 +1,79 @@
-From: Stefan Naewe <stefan.naewe@gmail.com>
-Subject: [PATCH] http-push: don't always prompt for password
-Date: Fri,  4 Nov 2011 08:03:08 +0100
-Message-ID: <1320390188-24334-1-git-send-email-stefan.naewe@gmail.com>
-References: <7vfwi6jucg.fsf@alter.siamese.dyndns.org>
-Cc: Stefan Naewe <stefan.naewe@gmail.com>
-To: gitster@pobox.com, git@vger.kernel.org, peff@peff.net
-X-From: git-owner@vger.kernel.org Fri Nov 04 08:03:26 2011
+From: =?UTF-8?B?0JDQu9C10LrRgdC10Lkg0JTQsNC90YfQtdC90LrQvtCy?= 
+	<adanchenkov@gmail.com>
+Subject: =?UTF-8?Q?aliases_causing_=E2=80=9CPermission_denied=E2=80=9D_error_in_git?=
+	=?UTF-8?Q?_v1=2E7?=
+Date: Fri, 4 Nov 2011 12:09:07 +0400
+Message-ID: <CALUFZ3n9cpHw3r3rcGriDqvJ+UM83L3Q19m=0YeAy51LBJzosA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 04 09:09:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RMDoD-0002yu-Vy
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Nov 2011 08:03:26 +0100
+	id 1RMEpw-0006KR-QD
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Nov 2011 09:09:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751638Ab1KDHDT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Nov 2011 03:03:19 -0400
-Received: from mail96.atlas.de ([194.156.172.86]:17662 "EHLO mail96.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751328Ab1KDHDS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Nov 2011 03:03:18 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail96.atlas.de (Postfix) with ESMTP id 761E3100B3;
-	Fri,  4 Nov 2011 08:03:17 +0100 (CET)
-X-Virus-Scanned: amavisd-new at lxsrv96.atlas.de
-Received: from mail96.atlas.de ([127.0.0.1])
-	by localhost (lxsrv96.atlas.de [127.0.0.1]) (amavisd-new, port 10124)
-	with ESMTP id kmb0-53mgsSE; Fri,  4 Nov 2011 08:03:17 +0100 (CET)
-Received: from mgsrv01.atlas.de (mailrelay-atlas.atlas.de [10.200.101.16])
-	by mail96.atlas.de (Postfix) with ESMTP;
-	Fri,  4 Nov 2011 08:03:17 +0100 (CET)
-Received: from as100897.atlas.de (as100897.atlas.de [141.200.51.220])
-	by mgsrv01.atlas.de (Postfix) with ESMTP id 03D9427190;
-	Fri,  4 Nov 2011 08:03:17 +0100 (CET)
-Received: by as100897.atlas.de (Postfix, from userid 1000)
-	id E1EAC14088; Fri,  4 Nov 2011 08:03:16 +0100 (CET)
-X-Mailer: git-send-email 1.7.8.rc0.1.gb345ae
-In-Reply-To: <7vfwi6jucg.fsf@alter.siamese.dyndns.org>
+	id S1752592Ab1KDIJK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Nov 2011 04:09:10 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:56151 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752451Ab1KDIJI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Nov 2011 04:09:08 -0400
+Received: by wwi36 with SMTP id 36so3087201wwi.1
+        for <git@vger.kernel.org>; Fri, 04 Nov 2011 01:09:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=yVWmruZ+NqGz4iseIQ/+SHYEXpe0hOf9zW3RPANj5o8=;
+        b=OmqwbiuKslOuIREdQ9xqEPXM+4Bi8pDw0Vcu2hHaNIO0Um3GC8ZsV0hh4pKnArbJZw
+         trXJ9Pc5JKdNInuzGdzlJOo0U+fiwuXbVKqO39eUNKywOn4TqIf1TIdfDKiliDlfuHaJ
+         MUmulXIONSvtu82OoqNjDDqKWKOYOn88PsvuU=
+Received: by 10.180.101.97 with SMTP id ff1mr368255wib.42.1320394147342; Fri,
+ 04 Nov 2011 01:09:07 -0700 (PDT)
+Received: by 10.180.85.195 with HTTP; Fri, 4 Nov 2011 01:09:07 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184761>
 
-http-push prompts for a password when the URL is set as
-'https://user@host/repo' even though there is one set
-in ~/.netrc. Pressing ENTER at the password prompt succeeds
-then, but is a annoying and makes it almost useless
-in a shell script, e.g.
+Hi!
 
-Signed-off-by: Stefan Naewe <stefan.naewe@gmail.com>
+$ git co -b newbranch
+$ git co oldbranch
+
+results in "fatal: cannot exec 'git-co': Permission denied" error.
+
+In the same time, things like
+
+$ git checkout -b newbranch
+$ git checkout oldbranch
+
+and
+
+$ sudo git co -b newbranch
+$ sudo git co oldbranch
+
+work as expected. Ownership rights for the .git die are set for the user
+and 0755/0644 are the mode for .git dir/subdir/files. There are no git-co
+script anywhere in the system (as it is an alias to git-checkout, which
+resides in /usr/libexec/git-core).
+
+Aliases are defined in .gitconfig of the home dir:
+
+[alias]
+co = checkout
+
+There is no difference in git config for root or normal user.
+
+Things work well as expected when I install git v1.6. Going back to 1.7
+gives me the same error.
+
+What am I missing?
+
 ---
- http.c |    7 +++----
- 1 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/http.c b/http.c
-index a4bc770..008ad72 100644
---- a/http.c
-+++ b/http.c
-@@ -279,8 +279,6 @@ static CURL *get_curl_handle(void)
- 	curl_easy_setopt(result, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
- #endif
- 
--	init_curl_http_auth(result);
--
- 	if (ssl_cert != NULL)
- 		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
- 	if (has_cert_password())
-@@ -846,7 +844,7 @@ static int http_request(const char *url, void *result, int target, int options)
- 		else if (missing_target(&results))
- 			ret = HTTP_MISSING_TARGET;
- 		else if (results.http_code == 401) {
--			if (user_name) {
-+			if (user_name && user_pass) {
- 				ret = HTTP_NOAUTH;
- 			} else {
- 				/*
-@@ -855,7 +853,8 @@ static int http_request(const char *url, void *result, int target, int options)
- 				 * but that is non-portable.  Using git_getpass() can at least be stubbed
- 				 * on other platforms with a different implementation if/when necessary.
- 				 */
--				user_name = xstrdup(git_getpass_with_description("Username", description));
-+				if (!user_name)
-+					user_name = xstrdup(git_getpass_with_description("Username", description));
- 				init_curl_http_auth(slot->curl);
- 				ret = HTTP_REAUTH;
- 			}
--- 
-1.7.8.rc0.1.gb345ae
+Gentoo / kernel v3.0.6 / git v1.7.3.4
