@@ -1,94 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/3] http.c: Use timeout suggested by curl instead of
- fixed 50ms timeout
-Date: Fri, 04 Nov 2011 10:13:41 -0700
-Message-ID: <7vehxndd4q.fsf@alter.siamese.dyndns.org>
-References: <1320265288-12647-1-git-send-email-mika.fischer@zoopnet.de>
- <1320416367-28843-1-git-send-email-mika.fischer@zoopnet.de>
- <1320416367-28843-3-git-send-email-mika.fischer@zoopnet.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] http-push: don't always prompt for password
+Date: Fri, 4 Nov 2011 13:43:03 -0400
+Message-ID: <20111104174303.GA22568@sigill.intra.peff.net>
+References: <7vfwi6jucg.fsf@alter.siamese.dyndns.org>
+ <1320390188-24334-1-git-send-email-stefan.naewe@gmail.com>
+ <7vlirvdeb2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, daniel@haxx.se, peff@peff.net
-To: Mika Fischer <mika.fischer@zoopnet.de>
-X-From: git-owner@vger.kernel.org Fri Nov 04 18:13:50 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Naewe <stefan.naewe@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 04 18:43:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RMNKv-0006dx-3I
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Nov 2011 18:13:49 +0100
+	id 1RMNnO-0004ye-Gp
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Nov 2011 18:43:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932550Ab1KDRNo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Nov 2011 13:13:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56202 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932394Ab1KDRNn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Nov 2011 13:13:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 25DE6600D;
-	Fri,  4 Nov 2011 13:13:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=I9GNd8A+S+RGLLI80FEuZBoqrc4=; b=giPLmt
-	0gce/Iz9DiJSLr3Bp3oFyd8iCsy3DgRPsQjP0PQdZlwScxynAu8U6fhJU3eCQ+Qx
-	l5Rtjsfy8DMBGWwGUjOMzB9wDmKdYBQ0p5og6oe5DnlOIrIiaEVlv70ony04bgfL
-	O6ap/wRLn0iBxJDrjNiUBJzXqr6bU0+iXwnZs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tPaBhQJziwGK6uVwNk7ZezOKN0+1bmjL
-	O/2ksAss59Wd+0fYyXHQ0oMD9xLdG9Y8QXn2b8OEwTOwz+LlRhzOVrOzumBNnMh2
-	w9xLWNIypT9ACev4dQmLjMhI9pSydG0RtS2NwV9DlJi++JM1TqSRNoF9e00bKTQ3
-	alzom8EFazk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BC52600C;
-	Fri,  4 Nov 2011 13:13:43 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A007600B; Fri,  4 Nov 2011
- 13:13:42 -0400 (EDT)
-In-Reply-To: <1320416367-28843-3-git-send-email-mika.fischer@zoopnet.de>
- (Mika Fischer's message of "Fri, 4 Nov 2011 15:19:26 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5894D9F6-0708-11E1-B50A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932322Ab1KDRnJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Nov 2011 13:43:09 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33539
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752118Ab1KDRnI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Nov 2011 13:43:08 -0400
+Received: (qmail 3415 invoked by uid 107); 4 Nov 2011 17:43:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 04 Nov 2011 13:43:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Nov 2011 13:43:03 -0400
+Content-Disposition: inline
+In-Reply-To: <7vlirvdeb2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184788>
 
-Mika Fischer <mika.fischer@zoopnet.de> writes:
+On Fri, Nov 04, 2011 at 09:48:17AM -0700, Junio C Hamano wrote:
 
-> Recent versions of curl can suggest a period of time the library user
-> should sleep and try again, when curl is blocked on reading or writing
-> (or connecting). Use this timeout instead of always sleeping for 50ms.
->
-> Signed-off-by: Mika Fischer <mika.fischer@zoopnet.de>
+> Stefan Naewe <stefan.naewe@gmail.com> writes:
+> 
+> > http-push prompts for a password when the URL is set as
+> > 'https://user@host/repo' even though there is one set
+> > in ~/.netrc. Pressing ENTER at the password prompt succeeds
+> > then, but is a annoying and makes it almost useless
+> > in a shell script, e.g.
+> >
+> > Signed-off-by: Stefan Naewe <stefan.naewe@gmail.com>
+> > ---
+> 
+> Thanks.
+> 
+> With this the only callsite of init_curl_http_auth() becomes the one after
+> we get the 401 response, and this caller makes sure that user_name is not
+> NULL.
+> 
+> Do we still want "if (user_name)" inside init_curl_http_auth()?
 
-Thanks.
+Since we now only call init_curl_http_auth when we know we need auth, I
+think it would make more sense to just move the user_name asking there,
+too, like:
 
-I'm inclined to squash in the following to narrow the scope of
-curl_timeout, though.
+  static void init_curl_http_auth(CURL *result)
+  {
+          struct strbuf up = STRBUF_INIT;
 
-diff --git a/http.c b/http.c
-index 5cb0fb6..924be52 100644
---- a/http.c
-+++ b/http.c
-@@ -636,9 +636,6 @@ void run_active_slot(struct active_request_slot *slot)
- 	fd_set excfds;
- 	int max_fd;
- 	struct timeval select_timeout;
--#if LIBCURL_VERSION_NUM >= 0x070f04
--	long curl_timeout;
--#endif
- 	int finished = 0;
- 
- 	slot->finished = &finished;
-@@ -655,6 +652,7 @@ void run_active_slot(struct active_request_slot *slot)
- 
- 		if (slot->in_use && !data_received) {
- #if LIBCURL_VERSION_NUM >= 0x070f04
-+			long curl_timeout;
- 			curl_multi_timeout(curlm, &curl_timeout);
- 			if (curl_timeout == 0) {
- 				continue;
+          if (!user_name)
+                  user_name = xstrdup(git_getpass_with_description("Username", description);
+          if (!user_pass)
+                  user_pass = xstrdup(git_getpass_with_description("Password", description);
+
+          strbuf_addf(&up, "%s:%s", user_name, user_pass);
+          curl_easy_setopt(result, CURLOPT_USERPWD, strbuf_detach(&up, NULL));
+  }
+
+And then it's easy to swap out the asking for credential_fill() when it
+becomes available. But I admit I don't care that much now, as I'll just
+end up doing that refactoring later with my credential patches anyway.
+
+> I tried to rewrite the proposed commit log message to describe the real
+> issue, and here is what I came up with:
+
+Your description looks accurate to me.
+
+> What is somewhat troubling is that after analyzing the root cause of the
+> issue, I am wondering if a more correct fix is to remove the user@ part
+> from the URL (in other words, document that a URL with an embedded
+> username will ask for password upfront, and tell the users that if they
+> have netrc entries or if they are accessing a resource that does not
+> require authentication, they should omit the username from the URL).
+
+It's tempting, because the non-netrc case is the common one, and we are
+dropping the round-trip avoidance for those people. I'm just not sure
+that it's going to be obvious to users that they need to drop the user@
+portion from their URL when using netrc. That seems like a bizarre
+requirement from the user's POV, even if we do document it.
+
+-Peff
