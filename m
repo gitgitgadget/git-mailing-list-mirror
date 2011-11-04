@@ -1,100 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] http-push: don't always prompt for password
-Date: Fri, 4 Nov 2011 13:43:03 -0400
-Message-ID: <20111104174303.GA22568@sigill.intra.peff.net>
-References: <7vfwi6jucg.fsf@alter.siamese.dyndns.org>
- <1320390188-24334-1-git-send-email-stefan.naewe@gmail.com>
- <7vlirvdeb2.fsf@alter.siamese.dyndns.org>
+From: Mika Fischer <mika.fischer@zoopnet.de>
+Subject: Re: [PATCH v3 2/3] http.c: Use timeout suggested by curl instead of
+ fixed 50ms timeout
+Date: Fri, 4 Nov 2011 18:47:44 +0100
+Message-ID: <CAOs=hRKxc9SdE_HTnfs+WdnxZEY6yF9MBV_K1FX2=7B7xtj7-w@mail.gmail.com>
+References: <1320265288-12647-1-git-send-email-mika.fischer@zoopnet.de>
+ <1320416367-28843-1-git-send-email-mika.fischer@zoopnet.de>
+ <1320416367-28843-3-git-send-email-mika.fischer@zoopnet.de> <7vehxndd4q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan Naewe <stefan.naewe@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, daniel@haxx.se, peff@peff.net
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 04 18:43:15 2011
+X-From: git-owner@vger.kernel.org Fri Nov 04 18:48:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RMNnO-0004ye-Gp
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Nov 2011 18:43:14 +0100
+	id 1RMNsD-0007Ta-TY
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Nov 2011 18:48:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932322Ab1KDRnJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Nov 2011 13:43:09 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33539
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752118Ab1KDRnI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Nov 2011 13:43:08 -0400
-Received: (qmail 3415 invoked by uid 107); 4 Nov 2011 17:43:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 04 Nov 2011 13:43:06 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Nov 2011 13:43:03 -0400
-Content-Disposition: inline
-In-Reply-To: <7vlirvdeb2.fsf@alter.siamese.dyndns.org>
+	id S932553Ab1KDRsJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Nov 2011 13:48:09 -0400
+Received: from trillian.zoopnet.de ([85.214.111.199]:49844 "EHLO
+	trillian.zoopnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932322Ab1KDRsI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Nov 2011 13:48:08 -0400
+Received: from mail-gx0-f174.google.com (mail-gx0-f174.google.com [209.85.161.174])
+	by trillian.zoopnet.de (Postfix) with ESMTPSA id 14131249C2BC
+	for <git@vger.kernel.org>; Fri,  4 Nov 2011 18:48:06 +0100 (CET)
+Received: by ggnb2 with SMTP id b2so2731942ggn.19
+        for <git@vger.kernel.org>; Fri, 04 Nov 2011 10:48:05 -0700 (PDT)
+Received: by 10.236.22.33 with SMTP id s21mr22512948yhs.70.1320428885111; Fri,
+ 04 Nov 2011 10:48:05 -0700 (PDT)
+Received: by 10.236.60.135 with HTTP; Fri, 4 Nov 2011 10:47:44 -0700 (PDT)
+In-Reply-To: <7vehxndd4q.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184789>
 
-On Fri, Nov 04, 2011 at 09:48:17AM -0700, Junio C Hamano wrote:
+On Fri, Nov 4, 2011 at 18:13, Junio C Hamano <gitster@pobox.com> wrote:
+> I'm inclined to squash in the following to narrow the scope of
+> curl_timeout, though.
+>
+> diff --git a/http.c b/http.c
+> index 5cb0fb6..924be52 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -636,9 +636,6 @@ void run_active_slot(struct active_request_slot *=
+slot)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0fd_set excfds;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0int max_fd;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct timeval select_timeout;
+> -#if LIBCURL_VERSION_NUM >=3D 0x070f04
+> - =C2=A0 =C2=A0 =C2=A0 long curl_timeout;
+> -#endif
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0int finished =3D 0;
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0slot->finished =3D &finished;
+> @@ -655,6 +652,7 @@ void run_active_slot(struct active_request_slot *=
+slot)
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (slot->in_u=
+se && !data_received) {
+> =C2=A0#if LIBCURL_VERSION_NUM >=3D 0x070f04
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 long curl_timeout;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0curl_multi_timeout(curlm, &curl_timeout);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0if (curl_timeout =3D=3D 0) {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0continue;
 
-> Stefan Naewe <stefan.naewe@gmail.com> writes:
-> 
-> > http-push prompts for a password when the URL is set as
-> > 'https://user@host/repo' even though there is one set
-> > in ~/.netrc. Pressing ENTER at the password prompt succeeds
-> > then, but is a annoying and makes it almost useless
-> > in a shell script, e.g.
-> >
-> > Signed-off-by: Stefan Naewe <stefan.naewe@gmail.com>
-> > ---
-> 
-> Thanks.
-> 
-> With this the only callsite of init_curl_http_auth() becomes the one after
-> we get the 401 response, and this caller makes sure that user_name is not
-> NULL.
-> 
-> Do we still want "if (user_name)" inside init_curl_http_auth()?
-
-Since we now only call init_curl_http_auth when we know we need auth, I
-think it would make more sense to just move the user_name asking there,
-too, like:
-
-  static void init_curl_http_auth(CURL *result)
-  {
-          struct strbuf up = STRBUF_INIT;
-
-          if (!user_name)
-                  user_name = xstrdup(git_getpass_with_description("Username", description);
-          if (!user_pass)
-                  user_pass = xstrdup(git_getpass_with_description("Password", description);
-
-          strbuf_addf(&up, "%s:%s", user_name, user_pass);
-          curl_easy_setopt(result, CURLOPT_USERPWD, strbuf_detach(&up, NULL));
-  }
-
-And then it's easy to swap out the asking for credential_fill() when it
-becomes available. But I admit I don't care that much now, as I'll just
-end up doing that refactoring later with my credential patches anyway.
-
-> I tried to rewrite the proposed commit log message to describe the real
-> issue, and here is what I came up with:
-
-Your description looks accurate to me.
-
-> What is somewhat troubling is that after analyzing the root cause of the
-> issue, I am wondering if a more correct fix is to remove the user@ part
-> from the URL (in other words, document that a URL with an embedded
-> username will ask for password upfront, and tell the users that if they
-> have netrc entries or if they are accessing a resource that does not
-> require authentication, they should omit the username from the URL).
-
-It's tempting, because the non-netrc case is the common one, and we are
-dropping the round-trip avoidance for those people. I'm just not sure
-that it's going to be obvious to users that they need to drop the user@
-portion from their URL when using netrc. That seems like a bizarre
-requirement from the user's POV, even if we do document it.
-
--Peff
+Ah yes, that's good. I would have done it this way in C++, but I
+wasn't sure whether C99 is OK for git.
