@@ -1,298 +1,112 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 4/4] fsck: print progress
-Date: Fri,  4 Nov 2011 22:47:50 +0700
-Message-ID: <1320421670-518-5-git-send-email-pclouds@gmail.com>
-References: <1320421670-518-1-git-send-email-pclouds@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: New Feature wanted: Is it possible to let git clone continue last break point?
+Date: Fri, 04 Nov 2011 08:55:32 -0700 (PDT)
+Message-ID: <m3k47f51f0.fsf@localhost.localdomain>
+References: <CAEZo+gfKVY-YgMjd=bEYzRV4-460kqDik-yVcQ9Xs=DoCZOMDg@mail.gmail.com>
+	<CAEZo+gcj5q2UYnak1+1UG7pPzoeaUr=QLsiCiNXbC_n+JQbKQQ@mail.gmail.com>
+	<20111031090717.GA24978@elie.hsd1.il.comcast.net>
+	<20111102220614.GB14108@sigill.intra.peff.net>
+	<7vwrbigna7.fsf@alter.siamese.dyndns.org>
+	<20111102232735.GA17466@sigill.intra.peff.net>
+	<CAJo=hJtt8vjB5oU+tEabN2AS7c-24bMHNwQSoWtZYtjjrR3d7Q@mail.gmail.com>
+	<20111103024248.GA9492@sigill.intra.peff.net>
+	<CAJo=hJt2kU10r5rq23qgimtW8dmzu-N92vjO_hNBbVVsKSpDmg@mail.gmail.com>
+	<20111104085633.GA13924@ecki> <4EB3B1E7.7080507@viscovery.net>
+	<CAJo=hJtsiEEHA33CQn1MCvb7vFv7uEF+U292YgBa7EWv7P8Jng@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 04 16:49:57 2011
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Clemens Buchacher <drizzd@aon.at>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	netroby <hufeng1987@gmail.com>,
+	Git Mail List <git@vger.kernel.org>,
+	Tomas Carnecky <tom@dbservice.com>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Nov 04 16:55:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RMM1l-0003P3-0a
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Nov 2011 16:49:57 +0100
+	id 1RMM7N-0006Qt-44
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Nov 2011 16:55:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932517Ab1KDPtw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Nov 2011 11:49:52 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:36170 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755554Ab1KDPtv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Nov 2011 11:49:51 -0400
-Received: by mail-iy0-f174.google.com with SMTP id e36so2682080iag.19
-        for <git@vger.kernel.org>; Fri, 04 Nov 2011 08:49:51 -0700 (PDT)
+	id S932590Ab1KDPzg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Nov 2011 11:55:36 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:50818 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755839Ab1KDPzf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Nov 2011 11:55:35 -0400
+Received: by eye27 with SMTP id 27so2159821eye.19
+        for <git@vger.kernel.org>; Fri, 04 Nov 2011 08:55:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=9ONHNLL85qHga292ND/cAgjDOakNqEIqO1u9l+Wp5Is=;
-        b=emUiA+89kc25avLHODVRT5z/E8nqatwkFOMb1Z+0NGYr6fu0JvnhCondz4F0cO+Z38
-         Xa+kIVWAU0t4yqDui1kNwi0b/X1uPe61iy6N5ClmNpKO9Kmu86B/6wMU4NPInNi2Fiyj
-         nkSe4lJloMZhzcCqolqJ9qdUmwcZIUEvH88tg=
-Received: by 10.43.50.201 with SMTP id vf9mr16502956icb.10.1320421790758;
-        Fri, 04 Nov 2011 08:49:50 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.73.210.255])
-        by mx.google.com with ESMTPS id dd36sm22104614ibb.7.2011.11.04.08.49.45
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=HxPpvVmrrXrquzCz74gjEGd+2qZvzjoQlbxsx6HoziM=;
+        b=tFgWzbBKSK8ToLvFvEk0ApSi58KisE6XE5FW9vgbDBdWg+cBfPqFr61dLdf/LCiDky
+         ipxs62+tWMIFwlgh3T4Cxmbv8HDkOaFTQj1qR2b4nzEFetntM4p4rcubB2bDfLmSlKfr
+         MYm5EMfv2gCmCmanzeXUo5OTzuc8S97M0wCqE=
+Received: by 10.213.2.133 with SMTP id 5mr595119ebj.8.1320422133750;
+        Fri, 04 Nov 2011 08:55:33 -0700 (PDT)
+Received: from localhost.localdomain (abwn145.neoplus.adsl.tpnet.pl. [83.8.237.145])
+        by mx.google.com with ESMTPS id t6sm26275207eeb.11.2011.11.04.08.55.30
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 04 Nov 2011 08:49:49 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 04 Nov 2011 22:48:27 +0700
-X-Mailer: git-send-email 1.7.4.74.g639db
-In-Reply-To: <1320421670-518-1-git-send-email-pclouds@gmail.com>
+        Fri, 04 Nov 2011 08:55:32 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id pA4FsgRK029650;
+	Fri, 4 Nov 2011 16:54:52 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id pA4FruMw029641;
+	Fri, 4 Nov 2011 16:53:56 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <CAJo=hJtsiEEHA33CQn1MCvb7vFv7uEF+U292YgBa7EWv7P8Jng@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184782>
 
-fsck is usually a long process and it would be nice if it prints
-progress from time to time.
+Shawn Pearce <spearce@spearce.org> writes:
+> On Fri, Nov 4, 2011 at 02:35, Johannes Sixt <j.sixt@viscovery.net> wr=
+ote:
+> > Am 11/4/2011 9:56, schrieb Clemens Buchacher:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/git-fsck.txt |   12 +++++++++++-
- builtin/fsck.c             |   40 ++++++++++++++++++++++++++++++++++++=
-++--
- pack-check.c               |   14 +++++++++++---
- pack.h                     |    3 ++-
- 4 files changed, 62 insertions(+), 7 deletions(-)
+> > > Cache ... not the pack but the information
+> > > =A0 =A0to re-create it...
+> >
+> > It has been discussed. It doesn't work. Because with threaded pack
+> > generation, the resulting pack is not deterministic.
+>=20
+> The information to create a pack for a repository with 2M objects
+> (e.g. Linux kernel tree) is *at least* 152M of data. This is just a
+> first order approximation of what it takes to write out the 2M SHA-1s=
+,
+> along with say a 4 byte length so you can find given an offset
+> provided by the client roughly where to resumse in the object stream.
+> This is like 25% of the pack size itself. Ouch.
 
-diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
-index a2a508d..5245101 100644
---- a/Documentation/git-fsck.txt
-+++ b/Documentation/git-fsck.txt
-@@ -10,7 +10,8 @@ SYNOPSIS
- --------
- [verse]
- 'git fsck' [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]
--	 [--[no-]full] [--strict] [--verbose] [--lost-found] [<object>*]
-+	 [--[no-]full] [--strict] [--verbose] [--lost-found]
-+	 [--[no-]progress] [<object>*]
+Well, perhaps caching a few most popular packs in some kind of cache
+(packfile is saved to disk as it is streamed if we detect that it will
+be large), indexing by WANT / HAVE?
 =20
- DESCRIPTION
- -----------
-@@ -72,6 +73,15 @@ index file, all SHA1 references in .git/refs/*, and =
-all reflogs (unless
- 	a blob, the contents are written into the file, rather than
- 	its object name.
+> This data is still insufficient to resume from. A correct solution
+> would allow you to resume in the middle of an object, which means we
+> also need to store some sort of indicator of which representation was
+> chosen from an existing pack file for object reuse. Which adds more
+> data to the stream. And then there is the not so simple problem of ho=
+w
+> to resume in the middle of an object that was being recompressed on
+> the fly, such as a large loose object.
+
+Well, so you wouldn't be able to just concatenate packs^W received
+data.  Still it should be possible to "repair" halfway downloaded
+partial pack...
 =20
-+--progress::
-+--no-progress::
-+	When fsck is run in a terminal, it will show the progress.
-+	These options can force progress to be shown or not
-+	regardless terminal check.
-++
-+Progress is not shown when --verbose is used. --progress is ignored
-+in this case.
-+
- It tests SHA1 and general object sanity, and it does full tracking of
- the resulting reachability and everything else. It prints out any
- corruption it finds (missing or bad objects), and if you use the
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 0603f64..c4b1ca6 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -11,6 +11,7 @@
- #include "fsck.h"
- #include "parse-options.h"
- #include "dir.h"
-+#include "progress.h"
-=20
- #define REACHABLE 0x0001
- #define SEEN      0x0002
-@@ -27,6 +28,7 @@ static const char *head_points_at;
- static int errors_found;
- static int write_lost_and_found;
- static int verbose;
-+static int show_progress =3D -1;
- #define ERROR_OBJECT 01
- #define ERROR_REACHABLE 02
- #define ERROR_PACK 04
-@@ -138,7 +140,11 @@ static int traverse_one_object(struct object *obj)
-=20
- static int traverse_reachable(void)
- {
-+	struct progress *progress =3D NULL;
-+	unsigned int nr =3D 0;
- 	int result =3D 0;
-+	if (show_progress)
-+		progress =3D start_progress_delay("Checking connectivity", 0, 0, 2);
- 	while (pending.nr) {
- 		struct object_array_entry *entry;
- 		struct object *obj;
-@@ -146,7 +152,9 @@ static int traverse_reachable(void)
- 		entry =3D pending.objects + --pending.nr;
- 		obj =3D entry->item;
- 		result |=3D traverse_one_object(obj);
-+		display_progress(progress, ++nr);
- 	}
-+	stop_progress(&progress);
- 	return !!result;
- }
-=20
-@@ -530,15 +538,20 @@ static void get_default_heads(void)
- static void fsck_object_dir(const char *path)
- {
- 	int i;
-+	struct progress *progress =3D NULL;
-=20
- 	if (verbose)
- 		fprintf(stderr, "Checking object directory\n");
-=20
-+	if (show_progress)
-+		progress =3D start_progress("Checking object directories", 256);
- 	for (i =3D 0; i < 256; i++) {
- 		static char dir[4096];
- 		sprintf(dir, "%s/%02x", path, i);
- 		fsck_dir(i, dir);
-+		display_progress(progress, i+1);
- 	}
-+	stop_progress(&progress);
- 	fsck_sha1_list();
- }
-=20
-@@ -609,6 +622,7 @@ static struct option fsck_opts[] =3D {
- 	OPT_BOOLEAN(0, "strict", &check_strict, "enable more strict checking"=
-),
- 	OPT_BOOLEAN(0, "lost-found", &write_lost_and_found,
- 				"write dangling objects in .git/lost-found"),
-+	OPT_BOOL   (0, "progress", &show_progress, "show progress"),
- 	OPT_END(),
- };
-=20
-@@ -621,6 +635,12 @@ int cmd_fsck(int argc, const char **argv, const ch=
-ar *prefix)
- 	read_replace_refs =3D 0;
-=20
- 	argc =3D parse_options(argc, argv, prefix, fsck_opts, fsck_usage, 0);
-+
-+	if (show_progress =3D=3D -1)
-+		show_progress =3D isatty(2);
-+	if (verbose)
-+		show_progress =3D 0;
-+
- 	if (write_lost_and_found) {
- 		check_full =3D 1;
- 		include_reflogs =3D 0;
-@@ -640,12 +660,28 @@ int cmd_fsck(int argc, const char **argv, const c=
-har *prefix)
-=20
- 	if (check_full) {
- 		struct packed_git *p;
-+		uint32_t total =3D 0, count =3D 0;
-+		struct progress *progress =3D NULL;
-=20
- 		prepare_packed_git();
--		for (p =3D packed_git; p; p =3D p->next)
-+
-+		if (show_progress) {
-+			for (p =3D packed_git; p; p =3D p->next) {
-+				if (open_pack_index(p))
-+					continue;
-+				total +=3D p->num_objects;
-+			}
-+
-+			progress =3D start_progress("Checking objects", total);
-+		}
-+		for (p =3D packed_git; p; p =3D p->next) {
- 			/* verify gives error messages itself */
--			if (verify_pack(p, fsck_obj_buffer))
-+			if (verify_pack(p, fsck_obj_buffer,
-+					progress, count))
- 				errors_found |=3D ERROR_PACK;
-+			count +=3D p->num_objects;
-+		}
-+		stop_progress(&progress);
- 	}
-=20
- 	heads =3D 0;
-diff --git a/pack-check.c b/pack-check.c
-index 372d6b2..a3262af 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -1,6 +1,7 @@
- #include "cache.h"
- #include "pack.h"
- #include "pack-revindex.h"
-+#include "progress.h"
-=20
- struct idx_entry {
- 	off_t                offset;
-@@ -43,7 +44,9 @@ int check_pack_crc(struct packed_git *p, struct pack_=
-window **w_curs,
-=20
- static int verify_packfile(struct packed_git *p,
- 			   struct pack_window **w_curs,
--			   verify_fn fn)
-+			   verify_fn fn,
-+			   struct progress *progress, uint32_t base_count)
-+
- {
- 	off_t index_size =3D p->index_size;
- 	const unsigned char *index_base =3D p->index_data;
-@@ -136,8 +139,12 @@ static int verify_packfile(struct packed_git *p,
- 			if (eaten)
- 				data =3D NULL;
- 		}
-+		if (((base_count + i) & 1023) =3D=3D 0)
-+			display_progress(progress, base_count + i);
- 		free(data);
-+
- 	}
-+	display_progress(progress, base_count + i);
- 	free(entries);
-=20
- 	return err;
-@@ -166,7 +173,8 @@ int verify_pack_index(struct packed_git *p)
- 	return err;
- }
-=20
--int verify_pack(struct packed_git *p, verify_fn fn)
-+int verify_pack(struct packed_git *p, verify_fn fn,
-+		struct progress *progress, uint32_t base_count)
- {
- 	int err =3D 0;
- 	struct pack_window *w_curs =3D NULL;
-@@ -175,7 +183,7 @@ int verify_pack(struct packed_git *p, verify_fn fn)
- 	if (!p->index_data)
- 		return -1;
-=20
--	err |=3D verify_packfile(p, &w_curs, fn);
-+	err |=3D verify_packfile(p, &w_curs, fn, progress, base_count);
- 	unuse_pack(&w_curs);
-=20
- 	return err;
-diff --git a/pack.h b/pack.h
-index 70f3c29..324a1d7 100644
---- a/pack.h
-+++ b/pack.h
-@@ -71,12 +71,13 @@ struct pack_idx_entry {
- };
-=20
-=20
-+struct progress;
- typedef int (*verify_fn)(const unsigned char*, enum object_type, unsig=
-ned long, void*, int*);
-=20
- extern const char *write_idx_file(const char *index_name, struct pack_=
-idx_entry **objects, int nr_objects, const struct pack_idx_option *, un=
-signed char *sha1);
- extern int check_pack_crc(struct packed_git *p, struct pack_window **w=
-_curs, off_t offset, off_t len, unsigned int nr);
- extern int verify_pack_index(struct packed_git *);
--extern int verify_pack(struct packed_git *, verify_fn fn);
-+extern int verify_pack(struct packed_git *, verify_fn fn, struct progr=
-ess *, uint32_t);
- extern void fixup_pack_header_footer(int, unsigned char *, const char =
-*, uint32_t, unsigned char *, off_t);
- extern char *index_pack_lockfile(int fd);
- extern int encode_in_pack_object_header(enum object_type, uintmax_t, u=
-nsigned char *);
+Just my 2 eurocents^W groszy.
 --=20
-1.7.4.74.g639db
+Jakub Nar=EAbski
