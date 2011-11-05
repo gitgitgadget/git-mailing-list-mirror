@@ -1,52 +1,83 @@
-From: Nix <nix@esperi.org.uk>
-Subject: Re: [PATCH na/strtoimax] Compatibility: declare strtoimax() under NO_STRTOUMAX
-Date: Sat, 05 Nov 2011 15:38:22 +0000
-Message-ID: <87ty6i1swh.fsf@spindle.srvr.nix>
-References: <4EB5583E.2030306@kdbg.org>
-Mime-Version: 1.0
-Content-Type: text/plain
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH 0/5] Sequencer: working around historical mistakes
+Date: Sat,  5 Nov 2011 21:59:41 +0530
+Message-ID: <1320510586-3940-1-git-send-email-artagnon@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Nov 05 17:25:12 2011
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Nov 05 17:31:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RMj3Q-0002DS-47
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Nov 2011 17:25:12 +0100
+	id 1RMj9l-0005Gc-J5
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Nov 2011 17:31:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752670Ab1KEQZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Nov 2011 12:25:05 -0400
-Received: from icebox.esperi.org.uk ([81.187.191.129]:51411 "EHLO
-	mail.esperi.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750804Ab1KEQZE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Nov 2011 12:25:04 -0400
-X-Greylist: delayed 2795 seconds by postgrey-1.27 at vger.kernel.org; Sat, 05 Nov 2011 12:25:04 EDT
-Received: from esperi.org.uk (nix@spindle.srvr.nix [192.168.14.15])
-	by mail.esperi.org.uk (8.14.5/8.14.5) with ESMTP id pA5FcMPP024189;
-	Sat, 5 Nov 2011 15:38:22 GMT
-Received: (from nix@localhost)
-	by esperi.org.uk (8.14.5/8.14.5/Submit) id pA5FcMq3011090;
-	Sat, 5 Nov 2011 15:38:22 GMT
-Emacs: anything free is worth what you paid for it.
-In-Reply-To: <4EB5583E.2030306@kdbg.org> (Johannes Sixt's message of "Sat, 05
-	Nov 2011 16:37:34 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.90 (gnu/linux)
-X-DCC-URT-Metrics: spindle 1060; Body=3 Fuz1=3 Fuz2=3
+	id S1752888Ab1KEQbk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Nov 2011 12:31:40 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:57013 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751252Ab1KEQbk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Nov 2011 12:31:40 -0400
+Received: by ywf7 with SMTP id 7so3621338ywf.19
+        for <git@vger.kernel.org>; Sat, 05 Nov 2011 09:31:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=zaal/JtTwhDCg+cxf9MWplluyI09rZ3Q3r7qVs06RkQ=;
+        b=X7gYw+cI9xgJz80/F8Af1CsDqwrwC9U9lB/nCJI8HAN3Ilp6sTJdYwJgrInR152mlt
+         sx+DfuRibRUzyEE4yhUWxndNStOtM6ZXhvFPEHtj6aAL77/U5/UIrH4CyYkDCI0k95nD
+         yrmJvpnXi3HkEegJXvGwkJpJL28vSxxJauaqs=
+Received: by 10.42.137.6 with SMTP id w6mr27436933ict.5.1320510699343;
+        Sat, 05 Nov 2011 09:31:39 -0700 (PDT)
+Received: from localhost.localdomain ([203.110.240.205])
+        by mx.google.com with ESMTPS id p10sm19248815pbd.15.2011.11.05.09.31.35
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 05 Nov 2011 09:31:38 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.351.gb35ac.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184859>
 
-On 5 Nov 2011, Johannes Sixt said:
+Hi,
 
-> Commit f696543d (Add strtoimax() compatibility function) introduced an
-> implementation of the function, but forgot to add a declaration.
+As described in the discussion following $gmane/179304/focus=179383,
+we have decided to handle historical hacks in the sequencer itself.
+This series that follows is one step in the right direction.
 
-Oh, my apologies. (How did my testing miss that? No -Wall, I bet.)
+- Part 1/5 makes the gigantic move required to create the sequencer.
+If you need an excuse to celebrate, wait till this gets merged :)
+- Part 5/5 can be considered as the "ultimate objective" of the
+series.  I first wrote this part, and then wrote the other parts to
+make tests pass.
+- Parts 3/5 and 4/5 are ugly!  Causes heartburn.
+
+Immediate shortcomings of this iteration:
+1. No tests yet.  I want to see if it's possible to make this less
+ugly first.
+2. This series depends on rr/revert-cherry-pick, but doesn't apply to
+the current 'next'- sorry, rebasing is a massive pita due to 1/5.
+
+Thanks for reading.
+
+-- Ram
+
+Ramkumar Ramachandra (5):
+  sequencer: factor code out of revert builtin
+  sequencer: remove CHERRY_PICK_HEAD with sequencer state
+  sequencer: sequencer state is useless without todo
+  sequencer: handle single commit pick separately
+  sequencer: revert d3f4628e
+
+ builtin/revert.c                |  821 +--------------------------------------
+ sequencer.c                     |  832 ++++++++++++++++++++++++++++++++++++++-
+ sequencer.h                     |   26 ++
+ t/t3510-cherry-pick-sequence.sh |   24 --
+ 4 files changed, 847 insertions(+), 856 deletions(-)
 
 -- 
-NULL && (void)
+1.7.6.351.gb35ac.dirty
