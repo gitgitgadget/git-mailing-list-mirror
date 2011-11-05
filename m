@@ -1,67 +1,104 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] Introduce gc.autowarnonly config option
-Date: Sat, 5 Nov 2011 15:22:11 +0100
-Message-ID: <CAGdFq_jQ_2NueWD5YqXb-nuT6boOw66TJ0+m5mFPqenND2RBsQ@mail.gmail.com>
-References: <20111105140529.3A6CE9004A@inscatolati.net>
+From: Fernando Vezzosi <buccia@repnz.net>
+Subject: [PATCH 2/1] gc --auto: warn gc will soon run, give users a chance to run
+ manually
+Date: Sat, 5 Nov 2011 17:33:32 +0700
+Message-ID: <20111105151225.EE3869004A@inscatolati.net>
+References: <1320489212-524-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Fernando Vezzosi <buccia@repnz.net>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 05 15:22:58 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 05 16:21:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RMh97-0006ku-Gs
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Nov 2011 15:22:57 +0100
+	id 1RMi3U-00081C-OT
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Nov 2011 16:21:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751810Ab1KEOWx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Nov 2011 10:22:53 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:57133 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751129Ab1KEOWw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Nov 2011 10:22:52 -0400
-Received: by qao25 with SMTP id 25so1097qao.19
-        for <git@vger.kernel.org>; Sat, 05 Nov 2011 07:22:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=86dPgdgsJWTiUjs/nRS59HXPXrQ8Pjab4Nou3bdc61E=;
-        b=v45bpnRbwbNKhUQoJIjkPU2V0Hp7t3Ntf0PkClG7ny2PfTUeep15B/zj5PvOc6BYKc
-         5+Zguh9WpN3b3cq9fXf1n8iuE+R3yNmFROLnaGo7csyyDlC7obiZ14mLLVxhSyo7rqMi
-         X9PU8FpDnvFbnTqqtabAekeep0Xgq3G+CW6/o=
-Received: by 10.182.45.102 with SMTP id l6mr450552obm.0.1320502972053; Sat, 05
- Nov 2011 07:22:52 -0700 (PDT)
-Received: by 10.182.52.3 with HTTP; Sat, 5 Nov 2011 07:22:11 -0700 (PDT)
+	id S1751797Ab1KEPM1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Nov 2011 11:12:27 -0400
+Received: from www.inscatolati.net ([212.45.155.126]:36888 "EHLO
+	inscatolati.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751129Ab1KEPM1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Nov 2011 11:12:27 -0400
+Received: by inscatolati.net (Postfix, from userid 1004)
+	id EE3869004A; Sat,  5 Nov 2011 16:12:25 +0100 (CET)
 In-Reply-To: <20111105140529.3A6CE9004A@inscatolati.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184851>
 
-Heya,
+Signed-off-by: Fernando Vezzosi <buccia@repnz.net>
+---
 
-On Sat, Nov 5, 2011 at 14:39, Fernando Vezzosi <buccia@repnz.net> wrote=
-:
-> When `git gc --auto` would detect need for garbage collection to run,=
- it
-> would just run. =C2=A0With this patch, enabling gc.autowarnonly will =
-instead
-> make it just emit a warning.
->
-> Reviewed-by: Sverre Rabbelier <srabbelier@gmail.com>
-> Signed-off-by: Fernando Vezzosi <buccia@repnz.net>
+Rebased Nguy=E1=BB=85n's patch on top of mine.
 
-Highly relevant considering recent (3 hours ago) patch that instead
-adds a warning that gc will happen soon.
+ builtin/gc.c |   19 +++++++++++++++++--
+ 1 files changed, 17 insertions(+), 2 deletions(-)
 
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 65b6616..ca620e3 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -25,8 +25,10 @@ static const char * const builtin_gc_usage[] =3D {
+ static int pack_refs =3D 1;
+ static int aggressive_window =3D 250;
+ static int gc_auto_threshold =3D 6700;
++static int gc_warn_auto_threshold =3D 6600;
+ static int gc_auto_pack_limit =3D 50;
+ static int gc_auto_warn_only =3D 0;
++static int gc_warn_auto_pack_limit =3D 45;
+ static const char *prune_expire =3D "2.weeks.ago";
+=20
+ #define MAX_ADD 10
+@@ -51,10 +53,12 @@ static int gc_config(const char *var, const char *v=
+alue, void *cb)
+ 	}
+ 	if (!strcmp(var, "gc.auto")) {
+ 		gc_auto_threshold =3D git_config_int(var, value);
++		gc_warn_auto_threshold =3D gc_auto_threshold - 100;
+ 		return 0;
+ 	}
+ 	if (!strcmp(var, "gc.autopacklimit")) {
+ 		gc_auto_pack_limit =3D git_config_int(var, value);
++		gc_warn_auto_pack_limit =3D gc_auto_pack_limit - 5;
+ 		return 0;
+ 	}
+ 	if (!strcmp(var, "gc.pruneexpire")) {
+@@ -123,7 +127,13 @@ static int too_many_loose_objects(void)
+ 		}
+ 	}
+ 	closedir(dir);
+-	return needed;
++	if (needed)
++		return 1;
++
++	auto_threshold =3D (gc_warn_auto_threshold + 255) / 256;
++	if (num_loose > auto_threshold)
++		warning(_("Too many loose objects. \"git gc\" will soon run automati=
+cally"));
++	return 0;
+ }
+=20
+ static int too_many_packs(void)
+@@ -146,7 +156,12 @@ static int too_many_packs(void)
+ 		 */
+ 		cnt++;
+ 	}
+-	return gc_auto_pack_limit <=3D cnt;
++	if (gc_auto_pack_limit <=3D cnt)
++		return 1;
++
++	if (gc_warn_auto_pack_limit <=3D cnt)
++		warning(_("Too many packs, \"git gc\" will soon run automatically.")=
+);
++	return 0;
+ }
+=20
+ static int need_to_gc(void)
 --=20
-Cheers,
-
-Sverre Rabbelier
+1.7.5.3
