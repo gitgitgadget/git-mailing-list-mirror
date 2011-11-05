@@ -1,78 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: share object storage for multiple clones of different
- repositories
-Date: Fri, 04 Nov 2011 19:26:11 -0700
-Message-ID: <7vobwr9uf0.fsf@alter.siamese.dyndns.org>
-References: <j91rcq$1uo$1@dough.gmane.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 4/4] fsck: print progress
+Date: Sat, 5 Nov 2011 10:26:48 +0700
+Message-ID: <CACsJy8AoEa3gR5dzTcscJRqjrfkv5_J+7Q2UVaYSjvSQyKJssA@mail.gmail.com>
+References: <1320421670-518-1-git-send-email-pclouds@gmail.com>
+ <1320421670-518-5-git-send-email-pclouds@gmail.com> <20111104201416.GA26591@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Gelonida N <gelonida@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 05 03:26:20 2011
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Nov 05 04:32:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RMVxb-0007YN-Nl
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Nov 2011 03:26:20 +0100
+	id 1RMWzQ-0001lr-41
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Nov 2011 04:32:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752916Ab1KEC0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Nov 2011 22:26:14 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47663 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752879Ab1KEC0O (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Nov 2011 22:26:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4915A67CA;
-	Fri,  4 Nov 2011 22:26:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hBgCIO0T3/6V/CG6jS+phog/ppk=; b=ZWnPvf
-	2KBvXMkgYZCArHUBuhD5gUqvsMm5OUnF5JsxDpvR/Vi2Y2Nkt/ovGkeA1eJh6jTz
-	x570EAKvGfLLNb9DRXKn5zQCLGzW2LiwwfoXz1SdJ9iduscUbB4sRDMNylPXPdM/
-	L5icFST394LvF+4xvUcW9vjpVbtwk5BIhCTes=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hPHn4aH8MMrjptH/aq+u8toQ5zlV4o5u
-	KanFjLRjlYp0ZTTTwSLxTSakwPA+rSbniiuOj3aTxEwP6q0uXQGSWCnIAeZxBV+K
-	aDk+tLCS3W4BLwLcDMcZoEZwfAY3mCXYiaGXZgFTO7iAaR79FAyxNwi903k/xakS
-	9S+YPrvye6o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3DCAC67C9;
-	Fri,  4 Nov 2011 22:26:13 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AE7E167C8; Fri,  4 Nov 2011
- 22:26:12 -0400 (EDT)
-In-Reply-To: <j91rcq$1uo$1@dough.gmane.org> (Gelonida N.'s message of "Sat,
- 05 Nov 2011 00:10:18 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 87A62A54-0755-11E1-A2F9-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753508Ab1KED1V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Nov 2011 23:27:21 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:42586 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753429Ab1KED1U (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Nov 2011 23:27:20 -0400
+Received: by bke11 with SMTP id 11so2481296bke.19
+        for <git@vger.kernel.org>; Fri, 04 Nov 2011 20:27:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=6KsPXXItS1KmamfH8ivFJI6FSPGANQ74EmoXtQJPgKI=;
+        b=ch/+TrqrFViz+vWRDXhOz7aGCtpx5DRCjs4qdf3VfENxr1aYhbrp3qzterrC3IcHfJ
+         oCM4npmWjiN9RNYP+l0JPL60Nix49ePXBdRCwo+ribIwshKIh411Txn3K7qvGk6Uqq1K
+         8CXtO7/sc6LBKzHptrpI2CneySlhhNhBHth0U=
+Received: by 10.204.139.8 with SMTP id c8mr13480421bku.97.1320463639209; Fri,
+ 04 Nov 2011 20:27:19 -0700 (PDT)
+Received: by 10.204.177.79 with HTTP; Fri, 4 Nov 2011 20:26:48 -0700 (PDT)
+In-Reply-To: <20111104201416.GA26591@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184814>
 
-Gelonida N <gelonida@gmail.com> writes:
-
-> SHARED_STORAGE=$HOME/shared_storage
-> mkdir $SHARED_STORAGE
+2011/11/5 Jeff King <peff@peff.net>:
+> Thanks, this is a good place to put a progress meter, too. If you're
+> feeling like pushing this topic further, "git prune" might be a good
+> place for a progress meter, too. It does a similar traversal[1] for
+> reachability, and makes "git gc" appear to hang at the end (we have nice
+> progress meters for packing, but it takes something like 25 seconds to
+> run "git prune" at the end, during which we are silent).
 >
-> git clone remotehost1:repo1
-> cd repo1
-> rsync -av .git/objects $SHARED_REPO
+> -Peff
+>
+> [1] I wonder why fsck doesn't use mark_reachable from reachable.c.
 
-Up to this part it is probably OK.  Repeat that for all your local
-repositories to collect all objects in $HOME/shared_storage.
-
-After doing that, do this in all of your local repositories:
-
-	rm -rf .git/objects
-        mkdir -p .git/objects/info
-        echo $HOME/shared/storage >.git/objects/info/alternates
-
-The reason why nobody should follow your original recipe is because any
-"git gc"/"git repack" in any of your local repositories would break others
-with that approach.
+Thanks. I'll have a look.
+-- 
+Duy
