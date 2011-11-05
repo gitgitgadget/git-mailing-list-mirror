@@ -1,104 +1,74 @@
-From: Fernando Vezzosi <buccia@repnz.net>
-Subject: [PATCH 2/1] gc --auto: warn gc will soon run, give users a chance to run
- manually
-Date: Sat, 5 Nov 2011 17:33:32 +0700
-Message-ID: <20111105154411.079F69004A@inscatolati.net>
-References: <1320489212-524-1-git-send-email-pclouds@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] pull: introduce a pull.rebase option to enable
+ --rebase
+Date: Sat, 5 Nov 2011 10:55:52 -0500 (CDT)
+Message-ID: <alpine.DEB.1.00.1111051054380.32316@s15462909.onlinehome-server.info>
+References: <1320507358-3407-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 05 16:48:32 2011
+Content-Type: MULTIPART/MIXED; BOUNDARY="1784107012-1464368307-1320508552=:32316"
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Eric Herman <eric@freesa.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Fernando Vezzosi <buccia@repnz.net>
+To: =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 05 16:56:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RMiTt-0003Kj-4b
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Nov 2011 16:48:29 +0100
+	id 1RMibA-0006Uf-2V
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Nov 2011 16:56:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752708Ab1KEPoN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Nov 2011 11:44:13 -0400
-Received: from www.inscatolati.net ([212.45.155.126]:43140 "EHLO
-	inscatolati.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751984Ab1KEPoM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Nov 2011 11:44:12 -0400
-Received: by inscatolati.net (Postfix, from userid 1004)
-	id 079F69004A; Sat,  5 Nov 2011 16:44:10 +0100 (CET)
-In-Reply-To: <20111105140529.3A6CE9004A@inscatolati.net>
+	id S1752916Ab1KEPzz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Nov 2011 11:55:55 -0400
+Received: from mailout-de.gmx.net ([213.165.64.23]:60315 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751641Ab1KEPzz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Nov 2011 11:55:55 -0400
+Received: (qmail invoked by alias); 05 Nov 2011 15:55:52 -0000
+Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
+  by mail.gmx.net (mp011) with SMTP; 05 Nov 2011 16:55:52 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+a469pB3Saq9bl2qEoopnu0VYo2wy1VgHULy0OrX
+	Rrm6PgU0GI7G5T
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <1320507358-3407-1-git-send-email-avarab@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184855>
 
-Signed-off-by: Fernando Vezzosi <buccia@repnz.net>
----
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Rebased Nguy=E1=BB=85n's patch on top of mine.
+--1784107012-1464368307-1320508552=:32316
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
- builtin/gc.c |   19 +++++++++++++++++--
- 1 files changed, 17 insertions(+), 2 deletions(-)
+Hi,
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 65b6616..ca620e3 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -25,8 +25,10 @@ static const char * const builtin_gc_usage[] =3D {
- static int pack_refs =3D 1;
- static int aggressive_window =3D 250;
- static int gc_auto_threshold =3D 6700;
-+static int gc_warn_auto_threshold =3D 6600;
- static int gc_auto_pack_limit =3D 50;
- static int gc_auto_warn_only =3D 0;
-+static int gc_warn_auto_pack_limit =3D 45;
- static const char *prune_expire =3D "2.weeks.ago";
-=20
- #define MAX_ADD 10
-@@ -51,10 +53,12 @@ static int gc_config(const char *var, const char *v=
-alue, void *cb)
- 	}
- 	if (!strcmp(var, "gc.auto")) {
- 		gc_auto_threshold =3D git_config_int(var, value);
-+		gc_warn_auto_threshold =3D gc_auto_threshold - 100;
- 		return 0;
- 	}
- 	if (!strcmp(var, "gc.autopacklimit")) {
- 		gc_auto_pack_limit =3D git_config_int(var, value);
-+		gc_warn_auto_pack_limit =3D gc_auto_pack_limit - 5;
- 		return 0;
- 	}
- 	if (!strcmp(var, "gc.pruneexpire")) {
-@@ -123,7 +127,13 @@ static int too_many_loose_objects(void)
- 		}
- 	}
- 	closedir(dir);
--	return needed;
-+	if (needed)
-+		return 1;
-+
-+	auto_threshold =3D (gc_warn_auto_threshold + 255) / 256;
-+	if (num_loose > auto_threshold)
-+		warning(_("Too many loose objects. \"git gc\" will soon run automati=
-cally"));
-+	return 0;
- }
-=20
- static int too_many_packs(void)
-@@ -146,7 +156,12 @@ static int too_many_packs(void)
- 		 */
- 		cnt++;
- 	}
--	return gc_auto_pack_limit <=3D cnt;
-+	if (gc_auto_pack_limit <=3D cnt)
-+		return 1;
-+
-+	if (gc_warn_auto_pack_limit <=3D cnt)
-+		warning(_("Too many packs, \"git gc\" will soon run automatically.")=
-);
-+	return 0;
- }
-=20
- static int need_to_gc(void)
---=20
-1.7.5.3
+On Sat, 5 Nov 2011, Ævar Arnfjörð Bjarmason wrote:
+
+> Currently we either need to set branch.<name>.rebase for existing 
+> branches if we'd like "git pull" to mean "git pull --rebase", or have 
+> the forethought of setting "branch.autosetuprebase" before we create the 
+> branch.
+> 
+> But there's no way to globally configure "git pull" to mean "git pull 
+> --rebase" for existing branches, introduce a "pull.rebase" option to do 
+> that.
+> 
+> This option will be considered at a lower priority than 
+> branch.<name>.rebase, i.e. we could set pull.rebase=true and 
+> branch.<name>.rebase=false and the latter configuration option would 
+> win.
+
+Nice.
+
+Ciao,
+Johannes
+--1784107012-1464368307-1320508552=:32316--
