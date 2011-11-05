@@ -1,102 +1,65 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: How do I get a squashed diff for review
-Date: Sat, 5 Nov 2011 02:15:15 -0700
-Message-ID: <20111105091514.GA97860@gmail.com>
-References: <CAH_EFyZ_0JB0-5cw-6VEJkfJhSjbmA=3upByQ3YpmnVSvR+9Pg@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv2] Add options to specify snapshot file name, prefix
+Date: Sat, 5 Nov 2011 10:18:22 +0100
+Message-ID: <201111051018.22995.jnareb@gmail.com>
+References: <1320302318-28315-1-git-send-email-dermoth@aei.ca> <4EB488C9.2050301@aei.ca> <201111050947.15440.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Roland Kaufmann <rlndkfmn+git@gmail.com>
-To: Alexander Usov <a.s.usov@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 05 10:15:59 2011
+Content-Type: text/plain;
+  charset="iso-8859-4"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Thomas Guyot-Sionnest <dermoth@aei.ca>
+X-From: git-owner@vger.kernel.org Sat Nov 05 10:18:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RMcM1-0000Tm-QL
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Nov 2011 10:15:58 +0100
+	id 1RMcOQ-0001RK-Ix
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Nov 2011 10:18:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752129Ab1KEJPq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Nov 2011 05:15:46 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:53665 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752064Ab1KEJPp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Nov 2011 05:15:45 -0400
-Received: by ywf7 with SMTP id 7so3352545ywf.19
-        for <git@vger.kernel.org>; Sat, 05 Nov 2011 02:15:44 -0700 (PDT)
+	id S1752166Ab1KEJSV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Nov 2011 05:18:21 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:61911 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752064Ab1KEJSU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Nov 2011 05:18:20 -0400
+Received: by faao14 with SMTP id o14so3418938faa.19
+        for <git@vger.kernel.org>; Sat, 05 Nov 2011 02:18:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=yf949wZkCJggxbQP+UCI7LQMzPafKlEIWD0Ei76eGCw=;
-        b=DUKdq/LyZO6pa8t3G5Y81XZULwmGVCV8gCI3/Ysz41lN0Pi6cLBmwBMHxQF+XUvWj2
-         PxWXTAut1arXCScgy8dEpq2HAU+sGYDdhYW0+n7REAqd1/JVi1m6m5oEczb9XX1OUp5Z
-         3ayG5epIQSRG1Uj38dbcH6uw0p8flB49HrotU=
-Received: by 10.50.36.161 with SMTP id r1mr19693354igj.37.1320484544808;
-        Sat, 05 Nov 2011 02:15:44 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id t5sm17114174pbb.13.2011.11.05.02.15.42
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=Qh7lmHrYfmNM0FXvPMgXkOSEt2ZVQpguWRZo9QvHMag=;
+        b=Ed0VW3GfY3vp6maE/GBwBOH6vpf+N9HjeCpmmNi+OP700/A9Jjvn3Y7vmBfZhFhNMU
+         Tdf2sC6rWVVAZ7GI9haAJt7flLDFZGLwowco9hvFdyA7/vKddg6vugOO5xPYCYyaqk0P
+         wB5zKWk3vBCoP0jWUkf0LZXPKnhQkuGm+unKQ=
+Received: by 10.223.6.129 with SMTP id 1mr20002661faz.17.1320484699583;
+        Sat, 05 Nov 2011 02:18:19 -0700 (PDT)
+Received: from [192.168.1.13] (abwn145.neoplus.adsl.tpnet.pl. [83.8.237.145])
+        by mx.google.com with ESMTPS id y17sm20683992faa.22.2011.11.05.02.18.17
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 05 Nov 2011 02:15:43 -0700 (PDT)
+        Sat, 05 Nov 2011 02:18:18 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <201111050947.15440.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <CAH_EFyZ_0JB0-5cw-6VEJkfJhSjbmA=3upByQ3YpmnVSvR+9Pg@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184840>
 
-On Fri, Nov 04, 2011 at 07:15:01PM +0000, Alexander Usov wrote:
-> Hi,
->=20
-> I'm wondering if there is an easy way to get a squashed diff of the
-> changes done on the=C2=A0feature=C2=A0branch for review.
-> In the simple cases (where feature branch is linear) there is an
-> absolutely fantastic way to get a patch for review:
-> git diff master...feature
->=20
-> However if the feature branch happened to be long-lived and had
-> mainline merged into it it's not going to work -- the
-> resulting diff would contain changes from the merge. The way we are
-> doing things now is to merge master into it
-> once more and then diff, however this is somewhat cumbersome. Is ther=
-e
-> easier way to do it?
+Jakub Narebski wrote:
 
-"git diff A...B" is equivalent to "git diff <merge-base A B> B".
-The merge-base can be found with "git merge-base A B"
-and is simply the common ancestor of A and B.
+> So should we expect a re-roll?
 
-Diffing against the merge base (which doesn't contain the merged
-work done in master) is why you're seeing the merges in the diff.
+By the way, those new query parameters ('sn' and 'sp') should IMHO
+be documented in Documentation/gitweb.txt i.e. gitweb(1) manpage.
 
-It sounds like you want the simpler form of "diff" which doesn't
-do any merge-base calculation.
+Also, shouldn't you infer snapshot format from snapshot name 
+("git archive" does part of that... but not the compression part)?
 
-e.g. "git diff A B" and its synonymn "git diff A..B".
-
-
-> And while we are on the topic -- is there a tool for git similar to "=
-bzr qdiff"?
-> It's a simple graphical diff viewer with 2 nice features -- it shows
-> complete diff (of multiple files) in a single window and
-> has a checkbox to switch between diff-only & full-text modes.
-> I have seen difftool, but it seems to work on per-file basis, and
-> something like "vi <(git diff ...)" lacks the easy way to
-> switch into full-text mode.
-
-difftool is a wrapper around specialized diff tools, so the
-ability to switch from diff to full view is tool-dependent.
-
-A contrib "git-dirdiff" script was posted to the list recently.
-It builds upon diff tools that can diff directory trees.
-
-http://thread.gmane.org/gmane.comp.version-control.git/184528
-
-There may be a newer version of this script, too.  Roland would
-know for sure...
---=20
-					David
+-- 
+Jakub Narebski
+Poland
