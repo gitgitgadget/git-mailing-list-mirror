@@ -1,134 +1,128 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH] git-p4: ignore apple filetype
-Date: Sat, 5 Nov 2011 13:36:07 -0400
-Message-ID: <20111105173607.GA12532@arf.padd.com>
-References: <CAOk9v+-==GwDQaZ=4BW1QfEF7+5SfhNF409Xom0bHdT_qKaiFA@mail.gmail.com>
- <20111101020841.GA8116@arf.padd.com>
- <CAOk9v+_xXRGAGWg2L5u=r9qBS=H+ZmdF=TwumSyq7WKf-15okw@mail.gmail.com>
- <loom.20111102T153631-769@post.gmane.org>
- <CAOk9v+_xaS_Y1m17TROOSjgiscT+QEJWbpZbAZFmh8_tAviF6Q@mail.gmail.com>
- <CAOpHH-W1JO9PLsyp2hQxfr6eyKRr+=pMkaDikV5NcFwF98Miow@mail.gmail.com>
- <20111104183957.GB18517@padd.com>
+From: Alexander Usov <a.s.usov@gmail.com>
+Subject: Re: How do I get a squashed diff for review
+Date: Sat, 5 Nov 2011 17:56:58 +0000
+Message-ID: <CAH_EFyYUja4cKY5YM4Uqn-bnQZCnhnJCNsxGsUitL+SSqj9qxQ@mail.gmail.com>
+References: <CAH_EFyZ_0JB0-5cw-6VEJkfJhSjbmA=3upByQ3YpmnVSvR+9Pg@mail.gmail.com>
+ <20111105091514.GA97860@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Wookey <michaelwookey@gmail.com>,
-	Vitor Antunes <vitor.hda@gmail.com>,
-	Luke Diamand <luke@diamand.org>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Nov 05 18:37:31 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Roland Kaufmann <rlndkfmn+git@gmail.com>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 05 18:57:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RMkBP-0001HM-Ea
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Nov 2011 18:37:31 +0100
+	id 1RMkV2-0002IR-5u
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Nov 2011 18:57:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753697Ab1KERgk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Nov 2011 13:36:40 -0400
-Received: from honk.padd.com ([74.3.171.149]:59841 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753359Ab1KERgj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Nov 2011 13:36:39 -0400
-Received: from arf.padd.com (unknown [50.52.169.245])
-	by honk.padd.com (Postfix) with ESMTPSA id 31B6E29E1;
-	Sat,  5 Nov 2011 10:36:37 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id C4F28313D4; Sat,  5 Nov 2011 13:36:07 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20111104183957.GB18517@padd.com>
+	id S1753948Ab1KER5k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Nov 2011 13:57:40 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:55838 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753880Ab1KER5j convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Nov 2011 13:57:39 -0400
+Received: by ywf7 with SMTP id 7so3679031ywf.19
+        for <git@vger.kernel.org>; Sat, 05 Nov 2011 10:57:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=HqdP+XkeEKpuJ6hRJLJxS0OwsHMcci0/xiDsYw+oJBw=;
+        b=nnw1ntG8/ACzsFJurGO/RSVp8qVW9a8FuD0J2nntuAcvUCSeLop+Tj5/XIPQF4D+dw
+         ptxFgEaiy0wltpxfHcoi3PUGo9BI1IbcNAlcUsIlTzd/QTClwW7UIoD2VauIPcBPZmVA
+         anVWTU6Rg2mRPZ8LlLmWLFgRDPgfZwphwGiQo=
+Received: by 10.236.174.105 with SMTP id w69mr26676698yhl.32.1320515859127;
+ Sat, 05 Nov 2011 10:57:39 -0700 (PDT)
+Received: by 10.236.105.231 with HTTP; Sat, 5 Nov 2011 10:56:58 -0700 (PDT)
+In-Reply-To: <20111105091514.GA97860@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184871>
 
-Revert 97a21ca (git-p4: stop ignoring apple filetype, 2011-10-16)
-and add a test case.
+On 5 November 2011 09:15, David Aguilar <davvid@gmail.com> wrote:
+> On Fri, Nov 04, 2011 at 07:15:01PM +0000, Alexander Usov wrote:
+>> Hi,
+>>
+>> However if the feature branch happened to be long-lived and had
+>> mainline merged into it it's not going to work -- the
+>> resulting diff would contain changes from the merge. The way we are
+>> doing things now is to merge master into it
+>> once more and then diff, however this is somewhat cumbersome. Is the=
+re
+>> easier way to do it?
+>
+> "git diff A...B" is equivalent to "git diff <merge-base A B> B".
+> The merge-base can be found with "git merge-base A B"
+> and is simply the common ancestor of A and B.
+>
+> Diffing against the merge base (which doesn't contain the merged
+> work done in master) is why you're seeing the merges in the diff.
+>
+> It sounds like you want the simpler form of "diff" which doesn't
+> do any merge-base calculation.
+>
+> e.g. "git diff A B" and its synonymn "git diff A..B".
 
-Reported-by: Michael Wookey <michaelwookey@gmail.com>
-Signed-off-by: Pete Wyckoff <pw@padd.com>
----
+Just diffing 2 revisions (or trees) won't do the trick. Let me try to e=
+xplain
+what I'm trying to achieve.
 
-This is mostly a revert, but the test moves down a bit to be near
-a similar clause for utf16.  Adding a big comment and test case
-hopefully keeps this code in place in the future.
+Consider the following history:
 
-Michael: if you're willing to test this, I'd appreciate it.  In
-fact, running all the git-p4 unit tests on Mac would be great
-if you have a p4d:
+master: A---B---D---F
+            \    \
+branch:      .-C--E--G
 
-    mac$ ( cd t ; make t98* )
+Now I want to review the changes made in the branch prior to merging it=
+=2E
+What I essentially want to be included in the diff are changes committe=
+d in
+C & G and conflic resolution done in E (if any).
 
- contrib/fast-import/git-p4 |   13 +++++++++++++
- t/t9802-git-p4-filetype.sh |   31 +++++++++++++++++++++++++++++++
- 2 files changed, 44 insertions(+), 0 deletions(-)
+There are few ways that I know of to achieve it:
+- use "git log -p branch ^master " to get a sequence of patches and try=
+ to
+feed them into combinediff tool (part of the diffutils package). This
+will require
+some scripting and I'm not really sure if combinediff would work with
+git patches.
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index f885d70..b975d67 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -1318,6 +1318,19 @@ class P4Sync(Command, P4UserMap):
-             text = p4_read_pipe(['print', '-q', '-o', '-', file['depotFile']])
-             contents = [ text ]
- 
-+        if type_base == "apple":
-+            # Apple filetype files will be streamed as a concatenation of
-+            # its appledouble header and the contents.  This is useless
-+            # on both macs and non-macs.  If using "print -q -o xx", it
-+            # will create "xx" with the data, and "%xx" with the header.
-+            # This is also not very useful.
-+            #
-+            # Ideally, someday, this script can learn how to generate
-+            # appledouble files directly and import those to git, but
-+            # non-mac machines can never find a use for apple filetype.
-+            print "\nIgnoring apple filetype file %s" % file['depotFile']
-+            return
-+
-         # Perhaps windows wants unicode, utf16 newlines translated too;
-         # but this is not doing it.
-         if self.isWindows and type_base == "text":
-diff --git a/t/t9802-git-p4-filetype.sh b/t/t9802-git-p4-filetype.sh
-index 3b358ef..992bb8c 100755
---- a/t/t9802-git-p4-filetype.sh
-+++ b/t/t9802-git-p4-filetype.sh
-@@ -101,6 +101,37 @@ test_expect_success 'keyword file test' '
- 	)
- '
- 
-+build_gendouble() {
-+	cat >gendouble.py <<-\EOF
-+	import sys
-+	import struct
-+	import array
-+
-+	s = array.array("c", '\0' * 26)
-+	struct.pack_into(">L", s,  0, 0x00051607)  # AppleDouble
-+	struct.pack_into(">L", s,  4, 0x00020000)  # version 2
-+	s.tofile(sys.stdout)
-+	EOF
-+}
-+
-+test_expect_success 'ignore apple' '
-+	test_when_finished rm -f gendouble.py &&
-+	build_gendouble &&
-+	(
-+		cd "$cli" &&
-+		test-genrandom apple 1024 >double.png &&
-+		"$PYTHON_PATH" "$TRASH_DIRECTORY/gendouble.py" >%double.png &&
-+		p4 add -t apple double.png &&
-+		p4 submit -d appledouble
-+	) &&
-+	test_when_finished cleanup_git &&
-+	"$GITP4" clone --dest="$git" //depot@all &&
-+	(
-+		cd "$git" &&
-+		test ! -f double.png
-+	)
-+'
-+
- test_expect_success 'kill p4d' '
- 	kill_p4d
- '
--- 
-1.7.7.345.g88d3c
+- "git diff D..branch" would do a trick, but I'm not sure how to
+correctly determine
+D (if I'm to write a script). This would be the last (in topological
+order) commit which is
+reachable from both master & branch. Any suggestions on it?
+
+
+>> And while we are on the topic -- is there a tool for git similar to =
+"bzr qdiff"?
+>> It's a simple graphical diff viewer with 2 nice features -- it shows
+>> complete diff (of multiple files) in a single window and
+>> has a checkbox to switch between diff-only & full-text modes.
+>> I have seen difftool, but it seems to work on per-file basis, and
+>> something like "vi <(git diff ...)" lacks the easy way to
+>> switch into full-text mode.
+>
+> difftool is a wrapper around specialized diff tools, so the
+> ability to switch from diff to full view is tool-dependent.
+>
+> A contrib "git-dirdiff" script was posted to the list recently.
+> It builds upon diff tools that can diff directory trees.
+>
+> http://thread.gmane.org/gmane.comp.version-control.git/184528
+>
+> There may be a newer version of this script, too. =A0Roland would
+> know for sure...
+
+Thanks. Will have a more carefull look at various tools & see if I can
+figure something out.
+
+
+--=20
+Best regards,
+=A0 Alexander.
