@@ -1,83 +1,80 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH] Add abbreviated commit hash to rebase conflict message
-Date: Sat,  5 Nov 2011 15:02:39 +0100
-Message-ID: <1320501759-27236-1-git-send-email-srabbelier@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>
-To: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>,
-	=?UTF-8?q?Jonas=20Flod=C3=A9n?= <jonas@floden.nu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Herman <eric@f
-X-From: git-owner@vger.kernel.org Sat Nov 05 15:15:32 2011
+From: Fernando Vezzosi <buccia@repnz.net>
+Subject: [PATCH] Introduce gc.autowarnonly config option
+Date: Sat, 5 Nov 2011 14:39:07 +0100
+Message-ID: <20111105140529.3A6CE9004A@inscatolati.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 05 15:18:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RMh1v-0003di-7Q
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Nov 2011 15:15:31 +0100
+	id 1RMh4W-0004oI-Q9
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Nov 2011 15:18:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751248Ab1KEODq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Nov 2011 10:03:46 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:41737 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750755Ab1KEODp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Nov 2011 10:03:45 -0400
-Received: by eye27 with SMTP id 27so2738182eye.19
-        for <git@vger.kernel.org>; Sat, 05 Nov 2011 07:03:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=sGOKkr7Lq2ehtWLxv4rvx9xnjt4sFEiPNCEp/wUij2c=;
-        b=Gdwa/0Lsfn3vQJza43wVH8B+tw2uhzxDpw6JD+JAp93pdIM+0Ya82L69mrT95QA60O
-         nwhlVwQa43Ullwtngz4yYmmLR1dKqyrMbcOGtkxZziAIzsqR1F1BClicW4wuu9F2bUwf
-         YZ1F1ofuY9SYf9WqQYROPVtICooVKZVQtwY+c=
-Received: by 10.14.12.16 with SMTP id 16mr137724eey.243.1320501824529;
-        Sat, 05 Nov 2011 07:03:44 -0700 (PDT)
-Received: from laptop-sverre.home (sd4406ed1.adsl.wanadoo.nl. [212.64.110.209])
-        by mx.google.com with ESMTPS id o4sm34158785eeb.0.2011.11.05.07.03.42
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 05 Nov 2011 07:03:43 -0700 (PDT)
-X-Mailer: git-send-email 1.7.8.rc0.36.g67522.dirty
+	id S1751566Ab1KEOR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Nov 2011 10:17:59 -0400
+Received: from www.inscatolati.net ([212.45.155.126]:51583 "EHLO
+	inscatolati.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751311Ab1KEOR6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Nov 2011 10:17:58 -0400
+X-Greylist: delayed 748 seconds by postgrey-1.27 at vger.kernel.org; Sat, 05 Nov 2011 10:17:58 EDT
+Received: by inscatolati.net (Postfix, from userid 1004)
+	id 3A6CE9004A; Sat,  5 Nov 2011 15:05:29 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184848>
 
-Also move the $msgnum to a more sensible location.
+When `git gc --auto` would detect need for garbage collection to run, it
+would just run.  With this patch, enabling gc.autowarnonly will instead
+make it just emit a warning.
 
-Before:
-	Patch failed at 0001 msg
-After:
-	Patch 0001 failed at [da65151] msg
-
-Reviewed-by: Eric Herman <eric@freesa.org>
-Reviewed-by: Fernando Vezzosi <buccia@repnz.net>
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
+Reviewed-by: Sverre Rabbelier <srabbelier@gmail.com>
+Signed-off-by: Fernando Vezzosi <buccia@repnz.net>
 ---
- git-am.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+ builtin/gc.c |   14 ++++++++++++++
+ 1 files changed, 14 insertions(+), 0 deletions(-)
 
-diff --git a/git-am.sh b/git-am.sh
-index 9042432..9d70588 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -837,7 +837,8 @@ did you forget to use 'git add'?"
- 	fi
- 	if test $apply_status !=3D 0
- 	then
--		eval_gettextln 'Patch failed at $msgnum $FIRSTLINE'
-+		abbrev_commit=3D$(git log -1 --pretty=3D%h $commit)
-+		eval_gettextln 'Patch $msgnum failed at [$abbrev_commit] $FIRSTLINE'
- 		stop_here_user_resolve $this
- 	fi
-=20
---=20
-1.7.8.rc0.36.g67522.dirty
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 0498094..65b6616 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -26,6 +26,7 @@ static int pack_refs = 1;
+ static int aggressive_window = 250;
+ static int gc_auto_threshold = 6700;
+ static int gc_auto_pack_limit = 50;
++static int gc_auto_warn_only = 0;
+ static const char *prune_expire = "2.weeks.ago";
+ 
+ #define MAX_ADD 10
+@@ -64,6 +65,10 @@ static int gc_config(const char *var, const char *value, void *cb)
+ 		}
+ 		return git_config_string(&prune_expire, var, value);
+ 	}
++	if (!strcmp(var, "gc.autowarnonly")) {
++		gc_auto_warn_only = git_config_bool(var, value);
++		return 0;
++	}
+ 	return git_default_config(var, value, cb);
+ }
+ 
+@@ -219,6 +224,15 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 		 */
+ 		if (!need_to_gc())
+ 			return 0;
++
++		if (gc_auto_warn_only){
++			fprintf(stderr,
++					_("Pack the repository for optimum performance by running\n"
++					"\"git gc\" manually. See "
++					"\"git help gc\" for more information.\n"));
++			return 0;
++		}
++
+ 		if (quiet)
+ 			fprintf(stderr, _("Auto packing the repository for optimum performance.\n"));
+ 		else
+-- 
+1.7.5.3
