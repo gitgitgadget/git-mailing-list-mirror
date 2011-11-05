@@ -1,79 +1,67 @@
 From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCH] fsck: print progress
-Date: Sat, 05 Nov 2011 00:53:20 -0700
-Message-ID: <4EB4EB70.40801@gmail.com>
-References: <20111103211819.GA17341@sigill.intra.peff.net> <1320376242-27851-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 05 08:57:11 2011
+Subject: [PATCH] completion: Update rebase completion
+Date: Sat,  5 Nov 2011 01:07:05 -0700
+Message-ID: <1320480425-31066-1-git-send-email-bebarino@gmail.com>
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Nov 05 09:11:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RMb7l-0005eD-Cr
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Nov 2011 08:57:09 +0100
+	id 1RMbM1-000255-25
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Nov 2011 09:11:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751201Ab1KEHxY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Nov 2011 03:53:24 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:58807 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750862Ab1KEHxY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Nov 2011 03:53:24 -0400
-Received: by ywf7 with SMTP id 7so3310953ywf.19
-        for <git@vger.kernel.org>; Sat, 05 Nov 2011 00:53:23 -0700 (PDT)
+	id S1751450Ab1KEIHM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Nov 2011 04:07:12 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:36449 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751397Ab1KEIHJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Nov 2011 04:07:09 -0400
+Received: by ggnb2 with SMTP id b2so3313738ggn.19
+        for <git@vger.kernel.org>; Sat, 05 Nov 2011 01:07:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=jMnCzBr4JzejHAgD3LGV/KBfvlZ9UU7bY43zSuweCKk=;
-        b=vZP8JnjXWBlZRfaEYg7B7te4Wzin5WFnIxKwdgiGpq9oLi0rvvqxmAGO8G9GlLGT6m
-         pLa9sHM/+9+nAgFRFrKUPk/Ss/x2h7B33x8OVWzGqfpqut+9VFZAwFJ/4ous76Prdv7+
-         ISsUwABZjOytjQ3nkihWUivPSy2cot8uSgI04=
-Received: by 10.50.197.227 with SMTP id ix3mr19730166igc.51.1320479603272;
-        Sat, 05 Nov 2011 00:53:23 -0700 (PDT)
-Received: from [192.168.2.10] (ip68-105-100-241.sd.sd.cox.net. [68.105.100.241])
-        by mx.google.com with ESMTPS id a4sm4288217pbd.7.2011.11.05.00.53.21
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 05 Nov 2011 00:53:22 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110911 Thunderbird/6.0
-In-Reply-To: <1320376242-27851-1-git-send-email-pclouds@gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=kY1+M043VXhWUSbM1DPR6GD25SaBwdDktNp6AeG6a60=;
+        b=Q6HNmtivIQyufTXSrT/7qX3XirLXrrnfuL2lCvI2Q89jYTM/j6LXh8QOv4uUsz7YfF
+         6vpx+YgoxMPyQTs+V8lVmGQGLsYsa+jq45/dv148xLEp4R1VoWu0yYL/r5joVeDcwFi6
+         OiVMz966QGDyt/MdOxBRikp7h7a7WcKPIOxnw=
+Received: by 10.50.207.38 with SMTP id lt6mr19109522igc.43.1320480428136;
+        Sat, 05 Nov 2011 01:07:08 -0700 (PDT)
+Received: from earth (ip68-105-100-241.sd.sd.cox.net. [68.105.100.241])
+        by mx.google.com with ESMTPS id g1sm16703956pbv.2.2011.11.05.01.07.06
+        (version=SSLv3 cipher=OTHER);
+        Sat, 05 Nov 2011 01:07:07 -0700 (PDT)
+Received: by earth (sSMTP sendmail emulation); Sat, 05 Nov 2011 01:07:05 -0700
+X-Mailer: git-send-email 1.7.7.1.431.g10b2a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184835>
 
-On 11/03/2011 08:10 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote=
-:
-> diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
-[...]
-> +--progress::
-> +--no-progress::
-> +	When fsck is run in a terminal, it will show the progress.
-> +	These options can force progress to be shown or not
-> +	regardless terminal check.
+--no-autosquash is missing in addition to a few others.
 
-Can we reuse the --progress description in fetch-options.txt (minus the=
- q)?
+Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+---
+ contrib/completion/git-completion.bash |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
---[no]-progress::
-        Progress status is reported on the standard error stream
-        by default when it is attached to a terminal. This flag
-	forces progress status even if the standard error stream
-	is not directed to a terminal.
-
-
-> ++
-> +Progress is not shown when --verbose is used. --progress is ignored
-> +in this case.
-
-What progress isn't shown? How about
-
-	If --verbose is used with --progress the progress status
-	will not be shown.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 98af8f5..5aa8b91 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1764,7 +1764,8 @@ _git_rebase ()
+ 			--preserve-merges --stat --no-stat
+ 			--committer-date-is-author-date --ignore-date
+ 			--ignore-whitespace --whitespace=
+-			--autosquash
++			--autosquash --no-autosquash --no-ff
++			--rerere-autoupdate --root
+ 			"
+ 
+ 		return
+-- 
+1.7.7.1.431.g10b2a
