@@ -1,67 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/1] gc --auto: warn gc will soon run, give users a
- chance to run manually
-Date: Sat, 05 Nov 2011 17:19:25 -0700
-Message-ID: <7vaa8a85ma.fsf@alter.siamese.dyndns.org>
-References: <1320489212-524-1-git-send-email-pclouds@gmail.com>
- <20111105154411.079F69004A@inscatolati.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/5] sequencer: sequencer state is useless without todo
+Date: Sat, 5 Nov 2011 19:26:45 -0500
+Message-ID: <20111106002645.GE27272@elie.hsd1.il.comcast.net>
+References: <1320510586-3940-1-git-send-email-artagnon@gmail.com>
+ <1320510586-3940-4-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Fernando Vezzosi <buccia@repnz.net>
-X-From: git-owner@vger.kernel.org Sun Nov 06 01:19:34 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 06 01:27:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RMqST-0004WI-25
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Nov 2011 01:19:33 +0100
+	id 1RMqZl-00076r-B5
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Nov 2011 01:27:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752693Ab1KFAT2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Nov 2011 20:19:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40868 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751397Ab1KFAT2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Nov 2011 20:19:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3946E54A3;
-	Sat,  5 Nov 2011 20:19:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=FUgqDKPJ7MW6
-	4abOtwPeK2oxl0I=; b=ZqItozzQ9mTmth7gWVcecGF7F2AS5aVs2TzdubUpPs8r
-	oYPcHcbQBlDsefVGPq9zT1UU7++Emr/oxCzHWZMsSsHSPbGgLaQDQ85cTbDxXqMu
-	eaIsPCHULWyPDgx7OGwnbz0i0ITzFQhPAHk4bsCCu96gsNyut+Q9yVShAtVsu4I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xtKWMV
-	WTYQmd+nT0aya9fr8ct05X21pFhoyN2IFVRPsHFP2zboY7HiVhNOHJdcOQnwBf+H
-	UkHQBE3vTrbuKlP7RU/ChL0rzVTLk0kx74Q/cNo2Lr/9OLtqayENLEmOJsXs9ydq
-	2UQrYoj/jDKfnz0sRZ8h2WY1PhX50qpUqX/Q8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D70954A2;
-	Sat,  5 Nov 2011 20:19:27 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 87EEB54A1; Sat,  5 Nov 2011
- 20:19:26 -0400 (EDT)
-In-Reply-To: <20111105154411.079F69004A@inscatolati.net> (Fernando Vezzosi's
- message of "Sat, 5 Nov 2011 17:33:32 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FC7037D2-080C-11E1-9155-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752997Ab1KFA0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Nov 2011 20:26:55 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:36340 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751013Ab1KFA0y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Nov 2011 20:26:54 -0400
+Received: by iage36 with SMTP id e36so4234752iag.19
+        for <git@vger.kernel.org>; Sat, 05 Nov 2011 17:26:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=QkYngY75WyJn047WTUgftg89hXkeVzPGW0KmM0pNwEs=;
+        b=h54bjew0cQrCz+gO9dwO684SrOhuWVq3XW8NLsKW4QSDevGT3dz4up076nuo+BZMro
+         xrujvlIT/5ffLRLf8KfbkIkX7Krm6PVb9nRcJwaXoLwSaM97gPEJVgl9O5LuZb6NM6bq
+         +lCn1yVtfore97bi8jWRctpq6PN0n6JBpDDEM=
+Received: by 10.42.155.74 with SMTP id t10mr30166482icw.49.1320539214237;
+        Sat, 05 Nov 2011 17:26:54 -0700 (PDT)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id p16sm30430435ibk.6.2011.11.05.17.26.53
+        (version=SSLv3 cipher=OTHER);
+        Sat, 05 Nov 2011 17:26:53 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1320510586-3940-4-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184886>
 
-=46ernando Vezzosi <buccia@repnz.net> writes:
+Ramkumar Ramachandra wrote:
 
-> Signed-off-by: Fernando Vezzosi <buccia@repnz.net>
-> ---
->
-> Rebased Nguy=E1=BB=85n's patch on top of mine.
+> Later in the series, we will not write '.git/sequencer/todo' for a
+> single commit cherry-pick, because 'CHERRY_PICK_HEAD' already contains
+> this information.  So, stomp the sequencer state in create_seq_state()
+> unless the todo file is present.
 
-You don't have to do this.
+What problem does this solve?  How does it solve it?  What does it
+mean to stomp?
+
+The usual commit-message debugging strategy applies here: imagine you
+are a BIOS clone manufacturer, and for legal reasons you are not
+allowed to read this part of the git implementation embedded in the
+standard BIOS.  However, you are allowed to read the commit message,
+and if that message is clear enough, it will explain the purpose and
+behavior of that code and you will be able to implement a compatible
+implementation addressing the same problem without scratching your
+head too much.
+
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -654,11 +654,15 @@ static void walk_revs_populate_todo(struct replay_insn_list **todo_list,
+>  
+>  static int create_seq_dir(void)
+>  {
+> +	const char *todo_file = git_path(SEQ_TODO_FILE);
+>  	const char *seq_dir = git_path(SEQ_DIR);
+
+Scary idiom.
+
+> -	if (file_exists(seq_dir))
+> -		return error(_("%s already exists."), seq_dir);
+> -	else if (mkdir(seq_dir, 0777) < 0)
+> +	if (file_exists(todo_file))
+> +		return error(_("%s already exists."), todo_file);
+> +
+> +	/* If todo_file doesn't exist, discard sequencer state */
+> +	remove_sequencer_state(1);
+> +	if (mkdir(seq_dir, 0777) < 0)
+>  		die_errno(_("Could not create sequencer directory '%s'."), seq_dir);
+
+I guess this patch would make more sense after patch 4.
