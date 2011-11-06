@@ -1,89 +1,78 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 5/5] sequencer: revert d3f4628e
-Date: Sat, 5 Nov 2011 19:42:57 -0500
-Message-ID: <20111106004257.GG27272@elie.hsd1.il.comcast.net>
-References: <1320510586-3940-1-git-send-email-artagnon@gmail.com>
- <1320510586-3940-6-git-send-email-artagnon@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
+Date: Sat, 5 Nov 2011 17:53:30 -0700
+Message-ID: <CA+55aFzxmDC407EDcm8MV55R7BnRhuxuTOyhZ-jyg2q39=NKfw@mail.gmail.com>
+References: <20111026202235.GA20928@havoc.gtf.org> <1319969101.5215.20.camel@dabdike>
+ <CA+55aFx1NGWfNJAKDTvZfsHDDKiEtS4t4RydSgHurBeyGPyhXg@mail.gmail.com>
+ <1320049150.8283.19.camel@dabdike> <CA+55aFz3=cbciRfTYodNhdEetXYxTARGTfpP9GL9RZK222XmKQ@mail.gmail.com>
+ <7vy5w1ow90.fsf@alter.siamese.dyndns.org> <CA+55aFwL_s=DcT46dprcYVWEAm_=WkuTV6K9dAn3wc_bDQU8vA@mail.gmail.com>
+ <7vwrbjlj5r.fsf@alter.siamese.dyndns.org> <CA+55aFx_rAA6TJkZn1Zvu6u9UjxnmTVt0HpMnvaE_q9Sx-jzPg@mail.gmail.com>
+ <7vk47jld5s.fsf@alter.siamese.dyndns.org> <CA+55aFz7TeQQH3D4Tpp31cZYZoQKeK37jouo+2Kh61Wa07knfw@mail.gmail.com>
+ <CAJo=hJv5nAKH_ptYSWfMvFQv0Dj+naPXK35wSzKYkfPOYsWkxg@mail.gmail.com>
+ <CA+55aFx0oCd6-sh0psYxho-s=sHAK0RHXJHfLewRuUcdXzxZbg@mail.gmail.com>
+ <CA+55aFwXu=+HdQ5nW11Ts5p-V=KgpxjyagKqB+Xv+qBOEEWXvQ@mail.gmail.com>
+ <7v62j1gitn.fsf@alter.siamese.dyndns.org> <7vvcr1f38j.fsf@alter.siamese.dyndns.org>
+ <CA+55aFyRawm9CoJMiEXDFCX4YTidPOiV4oqSS2d7nNv7Ecw8BQ@mail.gmail.com>
+ <7v1utn9it8.fsf@alter.siamese.dyndns.org> <CA+55aFy0gA0ROSyE03h6Lw0zn4B4j-oEFBmffOcWs6NfyYy8JA@mail.gmail.com>
+ <7vsjm2870k.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 06 01:43:17 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "Ted Ts'o" <tytso@mit.edu>, Shawn Pearce <spearce@spearce.org>,
+	git@vger.kernel.org,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	Jeff Garzik <jeff@garzik.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+To: Junio C Hamano <junio@pobox.com>
+X-From: linux-ide-owner@vger.kernel.org Sun Nov 06 01:53:57 2011
+Return-path: <linux-ide-owner@vger.kernel.org>
+Envelope-to: lnx-linux-ide@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RMqpN-00047n-2c
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Nov 2011 01:43:13 +0100
+	(envelope-from <linux-ide-owner@vger.kernel.org>)
+	id 1RMqzk-0007Zd-Pr
+	for lnx-linux-ide@lo.gmane.org; Sun, 06 Nov 2011 01:53:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752562Ab1KFAnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Nov 2011 20:43:08 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:32829 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751397Ab1KFAnH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Nov 2011 20:43:07 -0400
-Received: by ywf7 with SMTP id 7so3906986ywf.19
-        for <git@vger.kernel.org>; Sat, 05 Nov 2011 17:43:06 -0700 (PDT)
+	id S1752693Ab1KFAxx (ORCPT <rfc822;lnx-linux-ide@m.gmane.org>);
+	Sat, 5 Nov 2011 20:53:53 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:43641 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751397Ab1KFAxx (ORCPT
+	<rfc822;linux-ide@vger.kernel.org>); Sat, 5 Nov 2011 20:53:53 -0400
+Received: by wwi36 with SMTP id 36so5136139wwi.1
+        for <multiple recipients>; Sat, 05 Nov 2011 17:53:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=W2YHI+LnkZYlPqtDhT3q01qumy/9tEXTXpAlFqMaJaY=;
-        b=fkyY1fbGqaHZHcX+WLMTVTeIEkjrv87NQMcnJcAZ8imCB2pHKwyeB20x/VVUbP1dwd
-         XWE8RzeskxU4+/IbSRLLDDRb5N3LkNjM0j8LWRR83X0V4mCOkWKNhXVpdEeOI3vEhWcI
-         2lm2VGUL3WOaPZFFqmddRwlTjKwNdCPSWqbKQ=
-Received: by 10.50.195.233 with SMTP id ih9mr28209161igc.21.1320540186248;
-        Sat, 05 Nov 2011 17:43:06 -0700 (PDT)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id hz1sm13950883igc.5.2011.11.05.17.43.05
-        (version=SSLv3 cipher=OTHER);
-        Sat, 05 Nov 2011 17:43:05 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1320510586-3940-6-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
-Sender: git-owner@vger.kernel.org
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=QpUBCkj42YCRDxBg88AmHSEW3j1Oumxl4b/jmoidJOk=;
+        b=C3cW99JUfnQwZYr8fJCAfc3hjOq7tmPpQvumxtiqoCrpZjkOydPqpD4MnfMC3x3aCd
+         KMfuZF3njDgiw7iaaWUaRfpa67NzAjZOMmgI+pgrLwSOLPTNSNkCKCYHJY3MOGcdc3G2
+         1bcrXNVTiUQsKFr4tCB6RADZjSg2/PkkcCAlo=
+Received: by 10.216.24.39 with SMTP id w39mr2291599wew.67.1320540831158; Sat,
+ 05 Nov 2011 17:53:51 -0700 (PDT)
+Received: by 10.216.166.3 with HTTP; Sat, 5 Nov 2011 17:53:30 -0700 (PDT)
+In-Reply-To: <7vsjm2870k.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: 0bWOITsp2s3OPz1N6EY18nyxU00
+Sender: linux-ide-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184890>
+List-ID: <linux-ide.vger.kernel.org>
+X-Mailing-List: linux-ide@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184891>
 
-Ramkumar Ramachandra wrote:
+On Sat, Nov 5, 2011 at 4:49 PM, Junio C Hamano <junio@pobox.com> wrote:
+>
+> You do not have to resort to NUL; we could just stuff whatever you do not
+> need to see but needs to be left *intact* in the new header fields just
+> like the embedded GPG signatures are stored in signed commits.
 
-> Revert d3f4628e (revert: Remove sequencer state when no commits are
-> pending, 2011-06-06), because this is not the right approach.  Instead
-> of increasing coupling between the sequencer and 'git commit', a
-> unified '--continue' that invokes 'git commit' on behalf of the
-> end-user is preferred.
+Agreed, [ details removed ] that sounds perfect. And makes it easy to
+get at if you want to with just "git cat-file commit" - without ever
+really being visible to people who don't care. And having it visible
+in the editor with '#' means that the user who does the merge gets to
+see what actually ended up being put in there, along with the fact
+that yes, it verified correctly.
 
-Forgive me for forgetting: what is the problem that d3f4628e was going
-to resolve (i.e., right approach to what)?  What is this increased
-coupling, and why do we want to avoid it?  Is "to prefer" another word
-for "to implement"?  Who is being united by this new --continue
-switch?
+So I think I really like that approach - it seems to solve all problems.
 
-Is this patch just reverting a previous patch?  If so, why doesn't the
-commit message use the usual format
-
-	Revert "<commit message>"
-
-	This reverts commit <unabbreviated object name>.
-
-	<explanation>
-
-?
-
->  sequencer.c                     |   12 +-----------
->  t/t3510-cherry-pick-sequence.sh |   24 ------------------------
->  2 files changed, 1 insertions(+), 35 deletions(-)
-
-When changing behavior, it's more comforting to modify tests to describe
-the new behavior than to just get rid of them. :)
-
-To sum matters up: with a new commit message, patch 1 seems likely to
-be ready.  Patches 2-5 seem to need more work --- it's not clear to me
-yet what they are supposed to do.
-
-Hope that helps,
-Jonathan
+               Linus
