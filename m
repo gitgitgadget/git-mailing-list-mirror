@@ -1,8 +1,9 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 0/3] Fix code issues spotted by clang
-Date: Sun,  6 Nov 2011 13:06:21 +0100
-Message-ID: <1320581184-4557-1-git-send-email-avarab@gmail.com>
+Subject: [PATCH 2/3] diff/apply: cast variable in call to free()
+Date: Sun,  6 Nov 2011 13:06:23 +0100
+Message-ID: <1320581184-4557-3-git-send-email-avarab@gmail.com>
+References: <1320581184-4557-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -12,110 +13,98 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 06 13:06:49 2011
+X-From: git-owner@vger.kernel.org Sun Nov 06 13:06:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RN1Uu-00070z-Jn
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Nov 2011 13:06:48 +0100
+	id 1RN1V4-00074r-F8
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Nov 2011 13:06:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751637Ab1KFMGo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Nov 2011 07:06:44 -0500
+	id S1751901Ab1KFMGx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Nov 2011 07:06:53 -0500
 Received: from mail-fx0-f46.google.com ([209.85.161.46]:49619 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751493Ab1KFMGn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Nov 2011 07:06:43 -0500
-Received: by faao14 with SMTP id o14so4247439faa.19
-        for <git@vger.kernel.org>; Sun, 06 Nov 2011 04:06:41 -0800 (PST)
+	with ESMTP id S1751833Ab1KFMGx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Nov 2011 07:06:53 -0500
+Received: by mail-fx0-f46.google.com with SMTP id o14so4247439faa.19
+        for <git@vger.kernel.org>; Sun, 06 Nov 2011 04:06:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=0aFKO7DfO4aVz6Nw5rspLPDSoDGVFuvLbxmKicBeISo=;
-        b=Rt+CbV2OmKkOLhYlM8NsfXISuI9Oz7ABZDMChwY4j7/6PghurzCimMYC8GEFCRIoK1
-         JV3ajKUm+5Hwnb+BXiB1maY/CMPB4dtdrnIrvRPjk6mLAZLCPxEnJGVDyyk/cQYD0WWe
-         VAfhBh+XljQ1F49ze8A3KJpndu03I0igy+eRg=
-Received: by 10.223.75.15 with SMTP id w15mr39098751faj.9.1320581201809;
-        Sun, 06 Nov 2011 04:06:41 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=aMbqT9gM28tC/gI3YRvlWdHrk7keS7VUhoC+HNIRamM=;
+        b=cdnr9oTPW29Y/xvJKRbbV4iI+flcKTpDOom1Pxh6LDAGYOXTrq8O1+MlcdNBy2STHi
+         TfQxIKEAfWLwkwgc+VF6Ydl/BYg+tdKlqyBSq5jPywnBv5o73tcnaE2DHMelmt1TRQ2z
+         6Z9pXWnCjmfMxUWFpxF1yTKtPJlnUnuLhhaiY=
+Received: by 10.223.76.217 with SMTP id d25mr38715785fak.31.1320581212395;
+        Sun, 06 Nov 2011 04:06:52 -0800 (PST)
 Received: from snth.ams7.corp.booking.com ([62.140.137.119])
-        by mx.google.com with ESMTPS id f14sm3038218fah.6.2011.11.06.04.06.40
+        by mx.google.com with ESMTPS id f14sm3038218fah.6.2011.11.06.04.06.50
         (version=SSLv3 cipher=OTHER);
-        Sun, 06 Nov 2011 04:06:41 -0800 (PST)
+        Sun, 06 Nov 2011 04:06:51 -0800 (PST)
 X-Mailer: git-send-email 1.7.6.3
+In-Reply-To: <1320581184-4557-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184909>
 
-This series fixes some of the code issues raised by clang. This leaves
-the following warnings that I haven't addressed:
+Both of these free() calls are freeing a "const unsigned char (*)[20]"
+type while free() expects a "void *". This results in the following
+warning under clang 2.9:
 
-    revision.c:766:25: warning: implicit truncation from 'unsigned int'=
- to bitfield changes value from 4294967279 to 134217711
-          [-Wconstant-conversion]
-                    p->item->object.flags &=3D ~TMP_MARK;
-                                          ^  ~~~~~~~~~
-    revision.c:768:25: warning: implicit truncation from 'unsigned int'=
- to bitfield changes value from 4294967279 to 134217711
-          [-Wconstant-conversion]
-                    p->item->object.flags &=3D ~TMP_MARK;
-                                          ^  ~~~~~~~~~
-    revision.c:1875:25: warning: implicit truncation from 'unsigned int=
-' to bitfield changes value from 4294967279 to 134217711
-          [-Wconstant-conversion]
-                    p->item->object.flags &=3D ~TMP_MARK;
-                                          ^  ~~~~~~~~~
-    revision.c:2202:25: warning: implicit truncation from 'unsigned int=
-' to bitfield changes value from 4294967158 to 134217590
-          [-Wconstant-conversion]
-                            commit->object.flags &=3D ~(ADDED | SEEN | =
-SHOWN);
-                                                 ^  ~~~~~~~~~~~~~~~~~~~=
-~~~~
-    upload-pack.c:115:12: warning: implicit truncation from 'unsigned i=
-nt' to bitfield changes value from 4294967293 to 134217725
-          [-Wconstant-conversion]
-                    o->flags &=3D ~UNINTERESTING;
-                             ^  ~~~~~~~~~~~~~~
-    upload-pack.c:689:19: warning: implicit truncation from 'unsigned i=
-nt' to bitfield changes value from 4294705151 to 133955583
-          [-Wconstant-conversion]
-                                    object->flags &=3D ~CLIENT_SHALLOW;
-                                                  ^  ~~~~~~~~~~~~~~~
-    builtin/checkout.c:676:16: warning: implicit truncation from 'unsig=
-ned int' to bitfield changes value from 4294967293 to 134217725
-          [-Wconstant-conversion]
-            object->flags &=3D ~UNINTERESTING;
-                          ^  ~~~~~~~~~~~~~~
-    builtin/reflog.c:173:32: warning: implicit truncation from 'unsigne=
-d int' to bitfield changes value from 4294965247 to 134215679
-          [-Wconstant-conversion]
-                    found.objects[i].item->flags &=3D ~STUDYING;
-                                                 ^  ~~~~~~~~~
-    builtin/reflog.c:232:31: warning: implicit truncation from 'unsigne=
-d int' to bitfield changes value from 4294963199 to 134213631
-          [-Wconstant-conversion]
-                    pending->item->object.flags &=3D ~REACHABLE;
-                                                ^  ~~~~~~~~~~
-    bisect.c:66:24: warning: implicit truncation from 'unsigned int' to=
- bitfield changes value from 4294901759 to 134152191
-          [-Wconstant-conversion]
-                    commit->object.flags &=3D ~COUNTED;
-                                         ^  ~~~~~~~~
-   =20
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (3):
-  apply: get rid of useless x < 0 comparison on a size_t type
-  diff/apply: cast variable in call to free()
-  grep: get rid of useless x < 0 comparison on an enum member
+    builtin/diff.c:185:7: warning: passing 'const unsigned char (*)[20]=
+' to parameter of type 'void *' discards qualifiers
+            free(parent);
+                 ^~~~~~
 
- builtin/apply.c |    3 ---
- builtin/diff.c  |    2 +-
- grep.c          |    2 +-
- submodule.c     |    2 +-
- 4 files changed, 3 insertions(+), 6 deletions(-)
+    submodule.c:394:7: warning: passing 'const unsigned char (*)[20]' t=
+o parameter of type 'void *' discards qualifiers
+            free(parents);
+                 ^~~~~~~
 
+This free()-ing without a cast was added by Jim Meyering to
+builtin/diff.c in v1.7.6-rc3~4 and later by Fredrik Gustafsson in
+submodule.c in v1.7.7-rc1~25^2.
+
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
+ builtin/diff.c |    2 +-
+ submodule.c    |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/diff.c b/builtin/diff.c
+index 1118689..0fe638f 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -182,7 +182,7 @@ static int builtin_diff_combined(struct rev_info *r=
+evs,
+ 		hashcpy((unsigned char *)(parent + i), ent[i].item->sha1);
+ 	diff_tree_combined(parent[0], parent + 1, ents - 1,
+ 			   revs->dense_combined_merges, revs);
+-	free(parent);
++	free((void *)parent);
+ 	return 0;
+ }
+=20
+diff --git a/submodule.c b/submodule.c
+index 0fd10a0..52cdcc6 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -391,7 +391,7 @@ static void commit_need_pushing(struct commit *comm=
+it, struct commit_list *paren
+ 	rev.diffopt.format_callback_data =3D needs_pushing;
+ 	diff_tree_combined(commit->object.sha1, parents, n, 1, &rev);
+=20
+-	free(parents);
++	free((void *)parents);
+ }
+=20
+ int check_submodule_needs_pushing(unsigned char new_sha1[20], const ch=
+ar *remotes_name)
 --=20
 1.7.6.3
