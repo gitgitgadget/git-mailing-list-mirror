@@ -1,103 +1,80 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH] grep: detect number of CPUs for thread spawning
-Date: Sun, 6 Nov 2011 09:50:50 -0500
-Message-ID: <20111106145050.GA4219@arf.padd.com>
-References: <1320502568-14085-1-git-send-email-avarab@gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH 3/3] grep: get rid of useless x < 0 comparison on an enum member
+Date: Sun, 06 Nov 2011 16:03:23 +0100
+Message-ID: <m2pqh5nvic.fsf@igel.home>
+References: <1320581184-4557-1-git-send-email-avarab@gmail.com>
+	<1320581184-4557-4-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Eric Herman <eric@freesa.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Fernando Vezzosi <buccia@repnz.net>
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 06 15:51:02 2011
+	Jim Meyering <jim@meyering.net>,
+	Fredrik Gustafsson <iveqy@iveqy.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 06 16:03:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RN43p-0001GX-1r
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Nov 2011 15:51:01 +0100
+	id 1RN4G7-0006K3-Ic
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Nov 2011 16:03:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752650Ab1KFOu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Nov 2011 09:50:56 -0500
-Received: from honk.padd.com ([74.3.171.149]:52892 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752565Ab1KFOuz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Nov 2011 09:50:55 -0500
-Received: from arf.padd.com (unknown [50.52.169.245])
-	by honk.padd.com (Postfix) with ESMTPSA id C7C0C29E1;
-	Sun,  6 Nov 2011 06:50:54 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 223B6313DA; Sun,  6 Nov 2011 09:50:51 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <1320502568-14085-1-git-send-email-avarab@gmail.com>
+	id S1752655Ab1KFPDc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Nov 2011 10:03:32 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:35024 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752616Ab1KFPDb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Nov 2011 10:03:31 -0500
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id F2C471C1D9E9;
+	Sun,  6 Nov 2011 16:03:25 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id ED9FE1C001A0;
+	Sun,  6 Nov 2011 16:03:25 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id Ftzgw0Y+TejK; Sun,  6 Nov 2011 16:03:25 +0100 (CET)
+Received: from igel.home (ppp-93-104-146-255.dynamic.mnet-online.de [93.104.146.255])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Sun,  6 Nov 2011 16:03:24 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 6E0AECA29C; Sun,  6 Nov 2011 16:03:24 +0100 (CET)
+X-Yow: You were s'posed to laugh!
+In-Reply-To: <1320581184-4557-4-git-send-email-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun, 6 Nov
+ 2011 13:06:24 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184915>
 
-avarab@gmail.com wrote on Sat, 05 Nov 2011 14:16 +0000:
-> From: Eric Herman <eric@freesa.org>
-> 
-> Change the number of threads that we spawn from a hardcoded value of
-> "8" to what online_cpus() returns.
-> 
-> Back in v1.7.0-rc1~19^2 when threaded grep was introduced the number
-> of threads was hardcoded at compile time to 8, but this value was only
-> used if online_cpus() returned greater than 1.
-> 
-> However just using 8 threads regardless of the actual number of CPUs
-> is inefficient if we have more than 8 CPUs, and potentially wasteful
-> if we have fewer than 8 CPUs.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-I agree with the need to exploit >8 CPUs, but I lose a lot of
-performance when limiting the threads to the number of physical
-CPUs.
+> Remove an "p->field < 0" comparison in grep.c that'll always be
+> false. In this case "p" is a "grep_pat" where "field" is defined as:
+>
+> 	enum grep_header_field field;
+>
+> And grep_header_field is in turn defined as:
+>
+>     enum grep_header_field {
+>     	GREP_HEADER_AUTHOR =3D 0,
+>     	GREP_HEADER_COMMITTER
+>     };
+>
+> Meaning that this comparison will always be false.
 
-Tests without your patch on master, just changing "#define
-THREADS" from 8 to 2.  On a 2-core Intel Core2 Duo.
+The underlying integer type is implementation-defined, and can be any
+signed or unsigned integer type that can represent all enumerations.
 
-Producing lots of output:
+Andreas.
 
-    8 threads:
-
-	$ time ~/u/src/git/bin-wrappers/git grep f > /dev/null
-	0m14.02s user 0m3.64s sys 0m11.93s elapsed 148.07 %CPU
-	$ time ~/u/src/git/bin-wrappers/git grep f > /dev/null
-	0m13.86s user 0m3.70s sys 0m11.82s elapsed 148.57 %CPU
-
-    2 threads:
-
-	$ time ~/u/src/git/bin-wrappers/git grep f > /dev/null
-	0m15.14s user 0m3.52s sys 0m24.22s elapsed 77.05 %CPU
-	$ time ~/u/src/git/bin-wrappers/git grep f > /dev/null
-	0m14.85s user 0m3.79s sys 0m24.20s elapsed 77.05 %CPU
-
-Producing no output:
-
-    8 threads:
-
-	$ time ~/u/src/git/bin-wrappers/git grep unfindable-string
-	0m1.14s user 0m3.68s sys 0m5.17s elapsed 93.22 %CPU
-	$ time ~/u/src/git/bin-wrappers/git grep unfindable-string
-	0m1.28s user 0m3.56s sys 0m5.15s elapsed 94.22 %CPU
-
-    2 threads:
-
-	$ time ~/u/src/git/bin-wrappers/git grep unfindable-string
-	0m1.36s user 0m3.64s sys 0m16.82s elapsed 29.75 %CPU
-	$ time ~/u/src/git/bin-wrappers/git grep unfindable-string
-	0m1.38s user 0m3.66s sys 0m16.81s elapsed 30.04 %CPU
-
-My workdir is on NFS, where even though the repository is fully
-cached, the open()s must go to the server.  Using more threads
-than CPUs makes it more likely that some thread isn't blocked.
-
-You could add a #threads knob, but then we'd have to get
-everybody on NFS to set that properly.  Or take a look at
-preload_index() to see how it guesses at how many threads it
-needs.
-
-		-- Pete
+--=20
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
+ED5
+"And now for something completely different."
