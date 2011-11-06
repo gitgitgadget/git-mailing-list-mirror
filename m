@@ -1,73 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] pull: introduce a pull.rebase option to enable
- --rebase
-Date: Sun, 06 Nov 2011 10:20:40 -0800
-Message-ID: <7v1utl6rk7.fsf@alter.siamese.dyndns.org>
-References: <7v8vnt7kvd.fsf@alter.siamese.dyndns.org>
- <1320573010-12296-1-git-send-email-avarab@gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH na/strtoimax] Compatibility: declare strtoimax() under
+ NO_STRTOUMAX
+Date: Sun, 06 Nov 2011 18:21:30 +0000
+Message-ID: <4EB6D02A.4010000@ramsay1.demon.co.uk>
+References: <4EB5583E.2030306@kdbg.org> <4EB56593.6090402@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Eric Herman <eric@freesa.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Fernando Vezzosi <buccia@repnz.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 06 19:20:56 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Nick Alcock <nix@esperi.org.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sun Nov 06 19:23:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RN7Kx-0007jU-4f
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Nov 2011 19:20:55 +0100
+	id 1RN7NO-0000Fn-7t
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Nov 2011 19:23:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752933Ab1KFSUo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Nov 2011 13:20:44 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37923 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750736Ab1KFSUn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2011 13:20:43 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C75A65288;
-	Sun,  6 Nov 2011 13:20:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=4234jASmtI+4
-	YkhVGzZeERdiOpw=; b=gIUP5hxxO954WVXxdqMNreFvn8xF6BzAIJAArA9cpl2Q
-	JwrPp9RuDOf6kwDw2nKMVgLhFurrY+0WZPVeKKbJXrlE2gA7XlbAf6LMPwa96IMQ
-	qj09J3X+S79Q9ZnP84ryN3qfzTf3Dv9JSeOJh/OVIwgptnBQs6VO9L/t/5M4OGk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=jQp9Fx
-	WdHL5/OcNgJdb4OuXuNbiJrfCVLJs4QcnQuqm75kgp2rMQPKDLiIcNhE7sbUyGYz
-	MkIaf2D3AAflhTP2Q3zXJ+lVaoPrNwjmP3eYCf2Citcw3hknPEC5rvjvMivHONEW
-	PzNkmQ5qD+9vzVn34p7pBLAk5jgEgZpeXb/ps=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB8A25287;
-	Sun,  6 Nov 2011 13:20:42 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3D1215286; Sun,  6 Nov 2011
- 13:20:42 -0500 (EST)
-In-Reply-To: <1320573010-12296-1-git-send-email-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun, 6 Nov
- 2011 10:50:10 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 095DC27E-08A4-11E1-92FB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753952Ab1KFSXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Nov 2011 13:23:21 -0500
+Received: from anchor-post-3.mail.demon.net ([195.173.77.134]:35485 "EHLO
+	anchor-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753644Ab1KFSXU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2011 13:23:20 -0500
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-3.mail.demon.net with esmtp (Exim 4.69)
+	id 1RN7NH-0006vd-mb; Sun, 06 Nov 2011 18:23:19 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <4EB56593.6090402@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184921>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Johannes Sixt wrote:
+> Am 05.11.2011 16:37, schrieb Johannes Sixt:
+>> Commit f696543d (Add strtoimax() compatibility function) introduced an
+>> implementation of the function, but forgot to add a declaration.
+> 
+> On second thought, I'm puzzled: Without this patch and without noticing
+> the warning that strtoimax() was not declared, I had built with
+> NO_STRTOUMAX on MinGW before, and the build succeeded. This means that
+> even though MinGW's headers are not C99, we must have pulled in function
+> strtoimax() from somewhere. I'll investigate later this weekend.
 
-> We all stood behind my laptop while I explained what it did and
-> why. Sverre pointed out that I should use the test_when_finished()
-> function for unsetting the config variables, Eric and Fernando looked
-> it over as well.
+Yes, I've noticed the same thing, viz:
 
-Sounds like fun ;-)
+    ramsay (pu)$ find /mingw/include -type f | xargs egrep 'strto(imax|umax|ull)'
+    /mingw/include/inttypes.h:intmax_t __cdecl __MINGW_NOTHROW strtoimax (const char
+    * __restrict__ nptr,
+    /mingw/include/inttypes.h:uintmax_t __cdecl __MINGW_NOTHROW strtoumax (const cha
+    r* __restrict__ nptr,
+    /mingw/include/stdlib.h:unsigned long long  __cdecl __MINGW_NOTHROW strtoull (co
+    nst char* __restrict__, char** __restrict__, int);
 
-Will re-queue. Thanks.
+    ramsay (pu)$ nm /mingw/lib/libmingwex.a | egrep 'strto(imax|umax|ull)'
+    strtoimax.o:
+    00000000 T _strtoimax
+    strtoumax.o:
+    00000000 T _strtoull
+    00000000 T _strtoumax
+
+    ramsay (pu)$
+
+So, I assume, an earlier version of MinGW did not have the inttypes.h header
+file and the NO_STRTOUMAX etc. settings are stale; dunno ;-)
+
+In any event, I guess an '#include <inttypes.h>' on MinGW will be part of the
+solution. [Without breaking the MSVC build, of course; see the NO_INTTYPES_H
+make variable.] However, I haven't given it too much thought, so take that with
+a bucket of salt!
+
+Note, also, that very similar comments apply to NO_LIBGEN_H; viz:
+
+    ramsay (pu)$ find /mingw/include -type f | xargs egrep 'char \*(dir|base)name'
+    /mingw/include/libgen.h:extern __cdecl __MINGW_NOTHROW char *basename (char *);
+    /mingw/include/libgen.h:extern __cdecl __MINGW_NOTHROW char *dirname  (char *);
+
+    ramsay (pu)$ nm /mingw/lib/libmingwex.a | egrep '(dir|base)name'
+    basename.o:
+    00000000 T _basename
+    dirname.o:
+    00000000 T _dirname
+
+    ramsay (pu)$
+
+[having said that, I have a patch that adds a compat/dirname.c and modifies
+the existing compat/basename.c; the MinGW dirname()/basename() functions 
+have problems.]
+
+HTH
+
+ATB,
+Ramsay Jones
