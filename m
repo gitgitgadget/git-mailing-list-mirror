@@ -1,106 +1,142 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: A Python script to put CTAN into git (from DVDs)
-Date: Sun, 06 Nov 2011 08:42:23 -0800 (PST)
-Message-ID: <m37h3d430e.fsf@localhost.localdomain>
-References: <4EB6A522.3020909@pytex.org>
+From: Eric Herman <eric@freesa.org>
+Subject: Re: [PATCH] grep: detect number of CPUs for thread spawning
+Date: Sun, 06 Nov 2011 19:00:00 +0100
+Message-ID: <4EB6CB20.5060309@freesa.org>
+References: <1320502568-14085-1-git-send-email-avarab@gmail.com> <20111106145050.GA4219@arf.padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-4
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: python-list@python.org, git@vger.kernel.org
-To: Jonathan Fine <jfine@pytex.org>
-X-From: git-owner@vger.kernel.org Sun Nov 06 17:42:32 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Fernando Vezzosi <buccia@repnz.net>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Sun Nov 06 19:07:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RN5nj-0002ML-QN
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Nov 2011 17:42:32 +0100
+	id 1RN77g-0002XV-Oq
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Nov 2011 19:07:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753401Ab1KFQm1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Nov 2011 11:42:27 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:49619 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753033Ab1KFQm0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2011 11:42:26 -0500
-Received: by faao14 with SMTP id o14so4381632faa.19
-        for <git@vger.kernel.org>; Sun, 06 Nov 2011 08:42:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:subject:references:to:cc:from:user-agent
-         :date:in-reply-to:message-id:lines:mime-version:content-type
-         :content-transfer-encoding;
-        bh=7w8BKmBv3yC11NWAj3jN/bG0reUkHy1mrnk7mNp+TyY=;
-        b=ihY0jy0R2GOYC2OfJaJZOcaaLMJP3O1dnX+LlZmg20sRi2JtheU7weeiqIeJXuZtZV
-         QGcrU8oNVlXhVFXcxZd36b89Blj2TyvlX7dNvdq/2+FpRHKo09ylaWp4ju9w1ncaPBQ2
-         bYT2rofcuXYzsgrdrYrMy6CNEmNP5UNbdVpUA=
-Received: by 10.223.75.150 with SMTP id y22mr40220605faj.29.1320597745058;
-        Sun, 06 Nov 2011 08:42:25 -0800 (PST)
-Received: from localhost.localdomain (aehn151.neoplus.adsl.tpnet.pl. [79.186.195.151])
-        by mx.google.com with ESMTPS id y10sm24205552fal.10.2011.11.06.08.42.22
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 06 Nov 2011 08:42:23 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id pA6Gfxuj030835;
-	Sun, 6 Nov 2011 17:42:04 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id pA6GfcVP030824;
-	Sun, 6 Nov 2011 17:41:38 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
-In-Reply-To: <4EB6A522.3020909@pytex.org>
+	id S1753942Ab1KFSHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Nov 2011 13:07:05 -0500
+Received: from dsl017-020-053.chi1.dsl.speakeasy.net ([69.17.20.53]:44509 "EHLO
+	chirm.localdomain" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751670Ab1KFSHE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Nov 2011 13:07:04 -0500
+X-Greylist: delayed 420 seconds by postgrey-1.27 at vger.kernel.org; Sun, 06 Nov 2011 13:07:04 EST
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by chirm.localdomain (Postfix) with ESMTP id 147E2217B99;
+	Sun,  6 Nov 2011 13:01:14 -0600 (CST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+In-Reply-To: <20111106145050.GA4219@arf.padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184919>
 
-Jonathan Fine <jfine@pytex.org> writes:
+Hello Pete,
 
-> Hi
->=20
-> This it to let you know that I'm writing (in Python) a script that
-> places the content of CTAN into a git repository.
->      https://bitbucket.org/jfine/python-ctantools
+Thank you for the feedback.
 
-I hope that you meant "repositories" (plural) here, one per tool,
-rather than putting all of CTAN into single Git repository.
-=20
-> I'm working from the TeX Collection DVDs that are published each year
-> by the TeX user groups, which contain a snapshot of CTAN (about
-> 100,000 files occupying 4Gb), which means I have to unzip folders and
-> do a few other things.
+On 11/06/2011 03:50 PM, Pete Wyckoff wrote:
 
-There is 'contrib/fast-import/import-zips.py' in git.git repository.
-If you are not using it, or its equivalent, it might be worth checking
-out.
-=20
-> CTAN is the Comprehensive TeX Archive Network.  CTAN keeps only the
-> latest version of each file, but old CTAN snapshots will provide many
-> earlier versions.
+>> From: Eric Herman<eric@freesa.org>
+>>
+>> Change the number of threads that we spawn from a hardcoded value of
+>> "8" to what online_cpus() returns.
 
-There was similar effort done in putting CPAN (Comprehensive _Perl_
-Archive Network) in Git, hosting repositories on GitHub[1], by the name
-of gitPAN, see e.g.:
 
-  "The gitPAN Import is Complete"
-  http://perlisalive.com/articles/36
-=20
-[1]: https://github.com/gitpan
+> I agree with the need to exploit>8 CPUs, but I lose a lot of
+> performance when limiting the threads to the number of physical
+> CPUs.
 
-> I'm working on putting old CTAN files into modern version
-> control. Martin Scharrer is working in the other direction.  He's
-> putting new files added to CTAN into Mercurial.
->      http://ctanhg.scharrer-online.de/
+Ah, yes, Being focused on big machines, I did not actually test with low 
+CPU machines, certainly not with NFS mounts.
 
-Nb. thanks to tools such as git-hg and fast-import / fast-export
-we have quite good interoperability and convertability between
-Git and Mercurial.
+>
+> Tests without your patch on master, just changing "#define
+> THREADS" from 8 to 2.  On a 2-core Intel Core2 Duo.
+>
+> Producing lots of output:
+>
+>      8 threads:
+>
+> 	$ time ~/u/src/git/bin-wrappers/git grep f>  /dev/null
+> 	0m14.02s user 0m3.64s sys 0m11.93s elapsed 148.07 %CPU
+> 	$ time ~/u/src/git/bin-wrappers/git grep f>  /dev/null
+> 	0m13.86s user 0m3.70s sys 0m11.82s elapsed 148.57 %CPU
+>
+>      2 threads:
+>
+> 	$ time ~/u/src/git/bin-wrappers/git grep f>  /dev/null
+> 	0m15.14s user 0m3.52s sys 0m24.22s elapsed 77.05 %CPU
+> 	$ time ~/u/src/git/bin-wrappers/git grep f>  /dev/null
+> 	0m14.85s user 0m3.79s sys 0m24.20s elapsed 77.05 %CPU
+>
+> Producing no output:
+>
+>      8 threads:
+>
+> 	$ time ~/u/src/git/bin-wrappers/git grep unfindable-string
+> 	0m1.14s user 0m3.68s sys 0m5.17s elapsed 93.22 %CPU
+> 	$ time ~/u/src/git/bin-wrappers/git grep unfindable-string
+> 	0m1.28s user 0m3.56s sys 0m5.15s elapsed 94.22 %CPU
+>
+>      2 threads:
+>
+> 	$ time ~/u/src/git/bin-wrappers/git grep unfindable-string
+> 	0m1.36s user 0m3.64s sys 0m16.82s elapsed 29.75 %CPU
+> 	$ time ~/u/src/git/bin-wrappers/git grep unfindable-string
+> 	0m1.38s user 0m3.66s sys 0m16.81s elapsed 30.04 %CPU
+>
+> My workdir is on NFS, where even though the repository is fully
+> cached, the open()s must go to the server.  Using more threads
+> than CPUs makes it more likely that some thread isn't blocked.
 
-P.S. I'd point to reposurgeon tool, which can be used to do fixups
-after import, but it would probably won't work on such large (set of)
-repositories.
+This is good data.
+It gives me ideas for how I can do some more testing.
 
-P.P.S. Can you forward it to comp.text.tex?
---=20
-Jakub Nar=EAbski
+>
+> You could add a #threads knob,
+
+Sure, adding a knob is not a bad idea.
+
+
+> but then we'd have to get
+> everybody on NFS to set that properly.
+
+Indeed, I think you agree that it would be better if there was no need 
+for most people to fiddle with yet another knob.
+
+
+>  Or take a look at
+> preload_index() to see how it guesses at how many threads it
+> needs.
+
+Good tip.
+A quick peek at preload_index suggests that it was a bit of guesswork:
+
+/*
+  * Mostly randomly chosen maximum thread counts: we
+  * cap the parallelism to 20 threads, and we want
+  * to have at least 500 lstat's per thread for it to
+  * be worth starting a thread.
+  */
+
+However, your comments make me wonder if a rule-of-thumb like "3 + 
+online_cpus()" would yield better results across both large and small 
+numbers of cores with either blazing fast or very slow storage.
+
+I will create a setup similar to the one you describe and do some 
+exploration.
+
+Cheers,
+  -Eric
+
+-- 
+http://www.freesa.org/ -- mobile: +31 620719662
+aim: ericigps -- skype: eric_herman -- jabber: eric.herman@gmail.com
