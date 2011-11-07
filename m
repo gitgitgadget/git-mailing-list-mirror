@@ -1,8 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 3/4] Documentation: unanchored gitignore patterns match
- basename
-Date: Mon, 7 Nov 2011 02:09:26 -0600
-Message-ID: <20111107080926.GC30486@elie.hsd1.il.comcast.net>
+Subject: [PATCH 4/4] Documentation/gitignore: explain how to un-ignore part
+ of a directory
+Date: Mon, 7 Nov 2011 02:11:32 -0600
+Message-ID: <20111107081132.GD30486@elie.hsd1.il.comcast.net>
 References: <20111107080449.GA30448@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -10,37 +10,37 @@ Cc: Eric Blake <eblake@redhat.com>, Johannes Sixt <j6t@kdbg.org>,
 	"Y.G." <yamomo1@hotmail.com>, Eli Barzilay <eli@barzilay.org>,
 	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 07 09:09:35 2011
+X-From: git-owner@vger.kernel.org Mon Nov 07 09:11:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNKGs-0002EN-5b
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 09:09:34 +0100
+	id 1RNKIy-0002yh-Gx
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 09:11:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751380Ab1KGIJ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Nov 2011 03:09:29 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:42371 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751285Ab1KGIJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Nov 2011 03:09:29 -0500
-Received: by ggnb2 with SMTP id b2so5014175ggn.19
-        for <git@vger.kernel.org>; Mon, 07 Nov 2011 00:09:28 -0800 (PST)
+	id S1751464Ab1KGILh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Nov 2011 03:11:37 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:41579 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751662Ab1KGILf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Nov 2011 03:11:35 -0500
+Received: by iage36 with SMTP id e36so5584963iag.19
+        for <git@vger.kernel.org>; Mon, 07 Nov 2011 00:11:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=8gk53VV6eyRoM5ObHKaThQn3cdU1oErfIUxVcyGY7d8=;
-        b=H7yfdg4PhshUsayMKYAd+J8NlpcX2w8Gi8pqlqdiC+szOrv1lEQJoxx2OtCEyi0gOQ
-         cPUIhOjnjbY+5daJanuH6z9FFZxCEI9Vbxl7xUdjUtKkxfSMVm9Q+YVlyigFaiz308u6
-         /GCGOdcnQ0N5Z9xh2dZHNWM43gi9k0Mi9x3z8=
-Received: by 10.42.117.193 with SMTP id u1mr45568371icq.24.1320653368680;
-        Mon, 07 Nov 2011 00:09:28 -0800 (PST)
+        bh=Mc7k0XKFzXpo59hDnTSb1cQ0RSi/N6n6o94KIh6BxVI=;
+        b=GJ8HhLGbckUsCCjAClSSjj2ho/6pp7J4nysxE3hjDEzNYfKsFTz7aiRy4QBuaVag1A
+         f7jZxfJ3OKAxB8Go/JB/pfreFoGERDpxNFr1MdUbMeKyVydgw2vP1n5C7Nsr7ylsMhHd
+         N/tWH3Z4/SE07NcPefTWmdyC+bZA/bvAP19Co=
+Received: by 10.42.158.9 with SMTP id f9mr44810832icx.31.1320653495253;
+        Mon, 07 Nov 2011 00:11:35 -0800 (PST)
 Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id p16sm37112073ibk.6.2011.11.07.00.09.27
+        by mx.google.com with ESMTPS id ge16sm37133739ibb.2.2011.11.07.00.11.34
         (version=SSLv3 cipher=OTHER);
-        Mon, 07 Nov 2011 00:09:28 -0800 (PST)
+        Mon, 07 Nov 2011 00:11:34 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20111107080449.GA30448@elie.hsd1.il.comcast.net>
 User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
@@ -48,57 +48,77 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184961>
 
-The rule described by v1.7.1.1~31^2 (gitignore.5: Clarify matching
-rules, 2010-03-05) is just false: simple gitignore patterns without a
-slash like "foo" and "cscope*" have always matched files in all
-directories, not just the toplevel, and a question mark cannot be used
-to match the slash separating path components.
+From: Johannes Sixt <j6t@kdbg.org>
+Date: Tue, 5 Apr 2011 23:15:54 +0200
 
-For example:
+Trying to whitelist a single file pattern in a directory that I was
+otherwise content to ignore, if I try
 
-	foo/ - matches directories named "foo" throughout the tree
-	Documentation?foo - does not match Documentation/foo
+	/m4/
+	!/m4/virt-*.m4
 
-Reported-by: Y.G. <yamomo1@hotmail.com>
+then 'git add' will keep warning me that I have to use -f.  That is
+because ignoring a directory is much different than ignoring all files
+in a directory, when it comes to later negation patterns:
+
+	/m4/*
+	!/m4/virt-*.m4
+
+However, this example is misleading because it gives the false
+impression that you could do
+
+	/foo/*
+	!/foo/bar/baz
+
+and have foo/bar/baz not ignored, and it is still ignored.  Add a
+paragraph in the NOTES section explaining the general rule and
+suggesting ignoring the directory and using "git add -f" to track
+exceptions to cope with it.
+
+[jn: change description distilled from messages by Eric and Hannes
+to the mailing list.
+
+As Eric noticed, while the "git add -f" trick works well with
+commands like "git status" and "git add -u", plain "git add
+subdir/<path>" refuses to update the index with changes from an
+ignored subdirectory.  When describing the trick, explicitly list a
+few commands that already behave appropriately to avoid confusion.]
+
+Reported-by: Eric Blake <eblake@redhat.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- Documentation/gitignore.txt |   19 ++++++++++---------
- 1 files changed, 10 insertions(+), 9 deletions(-)
+That's the end of the series.  Thoughts?
+
+ Documentation/gitignore.txt |   15 +++++++++++++++
+ 1 files changed, 15 insertions(+), 0 deletions(-)
 
 diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index c7c948dd..e5715a27 100644
+index e5715a27..8b6f601e 100644
 --- a/Documentation/gitignore.txt
 +++ b/Documentation/gitignore.txt
-@@ -80,18 +80,19 @@ PATTERN FORMAT
+@@ -113,6 +113,21 @@ use 'git update-index {litdd}assume-unchanged'.
+ To stop tracking a file that is currently tracked, use
+ 'git rm --cached'.
  
-  - If the pattern does not contain a slash '/' at the beginning
-    or in the middle, git treats it as a shell glob pattern and
--   matches the entire pathname including slashes, relative to the
--   location of the `.gitignore` file (or relative to the toplevel
--   of the work tree if the pattern is not from a `.gitignore`
--   file), against it.
--   For example, "{asterisk}.html" matches HTML files in the
--   directory containing the `.gitignore` file and in its
--   subdirectories.
-+   checks if the pathname with leading path components
-+   removed matches it.
-+   For example, "x{asterisk}.html" matches HTML files whose
-+   filename begins with an "x" in the directory containing
-+   the `.gitignore` file and in its subdirectories.
++When a directory is ignored, it is not possible to un-ignore a single file
++somewhere in the directory using another pattern. E.g., with the patterns
++
++--------------
++/build/
++!/build/tests/results
++--------------
++
++the file "build/tests/results" is still ignored because when a directory is
++ignored, its contents are never investigated. In a situation where a few
++exceptions in an otherwise ignored hierarchy are needed, the recommended
++procedure is to specify to ignore the root of the hierarchy and then to 'git
++add -f' the exceptional files. Subsequent changes to the files will not be
++ignored by 'git status', 'git add .', 'git add -u', or 'git commit -a'.
++
+ EXAMPLES
+ --------
  
-  - If the pattern contains a slash '/' at the beginning or in the
-    middle, git imitates the behavior of fnmatch(3) with the
--   FNM_PATHNAME flag: wildcards in the pattern will not match a /
--   in the pathname.
-+   FNM_PATHNAME flag.  The pattern is used to match the entire
-+   pathname, relative to the location of the `.gitignore` file
-+   (or relative to the toplevel of the work tree if the pattern
-+   is not from a `.gitignore` file).  Wildcards in the pattern
-+   do not match a / in the pathname.
-    For example, "Documentation/{asterisk}.html" matches
-    "Documentation/git.html" but not "Documentation/ppc/ppc.html"
-    or "tools/perf/Documentation/perf.html".
 -- 
 1.7.8.rc0
