@@ -1,66 +1,66 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] Introduce gc.autowarnonly config option
-Date: Sun, 6 Nov 2011 19:18:01 -0500
-Message-ID: <CAG+J_DzNsAP1xAswkNxTAN6ze8ZV5pFqDMeQXKkjCoQgPUgEQQ@mail.gmail.com>
-References: <20111105140529.3A6CE9004A@inscatolati.net>
+From: Michael Wookey <michaelwookey@gmail.com>
+Subject: Re: [PATCH] git-p4: ignore apple filetype
+Date: Mon, 7 Nov 2011 13:21:33 +1100
+Message-ID: <CAOk9v+9xbq0zBF=96GXeK4L-Z9PrGB_NO5h06u63PweRgFFB2g@mail.gmail.com>
+References: <CAOk9v+-==GwDQaZ=4BW1QfEF7+5SfhNF409Xom0bHdT_qKaiFA@mail.gmail.com>
+ <20111101020841.GA8116@arf.padd.com> <CAOk9v+_xXRGAGWg2L5u=r9qBS=H+ZmdF=TwumSyq7WKf-15okw@mail.gmail.com>
+ <loom.20111102T153631-769@post.gmane.org> <CAOk9v+_xaS_Y1m17TROOSjgiscT+QEJWbpZbAZFmh8_tAviF6Q@mail.gmail.com>
+ <CAOpHH-W1JO9PLsyp2hQxfr6eyKRr+=pMkaDikV5NcFwF98Miow@mail.gmail.com>
+ <20111104183957.GB18517@padd.com> <20111105173607.GA12532@arf.padd.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Fernando Vezzosi <buccia@repnz.net>
-X-From: git-owner@vger.kernel.org Mon Nov 07 01:19:04 2011
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Vitor Antunes <vitor.hda@gmail.com>,
+	Luke Diamand <luke@diamand.org>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Mon Nov 07 03:22:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNCvY-0006e6-6R
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 01:19:04 +0100
+	id 1RNEqs-0006j1-88
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 03:22:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754752Ab1KGASE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Nov 2011 19:18:04 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:58974 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754393Ab1KGASD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2011 19:18:03 -0500
-Received: by ggnb2 with SMTP id b2so4664422ggn.19
-        for <git@vger.kernel.org>; Sun, 06 Nov 2011 16:18:02 -0800 (PST)
+	id S932145Ab1KGCWQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Nov 2011 21:22:16 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:62915 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932090Ab1KGCWP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2011 21:22:15 -0500
+Received: by eye27 with SMTP id 27so3137669eye.19
+        for <git@vger.kernel.org>; Sun, 06 Nov 2011 18:22:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=3wXOKpjI2K9qrZExuhFIiRMT8Gv0lbP/RqLI7wSUXFY=;
-        b=sPQ0rSqp5DqKlA+4ZftVEDe2DOu70vA1VLgnC4Pne3CpPR+E6bs9EBNBp2U+nvYAlR
-         7BmMigy3zLbKbyWTWwLLpWM5F9bcwW+6OHf9uiJPsWZQz3RNSrnFnQzNuiVw7jML3AeH
-         g6rFBYKRed6pwx23kwZI4TpWVi0b52RrSAXjM=
-Received: by 10.147.161.9 with SMTP id n9mr5464788yao.23.1320625081894; Sun,
- 06 Nov 2011 16:18:01 -0800 (PST)
-Received: by 10.147.125.14 with HTTP; Sun, 6 Nov 2011 16:18:01 -0800 (PST)
-In-Reply-To: <20111105140529.3A6CE9004A@inscatolati.net>
+        bh=LB3VkLrWfvrEUXYx3viWoxgEVy1ceERTaOBhBgjSNhM=;
+        b=bjyucdIswhOzsOSlq8RW6RVqfjU+Edati8cL6uz6X3CIB53pSuNLwHy1o3GM8XHUoJ
+         GoxaM79c/f9SrIYWRSFhXXbWg7J1gdUS3BV+RVw5mNf+xq1zYwgT1/kjIBrXFWY9qNZ9
+         unAWegiZSn9N4fchK8wMitG681QPC+FMsOIjA=
+Received: by 10.213.34.65 with SMTP id k1mr2327019ebd.101.1320632534120; Sun,
+ 06 Nov 2011 18:22:14 -0800 (PST)
+Received: by 10.213.17.209 with HTTP; Sun, 6 Nov 2011 18:21:33 -0800 (PST)
+In-Reply-To: <20111105173607.GA12532@arf.padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184938>
 
-On Sat, Nov 5, 2011 at 9:39 AM, Fernando Vezzosi <buccia@repnz.net> wro=
-te:
-> When `git gc --auto` would detect need for garbage collection to run,=
- it
-> would just run. =C2=A0With this patch, enabling gc.autowarnonly will =
-instead
-> make it just emit a warning.
+> This is mostly a revert, but the test moves down a bit to be near
+> a similar clause for utf16. =C2=A0Adding a big comment and test case
+> hopefully keeps this code in place in the future.
 >
-> Reviewed-by: Sverre Rabbelier <srabbelier@gmail.com>
-> Signed-off-by: Fernando Vezzosi <buccia@repnz.net>
+> Michael: if you're willing to test this, I'd appreciate it. =C2=A0In
+> fact, running all the git-p4 unit tests on Mac would be great
+> if you have a p4d:
+>
+> =C2=A0 =C2=A0mac$ ( cd t ; make t98* )
 
-This is much better than the solution I've been living with the last
-year, which was to put a pre-auto-gc in my templates directory of:
+I tested this and the warnings about the "apple" filetype do indeed
+appear. I have also run the test suite and all git-p4 tests pass on
+Mac OS X (10.7.2).
 
-#!/bin/sh
-echo "time to run git gc"
-exit 1
-
-So, thank you.
-
-j.
+Thanks again.
