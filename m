@@ -1,66 +1,62 @@
-From: Alexey Shumkin <Alex.Crezoff@gmail.com>
-Subject: BUG. Git config pager when --edit
-Date: Mon, 7 Nov 2011 17:26:52 +0400
-Message-ID: <20111107172652.0faade61@ashu.dyn.rarus.ru>
+From: Frans Klaver <fransklaver@gmail.com>
+Subject: Re: BUG. Git config pager when --edit
+Date: Mon, 7 Nov 2011 14:43:41 +0100
+Message-ID: <CAH6sp9Ox+6p4RkjCZ0j3tXG9F4u7SPuwbSrOWmLSXic9DxSKiQ@mail.gmail.com>
+References: <20111107172652.0faade61@ashu.dyn.rarus.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 07 14:27:05 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Alexey Shumkin <Alex.Crezoff@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 07 14:43:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNPE7-0001c7-90
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 14:27:03 +0100
+	id 1RNPUI-0000YP-Ss
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 14:43:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932393Ab1KGN06 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Nov 2011 08:26:58 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:64749 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932094Ab1KGN05 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Nov 2011 08:26:57 -0500
-Received: by faao14 with SMTP id o14so5081600faa.19
-        for <git@vger.kernel.org>; Mon, 07 Nov 2011 05:26:56 -0800 (PST)
+	id S1755567Ab1KGNnm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Nov 2011 08:43:42 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:34901 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754394Ab1KGNnl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Nov 2011 08:43:41 -0500
+Received: by qao25 with SMTP id 25so591253qao.19
+        for <git@vger.kernel.org>; Mon, 07 Nov 2011 05:43:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rarus.ru; s=google;
-        h=sender:date:from:to:subject:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=ZyijPSg8S/Hj+Ry2g0FXSEe0vhvA7mHDIJVVGC3Ua6Q=;
-        b=eEpA9dtIoaJOiGtcJ2QONU/Lcb6oq51FI7SC06GhN69TaaFVFVgW57WYeTxTIjPIVl
-         NhAYXizuh1qibmh7Fabz/2V9VIcaU7RwGMSJUx4eJDapzHWoaQ3q8cjSxIEDr8Tvjxpk
-         oqBrzc+nFzZpgXKDedyEdXuMZ/vvAJBnWV6i0=
-Received: by 10.223.75.129 with SMTP id y1mr5060248faj.1.1320672415966;
-        Mon, 07 Nov 2011 05:26:55 -0800 (PST)
-Received: from ashu.dyn.rarus.ru ([85.21.218.130])
-        by mx.google.com with ESMTPS id k26sm31243529fab.8.2011.11.07.05.26.54
-        (version=SSLv3 cipher=OTHER);
-        Mon, 07 Nov 2011 05:26:55 -0800 (PST)
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=obyOprC/sAXoejQJ+5DusbeHW7FtK59eqxeMrnH2S0U=;
+        b=sGC70fZBtLEnaxH5N4JLXrYsZ1oJ31Ake0tOutMevh54JqMbGc7ysc1TvEvSsWQRsh
+         SzwBvS5dwPsV2ofhaeQzkkLtPYoid/pCCcXp7UemZ0BMjwsggxVgiBaOyofO4S2Tgh4S
+         pgLDcQTb32s7NeBrGtfl0UAM17RGWxFc/58t4=
+Received: by 10.224.202.8 with SMTP id fc8mr12863894qab.10.1320673421205; Mon,
+ 07 Nov 2011 05:43:41 -0800 (PST)
+Received: by 10.224.80.149 with HTTP; Mon, 7 Nov 2011 05:43:41 -0800 (PST)
+In-Reply-To: <20111107172652.0faade61@ashu.dyn.rarus.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184984>
 
-Hello!
+Hi,
 
-I've found an annoying bug.
-When I wanna review my config I run
-$ git config --list
+On Mon, Nov 7, 2011 at 2:26 PM, Alexey Shumkin <Alex.Crezoff@gmail.com> wrote:
 
-When I wanna edit config I run
-$ git config --edit [--global]
+> As far as my config is large enough to be paged I set pager.config=less
+> setting. But since that moment when I run
+> $ git config --edit
+> I get
+> Vim: Warning: Output is not to a terminal
+> And some messed config output
+>
+> The same happens if to run
+> $ vim .git/config | less
 
-As far as my config is large enough to be paged I set pager.config=less
-setting. But since that moment when I run
-$ git config --edit
-I get 
-Vim: Warning: Output is not to a terminal
-And some messed config output
+So git is trying to tell vim to pipe its output to less. vim can't do
+that because it needs a terminal, as it's the only way vim is usable.
 
-The same happens if to run
-$ vim .git/config | less
-
-Can anybody skilled enough fix it? :)
+Should pager.config then only be used with --list?
