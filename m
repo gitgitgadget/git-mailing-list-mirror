@@ -1,98 +1,75 @@
-From: Andre Noll <maan@systemlinux.org>
-Subject: git fsck: failed to apply delta
-Date: Mon, 7 Nov 2011 15:25:37 +0100
-Message-ID: <20111107142537.GD13394@systemlinux.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="6WlEvdN9Dv0WHSBl"
-Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Nov 07 15:31:24 2011
+From: Emily <lingyan.ren@gmail.com>
+Subject: how to merge sub directory or file?
+Date: Mon, 7 Nov 2011 22:54:18 +0800
+Message-ID: <8B3D19E0-2181-4E9C-943F-CA26A399E0D9@gmail.com>
+References: <20111107172652.0faade61@ashu.dyn.rarus.ru>
+Mime-Version: 1.0 (iPad Mail 8H7)
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 07 15:53:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNQEE-0005aC-I2
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 15:31:14 +0100
+	id 1RNQZX-0007fv-EL
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 15:53:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754361Ab1KGObJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Nov 2011 09:31:09 -0500
-Received: from systemlinux.org ([79.140.41.46]:52812 "EHLO
-	v3-1046.systemlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751676Ab1KGObI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Nov 2011 09:31:08 -0500
-X-Greylist: delayed 434 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Nov 2011 09:31:08 EST
-Received: by v3-1046.systemlinux.org (Postfix, from userid 1002)
-	id DEB30308444; Mon,  7 Nov 2011 15:25:37 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S932316Ab1KGOxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Nov 2011 09:53:09 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:57008 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932151Ab1KGOxI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2011 09:53:08 -0500
+Received: by iage36 with SMTP id e36so5915510iag.19
+        for <git@vger.kernel.org>; Mon, 07 Nov 2011 06:53:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=subject:references:from:content-type:x-mailer:in-reply-to
+         :message-id:date:to:content-transfer-encoding:mime-version;
+        bh=EHOdf1vGJ+1b4A65I/TWEPJyur+/9z1slQRMiud+sGQ=;
+        b=RmTlUeJQ4ZImYDBNqE0chHp8i7dUR/1HmVx1mxfvXH5uHGwepW5pQQAzJ4txRgTcYN
+         bKbjRe7Hv3d9fjKQEuKrCkQidsE9jY7rkhAp6EVoF8Xw93XNMWCstqTBTmZ7ALdLoSKO
+         +oP7ulznIKklwp9yXY7D68xyHDN/1pcELfqmA=
+Received: by 10.231.26.201 with SMTP id f9mr5147024ibc.40.1320677587817;
+        Mon, 07 Nov 2011 06:53:07 -0800 (PST)
+Received: from [192.168.11.4] ([123.118.94.188])
+        by mx.google.com with ESMTPS id l28sm38507247ibc.3.2011.11.07.06.53.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 07 Nov 2011 06:53:07 -0800 (PST)
+X-Mailer: iPad Mail (8H7)
+In-Reply-To: <20111107172652.0faade61@ashu.dyn.rarus.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184986>
 
+Hi,
 
---6WlEvdN9Dv0WHSBl
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I have two git projects A and B, content of B is subset of A. For example, Project  A and B's tree are as below:
 
-Hi
+A
+--- dir1
+--- dir2
+--- dir3
+       |---file1
+       |---dir4
+       |---dir5
+--- dir6
+--- dir7
 
-I'm getting this when running git fsck or git repack against a large
-(21G) repo which was created from subversion using git svn clone:
+B
+--- dir1
+--- dir3
+      |--- file1
+      |--- dir4
 
-	fatal: failed to apply delta
+When there's new changes in project A, how can I merge them to project B without changing B's directory structure?
 
-The debugging patch below indicates that this repo fails the sanity
-check for the size in patch_delta(). With this patch applied I'm
-getting the following additional output
+Your help will be highly appreciated.
 
-	error: bad delta header size, expected: 236, have 1994568
-
-This is 100% reproducible. I'm using the git master branch as of
-today (5ae0f681) but the same problem showed up also with an older
-git version.
-
-Does anybody know what's going on here?
-
-Thanks
-Andre
----
-
-diff --git a/patch-delta.c b/patch-delta.c
-index 56e0a5e..cff4d79 100644
---- a/patch-delta.c
-+++ b/patch-delta.c
-@@ -28,8 +28,10 @@ void *patch_delta(const void *src_buf, unsigned long src=
-_size,
-=20
- 	/* make sure the orig file size matches what we expect */
- 	size =3D get_delta_hdr_size(&data, top);
--	if (size !=3D src_size)
-+	if (size !=3D src_size) {
-+		error("bad delta header size, expected: %lu, have %lu", src_size, size);
- 		return NULL;
-+	}
-=20
- 	/* now the result size */
- 	size =3D get_delta_hdr_size(&data, top);
---=20
-The only person who always got his work done by Friday was Robinson Crusoe
-
---6WlEvdN9Dv0WHSBl
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEARECAAYFAk636mEACgkQWto1QDEAkw8AOgCfdNAoRdDcSwYSwxBsuhQeXPuD
-ZsoAoJU0Ka12y5f0j8/3ZYkxnP/NX/mo
-=gL1h
------END PGP SIGNATURE-----
-
---6WlEvdN9Dv0WHSBl--
+Thanks,
+Emily
