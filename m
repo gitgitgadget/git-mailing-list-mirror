@@ -1,154 +1,87 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: reset reports file as modified when it's in fact deleted
-Date: Mon, 7 Nov 2011 11:26:42 -0500
-Message-ID: <20111107162642.GA27055@sigill.intra.peff.net>
-References: <20111107094330.GB10936@beez.lab.cmartin.tk>
+Subject: Re: [PATCH 3/3] grep: get rid of useless x < 0 comparison on an enum
+ member
+Date: Mon, 7 Nov 2011 11:38:23 -0500
+Message-ID: <20111107163823.GB27055@sigill.intra.peff.net>
+References: <1320581184-4557-1-git-send-email-avarab@gmail.com>
+ <1320581184-4557-4-git-send-email-avarab@gmail.com>
+ <m2pqh5nvic.fsf@igel.home>
+ <CACBZZX6CRm1W5i43=LeXPJFdcWFgVTkD8cGntHoKsPoWGx_hNg@mail.gmail.com>
+ <m3pqh4krer.fsf@hase.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 07 17:26:53 2011
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jim Meyering <jim@meyering.net>,
+	Fredrik Gustafsson <iveqy@iveqy.com>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Mon Nov 07 17:38:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNS28-0002a6-DX
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 17:26:52 +0100
+	id 1RNSDO-0000II-JB
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 17:38:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755006Ab1KGQ0s convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Nov 2011 11:26:48 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35797
+	id S1755741Ab1KGQiZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Nov 2011 11:38:25 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35801
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751483Ab1KGQ0q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Nov 2011 11:26:46 -0500
-Received: (qmail 27323 invoked by uid 107); 7 Nov 2011 16:26:47 -0000
+	id S1754900Ab1KGQiZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Nov 2011 11:38:25 -0500
+Received: (qmail 27416 invoked by uid 107); 7 Nov 2011 16:38:26 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 07 Nov 2011 11:26:47 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Nov 2011 11:26:42 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 07 Nov 2011 11:38:26 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Nov 2011 11:38:23 -0500
 Content-Disposition: inline
-In-Reply-To: <20111107094330.GB10936@beez.lab.cmartin.tk>
+In-Reply-To: <m3pqh4krer.fsf@hase.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184993>
 
-On Mon, Nov 07, 2011 at 10:43:30AM +0100, Carlos Mart=C3=ADn Nieto wrot=
-e:
+On Mon, Nov 07, 2011 at 02:12:28PM +0100, Andreas Schwab wrote:
 
-> When I delete a file (git rm) and then reset so it exists in the inde=
-x
-> again, the message tells me 'M file.txt' even though the file doesn't
-> exist in the worktree anymore. Running git status afterwards does giv=
-e
-> the correct output. So, here's the minimal steps to reproduce:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >=20
->     $ git init
->     Initialized empty Git repository in /home/carlos/test/reset-err/.=
-git/
->     $ touch file.txt
->     $ git add file.txt
->     $ git ci file.txt -m initial
->     [master (root-commit) a536393] initial
->      0 files changed, 0 insertions(+), 0 deletions(-)
->      create mode 100644 file.txt
->     $ git rm file.txt
->     rm 'file.txt'
->     $ git reset -- file.txt
->     Unstaged changes after reset:
->     M		 file.txt
->     $ git status -b -s
->     ## master
->      D file.txt
-
-You can simplify this even further by not touching the index at all:
-
-  git init -q &&
-  >file && git add file && git commit -q -m initial &&
-  rm file &&
-  git reset
-
-produces:
-
-  Unstaged changes after reset:
-  M       file
-
-> I'd expect the output after "Unstaged changes after reset" to tell me
-> file.txt has been deleted instead of modified. This happens with
-> 1.7.8-rc0, 1.7.7 and 1.7.4.1 and I expect with many more that I don't
-> have here.
+> > I.e. we'll always have GREP_HEADER_AUTHOR =3D 0 and
+> > GREP_HEADER_COMMITTER =3D 1, we'll never have GREP_HEADER_AUTHOR =3D=
+ and
+> > GREP_HEADER_COMMITTER =3D <some int>.
 >=20
-> I thought the index diff code might have been checking the index at t=
-he
-> wrong time, but I can run 'git reset HEAD -- file.txt' as many times
-> as I want, and it will still say 'M', so now I'm not sure.
+> That is irrelevant.  You can always assign -1 to an object of enumera=
+ted
+> type and the implicit conversion to the underlying type is fully
+> defined, no matter what type the compiler choses.
 
-The index diff code isn't running at all. Those messages are produced b=
-y
-refresh_index, which outputs only two flags: modified or unmerged. I
-think the reason for this is somewhat historical. You would run
-"update-index --refresh", and it would helpfully say "by the way, when
-refreshing this entry, I noticed that it is in need of being updated in
-the index". The text was "file.txt: needs update".
+Yes, but now you are getting into implementation-defined behavior, whic=
+h
+is also something to avoid. IOW, I don't think it's wrong for a static
+analyzer to complain about:
 
-Later, many porcelain commands started to refresh the index themselves,
-and the "needs update" message was very confusing. So it was switched t=
-o
-the more familiar "M file.txt" (though you can still see the original
-plumbing message if you run update-index yourself).
+  if (enum_with_only_positive_values < 0)
 
-I think it is a little more friendly to distinguish deletion from just
-modification. And there's shouldn't be any compatibility questions, as
-these are explicitly porcelain output (plumbing will still say "needs
-update").
+just because you could say:
 
-There are a few other cases users might expect to see. We'll never show
-copies or renames, of course, because we aren't actually doing a diff
-with copy detection. We won't see an "A"dded file, because such a file
-would be in the working tree but not the index, meaning it is not
-tracked.
+  enum_with_only_positive_values =3D -1;
 
-We could see a "T"ypechange, but the distinction between that and a
-modified file is lost by the time we get to refresh_index. We could pas=
-s
-it up, but I wonder if it's really worth it.
+and it would work on _some_ platforms. That same static analyzer should
+be complaining about the second line, which is where the real potential
+bug is. If you want "-1" as an enumerated value, then add it to your
+enum definition and the compiler will do the right thing.
 
-The patch to do "D"eleted is pretty simple:
+It is perfectly fine to do:
 
-diff --git a/read-cache.c b/read-cache.c
-index dea7cd8..cc1ebdf 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1103,9 +1103,11 @@ int refresh_index(struct index_state *istate, un=
-signed int flags, const char **p
- 	int in_porcelain =3D (flags & REFRESH_IN_PORCELAIN);
- 	unsigned int options =3D really ? CE_MATCH_IGNORE_VALID : 0;
- 	const char *needs_update_fmt;
-+	const char *needs_rm_fmt;
- 	const char *needs_merge_fmt;
-=20
- 	needs_update_fmt =3D (in_porcelain ? "M\t%s\n" : "%s: needs update\n"=
-);
-+	needs_rm_fmt =3D (in_porcelain ? "D\t%s\n" : "%s: needs update\n");
- 	needs_merge_fmt =3D (in_porcelain ? "U\t%s\n" : "%s: needs merge\n");
- 	for (i =3D 0; i < istate->cache_nr; i++) {
- 		struct cache_entry *ce, *new;
-@@ -1145,7 +1147,10 @@ int refresh_index(struct index_state *istate, un=
-signed int flags, const char **p
- 			}
- 			if (quiet)
- 				continue;
--			show_file(needs_update_fmt, ce->name, in_porcelain, &first, header_=
-msg);
-+			if (cache_errno =3D=3D ENOENT)
-+				show_file(needs_rm_fmt, ce->name, in_porcelain, &first, header_msg=
-);
-+			else
-+				show_file(needs_update_fmt, ce->name, in_porcelain, &first, header=
-_msg);
- 			has_errors =3D 1;
- 			continue;
- 		}
+     enum foo { a =3D -1, b, c };
+     ...
+     if (foo < 0)
+        ...
+
+and the static analyzer should not complain about the conditional there=
+=2E
+
+-Peff
