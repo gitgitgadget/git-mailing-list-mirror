@@ -1,247 +1,97 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [RFC/PATCH] remote: add new sync command
-Date: Mon,  7 Nov 2011 18:07:12 +0200
-Message-ID: <1320682032-12698-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 07 17:07:36 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
+Date: Mon, 7 Nov 2011 08:24:34 -0800
+Message-ID: <CA+55aFyKocxDUD2YhhBhfDzp+WHOddOZ_3mfqwADri86aUOUFQ@mail.gmail.com>
+References: <7vwrbjlj5r.fsf@alter.siamese.dyndns.org> <CA+55aFx_rAA6TJkZn1Zvu6u9UjxnmTVt0HpMnvaE_q9Sx-jzPg@mail.gmail.com>
+ <7vk47jld5s.fsf@alter.siamese.dyndns.org> <CA+55aFz7TeQQH3D4Tpp31cZYZoQKeK37jouo+2Kh61Wa07knfw@mail.gmail.com>
+ <CAJo=hJv5nAKH_ptYSWfMvFQv0Dj+naPXK35wSzKYkfPOYsWkxg@mail.gmail.com>
+ <CA+55aFx0oCd6-sh0psYxho-s=sHAK0RHXJHfLewRuUcdXzxZbg@mail.gmail.com>
+ <CA+55aFwXu=+HdQ5nW11Ts5p-V=KgpxjyagKqB+Xv+qBOEEWXvQ@mail.gmail.com>
+ <7v62j1gitn.fsf@alter.siamese.dyndns.org> <7vvcr1f38j.fsf@alter.siamese.dyndns.org>
+ <CA+55aFyRawm9CoJMiEXDFCX4YTidPOiV4oqSS2d7nNv7Ecw8BQ@mail.gmail.com>
+ <20111104145908.GA3903@thunk.org> <CA+55aFw6JJDkkSJnp=X4cQuibXMHVBgbQ99iPqEbd7p_7J=VfQ@mail.gmail.com>
+ <22879.1320652337@turing-police.cc.vt.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Ted Ts'o" <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	Jeff Garzik <jeff@garzik.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+To: Valdis.Kletnieks@vt.edu
+X-From: linux-kernel-owner@vger.kernel.org Mon Nov 07 17:25:10 2011
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNRjT-0000oj-74
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 17:07:36 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1RNS0Q-0001Z6-Vd
+	for glk-linux-kernel-3@lo.gmane.org; Mon, 07 Nov 2011 17:25:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755135Ab1KGQHa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Nov 2011 11:07:30 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:51884 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754806Ab1KGQH3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Nov 2011 11:07:29 -0500
-Received: by bke11 with SMTP id 11so3731259bke.19
-        for <git@vger.kernel.org>; Mon, 07 Nov 2011 08:07:27 -0800 (PST)
+	id S932939Ab1KGQY6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 7 Nov 2011 11:24:58 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:55110 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932653Ab1KGQY4 convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 7 Nov 2011 11:24:56 -0500
+Received: by wwi36 with SMTP id 36so6952851wwi.1
+        for <multiple recipients>; Mon, 07 Nov 2011 08:24:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=5cbEdgB0FS02Z+lkzxFzZfr0h/LgWklBwk5cpw0rbPo=;
-        b=Tc2Xx5v1mATQeS9VhESBgicaqV99c/4JW5Qulvb/L6LfHEiyLov6Llsm72kFWXNVLR
-         iEwxuNmEjaXvSbAi10avrgOiIXlpD5QBUJaUhPOkxUk1XEdozQXws+eGK1eKIlil1I+3
-         tlzmVKFdW1oNJlRCV4gp3LQjWIV/jDQhJXfL8=
-Received: by 10.204.156.133 with SMTP id x5mr19922608bkw.87.1320682047367;
-        Mon, 07 Nov 2011 08:07:27 -0800 (PST)
-Received: from localhost (cs27007082.pp.htv.fi. [89.27.7.82])
-        by mx.google.com with ESMTPS id x14sm18020521bkf.10.2011.11.07.08.07.23
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 07 Nov 2011 08:07:25 -0800 (PST)
-X-Mailer: git-send-email 1.7.7
-Sender: git-owner@vger.kernel.org
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=n0awxGr+SMOszzG2C7pHN6H0YBVM7FK3osLyoIpqRlQ=;
+        b=kunwdtgCd7+GEYqNiGg1tulLHL8Vch7Nxpke73a40XyunIjaL/jo2HyJ05DPkqgPkV
+         PpfiWWdppFgHHBihg2s6/61zAGtl+SLUHotJEkhF8pf/z8D8Pg+DRHz6b8curjT4ytsv
+         LN3YjTXWG+iqYCfZz/beXk4fMRlbdqYDYC1jg=
+Received: by 10.216.229.162 with SMTP id h34mr5188699weq.82.1320683095109;
+ Mon, 07 Nov 2011 08:24:55 -0800 (PST)
+Received: by 10.216.166.3 with HTTP; Mon, 7 Nov 2011 08:24:34 -0800 (PST)
+In-Reply-To: <22879.1320652337@turing-police.cc.vt.edu>
+X-Google-Sender-Auth: aEx0HHDuTR746Nu9BZVzrtQ1eOw
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184990>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184991>
 
-This is useful to mirror all the branches in the current repo to
-another.
+On Sun, Nov 6, 2011 at 11:52 PM,  <Valdis.Kletnieks@vt.edu> wrote:
+>
+> OK.. I'll bite. =A0How do you disambiguate a '42deadbeef' in the chan=
+gelog part
+> of a commit as being a commit ID, as opposed to being an address in a=
+ traceback
+> or something similar? Yes, I know you only change the ones that actua=
+lly map to
+> a commit ID, but I'd not be surprised if by now we've got enough comm=
+its and
+> stack tracebacks in the git history that we'll birthday-paradox ourse=
+lves into
+> a false-positive in an automatic replacement.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Documentation/git-remote.txt |   17 +++++++
- builtin/remote.c             |  108 ++++++++++++++++++++++++++++++++++++++++++
- t/t5505-remote.sh            |   15 ++++++
- 3 files changed, 140 insertions(+), 0 deletions(-)
+I don't think we are quite there yet. And (sadly) most of the commit
+ID's in the history are 7 hex characters, because that used to be the
+default git abbreviation. So there is unlikely to be any real
+conflicts.
 
-diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-index 5a8c506..643fc8b 100644
---- a/Documentation/git-remote.txt
-+++ b/Documentation/git-remote.txt
-@@ -21,6 +21,7 @@ SYNOPSIS
- 'git remote' [-v | --verbose] 'show' [-n] <name>
- 'git remote prune' [-n | --dry-run] <name>
- 'git remote' [-v | --verbose] 'update' [-p | --prune] [(<group> | <remote>)...]
-+'git remote sync' <name> [-a | --all] [-n | --new] [-p | --prune] [-f | --force] [--dry-run]
- 
- DESCRIPTION
- -----------
-@@ -169,6 +170,22 @@ be updated.  (See linkgit:git-config[1]).
- +
- With `--prune` option, prune all the remotes that are updated.
- 
-+'sync'::
-+
-+Synchronizes local branches with certain remote. This is useful to backup all
-+the branches in a local repository to a remote one, regardless of what upstream
-+is configured for each branch.
-++
-+With `--prune`, remote branches will be deleted if they are not also locally.
-++
-+With `--new`, local branches that are not yet in the remote will be pushed too.
-++
-+With `--all`, basically both `--prune` and `--new` will be selected.
-++
-+With `--force`, existing branches will be forced to update, like `git push
-+--force`.
-++
-+With `--dry-run`, all the changes will be reported, but not really happen.
- 
- DISCUSSION
- ----------
-diff --git a/builtin/remote.c b/builtin/remote.c
-index e1285be..b3b9b19 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -64,6 +64,11 @@ static const char * const builtin_remote_update_usage[] = {
- 	NULL
- };
- 
-+static const char * const builtin_remote_sync_usage[] = {
-+	"git remote sync <name> [-a|--all] [-n|--new] [-p|--prune] [<options>]",
-+	NULL
-+};
-+
- static const char * const builtin_remote_seturl_usage[] = {
- 	"git remote set-url [--push] <name> <newurl> [<oldurl>]",
- 	"git remote set-url --add <name> <newurl>",
-@@ -1492,6 +1497,107 @@ static int set_url(int argc, const char **argv)
- 	return 0;
- }
- 
-+struct action {
-+	struct string_list *list;
-+	int type;
-+};
-+
-+static int ref_cb(const char *refname,
-+	const unsigned char *sha1, int flags, void *cb_data)
-+{
-+	struct action *action = cb_data;
-+	struct string_list_item *item;
-+	if (strcmp(refname, "HEAD") == 0)
-+		return 0;
-+	item = string_list_insert(action->list, refname);
-+	item->util = (void *)((long)item->util | action->type);
-+	return 0;
-+}
-+
-+static int for_each_in_remote_ref(const char *name, each_ref_fn fn, void *cb_data)
-+{
-+	char prefix[1000];
-+	sprintf(prefix, "refs/remotes/%s/", name);
-+	return for_each_ref_in(prefix, fn, cb_data);
-+}
-+
-+static int do_sync(int argc, const char **argv)
-+{
-+	const char *remotename;
-+	struct string_list list;
-+	struct action action;
-+	struct remote *remote;
-+	struct transport *transport;
-+	int i, r, nonff;
-+	char **refspec;
-+	int refspec_nr = 0;
-+	int prune = 0, new = 0, all = 0, flags = 0;
-+
-+	struct option options[] = {
-+		OPT_BOOLEAN('p', "prune", &prune, "prune remote branches"),
-+		OPT_BOOLEAN('n', "new", &new, "push new branches"),
-+		OPT_BOOLEAN('a', "all", &all, "synchronize everything"),
-+		OPT_BIT(0, "dry-run", &flags, "dry run", TRANSPORT_PUSH_DRY_RUN),
-+		OPT_BIT('f', "force", &flags, "force updates", TRANSPORT_PUSH_FORCE),
-+		OPT_END()
-+	};
-+	argc = parse_options(argc, argv, NULL, options, builtin_remote_sync_usage,
-+			     PARSE_OPT_KEEP_ARGV0);
-+	if (argc < 2 || argc > 2)
-+		usage_with_options(builtin_remote_sync_usage, options);
-+
-+	if (all)
-+		prune = new = 1;
-+
-+	remotename = argv[1];
-+	if (!remote_is_configured(remotename))
-+		die("No such remote '%s'", remotename);
-+
-+	memset(&list, 0, sizeof(list));
-+
-+	action.list = &list;
-+
-+	action.type = 1;
-+	for_each_in_remote_ref(remotename, ref_cb, &action);
-+
-+	action.type = 2;
-+	for_each_branch_ref(ref_cb, &action);
-+
-+	refspec = xmalloc(sizeof(*refspec) * list.nr);
-+
-+	for (i = 0; i < list.nr; i++) {
-+		const char *str = list.items[i].string;
-+		char *t = NULL;
-+
-+		switch ((long)list.items[i].util) {
-+		case 1:
-+			if (prune)
-+				asprintf(&t, ":%s", str);
-+			break;
-+		case 2:
-+			if (new)
-+				t = strdup(str);
-+			break;
-+		case 3:
-+			t = strdup(str);
-+			break;
-+		}
-+		if (t)
-+			refspec[refspec_nr++] = t;
-+	}
-+
-+	remote = remote_get(remotename);
-+	transport = transport_get(remote, NULL);
-+	r = transport_push(transport, refspec_nr, (const char **)refspec, flags, &nonff);
-+
-+	for (i = 0; i < refspec_nr; i++)
-+		free(refspec[i]);
-+
-+	string_list_clear(&list, 0);
-+
-+	return r;
-+}
-+
- static int get_one_entry(struct remote *remote, void *priv)
- {
- 	struct string_list *list = priv;
-@@ -1581,6 +1687,8 @@ int cmd_remote(int argc, const char **argv, const char *prefix)
- 		result = prune(argc, argv);
- 	else if (!strcmp(argv[0], "update"))
- 		result = update(argc, argv);
-+	else if (!strcmp(argv[0], "sync"))
-+		result = do_sync(argc, argv);
- 	else {
- 		error("Unknown subcommand: %s", argv[0]);
- 		usage_with_options(builtin_remote_usage, options);
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index e8af615..13378c5 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -997,4 +997,19 @@ test_expect_success 'remote set-url --delete baz' '
- 	cmp expect actual
- '
- 
-+test_expect_success 'remote sync' '
-+	setup_repository sync-origin &&
-+	(cd sync-origin &&
-+	 git branch another &&
-+	 git config receive.denyCurrentBranch ignore) &&
-+	git clone sync-origin sync &&
-+	(cd sync &&
-+	 git branch -a > /tmp/a &&
-+	 git remote sync origin &&
-+	 git commit --allow-empty -m "Test" &&
-+	 git checkout side &&
-+	 git commit --allow-empty -m "Test" &&
-+	 git remote sync -a origin)
-+'
-+
- test_done
--- 
-1.7.7
+If we do miss one or two, that will be sad and embarrassing, but is
+not a real problem in practice.
+
+We probably could add various heuristics (the SHA1 values are *often*
+preceded by the string "commit"), and a really good import would also
+have somebody at least visually inspecting ones that other heuristics
+say might be debatable (for example - because they have 8 hex digits
+and there are other numbers around them that were *not* converted),
+but in the end perfection is the enemy of good. It's not really worth
+the headache to worry about *all* the cases, if you can cheaply and
+simply get 99+% right.
+
+And I think the 99% is almost trivial. While the last 1% may or may
+not be worth worrying about.
+
+               Linus
