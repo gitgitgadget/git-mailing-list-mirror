@@ -1,145 +1,87 @@
-From: Jonathan Fine <jfine@pytex.org>
-Subject: Re: A Python script to put CTAN into git (from DVDs)
-Date: Mon, 07 Nov 2011 20:21:49 +0000
-Message-ID: <4EB83DDD.1080103@pytex.org>
-References: <4EB6A522.3020909@pytex.org>	<mailman.2464.1320597747.27778.python-list@python.org>	<4EB6CFBB.2090901@pytex.org> <m3zkg92dxq.fsf@localhost.localdomain>
+From: "Frans Klaver" <fransklaver@gmail.com>
+Subject: Re: BUG. Git config pager when --edit
+Date: Mon, 07 Nov 2011 21:45:02 +0100
+Message-ID: <op.v4lfxck60aolir@keputer.lokaal>
+References: <20111107172652.0faade61@ashu.dyn.rarus.ru>
+ <CAH6sp9Ox+6p4RkjCZ0j3tXG9F4u7SPuwbSrOWmLSXic9DxSKiQ@mail.gmail.com>
+ <20111107164250.GC27055@sigill.intra.peff.net>
+ <7vpqh327ds.fsf@alter.siamese.dyndns.org>
+ <20111107171800.GA3621@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-4; format=flowed
+Content-Type: text/plain; charset=iso-8859-15; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: python-list@python.org, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 07 21:24:21 2011
+Cc: "Alexey Shumkin" <Alex.Crezoff@gmail.com>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Nov 07 21:45:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNVjx-0007ZL-4q
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 21:24:21 +0100
+	id 1RNW48-0001hA-1o
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 21:45:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754469Ab1KGUYQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Nov 2011 15:24:16 -0500
-Received: from avasout01.plus.net ([84.93.230.227]:36193 "EHLO
-	avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751453Ab1KGUYP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Nov 2011 15:24:15 -0500
-Received: from [192.168.1.4] ([91.125.193.208])
-	by avasout01.plus.net with smtp
-	id uLQ91h0024WEYdn01LQAuc; Mon, 07 Nov 2011 20:24:11 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.0 cv=H4xZMpki c=1 sm=1 a=IScl633ZHowHAm5euRxHow==:17
- a=drkSDUSQfzAA:10 a=sjtYlV3t_a8A:10 a=2-jFaxeq-9kA:10 a=evIkNGOUjnIA:10
- a=bZdGXqoGs2vnu05zy-sA:9 a=gJoACgfOXQQNPbB8KqwA:7 a=ebS1H2NBVeoA:10
- a=IScl633ZHowHAm5euRxHow==:117
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.23) Gecko/20110921 Thunderbird/3.1.15
-Newsgroups: comp.lang.python,comp.text.tex
-In-Reply-To: <m3zkg92dxq.fsf@localhost.localdomain>
+	id S1751833Ab1KGUpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Nov 2011 15:45:07 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:62819 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751174Ab1KGUpG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Nov 2011 15:45:06 -0500
+Received: by eye27 with SMTP id 27so3863750eye.19
+        for <git@vger.kernel.org>; Mon, 07 Nov 2011 12:45:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=content-type:to:cc:subject:references:date:mime-version
+         :content-transfer-encoding:from:message-id:in-reply-to:user-agent;
+        bh=DuaPGpl0DAJR9SiU4ZFSGJ1wKqeAtJHmAknLydWzlgs=;
+        b=JDDOKIOgs6DJ5dRMg9ZolP7IsdPXLGFEyBfqNBCoC6NPS/AIfU0syH8o1Ubu4FKBrG
+         aCTDMyjH8Q/jqpRQa9al4rx9zMPM2mIUY/9GCE9WX9qbk0gWk+nB6hD+U9jSN9Q9gaiP
+         KSTFOcYIa4ERBy/kCLtgvihmr0LBBhNFNZo3k=
+Received: by 10.213.32.147 with SMTP id c19mr1158513ebd.10.1320698704930;
+        Mon, 07 Nov 2011 12:45:04 -0800 (PST)
+Received: from keputer.lokaal (82-136-253-149.ip.telfort.nl. [82.136.253.149])
+        by mx.google.com with ESMTPS id x12sm53243474eef.9.2011.11.07.12.45.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 07 Nov 2011 12:45:04 -0800 (PST)
+In-Reply-To: <20111107171800.GA3621@sigill.intra.peff.net>
+User-Agent: Opera Mail/12.00 (Win32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185023>
 
-On 06/11/11 20:28, Jakub Narebski wrote:
+On Mon, 07 Nov 2011 18:18:00 +0100, Jeff King <peff@peff.net> wrote:
 
-> Note that for gitPAN each "distribution" (usually but not always
-> corresponding to single Perl module) is in separate repository.
-> The dependencies are handled by CPAN / CPANPLUS / cpanm client
-> (i.e. during install).
-
-Thank you for your interest, Jakub, and also for this information.  With 
-TeX there's a difficult which Perl, I think, does not have.  With TeX we 
-process documents, which may demand specific versions of packages. 
-LaTeX users are concerned that move on to a later version will cause 
-documents to break.
-
-> Putting all DVD (is it "TeX Live" DVD by the way?) into single
-> repository would put quite a bit of stress to git; it was created for
-> software development (although admittedly of large project like Linux
-> kernel), not 4GB+ trees.
-
-I'm impressed by how well git manages it.  It took about 15 minutes to 
-build the 4GB tree, and it was disk speed rather than CPU which was the 
-bottleneck.
-
->> Once you've done that, it is then possible and sensible to select
->> suitable interesting subsets, such as releases of a particular
->> package. Users could even define their own subsets, such as "all
->> resources needed to process this file, exactly as it processes on my
->> machine".
+>> I was actually hoping that you won't go that route, but the route to  
+>> push
+>> further to decide/spawn pager as late as possible. Clearly no sane  
+>> person
+>> would want to run --edit subcommand under pager and "pager.config =  
+>> less"
+>> should just be ignored in such a case.
 >
-> This could be handled using submodules, by having superrepository that
-> consist solely of references to other repositories by the way of
-> submodules... plus perhaps some administrativa files (like README for
-> whole CTAN, or search tool, or DVD install, etc.)
+> The problem with that is that it dumps the responsibility for running
+> the pager to every subcommand. For builtins, we can have a flag that
+> says "respect the pager.log config" or "foo will handle this itself;
+> don't respect pager.tag".
 >
-> This could be the used to get for example contents of DVD from 2010.
-
-We may be at cross purposes.  My first task is get the DVD tree into 
-git, performing necessary transformations such as expanding zip files 
-along the way.  Breaking the content into submodules can, I believe, be 
-done afterwards.
-
-With DVDs from several years it could take several hours to load 
-everything into git.  For myself, I'd like to do that once, more or less 
-as a batch process, and then move on to the more interesting topics. 
-Getting the DVD contents into git is already a significant piece of work.
-
-Once done, I can them move on to what you're interested in, which is 
-organising the material.  And I hope that others in the TeX community 
-will get involved with that, because I'm not building this repository 
-just for myself.
-
-> But even though submodules (c.f. Subversion svn:external, Mecurial
-> forest extension, etc.) are in Git for quite a bit of time, it doesn't
-> have best user interface.
+> But what about externals? If "pager.stash" does nothing in git.c, and
+> leaves it to "git-stash.sh" to start the pager if and when it's
+> appropriate, then what about my personal "git-foo" that I drop into my
+> PATH? Now I can't use "config.foo" without carrying code to do so in my
+> external command.
 >
->> In addition, many TeX users have a TeX DVD.  If they import it into a
->> git repository (using for example my script) then the update from 2011
->> to 2012 would require much less bandwidth.
->
-> ???
+> Maybe that's an OK tradeoff. But it's more of a pain for existing
+> scripts, and it's not backwards compatible. What do you think?
 
-A quick way to bring your TeX distribution up to date is to do a delta 
-with a later distribution, and download the difference.  That's what git 
-does, and it does it well.  So I'm keen to convert a TeX DVD into a git 
-repository, and then differences can be downloaded.
+For both cases there's something to say. In any new design I might dump  
+the responsibility on the external, but I would prefer to keep the  
+decision logic centralized. But as I understand, removing the  
+responsibility from git.c is going to require a whole bunch of other  
+changes to get the pager functional again in the scripts. So if there is a  
+somewhat decent way to be sure about whether or not to use the pager (i.e.  
+no editing) in git.c, why not keep it there? If, on the other hand, the  
+code is going to turn out to be a big hack, I'd say move it out.
 
->> Finally, I'd rather be working within git that modified copy of the
->> ISO when doing the subsetting.  I'm pretty sure that I can manage to
->> pull the small repositories from the big git-CTAN repository.
->
-> No you cannot.  It is all or nothing; there is no support for partial
-> _clone_ (yet), and it looks like it is a hard problem.
->
-> Nb. there is support for partial _checkout_, but this is something
-> different.
-
- From what I know, I'm confident that I can achieve what I want using 
-git.  I'm also confident that my approach is not closing off any 
-possible approached.  But if I'm wrong you'll be able to say: I told you so.
-
-> Commit = tree + parent + metadata.
-
-Actually, any number of parents, including none.  What metadata do I 
-have to provide?  At this time nothing, I think, beyond that provided by 
-the name of a reference (to the root of a tree).
-
-> I think you would very much want to have linear sequence of trees,
-> ordered via DAG of commits.  "Naked" trees are rather bad idea, I think.
->
->> As I recall the first 'commit' to the git repository for the Linux
->> kernel was just a tree, with a reference to that tree as a tag.  But
->> no commit.
->
-> That was a bad accident that there is a tag that points directly to a
-> tree of _initial import_, not something to copy.
-
-Because git is a distributed version control system, anyone who wants to 
-can create such a directed acyclic graph of commits.  And if it's useful 
-I'll gladly add it to my copy of the repository.
-
-best regards
-
-
-Jonathan
+Frans
