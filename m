@@ -1,70 +1,104 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] remote: add new sync command
-Date: Mon, 7 Nov 2011 16:31:23 -0500
-Message-ID: <20111107213123.GA10965@sigill.intra.peff.net>
-References: <1320682032-12698-1-git-send-email-felipe.contreras@gmail.com>
- <20111107172218.GB3621@sigill.intra.peff.net>
- <CAMP44s358k4EsCg+K6MeLEU4eLbb4mWyX9AdAf4P9CHvf9Lrwg@mail.gmail.com>
- <20111107183938.GA5155@sigill.intra.peff.net>
- <CAMP44s0M-qnZeHCUadSJJCYO=t881sUOi11G3fCG2vaAakPyBQ@mail.gmail.com>
- <20111107210134.GA7380@sigill.intra.peff.net>
- <7vhb2f1v7g.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/3] grep: get rid of useless x < 0 comparison on an enum
+ member
+Date: Mon, 7 Nov 2011 15:32:19 -0600
+Message-ID: <20111107213219.GA13537@elie.hsd1.il.comcast.net>
+References: <1320581184-4557-1-git-send-email-avarab@gmail.com>
+ <1320581184-4557-4-git-send-email-avarab@gmail.com>
+ <20111107194912.GA12469@elie.hsd1.il.comcast.net>
+ <7vlirr1vi5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	git@vger.kernel.org, Jim Meyering <jim@meyering.net>,
+	Fredrik Gustafsson <iveqy@iveqy.com>,
+	Andreas Schwab <schwab@linux-m68k.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 07 22:31:32 2011
+X-From: git-owner@vger.kernel.org Mon Nov 07 22:32:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNWmx-0000Da-3C
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 22:31:31 +0100
+	id 1RNWnx-0000hm-AJ
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 22:32:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752212Ab1KGVb0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Nov 2011 16:31:26 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35934
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751898Ab1KGVbZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Nov 2011 16:31:25 -0500
-Received: (qmail 30250 invoked by uid 107); 7 Nov 2011 21:31:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 07 Nov 2011 16:31:26 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Nov 2011 16:31:23 -0500
+	id S1752634Ab1KGVc2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Nov 2011 16:32:28 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:56395 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751319Ab1KGVc1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2011 16:32:27 -0500
+Received: by iage36 with SMTP id e36so6294351iag.19
+        for <git@vger.kernel.org>; Mon, 07 Nov 2011 13:32:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=4fd8J0KYWnO1hYa2GZ5HwVv19xzUrZA2t0ixnwInH7Q=;
+        b=VAYLfdTircZT0wUaMdXJ20jRGMAwt1YtWssW0rIGrOLuPPbmrCTnVpgNAgVQ46tn04
+         RPsm//uJYnOVfrJZGYJ0oQsyWDWvbAqN8pYu0gcX4GJ6hWqO93fQUcEt/xMkjoEG4pEF
+         Xef1rdwYUs0f5QS5aGnfYhvVbMwzc6znqLLsA=
+Received: by 10.42.153.74 with SMTP id l10mr49528750icw.52.1320701547081;
+        Mon, 07 Nov 2011 13:32:27 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id j1sm19269365igq.2.2011.11.07.13.32.25
+        (version=SSLv3 cipher=OTHER);
+        Mon, 07 Nov 2011 13:32:25 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <7vhb2f1v7g.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vlirr1vi5.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185030>
 
-On Mon, Nov 07, 2011 at 01:25:23PM -0800, Junio C Hamano wrote:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > That makes sense. But I think it fits in with git's current UI to do
-> > this via a combination of push options and refspecs. Even if we want to
-> > wrap it in some "git remote" command for convenience, I think what
-> > you're asking should be implemented as part of "git push".
-> 
-> Yeah, I think it makes sense to give --prune to "push" just like "fetch"
-> already has. These two are the primary (and in the ideal world, only)
-> operations that talk to the outside world. "remote add -f" might have been
-> a tempting "convenience" feature, but I personally think it probably was a
-> mistake for the exact reason that letting anything but "push" and "fetch"
-> talk to the outside world just invites more confusion. There does not have
-> to be 47 different ways to do the same thing.
+>> [jn: drop the GREP_HEADER_FIELD_MAX <=3D p->field check, too,
+>>  for symmetry]
+>
+> Umm, why is this removal of defensive programming practice an improve=
+ment?
 
-I don't mind "add -f" too much, which is at least very clear that it is
-simply a convenience feature for "git remote add foo && git fetch foo".
-But the other "git remote" features like "set-head -a", which can't be
-done any other way, or the "auto-check-what-the-remote-has" feature of
-"git remote show" are a little gross.
+Checking "p->filed < 0" makes static analyzers complain.  There's no
+clean way I know of[*] to get them to shut up and keep the check.  The
+fundamental question is whether the -Wtype-limits check is worth it or
+not:
 
-Anyway, I think we are on the same page; this feature (and btw, I think
-this is a great feature that we should have) should go into "push".
+ - on one hand, it catches real bugs, such as the mistaken check for
+   negative size_t =C3=86var mentioned;
 
--Peff
+ - on the other hand, it trips for cases like this in which the type
+   only happened to be unsigned on the build platform.  I consider
+   that a gcc bug (and apparently clang shares it) --- see
+   <http://bugs.debian.org/615525>.
+
+So, the purpose of this patch was to work around this common bug in
+static analyzers.
+
+Checking "GREP_HEADER_FIELD_MAX <=3D p->field" without checking for
+"p->field < 0", like the original patch did, would be only checking
+half of what it intends to and not add any real guarantees.  And
+more importantly, it would be distracting to people like me and
+Andreas who would wonder "why doesn't this check p->field < 0, too?".
+
+I guess the commit message should have said
+
+	grep: remove a defensive check to work around common static analyzer b=
+ug
+
+> This part is mostly my code and because I know what I wrote is almost
+> always perfect, so I do not think there is any real harm done, but st=
+ill...
+
+Heh.
+
+[*] There are plenty of cryptic, hackish ways possible, though. :)
+
+	if ((size_t) p->field >=3D GREP_HEADER_FIELD_MAX)
+		die(...);
