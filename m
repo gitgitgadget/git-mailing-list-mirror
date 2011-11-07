@@ -1,62 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote: fix remote set-url usage
-Date: Sun, 06 Nov 2011 21:44:08 -0800
-Message-ID: <7v7h3c4hcn.fsf@alter.siamese.dyndns.org>
-References: <1320637017-30863-1-git-send-email-felipe.contreras@gmail.com>
- <7vfwi04itx.fsf@alter.siamese.dyndns.org>
+From: Jack Nagel <jacknagel@gmail.com>
+Subject: pretty placeholders for reflog entries
+Date: Sun, 6 Nov 2011 23:49:48 -0600
+Message-ID: <CAMYxyaWPWVGUHz0qQOnARb9wexHCx73a04Bu_UhrJR=xrinX7g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 07 06:44:16 2011
+X-From: git-owner@vger.kernel.org Mon Nov 07 06:50:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNI0F-0006E2-T2
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 06:44:16 +0100
+	id 1RNI65-0007hk-8W
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 06:50:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751560Ab1KGFoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Nov 2011 00:44:12 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46522 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751227Ab1KGFoL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Nov 2011 00:44:11 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA7871A1C;
-	Mon,  7 Nov 2011 00:44:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NQPgNnI+Qj96ishbk10nPzdS+HI=; b=nXALTN
-	fmSRF/NTc4aocriAyyoqc3stRoAYWz1Al7Uap0o/mauCPFkJsr/ufARMaBbK6bRh
-	IQh8/JnZ2yikG+YN9LxHxLkFKC5S+EHGFsm+naz64fHFJz0bWY3aaI94WtTRrke/
-	dRdYrTtS1wBCy1nlDqrM/K59SCMzhyoOLVXmE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=v0LXupVY6aF5JNmwZyD24tE+tGazop7t
-	buzYVzUxWqsxqDdeAD7JdqtHdVmMoJZb0zZd7yqyvTvOZ6fZ5th9vyA4B2NnAJEw
-	fsqDnXAP+0gf/ij4tjHWHxgG3dja8T+oT5zY2RSgdrTnC0tKfZq8E0XtuitYJ/bW
-	WM0sz36Em04=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2B021A1B;
-	Mon,  7 Nov 2011 00:44:10 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4C8BD1A1A; Mon,  7 Nov 2011
- 00:44:10 -0500 (EST)
-In-Reply-To: <7vfwi04itx.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 06 Nov 2011 21:12:10 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 84138AC6-0903-11E1-97BB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752043Ab1KGFuL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Nov 2011 00:50:11 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:52465 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751715Ab1KGFuK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Nov 2011 00:50:10 -0500
+Received: by faao14 with SMTP id o14so4763491faa.19
+        for <git@vger.kernel.org>; Sun, 06 Nov 2011 21:50:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=Agadf8g0LUKjw1IEV9VZZnGwOvY/I1Mxdz36AhkNEv8=;
+        b=sfEu0Z3LKKa4pO2DkaVs4s1opLRWTVqRcsmpMczrC8K34B1kC+YjnFeO5uRZZekY3z
+         cqic056yWx+EZvyJ10MCQt2yc5wcG4qswK9TjKAnBjYxSBCaqb9R7C/mvmeukN0oiJAi
+         M8MI1qv938mLmi/u+xo8QkQk38ZfiPzKGejp4=
+Received: by 10.223.17.23 with SMTP id q23mr44577826faa.11.1320645009161; Sun,
+ 06 Nov 2011 21:50:09 -0800 (PST)
+Received: by 10.223.72.1 with HTTP; Sun, 6 Nov 2011 21:49:48 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184951>
 
-By the way, these two are low-impact fixes to relatively ancient problems,
-so while it is not urgent enough to include them to the upcoming 1.7.8
-(the users lived with the bug long enough and survived), I do not see much
-problem to include them in it, either.
+I have the reflog enabled on a bare repo so that I can have a record of
+"who pushed what, when". I'd like to define a custom pretty format for
+use with "git log -g" for reading it, but unfortunately the placeholders
+for reflog information are somewhat limited. In particular, I'd like to
+be able to access the identity (i.e., name and email) and date from each
+reflog entry.
+
+Is it possible to extract this information in current git? Perhaps I
+overlooked something.
+
+I suppose it would be simple enough to just write a script to parse the
+reflog file(s), but it would be nice to be able to do this with git
+itself.
+
+Thanks.
+
+Jack
