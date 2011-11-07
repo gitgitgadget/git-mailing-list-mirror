@@ -1,108 +1,86 @@
-From: Valdis.Kletnieks@vt.edu
-Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
-Date: Mon, 07 Nov 2011 02:52:17 -0500
-Message-ID: <22879.1320652337@turing-police.cc.vt.edu>
-References: <7vwrbjlj5r.fsf@alter.siamese.dyndns.org> <CA+55aFx_rAA6TJkZn1Zvu6u9UjxnmTVt0HpMnvaE_q9Sx-jzPg@mail.gmail.com> <7vk47jld5s.fsf@alter.siamese.dyndns.org> <CA+55aFz7TeQQH3D4Tpp31cZYZoQKeK37jouo+2Kh61Wa07knfw@mail.gmail.com> <CAJo=hJv5nAKH_ptYSWfMvFQv0Dj+naPXK35wSzKYkfPOYsWkxg@mail.gmail.com> <CA+55aFx0oCd6-sh0psYxho-s=sHAK0RHXJHfLewRuUcdXzxZbg@mail.gmail.com> <CA+55aFwXu=+HdQ5nW11Ts5p-V=KgpxjyagKqB+Xv+qBOEEWXvQ@mail.gmail.com> <7v62j1gitn.fsf@alter.siamese.dyndns.org> <7vvcr1f38j.fsf@alter.siamese.dyndns.org> <CA+55aFyRawm9CoJMiEXDFCX4YTidPOiV4oqSS2d7nNv7Ecw8BQ@mail.gmail.com> <20111104145908.GA3903@thunk.org>
-            <CA+55aFw6JJDkkSJnp=X4cQuibXMHVBgbQ99iPqEbd7p_7J=VfQ@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [RFC/PATCH 0/5] gitignore.5 clarifications
+Date: Mon, 7 Nov 2011 02:04:55 -0600
+Message-ID: <20111107080449.GA30448@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="==_Exmh_1320652337_7081P";
-	 micalg=pgp-sha1; protocol="application/pgp-signature"
-Content-Transfer-Encoding: 7bit
-Cc: "Ted Ts'o" <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org,
-	James Bottomley <James.Bottomley@hansenpartnership.com>,
-	Jeff Garzik <jeff@garzik.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: linux-kernel-owner@vger.kernel.org Mon Nov 07 08:52:48 2011
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Blake <eblake@redhat.com>, Johannes Sixt <j6t@kdbg.org>,
+	"Y.G." <yamomo1@hotmail.com>, Eli Barzilay <eli@barzilay.org>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 07 09:05:14 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1RNK0b-0005Yo-4J
-	for glk-linux-kernel-3@lo.gmane.org; Mon, 07 Nov 2011 08:52:45 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1RNKCe-0000hX-Ri
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 09:05:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751689Ab1KGHwi (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 7 Nov 2011 02:52:38 -0500
-Received: from lennier.cc.vt.edu ([198.82.162.213]:59618 "EHLO
-	lennier.cc.vt.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751111Ab1KGHwf (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 7 Nov 2011 02:52:35 -0500
-Received: from dagger.cc.vt.edu (dagger.cc.vt.edu [198.82.163.114])
-	by lennier.cc.vt.edu (8.13.8/8.13.8) with ESMTP id pA77qMTH009857;
-	Mon, 7 Nov 2011 02:52:22 -0500
-Received: from auth3.smtp.vt.edu (EHLO auth3.smtp.vt.edu) ([198.82.161.152])
-	by dagger.cc.vt.edu (MOS 4.2.2-FCS FastPath queued)
-	with ESMTP id SWD86370;
-	Mon, 07 Nov 2011 02:52:22 -0500 (EST)
-Received: from turing-police.cc.vt.edu (c-71-62-120-57.hsd1.va.comcast.net [71.62.120.57])
-	(authenticated bits=0)
-	by auth3.smtp.vt.edu (8.13.8/8.13.8) with ESMTP id pA77qHmK001259
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 7 Nov 2011 02:52:19 -0500
-X-Mailer: exmh version 2.7.2 01/07/2005 with nmh-1.3-dev
-In-Reply-To: Your message of "Fri, 04 Nov 2011 08:14:52 PDT."
-             <CA+55aFw6JJDkkSJnp=X4cQuibXMHVBgbQ99iPqEbd7p_7J=VfQ@mail.gmail.com>
-X-Mirapoint-Received-SPF: 198.82.161.152 auth3.smtp.vt.edu Valdis.Kletnieks@vt.edu 2 pass
-X-Junkmail-Status: score=10/50, host=dagger.cc.vt.edu
-X-Junkmail-Signature-Raw: score=unknown,
-	refid=str=0001.0A020204.4EB78E36.00AD,ss=1,fgs=0,
-	ip=71.62.120.57,
-	so=2010-07-22 22:03:31,
-	dmn=2009-09-10 00:05:08,
-	mode=single engine
-X-Junkmail-IWF: false
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1750925Ab1KGIFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Nov 2011 03:05:05 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:62508 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750717Ab1KGIFE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Nov 2011 03:05:04 -0500
+Received: by iage36 with SMTP id e36so5579651iag.19
+        for <git@vger.kernel.org>; Mon, 07 Nov 2011 00:05:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=ac+5IQLkQravGiVwZ+1T36gaJyZ2288gXRL3ELyw9bA=;
+        b=rSiGXDvyMWGzOIk/pMKvjo2gQcBKxxw/Nj5zqrbFV4FVDHDTUG3GQ1VhFfu1JU7g1J
+         B7acOMXP2Fe+bC7VmZGXg63+MBAfxqgbm7JNkFkZcPk6UBdxpsdnJs+LFo0cKpwv88DK
+         DxUqtp5k7z3Pr8jKLXQDXHcf8Gj7FkpiiEJ+4=
+Received: by 10.231.26.201 with SMTP id f9mr4386976ibc.40.1320653104239;
+        Mon, 07 Nov 2011 00:05:04 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id l28sm37117799ibc.3.2011.11.07.00.05.00
+        (version=SSLv3 cipher=OTHER);
+        Mon, 07 Nov 2011 00:05:02 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184956>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184957>
 
---==_Exmh_1320652337_7081P
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-On Fri, 04 Nov 2011 08:14:52 PDT, Linus Torvalds said:
-> On Fri, Nov 4, 2011 at 7:59 AM, Ted Ts'o <tytso=40mit.edu> wrote:
-> > Note that a repository format change will break a bunch of other
-> > things as well, including references in commit descriptions (=22This
-> > fixes a regression introduced in commit 42DEADBEEF=22)
+Y.G. noticed that the explanation of '/' handling in the gitignore
+docs are hard to follow.  Worse, it's completely wrong in a number
+of ways.
 
-> No they won't. Not if you do it right. It's easy enough to
-> automatically replace the SHA1's in the description, the same way we
-> replace everything else.
+Here's a series to fix a few of those.  Impact:
 
-OK.. I'll bite.  How do you disambiguate a '42deadbeef' in the changelog =
-part
-of a commit as being a commit ID, as opposed to being an address in a tra=
-ceback
-or something similar? Yes, I know you only change the ones that actually =
-map to
-a commit ID, but I'd not be surprised if by now we've got enough commits =
-and
-stack tracebacks in the git history that we'll birthday-paradox ourselves=
- into
-a false-positive in an automatic replacement.
+ - remove some complete nonsense (how did I mislead myself into
+   thinking patterns without a '/' were anchored?)
 
-(And it's OK to say =22the 3 stack tracebacks in changelogs we just mangl=
-ed can
-just go jump=22, but it does need at least a few seconds consideration..)=
+ - address the frequently asked question "how do I un-ignore part of a
+   directory I have ignored?"
 
+ - relive what seems to be a bug (even when the "foo/" directory is
+   ignored, a "git add foo/bar" should add new changes to the index
+   when that file is already tracked)
 
+ - some minor clarity improvements
 
---==_Exmh_1320652337_7081P
-Content-Type: application/pgp-signature
+At this point, I can hardly trust myself, so careful review for
+correctness and clarity would be very welcome.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Exmh version 2.5 07/13/2001
+Incorporates material from
+http://thread.gmane.org/gmane.comp.version-control.git/170907/focus=170916
 
-iD8DBQFOt44xcC3lWbTT17ARAqdSAKD8BKeDESG5NM0dZXjFR9OMibTRYgCfZP8A
-6Xk6cPcaVy+tbJOahk+ING8=
-=/1pP
------END PGP SIGNATURE-----
+Johannes Sixt (1):
+  Documentation/gitignore: explain how to un-ignore part of a directory
 
---==_Exmh_1320652337_7081P--
+Jonathan Nieder (3):
+  Documentation/gitignore: "foo/" patterns match directories, not files
+    under them
+  Documentation: clarify effect of '/' in gitignore(5) patterns
+  Documentation: unanchored gitignore patterns match basename
+
+ Documentation/gitignore.txt |   48 ++++++++++++++++++++++++++++++------------
+ 1 files changed, 34 insertions(+), 14 deletions(-)
