@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 3/4] fsck: avoid reading every object twice
-Date: Mon,  7 Nov 2011 09:59:25 +0700
-Message-ID: <1320634766-24511-4-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 4/4] fsck: print progress
+Date: Mon,  7 Nov 2011 09:59:26 +0700
+Message-ID: <1320634766-24511-5-git-send-email-pclouds@gmail.com>
 References: <1320634766-24511-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -12,213 +12,289 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 07 04:01:24 2011
+X-From: git-owner@vger.kernel.org Mon Nov 07 04:01:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNFSd-00089R-9i
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 04:01:23 +0100
+	id 1RNFSq-0008BS-Mv
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 04:01:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755171Ab1KGDBS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Nov 2011 22:01:18 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:62897 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751381Ab1KGDBS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Nov 2011 22:01:18 -0500
-Received: by gyc15 with SMTP id 15so3696948gyc.19
-        for <git@vger.kernel.org>; Sun, 06 Nov 2011 19:01:17 -0800 (PST)
+	id S1755172Ab1KGDBc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Nov 2011 22:01:32 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:43933 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751071Ab1KGDBb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Nov 2011 22:01:31 -0500
+Received: by iage36 with SMTP id e36so5338224iag.19
+        for <git@vger.kernel.org>; Sun, 06 Nov 2011 19:01:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=faYyWowrnLwdnq/GdsFpjVU/fAv+IJ/PDm9hSpNBPIQ=;
-        b=OyrtFCdlZtK4c62KvKOxpAJotcSU2gILZEkYnUnTVk4D9dFpA1QwMz+yupmGiYF7kQ
-         0tRrvc0tdPUH7sFho/3cU2PrfKfttqsehz4TJJhqyHhYhA7VRycrPsQIjfyW4G4D68zw
-         ye3/k0qnRmqbiOPFGsQHpQqtjVlNs9cFFYlYE=
-Received: by 10.42.163.202 with SMTP id d10mr38008361icy.47.1320634877259;
-        Sun, 06 Nov 2011 19:01:17 -0800 (PST)
+        bh=YnNGB2aCQ/6vYBTGPzSb9CnpzICyjJKLrgV6wOpe0UY=;
+        b=FtdrWv0Tc55+04bxXgVWfmr9guE57G6E7UlxcNN0f6/0gCB8WsnpR0rxTxKEYPged2
+         5Aks6DoKUo6VtqmMGagXM7AdHXCBCPHnpnS2fkiv1npy9nwKsZDhlcSP6lwfRHyPaXiY
+         GGQ31WR5+6IaZRpqAoCaQt5eQY5/siC+CV+LY=
+Received: by 10.42.164.194 with SMTP id h2mr41595344icy.44.1320634891170;
+        Sun, 06 Nov 2011 19:01:31 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.230.110])
-        by mx.google.com with ESMTPS id b2sm3862736pbc.2.2011.11.06.19.01.12
+        by mx.google.com with ESMTPS id km16sm32569254pbb.9.2011.11.06.19.01.26
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 06 Nov 2011 19:01:15 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 07 Nov 2011 09:59:57 +0700
+        Sun, 06 Nov 2011 19:01:30 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 07 Nov 2011 10:00:06 +0700
 X-Mailer: git-send-email 1.7.4.74.g639db
 In-Reply-To: <1320634766-24511-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184943>
 
-During verify_pack() all objects are read for SHA-1 check. Then
-fsck_sha1() is called on every object, which read the object again
-(fsck_sha1 -> parse_object -> read_sha1_file).
+fsck is usually a long process and it would be nice if it prints
+progress from time to time.
 
-Avoid reading an object twice, do fsck_sha1 while we have an object
-uncompressed data in verify_pack.
-
-On git.git, with this patch I got:
-
-$ /usr/bin/time ./git fsck >/dev/null
-98.97user 0.90system 1:40.01elapsed 99%CPU (0avgtext+0avgdata 616624max=
-resident)k
-0inputs+0outputs (0major+194186minor)pagefaults 0swaps
-
-Without it:
-
-$ /usr/bin/time ./git fsck >/dev/null
-231.23user 2.35system 3:53.82elapsed 99%CPU (0avgtext+0avgdata 636688ma=
-xresident)k
-0inputs+0outputs (0major+461629minor)pagefaults 0swaps
+Progress meter is not printed when --verbose is given because
+--verbose prints a lot, there's no need for "alive" indicator.
+Progress meter may provide "% complete" information but it would
+be lost anyway in the flood of text.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/fsck.c |   42 +++++++++++++++++++++++++-----------------
- pack-check.c   |   13 ++++++++++---
- pack.h         |    5 ++++-
- 3 files changed, 39 insertions(+), 21 deletions(-)
+ Documentation/git-fsck.txt |   11 ++++++++++-
+ builtin/fsck.c             |   40 ++++++++++++++++++++++++++++++++++++=
+++--
+ pack-check.c               |   14 +++++++++++---
+ pack.h                     |    3 ++-
+ 4 files changed, 61 insertions(+), 7 deletions(-)
 
+diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
+index a2a508d..0a17b42 100644
+--- a/Documentation/git-fsck.txt
++++ b/Documentation/git-fsck.txt
+@@ -10,7 +10,8 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git fsck' [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]
+-	 [--[no-]full] [--strict] [--verbose] [--lost-found] [<object>*]
++	 [--[no-]full] [--strict] [--verbose] [--lost-found]
++	 [--[no-]progress] [<object>*]
+=20
+ DESCRIPTION
+ -----------
+@@ -72,6 +73,14 @@ index file, all SHA1 references in .git/refs/*, and =
+all reflogs (unless
+ 	a blob, the contents are written into the file, rather than
+ 	its object name.
+=20
++--progress::
++--no-progress::
++	Progress status is reported on the standard error stream by
++	default when it is attached to a terminal, unless
++	--no-progress or --verbose is specified. --progress forces
++	progress status even if the standard error stream is not
++	directed to a terminal.
++
+ It tests SHA1 and general object sanity, and it does full tracking of
+ the resulting reachability and everything else. It prints out any
+ corruption it finds (missing or bad objects), and if you use the
 diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 4ead98d..0603f64 100644
+index 0603f64..c4b1ca6 100644
 --- a/builtin/fsck.c
 +++ b/builtin/fsck.c
-@@ -282,14 +282,8 @@ static void check_connectivity(void)
- 	}
- }
+@@ -11,6 +11,7 @@
+ #include "fsck.h"
+ #include "parse-options.h"
+ #include "dir.h"
++#include "progress.h"
 =20
--static int fsck_sha1(const unsigned char *sha1)
-+static int fsck_obj(struct object *obj)
+ #define REACHABLE 0x0001
+ #define SEEN      0x0002
+@@ -27,6 +28,7 @@ static const char *head_points_at;
+ static int errors_found;
+ static int write_lost_and_found;
+ static int verbose;
++static int show_progress =3D -1;
+ #define ERROR_OBJECT 01
+ #define ERROR_REACHABLE 02
+ #define ERROR_PACK 04
+@@ -138,7 +140,11 @@ static int traverse_one_object(struct object *obj)
+=20
+ static int traverse_reachable(void)
  {
--	struct object *obj =3D parse_object(sha1);
--	if (!obj) {
--		errors_found |=3D ERROR_OBJECT;
--		return error("%s: object corrupt or missing",
--			     sha1_to_hex(sha1));
--	}
- 	if (obj->flags & SEEN)
- 		return 0;
- 	obj->flags |=3D SEEN;
-@@ -332,6 +326,29 @@ static int fsck_sha1(const unsigned char *sha1)
- 	return 0;
++	struct progress *progress =3D NULL;
++	unsigned int nr =3D 0;
+ 	int result =3D 0;
++	if (show_progress)
++		progress =3D start_progress_delay("Checking connectivity", 0, 0, 2);
+ 	while (pending.nr) {
+ 		struct object_array_entry *entry;
+ 		struct object *obj;
+@@ -146,7 +152,9 @@ static int traverse_reachable(void)
+ 		entry =3D pending.objects + --pending.nr;
+ 		obj =3D entry->item;
+ 		result |=3D traverse_one_object(obj);
++		display_progress(progress, ++nr);
+ 	}
++	stop_progress(&progress);
+ 	return !!result;
  }
 =20
-+static int fsck_sha1(const unsigned char *sha1)
-+{
-+	struct object *obj =3D parse_object(sha1);
-+	if (!obj) {
-+		errors_found |=3D ERROR_OBJECT;
-+		return error("%s: object corrupt or missing",
-+			     sha1_to_hex(sha1));
-+	}
-+	return fsck_obj(obj);
-+}
-+
-+static int fsck_obj_buffer(const unsigned char *sha1, enum object_type=
- type,
-+			   unsigned long size, void *buffer, int *eaten)
-+{
-+	struct object *obj;
-+	obj =3D parse_object_buffer(sha1, type, size, buffer, eaten);
-+	if (!obj) {
-+		errors_found |=3D ERROR_OBJECT;
-+		return error("%s: object corrupt or missing", sha1_to_hex(sha1));
-+	}
-+	return fsck_obj(obj);
-+}
-+
- /*
-  * This is the sorting chunk size: make it reasonably
-  * big so that we can sort well..
-@@ -627,17 +644,8 @@ int cmd_fsck(int argc, const char **argv, const ch=
+@@ -530,15 +538,20 @@ static void get_default_heads(void)
+ static void fsck_object_dir(const char *path)
+ {
+ 	int i;
++	struct progress *progress =3D NULL;
+=20
+ 	if (verbose)
+ 		fprintf(stderr, "Checking object directory\n");
+=20
++	if (show_progress)
++		progress =3D start_progress("Checking object directories", 256);
+ 	for (i =3D 0; i < 256; i++) {
+ 		static char dir[4096];
+ 		sprintf(dir, "%s/%02x", path, i);
+ 		fsck_dir(i, dir);
++		display_progress(progress, i+1);
+ 	}
++	stop_progress(&progress);
+ 	fsck_sha1_list();
+ }
+=20
+@@ -609,6 +622,7 @@ static struct option fsck_opts[] =3D {
+ 	OPT_BOOLEAN(0, "strict", &check_strict, "enable more strict checking"=
+),
+ 	OPT_BOOLEAN(0, "lost-found", &write_lost_and_found,
+ 				"write dangling objects in .git/lost-found"),
++	OPT_BOOL   (0, "progress", &show_progress, "show progress"),
+ 	OPT_END(),
+ };
+=20
+@@ -621,6 +635,12 @@ int cmd_fsck(int argc, const char **argv, const ch=
 ar *prefix)
+ 	read_replace_refs =3D 0;
+=20
+ 	argc =3D parse_options(argc, argv, prefix, fsck_opts, fsck_usage, 0);
++
++	if (show_progress =3D=3D -1)
++		show_progress =3D isatty(2);
++	if (verbose)
++		show_progress =3D 0;
++
+ 	if (write_lost_and_found) {
+ 		check_full =3D 1;
+ 		include_reflogs =3D 0;
+@@ -640,12 +660,28 @@ int cmd_fsck(int argc, const char **argv, const c=
+har *prefix)
+=20
+ 	if (check_full) {
+ 		struct packed_git *p;
++		uint32_t total =3D 0, count =3D 0;
++		struct progress *progress =3D NULL;
+=20
  		prepare_packed_git();
- 		for (p =3D packed_git; p; p =3D p->next)
+-		for (p =3D packed_git; p; p =3D p->next)
++
++		if (show_progress) {
++			for (p =3D packed_git; p; p =3D p->next) {
++				if (open_pack_index(p))
++					continue;
++				total +=3D p->num_objects;
++			}
++
++			progress =3D start_progress("Checking objects", total);
++		}
++		for (p =3D packed_git; p; p =3D p->next) {
  			/* verify gives error messages itself */
--			if (verify_pack(p))
-+			if (verify_pack(p, fsck_obj_buffer))
+-			if (verify_pack(p, fsck_obj_buffer))
++			if (verify_pack(p, fsck_obj_buffer,
++					progress, count))
  				errors_found |=3D ERROR_PACK;
--
--		for (p =3D packed_git; p; p =3D p->next) {
--			uint32_t j, num;
--			if (open_pack_index(p))
--				continue;
--			num =3D p->num_objects;
--			for (j =3D 0; j < num; j++)
--				fsck_sha1(nth_packed_object_sha1(p, j));
--		}
++			count +=3D p->num_objects;
++		}
++		stop_progress(&progress);
  	}
 =20
  	heads =3D 0;
 diff --git a/pack-check.c b/pack-check.c
-index 7ac9b3a..3b48b86 100644
+index 3b48b86..63a595c 100644
 --- a/pack-check.c
 +++ b/pack-check.c
-@@ -42,7 +42,8 @@ int check_pack_crc(struct packed_git *p, struct pack_=
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "pack.h"
+ #include "pack-revindex.h"
++#include "progress.h"
+=20
+ struct idx_entry {
+ 	off_t                offset;
+@@ -43,7 +44,9 @@ int check_pack_crc(struct packed_git *p, struct pack_=
 window **w_curs,
- }
 =20
  static int verify_packfile(struct packed_git *p,
--		struct pack_window **w_curs)
-+			   struct pack_window **w_curs,
-+			   verify_fn fn)
+ 			   struct pack_window **w_curs,
+-			   verify_fn fn)
++			   verify_fn fn,
++			   struct progress *progress, uint32_t base_count)
++
  {
  	off_t index_size =3D p->index_size;
  	const unsigned char *index_base =3D p->index_data;
-@@ -120,6 +121,12 @@ static int verify_packfile(struct packed_git *p,
- 		else if (check_sha1_signature(entries[i].sha1, data, size, typename(=
-type)))
- 			err =3D error("packed %s from %s is corrupt",
- 				    sha1_to_hex(entries[i].sha1), p->pack_name);
-+		else if (fn) {
-+			int eaten =3D 0;
-+			fn(entries[i].sha1, type, size, data, &eaten);
-+			if (eaten)
-+				data =3D NULL;
-+		}
+@@ -127,8 +130,12 @@ static int verify_packfile(struct packed_git *p,
+ 			if (eaten)
+ 				data =3D NULL;
+ 		}
++		if (((base_count + i) & 1023) =3D=3D 0)
++			display_progress(progress, base_count + i);
  		free(data);
++
  	}
++	display_progress(progress, base_count + i);
  	free(entries);
-@@ -150,7 +157,7 @@ int verify_pack_index(struct packed_git *p)
+=20
+ 	return err;
+@@ -157,7 +164,8 @@ int verify_pack_index(struct packed_git *p)
  	return err;
  }
 =20
--int verify_pack(struct packed_git *p)
-+int verify_pack(struct packed_git *p, verify_fn fn)
+-int verify_pack(struct packed_git *p, verify_fn fn)
++int verify_pack(struct packed_git *p, verify_fn fn,
++		struct progress *progress, uint32_t base_count)
  {
  	int err =3D 0;
  	struct pack_window *w_curs =3D NULL;
-@@ -159,7 +166,7 @@ int verify_pack(struct packed_git *p)
+@@ -166,7 +174,7 @@ int verify_pack(struct packed_git *p, verify_fn fn)
  	if (!p->index_data)
  		return -1;
 =20
--	err |=3D verify_packfile(p, &w_curs);
-+	err |=3D verify_packfile(p, &w_curs, fn);
+-	err |=3D verify_packfile(p, &w_curs, fn);
++	err |=3D verify_packfile(p, &w_curs, fn, progress, base_count);
  	unuse_pack(&w_curs);
 =20
  	return err;
 diff --git a/pack.h b/pack.h
-index 722a54e..70f3c29 100644
+index 70f3c29..324a1d7 100644
 --- a/pack.h
 +++ b/pack.h
-@@ -70,10 +70,13 @@ struct pack_idx_entry {
- 	off_t offset;
+@@ -71,12 +71,13 @@ struct pack_idx_entry {
  };
 =20
-+
-+typedef int (*verify_fn)(const unsigned char*, enum object_type, unsig=
+=20
++struct progress;
+ typedef int (*verify_fn)(const unsigned char*, enum object_type, unsig=
 ned long, void*, int*);
-+
+=20
  extern const char *write_idx_file(const char *index_name, struct pack_=
 idx_entry **objects, int nr_objects, const struct pack_idx_option *, un=
 signed char *sha1);
  extern int check_pack_crc(struct packed_git *p, struct pack_window **w=
 _curs, off_t offset, off_t len, unsigned int nr);
  extern int verify_pack_index(struct packed_git *);
--extern int verify_pack(struct packed_git *);
-+extern int verify_pack(struct packed_git *, verify_fn fn);
+-extern int verify_pack(struct packed_git *, verify_fn fn);
++extern int verify_pack(struct packed_git *, verify_fn fn, struct progr=
+ess *, uint32_t);
  extern void fixup_pack_header_footer(int, unsigned char *, const char =
 *, uint32_t, unsigned char *, off_t);
  extern char *index_pack_lockfile(int fd);
