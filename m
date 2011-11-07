@@ -1,77 +1,77 @@
-From: Tony Godshall <togo@of.net>
-Subject: Re: Is there a pdf git manual?
-Date: Mon, 7 Nov 2011 10:29:01 -0800
-Message-ID: <CAAOvAThP0C3KmsOWZy1c=GLiBZkWsmWTSQRFahmX+FQ1BcD01A@mail.gmail.com>
-References: <CABrM6wkzV58WLnHkZ88y=MQVWjD8dwYMtG9HTto8t8QXBEW-hA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] grep: get rid of useless x < 0 comparison on an enum
+ member
+Date: Mon, 7 Nov 2011 13:34:02 -0500
+Message-ID: <20111107183402.GA5118@sigill.intra.peff.net>
+References: <1320581184-4557-1-git-send-email-avarab@gmail.com>
+ <1320581184-4557-4-git-send-email-avarab@gmail.com>
+ <m2pqh5nvic.fsf@igel.home>
+ <CACBZZX6CRm1W5i43=LeXPJFdcWFgVTkD8cGntHoKsPoWGx_hNg@mail.gmail.com>
+ <m3pqh4krer.fsf@hase.home>
+ <20111107163823.GB27055@sigill.intra.peff.net>
+ <m2k47b4wqi.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Peng Yu <pengyu.ut@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 07 19:29:11 2011
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jim Meyering <jim@meyering.net>,
+	Fredrik Gustafsson <iveqy@iveqy.com>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Mon Nov 07 19:34:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNTwS-0000Ma-8d
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 19:29:08 +0100
+	id 1RNU1L-0002zV-IO
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 19:34:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750957Ab1KGS3D convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Nov 2011 13:29:03 -0500
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:44896 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751338Ab1KGS3B convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2011 13:29:01 -0500
-Received: by pzk2 with SMTP id 2so8320740pzk.1
-        for <git@vger.kernel.org>; Mon, 07 Nov 2011 10:29:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=w0PUtRpMZgnFcVA0yKdnNUNhXqygsqvdKEL6YhTAmdo=;
-        b=ELTeIMTgPeISg9RKJQzsmaeJ0nYriRcWCO7s3wk2jWof4cLLTpT740/5gpbyEJQ+/1
-         jsV6j7aDtnRXfzwsGG1BcJpAN/wIcKjHxDk32kzpVlqHAFEwAQgDSJ2BLAJgD0zm/NFa
-         BDHYKiJHq+A+ZySKC56onUHj5mh3/nv2fN5+M=
-Received: by 10.68.29.197 with SMTP id m5mr1111763pbh.9.1320690541453; Mon, 07
- Nov 2011 10:29:01 -0800 (PST)
-Received: by 10.68.63.234 with HTTP; Mon, 7 Nov 2011 10:29:01 -0800 (PST)
-In-Reply-To: <CABrM6wkzV58WLnHkZ88y=MQVWjD8dwYMtG9HTto8t8QXBEW-hA@mail.gmail.com>
-X-Google-Sender-Auth: aAr2oWpP_Gn3w9iyeO_RMZCMiYA
+	id S1751344Ab1KGSeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Nov 2011 13:34:06 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35862
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751020Ab1KGSeF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Nov 2011 13:34:05 -0500
+Received: (qmail 28618 invoked by uid 107); 7 Nov 2011 18:34:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 07 Nov 2011 13:34:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Nov 2011 13:34:02 -0500
+Content-Disposition: inline
+In-Reply-To: <m2k47b4wqi.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185009>
 
-CUPS-PDF is a free program
-that will generate PDFs from
-any document- it's as easy as
-printing.
+On Mon, Nov 07, 2011 at 07:24:05PM +0100, Andreas Schwab wrote:
 
-On Mon, Nov 7, 2011 at 9:24 AM, Peng Yu <pengyu.ut@gmail.com> wrote:
-> Hi,
->
-> http://schacon.github.com/git/user-manual.html
->
-> The manual is in html. I'm not able to find a pdf version. Running
-> make in git/Documentation doesn't generate a pdf document
-> automatically. Could anybody generated the pdf document and post it t=
-o
-> the git project website? Thanks!
->
-> --
-> Regards,
-> Peng
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+> Jeff King <peff@peff.net> writes:
+> 
+> > Yes, but now you are getting into implementation-defined behavior, which
+> > is also something to avoid.
+> 
+> The whole point of the statement is a sanity check to uncover bugs.  If
+> you remove the first condition you completely ruin its point.
 
+I'm somewhat dubious of the value of a bug-check that may or may not
+actually kick in depending on your compiler's choice of enum
+representation, and whose bugs are generally easier to check via static
+analysis (i.e., making sure the enum value is one of the enumerated
+values when it is initialized or assigned).
 
+Yes, static analysis can miss some bugs (like passing the address of the
+enum through a void pointer (e.g., when memset'ing a struct)). But
+couldn't it just as easily be out of range in the other direction?
 
---=20
-Best Regards.
-This is unedited.
+It seems like the bug trying to be caught is probably something like:
+
+  enum foo v = function_which_returns_value_or_negative_error();
+  if (v < 0)
+     die("BUG");
+
+But in that case the bug is on the first line, and it is easily caught
+by static analysis, no?
+
+-Peff
