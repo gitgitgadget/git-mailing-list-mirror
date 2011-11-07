@@ -1,74 +1,73 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH v2] pull: introduce a pull.rebase option to enable --rebase
-Date: Mon, 7 Nov 2011 19:48:51 +0100
-Message-ID: <CACBZZX7igeXcuss2k3bPHrMP0U2JmbLAT-uQ0TvzZokofLqrJA@mail.gmail.com>
-References: <7v8vnt7kvd.fsf@alter.siamese.dyndns.org> <1320573010-12296-1-git-send-email-avarab@gmail.com>
- <4EB6E5AD.7060605@kdbg.org> <CACBZZX5Lq7vunx-QnsrufQVWJ6xYPoMXnv+tMwhOC3XbrZO11A@mail.gmail.com>
- <7v39dz3ms7.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Is there a pdf git manual?
+Date: Mon, 07 Nov 2011 10:53:34 -0800 (PST)
+Message-ID: <m3obwn3gtz.fsf@localhost.localdomain>
+References: <CABrM6wkzV58WLnHkZ88y=MQVWjD8dwYMtG9HTto8t8QXBEW-hA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-4
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-	Eric Herman <eric@freesa.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Fernando Vezzosi <buccia@repnz.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 07 19:49:20 2011
+Cc: git@vger.kernel.org
+To: Peng Yu <pengyu.ut@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 07 19:53:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNUFy-0002HG-U3
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 19:49:19 +0100
+	id 1RNUKD-0004Vi-I6
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 19:53:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751602Ab1KGStO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Nov 2011 13:49:14 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:53351 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750957Ab1KGStN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2011 13:49:13 -0500
-Received: by bke11 with SMTP id 11so3891236bke.19
-        for <git@vger.kernel.org>; Mon, 07 Nov 2011 10:49:12 -0800 (PST)
+	id S1752207Ab1KGSxh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Nov 2011 13:53:37 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:56388 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751105Ab1KGSxg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2011 13:53:36 -0500
+Received: by faan17 with SMTP id n17so310004faa.19
+        for <git@vger.kernel.org>; Mon, 07 Nov 2011 10:53:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=usYWLWUglVZFk71mljzC8pkEs8cG/proa4nU5HAPmTs=;
-        b=pHEgJXxKnoVEGXGzS5WYkowJmY2wkLWkbEXX6+BesEILPk6Aqv214x7AnuEjOBpd1l
-         EdbCo94JqYYC0cPFqsLrk8j04rO+gDyg8OkNxNozxYFf97sTjKCNRHC3tfaxYFC0fg+F
-         ShxyXJRRu0Cn4NlsVyWhjnWhTffFcKExIcnwE=
-Received: by 10.205.117.20 with SMTP id fk20mr494764bkc.58.1320691752121; Mon,
- 07 Nov 2011 10:49:12 -0800 (PST)
-Received: by 10.204.118.67 with HTTP; Mon, 7 Nov 2011 10:48:51 -0800 (PST)
-In-Reply-To: <7v39dz3ms7.fsf@alter.siamese.dyndns.org>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=8OPMMje8a6K8RhPve6bKv8VSuwjE7eA9jRqY07oExAQ=;
+        b=ci8C6M5C/OvU4Tw17DatB0f+GaiVhA7wUHJBulF66qqr2VIc4xqvEumieI2GMigEJt
+         t5aPzz9lIlQFxlKDgY7CWbBA+kR3TpAP4oQet7aFSnAKSNgGFzDdhlyp8FoTQdg2I81S
+         LaA+Lc5dKikLK8SWxpb4zIn29q71OFb+sVaPs=
+Received: by 10.223.76.66 with SMTP id b2mr49935654fak.15.1320692015264;
+        Mon, 07 Nov 2011 10:53:35 -0800 (PST)
+Received: from localhost.localdomain (abwr239.neoplus.adsl.tpnet.pl. [83.8.241.239])
+        by mx.google.com with ESMTPS id n25sm32297575fah.15.2011.11.07.10.53.33
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 07 Nov 2011 10:53:34 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id pA7Ir7sg015647;
+	Mon, 7 Nov 2011 19:53:18 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id pA7IqvIK015643;
+	Mon, 7 Nov 2011 19:52:57 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <CABrM6wkzV58WLnHkZ88y=MQVWjD8dwYMtG9HTto8t8QXBEW-hA@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185013>
 
-On Mon, Nov 7, 2011 at 17:44, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> On Sun, Nov 6, 2011 at 20:53, Johannes Sixt <j6t@kdbg.org> wrote:
->>> When you continue an indented item in a separate paragraph, then yo=
-u
->>> must not use an empty line, but have line with '+' and un-indented
->>> continuation paragraphs. See examples in this file.
->>
->> Thanks for spotting that.
->>
->> Junio: Should I spam you with another patch or is something you'd
->> prefer to just fix up?
->
-> It is about the same amount of work for me; I've just dedented the tw=
+Peng Yu <pengyu.ut@gmail.com> writes:
+
+> Hi,
+>=20
+> http://schacon.github.com/git/user-manual.html
+>=20
+> The manual is in html. I'm not able to find a pdf version. Running
+> make in git/Documentation doesn't generate a pdf document
+> automatically. Could anybody generated the pdf document and post it t=
 o
-> paragraphs that start with "*NOTE*:" and replaced the blank lines bef=
-ore
-> them with a single "+". Is that what you wanted to resend, or is ther=
-e
-> anything else?
+> the git project website? Thanks!
 
-That should cover it, thanks!
+"make pdf" would generate PDF version of (some of) documentation.
+
+--=20
+Jakub Nar=EAbski
