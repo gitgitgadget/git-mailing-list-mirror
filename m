@@ -1,83 +1,138 @@
-From: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: How to take dump and import to new git repository
-Date: Mon, 7 Nov 2011 12:46:48 +0100
-Message-ID: <20111107114648.GC10936@beez.lab.cmartin.tk>
-References: <1320666117862-6970049.post@n2.nabble.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 3/3] grep: get rid of useless x < 0 comparison on an enum member
+Date: Mon, 7 Nov 2011 13:42:39 +0100
+Message-ID: <CACBZZX6CRm1W5i43=LeXPJFdcWFgVTkD8cGntHoKsPoWGx_hNg@mail.gmail.com>
+References: <1320581184-4557-1-git-send-email-avarab@gmail.com>
+ <1320581184-4557-4-git-send-email-avarab@gmail.com> <m2pqh5nvic.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="1yeeQ81UyVL57Vl7"
-Cc: git@vger.kernel.org
-To: redhat1981 <redhat1981@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 07 12:47:04 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jim Meyering <jim@meyering.net>,
+	Fredrik Gustafsson <iveqy@iveqy.com>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Mon Nov 07 13:43:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNNfL-0001mS-CB
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 12:47:03 +0100
+	id 1RNOXn-0000hG-2y
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 13:43:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753588Ab1KGLq6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Nov 2011 06:46:58 -0500
-Received: from kimmy.cmartin.tk ([91.121.65.165]:40152 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752418Ab1KGLq6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Nov 2011 06:46:58 -0500
-Received: from beez.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 4AF8446196;
-	Mon,  7 Nov 2011 12:46:23 +0100 (CET)
-Received: (nullmailer pid 15153 invoked by uid 1000);
-	Mon, 07 Nov 2011 11:46:48 -0000
-Mail-Followup-To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
-	redhat1981 <redhat1981@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <1320666117862-6970049.post@n2.nabble.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932350Ab1KGMnL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Nov 2011 07:43:11 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:46176 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932322Ab1KGMnB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2011 07:43:01 -0500
+Received: by mail-bw0-f46.google.com with SMTP id 11so3537283bke.19
+        for <git@vger.kernel.org>; Mon, 07 Nov 2011 04:43:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Wk4XBLeYgZ7RCF5NKIHThMLAP16wl1SdjMz9qW/CFVU=;
+        b=VCAgpti/zvYabx0TTrCkAv9hasMVwqAmIEyxqVs/sfpOQhwjACk7vZcbmjzh/NKzBX
+         OAPkyxFg3TBpcaBbC05ZXOiH4IrX2WhYpECCoGVJ+zSZgtCTlAErYadbDrXD+/sEWHXa
+         E61faJKBwwnyCwr6jWp3AAMeutQNgtGFEcTTs=
+Received: by 10.204.140.129 with SMTP id i1mr19059563bku.19.1320669780406;
+ Mon, 07 Nov 2011 04:43:00 -0800 (PST)
+Received: by 10.204.118.67 with HTTP; Mon, 7 Nov 2011 04:42:39 -0800 (PST)
+In-Reply-To: <m2pqh5nvic.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184980>
 
+On Sun, Nov 6, 2011 at 16:03, Andreas Schwab <schwab@linux-m68k.org> wr=
+ote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> Remove an "p->field < 0" comparison in grep.c that'll always be
+>> false. In this case "p" is a "grep_pat" where "field" is defined as:
+>>
+>> =C2=A0 =C2=A0 =C2=A0 enum grep_header_field field;
+>>
+>> And grep_header_field is in turn defined as:
+>>
+>> =C2=A0 =C2=A0 enum grep_header_field {
+>> =C2=A0 =C2=A0 =C2=A0 GREP_HEADER_AUTHOR =3D 0,
+>> =C2=A0 =C2=A0 =C2=A0 GREP_HEADER_COMMITTER
+>> =C2=A0 =C2=A0 };
+>>
+>> Meaning that this comparison will always be false.
+>
+> The underlying integer type is implementation-defined, and can be any
+> signed or unsigned integer type that can represent all enumerations.
 
---1yeeQ81UyVL57Vl7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yes, but as far as I can tell since we've done "=3D 0" there that
+doesn't apply to us. To quote the ANSI C Standard (ANSI X3J11/88-090):
 
-On Mon, Nov 07, 2011 at 03:41:57AM -0800, redhat1981 wrote:
-> Hi,
->=20
-> I am SVN admin, Fluent with SVN, Git I am a new user, Please let me know,
-> How to take dump of one git repository and then import that Dump to new
-> Repo.
+    3.5.2.2 Enumeration specifiers
 
-This is what cloning a repository does. You're probably looking for
-the --mirror option.
+    Syntax
 
-   git clone --mirror somerepo.git newrepo.git
+              enum-specifier:
+                      enum  identifier<opt> { enumerator-list }
+                      enum  identifier
 
-will give you a repository in newrepo.git that has all the branches
-and tags from somerepo.git.
+              enumerator-list:
+                      enumerator
+                      enumerator-list , enumerator
 
-   cmn
+              enumerator:
+                      enumeration-constant
+                      enumeration-constant =3D constant-expression
 
+    Constraints
 
+       The expression that defines the value of an enumeration constant
+    shall be an integral constant expression that has a value
+    representable as an int.
 
---1yeeQ81UyVL57Vl7
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+    Semantics
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+       The identifiers in an enumerator list are declared as constants
+    that have type int and may appear wherever such are permitted./52/ =
+An
+    enumerator with =3D defines its enumeration constant as the value o=
+f the
+    constant expression.  If the first enumerator has no =3D , the valu=
+e of
+    its enumeration constant is 0.  Each subsequent enumerator with no =
+=3D
+    defines its enumeration constant as the value of the constant
+    expression obtained by adding 1 to the value of the previous
+    enumeration constant.  (A combination of both forms of enumerators =
+may
+    produce enumeration constants with values that duplicate other valu=
+es
+    in the same enumeration.) The enumerators of an enumeration are als=
+o
+    known as its members.
 
-iQEcBAEBAgAGBQJOt8UoAAoJEHKRP1jG7ZzTjcUH+wT6u1XkdjUX+dkg/grnmIO9
-qjdJ4gIUhXj9Vs8nBu7uPosrix7ZEdFRnBPSfgzQhVRb9Mm1dO4ICmJxRsJrsMrx
-kO+E5SAfgmYPwYamR/ClOe2gFfXsYAfiuk48LvQZJyuleVfvz1NT+KEh7zBiuVXE
-JZ9k263Oh5oloOZVbpcKc6K0RoiraIC4NbbtK8ahnbFNU8FjKCEKTYEKV/haz9pI
-XQUhG4UckEbg5R/i69Dmf1BUpoWPRinDuxETKKZDFyicB7JAdBChmDZlbPSnuRYM
-duwA3fNFWqJaGRkxnEYeuHor2XJOiXe4jHuB1Ahl3ITxLjSmtaLYtkeUcD09NFU=
-=5Ygi
------END PGP SIGNATURE-----
+       Each enumerated type shall be compatible with an integer type; t=
+he
+    choice of type is implementation-defined.
 
---1yeeQ81UyVL57Vl7--
+    Example
+
+             enum hue { chartreuse, burgundy, claret=3D20, winedark };
+             /*...*/
+             enum hue col, *cp;
+             /*...*/
+             col =3D claret;
+             cp =3D &col;
+             /*...*/
+             /*...*/ (*cp !=3D burgundy) /*...*/
+
+    makes hue the tag of an enumeration, and then declares col as an
+    object that has that type and cp as a pointer to an object that has
+    that type.  The enumerated values are in the set {0, 1, 20, 21}.
+
+I.e. we'll always have GREP_HEADER_AUTHOR =3D 0 and
+GREP_HEADER_COMMITTER =3D 1, we'll never have GREP_HEADER_AUTHOR =3D an=
+d
+GREP_HEADER_COMMITTER =3D <some int>.
