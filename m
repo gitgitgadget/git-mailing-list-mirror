@@ -1,98 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/3] t9350: point out that refs are not updated correctly
-Date: Mon, 7 Nov 2011 03:32:49 -0600
-Message-ID: <20111107093249.GD30641@elie.hsd1.il.comcast.net>
-References: <1320535407-4933-1-git-send-email-srabbelier@gmail.com>
- <1320535407-4933-2-git-send-email-srabbelier@gmail.com>
- <20111106043157.GM27272@elie.hsd1.il.comcast.net>
- <CAGdFq_hmF8xDA8PdDUPygSSAVsvrA=BRVKp+eCVRggHxLZzBsQ@mail.gmail.com>
+From: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: reset reports file as modified when it's in fact deleted
+Date: Mon, 7 Nov 2011 10:43:30 +0100
+Message-ID: <20111107094330.GB10936@beez.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Eric Herman <eric@freesa.org>,
-	Fernando Vezzosi <buccia@repnz.net>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 07 10:33:00 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 07 10:43:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNLZb-0007TA-6E
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 10:32:59 +0100
+	id 1RNLk5-0002sz-An
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 10:43:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752067Ab1KGJcz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Nov 2011 04:32:55 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:52524 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751734Ab1KGJcy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2011 04:32:54 -0500
-Received: by ywf7 with SMTP id 7so5073409ywf.19
-        for <git@vger.kernel.org>; Mon, 07 Nov 2011 01:32:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=9qB1Sx81H3bzdCljrpQXtC2h35Fhhml+xypOd4N4aEM=;
-        b=Law1PhfDWt8646EOhYGl4JdLh7ix15w4HkdzBAqvjNTG8m9nW72uAEm/Zj4iiB3G8W
-         LUcL44+IgmJYwn4b4h0QTTE72klQHtk/xtcxu4TRFNhcH3DptbgZu5kxBPCQ/7jwOYj/
-         pe9rMTQ/hkwD14lvckLXa/HEM0r+SmA0BTEuw=
-Received: by 10.42.151.196 with SMTP id f4mr45453301icw.17.1320658373282;
-        Mon, 07 Nov 2011 01:32:53 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id n30sm37415868ibl.4.2011.11.07.01.32.51
-        (version=SSLv3 cipher=OTHER);
-        Mon, 07 Nov 2011 01:32:52 -0800 (PST)
+	id S1752727Ab1KGJnm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Nov 2011 04:43:42 -0500
+Received: from kimmy.cmartin.tk ([91.121.65.165]:43731 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751734Ab1KGJnl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Nov 2011 04:43:41 -0500
+Received: from beez.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id 0298446196
+	for <git@vger.kernel.org>; Mon,  7 Nov 2011 10:43:05 +0100 (CET)
+Received: (nullmailer pid 11670 invoked by uid 1000);
+	Mon, 07 Nov 2011 09:43:30 -0000
+Mail-Followup-To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
+	git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <CAGdFq_hmF8xDA8PdDUPygSSAVsvrA=BRVKp+eCVRggHxLZzBsQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184965>
 
-Sverre Rabbelier wrote:
-> On Sun, Nov 6, 2011 at 05:31, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
+Hello,
 
->>> as they use marks
->>> files to store which commits have already been seen. The call graph
->>> is something as follows:
-[...]
->>> $ # run `git branch foo` and push it to remote
->>> $ git fast-export --{im,ex}port-marks=3Dmarksfile foo
->>>
->>> When fast-export imports the marksfile and sees that all commits in
->>> foo are marked as UNINTERESTING
->>
->> Hmm, I didn't know about this behavior. =C2=A0Would it be possible t=
-o add
->> a test for it, too?
->
-> What behavior are you referring to here? What kind of test would you =
-want added?
+When I delete a file (git rm) and then reset so it exists in the index
+again, the message tells me 'M file.txt' even though the file doesn't
+exist in the worktree anymore. Running git status afterwards does give
+the correct output. So, here's the minimal steps to reproduce:
 
-I meant I hadn't remembered that marks result in commits being marked
-as UNINTERESTING (even though the manpage warned me), and that it's
-possible a priori that fast-export could be broken when you run
+    $ git init
+    Initialized empty Git repository in /home/carlos/test/reset-err/.git/
+    $ touch file.txt
+    $ git add file.txt
+    $ git ci file.txt -m initial
+    [master (root-commit) a536393] initial
+     0 files changed, 0 insertions(+), 0 deletions(-)
+     create mode 100644 file.txt
+    $ git rm file.txt
+    rm 'file.txt'
+    $ git reset -- file.txt
+    Unstaged changes after reset:
+    M		 file.txt
+    $ git status -b -s
+    ## master
+     D file.txt
 
-	git fast-export --import-marks=3Dmarksfile master
+I'd expect the output after "Unstaged changes after reset" to tell me
+file.txt has been deleted instead of modified. This happens with
+1.7.8-rc0, 1.7.7 and 1.7.4.1 and I expect with many more that I don't
+have here.
 
-even without breaking
+I thought the index diff code might have been checking the index at the
+wrong time, but I can run 'git reset HEAD -- file.txt' as many times
+as I want, and it will still say 'M', so now I'm not sure.
 
-	git fast-export master..master
-
-But don't worry about it --- I can try it as a follow-on when this
-series next visits the list if that doesn't sound like fun. :)
-
-=46WIW, with the clarifications to the commit message Junio made, I'm
-happy with this patch.
+   cmn
