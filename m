@@ -1,62 +1,98 @@
-From: Frans Klaver <fransklaver@gmail.com>
-Subject: Re: BUG. Git config pager when --edit
-Date: Mon, 7 Nov 2011 14:43:41 +0100
-Message-ID: <CAH6sp9Ox+6p4RkjCZ0j3tXG9F4u7SPuwbSrOWmLSXic9DxSKiQ@mail.gmail.com>
-References: <20111107172652.0faade61@ashu.dyn.rarus.ru>
+From: Andre Noll <maan@systemlinux.org>
+Subject: git fsck: failed to apply delta
+Date: Mon, 7 Nov 2011 15:25:37 +0100
+Message-ID: <20111107142537.GD13394@systemlinux.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="6WlEvdN9Dv0WHSBl"
 Cc: git@vger.kernel.org
-To: Alexey Shumkin <Alex.Crezoff@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 07 14:43:48 2011
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Mon Nov 07 15:31:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNPUI-0000YP-Ss
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 14:43:47 +0100
+	id 1RNQEE-0005aC-I2
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 15:31:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755567Ab1KGNnm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Nov 2011 08:43:42 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:34901 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754394Ab1KGNnl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Nov 2011 08:43:41 -0500
-Received: by qao25 with SMTP id 25so591253qao.19
-        for <git@vger.kernel.org>; Mon, 07 Nov 2011 05:43:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=obyOprC/sAXoejQJ+5DusbeHW7FtK59eqxeMrnH2S0U=;
-        b=sGC70fZBtLEnaxH5N4JLXrYsZ1oJ31Ake0tOutMevh54JqMbGc7ysc1TvEvSsWQRsh
-         SzwBvS5dwPsV2ofhaeQzkkLtPYoid/pCCcXp7UemZ0BMjwsggxVgiBaOyofO4S2Tgh4S
-         pgLDcQTb32s7NeBrGtfl0UAM17RGWxFc/58t4=
-Received: by 10.224.202.8 with SMTP id fc8mr12863894qab.10.1320673421205; Mon,
- 07 Nov 2011 05:43:41 -0800 (PST)
-Received: by 10.224.80.149 with HTTP; Mon, 7 Nov 2011 05:43:41 -0800 (PST)
-In-Reply-To: <20111107172652.0faade61@ashu.dyn.rarus.ru>
+	id S1754361Ab1KGObJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Nov 2011 09:31:09 -0500
+Received: from systemlinux.org ([79.140.41.46]:52812 "EHLO
+	v3-1046.systemlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751676Ab1KGObI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Nov 2011 09:31:08 -0500
+X-Greylist: delayed 434 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Nov 2011 09:31:08 EST
+Received: by v3-1046.systemlinux.org (Postfix, from userid 1002)
+	id DEB30308444; Mon,  7 Nov 2011 15:25:37 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184985>
 
-Hi,
 
-On Mon, Nov 7, 2011 at 2:26 PM, Alexey Shumkin <Alex.Crezoff@gmail.com> wrote:
+--6WlEvdN9Dv0WHSBl
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> As far as my config is large enough to be paged I set pager.config=less
-> setting. But since that moment when I run
-> $ git config --edit
-> I get
-> Vim: Warning: Output is not to a terminal
-> And some messed config output
->
-> The same happens if to run
-> $ vim .git/config | less
+Hi
 
-So git is trying to tell vim to pipe its output to less. vim can't do
-that because it needs a terminal, as it's the only way vim is usable.
+I'm getting this when running git fsck or git repack against a large
+(21G) repo which was created from subversion using git svn clone:
 
-Should pager.config then only be used with --list?
+	fatal: failed to apply delta
+
+The debugging patch below indicates that this repo fails the sanity
+check for the size in patch_delta(). With this patch applied I'm
+getting the following additional output
+
+	error: bad delta header size, expected: 236, have 1994568
+
+This is 100% reproducible. I'm using the git master branch as of
+today (5ae0f681) but the same problem showed up also with an older
+git version.
+
+Does anybody know what's going on here?
+
+Thanks
+Andre
+---
+
+diff --git a/patch-delta.c b/patch-delta.c
+index 56e0a5e..cff4d79 100644
+--- a/patch-delta.c
++++ b/patch-delta.c
+@@ -28,8 +28,10 @@ void *patch_delta(const void *src_buf, unsigned long src=
+_size,
+=20
+ 	/* make sure the orig file size matches what we expect */
+ 	size =3D get_delta_hdr_size(&data, top);
+-	if (size !=3D src_size)
++	if (size !=3D src_size) {
++		error("bad delta header size, expected: %lu, have %lu", src_size, size);
+ 		return NULL;
++	}
+=20
+ 	/* now the result size */
+ 	size =3D get_delta_hdr_size(&data, top);
+--=20
+The only person who always got his work done by Friday was Robinson Crusoe
+
+--6WlEvdN9Dv0WHSBl
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEARECAAYFAk636mEACgkQWto1QDEAkw8AOgCfdNAoRdDcSwYSwxBsuhQeXPuD
+ZsoAoJU0Ka12y5f0j8/3ZYkxnP/NX/mo
+=gL1h
+-----END PGP SIGNATURE-----
+
+--6WlEvdN9Dv0WHSBl--
