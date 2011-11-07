@@ -1,52 +1,105 @@
-From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-Subject: Re: how to merge sub directory or file?
-Date: Mon, 7 Nov 2011 19:37:08 +0400
-Message-ID: <20111107193708.6cf2ae81.kostix@domain007.com>
-References: <20111107172652.0faade61@ashu.dyn.rarus.ru>
-	<8B3D19E0-2181-4E9C-943F-CA26A399E0D9@gmail.com>
+From: =?ISO-8859-1?Q?Fran=E7ois_Dagorn?= 
+	<Francois.Dagorn@univ-rennes1.fr>
+Subject: git-receive-pack missing credentials ?
+Date: Mon, 07 Nov 2011 16:33:14 +0100
+Organization: (ISTIC)
+Message-ID: <4EB7FA3A.8070908@univ-rennes1.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Emily <lingyan.ren@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 07 16:47:42 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 07 16:55:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNRQE-0008Ka-Be
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 16:47:42 +0100
+	id 1RNRXN-0003Py-Om
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 16:55:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932297Ab1KGPrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Nov 2011 10:47:33 -0500
-Received: from mailhub.007spb.ru ([84.204.203.130]:55773 "EHLO
-	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932103Ab1KGPrb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Nov 2011 10:47:31 -0500
-X-Greylist: delayed 617 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Nov 2011 10:47:30 EST
-Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id pA7Fb8Mj026947;
-	Mon, 7 Nov 2011 19:37:09 +0400
-In-Reply-To: <8B3D19E0-2181-4E9C-943F-CA26A399E0D9@gmail.com>
-X-Mailer: Sylpheed 3.1.1 (GTK+ 2.10.14; i686-pc-mingw32)
-X-Antivirus: Dr.Web (R) for Mail Servers on proxysrv host
-X-Antivirus-Code: 100000
+	id S1752546Ab1KGPy7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Nov 2011 10:54:59 -0500
+Received: from mailrelais2.univ-rennes1.fr ([129.20.128.64]:55872 "EHLO
+	mailrelais2.univ-rennes1.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751509Ab1KGPy7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2011 10:54:59 -0500
+X-Greylist: delayed 1423 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Nov 2011 10:54:58 EST
+Received: from localhost (mailscan.univ-rennes1.fr [129.20.128.58])
+	by mailrelais2.univ-rennes1.fr (Postfix) with ESMTP id 003C5386
+	for <git@vger.kernel.org>; Mon,  7 Nov 2011 16:31:13 +0100 (MET)
+X-Virus-Scanned: amavisd-new at univ-rennes1.fr
+Received: from mailrelais2.univ-rennes1.fr ([129.20.128.64])
+	by localhost (mailscan.univ-rennes1.fr [129.20.128.58]) (amavisd-new, port 10036)
+	with ESMTP id 3eGBVRGgDvU3 for <git@vger.kernel.org>;
+	Mon,  7 Nov 2011 16:31:12 +0100 (MET)
+X-AUTHENTICATED_LDAP: authentification_ldap_reussie
+Received: from [148.60.10.22] (zag.istic.univ-rennes1.fr [148.60.10.22])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mailrelais2.univ-rennes1.fr (Postfix) with ESMTP id CC997333
+	for <git@vger.kernel.org>; Mon,  7 Nov 2011 16:31:12 +0100 (MET)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.17) Gecko/20110829 Lightning/1.0b3pre Thunderbird/3.1.10
+X-Enigmail-Version: 1.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184988>
 
-On Mon, 7 Nov 2011 22:54:18 +0800
-Emily <lingyan.ren@gmail.com> wrote:
+Hello all,
 
-> I have two git projects A and B, content of B is subset of A. For
-> example, Project  A and B's tree are as below:
-[...]
-> When there's new changes in project A, how can I merge them to
-> project B without changing B's directory structure?
-> 
-> Your help will be highly appreciated.
-Subtree merging maybe?
-See http://progit.org/book/ch6-7.html
+I'm experiencing problems when trying to set up a git repository
+managed by git-http-backend. I've done the following :
+
+- on the server side
+
+     cd /git
+     mkdir test13
+     git --bare init .
+         >>> Initialized empty Git repository in /git/test13
+
+     /usr/local/libexec/git-core/git-update-server-info
+     chown -R apache.apache .
+
+- on the client side
+
+    cd (project-directory)
+    $ git init
+    $ (add some files)
+    $ git add .
+    $ git commit -m 'Initial commit'
+    git push http://git.istic.smw.fr/test13 master
+
+        Username:
+        Password:
+        error: Cannot access URL http://git.istic.smw.fr/test13/, retur=
+n code 22
+        fatal: git-http-push failed
+
+- apache acces_log
+
+ 1) ip-address - metheuser [07/Nov/2011:16:17:31 +0100]
+    "GET /test13/info/refs?service=3Dgit-     receive-pack HTTP/1.1" 20=
+0 - "-" "git/1.7.3.4"
+ 2) ip-address - metheuser [07/Nov/2011:16:17:32 +0100]
+    "GET /test13/HEAD HTTP/1.1" 200 23 "-" "git/1.7.3.4"
+ 3) ip-address - - [07/Nov/2011:16:17:32 +0100]
+    "PROPFIND /test13/ HTTP/1.1" 401 492 "-" "git/1.7.3.4"
+
+- what sounds strange to me : the 2 firsts requests are generated by my=
+ client side
+  (wireshark used as a clue) but the third comes from the server side a=
+nd the users
+  credentials are missed !
+
+- And also, I was hoping to use smart httpd and so the generated PROPFI=
+ND (DAV)
+  is amazing.
+
+Any help would be appreciated.
+
+Cheers.
+
+=46ran=E7ois Dagorn
+Universit=E9 de rennes 1
+=46rance
