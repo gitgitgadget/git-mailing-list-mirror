@@ -1,52 +1,68 @@
-From: Peng Yu <pengyu.ut@gmail.com>
-Subject: Is there a pdf git manual?
-Date: Mon, 7 Nov 2011 11:24:14 -0600
-Message-ID: <CABrM6wkzV58WLnHkZ88y=MQVWjD8dwYMtG9HTto8t8QXBEW-hA@mail.gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH] blame.c: Properly initialize strbuf after calling textconv_object(),
+ again
+Date: Mon, 07 Nov 2011 18:31:23 +0100
+Message-ID: <4EB815EB.30702@gmail.com>
+References: <4EB7FEE6.9000609@gmail.com> <7vy5vr282s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 07 18:24:22 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 07 18:33:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNSvm-0008NB-Aw
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 18:24:22 +0100
+	id 1RNT4m-00051z-FL
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 18:33:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932981Ab1KGRYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Nov 2011 12:24:17 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:40712 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932759Ab1KGRYP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Nov 2011 12:24:15 -0500
-Received: by gyc15 with SMTP id 15so4394475gyc.19
-        for <git@vger.kernel.org>; Mon, 07 Nov 2011 09:24:14 -0800 (PST)
+	id S932502Ab1KGRdg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Nov 2011 12:33:36 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:40921 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755812Ab1KGRdf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Nov 2011 12:33:35 -0500
+Received: by bke11 with SMTP id 11so3816611bke.19
+        for <git@vger.kernel.org>; Mon, 07 Nov 2011 09:33:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=EEOyWQgNzBD8HhJwV5hWQeVatMEWNWhYXL9lFusJUpE=;
-        b=tposNaoMYnyWPM/CyFT0gWyzzfDT0vFIduhh93HVMa0mf1GA+Jj+/waN+207tjS9K4
-         8Vn7FKvZ6sDC+6TTb/BqoOvIDzs3rkTnMBdE+aqE08dlttRON38j748CCF+BgPVEM3JO
-         WRygIr5IjpwXtQ4DsAMwMfQZPDCbHww5cZCE8=
-Received: by 10.236.180.200 with SMTP id j48mr5015769yhm.26.1320686654741;
- Mon, 07 Nov 2011 09:24:14 -0800 (PST)
-Received: by 10.236.103.8 with HTTP; Mon, 7 Nov 2011 09:24:14 -0800 (PST)
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=IMUVCndxE+Ge4/xOo7cux69t24Pm9YQDvoDDO2Lejaw=;
+        b=eKQLBoUwqHyqZPzmG2WTXuxh1VU2NmJM1xuip9XJVdIW8ANTmChfYak9mnfJH1A2/2
+         QHVWb4+hmEcjCgrMXo3WYtZu2KTHpYVRhJRGFeZjyZpnsIMqW4KFgX9ndtFi++SkVIV0
+         6OlgZXTEMaHwclhkqZ5fS6DXTIGvjKyA3Yrag=
+Received: by 10.204.130.85 with SMTP id r21mr20306186bks.38.1320687214096;
+        Mon, 07 Nov 2011 09:33:34 -0800 (PST)
+Received: from [130.73.68.203] (jambul.zib.de. [130.73.68.203])
+        by mx.google.com with ESMTPS id e14sm18279194bka.0.2011.11.07.09.33.32
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 07 Nov 2011 09:33:33 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <7vy5vr282s.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185004>
 
-Hi,
+On 07.11.2011 17:47, Junio C Hamano wrote:
 
-http://schacon.github.com/git/user-manual.html
+>> 2564aa4 started to initialize buf.alloc, but that should actually be one
+>> more byte than the string length due to the trailing \0.
+>
+> Even when the conversion result is a zero-length string?
 
-The manual is in html. I'm not able to find a pdf version. Running
-make in git/Documentation doesn't generate a pdf document
-automatically. Could anybody generated the pdf document and post it to
-the git project website? Thanks!
+In this case, yes. The string buffer is initialized (and detached) in 
+run_textconv, which calls strbuf_read, which grows the (yet empty) 
+string to 8192 bytes. So alloc is always > 0, and the detach will trim 
+alloc to len + 1.
+
+However, Peff made another valid point and I'll send v2 soon.
 
 -- 
-Regards,
-Peng
+Sebastian Schuberth
