@@ -1,68 +1,60 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] remote: fix remote set-url usage
-Date: Mon,  7 Nov 2011 05:36:57 +0200
-Message-ID: <1320637017-30863-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 07 04:37:13 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 4/4] fsck: print progress
+Date: Sun, 06 Nov 2011 20:33:03 -0800
+Message-ID: <7vsjm04kn4.fsf@alter.siamese.dyndns.org>
+References: <1320634766-24511-1-git-send-email-pclouds@gmail.com>
+ <1320634766-24511-5-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Stephen Boyd <bebarino@gmail.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 07 05:33:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNG1J-0000KP-80
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 04:37:13 +0100
+	id 1RNGtZ-0005ct-3D
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 05:33:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755190Ab1KGDhH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Nov 2011 22:37:07 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:48118 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752455Ab1KGDhG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Nov 2011 22:37:06 -0500
-Received: by bke11 with SMTP id 11so3278038bke.19
-        for <git@vger.kernel.org>; Sun, 06 Nov 2011 19:37:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=5GhNHS0DQrzJU2mXSQERlAiRYsie+JKNroeeJTJLbfk=;
-        b=fHArDcuYG4NbQJqmwIGn0+TsL4KYFEZ2+sop0niUUg2BNFG+up0DIk6qn3iprj03yc
-         0bk+B5iws4X04jExcto08vyiFkM4sjekT9buJKQyvw0WkMo/I5mBQFJHXd+x3tmSbWS6
-         +Kcgu/VCAs8/+M9qwbGAVj55L86avAzOXsYys=
-Received: by 10.204.154.156 with SMTP id o28mr17741957bkw.12.1320637023979;
-        Sun, 06 Nov 2011 19:37:03 -0800 (PST)
-Received: from localhost (cs27007082.pp.htv.fi. [89.27.7.82])
-        by mx.google.com with ESMTPS id z13sm12758379bkw.8.2011.11.06.19.37.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 06 Nov 2011 19:37:02 -0800 (PST)
-X-Mailer: git-send-email 1.7.7
+	id S1752392Ab1KGEdH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Nov 2011 23:33:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54641 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751489Ab1KGEdG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Nov 2011 23:33:06 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E6796853;
+	Sun,  6 Nov 2011 23:33:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dXEiOJYLOZjPMdwiVyzYU5TRX/Y=; b=P/1mBv
+	N9AVAyQU6zzLzdletfiAK5DCsKUvuwza9izq7bcywYXaVwIAasirgDUNZcoSMTVt
+	8DQbP3PwPX8+97y2jozgvTUdkpTDYnbr+ywPvAhjLifBE/8Fh3oxee9VcSY9biOi
+	iJpmVas4RWUwZW44puzOvGWIKXCnPDscKUdBo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vfUFeMk4vgODLqYPcTBrg01SOQW8d9VU
+	8kgKxGKmkWh37nfao8Fnj2956gYcuPXWQIn9HtODgS+mzO3gbGwygw/wAGIMi22i
+	D5AL0uK+soAK90tsbNT3J/ATj0Y3hXh2BKGOMtmd5us1XathN16BHj7nwgGYX201
+	+mmZtKMW/2Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9051B6851;
+	Sun,  6 Nov 2011 23:33:05 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 20A0A6850; Sun,  6 Nov 2011
+ 23:33:05 -0500 (EST)
+In-Reply-To: <1320634766-24511-5-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 7 Nov
+ 2011 09:59:26 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 95D4B5E6-08F9-11E1-ADF8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184945>
 
-Bad copy-paste.
-
-Otherwise the help would be for a different command:
- git remote set-url --help
-
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- builtin/remote.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/builtin/remote.c b/builtin/remote.c
-index e1285be..2add79a 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1427,7 +1427,7 @@ static int set_url(int argc, const char **argv)
- 			    "delete URLs"),
- 		OPT_END()
- 	};
--	argc = parse_options(argc, argv, NULL, options, builtin_remote_update_usage,
-+	argc = parse_options(argc, argv, NULL, options, builtin_remote_seturl_usage,
- 			     PARSE_OPT_KEEP_ARGV0);
- 
- 	if (add_mode && delete_mode)
--- 
-1.7.7
+Thanks. Will queue.
