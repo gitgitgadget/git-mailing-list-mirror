@@ -1,85 +1,69 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: git-receive-pack missing credentials ?
-Date: Tue, 8 Nov 2011 01:02:04 +0800
-Message-ID: <CALUzUxpiOoY3Qy0oXzgioBGkZyBF_vpHV3OHm-DWfChR9pPHHA@mail.gmail.com>
-References: <4EB7FA3A.8070908@univ-rennes1.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: BUG. Git config pager when --edit
+Date: Mon, 7 Nov 2011 12:18:00 -0500
+Message-ID: <20111107171800.GA3621@sigill.intra.peff.net>
+References: <20111107172652.0faade61@ashu.dyn.rarus.ru>
+ <CAH6sp9Ox+6p4RkjCZ0j3tXG9F4u7SPuwbSrOWmLSXic9DxSKiQ@mail.gmail.com>
+ <20111107164250.GC27055@sigill.intra.peff.net>
+ <7vpqh327ds.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Fran=E7ois_Dagorn?= 
-	<Francois.Dagorn@univ-rennes1.fr>
-X-From: git-owner@vger.kernel.org Mon Nov 07 18:02:14 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Frans Klaver <fransklaver@gmail.com>,
+	Alexey Shumkin <Alex.Crezoff@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 07 18:18:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNSaM-0004iU-0a
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 18:02:14 +0100
+	id 1RNSpl-00058B-TZ
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 18:18:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932567Ab1KGRCI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Nov 2011 12:02:08 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:53421 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751480Ab1KGRCG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2011 12:02:06 -0500
-Received: by faan17 with SMTP id n17so200698faa.19
-        for <git@vger.kernel.org>; Mon, 07 Nov 2011 09:02:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=2GiE5vV1RkK4nrGAPCfQZhk+slPZJJYiD+RORQH85t4=;
-        b=oEhf4vfG6Xu2XsqBaC+cvuBhWd5+j3IGtXWUTzASROsyHDEVdh3S3ec3h7zYbHJbub
-         HLi/lz0oQHZXk+16+CFCzDaQHn43CKSYqOHbsB4qkLIgnaPQxX4nz9ymlRE7d5eS7I5t
-         aI5DBpShTN2E+rnUKg8WC2BqG/cCcXQMQ+Rac=
-Received: by 10.223.91.143 with SMTP id n15mr48171812fam.23.1320685324738;
- Mon, 07 Nov 2011 09:02:04 -0800 (PST)
-Received: by 10.223.75.197 with HTTP; Mon, 7 Nov 2011 09:02:04 -0800 (PST)
-In-Reply-To: <4EB7FA3A.8070908@univ-rennes1.fr>
+	id S1755898Ab1KGRSE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Nov 2011 12:18:04 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35827
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755119Ab1KGRSD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Nov 2011 12:18:03 -0500
+Received: (qmail 27950 invoked by uid 107); 7 Nov 2011 17:18:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 07 Nov 2011 12:18:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Nov 2011 12:18:00 -0500
+Content-Disposition: inline
+In-Reply-To: <7vpqh327ds.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185001>
 
-On Mon, Nov 7, 2011 at 11:33 PM, Fran=E7ois Dagorn
-<Francois.Dagorn@univ-rennes1.fr> wrote:
-> - on the client side
->
-> =A0 =A0cd (project-directory)
-> =A0 =A0$ git init
-> =A0 =A0$ (add some files)
-> =A0 =A0$ git add .
-> =A0 =A0$ git commit -m 'Initial commit'
-> =A0 =A0git push http://git.istic.smw.fr/test13 master
->
-> =A0 =A0 =A0 =A0Username:
-> =A0 =A0 =A0 =A0Password:
-> =A0 =A0 =A0 =A0error: Cannot access URL http://git.istic.smw.fr/test1=
-3/, return code 22
-> =A0 =A0 =A0 =A0fatal: git-http-push failed
->
-> - apache acces_log
->
-> =A01) ip-address - metheuser [07/Nov/2011:16:17:31 +0100]
-> =A0 =A0"GET /test13/info/refs?service=3Dgit- =A0 =A0 receive-pack HTT=
-P/1.1" 200 - "-" "git/1.7.3.4"
-> =A02) ip-address - metheuser [07/Nov/2011:16:17:32 +0100]
-> =A0 =A0"GET /test13/HEAD HTTP/1.1" 200 23 "-" "git/1.7.3.4"
-> =A03) ip-address - - [07/Nov/2011:16:17:32 +0100]
-> =A0 =A0"PROPFIND /test13/ HTTP/1.1" 401 492 "-" "git/1.7.3.4"
->
-> - what sounds strange to me : the 2 firsts requests are generated by =
-my client side
-> =A0(wireshark used as a clue) but the third comes from the server sid=
-e and the users
-> =A0credentials are missed !
+On Mon, Nov 07, 2011 at 09:02:23AM -0800, Junio C Hamano wrote:
 
-Can you update your git installation and try again? v1.7.3.4 sounds
-pretty old (almost a year).
+> Jeff King <peff@peff.net> writes:
+> 
+> > I should probably polish and submit the patch here:
+> >
+> >   http://thread.gmane.org/gmane.comp.version-control.git/182238/focus=182475
+> 
+> I was actually hoping that you won't go that route, but the route to push
+> further to decide/spawn pager as late as possible. Clearly no sane person
+> would want to run --edit subcommand under pager and "pager.config = less"
+> should just be ignored in such a case.
 
---=20
-Cheers,
-Ray Chuan
+The problem with that is that it dumps the responsibility for running
+the pager to every subcommand. For builtins, we can have a flag that
+says "respect the pager.log config" or "foo will handle this itself;
+don't respect pager.tag".
+
+But what about externals? If "pager.stash" does nothing in git.c, and
+leaves it to "git-stash.sh" to start the pager if and when it's
+appropriate, then what about my personal "git-foo" that I drop into my
+PATH? Now I can't use "config.foo" without carrying code to do so in my
+external command.
+
+Maybe that's an OK tradeoff. But it's more of a pain for existing
+scripts, and it's not backwards compatible. What do you think?
+
+-Peff
