@@ -1,59 +1,71 @@
-From: Ori Avtalion <ori@avtalion.name>
-Subject: git-apply that handles rejects like merge conflicts
-Date: Tue, 08 Nov 2011 00:10:48 +0200
-Message-ID: <4EB85768.1060508@avtalion.name>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/3] grep: get rid of useless x < 0 comparison on an enum
+ member
+Date: Mon, 7 Nov 2011 16:21:09 -0600
+Message-ID: <20111107222109.GA22693@elie.hsd1.il.comcast.net>
+References: <1320581184-4557-1-git-send-email-avarab@gmail.com>
+ <1320581184-4557-4-git-send-email-avarab@gmail.com>
+ <20111107194912.GA12469@elie.hsd1.il.comcast.net>
+ <7vlirr1vi5.fsf@alter.siamese.dyndns.org>
+ <20111107213219.GA13537@elie.hsd1.il.comcast.net>
+ <7vd3d31u4e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 07 23:10:59 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	git@vger.kernel.org, Jim Meyering <jim@meyering.net>,
+	Fredrik Gustafsson <iveqy@iveqy.com>,
+	Andreas Schwab <schwab@linux-m68k.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 07 23:21:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNXP7-0002ix-Lm
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 23:10:58 +0100
+	id 1RNXZE-0007eF-2A
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 23:21:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751464Ab1KGWKx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Nov 2011 17:10:53 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:33614 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751041Ab1KGWKw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Nov 2011 17:10:52 -0500
-Received: by faan17 with SMTP id n17so482834faa.19
-        for <git@vger.kernel.org>; Mon, 07 Nov 2011 14:10:51 -0800 (PST)
+	id S1753499Ab1KGWVT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Nov 2011 17:21:19 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:55517 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750852Ab1KGWVS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Nov 2011 17:21:18 -0500
+Received: by qao25 with SMTP id 25so1097642qao.19
+        for <git@vger.kernel.org>; Mon, 07 Nov 2011 14:21:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=6cWz4dSQRudLA32688uODfW49vhoruLevtDzjyZPjlo=;
-        b=JzBkUHq/hlRqlANAP5MXVDnipnjHCYBfOcKvzKS8JYHiAi4KEl1mbKTknboNaRIC9G
-         RNj1zSEY3D3XcTmhLKQDUvz2WU8TQUy1q7cSaOzP5ygyDZPLRvXeSTY7R1ptpgxv2Te9
-         46UyH0Sqg+jvTKk3qZSP7ONCxmwYyY6L0bZ2k=
-Received: by 10.223.76.66 with SMTP id b2mr51029136fak.15.1320703851240;
-        Mon, 07 Nov 2011 14:10:51 -0800 (PST)
-Received: from [192.168.1.55] (bzq-79-179-20-244.red.bezeqint.net. [79.179.20.244])
-        by mx.google.com with ESMTPS id l18sm33031021fab.9.2011.11.07.14.10.49
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 07 Nov 2011 14:10:50 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=bHrz+3zLmkl8nkFJn+B1xM+ZxuC/Ne8Vx0MlOl+cdIw=;
+        b=krQURkiIjJhimaUJL65zYkH9bgvMUHiMEX/d8RTW899ssMQvbw8g0K/+K8eYmUlt2e
+         oKIkNnoLHkbnSRKR4+3E2mYYNTjvuzCUEjTHrjJIUJf9CqmSZC8aMB4w0+B/VYd7MeAk
+         VM6pPmYHZW0xSAANvgaWX+MVWZXhcJUb/+hEA=
+Received: by 10.50.161.131 with SMTP id xs3mr47323582igb.23.1320704477302;
+        Mon, 07 Nov 2011 14:21:17 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id fu10sm19346907igc.6.2011.11.07.14.21.15
+        (version=SSLv3 cipher=OTHER);
+        Mon, 07 Nov 2011 14:21:16 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vd3d31u4e.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185041>
 
-Hey,
+Junio C Hamano wrote:
 
-I'm trying to get git-apply to apply patches, and let me handle the
-conflicts in a way I'm comfortable with -- by staging the "successful"
-hunks and leaving conflict markers in the working tree.
+> With the removal of the check, you _have_ to rely on static analyzers to
+> do the _right thing_, but if you have static analyzers that do the right
+> thing, you do not have to have such a workaround to begin with.
 
-With the available flags, I seem to only be able to have successful
-hunks in the index, and rejected ones in patch-like .rej files.
+No, automatic static analyzers will not help you avoid using an
+uninitialized enum value here (well, I guess they could, but I don't
+believe gcc or clang is nearly smart enough for that).  The only
+replacement for the check is (1) humans and (2) valgrind.
 
-Is there a way to accomplish this? If not, does anyone think it's a good
-idea?
-
--Ori
+In this particular case, as you mentioned before, (1) seems to be
+quite sufficient.
