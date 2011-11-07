@@ -1,162 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] Documentation/gitignore: "foo/" patterns match
- directories, not files under them
-Date: Mon, 07 Nov 2011 08:53:28 -0800
-Message-ID: <7vty6f27sn.fsf@alter.siamese.dyndns.org>
-References: <20111107080449.GA30448@elie.hsd1.il.comcast.net>
- <20111107080711.GA30486@elie.hsd1.il.comcast.net>
- <CACsJy8CZFihbS8MrG=0gWdRPu6F0BqG2FLp48KDxOXWc+4amuQ@mail.gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: git-receive-pack missing credentials ?
+Date: Tue, 8 Nov 2011 01:02:04 +0800
+Message-ID: <CALUzUxpiOoY3Qy0oXzgioBGkZyBF_vpHV3OHm-DWfChR9pPHHA@mail.gmail.com>
+References: <4EB7FA3A.8070908@univ-rennes1.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Eric Blake <eblake@redhat.com>, Johannes Sixt <j6t@kdbg.org>,
-	"Y.G." <yamomo1@hotmail.com>, Eli Barzilay <eli@barzilay.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 07 17:53:37 2011
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Fran=E7ois_Dagorn?= 
+	<Francois.Dagorn@univ-rennes1.fr>
+X-From: git-owner@vger.kernel.org Mon Nov 07 18:02:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNSRz-0000AX-U1
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 17:53:36 +0100
+	id 1RNSaM-0004iU-0a
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 18:02:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754265Ab1KGQxb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Nov 2011 11:53:31 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55655 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751480Ab1KGQxa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2011 11:53:30 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C22F45AD;
-	Mon,  7 Nov 2011 11:53:30 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=M0g6/RI7NwZ4
-	mJ5BIp48Lq5CN4c=; b=MkD4j9ChF4rElHhNF7Yw6uCr4kkaq+dQn3j2Ooqpz/lf
-	7yiXkKuTA0cmrbUKhwXurcIj6VeGwBP8gQPEh504JAvMd+a5RBwJV4Ft9wIK/jaW
-	yDwH+W9jk4FZJqdczYJQCLH40YeCbN2rbAyo/p6uQksu7syB33yOJUSmuPvnppM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ZSUwbz
-	tmvfj7AUlgCqKWycLxbHFycGo4RypdH+6tf46Rg0XN3kHvN86Ij2bt1fLLQHjGVU
-	uE/EKXeenLKc1VsTFr0LzE0D8FWW0TlrJIgt8w/g6hgN5mZLXBbJ2ehDBguQY8pW
-	gQNyMbe15Fya04dgiL417VHfwyNK/IZICDfSk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2086145AC;
-	Mon,  7 Nov 2011 11:53:30 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5EA6745AB; Mon,  7 Nov 2011
- 11:53:29 -0500 (EST)
-In-Reply-To: <CACsJy8CZFihbS8MrG=0gWdRPu6F0BqG2FLp48KDxOXWc+4amuQ@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Mon, 7 Nov 2011 16:57:01 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 04C2EF74-0961-11E1-A19E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932567Ab1KGRCI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Nov 2011 12:02:08 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:53421 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751480Ab1KGRCG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2011 12:02:06 -0500
+Received: by faan17 with SMTP id n17so200698faa.19
+        for <git@vger.kernel.org>; Mon, 07 Nov 2011 09:02:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=2GiE5vV1RkK4nrGAPCfQZhk+slPZJJYiD+RORQH85t4=;
+        b=oEhf4vfG6Xu2XsqBaC+cvuBhWd5+j3IGtXWUTzASROsyHDEVdh3S3ec3h7zYbHJbub
+         HLi/lz0oQHZXk+16+CFCzDaQHn43CKSYqOHbsB4qkLIgnaPQxX4nz9ymlRE7d5eS7I5t
+         aI5DBpShTN2E+rnUKg8WC2BqG/cCcXQMQ+Rac=
+Received: by 10.223.91.143 with SMTP id n15mr48171812fam.23.1320685324738;
+ Mon, 07 Nov 2011 09:02:04 -0800 (PST)
+Received: by 10.223.75.197 with HTTP; Mon, 7 Nov 2011 09:02:04 -0800 (PST)
+In-Reply-To: <4EB7FA3A.8070908@univ-rennes1.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184999>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+On Mon, Nov 7, 2011 at 11:33 PM, Fran=E7ois Dagorn
+<Francois.Dagorn@univ-rennes1.fr> wrote:
+> - on the client side
+>
+> =A0 =A0cd (project-directory)
+> =A0 =A0$ git init
+> =A0 =A0$ (add some files)
+> =A0 =A0$ git add .
+> =A0 =A0$ git commit -m 'Initial commit'
+> =A0 =A0git push http://git.istic.smw.fr/test13 master
+>
+> =A0 =A0 =A0 =A0Username:
+> =A0 =A0 =A0 =A0Password:
+> =A0 =A0 =A0 =A0error: Cannot access URL http://git.istic.smw.fr/test1=
+3/, return code 22
+> =A0 =A0 =A0 =A0fatal: git-http-push failed
+>
+> - apache acces_log
+>
+> =A01) ip-address - metheuser [07/Nov/2011:16:17:31 +0100]
+> =A0 =A0"GET /test13/info/refs?service=3Dgit- =A0 =A0 receive-pack HTT=
+P/1.1" 200 - "-" "git/1.7.3.4"
+> =A02) ip-address - metheuser [07/Nov/2011:16:17:32 +0100]
+> =A0 =A0"GET /test13/HEAD HTTP/1.1" 200 23 "-" "git/1.7.3.4"
+> =A03) ip-address - - [07/Nov/2011:16:17:32 +0100]
+> =A0 =A0"PROPFIND /test13/ HTTP/1.1" 401 492 "-" "git/1.7.3.4"
+>
+> - what sounds strange to me : the 2 firsts requests are generated by =
+my client side
+> =A0(wireshark used as a clue) but the third comes from the server sid=
+e and the users
+> =A0credentials are missed !
 
-> 2011/11/7 Jonathan Nieder <jrnieder@gmail.com>:
->> The gitignore(5) manpage says that "foo/" will match a directory foo
->> and paths underneath it.
->
-> If git ignores a directory, then it essentially ignores all paths
-> underneath it, doesn't it?
->
->> But that is completely false: as Johannes
->> Sixt likes to remind us, patterns with a trailing '/' match the name=
-d
->> directory, not files under that directory. =C2=A0For example, the fo=
-llowing
->> .gitignore file
->>
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0/build/
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0!/build/tests/results
->>
->> does not un-ignore build/tests/results since it was never ignored in
->> the first place; and commands like "git status" will not notice
->> changes to build/tests/results because git doesn't enter the (ignore=
-d)
->> build/ directory.
->
-> I haven't checked but I think it's because when a directory is
-> ignored, git just stops checking further ignore rules. So "build" _is=
-_
-> ignored, too strongly that it does not care if some files may need to
-> be un-ignored later on.
->
-> I remember the argument was, because ignore rules are distributed
-> across .gitignore files, we would need to go into ignored directories
-> for collecting potential un-ignore rules (for example "!results" on
-> build/tests/.gitignore) and that just does not make much sense becaus=
-e
-> we always have to go into ignored directories.
->
-> But in your example, where we know we have negated rules, we should
-> follow the rules and ignore all but build/tests/results.
->
->> Correct the manual to just say that "foo/" matches the directory
->> "foo", and make the wording a little clearer in other ways while at
->> it.
->
-> I haven't not read the next patches, maybe you have mentioned this
-> already. We should make clear that git does not look for negated rule=
-s
-> once a directory is ignored.
->
-> Your example however demonstrates a bug that should be fixed in my
-> opinion. So maybe one or two lines under BUGS section.
->
->> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
->> ---
->> =C2=A0Documentation/gitignore.txt | =C2=A0 14 ++++++++------
->> =C2=A01 files changed, 8 insertions(+), 6 deletions(-)
->>
->> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.t=
-xt
->> index 2e7328b8..5b070bf0 100644
->> --- a/Documentation/gitignore.txt
->> +++ b/Documentation/gitignore.txt
->> @@ -72,12 +72,14 @@ PATTERN FORMAT
->> =C2=A0 =C2=A0included again. =C2=A0If a negated pattern matches, thi=
-s will
->> =C2=A0 =C2=A0override lower precedence patterns sources.
->>
->> - - If the pattern ends with a slash, it is removed for the
->> - =C2=A0 purpose of the following description, but it would only fin=
-d
->> - =C2=A0 a match with a directory. =C2=A0In other words, `foo/` will=
- match a
->> - =C2=A0 directory `foo` and paths underneath it, but will not match=
- a
->> - =C2=A0 regular file or a symbolic link `foo` (this is consistent
->> - =C2=A0 with the way how pathspec works in general in git).
->> + - If the pattern ends with a slash, it will only match
->> + =C2=A0 directories. =C2=A0In other words, `foo/` will match a
->> + =C2=A0 directory `foo` but will not match a regular file or a
->> + =C2=A0 symbolic link `foo` (this is consistent with the way
->> + =C2=A0 pathspecs work in general in git).
->
-> Looks good.
+Can you update your git installation and try again? v1.7.3.4 sounds
+pretty old (almost a year).
 
-Or just remove "In other words, ..." that is bogus. Everything before t=
-hat
-is correct.
-
->> ++
->> +The trailing slash is removed before applying the remaining
->> +rules.
->
-> Why does the trailing slash of a rule affect the remaining rules?
-
-Later rule makes a path with and without a slash in it work differently=
-=2E
-A single token "foo/" acts as if there is no trailing slash to match
-any directory in the hierarchy, e.g. it matches a directory "frotz/foo"=
-=2E
+--=20
+Cheers,
+Ray Chuan
