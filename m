@@ -1,105 +1,67 @@
-From: =?ISO-8859-1?Q?Fran=E7ois_Dagorn?= 
-	<Francois.Dagorn@univ-rennes1.fr>
-Subject: git-receive-pack missing credentials ?
-Date: Mon, 07 Nov 2011 16:33:14 +0100
-Organization: (ISTIC)
-Message-ID: <4EB7FA3A.8070908@univ-rennes1.fr>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: [PATCH] blame.c: Properly initialize strbuf after calling textconv_object(),
+ again
+Date: Mon, 07 Nov 2011 16:53:10 +0100
+Message-ID: <4EB7FEE6.9000609@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 07 16:55:07 2011
+X-From: git-owner@vger.kernel.org Mon Nov 07 16:55:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNRXN-0003Py-Om
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 16:55:06 +0100
+	id 1RNRXv-0003fx-8S
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Nov 2011 16:55:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752546Ab1KGPy7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Nov 2011 10:54:59 -0500
-Received: from mailrelais2.univ-rennes1.fr ([129.20.128.64]:55872 "EHLO
-	mailrelais2.univ-rennes1.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751509Ab1KGPy7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2011 10:54:59 -0500
-X-Greylist: delayed 1423 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Nov 2011 10:54:58 EST
-Received: from localhost (mailscan.univ-rennes1.fr [129.20.128.58])
-	by mailrelais2.univ-rennes1.fr (Postfix) with ESMTP id 003C5386
-	for <git@vger.kernel.org>; Mon,  7 Nov 2011 16:31:13 +0100 (MET)
-X-Virus-Scanned: amavisd-new at univ-rennes1.fr
-Received: from mailrelais2.univ-rennes1.fr ([129.20.128.64])
-	by localhost (mailscan.univ-rennes1.fr [129.20.128.58]) (amavisd-new, port 10036)
-	with ESMTP id 3eGBVRGgDvU3 for <git@vger.kernel.org>;
-	Mon,  7 Nov 2011 16:31:12 +0100 (MET)
-X-AUTHENTICATED_LDAP: authentification_ldap_reussie
-Received: from [148.60.10.22] (zag.istic.univ-rennes1.fr [148.60.10.22])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mailrelais2.univ-rennes1.fr (Postfix) with ESMTP id CC997333
-	for <git@vger.kernel.org>; Mon,  7 Nov 2011 16:31:12 +0100 (MET)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.17) Gecko/20110829 Lightning/1.0b3pre Thunderbird/3.1.10
-X-Enigmail-Version: 1.1.2
+	id S932651Ab1KGPzd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Nov 2011 10:55:33 -0500
+Received: from lo.gmane.org ([80.91.229.12]:41850 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932553Ab1KGPzc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Nov 2011 10:55:32 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RNRXn-0003bs-KB
+	for git@vger.kernel.org; Mon, 07 Nov 2011 16:55:31 +0100
+Received: from jambul.zib.de ([130.73.68.203])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 07 Nov 2011 16:55:31 +0100
+Received: from sschuberth by jambul.zib.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 07 Nov 2011 16:55:31 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: jambul.zib.de
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/184989>
 
-Hello all,
+2564aa4 started to initialize buf.alloc, but that should actually be one
+more byte than the string length due to the trailing \0.
+---
+ builtin/blame.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-I'm experiencing problems when trying to set up a git repository
-managed by git-http-backend. I've done the following :
-
-- on the server side
-
-     cd /git
-     mkdir test13
-     git --bare init .
-         >>> Initialized empty Git repository in /git/test13
-
-     /usr/local/libexec/git-core/git-update-server-info
-     chown -R apache.apache .
-
-- on the client side
-
-    cd (project-directory)
-    $ git init
-    $ (add some files)
-    $ git add .
-    $ git commit -m 'Initial commit'
-    git push http://git.istic.smw.fr/test13 master
-
-        Username:
-        Password:
-        error: Cannot access URL http://git.istic.smw.fr/test13/, retur=
-n code 22
-        fatal: git-http-push failed
-
-- apache acces_log
-
- 1) ip-address - metheuser [07/Nov/2011:16:17:31 +0100]
-    "GET /test13/info/refs?service=3Dgit-     receive-pack HTTP/1.1" 20=
-0 - "-" "git/1.7.3.4"
- 2) ip-address - metheuser [07/Nov/2011:16:17:32 +0100]
-    "GET /test13/HEAD HTTP/1.1" 200 23 "-" "git/1.7.3.4"
- 3) ip-address - - [07/Nov/2011:16:17:32 +0100]
-    "PROPFIND /test13/ HTTP/1.1" 401 492 "-" "git/1.7.3.4"
-
-- what sounds strange to me : the 2 firsts requests are generated by my=
- client side
-  (wireshark used as a clue) but the third comes from the server side a=
-nd the users
-  credentials are missed !
-
-- And also, I was hoping to use smart httpd and so the generated PROPFI=
-ND (DAV)
-  is amazing.
-
-Any help would be appreciated.
-
-Cheers.
-
-=46ran=E7ois Dagorn
-Universit=E9 de rennes 1
-=46rance
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 86c0537..45f0dcc 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2114,7 +2114,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
+ 		case S_IFREG:
+ 			if (DIFF_OPT_TST(opt, ALLOW_TEXTCONV) &&
+ 			    textconv_object(read_from, mode, null_sha1, &buf.buf, &buf_len)) {
+-				buf.alloc = buf_len;
++				buf.alloc = buf_len + 1;
+ 				buf.len = buf_len;
+ 			}
+ 			else if (strbuf_read_file(&buf, read_from, st.st_size) != st.st_size)
+-- 
+1.7.8.rc0.46.g5ae0f.dirty
