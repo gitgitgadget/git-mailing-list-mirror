@@ -1,136 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-apply that handles rejects like merge conflicts
-Date: Tue, 8 Nov 2011 11:10:15 -0500
-Message-ID: <20111108161014.GA14049@sigill.intra.peff.net>
-References: <4EB85768.1060508@avtalion.name>
- <20111107225508.GB28188@sigill.intra.peff.net>
- <CAKPyHN1cqG9-g1Q4iGbUOtfiXLc6EPcFH2cWNCep3af4cTdzSg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Nov 2011, #02; Sun, 6)
+Date: Tue, 08 Nov 2011 08:21:20 -0800
+Message-ID: <7v8vnqzitb.fsf@alter.siamese.dyndns.org>
+References: <7vehxl57lt.fsf@alter.siamese.dyndns.org>
+ <4EB91D2C.6020504@atlas-elektronik.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Ori Avtalion <ori@avtalion.name>, git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 08 17:10:26 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan =?utf-8?Q?N=C3=A4we?= <stefan.naewe@atlas-elektronik.com>
+X-From: git-owner@vger.kernel.org Tue Nov 08 17:21:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNoFl-0001bR-7w
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Nov 2011 17:10:25 +0100
+	id 1RNoQV-0006hP-Je
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Nov 2011 17:21:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756082Ab1KHQKU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Nov 2011 11:10:20 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37077
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755158Ab1KHQKT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Nov 2011 11:10:19 -0500
-Received: (qmail 5376 invoked by uid 107); 8 Nov 2011 16:10:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 08 Nov 2011 11:10:20 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Nov 2011 11:10:15 -0500
-Content-Disposition: inline
-In-Reply-To: <CAKPyHN1cqG9-g1Q4iGbUOtfiXLc6EPcFH2cWNCep3af4cTdzSg@mail.gmail.com>
+	id S1756159Ab1KHQV0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Nov 2011 11:21:26 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43672 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755158Ab1KHQVX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Nov 2011 11:21:23 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E844511C;
+	Tue,  8 Nov 2011 11:21:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=PJjXAIOoOKjk
+	syaiUsdNqhYIVyA=; b=Da3gyLAEeNu1SGVb/a4j5sPATKJQXAX8/Reai98WJBMm
+	y9pa3JiwNZmZehfKKCQMgbuukceACSsozol0RBkk1Ydzmy5Zybme2pf1yMA5cM8Z
+	qBjx0ZR+b2VnOsUiwvrZ+5u0Ld338IqjIVIMCgNOLcMxJGuLB25nAIATOxM5rjw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=NGovV+
+	FrfCuuuKRYFKcCQUxE9o5ldvk1zdmcT0PTQgBFA+amFFzDBeb0IOWHLHFk0OR2bV
+	6ff415uCmvMCqACIQuAIuDXdj0MzcTbPyRXuE0NB9VCbxS7c/0TWvrkmoA9Ngaq+
+	ResQMc3se1kcoCmrzSxu5Rc8qoVBIfIlQxPn4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9580D511A;
+	Tue,  8 Nov 2011 11:21:22 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14C925117; Tue,  8 Nov 2011
+ 11:21:21 -0500 (EST)
+In-Reply-To: <4EB91D2C.6020504@atlas-elektronik.com> ("Stefan =?utf-8?Q?N?=
+ =?utf-8?Q?=C3=A4we=22's?= message of "Tue, 08 Nov 2011 13:14:36 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B266C69A-0A25-11E1-A526-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185093>
 
-On Tue, Nov 08, 2011 at 09:52:26AM +0100, Bert Wesarg wrote:
+Stefan N=C3=A4we <stefan.naewe@atlas-elektronik.com> writes:
 
-> On Mon, Nov 7, 2011 at 23:55, Jeff King <peff@peff.net> wrote:
-> > In the general case, you can't represent all failed hunks with conflict
-> > markers, can you? I'm thinking something where we couldn't find any
-> > relevant context. You know the lines from the original patch from the
-> > hunk header, so you can drop the failed content from the patch in the
-> > right spot. But how do you know how big a conflict marker to make for
-> > the "current" side? The same number of lines as were in the hunk?
-> > I think you'd end up with confusing conflict markers.
-> 
-> GNU patch can produce conflict markers with the --merge option.
+> This breaks the 'quick-install-{doc,html,man}' make targets, btw.
 
-Hmm. Yeah, it does work, but as I feared, it can produce pretty awful
-conflicts. Try this fairly straightforward setup (3 lines changed in the
-middle of a file):
+Thanks. As the "push into kernel.org auto-rebuilds these branches"
+infrastructure is no longer available, I think we should remove these
+targets and description of them in the INSTALL file in the meantime.
 
-  git init &&
-  seq 1 10 >file && git add file && git commit -m base &&
-  sed -i '3,5s/$/ master/' file && git commit -a -m master &&
-  git checkout -b other HEAD^ &&
-  sed -i '3,5s/$/ other/' file && git commit -a -m other
-
-You can see what a real merge looks like:
-
-  git merge master &&
-  $EDITOR file
-
-which is:
-
-  1
-  2
-  <<<<<<< HEAD
-  3 other
-  4 other
-  5 other
-  =======
-  3 master
-  4 master
-  5 master
-  >>>>>>> master
-  6
-  7
-  8
-  9
-  10
-
-If you use "patch --merge", you get the same thing. Which is good. But
-now try it with 10 lines changed out of 100:
-
-  rm -rf .git
-  git init &&
-  seq 1 100 >file && git add file && git commit -m base &&
-  sed -i '50,60s/$/ master/' file && git commit -a -m master &&
-  git checkout -b other HEAD^ &&
-  sed -i '50,60s/$/ other/' file && git commit -a -m other
-
-Doing a merge will get you the same sensible results. But "patch
---merge" produces:
-
- ...
- 45
- 46
- <<<<<<<
- =======
- 47
- 48
- 49
- 50 master
- ...
- 60 master
- 61
- 62
- 63
- >>>>>>>
- 47
- 48
- 49
- 50 other
- 51 other
- 52 other
- 53 other
- ...
-
-which is not that helpful. Interestingly, I think it _should_ be able to
-do the same thing here as it did on the 3-line case. So I'm not sure
-why it doesn't.
-
-But there are even more complex cases, like say "other" had added new
-lines of new content at the beginning of the file, and messed up the
-context lines that the patch was using. So I think in the general case,
-you will end up with patches like the latter one. Just shoving the patch
-hunk into the file with an empty preimage section. And that can even
-still be useful, but you are relying on line counts then. If they're
-off, it's going ot be quite confusing.
-
--Peff
+Anybody care to do a big removal patch?
