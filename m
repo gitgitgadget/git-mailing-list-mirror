@@ -1,229 +1,313 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 08/12] fmt-merge-msg: Add contents of merged tag in the
- merge message
-Date: Mon,  7 Nov 2011 19:00:41 -0800
-Message-ID: <1320721245-13223-9-git-send-email-gitster@pobox.com>
+Subject: [PATCH v2 09/12] merge: make usage of commit->util more extensible
+Date: Mon,  7 Nov 2011 19:00:42 -0800
+Message-ID: <1320721245-13223-10-git-send-email-gitster@pobox.com>
 References: <1320472900-6601-1-git-send-email-gitster@pobox.com>
  <1320721245-13223-1-git-send-email-gitster@pobox.com>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 08 04:01:32 2011
+X-From: git-owner@vger.kernel.org Tue Nov 08 04:01:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNbwE-0001XL-Lq
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Nov 2011 04:01:27 +0100
+	id 1RNbwI-0001XL-EN
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Nov 2011 04:01:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754942Ab1KHDBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Nov 2011 22:01:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44606 "EHLO
+	id S1755158Ab1KHDBX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Nov 2011 22:01:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44630 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754794Ab1KHDBF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Nov 2011 22:01:05 -0500
+	id S1754862Ab1KHDBH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Nov 2011 22:01:07 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C18E7651A;
-	Mon,  7 Nov 2011 22:01:04 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1EA27651F;
+	Mon,  7 Nov 2011 22:01:07 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=OvSk
-	IR5p8iGd3lXgNKUhddeVFCs=; b=NIlULliVGQRd68OWBI1O3VArd0GaWHOjJcHm
-	KiifW+8XsmDSGW8zFFK/TyGElnYm/xvid/2PVWEfHP2Pk1GaMsWb97MUr9oycRD0
-	xxq+1pQIf3TMFnO9y5341JiS2PxLXbEAlT1uVe6xwENllTdccnrTHvqWdG+tjp/h
-	jxoH5kg=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=12N3
+	nWeQc85Nj31DTZDKny/lsiU=; b=WFCuz5OdcR3Eqzix0OVMEStX8dl4288enlX1
+	aTnVWwhv8UfbgtPeOu6yCSOSjiZCV251rrXing35VxyLFCDtXB4trBgbXoTN4U70
+	P+/r8HmjwHutxKkcNhaYDzt/XdbN4Ubcc+Gm/7FjcF3bLN5MXs6/9Dl43IUytHH1
+	AmTRFzE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	DTP8I20xKJEj3t+fUjIqV7g2GxWWsTXCaiSplwORCQcZEzZKBxU4artOPwIBGPE0
-	lDHXDHcsZZP886AxlJ0VpPiiQjAmYp+tK5FM5IA9jV91NE8tX257KnviDuh3WQjW
-	kBnohWYpghhoxnYXRdInXS6w9WjL6Mn4YTN8rjkPHK4=
+	T1JcQoTKoRBAi5uOBWQgU+pVVpO9q6fSHx7svH59ERvueW0ZUJyA1SbshPpdQi63
+	sQVyc1dW/en/Kh54RKzq7a48F/IYDDB7asD0JbOgBNUHSTnmEetYIbyeS6hv6jsg
+	vdaIIlYRcb/NCNxlmGz84yc5rtzT0yHzsIFVdiCh7lU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9A0F6519;
-	Mon,  7 Nov 2011 22:01:04 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 165FD651E;
+	Mon,  7 Nov 2011 22:01:07 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E91C6518; Mon,  7 Nov 2011
- 22:01:03 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 10044651C; Mon,  7 Nov 2011
+ 22:01:05 -0500 (EST)
 X-Mailer: git-send-email 1.7.8.rc1.82.g90e080
 In-Reply-To: <1320721245-13223-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: E56D3846-09B5-11E1-AC89-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: E69F3520-09B5-11E1-B69B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185062>
 
-When a contributor asks the integrator to merge her history, a signed tag
-can be a good vehicle to communicate the authenticity of the request while
-conveying other information such as the purpose of the topic.
+The merge-recursive code uses the commit->util field directly to annotate
+the commit objects given from the command line, i.e. the remote heads to
+be merged, with a single string to be used to describe it in its trace
+messages and conflict markers.
 
-E.g. a signed tag "for-linus" can be created, and the integrator can run:
-
-   $ git pull git://example.com/work.git/ for-linus
-
-This would allow the integrator to run "git verify-tag FETCH_HEAD" to
-validate the signed tag.
-
-Update fmt-merge-msg so that it pre-fills the merge message template with
-the body (but not signature) of the tag object to help the integrator write
-a better merge message, in the same spirit as the existing merge.log summary
-lines.
-
-The message that comes from GPG signature validation is also included in
-the merge message template to help the integrator verify it, but they are
-prefixed with "#" to make them comments.
+Correct this short-signtedness by redefining the field to be a pointer to
+a structure "struct merge_remote_desc" that later enhancements can add
+more information. Store the original objects we were told to merge in a
+field "obj" in this struct, so that we can recover the tag we were told to
+merge.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/fmt-merge-msg.c |   72 +++++++++++++++++++++++++++++++++++++++++++++-
- strbuf.c                |   15 ++++++++++
- strbuf.h                |    8 +++++
- 3 files changed, 93 insertions(+), 2 deletions(-)
+ builtin/merge.c   |   63 +++++++++++++++++++---------------------------------
+ commit.c          |   19 ++++++++++++++++
+ commit.h          |   13 +++++++++++
+ merge-recursive.c |   13 +++++------
+ 4 files changed, 61 insertions(+), 47 deletions(-)
 
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 3ff9564..7dae846 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -5,6 +5,7 @@
- #include "revision.h"
- #include "tag.h"
- #include "string-list.h"
-+#include "gpg-interface.h"
- 
- static const char * const fmt_merge_msg_usage[] = {
- 	"git fmt-merge-msg [-m <message>] [--log[=<n>]|--no-log] [--file <file>]",
-@@ -262,6 +263,70 @@ static void fmt_merge_msg_title(struct strbuf *out,
- 		strbuf_addf(out, " into %s\n", current_branch);
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 48e7f00..8d4eb4e 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -406,20 +406,10 @@ static void finish(struct commit *head_commit,
+ 	strbuf_release(&reflog_message);
  }
  
-+static void fmt_tag_signature(struct strbuf *tagbuf,
-+			      struct strbuf *sig,
-+			      const char *buf,
-+			      unsigned long len)
-+{
-+	const char *tag_body = strstr(buf, "\n\n");
-+	if (tag_body) {
-+		tag_body += 2;
-+		strbuf_add(tagbuf, tag_body, buf + len - tag_body);
-+	}
-+	strbuf_complete_line(tagbuf);
-+	strbuf_add_lines(tagbuf, "# ", sig->buf, sig->len);
-+}
-+
-+static void fmt_merge_msg_sigs(struct strbuf *out)
-+{
-+	int i, tag_number = 0, first_tag = 0;
-+	struct strbuf tagbuf = STRBUF_INIT;
-+
-+	for (i = 0; i < origins.nr; i++) {
-+		unsigned char *sha1 = origins.items[i].util;
-+		enum object_type type;
-+		unsigned long size, len;
-+		char *buf = read_sha1_file(sha1, &type, &size);
-+		struct strbuf sig = STRBUF_INIT;
-+
-+		if (!buf || type != OBJ_TAG)
-+			goto next;
-+		len = parse_signature(buf, size);
-+
-+		if (size == len)
-+			; /* merely annotated */
-+		else if (verify_signed_buffer(buf, len, buf + len, size - len, &sig)) {
-+			if (!sig.len)
-+				strbuf_addstr(&sig, "gpg verification failed.\n");
-+		}
-+
-+		if (!tag_number++) {
-+			fmt_tag_signature(&tagbuf, &sig, buf, len);
-+			first_tag = i;
-+		} else {
-+			if (tag_number == 2) {
-+				struct strbuf tagline = STRBUF_INIT;
-+				strbuf_addf(&tagline, "\n# %s\n",
-+					    origins.items[first_tag].string);
-+				strbuf_insert(&tagbuf, 0, tagline.buf,
-+					      tagline.len);
-+				strbuf_release(&tagline);
-+			}
-+			strbuf_addf(&tagbuf, "\n# %s\n",
-+				    origins.items[i].string);
-+			fmt_tag_signature(&tagbuf, &sig, buf, len);
-+		}
-+		strbuf_release(&sig);
-+	next:
-+		free(buf);
-+	}
-+	if (tagbuf.len) {
-+		strbuf_addch(out, '\n');
-+		strbuf_addbuf(out, &tagbuf);
-+	}
-+	strbuf_release(&tagbuf);
-+}
-+
- int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
- 		  struct fmt_merge_msg_opts *opts)
+-static struct object *want_commit(const char *name)
+-{
+-	struct object *obj;
+-	unsigned char sha1[20];
+-	if (get_sha1(name, sha1))
+-		return NULL;
+-	obj = parse_object(sha1);
+-	return peel_to_type(name, 0, obj, OBJ_COMMIT);
+-}
+-
+ /* Get the name for the merge commit's message. */
+ static void merge_name(const char *remote, struct strbuf *msg)
  {
-@@ -293,6 +358,9 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
- 	if (opts->add_title && srcs.nr)
- 		fmt_merge_msg_title(out, current_branch);
+-	struct object *remote_head;
++	struct commit *remote_head;
+ 	unsigned char branch_head[20], buf_sha[20];
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct strbuf bname = STRBUF_INIT;
+@@ -431,7 +421,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
+ 	remote = bname.buf;
  
-+	if (origins.nr)
-+		fmt_merge_msg_sigs(out);
-+
- 	if (opts->shortlog_len) {
- 		struct commit *head;
- 		struct rev_info rev;
-@@ -310,8 +378,8 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
- 			shortlog(origins.items[i].string, origins.items[i].util,
- 				 head, &rev, opts->shortlog_len, out);
+ 	memset(branch_head, 0, sizeof(branch_head));
+-	remote_head = want_commit(remote);
++	remote_head = get_merge_parent(remote);
+ 	if (!remote_head)
+ 		die(_("'%s' does not point to a commit"), remote);
+ 
+@@ -487,7 +477,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
+ 		if (resolve_ref(truname.buf, buf_sha, 1, NULL)) {
+ 			strbuf_addf(msg,
+ 				    "%s\t\tbranch '%s'%s of .\n",
+-				    sha1_to_hex(remote_head->sha1),
++				    sha1_to_hex(remote_head->object.sha1),
+ 				    truname.buf + 11,
+ 				    (early ? " (early part)" : ""));
+ 			strbuf_release(&truname);
+@@ -515,7 +505,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
+ 		goto cleanup;
  	}
--	if (out->len && out->buf[out->len-1] != '\n')
--		strbuf_addch(out, '\n');
-+
-+	strbuf_complete_line(out);
- 	return 0;
- }
+ 	strbuf_addf(msg, "%s\t\tcommit '%s'\n",
+-		sha1_to_hex(remote_head->sha1), remote);
++		sha1_to_hex(remote_head->object.sha1), remote);
+ cleanup:
+ 	strbuf_release(&buf);
+ 	strbuf_release(&bname);
+@@ -719,7 +709,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 				die(_("Unknown option for merge-recursive: -X%s"), xopts[x]);
  
-diff --git a/strbuf.c b/strbuf.c
-index 3ad2cc0..a3c2e84 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -397,3 +397,18 @@ int strbuf_read_file(struct strbuf *sb, const char *path, size_t hint)
+ 		o.branch1 = head_arg;
+-		o.branch2 = remoteheads->item->util;
++		o.branch2 = merge_remote_util(remoteheads->item)->name;
  
- 	return len;
+ 		for (j = common; j; j = j->next)
+ 			commit_list_insert(j->item, &reversed);
+@@ -1190,7 +1180,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		argv += 2;
+ 		argc -= 2;
+ 	} else if (!head_commit) {
+-		struct object *remote_head;
++		struct commit *remote_head;
+ 		/*
+ 		 * If the merged head is a valid one there is no reason
+ 		 * to forbid "git merge" into a branch yet to be born.
+@@ -1204,12 +1194,12 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		if (!allow_fast_forward)
+ 			die(_("Non-fast-forward commit does not make sense into "
+ 			    "an empty head"));
+-		remote_head = want_commit(argv[0]);
++		remote_head = get_merge_parent(argv[0]);
+ 		if (!remote_head)
+ 			die(_("%s - not something we can merge"), argv[0]);
+-		read_empty(remote_head->sha1, 0);
+-		update_ref("initial pull", "HEAD", remote_head->sha1, NULL, 0,
+-				DIE_ON_ERR);
++		read_empty(remote_head->object.sha1, 0);
++		update_ref("initial pull", "HEAD", remote_head->object.sha1,
++			   NULL, 0, DIE_ON_ERR);
+ 		return 0;
+ 	} else {
+ 		struct strbuf merge_names = STRBUF_INIT;
+@@ -1218,12 +1208,9 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		head_arg = "HEAD";
+ 
+ 		/*
+-		 * All the rest are the commits being merged;
+-		 * prepare the standard merge summary message to
+-		 * be appended to the given message.  If remote
+-		 * is invalid we will die later in the common
+-		 * codepath so we discard the error in this
+-		 * loop.
++		 * All the rest are the commits being merged; prepare
++		 * the standard merge summary message to be appended
++		 * to the given message.
+ 		 */
+ 		for (i = 0; i < argc; i++)
+ 			merge_name(argv[i], &merge_names);
+@@ -1251,17 +1238,12 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	strbuf_reset(&buf);
+ 
+ 	for (i = 0; i < argc; i++) {
+-		struct object *o;
+-		struct commit *commit;
+-
+-		o = want_commit(argv[i]);
+-		if (!o)
++		struct commit *commit = get_merge_parent(argv[i]);
++		if (!commit)
+ 			die(_("%s - not something we can merge"), argv[i]);
+-		commit = lookup_commit(o->sha1);
+-		commit->util = (void *)argv[i];
+ 		remotes = &commit_list_insert(commit, remotes)->next;
+-
+-		strbuf_addf(&buf, "GITHEAD_%s", sha1_to_hex(o->sha1));
++		strbuf_addf(&buf, "GITHEAD_%s",
++			    sha1_to_hex(commit->object.sha1));
+ 		setenv(buf.buf, argv[i], 1);
+ 		strbuf_reset(&buf);
+ 	}
+@@ -1307,7 +1289,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			!hashcmp(common->item->object.sha1, head_commit->object.sha1)) {
+ 		/* Again the most common case of merging one remote. */
+ 		struct strbuf msg = STRBUF_INIT;
+-		struct object *o;
++		struct commit *commit;
+ 		char hex[41];
+ 
+ 		strcpy(hex, find_unique_abbrev(head_commit->object.sha1, DEFAULT_ABBREV));
+@@ -1321,14 +1303,15 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		if (have_message)
+ 			strbuf_addstr(&msg,
+ 				" (no commit created; -m option ignored)");
+-		o = want_commit(sha1_to_hex(remoteheads->item->object.sha1));
+-		if (!o)
++		commit = remoteheads->item;
++		if (!commit)
+ 			return 1;
+ 
+-		if (checkout_fast_forward(head_commit->object.sha1, remoteheads->item->object.sha1))
++		if (checkout_fast_forward(head_commit->object.sha1,
++					  commit->object.sha1))
+ 			return 1;
+ 
+-		finish(head_commit, o->sha1, msg.buf);
++		finish(head_commit, commit->object.sha1, msg.buf);
+ 		drop_save();
+ 		return 0;
+ 	} else if (!remoteheads->next && common->next)
+diff --git a/commit.c b/commit.c
+index 73b7e00..83ff503 100644
+--- a/commit.c
++++ b/commit.c
+@@ -894,3 +894,22 @@ int commit_tree(const char *msg, unsigned char *tree,
+ 	strbuf_release(&buffer);
+ 	return result;
  }
 +
-+void strbuf_add_lines(struct strbuf *out, const char *prefix,
-+		      const char *buf, size_t size)
++struct commit *get_merge_parent(const char *name)
 +{
-+	strbuf_complete_line(out);
-+	while (size) {
-+		const char *next = memchr(buf, '\n', size);
-+		next = next ? (next + 1) : (buf + size);
-+		strbuf_addstr(out, prefix);
-+		strbuf_add(out, buf, next - buf);
-+		size -= next - buf;
-+		buf = next;
++	struct object *obj;
++	struct commit *commit;
++	unsigned char sha1[20];
++	if (get_sha1(name, sha1))
++		return NULL;
++	obj = parse_object(sha1);
++	commit = (struct commit *)peel_to_type(name, 0, obj, OBJ_COMMIT);
++	if (commit && !commit->util) {
++		struct merge_remote_desc *desc;
++		desc = xmalloc(sizeof(*desc));
++		desc->obj = obj;
++		desc->name = strdup(name);
++		commit->util = desc;
 +	}
-+	strbuf_complete_line(out);
++	return commit;
 +}
-diff --git a/strbuf.h b/strbuf.h
-index 46a33f8..08fc13d 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -100,6 +100,14 @@ extern void strbuf_addf(struct strbuf *sb, const char *fmt, ...);
- __attribute__((format (printf,2,0)))
- extern void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap);
+diff --git a/commit.h b/commit.h
+index 009b113..5b57eab 100644
+--- a/commit.h
++++ b/commit.h
+@@ -185,4 +185,17 @@ extern int commit_tree(const char *msg, unsigned char *tree,
+ 		struct commit_list *parents, unsigned char *ret,
+ 		const char *author);
  
-+extern void strbuf_add_lines(struct strbuf *sb, const char *prefix, const char *buf, size_t size);
++struct merge_remote_desc {
++	struct object *obj; /* the named object, could be a tag */
++	const char *name;
++};
++#define merge_remote_util(commit) ((struct merge_remote_desc *)((commit)->util))
 +
-+static inline void strbuf_complete_line(struct strbuf *sb)
-+{
-+	if (sb->len && sb->buf[sb->len - 1] != '\n')
-+		strbuf_addch(sb, '\n');
-+}
++/*
++ * Given "name" from the command line to merge, find the commit object
++ * and return it, while storing merge_remote_desc in its ->util field,
++ * to allow callers to tell if we are told to merge a tag.
++ */
++struct commit *get_merge_parent(const char *name);
 +
- extern size_t strbuf_fread(struct strbuf *, size_t, FILE *);
- /* XXX: if read fails, any partial read is undone */
- extern ssize_t strbuf_read(struct strbuf *, int fd, size_t hint);
+ #endif /* COMMIT_H */
+diff --git a/merge-recursive.c b/merge-recursive.c
+index cc664c3..5a2db29 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -38,16 +38,15 @@ static struct tree *shift_tree_object(struct tree *one, struct tree *two,
+ 	return lookup_tree(shifted);
+ }
+ 
+-/*
+- * A virtual commit has (const char *)commit->util set to the name.
+- */
+-
+ static struct commit *make_virtual_commit(struct tree *tree, const char *comment)
+ {
+ 	struct commit *commit = xcalloc(1, sizeof(struct commit));
++	struct merge_remote_desc *desc = xmalloc(sizeof(*desc));
++
++	desc->name = comment;
++	desc->obj = (struct object *)commit;
+ 	commit->tree = tree;
+-	commit->util = (void*)comment;
+-	/* avoid warnings */
++	commit->util = desc;
+ 	commit->object.parsed = 1;
+ 	return commit;
+ }
+@@ -184,7 +183,7 @@ static void output_commit_title(struct merge_options *o, struct commit *commit)
+ 	for (i = o->call_depth; i--;)
+ 		fputs("  ", stdout);
+ 	if (commit->util)
+-		printf("virtual %s\n", (char *)commit->util);
++		printf("virtual %s\n", merge_remote_util(commit)->name);
+ 	else {
+ 		printf("%s ", find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV));
+ 		if (parse_commit(commit) != 0)
 -- 
 1.7.8.rc0.128.g31aa4
