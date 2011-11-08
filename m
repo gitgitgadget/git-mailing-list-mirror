@@ -1,94 +1,106 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: git-apply that handles rejects like merge conflicts
-Date: Tue, 8 Nov 2011 16:00:45 -0500
-Message-ID: <20111108210045.GA18666@sigill.intra.peff.net>
-References: <4EB85768.1060508@avtalion.name>
- <20111107225508.GB28188@sigill.intra.peff.net>
- <7v4nyf1opf.fsf@alter.siamese.dyndns.org>
- <20111108054643.GC29643@sigill.intra.peff.net>
- <4EB9962B.8060809@avtalion.name>
+Subject: Re: git log --quiet bug?
+Date: Tue, 8 Nov 2011 16:29:30 -0500
+Message-ID: <20111108212930.GA18529@sigill.intra.peff.net>
+References: <1320762978.3614.YahooMailNeo@web84005.mail.mud.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Ori Avtalion <ori@avtalion.name>
-X-From: git-owner@vger.kernel.org Tue Nov 08 22:00:54 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Prasad Deshpande <prasadgdeshpande@yahoo.com>
+X-From: git-owner@vger.kernel.org Tue Nov 08 22:29:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNsms-0001My-1d
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Nov 2011 22:00:54 +0100
+	id 1RNtEf-0005o4-Qs
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Nov 2011 22:29:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933318Ab1KHVAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Nov 2011 16:00:49 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37157
+	id S1751157Ab1KHV3c convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Nov 2011 16:29:32 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37165
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932486Ab1KHVAs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Nov 2011 16:00:48 -0500
-Received: (qmail 8095 invoked by uid 107); 8 Nov 2011 21:00:49 -0000
+	id S1750936Ab1KHV3c (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Nov 2011 16:29:32 -0500
+Received: (qmail 8242 invoked by uid 107); 8 Nov 2011 21:29:33 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 08 Nov 2011 16:00:49 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Nov 2011 16:00:45 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 08 Nov 2011 16:29:33 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Nov 2011 16:29:30 -0500
 Content-Disposition: inline
-In-Reply-To: <4EB9962B.8060809@avtalion.name>
+In-Reply-To: <1320762978.3614.YahooMailNeo@web84005.mail.mud.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185112>
 
-On Tue, Nov 08, 2011 at 10:50:51PM +0200, Ori Avtalion wrote:
+On Tue, Nov 08, 2011 at 06:36:18AM -0800, Prasad Deshpande wrote:
 
-> In answer to your first question
-> >   1. Should am's 3-way fallback be made more easily available to users
-> >      of regular "apply"?
-> 
-> git-am is never part of this workflow as I'm trying to move patches
-> between separate repositories with no shared root.
+> =C2=A0 I am seeing a bug with git log --quiet. It=C2=A0doesn't=C2=A0s=
+eem to be quiet
+> :-). Also I have seen cases where the exit status returned is not
+> correct i.e. its 0 even if there is some output (although I cant seem
+> to reproduce that problem at present).
 
-Isn't git-am the right tool for that? You format-patch out your commits
-in one repo, and then apply them in the other. No shared history is
-required; just the ability of the patches to actually be applied.
+I think the description of "--quiet" in the git-log manpage is
+accidentally inherited by including the diff options. In "git diff", it
+stops output and makes the exit code useful for determining whether
+there were changes. But what does the exit code even mean in the contex=
+t
+of "git log"?
 
-It _helps_ if you have the common base objects (the actual files, not
-the commits), since the git diffs carry the pre- and post-image file
-sha1s, which is what allows us to do a real 3-way merge. In that case,
-it is just a matter of making the objects from the first repo available
-to git during the moment you are applying in the second repo. You could
-do it by fetching the history of the first into a side-branch of the
-second, or even just by sharing object databases via the "alternates"
-mechanism.
+It does look like there is code in "git log" to handle --quiet, and
+convert it to "no diff output" (i.e., like "-s"). But it doesn't seem t=
+o
+do anything. If I manually specify a format like "git log -p --quiet", =
+I
+still get output. And if I don't say "-p", then I wouldn't get diff
+output anyway. It does seem to have an impact on other log variants tha=
+t
+have output by default (e.g., "git whatchanged --quiet" won't show the
+usual raw diffs).
 
-> <rant>
-> And, personally, I don't think git-am is named correctly as the only
-> use-case I have for it is applying+committing single patches produced by
-> format-patch and sent as individual files over some medium which isn't
-> mboxes (I'm not that old-school). I never understood why git-apply can't
-> do the commit and I have to instead use a tool with 'mail' in its name
-> (Let's ignore the historical reasons) -- Shouldn't git-am be an
-> mbox-reading wrapper around some more basic patch-applying tool?
-> </rant>
+I think we should probably just excise it from the git-log manpage, lik=
+e
+this:
 
-git-am _is_ an mbox-reading wrapper around some more basic
-patch-applying tool. That tool is "git apply". I think what you are
-missing is that a single patch (or multiple patches) produced by
-format-patch _is_ an mbox. There is nothing wrong with:
+-- >8 --
+Subject: [PATCH] docs: don't mention --quiet or --exit-code in git-log(=
+1)
 
-  cd repo1 &&
-  git format-patch -1 --stdout >../my.patch &&
-  cd ../repo2 &&
-  git am ../my.patch
+These are diff-options, but they don't actually make sense
+in the context of log.
 
-There is no standard for representing commit metadata in the diff
-format. So git had to invent its own. It used rfc822 messages and
-mailboxes because it was simple and convenient, it mapped to what some
-people were already doing, and it means we don't need a separate tool
-for applying local commits versus ones that were emailed.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/diff-options.txt |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-So the "m" is really for mbox, which happens to be git's format for
-storing one or more commits, including metadata. If you just forget that
-it's associated with mail, then I think you will be happy. :)
-
--Peff
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-option=
+s.txt
+index 08b581f..9f7cba2 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -412,15 +412,17 @@ endif::git-format-patch[]
+ --function-context::
+ 	Show whole surrounding functions of changes.
+=20
+ ifndef::git-format-patch[]
++ifndef::git-log[]
+ --exit-code::
+ 	Make the program exit with codes similar to diff(1).
+ 	That is, it exits with 1 if there were differences and
+ 	0 means no differences.
+=20
+ --quiet::
+ 	Disable all output of the program. Implies `--exit-code`.
++endif::git-log[]
+ endif::git-format-patch[]
+=20
+ --ext-diff::
+ 	Allow an external diff helper to be executed. If you set an
+--=20
+1.7.7.2.7.g9f96f
