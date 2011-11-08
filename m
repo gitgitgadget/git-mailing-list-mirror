@@ -1,64 +1,55 @@
-From: Sven Bachmann <dev@mcbachmann.de>
-Subject: How to resolve git stash conflict without adding to index?
-Date: Tue, 08 Nov 2011 10:10:04 +0100
-Message-ID: <20111108101004.Horde.46VbWsL8999OuPHsJOQ2ZrA@webmail.df.eu>
+From: =?utf-8?b?RnJhbsOnb2lz?= Dagorn <Francois.Dagorn@univ-rennes1.fr>
+Subject: Re: git-receive-pack missing credentials ?
+Date: Tue, 8 Nov 2011 10:17:40 +0000 (UTC)
+Message-ID: <loom.20111108T111508-171@post.gmane.org>
+References: <4EB7FA3A.8070908@univ-rennes1.fr> <CALUzUxpiOoY3Qy0oXzgioBGkZyBF_vpHV3OHm-DWfChR9pPHHA@mail.gmail.com> <loom.20111108T091907-908@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed; DelSp=Yes
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 08 10:16:55 2011
+X-From: git-owner@vger.kernel.org Tue Nov 08 11:22:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNhna-0007oQ-O0
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Nov 2011 10:16:55 +0100
+	id 1RNios-00079p-8X
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Nov 2011 11:22:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753437Ab1KHJQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Nov 2011 04:16:50 -0500
-Received: from smtprelay05.ispgateway.de ([80.67.31.98]:58458 "EHLO
-	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752869Ab1KHJQr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Nov 2011 04:16:47 -0500
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Nov 2011 04:16:47 EST
-Received: from [80.67.16.117] (helo=webmailfront01.ispgateway.de)
-	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <dev@mcbachmann.de>)
-	id 1RNhgy-0002x7-5m
-	for git@vger.kernel.org; Tue, 08 Nov 2011 10:10:04 +0100
-Received: from business-178-015-016-250.static.arcor-ip.net
- (business-178-015-016-250.static.arcor-ip.net [178.15.16.250]) by
- webmail.df.eu (Horde Framework) with HTTP; Tue, 08 Nov 2011 10:10:04 +0100
-User-Agent: Internet Messaging Program (IMP) H4 (5.0.14)
-Content-Disposition: inline
-X-Df-Sender: c3ZlbkBtY2JhY2htYW5uLmRl
+	id S1751285Ab1KHKR4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Nov 2011 05:17:56 -0500
+Received: from lo.gmane.org ([80.91.229.12]:36465 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751117Ab1KHKRz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Nov 2011 05:17:55 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RNikb-0005Q6-V5
+	for git@vger.kernel.org; Tue, 08 Nov 2011 11:17:53 +0100
+Received: from zag.istic.univ-rennes1.fr ([148.60.10.22])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 08 Nov 2011 11:17:53 +0100
+Received: from Francois.Dagorn by zag.istic.univ-rennes1.fr with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 08 Nov 2011 11:17:53 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 148.60.10.22 (Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185081>
 
+=46ran=C3=A7ois Dagorn <Francois.Dagorn <at> univ-rennes1.fr> writes:
 
-Hi Git-Group,
+What happens : git-http-backend is not called at all !
 
-from time to time I've got to "git stash" a bunch of files (about 20).
-My problem is, sometimes "git stash pop" conflicts and all files are  
-added to the index - which is not what I want.
+ScriptAlias /git/ /usr/local/libexec/git-core/git-httpd-backend/
 
-I just want to have the same behavior like "git stash pop" without  
-conflict has. Resolving the conflict is okay, but not "git reset HEAD"  
-to all other files, which I don't want to commit now.
+is not relevant, I don't know why.
 
-Is there a possibility that "git stash pop" does not add all files to  
-the index when a conflict appears?
-
-I've already asked this question on stackoverflow (  
-http://stackoverflow.com/questions/7751555/how-to-resolve-git-stash-conflict-without-commit ) - maybe this helps a bit better to describe the  
-problem.
-
-Please add me to CC if possible as I'm not subscribed to this list and  
-reading it in the browser.
-
-Thanks a lot in advance!
-   Sven
+=46ran=C3=A7ois
