@@ -1,173 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/3] commit-tree: teach -m/-F options to read logs from
- elsewhere
-Date: Wed,  9 Nov 2011 13:01:34 -0800
-Message-ID: <1320872495-7545-3-git-send-email-gitster@pobox.com>
-References: <1320872495-7545-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 09 22:01:51 2011
+From: Jeff King <peff@peff.net>
+Subject: Re: RFH: unexpected reflog behavior with --since=
+Date: Wed, 9 Nov 2011 17:01:28 -0500
+Message-ID: <20111109220128.GA31535@sigill.intra.peff.net>
+References: <4EB9C7D1.30201@nextest.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Eric Raible <raible@nextest.com>
+X-From: git-owner@vger.kernel.org Wed Nov 09 23:01:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ROFHI-0000X7-UF
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Nov 2011 22:01:49 +0100
+	id 1ROGD9-0003P3-PD
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Nov 2011 23:01:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756788Ab1KIVBo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Nov 2011 16:01:44 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46922 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753104Ab1KIVBl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Nov 2011 16:01:41 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B598659C
-	for <git@vger.kernel.org>; Wed,  9 Nov 2011 16:01:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=pmgZ
-	dg8LvPIgi37xIjbWYt/7/p8=; b=mgNhq7Mp9dnJB++oUIGWBKIcLZuQnRRib+rI
-	WLLHBB4i4nVUCExi/JpPrL2B+rQmZQAWKw9qow9ARmukEmeawd1agsBu/dLNMjbv
-	GncqWgfNae/K6uUKYorwYanWzAWaV3/hV+qGeojbCn0e1ASxsnrHTEI00OYCtmoi
-	hjEr7Rg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=uYL1At
-	UN2q9cuD/IFoQhjx30OYDlbn5ltLz5jYj+V6bV/nbR9vvvTlVfjGhyhyzbjlJkHe
-	CKjucRo3tEPli8QeKxNHyTZ1Dwfbqvp/+CHZObu4XKkZv/M1yHM6XaGfVPDLcFOb
-	Eok/OxQ6MH0oS4M3X57kPCXWaCC7Wdg9mX2N8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12761659B
-	for <git@vger.kernel.org>; Wed,  9 Nov 2011 16:01:41 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 63CEF6598 for
- <git@vger.kernel.org>; Wed,  9 Nov 2011 16:01:40 -0500 (EST)
-X-Mailer: git-send-email 1.7.8.rc1.82.gde0f9
-In-Reply-To: <1320872495-7545-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 0550A682-0B16-11E1-B94A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754982Ab1KIWBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Nov 2011 17:01:31 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38790
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753009Ab1KIWBa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Nov 2011 17:01:30 -0500
+Received: (qmail 18889 invoked by uid 107); 9 Nov 2011 22:01:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 09 Nov 2011 17:01:32 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Nov 2011 17:01:28 -0500
+Content-Disposition: inline
+In-Reply-To: <4EB9C7D1.30201@nextest.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185171>
 
-Just like "git commit" does.
+On Tue, Nov 08, 2011 at 04:22:41PM -0800, Eric Raible wrote:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-commit-tree.txt |   16 +++++++++++--
- builtin/commit-tree.c             |   43 ++++++++++++++++++++++++++++++++++--
- 2 files changed, 53 insertions(+), 6 deletions(-)
+>     # It's reported correctly here:
+>     git log -g --oneline --since=$add_b
+> 
+>     # But after a reset no history isn't shown.
+>     git reset --hard HEAD^
+>     git log -g --oneline --since=$add_b
+> 
+> Is this a bug?  Of course everything is reported when --since isn't used,
+> but not so when limited with --since.
 
-diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
-index 02133d5..cfb9906 100644
---- a/Documentation/git-commit-tree.txt
-+++ b/Documentation/git-commit-tree.txt
-@@ -9,7 +9,8 @@ git-commit-tree - Create a new commit object
- SYNOPSIS
- --------
- [verse]
--'git commit-tree' <tree> [(-p <parent commit>)...] < changelog
-+'git commit-tree' <tree> [(-p <parent>)...] < changelog
-+'git commit-tree' [(-p <parent>)...] [(-m <message>)...] [(-F <file>)...] <tree>
- 
- DESCRIPTION
- -----------
-@@ -17,7 +18,8 @@ This is usually not what an end user wants to run directly.  See
- linkgit:git-commit[1] instead.
- 
- Creates a new commit object based on the provided tree object and
--emits the new commit object id on stdout.
-+emits the new commit object id on stdout. The log message is read
-+from the standard input, unless `-m` or `-F` options are given.
- 
- A commit object may have any number of parents. With exactly one
- parent, it is an ordinary commit. Having more than one parent makes
-@@ -39,9 +41,17 @@ OPTIONS
- <tree>::
- 	An existing tree object
- 
---p <parent commit>::
-+-p <parent>::
- 	Each '-p' indicates the id of a parent commit object.
- 
-+-m <message>::
-+	A paragraph in the commig log message. This can be given more than
-+	once and each <message> becomes its own paragraph.
-+
-+-F <file>::
-+	Read the commit log message from the given file. Use `-` to read
-+	from the standard input.
-+
- 
- Commit Information
- ------------------
-diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-index 92cfbaf..db5b6e5 100644
---- a/builtin/commit-tree.c
-+++ b/builtin/commit-tree.c
-@@ -9,7 +9,7 @@
- #include "builtin.h"
- #include "utf8.h"
- 
--static const char commit_tree_usage[] = "git commit-tree <sha1> [(-p <sha1>)...] < changelog";
-+static const char commit_tree_usage[] = "git commit-tree [(-p <sha1>)...] [-m <message>] <sha1> < changelog";
- 
- static void new_parent(struct commit *parent, struct commit_list **parents_p)
- {
-@@ -51,6 +51,41 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
- 			continue;
- 		}
- 
-+		if (!strcmp(arg, "-m")) {
-+			if (argc <= ++i)
-+				usage(commit_tree_usage);
-+			if (buffer.len)
-+				strbuf_addch(&buffer, '\n');
-+			strbuf_addstr(&buffer, argv[i]);
-+			strbuf_complete_line(&buffer);
-+			continue;
-+		}
-+
-+		if (!strcmp(arg, "-F")) {
-+			int fd;
-+
-+			if (argc <= ++i)
-+				usage(commit_tree_usage);
-+			if (buffer.len)
-+				strbuf_addch(&buffer, '\n');
-+			if (!strcmp(argv[i], "-"))
-+				fd = 0;
-+			else {
-+				fd = open(argv[i], O_RDONLY);
-+				if (fd < 0)
-+					die_errno("git commit-tree: failed to open '%s'",
-+						  argv[i]);
-+			}
-+			if (strbuf_read(&buffer, fd, 0) < 0)
-+				die_errno("git commit-tree: failed to read '%s'",
-+					  argv[i]);
-+			if (fd && close(fd))
-+				die_errno("git commit-tree: failed to close '%s'",
-+					  argv[i]);
-+			strbuf_complete_line(&buffer);
-+			continue;
-+		}
-+
- 		if (get_sha1(arg, tree_sha1))
- 			die("Not a valid object name %s", arg);
- 		if (got_tree)
-@@ -58,8 +93,10 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
- 		got_tree = 1;
- 	}
- 
--	if (strbuf_read(&buffer, 0, 0) < 0)
--		die_errno("git commit-tree: failed to read");
-+	if (!buffer.len) {
-+		if (strbuf_read(&buffer, 0, 0) < 0)
-+			die_errno("git commit-tree: failed to read");
-+	}
- 
- 	if (commit_tree(buffer.buf, tree_sha1, parents, commit_sha1, NULL)) {
- 		strbuf_release(&buffer);
--- 
-1.7.8.rc1.82.gde0f9
+It's sort of a bug. And sort of a missing feature.
+
+In the normal revision walking case, git walks the history graph
+backwards, hitting the parent of each commit (and when there are
+multiple lines of history, we traverse them in commit timestamp order).
+
+So "--since" works not just by omitting non-matching commits from the
+output, but also by stopping the traversal when we go too far back in
+time. In a sense, this is purely an optimization, as it shouldn't change
+the output. But it's an important one, because it makes looking back in
+time O(how far back) instead of O(size of all history).
+
+This optimization breaks down badly, of course, in the face of clock
+skew (i.e., a commit whose timestamp is further back than its parent).
+There are a few tricks we do to avoid small runs of moderate skew, and
+in practice it works well.
+
+Now let's look at reflog walking. It's kind of bolted on to the side
+of the revision traversal machinery. We walk through the reflog
+backwards and pretend that entry N's parent is entry N-1 (you can see
+this if you do "git log -g -p", for example; you see the patch versus
+the last reflog entry, not the patch against the commit's true parent).
+
+In the case of rewound history (like the reset you showed above), this
+means that the history graph will appear to have bad clock skew. The
+timestamp of HEAD@{0} is going to be much earlier than its pretend
+parent, HEAD@{1}. And the "--since" optimization is going to cut off
+traversal, even though there are more interesting commits to be shown.
+
+So in that sense, I think it's a bug, and we should probably disable the
+exit-early-from-traversal optimization when we're walking reflogs.
+
+But it may also be a misfeature, because it's not clear what you're
+actually trying to limit by. We have commit timestamps, of course, but
+when we are walking reflogs, we also have reflog timestamps. Did you
+actually want to say "show me all commits in the reflog, in reverse
+reflog order, omitting commits that happened before time t"? Or did you
+really mean "show me the reflog entries that happened before time t,
+regardless of their commit timestamp"?
+
+In the latter case, we would either need a new specifier (like
+"--reflog-since"), or to rewrite the commit timestamp when we rewrite
+the parent pointers.
+
+The latter has a certain elegance to it (we are making a pretend linear
+history graph out of the reflog, so faking the timestamps to be sensible
+and in order is a logical thing to do) but I worry about lying too much
+in the output. Something like "git log -g --format=%cd" would now have
+the fake timestamp in the output. But then, we already show the fake
+parents in the output, so I don't know that this is any worse.
+
+-Peff
