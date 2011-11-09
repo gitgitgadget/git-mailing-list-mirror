@@ -1,104 +1,103 @@
-From: Dan McGee <dpmcgee@gmail.com>
-Subject: Re: [PATCH 3/4] pack-objects: don't traverse objects unnecessarily
-Date: Tue, 8 Nov 2011 22:31:48 -0600
-Message-ID: <CAEik5nNmAnPni+rnLm7n5tO7f=LV_1TuTbVqxgjVaoqqaF_Ukw@mail.gmail.com>
-References: <1318915284-6361-1-git-send-email-dpmcgee@gmail.com>
-	<1318915284-6361-3-git-send-email-dpmcgee@gmail.com>
-	<7vk47qxe9x.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Benchmarks regarding git's gc
+Date: Wed, 09 Nov 2011 06:12:55 +0100
+Message-ID: <4EBA0BD7.3050301@alum.mit.edu>
+References: <CAMP44s3E-YCMQQzJAU2wjjD-adpNy6bGb-=iUQ=p=bFTWxm+Ng@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 09 05:32:15 2011
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 09 06:13:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNzpd-0006Ij-TN
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Nov 2011 05:32:14 +0100
+	id 1RO0T9-0007Uv-PC
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Nov 2011 06:13:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751708Ab1KIEbu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Nov 2011 23:31:50 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:64432 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750924Ab1KIEbu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Nov 2011 23:31:50 -0500
-Received: by bke11 with SMTP id 11so1028563bke.19
-        for <git@vger.kernel.org>; Tue, 08 Nov 2011 20:31:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=UsBEOEv8Hy32h0JXXE35ZhxWhFnsJTVVAsSTbH3ufN0=;
-        b=BDHjjlDRSBk8DNcmm0QnL2u4CMsJ1pycyC447JvUYXs3ZXTE22Felni7Tx6iCSI05n
-         pPjTa6zEQ8znYZKDoXITD5GKWNEZ7vu26u0OHU2twe/reI9+b4+Hfb+3J8jOqbvG5Fsc
-         VfnQlV+XjtvmLzo0VVEb4C9YgYvlbiGqZ7zdI=
-Received: by 10.204.157.27 with SMTP id z27mr439885bkw.8.1320813108611; Tue,
- 08 Nov 2011 20:31:48 -0800 (PST)
-Received: by 10.205.81.76 with HTTP; Tue, 8 Nov 2011 20:31:48 -0800 (PST)
-In-Reply-To: <7vk47qxe9x.fsf@alter.siamese.dyndns.org>
+	id S1751058Ab1KIFM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Nov 2011 00:12:59 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:46317 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750965Ab1KIFM6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Nov 2011 00:12:58 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.134] (p54BEDD6A.dip.t-dialin.net [84.190.221.106])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pA95CtKa000913
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 9 Nov 2011 06:12:56 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
+In-Reply-To: <CAMP44s3E-YCMQQzJAU2wjjD-adpNy6bGb-=iUQ=p=bFTWxm+Ng@mail.gmail.com>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185147>
 
-On Thu, Oct 27, 2011 at 5:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Dan McGee <dpmcgee@gmail.com> writes:
->
->> Two optimizations take place here- we can start our objects array
->> iteration from a known point where we left off before we started trying
->> to find our tags,
->
-> This I would understand (but I am somewhat curious how much last_untagged
-> would advance relative to nr_objects for this half of the optimization to
-> be worth it), but...
-First off, sorry I wasn't able to respond to you until now, I've been
-a bit swamped with other projects. I saw this made it into the 1.7.7.3
-maint release today, but wanted to at least try to respond to the
-points you raised (if you didn't investigate them by yourself
-already).
+On 11/08/2011 12:34 PM, Felipe Contreras wrote:
+> Has anybody seen these?
+> http://draketo.de/proj/hg-vs-git-server/test-results.html#results
+> 
+> Seems like a potential area of improvement.
 
-If I remember right, the last_untagged optimization was pretty minor-
-around 10% advancement of the pointer, never that much more. However,
-it was a very easy change to make so I figured it was worth the slight
-additional code (~5 lines changed for that part on its own).
+The fact that git requires periodic garbage collection is indeed
+annoying (even in interactive use) and even more annoying in the
+scenario discussed by the author of this article.
 
->
->> and we don't need to do the deep dives required by
->> add_family_to_write_order() if the object has already been marked as
->> filled.
->
-> I am not sure if this produces the identical result that was benchmarked
-> in the original series.
-I was not either when I wrote the patch, and I had hoped to confirm
-the results you showed in the message of 1b4bb16b9ec. However, I was
-unable to figure out how you generated those numbers so I wasn't able
-to do so (and had planned to get back to you to find out how you made
-those tables). Were you able to verify the ordering did not regress?
+With respect to the article's claims about the overall efficiency of
+Mercurial vs. git, I would like to point out that the author's use of a
+test repository with a linear history avoids one of Mercurial's big
+design weaknesses.  If the repository had had a branching history,
+Mercurial's numbers would probably be significantly less flattering.
 
-> For example, if you have a tagged object that is not a commit (say a
-> blob), you would have written that blob in the second phase (write tagged
-> objects together), so the family of blobs that share same delta parent as
-> that blob will not be written in this "Finally all the rest" in the right
-> place in the original list, no?
-True, I think. They would not be written in the same place, but is
-that necessarily the right place? The delta parent of an
-already-filled tag object would eventually come up in the array as not
-filled, and then we would do a full deep dive at that point, so the
-majority of the objects would still be in close proximity.
+Mercurial's revlog repository format [1] (at least the last time I
+checked) uses a single data file to hold the contents of all versions of
+a single file in the working copy.  It appends a delta to the end of the
+revlog file for each revision, with periodic fulltexts.  It is designed
+to make it possible to reconstruct any file revision via a single seek
+and a single read of at most twice the length of the file's fulltext
+(assuming that the index is already known).  The avoidance of disk seeks
+goes a long way to explaining Mercurial's competitive performance
+despite the fact that it is written in Python.
 
-Note that either way, we still have a gap between the original tagged
-object and its "family"- potentially all the other tagged tips, tags,
-commits, and trees before the blobs are finally hit and laid out in
-family groups. So there is at least one potentially big seek that
-can't be avoided.
+However, the deltas stored in revlog are not relative to a revision's
+parent(s), but rather relative to the previous revision in the revlog
+file, which is typically the most recent revision committed *to any
+branch*.  Therefore, revlog is very good at storing a linear series of
+commits, but is considerably less efficient at storing a history with
+lots of branches that were under development concurrently.  The net
+result is that the history of a branchy repository can take up much more
+space than that of a linear repository.
 
-> I do not think this change would forget to fill an object that needs to be
-> filled, but it would affect the resulting ordering of the list, so...
-This was the purpose of the added "if (wo_end != nr_objects) die()"
-line; it confirms we have traversed and hit every object we originally
-found.
+There was a GSOC "parentdelta" project to allow deltas to be computed
+against parents [2], later replaced by a second "generaldelta" scheme
+[3], but AFAICT this is still experimental and they are struggling with
+its performance.
 
--Dan
+There is also a script in contrib that reorders the revisions in a
+revlog file to put topological neighbors closer together [4].  This can
+shrink the size of the file dramatically.  But of course this script is
+something like "git gc" in the sense that it would presumably need to be
+run periodically, and each run would have to lock the repo for some time.
+
+All this is not to detract from the fact that Mercurial, by not
+requiring garbage collection, has a big advantage against git in certain
+scenarios.
+
+Michael
+
+[1]
+http://mercurial.selenic.com/wiki/FAQ#FAQ.2BAC8-TechnicalDetails.How_does_Mercurial_store_its_data.3F
+[2] http://mercurial.selenic.com/wiki/ParentDeltaPlan
+[3]
+http://mercurial.selenic.com/wiki/WhatsNew#Mercurial_1.9_.282011-07-01.29
+[4] http://selenic.com/hg/file/54c0517c0fe8/contrib/shrink-revlog.py
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
