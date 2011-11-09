@@ -1,109 +1,129 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add abbreviated commit hash to rebase conflict message
-Date: Wed, 09 Nov 2011 10:25:21 -0800
-Message-ID: <7vmxc5tapa.fsf@alter.siamese.dyndns.org>
-References: <1320501759-27236-1-git-send-email-srabbelier@gmail.com>
- <7v39e2852t.fsf@alter.siamese.dyndns.org>
- <CAGdFq_hw1630ELQP3+AEaCmUTEjYq7K1j8ZB-n0_rb1VN=wQgA@mail.gmail.com>
- <7vy5vt7uqo.fsf@alter.siamese.dyndns.org>
- <CAGdFq_j7NxojZ+82s0GJ8ZF0oyd5sH8t0kcMOTQGtKbASXqYTA@mail.gmail.com>
- <7vaa89573r.fsf@alter.siamese.dyndns.org>
- <CAGdFq_gS2fV5B26ZBOLs=5L_rnaeORmKW49OxwbP-+vx+ZN8cQ@mail.gmail.com>
- <7v4nyg6b9s.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Jonas =?utf-8?Q?Flod=C3=A9n?= <jonas@floden.nu>,
-	Eric Herman <eric@freesa.org>, Fernando Vezzosi <fv@repnz.net>,
-	Git List <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 09 19:25:31 2011
+Subject: [PATCH 3/3] commit-tree: teach -x <extra>
+Date: Wed,  9 Nov 2011 13:01:35 -0800
+Message-ID: <1320872495-7545-4-git-send-email-gitster@pobox.com>
+References: <1320872495-7545-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 09 22:01:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ROCq1-0008Go-CW
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Nov 2011 19:25:29 +0100
+	id 1ROFHJ-0000X7-FR
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Nov 2011 22:01:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751596Ab1KISZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Nov 2011 13:25:24 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39111 "EHLO
+	id S1756784Ab1KIVBq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Nov 2011 16:01:46 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47015 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751364Ab1KISZY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Nov 2011 13:25:24 -0500
+	id S1756785Ab1KIVBn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Nov 2011 16:01:43 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 63ADB51D3;
-	Wed,  9 Nov 2011 13:25:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yIY+RUNDHVdtAVUaMzc9UwKD50o=; b=NDG/XI
-	33GX4zSEoAM8PUelsuDugxGsS46+kSZjefPgykKmEEZYdfGINlW7/uMAbckx1UgJ
-	I/oWVnS+1UU0HcHHWzeC+WBVc7amIBLUwfp4F07TGqkmkbYBTsJYr2um1+nbSvuT
-	713Zz3a+Zyz+oJpO7IpuMAoWw/GbBC+ix43gM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FUh4atrZgG6Z59Sa9abpaE+uYEWnkVy/
-	3YiUxVqgC93yLH0ypmxymKxzdkZtOH0N3fImCaKLC6SQCE+/7hERqbZfiLkXVfHN
-	l77x/eMyzoDwcPMfDgPDVhL9Jx/pz+oAv2Rwyy9WUQEkP7rDTraE/CSiR/brVKuc
-	HFsNs85fh3g=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E11DA65AC
+	for <git@vger.kernel.org>; Wed,  9 Nov 2011 16:01:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=zDLW
+	dyqx1Mg2i//yll8zLyGQatU=; b=sIF8h2XNhT/ZaR8VGpgcLMbOzBVrla0ubHQL
+	hPryKIkz5YdYHi4EGiqM2CV4BvFTO1tYFcg7wiq/yNjmQnct5qzSBIFVqVw9dpij
+	L/xutQRDV7qH1kvb1SQhZO4CniyDZzEJsXPrURxUF7yJqTxm0zgobxfBBF8zCrMc
+	z4gpv6g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=DZIVXS
+	9iAmTF3RDgD+ERfmiL9DQJi0mCrn+mF/7vXahXaqDXr580rvdh5UHnEjyMpIzELR
+	uJIha5FqTx8m9vN3soYrjQk32KeFmb6MKWZxecQHaAMfrry88ep9QMDArMCLV1tz
+	C3wq0zin7OOJ5bdh3mRhSRLgyj3ge+XHF4aSY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A59551D2;
-	Wed,  9 Nov 2011 13:25:23 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D828A65AA
+	for <git@vger.kernel.org>; Wed,  9 Nov 2011 16:01:42 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AD1AE51D1; Wed,  9 Nov 2011
- 13:25:22 -0500 (EST)
-In-Reply-To: <7v4nyg6b9s.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 06 Nov 2011 16:12:31 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2FC5DF6A-0B00-11E1-9CB5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4DD4265A5 for
+ <git@vger.kernel.org>; Wed,  9 Nov 2011 16:01:42 -0500 (EST)
+X-Mailer: git-send-email 1.7.8.rc1.82.gde0f9
+In-Reply-To: <1320872495-7545-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 067413F0-0B16-11E1-8814-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185167>
 
-Junio C Hamano <gitster@pobox.com> writes:
+By feeding the header part of the original commit with this parameter,
+e.g. -x "$(git cat-file commit $commit | sed -n -e /^$/q -e p)", extra
+headers of another commit can be transplanted to the resulting commit.
 
-> Sverre Rabbelier <srabbelier@gmail.com> writes:
->
->> On Sun, Nov 6, 2011 at 21:27, Junio C Hamano <gitster@pobox.com> wrote:
->>> In what situation does it make sense to say "It came from _this_ commit"?
->>>
->>> I think there is a separate variable that allows any part of the script if
->>> we are being run as a backend of rebase or not, and that is the condition
->>> you are looking for.
->>
->> The closest I could find is:
->>
->>                 if test -f "$dotest/rebasing"
->>
->> Which is exactly the case when commit is set. Do you prefer the "-f
->> $dotest/rebasing" test or the "-n $commit" one?
->
-> Given the variable scoping rules of vanilla shell script, relying on the
-> variable $commit is a very bad idea to begin with.  I think the variable
-> also is used to hold the final commit object name produced by patch
-> application elsewhere in the script in the same loop, and I do not think
-> existing code clears it before each iteration, as each part of the exiting
-> code uses the variable only immediately after that part assigns to the
-> variable for its own purpose, and they all know that nobody uses the
-> variable as a way for long haul communication media between different
-> parts of the script.  Unless your patch updated that aspect of the
-> lifetime rule for the variable, which I doubt you did, using $commit would
-> introduce yet another bug without solving anything, I would think.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-commit-tree.txt |    3 ++-
+ builtin/commit-tree.c             |   20 ++++++++++++++++++--
+ 2 files changed, 20 insertions(+), 3 deletions(-)
 
-I was looking at git-am today for a separate topic. Doesn't it appear to
-you that $dotest/original-commit is what serves your purpose the best?
-
-The file is removed before starting to process a new input (i.e. message
-in the mbox), created only after we read the from line and determine it is
-really the commit we are rebasing, and is left intact until we decide the
-patch was applied correctly and write the result out as a tree.
-
-It might be a clean-up to get rid of $dotest/original-commit file, rename
-the variable to $original_commit and initialize it to an empty string
-where we currently have 'rm -f "$dotest/original-commit"' (and replace the
-check 'test -f "$dotest/original-commit"' later in the script with a check
-'test -n "$original_commit"'), though.
+diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
+index cfb9906..060e79d 100644
+--- a/Documentation/git-commit-tree.txt
++++ b/Documentation/git-commit-tree.txt
+@@ -10,7 +10,8 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git commit-tree' <tree> [(-p <parent>)...] < changelog
+-'git commit-tree' [(-p <parent>)...] [(-m <message>)...] [(-F <file>)...] <tree>
++'git commit-tree' [(-p <parent>)...] [(-m <message>)...] [(-F <file>)...]
++    [(-x <extra>)...]<tree>
+ 
+ DESCRIPTION
+ -----------
+diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
+index db5b6e5..8b0a223 100644
+--- a/builtin/commit-tree.c
++++ b/builtin/commit-tree.c
+@@ -9,7 +9,7 @@
+ #include "builtin.h"
+ #include "utf8.h"
+ 
+-static const char commit_tree_usage[] = "git commit-tree [(-p <sha1>)...] [-m <message>] <sha1> < changelog";
++static const char commit_tree_usage[] = "git commit-tree [(-p <sha1>)...] [-m <message>] [-x <extra>] <sha1> < changelog";
+ 
+ static void new_parent(struct commit *parent, struct commit_list **parents_p)
+ {
+@@ -32,6 +32,7 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ 	unsigned char tree_sha1[20];
+ 	unsigned char commit_sha1[20];
+ 	struct strbuf buffer = STRBUF_INIT;
++	struct commit_extra_header *extra = NULL, **extra_tail = &extra;
+ 
+ 	git_config(git_default_config, NULL);
+ 
+@@ -86,6 +87,20 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		}
+ 
++		if (!strcmp(arg, "-x")) {
++			struct commit_extra_header *x;
++			if (argc <= ++i)
++				usage(commit_tree_usage);
++			x = read_commit_extra_header_lines(argv[i], strlen(argv[i]));
++			if (x) {
++				*extra_tail = x;
++				while (x->next)
++					x = x->next;
++				extra_tail = &x->next;
++			}
++			continue;
++		}
++
+ 		if (get_sha1(arg, tree_sha1))
+ 			die("Not a valid object name %s", arg);
+ 		if (got_tree)
+@@ -98,7 +113,8 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ 			die_errno("git commit-tree: failed to read");
+ 	}
+ 
+-	if (commit_tree(buffer.buf, tree_sha1, parents, commit_sha1, NULL)) {
++	if (commit_tree_extended(buffer.buf, tree_sha1, parents, commit_sha1,
++				 NULL, extra)) {
+ 		strbuf_release(&buffer);
+ 		return 1;
+ 	}
+-- 
+1.7.8.rc1.82.gde0f9
