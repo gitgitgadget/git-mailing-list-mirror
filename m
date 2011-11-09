@@ -1,263 +1,225 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 11/17] commit: copy merged signed tags to headers of merge
- commit
-Date: Tue,  8 Nov 2011 17:01:57 -0800
-Message-ID: <1320800523-5407-12-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 15/17] log: --show-signature
+Date: Tue,  8 Nov 2011 17:02:01 -0800
+Message-ID: <1320800523-5407-16-git-send-email-gitster@pobox.com>
 References: <1320800523-5407-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 09 02:02:52 2011
+X-From: git-owner@vger.kernel.org Wed Nov 09 02:02:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNwZ1-0003z8-Hu
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Nov 2011 02:02:51 +0100
+	id 1RNwZ3-0003z8-JV
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Nov 2011 02:02:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753657Ab1KIBCf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Nov 2011 20:02:35 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36541 "EHLO
+	id S1755372Ab1KIBCp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Nov 2011 20:02:45 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36669 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752016Ab1KIBCb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Nov 2011 20:02:31 -0500
+	id S1754369Ab1KIBCj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Nov 2011 20:02:39 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EEB7A5B94
-	for <git@vger.kernel.org>; Tue,  8 Nov 2011 20:02:30 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 448115BA8
+	for <git@vger.kernel.org>; Tue,  8 Nov 2011 20:02:39 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=FafK
-	ztf1LTr1hoCgSWTe71f90oM=; b=Pt4+O6HH8vnVa83Z7Yvucvaq1dCnAvT6UgFU
-	IwGjrGQy+9oKOCCzWsSNcI/HdHHh85x9aHQ4mh44TSpzx9Z+wLl6MtCZVtO67yWU
-	4Fxc8MF0hEoIR36yixelaYsaCI/02o6Y2ge2DBhJMO7lF23+omHX2aKct4/hJq/u
-	+dVlzlU=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=3k0b
+	XgPaZU9YuLQ60ZhHOA6mODw=; b=nx2zPzsOlmWyHLK0wQvHxvszaaLHvb2ojl0S
+	NOcuqZL+SoKQuh91t0BxjcP0GROMDUz7ISQMKo9akFR1CxtbPm333Y9u65xhXYRS
+	CYTTR6jJR0JEnFR8Imb1U7vo9Z1ZtZ0CMxh0Ghz1TusWicob0sdPOG4G03Cwkkge
+	KPfleUk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=mvwXin
-	Epcbx5vzuLcWzr5Y8s2i+/Zl0TGWJSBXSokX+bevsroJfBW7mlqW12c7iTG4ktfh
-	5oSyi6BqygV2CEZ8vjpOwqhbazJmfwiWhJ9NRIaCkwug2UnAjgBYZo1EDkdr+Vnt
-	AO3B/6Q+ew9JxBINRQLxWDaodS1LUTZ/5T29s=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=CRvhan
+	xd33OX1FnIrtOKcTnL6ZJVeHfVFbnSqbmmEpFLJNVHirCPo9CvRAQOLq/eCkZ9cu
+	lp9QxFxD4un+FQED9x9jHK0s+HeA5KvaQ71xy6gdwjTTzr9SkwNHzOSavQ2Adp8p
+	dn2kiWWmFo9UaJjxhu7EhKKHgCB4dOTakdNSQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E30C65B8A
-	for <git@vger.kernel.org>; Tue,  8 Nov 2011 20:02:30 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CC9A5BA7
+	for <git@vger.kernel.org>; Tue,  8 Nov 2011 20:02:39 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2AC695B89 for
- <git@vger.kernel.org>; Tue,  8 Nov 2011 20:02:30 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 69E535BA6 for
+ <git@vger.kernel.org>; Tue,  8 Nov 2011 20:02:38 -0500 (EST)
 X-Mailer: git-send-email 1.7.8.rc1.82.gde0f9
 In-Reply-To: <1320800523-5407-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 7FA23A98-0A6E-11E1-AAD6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 848E6496-0A6E-11E1-9413-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185134>
 
-Now MERGE_HEAD records the tag objects without peeling, we could record
-the result of manual conflict resolution via "git commit" without losing
-the tag information. Introduce a new "mergetag" multi-line header field to
-the commit object, and use it to store the entire contents of each signed
-tag merged.
+This teaches the "log" family of commands to pass the GPG signature in the
+commit objects to "gpg --verify" via the verify_signed_buffer() interface
+used to verify signed tag objects. E.g.
 
-A commit header that has a multi-line payload begins with the header tag
-(e.g. "mergetag" in this case), SP, the first line of payload, LF, and all
-the remaining lines have a SP inserted at the beginning.
+    $ git show --show-signature -s HEAD
 
-In hindsight, it would have been better to make "merge --continue" as the
-way to continue from such an interrupted merge, not "commit", but this is
-a backward compatibility baggage we would need to carry around for now.
+shows GPG output in the header part of the output.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/commit.c |   10 +++---
- commit.c         |   95 +++++++++++++++++++++++++++++++++++++++++++++++++++--
- commit.h         |   21 +++++++++++-
- 3 files changed, 115 insertions(+), 11 deletions(-)
+ commit.c   |   44 ++++++++++++++++++++++++++++++++++++++++++++
+ commit.h   |    2 ++
+ log-tree.c |   39 +++++++++++++++++++++++++++++++++++++++
+ revision.c |    2 ++
+ revision.h |    1 +
+ 5 files changed, 88 insertions(+), 0 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index c46f2d1..4688a73 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1425,7 +1425,6 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 			pptr = &commit_list_insert(c->item, pptr)->next;
- 	} else if (whence == FROM_MERGE) {
- 		struct strbuf m = STRBUF_INIT;
--		struct commit *commit;
- 		FILE *fp;
- 
- 		if (!reflog_msg)
-@@ -1436,11 +1435,12 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 			die_errno(_("could not open '%s' for reading"),
- 				  git_path("MERGE_HEAD"));
- 		while (strbuf_getline(&m, fp, '\n') != EOF) {
--			unsigned char sha1[20];
--			if (get_sha1_hex(m.buf, sha1) < 0)
-+			struct commit *parent;
-+
-+			parent = get_merge_parent(m.buf);
-+			if (!parent)
- 				die(_("Corrupt MERGE_HEAD file (%s)"), m.buf);
--			commit = lookup_commit_or_die(sha1, "MERGE_HEAD");
--			pptr = &commit_list_insert(commit, pptr)->next;
-+			pptr = &commit_list_insert(parent, pptr)->next;
- 		}
- 		fclose(fp);
- 		strbuf_release(&m);
 diff --git a/commit.c b/commit.c
-index 83ff503..ee12eff 100644
+index a5c53b3..7fb1830 100644
 --- a/commit.c
 +++ b/commit.c
-@@ -840,14 +840,94 @@ struct commit_list *reduce_heads(struct commit_list *heads)
- 	return result;
+@@ -877,6 +877,50 @@ static int do_sign_commit(struct strbuf *buf, const char *keyid)
+ 	return 0;
  }
  
-+static void handle_signed_tag(struct commit *parent, struct commit_extra_header ***tail)
++int parse_signed_commit(const unsigned char *sha1,
++			struct strbuf *payload, struct strbuf *signature)
 +{
-+	struct merge_remote_desc *desc;
-+	struct commit_extra_header *mergetag;
-+	char *buf;
-+	unsigned long size, len;
++	unsigned long size;
 +	enum object_type type;
++	char *buffer = read_sha1_file(sha1, &type, &size);
++	int in_signature, saw_signature = -1;
++	char *line, *tail;
 +
-+	desc = merge_remote_util(parent);
-+	if (!desc || !desc->obj)
-+		return;
-+	buf = read_sha1_file(desc->obj->sha1, &type, &size);
-+	if (!buf || type != OBJ_TAG)
-+		goto free_return;
-+	len = parse_signature(buf, size);
-+	if (size == len)
-+		goto free_return;
-+	/*
-+	 * We could verify this signature and either omit the tag when
-+	 * it does not validate, but the integrator may not have the
-+	 * public key of the signer of the tag he is merging, while a
-+	 * later auditor may have it while auditing, so let's not run
-+	 * verify-signed-buffer here for now...
-+	 *
-+	 * if (verify_signed_buffer(buf, len, buf + len, size - len, ...))
-+	 *	warn("warning: signed tag unverified.");
-+	 */
-+	mergetag = xcalloc(1, sizeof(*mergetag));
-+	mergetag->key = "mergetag";
-+	mergetag->value = buf;
-+	mergetag->len = size;
++	if (!buffer || type != OBJ_COMMIT)
++		goto cleanup;
 +
-+	**tail = mergetag;
-+	*tail = &mergetag->next;
-+	return;
++	line = buffer;
++	tail = buffer + size;
++	in_signature = 0;
++	saw_signature = 0;
++	while (line < tail) {
++		const char *sig = NULL;
++		char *next = memchr(line, '\n', tail - line);
 +
-+free_return:
-+	free(buf);
-+}
-+
-+void append_merge_tag_headers(struct commit_list *parents,
-+			      struct commit_extra_header ***tail)
-+{
-+	while (parents) {
-+		struct commit *parent = parents->item;
-+		handle_signed_tag(parent, tail);
-+		parents = parents->next;
++		next = next ? next + 1 : tail;
++		if (in_signature && line[0] == ' ')
++			sig = line + 1;
++		else if (!prefixcmp(line, gpg_sig_header) &&
++			 line[gpg_sig_header_len] == ' ')
++			sig = line + gpg_sig_header_len + 1;
++		if (sig) {
++			strbuf_add(signature, sig, next - sig);
++			saw_signature = 1;
++			in_signature = 1;
++		} else {
++			if (*line == '\n')
++				/* dump the whole remainder of the buffer */
++				next = tail;
++			strbuf_add(payload, line, next - line);
++			in_signature = 0;
++		}
++		line = next;
 +	}
++ cleanup:
++	free(buffer);
++	return saw_signature;
 +}
 +
-+static void add_extra_header(struct strbuf *buffer,
-+			     struct commit_extra_header *extra)
-+{
-+	strbuf_addstr(buffer, extra->key);
-+	strbuf_add_lines(buffer, " ", extra->value, extra->len);
-+}
-+
-+void free_commit_extra_headers(struct commit_extra_header *extra)
-+{
-+	while (extra) {
-+		struct commit_extra_header *next = extra->next;
-+		free(extra->value);
-+		free(extra);
-+		extra = next;
-+	}
-+}
-+
-+int commit_tree(const char *msg, unsigned char *tree,
-+		struct commit_list *parents, unsigned char *ret,
-+		const char *author)
-+{
-+	struct commit_extra_header *extra = NULL, **tail = &extra;
-+	int result;
-+
-+	append_merge_tag_headers(parents, &tail);
-+	result = commit_tree_extended(msg, tree, parents, ret, author, extra);
-+	free_commit_extra_headers(extra);
-+	return result;
-+}
-+
- static const char commit_utf8_warn[] =
- "Warning: commit message does not conform to UTF-8.\n"
- "You may want to amend it after fixing the message, or set the config\n"
- "variable i18n.commitencoding to the encoding your project uses.\n";
- 
--int commit_tree(const char *msg, unsigned char *tree,
--		struct commit_list *parents, unsigned char *ret,
--		const char *author)
-+int commit_tree_extended(const char *msg, unsigned char *tree,
-+			 struct commit_list *parents, unsigned char *ret,
-+			 const char *author, struct commit_extra_header *extra)
+ static void handle_signed_tag(struct commit *parent, struct commit_extra_header ***tail)
  {
- 	int result;
- 	int encoding_is_utf8;
-@@ -868,8 +948,10 @@ int commit_tree(const char *msg, unsigned char *tree,
- 	 */
- 	while (parents) {
- 		struct commit_list *next = parents->next;
-+		struct commit *parent = parents->item;
-+
- 		strbuf_addf(&buffer, "parent %s\n",
--			sha1_to_hex(parents->item->object.sha1));
-+			    sha1_to_hex(parent->object.sha1));
- 		free(parents);
- 		parents = next;
- 	}
-@@ -881,6 +963,11 @@ int commit_tree(const char *msg, unsigned char *tree,
- 	strbuf_addf(&buffer, "committer %s\n", git_committer_info(IDENT_ERROR_ON_NO_NAME));
- 	if (!encoding_is_utf8)
- 		strbuf_addf(&buffer, "encoding %s\n", git_commit_encoding);
-+
-+	while (extra) {
-+		add_extra_header(&buffer, extra);
-+		extra = extra->next;
-+	}
- 	strbuf_addch(&buffer, '\n');
- 
- 	/* And add the comment */
+ 	struct merge_remote_desc *desc;
 diff --git a/commit.h b/commit.h
-index 5b57eab..c1a723e 100644
+index d2c3e65..6107648 100644
 --- a/commit.h
 +++ b/commit.h
-@@ -181,9 +181,26 @@ static inline int single_parent(struct commit *commit)
+@@ -218,4 +218,6 @@ struct merge_remote_desc {
+  */
+ struct commit *get_merge_parent(const char *name);
  
- struct commit_list *reduce_heads(struct commit_list *heads);
++extern int parse_signed_commit(const unsigned char *sha1,
++			       struct strbuf *message, struct strbuf *signature);
+ #endif /* COMMIT_H */
+diff --git a/log-tree.c b/log-tree.c
+index e7694a3..142ba51 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -8,6 +8,7 @@
+ #include "refs.h"
+ #include "string-list.h"
+ #include "color.h"
++#include "gpg-interface.h"
  
-+struct commit_extra_header {
-+	struct commit_extra_header *next;
-+	char *key;
-+	char *value;
-+	size_t len;
-+};
-+
-+extern void append_merge_tag_headers(struct commit_list *parents,
-+				     struct commit_extra_header ***tail);
-+
- extern int commit_tree(const char *msg, unsigned char *tree,
--		struct commit_list *parents, unsigned char *ret,
--		const char *author);
-+		       struct commit_list *parents, unsigned char *ret,
-+		       const char *author);
-+
-+extern int commit_tree_extended(const char *msg, unsigned char *tree,
-+				struct commit_list *parents, unsigned char *ret,
-+				const char *author,
-+				struct commit_extra_header *);
-+
-+extern void free_commit_extra_headers(struct commit_extra_header *extra);
+ struct decoration name_decoration = { "object names" };
  
- struct merge_remote_desc {
- 	struct object *obj; /* the named object, could be a tag */
+@@ -403,6 +404,41 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+ 	*extra_headers_p = extra_headers;
+ }
+ 
++static void show_signature(struct rev_info *opt, struct commit *commit)
++{
++	struct strbuf payload = STRBUF_INIT;
++	struct strbuf signature = STRBUF_INIT;
++	struct strbuf gpg_output = STRBUF_INIT;
++	int status;
++	const char *color, *reset, *bol, *eol;
++
++	if (parse_signed_commit(commit->object.sha1, &payload, &signature) <= 0)
++		goto out;
++
++	status = verify_signed_buffer(payload.buf, payload.len,
++				      signature.buf, signature.len,
++				      &gpg_output);
++	if (status && !gpg_output.len)
++		strbuf_addstr(&gpg_output, "No signature\n");
++
++	color = diff_get_color_opt(&opt->diffopt,
++				   status ? DIFF_WHITESPACE : DIFF_FRAGINFO);
++	reset = diff_get_color_opt(&opt->diffopt, DIFF_RESET);
++
++	bol = gpg_output.buf;
++	while (*bol) {
++		eol = strchrnul(bol, '\n');
++		printf("%s%.*s%s%s", color, (int)(eol - bol), bol, reset,
++		       *eol ? "\n" : "");
++		bol = (*eol) ? (eol + 1) : eol;
++	}
++
++ out:
++	strbuf_release(&gpg_output);
++	strbuf_release(&payload);
++	strbuf_release(&signature);
++}
++
+ void show_log(struct rev_info *opt)
+ {
+ 	struct strbuf msgbuf = STRBUF_INIT;
+@@ -514,6 +550,9 @@ void show_log(struct rev_info *opt)
+ 		}
+ 	}
+ 
++	if (opt->show_signature)
++		show_signature(opt, commit);
++
+ 	if (!commit->buffer)
+ 		return;
+ 
+diff --git a/revision.c b/revision.c
+index 8764dde..064e351 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1469,6 +1469,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->show_notes = 1;
+ 		revs->show_notes_given = 1;
+ 		revs->notes_opt.use_default_notes = 1;
++	} else if (!strcmp(arg, "--show-signature")) {
++		revs->show_signature = 1;
+ 	} else if (!prefixcmp(arg, "--show-notes=") ||
+ 		   !prefixcmp(arg, "--notes=")) {
+ 		struct strbuf buf = STRBUF_INIT;
+diff --git a/revision.h b/revision.h
+index 6aa53d1..b8e9223 100644
+--- a/revision.h
++++ b/revision.h
+@@ -110,6 +110,7 @@ struct rev_info {
+ 			show_merge:1,
+ 			show_notes:1,
+ 			show_notes_given:1,
++			show_signature:1,
+ 			pretty_given:1,
+ 			abbrev_commit:1,
+ 			abbrev_commit_given:1,
 -- 
 1.7.8.rc1.82.g90e080
