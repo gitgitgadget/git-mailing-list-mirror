@@ -1,73 +1,92 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: Problem with git-svn with limited SVN access
-Date: Wed, 9 Nov 2011 23:38:25 +0100
-Message-ID: <201111092338.26164.trast@student.ethz.ch>
-References: <4EBA63CA.7000201@stickyadstv.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Antoine Bonavita <antoine@stickyadstv.com>
-X-From: git-owner@vger.kernel.org Wed Nov 09 23:38:40 2011
+From: "Bruce E. Robertson" <bruce.e.robertson@intel.com>
+Subject: [PATCH 1/1] apply.c: reject patch without --(ex,in)clude and path outside.
+Date: Wed,  9 Nov 2011 14:49:02 -0800
+Message-ID: <1320878942-9811-1-git-send-email-bruce.e.robertson@intel.com>
+Cc: "Bruce E. Robertson" <bruce.e.robertson@intel.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 09 23:49:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ROGn0-0004Ef-5r
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Nov 2011 23:38:38 +0100
+	id 1ROGxD-00006a-6Q
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Nov 2011 23:49:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932827Ab1KIWib (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Nov 2011 17:38:31 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:37612 "EHLO edge10.ethz.ch"
+	id S1756158Ab1KIWtF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Nov 2011 17:49:05 -0500
+Received: from mga02.intel.com ([134.134.136.20]:23349 "EHLO mga02.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932271Ab1KIWia (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Nov 2011 17:38:30 -0500
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.339.1; Wed, 9 Nov
- 2011 23:38:26 +0100
-Received: from thomas.inf.ethz.ch (84.73.49.17) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.339.1; Wed, 9 Nov
- 2011 23:38:26 +0100
-User-Agent: KMail/1.13.7 (Linux/3.1.0-46-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <4EBA63CA.7000201@stickyadstv.com>
-X-Originating-IP: [84.73.49.17]
+	id S1751617Ab1KIWtE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Nov 2011 17:49:04 -0500
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga101.jf.intel.com with ESMTP; 09 Nov 2011 14:49:03 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.67,352,1309762800"; 
+   d="scan'208";a="73094571"
+Received: from brucer42-tower.jf.intel.com ([10.7.197.61])
+  by orsmga001.jf.intel.com with ESMTP; 09 Nov 2011 14:49:03 -0800
+X-Mailer: git-send-email 1.7.7.1.432.gca458.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185176>
 
-Antoine Bonavita wrote:
-> ### If I try to add one of the branches manually:
-> branches = branches/XXX:refs/remotes/branches/XXX
->  > git svn fetch
-> One '*' is needed in glob: 'branches/XXX'
+From: "Bruce E. Robertson" <bruce.e.robertson@intel.com>
 
-I think having several fetch specs should do the trick, although I
-cannot easily test with actual permissions.
+Patches are silently ignored when applied with neither --include nor
+--exclude options when the current working dir is not on patch's
+path. This contravenes the principle of least surprise.
 
-You can start configuring the repo with
+"make test" results for this change:
+fixed   0
+success 8032
+failed  0
+broken  58
+total   8126
 
-  git init
-  git svn init svn://server/ -T trunk
+Signed-off-by: Bruce E. Robertson <bruce.e.robertson@intel.com>
+---
+ builtin/apply.c |   12 +++++++++---
+ 1 files changed, 9 insertions(+), 3 deletions(-)
 
-to get an initial layout.  The .git/config will look like
-
-  [svn-remote "svn"]
-          url = svn://server/
-          fetch = trunk:refs/remotes/trunk
-
-The clue is that the config says 'fetch', not 'trunk'.  Much like with
-git remotes, you can add more fetch specs along the lines of
-
-          fetch = branches/XXX:refs/remotes/svn/XXX
-
-or whatever layout you prefer.
-
-Please tell us whether that works even in the face of restrictions on
-branches/ itself :-)
-
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 84a8a0b..162e2aa 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -3619,6 +3619,7 @@ static struct lock_file lock_file;
+ 
+ static struct string_list limit_by_name;
+ static int has_include;
++static int has_exclude;
+ static void add_name_limit(const char *name, int exclude)
+ {
+ 	struct string_list_item *it;
+@@ -3717,9 +3718,13 @@ static int apply_patch(int fd, const char *filename, int options)
+ 			listp = &patch->next;
+ 		}
+ 		else {
+-			/* perhaps free it a bit better? */
+-			free(patch);
+-			skipped_patch++;
++			if ( !has_exclude && !has_include ) {
++				patch->rejected = 1;
++			} else {
++				/* perhaps free it a bit better? */
++				free(patch);
++				skipped_patch++;
++			}
+ 		}
+ 		offset += nr;
+ 	}
+@@ -3773,6 +3778,7 @@ static int option_parse_exclude(const struct option *opt,
+ 				const char *arg, int unset)
+ {
+ 	add_name_limit(arg, 1);
++	has_exclude = 1;
+ 	return 0;
+ }
+ 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.7.7.1.432.gca458.dirty
