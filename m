@@ -1,182 +1,189 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 13/17] commit: teach --amend to carry forward extra
- headers
-Date: Tue,  8 Nov 2011 17:01:59 -0800
-Message-ID: <1320800523-5407-14-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 17/17] pretty: %G[?GS] placeholders
+Date: Tue,  8 Nov 2011 17:02:03 -0800
+Message-ID: <1320800523-5407-18-git-send-email-gitster@pobox.com>
 References: <1320800523-5407-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 09 02:02:53 2011
+X-From: git-owner@vger.kernel.org Wed Nov 09 02:02:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNwZ2-0003z8-5r
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Nov 2011 02:02:52 +0100
+	id 1RNwZ5-0003z8-Cn
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Nov 2011 02:02:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754144Ab1KIBCh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Nov 2011 20:02:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36609 "EHLO
+	id S1755552Ab1KIBCu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Nov 2011 20:02:50 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36725 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752828Ab1KIBCf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Nov 2011 20:02:35 -0500
+	id S1754814Ab1KIBCn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Nov 2011 20:02:43 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B33405BA1
-	for <git@vger.kernel.org>; Tue,  8 Nov 2011 20:02:34 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 232955BB0
+	for <git@vger.kernel.org>; Tue,  8 Nov 2011 20:02:43 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=zO3y
-	zkKGmlNP+gxuXbjHnwvNSMI=; b=EZgUX9pTQ9A4kAVMcUCQxvpl1fimPcl+hOWh
-	9TstpKZZ/X+4ely1dtHt6S/IKOLYNTY+YiAa9Hpj74lB9dGTSbFhWSVqFma0FAy5
-	nQJhPnSaWZE6ux/glbAtjCYls7zpA1y6NfVLoG+WX16rZgbQ18/WVSqT7oOETvMB
-	5203Fhw=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=0/xC
+	foK4jAF+oFRCRqDYpaKpeN4=; b=Tw6iwtx8Z1O8r4VgElzd5o4+8iRmzZqno8/f
+	guf6HYcTuzjdlU8T+8cklp4bfIiFJxJhb8He5zptv7O2yicYcOY1Wd8janC0duVK
+	EFaYCUBOSTJBTE6WbZRxuZFeqR4m8aiPct7k124wdDpzyg3DwxbIt22Mh9jjb/t0
+	WGqe6qo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=gZHF6Q
-	ppbECrG+eic0qfLqB6vwnFlNSLBArg8eUSR8h2i6SGe4iap1BfKF4VZQUG9iCa4R
-	PMVzybgtD5k5Y+YZwU/Kq+/RmVQ3g16j9snmBEuqY0IgM21aiK6wiR1HF9CuEk8i
-	IDuTQqK986VKR+kMb0vYFEVrblckpDGepA5W4=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=QsEgZs
+	mnunqV96mmQ1jD79r8i5n5GFBBkvgy49NF8JKQVlS9XdmfUOnXZvNUr3VO/JTYDG
+	+521ZOsTnZ3hP4PYLKiu94BPJMREHtzc0ABaOVYAdlqayMM0+b4G5HqVZ+OREQ1t
+	kUc9w0vt6PJtTSSGeHyQH/0gTzKtu5nkHG3lc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB4E25BA0
-	for <git@vger.kernel.org>; Tue,  8 Nov 2011 20:02:34 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B69F5BAF
+	for <git@vger.kernel.org>; Tue,  8 Nov 2011 20:02:43 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0F8195B9C for
- <git@vger.kernel.org>; Tue,  8 Nov 2011 20:02:33 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5F8B65BAE for
+ <git@vger.kernel.org>; Tue,  8 Nov 2011 20:02:42 -0500 (EST)
 X-Mailer: git-send-email 1.7.8.rc1.82.gde0f9
 In-Reply-To: <1320800523-5407-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 81F398DC-0A6E-11E1-BF64-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 86EA5A1A-0A6E-11E1-9134-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185137>
 
-After running "git pull $there for-linus" to merge a signed tag, the
-integrator may need to amend the resulting merge commit to fix typoes
-in it. Teach --amend option to read the existing extra headers, and
-carry them forward.
+Add new placeholders related to the GPG signature on signed commits.
+
+ - %GG to show the raw verification message from GPG;
+ - %G? to show either "G" for Good, "B" for Bad;
+ - %GS to show the name of the signer.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/commit.c |    9 ++++++-
- commit.c         |   60 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- commit.h         |    3 ++
- 3 files changed, 70 insertions(+), 2 deletions(-)
+ pretty.c |   86 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 86 insertions(+), 0 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 4688a73..fca7ea0 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1382,6 +1382,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	int allow_fast_forward = 1;
- 	struct wt_status s;
- 	struct commit *current_head = NULL;
-+	struct commit_extra_header *extra = NULL;
+diff --git a/pretty.c b/pretty.c
+index f45eb54..392d656 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -9,6 +9,7 @@
+ #include "notes.h"
+ #include "color.h"
+ #include "reflog-walk.h"
++#include "gpg-interface.h"
  
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage_with_options(builtin_commit_usage, builtin_commit_options);
-@@ -1483,12 +1484,16 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		exit(1);
- 	}
+ static char *user_format;
+ static struct cmt_fmt_map {
+@@ -640,6 +641,12 @@ struct format_commit_context {
+ 	const struct pretty_print_context *pretty_ctx;
+ 	unsigned commit_header_parsed:1;
+ 	unsigned commit_message_parsed:1;
++	unsigned commit_signature_parsed:1;
++	struct {
++		char *gpg_output;
++		char good_bad;
++		char *signer;
++	} signature;
+ 	char *message;
+ 	size_t width, indent1, indent2;
  
--	if (commit_tree(sb.buf, active_cache_tree->sha1, parents, sha1,
--			author_ident.buf)) {
-+	if (amend)
-+		extra = read_commit_extra_headers(current_head);
-+
-+	if (commit_tree_extended(sb.buf, active_cache_tree->sha1, parents, sha1,
-+				 author_ident.buf, extra)) {
- 		rollback_index_files();
- 		die(_("failed to write commit object"));
- 	}
- 	strbuf_release(&author_ident);
-+	free_commit_extra_headers(extra);
- 
- 	ref_lock = lock_any_ref_for_update("HEAD",
- 					   !current_head
-diff --git a/commit.c b/commit.c
-index ee12eff..1c05879 100644
---- a/commit.c
-+++ b/commit.c
-@@ -897,6 +897,66 @@ static void add_extra_header(struct strbuf *buffer,
- 	strbuf_add_lines(buffer, " ", extra->value, extra->len);
+@@ -822,6 +829,59 @@ static void rewrap_message_tail(struct strbuf *sb,
+ 	c->indent2 = new_indent2;
  }
  
-+struct commit_extra_header *read_commit_extra_headers(struct commit *commit)
-+{
-+	struct commit_extra_header *extra = NULL;
-+	size_t size;
-+	enum object_type type;
-+	char *buffer = read_sha1_file(commit->object.sha1, &type, &size);
-+	if (buffer && type == OBJ_COMMIT)
-+		extra = read_commit_extra_header_lines(buffer, size);
-+	free(buffer);
-+	return extra;
-+}
++static struct {
++	char result;
++	const char *check;
++} signature_check[] = {
++	{ 'G', ": Good signature from " },
++	{ 'B', ": BAD signature from " },
++};
 +
-+static inline int standard_header_field(const char *field, size_t len)
++static void parse_signature_lines(struct format_commit_context *ctx)
 +{
-+	return ((len == 4 && !memcmp(field, "tree ", 5)) ||
-+		(len == 6 && !memcmp(field, "parent ", 7)) ||
-+		(len == 6 && !memcmp(field, "author ", 7)) ||
-+		(len == 9 && !memcmp(field, "committer ", 10)) ||
-+		(len == 8 && !memcmp(field, "encoding ", 9)));
-+}
++	const char *buf = ctx->signature.gpg_output;
++	int i;
 +
-+struct commit_extra_header *read_commit_extra_header_lines(const char *buffer, size_t size)
-+{
-+	struct commit_extra_header *extra = NULL, **tail = &extra, *it = NULL;
-+	const char *line, *next, *eof, *eob;
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	for (line = buffer, eob = line + size;
-+	     line < eob && *line != '\n';
-+	     line = next) {
-+		next = memchr(line, '\n', eob - line);
-+		next = next ? next + 1 : eob;
-+		if (*line == ' ') {
-+			/* continuation */
-+			strbuf_add(&buf, line + 1, next - (line + 1));
++	for (i = 0; i < ARRAY_SIZE(signature_check); i++) {
++		const char *found = strstr(buf, signature_check[i].check);
++		const char *next;
++		if (!found)
 +			continue;
-+		}
-+		if (it)
-+			it->value = strbuf_detach(&buf, &it->len);
-+		strbuf_reset(&buf);
-+		it = NULL;
-+
-+		eof = strchr(line, ' ');
-+		if (next <= eof)
-+			continue; /* malformed */
-+
-+		if (standard_header_field(line, eof - line))
-+			continue;
-+
-+		it = xcalloc(1, sizeof(*it));
-+		it->key = xmemdupz(line, eof-line);
-+		*tail = it;
-+		tail = &it->next;
-+		strbuf_add(&buf, eof + 1, next - (eof + 1));
++		ctx->signature.good_bad = signature_check[i].result;
++		found += strlen(signature_check[i].check);
++		next = strchrnul(found, '\n');
++		ctx->signature.signer = xmemdupz(found, next - found);
++		break;
 +	}
-+	if (it)
-+		it->value = strbuf_detach(&buf, &it->len);
-+	return extra;
 +}
 +
- void free_commit_extra_headers(struct commit_extra_header *extra)
- {
- 	while (extra) {
-diff --git a/commit.h b/commit.h
-index c1a723e..3745f12 100644
---- a/commit.h
-+++ b/commit.h
-@@ -200,6 +200,9 @@ extern int commit_tree_extended(const char *msg, unsigned char *tree,
- 				const char *author,
- 				struct commit_extra_header *);
- 
-+extern struct commit_extra_header *read_commit_extra_headers(struct commit *);
-+extern struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len);
++static void parse_commit_signature(struct format_commit_context *ctx)
++{
++	struct strbuf payload = STRBUF_INIT;
++	struct strbuf signature = STRBUF_INIT;
++	struct strbuf gpg_output = STRBUF_INIT;
++	int status;
 +
- extern void free_commit_extra_headers(struct commit_extra_header *extra);
++	ctx->commit_signature_parsed = 1;
++
++	if (parse_signed_commit(ctx->commit->object.sha1,
++				&payload, &signature) <= 0)
++		goto out;
++	status = verify_signed_buffer(payload.buf, payload.len,
++				      signature.buf, signature.len,
++				      &gpg_output);
++	if (status && !gpg_output.len)
++		goto out;
++	ctx->signature.gpg_output = strbuf_detach(&gpg_output, NULL);
++	parse_signature_lines(ctx);
++
++ out:
++	strbuf_release(&gpg_output);
++	strbuf_release(&payload);
++	strbuf_release(&signature);
++}
++
++
+ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
+ 				void *context)
+ {
+@@ -974,6 +1034,30 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
+ 		return 0;
+ 	}
  
- struct merge_remote_desc {
++	if (placeholder[0] == 'G') {
++		if (!c->commit_signature_parsed)
++			parse_commit_signature(c);
++		switch (placeholder[1]) {
++		case 'G':
++			if (c->signature.gpg_output)
++				strbuf_addstr(sb, c->signature.gpg_output);
++			break;
++		case '?':
++			switch (c->signature.good_bad) {
++			case 'G':
++			case 'B':
++				strbuf_addch(sb, c->signature.good_bad);
++			}
++			break;
++		case 'S':
++			if (c->signature.signer)
++				strbuf_addstr(sb, c->signature.signer);
++			break;
++		}
++		return 2;
++	}
++
++
+ 	/* For the rest we have to parse the commit header. */
+ 	if (!c->commit_header_parsed)
+ 		parse_commit_header(c);
+@@ -1114,6 +1198,8 @@ void format_commit_message(const struct commit *commit,
+ 
+ 	if (context.message != commit->buffer)
+ 		free(context.message);
++	free(context.signature.gpg_output);
++	free(context.signature.signer);
+ }
+ 
+ static void pp_header(const struct pretty_print_context *pp,
 -- 
 1.7.8.rc1.82.g90e080
