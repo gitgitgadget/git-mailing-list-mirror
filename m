@@ -1,76 +1,62 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH v0] fast-import: Add drop command
-Date: Wed, 9 Nov 2011 01:27:03 +0100
-Message-ID: <CAGdFq_jPfSFidb59m-5Tsyusw3yQFRnxU9nqBVosVPuzbt86GA@mail.gmail.com>
-References: <1316878065-11782-1-git-send-email-vitor.hda@gmail.com>
- <1316878065-11782-2-git-send-email-vitor.hda@gmail.com> <20110924193733.GB10955@elie>
- <CA+gfSn8Z7Xn1hdpqNHiP3bd2KGRqcAc6O683Z4O+G=jNNYJtBA@mail.gmail.com>
- <CAOpHH-WSyD23GKtZ2nLiSsJfLU-+7ibyGhGccyvtAhKQ-jffBw@mail.gmail.com>
- <CAOpHH-WxhvEP58KkGhnJbATbzU6PDBeQB1_fhbQ+0fzDXznaYw@mail.gmail.com>
- <CAGdFq_heamPfKpK2sQ1RUvceaeGRVAwkv=KAn-ByPyPkNtoZBA@mail.gmail.com>
- <CAOpHH-VEhtOg6ai5p9VxWBKA3AFpG3meiJVGrWR4j68ffyQ6Bg@mail.gmail.com>
- <CAGdFq_iY92Gc=WLFVVMpi8w5JNZMo5bSk5=wjHyCmjXmP4RXrQ@mail.gmail.com>
- <CAOpHH-W30umoP6CuvrXgiSPBC2NjLvNWUX0uxhU4SU3kBB4H-A@mail.gmail.com>
- <CAGdFq_hSnywznK=3JgWBVigGZmS0ry_WHuuDww5tvPrcsPd7cQ@mail.gmail.com> <CAOpHH-X3bgJpRpiJMy-iDDpaFbUy8yZK+GFEwVB2vGHd-GpUiw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git log --quiet bug?
+Date: Tue, 8 Nov 2011 19:59:27 -0500
+Message-ID: <20111109005927.GA25876@sigill.intra.peff.net>
+References: <1320762978.3614.YahooMailNeo@web84005.mail.mud.yahoo.com>
+ <20111108212930.GA18529@sigill.intra.peff.net>
+ <1320791465.67359.YahooMailNeo@web84006.mail.mud.yahoo.com>
+ <20111108232043.GA21957@sigill.intra.peff.net>
+ <7vy5vqw47x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Dmitry Ivankov <divanorama@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	David Barr <davidbarr@google.com>
-To: Vitor Antunes <vitor.hda@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 09 01:27:51 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Prasad Deshpande <prasadgdeshpande@yahoo.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 09 01:59:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNw18-0001Lp-MP
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Nov 2011 01:27:51 +0100
+	id 1RNwVr-0002yg-JV
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Nov 2011 01:59:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756524Ab1KIA1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Nov 2011 19:27:46 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:47187 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756075Ab1KIA1q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Nov 2011 19:27:46 -0500
-Received: by ggnb2 with SMTP id b2so1162028ggn.19
-        for <git@vger.kernel.org>; Tue, 08 Nov 2011 16:27:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=mqGln1/30dGrQLmw7F7DsWn/aj40Z2UtmsF7HDinRpk=;
-        b=MZFnHPlC56F3X8X8zRu29CC2WV5I7KRXP08C2UXla4YoQZLH580sAs1jFavw4a7HhS
-         GG3wrgl/O1rgsbG0zHmUMRkL30xh2nBZZu2GLtZfBrBBts/8Hk9GaVlFnMPLhXAKJG5n
-         Fi/45ZfcTCi3rlKezVBhrWIr+E6+rJP5Rl3JY=
-Received: by 10.182.13.3 with SMTP id d3mr30264obc.20.1320798465154; Tue, 08
- Nov 2011 16:27:45 -0800 (PST)
-Received: by 10.182.52.3 with HTTP; Tue, 8 Nov 2011 16:27:03 -0800 (PST)
-In-Reply-To: <CAOpHH-X3bgJpRpiJMy-iDDpaFbUy8yZK+GFEwVB2vGHd-GpUiw@mail.gmail.com>
+	id S1756540Ab1KIA7a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Nov 2011 19:59:30 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37215
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756061Ab1KIA7a (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Nov 2011 19:59:30 -0500
+Received: (qmail 9902 invoked by uid 107); 9 Nov 2011 00:59:31 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 08 Nov 2011 19:59:31 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Nov 2011 19:59:27 -0500
+Content-Disposition: inline
+In-Reply-To: <7vy5vqw47x.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185123>
 
-Heya,
+On Tue, Nov 08, 2011 at 04:04:50PM -0800, Junio C Hamano wrote:
 
-On Wed, Nov 9, 2011 at 01:24, Vitor Antunes <vitor.hda@gmail.com> wrote:
-> On Thu, Oct 27, 2011 at 3:36 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
->> Ok, so the problem is that fast-import notices that a tree that was
->> written out as part of a checkpoint is later removed and doesn't like
->> that? Shouldn't we just teach the check about trees deleted by the
->> drop command?
->
-> That was exactly my intention when I used release_tree_entry(). But I
-> guess I'm doing it wrong, because without the delete_ref() part this
-> does not work (just noticed there's a missing semicolon there...
-> sorry). Any advices/guidance, please? :)
+> Jeff King <peff@peff.net> writes:
+> 
+> > Try:
+> >
+> >   test -z "$(git rev-list -1 origin..HEAD)" &&
+> >   echo nothing that needs pushing
+> >
+> > You can also use --count to get the exact number, but if you just care
+> > whether there is something or nothing, using "-1" lets git stop the
+> > graph traversal immediately.
+> 
+> Doesn't some variant of "branch -v" show the ahead/behind information for
+> all branches?
 
-ENODATA. What do you mean with "does not work"? Can you run it through
-gdb and see what's going on?
+Yeah, but I thought the question was how to figure this out
+programatically in a script.
 
--- 
-Cheers,
-
-Sverre Rabbelier
+-Peff
