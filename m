@@ -1,169 +1,210 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] prune: handle --progress/no-progress
-Date: Wed,  9 Nov 2011 11:23:17 +0700
-Message-ID: <1320812597-11175-1-git-send-email-pclouds@gmail.com>
-References: <20111108053407.GA16852@sigill.intra.peff.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] prune: show progress while marking reachable objects
+Date: Wed, 9 Nov 2011 11:26:42 +0700
+Message-ID: <20111109042642.GA11222@duynguyen-vnpc.dek-tpc.internal>
+References: <1320494408-6373-1-git-send-email-pclouds@gmail.com>
+ <20111108053149.GA29643@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 09 05:23:40 2011
+X-From: git-owner@vger.kernel.org Wed Nov 09 05:26:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RNzhL-00042F-Lx
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Nov 2011 05:23:40 +0100
+	id 1RNzkY-00058a-17
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Nov 2011 05:26:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754792Ab1KIEXa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Nov 2011 23:23:30 -0500
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:55101 "EHLO
+	id S1755024Ab1KIE0x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Nov 2011 23:26:53 -0500
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:52464 "EHLO
 	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751113Ab1KIEX3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Nov 2011 23:23:29 -0500
-Received: by pzk2 with SMTP id 2so623352pzk.1
-        for <git@vger.kernel.org>; Tue, 08 Nov 2011 20:23:29 -0800 (PST)
+	with ESMTP id S1751113Ab1KIE0w (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Nov 2011 23:26:52 -0500
+Received: by pzk2 with SMTP id 2so629003pzk.1
+        for <git@vger.kernel.org>; Tue, 08 Nov 2011 20:26:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=lQYC6HeBcvp4Y/U+b/oT77hxYudtjcR13rFsB7BGLh4=;
-        b=n/yTWZ5Rz9Oa+ebcc6vudaz5v2AJ1+sWWJ7kXJ/LMeQaQSLSLllMKAicPqVcKI0v6A
-         Qzj7hiap1jpCTU6aDfS8QdA3TU11chbpYfG+JlPQnQCiJiqeUC9AdWCm3Smt4RPme4c+
-         GxnebYZii+efA/tzmMrVUv8y+RPNpRV8eXg9g=
-Received: by 10.68.36.37 with SMTP id n5mr1985383pbj.105.1320812609030;
-        Tue, 08 Nov 2011 20:23:29 -0800 (PST)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=mVGI9TC7SeTiZlONS871i+7YH7tZidKawiNBLBKEv6M=;
+        b=ONQSJZceJsMFpKoed0PYyOj5ud3LNeG8aMZ4amgvGDU0Ik5E+CSpUpm+V5uyNJQam2
+         0bJqAnCwzENMW8xRYVraZdpSFE2y/ZBtRF/zNVVY9LI+sj/jYsxnIKjACdz+ya5CAvYi
+         JLPe7DbfjvANPmmkIzpGEsSpMW/yUDPqLmgus=
+Received: by 10.68.17.7 with SMTP id k7mr2210762pbd.20.1320812812215;
+        Tue, 08 Nov 2011 20:26:52 -0800 (PST)
 Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id b8sm9619777pba.16.2011.11.08.20.23.24
+        by mx.google.com with ESMTPS id a4sm9661411pbl.11.2011.11.08.20.26.47
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 08 Nov 2011 20:23:27 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 09 Nov 2011 11:23:19 +0700
-X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
-In-Reply-To: <20111108053407.GA16852@sigill.intra.peff.net>
+        Tue, 08 Nov 2011 20:26:51 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 09 Nov 2011 11:26:42 +0700
+Content-Disposition: inline
+In-Reply-To: <20111108053149.GA29643@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185145>
 
-=46rom: Jeff King <peff@peff.net>
+On Tue, Nov 08, 2011 at 12:31:49AM -0500, Jeff King wrote:
+> On Sat, Nov 05, 2011 at 07:00:08PM +0700, Nguyen Thai Ngoc Duy wrote:
+>=20
+> > prune already shows progress meter while pruning. The marking part =
+may
+> > take a few seconds or more, depending on repository size. Show
+> > progress meter during this time too.
+>=20
+> Thanks, this is a nice start. It's missing a few things IMHO:
+>=20
+>   1. It actually counts commits, not all objects. I'm tempted to say
+>      this doesn't matter, as any eye candy is helpful. Except that th=
+e
+>      most common use of prune is as part of "git gc", in which case
+>      pack-objects will have just done the "counting objects" phase an=
+d
+>      come up with some number. If we count all objects, then our end
+>      number is the same (modulo any .keep packs, but at least it's
+>      probably in the same order of magnitude). That gives the user a
+>      better sense of completion time.
+>=20
+>   2. Prune should learn --progress/--no-progress, isatty(2), etc. And
+>      git-gc should pass --no-progress when it's told to be quiet.
 
-And have "git gc" pass no-progress when quiet.
+  3. Show progress meter while pruning packed objects. It does not
+     seem to take long enough time to show the meter. Anyway the code
+     is there we should enable it.
 
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+-- 8< --
+Subject: [PATCH] prune: show progress meter while pruning packed object=
+s
+
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Added documentation.
+ builtin.h              |    4 ++++
+ builtin/prune-packed.c |   13 +++++--------
+ builtin/prune.c        |   13 +++++++++----
+ 3 files changed, 18 insertions(+), 12 deletions(-)
 
- Documentation/git-prune.txt |    9 ++++++++-
- builtin/gc.c                |    4 +++-
- builtin/prune.c             |   11 +++++++++--
- 3 files changed, 20 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-prune.txt b/Documentation/git-prune.txt
-index 80d01b0..6da99e2 100644
---- a/Documentation/git-prune.txt
-+++ b/Documentation/git-prune.txt
-@@ -9,7 +9,7 @@ git-prune - Prune all unreachable objects from the obje=
-ct database
- SYNOPSIS
- --------
- [verse]
--'git prune' [-n] [-v] [--expire <expire>] [--] [<head>...]
-+'git prune' [-n] [-v] [--expire <expire>] [--[no-]progress] [--] [<hea=
-d>...]
+diff --git a/builtin.h b/builtin.h
+index 0e9da90..0a5b511 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -13,6 +13,10 @@ extern const char git_version_string[];
+ extern const char git_usage_string[];
+ extern const char git_more_info_string[];
 =20
- DESCRIPTION
- -----------
-@@ -46,6 +46,13 @@ OPTIONS
- --expire <time>::
- 	Only expire loose objects older than <time>.
-=20
-+--progress::
-+--no-progress::
-+	Progress status is reported on the standard error stream
-+	by default when it is attached to a terminal, unless --no-progress
-+	is specified. This flag forces progress status even if the
-+	standard error stream is not directed to a terminal.
++#define PRUNE_DRY_RUN  01
++#define PRUNE_PROGRESS 02
++#define PRUNE_VERBOSE  04
 +
- <head>...::
- 	In addition to objects
- 	reachable from any of our references, keep objects
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 0498094..271376d 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -32,7 +32,7 @@ static const char *prune_expire =3D "2.weeks.ago";
- static const char *argv_pack_refs[] =3D {"pack-refs", "--all", "--prun=
-e", NULL};
- static const char *argv_reflog[] =3D {"reflog", "expire", "--all", NUL=
-L};
- static const char *argv_repack[MAX_ADD] =3D {"repack", "-d", "-l", NUL=
-L};
--static const char *argv_prune[] =3D {"prune", "--expire", NULL, NULL};
-+static const char *argv_prune[] =3D {"prune", "--expire", NULL, NULL, =
-NULL};
- static const char *argv_rerere[] =3D {"rerere", "gc", NULL};
+ extern void prune_packed_objects(int);
+ extern int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
+ 			 int merge_title, int shortlog_len);
+diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
+index f9463de..d9f6d1d 100644
+--- a/builtin/prune-packed.c
++++ b/builtin/prune-packed.c
+@@ -8,9 +8,6 @@ static const char * const prune_packed_usage[] =3D {
+ 	NULL
+ };
 =20
- static int gc_config(const char *var, const char *value, void *cb)
-@@ -243,6 +243,8 @@ int cmd_gc(int argc, const char **argv, const char =
-*prefix)
+-#define DRY_RUN 01
+-#define VERBOSE 02
+-
+ static struct progress *progress;
 =20
- 	if (prune_expire) {
- 		argv_prune[2] =3D prune_expire;
-+		if (quiet)
-+			argv_prune[3] =3D "--no-progress";
- 		if (run_command_v_opt(argv_prune, RUN_GIT_CMD))
- 			return error(FAILED_RUN, argv_prune[0]);
- 	}
+ static void prune_dir(int i, DIR *dir, char *pathname, int len, int op=
+ts)
+@@ -29,7 +26,7 @@ static void prune_dir(int i, DIR *dir, char *pathname=
+, int len, int opts)
+ 		if (!has_sha1_pack(sha1))
+ 			continue;
+ 		memcpy(pathname + len, de->d_name, 38);
+-		if (opts & DRY_RUN)
++		if (opts & PRUNE_DRY_RUN)
+ 			printf("rm -f %s\n", pathname);
+ 		else
+ 			unlink_or_warn(pathname);
+@@ -46,7 +43,7 @@ void prune_packed_objects(int opts)
+ 	const char *dir =3D get_object_directory();
+ 	int len =3D strlen(dir);
+=20
+-	if (opts =3D=3D VERBOSE)
++	if (opts & PRUNE_PROGRESS)
+ 		progress =3D start_progress_delay("Removing duplicate objects",
+ 			256, 95, 2);
+=20
+@@ -71,10 +68,10 @@ void prune_packed_objects(int opts)
+=20
+ int cmd_prune_packed(int argc, const char **argv, const char *prefix)
+ {
+-	int opts =3D isatty(2) ? VERBOSE : 0;
++	int opts =3D isatty(2) ? PRUNE_PROGRESS : 0;
+ 	const struct option prune_packed_options[] =3D {
+-		OPT_BIT('n', "dry-run", &opts, "dry run", DRY_RUN),
+-		OPT_NEGBIT('q', "quiet", &opts, "be quiet", VERBOSE),
++		OPT_BIT('n', "dry-run", &opts, "dry run", PRUNE_DRY_RUN),
++		OPT_NEGBIT('q', "quiet", &opts, "be quiet", PRUNE_PROGRESS),
+ 		OPT_END()
+ 	};
+=20
 diff --git a/builtin/prune.c b/builtin/prune.c
-index 6b39d3f..58d7cb8 100644
+index 58d7cb8..4cdbac0 100644
 --- a/builtin/prune.c
 +++ b/builtin/prune.c
-@@ -15,6 +15,7 @@ static const char * const prune_usage[] =3D {
- static int show_only;
- static int verbose;
- static unsigned long expire;
-+static int show_progress =3D -1;
-=20
- static int prune_tmp_object(const char *path, const char *filename)
- {
-@@ -125,10 +126,11 @@ static void remove_temporary_files(const char *pa=
-th)
- int cmd_prune(int argc, const char **argv, const char *prefix)
+@@ -127,9 +127,10 @@ int cmd_prune(int argc, const char **argv, const c=
+har *prefix)
  {
  	struct rev_info revs;
--	struct progress *progress;
-+	struct progress *progress =3D NULL;
+ 	struct progress *progress =3D NULL;
++	int prune_opts =3D 0;
  	const struct option options[] =3D {
- 		OPT__DRY_RUN(&show_only, "do not remove, show only"),
- 		OPT__VERBOSE(&verbose, "report pruned objects"),
-+		OPT_BOOL(0, "progress", &show_progress, "show progress"),
+-		OPT__DRY_RUN(&show_only, "do not remove, show only"),
+-		OPT__VERBOSE(&verbose, "report pruned objects"),
++		OPT_BIT('n', "dry-run", &prune_opts, "do not remove, show only", PRU=
+NE_DRY_RUN),
++		OPT_BIT('v', "verbose", &prune_opts, "report pruned objects", PRUNE_=
+VERBOSE),
+ 		OPT_BOOL(0, "progress", &show_progress, "show progress"),
  		OPT_DATE(0, "expire", &expire,
  			 "expire objects older than <time>"),
- 		OPT_END()
-@@ -154,7 +156,12 @@ int cmd_prune(int argc, const char **argv, const c=
-har *prefix)
- 		else
- 			die("unrecognized argument: %s", name);
- 	}
--	progress =3D start_progress_delay("Checking connectivity", 0, 0, 2);
-+
-+	if (show_progress =3D=3D -1)
-+		show_progress =3D isatty(2);
-+	if (show_progress)
-+		progress =3D start_progress_delay("Checking connectivity", 0, 0, 2);
-+
+@@ -143,6 +144,8 @@ int cmd_prune(int argc, const char **argv, const ch=
+ar *prefix)
+ 	init_revisions(&revs, prefix);
+=20
+ 	argc =3D parse_options(argc, argv, prefix, options, prune_usage, 0);
++	show_only =3D prune_opts & PRUNE_DRY_RUN;
++	verbose =3D prune_opts & PRUNE_VERBOSE;
+ 	while (argc--) {
+ 		unsigned char sha1[20];
+ 		const char *name =3D *argv++;
+@@ -159,14 +162,16 @@ int cmd_prune(int argc, const char **argv, const =
+char *prefix)
+=20
+ 	if (show_progress =3D=3D -1)
+ 		show_progress =3D isatty(2);
+-	if (show_progress)
++	if (show_progress) {
++		prune_opts |=3D PRUNE_PROGRESS;
+ 		progress =3D start_progress_delay("Checking connectivity", 0, 0, 2);
++	}
+=20
  	mark_reachable_objects(&revs, 1, progress);
  	stop_progress(&progress);
  	prune_object_dir(get_object_directory());
+=20
+-	prune_packed_objects(show_only);
++	prune_packed_objects(prune_opts);
+ 	remove_temporary_files(get_object_directory());
+ 	s =3D xstrdup(mkpath("%s/pack", get_object_directory()));
+ 	remove_temporary_files(s);
 --=20
 1.7.3.1.256.g2539c.dirty
+
+-- 8< --
