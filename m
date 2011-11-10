@@ -1,99 +1,116 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 14/14] clone: give advice on how to resume a failed clone
-Date: Thu, 10 Nov 2011 13:21:38 -0800
-Message-ID: <7vvcqrsmfx.fsf@alter.siamese.dyndns.org>
-References: <20111110074330.GA27925@sigill.intra.peff.net>
- <20111110075654.GN27950@sigill.intra.peff.net>
+Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
+Date: Thu, 10 Nov 2011 13:41:49 -0800
+Message-ID: <7vr51fslia.fsf@alter.siamese.dyndns.org>
+References: <20111026202235.GA20928@havoc.gtf.org>
+ <1319969101.5215.20.camel@dabdike>
+ <CA+55aFx1NGWfNJAKDTvZfsHDDKiEtS4t4RydSgHurBeyGPyhXg@mail.gmail.com>
+ <1320049150.8283.19.camel@dabdike>
+ <CA+55aFz3=cbciRfTYodNhdEetXYxTARGTfpP9GL9RZK222XmKQ@mail.gmail.com>
+ <7vy5w1ow90.fsf@alter.siamese.dyndns.org>
+ <CA+55aFwL_s=DcT46dprcYVWEAm_=WkuTV6K9dAn3wc_bDQU8vA@mail.gmail.com>
+ <7vwrbjlj5r.fsf@alter.siamese.dyndns.org>
+ <CA+55aFx_rAA6TJkZn1Zvu6u9UjxnmTVt0HpMnvaE_q9Sx-jzPg@mail.gmail.com>
+ <7vk47jld5s.fsf@alter.siamese.dyndns.org>
+ <CA+55aFz7TeQQH3D4Tpp31cZYZoQKeK37jouo+2Kh61Wa07knfw@mail.gmail.com>
+ <CAJo=hJv5nAKH_ptYSWfMvFQv0Dj+naPXK35wSzKYkfPOYsWkxg@mail.gmail.com>
+ <CA+55aFx0oCd6-sh0psYxho-s=sHAK0RHXJHfLewRuUcdXzxZbg@mail.gmail.com>
+ <CA+55aFwXu=+HdQ5nW11Ts5p-V=KgpxjyagKqB+Xv+qBOEEWXvQ@mail.gmail.com>
+ <7v62j1gitn.fsf@alter.siamese.dyndns.org>
+ <7vvcr1f38j.fsf@alter.siamese.dyndns.org>
+ <CA+55aFyRawm9CoJMiEXDFCX4YTidPOiV4oqSS2d7nNv7Ecw8BQ@mail.gmail.com>
+ <7v4nydurzh.fsf@alter.siamese.dyndns.org>
+ <CALKQrgfZtELcK3H5ZYvmcW8RrtKMVRACFTvw3s5SidFvmFWkGw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 10 22:21:50 2011
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Nov 10 22:42:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ROc4B-0002GD-Oo
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Nov 2011 22:21:48 +0100
+	id 1ROcNj-0005Qw-SI
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Nov 2011 22:42:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756603Ab1KJVVn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Nov 2011 16:21:43 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55622 "EHLO
+	id S1751721Ab1KJVl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Nov 2011 16:41:56 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65141 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752888Ab1KJVVl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Nov 2011 16:21:41 -0500
+	id S1751210Ab1KJVly (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Nov 2011 16:41:54 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A76D6E28;
-	Thu, 10 Nov 2011 16:21:40 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E3A755414;
+	Thu, 10 Nov 2011 16:41:53 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=N79i5VazOBtQaR0amBWxaDZMNts=; b=ri/RVI
-	HGO+xrcuiqeMGZyt0SA8ZDVoo+bfMABSv95xL12Q5Y5gTYy5ofXXR22xKDgxXuYe
-	6QN4jZsk72WjZBKG1VHXjlQwN1d5BkUqSqNxUE8sCrOD/iNudEZJylYSE4YeptUV
-	KDJ2UCqsYln4oCmQhHTnAVGQQ2ZyRGAyUwNIQ=
+	:content-type; s=sasl; bh=Xw05pw+fwquKv43owG7CPIdxc/M=; b=GnoLdu
+	SyHp/z77YDkeGP+RbjBgDvbV7nqw4AGM005qxfB0U66K6JqNywK9j1LShcW0eQE2
+	gIW/wpwaPY/DuCzNW9nPcHPZFBbzGmxciBBQonn80RgGVeHtbwpUh6ORrY7OvKPg
+	W8KnV/84UNhHYaMERqFAL+0jXs3WC+5PK3YFo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mhFdHa8dJljXjOekADn+wiVQ3B9t85JX
-	Txg/qniGFLGioNkfxhHPiGQVatHAiuMBOzMjYV/AViqQ330jRkbCQ/sve0VjV5uh
-	2o24oeD9fSQFwVpQe0cP7RwMJic51FoguJEFu5YXYVFbNbotsPc47YoqQABG6cDd
-	IIsujNq0bBQ=
+	:content-type; q=dns; s=sasl; b=xSqzyIGvN5GOzmT5K321B7g1qF/3eojz
+	32rcD1c8K7ygEAqlU3HxOaqg3daX/fqIqAcf5MFYoihdMndbVHQpzXHzTWkHBIiV
+	AFf7Us/UHdQNM/su6AAIBlhB734r3/yZqil7JfIh89fTYewD6vNzBho7j9f+LeE9
+	+1rXRIno0XE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7127E6E27;
-	Thu, 10 Nov 2011 16:21:40 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC1905413;
+	Thu, 10 Nov 2011 16:41:53 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6522E6E26; Thu, 10 Nov 2011
- 16:21:39 -0500 (EST)
-In-Reply-To: <20111110075654.GN27950@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 10 Nov 2011 02:56:55 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5C0B55410; Thu, 10 Nov 2011
+ 16:41:52 -0500 (EST)
+In-Reply-To: <CALKQrgfZtELcK3H5ZYvmcW8RrtKMVRACFTvw3s5SidFvmFWkGw@mail.gmail.com> (Johan
+ Herland's message of "Thu, 10 Nov 2011 09:02:53 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FA644C84-0BE1-11E1-8C52-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: CD5FB252-0BE4-11E1-81E6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185245>
 
-Jeff King <peff@peff.net> writes:
+Johan Herland <johan@herland.net> writes:
 
-> We could make "git clone ..." automatically resume, but I'm a little
-> nervous about that. I wrote a patch that did so, and it did work, but
-> there are a lot of little hiccups as we violate the assumption that the
-> directory didn't already exist (e.g., it writes multiple fetch refspec
-> lines to the config).
+> You would also have to keep track of deleted annotations, to enable the local
+> side to delete an annotation corresponding to an already-deleted annotation
+> on the remote side.
 
-Sorry, but I do not think the worry is quite justified.
+For the "signed commit or pull request" use case, I think "delete" is
+probably not something you want to do in the first place.
 
-The "assumption that directory didn't already exist" becomes an issue only
-if you implement your "git clone" that automatically resumes as a thin
-wrapper around the current "git clone" in the form of
+If there is a "certificate" that says "I made this commit" or "I agree
+this is a good topic to be merged to my history" that later turns out to
+be incorrect, you do not just want to excise it from your repository and
+the place you push to. You would instead want to distribute revocation
+notice for such certificiate, which would be a new "note" that will be
+attached to the commit or merge in question, so that other people who got
+the "certificate" from you or the place you push to will know about the
+removal using the same mechanism.
 
-    until git clone ...
-    do
-	echo retrying...
-    done
+Of course the "UI" layer could match a "certificate" and a "revocation"
+against each other and do something intelligent about them (like, not
+showing revoked ones by default), so in that sense a moral equivalent of
+"delete" from the end user's point of view can easily be supported [*1*].
 
-Stepping back a bit, I think there are two different situations where
-resumable clone is beneficial. The "git clone" process died either by the
-machine crashing or the user hitting a \C-c, or the connection between the
-server and the "git clone" got severed for some reason.
+Note that in this thread, I am not saying that "git notes" mechanism is
+not good for anything. A tree whose node names encode an object name is a
+valid way to store the mapping from that object to a set of other objects,
+and we already agreed that as the "local" storage mechanism, "git notes"
+may be used as-is for the purpose of this thread.
 
-Right now, the "got disconnected" case results in "git clone" voluntarily
-dying and as the result of this, the symptom appears the same.  But it
-does not have to be that way.  If we know the underlying transport is
-resumable, e.g. when you are fetching a prepared bundle over the wire.
+But the transfer and merge semantics "git notes" mechanism offers treats
+the entire "notes" that appear in _one_ repository and merging that set to
+the entire "notes" in another repository and it is not a good match for
+the purpose of this thread.
 
-I have this suspicion that in practice the "got disconnected" case is the
-majority. If "git clone" does not die upon disconnect while fetching a
-bundle, but instead the fetching of the bundle is resumed internally by
-reconnecting to the server and requesting a range transfer, there is no
-risk of "writes multiple fetch refspec lines" etc, no?
 
-Of course, it is _also_ beneficial if we made "git clone" resumable after
-you purposefully kill it (maybe you thought it will clone within minutes,
-but it turns out that it may take hours and you have to turn off the
-machine in the next five minutes before leaving the work, or something).
-A solution for that case _could_ be used for the "got disconnected" case
-by letting it voluntarily die as we currently do, but I do not think that
-is an optimal solution to the "got disconnected" case.
+[Footnote]
+
+*1* The point is, it is not the only way to implement a "delete" to keep a
+history with common ancestor that has something and your latest that does
+not have that thing, which is what "git notes" gives you. If having to
+keep the history brings other undesired semantic baggage, other ways that
+do not have such undesired property need to be explored.
