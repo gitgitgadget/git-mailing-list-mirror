@@ -1,157 +1,68 @@
-From: Todd Zullinger <tmz@pobox.com>
-Subject: Re: [fyi] patches used by git distributors
-Date: Thu, 10 Nov 2011 11:12:48 -0500
-Message-ID: <20111110161248.GE28719@inocybe.localdomain>
-References: <20111108090251.GB17954@elie.hsd1.il.comcast.net>
+From: =?ISO-8859-1?Q?Stefan_N=E4we?= <stefan.naewe@atlas-elektronik.com>
+Subject: Re: "make quick-install-man" on git.git HEAD has failed for two days
+Date: Thu, 10 Nov 2011 17:33:22 +0100
+Message-ID: <4EBBFCD2.9060000@atlas-elektronik.com>
+References: <861utgymsv.fsf@red.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="cWoXeonUoKmBZSoM"
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 10 17:27:02 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Thu Nov 10 17:33:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ROXSq-00061P-JT
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Nov 2011 17:26:57 +0100
+	id 1ROXZ9-0002hV-6N
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Nov 2011 17:33:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757756Ab1KJQ0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Nov 2011 11:26:52 -0500
-Received: from a-pb-sasl-sd.pobox.com ([74.115.168.62]:52507 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755591Ab1KJQ0v (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Nov 2011 11:26:51 -0500
-X-Greylist: delayed 840 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Nov 2011 11:26:51 EST
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7C27D6A07;
-	Thu, 10 Nov 2011 11:12:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-	:cc:subject:message-id:references:mime-version:content-type
-	:in-reply-to; s=sasl; bh=0AqvU+90QieX1ytI6Tmuhds4q24=; b=T62uDEs
-	bz6RYW+zqaV0L8NotrUwx58zFXRGzeUIQkhd3PWM91sa2he0irMekL5N5OY8arcw
-	Cka+36cDThZIx/ZhnnVo3AiKkPxdIdmHSmDTsaiG83qr+NJvb21ujD5qoyDWwlWM
-	OvMzEJE/AfkNIh/QP3pxA6ZAF3UTefJO6YjM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-	:subject:message-id:references:mime-version:content-type
-	:in-reply-to; q=dns; s=sasl; b=PzRczs/EwW/TMj6v5P5RKdKqMWPoeHn3A
-	sDpZLT5YQtnnZdaPXcmFXXKnR/UxK3QuXO8fp1tmYdKflokE8xcD2valZVj6SH2F
-	MWWIy9QcadE0OyCV13U4jgMT4fFJXWV3FbIGwI/zwucbcTpLGOnGSWoGe0dQNw1C
-	pUPzyIgh0A=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 74EF16A06;
-	Thu, 10 Nov 2011 11:12:50 -0500 (EST)
-Received: from inocybe.localdomain (unknown [74.99.162.88]) (using TLSv1 with
- cipher DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested)
- by a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D2AF36A05; Thu, 10 Nov
- 2011 11:12:49 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <20111108090251.GB17954@elie.hsd1.il.comcast.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Pobox-Relay-ID: D5F12A0A-0BB6-11E1-837D-65B1DE995924-09356542!a-pb-sasl-sd.pobox.com
+	id S1757721Ab1KJQdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Nov 2011 11:33:23 -0500
+Received: from mail96.atlas.de ([194.156.172.86]:21544 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753158Ab1KJQdW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Nov 2011 11:33:22 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mail96.atlas.de (Postfix) with ESMTP id E703710075;
+	Thu, 10 Nov 2011 17:33:20 +0100 (CET)
+X-Virus-Scanned: amavisd-new at lxsrv96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (lxsrv96.atlas.de [127.0.0.1]) (amavisd-new, port 10124)
+	with ESMTP id v4wjF3rVxgob; Thu, 10 Nov 2011 17:33:20 +0100 (CET)
+Received: from mgsrv01.atlas.de (mailrelay-atlas.atlas.de [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP;
+	Thu, 10 Nov 2011 17:33:20 +0100 (CET)
+Received: from [141.200.19.108] (as112671.atlas.de [141.200.19.108])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id 164D427197;
+	Thu, 10 Nov 2011 17:33:20 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <861utgymsv.fsf@red.stonehenge.com>
+X-Enigmail-Version: 1.3.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185238>
 
+Am 10.11.2011 17:17, schrieb Randal L. Schwartz:
+> 
+> Known issue?  Should I have done something differently?
+> 
+> "make install quick-install-man" ends with:
+> 
+>     make[2]: `GIT-VERSION-FILE' is up to date.
+>     git-manpages repository must exist at ../../git-manpages
+>     make[1]: *** [require-manrepo] Error 1
+>     make: *** [quick-install-man] Error 2
 
---cWoXeonUoKmBZSoM
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This should be fixed with fcbebfd "docs: Update install-doc-quick".
+(It's in master)
 
-Hi Jonathan,
+You need to clone git-manpages.git next to git.git.
 
-Thanks for putting this together.
-
-Jonathan Nieder wrote:
-> In an ideal world, each patch applied by downstream distributors would
-> fall into one of two categories: (a) adapting the package to some
-> esoteric distro-specific requirement (i.e., special-interest patches)
-> or (b) in the process of being generalized and reviewed for eventual
-> application upstream, so everyone can benefit from it.  Unfortunately
-> that takes time.  I should do better --- sorry about that.
-
-> A few other packaging projects:
->
->  - git://pkgs.fedoraproject.org/git.git master --- 3 patches (using
->    SERVER_NAME for home link, reviving vc-git.el, compatibility with
->    newer cvsps)
-
-To review the patches we have in Fedora/EPEL:
-
-- git-1.5-gitweb-home-link.patch=C2=B9
-
-This predates my involvement in git packaging.  The default for
-++GITWEB_HOME_LINK_STR++ is projects.  The patch just uses
-git://$SERVER_NAME if SERVER_NAME is available, falling back to
-projects if it is not.
-
-I'm not sure exactly why that's an improvement over using projects, to
-be honest.  It's only a text string and it links to the gitweb home,
-not to the contents of the string, so whether it reads projects or
-git://$SERVER_NAME it takes the user to the same place.  Definitely
-doesn't seem like something we'd want to push into gitweb and I'm
-wondering why we even want to carry it in Fedora/EPEL at this point in
-the morning. :)
-
-- git-1.7-el5-emacs-support.patch=C2=B2
-
-This is only applied to builds for EL-5, where emacs is too old for
-the current emacs git support.  From the commit message:
-
-    This is the vc-git.el from 1.6.4.1, the last version to include
-    it.  Most uses will be better served by the vc-git.el which is
-    provided by emacs >=3D 22.2, but on EL-5 we don't have the luxury of
-    a modern emacs.
-
-Basically, to not break emacs support for folks who were using
-git-1.5.x from EPEL, we had to provide something to allow us to push
-git-1.7.x.  It seems there are relatively few emacs-git users running
-EL-5, as getting testers for this was difficult.  At the same time,
-we've gotten 0 bug reports.  So it either works about as well as it
-did with git-1.5.x or no one uses it to notice that it doesn't work.
-
-- git-cvsimport-Ignore-cvsps-2.2b1-Branches-output.patch=C2=B3
-
-This one became necessary when Fedora moved to cvsps 2.2b1 and git
-cvsimport got noisy=E2=81=B4.  As cvsps is pretty much dead upstream, it di=
-dn't
-seem like this patch was worthy of inclusion in git.
-
-If any of these seem like candidates for inclusion, I'm happy to
-properly submit them.
-
-=C2=B9 http://pkgs.fedoraproject.org/gitweb/?p=3Dgit.git;a=3Dblob;f=3Dgit-1=
-=2E5-gitweb-home-link.patch;hb=3DHEAD
-=C2=B2 http://pkgs.fedoraproject.org/gitweb/?p=3Dgit.git;a=3Dblob;f=3Dgit-1=
-=2E7-el5-emacs-support.patch;hb=3DHEAD
-=C2=B3 http://pkgs.fedoraproject.org/gitweb/?p=3Dgit.git;a=3Dblob;f=3Dgit-c=
-vsimport-Ignore-cvsps-2.2b1-Branches-output.patch;hb=3DHEAD
-=E2=81=B4 https://bugzilla.redhat.com/490602
-
---=20
-Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Dope will get you through times of no money better than money will get
-you through times of no dope.
-    -- Freewheelin' Franklin
-
-
---cWoXeonUoKmBZSoM
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEVAwUBTrv3+kMlk4u+rwzjAQiVZwgAqz+EW142n1p+NoTA+/4LLRV3+JAaZXvw
-gZD6fjp0+/vYLq9Mc1MwZyR+L/dQ0PAg37XEuZc1NcPB4EjtbKhLt3MV0VobIK2G
-SDYaol0gVno5lcQOrsq//RukuYOD9AIA8WxtonZb35nJYDAK7+S8mZw2slonoEdo
-0QOHdtAT2rFKEAKnjZI2UiYnbDm4pp8+C3nEUKMQS1HZFiP2HA1i80kdmqdpTBrl
-ljauqlwCA0q6oeXe2qnENf4IODtTh15Xs9/PtY2noXH2xjSKtZtQ7sDLfe/R8nzC
-6dMqIjipVMa3TBNv7Uah4eGJrp1xwDiIIiVBxmno2RfPhIDTSiXHqQ==
-=eU4B
------END PGP SIGNATURE-----
-
---cWoXeonUoKmBZSoM--
+Stefan
+-- 
+----------------------------------------------------------------
+/dev/random says: Useless Invention: Fireproof cigarettes.
+python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6e696b2e636f6d'.decode('hex')"
