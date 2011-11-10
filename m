@@ -1,136 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 03/14] http: refactor http_request function
-Date: Thu, 10 Nov 2011 02:48:31 -0500
-Message-ID: <20111110074831.GC27950@sigill.intra.peff.net>
-References: <20111110074330.GA27925@sigill.intra.peff.net>
+From: Eric Raible <raible@nextest.com>
+Subject: Re: RFH: unexpected reflog behavior with --since=
+Date: Wed, 9 Nov 2011 23:48:58 -0800
+Message-ID: <4EBB81EA.6060303@nextest.com>
+References: <4EB9C7D1.30201@nextest.com> <20111109220128.GA31535@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 10 08:48:39 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 10 08:49:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ROPNH-0002Yb-2V
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Nov 2011 08:48:39 +0100
+	id 1ROPNk-0002lD-39
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Nov 2011 08:49:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757422Ab1KJHse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Nov 2011 02:48:34 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38911
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752684Ab1KJHse (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Nov 2011 02:48:34 -0500
-Received: (qmail 22203 invoked by uid 107); 10 Nov 2011 07:48:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 10 Nov 2011 02:48:36 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Nov 2011 02:48:31 -0500
-Content-Disposition: inline
-In-Reply-To: <20111110074330.GA27925@sigill.intra.peff.net>
+	id S1757452Ab1KJHtD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Nov 2011 02:49:03 -0500
+Received: from exchange.domain1.nextest.com ([12.96.234.114]:47637 "EHLO
+	exchange.DOMAIN1.nextest.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752684Ab1KJHtC (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2011 02:49:02 -0500
+Received: from [131.101.151.102] (131.101.151.102) by
+ Exchange.DOMAIN1.nextest.com (131.101.21.39) with Microsoft SMTP Server (TLS)
+ id 8.2.176.0; Wed, 9 Nov 2011 23:49:00 -0800
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+In-Reply-To: <20111109220128.GA31535@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185201>
 
-This function takes a flag to indicate where the output
-should go (either to a file or to a strbuf). This flag is
-mostly used to set the callback function we hand to curl.
+On 11/9/2011 2:01 PM, Jeff King wrote:
+> On Tue, Nov 08, 2011 at 04:22:41PM -0800, Eric Raible wrote:
+> 
+> [explanation how --since is used to limits traversal omitted]
 
-This isn't very flexible for adding new output types.
-Instead, let's just let callers pass in the callback
-function directly. This results in shorter, more readable,
-and more flexible code.
+Yes, all that is as expected, and makes sense.
 
-The only other thing the flag was used for was to set a
-"Range" header when we already have a partial file (by using
-the results of ftell). This patch also adds an "offset"
-parameter, which can be used by callers to specify this
-feature separately (which is also more flexible, as non-FILE
-callers can now resume partial transfers).
+> Now let's look at reflog walking. It's kind of bolted on to the side
+> of the revision traversal machinery. We walk through the reflog
+> backwards and pretend that entry N's parent is entry N-1 (you can see
+> this if you do "git log -g -p", for example; you see the patch versus
+> the last reflog entry, not the patch against the commit's true parent).
+> 
+> In the case of rewound history (like the reset you showed above), this
+> means that the history graph will appear to have bad clock skew. The
+> timestamp of HEAD@{0} is going to be much earlier than its pretend
+> parent, HEAD@{1}. And the "--since" optimization is going to cut off
+> traversal, even though there are more interesting commits to be shown.
+> 
+> So in that sense, I think it's a bug, and we should probably disable the
+> exit-early-from-traversal optimization when we're walking reflogs.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- http.c |   37 ++++++++++++++-----------------------
- 1 files changed, 14 insertions(+), 23 deletions(-)
+Indeed.  Seems like a case of an optimization leading to an incorrect result.
 
-diff --git a/http.c b/http.c
-index 4f9e004..9ffd894 100644
---- a/http.c
-+++ b/http.c
-@@ -797,11 +797,8 @@ void append_remote_object_url(struct strbuf *buf, const char *url,
- 	return strbuf_detach(&buf, NULL);
- }
- 
--/* http_request() targets */
--#define HTTP_REQUEST_STRBUF	0
--#define HTTP_REQUEST_FILE	1
--
--static int http_request(const char *url, void *result, int target, int options)
-+static int http_request(const char *url, curl_write_callback cb, void *result,
-+			long offset, int options)
- {
- 	struct active_request_slot *slot;
- 	struct slot_results results;
-@@ -818,19 +815,13 @@ static int http_request(const char *url, void *result, int target, int options)
- 	} else {
- 		curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
- 		curl_easy_setopt(slot->curl, CURLOPT_FILE, result);
-+		curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, cb);
-+	}
- 
--		if (target == HTTP_REQUEST_FILE) {
--			long posn = ftell(result);
--			curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION,
--					 fwrite);
--			if (posn > 0) {
--				strbuf_addf(&buf, "Range: bytes=%ld-", posn);
--				headers = curl_slist_append(headers, buf.buf);
--				strbuf_reset(&buf);
--			}
--		} else
--			curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION,
--					 fwrite_buffer);
-+	if (offset > 0) {
-+		strbuf_addf(&buf, "Range: bytes=%lu-", offset);
-+		headers = curl_slist_append(headers, buf.buf);
-+		strbuf_reset(&buf);
- 	}
- 
- 	strbuf_addstr(&buf, "Pragma:");
-@@ -881,18 +872,18 @@ static int http_request(const char *url, void *result, int target, int options)
- 	return ret;
- }
- 
--static int http_request_reauth(const char *url, void *result, int target,
--			       int options)
-+static int http_request_reauth(const char *url, curl_write_callback cb,
-+			       void *result, unsigned long offset, int options)
- {
--	int ret = http_request(url, result, target, options);
-+	int ret = http_request(url, cb, result, offset, options);
- 	if (ret != HTTP_REAUTH)
- 		return ret;
--	return http_request(url, result, target, options);
-+	return http_request(url, cb, result, offset, options);
- }
- 
- int http_get_strbuf(const char *url, struct strbuf *result, int options)
- {
--	return http_request_reauth(url, result, HTTP_REQUEST_STRBUF, options);
-+	return http_request_reauth(url, fwrite_buffer, result, 0, options);
- }
- 
- /*
-@@ -915,7 +906,7 @@ static int http_get_file(const char *url, const char *filename, int options)
- 		goto cleanup;
- 	}
- 
--	ret = http_request_reauth(url, result, HTTP_REQUEST_FILE, options);
-+	ret = http_request_reauth(url, NULL, result, ftell(result), options);
- 	fclose(result);
- 
- 	if ((ret == HTTP_OK) && move_temp_to_file(tmpfile.buf, filename))
--- 
-1.7.7.2.7.g9f96f
+> But it may also be a misfeature, because it's not clear what you're
+> actually trying to limit by. We have commit timestamps, of course, but
+> when we are walking reflogs, we also have reflog timestamps. Did you
+> actually want to say "show me all commits in the reflog, in reverse
+> reflog order, omitting commits that happened before time t"? Or did you
+> really mean "show me the reflog entries that happened before time t,
+> regardless of their commit timestamp"?
+
+I meant "show me the reflog entries that happened *since* time t,
+regardless of their commit timestamp.
+
+> In the latter case, we would either need a new specifier (like
+> "--reflog-since"), or to rewrite the commit timestamp when we rewrite
+> the parent pointers.
+> 
+> The latter has a certain elegance to it (we are making a pretend linear
+> history graph out of the reflog, so faking the timestamps to be sensible
+> and in order is a logical thing to do) but I worry about lying too much
+> in the output. Something like "git log -g --format=%cd" would now have
+> the fake timestamp in the output. But then, we already show the fake
+> parents in the output, so I don't know that this is any worse.
+
+Since -g is asking specifying for the reflog, and since the reflog has
+its own timestamps, I would expect that those timestamps be used.
