@@ -1,97 +1,124 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 05/14] remote-curl: use http callback for requesting refs
-Date: Thu, 10 Nov 2011 02:49:44 -0500
-Message-ID: <20111110074944.GE27950@sigill.intra.peff.net>
+Subject: [PATCH 06/14] transport: factor out bundle to ref list conversion
+Date: Thu, 10 Nov 2011 02:49:52 -0500
+Message-ID: <20111110074952.GF27950@sigill.intra.peff.net>
 References: <20111110074330.GA27925@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 10 08:49:53 2011
+X-From: git-owner@vger.kernel.org Thu Nov 10 08:50:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ROPOQ-00035a-Jf
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Nov 2011 08:49:50 +0100
+	id 1ROPOc-0003Bw-TE
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Nov 2011 08:50:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933632Ab1KJHtr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Nov 2011 02:49:47 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38917
+	id S933638Ab1KJHt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Nov 2011 02:49:56 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38919
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933628Ab1KJHtq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Nov 2011 02:49:46 -0500
-Received: (qmail 22342 invoked by uid 107); 10 Nov 2011 07:49:48 -0000
+	id S933613Ab1KJHtz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Nov 2011 02:49:55 -0500
+Received: (qmail 22370 invoked by uid 107); 10 Nov 2011 07:49:57 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 10 Nov 2011 02:49:48 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Nov 2011 02:49:44 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 10 Nov 2011 02:49:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Nov 2011 02:49:52 -0500
 Content-Disposition: inline
 In-Reply-To: <20111110074330.GA27925@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185204>
 
-This should behave identically to the current strbuf code,
-but opens up room for us to do more clever things with
-bundles in a future patch.
+There is a data structure mismatch between what the
+transport code wants (a linked list of "struct ref") and
+what the bundle header provides (an array of ref names and
+sha1s), so the transport code has to convert.
+
+Let's factor out this conversion to make it useful to other
+transport-ish callers (like remote-curl).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Obviously it's way more code for the same thing, but future patches will
-make the design more clear.
+ bundle.c    |   16 ++++++++++++++++
+ bundle.h    |    2 ++
+ transport.c |   11 +----------
+ 3 files changed, 19 insertions(+), 10 deletions(-)
 
- remote-curl.c |   22 ++++++++++++++++++++--
- 1 files changed, 20 insertions(+), 2 deletions(-)
-
-diff --git a/remote-curl.c b/remote-curl.c
-index 0e720ee..fb4d853 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -90,6 +90,24 @@ static void free_discovery(struct discovery *d)
- 	}
+diff --git a/bundle.c b/bundle.c
+index 08020bc..e48fe2f 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -7,6 +7,7 @@
+ #include "list-objects.h"
+ #include "run-command.h"
+ #include "refs.h"
++#include "remote.h"
+ 
+ static const char bundle_signature[] = "# v2 git bundle\n";
+ 
+@@ -449,3 +450,18 @@ int unbundle(struct bundle_header *header, int bundle_fd, int flags)
+ 		return error("index-pack died");
+ 	return 0;
+ }
++
++struct ref *bundle_header_to_refs(const struct bundle_header *header)
++{
++	struct ref *result = NULL;
++	int i;
++
++	for (i = 0; i < header->references.nr; i++) {
++		struct ref_list_entry *e = header->references.list + i;
++		struct ref *ref = alloc_ref(e->name);
++		hashcpy(ref->old_sha1, e->sha1);
++		ref->next = result;
++		result = ref;
++	}
++	return result;
++}
+diff --git a/bundle.h b/bundle.h
+index 1584e4d..675cc97 100644
+--- a/bundle.h
++++ b/bundle.h
+@@ -24,4 +24,6 @@ int create_bundle(struct bundle_header *header, const char *path,
+ int list_bundle_refs(struct bundle_header *header,
+ 		int argc, const char **argv);
+ 
++struct ref *bundle_header_to_refs(const struct bundle_header *header);
++
+ #endif
+diff --git a/transport.c b/transport.c
+index 51814b5..5020bbb 100644
+--- a/transport.c
++++ b/transport.c
+@@ -407,8 +407,6 @@ struct bundle_transport_data {
+ static struct ref *get_refs_from_bundle(struct transport *transport, int for_push)
+ {
+ 	struct bundle_transport_data *data = transport->data;
+-	struct ref *result = NULL;
+-	int i;
+ 
+ 	if (for_push)
+ 		return NULL;
+@@ -418,14 +416,7 @@ struct bundle_transport_data {
+ 	data->fd = read_bundle_header(transport->url, &data->header);
+ 	if (data->fd < 0)
+ 		die ("Could not read bundle '%s'.", transport->url);
+-	for (i = 0; i < data->header.references.nr; i++) {
+-		struct ref_list_entry *e = data->header.references.list + i;
+-		struct ref *ref = alloc_ref(e->name);
+-		hashcpy(ref->old_sha1, e->sha1);
+-		ref->next = result;
+-		result = ref;
+-	}
+-	return result;
++	return bundle_header_to_refs(&data->header);
  }
  
-+struct get_refs_cb_data {
-+	struct strbuf *out;
-+};
-+
-+static size_t get_refs_callback(char *buf, size_t sz, size_t n, void *vdata)
-+{
-+	struct get_refs_cb_data *data = vdata;
-+	strbuf_add(data->out, buf, sz * n);
-+	return sz * n;
-+}
-+
-+static int get_refs_from_url(const char *url, struct strbuf *out, int options)
-+{
-+	struct get_refs_cb_data data;
-+	data.out = out;
-+	return http_get_callback(url, get_refs_callback, &data, 0, options);
-+}
-+
- static struct discovery* discover_refs(const char *service)
- {
- 	struct strbuf buffer = STRBUF_INIT;
-@@ -112,7 +130,7 @@ static void free_discovery(struct discovery *d)
- 	}
- 	refs_url = strbuf_detach(&buffer, NULL);
- 
--	http_ret = http_get_strbuf(refs_url, &buffer, HTTP_NO_CACHE);
-+	http_ret = get_refs_from_url(refs_url, &buffer, HTTP_NO_CACHE);
- 
- 	/* try again with "plain" url (no ? or & appended) */
- 	if (http_ret != HTTP_OK && http_ret != HTTP_NOAUTH) {
-@@ -123,7 +141,7 @@ static void free_discovery(struct discovery *d)
- 		strbuf_addf(&buffer, "%sinfo/refs", url);
- 		refs_url = strbuf_detach(&buffer, NULL);
- 
--		http_ret = http_get_strbuf(refs_url, &buffer, HTTP_NO_CACHE);
-+		http_ret = get_refs_from_url(refs_url, &buffer, HTTP_NO_CACHE);
- 	}
- 
- 	switch (http_ret) {
+ static int fetch_refs_from_bundle(struct transport *transport,
 -- 
 1.7.7.2.7.g9f96f
