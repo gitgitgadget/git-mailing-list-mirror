@@ -1,216 +1,205 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [fyi] patches used by git distributors
-Date: Thu, 10 Nov 2011 13:07:10 +0100
-Message-ID: <CABPQNSbUTrckA+ZEmY6ge8C8bvOGbNXb3E+8VtH9xjc3GLpAug@mail.gmail.com>
-References: <20111108090251.GB17954@elie.hsd1.il.comcast.net>
-Reply-To: kusmabite@gmail.com
+From: "Pitucha, Stanislaw Izaak" <stanislaw.pitucha@hp.com>
+Subject: Disappearing change on pull rebase
+Date: Thu, 10 Nov 2011 13:15:31 +0000
+Message-ID: <3FF1328CB05DB74898F769F1BA17812C3E49B74671@GVW1348EXA.americas.hpqcorp.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 10 13:07:58 2011
+Content-Type: multipart/signed; micalg=SHA1;
+	protocol="application/x-pkcs7-signature";
+	boundary="----=_NextPart_000_03E7_01CC9FAA.D29441D0"
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Nov 10 14:16:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ROTQE-0006yO-3x
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Nov 2011 13:07:58 +0100
+	id 1ROUUv-0001PQ-Bg
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Nov 2011 14:16:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932395Ab1KJMHx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Nov 2011 07:07:53 -0500
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:49992 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753112Ab1KJMHv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2011 07:07:51 -0500
-Received: by pzk36 with SMTP id 36so970439pzk.1
-        for <git@vger.kernel.org>; Thu, 10 Nov 2011 04:07:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=60AZN0eQPWM0dmOmPUnngbfdn0mi5yGopHa+OuNYwCE=;
-        b=H7QLgNZ2H8rA1XM1+NnFvkJPKBMo9KJIDFyjvs6oEZqH2N9Qtk+2fVgEzr+86jqlUq
-         tilFPRzIN14C7DVodDdILB4dc5+5lKSBwOiZk7iPUQnFSQFc4dmR4WOtji0cifWnE3O3
-         bwM5wJcnX7c0a/SZye4uhBLry2f627c6MJrYI=
-Received: by 10.68.72.104 with SMTP id c8mr14345539pbv.34.1320926871074; Thu,
- 10 Nov 2011 04:07:51 -0800 (PST)
-Received: by 10.68.71.135 with HTTP; Thu, 10 Nov 2011 04:07:10 -0800 (PST)
-In-Reply-To: <20111108090251.GB17954@elie.hsd1.il.comcast.net>
+	id S1756014Ab1KJNQs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Nov 2011 08:16:48 -0500
+Received: from g4t0015.houston.hp.com ([15.201.24.18]:16953 "EHLO
+	g4t0015.houston.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751596Ab1KJNQr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Nov 2011 08:16:47 -0500
+Received: from G2W1953G.americas.hpqcorp.net (g2w1953g.austin.hp.com [16.238.8.185])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by g4t0015.houston.hp.com (Postfix) with ESMTPS id 6625E8681
+	for <git@vger.kernel.org>; Thu, 10 Nov 2011 13:16:47 +0000 (UTC)
+Received: from G1W0397.americas.hpqcorp.net (16.236.31.21) by
+ G2W1953G.americas.hpqcorp.net (16.238.8.185) with Microsoft SMTP Server (TLS)
+ id 14.1.289.1; Thu, 10 Nov 2011 13:15:33 +0000
+Received: from GVW1348EXA.americas.hpqcorp.net ([16.238.72.128]) by
+ G1W0397.americas.hpqcorp.net ([16.236.31.21]) with mapi; Thu, 10 Nov 2011
+ 13:15:33 +0000
+Thread-Topic: Disappearing change on pull rebase
+Thread-Index: AcyfqtKN89EAhfsJRBKgFd/U378Ghw==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185226>
 
-On Tue, Nov 8, 2011 at 10:02 AM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Hi,
->
-> In an ideal world, each patch applied by downstream distributors woul=
-d
-> fall into one of two categories: (a) adapting the package to some
-> esoteric distro-specific requirement (i.e., special-interest patches)
-> or (b) in the process of being generalized and reviewed for eventual
-> application upstream, so everyone can benefit from it. =A0Unfortunate=
-ly
-> that takes time. =A0I should do better --- sorry about that.
->
-> As an experiment, here's a quick summary of the patches being used
-> in Debian, for people curious about that and for people interested in
-> grabbing useful patches to polish and not knowing where to start.
->
-> (Links point to relevant discussion, not necessarily the patch used):
->
-> Fr=E9d=E9ric Bri=E8re (1):
-> =A0 =A0 =A0gitk: Skip over AUTHOR/COMMIT_DATE when searching all fiel=
-ds [1]
->
-> Gerrit Pape (1):
-> =A0 =A0 =A0bug#506445: hooks/post-receive-email: set encoding to utf-=
-8 [2]
->
-> Jonathan Nieder (12):
-> =A0 =A0 =A0remove shebang line from shell libraries [3]
-> =A0 =A0 =A0pre-rebase hook: capture documentation in a <<here documen=
-t [4]
-> =A0 =A0 =A0gitk: use symbolic font names "sans" and "monospace"
-> =A0 =A0 =A0transport: expose git_tcp_connect and friends in new tcp.h=
- [5]
-> =A0 =A0 =A0daemon: make host resolution into a separate function [5]
-> =A0 =A0 =A0daemon: move locate_host to tcp.c [5]
-> =A0 =A0 =A0tcp: unify ipv4 and ipv6 code paths [5]
-> =A0 =A0 =A0daemon: check for errors retrieving IP address [5]
-> =A0 =A0 =A0tcp: make dns_resolve return an error code [5]
-> =A0 =A0 =A0transport: optionally honor DNS SRV records [5]
-> =A0 =A0 =A0srv: make errors less quiet [5]
-> =A0 =A0 =A0Makefile: add a knob to turn off hardlinks within same dir=
-ectory [6]
->
-> The patches listed above are on the candidate+patches branch of [7].
-> Questions and improvements can go to git@packages.debian.org.
->
-> A few other packaging projects:
->
-> =A0- git://pkgs.fedoraproject.org/git.git master --- 3 patches (using
-> =A0 SERVER_NAME for home link, reviving vc-git.el, compatibility with
-> =A0 newer cvsps)
-> =A0- http://www.freebsd.org/cgi/cvsweb.cgi/ports/devel/git/files/ ---
-> =A0 1 patch (capping individual reads and writes at INT_MAX chars)
-> =A0- https://build.opensuse.org/package/files?package=3Dgit&project=3D=
-devel%3Atools%3Ascm
-> =A0 --- 4 patches (a python build fix, making gitweb::prevent_xss
-> =A0 default to true, turning off hardlinks for builtins at installati=
-on
-> =A0 time, protecting COMP_WORDBREAKS from mangling in the completion
-> =A0 script)
-> =A0- http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/dev-vcs/=
-git/files/
-> =A0 --- 1 patch (a NO_CVS knob for the makefile). =A0Very nice.
-> =A0- http://cvsweb.netbsd.org/bsdweb.cgi/pkgsrc/devel/scmgit-base/pat=
-ches/
-> =A0 --- 3 patches (putting CFLAGS at the end of ALL_CFLAGS so it can
-> =A0 override BASIC_CFLAGS, setting INSTALLDIRS=3Dvendor in perl makef=
-ile,
-> =A0 improving tk support on Darwin 8)
-> =A0- http://www.openbsd.org/cgi-bin/cvsweb/ports/devel/git/patches/ -=
---
-> =A0 8 patches (updating OpenBSD makefile defaults, using raw perlio i=
-n
-> =A0 gitweb blob view, removing "set -e" in t9117, passing --text [wel=
-l,
-> =A0 -a] to grep in t9200, avoiding nonportable regex \+ in t9400)
-> =A0- ftp://ftp.cygwin.org/pub/cygwin/release/git/git-1.7.5.1-1-src.ta=
-r.bz2
-> =A0 --- 3 patches (tcl 8.4.1 support, updating Cygwin makefile defaul=
-ts,
-> =A0 case-insensitive path comparison in makefile, special Windows-spe=
-cific
-> =A0 wish script preamble)
->
+------=_NextPart_000_03E7_01CC9FAA.D29441D0
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-Here's what we have for msysGit (the commits themselves can be found
-in git://github.com/msysgit/git.git devel):
+Hi all,
+I've got an issue with some operations. It seems like git eats one of my =
+commits (it's still in reflog, but in normal tree, it's unavailable).
 
-$ git log --no-merges --first-parent --oneline 319312f..origin/devel
-9e47e31 Unicode console: fix font warning on Vista and Win7
-778774d MSVC: require pton and ntop emulation
-a49c818 MSVC: fix winansi.c compile errors
-9ca8039 MSVC: fix poll-related macro redefines
-0a6d148 MSVC: Remove unneeded header stubs
-18f5b9e Compile fix for MSVC: Include <io.h>
-fd6f6aa Compile fix for MSVC: Do not include sys/resources.h
-ae69aaf Handle the branch.<name>.rebase value 'interactive'
-5d1168b Teach 'git pull' to handle --rebase=3Dinteractive
-5d6f1d9 Windows: define S_ISUID properly
-5084033 Fixed wrong path delimiter in exe finding
-77a30da gitweb (SyntaxHighlighter): interpret #l<line-number>
-4654bdd Only switch on the line number toggle when highlighting is acti=
-vated
-3efcd98 Gitweb: add support for Alex Gorbatchev's SyntaxHighlighter in
-Javascript
-1d9ac66 MinGW: disable CRT command line globbing
-e0f2492 Win32: move main macro to a function
-8258c82 Win32: fix potential multi-threading issue
-c45b052 Win32 dirent: improve dirent implementation
-ab7ab7a Win32 dirent: clarify #include directives
-9d46513 Win32 dirent: change FILENAME_MAX to MAX_PATH
-18cf321 Win32 dirent: remove unused dirent.d_reclen member
-2741409 Win32 dirent: remove unused dirent.d_ino member
-a27af5c Revert "MinGW: Add missing file mode bit defines"
-3e4b790 submodule: Fix t7400, t7405, t7406 for msysGit
-f72cc9a t5407: Fix line-ending dependency in post-rewrite.args
-77de716 submodule: Use cat instead of echo to avoid DOS line-endings
-fece0cb t3102: Windows filesystems may not use a literal asterisk in fi=
-lenames.
-d3abd84 Disable test on MinGW that challenges its bash quoting
-3f65607 MinGW: Skip test redirecting to fd 4
-2e1f250 mingw: do not hide bare repositories
-8089c85c Git.pm: Use stream-like writing in cat_blob()
-d3d677e Amend "git grep -O -i: if the pager is 'less', pass the '-i' op=
-tion"
-ed7b275 git grep -O -i: if the pager is 'less', pass the '-i' option
-30d3f9e Handle new t1501 test case properly with MinGW
-64f7bec Do not compile compat/**/*.c with -Wold-style-definition
-68acf50 Fix old-style function declaration
-aa1c11f Make CFLAGS more strict
-c592e94 grep -I: do not bother to read known-binary files
-352f3d0 Let deny.currentBranch=3DupdateInstead ignore submodules
-5cf00b3 add -e: ignore dirty submodules
-bf239f8 Handle http.* config variables pointing to files gracefully on =
-Windows
-621a958 Gitweb: make line number toggling work for Firefox and Safari
-ff19df4 gitweb: Allow line number toggling with Javascript
-feab003 Give commit message reencoding for output on MinGW a chance
-6f86c3e Warn if the Windows console font doesn't support Unicode
-bfcdc94 Detect console streams more reliably on Windows
-9b505ab Support Unicode console output on Windows
-e3356ac Enable color output in Windows cmd.exe
-3bef266 Fix another invocation of git from gitk with an overly long com=
-mand-line
-d0a4bbe git gui: set GIT_ASKPASS=3Dgit-gui--askpass if not set yet
-7602e52 Make mingw_offset_1st_component() behave consistently for all p=
-aths.
-1c072a6 config.c: trivial fix for compile-time warning
-1f3a4f8 Allow using UNC path for git repository
-3d08379 work around misdetection of stdin attached to a tty
-fef92f8 git am: ignore dirty submodules
-d23ce6f t7602: cope with CR/LF
-3649391 Add a Windows-specific fallback to getenv("HOME");
-ede54b1 send-email: handle Windows paths for display just like we do
-for processing
-32eefc4 send-email: accept absolute path even on Windows
-6274596 Add a few more values for receive.denyCurrentBranch
-2afff36 Work around funny CR issue
-b81e593 mingw: add tests for the hidden attribute on the git directory
-f9445e4 Work around the command line limit on Windows
-59e0e60 git-gui: provide question helper for retry fallback on Windows
-9e89381 Revert "git-gui: set GIT_DIR and GIT_WORK_TREE after setup"
-40e6ef7 criss cross rename failure workaround
-d24ec01 When initializing .git/, record the current setting of core.hid=
-eDotFiles
-c40046b core.hidedotfiles: hide '.git' dir by default
-73afc46 MinGW: Add missing file mode bit defines
+What I did is:
 
-Some of these might be useful for upstream as well...
+checkout -b feature/....
+(edit files and commit)
+checkout master
+merge --no-ff --no-commit feature/...
+(edit some files, change versions, changelog)
+commit
+
+Now I've got the change committed in the branch and some more changes on =
+the merge commit.
+So before pushing to the main repo, I'd like to check if any other =
+changes are there:
+
+pull --rebase
+
+Now my merge commit disappears completely along with the changes without =
+any warning. I get the branch commits duplicated on top of master and =
+the branch stays as it was.
+That looks like a data loss bug to me since I can only recover a =
+committed change from reflog and there are no warnings before that =
+change goes away (using 1.7.4.1). Actually no changes were done in =
+upstream in the meantime, so the rebase was not even needed.
+
+Regards,
+Stanis=C5=82aw Pitucha
+Cloud Services=20
+Hewlett Packard
+
+
+
+------=_NextPart_000_03E7_01CC9FAA.D29441D0
+Content-Type: application/x-pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIScjCCBBkw
+ggMBAhBhcMtJjF+YRSnnsKbZUFt6MA0GCSqGSIb3DQEBBQUAMIHKMQswCQYDVQQGEwJVUzEXMBUG
+A1UEChMOVmVyaVNpZ24sIEluYy4xHzAdBgNVBAsTFlZlcmlTaWduIFRydXN0IE5ldHdvcmsxOjA4
+BgNVBAsTMShjKSAxOTk5IFZlcmlTaWduLCBJbmMuIC0gRm9yIGF1dGhvcml6ZWQgdXNlIG9ubHkx
+RTBDBgNVBAMTPFZlcmlTaWduIENsYXNzIDIgUHVibGljIFByaW1hcnkgQ2VydGlmaWNhdGlvbiBB
+dXRob3JpdHkgLSBHMzAeFw05OTEwMDEwMDAwMDBaFw0zNjA3MTYyMzU5NTlaMIHKMQswCQYDVQQG
+EwJVUzEXMBUGA1UEChMOVmVyaVNpZ24sIEluYy4xHzAdBgNVBAsTFlZlcmlTaWduIFRydXN0IE5l
+dHdvcmsxOjA4BgNVBAsTMShjKSAxOTk5IFZlcmlTaWduLCBJbmMuIC0gRm9yIGF1dGhvcml6ZWQg
+dXNlIG9ubHkxRTBDBgNVBAMTPFZlcmlTaWduIENsYXNzIDIgUHVibGljIFByaW1hcnkgQ2VydGlm
+aWNhdGlvbiBBdXRob3JpdHkgLSBHMzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAK8K
+DcLVLNtnuS3llCfdpb7gsE2Ps2FWPNZ8w/TNPobLooji4dikacW14r/BpkdQXkY5i9WWurVvFL8Q
+zicTngVHmzF6E9gf2dMCN4utLEfwjoEGpw0wDOv3PA8gHdxyRu6lAshbw8lWaUzFGMGRewvVEwCb
+vO/DSD5GYCCFKtWQts2LoMwy3bf9QFWyUBxWrsyNd03HIE2nMXbvaJKKkB4IgVayrWmjUtDLHMQj
+PR+Z/kzoFmOOxgiO9jH20vrldt21HJKjSc3NAc1ozalpuqPrHQ2cpCCmwaDF0UZMF23SrGY/lozg
+hNQ2/yJZxfkRYKhfBH3yGvYlQmEPxEq4PokCAwEAATANBgkqhkiG9w0BAQUFAAOCAQEANCYVPMCN
+TUNJHb3pIZLXZpy33sW40ORdX3YiwCb5hDo6+Yy1++xg8ejOBLDI3acDjzDzmN+k5qQx39McC0bc
+ciA/ru4FPKQzPws5rHB4c0uZK98wwlSwqDtVof4WKM1CvXRugNsnRKfORF3UG5CYDR5ClLEALATQ
+dKMCBSJjY82DtfvBbWJraXX9XXBBufW/fN++wTJzIiGLWIF7FZF6uuNkSLB/+zYl2pXQ8SQUF90Y
+gGtGIzlU9Y5iCQQdlJCmm+Yl4kJFqriQrb4Ij6kLQhiUz3I54bFD4CjPt+dabBNrSbP/4xh8iYsz
+Xawz16f52jpVyVgQ+arvWrbPS0vfKjCCBmEwggVJoAMCAQICEFHz5uyygZHVFZ4pmbCHOnswDQYJ
+KoZIhvcNAQEFBQAwgcoxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5WZXJpU2lnbiwgSW5jLjEfMB0G
+A1UECxMWVmVyaVNpZ24gVHJ1c3QgTmV0d29yazE6MDgGA1UECxMxKGMpIDE5OTkgVmVyaVNpZ24s
+IEluYy4gLSBGb3IgYXV0aG9yaXplZCB1c2Ugb25seTFFMEMGA1UEAxM8VmVyaVNpZ24gQ2xhc3Mg
+MiBQdWJsaWMgUHJpbWFyeSBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eSAtIEczMB4XDTA5MDkwMjAw
+MDAwMFoXDTE0MDkwMTIzNTk1OVowgfcxCzAJBgNVBAYTAlVTMSAwHgYDVQQKExdIZXdsZXR0LVBh
+Y2thcmQgQ29tcGFueTEfMB0GA1UECxMWVmVyaVNpZ24gVHJ1c3QgTmV0d29yazE7MDkGA1UECxMy
+VGVybXMgb2YgdXNlIGF0IGh0dHBzOi8vd3d3LnZlcmlzaWduLmNvbS9ycGEgKGMpMDkxNTAzBgNV
+BAsTLENsYXNzIDIgTWFuYWdlZCBQS0kgSW5kaXZpZHVhbCBTdWJzY3JpYmVyIENBMTEwLwYDVQQD
+EyhDb2xsYWJvcmF0aW9uIENlcnRpZmljYXRpb24gQXV0aG9yaXR5IEcyMIIBIjANBgkqhkiG9w0B
+AQEFAAOCAQ8AMIIBCgKCAQEAp2FraNquqoVkDEvLUMsw6HMhjon+yi1v/kajA27jIrdyhRMj4g+P
+BveBTHrtA7w97Rx1UKPP6CvOaAE5xUtoW9ajYZtO5kdiUFyzWHsbUgSjKy+yNO4QoHeEzaQi/JWU
+OYev/AV5YYJoEDIysosEELS1/M64iE2Utzr+LxiWhdaqSRE4jigbm4Dy4ayLzqAv5f7oILrJNZ6S
+hqLiGGCpP+7relTyRgFXmEX/SKN/a39JwZoKSNUdIkYyr7wmNI9+zylheDJghuk+kZDAD3NXv4EG
+VMUfOg5UEdhAJ0Lw40D4pqKa2ej1H0UipK1EEdRTm94RzfE8z8vDP8+dcgOqCwIDAQABo4ICEjCC
+Ag4wEgYDVR0TAQH/BAgwBgEB/wIBADBwBgNVHSAEaTBnMGUGC2CGSAGG+EUBBxcCMFYwKAYIKwYB
+BQUHAgEWHGh0dHBzOi8vd3d3LnZlcmlzaWduLmNvbS9jcHMwKgYIKwYBBQUHAgIwHhocaHR0cHM6
+Ly93d3cudmVyaXNpZ24uY29tL3JwYTA0BgNVHR8ELTArMCmgJ6AlhiNodHRwOi8vY3JsLnZlcmlz
+aWduLmNvbS9wY2EyLWczLmNybDAOBgNVHQ8BAf8EBAMCAQYwLgYDVR0RBCcwJaQjMCExHzAdBgNV
+BAMTFlByaXZhdGVMYWJlbDQtMjA0OC0xNDIwHQYDVR0OBBYEFCJ906SrV6xWf6l/QUQalbxb+Kvu
+MIHwBgNVHSMEgegwgeWhgdCkgc0wgcoxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5WZXJpU2lnbiwg
+SW5jLjEfMB0GA1UECxMWVmVyaVNpZ24gVHJ1c3QgTmV0d29yazE6MDgGA1UECxMxKGMpIDE5OTkg
+VmVyaVNpZ24sIEluYy4gLSBGb3IgYXV0aG9yaXplZCB1c2Ugb25seTFFMEMGA1UEAxM8VmVyaVNp
+Z24gQ2xhc3MgMiBQdWJsaWMgUHJpbWFyeSBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eSAtIEczghBh
+cMtJjF+YRSnnsKbZUFt6MA0GCSqGSIb3DQEBBQUAA4IBAQAvUbxneMj/3SU5WlUKapv9ZGIeeNSf
+6/t6gKUUsCT2A1KQMlZmK7/gn4ndrXWdch7Uafl6WkPlBcunYRGvJ6YkJCP4uV86Lwv68mK6REwJ
+FMiKHy/qFnRaoI+pLfaIlMQ9l7Q2DRnNLSyCBl9b02PaGzX+XQQxGhLiE89Z1E+ajicWG1zRzBUb
+Px46ptQUjfjYPNyP4cLWT5rJ7olc9/mRyfIO4nGU8lRjGcuKwxZhOP+TftJgd/fRYf68Kf2Bkue4
+cdrI2UUgYD02GBL/S8E8FBsOrAoJ5N6cEYacwT2BZgHzYrxTC5ZyxzY9TWtGldxEH/moJ5OLtF+K
+auJWhaACMIIH7DCCBtSgAwIBAgIQSm3k9/toMcn6DmzGTStNqzANBgkqhkiG9w0BAQUFADCB9zEL
+MAkGA1UEBhMCVVMxIDAeBgNVBAoTF0hld2xldHQtUGFja2FyZCBDb21wYW55MR8wHQYDVQQLExZW
+ZXJpU2lnbiBUcnVzdCBOZXR3b3JrMTswOQYDVQQLEzJUZXJtcyBvZiB1c2UgYXQgaHR0cHM6Ly93
+d3cudmVyaXNpZ24uY29tL3JwYSAoYykwOTE1MDMGA1UECxMsQ2xhc3MgMiBNYW5hZ2VkIFBLSSBJ
+bmRpdmlkdWFsIFN1YnNjcmliZXIgQ0ExMTAvBgNVBAMTKENvbGxhYm9yYXRpb24gQ2VydGlmaWNh
+dGlvbiBBdXRob3JpdHkgRzIwHhcNMTEwMzE0MDAwMDAwWhcNMTMwMzEzMjM1OTU5WjCBqTEgMB4G
+A1UEChQXSGV3bGV0dC1QYWNrYXJkIENvbXBhbnkxJjAkBgNVBAsUHUVtcGxveW1lbnQgU3RhdHVz
+IC0gRW1wbG95ZWVzMRIwEAYDVQQLEwlTL01JTUUgRzIxIDAeBgNVBAMTF1N0YW5pc2xhdyBJemFh
+ayBQaXR1Y2hhMScwJQYJKoZIhvcNAQkBFhhzdGFuaXNsYXcucGl0dWNoYUBocC5jb20wggEiMA0G
+CSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC13AtQqRmF7uO4vGbI5TpogyhI5SU+R/dQha6Vco3L
+vVFGrfCtWKBAtqoSBAVXjkAXYbDLLigngNyzTEGi+cGNhymJCAWovHmNvxLK6YmOiwQXRjaauNfM
+BxhjnyZsSgRge65HTgQ8x2d1Tv8ewqAAqwW/8IQfWI4H/tQkGSC8apks7RHbhqK5y5iXgac3kgTy
+OpCPsj8/GsYLBAaZ9PWL4PnWOq1QCjRo9nVsg/6iV4D0Z++maD+HCrEfSgKDDPR8y71Pydx6nVne
+CHjxbHHjrHg79AfOLNQz3rnV9tybgcVzdMq7xQ+Xc4B98LxHF9TfFi7Kd9AfZULk6BYLLql5AgMB
+AAGjggO+MIIDujAjBgNVHREEHDAagRhzdGFuaXNsYXcucGl0dWNoYUBocC5jb20wDAYDVR0TAQH/
+BAIwADAOBgNVHQ8BAf8EBAMCBaAwWQYDVR0fBFIwUDBOoEygSoZIaHR0cDovL29uc2l0ZWNybC52
+ZXJpc2lnbi5jb20vSGV3bGV0dFBhY2thcmRDb21wYW55U01JTUVHMi9MYXRlc3RDUkwuY3JsMB8G
+A1UdIwQYMBaAFCJ906SrV6xWf6l/QUQalbxb+KvuMB0GA1UdDgQWBBSLVHc3wZOTMWu8Uvpz1ipY
+BtHkrDCCATIGCCsGAQUFBwEBBIIBJDCCASAwJwYIKwYBBQUHMAGGG2h0dHA6Ly9ocC1vY3NwLnZl
+cmlzaWduLmNvbTCB9AYIKwYBBQUHMAKkgecwgeQxMTAvBgNVBAMTKENvbGxhYm9yYXRpb24gQ2Vy
+dGlmaWNhdGlvbiBBdXRob3JpdHkgRzIxMDAuBgNVBAsTJ0NsYXNzIDIgT25TaXRlIEluZGl2aWR1
+YWwgU3Vic2NyaWJlciBDQTE6MDgGA1UECxMxVGVybXMgb2YgdXNlIGF0IGh0dHBzOi8vd3d3LnZl
+cmlzaWduLmNvbS9ycGEoYykwOTEfMB0GA1UECxMWVmVyaVNpZ24gVHJ1c3QgTmV0d29yazEgMB4G
+A1UEChMXSGV3bGV0dC1QYWNrYXJkIENvbXBhbnkwggE9BgNVHSAEggE0MIIBMDCCASwGC2CGSAGG
++EUBBxcCMIIBGzAoBggrBgEFBQcCARYcaHR0cHM6Ly93d3cudmVyaXNpZ24uY29tL3JwYTCB7gYI
+KwYBBQUHAgIwgeEwHhYXSGV3bGV0dC1QYWNrYXJkIENvbXBhbnkwAwIBAhqBvkF1dGhvcml0eSB0
+byBiaW5kIEhQIGRvZXMgbm90IGNvcnJlc3BvbmQgd2l0aCB1c2Ugb3IgcG9zc2Vzc2lvbiBvZiB0
+aGlzIGNlcnRpZmljYXRlLiBJc3N1ZWQgdG8gZmFjaWxpdGF0ZSBjb21tdW5pY2F0aW9uIHdpdGgg
+SFAuIFZlcmlTaWduJ3MgQ1BTIGluY29ycC4gQnkgcmVmZXJlbmNlIGxpYWIuIGx0ZC4gKGMpOTcg
+VmVyaVNpZ24wFgYDVR0lAQH/BAwwCgYIKwYBBQUHAwQwSwYJKoZIhvcNAQkPBD4wPDAOBggqhkiG
+9w0DAgICAIAwDgYIKoZIhvcNAwICAgBAMA4GCCqGSIb3DQMEAgIAgDAKBggqhkiG9w0DBzANBgkq
+hkiG9w0BAQUFAAOCAQEApP04g1cJvwiHd3n7iMIbfVfizPtNRI3T+EmwO/OXxgTp5+nFap8+P7+7
+bEyA5VTxGF88YpV2RQ38A/SUBnmF20RfwLbj8PKBUW7f7S50sljnGKNejYd8f2cc/jXeXLs2y9rr
+v9jiK38EYPfGCWIk+4TZ7ncAP9DChqhqkK1N0PRr9FX6KthftNM6e2eepEJ0GGCJ5FxEb9kcXH8b
+LZu3xqUSCmTdbIEprw58FeDFewUTk3s+Xi2R7kPUN3pj/X1FCn1zL+Rztgt6bC8JCQLJMpf/LO8Y
+GpgQLahb0tofxgp+yQLI/KvyW3TCB52yOWDfepZmsFhXNRliuOKsQJBFyTGCBZgwggWUAgEBMIIB
+DDCB9zELMAkGA1UEBhMCVVMxIDAeBgNVBAoTF0hld2xldHQtUGFja2FyZCBDb21wYW55MR8wHQYD
+VQQLExZWZXJpU2lnbiBUcnVzdCBOZXR3b3JrMTswOQYDVQQLEzJUZXJtcyBvZiB1c2UgYXQgaHR0
+cHM6Ly93d3cudmVyaXNpZ24uY29tL3JwYSAoYykwOTE1MDMGA1UECxMsQ2xhc3MgMiBNYW5hZ2Vk
+IFBLSSBJbmRpdmlkdWFsIFN1YnNjcmliZXIgQ0ExMTAvBgNVBAMTKENvbGxhYm9yYXRpb24gQ2Vy
+dGlmaWNhdGlvbiBBdXRob3JpdHkgRzICEEpt5Pf7aDHJ+g5sxk0rTaswCQYFKw4DAhoFAKCCA18w
+GAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTExMTEwMTMxNTMxWjAj
+BgkqhkiG9w0BCQQxFgQUdsa9Bud4wl7dMTpCXeV6jnnFHcowgbcGCSqGSIb3DQEJDzGBqTCBpjAL
+BglghkgBZQMEASowCwYJYIZIAWUDBAEWMAoGCCqGSIb3DQMHMAsGCWCGSAFlAwQBAjAOBggqhkiG
+9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwBwYFKw4DAgcwDQYIKoZIhvcNAwICASgwBwYFKw4DAhow
+CwYJYIZIAWUDBAIDMAsGCWCGSAFlAwQCAjALBglghkgBZQMEAgEwCgYIKoZIhvcNAgUwggEfBgkr
+BgEEAYI3EAQxggEQMIIBDDCB9zELMAkGA1UEBhMCVVMxIDAeBgNVBAoTF0hld2xldHQtUGFja2Fy
+ZCBDb21wYW55MR8wHQYDVQQLExZWZXJpU2lnbiBUcnVzdCBOZXR3b3JrMTswOQYDVQQLEzJUZXJt
+cyBvZiB1c2UgYXQgaHR0cHM6Ly93d3cudmVyaXNpZ24uY29tL3JwYSAoYykwOTE1MDMGA1UECxMs
+Q2xhc3MgMiBNYW5hZ2VkIFBLSSBJbmRpdmlkdWFsIFN1YnNjcmliZXIgQ0ExMTAvBgNVBAMTKENv
+bGxhYm9yYXRpb24gQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkgRzICEEpt5Pf7aDHJ+g5sxk0rTasw
+ggEhBgsqhkiG9w0BCRACCzGCARCgggEMMIH3MQswCQYDVQQGEwJVUzEgMB4GA1UEChMXSGV3bGV0
+dC1QYWNrYXJkIENvbXBhbnkxHzAdBgNVBAsTFlZlcmlTaWduIFRydXN0IE5ldHdvcmsxOzA5BgNV
+BAsTMlRlcm1zIG9mIHVzZSBhdCBodHRwczovL3d3dy52ZXJpc2lnbi5jb20vcnBhIChjKTA5MTUw
+MwYDVQQLEyxDbGFzcyAyIE1hbmFnZWQgUEtJIEluZGl2aWR1YWwgU3Vic2NyaWJlciBDQTExMC8G
+A1UEAxMoQ29sbGFib3JhdGlvbiBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eSBHMgIQSm3k9/toMcn6
+DmzGTStNqzANBgkqhkiG9w0BAQEFAASCAQBvbJeySm3siA3zj273LfAAQgyk8zOB80Lv5laal1iw
+rWQWoPSL199FHnsaLfCNFkwgcgtTcl9A4jn+isVghdtBg5gRTZbdRZIFFpvfB3W8JMgItm74YiBY
+Yvwm05v8kC7QT2fbIAzRYAFdpGQmUHy2x0gYB3czvZ+Ru2X9yc02soeoMBg6tVqJ8iPNGm6Mzv/O
+hRmQysDyFHSKEvTmKs5jE065mqDgUG7PpN6slJVgxyQuB2DwFK+tx4UFarHfGDzun8YwOExBo4jO
+vxJM+9UxftssnIjklTuP8Y4OTmjhGyl/gGdl6kXuvkI/Cl9pdIdzyLkPAUh1ani0bfWrVopNAAAA
+AAAA
+
+------=_NextPart_000_03E7_01CC9FAA.D29441D0--
