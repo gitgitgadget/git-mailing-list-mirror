@@ -1,205 +1,92 @@
-From: "Pitucha, Stanislaw Izaak" <stanislaw.pitucha@hp.com>
-Subject: Disappearing change on pull rebase
-Date: Thu, 10 Nov 2011 13:15:31 +0000
-Message-ID: <3FF1328CB05DB74898F769F1BA17812C3E49B74671@GVW1348EXA.americas.hpqcorp.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=SHA1;
-	protocol="application/x-pkcs7-signature";
-	boundary="----=_NextPart_000_03E7_01CC9FAA.D29441D0"
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 10 14:16:55 2011
+From: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
+Subject: Re: Disappearing change on pull rebase
+Date: Thu, 10 Nov 2011 17:23:36 +0300
+Message-ID: <B5934593-5EE9-4A9F-96D5-0E36B696EFBD@jetbrains.com>
+References: <3FF1328CB05DB74898F769F1BA17812C3E49B74671@GVW1348EXA.americas.hpqcorp.net>
+Mime-Version: 1.0 (Apple Message framework v1084)
+Content-Type: text/plain; charset=koi8-r
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Pitucha, Stanislaw Izaak" <stanislaw.pitucha@hp.com>
+X-From: git-owner@vger.kernel.org Thu Nov 10 14:24:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ROUUv-0001PQ-Bg
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Nov 2011 14:16:53 +0100
+	id 1ROUc6-00059n-8g
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Nov 2011 14:24:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756014Ab1KJNQs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Nov 2011 08:16:48 -0500
-Received: from g4t0015.houston.hp.com ([15.201.24.18]:16953 "EHLO
-	g4t0015.houston.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751596Ab1KJNQr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Nov 2011 08:16:47 -0500
-Received: from G2W1953G.americas.hpqcorp.net (g2w1953g.austin.hp.com [16.238.8.185])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by g4t0015.houston.hp.com (Postfix) with ESMTPS id 6625E8681
-	for <git@vger.kernel.org>; Thu, 10 Nov 2011 13:16:47 +0000 (UTC)
-Received: from G1W0397.americas.hpqcorp.net (16.236.31.21) by
- G2W1953G.americas.hpqcorp.net (16.238.8.185) with Microsoft SMTP Server (TLS)
- id 14.1.289.1; Thu, 10 Nov 2011 13:15:33 +0000
-Received: from GVW1348EXA.americas.hpqcorp.net ([16.238.72.128]) by
- G1W0397.americas.hpqcorp.net ([16.236.31.21]) with mapi; Thu, 10 Nov 2011
- 13:15:33 +0000
-Thread-Topic: Disappearing change on pull rebase
-Thread-Index: AcyfqtKN89EAhfsJRBKgFd/U378Ghw==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1756393Ab1KJNYM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Nov 2011 08:24:12 -0500
+Received: from mail1.intellij.net ([46.137.178.215]:45049 "EHLO
+	mail1.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751322Ab1KJNYM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2011 08:24:12 -0500
+Received: (qmail 16304 invoked by uid 89); 10 Nov 2011 13:24:10 -0000
+Received: by simscan 1.1.0 ppid: 16162, pid: 16273, t: 0.2245s
+         scanners: regex: 1.1.0 clamav: 0.97/m:53/d:13443
+Received: from unknown (HELO loki.labs.intellij.net) (Kirill.Likhodedov@jetbrains.com@195.5.138.42)
+  by ip-10-48-137-145.eu-west-1.compute.internal with ESMTPA; 10 Nov 2011 13:24:09 -0000
+In-Reply-To: <3FF1328CB05DB74898F769F1BA17812C3E49B74671@GVW1348EXA.americas.hpqcorp.net>
+X-Mailer: Apple Mail (2.1084)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185227>
 
-------=_NextPart_000_03E7_01CC9FAA.D29441D0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+10.11.2011, =D7 16:15, Pitucha, Stanislaw Izaak:
 
-Hi all,
-I've got an issue with some operations. It seems like git eats one of my =
-commits (it's still in reflog, but in normal tree, it's unavailable).
+> Hi all,
+> I've got an issue with some operations. It seems like git eats one of=
+ my commits (it's still in reflog, but in normal tree, it's unavailable=
+).
+>=20
+> What I did is:
+>=20
+> checkout -b feature/....
+> (edit files and commit)
+> checkout master
+> merge --no-ff --no-commit feature/...
+> (edit some files, change versions, changelog)
+> commit
+>=20
+> Now I've got the change committed in the branch and some more changes=
+ on the merge commit.
+> So before pushing to the main repo, I'd like to check if any other ch=
+anges are there:
+>=20
+> pull --rebase
+>=20
+> Now my merge commit disappears completely along with the changes with=
+out any warning. I get the branch commits duplicated on top of master a=
+nd the branch stays as it was.
+> That looks like a data loss bug to me since I can only recover a comm=
+itted change from reflog and there are no warnings before that change g=
+oes away (using 1.7.4.1). Actually no changes were done in upstream in =
+the meantime, so the rebase was not even needed.
+>=20
 
-What I did is:
+That is definitely not a bug.=20
+"git pull --rebase" is (almost?) equal to "git fetch ; git rebase origi=
+n/master"
+When you perform a rebase, at first your HEAD is rolled back to the com=
+mit before your changes, then it is fast-forwared to the remote HEAD (i=
+n your case, no fast-forward was made, because there were no remote cha=
+nges); then your commits are applied one by one.
 
-checkout -b feature/....
-(edit files and commit)
-checkout master
-merge --no-ff --no-commit feature/...
-(edit some files, change versions, changelog)
-commit
+Of couse, when your commits are applied, they are applied like patches.=
+ That mean, that they are different from the original commits (at least=
+, by the commit time). That causes the duplication.
 
-Now I've got the change committed in the branch and some more changes on =
-the merge commit.
-So before pushing to the main repo, I'd like to check if any other =
-changes are there:
+And the merge commit "dissapeared", because it contained no changes, so=
+ the patch was empty, and there was nothing to reapply.
+If the merge commit contained some changes, and it really was not appli=
+ed during rebase, it is a bug, but more details will be needed, I think=
+=2E
 
-pull --rebase
+If you want to preserve your branch history, you should do "pull" witho=
+ut "rebase".
 
-Now my merge commit disappears completely along with the changes without =
-any warning. I get the branch commits duplicated on top of master and =
-the branch stays as it was.
-That looks like a data loss bug to me since I can only recover a =
-committed change from reflog and there are no warnings before that =
-change goes away (using 1.7.4.1). Actually no changes were done in =
-upstream in the meantime, so the rebase was not even needed.
-
-Regards,
-Stanis=C5=82aw Pitucha
-Cloud Services=20
-Hewlett Packard
-
-
-
-------=_NextPart_000_03E7_01CC9FAA.D29441D0
-Content-Type: application/x-pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIScjCCBBkw
-ggMBAhBhcMtJjF+YRSnnsKbZUFt6MA0GCSqGSIb3DQEBBQUAMIHKMQswCQYDVQQGEwJVUzEXMBUG
-A1UEChMOVmVyaVNpZ24sIEluYy4xHzAdBgNVBAsTFlZlcmlTaWduIFRydXN0IE5ldHdvcmsxOjA4
-BgNVBAsTMShjKSAxOTk5IFZlcmlTaWduLCBJbmMuIC0gRm9yIGF1dGhvcml6ZWQgdXNlIG9ubHkx
-RTBDBgNVBAMTPFZlcmlTaWduIENsYXNzIDIgUHVibGljIFByaW1hcnkgQ2VydGlmaWNhdGlvbiBB
-dXRob3JpdHkgLSBHMzAeFw05OTEwMDEwMDAwMDBaFw0zNjA3MTYyMzU5NTlaMIHKMQswCQYDVQQG
-EwJVUzEXMBUGA1UEChMOVmVyaVNpZ24sIEluYy4xHzAdBgNVBAsTFlZlcmlTaWduIFRydXN0IE5l
-dHdvcmsxOjA4BgNVBAsTMShjKSAxOTk5IFZlcmlTaWduLCBJbmMuIC0gRm9yIGF1dGhvcml6ZWQg
-dXNlIG9ubHkxRTBDBgNVBAMTPFZlcmlTaWduIENsYXNzIDIgUHVibGljIFByaW1hcnkgQ2VydGlm
-aWNhdGlvbiBBdXRob3JpdHkgLSBHMzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAK8K
-DcLVLNtnuS3llCfdpb7gsE2Ps2FWPNZ8w/TNPobLooji4dikacW14r/BpkdQXkY5i9WWurVvFL8Q
-zicTngVHmzF6E9gf2dMCN4utLEfwjoEGpw0wDOv3PA8gHdxyRu6lAshbw8lWaUzFGMGRewvVEwCb
-vO/DSD5GYCCFKtWQts2LoMwy3bf9QFWyUBxWrsyNd03HIE2nMXbvaJKKkB4IgVayrWmjUtDLHMQj
-PR+Z/kzoFmOOxgiO9jH20vrldt21HJKjSc3NAc1ozalpuqPrHQ2cpCCmwaDF0UZMF23SrGY/lozg
-hNQ2/yJZxfkRYKhfBH3yGvYlQmEPxEq4PokCAwEAATANBgkqhkiG9w0BAQUFAAOCAQEANCYVPMCN
-TUNJHb3pIZLXZpy33sW40ORdX3YiwCb5hDo6+Yy1++xg8ejOBLDI3acDjzDzmN+k5qQx39McC0bc
-ciA/ru4FPKQzPws5rHB4c0uZK98wwlSwqDtVof4WKM1CvXRugNsnRKfORF3UG5CYDR5ClLEALATQ
-dKMCBSJjY82DtfvBbWJraXX9XXBBufW/fN++wTJzIiGLWIF7FZF6uuNkSLB/+zYl2pXQ8SQUF90Y
-gGtGIzlU9Y5iCQQdlJCmm+Yl4kJFqriQrb4Ij6kLQhiUz3I54bFD4CjPt+dabBNrSbP/4xh8iYsz
-Xawz16f52jpVyVgQ+arvWrbPS0vfKjCCBmEwggVJoAMCAQICEFHz5uyygZHVFZ4pmbCHOnswDQYJ
-KoZIhvcNAQEFBQAwgcoxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5WZXJpU2lnbiwgSW5jLjEfMB0G
-A1UECxMWVmVyaVNpZ24gVHJ1c3QgTmV0d29yazE6MDgGA1UECxMxKGMpIDE5OTkgVmVyaVNpZ24s
-IEluYy4gLSBGb3IgYXV0aG9yaXplZCB1c2Ugb25seTFFMEMGA1UEAxM8VmVyaVNpZ24gQ2xhc3Mg
-MiBQdWJsaWMgUHJpbWFyeSBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eSAtIEczMB4XDTA5MDkwMjAw
-MDAwMFoXDTE0MDkwMTIzNTk1OVowgfcxCzAJBgNVBAYTAlVTMSAwHgYDVQQKExdIZXdsZXR0LVBh
-Y2thcmQgQ29tcGFueTEfMB0GA1UECxMWVmVyaVNpZ24gVHJ1c3QgTmV0d29yazE7MDkGA1UECxMy
-VGVybXMgb2YgdXNlIGF0IGh0dHBzOi8vd3d3LnZlcmlzaWduLmNvbS9ycGEgKGMpMDkxNTAzBgNV
-BAsTLENsYXNzIDIgTWFuYWdlZCBQS0kgSW5kaXZpZHVhbCBTdWJzY3JpYmVyIENBMTEwLwYDVQQD
-EyhDb2xsYWJvcmF0aW9uIENlcnRpZmljYXRpb24gQXV0aG9yaXR5IEcyMIIBIjANBgkqhkiG9w0B
-AQEFAAOCAQ8AMIIBCgKCAQEAp2FraNquqoVkDEvLUMsw6HMhjon+yi1v/kajA27jIrdyhRMj4g+P
-BveBTHrtA7w97Rx1UKPP6CvOaAE5xUtoW9ajYZtO5kdiUFyzWHsbUgSjKy+yNO4QoHeEzaQi/JWU
-OYev/AV5YYJoEDIysosEELS1/M64iE2Utzr+LxiWhdaqSRE4jigbm4Dy4ayLzqAv5f7oILrJNZ6S
-hqLiGGCpP+7relTyRgFXmEX/SKN/a39JwZoKSNUdIkYyr7wmNI9+zylheDJghuk+kZDAD3NXv4EG
-VMUfOg5UEdhAJ0Lw40D4pqKa2ej1H0UipK1EEdRTm94RzfE8z8vDP8+dcgOqCwIDAQABo4ICEjCC
-Ag4wEgYDVR0TAQH/BAgwBgEB/wIBADBwBgNVHSAEaTBnMGUGC2CGSAGG+EUBBxcCMFYwKAYIKwYB
-BQUHAgEWHGh0dHBzOi8vd3d3LnZlcmlzaWduLmNvbS9jcHMwKgYIKwYBBQUHAgIwHhocaHR0cHM6
-Ly93d3cudmVyaXNpZ24uY29tL3JwYTA0BgNVHR8ELTArMCmgJ6AlhiNodHRwOi8vY3JsLnZlcmlz
-aWduLmNvbS9wY2EyLWczLmNybDAOBgNVHQ8BAf8EBAMCAQYwLgYDVR0RBCcwJaQjMCExHzAdBgNV
-BAMTFlByaXZhdGVMYWJlbDQtMjA0OC0xNDIwHQYDVR0OBBYEFCJ906SrV6xWf6l/QUQalbxb+Kvu
-MIHwBgNVHSMEgegwgeWhgdCkgc0wgcoxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5WZXJpU2lnbiwg
-SW5jLjEfMB0GA1UECxMWVmVyaVNpZ24gVHJ1c3QgTmV0d29yazE6MDgGA1UECxMxKGMpIDE5OTkg
-VmVyaVNpZ24sIEluYy4gLSBGb3IgYXV0aG9yaXplZCB1c2Ugb25seTFFMEMGA1UEAxM8VmVyaVNp
-Z24gQ2xhc3MgMiBQdWJsaWMgUHJpbWFyeSBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eSAtIEczghBh
-cMtJjF+YRSnnsKbZUFt6MA0GCSqGSIb3DQEBBQUAA4IBAQAvUbxneMj/3SU5WlUKapv9ZGIeeNSf
-6/t6gKUUsCT2A1KQMlZmK7/gn4ndrXWdch7Uafl6WkPlBcunYRGvJ6YkJCP4uV86Lwv68mK6REwJ
-FMiKHy/qFnRaoI+pLfaIlMQ9l7Q2DRnNLSyCBl9b02PaGzX+XQQxGhLiE89Z1E+ajicWG1zRzBUb
-Px46ptQUjfjYPNyP4cLWT5rJ7olc9/mRyfIO4nGU8lRjGcuKwxZhOP+TftJgd/fRYf68Kf2Bkue4
-cdrI2UUgYD02GBL/S8E8FBsOrAoJ5N6cEYacwT2BZgHzYrxTC5ZyxzY9TWtGldxEH/moJ5OLtF+K
-auJWhaACMIIH7DCCBtSgAwIBAgIQSm3k9/toMcn6DmzGTStNqzANBgkqhkiG9w0BAQUFADCB9zEL
-MAkGA1UEBhMCVVMxIDAeBgNVBAoTF0hld2xldHQtUGFja2FyZCBDb21wYW55MR8wHQYDVQQLExZW
-ZXJpU2lnbiBUcnVzdCBOZXR3b3JrMTswOQYDVQQLEzJUZXJtcyBvZiB1c2UgYXQgaHR0cHM6Ly93
-d3cudmVyaXNpZ24uY29tL3JwYSAoYykwOTE1MDMGA1UECxMsQ2xhc3MgMiBNYW5hZ2VkIFBLSSBJ
-bmRpdmlkdWFsIFN1YnNjcmliZXIgQ0ExMTAvBgNVBAMTKENvbGxhYm9yYXRpb24gQ2VydGlmaWNh
-dGlvbiBBdXRob3JpdHkgRzIwHhcNMTEwMzE0MDAwMDAwWhcNMTMwMzEzMjM1OTU5WjCBqTEgMB4G
-A1UEChQXSGV3bGV0dC1QYWNrYXJkIENvbXBhbnkxJjAkBgNVBAsUHUVtcGxveW1lbnQgU3RhdHVz
-IC0gRW1wbG95ZWVzMRIwEAYDVQQLEwlTL01JTUUgRzIxIDAeBgNVBAMTF1N0YW5pc2xhdyBJemFh
-ayBQaXR1Y2hhMScwJQYJKoZIhvcNAQkBFhhzdGFuaXNsYXcucGl0dWNoYUBocC5jb20wggEiMA0G
-CSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC13AtQqRmF7uO4vGbI5TpogyhI5SU+R/dQha6Vco3L
-vVFGrfCtWKBAtqoSBAVXjkAXYbDLLigngNyzTEGi+cGNhymJCAWovHmNvxLK6YmOiwQXRjaauNfM
-BxhjnyZsSgRge65HTgQ8x2d1Tv8ewqAAqwW/8IQfWI4H/tQkGSC8apks7RHbhqK5y5iXgac3kgTy
-OpCPsj8/GsYLBAaZ9PWL4PnWOq1QCjRo9nVsg/6iV4D0Z++maD+HCrEfSgKDDPR8y71Pydx6nVne
-CHjxbHHjrHg79AfOLNQz3rnV9tybgcVzdMq7xQ+Xc4B98LxHF9TfFi7Kd9AfZULk6BYLLql5AgMB
-AAGjggO+MIIDujAjBgNVHREEHDAagRhzdGFuaXNsYXcucGl0dWNoYUBocC5jb20wDAYDVR0TAQH/
-BAIwADAOBgNVHQ8BAf8EBAMCBaAwWQYDVR0fBFIwUDBOoEygSoZIaHR0cDovL29uc2l0ZWNybC52
-ZXJpc2lnbi5jb20vSGV3bGV0dFBhY2thcmRDb21wYW55U01JTUVHMi9MYXRlc3RDUkwuY3JsMB8G
-A1UdIwQYMBaAFCJ906SrV6xWf6l/QUQalbxb+KvuMB0GA1UdDgQWBBSLVHc3wZOTMWu8Uvpz1ipY
-BtHkrDCCATIGCCsGAQUFBwEBBIIBJDCCASAwJwYIKwYBBQUHMAGGG2h0dHA6Ly9ocC1vY3NwLnZl
-cmlzaWduLmNvbTCB9AYIKwYBBQUHMAKkgecwgeQxMTAvBgNVBAMTKENvbGxhYm9yYXRpb24gQ2Vy
-dGlmaWNhdGlvbiBBdXRob3JpdHkgRzIxMDAuBgNVBAsTJ0NsYXNzIDIgT25TaXRlIEluZGl2aWR1
-YWwgU3Vic2NyaWJlciBDQTE6MDgGA1UECxMxVGVybXMgb2YgdXNlIGF0IGh0dHBzOi8vd3d3LnZl
-cmlzaWduLmNvbS9ycGEoYykwOTEfMB0GA1UECxMWVmVyaVNpZ24gVHJ1c3QgTmV0d29yazEgMB4G
-A1UEChMXSGV3bGV0dC1QYWNrYXJkIENvbXBhbnkwggE9BgNVHSAEggE0MIIBMDCCASwGC2CGSAGG
-+EUBBxcCMIIBGzAoBggrBgEFBQcCARYcaHR0cHM6Ly93d3cudmVyaXNpZ24uY29tL3JwYTCB7gYI
-KwYBBQUHAgIwgeEwHhYXSGV3bGV0dC1QYWNrYXJkIENvbXBhbnkwAwIBAhqBvkF1dGhvcml0eSB0
-byBiaW5kIEhQIGRvZXMgbm90IGNvcnJlc3BvbmQgd2l0aCB1c2Ugb3IgcG9zc2Vzc2lvbiBvZiB0
-aGlzIGNlcnRpZmljYXRlLiBJc3N1ZWQgdG8gZmFjaWxpdGF0ZSBjb21tdW5pY2F0aW9uIHdpdGgg
-SFAuIFZlcmlTaWduJ3MgQ1BTIGluY29ycC4gQnkgcmVmZXJlbmNlIGxpYWIuIGx0ZC4gKGMpOTcg
-VmVyaVNpZ24wFgYDVR0lAQH/BAwwCgYIKwYBBQUHAwQwSwYJKoZIhvcNAQkPBD4wPDAOBggqhkiG
-9w0DAgICAIAwDgYIKoZIhvcNAwICAgBAMA4GCCqGSIb3DQMEAgIAgDAKBggqhkiG9w0DBzANBgkq
-hkiG9w0BAQUFAAOCAQEApP04g1cJvwiHd3n7iMIbfVfizPtNRI3T+EmwO/OXxgTp5+nFap8+P7+7
-bEyA5VTxGF88YpV2RQ38A/SUBnmF20RfwLbj8PKBUW7f7S50sljnGKNejYd8f2cc/jXeXLs2y9rr
-v9jiK38EYPfGCWIk+4TZ7ncAP9DChqhqkK1N0PRr9FX6KthftNM6e2eepEJ0GGCJ5FxEb9kcXH8b
-LZu3xqUSCmTdbIEprw58FeDFewUTk3s+Xi2R7kPUN3pj/X1FCn1zL+Rztgt6bC8JCQLJMpf/LO8Y
-GpgQLahb0tofxgp+yQLI/KvyW3TCB52yOWDfepZmsFhXNRliuOKsQJBFyTGCBZgwggWUAgEBMIIB
-DDCB9zELMAkGA1UEBhMCVVMxIDAeBgNVBAoTF0hld2xldHQtUGFja2FyZCBDb21wYW55MR8wHQYD
-VQQLExZWZXJpU2lnbiBUcnVzdCBOZXR3b3JrMTswOQYDVQQLEzJUZXJtcyBvZiB1c2UgYXQgaHR0
-cHM6Ly93d3cudmVyaXNpZ24uY29tL3JwYSAoYykwOTE1MDMGA1UECxMsQ2xhc3MgMiBNYW5hZ2Vk
-IFBLSSBJbmRpdmlkdWFsIFN1YnNjcmliZXIgQ0ExMTAvBgNVBAMTKENvbGxhYm9yYXRpb24gQ2Vy
-dGlmaWNhdGlvbiBBdXRob3JpdHkgRzICEEpt5Pf7aDHJ+g5sxk0rTaswCQYFKw4DAhoFAKCCA18w
-GAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTExMTEwMTMxNTMxWjAj
-BgkqhkiG9w0BCQQxFgQUdsa9Bud4wl7dMTpCXeV6jnnFHcowgbcGCSqGSIb3DQEJDzGBqTCBpjAL
-BglghkgBZQMEASowCwYJYIZIAWUDBAEWMAoGCCqGSIb3DQMHMAsGCWCGSAFlAwQBAjAOBggqhkiG
-9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwBwYFKw4DAgcwDQYIKoZIhvcNAwICASgwBwYFKw4DAhow
-CwYJYIZIAWUDBAIDMAsGCWCGSAFlAwQCAjALBglghkgBZQMEAgEwCgYIKoZIhvcNAgUwggEfBgkr
-BgEEAYI3EAQxggEQMIIBDDCB9zELMAkGA1UEBhMCVVMxIDAeBgNVBAoTF0hld2xldHQtUGFja2Fy
-ZCBDb21wYW55MR8wHQYDVQQLExZWZXJpU2lnbiBUcnVzdCBOZXR3b3JrMTswOQYDVQQLEzJUZXJt
-cyBvZiB1c2UgYXQgaHR0cHM6Ly93d3cudmVyaXNpZ24uY29tL3JwYSAoYykwOTE1MDMGA1UECxMs
-Q2xhc3MgMiBNYW5hZ2VkIFBLSSBJbmRpdmlkdWFsIFN1YnNjcmliZXIgQ0ExMTAvBgNVBAMTKENv
-bGxhYm9yYXRpb24gQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkgRzICEEpt5Pf7aDHJ+g5sxk0rTasw
-ggEhBgsqhkiG9w0BCRACCzGCARCgggEMMIH3MQswCQYDVQQGEwJVUzEgMB4GA1UEChMXSGV3bGV0
-dC1QYWNrYXJkIENvbXBhbnkxHzAdBgNVBAsTFlZlcmlTaWduIFRydXN0IE5ldHdvcmsxOzA5BgNV
-BAsTMlRlcm1zIG9mIHVzZSBhdCBodHRwczovL3d3dy52ZXJpc2lnbi5jb20vcnBhIChjKTA5MTUw
-MwYDVQQLEyxDbGFzcyAyIE1hbmFnZWQgUEtJIEluZGl2aWR1YWwgU3Vic2NyaWJlciBDQTExMC8G
-A1UEAxMoQ29sbGFib3JhdGlvbiBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eSBHMgIQSm3k9/toMcn6
-DmzGTStNqzANBgkqhkiG9w0BAQEFAASCAQBvbJeySm3siA3zj273LfAAQgyk8zOB80Lv5laal1iw
-rWQWoPSL199FHnsaLfCNFkwgcgtTcl9A4jn+isVghdtBg5gRTZbdRZIFFpvfB3W8JMgItm74YiBY
-Yvwm05v8kC7QT2fbIAzRYAFdpGQmUHy2x0gYB3czvZ+Ru2X9yc02soeoMBg6tVqJ8iPNGm6Mzv/O
-hRmQysDyFHSKEvTmKs5jE065mqDgUG7PpN6slJVgxyQuB2DwFK+tx4UFarHfGDzun8YwOExBo4jO
-vxJM+9UxftssnIjklTuP8Y4OTmjhGyl/gGdl6kXuvkI/Cl9pdIdzyLkPAUh1ani0bfWrVopNAAAA
-AAAA
-
-------=_NextPart_000_03E7_01CC9FAA.D29441D0--
+Kirill.
