@@ -1,59 +1,59 @@
-From: Cheng Leong <leongc@alumni.rice.edu>
-Subject: Re: [PATCH/RFC] Restore line limit option in post-receive-email
-Date: Fri, 11 Nov 2011 01:08:36 -0600
-Message-ID: <CACor6wGkDPSkA_G117YtnsQA7H_cROKKW69m-jW_rb2SrVWo1w@mail.gmail.com>
-References: <1320993311-27112-1-git-send-email-leongc@alumni.rice.edu> <7v4nybrvug.fsf@alter.siamese.dyndns.org>
+From: Philippe Vaucher <philippe.vaucher@gmail.com>
+Subject: Re: Disappearing change on pull rebase
+Date: Fri, 11 Nov 2011 10:50:16 +0100
+Message-ID: <CAGK7Mr6D6-4aNceTDCYTHabA3vnxh+uvQ=GOeS_3nrL9rjmc9w@mail.gmail.com>
+References: <3FF1328CB05DB74898F769F1BA17812C3E49B74671@GVW1348EXA.americas.hpqcorp.net>
+ <B5934593-5EE9-4A9F-96D5-0E36B696EFBD@jetbrains.com> <3FF1328CB05DB74898F769F1BA17812C3E49B74699@GVW1348EXA.americas.hpqcorp.net>
+ <4EBCC71D.6000505@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, kpfleming@digium.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 11 08:09:04 2011
+Cc: "Pitucha, Stanislaw Izaak" <stanislaw.pitucha@hp.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Nov 11 10:50:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ROlEV-0005Y4-5m
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Nov 2011 08:09:03 +0100
+	id 1ROnl9-0001Zn-3k
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Nov 2011 10:50:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755931Ab1KKHI6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Nov 2011 02:08:58 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:35644 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754875Ab1KKHI5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2011 02:08:57 -0500
-Received: by ywf7 with SMTP id 7so3889684ywf.19
-        for <git@vger.kernel.org>; Thu, 10 Nov 2011 23:08:57 -0800 (PST)
+	id S1753372Ab1KKJut (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Nov 2011 04:50:49 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:49763 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752910Ab1KKJur (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Nov 2011 04:50:47 -0500
+Received: by yenr9 with SMTP id r9so2946108yen.19
+        for <git@vger.kernel.org>; Fri, 11 Nov 2011 01:50:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ANistO6hjh3ufDRlVGD/qdwjFzlgxPnWv9idmTWqYSE=;
-        b=JO5ZGsRtfaK6M8HlSuzAtefraYcVNY0euyPk+nLcd1bMKaDIb+vke18fo46W9UNrY7
-         7dn2aNWeGYksZ1hOSr88+YSLJOm+JMt78b+Gw5zHC9mCR6WDb/RMB5ti8PU5RlumnzHk
-         TbY1aXHJm7JXo5ldlElJsU0ACrR0cSzsXg+u8=
-Received: by 10.182.17.34 with SMTP id l2mr2588902obd.2.1320995337178; Thu, 10
- Nov 2011 23:08:57 -0800 (PST)
-Received: by 10.182.122.10 with HTTP; Thu, 10 Nov 2011 23:08:36 -0800 (PST)
-In-Reply-To: <7v4nybrvug.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: TVqkOoVaq3-LD8zIiMDt_IWb5ag
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=bU7wfeV5CdWfpItML9Qq2+gnvV4TyPyu78vEdXX7x6c=;
+        b=ba4dbTQLviz9lim9WXZppGaDCRkS8f2fcbfjO9mImBRTHMTldo8t9vYKtM18VMB1mS
+         4TzATUwsFJ9EfX77LgQmXiRA3/xbA45c0zKk83zp9TjmRHidlAFOsYt3Rj7vxRDaXJgl
+         a4M+cnog5UgmewsmqpHOk2yVgO284RspPDqFw=
+Received: by 10.50.17.199 with SMTP id q7mr11673990igd.20.1321005047143; Fri,
+ 11 Nov 2011 01:50:47 -0800 (PST)
+Received: by 10.50.195.199 with HTTP; Fri, 11 Nov 2011 01:50:16 -0800 (PST)
+In-Reply-To: <4EBCC71D.6000505@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185258>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Umm, there is another place where $maxlines is used without
-> merit. Shouldn't we do something like below as well?
-=2E..
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 generate_email $maxlines | send_mail
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 generate_email | send_mail
+> This is by design. Rebase does not rebase merge commits because it is
+> assumed that merge commits only do what their name implies - to merge
+> branches of a forked history. As such, they do not introduce their own
+> changes. Follow this rule, i.e., make your change in a separate non-merge
+> commit, and you are fine.
 
-Agree. $maxlines is harmless, but extraneous here.
-Would you like me to reroll a patch with both or is this a trivial fixu=
-p?
+Doesn't this create a problem if you pull, resolve a conflit but do NOT
+push, then pull --rebase some more commits later on? As I understand
+it, the conflict resolution commit will be a merge commit and will be
+thrown away by the git pull --rebase.
 
-Cheng
+Philippe
