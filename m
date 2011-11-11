@@ -1,60 +1,59 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Disappearing change on pull rebase
-Date: Fri, 11 Nov 2011 07:56:29 +0100
-Message-ID: <4EBCC71D.6000505@viscovery.net>
-References: <3FF1328CB05DB74898F769F1BA17812C3E49B74671@GVW1348EXA.americas.hpqcorp.net> <B5934593-5EE9-4A9F-96D5-0E36B696EFBD@jetbrains.com> <3FF1328CB05DB74898F769F1BA17812C3E49B74699@GVW1348EXA.americas.hpqcorp.net>
+From: Cheng Leong <leongc@alumni.rice.edu>
+Subject: Re: [PATCH/RFC] Restore line limit option in post-receive-email
+Date: Fri, 11 Nov 2011 01:08:36 -0600
+Message-ID: <CACor6wGkDPSkA_G117YtnsQA7H_cROKKW69m-jW_rb2SrVWo1w@mail.gmail.com>
+References: <1320993311-27112-1-git-send-email-leongc@alumni.rice.edu> <7v4nybrvug.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Pitucha, Stanislaw Izaak" <stanislaw.pitucha@hp.com>
-X-From: git-owner@vger.kernel.org Fri Nov 11 07:56:39 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, kpfleming@digium.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 11 08:09:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ROl2U-0000iL-WB
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Nov 2011 07:56:39 +0100
+	id 1ROlEV-0005Y4-5m
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Nov 2011 08:09:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755276Ab1KKG4e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Nov 2011 01:56:34 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:6058 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755180Ab1KKG4e (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Nov 2011 01:56:34 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1ROl2M-0000NL-Bd; Fri, 11 Nov 2011 07:56:30 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 1359B1660F;
-	Fri, 11 Nov 2011 07:56:29 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.23) Gecko/20110920 Thunderbird/3.1.15
-In-Reply-To: <3FF1328CB05DB74898F769F1BA17812C3E49B74699@GVW1348EXA.americas.hpqcorp.net>
-X-Spam-Score: -1.4 (-)
+	id S1755931Ab1KKHI6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Nov 2011 02:08:58 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:35644 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754875Ab1KKHI5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2011 02:08:57 -0500
+Received: by ywf7 with SMTP id 7so3889684ywf.19
+        for <git@vger.kernel.org>; Thu, 10 Nov 2011 23:08:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ANistO6hjh3ufDRlVGD/qdwjFzlgxPnWv9idmTWqYSE=;
+        b=JO5ZGsRtfaK6M8HlSuzAtefraYcVNY0euyPk+nLcd1bMKaDIb+vke18fo46W9UNrY7
+         7dn2aNWeGYksZ1hOSr88+YSLJOm+JMt78b+Gw5zHC9mCR6WDb/RMB5ti8PU5RlumnzHk
+         TbY1aXHJm7JXo5ldlElJsU0ACrR0cSzsXg+u8=
+Received: by 10.182.17.34 with SMTP id l2mr2588902obd.2.1320995337178; Thu, 10
+ Nov 2011 23:08:57 -0800 (PST)
+Received: by 10.182.122.10 with HTTP; Thu, 10 Nov 2011 23:08:36 -0800 (PST)
+In-Reply-To: <7v4nybrvug.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: TVqkOoVaq3-LD8zIiMDt_IWb5ag
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185257>
 
-Am 11/10/2011 14:35, schrieb Pitucha, Stanislaw Izaak:
-> As mentioned in the original mail - the merge commit did have changes.
-> Here's the log of reproducing it. The line containing "2" in changelog
-> is gone from master after pull --rebase.
-> ...
-> disappearing_commit$ git merge --no-ff --no-commit some-branch
-> Automatic merge went well; stopped before committing as requested
-> disappearing_commit$ echo 2 >> changelog 
-> disappearing_commit$ git add changelog
-> disappearing_commit$ git commit
-> [master e41e4c9] Merge branch 'some-branch'
+Junio C Hamano <gitster@pobox.com> wrote:
+> Umm, there is another place where $maxlines is used without
+> merit. Shouldn't we do something like below as well?
+=2E..
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 generate_email $maxlines | send_mail
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 generate_email | send_mail
 
-This is by design. Rebase does not rebase merge commits because it is
-assumed that merge commits only do what their name implies - to merge
-branches of a forked history. As such, they do not introduce their own
-changes. Follow this rule, i.e., make your change in a separate non-merge
-commit, and you are fine.
+Agree. $maxlines is harmless, but extraneous here.
+Would you like me to reroll a patch with both or is this a trivial fixu=
+p?
 
--- Hannes
+Cheng
