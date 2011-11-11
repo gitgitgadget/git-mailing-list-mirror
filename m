@@ -1,95 +1,80 @@
-From: David Michael Barr <davidbarr@google.com>
-Subject: Re: [PATCH 0/14] resumable network bundles
-Date: Sat, 12 Nov 2011 00:13:07 +1100
-Message-ID: <CAFfmPPN=f2nL4NAbhnHhkKvMFpgi2B+DeUQ42Si+do=Z4_SAXQ@mail.gmail.com>
-References: <20111110074330.GA27925@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: feature request: git annotate -w like git blame -w
+Date: Fri, 11 Nov 2011 05:57:03 -0800 (PST)
+Message-ID: <m3sjlun4o9.fsf@localhost.localdomain>
+References: <4EBD1CF4.7040002@ipax.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-4
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 11 14:13:15 2011
+To: "Raoul Bhatia [IPAX]" <r.bhatia@ipax.at>
+X-From: git-owner@vger.kernel.org Fri Nov 11 14:57:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ROquw-0000Tp-5s
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Nov 2011 14:13:14 +0100
+	id 1ROrbV-00052A-J3
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Nov 2011 14:57:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757827Ab1KKNNJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Nov 2011 08:13:09 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:61104 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757330Ab1KKNNI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2011 08:13:08 -0500
-Received: by gyc15 with SMTP id 15so2853722gyc.19
-        for <git@vger.kernel.org>; Fri, 11 Nov 2011 05:13:07 -0800 (PST)
+	id S1752831Ab1KKN5I convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Nov 2011 08:57:08 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:42668 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751708Ab1KKN5G convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2011 08:57:06 -0500
+Received: by fagn18 with SMTP id n18so1734341fag.19
+        for <git@vger.kernel.org>; Fri, 11 Nov 2011 05:57:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=beta;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding:x-system-of-record;
-        bh=TREHi1jX2Q4Hp5I15tk7DsMd7gSdLzCZ7mt+XXA+ZoM=;
-        b=VWGWNSXF/HzHFYh1PJJMKTLiKjmge66pUO4hztiBuwmGS/q8gx1vdTomhxxsRsMs0a
-         5LwZoMpMgUNw1yuRc6eg==
-Received: by 10.101.42.17 with SMTP id u17mr5820496anj.7.1321017187683;
-        Fri, 11 Nov 2011 05:13:07 -0800 (PST)
-Received: by 10.101.42.17 with SMTP id u17mr5820489anj.7.1321017187514; Fri,
- 11 Nov 2011 05:13:07 -0800 (PST)
-Received: by 10.100.225.6 with HTTP; Fri, 11 Nov 2011 05:13:07 -0800 (PST)
-In-Reply-To: <20111110074330.GA27925@sigill.intra.peff.net>
-X-System-Of-Record: true
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=Ge8HaMXyGp4p8iZdh7yya5D8fCK8eb3FqfVG/1pFtuo=;
+        b=PndKSkeTqtXqklqNEzHjxI/JAgn3SIrLFF4s8Umu/1f49F5edsQ0EfejphVfz30XND
+         eBlTFEBb5/rOTSXT0XeWclr8UEFhYOwre5Nfx0P3eQvvZT02PnXpiioeed05SQod88Op
+         jwgbczX2zzND44Dh91WUp0ly5UHJsuvzo9GKs=
+Received: by 10.204.146.65 with SMTP id g1mr8300288bkv.63.1321019824892;
+        Fri, 11 Nov 2011 05:57:04 -0800 (PST)
+Received: from localhost.localdomain (abvw113.neoplus.adsl.tpnet.pl. [83.8.220.113])
+        by mx.google.com with ESMTPS id e8sm10912811bkd.7.2011.11.11.05.57.02
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 11 Nov 2011 05:57:03 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id pABDut3i011533;
+	Fri, 11 Nov 2011 14:57:05 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id pABDud49011523;
+	Fri, 11 Nov 2011 14:56:39 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <4EBD1CF4.7040002@ipax.at>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185268>
 
-On Thu, Nov 10, 2011 at 6:43 PM, Jeff King <peff@peff.net> wrote:
-> One possible option for resumable clones that has been discussed is
-> letting the server point the client by http to a static bundle
-> containing most of history, followed by a fetch from the actual git r=
-epo
-> (which should be much cheaper now that we have all of the bundled
-> history). =A0This series implements "step 0" of this plan: just letti=
-ng
-> bundles be fetched across the network in the first place.
->
-> Shawn raised some issues about using bundles for this (as opposed to
-> accessing the packfiles themselves); specifically, this raises the I/=
-O
-> footprint of a repository that has to serve both the bundled version =
-of
-> the pack and the regular packfile.
->
-> So it may be that we don't follow this plan all the way through.
-> However, even if we don't, fetching bundles over http is still a usef=
-ul
-> thing to be able to do. Which makes this first step worth doing eithe=
-r
-> way.
->
-> =A0[01/14]: t/lib-httpd: check for NO_CURL
-> =A0[02/14]: http: turn off curl signals
-> =A0[03/14]: http: refactor http_request function
-> =A0[04/14]: http: add a public function for arbitrary-callback reques=
-t
-> =A0[05/14]: remote-curl: use http callback for requesting refs
-> =A0[06/14]: transport: factor out bundle to ref list conversion
-> =A0[07/14]: bundle: add is_bundle_buf helper
-> =A0[08/14]: remote-curl: free "discovery" object
-> =A0[09/14]: remote-curl: auto-detect bundles when fetching refs
-> =A0[10/14]: remote-curl: try base $URL after $URL/info/refs
-> =A0[11/14]: progress: allow pure-throughput progress meters
-> =A0[12/14]: remote-curl: show progress for bundle downloads
-> =A0[13/14]: remote-curl: resume interrupted bundle transfers
-> =A0[14/14]: clone: give advice on how to resume a failed clone
->
-> -Peff
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+"Raoul Bhatia [IPAX]" <r.bhatia@ipax.at> writes:
 
-I just want to say thank you for doing this.--David Barr
+> is it possible to add a "git annotate -w" option like git blame has?
+
+Why not use "git blame -c -w"?  `-c' turns on annotate-compatibile
+output.
+
+=46rom git-annotate(1) manpage:
+
+   The only difference between this command and git-blame(1) is that th=
+ey  use
+   slightly  different  output formats, and this command exists only fo=
+r back-
+   ward compatibility to support existing scripts, and provide a more f=
+amiliar
+   command name for people coming from other SCM systems.
+=20
+> ps. please reply to me in cc as i'm not subscribed to this list.
+
+This is usual behavior on this list.
+
+--=20
+Jakub Nar=EAbski
