@@ -1,59 +1,106 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 02/14] http: turn off curl signals
-Date: Fri, 11 Nov 2011 15:54:42 -0500
-Message-ID: <20111111205442.GC20515@sigill.intra.peff.net>
-References: <20111110074330.GA27925@sigill.intra.peff.net>
- <20111110074803.GB27950@sigill.intra.peff.net>
- <alpine.DEB.2.00.1111100941380.27581@tvnag.unkk.fr>
+From: Jvsrvcs <jvsrvcs@gmail.com>
+Subject: Git: Unexpected behaviour?
+Date: Fri, 11 Nov 2011 12:55:04 -0800 (PST)
+Message-ID: <1321044904175-6986736.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Daniel Stenberg <daniel@haxx.se>
-X-From: git-owner@vger.kernel.org Fri Nov 11 21:54:51 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 11 21:55:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ROy7d-0007Y9-Uq
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Nov 2011 21:54:50 +0100
+	id 1ROy81-0007kG-4X
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Nov 2011 21:55:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757583Ab1KKUyp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Nov 2011 15:54:45 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39714
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750863Ab1KKUyo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Nov 2011 15:54:44 -0500
-Received: (qmail 6134 invoked by uid 107); 11 Nov 2011 20:54:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 11 Nov 2011 15:54:47 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Nov 2011 15:54:42 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.00.1111100941380.27581@tvnag.unkk.fr>
+	id S1757891Ab1KKUzG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Nov 2011 15:55:06 -0500
+Received: from sam.nabble.com ([216.139.236.26]:47782 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750863Ab1KKUzE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Nov 2011 15:55:04 -0500
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <jvsrvcs@gmail.com>)
+	id 1ROy7s-0007C1-69
+	for git@vger.kernel.org; Fri, 11 Nov 2011 12:55:04 -0800
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185284>
 
-On Thu, Nov 10, 2011 at 09:43:40AM +0100, Daniel Stenberg wrote:
+Unexpected git behaviour
 
-> >I'm a little iffy on this one. If I understand correctly, depending
-> >on the build and configuration, curl may not be able to timeout
-> >during DNS lookups. But I'm not sure if it does, anyway, since we
-> >don't set any timeouts.
-> 
-> Right, without a timeout set libcurl won't try to timeout name resolves.
-> 
-> To clarify: when libcurl is built to use the standard synchronous
-> name resolver functions it can only abort them after a specified time
-> by using signals (on posix systems).
+---
+# First create a local git repo
 
-OK, that matches with my understanding. I think this patch is a fine
-thing to do for us, then. If we ever do start caring about timing out on
-name lookups, we can rework it.
+$mkdir gitexample
+$git config --global user.name "my name"
+$git config --global user.email "me@me.com"
+$git init
+$git add .
+$git commit -m 'initial commit'
 
-Thanks.
+# Create/Edit an empty file
+$vi readme.txt
 
--Peff
+# add a single line: "this was added in the master branch."
+$git commit -a
+
+# create and checkout a new branch (from master)
+$git branch test
+$git checkout test
+
+# edit the readme.txt file and do not commit
+# add the text:  "this was added in the test branch.", save and exit
+$vi readme.txt
+
+#now switch back to master
+$git checkout master
+$cat readme.txt
+
+#You will see both lines in the master.  
+
+Question #1:
+	Why was this line added in the *master branch?
+
+
+--- even further surprising
+In the master branch, now do a commit
+$git commit -a
+
+cat readme.txt ( you will see the line in the master now that was added in
+the test branch )
+
+Question #2:
+	Why did this happen?
+
+# Now switch back to the test branch
+$git checkout test
+$cat readme.txt
+
+You will only see the one line: "This was added in the master branch"
+
+Question #3:
+	Why did this happen?
+
+and NOT the line added in that branch: "this was added in the test branch"
+<= this line is gone
+
+What is the reason for this?
+
+1) Why do I see uncommitted changes in the branches made off master in the
+master branch?
+2) Why, if I commit them in the master, do the disappear in the branch in
+which they were made?
+
+This is confusing, I would think the * master branch would be left
+untouched.  This would solve issue #2.
+
+
+--
+View this message in context: http://git.661346.n2.nabble.com/Git-Unexpected-behaviour-tp6986736p6986736.html
+Sent from the git mailing list archive at Nabble.com.
