@@ -1,98 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] Restore line limit option in post-receive-email
-Date: Thu, 10 Nov 2011 22:56:07 -0800
-Message-ID: <7v4nybrvug.fsf@alter.siamese.dyndns.org>
-References: <1320993311-27112-1-git-send-email-leongc@alumni.rice.edu>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Disappearing change on pull rebase
+Date: Fri, 11 Nov 2011 07:56:29 +0100
+Message-ID: <4EBCC71D.6000505@viscovery.net>
+References: <3FF1328CB05DB74898F769F1BA17812C3E49B74671@GVW1348EXA.americas.hpqcorp.net> <B5934593-5EE9-4A9F-96D5-0E36B696EFBD@jetbrains.com> <3FF1328CB05DB74898F769F1BA17812C3E49B74699@GVW1348EXA.americas.hpqcorp.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, kpfleming@digium.com
-To: Cheng Leong <leongc@alumni.rice.edu>
-X-From: git-owner@vger.kernel.org Fri Nov 11 07:56:18 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Pitucha, Stanislaw Izaak" <stanislaw.pitucha@hp.com>
+X-From: git-owner@vger.kernel.org Fri Nov 11 07:56:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ROl28-0000ZC-LJ
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Nov 2011 07:56:17 +0100
+	id 1ROl2U-0000iL-WB
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Nov 2011 07:56:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755223Ab1KKG4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Nov 2011 01:56:11 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61077 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755180Ab1KKG4K (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Nov 2011 01:56:10 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E459492B;
-	Fri, 11 Nov 2011 01:56:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4UHhoWi/VuyI5kiAFq6V+9FsuQU=; b=wY8wiP
-	Xrel/r10vY8CJRFCLAcw4E5nqhh0/qIeAmUlFIMxL8RXyOTGRnkYnA7H//JCsKiL
-	VMCpJlfDE1HEWJbqjzc6xYRrGISYuCb+dgM5fBDDmX8BI+7DeU+rA6gzD3E+b6zf
-	wYQRToZg6USvQe83x1z5iBcGreN4ZpLD1xseo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Kvg9uwumB550gNHsPwyqIh+nIyxcCMlx
-	shPj6mECThc8xX6IBrXVwC7lx2fEtnBapDpISFr1cHdfmwm+Sqna4y4k/QH5WW0K
-	zPkgNjYQfFvvP1yf6H9g85rSONKDhVLiu+DShnnLJD/rBZVSgEox+4/GmVjWqfx5
-	Cqrz2gPTzf8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 559A6492A;
-	Fri, 11 Nov 2011 01:56:09 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D3A8C4928; Fri, 11 Nov 2011
- 01:56:08 -0500 (EST)
-In-Reply-To: <1320993311-27112-1-git-send-email-leongc@alumni.rice.edu>
- (Cheng Leong's message of "Fri, 11 Nov 2011 00:35:11 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3BC95890-0C32-11E1-A801-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755276Ab1KKG4e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Nov 2011 01:56:34 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:6058 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755180Ab1KKG4e (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Nov 2011 01:56:34 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1ROl2M-0000NL-Bd; Fri, 11 Nov 2011 07:56:30 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 1359B1660F;
+	Fri, 11 Nov 2011 07:56:29 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.23) Gecko/20110920 Thunderbird/3.1.15
+In-Reply-To: <3FF1328CB05DB74898F769F1BA17812C3E49B74699@GVW1348EXA.americas.hpqcorp.net>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185256>
 
-Cheng Leong <leongc@alumni.rice.edu> writes:
+Am 11/10/2011 14:35, schrieb Pitucha, Stanislaw Izaak:
+> As mentioned in the original mail - the merge commit did have changes.
+> Here's the log of reproducing it. The line containing "2" in changelog
+> is gone from master after pull --rebase.
+> ...
+> disappearing_commit$ git merge --no-ff --no-commit some-branch
+> Automatic merge went well; stopped before committing as requested
+> disappearing_commit$ echo 2 >> changelog 
+> disappearing_commit$ git add changelog
+> disappearing_commit$ git commit
+> [master e41e4c9] Merge branch 'some-branch'
 
-> The hooks.emailmaxlines config currently has no effect. Stop
-> prep_for_email from clobbering the already-initialized maxlines
-> variable in the contrib/hooks/post-receive-email example.
->
-> Signed-off-by: Cheng Leong <leongc@alumni.rice.edu>
-> ---
->  contrib/hooks/post-receive-email |    1 -
->  1 files changed, 0 insertions(+), 1 deletions(-)
->
-> diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-> index ba077c1..ac2e0ed 100755
-> --- a/contrib/hooks/post-receive-email
-> +++ b/contrib/hooks/post-receive-email
-> @@ -85,7 +85,6 @@ prep_for_email()
->  	oldrev=$(git rev-parse $1)
->  	newrev=$(git rev-parse $2)
->  	refname="$3"
-> -	maxlines=$4
->  
->  	# --- Interpret
->  	# 0000->1234 (create)
+This is by design. Rebase does not rebase merge commits because it is
+assumed that merge commits only do what their name implies - to merge
+branches of a forked history. As such, they do not introduce their own
+changes. Follow this rule, i.e., make your change in a separate non-merge
+commit, and you are fine.
 
-Umm, there is another place where $maxlines is used without
-merit. Shouldn't we do something like below as well?
-
- contrib/hooks/post-receive-email |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-index ba077c1..e27ca3c 100755
---- a/contrib/hooks/post-receive-email
-+++ b/contrib/hooks/post-receive-email
-@@ -743,6 +743,6 @@ else
- 	while read oldrev newrev refname
- 	do
- 		prep_for_email $oldrev $newrev $refname || continue
--		generate_email $maxlines | send_mail
-+		generate_email | send_mail
- 	done
- fi
+-- Hannes
