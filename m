@@ -1,97 +1,132 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: old git reference manuals & release notes
-Date: Fri, 11 Nov 2011 23:37:45 -0800
-Message-ID: <7vty69pz92.fsf@alter.siamese.dyndns.org>
-References: <j9kq3r$jk9$1@dough.gmane.org>
+From: Scott Bronson <bronson@rinspin.com>
+Subject: Re: Bash tab completion for _git_fetch alias is broken on Git 1.7.7.1
+Date: Sat, 12 Nov 2011 00:08:59 -0800
+Message-ID: <CAKmUPx6TpbLL2GZq6G1nWPPBe=_SsqJmqXs1o9x5BxqR8y9h2Q@mail.gmail.com>
+References: <CAPXHQbPgepSFHX63F+Nt8TJ+znAaVqzzmSZmJqxj2mekhStO-g@mail.gmail.com>
+	<CAPXHQbND61TyU21ckHwRyMYH=P=H7+GZR5KNY8m+qaMEEhEZKQ@mail.gmail.com>
+	<7vehxgu0fy.fsf@alter.siamese.dyndns.org>
+	<4EBB78C7.101@viscovery.net>
+	<CAPXHQbP4yCzZ96WEKuHsV_8Pny0MRzcLOY7qi5W3_L_5CnY0vA@mail.gmail.com>
+	<20111110151412.GA11479@goldbirke>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Neal Kreitzinger" <neal@rsss.com>
-X-From: git-owner@vger.kernel.org Sat Nov 12 08:45:32 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nathan Broadbent <nathan.f77@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Sat Nov 12 09:11:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RP8HM-0001ml-Aa
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Nov 2011 08:45:32 +0100
+	id 1RP8fz-0001d0-U7
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Nov 2011 09:11:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752171Ab1KLHht (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Nov 2011 02:37:49 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52587 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750951Ab1KLHhs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Nov 2011 02:37:48 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C871A168B;
-	Sat, 12 Nov 2011 02:37:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=t8t/B/PkqBbrRZ83VLRnce7RoLo=; b=w5pVsI
-	Yd0FdDRyJlLibS4oTk2MKbAd58sw5cdZmDLjVWnyiLKNNJjJKgoyqdkLFgiRgjsU
-	eeyFg+r2AobjewFbMgu8aKuZvmFn2Xd0IfbGffzT8XcyHHqaR//1Ti8cksuZY1nr
-	07O7ke3pg+IgXMtto0Dkpx1ZW8bjOg7bQBRnQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eLHZ+teKyzuVp7Kd35KZQMqN0eYSbT3C
-	F1W40j3URstqul4qvZctXiGrOx8P5BXBHq9+bHoxsSxOLcXIcy+GxjEd+oISielk
-	bsKIs1jJYNXA27WXs3M5Luc3v92oROnugHkHpGYNhj3GT2Upif/cY6BafMolnmwj
-	Bd2d4+HtI7o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C058C168A;
-	Sat, 12 Nov 2011 02:37:47 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 22AC01689; Sat, 12 Nov 2011
- 02:37:47 -0500 (EST)
-In-Reply-To: <j9kq3r$jk9$1@dough.gmane.org> (Neal Kreitzinger's message of
- "Fri, 11 Nov 2011 21:44:57 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3749A098-0D01-11E1-932C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751887Ab1KLIJA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Nov 2011 03:09:00 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:37223 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750951Ab1KLIJA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Nov 2011 03:09:00 -0500
+Received: by iage36 with SMTP id e36so4968179iag.19
+        for <git@vger.kernel.org>; Sat, 12 Nov 2011 00:08:59 -0800 (PST)
+Received: by 10.42.72.135 with SMTP id o7mr15541852icj.45.1321085339539; Sat,
+ 12 Nov 2011 00:08:59 -0800 (PST)
+Received: by 10.42.229.200 with HTTP; Sat, 12 Nov 2011 00:08:59 -0800 (PST)
+In-Reply-To: <20111110151412.GA11479@goldbirke>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185303>
 
-"Neal Kreitzinger" <neal@rsss.com> writes:
+2011/11/10 SZEDER G=E1bor <szeder@ira.uka.de>
+> > On Thu, Nov 10, 2011 at 3:09 PM, Johannes Sixt <j.sixt@viscovery.ne=
+t> wrote:
+> > > Am 11/10/2011 4:21, schrieb Junio C Hamano:
+> > > > Nathan Broadbent <nathan.f77@gmail.com> writes:
+> > > >> Dear git mailing list,
+> > > >> I'm assigning the `_git_fetch` bash tab completion to the alia=
+s `gf`,
+> > > >> with the following command:
+> > > >> =A0 =A0 complete -o default -o nospace -F _git_fetch gf
+> > > >> The tab completion then works fine in git 1.7.0.4, but breaks =
+on git
+> > > >> 1.7.7.1, with the following error:
+>
+> I didn't actually tried, but I guess this is a side-effect of da4902a=
+7
+> (completion: remove unnecessary _get_comp_words_by_ref() invocations,
 
-> Before the git-scm.com link to the reference manual went down last month, 
-> the reference manual used to list the links to the manuals for all the major 
-> git versions and the release notes for all git versions.  This made it easy 
-> to review release notes and manuals.  Now the link only shows the latest git 
-> manual.  Is there a way I can access older manuals and release notes?
+I looked into it and this is exactly right.
 
-The HTML version of git documentation pages k.org used to serve were
-specifically formatted to be served at that site, and sadly it is not
-likely they will return anytime soon.
 
-The k.org site kept these files under /pub/software/scm/git/docs/. The
-in-development "master" version of pages were placed directly underneath
-that directory, and the documentation pages for older versions were kept
-in vX.Y.Z subdirectory of that directory.
+> Alternatively, you could easily create your own wrapper function
+> around _git_fetch(), like this:
+>
+> _gf () {
+> =A0 =A0 =A0 =A0local cur prev words cword
+> =A0 =A0 =A0 =A0_get_comp_words_by_ref -n =3D: cur prev words cword
+> =A0 =A0 =A0 =A0_git_fetch
+> }
+>
+>
+> However.
+>
+> Having said all that, I'd like to point out that even if _git_fetch()
+> didn't error out when called for the 'gf' alias, it still wouldn't
+> work properly. =A0After 'gf origin <TAB>' it offers the list of remot=
+es
+> again and it never offers refspecs, because it calls
+> __git_complete_remote_or_refspec(), which
+>
+> =A0- depends on the fact that there must be at least two words ('git'
+> =A0 and 'fetch') on the command line before the remote, and
+>
+> =A0- needs to know the git command (i.e. fetch, pull, or push) to off=
+er
+> =A0 the proper refspecs, but it can't find that out from your alias.
 
-The "master" version of the documents were formatted with a special macro
-defined, and in that section, there were a bunch of links pointing at
-vX.Y.Z/git.html. These links _knew_ about this directory layout to have
-the current one at the top-level with stale ones in versioned directories.
+Very true.  But if you tweak the completion variables, you can fool
+_git_fetch into working perfectly:
 
-I am not involved in the git-scm.com site that shows the documentation,
-but I am guessing that it keeps an up to date copy of the preformatted
-git-htmldocs repository and shows blob contents directly from the tip of
-the history. The preformatted documents in git-htmldocs repository are
-meant to be installed in machines of the end users, and do not expect that
-end users would keep a forest of documents for all versions next to each
-other. For that reason, they are not formatted with the links to older
-versions.
+  _gf () {
+      COMP_LINE=3D"git fetch${COMP_LINE#gf}"
+      let COMP_POINT+=3D7  # strlen('git fetch') - strlen('gf')
+      COMP_WORDS=3D(git fetch "${COMP_WORDS[@]:1}")
+      let COMP_CWORD+=3D1
 
-So if you are asking for a way to access older versions without any effort
-on your part, the answer is no, there is no way to do so. At least, not
-that I know of.
+      local cur words cword prev
+      _get_comp_words_by_ref -n =3D: cur words cword prev
+      _git_fetch
+  }
 
-If you are willing to do some work, you can keep a forest of documentation
-pages for older versions yourself, and format the latest one with the
-special macro defined to have the links that point to older versions. If
-you can host that result somewhere on the net to help others, it would be
-even better. I can tell you how to drive asciidoc to enable the links to
-older versions if you are volunteering ;-)
+Can anyone find a place where this would fail?
+
+It would be pretty easy to write similar wrappers for _git_add,
+_git_branch, and all the rest. [*]
+
+Is there any possibility for a full set of wrappers (with better
+names) to be merged into the git completions?  A number of
+peopl are disappointed that abbreviation completion doesn't
+work anymore, myself included:
+  https://github.com/bobthecow/git-flow-completion/issues/2
+  https://github.com/ndbroadbent/scm_breeze/issues/11
+
+I'm happy to write them if there's a chance they'd be merged.
+Thank you for all the work you've done on the completions G=E1bor!
+
+    - Scott
+
+
+* If I had more time, I'd be tempted to write a function that
+would define all the wrapper functions.
+
+    define_wrapper add, ga
+    define_wrapper branch, gb
+    define_wrapper fetch, gf
+    ...
+
+Nothing a little eval metaprogramming can't solve.  :)
