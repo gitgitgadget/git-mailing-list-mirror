@@ -1,88 +1,75 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH 0/14] resumable network bundles
-Date: Sun, 13 Nov 2011 00:11:31 +0800
-Message-ID: <CALUzUxqsLP11Tcsoc1tzGMfNcMqor2wQF+Yutu3FRiTin4Pnew@mail.gmail.com>
-References: <20111110074330.GA27925@sigill.intra.peff.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 5/5] sequencer: revert d3f4628e
+Date: Sat, 12 Nov 2011 21:43:13 +0530
+Message-ID: <CALkWK0=QHUeKH6ccVLYJVW_RxXbEaLfwafTVzJ94+s49j=8QjA@mail.gmail.com>
+References: <1320510586-3940-1-git-send-email-artagnon@gmail.com>
+ <1320510586-3940-6-git-send-email-artagnon@gmail.com> <20111106004257.GG27272@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Nov 12 17:11:40 2011
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 12 17:13:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RPGB9-0002wx-BQ
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Nov 2011 17:11:39 +0100
+	id 1RPGD7-0003kY-DU
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Nov 2011 17:13:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754532Ab1KLQLe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Nov 2011 11:11:34 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:57491 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754470Ab1KLQLd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Nov 2011 11:11:33 -0500
-Received: by bke11 with SMTP id 11so4286684bke.19
-        for <git@vger.kernel.org>; Sat, 12 Nov 2011 08:11:31 -0800 (PST)
+	id S1754546Ab1KLQNh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Nov 2011 11:13:37 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:39744 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754470Ab1KLQNg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Nov 2011 11:13:36 -0500
+Received: by wwe5 with SMTP id 5so2624097wwe.1
+        for <git@vger.kernel.org>; Sat, 12 Nov 2011 08:13:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=hJoQLGglImtbQvfPDwlrzoPh3iWs9aXaKnCddJs8Mdc=;
-        b=JUznYX1vTjYMyIZ0SPoHb0L7mDZsxeKvOpRqhTdml5NY1zAIBlni2gbF5uggrgCap1
-         RjpbcCrl55hPxsALzhlGcUJgYZLZMZ8L0pC9A+6EeLNBYXKpLKo8SOhst0qkIdVlA49z
-         h6hDrqJTHnOstz3oURh0iFam+SwRikmmA2wjI=
-Received: by 10.205.122.17 with SMTP id ge17mr4719249bkc.109.1321114291436;
- Sat, 12 Nov 2011 08:11:31 -0800 (PST)
-Received: by 10.223.71.206 with HTTP; Sat, 12 Nov 2011 08:11:31 -0800 (PST)
-In-Reply-To: <20111110074330.GA27925@sigill.intra.peff.net>
+        bh=ij3+4MNXT/0FjKUVhhMLP8FffqdqKkHRvniJp0Rmxro=;
+        b=p3ioY2udkMIRQ/QLQvQTQOBP55sAn8vzmKQ6iXzL/9lF5SghPxUekzZuflz2D4Mqeg
+         oHMuVTARhl52srvydGM5uTEOuQCk5Rvsy/lmCLivmccRH7EugsdkMroOq+lfn51r5f7M
+         Ha1bn8wTUDFPhrvIHBd1G5wxlU1LXuB/m+CRQ=
+Received: by 10.216.188.145 with SMTP id a17mr2733051wen.24.1321114415180;
+ Sat, 12 Nov 2011 08:13:35 -0800 (PST)
+Received: by 10.216.19.209 with HTTP; Sat, 12 Nov 2011 08:13:13 -0800 (PST)
+In-Reply-To: <20111106004257.GG27272@elie.hsd1.il.comcast.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185308>
 
-On Thu, Nov 10, 2011 at 3:43 PM, Jeff King <peff@peff.net> wrote:
-> One possible option for resumable clones that has been discussed is
-> letting the server point the client by http to a static bundle
-> containing most of history, followed by a fetch from the actual git r=
-epo
-> (which should be much cheaper now that we have all of the bundled
-> history). =A0This series implements "step 0" of this plan: just letti=
-ng
-> bundles be fetched across the network in the first place.
+Hi Jonathan,
+
+Jonathan Nieder writes:
+> Is this patch just reverting a previous patch? =C2=A0If so, why doesn=
+'t the
+> commit message use the usual format
 >
-> Shawn raised some issues about using bundles for this (as opposed to
-> accessing the packfiles themselves); specifically, this raises the I/=
-O
-> footprint of a repository that has to serve both the bundled version =
-of
-> the pack and the regular packfile.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Revert "<commit message>"
 >
-> So it may be that we don't follow this plan all the way through.
-> However, even if we don't, fetching bundles over http is still a usef=
-ul
-> thing to be able to do. Which makes this first step worth doing eithe=
-r
-> way.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0This reverts commit <unabbreviated object =
+name>.
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0<explanation>
+> [...]
 
-Jeff, this is a great series, I think the cleanups and refactors
-should get integrated independently of the bundle-cloning stuff.
+I'd have loved to use 'git revert d3f4628e', but that ends up creating
+a lot more work: recall the big move made by 1/5?  I'm trying to
+"effectively port the inverse of the changes made by d3f4628e in
+revert.c to sequencer.c" -- would you still like to see a git-revert
+style commit message?  Don't you think it'll be misleading?
 
-One thing I'm not comfortable with is the "flexibility" allowed in
-bundle fetching - servers are allowed to send bundles if they see fit,
-and we have to detect it when they do (if I'm reading the "surprised"
-scenario in patch 9 correctly).
+Sorry about the shoddy commit messages though: I'm polishing the
+series now that I'm convinced that it's heading in the right
+direction.  Hopefully, I'll have more to show soon.
 
-Perhaps we can expose bundle fetching through /objects/info/bundles?
-It could possibly contain information about what bundles are available
-and what revs they contain. If bundles are found, fetch them;
-otherwise, go through the usual ref advertisement and other steps of
-the pack protocol.
+Thanks.
 
-That way, we take out the "surprise" factor in the fetching protocol.
-
---=20
-Cheers,
-Ray Chuan
+-- Ram
