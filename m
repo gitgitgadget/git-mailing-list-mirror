@@ -1,79 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git behaviour question regarding SHA-1 and commits
-Date: Sun, 13 Nov 2011 12:27:57 -0600
-Message-ID: <20111113182757.GA15194@elie.hsd1.il.comcast.net>
-References: <CAJuRt+r9BjYcead6hgzdUT0Bisz1D48cegqkoJ0S537VMYBy_g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Convert many resolve_ref() calls to read_ref*() and
+ ref_exists()
+Date: Sun, 13 Nov 2011 12:30:55 -0800
+Message-ID: <7vk473ojcw.fsf@alter.siamese.dyndns.org>
+References: <7vobwgo3l5.fsf@alter.siamese.dyndns.org>
+ <1321179735-21890-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: vinassa vinassa <vinassa.vinassa@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 13 19:29:52 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 13 21:31:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RPeoP-0000qq-W4
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Nov 2011 19:29:50 +0100
+	id 1RPghk-0000ox-3y
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Nov 2011 21:31:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754234Ab1KMS2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Nov 2011 13:28:08 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:51794 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753403Ab1KMS2G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Nov 2011 13:28:06 -0500
-Received: by iage36 with SMTP id e36so6338990iag.19
-        for <git@vger.kernel.org>; Sun, 13 Nov 2011 10:28:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Ly4usqMGubxKVJvLodp1CdtizwfbRKvx7fdV8w2X8L8=;
-        b=oMDiJYNLt+dVcaPFEnEVDxUcbm8NyYLGHvbAHjyNT7Z/DNeB2DnI7vHx6nYIx9EFcI
-         LFU+5ZU1p7azUWcIJaJ2MUMUutrh+hhAOIQkuMQFATzhZN2UgptOv0OEfv+FpK5clS58
-         dGKxElpQfUlJ0kHpAjvQnuCpnoHm49G3KqLkU=
-Received: by 10.50.41.196 with SMTP id h4mr20841246igl.42.1321208885527;
-        Sun, 13 Nov 2011 10:28:05 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id wo4sm4575421igc.5.2011.11.13.10.28.04
-        (version=SSLv3 cipher=OTHER);
-        Sun, 13 Nov 2011 10:28:05 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAJuRt+r9BjYcead6hgzdUT0Bisz1D48cegqkoJ0S537VMYBy_g@mail.gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1752292Ab1KMUa7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Nov 2011 15:30:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41035 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751775Ab1KMUa6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Nov 2011 15:30:58 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7BD66E20;
+	Sun, 13 Nov 2011 15:30:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=HGFc7nq6aVIq
+	mOI8V0yiMRIuj0I=; b=WFXcrKKPgUHPbqA5ksCQpUX/jJbd9cyuH//J+43m3Jd9
+	orme8qQYBn/ghjzljlFkIRqPIuTXocFSqKN98Icbrf1tB/jw/ZuJTsJfXIQARmmW
+	zueillldoqKZOo1R5qu4v+TN5JfO4fHwerdlo6ZJICYabItO2IEfD/BD3Iw6D7o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=oAorCE
+	41nesRbRG1Cyd22PwXaJixkEVwZljHGZ/J18ifGKwzzqKzbrPEo8Uas5CQQFk7fR
+	EXjRPwAb8BBS94ZzeIaJhWMgToG6sLr0xYNgotRqAjr2J0IFB8Gm8876ILrgD5ql
+	rde5vgK7CxqFpMYnNEYHByu2ASHhoO02+THOY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C333A6E1E;
+	Sun, 13 Nov 2011 15:30:57 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 59A606E1B; Sun, 13 Nov 2011
+ 15:30:57 -0500 (EST)
+In-Reply-To: <1321179735-21890-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sun, 13 Nov
+ 2011 17:22:14 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 646E1050-0E36-11E1-B9A0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185346>
 
-Hi Vinassa,
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-vinassa vinassa wrote:
+> Convert all these call sites to new wrappers to reduce resolve_ref()
+> calls from 57 to 34. If we change resolve_ref() prototype later on
+> to avoid passing static buffer out, this helps reduce changes.
 
-> I am wondering about how git behaves currently, if I kinda win the
-> lottery of the universe, and happen to create a commit with a SHA-1
-> that is already the SHA-1 of another commit in the previous history.
-> However improbable.
+Indeed the result is very nice and it is almost trivial to see that the
+result does not change any behaviour without looking outside the contex=
+t.
 
-That would be great!  You could definitely get an academic paper out
-of it.
-
-> Would that be detected, so that I could just add a newline, and then
-> commit with a different resulting SHA-1,
-> would I just lose one of those commits (hopefully the new one), would
-> I end up with a corrupted repository?
-
-I suspect that one of the two commits would "win" the right to be
-shown by commands like "git log".  A commit made after one of the
-commits participating in the hash collision might be stored as a delta
-against the wrong one in the pack, producing errors when you try to
-access it (which is good, since it helps you find the hash collision
-and you can get a paper and prizes).
-
-Though I haven't tested.  It would be nice to have an md5git (or even
-truncated-sha1-git) program to test this kind of thing with.
-
-Thanks and hope that helps,
-Jonathan
+Thanks.
