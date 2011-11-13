@@ -1,136 +1,119 @@
-From: Gelonida N <gelonida@gmail.com>
-Subject: Re: git diff --numstat <branch> always shows dirty submodules
-Date: Sun, 13 Nov 2011 01:45:25 +0100
-Message-ID: <j9n3v5$ncj$1@dough.gmane.org>
-References: <j9lsc1$4uf$1@dough.gmane.org> <4EBED0ED.7060005@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Copy resolve_ref() return value for longer use
+Date: Sat, 12 Nov 2011 21:57:46 -0800
+Message-ID: <7vehxcpns5.fsf@alter.siamese.dyndns.org>
+References: <CACsJy8Aw4_O_GMiK_D=HTENfxGUXTTzCHqM7FkriqU+mQtVWtA@mail.gmail.com>
+ <1320719428-1802-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 13 01:46:42 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Tony Wang <wwwjfy@gmail.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 13 07:00:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RPODZ-0001Lk-T7
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Nov 2011 01:46:42 +0100
+	id 1RPT7H-0005E0-Op
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Nov 2011 07:00:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752473Ab1KMApm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Nov 2011 19:45:42 -0500
-Received: from lo.gmane.org ([80.91.229.12]:48027 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752187Ab1KMApl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Nov 2011 19:45:41 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RPOCZ-00010D-HY
-	for git@vger.kernel.org; Sun, 13 Nov 2011 01:45:39 +0100
-Received: from unicorn.dungeon.de ([81.56.82.123])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 13 Nov 2011 01:45:39 +0100
-Received: from gelonida by unicorn.dungeon.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 13 Nov 2011 01:45:39 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: unicorn.dungeon.de
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 ""
-In-Reply-To: <4EBED0ED.7060005@web.de>
+	id S1750805Ab1KMF5w convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Nov 2011 00:57:52 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46550 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750752Ab1KMF5v convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Nov 2011 00:57:51 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DADD7B34;
+	Sun, 13 Nov 2011 00:57:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=axPcUI+8Wvhb
+	5skl3oqBnGBtFmQ=; b=luLw6SiY8joZmElVN2bQliwzhw5tIN0bC9yge8DYmi0p
+	Se9dc/lC6Y/6mEvx64EGsGkxyMfACaQV1mF8l6x58H91EF1M8TwqyoosSBk89Adv
+	1JRjtfTVWLoYSgGGI6Sf54yllEWp2csdFRKQ3a3ssTk6d6knTipLfALO8xCdkBM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=uNuTfw
+	pfc4H42vJZLn33haSzTIo6y8Pb1HU6dC8KQA30wSFfXBklpTzjotXLzmeM6JWdzc
+	7hU8Yl/ogAjz1x8b40XqDbvUsOMjPd0i6EWB21g0uw+boAacutYZwWWQ9uTXkOzO
+	hnIpKlEMyQ6v8oNlmWsl853j9sfzh95qonAtI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 45AEE7B33;
+	Sun, 13 Nov 2011 00:57:48 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BC1FB7B32; Sun, 13 Nov 2011
+ 00:57:47 -0500 (EST)
+In-Reply-To: <1320719428-1802-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 8 Nov
+ 2011 09:30:28 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 69CC12D8-0DBC-11E1-BD70-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185321>
 
-Hi Jens,
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Thanks a lot for your answer.
+> resolve_ref() may return a pointer to a static buffer. Callers that
+> use this value outside of a block should copy the value to avoid some
+> hidden resolve_ref() call that may change the static buffer's value.
+>
+> The bug found by Tony Wang <wwwjfy@gmail.com> in builtin/merge.c
+> demonstrates this. The first call is in cmd_merge()
+>
+> branch =3D resolve_ref("HEAD", head_sha1, 0, &flag);
+>
+> Then deep in lookup_commit_or_die() a few lines after, resolve_ref()
+> may be called again and destroy "branch".
+>
+> lookup_commit_or_die
+>  lookup_commit_reference
+>   lookup_commit_reference_gently
+>    parse_object
+>     lookup_replace_object
+>      do_lookup_replace_object
+>       prepare_replace_object
+>        for_each_replace_ref
+>         do_for_each_ref
+>          get_loose_refs
+>           get_ref_dir
+>            get_ref_dir
+>             resolve_ref
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
 
-On 11/12/2011 09:02 PM, Jens Lehmann wrote:
-> Am 12.11.2011 14:29, schrieb Gelonida N:
->> I recently started using submodules and they behave mostly as I like to.
->> Normally I use diff --numstat<branch>
->> to check quickly whether I am aligned with another branch or not.
->> . . . 
->> Is there any quick way flag / helper script / . . .
->> to show differences between two branches without raising the fact, that
->> submodules are dirty?
-> 
-> Yes, there is the "--ignore-submodules" command line option and the
-> diff.ignoreSubmodules (which can be set globally and/or per repo) and
-> submodule.<name.>ignore configuration settings. They can be set to
-> "untracked", "dirty" or "all" to control what you want to see.
-I tried this immediately and at works perfectly for git diff.
-Please see also my comments at the end of this post
+Thanks.
 
-> 
-> Did you check areas in the Documentation where you did expect to find
-> them mentioned but they weren't? Then please say so that we can fix
-> that.
-> 
+The above log message with the callchain would be a perfect explanation
+for a patch to fix builtin/merge.c and nothing else, but among 50+
+callsites of resolve_ref(), only 5 places are modified in this patch, a=
+nd
+it is not explained in the commit log message at all how they were chos=
+en.
+Were the other 40+ or so places inspected and deemed to be OK? Or is th=
+is
+"I just did a few of them in addition to the immediate need of fixing w=
+hat
+was reported, and the rest are left as an exercise to the readers" patc=
+h?
 
-Apologies. My bad. I must have read the output of
-git help diff
-too quickly.
-It is there plain as the day. :-(
+Some variables that receive xstrdup()'ed result with this patch are
+globals whose lifetime lasts while the process is alive, and I do not
+think it is a huge problem that this patch does not free it, but it see=
+ms
+the patch does not free some other function scope variables once their =
+use
+is done even when it is fairly easy to do so.
 
->>> From a user perspective I don't see why this is reported.
->> I am not being warned about dirty files in the top level repository
-> 
-> This is so you can't forget to add new files inside the submodule,
-> which can lead to breakage when other people clone the superproject
-> but won't get the new files from the submodule because you didn't
-> commit them there.
-
-Well I wouldn't expect to find this kind of info (by default) in the
-output of a git-diff.
-
-If you git-diff two branches of a project without submodules it doesn't
-tell you either, that you have untracked files in the repository.
-
-
-I would have expected this kind of output just as result of
-'git status'
-(as it is already today)
-#	modified:  submodule (untracked content)
-
-Git status reports untracked files in the super project AND in it
-reports, that there are untracked files in the submodule.
-So this seems to be more consistent to me than the diff case.
-
-
-On the other hand I would consider it usefult if git status could
-optionally report the complete list of untracked files also for the
-submodules
-(So far I didn't search in depth  in doc whether there is a switch
-for it.)
-
-
-A first shot was reading the output of git help status:
->       If status.submodulesummary is set to a non zero number or true (identical to -1 or an unlimited number), the
->        submodule summary will be enabled for the long format and a summary of commits for modified submodules will
->        be shown (see --summary-limit option of git-submodule(1)).
-
-I put thus following lines in .git/config of my repository
-status]
-    submodulesummary = true
-
-
- but the untracked files of my submodule were not reported. (will follow
-the doc of git-submodule)
-
-
-
-What is also confusing to me is, that the setting
-diff.ignoreSubmodules is also being used by git status.
-
-There seems to be no variable
-status.ignoreSubmodules
-
-So it seems impossible (without aliases) to
-have git diff NOT report the untracked files,
-but git status report them.
-
-I guess I'll go for a solution with git aliases
+How much overhead would it incur if we return xstrdup()'ed memory from =
+the
+resolve_ref() and make it the caller's responsibility to free it? Would=
+ it
+make the calling site too ugly?
