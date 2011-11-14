@@ -1,105 +1,63 @@
-From: Ted Percival <ted.percival@quest.com>
-Subject: [PATCH] svn: Create config options for common args
-Date: Mon, 14 Nov 2011 13:25:10 -0700
-Message-ID: <1321302310-28793-1-git-send-email-ted.percival@quest.com>
+From: Erik Carstensen <mandolaerik@gmail.com>
+Subject: mergetool's test for rerere seems to be incorrect
+Date: Mon, 14 Nov 2011 21:26:18 +0100
+Message-ID: <CALeBojRuZP3dbEs=rPX1E5p=oD43_yJO_Ec=Pe2SRpjG-rH2Vg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Ted Percival <ted.percival@quest.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 14 21:25:56 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 14 21:26:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQ36F-0005b9-DW
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 21:25:51 +0100
+	id 1RQ36n-0005tn-L8
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 21:26:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756210Ab1KNUZt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Nov 2011 15:25:49 -0500
-Received: from alvetxw01.quest.com ([12.106.87.93]:24077 "EHLO
-	alvetxw01.quest.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756206Ab1KNUZr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2011 15:25:47 -0500
-Received: from ALVHTXW01.prod.quest.corp (10.1.135.17) by alvetxw01.quest.com
- (10.1.100.93) with Microsoft SMTP Server (TLS) id 14.1.255.0; Mon, 14 Nov
- 2011 12:18:50 -0800
-Received: from slc21znqg1.ipv6.vintela.com (10.1.0.6) by
- ALVHTXW01.prod.quest.corp (10.1.135.27) with Microsoft SMTP Server id
- 14.1.255.0; Mon, 14 Nov 2011 12:25:46 -0800
-Received: from ted by slc21znqg1.ipv6.vintela.com with local (Exim 4.72)
-	(envelope-from <ted@slc21znqg1.prod.quest.corp>)	id 1RQ36A-0007V7-5I; Mon, 14
- Nov 2011 13:25:46 -0700
-X-Mailer: git-send-email 1.7.7.1
+	id S1756195Ab1KNU0T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Nov 2011 15:26:19 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:38992 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754537Ab1KNU0T (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2011 15:26:19 -0500
+Received: by ggnb2 with SMTP id b2so6580790ggn.19
+        for <git@vger.kernel.org>; Mon, 14 Nov 2011 12:26:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=anJltGZW+GUCW6m7ieQtn+BAebrizaN1FMpPHIRpbs0=;
+        b=HZ6WNkbwRBXeAP3sol43cTPf3sDUt0B3pz4DhnXDGhvLGqYlB6zy7V23FkWqmmDAju
+         +R8EJZAgBd+jKjQR9hMruqDCtg6NgzYoeSAvNByaeKu8+WSFUcYZgYlYOOwZ3LZzXNNo
+         kxbDJYwCbBL+ktbzaO1PEENGf6fc//L3yNep0=
+Received: by 10.101.177.9 with SMTP id e9mr2339019anp.152.1321302378401; Mon,
+ 14 Nov 2011 12:26:18 -0800 (PST)
+Received: by 10.100.143.19 with HTTP; Mon, 14 Nov 2011 12:26:18 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185398>
 
-These config options may be set to apply to all commands on the
-repository in lieu of providing the command-line options each time:
-  svn.localtime: --localtime
-  svn.useLogAuthor: --use-log-author
-  svn.addAuthorFrom: --add-author-from
+Hi,
 
-Since these flags apply to multiple operations, it's easier to set them
-once rather than remembering to use them every time for every operation.
+Occasionally when I use mergetool in a conflicted state ('git status'
+says it's a conflict), nothing happens.
 
-Signed-off-by: Ted Percival <ted.percival@quest.com>
----
- Documentation/git-svn.txt |   10 ++++++++++
- git-svn.perl              |    3 +++
- 2 files changed, 13 insertions(+), 0 deletions(-)
+By bisection I found that bb0a484e985ef8d9bbbbeb172b1fcf4982634bef is
+the offending commit.
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 34ee785..20f8edd 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -113,6 +113,9 @@ repository you cloned from, but if you wish for your local Git
- repository to be able to interoperate with someone else's local Git
- repository, either don't use this option or you should both use it in
- the same local timezone.
-++
-+[verse]
-+config key: svn.localtime
- 
- --parent;;
- 	Fetch only from the SVN parent of the current HEAD.
-@@ -596,12 +599,19 @@ creating the branch or tag.
- 	When retrieving svn commits into git (as part of 'fetch', 'rebase', or
- 	'dcommit' operations), look for the first `From:` or `Signed-off-by:` line
- 	in the log message and use that as the author string.
-++
-+[verse]
-+config key: svn.useLogAuthor
-+
- --add-author-from::
- 	When committing to svn from git (as part of 'commit-diff', 'set-tree' or 'dcommit'
- 	operations), if the existing log message doesn't already have a
- 	`From:` or `Signed-off-by:` line, append a `From:` line based on the
- 	git commit's author string.  If you use this, then `--use-log-author`
- 	will retrieve a valid author string for all commits.
-++
-+[verse]
-+config key: svn.addAuthorFrom
- 
- 
- ADVANCED OPTIONS
-diff --git a/git-svn.perl b/git-svn.perl
-index e30df22..d69b0d7 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -21,6 +21,9 @@ $Git::SVN::default_repo_id = 'svn';
- $Git::SVN::default_ref_id = $ENV{GIT_SVN_ID} || 'git-svn';
- $Git::SVN::Ra::_log_window_size = 100;
- $Git::SVN::_minimize_url = 'unset';
-+$Git::SVN::_localtime = Git::config_bool('svn.localtime');
-+$Git::SVN::_add_author_from = Git::config_bool('svn.addAuthorFrom');
-+$Git::SVN::_use_log_author = Git::config_bool('svn.useLogAuthor');
- 
- if (! exists $ENV{SVN_SSH} && exists $ENV{GIT_SSH}) {
- 	$ENV{SVN_SSH} = $ENV{GIT_SSH};
--- 
-1.7.7.1
+I have rerere.enabled unset, but I did find an empty file MERGE_RR in
+.git/, which explains my problem: mergetool chooses to use rerere
+because it finds the MERGE_RR file, but rerere just exits silently
+because it's not enabled.
+
+Wouldn't it make sense to restrict mergetool's use of rerere to the
+case when rerere.enabled is set?
+
+I'm also a little confused about why the MERGE_RR file appeared there
+in the first place. I can see that empty MERGE_RR files, with
+different timestamps, have ended up in various other of my git
+repositories as well. I never used rerere in these repos, and the only
+non-git tools I have used for version control are stgit and kdiff3.
+
+Erik
