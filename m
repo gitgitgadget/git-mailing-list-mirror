@@ -1,84 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [RFC] deprecating and eventually removing "git relink"?
-Date: Mon, 14 Nov 2011 02:24:32 -0800
-Message-ID: <7vmxbzj927.fsf@alter.siamese.dyndns.org>
+Date: Mon, 14 Nov 2011 05:34:52 -0500
+Message-ID: <20111114103451.GA10847@sigill.intra.peff.net>
 References: <7v4ny7mtbx.fsf@alter.siamese.dyndns.org>
  <buomxbzutjm.fsf@dhlpc061.dev.necel.com>
+ <CAD=rjTXgH+AivmK+zLurQVC+=p1UYqFy_p=wBF-1-TOQ=Cqjtw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Nov 14 11:24:42 2011
+To: Simon Brenner <olsner@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 14 11:35:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RPtiS-0007nv-Ek
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 11:24:41 +0100
+	id 1RPtsT-0004IL-TF
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 11:35:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754724Ab1KNKYg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Nov 2011 05:24:36 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41128 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753324Ab1KNKYf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2011 05:24:35 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E0F151D0;
-	Mon, 14 Nov 2011 05:24:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=50klqjAlqmYuiuXAIiXj+4v08JI=; b=dMzBsdcQbS6avG37LUxj
-	d/1WmpM3xKgzIAyqzfuDJbNj+0+Fj4B0nCcu43GS3tJk4rjbwavDWLyd2GR9nBwl
-	vcfwuJvG058uxbxr6UYu12THOLRIE0Ofs7qPaklmHAkVOo0YDA9whjWN7W0ky1kQ
-	vECraDdY4ynjcSpy4lUKGlg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=l54s84XY+tSsVUeyHCNgnSB648L0uHAoOOlaHRw2rIxh5j
-	4P7OcFZuR27GKn/7AzoGPCNo6MPdlf2DLDZSYFmsmqgWE5X4VkJ6Baqrz19Q+pUD
-	j4zXumcURA9aYaj0psVC1JxzjQhlUHNtNivotaIvyMj9CAQ0mC1vrmzkF8LWQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 65AFF51CF;
-	Mon, 14 Nov 2011 05:24:34 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC91651CE; Mon, 14 Nov 2011
- 05:24:33 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D8A5B896-0EAA-11E1-B22A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753541Ab1KNKe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Nov 2011 05:34:57 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:40970
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752624Ab1KNKe4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2011 05:34:56 -0500
+Received: (qmail 27945 invoked by uid 107); 14 Nov 2011 10:35:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 14 Nov 2011 05:35:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Nov 2011 05:34:52 -0500
+Content-Disposition: inline
+In-Reply-To: <CAD=rjTXgH+AivmK+zLurQVC+=p1UYqFy_p=wBF-1-TOQ=Cqjtw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185373>
 
-Miles Bader <miles@gnu.org> writes:
+On Mon, Nov 14, 2011 at 09:48:07AM +0100, Simon Brenner wrote:
 
-> It might be nice to have a mechanism where new objects would update
-> the _alternate_ rather than the object-store in the tree where the
-> command was run.
+> On Mon, Nov 14, 2011 at 7:06 AM, Miles Bader <miles@gnu.org> wrote:
+> > It might be nice to have a mechanism where new objects would update
+> > the _alternate_ rather than the object-store in the tree where the
+> > command was run... then you could easily have a bunch of trees using a
+> > central object store without needing to update the central store
+> > occasionally by hand (and do gc in its "clients")...
+> 
+> This sounds like a nice way forward: replace/extend the current
+> alternates system with support for a shared object store that is
+> "intelligently" shared so that it can be gc:d based on all refs from
+> all referring repositories. I imagine it would be something very much
+> like a bare repository - except it wouldn't have any refs of its own,
+> just a list of other repositories it should search for refs when
+> GC:ing.
 
-With the alternate mechanism, your borrowing is read-only and that is
-exactly why you can borrow from other peoples' repositories to which you
-have no write permission to.
+Yes, I think that is sensible. I'm not sure there is even any core git
+code to be written. I think a wrapper that does the following would
+probably work:
 
-What you are suggesting is fundamentally different from the alternates
-mechanism. I am not saying it is better or worse, though. Not yet at this
-point in this message.
+  1. Make new repo groups. E.g.:
 
-> .. then you could easily have a bunch of trees using a
-> central object store without needing to update the central store
-> occasionally by hand (and do gc in its "clients")...
+       $ git share init foo
 
-If you write objects to the central store, "gc" in the "clients" will be a
-no-op because they do not have their own objects. But instead, crufts your
-"clients" accumulate will be in the central store. There is still need for
-"gc" at the central store to remove things that are no longer used by any
-client, isn't it? Unless you declare that you do not care because perhaps
-the central store is large enough, that is.
+     which would be implemented something like:
 
-At least with the alternates, running "gc" in the "clients" is a safe
-operation and the only change necessary is to make fsck/repack aware of
-the repositories that borrow from the repository these commands are run,
-and the logic to do so is exactly the same as the case to run "gc" in your
-central store, I would think.
+       ROOT=$HOME/.git-share
+       git init --bare $ROOT/$1
+
+  2. Add a repo to a group.
+
+       $ git share add foo
+
+     implemented as:
+
+       echo $ROOT/$1/objects >>.git/objects/info/alternates
+       git --git-dir=$ROOT/$1 config --add share.child $PWD
+
+  3. Compact a group.
+
+       $ git share compact foo
+
+     implemented as:
+
+       # delete any existing refs
+       git for-each-ref --format='%(refname)' | xargs git update-ref -d
+
+       # now make new refs for each child
+       n=1
+       for dir in `git config --all share.child`; do
+              if ! test -d $dir; then
+                      echo >&2 "warning: $dir went away"
+                      continue
+              fi
+              git fetch $dir refs/*:refs/$1/*
+              n=$(($n + 1))
+       done
+
+       # and then repack/prune
+       git repack -ad
+
+       # and then gc each child, dropping anything in the share
+       for dir in `git config --all share.child`; do
+              git --git-dir=$dir gc
+       done
+
+I'm sure I'm missing a corner case or two, and of course there are
+quoting issues and error handling missing. But the point is, I don't
+think there's a real reason that the UI can't wrap the existing
+mechanism, creating a momentary list of refs and pruning based on that.
+
+One issue with this scheme (or most similar schemes) is that child repos
+are uniquely identified by their directory name. In the absence of
+alternates, it's perfectly reasonable to do:
+
+  git init; hack hack hack; commit commit commit
+  cd .. ; mv project new-project-name
+
+but here it would break the shared repo's link to the child (which is
+not just inconvenient, but dangerous, as we will not respect its refs
+when pruning). Probably the "warning" above should actually error out
+and force the user to say "yes, I deleted this child" or "no, I moved it
+here".
+
+You could try to be clever with assigning each child a UUID, but then
+you have to resort to grepping the filesystem for the UUID to detect a
+move. Which is complex and still not foolproof (i.e., if you don't find
+it, is it because the repo was deleted, or because it got moved
+somewhere that we didn't look?).
+
+-Peff
