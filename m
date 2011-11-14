@@ -1,73 +1,82 @@
-From: Richard Hartmann <richih.mailinglist@gmail.com>
-Subject: Revisiting metadata storage
-Date: Mon, 14 Nov 2011 01:07:16 +0100
-Message-ID: <CAD77+gQB+0zJG62jrtPn_MwLLR7zgH=5gBtkvPxrKgiLPZsbsw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [RFC] deprecating and eventually removing "git relink"?
+Date: Sun, 13 Nov 2011 16:38:26 -0800
+Message-ID: <7v4ny7mtbx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 14 01:07:45 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 14 01:38:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RPk5Q-00058O-Rv
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 01:07:45 +0100
+	id 1RPkZH-0005Q1-Nt
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 01:38:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752130Ab1KNAHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Nov 2011 19:07:39 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:58224 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753298Ab1KNAHj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Nov 2011 19:07:39 -0500
-Received: by ggnb2 with SMTP id b2so5669869ggn.19
-        for <git@vger.kernel.org>; Sun, 13 Nov 2011 16:07:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=lF5NzDpL2u2O5ojvQk40Hssm5bT4bglprlTrd1cnpJc=;
-        b=L49pMXfTQt8BdC8Lju2PIz8ok68kfJb0hDFpasP0AUGEZRfxDLo+w3EHMA/kv63m5K
-         kzZW63asljr/NmuTXWdK1i9Z30gTncOuv1JyhpfJslZmNp/PeOB54peUQoXqeubtm70F
-         63j8NDrqkOjYRcAeR4e+hQhKD5KvU9Px+Nm/k=
-Received: by 10.182.31.78 with SMTP id y14mr4532964obh.25.1321229258293; Sun,
- 13 Nov 2011 16:07:38 -0800 (PST)
-Received: by 10.182.56.135 with HTTP; Sun, 13 Nov 2011 16:07:16 -0800 (PST)
+	id S1752399Ab1KNAia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Nov 2011 19:38:30 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55911 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751863Ab1KNAi3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Nov 2011 19:38:29 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB7D16966;
+	Sun, 13 Nov 2011 19:38:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=S
+	8CgIq2lyLBZ18ctKYEy0BP0EyE=; b=cren0QsHSP5GakN7JlPM73jS6e1QshcSv
+	hET83fglLf3+qFVNRzCbItnILpU+svMocq7AmRhS7GsbLzFK9hy+SAKlHaH59qvl
+	JBzt601SAxWd1ipiCJFzZItei0Pd4CsioqF9sgEAwpAE/RrjoOecEhqadLt5tp1a
+	S9fbJFmyAY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=w+A
+	UCMefDGaY41jEmv/uPOWB0OQnw3y7/iLrAupnfSHDDqKcWaXbR0qa+z82xgXRyo9
+	OgYbzRl6NCMYCCRsYN8OhlJRySlWkzH1JKZfg+vMxqkaro2ux5OqOqf+JGKtrEE3
+	GDkSFuOUINlOZF+DmwTFGDfX/BCyPxunRC1tvUFc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D3EB96964;
+	Sun, 13 Nov 2011 19:38:28 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 672906963; Sun, 13 Nov 2011
+ 19:38:28 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F859140A-0E58-11E1-9CBE-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185357>
 
-Hi all,
+What do people think about the subject?  As to the timeframe I am thinking
+about deprecation at v1.7.9 (late January 2012) and removal at v1.7.12
+(early August 2012) [*1*].
 
-every few months, a thread seems to pop up regarding metadata storage,
-be it owner, mtime, xattr or what have you.
+The script more-or-less outlived its usefulness in July 2005 when
+packfiles were introduced.
 
-As of today there is (ttbomk) still no sane way to carry & restore
-metadata across different repositories.
+You are better off repacking the repositories in the first place before
+accumulating so many loose object that linking the same ones between the
+repositories would give you major saving.  It is theoretically possible
+that two repositories happen to have the same pack and it would give you
+saving to hardlink them together, but even in that case, the saving would
+not survive repacking unless they are marked with a ".keep" marker, which
+the script does not do anyway.
 
-metastore[1] is closest to a working solution but its storage format
-is binary and merge-unfriendly and it does not store mtime which is a
-deal-breaker, for me.
-I tried extend & fix metastore, but failed. Others looked at it,
-deemed it possible and lost interest and/or their development box.
+A more useful feature to attack a similar issue would be to make it easier
+to use "--reference" aka "objects/info/alternates". Namely:
 
-I know from Joey Hess [2] that the GitTogether 2011 saw some
-discussion about metadata, but I was unable to find any follow-up to
-this issue.
+ (1) devise a way to make it safer by allowing the repository whose
+     objects are borrowed by other repositories a way to protect objects
+     that it does not need but may be needed by others from repacking; and
 
+ (2) allowing two repositories that started independently to share objects
+     using the alternates mechanism after the fact.
 
-To make a long story short: Does anyone have a working solution,
-today? If not, is anyone working on one? If not, is anyone interested
-in working on one? And is there any follow-up to the GitTogether
-discussion?
-
-The feature set of any solution should probably include save, display,
-diff, and apply on a per-metadata and per-file basis.
+but that is a separate issue.
 
 
-Thanks,
-Richard
+[Footnote]
 
-[1] http://david.hardeman.nu/software.php
-[2] http://kitenet.net/~joey/blog/entry/GitTogether2011/
+*1* Both dates were derived from a mechanical "9-week per release cycle".
