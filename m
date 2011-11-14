@@ -1,75 +1,64 @@
-From: Simon Brenner <olsner@gmail.com>
+From: Chris Packham <judge.packham@gmail.com>
 Subject: Re: [RFC] deprecating and eventually removing "git relink"?
-Date: Mon, 14 Nov 2011 09:48:07 +0100
-Message-ID: <CAD=rjTXgH+AivmK+zLurQVC+=p1UYqFy_p=wBF-1-TOQ=Cqjtw@mail.gmail.com>
-References: <7v4ny7mtbx.fsf@alter.siamese.dyndns.org>
-	<buomxbzutjm.fsf@dhlpc061.dev.necel.com>
+Date: Mon, 14 Nov 2011 22:03:07 +1300
+Message-ID: <4EC0D94B.3060805@gmail.com>
+References: <7v4ny7mtbx.fsf@alter.siamese.dyndns.org> <buomxbzutjm.fsf@dhlpc061.dev.necel.com> <7v62inkymg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 14 09:48:18 2011
+Content-Transfer-Encoding: 7bit
+Cc: Miles Bader <miles@gnu.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 14 10:03:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RPsD9-0000hl-1v
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 09:48:15 +0100
+	id 1RPsRp-0006EG-8E
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 10:03:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753203Ab1KNIsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Nov 2011 03:48:09 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:42024 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752723Ab1KNIsI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2011 03:48:08 -0500
-Received: by yenr9 with SMTP id r9so4911517yen.19
-        for <git@vger.kernel.org>; Mon, 14 Nov 2011 00:48:07 -0800 (PST)
+	id S1753346Ab1KNJDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Nov 2011 04:03:11 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:36929 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753203Ab1KNJDK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2011 04:03:10 -0500
+Received: by gyc15 with SMTP id 15so4661981gyc.19
+        for <git@vger.kernel.org>; Mon, 14 Nov 2011 01:03:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=cEgm3Cpcj8gMbvXMCmt53SgwKm0YdSf4DxQLOdEtrH4=;
-        b=aZ6yxrdvNar8m41zQ0jGpE8hHrP7BalQ2pPqTatCCsJiyptrpxwUDmL2t14eS7R+AB
-         oZb3OzNGcJEKIJT7HQQ0oBHSf33h5HaUmqU7yTSWwcF45gnmFRgK3rdU6H3FyNwZexsM
-         vnf/oJ+lnNO33UP2MpTk4ixmqd56YuehGnDuo=
-Received: by 10.147.157.21 with SMTP id j21mr2472662yao.36.1321260487740; Mon,
- 14 Nov 2011 00:48:07 -0800 (PST)
-Received: by 10.146.155.12 with HTTP; Mon, 14 Nov 2011 00:48:07 -0800 (PST)
-In-Reply-To: <buomxbzutjm.fsf@dhlpc061.dev.necel.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=2+f0Wjo1VDHT+9oidQ5N5MNrWbrlCBQ1iof7Lp2FL18=;
+        b=F7FgGPjAR9Q8tkcUKMzGaYNvkHTsNV9GX8E/bqOK+IeNECE+wL0eA6ddMHzHBx3ZsX
+         VFqpoK4UYB+iBjMU91LoNm+6DY2kja5G8OWSHneB7dLES1tBJvh6cqnUgov3GCrVKlnC
+         L+bFHEImldT/6ez9maiJ8binRg5orKqG6FqIE=
+Received: by 10.68.38.71 with SMTP id e7mr47900356pbk.88.1321261389590;
+        Mon, 14 Nov 2011 01:03:09 -0800 (PST)
+Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
+        by mx.google.com with ESMTPS id f2sm26539796pbg.14.2011.11.14.01.03.06
+        (version=SSLv3 cipher=OTHER);
+        Mon, 14 Nov 2011 01:03:08 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.2.23) Gecko/20110920 SUSE/3.1.15 Thunderbird/3.1.15
+In-Reply-To: <7v62inkymg.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185370>
 
-I think one of the most annoying aspects of alternates (beyond the
-hassle of adding/removing them except using clone --reference) is the
-danger of losing data if you aren't absolutely sure that your
-alternate is stable and won't ever lose references to objects.
+On 14/11/11 19:27, Junio C Hamano wrote:
+> Miles Bader <miles@gnu.org> writes:
+> 
+>> Do you mean a more elaborate UI that does this nicely...?
+> 
+> Yes, that is what I meant. I also have a feeling that people would prefer
+> to have an option that treats these two repositories equally; your
+> illustration makes one a subordinate to the other.
 
-If the alternate just had links to the referring repositories, I think
-this hole could be neatly closed.
+Not sure if it's what you're after but there was this patch [1] that I
+was kicking around a while back. I've still got the code in an old
+branch if there is interest in resurrecting it. It looks like I started
+addressing Junio's comments and never posted v3.
 
-On Mon, Nov 14, 2011 at 7:06 AM, Miles Bader <miles@gnu.org> wrote:
-> It might be nice to have a mechanism where new objects would update
-> the _alternate_ rather than the object-store in the tree where the
-> command was run... then you could easily have a bunch of trees using a
-> central object store without needing to update the central store
-> occasionally by hand (and do gc in its "clients")...
-
-This sounds like a nice way forward: replace/extend the current
-alternates system with support for a shared object store that is
-"intelligently" shared so that it can be gc:d based on all refs from
-all referring repositories. I imagine it would be something very much
-like a bare repository - except it wouldn't have any refs of its own,
-just a list of other repositories it should search for refs when
-GC:ing.
-
-The object store currently built into each git repository could even
-become a special case of that: a shared object store (that happens to
-reside under .git) with a single referring repository (the parent .git
-dir). If the location of the object store is configurable, clone
---reference could simply point the new repository directly to the
-shared store instead of ever setting up a local object store.
-
-// Simon
+[1] http://article.gmane.org/gmane.comp.version-control.git/143164
