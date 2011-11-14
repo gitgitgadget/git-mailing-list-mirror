@@ -1,82 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [RFC] deprecating and eventually removing "git relink"?
-Date: Sun, 13 Nov 2011 16:38:26 -0800
-Message-ID: <7v4ny7mtbx.fsf@alter.siamese.dyndns.org>
+From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+Subject: Re: Git:  CVS to Git import
+Date: Sun, 13 Nov 2011 19:44:03 -0700
+Message-ID: <20111114024403.GA2905@comcast.net>
+References: <1321053453892-6987037.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 14 01:38:36 2011
+Cc: git@vger.kernel.org
+To: Jvsrvcs <jvsrvcs@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 14 03:50:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RPkZH-0005Q1-Nt
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 01:38:36 +0100
+	id 1RPmcT-0005iM-4o
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 03:50:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752399Ab1KNAia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Nov 2011 19:38:30 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55911 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751863Ab1KNAi3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Nov 2011 19:38:29 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB7D16966;
-	Sun, 13 Nov 2011 19:38:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=S
-	8CgIq2lyLBZ18ctKYEy0BP0EyE=; b=cren0QsHSP5GakN7JlPM73jS6e1QshcSv
-	hET83fglLf3+qFVNRzCbItnILpU+svMocq7AmRhS7GsbLzFK9hy+SAKlHaH59qvl
-	JBzt601SAxWd1ipiCJFzZItei0Pd4CsioqF9sgEAwpAE/RrjoOecEhqadLt5tp1a
-	S9fbJFmyAY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=w+A
-	UCMefDGaY41jEmv/uPOWB0OQnw3y7/iLrAupnfSHDDqKcWaXbR0qa+z82xgXRyo9
-	OgYbzRl6NCMYCCRsYN8OhlJRySlWkzH1JKZfg+vMxqkaro2ux5OqOqf+JGKtrEE3
-	GDkSFuOUINlOZF+DmwTFGDfX/BCyPxunRC1tvUFc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D3EB96964;
-	Sun, 13 Nov 2011 19:38:28 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 672906963; Sun, 13 Nov 2011
- 19:38:28 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F859140A-0E58-11E1-9CBE-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753267Ab1KNCt5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Nov 2011 21:49:57 -0500
+Received: from qmta15.emeryville.ca.mail.comcast.net ([76.96.27.228]:57719
+	"EHLO qmta15.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752859Ab1KNCt4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Nov 2011 21:49:56 -0500
+X-Greylist: delayed 344 seconds by postgrey-1.27 at vger.kernel.org; Sun, 13 Nov 2011 21:49:56 EST
+Received: from omta09.emeryville.ca.mail.comcast.net ([76.96.30.20])
+	by qmta15.emeryville.ca.mail.comcast.net with comcast
+	id wqSk1h00F0S2fkCAFqk5B0; Mon, 14 Nov 2011 02:44:05 +0000
+Received: from mmogilvi.homeip.net ([24.8.44.9])
+	by omta09.emeryville.ca.mail.comcast.net with comcast
+	id wqkN1h00V0BsQcg8VqkNWQ; Mon, 14 Nov 2011 02:44:23 +0000
+Received: by mmogilvi.homeip.net (Postfix, from userid 501)
+	id D196AC62001; Sun, 13 Nov 2011 19:44:03 -0700 (MST)
+Content-Disposition: inline
+In-Reply-To: <1321053453892-6987037.post@n2.nabble.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185359>
 
-What do people think about the subject?  As to the timeframe I am thinking
-about deprecation at v1.7.9 (late January 2012) and removal at v1.7.12
-(early August 2012) [*1*].
+On Fri, Nov 11, 2011 at 03:17:33PM -0800, Jvsrvcs wrote:
+> Git:  CVS to Git import
+> 
+> We are moving from CVS to Git and want to know if anyone has had any
+> experience there doing this and could share do's  / dont's, best practices
+> when doing the initial import.
 
-The script more-or-less outlived its usefulness in July 2005 when
-packfiles were introduced.
+Some ideas:
 
-You are better off repacking the repositories in the first place before
-accumulating so many loose object that linking the same ones between the
-repositories would give you major saving.  It is theoretically possible
-that two repositories happen to have the same pack and it would give you
-saving to hardlink them together, but even in that case, the saving would
-not survive repacking unless they are marked with a ".keep" marker, which
-the script does not do anyway.
+I wouldn't trust "git cvsimport".  In my testing, it was actaully fairly
+common for the resulting git tags and branches to be inconsistent with the
+original CVS tags and branches: checking out a tag from CVS and the same
+tag from GIT, the trees were often different.  See the manpage
+for a list of some of the known issues. 
 
-A more useful feature to attack a similar issue would be to make it easier
-to use "--reference" aka "objects/info/alternates". Namely:
+Use cvs2git instead.
 
- (1) devise a way to make it safer by allowing the repository whose
-     objects are borrowed by other repositories a way to protect objects
-     that it does not need but may be needed by others from repacking; and
+Write up your own script to do the conversion.  Iteratively inspect
+the results, find ways to fix up anything you don't like,
+and re-run the script.  Any "fixups" you want should be
+scripted, so that you can try different things, examine
+the result.  Then when the actual "real" conversion
+happens, you have a minimal amount of downtime as you your
+already-tested script runs.
 
- (2) allowing two repositories that started independently to share objects
-     using the alternates mechanism after the fact.
+The exact fixups your script should do depend on your
+circumstances, but in my case, some of things my script did included:
 
-but that is a separate issue.
+  - First, copy the CVS repository, and work with the copy:
+  - Delete some ",v" files we didn't interested in importing into git for
+    various reasons.
+  - Tweak some CVS commit timestamps in some files (such as a version
+    file), to reduce import odditities.  (The most common oddities
+    resulted from an old CVS workflow that would often sequence:
+    (a) checkout, (b) modify version number file, (c) build, (d) commit
+    the new version number file, and (e) tag the sandbox.  It was
+    was moderately common for other changes (in other files) to
+    be committed between (a) and (d), which will either cause
+    strange import artifacts or actually break import tools, due to
+    the out-of-order timestamps.  Tweaking back the timestamp in the
+    CVS file typically allows the import tool to avoid the
+    oddity.  Completely cleaning this up would have been a
+    lot of work, so I focused just on just improving recent
+    history.)  (sed -i ...)
+  - Do the bulk of the import work using cvs2git.
+  - Graft on appropriate merge history (multiple parents) for
+    CVS merges.  To save time, I only worried about recent merges.
+     - If you have a nice consistent tag naming
+       convention, there are ways to do this as part of cvs2git.
+       Unfortunately, we didn't.
+     - Do not refer to a previous run's commit SHA-1's; they'll
+       likely change as things change.  Use CVS tags instead.
+     - git rev-parse is useful for looking up current references
+       to construct graft lines.
+  - Use git filter-branch to both make the above grafts permanent,
+    and to fix commiter/author username/email.
+  - Move imported tags and branches to refs/oldcvstags/*
+    and refs/oldcvsbranches/*, to bury a lot of the noise
+    (automatic build tags, tags applied as part of doing a
+    merge, etc) to where a normal "git clone" will not grab
+    them, but they can still be fetched manually if necessary.
+  - Copy/rename a few recent release tags and branches to
+    normal refs/tags/* and refs/heads/*, when they are actually
+    useful. (git pack-refs and sed)
+  - Something like: sleep 5 ; git gc --aggressive --prune='1 second ago'
 
-
-[Footnote]
-
-*1* Both dates were derived from a mechanical "9-week per release cycle".
+--
+Matthew Ogilvie   [mmogilvi_git@miniinfo.net]
