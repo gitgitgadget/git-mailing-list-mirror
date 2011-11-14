@@ -1,163 +1,120 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Git shouldn't allow to push a new branch called HEAD
-Date: Mon, 14 Nov 2011 11:45:46 +0100
-Message-ID: <4EC0F15A.9010502@alum.mit.edu>
-References: <1318591877.2938.20.camel@mastroc3.mobc3.local>	 <1318592153.2938.21.camel@mastroc3.mobc3.local> <1321261662.2941.13.camel@mastroc3.mobc3.local>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Daniele Segato <daniele.bilug@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 14 11:45:55 2011
+From: "Kirill A. Shutemov" <kirill@shutemov.name>
+Subject: [PATCH] tag: implement --no-strip option
+Date: Mon, 14 Nov 2011 13:08:22 +0200
+Message-ID: <1321268902-2170-1-git-send-email-kirill@shutemov.name>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Kirill A. Shutemov" <kirill@shutemov.name>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 14 12:08:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RPu30-0000dR-G9
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 11:45:54 +0100
+	id 1RPuOz-0002H8-Dg
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 12:08:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754903Ab1KNKpu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Nov 2011 05:45:50 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:41791 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752803Ab1KNKpt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2011 05:45:49 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pAEAjkGC013124
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 14 Nov 2011 11:45:46 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
-In-Reply-To: <1321261662.2941.13.camel@mastroc3.mobc3.local>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1755116Ab1KNLI1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Nov 2011 06:08:27 -0500
+Received: from shutemov.name ([188.40.19.243]:55496 "EHLO shutemov.name"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755108Ab1KNLI0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2011 06:08:26 -0500
+Received: by shutemov.name (Postfix, from userid 500)
+	id 2F0B0114001; Mon, 14 Nov 2011 13:08:25 +0200 (EET)
+X-Mailer: git-send-email 1.7.4.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185375>
 
-On 11/14/2011 10:07 AM, Daniele Segato wrote:
-> On Fri, 2011-10-14 at 13:35 +0200, Daniele Segato wrote:
->> On Fri, 2011-10-14 at 13:31 +0200, Daniele Segato wrote:
->>> following from a discussion in IRC freenode #git between me, sitaram an
->>> shruggar
->>>
->>>
->>> step to reproduce:
->>>
->>> $ mkdir /tmp/gitbug
->>> $ cd /tmp/gitbug/
->>>
->>> $ # create a fake remote repo
->>> $ git init --bare remote.git
->>>
->>> $ # clone it with the user that will generate the bug
->>> $ git clone remote.git buggenerator
->>> $ cd buggenerator/
->>> $ touch whatever
->>> $ git add .
->>> $ git commit -m "first commit"
->>> $ git push origin master 
->>>
->>> $ # now clone the same repo the other guy is the "victim" of this issue
->>> $ cd ..
->>> $ git clone remote.git victim
->>>
->>> $ # time to create the remote HEAD branch
->>> $ cd buggenerator/
->>> $ git push origin HEAD:HEAD
->>>
->>> $ # the remote refs has been created!
->>> $ git ls-remote
->>>
->>> $ # another commit
->>> $ echo 'any change' >> whatever 
->>> $ git commit -a -m "some change"
->>> $ git push origin master 
->>>
->>> $ # the refs/heads/HEAD is still where it was
->>> $ git ls-remote
->>>
->>> $ # now from the victim perspective
->>> $ cd ../victim/
->>>
->>> $ # every time executing a fetch he will get a force update
->>> $ # or maybe even an error, seen it my real repo, don't know how
->>> $ # to reproduce
->>> $ git fetch 
->>> $ git fetch 
->>> $ git ls-remote
->>> $ git fetch 
->>> $ git ls-remote
->>> $ git branch -a
->>
->> This should also help understanding what happen in the "victim" local
->> repo at every fetch:
->>
->> mastro@mastroc3 /tmp/gitbug/victim (master) $ git br -av
->> * master                11d0a12 [behind 1] first commit
->>   remotes/origin/HEAD   -> origin/master
->>   remotes/origin/master 77852ef some change
->> mastro@mastroc3 /tmp/gitbug/victim (master) $ git fetch 
->> From /tmp/gitbug/remote
->>  + 77852ef...11d0a12 HEAD       -> origin/HEAD  (forced update)
->> mastro@mastroc3 /tmp/gitbug/victim (master) $ git br -av
->> * master                11d0a12 first commit
->>   remotes/origin/HEAD   -> origin/master
->>   remotes/origin/master 11d0a12 first commit
-> 
-> I'm aware my request has been ignored for a good reason but I would
-> appreciate someone stepping in and explaining to me why this is not a
-> bug or why it has been ignored.
+From: "Kirill A. Shutemov" <kirill@shutemov.name>
 
-This is a nice little bug.
+--no-strip turns off strip any comments or empty lines.
 
-I'm sure that you noticed that running "git fetch" repeatedly from the
-"victim" repository alternates between two behaviors (I'm using 1.7.7.2):
+It's useful if you want to take a tag message as-is, without any
+stripping.
 
-> $ git fetch
-> From /home/mhagger/tmp/gitbug/remote
->  + 6bf3df1...4c9ebba HEAD       -> origin/HEAD  (forced update)
-> $ git for-each-ref
-> 4c9ebba3c0618bd6238a810013da4a8cd4f2213b commit	refs/heads/master
-> 4c9ebba3c0618bd6238a810013da4a8cd4f2213b commit	refs/remotes/origin/HEAD
-> 4c9ebba3c0618bd6238a810013da4a8cd4f2213b commit	refs/remotes/origin/master
-> $ git fetch
-> From /home/mhagger/tmp/gitbug/remote
->    4c9ebba..6bf3df1  master     -> origin/master
-> $ git for-each-ref
-> 4c9ebba3c0618bd6238a810013da4a8cd4f2213b commit	refs/heads/master
-> 6bf3df178cd92ca72625ae5bda9206c4333fd807 commit	refs/remotes/origin/HEAD
-> 6bf3df178cd92ca72625ae5bda9206c4333fd807 commit	refs/remotes/origin/master
-> $ git fetch
-> From /home/mhagger/tmp/gitbug/remote
->  + 6bf3df1...4c9ebba HEAD       -> origin/HEAD  (forced update)
-> $ git fetch
-> From /home/mhagger/tmp/gitbug/remote
->    4c9ebba..6bf3df1  master     -> origin/master
+Signed-off-by: Kirill A. Shutemov <kirill@shutemov.name>
+---
+ Documentation/git-tag.txt |    4 ++++
+ builtin/tag.c             |   13 ++++++++-----
+ 2 files changed, 12 insertions(+), 5 deletions(-)
 
-The whole time, victim's .git/HEAD contains "ref: refs/heads/master",
-.git/refs/remotes/origin/HEAD contains "ref:
-refs/remotes/origin/master", and its packed-refs file contains
-
-# pack-refs with: peeled
-4c9ebba3c0618bd6238a810013da4a8cd4f2213b refs/remotes/origin/master
-
-In "remote.git", refs/heads/HEAD contains not a symbolic reference but
-the explicit SHA1 "4c9ebba...".  This is of course not affected by
-running "git fetch" in the "victim" tree.  Deleting this file makes the
-problem go away.
-
-
-Given that this problem seems to be in the remote protocol rather than
-in the refs API, I think I'll stop working on this.  I hope that my
-observations are helpful to somebody.
-
-Michael
-
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index c83cb13..947d4e5 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -99,6 +99,10 @@ OPTIONS
+ 	Implies `-a` if none of `-a`, `-s`, or `-u <key-id>`
+ 	is given.
+ 
++-S::
++--no-strip::
++	Take tag message as-is. Do not strip any comments or empty lines.
++
+ <tagname>::
+ 	The name of the tag to create, delete, or describe.
+ 	The new tag name must pass all checks defined by
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 9b6fd95..427d646 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -320,7 +320,7 @@ static int build_tag_object(struct strbuf *buf, int sign, unsigned char *result)
+ }
+ 
+ static void create_tag(const unsigned char *object, const char *tag,
+-		       struct strbuf *buf, int message, int sign,
++		       struct strbuf *buf, int message, int sign, int nostrip,
+ 		       unsigned char *prev, unsigned char *result)
+ {
+ 	enum object_type type;
+@@ -356,7 +356,7 @@ static void create_tag(const unsigned char *object, const char *tag,
+ 
+ 		if (!is_null_sha1(prev))
+ 			write_tag_body(fd, prev);
+-		else
++		else if (!nostrip)
+ 			write_or_die(fd, _(tag_template), strlen(_(tag_template)));
+ 		close(fd);
+ 
+@@ -367,7 +367,8 @@ static void create_tag(const unsigned char *object, const char *tag,
+ 		}
+ 	}
+ 
+-	stripspace(buf, 1);
++	if (!nostrip)
++		stripspace(buf, 1);
+ 
+ 	if (!message && !buf->len)
+ 		die(_("no tag message?"));
+@@ -423,7 +424,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	const char *object_ref, *tag;
+ 	struct ref_lock *lock;
+ 
+-	int annotate = 0, sign = 0, force = 0, lines = -1,
++	int annotate = 0, sign = 0, nostrip = 0, force = 0, lines = -1,
+ 		list = 0, delete = 0, verify = 0;
+ 	const char *msgfile = NULL, *keyid = NULL;
+ 	struct msg_arg msg = { 0, STRBUF_INIT };
+@@ -443,6 +444,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 			     "tag message", parse_msg_arg),
+ 		OPT_FILENAME('F', "file", &msgfile, "read message from file"),
+ 		OPT_BOOLEAN('s', "sign", &sign, "annotated and GPG-signed tag"),
++		OPT_BOOLEAN('S', "no-strip", &nostrip,
++					"turn off tag message stripping"),
+ 		OPT_STRING('u', "local-user", &keyid, "key-id",
+ 					"use another key to sign the tag"),
+ 		OPT__FORCE(&force, "replace the tag if exists"),
+@@ -525,7 +528,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 
+ 	if (annotate)
+ 		create_tag(object, tag, &buf, msg.given || msgfile,
+-			   sign, prev, object);
++			   sign, nostrip, prev, object);
+ 
+ 	lock = lock_any_ref_for_update(ref.buf, prev, 0);
+ 	if (!lock)
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.7.7.2
