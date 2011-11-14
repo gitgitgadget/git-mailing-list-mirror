@@ -1,64 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] deprecating and eventually removing "git relink"?
-Date: Sun, 13 Nov 2011 22:27:03 -0800
-Message-ID: <7v62inkymg.fsf@alter.siamese.dyndns.org>
-References: <7v4ny7mtbx.fsf@alter.siamese.dyndns.org>
- <buomxbzutjm.fsf@dhlpc061.dev.necel.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: What's cooking in git.git (Nov 2011, #03; Sun, 13)
+Date: Mon, 14 Nov 2011 08:19:29 +0100
+Message-ID: <4EC0C101.4060001@viscovery.net>
+References: <7vmxbzl5ch.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Nov 14 07:27:17 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Vincent van Ravesteijn <vfr@lyx.org>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	msysGit <msysgit@googlegroups.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 14 08:20:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RPq0h-00083e-AZ
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 07:27:15 +0100
+	id 1RPqqF-0005SY-Ey
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 08:20:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751985Ab1KNG1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Nov 2011 01:27:10 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36060 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751295Ab1KNG1J (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2011 01:27:09 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 493D53BF0;
-	Mon, 14 Nov 2011 01:27:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Mf1orEbYHiOjfWlmNX88l5/2+yM=; b=x72ak5
-	A8nUTNrpB7lDVwjiMgOrC3Nq9EUQ4RB446G2O5w9dZj3i7Vto1IrDAtPyqS33LiK
-	URhw03dwUElIoiwIhqLJCdZe0E9VIo1AK48bc2SgilMaLvGCDmxmj8CfNPe/ZpvT
-	vBAEBuNy81FaNlnzLp13EG02M3sHMeJegbmwM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kMno7D6VZxxE7MgnySvg7aMKA/Bv9IkN
-	Iw44ndK+qSBhxiun8zJUChn27+ZHXBndtEacC23EZJ9nqt302uWRzq6mN476qnSs
-	fRreDBSzuuaevZ+2k4aYIkjDAZ9bWx5Wz2APGAkmcFfx8W1uvA2nzcMKBUxCEZtY
-	nTfUSlEFI9c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 422F43BEF;
-	Mon, 14 Nov 2011 01:27:05 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C760C3BED; Mon, 14 Nov 2011
- 01:27:04 -0500 (EST)
-In-Reply-To: <buomxbzutjm.fsf@dhlpc061.dev.necel.com> (Miles Bader's message
- of "Mon, 14 Nov 2011 15:06:37 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AB7D9A30-0E89-11E1-91F4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751532Ab1KNHUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Nov 2011 02:20:20 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:9017 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751174Ab1KNHUT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2011 02:20:19 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1RPqpx-0001jk-NH; Mon, 14 Nov 2011 08:20:13 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 5BE8A1660F;
+	Mon, 14 Nov 2011 08:20:13 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.23) Gecko/20110920 Thunderbird/3.1.15
+In-Reply-To: <7vmxbzl5ch.fsf@alter.siamese.dyndns.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185367>
 
-Miles Bader <miles@gnu.org> writes:
+IMO, these two topics can move forward:
 
-> Do you mean a more elaborate UI that does this nicely...?
+> * vr/msvc (2011-10-31) 3 commits
+>  - MSVC: Remove unneeded header stubs
+>  - Compile fix for MSVC: Include <io.h>
+>  - Compile fix for MSVC: Do not include sys/resources.h
+> 
+> It seems this needs to be rehashed with msysgit folks.
 
-Yes, that is what I meant. I also have a feeling that people would prefer
-to have an option that treats these two repositories equally; your
-illustration makes one a subordinate to the other.
+With these patches, git can be built with MSVC. The result is usable,
+although a few tests still fail.
+
+> * na/strtoimax (2011-11-05) 3 commits
+>  - Support sizes >=2G in various config options accepting 'g' sizes.
+>  - Compatibility: declare strtoimax() under NO_STRTOUMAX
+>  - Add strtoimax() compatibility function.
+> 
+> It seems this needs to be rehashed with msysgit folks.
+
+There were a few curiosities around strtoimax being present in MinGW or
+not, but these have been resolved. Also, whether or not we should define
+NO_STRTOUMAX for the MinGW build is an independent matter.
+
+-- Hannes
