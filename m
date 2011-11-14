@@ -1,60 +1,82 @@
-From: Peter Vereshagin <peter@vereshagin.org>
-Subject: Re: delete deprecated refs to release disk space
-Date: Mon, 14 Nov 2011 18:25:25 +0400
-Organization: '
-Message-ID: <20111114142525.GB8641@external.screwed.box>
-References: <20111113151033.GD16065@external.screwed.box>
- <CACBZZX5kBqM1eye40_Vw0W=8qnNsUQBVCE0q9JrixYomGPuZbg@mail.gmail.com>
+From: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: input director not compatible with git right-click
+Date: Mon, 14 Nov 2011 15:40:24 +0100
+Message-ID: <20111114144024.GD10025@beez.lab.cmartin.tk>
+References: <loom.20111113T173332-656@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Cc: Peter Vereshagin <peter@vereshagin.org>, git@vger.kernel.org
-To: ??var Arnfj??r?? Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 14 15:26:26 2011
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="/e2eDi0V/xtL+Mc8"
+Cc: git@vger.kernel.org
+To: Eric <eric@mansionis.fr>
+X-From: git-owner@vger.kernel.org Mon Nov 14 15:40:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RPxUN-0002z5-6y
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 15:26:23 +0100
+	id 1RPxiL-0002A9-Pe
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 15:40:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754484Ab1KNO0N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Nov 2011 09:26:13 -0500
-Received: from ns1.skyriver.ru ([89.108.118.221]:60471 "EHLO mx1.skyriver.ru"
+	id S1754665Ab1KNOkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Nov 2011 09:40:46 -0500
+Received: from kimmy.cmartin.tk ([91.121.65.165]:50809 "EHLO kimmy.cmartin.tk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753596Ab1KNO0M (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2011 09:26:12 -0500
-Received: from localhost (exit2.ipredator.se [93.182.132.103])
-	by mx1.skyriver.ru (Postfix) with ESMTPSA id 84D1C5A83;
-	Mon, 14 Nov 2011 17:51:26 +0400 (MSK)
+	id S1754542Ab1KNOko (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2011 09:40:44 -0500
+Received: from beez.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id CC82E4619B;
+	Mon, 14 Nov 2011 15:40:06 +0100 (CET)
+Received: (nullmailer pid 17963 invoked by uid 1000);
+	Mon, 14 Nov 2011 14:40:24 -0000
+Mail-Followup-To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
+	Eric <eric@mansionis.fr>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <CACBZZX5kBqM1eye40_Vw0W=8qnNsUQBVCE0q9JrixYomGPuZbg@mail.gmail.com>
-X-Face: 8T>{1owI$Byj]]a;^G]kRf*dkq>E-3':F>4ODP[#X4s"dr?^b&2G@'3lukno]A1wvJ_L(~u
- 6>I2ra/<,j1%@C[LN=>p#_}RIV+#:KTszp-X$bQOj,K
+In-Reply-To: <loom.20111113T173332-656@post.gmane.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185387>
 
-Hello.
 
-2011/11/13 18:01:18 +0100 ??var Arnfj??r?? Bjarmason <avarab@gmail.com> => To Peter Vereshagin :
-vArB> What you're looking for is git-filter-branch + the graft facility. I
-vArB> can't remember the exact invocation, but you echo the sha1 of the
-vArB> commit you want to be the oldest commit to .git/info/grafts, then run
-vArB> git-filter-branch.
+--/e2eDi0V/xtL+Mc8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Seem to work for me ( with 'gc' and 'prune' thereafter ) but with these quirks:
-*) the git-filter-branch(1) tells that there must be two ids:
+On Sun, Nov 13, 2011 at 04:34:26PM +0000, Eric wrote:
+> Hi,
+>=20
+> New in Git use, I use it do dev on window some administrative script. I u=
+se as
+> well Input director to share keyboard and mouse on multiple computer.
 
-    echo "$commit-id $graft-id" >> .git/info/grafts
+Do you mean you're using it on the Windows OS?
 
-This works for me if only one is put there.
-*) I'd like to have a command for this. Is this a '--parent-filter' to make
-the same thing?
+>=20
+> when I right-clicked on an item, it works when input director is disabled=
+=2E If
 
-N commits ago is a fine setting for me as it's a cron job backup. Thanks?
+Right-click on what? git doesn't have a graphical interface. If you're
+using a graphical front-end to git, you should send them a bug report.
 
---
-Peter Vereshagin <peter@vereshagin.org> (http://vereshagin.org) pgp: A0E26627 
+   cmn
+
+--/e2eDi0V/xtL+Mc8
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAEBAgAGBQJOwShYAAoJEHKRP1jG7ZzT7GEH/AkwF1nCVGe2oFG6qQRbtpNw
+m4+wekftbi0S+U6aYAq2bqeQqXvrTHdlMHdRNgy0gVi/+y9UcQKQqdoi1+BHf4Y3
+1y1IBYh3f37d0toMaD3RCp/oRRLEJvEjHSb/SntlRPh2rH+MX7LxT7MaF1mgdzo8
+yugmpqy/kcAgNMfemjPegyS7nyTHCYS6Vk1DH/cr/TSWX4xRuQoUchLbrCUmKt/P
+wwqFvsMQM7tEXluBAM1ksQDIjBzwkpSawBZrFB/uIF9ezrBAW4WoBNa6yniPmnOl
+LoTi5UQIuoaGJZRyO0kuhbyvnU/a4kmeyijG8yKPwt5hXSJp7fTygawUZWa4zWc=
+=bEgT
+-----END PGP SIGNATURE-----
+
+--/e2eDi0V/xtL+Mc8--
