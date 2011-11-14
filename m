@@ -1,83 +1,64 @@
-From: Miles Bader <miles@gnu.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [RFC] deprecating and eventually removing "git relink"?
-Date: Mon, 14 Nov 2011 15:06:37 +0900
-Message-ID: <buomxbzutjm.fsf@dhlpc061.dev.necel.com>
+Date: Sun, 13 Nov 2011 22:27:03 -0800
+Message-ID: <7v62inkymg.fsf@alter.siamese.dyndns.org>
 References: <7v4ny7mtbx.fsf@alter.siamese.dyndns.org>
+ <buomxbzutjm.fsf@dhlpc061.dev.necel.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 14 07:06:50 2011
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Nov 14 07:27:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RPpgt-0002fy-Bm
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 07:06:47 +0100
+	id 1RPq0h-00083e-AZ
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 07:27:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751693Ab1KNGGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Nov 2011 01:06:43 -0500
-Received: from relmlor3.renesas.com ([210.160.252.173]:39170 "EHLO
-	relmlor3.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751309Ab1KNGGm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2011 01:06:42 -0500
-Received: from relmlir1.idc.renesas.com ([10.200.68.151])
- by relmlor3.idc.renesas.com ( SJSMS)
- with ESMTP id <0LUM00349ZN57T70@relmlor3.idc.renesas.com> for
- git@vger.kernel.org; Mon, 14 Nov 2011 15:06:41 +0900 (JST)
-Received: from relmlac4.idc.renesas.com ([10.200.69.24])
- by relmlir1.idc.renesas.com (SJSMS)
- with ESMTP id <0LUM008RJZN4NKE0@relmlir1.idc.renesas.com> for
- git@vger.kernel.org; Mon, 14 Nov 2011 15:06:41 +0900 (JST)
-Received: by relmlac4.idc.renesas.com (Postfix, from userid 0)
-	id EEA304807B; Mon, 14 Nov 2011 15:06:40 +0900 (JST)
-Received: from relmlac4.idc.renesas.com (localhost [127.0.0.1])
-	by relmlac4.idc.renesas.com (Postfix) with ESMTP id E8A3048070; Mon,
- 14 Nov 2011 15:06:40 +0900 (JST)
-Received: from relmlii1.idc.renesas.com [10.200.68.65]	by
- relmlac4.idc.renesas.com with ESMTP id RAA14665; Mon,
- 14 Nov 2011 15:06:40 +0900
-X-IronPort-AV: E=Sophos;i="4.69,506,1315148400";   d="scan'208";a="54602139"
-Received: from unknown (HELO relay41.aps.necel.com) ([10.29.19.9])
- by relmlii1.idc.renesas.com with ESMTP; Mon, 14 Nov 2011 15:06:40 +0900
-Received: from dhlpc061 (dhlpc061.dev.necel.com [10.114.96.242])
-	by relay41.aps.necel.com (8.14.4+Sun/8.14.4) with ESMTP id pAE66dII014861;
- Mon, 14 Nov 2011 15:06:39 +0900 (JST)
-Received: by dhlpc061 (Postfix, from userid 31295)	id 7500252E245; Mon,
- 14 Nov 2011 15:06:38 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-reply-to: <7v4ny7mtbx.fsf@alter.siamese.dyndns.org>
+	id S1751985Ab1KNG1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Nov 2011 01:27:10 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36060 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751295Ab1KNG1J (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2011 01:27:09 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 493D53BF0;
+	Mon, 14 Nov 2011 01:27:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Mf1orEbYHiOjfWlmNX88l5/2+yM=; b=x72ak5
+	A8nUTNrpB7lDVwjiMgOrC3Nq9EUQ4RB446G2O5w9dZj3i7Vto1IrDAtPyqS33LiK
+	URhw03dwUElIoiwIhqLJCdZe0E9VIo1AK48bc2SgilMaLvGCDmxmj8CfNPe/ZpvT
+	vBAEBuNy81FaNlnzLp13EG02M3sHMeJegbmwM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kMno7D6VZxxE7MgnySvg7aMKA/Bv9IkN
+	Iw44ndK+qSBhxiun8zJUChn27+ZHXBndtEacC23EZJ9nqt302uWRzq6mN476qnSs
+	fRreDBSzuuaevZ+2k4aYIkjDAZ9bWx5Wz2APGAkmcFfx8W1uvA2nzcMKBUxCEZtY
+	nTfUSlEFI9c=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 422F43BEF;
+	Mon, 14 Nov 2011 01:27:05 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C760C3BED; Mon, 14 Nov 2011
+ 01:27:04 -0500 (EST)
+In-Reply-To: <buomxbzutjm.fsf@dhlpc061.dev.necel.com> (Miles Bader's message
+ of "Mon, 14 Nov 2011 15:06:37 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AB7D9A30-0E89-11E1-91F4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185366>
 
-Junio C Hamano <gitster@pobox.com> writes:
->  (2) allowing two repositories that started independently to share objects
->      using the alternates mechanism after the fact.
+Miles Bader <miles@gnu.org> writes:
 
-Can they not already?
+> Do you mean a more elaborate UI that does this nicely...?
 
-I mean, it works great right now to do:
-
-  cd $REP2
-  echo $REP1/.git/objects > .git/objects/info/alternates
-  git gc
-
-Do you mean a more elaborate UI that does this nicely...? or something
-else?
-
-It might be nice to have a mechanism where new objects would update
-the _alternate_ rather than the object-store in the tree where the
-command was run... then you could easily have a bunch of trees using a
-central object store without needing to update the central store
-occasionally by hand (and do gc in its "clients")...
-
--Miles
-
--- 
-"Most attacks seem to take place at night, during a rainstorm, uphill,
- where four map sheets join."   -- Anon. British Officer in WW I
+Yes, that is what I meant. I also have a feeling that people would prefer
+to have an option that treats these two repositories equally; your
+illustration makes one a subordinate to the other.
