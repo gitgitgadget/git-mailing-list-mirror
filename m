@@ -1,55 +1,76 @@
-From: "Frans Klaver" <fransklaver@gmail.com>
-Subject: Compile warnings
-Date: Mon, 14 Nov 2011 15:55:22 +0100
-Message-ID: <op.v4xyekju0aolir@keputer>
+From: Joshua Jensen <jjensen@workspacewhiz.com>
+Subject: Re: Repository data loss in fast-export with a merge of a deleted
+ submodule
+Date: Mon, 14 Nov 2011 08:06:51 -0700
+Message-ID: <4EC12E8B.3050909@workspacewhiz.com>
+References: <4EA9B0B5.6060005@workspacewhiz.com> <4EB2BBB5.3030908@workspacewhiz.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed; delsp=yes
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 14 15:55:38 2011
+X-From: git-owner@vger.kernel.org Mon Nov 14 16:05:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RPxwe-0000SO-D0
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 15:55:36 +0100
+	id 1RPy6c-0005Ol-Ai
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 16:05:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752432Ab1KNOz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Nov 2011 09:55:27 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:44337 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751999Ab1KNOz0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2011 09:55:26 -0500
-Received: by eye27 with SMTP id 27so5069125eye.19
-        for <git@vger.kernel.org>; Mon, 14 Nov 2011 06:55:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=content-type:to:date:subject:mime-version:content-transfer-encoding
-         :from:message-id:user-agent;
-        bh=mFTGSF3LcjFmbojHk7HmXZN5EGxMWMv+M4xmS/3ii30=;
-        b=iMElGf3NDm8UjYT87us6ckWp7puYjIz7CcvQP3apaEYJYHt89n5DJVXac3FPdpARaz
-         L1iHPDinbAAPHrzcoxCFoP+V5pOOOYeftfTnS9KXV+cm0W/vjH2qaDbYHYaUiM5+kokU
-         m8cIzViZQmDxg4M8amJ2+zxLQTrmDEtJ2C1OU=
-Received: by 10.213.22.211 with SMTP id o19mr531565ebb.6.1321282525072;
-        Mon, 14 Nov 2011 06:55:25 -0800 (PST)
-Received: from keputer (82-136-253-149.ip.telfort.nl. [82.136.253.149])
-        by mx.google.com with ESMTPS id v3sm60597997eej.7.2011.11.14.06.55.23
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 14 Nov 2011 06:55:24 -0800 (PST)
-User-Agent: Opera Mail/12.00 (Linux)
+	id S1752511Ab1KNPFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Nov 2011 10:05:49 -0500
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:56733 "EHLO
+	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751071Ab1KNPFt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2011 10:05:49 -0500
+Received: (qmail 10627 invoked by uid 399); 14 Nov 2011 08:05:44 -0700
+Received: from unknown (HELO ?192.168.1.109?) (jjensen@workspacewhiz.com@67.171.115.152)
+  by hsmail.qwknetllc.com with ESMTPAM; 14 Nov 2011 08:05:44 -0700
+X-Originating-IP: 67.171.115.152
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <4EB2BBB5.3030908@workspacewhiz.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185389>
 
-Hi,
+----- Original Message -----
+From: Joshua Jensen
+Date: 11/3/2011 10:05 AM
+> ----- Original Message -----
+> From: Joshua Jensen
+> Date: 10/27/2011 1:27 PM
+>> We had a submodule that we deleted and then added back into the 
+>> repository at the same location as the former submodule.  When 
+>> running fast-export, the newly 'added' files for the merge commit are 
+>> listed and then are followed with a:
+>>
+>> M ... path/to/submodule/file
+>> D path/to/submodule
+>>
+>> On fast-import, the resultant repository becomes corrupt due to the 
+>> Delete instruction above occurring AFTER the file 
+>> adds/modifications.  The new repository does not match the old 
+>> repository where the fast-export was performed.
+>>
+>> I am not familiar with the fast-export code.  Can anyone help out?
+> Okay, I looked into this further, and I came up with a patch that 
+> works for me.  Nevertheless, I do not understand exactly what is going 
+> on here, so I would like to defer to someone else's patch to fix the 
+> issue.
+>
+Hi.
 
-Every now and then I see an 'unused result' warning come by during  
-building. What is the general attitude towards these warnings? Remove them  
-(by properly checking)? Or leave them be as a kind of documentation -- we  
-know we're ignoring the info, but it's good to be reminded?
+__This is a genuine data loss problem in Git.__
 
-Thanks,
-Frans
+I'm confused at the lack of response to this.  I first posted about the 
+issue **2-1/2 weeks ago**, and there have been no responses  Does no one 
+care?
+
+In case no one received the messages, you can find them at [1] and [2].
+
+-Josh
+
+[1] http://www.spinics.net/lists/git/msg168295.html
+[2] http://www.spinics.net/lists/git/msg168691.html
