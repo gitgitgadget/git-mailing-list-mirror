@@ -1,75 +1,75 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: git behaviour question regarding SHA-1 and commits
-Date: Mon, 14 Nov 2011 08:39:59 +0100
-Message-ID: <4EC0C5CF.3010708@viscovery.net>
-References: <CAJuRt+r9BjYcead6hgzdUT0Bisz1D48cegqkoJ0S537VMYBy_g@mail.gmail.com>
+From: Simon Brenner <olsner@gmail.com>
+Subject: Re: [RFC] deprecating and eventually removing "git relink"?
+Date: Mon, 14 Nov 2011 09:48:07 +0100
+Message-ID: <CAD=rjTXgH+AivmK+zLurQVC+=p1UYqFy_p=wBF-1-TOQ=Cqjtw@mail.gmail.com>
+References: <7v4ny7mtbx.fsf@alter.siamese.dyndns.org>
+	<buomxbzutjm.fsf@dhlpc061.dev.necel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: vinassa vinassa <vinassa.vinassa@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 14 08:41:02 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 14 09:48:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RPrA5-0003n2-Rv
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 08:41:02 +0100
+	id 1RPsD9-0000hl-1v
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Nov 2011 09:48:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751997Ab1KNHkp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Nov 2011 02:40:45 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:34329 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751770Ab1KNHkp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2011 02:40:45 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1RPr9n-0003wG-D4; Mon, 14 Nov 2011 08:40:43 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 28A5E1660F;
-	Mon, 14 Nov 2011 08:40:43 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.23) Gecko/20110920 Thunderbird/3.1.15
-In-Reply-To: <CAJuRt+r9BjYcead6hgzdUT0Bisz1D48cegqkoJ0S537VMYBy_g@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1753203Ab1KNIsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Nov 2011 03:48:09 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:42024 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752723Ab1KNIsI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2011 03:48:08 -0500
+Received: by yenr9 with SMTP id r9so4911517yen.19
+        for <git@vger.kernel.org>; Mon, 14 Nov 2011 00:48:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=cEgm3Cpcj8gMbvXMCmt53SgwKm0YdSf4DxQLOdEtrH4=;
+        b=aZ6yxrdvNar8m41zQ0jGpE8hHrP7BalQ2pPqTatCCsJiyptrpxwUDmL2t14eS7R+AB
+         oZb3OzNGcJEKIJT7HQQ0oBHSf33h5HaUmqU7yTSWwcF45gnmFRgK3rdU6H3FyNwZexsM
+         vnf/oJ+lnNO33UP2MpTk4ixmqd56YuehGnDuo=
+Received: by 10.147.157.21 with SMTP id j21mr2472662yao.36.1321260487740; Mon,
+ 14 Nov 2011 00:48:07 -0800 (PST)
+Received: by 10.146.155.12 with HTTP; Mon, 14 Nov 2011 00:48:07 -0800 (PST)
+In-Reply-To: <buomxbzutjm.fsf@dhlpc061.dev.necel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185369>
 
-Am 11/13/2011 18:04, schrieb vinassa vinassa:
-> I am wondering about how git behaves currently, if I kinda win the
-> lottery of the universe, and happen to create a commit with a SHA-1
-> that is already the SHA-1 of another commit in the previous history.
-> However improbable.
-> 
-> Would that be detected, so that I could just add a newline, and then
-> commit with a different resulting SHA-1,
-> would I just lose one of those commits (hopefully the new one), would
-> I end up with a corrupted repository?
+I think one of the most annoying aspects of alternates (beyond the
+hassle of adding/removing them except using clone --reference) is the
+danger of losing data if you aren't absolutely sure that your
+alternate is stable and won't ever lose references to objects.
 
-I *think* the following would happen:
+If the alternate just had links to the referring repositories, I think
+this hole could be neatly closed.
 
-1. Git detects that the (commit) object that it is about to generate
-already exists, and does not write a new one.
+On Mon, Nov 14, 2011 at 7:06 AM, Miles Bader <miles@gnu.org> wrote:
+> It might be nice to have a mechanism where new objects would update
+> the _alternate_ rather than the object-store in the tree where the
+> command was run... then you could easily have a bunch of trees using a
+> central object store without needing to update the central store
+> occasionally by hand (and do gc in its "clients")...
 
-2. Then the branch's ref is updated to the SHA-1. Since the original
-commit is somewhere back in history, this is effectively like 'git reset
---soft that-commit'.
+This sounds like a nice way forward: replace/extend the current
+alternates system with support for a shared object store that is
+"intelligently" shared so that it can be gc:d based on all refs from
+all referring repositories. I imagine it would be something very much
+like a bare repository - except it wouldn't have any refs of its own,
+just a list of other repositories it should search for refs when
+GC:ing.
 
-3. At your next 'git diff --cached', you notice unexpected differences
-between the index and the branch head. You will wonder what happened.
-("Who typed 'git reset --soft that-commit' while I was looking the other
-way??")
+The object store currently built into each git repository could even
+become a special case of that: a shared object store (that happens to
+reside under .git) with a single referring repository (the parent .git
+dir). If the location of the object store is configurable, clone
+--reference could simply point the new repository directly to the
+shared store instead of ever setting up a local object store.
 
-4. To recover, you just 'git reset --soft @{1}' to revert to the state
-before the commit attempt, and commit again. Your commit message from the
-first attempt will be lost unless you have used -C or -F for your commit.
-At any rate, you can reuse the exact same commit message for this second
-commit attempt, because by now time will have advanced by at least one
-second, which gives you a different commit timestamp and, hence, a
-different commit object.
-
--- Hannes
+// Simon
