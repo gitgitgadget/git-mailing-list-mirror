@@ -1,64 +1,74 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 0/7] New sequencer workflow!
-Date: Tue, 15 Nov 2011 21:42:48 +0530
-Message-ID: <CALkWK0nPQm6Qnp2=0Bc+ntHU6sGSp2C+BFnEqTznws3mY9=E5g@mail.gmail.com>
-References: <1321181181-23923-1-git-send-email-artagnon@gmail.com> <CABURp0qt+r09Uy_nfLd60pXiMMXgTOUB__XL-N=S7HaJa-oWoA@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] Fix "is_refname_available(): query only possibly-conflicting
+ references"
+Date: Tue, 15 Nov 2011 17:19:44 +0100
+Message-ID: <4EC29120.2020400@alum.mit.edu>
+References: <1319804921-17545-27-git-send-email-mhagger@alum.mit.edu> <1321336525-19374-1-git-send-email-mhagger@alum.mit.edu> <7vty65x2zl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 15 17:13:16 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Drew Northup <drew.northup@maine.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 15 17:20:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQLdL-00015H-LU
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 17:13:16 +0100
+	id 1RQLk9-0004qy-Ux
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 17:20:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756692Ab1KOQNL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Nov 2011 11:13:11 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:44303 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756486Ab1KOQNK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2011 11:13:10 -0500
-Received: by wwe5 with SMTP id 5so6349332wwe.1
-        for <git@vger.kernel.org>; Tue, 15 Nov 2011 08:13:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=xGGAsFvvyStQT4Nx+vEIClQXH4GmL8vUsLZd3jMn9ys=;
-        b=iMtiLYOwcxLo/xp9jAGxJRhypbP7ZfwkkYaIIPR/+LUqXVNdiXD/DhNApaJFZpD0I+
-         HMUAj6Ye+RxEKf73cmiNrRfTFKjd5+VY2nOU3PrfJbQtp5SYm8WoMeB3fV756YO0/ISu
-         MjNXVH+lJgYlnUDwKUao+8woU0iwhfPDoOQQY=
-Received: by 10.227.207.205 with SMTP id fz13mr18743820wbb.0.1321373589161;
- Tue, 15 Nov 2011 08:13:09 -0800 (PST)
-Received: by 10.216.19.209 with HTTP; Tue, 15 Nov 2011 08:12:48 -0800 (PST)
-In-Reply-To: <CABURp0qt+r09Uy_nfLd60pXiMMXgTOUB__XL-N=S7HaJa-oWoA@mail.gmail.com>
+	id S1756736Ab1KOQUI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Nov 2011 11:20:08 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:37206 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756521Ab1KOQUH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2011 11:20:07 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pAFGJiN6026898
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 15 Nov 2011 17:19:45 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
+In-Reply-To: <7vty65x2zl.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185465>
 
-Hi Phil,
+On 11/15/2011 08:24 AM, Junio C Hamano wrote:
+> However, I'd rather see us spend effort to make absolutely sure that other
+> topics already in next that touch the related codepaths (I think you have
+> two such series yourself and I suspect there are other minor fixes that
+> may textually conflict) are in good shape and have them graduate early
+> after 1.7.8 ships, before queuing a re-roll of the ref-api series, which
+> is rather extensive.
 
-Phil Hord wrote:
-> I see that --reset was added to cherry-pick, revert and sequencer
-> around the same time back in August. =C2=A0Shouldn't it be spelled
-> "--abort" instead?
+If you have a preference for which patch series you would like to
+integrate in which order (and especially if you think that there are
+gaps that need to be filled), please let me know.  It would be a lot
+less work to put them in the right order from the start rather than
+trying to keep them all synchronized with master and continually reroll
+them based on what you have merged so far.
 
-"reset" is actually different from "abort": it simply removes the
-sequencer state without touching the worktree, index or HEAD.  We
-decided that this would be a nice low-level command to implement
-(since I find myself doing `rm -rf .git/rebase-todo` sometimes).
-Sure, "abort" and a lot of other porcelain would be nice- we can
-always implement them carefully later :)
+Also, I am working under the assumption that the patch series that are
+already in "next" should be left alone; if you have doubts about any of
+those patch series (i.e., are thinking of ejecting them from next during
+the post-release chaos), please let me know what needs changing.
 
-Thanks.
+I'm still getting the hang of this workflow, so suggestions are welcome.
 
--- Ram
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
