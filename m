@@ -1,86 +1,115 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH 1/5] sequencer: factor code out of revert builtin
-Date: Tue, 15 Nov 2011 18:18:33 +0900
-Message-ID: <buo4ny5u4k6.fsf@dhlpc061.dev.necel.com>
-References: <1320510586-3940-1-git-send-email-artagnon@gmail.com>
- <1320510586-3940-2-git-send-email-artagnon@gmail.com>
- <20111106001232.GC27272@elie.hsd1.il.comcast.net>
- <CALkWK0n7v15n_s3CNq1Qu3LHjYkV-ENAkv2b+oB+VBkyV+Sphw@mail.gmail.com>
- <7vvcqnmxeu.fsf@alter.siamese.dyndns.org>
- <CALkWK0mtmRYyFosQNJixhheUmHpRjWc4A5zPQ6AaBfmw4H4eLQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH] revert: prettify fatal messages
+Date: Tue, 15 Nov 2011 15:01:32 +0530
+Message-ID: <1321349492-5653-1-git-send-email-artagnon@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 15 10:18:49 2011
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 15 10:33:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQFAF-0001un-Ae
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 10:18:47 +0100
+	id 1RQFOG-0007u5-0S
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 10:33:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753779Ab1KOJSm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Nov 2011 04:18:42 -0500
-Received: from relmlor1.renesas.com ([210.160.252.171]:42436 "EHLO
-	relmlor1.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753493Ab1KOJSl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2011 04:18:41 -0500
-Received: from relmlir1.idc.renesas.com ([10.200.68.151])
- by relmlor1.idc.renesas.com ( SJSMS)
- with ESMTP id <0LUP008B9374KEE0@relmlor1.idc.renesas.com> for
- git@vger.kernel.org; Tue, 15 Nov 2011 18:18:40 +0900 (JST)
-Received: from relmlac4.idc.renesas.com ([10.200.69.24])
- by relmlir1.idc.renesas.com (SJSMS)
- with ESMTP id <0LUP00DDC3745590@relmlir1.idc.renesas.com> for
- git@vger.kernel.org; Tue, 15 Nov 2011 18:18:40 +0900 (JST)
-Received: by relmlac4.idc.renesas.com (Postfix, from userid 0)
-	id 0891E48087; Tue, 15 Nov 2011 18:18:40 +0900 (JST)
-Received: from relmlac4.idc.renesas.com (localhost [127.0.0.1])
-	by relmlac4.idc.renesas.com (Postfix) with ESMTP id 0109648070; Tue,
- 15 Nov 2011 18:18:40 +0900 (JST)
-Received: from relmlii1.idc.renesas.com [10.200.68.65]	by
- relmlac4.idc.renesas.com with ESMTP id UAD08878; Tue,
- 15 Nov 2011 18:18:39 +0900
-X-IronPort-AV: E=Sophos;i="4.69,513,1315148400";   d="scan'208";a="54853547"
-Received: from unknown (HELO relay51.aps.necel.com) ([10.29.19.60])
- by relmlii1.idc.renesas.com with ESMTP; Tue, 15 Nov 2011 18:18:39 +0900
-Received: from dhlpc061 (dhlpc061.dev.necel.com [10.114.96.50])
-	by relay51.aps.necel.com (8.14.4+Sun/8.14.4) with ESMTP id pAF9IdC4020872;
- Tue, 15 Nov 2011 18:18:39 +0900 (JST)
-Received: by dhlpc061 (Postfix, from userid 31295)	id B376952E283; Tue,
- 15 Nov 2011 18:18:38 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-reply-to: <CALkWK0mtmRYyFosQNJixhheUmHpRjWc4A5zPQ6AaBfmw4H4eLQ@mail.gmail.com>
+	id S1754391Ab1KOJdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Nov 2011 04:33:10 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:64794 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754093Ab1KOJdJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2011 04:33:09 -0500
+Received: by yenq3 with SMTP id q3so396254yen.19
+        for <git@vger.kernel.org>; Tue, 15 Nov 2011 01:33:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=/Mq9ru998oBDb1H0zzGJoS841qsjadlYWcOWODESH0Y=;
+        b=Z05uv4aLZrd8De2uKiXgQI7GsWWfuRwey80NRD7AmjWotpfrkAsRg30eHXpSHm/hVM
+         MPqJKcYESkHu+TWXI3hK21bJrPhYyA6WKWRvjzygbJjy0lulWJABbfYzDsHDZ3zSntT1
+         xgS3R2UcS48POiJk2uap4QY0lhzf3f7U2gfg0=
+Received: by 10.68.0.129 with SMTP id 1mr57570905pbe.94.1321349587863;
+        Tue, 15 Nov 2011 01:33:07 -0800 (PST)
+Received: from localhost.localdomain ([203.110.240.205])
+        by mx.google.com with ESMTPS id g8sm45295602pbe.11.2011.11.15.01.33.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 15 Nov 2011 01:33:06 -0800 (PST)
+X-Mailer: git-send-email 1.7.6.351.gb35ac.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185448>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
-> Junio C Hamano writes:
->> [...]
->> With that observation, it would probably make more sense if "foo.c"
->> included the headers in the following order:
->>
->> =A0- Anything the declarations in "foo.h" depends on;
->> =A0- "foo.h" itself; and finally
->> =A0- Other headers that "foo.c" implementation needs.
->>
->> That way, people who want to use "foo.h" can guess what needs to be
->> included before using "foo.h" a lot more easily.
->
-> That's a good rule-of-thumb.  Thanks :)
+Some of the fatal messages printed by revert and cherry-pick look ugly
+like the following:
 
-Does git not use the common practice of self-contained headers?
+  fatal: Could not open .git/sequencer/todo.: No such file or directory
 
--miles
+The culprit here is the die_errno() function that takes a custom error
+message string as an argument and appends ": <message from errno>"
+before printing it.  So, we can fix the problem by not terminating the
+string argument to the function with a '.' (period).  Fatal messages
+look nicer now:
 
---=20
-=46ast, small, soon; pick any 2.
+  fatal: Could not open .git/sequencer/todo: No such file or directory
+
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ Candidate for 'maint'?
+
+ builtin/revert.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 87df70e..e0319c8 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -331,7 +331,7 @@ static void write_message(struct strbuf *msgbuf, const char *filename)
+ 	int msg_fd = hold_lock_file_for_update(&msg_file, filename,
+ 					       LOCK_DIE_ON_ERROR);
+ 	if (write_in_full(msg_fd, msgbuf->buf, msgbuf->len) < 0)
+-		die_errno(_("Could not write to %s."), filename);
++		die_errno(_("Could not write to %s"), filename);
+ 	strbuf_release(msgbuf);
+ 	if (commit_lock_file(&msg_file) < 0)
+ 		die(_("Error wrapping up %s"), filename);
+@@ -767,7 +767,7 @@ static void read_populate_todo(struct commit_list **todo_list,
+ 
+ 	fd = open(todo_file, O_RDONLY);
+ 	if (fd < 0)
+-		die_errno(_("Could not open %s."), todo_file);
++		die_errno(_("Could not open %s"), todo_file);
+ 	if (strbuf_read(&buf, fd, 0) < 0) {
+ 		close(fd);
+ 		strbuf_release(&buf);
+@@ -845,7 +845,7 @@ static int create_seq_dir(void)
+ 	if (file_exists(seq_dir))
+ 		return error(_("%s already exists."), seq_dir);
+ 	else if (mkdir(seq_dir, 0777) < 0)
+-		die_errno(_("Could not create sequencer directory '%s'."), seq_dir);
++		die_errno(_("Could not create sequencer directory %s"), seq_dir);
+ 	return 0;
+ }
+ 
+@@ -859,7 +859,7 @@ static void save_head(const char *head)
+ 	fd = hold_lock_file_for_update(&head_lock, head_file, LOCK_DIE_ON_ERROR);
+ 	strbuf_addf(&buf, "%s\n", head);
+ 	if (write_in_full(fd, buf.buf, buf.len) < 0)
+-		die_errno(_("Could not write to %s."), head_file);
++		die_errno(_("Could not write to %s"), head_file);
+ 	if (commit_lock_file(&head_lock) < 0)
+ 		die(_("Error wrapping up %s."), head_file);
+ }
+@@ -876,7 +876,7 @@ static void save_todo(struct commit_list *todo_list, struct replay_opts *opts)
+ 		die(_("Could not format %s."), todo_file);
+ 	if (write_in_full(fd, buf.buf, buf.len) < 0) {
+ 		strbuf_release(&buf);
+-		die_errno(_("Could not write to %s."), todo_file);
++		die_errno(_("Could not write to %s"), todo_file);
+ 	}
+ 	if (commit_lock_file(&todo_lock) < 0) {
+ 		strbuf_release(&buf);
+-- 
+1.7.6.351.gb35ac.dirty
