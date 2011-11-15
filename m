@@ -1,78 +1,148 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [RFC] deprecating and eventually removing "git relink"?
-Date: Tue, 15 Nov 2011 13:48:00 +0900
-Message-ID: <buoehxat2in.fsf@dhlpc061.dev.necel.com>
-References: <7v4ny7mtbx.fsf@alter.siamese.dyndns.org>
- <buomxbzutjm.fsf@dhlpc061.dev.necel.com>
- <CAD=rjTXgH+AivmK+zLurQVC+=p1UYqFy_p=wBF-1-TOQ=Cqjtw@mail.gmail.com>
- <20111114103451.GA10847@sigill.intra.peff.net>
- <7vfwhqjw4u.fsf@alter.siamese.dyndns.org>
- <20111114202522.GA26269@sigill.intra.peff.net>
- <7vmxbyicgg.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Simon Brenner <olsner@gmail.com>,
-	git@vger.kernel.org
+From: mhagger@alum.mit.edu
+Subject: [PATCH] Fix "is_refname_available(): query only possibly-conflicting references"
+Date: Tue, 15 Nov 2011 06:55:25 +0100
+Message-ID: <1321336525-19374-1-git-send-email-mhagger@alum.mit.edu>
+References: <1319804921-17545-27-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Drew Northup <drew.northup@maine.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 15 05:48:12 2011
+X-From: git-owner@vger.kernel.org Tue Nov 15 06:55:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQAwN-0006Dz-Re
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 05:48:12 +0100
+	id 1RQBzw-0002T0-8N
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 06:55:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751856Ab1KOEsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Nov 2011 23:48:06 -0500
-Received: from relmlor4.renesas.com ([210.160.252.174]:46429 "EHLO
-	relmlor4.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751231Ab1KOEsF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2011 23:48:05 -0500
-Received: from relmlir3.idc.renesas.com ([10.200.68.153])
- by relmlor4.idc.renesas.com ( SJSMS)
- with ESMTP id <0LUO00LNAQO3VS00@relmlor4.idc.renesas.com> for
- git@vger.kernel.org; Tue, 15 Nov 2011 13:48:03 +0900 (JST)
-Received: from relmlac3.idc.renesas.com ([10.200.69.23])
- by relmlir3.idc.renesas.com ( SJSMS)
- with ESMTP id <0LUO003DGQO3R990@relmlir3.idc.renesas.com> for
- git@vger.kernel.org; Tue, 15 Nov 2011 13:48:03 +0900 (JST)
-Received: by relmlac3.idc.renesas.com (Postfix, from userid 0)
-	id 3E58D18071; Tue, 15 Nov 2011 13:48:03 +0900 (JST)
-Received: from relmlac3.idc.renesas.com (localhost [127.0.0.1])
-	by relmlac3.idc.renesas.com (Postfix) with ESMTP id 2F2EA18077; Tue,
- 15 Nov 2011 13:48:03 +0900 (JST)
-Received: from relmlii1.idc.renesas.com [10.200.68.65]	by
- relmlac3.idc.renesas.com with ESMTP id PAA27318; Tue,
- 15 Nov 2011 13:48:03 +0900
-X-IronPort-AV: E=Sophos;i="4.69,513,1315148400";   d="scan'208";a="54784828"
-Received: from unknown (HELO relay41.aps.necel.com) ([10.29.19.9])
- by relmlii1.idc.renesas.com with ESMTP; Tue, 15 Nov 2011 13:48:02 +0900
-Received: from dhlpc061 (dhlpc061.dev.necel.com [10.114.96.50])
-	by relay41.aps.necel.com (8.14.4+Sun/8.14.4) with ESMTP id pAF4m169021457;
- Tue, 15 Nov 2011 13:48:01 +0900 (JST)
-Received: by dhlpc061 (Postfix, from userid 31295)	id EB0AA52E283; Tue,
- 15 Nov 2011 13:48:00 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-reply-to: <7vmxbyicgg.fsf@alter.siamese.dyndns.org>
+	id S1751627Ab1KOFzv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Nov 2011 00:55:51 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:55455 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751401Ab1KOFzu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2011 00:55:50 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from michael.fritz.box (p54BEB582.dip.t-dialin.net [84.190.181.130])
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pAF5tRfr030877;
+	Tue, 15 Nov 2011 06:55:27 +0100
+X-Mailer: git-send-email 1.7.7.2
+In-Reply-To: <1319804921-17545-27-git-send-email-mhagger@alum.mit.edu>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185423>
 
-Junio C Hamano <gitster@pobox.com> writes:
-> I did not mean "it is wrong because it does not match what Miles said"
-> by that. In fact, I think it is a better approach to put things in
-> clients first and consolidating possible duplicates at the central one
-> purely as optimization, and I do not necessarily see "write to central
-> from the beginning" as a particularly good "optimization".
+From: Michael Haggerty <mhagger@alum.mit.edu>
 
-FWIW, this seems reasonable to me...
+The above-named commit didn't do all that its commit message claimed.
+The problem is that do_for_each_ref_in_dir() doesn't avoid iterating
+through reference subtrees outside of "prefix"; it only skips passing
+those references to the callback function.  So the function
+unnecessarily caused all loose references to be loaded rather than
+just those in the required subtree.
 
--Miles
+So instead, explicitly select the possibly-conflicting subtree and
+pass it to do_for_each_ref_in_dir().
 
+Also, simplify name_conflict_fn().  Since it will only be called for
+possibly-conflicting references, there is necessarily a conflict if it
+is called for *any* reference besides "oldrefname".
+
+Remove function names_conflict(), which is now unused.
+
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+
+This patch can be squashed on top of "is_refname_available(): query
+only possibly-conflicting references", or applied at the end of
+mh/ref-api-take-2; it does not conflict with the two commits later in
+the series.
+
+ refs.c |   40 +++++++++++++++++-----------------------
+ 1 files changed, 17 insertions(+), 23 deletions(-)
+
+diff --git a/refs.c b/refs.c
+index 6a7f9c3..b185c32 100644
+--- a/refs.c
++++ b/refs.c
+@@ -633,23 +633,7 @@ static int do_for_each_ref_in_dirs(struct ref_entry *direntry1,
+ 	}
+ }
+ 
+-/*
+- * Return true iff refname1 and refname2 conflict with each other.
+- * Two reference names conflict if one of them exactly matches the
+- * leading components of the other; e.g., "foo/bar" conflicts with
+- * both "foo" and with "foo/bar/baz" but not with "foo/bar" or
+- * "foo/barbados".
+- */
+-static int names_conflict(const char *refname1, const char *refname2)
+-{
+-	for (; *refname1 && *refname1 == *refname2; refname1++, refname2++)
+-		;
+-	return (*refname1 == '\0' && *refname2 == '/')
+-		|| (*refname1 == '/' && *refname2 == '\0');
+-}
+-
+ struct name_conflict_cb {
+-	const char *refname;
+ 	const char *oldrefname;
+ 	const char *conflicting_refname;
+ };
+@@ -660,11 +644,13 @@ static int name_conflict_fn(const char *existingrefname, const unsigned char *sh
+ 	struct name_conflict_cb *data = (struct name_conflict_cb *)cb_data;
+ 	if (!strcmp(data->oldrefname, existingrefname))
+ 		return 0;
+-	if (names_conflict(data->refname, existingrefname)) {
+-		data->conflicting_refname = existingrefname;
+-		return 1;
+-	}
+-	return 0;
++
++	/*
++	 * Since we are only iterating over the subtree that has the
++	 * new refname as prefix, *any* reference found is a conflict.
++	 */
++	data->conflicting_refname = existingrefname;
++	return 1;
+ }
+ 
+ /*
+@@ -673,6 +659,11 @@ static int name_conflict_fn(const char *existingrefname, const unsigned char *sh
+  * oldrefname is non-NULL, ignore potential conflicts with oldrefname
+  * (e.g., because oldrefname is scheduled for deletion in the same
+  * operation).
++ *
++ * Two reference names conflict if one of them exactly matches the
++ * leading components of the other; e.g., "foo/bar" conflicts with
++ * both "foo" and with "foo/bar/baz" but not with "foo/bar" or
++ * "foo/barbados".
+  */
+ static int is_refname_available(const char *refname, const char *oldrefname,
+ 				struct ref_entry *direntry)
+@@ -706,11 +697,14 @@ static int is_refname_available(const char *refname, const char *oldrefname,
+ 	/* Check whether refname is a proper prefix of an existing reference: */
+ 	prefix[prefixlen++] = '/';
+ 	prefix[prefixlen] = '\0';
+-	data.refname = refname;
+ 	data.oldrefname = oldrefname;
+ 	data.conflicting_refname = NULL;
+ 
+-	if (do_for_each_ref_in_dir(direntry, 0, prefix, name_conflict_fn,
++	direntry = find_containing_direntry(direntry, prefix, 0);
++	if (!direntry)
++		return 1;
++
++	if (do_for_each_ref_in_dir(direntry, 0, "", name_conflict_fn,
+ 				   0, DO_FOR_EACH_INCLUDE_BROKEN,
+ 				   &data)) {
+ 		error("'%s' exists; cannot create '%s'",
 -- 
-Circus, n. A place where horses, ponies and elephants are permitted to see
-men, women and children acting the fool.
+1.7.7.2
