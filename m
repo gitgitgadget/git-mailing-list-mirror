@@ -1,162 +1,172 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] upload-archive: use argv_array for sent parameters
-Date: Tue, 15 Nov 2011 14:49:58 -0500
-Message-ID: <20111115194958.GB19305@sigill.intra.peff.net>
-References: <1319472131-3968-1-git-send-email-kusmabite@gmail.com>
- <201111151122.48378.trast@student.ethz.ch>
- <20111115102807.GA18649@sigill.intra.peff.net>
- <201111151311.46832.trast@student.ethz.ch>
- <20111115173715.GA4478@sigill.intra.peff.net>
- <7vobwdus7w.fsf@alter.siamese.dyndns.org>
- <20111115191832.GA16030@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Franck Bui-Huu <vagabon.xyz@gmail.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>, git@vger.kernel.org,
-	j6t@kdbg.org, rene.scharfe@lsrfire.ath.cx
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 15 20:50:07 2011
+From: Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: [PATCH v2] Add built-in diff patterns for MATLAB code
+Date: Tue, 15 Nov 2011 21:15:03 +0100
+Message-ID: <1321388103-32225-1-git-send-email-hendeby@isy.liu.se>
+References: <201111151414.34141.trast@student.ethz.ch>
+Cc: Git List <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	Gustaf Hendeby <hendeby@isy.liu.se>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Nov 15 21:16:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQP1C-0000Y2-M5
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 20:50:07 +0100
+	id 1RQPQI-0005BY-QT
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 21:16:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757384Ab1KOTuB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Nov 2011 14:50:01 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42779
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757327Ab1KOTuA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2011 14:50:00 -0500
-Received: (qmail 9792 invoked by uid 107); 15 Nov 2011 19:50:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 15 Nov 2011 14:50:05 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Nov 2011 14:49:58 -0500
-Content-Disposition: inline
-In-Reply-To: <20111115191832.GA16030@sigill.intra.peff.net>
+	id S1757391Ab1KOUP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Nov 2011 15:15:58 -0500
+Received: from muon.isy.liu.se ([130.236.48.25]:39556 "EHLO muon.isy.liu.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757050Ab1KOUP5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2011 15:15:57 -0500
+Received: from foolap.hendeby.homeip.net (81-232-38-97-no36.tbcn.telia.com [81.232.38.97])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by muon.isy.liu.se (Postfix) with ESMTPSA id 328F66D8;
+	Tue, 15 Nov 2011 21:15:44 +0100 (MET)
+X-Mailer: git-send-email 1.7.8.rc2.209.geddc4
+In-Reply-To: <201111151414.34141.trast@student.ethz.ch>
+X-ISY-LIU-SE-MailScanner-Information: Please contact postmaster@isy.liu.se for more information
+X-ISY-LIU-SE-MailScanner-ID: 328F66D8.A305B
+X-ISY-LIU-SE-MailScanner: Found to be clean
+X-ISY-LIU-SE-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
+	score=-1, required 6, ALL_TRUSTED -1.00)
+X-ISY-LIU-SE-MailScanner-From: hendeby@isy.liu.se
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185486>
 
-The existing prepare_argv uses a fixed-size static buffer to
-hold all of the arguments, and then puts pointers into the
-buffer into a fixed-size array. Using argv_array gets rid of
-all of the manual bookkeeping and makes the code more
-readable.
+MATLAB is often used in industry and academia for scientific
+computations motivating it being included as a build in pattern.
 
-It also lifts the static limits on the size of the array.
-This is convenient, but is perhaps a security regression, as
-a malicious client can now ask us to create arbitrary-length
-argv arrays in memory.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
 ---
-I think the code is way more readable and obvious.  Do we care about the
-potential DoS?  If so, we can still cap the number of arguments we'll
-accept. In practice, we never send more than a few.
 
- builtin/upload-archive.c |   45 +++++++++++++++++----------------------------
- 1 files changed, 17 insertions(+), 28 deletions(-)
+This version of this commit adds the missing patterns to make the
+.-operators words and adds these to the test.  Lots of thanks Thomas
+for keeping your eyes open and catching this.
 
-diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
-index 80575b9..3830310 100644
---- a/builtin/upload-archive.c
-+++ b/builtin/upload-archive.c
-@@ -7,6 +7,7 @@
- #include "pkt-line.h"
- #include "sideband.h"
- #include "run-command.h"
-+#include "argv-array.h"
+/Gustaf
+
+ Documentation/gitattributes.txt |    2 ++
+ t/t4018-diff-funcname.sh        |    2 +-
+ t/t4034-diff-words.sh           |    1 +
+ t/t4034/matlab/expect           |   14 ++++++++++++++
+ t/t4034/matlab/post             |    9 +++++++++
+ t/t4034/matlab/pre              |    9 +++++++++
+ userdiff.c                      |    3 +++
+ 7 files changed, 39 insertions(+), 1 deletions(-)
+ create mode 100644 t/t4034/matlab/expect
+ create mode 100644 t/t4034/matlab/post
+ create mode 100644 t/t4034/matlab/pre
+
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 25e46ae..a85b187 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -500,6 +500,8 @@ patterns are available:
  
- static const char upload_archive_usage[] =
- 	"git upload-archive <repo>";
-@@ -17,42 +18,28 @@
- static const char lostchild[] =
- "git upload-archive: archiver process was lost";
+ - `java` suitable for source code in the Java language.
  
--#define MAX_ARGS (64)
--
--static void prepare_argv(const char **sent_argv)
-+static void prepare_argv(struct argv_array *out)
- {
- 	const char *arg_cmd = "argument ";
--	char *p;
--	static char buf[4096];
--	int sent_argc;
--	int len;
++- `matlab` suitable for source code in the MATLAB language.
++
+ - `objc` suitable for source code in the Objective-C language.
  
--	/* put received options in sent_argv[] */
--	sent_argc = 2;
--	sent_argv[0] = "archive";
--	sent_argv[1] = "--remote-request";
--	for (p = buf;;) {
-+	argv_array_push(out, "archive");
-+	argv_array_push(out, "--remote-request");
-+	while (1) {
-+		char buf[4096];
-+		int len;
- 		/* This will die if not enough free space in buf */
--		len = packet_read_line(0, p, (buf + sizeof buf) - p);
-+		len = packet_read_line(0, buf, sizeof(buf));
- 		if (len == 0)
- 			break;	/* got a flush */
--		if (sent_argc > MAX_ARGS - 2)
--			die("Too many options (>%d)", MAX_ARGS - 2);
- 
--		if (p[len-1] == '\n') {
--			p[--len] = 0;
--		}
-+		if (buf[len-1] == '\n')
-+			buf[--len] = 0;
- 		if (len < strlen(arg_cmd) ||
--		    strncmp(arg_cmd, p, strlen(arg_cmd)))
-+		    strncmp(arg_cmd, buf, strlen(arg_cmd)))
- 			die("'argument' token or flush expected");
- 
--		len -= strlen(arg_cmd);
--		memmove(p, p + strlen(arg_cmd), len);
--		sent_argv[sent_argc++] = p;
--		p += len;
--		*p++ = 0;
-+		argv_array_push(out, buf + strlen(arg_cmd));
- 	}
--	sent_argv[sent_argc] = NULL;
+ - `pascal` suitable for source code in the Pascal/Delphi language.
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index b68c56b..4bd2a1c 100755
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -105,7 +105,7 @@ test_expect_funcname () {
+ 	grep "^@@.*@@ $1" diff
  }
  
- __attribute__((format (printf, 1, 2)))
-@@ -84,8 +71,8 @@ static ssize_t process_input(int child_fd, int band)
- 
- int cmd_upload_archive(int argc, const char **argv, const char *prefix)
- {
--	const char *sent_argv[MAX_ARGS];
--	struct child_process cld = { sent_argv };
-+	struct argv_array sent_argv = ARGV_ARRAY_INIT;
-+	struct child_process cld = {0};
- 	cld.out = cld.err = -1;
- 	cld.git_cmd = 1;
- 
-@@ -95,7 +82,8 @@ int cmd_upload_archive(int argc, const char **argv, const char *prefix)
- 	if (!enter_repo(argv[1], 0))
- 		die("'%s' does not appear to be a git repository", argv[1]);
- 
--	prepare_argv(sent_argv);
-+	prepare_argv(&sent_argv);
-+	cld.argv = sent_argv.argv;
- 	if (start_command(&cld)) {
- 		int err = errno;
- 		packet_write(1, "NACK fork failed on the remote side\n");
-@@ -138,5 +126,6 @@ int cmd_upload_archive(int argc, const char **argv, const char *prefix)
- 		packet_flush(1);
- 		break;
- 	}
-+	argv_array_clear(&sent_argv);
- 	return 0;
- }
+-for p in bibtex cpp csharp fortran html java objc pascal perl php python ruby tex
++for p in bibtex cpp csharp fortran html java matlab objc pascal perl php python ruby tex
+ do
+ 	test_expect_success "builtin $p pattern compiles" '
+ 		echo "*.java diff=$p" >.gitattributes &&
+diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+index c374aa4..6f1e5a2 100755
+--- a/t/t4034-diff-words.sh
++++ b/t/t4034-diff-words.sh
+@@ -299,6 +299,7 @@ test_language_driver csharp
+ test_language_driver fortran
+ test_language_driver html
+ test_language_driver java
++test_language_driver matlab
+ test_language_driver objc
+ test_language_driver pascal
+ test_language_driver perl
+diff --git a/t/t4034/matlab/expect b/t/t4034/matlab/expect
+new file mode 100644
+index 0000000..72cf3e9
+--- /dev/null
++++ b/t/t4034/matlab/expect
+@@ -0,0 +1,14 @@
++<BOLD>diff --git a/pre b/post<RESET>
++<BOLD>index dc204db..70e05f0 100644<RESET>
++<BOLD>--- a/pre<RESET>
++<BOLD>+++ b/post<RESET>
++<CYAN>@@ -1,9 +1,9 @@<RESET>
++(<RED>1<RESET><GREEN>0<RESET>) (<RED>-1e10<RESET><GREEN>-0e10<RESET>) '<RED>b<RESET><GREEN>y<RESET>';
++[<RED>a<RESET><GREEN>x<RESET>] {<RED>a<RESET><GREEN>x<RESET>} <RED>a<RESET><GREEN>x<RESET>.<RED>b<RESET><GREEN>y<RESET>;
++~<RED>a<RESET><GREEN>x<RESET>;
++<RED>a<RESET><GREEN>x<RESET>*<RED>b a<RESET><GREEN>y x<RESET>.*<RED>b a<RESET><GREEN>y x<RESET>/<RED>b a<RESET><GREEN>y x<RESET>./<RED>b a<RESET><GREEN>y x<RESET>^<RED>b a<RESET><GREEN>y x<RESET>.^<RED>b a<RESET><GREEN>y x<RESET>.\<RED>b a<RESET><GREEN>y x<RESET>.';
++<RED>a<RESET><GREEN>x<RESET>+<RED>b a<RESET><GREEN>y x<RESET>-<RED>b<RESET><GREEN>y<RESET>;
++<RED>a<RESET><GREEN>x<RESET>&<RED>b a<RESET><GREEN>y x<RESET>&&<RED>b a<RESET><GREEN>y x<RESET>|<RED>b a<RESET><GREEN>y x<RESET>||<RED>b<RESET><GREEN>y<RESET>;
++<RED>a<RESET><GREEN>x<RESET><<RED>b a<RESET><GREEN>y x<RESET><=<RED>b a<RESET><GREEN>y x<RESET>><RED>b a<RESET><GREEN>y x<RESET>>=<RED>b<RESET><GREEN>y<RESET>;
++<RED>a<RESET><GREEN>x<RESET>==<RED>b a<RESET><GREEN>y x<RESET>~=<RED>b<RESET><GREEN>y<RESET>;
++<RED>a<RESET><GREEN>x<RESET>,<RED>b<RESET><GREEN>y<RESET>;
+diff --git a/t/t4034/matlab/post b/t/t4034/matlab/post
+new file mode 100644
+index 0000000..70e05f0
+--- /dev/null
++++ b/t/t4034/matlab/post
+@@ -0,0 +1,9 @@
++(0) (-0e10) 'y';
++[x] {x} x.y;
++~x;
++x*y x.*y x/y x./y x^y x.^y x.\y x.';
++x+y x-y;
++x&y x&&y x|y x||y;
++x<y x<=y x>y x>=y;
++x==y x~=y;
++x,y;
+diff --git a/t/t4034/matlab/pre b/t/t4034/matlab/pre
+new file mode 100644
+index 0000000..dc204db
+--- /dev/null
++++ b/t/t4034/matlab/pre
+@@ -0,0 +1,9 @@
++(1) (-1e10) 'b';
++[a] {a} a.b;
++~a;
++a*b a.*b a/b a./b a^b a.^b a.\b a.';
++a+b a-b;
++a&b a&&b a|b a||b;
++a<b a<=b a>b a>=b;
++a==b a~=b;
++a,b;
+diff --git a/userdiff.c b/userdiff.c
+index bf553ad..7c983c1 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -37,6 +37,9 @@ PATTERNS("java",
+ 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
+ 	 "|[-+*/<>%&^|=!]="
+ 	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
++PATTERNS("matlab",
++	 "^[[:space:]]*((classdef|function)[[:space:]].*)$|^%%[[:space:]].*$",
++	 "[a-zA-Z_][a-zA-Z0-9_]*|[-+0-9.e]+|[=~<>]=|\\.[*/\\^']|\\|\\||&&"),
+ PATTERNS("objc",
+ 	 /* Negate C statements that can look like functions */
+ 	 "!^[ \t]*(do|for|if|else|return|switch|while)\n"
 -- 
-1.7.7.3.8.g38efa
+1.7.8.rc2.209.geddc4
