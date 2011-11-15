@@ -1,67 +1,51 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Nov 2011, #03; Sun, 13)
-Date: Mon, 14 Nov 2011 23:27:32 -0800
-Message-ID: <7vpqgtx2u3.fsf@alter.siamese.dyndns.org>
-References: <7vmxbzl5ch.fsf@alter.siamese.dyndns.org>
- <4EC0C101.4060001@viscovery.net>
+From: mardu@aster.pl
+Subject: Git 1.7.7.1 (Win7) work slower.
+Date: Tue, 15 Nov 2011 08:59:07 +0100
+Message-ID: <49277.1321343947@aster.pl>
+Reply-To: mardu@aster.pl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Vincent van Ravesteijn <vfr@lyx.org>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	msysGit <msysgit@googlegroups.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Nov 15 08:27:41 2011
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 15 09:00:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQDQi-000054-MZ
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 08:27:41 +0100
+	id 1RQDwB-0003lq-89
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 09:00:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753263Ab1KOH1g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Nov 2011 02:27:36 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58435 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753047Ab1KOH1f (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2011 02:27:35 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4AFAE27EA;
-	Tue, 15 Nov 2011 02:27:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RXPMUFQOVSmVxdNez5RseYWatnA=; b=xFxDXq
-	auSe0I9HNbKIFAt1S8o2h6elgRwYmBknTfWilZ//LnKIBEpIZNylq7HVDgu/I83I
-	CN/OYwiM9yo+RboFLjM+ujoHfaLykqF6yuxVLNc5CrU/j6U26mWkgl5y4UvUTg4d
-	QmxVCOfR0UTupHiKqHTzJQsJeJCrGLQ/5gyHY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jxGjRzdoagcNDq2DjxFKebdi+/rWs09p
-	9G5QvKY7enMDIYBznvviggIM8HCGad5QxOkwXFY82/hj6tHHJLQltjKxHoCQaZFf
-	wUVQSQgZFJ8TMaM7ecOEHIX4CAZh0MpMoPHAlhskMaFdhvFtCKRdiAADLPIwbgbB
-	O0jIpKTr908=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4274D27E9;
-	Tue, 15 Nov 2011 02:27:35 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D6D4127E8; Tue, 15 Nov 2011
- 02:27:33 -0500 (EST)
-In-Reply-To: <4EC0C101.4060001@viscovery.net> (Johannes Sixt's message of
- "Mon, 14 Nov 2011 08:19:29 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 48FEC1AE-0F5B-11E1-A266-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752330Ab1KOIAE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Nov 2011 03:00:04 -0500
+Received: from barka1.aster.pl ([212.76.39.187]:53561 "EHLO barka1.aster.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751272Ab1KOIAD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2011 03:00:03 -0500
+Received: from smtp2.aster.pl (smtp2.aster.pl [212.76.33.47]) by barka1.aster.pl with ESMTP id N23feMWktbgVsTU9 for <git@vger.kernel.org>; Tue, 15 Nov 2011 09:00:00 +0100 (CET)
+Received: from localhost (webmail2.aster.pl [212.76.33.159])
+	by smtp2.aster.pl (sendmail) with ESMTP id 7812C289FD
+	for <git@vger.kernel.org>; Tue, 15 Nov 2011 08:59:07 +0100 (CET)
+X-Mailer: AtMail PHP 5.61
+X-Origin: 87.205.159.236
+X-Atmail-Account: mardu@aster.pl
+X-Virus-Scanned: by bsmtpd at aster.pl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185440>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Hello,
 
-> IMO, these two topics can move forward:
->
->> * vr/msvc (2011-10-31) 3 commits
->> * na/strtoimax (2011-11-05) 3 commits
+The latest Git version for Windows (1.7.7.1; GUI) work very slow (it means that I
+have to wait tens seconds or even few minutes for open the application, scan
+files, read history and other...).
+I don't see changes in speed in another aplications installed on my computer.
+The previous version Git (1.7.6), which I had installed, it has worked normaly.
 
-Thanks.
+OS:Windows 7 x64 (Home Premium, SP1),
+CPU: Intel Core i5 M520 2.40GHz
+RAM: 4GB
+
+Martin
