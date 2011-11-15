@@ -1,73 +1,74 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] revert: prettify fatal messages
-Date: Tue, 15 Nov 2011 11:04:35 +0100
-Message-ID: <vpqlirhitvw.fsf@bauges.imag.fr>
-References: <1321349492-5653-1-git-send-email-artagnon@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v4 3/3] upload-archive: use start_command instead of fork
+Date: Tue, 15 Nov 2011 11:22:48 +0100
+Message-ID: <201111151122.48378.trast@student.ethz.ch>
+References: <1319472131-3968-1-git-send-email-kusmabite@gmail.com> <1319472131-3968-4-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 15 11:04:51 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, <gitster@pobox.com>, <j6t@kdbg.org>,
+	<peff@peff.net>, <rene.scharfe@lsrfire.ath.cx>
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 15 11:22:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQFso-0004xg-F4
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 11:04:50 +0100
+	id 1RQGAM-00045g-CM
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 11:22:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754709Ab1KOKEp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Nov 2011 05:04:45 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:52278 "EHLO shiva.imag.fr"
+	id S1754722Ab1KOKWy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Nov 2011 05:22:54 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:10883 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754625Ab1KOKEp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2011 05:04:45 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id pAFA09fL032213
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 15 Nov 2011 11:00:09 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1RQFsa-0005ZX-6k; Tue, 15 Nov 2011 11:04:36 +0100
-In-Reply-To: <1321349492-5653-1-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Tue, 15 Nov 2011 15:01:32 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 15 Nov 2011 11:00:09 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: pAFA09fL032213
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1321956012.49435@7LedX/3J5MBuoQSoJgo5nA
+	id S1754586Ab1KOKWx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2011 05:22:53 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.339.1; Tue, 15 Nov
+ 2011 11:22:49 +0100
+Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.339.1; Tue, 15 Nov
+ 2011 11:22:51 +0100
+User-Agent: KMail/1.13.7 (Linux/3.1.0-47-desktop; KDE/4.6.5; x86_64; ; )
+In-Reply-To: <1319472131-3968-4-git-send-email-kusmabite@gmail.com>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185452>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Erik Faye-Lund wrote:
+> The POSIX-function fork is not supported on Windows. Use our
+> start_command API instead.
+> 
+> As this is the last call-site that depends on the fork-stub in
+> compat/mingw.h, remove that as well.
+> 
+> Add an undocumented flag to git-archive that tells it that the
+> action originated from a remote, so features can be disabled.
+> Thanks to Jeff King for work on this part.
+> 
+> Remove the NOT_MINGW-prereq for t5000, as git-archive --remote
+> now works.
 
-> Some of the fatal messages printed by revert and cherry-pick look ugly
-> like the following:
->
->   fatal: Could not open .git/sequencer/todo.: No such file or directory
->
-> The culprit here is the die_errno() function that takes a custom error
-> message string as an argument and appends ": <message from errno>"
-> before printing it.  So, we can fix the problem by not terminating the
-> string argument to the function with a '.' (period).  Fatal messages
-> look nicer now:
->
->   fatal: Could not open .git/sequencer/todo: No such file or directory
+I see valgrind failures bisecting to this commit, like so:
 
-Sounds (obviously) good.
+==19125== Syscall param execve(argv[i]) points to unaddressable byte(s)
+==19125==    at 0x5303CB7: execve (in /lib64/libc-2.11.3.so)
+==19125==    by 0x53045A5: execvpe (in /lib64/libc-2.11.3.so)
+==19125==    by 0x4B183C: execv_git_cmd (exec_cmd.c:137)
+==19125==    by 0x4F305E: start_command (run-command.c:277)
+==19125==    by 0x47F5C9: cmd_upload_archive (upload-archive.c:98)
+==19125==    by 0x4051F4: run_builtin (git.c:308)
+==19125==    by 0x40538F: handle_internal_command (git.c:466)
+==19125==    by 0x405556: main (git.c:553)
+==19125==  Address 0x7feffe7d0 is not stack'd, malloc'd or (recently) free'd
 
-(I just misread the subject line at first, and understood that this was
-a revert of an earlier commit, while this is actually a commit touching
-the "revert" part of Git)
+when running 'make valgrind' in current master.  Let me know if you
+need more information.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thomas Rast
+trast@{inf,student}.ethz.ch
