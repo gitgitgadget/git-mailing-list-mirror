@@ -1,554 +1,61 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 01/10] Allow resolve_ref() caller to decide whether to receive static buffer
-Date: Tue, 15 Nov 2011 13:07:47 +0700
-Message-ID: <1321337276-17803-1-git-send-email-pclouds@gmail.com>
-References: <20111115060603.GA17585@tre>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH, v2] tag: implement --[no-]strip option
+Date: Tue, 15 Nov 2011 07:42:15 +0100
+Message-ID: <4EC209C7.6090805@viscovery.net>
+References: <1321307019-5557-1-git-send-email-kirill@shutemov.name>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 15 07:06:37 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: "Kirill A. Shutemov" <kirill@shutemov.name>
+X-From: git-owner@vger.kernel.org Tue Nov 15 07:42:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQCAF-0005yN-3M
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 07:06:35 +0100
+	id 1RQCiw-0000o6-A9
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 07:42:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752023Ab1KOGFQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Nov 2011 01:05:16 -0500
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:46627 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751642Ab1KOGFO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2011 01:05:14 -0500
-Received: by pzk36 with SMTP id 36so14544202pzk.1
-        for <git@vger.kernel.org>; Mon, 14 Nov 2011 22:05:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=8erYjvq1Cm3YaB2og+Wr/r1cF56QU718RSAOWl6mjj4=;
-        b=AngR5p/XfgEXC3xMBUqm6Ufae/vtpch/OX7dWyEwbEFjqHv1n+v0MzhIkhREFEF5pk
-         vKHIAJ8QjLsK1GkI/MuRM1XqtiR9iYZUnUpqMCBpuJ8tlNtGrA0DRTKM96tZ5GLU3zeu
-         rX7O6DsPKoQySPRmmlQKu3zDZFsOcnYJDrLhA=
-Received: by 10.68.33.227 with SMTP id u3mr56791017pbi.72.1321337113347;
-        Mon, 14 Nov 2011 22:05:13 -0800 (PST)
-Received: from tre ([115.74.43.88])
-        by mx.google.com with ESMTPS id b4sm62379803pbc.19.2011.11.14.22.05.08
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 14 Nov 2011 22:05:12 -0800 (PST)
-Received: by tre (sSMTP sendmail emulation); Tue, 15 Nov 2011 13:07:57 +0700
-X-Mailer: git-send-email 1.7.4.74.g639db
-In-Reply-To: <20111115060603.GA17585@tre>
+	id S1751812Ab1KOGmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Nov 2011 01:42:21 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:29896 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751071Ab1KOGmV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2011 01:42:21 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1RQCil-0004SB-Rh; Tue, 15 Nov 2011 07:42:16 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 8E7931660F;
+	Tue, 15 Nov 2011 07:42:15 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.23) Gecko/20110920 Thunderbird/3.1.15
+In-Reply-To: <1321307019-5557-1-git-send-email-kirill@shutemov.name>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185435>
 
-resolve_ref() is taught to return a xstrdup'd buffer if alloc is true.
-All callers are updated to receive static buffer as before though.
+Am 11/14/2011 22:43, schrieb Kirill A. Shutemov:
+> From: "Kirill A. Shutemov" <kirill@shutemov.name>
+> 
+> --strip::
+> 	Remove from tag message lines staring with '#', trailing spaces
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- branch.c                |    2 +-
- builtin/branch.c        |    6 +++---
- builtin/checkout.c      |    2 +-
- builtin/commit.c        |    2 +-
- builtin/fmt-merge-msg.c |    2 +-
- builtin/for-each-ref.c  |    2 +-
- builtin/fsck.c          |    2 +-
- builtin/merge.c         |    2 +-
- builtin/notes.c         |    2 +-
- builtin/receive-pack.c  |    4 ++--
- builtin/remote.c        |    2 +-
- builtin/show-branch.c   |    4 ++--
- builtin/symbolic-ref.c  |    2 +-
- cache.h                 |    2 +-
- reflog-walk.c           |    4 ++--
- refs.c                  |   31 ++++++++++++++++++-------------
- remote.c                |    6 +++---
- transport.c             |    2 +-
- wt-status.c             |    2 +-
- 19 files changed, 43 insertions(+), 38 deletions(-)
+s/staring/starting/
 
-diff --git a/branch.c b/branch.c
-index d809876..a5ee614 100644
---- a/branch.c
-+++ b/branch.c
-@@ -151,7 +151,7 @@ int validate_new_branchname(const char *name, struc=
-t strbuf *ref,
- 		const char *head;
- 		unsigned char sha1[20];
-=20
--		head =3D resolve_ref("HEAD", sha1, 0, NULL);
-+		head =3D resolve_ref("HEAD", sha1, 0, NULL, 0);
- 		if (!is_bare_repository() && head && !strcmp(head, ref->buf))
- 			die("Cannot force update the current branch.");
- 	}
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 0fe9c4d..43b494c 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -115,7 +115,7 @@ static int branch_merged(int kind, const char *name=
-,
- 		    branch->merge[0] &&
- 		    branch->merge[0]->dst &&
- 		    (reference_name =3D
--		     resolve_ref(branch->merge[0]->dst, sha1, 1, NULL)) !=3D NULL)
-+		     resolve_ref(branch->merge[0]->dst, sha1, 1, NULL, 0)) !=3D NULL=
-)
- 			reference_rev =3D lookup_commit_reference(sha1);
- 	}
- 	if (!reference_rev)
-@@ -250,7 +250,7 @@ static char *resolve_symref(const char *src, const =
-char *prefix)
- 	int flag;
- 	const char *dst, *cp;
-=20
--	dst =3D resolve_ref(src, sha1, 0, &flag);
-+	dst =3D resolve_ref(src, sha1, 0, &flag, 0);
- 	if (!(dst && (flag & REF_ISSYMREF)))
- 		return NULL;
- 	if (prefix && (cp =3D skip_prefix(dst, prefix)))
-@@ -688,7 +688,7 @@ int cmd_branch(int argc, const char **argv, const c=
-har *prefix)
-=20
- 	track =3D git_branch_track;
-=20
--	head =3D resolve_ref("HEAD", head_sha1, 0, NULL);
-+	head =3D resolve_ref("HEAD", head_sha1, 0, NULL, 0);
- 	if (!head)
- 		die(_("Failed to resolve HEAD as a valid ref."));
- 	head =3D xstrdup(head);
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index beeaee4..f92c737 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -699,7 +699,7 @@ static int switch_branches(struct checkout_opts *op=
-ts, struct branch_info *new)
- 	unsigned char rev[20];
- 	int flag;
- 	memset(&old, 0, sizeof(old));
--	old.path =3D xstrdup(resolve_ref("HEAD", rev, 0, &flag));
-+	old.path =3D xstrdup(resolve_ref("HEAD", rev, 0, &flag, 0));
- 	old.commit =3D lookup_commit_reference_gently(rev, 1);
- 	if (!(flag & REF_ISSYMREF)) {
- 		free((char *)old.path);
-diff --git a/builtin/commit.c b/builtin/commit.c
-index c46f2d1..11ae005 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1259,7 +1259,7 @@ static void print_summary(const char *prefix, con=
-st unsigned char *sha1,
- 	struct commit *commit;
- 	struct strbuf format =3D STRBUF_INIT;
- 	unsigned char junk_sha1[20];
--	const char *head =3D resolve_ref("HEAD", junk_sha1, 0, NULL);
-+	const char *head =3D resolve_ref("HEAD", junk_sha1, 0, NULL, 0);
- 	struct pretty_print_context pctx =3D {0};
- 	struct strbuf author_ident =3D STRBUF_INIT;
- 	struct strbuf committer_ident =3D STRBUF_INIT;
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 7e2f225..c80f4b7 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -263,7 +263,7 @@ static int do_fmt_merge_msg(int merge_title, struct=
- strbuf *in,
- 	const char *current_branch;
-=20
- 	/* get current branch */
--	current_branch =3D resolve_ref("HEAD", head_sha1, 1, NULL);
-+	current_branch =3D resolve_ref("HEAD", head_sha1, 1, NULL, 0);
- 	if (!current_branch)
- 		die("No current branch");
- 	if (!prefixcmp(current_branch, "refs/heads/"))
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index d90e5d2..09d7d6b 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -629,7 +629,7 @@ static void populate_value(struct refinfo *ref)
- 	if (need_symref && (ref->flag & REF_ISSYMREF) && !ref->symref) {
- 		unsigned char unused1[20];
- 		const char *symref;
--		symref =3D resolve_ref(ref->refname, unused1, 1, NULL);
-+		symref =3D resolve_ref(ref->refname, unused1, 1, NULL, 0);
- 		if (symref)
- 			ref->symref =3D xstrdup(symref);
- 		else
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index df1a88b..4d3d87e 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -532,7 +532,7 @@ static int fsck_head_link(void)
- 	if (verbose)
- 		fprintf(stderr, "Checking HEAD link\n");
-=20
--	head_points_at =3D resolve_ref("HEAD", head_sha1, 0, &flag);
-+	head_points_at =3D resolve_ref("HEAD", head_sha1, 0, &flag, 0);
- 	if (!head_points_at)
- 		return error("Invalid HEAD");
- 	if (!strcmp(head_points_at, "HEAD"))
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 42b4f9e..d9c7a80 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1095,7 +1095,7 @@ int cmd_merge(int argc, const char **argv, const =
-char *prefix)
- 	 * Check if we are _not_ on a detached HEAD, i.e. if there is a
- 	 * current branch.
- 	 */
--	branch =3D resolve_ref("HEAD", head_sha1, 0, &flag);
-+	branch =3D resolve_ref("HEAD", head_sha1, 0, &flag, 0);
- 	if (branch && !prefixcmp(branch, "refs/heads/"))
- 		branch +=3D 11;
- 	if (!branch || is_null_sha1(head_sha1))
-diff --git a/builtin/notes.c b/builtin/notes.c
-index f8e437d..9c70d8f 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -825,7 +825,7 @@ static int merge_commit(struct notes_merge_options =
-*o)
- 	t =3D xcalloc(1, sizeof(struct notes_tree));
- 	init_notes(t, "NOTES_MERGE_PARTIAL", combine_notes_overwrite, 0);
-=20
--	o->local_ref =3D resolve_ref("NOTES_MERGE_REF", sha1, 0, NULL);
-+	o->local_ref =3D resolve_ref("NOTES_MERGE_REF", sha1, 0, NULL, 0);
- 	if (!o->local_ref)
- 		die("Failed to resolve NOTES_MERGE_REF");
-=20
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 7ec68a1..903f2c5 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -571,7 +571,7 @@ static void check_aliased_update(struct command *cm=
-d, struct string_list *list)
- 	int flag;
-=20
- 	strbuf_addf(&buf, "%s%s", get_git_namespace(), cmd->ref_name);
--	dst_name =3D resolve_ref(buf.buf, sha1, 0, &flag);
-+	dst_name =3D resolve_ref(buf.buf, sha1, 0, &flag, 0);
- 	strbuf_release(&buf);
-=20
- 	if (!(flag & REF_ISSYMREF))
-@@ -695,7 +695,7 @@ static void execute_commands(struct command *comman=
-ds, const char *unpacker_erro
-=20
- 	check_aliased_updates(commands);
-=20
--	head_name =3D resolve_ref("HEAD", sha1, 0, NULL);
-+	head_name =3D resolve_ref("HEAD", sha1, 0, NULL, 0);
-=20
- 	for (cmd =3D commands; cmd; cmd =3D cmd->next)
- 		if (!cmd->skip_update)
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 407abfb..4a3b529 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -573,7 +573,7 @@ static int read_remote_branches(const char *refname=
-,
- 	strbuf_addf(&buf, "refs/remotes/%s/", rename->old);
- 	if (!prefixcmp(refname, buf.buf)) {
- 		item =3D string_list_append(rename->remote_branches, xstrdup(refname=
-));
--		symref =3D resolve_ref(refname, orig_sha1, 1, &flag);
-+		symref =3D resolve_ref(refname, orig_sha1, 1, &flag, 0);
- 		if (flag & REF_ISSYMREF)
- 			item->util =3D xstrdup(symref);
- 		else
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index 4b480d7..d8282ad 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -728,7 +728,7 @@ int cmd_show_branch(int ac, const char **av, const =
-char *prefix)
- 			static const char *fake_av[2];
- 			const char *refname;
-=20
--			refname =3D resolve_ref("HEAD", sha1, 1, NULL);
-+			refname =3D resolve_ref("HEAD", sha1, 1, NULL, 0);
- 			fake_av[0] =3D xstrdup(refname);
- 			fake_av[1] =3D NULL;
- 			av =3D fake_av;
-@@ -791,7 +791,7 @@ int cmd_show_branch(int ac, const char **av, const =
-char *prefix)
- 		}
- 	}
-=20
--	head_p =3D resolve_ref("HEAD", head_sha1, 1, NULL);
-+	head_p =3D resolve_ref("HEAD", head_sha1, 1, NULL, 0);
- 	if (head_p) {
- 		head_len =3D strlen(head_p);
- 		memcpy(head, head_p, head_len + 1);
-diff --git a/builtin/symbolic-ref.c b/builtin/symbolic-ref.c
-index dea849c..50cbdd1 100644
---- a/builtin/symbolic-ref.c
-+++ b/builtin/symbolic-ref.c
-@@ -12,7 +12,7 @@ static void check_symref(const char *HEAD, int quiet)
- {
- 	unsigned char sha1[20];
- 	int flag;
--	const char *refs_heads_master =3D resolve_ref(HEAD, sha1, 0, &flag);
-+	const char *refs_heads_master =3D resolve_ref(HEAD, sha1, 0, &flag, 0=
-);
-=20
- 	if (!refs_heads_master)
- 		die("No such ref: %s", HEAD);
-diff --git a/cache.h b/cache.h
-index 5badece..b2f0d56 100644
---- a/cache.h
-+++ b/cache.h
-@@ -866,7 +866,7 @@ extern int read_ref(const char *filename, unsigned =
-char *sha1);
-  *
-  * errno is sometimes set on errors, but not always.
-  */
--extern const char *resolve_ref(const char *ref, unsigned char *sha1, i=
-nt reading, int *flag);
-+extern char *resolve_ref(const char *ref, unsigned char *sha1, int rea=
-ding, int *flag, int alloc);
-=20
- extern int dwim_ref(const char *str, int len, unsigned char *sha1, cha=
-r **ref);
- extern int dwim_log(const char *str, int len, unsigned char *sha1, cha=
-r **ref);
-diff --git a/reflog-walk.c b/reflog-walk.c
-index 5d81d39..f71cca6 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -50,7 +50,7 @@ static struct complete_reflogs *read_complete_reflog(=
-const char *ref)
- 	for_each_reflog_ent(ref, read_one_reflog, reflogs);
- 	if (reflogs->nr =3D=3D 0) {
- 		unsigned char sha1[20];
--		const char *name =3D resolve_ref(ref, sha1, 1, NULL);
-+		const char *name =3D resolve_ref(ref, sha1, 1, NULL, 0);
- 		if (name)
- 			for_each_reflog_ent(name, read_one_reflog, reflogs);
- 	}
-@@ -168,7 +168,7 @@ int add_reflog_for_walk(struct reflog_walk_info *in=
-fo,
- 	else {
- 		if (*branch =3D=3D '\0') {
- 			unsigned char sha1[20];
--			const char *head =3D resolve_ref("HEAD", sha1, 0, NULL);
-+			const char *head =3D resolve_ref("HEAD", sha1, 0, NULL, 0);
- 			if (!head)
- 				die ("No current branch");
- 			free(branch);
-diff --git a/refs.c b/refs.c
-index 44c1c86..0387490 100644
---- a/refs.c
-+++ b/refs.c
-@@ -361,7 +361,7 @@ static int warn_if_dangling_symref(const char *refn=
-ame, const unsigned char *sha
- 	if (!(flags & REF_ISSYMREF))
- 		return 0;
-=20
--	resolves_to =3D resolve_ref(refname, junk, 0, NULL);
-+	resolves_to =3D resolve_ref(refname, junk, 0, NULL, 0);
- 	if (!resolves_to || strcmp(resolves_to, d->refname))
- 		return 0;
-=20
-@@ -497,16 +497,19 @@ static int get_packed_ref(const char *ref, unsign=
-ed char *sha1)
- 	return -1;
- }
-=20
--const char *resolve_ref(const char *ref, unsigned char *sha1, int read=
-ing, int *flag)
-+char *resolve_ref(const char *ref_ro, unsigned char *sha1, int reading=
-, int *flag, int alloc)
- {
- 	int depth =3D MAXDEPTH;
- 	ssize_t len;
-+	char *ref;
- 	char buffer[256];
- 	static char ref_buffer[256];
-=20
- 	if (flag)
- 		*flag =3D 0;
-=20
-+	ref =3D strcpy(ref_buffer, ref_ro);
-+
- 	if (check_refname_format(ref, REFNAME_ALLOW_ONELEVEL))
- 		return NULL;
-=20
-@@ -531,14 +534,14 @@ const char *resolve_ref(const char *ref, unsigned=
- char *sha1, int reading, int *
- 			if (!get_packed_ref(ref, sha1)) {
- 				if (flag)
- 					*flag |=3D REF_ISPACKED;
--				return ref;
-+				goto done;
- 			}
- 			/* The reference is not a packed reference, either. */
- 			if (reading) {
- 				return NULL;
- 			} else {
- 				hashclr(sha1);
--				return ref;
-+				goto done;
- 			}
- 		}
-=20
-@@ -602,7 +605,9 @@ const char *resolve_ref(const char *ref, unsigned c=
-har *sha1, int reading, int *
- 			*flag |=3D REF_ISBROKEN;
- 		return NULL;
- 	}
--	return ref;
-+
-+done:
-+	return alloc ? xstrdup(ref) : ref;
- }
-=20
- /* The argument to filter_refs */
-@@ -614,7 +619,7 @@ struct ref_filter {
-=20
- int read_ref_full(const char *ref, unsigned char *sha1, int reading, i=
-nt *flags)
- {
--	if (resolve_ref(ref, sha1, reading, flags))
-+	if (resolve_ref(ref, sha1, reading, flags, 0))
- 		return 0;
- 	return -1;
- }
-@@ -1118,7 +1123,7 @@ int dwim_ref(const char *str, int len, unsigned c=
-har *sha1, char **ref)
-=20
- 		this_result =3D refs_found ? sha1_from_ref : sha1;
- 		mksnpath(fullref, sizeof(fullref), *p, len, str);
--		r =3D resolve_ref(fullref, this_result, 1, &flag);
-+		r =3D resolve_ref(fullref, this_result, 1, &flag, 0);
- 		if (r) {
- 			if (!refs_found++)
- 				*ref =3D xstrdup(r);
-@@ -1148,7 +1153,7 @@ int dwim_log(const char *str, int len, unsigned c=
-har *sha1, char **log)
- 		const char *ref, *it;
-=20
- 		mksnpath(path, sizeof(path), *p, len, str);
--		ref =3D resolve_ref(path, hash, 1, NULL);
-+		ref =3D resolve_ref(path, hash, 1, NULL, 0);
- 		if (!ref)
- 			continue;
- 		if (!stat(git_path("logs/%s", path), &st) &&
-@@ -1184,7 +1189,7 @@ static struct ref_lock *lock_ref_sha1_basic(const=
- char *ref, const unsigned char
- 	lock =3D xcalloc(1, sizeof(struct ref_lock));
- 	lock->lock_fd =3D -1;
-=20
--	ref =3D resolve_ref(ref, lock->old_sha1, mustexist, &type);
-+	ref =3D resolve_ref(ref, lock->old_sha1, mustexist, &type, 0);
- 	if (!ref && errno =3D=3D EISDIR) {
- 		/* we are trying to lock foo but we used to
- 		 * have foo/bar which now does not exist;
-@@ -1197,7 +1202,7 @@ static struct ref_lock *lock_ref_sha1_basic(const=
- char *ref, const unsigned char
- 			error("there are still refs under '%s'", orig_ref);
- 			goto error_return;
- 		}
--		ref =3D resolve_ref(orig_ref, lock->old_sha1, mustexist, &type);
-+		ref =3D resolve_ref(orig_ref, lock->old_sha1, mustexist, &type, 0);
- 	}
- 	if (type_p)
- 	    *type_p =3D type;
-@@ -1360,7 +1365,7 @@ int rename_ref(const char *oldref, const char *ne=
-wref, const char *logmsg)
- 	if (log && S_ISLNK(loginfo.st_mode))
- 		return error("reflog for %s is a symlink", oldref);
-=20
--	symref =3D resolve_ref(oldref, orig_sha1, 1, &flag);
-+	symref =3D resolve_ref(oldref, orig_sha1, 1, &flag, 0);
- 	if (flag & REF_ISSYMREF)
- 		return error("refname %s is a symbolic ref, renaming it is not suppo=
-rted",
- 			oldref);
-@@ -1649,7 +1654,7 @@ int write_ref_sha1(struct ref_lock *lock,
- 		unsigned char head_sha1[20];
- 		int head_flag;
- 		const char *head_ref;
--		head_ref =3D resolve_ref("HEAD", head_sha1, 1, &head_flag);
-+		head_ref =3D resolve_ref("HEAD", head_sha1, 1, &head_flag, 0);
- 		if (head_ref && (head_flag & REF_ISSYMREF) &&
- 		    !strcmp(head_ref, lock->ref_name))
- 			log_ref_write("HEAD", lock->old_sha1, sha1, logmsg);
-@@ -1986,7 +1991,7 @@ int update_ref(const char *action, const char *re=
-fname,
- int ref_exists(const char *refname)
- {
- 	unsigned char sha1[20];
--	return !!resolve_ref(refname, sha1, 1, NULL);
-+	return !!resolve_ref(refname, sha1, 1, NULL, 0);
- }
-=20
- struct ref *find_ref_by_name(const struct ref *list, const char *name)
-diff --git a/remote.c b/remote.c
-index 6655bb0..e776ba3 100644
---- a/remote.c
-+++ b/remote.c
-@@ -482,7 +482,7 @@ static void read_config(void)
- 		return;
- 	default_remote_name =3D xstrdup("origin");
- 	current_branch =3D NULL;
--	head_ref =3D resolve_ref("HEAD", sha1, 0, &flag);
-+	head_ref =3D resolve_ref("HEAD", sha1, 0, &flag, 0);
- 	if (head_ref && (flag & REF_ISSYMREF) &&
- 	    !prefixcmp(head_ref, "refs/heads/")) {
- 		current_branch =3D
-@@ -1007,7 +1007,7 @@ static char *guess_ref(const char *name, struct r=
-ef *peer)
- 	struct strbuf buf =3D STRBUF_INIT;
- 	unsigned char sha1[20];
-=20
--	const char *r =3D resolve_ref(peer->name, sha1, 1, NULL);
-+	const char *r =3D resolve_ref(peer->name, sha1, 1, NULL, 0);
- 	if (!r)
- 		return NULL;
-=20
-@@ -1058,7 +1058,7 @@ static int match_explicit(struct ref *src, struct=
- ref *dst,
- 		unsigned char sha1[20];
- 		int flag;
-=20
--		dst_value =3D resolve_ref(matched_src->name, sha1, 1, &flag);
-+		dst_value =3D resolve_ref(matched_src->name, sha1, 1, &flag, 0);
- 		if (!dst_value ||
- 		    ((flag & REF_ISSYMREF) &&
- 		     prefixcmp(dst_value, "refs/heads/")))
-diff --git a/transport.c b/transport.c
-index 51814b5..063c285 100644
---- a/transport.c
-+++ b/transport.c
-@@ -163,7 +163,7 @@ static void set_upstreams(struct transport *transpo=
-rt, struct ref *refs,
- 		/* Follow symbolic refs (mainly for HEAD). */
- 		localname =3D ref->peer_ref->name;
- 		remotename =3D ref->name;
--		tmp =3D resolve_ref(localname, sha, 1, &flag);
-+		tmp =3D resolve_ref(localname, sha, 1, &flag, 0);
- 		if (tmp && flag & REF_ISSYMREF &&
- 			!prefixcmp(tmp, "refs/heads/"))
- 			localname =3D tmp;
-diff --git a/wt-status.c b/wt-status.c
-index 70fdb76..96dc603 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -119,7 +119,7 @@ void wt_status_prepare(struct wt_status *s)
- 	s->show_untracked_files =3D SHOW_NORMAL_UNTRACKED_FILES;
- 	s->use_color =3D -1;
- 	s->relative_paths =3D 1;
--	head =3D resolve_ref("HEAD", sha1, 0, NULL);
-+	head =3D resolve_ref("HEAD", sha1, 0, NULL, 0);
- 	s->branch =3D head ? xstrdup(head) : NULL;
- 	s->reference =3D "HEAD";
- 	s->fp =3D stdout;
---=20
-1.7.4.74.g639db
+> 	from every line and empty lines from the beginning and end.
+> 	Enabled by default. Use --no-strip to overwrite the behaviour.
+> 
+> --no-strip is useful if you want to take a tag message as-is, without
+> any stripping.
+
+I would like to know why this is useful. Tag messages are for human
+consumption. What benefit is it that whitespace is not stripped? Why are
+lines starting with '#' so important that they need to stay in the tag
+message?
+
+-- Hannes
