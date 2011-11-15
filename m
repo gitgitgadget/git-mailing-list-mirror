@@ -1,81 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git 1.7.5 problem with HTTPS
-Date: Tue, 15 Nov 2011 15:10:56 -0800
-Message-ID: <7v1ut9uglb.fsf@alter.siamese.dyndns.org>
-References: <CACf55T6BGds_D=nbb8G=m+Jwr+bHFruCs-Q0+FOO+WXitXEJ-g@mail.gmail.com>
- <CAJo=hJvdstr39suGMwxNoT+_cKThxsEYHi96eqja7HuHyPmhWA@mail.gmail.com>
+Subject: Re: [PATCH 3/4] ll-merge: initialize default_opts const
+Date: Tue, 15 Nov 2011 15:17:02 -0800
+Message-ID: <7vty65t1qp.fsf@alter.siamese.dyndns.org>
+References: <1321376379-31750-1-git-send-email-artagnon@gmail.com>
+ <1321376379-31750-4-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Dmitry Smirnov <divis1969@gmail.com>, git@vger.kernel.org
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Nov 16 00:11:07 2011
+Cc: Git List <git@vger.kernel.org>, Thomas Rast <trast@student.ethz.ch>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 16 00:17:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQS9h-0008BP-UE
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 00:11:06 +0100
+	id 1RQSFc-0002Q5-3a
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 00:17:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932575Ab1KOXLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Nov 2011 18:11:00 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33222 "EHLO
+	id S1756800Ab1KOXRH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Nov 2011 18:17:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35131 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756524Ab1KOXK7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2011 18:10:59 -0500
+	id S1754957Ab1KOXRF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2011 18:17:05 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B34EE57F2;
-	Tue, 15 Nov 2011 18:10:58 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C941859A0;
+	Tue, 15 Nov 2011 18:17:04 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nFocQESyZ+FcbMaFknQw6e7YujY=; b=YDfek2
-	rJzy4dkxqcddDn+EavkiiVB6TioIKtpPwt50Ydf5zlKVdExABu+l0rocInJG6evp
-	SU0nG6Ehi+o32yQDwfbVbKx1XwOk/KTBKhHxlEyDP4nU4TI9dnKaWBB6CTCRK0kw
-	M5SWDH805EKXKCrtoFUEC9IRZA3XRxg7mYjzo=
+	:content-type; s=sasl; bh=M6NN7JhtWlbu2LIKUYOGJx1qLmQ=; b=vexhKQ
+	OI7WAdKUI0nJw9VIYFKVUk1N8LcyfsuBW/iBNmUzszOYZfP0OFN8owuAFhh+vaVf
+	J3hDfUJ0NoaSRMLacGhSWj3UVqcl/scHmlaenKrv8quBSI4VgCZ2P/hmsArcshFU
+	aA7z6kRFNLZtG63RlCA0bhSwwWJ6xjEMgvQF4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RAV79HokvZeRQawyX/D2AF6CR/wIq0YL
-	efuYEvmxuNBPCLe9bIgN0bRvOMZ2prDWsaygBtzAMrMiYoD/pHyfTik+UAi1Gojt
-	2+5zdRW9yW8BrVa4F/K+P5+tTR+6MXC4MJxG4H8pzV/+dzCxkyf0pojNexONzACb
-	CMGeCE7pX8c=
+	:content-type; q=dns; s=sasl; b=gyvvCWtaYbJmN3tMSEDhaEc/HnTlzeU4
+	gRL05CeXQd0oeZmJ5VgFWbH3Ci+Q//OmMDcPVmfbRSBk00xsdOXSCtLBX9nQdOCW
+	xlKRIfTzt+nmu9yfu1c9A3CHwUbqnvg1iKxxyT5RBI956UaAA3kCO+Ga8sR9wlCH
+	ckfKp7StQco=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AAD6D57F1;
-	Tue, 15 Nov 2011 18:10:58 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C10AD599F;
+	Tue, 15 Nov 2011 18:17:04 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3AD8457F0; Tue, 15 Nov 2011
- 18:10:58 -0500 (EST)
-In-Reply-To: <CAJo=hJvdstr39suGMwxNoT+_cKThxsEYHi96eqja7HuHyPmhWA@mail.gmail.com> (Shawn
- Pearce's message of "Tue, 15 Nov 2011 07:03:52 -0800")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 566FA599E; Tue, 15 Nov 2011
+ 18:17:04 -0500 (EST)
+In-Reply-To: <1321376379-31750-4-git-send-email-artagnon@gmail.com> (Ramkumar
+ Ramachandra's message of "Tue, 15 Nov 2011 22:29:38 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 13D2A1CE-0FDF-11E1-8A61-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: EE0B0ED0-0FDF-11E1-9B9C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185496>
 
-Shawn Pearce <spearce@spearce.org> writes:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> On Tue, Nov 15, 2011 at 05:52, Dmitry Smirnov <divis1969@gmail.com> wrote:
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  ll-merge.c |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
 >
->> If I use the http URL (http://git.kernel.org/pub/scm/git/git.git) I
->> can clone with no problems.
->
-> This may be a problem with the git.kernel.org HTTP server. It is
-> probably not a problem with Git itself.
+> diff --git a/ll-merge.c b/ll-merge.c
+> index da59738..205aed3 100644
+> --- a/ll-merge.c
+> +++ b/ll-merge.c
+> @@ -351,7 +351,7 @@ int ll_merge(mmbuffer_t *result_buf,
+>  	     const struct ll_merge_options *opts)
+>  {
+>  	static struct git_attr_check check[2];
+> -	static const struct ll_merge_options default_opts;
+> +	static const struct ll_merge_options default_opts = {0, 0, 0, 0};
 
-Not likely to be an issue with git.kernel.org either. I am puzzled.
-
-$ git ls-remote https://git.kernel.org/pub/scm/git/git.git |
-  grep -e HEAD -e master
-bc1bbe0c19a6ff39522b4fa3259f34150e308e1f        HEAD
-bc1bbe0c19a6ff39522b4fa3259f34150e308e1f        refs/heads/master
-
-$ rungit v1.7.5.4 ls-remote https://git.kernel.org/pub/scm/git/git.git |
-  grep -e HEAD -e master
-bc1bbe0c19a6ff39522b4fa3259f34150e308e1f        HEAD
-bc1bbe0c19a6ff39522b4fa3259f34150e308e1f        refs/heads/master
-
-The only thing that immediately comes to mind is the rare smart-http
-breakage in 1.7.5 but that was plugged in 1.7.5.1, so...
+Doesn't "static" tell us that it will be in BSS, initialized to all zero
+by definition?
