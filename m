@@ -1,105 +1,65 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH v4 3/3] upload-archive: use start_command instead of fork
-Date: Tue, 15 Nov 2011 18:44:38 +0100
-Message-ID: <CABPQNSbu9bb5UG1ihi2vGX5ZkpvjfjaXrT8bhDGZHb=n9RbjSg@mail.gmail.com>
-References: <1319472131-3968-1-git-send-email-kusmabite@gmail.com>
- <201111151122.48378.trast@student.ethz.ch> <20111115102807.GA18649@sigill.intra.peff.net>
- <201111151311.46832.trast@student.ethz.ch> <20111115173715.GA4478@sigill.intra.peff.net>
-Reply-To: kusmabite@gmail.com
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: Git, Parrot, Perl6, Rakudo for G4 MAC
+Date: Tue, 15 Nov 2011 09:51:00 -0800
+Message-ID: <CAE1pOi0fqzoz+Af8PaSORuW45UqDAEmqtKW3w4qYH-275BdUzw@mail.gmail.com>
+References: <loom.20111115T112500-386@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Franck Bui-Huu <vagabon.xyz@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, j6t@kdbg.org, rene.scharfe@lsrfire.ath.cx
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 15 18:45:31 2011
+Cc: git@vger.kernel.org
+To: Greg <greggallen@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 15 18:51:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQN4b-00028P-Dw
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 18:45:29 +0100
+	id 1RQNA4-0005KT-FG
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 18:51:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757041Ab1KORpV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Nov 2011 12:45:21 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:49990 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756980Ab1KORpU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2011 12:45:20 -0500
-Received: by ggnb2 with SMTP id b2so7705956ggn.19
-        for <git@vger.kernel.org>; Tue, 15 Nov 2011 09:45:19 -0800 (PST)
+	id S1757062Ab1KORvD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Nov 2011 12:51:03 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:51335 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752408Ab1KORvB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2011 12:51:01 -0500
+Received: by ywt32 with SMTP id 32so3732453ywt.19
+        for <git@vger.kernel.org>; Tue, 15 Nov 2011 09:51:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=JMAtJroCA1Hz4S50qXwD1s1xcXnoFBbFSGccKT2N8qE=;
-        b=kpXkKJyRiKtVJ8Iie/YWhm85mdgMvau0Na4+f7ct26Uauo4fi4dKPGzz+wGu1qClPt
-         BGtdkhh0uYdo2dApGG3NCHIjcdizK5TlDzP1nDdOCP3uCeZWuZXVK+B1zSJRrgQFxEMJ
-         1caEflPVhG8q5zPlxe/ZKjzAIey7wJ2EBZVuc=
-Received: by 10.68.72.104 with SMTP id c8mr61156240pbv.34.1321379119259; Tue,
- 15 Nov 2011 09:45:19 -0800 (PST)
-Received: by 10.68.71.135 with HTTP; Tue, 15 Nov 2011 09:44:38 -0800 (PST)
-In-Reply-To: <20111115173715.GA4478@sigill.intra.peff.net>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=6aiI7T3+CytGWSsxs3O3OYFx/fNmWjKCyuFgo133VlU=;
+        b=siAHA/uzhWsrLE9aU54EvcclrUkT0/NokeJ3fr9Q66VW0sHn+J68tZQt7FTLbh49Pb
+         P4d4iDoirHq+Cl0LYCGHR7tmxXQbuzaB4jN0+3wVbOC4qpFe0shtweceI8KWslSeOBT7
+         zoxda1nE92i0DMpjBeMYw5075vPCM4T4ZIqTc=
+Received: by 10.101.118.3 with SMTP id v3mr8420130anm.4.1321379461031; Tue, 15
+ Nov 2011 09:51:01 -0800 (PST)
+Received: by 10.236.61.41 with HTTP; Tue, 15 Nov 2011 09:51:00 -0800 (PST)
+In-Reply-To: <loom.20111115T112500-386@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185476>
 
-On Tue, Nov 15, 2011 at 6:37 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Nov 15, 2011 at 01:11:46PM +0100, Thomas Rast wrote:
->
->> But after a closer look I think this patch just prodded it enough to
->> unearth long-existing undefined behaviour: prepare_argv() summarizes
->> to something like
->>
->> static void prepare_argv(const char **sent_argv, const char **argv)
->> {
->> =A0 =A0 =A0 char *p, buf[4096];
->>
->> =A0 =A0 =A0 for (p =3D buf;;) {
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 len =3D packet_read_line(0, p, (buf + si=
-zeof buf) - p);
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* ... p always points into buf ... */
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 sent_argv[sent_argc++] =3D p;
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 p +=3D len;
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 *p++ =3D 0;
->> =A0 =A0 =A0 }
->> =A0 =A0 =A0 sent_argv[sent_argc] =3D NULL;
->> }
->>
->> The code appears to have looked like this ever since the addition of
->> that file back in 39345a2 (Add git-upload-archive, 2006-09-07). =A0S=
-o
->> the elements of sent_argv have apparently always pointed into the
->> stack-allocated 'buf'.
->
-> Oh, yikes. That is definitely the problem, but it does come from
-> c09cd77e. The prepare_argv function used to be "run_upload_archive", =
-and
-> it would prepare argv on the stack, call into write_archive with it, =
-and
-> then return; nobody else cares about the value afterwards.
->
-> Erik's patch converts it into a function that writes the new argv int=
-o a
-> parameter and returns, and the now-invalid stack-allocated memory is
-> used by the calling function.
->
+On 15 November 2011 02:36, Greg <greggallen@gmail.com> wrote:
+> Could someone please assist me in locating the resources to "GIT"
+> =C2=A0this stuff going on a G4 MAC PPC? =C2=A0I
+> keep getting weird bugs.
+> Need me to be more explicit? =C2=A0Ok - it says gcc v3.3 isn't compat=
+ible, and a
+> bunch of other sheet!
 
-Outch. Thanks for spotting.
+GCC 3.3 is from May 2003, I suggest you upgrade to a more recent GCC
+(probably 4.6).
 
->> A quick band-aid would be to heap-allocate it instead:
->
-> That works. =A0An even shorter band-aid is to mark it as "static".
+> I already have Perl5.10.1 working fine, and performing
+> numerous marvelous tasks, so I (perhaps
+> mistakenly) thought it would be an easy addition.
 
-Hmm, I seem to remember spotting it myself at some point and fixing it
-by marking it as static. I guess I must have forgot to push it...
+Perl 5.10.1 is from August 2009. Presumably less of a problem but,
+again, you should probably upgrade to something more recent.
 
-> I think the code would be more readable if it just used the new
-> argv_array.
->
-
-Oooh, nice. The whole argv_array slipped past me, I like it!
+(Please note that I don't know the minimum requirements in this regard
+for Git. It's just that your tools are old to ancient. :-) )
