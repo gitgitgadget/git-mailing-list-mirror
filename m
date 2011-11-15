@@ -1,69 +1,117 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 3/3] upload-archive: use start_command instead of fork
-Date: Tue, 15 Nov 2011 10:59:47 -0800
-Message-ID: <7vobwdus7w.fsf@alter.siamese.dyndns.org>
-References: <1319472131-3968-1-git-send-email-kusmabite@gmail.com>
- <201111151122.48378.trast@student.ethz.ch>
- <20111115102807.GA18649@sigill.intra.peff.net>
- <201111151311.46832.trast@student.ethz.ch>
- <20111115173715.GA4478@sigill.intra.peff.net>
+Subject: Re: [PATCH] git-show-ref: fix escaping in asciidoc source
+Date: Tue, 15 Nov 2011 11:16:33 -0800
+Message-ID: <7vk471urfy.fsf@alter.siamese.dyndns.org>
+References: <1319050336-24717-1-git-send-email-mhagger@alum.mit.edu>
+ <4EC27328.3070309@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Franck Bui-Huu <vagabon.xyz@gmail.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, j6t@kdbg.org, rene.scharfe@lsrfire.ath.cx
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 15 19:59:57 2011
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Nov 15 20:16:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQOEd-0007zI-UZ
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 19:59:56 +0100
+	id 1RQOUw-0008C4-UH
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 20:16:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756872Ab1KOS7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Nov 2011 13:59:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51190 "EHLO
+	id S1756104Ab1KOTQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Nov 2011 14:16:38 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59182 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752286Ab1KOS7v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2011 13:59:51 -0500
+	id S1751620Ab1KOTQg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2011 14:16:36 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 296046A6B;
-	Tue, 15 Nov 2011 13:59:50 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CEDF6F0C;
+	Tue, 15 Nov 2011 14:16:35 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=M8zeihHI6FMPM4cJXKZ4vKfbR1w=; b=enoIdO
-	NVhu6zKYrKIpV19fEwWEK7ddcilf6UNS1WJ/LN7q0NoP7ruZNnDZpRH4ZyvCmrvy
-	8DPmLP2I0ycKAGLux9/OIDBjwEcLdUcgoUchjZ38jAazXGctsVN1pQ4XMcw7Jeqk
-	1LqyanuTw9i9F0wdhTogxLkekng14ZLY1rOY4=
+	:content-type; s=sasl; bh=HKMW0AAD3FxUoSNXdYtp35/XH3M=; b=CyU5wi
+	8IvDdOB8H6gRpyYDEoKlOd9fsUoH1Tl5jKPRdKpzvQ4YAzOx2TCQlBYZYtSE+BNx
+	dvf+Qk540GFI4sie3xlaIA1ieY/B7GyMuTNS23Aq0yaAml6QL5/1dCl5dHaK4SWE
+	ohWX5qJvsygEtz74RkOwO8gl3/SFz1jpeNVCg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OZgztRmoNbmmxKLybU1nujjbE7Sg3AKh
-	SYI+5gyir7DrcKCIsqy03XjR9tQ+un2htCwmPcjnKj/MSeLptAK7GtkdvXh+bgvy
-	uyiLHiBZElYj1LLUpa5ZQkEemZSQeZNAXFQOgwNt6V+LkdHUXUMPCdU65wB/maqp
-	hEAlOEJahs0=
+	:content-type; q=dns; s=sasl; b=qKDM07fuxVVNF+AniYLBRSwVV8/LVm3A
+	fapAHQWUVLOtlmFELrPfOMc7zQgdqI7mkTwG2w0uKfTq2D0bEBs92m4O2EIpGSrJ
+	AVeG/ZbRwgqVlZHmWWLx1NnIHRuq3NnQlPruktZI8GBunRSWwxt/ypA74hEmO0PW
+	gSQsX8Wbwrs=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E6FA6A6A;
-	Tue, 15 Nov 2011 13:59:50 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 54B0B6F0B;
+	Tue, 15 Nov 2011 14:16:35 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C47416A69; Tue, 15 Nov 2011
- 13:59:48 -0500 (EST)
-In-Reply-To: <20111115173715.GA4478@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 15 Nov 2011 12:37:15 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C21A76F0A; Tue, 15 Nov 2011
+ 14:16:34 -0500 (EST)
+In-Reply-To: <4EC27328.3070309@alum.mit.edu> (Michael Haggerty's message of
+ "Tue, 15 Nov 2011 15:11:52 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FDC21FAE-0FBB-11E1-82DA-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 555AF4FA-0FBE-11E1-8D4A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185481>
 
-Jeff King <peff@peff.net> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> Junio, this bug is in 1.7.8-rc*. Do you want the one-liner fix for the
-> release, or the nicer fix?
+> Junio,
+>
+> Did this one fall through the cracks?  I don't see it in your tree.
+>
+> Michael
 
-Let's just do "static" for now, if we know the array is large enough.
+Yeah, I was wondering if we can have a concise description in what context
+any "^" must be spelled as {caret} and what other context "^" can be
+spelled literally, and possibly which versions of AsciiDoc toolchain have
+this issue [*1*]. Without a clear guideline, people may unknowingly use
+literal "^" to new paragraphs, or perhaps worse yet, spell {caret} that
+end up being shown literally.
+
+Since I didn't find a clear pattern other than that "^" can and should be
+literally given in a literal paragraph (i.e. an indented paragraph or
+inside a listing/literal block that shows program examples), I was meaning
+to ask you if you knew the rules better than I did, and I stopped there,
+forgetting to follow through.
+
+
+[Footnote]
+
+*1* For example, http://schacon.github.com/git/git-show-ref.html indicates
+that the description for "-d" does not seem to need your patch for the box
+it was formatted on.
+
+> On 10/19/2011 08:52 PM, mhagger@alum.mit.edu wrote:
+>> From: Michael Haggerty <mhagger@alum.mit.edu>
+>> 
+>> One of the "^" characters was not coming through in the man page.
+>> 
+>> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>> ---
+>>  Documentation/git-show-ref.txt |    4 ++--
+>>  1 files changed, 2 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.txt
+>> index 3c45895..87f358d 100644
+>> --- a/Documentation/git-show-ref.txt
+>> +++ b/Documentation/git-show-ref.txt
+>> @@ -44,7 +44,7 @@ OPTIONS
+>>  -d::
+>>  --dereference::
+>>  
+>> -	Dereference tags into object IDs as well. They will be shown with "^{}"
+>> +	Dereference tags into object IDs as well. They will be shown with "{caret}\{\}"
+>>  	appended.
+>>  
+>>  -s::
+>> @@ -75,7 +75,7 @@ OPTIONS
+>>  	Make 'git show-ref' act as a filter that reads refs from stdin of the
+>>  	form "^(?:<anything>\s)?<refname>(?:{backslash}{caret}\{\})?$"
+>>  	and performs the following actions on each:
+>> -	(1) strip "^{}" at the end of line if any;
+>> +	(1) strip "{caret}\{\}" at the end of line if any;
+>>  	(2) ignore if pattern is provided and does not head-match refname;
+>>  	(3) warn if refname is not a well-formed refname and skip;
+>>  	(4) ignore if refname is a ref that exists in the local repository;
