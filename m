@@ -1,83 +1,64 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] git-show-ref: fix escaping in asciidoc source
-Date: Tue, 15 Nov 2011 15:11:52 +0100
-Message-ID: <4EC27328.3070309@alum.mit.edu>
-References: <1319050336-24717-1-git-send-email-mhagger@alum.mit.edu>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Git 1.7.5 problem with HTTPS
+Date: Tue, 15 Nov 2011 07:03:52 -0800
+Message-ID: <CAJo=hJvdstr39suGMwxNoT+_cKThxsEYHi96eqja7HuHyPmhWA@mail.gmail.com>
+References: <CACf55T6BGds_D=nbb8G=m+Jwr+bHFruCs-Q0+FOO+WXitXEJ-g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 15 15:12:04 2011
+To: Dmitry Smirnov <divis1969@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 15 16:04:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQJk3-0006Bi-Ey
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 15:12:03 +0100
+	id 1RQKYe-0007Tj-Cl
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 16:04:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755872Ab1KOOL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Nov 2011 09:11:58 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:34938 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755850Ab1KOOL6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2011 09:11:58 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pAFEBqx1014651
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 15 Nov 2011 15:11:52 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
-In-Reply-To: <1319050336-24717-1-git-send-email-mhagger@alum.mit.edu>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1752821Ab1KOPEP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Nov 2011 10:04:15 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:35754 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752761Ab1KOPEO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2011 10:04:14 -0500
+Received: by yenq3 with SMTP id q3so697019yen.19
+        for <git@vger.kernel.org>; Tue, 15 Nov 2011 07:04:14 -0800 (PST)
+Received: by 10.146.236.17 with SMTP id j17mr1219794yah.10.1321369453297; Tue,
+ 15 Nov 2011 07:04:13 -0800 (PST)
+Received: by 10.147.124.5 with HTTP; Tue, 15 Nov 2011 07:03:52 -0800 (PST)
+In-Reply-To: <CACf55T6BGds_D=nbb8G=m+Jwr+bHFruCs-Q0+FOO+WXitXEJ-g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185461>
 
-Junio,
+On Tue, Nov 15, 2011 at 05:52, Dmitry Smirnov <divis1969@gmail.com> wrote:
+> I have problems with downloading Android code from android.googlesource.com.
+>
+> The error says: fatal: branch stable is not signed
+>
+> I was trying to figure out what happens and finally came to conclusion
+> that this is a problem of the git.
 
-Did this one fall through the cracks?  I don't see it in your tree.
+Not likely. This is an error printed by the "repo" tool used by
+Android. It typically indicates the repo command you are executing is
+pointing to a URL that may be a local mirror and contain additional
+patches in it that were not signed by me.
 
-Michael
+I would suggest starting over by downloading repo per [1] and using
+that script to start the process.
 
-On 10/19/2011 08:52 PM, mhagger@alum.mit.edu wrote:
-> From: Michael Haggerty <mhagger@alum.mit.edu>
-> 
-> One of the "^" characters was not coming through in the man page.
-> 
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
->  Documentation/git-show-ref.txt |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.txt
-> index 3c45895..87f358d 100644
-> --- a/Documentation/git-show-ref.txt
-> +++ b/Documentation/git-show-ref.txt
-> @@ -44,7 +44,7 @@ OPTIONS
->  -d::
->  --dereference::
->  
-> -	Dereference tags into object IDs as well. They will be shown with "^{}"
-> +	Dereference tags into object IDs as well. They will be shown with "{caret}\{\}"
->  	appended.
->  
->  -s::
-> @@ -75,7 +75,7 @@ OPTIONS
->  	Make 'git show-ref' act as a filter that reads refs from stdin of the
->  	form "^(?:<anything>\s)?<refname>(?:{backslash}{caret}\{\})?$"
->  	and performs the following actions on each:
-> -	(1) strip "^{}" at the end of line if any;
-> +	(1) strip "{caret}\{\}" at the end of line if any;
->  	(2) ignore if pattern is provided and does not head-match refname;
->  	(3) warn if refname is not a well-formed refname and skip;
->  	(4) ignore if refname is a ref that exists in the local repository;
+[1] http://source.android.com/source/downloading.html
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+> When I try to clone the git itself using https
+> (https://git.kernel.org/pub/scm/git/git.git) I'm getting the follwing
+> error:
+> warning: remote HEAD refers to nonexistent ref, unable to checkout.
+>
+> If I use the http URL (http://git.kernel.org/pub/scm/git/git.git) I
+> can clone with no problems.
+
+This may be a problem with the git.kernel.org HTTP server. It is
+probably not a problem with Git itself.
