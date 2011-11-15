@@ -1,67 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/2] upload-archive security issues
-Date: Tue, 15 Nov 2011 17:23:20 -0500
-Message-ID: <20111115222320.GA28646@sigill.intra.peff.net>
-References: <20111115214159.GA20457@sigill.intra.peff.net>
- <CABPQNSZ71==pQvH9nTQ3rD6c1RJiLmkA+k_9KS=T45cQb+PTLA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git 1.7.5 problem with HTTPS
+Date: Tue, 15 Nov 2011 15:10:56 -0800
+Message-ID: <7v1ut9uglb.fsf@alter.siamese.dyndns.org>
+References: <CACf55T6BGds_D=nbb8G=m+Jwr+bHFruCs-Q0+FOO+WXitXEJ-g@mail.gmail.com>
+ <CAJo=hJvdstr39suGMwxNoT+_cKThxsEYHi96eqja7HuHyPmhWA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 15 23:23:29 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Smirnov <divis1969@gmail.com>, git@vger.kernel.org
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Nov 16 00:11:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQRPc-0002EZ-SI
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 23:23:29 +0100
+	id 1RQS9h-0008BP-UE
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 00:11:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755565Ab1KOWXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Nov 2011 17:23:23 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42833
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754732Ab1KOWXX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2011 17:23:23 -0500
-Received: (qmail 10805 invoked by uid 107); 15 Nov 2011 22:23:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 15 Nov 2011 17:23:27 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Nov 2011 17:23:20 -0500
-Content-Disposition: inline
-In-Reply-To: <CABPQNSZ71==pQvH9nTQ3rD6c1RJiLmkA+k_9KS=T45cQb+PTLA@mail.gmail.com>
+	id S932575Ab1KOXLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Nov 2011 18:11:00 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33222 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756524Ab1KOXK7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2011 18:10:59 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B34EE57F2;
+	Tue, 15 Nov 2011 18:10:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nFocQESyZ+FcbMaFknQw6e7YujY=; b=YDfek2
+	rJzy4dkxqcddDn+EavkiiVB6TioIKtpPwt50Ydf5zlKVdExABu+l0rocInJG6evp
+	SU0nG6Ehi+o32yQDwfbVbKx1XwOk/KTBKhHxlEyDP4nU4TI9dnKaWBB6CTCRK0kw
+	M5SWDH805EKXKCrtoFUEC9IRZA3XRxg7mYjzo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RAV79HokvZeRQawyX/D2AF6CR/wIq0YL
+	efuYEvmxuNBPCLe9bIgN0bRvOMZ2prDWsaygBtzAMrMiYoD/pHyfTik+UAi1Gojt
+	2+5zdRW9yW8BrVa4F/K+P5+tTR+6MXC4MJxG4H8pzV/+dzCxkyf0pojNexONzACb
+	CMGeCE7pX8c=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AAD6D57F1;
+	Tue, 15 Nov 2011 18:10:58 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3AD8457F0; Tue, 15 Nov 2011
+ 18:10:58 -0500 (EST)
+In-Reply-To: <CAJo=hJvdstr39suGMwxNoT+_cKThxsEYHi96eqja7HuHyPmhWA@mail.gmail.com> (Shawn
+ Pearce's message of "Tue, 15 Nov 2011 07:03:52 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 13D2A1CE-0FDF-11E1-8A61-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185495>
 
-On Tue, Nov 15, 2011 at 11:01:09PM +0100, Erik Faye-Lund wrote:
+Shawn Pearce <spearce@spearce.org> writes:
 
-> Yikes! Perhaps the whole deal of rewriting the code to take explicit
-> file descriptors (and/or dup-bonanza) would have been the better
-> choice after all?
+> On Tue, Nov 15, 2011 at 05:52, Dmitry Smirnov <divis1969@gmail.com> wrote:
+>
+>> If I use the http URL (http://git.kernel.org/pub/scm/git/git.git) I
+>> can clone with no problems.
+>
+> This may be a problem with the git.kernel.org HTTP server. It is
+> probably not a problem with Git itself.
 
-It's certainly simpler. This way is not that hard to fix; we just need
-to be more careful about the code path getting from upload-archive into
-write_archive.
+Not likely to be an issue with git.kernel.org either. I am puzzled.
 
-> For the record: I would be fine with c09cd77e simply being reverted
-> for this release, and having a better version applied in the near
-> future. Windows support for upload-archive is not worth the risk of
-> slipping in a remote code execution bug...
+$ git ls-remote https://git.kernel.org/pub/scm/git/git.git |
+  grep -e HEAD -e master
+bc1bbe0c19a6ff39522b4fa3259f34150e308e1f        HEAD
+bc1bbe0c19a6ff39522b4fa3259f34150e308e1f        refs/heads/master
 
-I'd be OK with that, too.
+$ rungit v1.7.5.4 ls-remote https://git.kernel.org/pub/scm/git/git.git |
+  grep -e HEAD -e master
+bc1bbe0c19a6ff39522b4fa3259f34150e308e1f        HEAD
+bc1bbe0c19a6ff39522b4fa3259f34150e308e1f        refs/heads/master
 
-> Not only did you fail to spot them, you actually wrote that part of the code ;)
-> 
-> http://article.gmane.org/gmane.comp.version-control.git/178098
-> 
-> (I don't mean to shift blame over to you, I'm the one who should have
-> spent more time thinking about this as this was "my" series)
-
-Heh. I did say "something like this" in that message, which is usually a
-sure sign I haven't actually thought too hard about the code I'm about
-to write. I'll be content to share the blame equally with you. :)
-
--Peff
+The only thing that immediately comes to mind is the rare smart-http
+breakage in 1.7.5 but that was plugged in 1.7.5.1, so...
