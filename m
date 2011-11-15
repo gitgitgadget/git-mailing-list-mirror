@@ -1,130 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] refresh_index: notice typechanges in output
-Date: Mon, 14 Nov 2011 16:08:32 -0800
-Message-ID: <7vaa7yi6wv.fsf@alter.siamese.dyndns.org>
-References: <20111114225056.GA27370@sigill.intra.peff.net>
- <20111114225651.GD3993@sigill.intra.peff.net>
+Subject: Re: [PATCH] documentation fix: git difftool uses diff tools, not
+ merge tools.
+Date: Mon, 14 Nov 2011 16:20:56 -0800
+Message-ID: <7v62imi6c7.fsf@alter.siamese.dyndns.org>
+References: <1321311352-8950-1-git-send-email-thh@inter.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 15 01:08:41 2011
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+To: Thomas Hochstein <thh@inter.net>
+X-From: git-owner@vger.kernel.org Tue Nov 15 01:21:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQ6Zt-0002UN-3W
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 01:08:41 +0100
+	id 1RQ6lu-0007Pw-He
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 01:21:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756768Ab1KOAIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Nov 2011 19:08:36 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44909 "EHLO
+	id S1752253Ab1KOAVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Nov 2011 19:21:00 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49354 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754698Ab1KOAIf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2011 19:08:35 -0500
+	id S1751808Ab1KOAU7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2011 19:20:59 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EBE952A0;
-	Mon, 14 Nov 2011 19:08:34 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C7DB0558F;
+	Mon, 14 Nov 2011 19:20:58 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nCOA3RD/p2M28t+enNq+aXibsU8=; b=E+lHLj
-	tREXyvz599ki2UQ54GRuV940jqXsHGAGFdKhD0ukthGTvg7FTl9lPmwCXqRC2FZ9
-	htlzLR2wDh31XG0lbqAlolHm9wETBr32Q/bOVVkrsA2WYpyJUphVapFvFDzrcIsg
-	fmhdsVIhmJqShQEPuZ0O0pyd7qt+ZKR5bdNa4=
+	:content-type; s=sasl; bh=DeuhtYDO+rsrrNUcwEM6bNpeHmc=; b=shwmnh
+	5K2CSqvBKqeZZN8GliXJXMvYQTJHHldTxhxsTJO57tJczCgmEN/ONOuCzoXJrZdo
+	Gni4Bdp4npBixyCnEKPWlPdQDf9lA+6hJZDZw0EBChiNfTJmLVwCz2ezYpQ7fO/z
+	wz9ozVKXbbtYgLgAmY6JUBeoUR8avl2gWQLFk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Um29GG9rbP3Ed/stZSf0NcFTDBiosRq5
-	PcN3sDL3AbpLC9cBEKwQewqb3z31m4m46GmjMT5io6orJdLOB8qxzbrviHNEZFkr
-	pggRjPUwkS3wz1dwZoOujVQOHJ7+EGKLXztZinaHIcmp2Pm0MGLR9vsZzjlNmBo0
-	vNjE+b28WwI=
+	:content-type; q=dns; s=sasl; b=GfzKTHlqfdxkE1ZqDwLySavFO5ViHKMl
+	um4BRqdGRfZjbMhL8OQo/PWaDludiszTRbAd0lUFdTSsdy+WGd7g/cUNj8XUbtNT
+	lzOEzxRX56xJnDQSEQpexYMm3/bGsA7/Tg7nfmgq1rkWWWYWgXOLAuV5nuyIkgOw
+	J7J20Eant9k=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4616C529F;
-	Mon, 14 Nov 2011 19:08:34 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BF5A5558E;
+	Mon, 14 Nov 2011 19:20:58 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B4D1E529D; Mon, 14 Nov 2011
- 19:08:33 -0500 (EST)
-In-Reply-To: <20111114225651.GD3993@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 14 Nov 2011 17:56:51 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1E842558D; Mon, 14 Nov 2011
+ 19:20:58 -0500 (EST)
+In-Reply-To: <1321311352-8950-1-git-send-email-thh@inter.net> (Thomas
+ Hochstein's message of "Mon, 14 Nov 2011 23:55:52 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F50C3EB0-0F1D-11E1-812B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B0BC4776-0F1F-11E1-BDA8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185419>
 
-Jeff King <peff@peff.net> writes:
+Thomas Hochstein <thh@inter.net> writes:
 
-> If a file changes type and a porcelain updates the index, we
-> will print "M file". Instead, let's be more specific and
-> print "T file", which matches actual diff and status output.
+> Let the documentation for -t list valid *diff* tools,
+> not valid *merge* tools.
 >
-> The plumbing version remains "needs update" for historical
-> compatibility.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+> Signed-off-by: Thomas Hochstein <thh@inter.net>
 > ---
-> The "changed" flag comes from refresh_cache_ent, which in turn gets it
-> from ie_modified_stat. The one hesitation I have is that intent-to-add
-> entries get the TYPE_CHANGED flag set, which means they will get a "T"
-> output. Whereas I actually think "M" is a little more sensible.
+>  Documentation/git-difftool.txt |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
+> index a03515f..19d473c 100644
+> --- a/Documentation/git-difftool.txt
+> +++ b/Documentation/git-difftool.txt
+> @@ -31,7 +31,7 @@ OPTIONS
+>  -t <tool>::
+>  --tool=<tool>::
+>  	Use the diff tool specified by <tool>.
+> -	Valid merge tools are:
+> +	Valid diff tools are:
+>  	araxis, bc3, diffuse, emerge, ecmerge, gvimdiff, kdiff3,
+>  	kompare, meld, opendiff, p4merge, tkdiff, vimdiff and xxdiff.
+>  +
 
-I agree that we should not say that an intent-to-add entry has changed
-type relative to whatever, as by definition there is nothing to compare
-against. "A" that stands for "A"dd is a lot more sensible here, I would
-think.
+The patch is obviously correct, and it is so trivial that there is no risk
+of breaking anything. It would even be OK for 1.7.7.X maintenance series.
 
- read-cache.c |   17 ++++++++++++++---
- 1 files changed, 14 insertions(+), 3 deletions(-)
+But in the longer term, I suspect that we would want to drop this
+enumeration from the documentation, and instead give "--list-tools"
+option or something to the command. That way, we only need to keep
+the list of known tools in one place where it matters, namely, the
+command that knows about them.
 
-diff --git a/read-cache.c b/read-cache.c
-index 0e17add..27e9fc6 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1108,11 +1108,13 @@ int refresh_index(struct index_state *istate, unsigned int flags, const char **p
- 	const char *modified_fmt;
- 	const char *deleted_fmt;
- 	const char *typechange_fmt;
-+	const char *added_fmt;
- 	const char *unmerged_fmt;
- 
- 	modified_fmt = (in_porcelain ? "M\t%s\n" : "%s: needs update\n");
- 	deleted_fmt = (in_porcelain ? "D\t%s\n" : "%s: needs update\n");
- 	typechange_fmt = (in_porcelain ? "T\t%s\n" : "%s needs update\n");
-+	added_fmt = (in_porcelain ? "A\t%s\n" : "%s needs update\n");
- 	unmerged_fmt = (in_porcelain ? "U\t%s\n" : "%s: needs merge\n");
- 	for (i = 0; i < istate->cache_nr; i++) {
- 		struct cache_entry *ce, *new;
-@@ -1142,6 +1144,8 @@ int refresh_index(struct index_state *istate, unsigned int flags, const char **p
- 		if (new == ce)
- 			continue;
- 		if (!new) {
-+			const char *fmt;
-+
- 			if (not_new && cache_errno == ENOENT)
- 				continue;
- 			if (really && cache_errno == EINVAL) {
-@@ -1153,9 +1157,16 @@ int refresh_index(struct index_state *istate, unsigned int flags, const char **p
- 			}
- 			if (quiet)
- 				continue;
--			show_file((cache_errno == ENOENT ? deleted_fmt :
--				   changed & TYPE_CHANGED ? typechange_fmt :
--				   modified_fmt),
-+
-+			if (cache_errno == ENOENT)
-+				fmt = deleted_fmt;
-+			else if (ce->ce_flags & CE_INTENT_TO_ADD)
-+				fmt = added_fmt; /* must be before other checks */
-+			else if (changed & TYPE_CHANGED)
-+				fmt = typechange_fmt;
-+			else
-+				fmt = modified_fmt;
-+			show_file(fmt,
- 				  ce->name, in_porcelain, &first, header_msg);
- 			has_errors = 1;
- 			continue;
+David, what do you think?
+
+The same comment applies to "git mergetool", I would think.
