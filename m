@@ -1,60 +1,95 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 0/2] upload-archive security issues
-Date: Tue, 15 Nov 2011 16:42:00 -0500
-Message-ID: <20111115214159.GA20457@sigill.intra.peff.net>
+Subject: [PATCH 1/2] archive: don't allow negation of --remote-request
+Date: Tue, 15 Nov 2011 16:43:18 -0500
+Message-ID: <20111115214317.GA20624@sigill.intra.peff.net>
+References: <20111115214159.GA20457@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Erik Faye-Lund <kusmabite@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 15 22:42:42 2011
+X-From: git-owner@vger.kernel.org Tue Nov 15 22:43:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQQm7-0007MV-9U
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 22:42:39 +0100
+	id 1RQQms-0007lC-7w
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 22:43:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932617Ab1KOVmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Nov 2011 16:42:06 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42808
+	id S932504Ab1KOVnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Nov 2011 16:43:20 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42813
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932504Ab1KOVmC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2011 16:42:02 -0500
-Received: (qmail 10271 invoked by uid 107); 15 Nov 2011 21:42:06 -0000
+	id S1752690Ab1KOVnU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2011 16:43:20 -0500
+Received: (qmail 10323 invoked by uid 107); 15 Nov 2011 21:43:24 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 15 Nov 2011 16:42:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Nov 2011 16:42:00 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 15 Nov 2011 16:43:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Nov 2011 16:43:18 -0500
 Content-Disposition: inline
+In-Reply-To: <20111115214159.GA20457@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185490>
 
-[Note to readers who haven't been following the recent thread on
-upload-archive bugs: these security issues are in c09cd77e, which has
-not actually been released. So this is "security problems, and we need
-fixes before this ships in 1.7.8" and not "OMG your git site is 0wned"].
+The remote-request flag is a security feature, telling the
+spawned git-archive that certain formats should be turned
+off. We always place it at the front of the command line
+when serving a remote request. Of course, this doesn't do us
+any good if the client can simply ask us politely to turn it
+off.
 
-Looking at Erik's c09cd77e again, there are some serious security
-problems, in that we are too lenient with what gets passed to
-git-archive, which is not hardened to accept random client arguments.
-That lets a client do all sorts of nasty things like running arbitrary
-code.
+This bug was introduced in c09cd77 (upload-archive: use
+start_command instead of fork, 2011-10-24), but hasn't yet
+been released.
 
-These patches fix it by making cmd_archive handle the remote-request
-flag better. An alternative would be to pass only known-good options
-through upload-archive. That might be more future-proof, but also
-involves upload-archive knowing about the innards of write_archive and
-its options.  See also the comments in patch 2/2 for another alternative
-fix.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+The other option would be recognizing and disallowing this when reading
+arguments from the remote.
 
-  [1/2]: archive: don't allow negation of --remote-request
-  [2/2]: archive: limit ourselves during remote requests
+ builtin/archive.c   |    2 +-
+ t/t5000-tar-tree.sh |   12 ++++++++++++
+ 2 files changed, 13 insertions(+), 1 deletions(-)
 
-And yes, I feel like a moron for not noticing these problems during my
-initial review.
-
--Peff
+diff --git a/builtin/archive.c b/builtin/archive.c
+index e405566..fce20a1 100644
+--- a/builtin/archive.c
++++ b/builtin/archive.c
+@@ -97,7 +97,7 @@ int cmd_archive(int argc, const char **argv, const char *prefix)
+ 			"path to the remote git-upload-archive command"),
+ 		{ OPTION_BOOLEAN, 0, "remote-request", &is_remote, NULL,
+ 			"indicate we are serving a remote request",
+-			PARSE_OPT_NOARG | PARSE_OPT_HIDDEN },
++			PARSE_OPT_NOARG | PARSE_OPT_HIDDEN | PARSE_OPT_NONEG },
+ 		OPT_END()
+ 	};
+ 
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 889842e..723b54e 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -305,6 +305,18 @@ test_expect_success 'only enabled filters are available remotely' '
+ 	test_cmp remote.bar config.bar
+ '
+ 
++# We have to hand-craft this, since the local "git archive" will
++# eat our "--no-remote-request" argument otherwise.
++test_expect_success 'malicious clients cannot un-remote themselves' '
++	{
++		echo "0021argument --no-remote-request" &&
++		echo "001eargument --format=tar.foo" &&
++		echo "0012argument HEAD" &&
++		printf "0000"
++	} >evil-request &&
++	test_must_fail git upload-archive . <evil-request >remote.tar.foo
++'
++
+ if $GZIP --version >/dev/null 2>&1; then
+ 	test_set_prereq GZIP
+ else
+-- 
+1.7.7.3.8.g38efa
