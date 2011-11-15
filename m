@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/2] upload-archive: drop extra argument to prepare_argv
-Date: Tue, 15 Nov 2011 14:46:03 -0500
-Message-ID: <20111115194603.GA19305@sigill.intra.peff.net>
+Subject: [PATCH] upload-archive: use argv_array for sent parameters
+Date: Tue, 15 Nov 2011 14:49:58 -0500
+Message-ID: <20111115194958.GB19305@sigill.intra.peff.net>
 References: <1319472131-3968-1-git-send-email-kusmabite@gmail.com>
  <201111151122.48378.trast@student.ethz.ch>
  <20111115102807.GA18649@sigill.intra.peff.net>
@@ -16,78 +16,147 @@ Cc: Thomas Rast <trast@student.ethz.ch>,
 	Erik Faye-Lund <kusmabite@gmail.com>, git@vger.kernel.org,
 	j6t@kdbg.org, rene.scharfe@lsrfire.ath.cx
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 15 20:46:13 2011
+X-From: git-owner@vger.kernel.org Tue Nov 15 20:50:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQOxR-00077o-A5
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 20:46:13 +0100
+	id 1RQP1C-0000Y2-M5
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 20:50:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757368Ab1KOTqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Nov 2011 14:46:07 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42771
+	id S1757384Ab1KOTuB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Nov 2011 14:50:01 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42779
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757327Ab1KOTqG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2011 14:46:06 -0500
-Received: (qmail 9752 invoked by uid 107); 15 Nov 2011 19:46:10 -0000
+	id S1757327Ab1KOTuA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2011 14:50:00 -0500
+Received: (qmail 9792 invoked by uid 107); 15 Nov 2011 19:50:05 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 15 Nov 2011 14:46:10 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Nov 2011 14:46:03 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 15 Nov 2011 14:50:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Nov 2011 14:49:58 -0500
 Content-Disposition: inline
 In-Reply-To: <20111115191832.GA16030@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185485>
 
-We pass a "sent_argv" which is an out-parameter to hold the
-argv that we were sent over the wire. But we also pass in
-the "argv" we got on the command line, which is not used at
-all. Drop this useless and confusing parameter.
+The existing prepare_argv uses a fixed-size static buffer to
+hold all of the arguments, and then puts pointers into the
+buffer into a fixed-size array. Using argv_array gets rid of
+all of the manual bookkeeping and makes the code more
+readable.
 
-The parameter was obsoleted by c09cd77e, which moved the
-enter_repo function (which looked at argv[1]) out of
-prepare_argv and into cmd_upload_archive.
+It also lifts the static limits on the size of the array.
+This is convenient, but is perhaps a security regression, as
+a malicious client can now ask us to create arbitrary-length
+argv arrays in memory.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-On Tue, Nov 15, 2011 at 02:18:32PM -0500, Jeff King wrote:
+I think the code is way more readable and obvious.  Do we care about the
+potential DoS?  If so, we can still cap the number of arguments we'll
+accept. In practice, we never send more than a few.
 
-> > Let's just do "static" for now, if we know the array is large enough.
-> 
-> OK, here it is.
-
-And here's the other more invasive cleanup on top (patch 2 is the meaty
-one).
-
- builtin/upload-archive.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ builtin/upload-archive.c |   45 +++++++++++++++++----------------------------
+ 1 files changed, 17 insertions(+), 28 deletions(-)
 
 diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
-index f47c0f0..80575b9 100644
+index 80575b9..3830310 100644
 --- a/builtin/upload-archive.c
 +++ b/builtin/upload-archive.c
-@@ -19,7 +19,7 @@
+@@ -7,6 +7,7 @@
+ #include "pkt-line.h"
+ #include "sideband.h"
+ #include "run-command.h"
++#include "argv-array.h"
  
- #define MAX_ARGS (64)
+ static const char upload_archive_usage[] =
+ 	"git upload-archive <repo>";
+@@ -17,42 +18,28 @@
+ static const char lostchild[] =
+ "git upload-archive: archiver process was lost";
  
--static void prepare_argv(const char **sent_argv, const char **argv)
-+static void prepare_argv(const char **sent_argv)
+-#define MAX_ARGS (64)
+-
+-static void prepare_argv(const char **sent_argv)
++static void prepare_argv(struct argv_array *out)
  {
  	const char *arg_cmd = "argument ";
- 	char *p;
-@@ -95,7 +95,7 @@ int cmd_upload_archive(int argc, const char **argv, const char *prefix)
+-	char *p;
+-	static char buf[4096];
+-	int sent_argc;
+-	int len;
+ 
+-	/* put received options in sent_argv[] */
+-	sent_argc = 2;
+-	sent_argv[0] = "archive";
+-	sent_argv[1] = "--remote-request";
+-	for (p = buf;;) {
++	argv_array_push(out, "archive");
++	argv_array_push(out, "--remote-request");
++	while (1) {
++		char buf[4096];
++		int len;
+ 		/* This will die if not enough free space in buf */
+-		len = packet_read_line(0, p, (buf + sizeof buf) - p);
++		len = packet_read_line(0, buf, sizeof(buf));
+ 		if (len == 0)
+ 			break;	/* got a flush */
+-		if (sent_argc > MAX_ARGS - 2)
+-			die("Too many options (>%d)", MAX_ARGS - 2);
+ 
+-		if (p[len-1] == '\n') {
+-			p[--len] = 0;
+-		}
++		if (buf[len-1] == '\n')
++			buf[--len] = 0;
+ 		if (len < strlen(arg_cmd) ||
+-		    strncmp(arg_cmd, p, strlen(arg_cmd)))
++		    strncmp(arg_cmd, buf, strlen(arg_cmd)))
+ 			die("'argument' token or flush expected");
+ 
+-		len -= strlen(arg_cmd);
+-		memmove(p, p + strlen(arg_cmd), len);
+-		sent_argv[sent_argc++] = p;
+-		p += len;
+-		*p++ = 0;
++		argv_array_push(out, buf + strlen(arg_cmd));
+ 	}
+-	sent_argv[sent_argc] = NULL;
+ }
+ 
+ __attribute__((format (printf, 1, 2)))
+@@ -84,8 +71,8 @@ static ssize_t process_input(int child_fd, int band)
+ 
+ int cmd_upload_archive(int argc, const char **argv, const char *prefix)
+ {
+-	const char *sent_argv[MAX_ARGS];
+-	struct child_process cld = { sent_argv };
++	struct argv_array sent_argv = ARGV_ARRAY_INIT;
++	struct child_process cld = {0};
+ 	cld.out = cld.err = -1;
+ 	cld.git_cmd = 1;
+ 
+@@ -95,7 +82,8 @@ int cmd_upload_archive(int argc, const char **argv, const char *prefix)
  	if (!enter_repo(argv[1], 0))
  		die("'%s' does not appear to be a git repository", argv[1]);
  
--	prepare_argv(sent_argv, argv);
-+	prepare_argv(sent_argv);
+-	prepare_argv(sent_argv);
++	prepare_argv(&sent_argv);
++	cld.argv = sent_argv.argv;
  	if (start_command(&cld)) {
  		int err = errno;
  		packet_write(1, "NACK fork failed on the remote side\n");
+@@ -138,5 +126,6 @@ int cmd_upload_archive(int argc, const char **argv, const char *prefix)
+ 		packet_flush(1);
+ 		break;
+ 	}
++	argv_array_clear(&sent_argv);
+ 	return 0;
+ }
 -- 
 1.7.7.3.8.g38efa
