@@ -1,85 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH, v2] tag: implement --[no-]strip option
-Date: Mon, 14 Nov 2011 23:17:36 -0800
-Message-ID: <7vy5vhx3an.fsf@alter.siamese.dyndns.org>
-References: <1321307019-5557-1-git-send-email-kirill@shutemov.name>
- <4EC209C7.6090805@viscovery.net>
+Subject: Re: [PATCH] Fix "is_refname_available(): query only
+ possibly-conflicting references"
+Date: Mon, 14 Nov 2011 23:24:14 -0800
+Message-ID: <7vty65x2zl.fsf@alter.siamese.dyndns.org>
+References: <1319804921-17545-27-git-send-email-mhagger@alum.mit.edu>
+ <1321336525-19374-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Kirill A. Shutemov" <kirill@shutemov.name>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Nov 15 08:17:45 2011
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Drew Northup <drew.northup@maine.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Tue Nov 15 08:24:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQDH5-0004wc-Aj
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 08:17:43 +0100
+	id 1RQDNV-0007L6-Vw
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 08:24:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752877Ab1KOHRj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Nov 2011 02:17:39 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54617 "EHLO
+	id S1752736Ab1KOHYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Nov 2011 02:24:17 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57016 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752736Ab1KOHRi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2011 02:17:38 -0500
+	id S1752119Ab1KOHYR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2011 02:24:17 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 19E592579;
-	Tue, 15 Nov 2011 02:17:38 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 600F526FD;
+	Tue, 15 Nov 2011 02:24:16 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ht9S40Bl9+P27UkSoLuGP6fPXOU=; b=dtiXgA
-	speuRoePcnaw8OLdWbHw/7ZIo/Somgp/OAhv3XwJQedmHS0FHdPV3UrM8Fh+l29z
-	qItU4nAQtKMUFooqTDeu7tzg2M7YRnUuUuViE4zAbKw4HEv1Bkv0OslTg4iw1vlL
-	oGhdwlj4W5MmkB6qYYYqDxGz9mv/oyEj7OEBg=
+	:content-type; s=sasl; bh=ez2e+oGnYBlz5fxH5ExJCxyqFo0=; b=Dg+nPT
+	7xaNNcq/0Z1dYjhtOnIHePkEciDKSuaYzFlHI9Ju7r8XRXay5r5HySrNjgJ/spum
+	gkjn07IJBvncOe2cIxccDrELfSOQFuMibH/48VnIaQHgY9y8H6eazL25vb6rhEF0
+	YI2u14nOqcSxJGCYEjVn+6E9mBJb7OFqsgfSw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I/kNTPIbLaFOIXc989TwZbPoYSou6GWy
-	NaNgHtI8axFrtAS2SN5zVIbiaxEXDxYPXNTdVDQxDG/kSzK5cszjMhOSUF0n7vsz
-	MJzToejj1+D2/Q4fwqbA4wXKhVnwLsKwcKB73crBIJ2LI4L9PvOo5wa5vvfZE/Ar
-	BARBuBjjeOE=
+	:content-type; q=dns; s=sasl; b=cia4FSLXkSA62h2f455TGZK9/t7tks7K
+	5Hvla1vlef+g2jq2CtyOAmsweCvjnkgn/JzWIdWBmXP2UHHhuMnU2F7revfHrq3F
+	mWlEcg2X2YFBPSpSFAnOF12HMAUaIcMaVOWLveBBGwpJhZpKPZY4RvcuyaSOfO53
+	2ytadg+8yYQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 126E92578;
-	Tue, 15 Nov 2011 02:17:38 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 56ABD26FC;
+	Tue, 15 Nov 2011 02:24:16 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 943962577; Tue, 15 Nov 2011
- 02:17:37 -0500 (EST)
-In-Reply-To: <4EC209C7.6090805@viscovery.net> (Johannes Sixt's message of
- "Tue, 15 Nov 2011 07:42:15 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C729026FB; Tue, 15 Nov 2011
+ 02:24:15 -0500 (EST)
+In-Reply-To: <1321336525-19374-1-git-send-email-mhagger@alum.mit.edu>
+ (mhagger@alum.mit.edu's message of "Tue, 15 Nov 2011 06:55:25 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E5969B24-0F59-11E1-BCCB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D2F454BA-0F5A-11E1-B59C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185438>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+mhagger@alum.mit.edu writes:
 
-> Am 11/14/2011 22:43, schrieb Kirill A. Shutemov:
->> From: "Kirill A. Shutemov" <kirill@shutemov.name>
->> 
->> --strip::
->> 	Remove from tag message lines staring with '#', trailing spaces
->
-> s/staring/starting/
->
->> 	from every line and empty lines from the beginning and end.
->> 	Enabled by default. Use --no-strip to overwrite the behaviour.
->> 
->> --no-strip is useful if you want to take a tag message as-is, without
->> any stripping.
->
-> I would like to know why this is useful. Tag messages are for human
-> consumption. What benefit is it that whitespace is not stripped? Why are
-> lines starting with '#' so important that they need to stay in the tag
-> message?
+> This patch can be squashed on top of "is_refname_available(): query
+> only possibly-conflicting references", or applied at the end of
+> mh/ref-api-take-2; it does not conflict with the two commits later in
+> the series.
 
-A conversion from foreign SCM comes to mind, but that is somewhat an
-unfair comment, given that I know by heart how stripspace works and the
-above documentation patch incorrectly describes what it does.
+Thanks. At the microscopic level (i.e. in the context of the said series),
+the patch makes sense to me.
 
-Besides stripping "# comment", stripspace collapses consecutive blank
-lines, removes trailing blank lines and trailing whitespaces at the end of
-lines.
+However, I'd rather see us spend effort to make absolutely sure that other
+topics already in next that touch the related codepaths (I think you have
+two such series yourself and I suspect there are other minor fixes that
+may textually conflict) are in good shape and have them graduate early
+after 1.7.8 ships, before queuing a re-roll of the ref-api series, which
+is rather extensive.
