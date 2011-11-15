@@ -1,173 +1,128 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] archive: limit ourselves during remote requests
-Date: Tue, 15 Nov 2011 16:48:40 -0500
-Message-ID: <20111115214840.GB20624@sigill.intra.peff.net>
-References: <20111115214159.GA20457@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/7] sequencer: handle single-commit pick as special case
+Date: Tue, 15 Nov 2011 13:58:21 -0800
+Message-ID: <7v62ilujya.fsf@alter.siamese.dyndns.org>
+References: <1321181181-23923-1-git-send-email-artagnon@gmail.com>
+ <1321181181-23923-4-git-send-email-artagnon@gmail.com>
+ <7vpqgvmwtl.fsf@alter.siamese.dyndns.org>
+ <CALkWK0krTY+szqPrE9wxwfK76VBbFXh_Xaz8EyWZayLa_SFQTw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Erik Faye-Lund <kusmabite@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 15 22:48:48 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 15 22:58:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQQs3-0001zO-En
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 22:48:47 +0100
+	id 1RQR1R-0006qA-R4
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 22:58:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756370Ab1KOVsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Nov 2011 16:48:43 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42815
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753588Ab1KOVsm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2011 16:48:42 -0500
-Received: (qmail 10370 invoked by uid 107); 15 Nov 2011 21:48:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 15 Nov 2011 16:48:47 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Nov 2011 16:48:40 -0500
-Content-Disposition: inline
-In-Reply-To: <20111115214159.GA20457@sigill.intra.peff.net>
+	id S1757400Ab1KOV6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Nov 2011 16:58:25 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35464 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751217Ab1KOV6Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2011 16:58:24 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9EB80625B;
+	Tue, 15 Nov 2011 16:58:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5bfYZVMSf8TwOm/X7nD886fIupo=; b=qfbKP9
+	eR/PLevxsf6RWNw4i6EQn17r/YCcFB5JZRGK8X2HxhvU283G7Mc4SxXd2y9x09cx
+	ukOAzAfdLbjE1tKjKYfgEIcnDg1Jw1KsZ6jrqfjciCewJrrGSIrmnREnmPGmywVs
+	jTmPY1Z1LakeiJwDgUTJLOK1iUICxqAcy9sWM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=E3vuzwrUD6A1G9lD+05CmKrYUbIyFxeW
+	SIWCe7FoZm3wQH59WRkB5o52VIhHFd267PY9obsOKHfUmIPgp+5dfuP0QHryO1T9
+	MJ/TLvm7QR33aPaet2G6f+RX9RhpEKyt8juZwRe13V/Bd3HwLQZF1qreltkDnjgS
+	QiHjI7fOU+o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D662625A;
+	Tue, 15 Nov 2011 16:58:23 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 031046254; Tue, 15 Nov 2011
+ 16:58:22 -0500 (EST)
+In-Reply-To: <CALkWK0krTY+szqPrE9wxwfK76VBbFXh_Xaz8EyWZayLa_SFQTw@mail.gmail.com>
+ (Ramkumar Ramachandra's message of "Tue, 15 Nov 2011 14:17:08 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EFE7864E-0FD4-11E1-B121-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185492>
 
-Originally, the call-chain of an upload-archive invocation
-was like:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-  cmd_archive (on local machine)
-    run_remote_archiver (local)
-      cmd_upload_archive (on remote machine)
-	run_upload_archive (remote)
-	  write_archive (remote)
+> Hi Junio,
+>
+> Junio C Hamano writes:
+>> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>>> [...]
+>> [...]
+>> I do not see an inconsistency here, let alone any "glaring" one.
+>
+> Yeah, my commit message is totally misleading and unclear.  Yes, all
+> the operations make sense to you and me; for a new user who doesn't
+> understand how Git works, it's completely inconsistent at a very
+> superficial level, no?  The sequence of operations he has to execute
+> depends on:
+> 1. If he literally specified a single commit or a commit range on the
+> command-line.
 
-And write_archive knew that it could be remotely invoked,
-and didn't trust the arguments given to it when doing
-anything security-critical.
+But we are already in agreement on this point, I think. Didn't I say:
 
-Since c09cd77 (upload-archive: use start_command instead of
-fork, 2011-10-24), we exec a git-archive subprocess, and the
-call-chain is now:
+  It is a different story if the sequence were like this:
 
-  cmd_archive (local)
-    run_remote_archiver (local)
-      cmd_upload_archive (remote)
-        cmd_archive (in a sub-process)
-          write_archive
+      $ git cherry-pick foo
+      ... conflict happens
+      $ edit problematicfile
+      $ git add problematicfile
+      $ git cherry-pick --continue
+      ... This should notice CHERRY_PICK_HEAD and record it.
+      ... After that, there is nothing remaining to be done.
 
-The arbitrary arguments we get from the client are passed
-through cmd_archive via the command-line of git-archive.
-Unlike write_archive, cmd_archive was never taught not to
-trust the remote arguments. Among the many horrible things a
-malicious client could do were:
+  In other words, the user said "I want to replay this commit", the command
+  couldn't finish it by itself and asked the user to help resolving the
+  conflict, the user resolved and told the command to continue. The command
+  should continue recording the result.
 
-  - accessing another repository as the user running on the
-    server, using "--remote"
+  And if "continue" does not work in this sequence, that is a bug worth
+  fixing.
 
-  - execute arbitrary code as the user running on the server
-    using "--remote --exec"
+in the message you are responding to?
 
-  - overwrite arbitrary files using "--output"
+> 2. In the case of multi-commit picking, there's an additional layer of
+> decision making: did the conflict occur in the last commit in the
+> range?
 
-This patch causes cmd_archive to respect the remote-request
-flag immediately and chain to write_archive, ignoring any
-other options.
+Again, it would be the same thing. If the implementation forces that
+decision, that would be a bug, no?
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This is the minimal required to fix it.
+My understanding is that multi-commit form of cherry-pick and revert
+intended to allow two forms of "user done helping and telling the command
+to continue" at any stage, be it the first, in the middle, or the last
+operation in a series:
 
-I mentioned already the alternative of allowing through only known-good
-arguments in upload-pack's prepare_argv. I don't like that because it
-means we have to know about every option that write_archive is OK with.
+ - User resolves, adds and commits, and then tells the command to
+   continue. The command notices that the user has committed, and goes on
+   to the next task; or
 
-I think a more sensible solution would be a new command, "git
-upload-archive--remote", which is just a very stripped-down version of
-git-archive (i.e., it _only_ calls write_archive). Or it could even be
-spelled "git upload-archive --remote-request". But the point is that
-git-archive never needed to worry about security before.  We
-shouldn't be polluting it with security code; we should be bypassing it
-going to write_archive directly.
+ - User resolves, adds, and then tells the command to continue. The
+   command notices that the user has not committed, makes a commit and
+   goes on to the next task.
 
-For the tests, checking each failure mode is perhaps overkill, but I
-want to be double sure that this doesn't ever regress.
+I think "rebase -i" works the same way and both are valid ways to tell the
+command to continue.
 
- builtin/archive.c   |    9 +++++++++
- t/t5000-tar-tree.sh |   39 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 48 insertions(+), 0 deletions(-)
-
-diff --git a/builtin/archive.c b/builtin/archive.c
-index fce20a1..ee2fb54 100644
---- a/builtin/archive.c
-+++ b/builtin/archive.c
-@@ -104,6 +104,15 @@ int cmd_archive(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, local_opts, NULL,
- 			     PARSE_OPT_KEEP_ALL);
- 
-+	/*
-+	 * We want to ignore all other parsed options in the remote case, as
-+	 * they come from an arbitrary client. Therefore we shouldn't do things
-+	 * like write files based on --output, or make new --remote
-+	 * connections.
-+	 */
-+	if (is_remote)
-+		return write_archive(argc, argv, prefix, 0, NULL, 1);
-+
- 	if (output)
- 		create_output_file(output);
- 
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-index 723b54e..5679c79 100755
---- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -317,6 +317,45 @@ test_expect_success 'malicious clients cannot un-remote themselves' '
- 	test_must_fail git upload-archive . <evil-request >remote.tar.foo
- '
- 
-+# Again, we have to hand-craft our malicious request. Since parsing
-+# the output to determine that we did indeed get subrepo would be hard,
-+# instead we use an easier test: try to get a branch only in the subrepo,
-+# which must fail if our hack doesn't work.
-+test_expect_success 'malicious clients cannot access repos via --remote' '
-+	git init subrepo &&
-+	(cd subrepo &&
-+	 test_commit subrepo &&
-+	 git branch only-in-subrepo
-+	) &&
-+	{
-+		echo "0021argument --remote=../subrepo"
-+		echo "001dargument only-in-subrepo" &&
-+		printf "0000"
-+	} >evil-request &&
-+	test_must_fail git upload-archive . <evil-request >evil-output
-+'
-+
-+test_expect_success 'malicious clients cannot exec code via --remote' '
-+	{
-+		echo "0021argument --remote=../subrepo"
-+		echo "0026argument --exec=echo foo >hax0red"
-+		echo "0012argument HEAD" &&
-+		printf "0000"
-+	} >evil-request &&
-+	test_might_fail git upload-archive . <evil-request >evil-output &&
-+	test_path_is_missing .git/hax0red
-+'
-+
-+test_expect_success 'malicious clients cannot trigger --output on server' '
-+	{
-+		echo "001dargument --output=p0wn3d"
-+		echo "0012argument HEAD" &&
-+		printf "0000"
-+	} >evil-request &&
-+	git upload-archive . <evil-request >remote.tar &&
-+	test_path_is_missing .git/p0wn3d
-+'
-+
- if $GZIP --version >/dev/null 2>&1; then
- 	test_set_prereq GZIP
- else
--- 
-1.7.7.3.8.g38efa
+Now, multi-commit form of cherry-pick/revert _may_ be buggy (I do not use
+that form often myself to know if this is the case, though) and may only
+allow one or the other depending on which commit in the series the user is
+asked to help, but if that is the case it is a bug in the implementation
+of the multi-commit form done back in v1.7.2 timeframe.
