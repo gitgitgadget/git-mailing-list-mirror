@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 03/10] merge: do not point "branch" to a resolve_ref()'s static buffer
-Date: Tue, 15 Nov 2011 13:07:49 +0700
-Message-ID: <1321337276-17803-3-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 04/10] commit: move resolve_ref() closer to where the return value is used
+Date: Tue, 15 Nov 2011 13:07:50 +0700
+Message-ID: <1321337276-17803-4-git-send-email-pclouds@gmail.com>
 References: <20111115060603.GA17585@tre>
  <1321337276-17803-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -12,113 +12,78 @@ Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 15 07:05:36 2011
+X-From: git-owner@vger.kernel.org Tue Nov 15 07:06:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQC9F-0005VW-Na
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 07:05:34 +0100
+	id 1RQC9v-0005p2-WD
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 07:06:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752313Ab1KOGF3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Nov 2011 01:05:29 -0500
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:46627 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751962Ab1KOGF0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2011 01:05:26 -0500
-Received: by mail-pz0-f42.google.com with SMTP id 36so14544202pzk.1
-        for <git@vger.kernel.org>; Mon, 14 Nov 2011 22:05:26 -0800 (PST)
+	id S1752335Ab1KOGFf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Nov 2011 01:05:35 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:64839 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752314Ab1KOGFe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2011 01:05:34 -0500
+Received: by ggnb2 with SMTP id b2so7055058ggn.19
+        for <git@vger.kernel.org>; Mon, 14 Nov 2011 22:05:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=GHV635r0HzIA8oPPbypdcH9RCBVlduRs0ZVvtAbfuow=;
-        b=vTmSH4IZS9DrUBnD94cvoZNMtCubplUj0rUSC83SjFSJ++03TgPH+jkc7JF8Gob7PO
-         mv5l4JuO7H23JWduZphNk6FJl7mmxLl2gbuawtLU+W44+TDRRGP2I8DXXyOKUmjZWTLt
-         gVWKJjt4cFbQUd5e7wNkbUF/mQ+Z4czpeFmGE=
-Received: by 10.68.4.200 with SMTP id m8mr56056147pbm.50.1321337126360;
-        Mon, 14 Nov 2011 22:05:26 -0800 (PST)
+        bh=g+at8HGptVSGLd26ZVg+EIeO4pKEHhlOV82ll+XBPFs=;
+        b=um2H72ip/NHRMr2mgVyYUOHdfUs6sFhG4TF2uTA7UG8eFa56kp9FcM17gyFbPbtOcx
+         ROVr0bc1Bp0Gfztzi66hrLVMPeXEfKmb0zCpzG3s+5O9LoieYtdvl8jN/Hwj7T8iIpFZ
+         M6/QsKbXuZR9UxT9vDdAzr0/FzowAtwO7AXrE=
+Received: by 10.68.208.225 with SMTP id mh1mr57613878pbc.17.1321337132907;
+        Mon, 14 Nov 2011 22:05:32 -0800 (PST)
 Received: from tre ([115.74.43.88])
-        by mx.google.com with ESMTPS id c3sm62399376pbt.12.2011.11.14.22.05.22
+        by mx.google.com with ESMTPS id p6sm62443097pbf.3.2011.11.14.22.05.29
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 14 Nov 2011 22:05:25 -0800 (PST)
-Received: by tre (sSMTP sendmail emulation); Tue, 15 Nov 2011 13:08:11 +0700
+        Mon, 14 Nov 2011 22:05:32 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Tue, 15 Nov 2011 13:08:17 +0700
 X-Mailer: git-send-email 1.7.4.74.g639db
 In-Reply-To: <1321337276-17803-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185426>
 
-resolve_ref() may return a pointer to a static buffer. Callers that
-use this value longer than a couple of statements should copy the
-value to avoid some hidden resolve_ref() call that may change the
-static buffer's value.
-
-The bug found by Tony Wang <wwwjfy@gmail.com> in builtin/merge.c
-demonstrates this. The first call is in cmd_merge()
-
-branch =3D resolve_ref("HEAD", head_sha1, 0, &flag);
-
-Then deep in lookup_commit_or_die() a few lines after, resolve_ref()
-may be called again and destroy "branch".
-
-lookup_commit_or_die
- lookup_commit_reference
-  lookup_commit_reference_gently
-   parse_object
-    lookup_replace_object
-     do_lookup_replace_object
-      prepare_replace_object
-       for_each_replace_ref
-        do_for_each_ref
-         get_loose_refs
-          get_ref_dir
-           get_ref_dir
-            resolve_ref
-
-Ask resolve_ref() to allocate a new buffer instead of returning static
-buffer.
+resolve_ref() returns a static buffer and the value may change if
+another resolve_ref() is called. Move resolve_ref() closer to printf()
+where the value is used to reduce that chance.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/merge.c |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+ builtin/commit.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 1be6f3b..1a3095f 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1087,6 +1087,7 @@ int cmd_merge(int argc, const char **argv, const =
-char *prefix)
- 	struct commit_list *common =3D NULL;
- 	const char *best_strategy =3D NULL, *wt_strategy =3D NULL;
- 	struct commit_list **remotes =3D &remoteheads;
-+	char *branch_ref;
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 11ae005..365b9f6 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1259,7 +1259,7 @@ static void print_summary(const char *prefix, con=
+st unsigned char *sha1,
+ 	struct commit *commit;
+ 	struct strbuf format =3D STRBUF_INIT;
+ 	unsigned char junk_sha1[20];
+-	const char *head =3D resolve_ref("HEAD", junk_sha1, 0, NULL, 0);
++	const char *head;
+ 	struct pretty_print_context pctx =3D {0};
+ 	struct strbuf author_ident =3D STRBUF_INIT;
+ 	struct strbuf committer_ident =3D STRBUF_INIT;
+@@ -1304,6 +1304,7 @@ static void print_summary(const char *prefix, con=
+st unsigned char *sha1,
+ 	rev.diffopt.break_opt =3D 0;
+ 	diff_setup_done(&rev.diffopt);
 =20
- 	if (argc =3D=3D 2 && !strcmp(argv[1], "-h"))
- 		usage_with_options(builtin_merge_usage, builtin_merge_options);
-@@ -1095,7 +1096,7 @@ int cmd_merge(int argc, const char **argv, const =
-char *prefix)
- 	 * Check if we are _not_ on a detached HEAD, i.e. if there is a
- 	 * current branch.
- 	 */
--	branch =3D resolve_ref("HEAD", head_sha1, 0, &flag, 0);
-+	branch =3D branch_ref =3D resolve_ref("HEAD", head_sha1, 0, &flag, 1)=
-;
- 	if (branch && !prefixcmp(branch, "refs/heads/"))
- 		branch +=3D 11;
- 	if (!branch || is_null_sha1(head_sha1))
-@@ -1497,5 +1498,6 @@ int cmd_merge(int argc, const char **argv, const =
-char *prefix)
- 		ret =3D suggest_conflicts(option_renormalize);
-=20
- done:
-+	free(branch_ref);
- 	return ret;
- }
++	head =3D resolve_ref("HEAD", junk_sha1, 0, NULL, 0);
+ 	printf("[%s%s ",
+ 		!prefixcmp(head, "refs/heads/") ?
+ 			head + 11 :
 --=20
 1.7.4.74.g639db
