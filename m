@@ -1,172 +1,79 @@
-From: Gustaf Hendeby <hendeby@isy.liu.se>
-Subject: [PATCH v2] Add built-in diff patterns for MATLAB code
-Date: Tue, 15 Nov 2011 21:15:03 +0100
-Message-ID: <1321388103-32225-1-git-send-email-hendeby@isy.liu.se>
-References: <201111151414.34141.trast@student.ethz.ch>
-Cc: Git List <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	Gustaf Hendeby <hendeby@isy.liu.se>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Nov 15 21:16:04 2011
+From: Tim Walberg <twalberg@comcast.net>
+Subject: odd name-rev behavior?
+Date: Tue, 15 Nov 2011 15:15:14 -0600
+Message-ID: <20111115211514.GE27706@comcast.net>
+Reply-To: Tim Walberg <twalberg@comcast.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 15 22:20:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQPQI-0005BY-QT
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 21:16:03 +0100
+	id 1RQQR7-0004U1-KL
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Nov 2011 22:20:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757391Ab1KOUP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Nov 2011 15:15:58 -0500
-Received: from muon.isy.liu.se ([130.236.48.25]:39556 "EHLO muon.isy.liu.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757050Ab1KOUP5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2011 15:15:57 -0500
-Received: from foolap.hendeby.homeip.net (81-232-38-97-no36.tbcn.telia.com [81.232.38.97])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by muon.isy.liu.se (Postfix) with ESMTPSA id 328F66D8;
-	Tue, 15 Nov 2011 21:15:44 +0100 (MET)
-X-Mailer: git-send-email 1.7.8.rc2.209.geddc4
-In-Reply-To: <201111151414.34141.trast@student.ethz.ch>
-X-ISY-LIU-SE-MailScanner-Information: Please contact postmaster@isy.liu.se for more information
-X-ISY-LIU-SE-MailScanner-ID: 328F66D8.A305B
-X-ISY-LIU-SE-MailScanner: Found to be clean
-X-ISY-LIU-SE-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
-	score=-1, required 6, ALL_TRUSTED -1.00)
-X-ISY-LIU-SE-MailScanner-From: hendeby@isy.liu.se
-X-Spam-Status: No
+	id S932416Ab1KOVUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Nov 2011 16:20:52 -0500
+Received: from qmta02.emeryville.ca.mail.comcast.net ([76.96.30.24]:41245 "EHLO
+	qmta02.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932385Ab1KOVUw (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2011 16:20:52 -0500
+X-Greylist: delayed 336 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Nov 2011 16:20:52 EST
+Received: from omta24.emeryville.ca.mail.comcast.net ([76.96.30.92])
+	by qmta02.emeryville.ca.mail.comcast.net with comcast
+	id xZ2u1h0021zF43QA2ZF9Bt; Tue, 15 Nov 2011 21:15:09 +0000
+Received: from beta.localdomain ([67.184.156.247])
+	by omta24.emeryville.ca.mail.comcast.net with comcast
+	id xZXr1h00q5LYcRf8kZXsaL; Tue, 15 Nov 2011 21:31:53 +0000
+Received: from calvin.localdomain ([10.0.0.8])
+	by beta.localdomain with esmtp (Exim 4.69)
+	(envelope-from <twalberg@comcast.net>)
+	id 1RQQLa-0003QM-E4; Tue, 15 Nov 2011 15:15:14 -0600
+Received: from tew by calvin.localdomain with local (Exim 4.69)
+	(envelope-from <tew@calvin.localdomain>)
+	id 1RQQLa-0005Hf-9a; Tue, 15 Nov 2011 15:15:14 -0600
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185487>
 
-MATLAB is often used in industry and academia for scientific
-computations motivating it being included as a build in pattern.
+Never noticed this before - is this expected? It doesn't seem to
+match documentation, in any case...
 
-Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
----
+Basically, 'git name-rev --all' lists a lot of lines that are
+marked as "undefined", and most, if not all, of the objects
+represented are trees, not commits... I wouldn't have expected
+name-rev to follow the link from a commit to a tree and try to
+process that result...
 
-This version of this commit adds the missing patterns to make the
-.-operators words and adds these to the test.  Lots of thanks Thomas
-for keeping your eyes open and catching this.
+> git --version
+git version 1.7.7.3
+> git name-rev --all | tail -10
+ed858730bc0e40d5317543ca4a199f1902b1c545 master~35
+ea6d0d16af77b357caab59bda3eff8efe78370c1 undefined
+ea01449260d4ed49cc30ffff8fa840273e182195 undefined
+f0a186fa05e9d4dd2de85ab537ac019a74b84736 undefined
+f223486e4178e0b2d6645fa3d0478602a6aec548 undefined
+f6f969d943f981057d9243d5fc2d8a79864cb542 master~19
+f73dc68c32681939d2ce92378128889c7b6a8902 master~90
+f739f050f0a20692e947604d0d5a464cdd5393aa master~109
+faa7bf622b69c93f1f21eec0de3bd0ab6957b888 master~94
+ff41d4390d3fabf1ba886749a51a20722b159fdd undefined
+> git cat-file -t ff41d4
+tree
+>
 
-/Gustaf
 
- Documentation/gitattributes.txt |    2 ++
- t/t4018-diff-funcname.sh        |    2 +-
- t/t4034-diff-words.sh           |    1 +
- t/t4034/matlab/expect           |   14 ++++++++++++++
- t/t4034/matlab/post             |    9 +++++++++
- t/t4034/matlab/pre              |    9 +++++++++
- userdiff.c                      |    3 +++
- 7 files changed, 39 insertions(+), 1 deletions(-)
- create mode 100644 t/t4034/matlab/expect
- create mode 100644 t/t4034/matlab/post
- create mode 100644 t/t4034/matlab/pre
-
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 25e46ae..a85b187 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -500,6 +500,8 @@ patterns are available:
- 
- - `java` suitable for source code in the Java language.
- 
-+- `matlab` suitable for source code in the MATLAB language.
-+
- - `objc` suitable for source code in the Objective-C language.
- 
- - `pascal` suitable for source code in the Pascal/Delphi language.
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index b68c56b..4bd2a1c 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -105,7 +105,7 @@ test_expect_funcname () {
- 	grep "^@@.*@@ $1" diff
- }
- 
--for p in bibtex cpp csharp fortran html java objc pascal perl php python ruby tex
-+for p in bibtex cpp csharp fortran html java matlab objc pascal perl php python ruby tex
- do
- 	test_expect_success "builtin $p pattern compiles" '
- 		echo "*.java diff=$p" >.gitattributes &&
-diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
-index c374aa4..6f1e5a2 100755
---- a/t/t4034-diff-words.sh
-+++ b/t/t4034-diff-words.sh
-@@ -299,6 +299,7 @@ test_language_driver csharp
- test_language_driver fortran
- test_language_driver html
- test_language_driver java
-+test_language_driver matlab
- test_language_driver objc
- test_language_driver pascal
- test_language_driver perl
-diff --git a/t/t4034/matlab/expect b/t/t4034/matlab/expect
-new file mode 100644
-index 0000000..72cf3e9
---- /dev/null
-+++ b/t/t4034/matlab/expect
-@@ -0,0 +1,14 @@
-+<BOLD>diff --git a/pre b/post<RESET>
-+<BOLD>index dc204db..70e05f0 100644<RESET>
-+<BOLD>--- a/pre<RESET>
-+<BOLD>+++ b/post<RESET>
-+<CYAN>@@ -1,9 +1,9 @@<RESET>
-+(<RED>1<RESET><GREEN>0<RESET>) (<RED>-1e10<RESET><GREEN>-0e10<RESET>) '<RED>b<RESET><GREEN>y<RESET>';
-+[<RED>a<RESET><GREEN>x<RESET>] {<RED>a<RESET><GREEN>x<RESET>} <RED>a<RESET><GREEN>x<RESET>.<RED>b<RESET><GREEN>y<RESET>;
-+~<RED>a<RESET><GREEN>x<RESET>;
-+<RED>a<RESET><GREEN>x<RESET>*<RED>b a<RESET><GREEN>y x<RESET>.*<RED>b a<RESET><GREEN>y x<RESET>/<RED>b a<RESET><GREEN>y x<RESET>./<RED>b a<RESET><GREEN>y x<RESET>^<RED>b a<RESET><GREEN>y x<RESET>.^<RED>b a<RESET><GREEN>y x<RESET>.\<RED>b a<RESET><GREEN>y x<RESET>.';
-+<RED>a<RESET><GREEN>x<RESET>+<RED>b a<RESET><GREEN>y x<RESET>-<RED>b<RESET><GREEN>y<RESET>;
-+<RED>a<RESET><GREEN>x<RESET>&<RED>b a<RESET><GREEN>y x<RESET>&&<RED>b a<RESET><GREEN>y x<RESET>|<RED>b a<RESET><GREEN>y x<RESET>||<RED>b<RESET><GREEN>y<RESET>;
-+<RED>a<RESET><GREEN>x<RESET><<RED>b a<RESET><GREEN>y x<RESET><=<RED>b a<RESET><GREEN>y x<RESET>><RED>b a<RESET><GREEN>y x<RESET>>=<RED>b<RESET><GREEN>y<RESET>;
-+<RED>a<RESET><GREEN>x<RESET>==<RED>b a<RESET><GREEN>y x<RESET>~=<RED>b<RESET><GREEN>y<RESET>;
-+<RED>a<RESET><GREEN>x<RESET>,<RED>b<RESET><GREEN>y<RESET>;
-diff --git a/t/t4034/matlab/post b/t/t4034/matlab/post
-new file mode 100644
-index 0000000..70e05f0
---- /dev/null
-+++ b/t/t4034/matlab/post
-@@ -0,0 +1,9 @@
-+(0) (-0e10) 'y';
-+[x] {x} x.y;
-+~x;
-+x*y x.*y x/y x./y x^y x.^y x.\y x.';
-+x+y x-y;
-+x&y x&&y x|y x||y;
-+x<y x<=y x>y x>=y;
-+x==y x~=y;
-+x,y;
-diff --git a/t/t4034/matlab/pre b/t/t4034/matlab/pre
-new file mode 100644
-index 0000000..dc204db
---- /dev/null
-+++ b/t/t4034/matlab/pre
-@@ -0,0 +1,9 @@
-+(1) (-1e10) 'b';
-+[a] {a} a.b;
-+~a;
-+a*b a.*b a/b a./b a^b a.^b a.\b a.';
-+a+b a-b;
-+a&b a&&b a|b a||b;
-+a<b a<=b a>b a>=b;
-+a==b a~=b;
-+a,b;
-diff --git a/userdiff.c b/userdiff.c
-index bf553ad..7c983c1 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -37,6 +37,9 @@ PATTERNS("java",
- 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
- 	 "|[-+*/<>%&^|=!]="
- 	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
-+PATTERNS("matlab",
-+	 "^[[:space:]]*((classdef|function)[[:space:]].*)$|^%%[[:space:]].*$",
-+	 "[a-zA-Z_][a-zA-Z0-9_]*|[-+0-9.e]+|[=~<>]=|\\.[*/\\^']|\\|\\||&&"),
- PATTERNS("objc",
- 	 /* Negate C statements that can look like functions */
- 	 "!^[ \t]*(do|for|if|else|return|switch|while)\n"
 -- 
-1.7.8.rc2.209.geddc4
++----------------------+
+| Tim Walberg          |
+| 830 Carriage Dr.     |
+| Algonquin, IL 60102  |
+| twalberg@comcast.net |
++----------------------+
