@@ -1,67 +1,62 @@
-From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: Git Gems
-Date: Wed, 16 Nov 2011 15:18:15 -0800
-Message-ID: <CAE1pOi1gyshz_502NQvLNAByfwiYXW2fzA+EnGKz8tuFrCpkxg@mail.gmail.com>
+From: Peter Vereshagin <peter@vereshagin.org>
+Subject: Re: delete deprecated refs to release disk space
+Date: Thu, 17 Nov 2011 03:44:22 +0400
+Organization: '
+Message-ID: <20111116234422.GA5131@external.screwed.box>
+References: <20111113151033.GD16065@external.screwed.box>
+ <CACBZZX5kBqM1eye40_Vw0W=8qnNsUQBVCE0q9JrixYomGPuZbg@mail.gmail.com>
+ <20111114142525.GB8641@external.screwed.box>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Users <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 17 00:18:22 2011
+Content-Type: text/plain; charset=koi8-r
+Cc: ??var Arnfj??r?? Bjarmason <avarab@gmail.com>, git@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 17 00:45:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQokH-0004Ts-HO
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Nov 2011 00:18:21 +0100
+	id 1RQpAq-0001PJ-C0
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Nov 2011 00:45:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754128Ab1KPXSQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Nov 2011 18:18:16 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:33655 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753974Ab1KPXSQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2011 18:18:16 -0500
-Received: by ywt32 with SMTP id 32so311784ywt.19
-        for <git@vger.kernel.org>; Wed, 16 Nov 2011 15:18:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=0yxq4Papas7cb0CTsACUh8Y/KH8HwEF3gIXeTmb+QdE=;
-        b=UYBA2+ugXJPjwQwgz/qB4nnFThjwR3FfOPsDmNwJFXsFGazPwNoMpeOib+OuxXf5QG
-         P/H1zm8yGEvIGE7BdiPfi9s4DlJDwFhZ5g8/Jquehb/2HXHzmgayNfWs3KkBIP7vSt0H
-         QEk4QkMW+l2pB2qSvVujd3rD4a5IBOxLDp+d4=
-Received: by 10.236.155.74 with SMTP id i50mr5383493yhk.23.1321485495655; Wed,
- 16 Nov 2011 15:18:15 -0800 (PST)
-Received: by 10.236.61.41 with HTTP; Wed, 16 Nov 2011 15:18:15 -0800 (PST)
+	id S1754590Ab1KPXpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Nov 2011 18:45:44 -0500
+Received: from ns1.skyriver.ru ([89.108.118.221]:59703 "EHLO mx1.skyriver.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751674Ab1KPXpn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2011 18:45:43 -0500
+Received: from localhost (rainbowwarrior.torservers.net [77.247.181.164])
+	by mx1.skyriver.ru (Postfix) with ESMTPSA id 18BC15A94;
+	Thu, 17 Nov 2011 03:10:57 +0400 (MSK)
+Content-Disposition: inline
+In-Reply-To: <20111114142525.GB8641@external.screwed.box>
+X-Face: 8T>{1owI$Byj]]a;^G]kRf*dkq>E-3':F>4ODP[#X4s"dr?^b&2G@'3lukno]A1wvJ_L(~u
+ 6>I2ra/<,j1%@C[LN=>p#_}RIV+#:KTszp-X$bQOj,K
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185561>
 
-Hi all,
+Hello.
 
-Just today, I found out about 'git add -p'. I had never even thought
-of this but, now that I know, I can't imagine life without it. :-)
-Actually, it's a bit scary to note that the Git devs apparently aren't
-just telepathic but they can read my thoughts even before I think
-them. ;-)
+2011/11/14 18:25:25 +0400 Peter Vereshagin <peter@vereshagin.org> => To ??var Arnfj??r?? Bjarmason :
+PV> N commits ago is a fine setting for me as it's a cron job backup. Thanks?
 
-All kidding aside, I'm starting to wonder which other Git Gems I don't
-know about. For me, the list of Git Gems would include Git's Bash
-command line prompt, 'git add -p', 'git rebase', 'git commit --amend',
-and 'git-new-workdir'. I realize there are plenty of books and such
-out there but I'm really just looking for a list of Git commands
-and/or options that are worth looking into. Finding out more about a
-particular command/script/option is easy, realizing that a particular
-one is the one you need is not. Especially, if you don't even know you
-have a problem.
+* = Thanks!
 
-As an example, 'git rebase' didn't really seem useful until I
-understood (well, more or less) what it did. Until then, I just
-naively assumed that merge commits and non-linear history were
-something you simply had to live with. I'm guessing that, like me, a
-lot of people come to Git with quite a few assumptions and
-preconceived notions due to their exposure to other SCM tools. :-(
+Here is the PoC QnD code that releases disk space for me by far:
 
-Cheers,
-Hilco
+    git rev-list --all --timestamp |\
+        perl -Mstrict -MTime::ParseDate -wE \
+            'my $match = 0; my $expire = parsedate( "3 days ago" ); while (<>)
+                { chomp; my ( $tstamp => $graft_id ) = split /\s+/;
+                    if ( not( $match ) and $tstamp < $expire )
+                        { say $graft_id; $match = 1; } }
+            ' > .git/info/grafts && \
+    git filter-branch -f
+
+for case a one shall seek for it.
+
+--
+Peter Vereshagin <peter@vereshagin.org> (http://vereshagin.org) pgp: A0E26627 
