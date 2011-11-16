@@ -1,81 +1,74 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [RFC 2/2] Make misuse of get_pathname() buffers detectable by valgrind
-Date: Wed, 16 Nov 2011 21:18:53 +0700
-Message-ID: <CACsJy8BK3zvxA5mpC+3UvYMe20X6iFWJ7JL+VH6fr-Xstw2usg@mail.gmail.com>
-References: <1317097687-11098-1-git-send-email-mhagger@alum.mit.edu> <1317097687-11098-3-git-send-email-mhagger@alum.mit.edu>
+From: "Harald Heigl" <Harald@heigl-online.at>
+Subject: What to do if the path of my git submodules change upstream
+Date: Wed, 16 Nov 2011 15:37:55 +0100
+Message-ID: <000301cca46d$5428c3d0$fc7a4b70$@heigl-online.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Nov 16 15:19:31 2011
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 16 15:38:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQgKo-0006yE-Pp
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 15:19:31 +0100
+	id 1RQgcm-0000Gg-NP
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 15:38:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757821Ab1KPOT0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Nov 2011 09:19:26 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:51656 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757816Ab1KPOTZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2011 09:19:25 -0500
-Received: by bke11 with SMTP id 11so602509bke.19
-        for <git@vger.kernel.org>; Wed, 16 Nov 2011 06:19:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=MLAwFnRUwAH5qgeLmf3UeaMsGs7MLpaGD0zChhjSGhs=;
-        b=OLA21YqNBJy21N4aiTk7v+U1fVnOFDZDpL7IycvD2gz+5YZ2NvBe/H8tKgTd0YyLOJ
-         /cPWMTTgljlm2eyMrS+9t+plVC7diDBcwbIywgAxkuTUgRZU7Y3mW8QjJcWLfPJRGWwG
-         4DqWZ8CZv08eVfv/wZT7qtfd6eXzB+OCC6AVo=
-Received: by 10.204.9.209 with SMTP id m17mr22299657bkm.101.1321453164155;
- Wed, 16 Nov 2011 06:19:24 -0800 (PST)
-Received: by 10.204.23.2 with HTTP; Wed, 16 Nov 2011 06:18:53 -0800 (PST)
-In-Reply-To: <1317097687-11098-3-git-send-email-mhagger@alum.mit.edu>
+	id S932412Ab1KPOh7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Nov 2011 09:37:59 -0500
+Received: from xserv02.internex.at ([85.124.51.102]:57889 "HELO
+	xserv2.internex.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S932118Ab1KPOh7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2011 09:37:59 -0500
+X-PDA-ORIGIN: xserv2.internex.at
+Received: (qmail 24334 invoked from network); 16 Nov 2011 14:37:56 -0000
+Received: by simscan 1.4.0 ppid: 24321, pid: 24331, t: 0.0675s
+         scanners: clamav: 0.97/m:54/d:13952
+Received: from unknown (HELO setnbheh) (Harald@heigl-online.at@84.115.25.240)
+  by xserv02.internex.at with SMTP; 16 Nov 2011 14:37:56 -0000
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AcykbVOUYs4xONHxR4alkgelAa20AA==
+Content-Language: de-at
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185551>
 
-On Tue, Sep 27, 2011 at 11:28 AM, Michael Haggerty <mhagger@alum.mit.ed=
-u> wrote:
-> +#ifdef VALGRIND
-> + =C2=A0 =C2=A0 =C2=A0 static char *pathname_array[PATHNAME_BUFFER_CO=
-UNT];
-> + =C2=A0 =C2=A0 =C2=A0 index =3D (index + 1) & (PATHNAME_BUFFER_COUNT=
- - 1);
-> + =C2=A0 =C2=A0 =C2=A0 if (pathname_array[index]) {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* In a corre=
-ct program, this will have no effect, but
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* *if* someb=
-ody erroneously uses this buffer after it
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* has been f=
-reed, it gives more of a chance that the
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* error will=
- be detected even if valgrind is not
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* running:
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strcpy(pathname_ar=
-ray[index], buggy_path);
-> +
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 free(pathname_arra=
-y[index]);
-> + =C2=A0 =C2=A0 =C2=A0 }
-> + =C2=A0 =C2=A0 =C2=A0 pathname_array[index] =3D xmalloc(PATH_MAX);
-> + =C2=A0 =C2=A0 =C2=A0 return pathname_array[index];
-> +#else
+Hi everyone!
 
-Not sure if it works (just read man pages, haven't tried anything) I'm
-thinking to use mmap() with MAP_ANONYMOUS instead of xmalloc(), then
-mprotect() instead of free() to remove read access from that area. Any
-access after that should be caught. Leaking may not be severe for
-git_path(), hopefully.
---=20
-Duy
+=46irst setup of my git was a server (with ssh) and some clients.
+
+Today I changed to gitolite because I wanted a more sophisticated way o=
+f
+managing my repos. So far so good=85
+So the old path =93ssh://[ip]/[fullpath].git=94 would change to a new p=
+ath
+=93git@[servername]:[gitreponame]=94.=20
+This is no problem for =93normal=94 repos, I change the remote origin a=
+nd
+continue using push and pull.
+
+I have some submodules:
+I changed the .gitmodules to reflect my changes, did a git submodule sy=
+nc.
+This works flawlessly too!
+
+But what if someone wants to checkout an older version of the project? =
+(for
+comparison, or because he/she wanted to try something out)
+He would get an old .gitmodules with old paths.
+After a git submodule sync he would get errors, because old paths won=92=
+t work
+anymore, because I changed some paths on the server=20
+
+It is only one project I have this problem and therein I changed the
+=2Egitmodules only 3 times. Is it possible to rewrite .gitmodules on th=
+ese
+specific =A0commits on the server (perhaps with git-filter-branch)?
+Or is there another easy solution? Has someone ever had this problem?
+
+Hope you can help,
+Kind regards,
+Harald Heigl
