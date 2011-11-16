@@ -1,88 +1,91 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/5] sequencer: sequencer state is useless without todo
-Date: Tue, 15 Nov 2011 23:38:49 -0800
-Message-ID: <7vhb24qzxy.fsf@alter.siamese.dyndns.org>
-References: <1320510586-3940-1-git-send-email-artagnon@gmail.com>
- <1320510586-3940-4-git-send-email-artagnon@gmail.com>
- <20111106002645.GE27272@elie.hsd1.il.comcast.net>
- <CALkWK0nGhUshwJM1vmAUhBG9foH+=6+_KFhfTTF6+kNS0Hm2JA@mail.gmail.com>
- <7v7h33oifq.fsf@alter.siamese.dyndns.org>
- <CALkWK0nUuzn2_itdACHLQBpUaVv97tFAjNGdVBEhWC7a6Rp75w@mail.gmail.com>
- <20111115095225.GB23139@elie.hsd1.il.comcast.net>
- <7v7h31wduv.fsf@alter.siamese.dyndns.org>
- <CALkWK0kOrGzjcGNcf2qPahJSgkvCsQwSrEfAA3wj6PqnMzDBVQ@mail.gmail.com>
+Subject: Re: [PATCH 3/4] ll-merge: initialize default_opts const
+Date: Tue, 15 Nov 2011 23:49:07 -0800
+Message-ID: <7vd3csqzgs.fsf@alter.siamese.dyndns.org>
+References: <1321376379-31750-1-git-send-email-artagnon@gmail.com>
+ <1321376379-31750-4-git-send-email-artagnon@gmail.com>
+ <7vty65t1qp.fsf@alter.siamese.dyndns.org>
+ <CALkWK0mVxxq0345B_OJQwejpTBD=evOU_iAv39CvXv4mAi=09A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Thomas Rast <trast@student.ethz.ch>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 16 08:38:59 2011
+X-From: git-owner@vger.kernel.org Wed Nov 16 08:49:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQa5C-0003Ps-Tn
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 08:38:59 +0100
+	id 1RQaFA-0007D1-2q
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 08:49:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754537Ab1KPHiy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Nov 2011 02:38:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48516 "EHLO
+	id S1754769Ab1KPHtL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Nov 2011 02:49:11 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51987 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754098Ab1KPHix (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2011 02:38:53 -0500
+	id S1754675Ab1KPHtK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2011 02:49:10 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EFDD32C1;
-	Wed, 16 Nov 2011 02:38:53 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B1AA73530;
+	Wed, 16 Nov 2011 02:49:09 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jYXqjgG0B8Tc87WBcRdRVUpqyi8=; b=l8F5ku
-	II5RUaHVwADpU1cUTQKP9k148l2DjcrtcWXyMrvXH13QbtPjbovX207R4bfZ01x/
-	ICYj1W9k3+uNJ7vVhSo4fFE4+DrmlRAMz8YHrWnVO9Wp1+f0D+WM+iMwDa7VoDCB
-	MV+G5ac3RFlmyyHTTsq8wr5LpazG96ILhUx40=
+	:content-type:content-transfer-encoding; s=sasl; bh=A1NAmuCDiIbe
+	3RLJB1HMK0m83q0=; b=vLZyIpEQlIHZSXh1uCbLlUCE4EvYJfysZuMm3AROr+Tb
+	cArMAjdfVznZ/dfiRKbhcw4/BQAlWQzit9a9vnRrdTso6Hk5RyiJRfDqR22JPrc9
+	u6Nj0+JvxwQhrIA7iCVG8PbnzRP85fTcQK0No3Sa5ErJ1qnODBLuk0XN846gB7Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CZWu3CeQmZunlqpS5FIOGUHG6wXpOVp1
-	+IdiUXvXUrr8ooe0fd032bvmmzkgO4hiPTkQT0xzAHwyW6RTCWR3pMfwCE+qSCcz
-	7GytRJzQ5X+3drXfReuoBDxJDr+FhDBRW64v5GJ4A3HXdiOmFVyXstLw5VZzUnW2
-	23d7c34mFTI=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=B3xmrE
+	nveVVVWCSAVagv3mraFn063v9BuDyo5KhaCmmUMB0msPaDOTDxZxhmI2ni+wGvVV
+	FTEyc9uwQVu+WUbcFLIzUT7zCOYDp4lAJBxCKCz9dNuYnbJy0+o7kUIwMq2YFbjf
+	2ekGnjQAtbcTE5aPQ2tf795bQKlZosC5aM7EU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 46AB532BF;
-	Wed, 16 Nov 2011 02:38:53 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A6B59352F;
+	Wed, 16 Nov 2011 02:49:09 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F3E6132BE; Wed, 16 Nov 2011
- 02:38:50 -0500 (EST)
-In-Reply-To: <CALkWK0kOrGzjcGNcf2qPahJSgkvCsQwSrEfAA3wj6PqnMzDBVQ@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Wed, 16 Nov 2011 11:47:43 +0530")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B09B352C; Wed, 16 Nov 2011
+ 02:49:08 -0500 (EST)
+In-Reply-To: <CALkWK0mVxxq0345B_OJQwejpTBD=evOU_iAv39CvXv4mAi=09A@mail.gmail.com>
+ (Ramkumar Ramachandra's message of "Wed, 16 Nov 2011 11:36:05 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 07006F34-1026-11E1-8AE2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7762EB52-1027-11E1-BCDF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185520>
 
 Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> I noticed that sha1_to_hex() also operates like this.
+> Hi Junio,
+>
+> Junio C Hamano wrote:
+>> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>>> [...]
+>>> - =C2=A0 =C2=A0 static const struct ll_merge_options default_opts;
+>>> + =C2=A0 =C2=A0 static const struct ll_merge_options default_opts =3D=
+ {0, 0, 0, 0};
+>>
+>> Doesn't "static" tell us that it will be in BSS, initialized to all =
+zero
+>> by definition?
+>
+> I'm uncertain about whether the C89 standard says this explicitly- ic=
+c
+> is more pedantic than most mainstream compilers.
 
-A function to externalize our internal representation like sha1_to_hex()
-is not such a big problem in practice, as the lifetime of its result is
-inherently much shorter.
+Actually I take a part of the comment back; as this is "static const", =
+it
+is entirely plausible for a compiler to tell the linker to put it in ro=
+data
+instead of bss, to cause any attempt to modify it to segv.
 
-Anybody sane with a datum that eventually needs to be externalized will
-keep it in its internal representation as long as possible, and then call
-such an internal-to-external function just before it becomes absolutely
-necessary to externalize it (e.g. calling printf(), packet_write(), etc).
-This is because the whole point of having an internal representation
-(e.g. when our code talks about an object name, we always use "unsigned
-char[20]") is so that all of our functions can use that representation to
-pass it around. It would be insane to call such a function earlier than
-necessary, having to pass external representation around.
-
-On the other hand, resolve_ref() is an interface to canonicalize external
-representation into a form suitable to be kept and passed around as its
-internal representation. The lifetime of its result fundamentally has to
-be a lot longer than that of functions that work in the opposite
-direction, e.g. sha1_to_hex().
+A datum that is implicitly initialized to all zero and not allowed to b=
+e
+modified might appear suspect to some compiler writers (especially when
+they are under influence ;-)), so I am not so surprised if a compiler
+issued a warning saying "did you forget to initialize it?".
