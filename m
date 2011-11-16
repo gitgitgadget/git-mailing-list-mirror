@@ -1,57 +1,67 @@
-From: MikeW <mw_phil@yahoo.co.uk>
-Subject: feature request: git format-patch - allow --suffix to work with --numbered-files
-Date: Wed, 16 Nov 2011 13:02:52 +0000 (UTC)
-Message-ID: <loom.20111116T135509-236@post.gmane.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 0/3] avoiding unintended consequences of git_path() usage
+Date: Wed, 16 Nov 2011 20:33:26 +0700
+Message-ID: <CACsJy8A2=qBiyY3SD-PZo+E=U+Dfjm1UQidgq6khQARZ3d41WQ@mail.gmail.com>
+References: <1320510586-3940-1-git-send-email-artagnon@gmail.com>
+ <1320510586-3940-4-git-send-email-artagnon@gmail.com> <20111106002645.GE27272@elie.hsd1.il.comcast.net>
+ <CALkWK0nGhUshwJM1vmAUhBG9foH+=6+_KFhfTTF6+kNS0Hm2JA@mail.gmail.com>
+ <7v7h33oifq.fsf@alter.siamese.dyndns.org> <CALkWK0nUuzn2_itdACHLQBpUaVv97tFAjNGdVBEhWC7a6Rp75w@mail.gmail.com>
+ <20111115095225.GB23139@elie.hsd1.il.comcast.net> <7v7h31wduv.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kOrGzjcGNcf2qPahJSgkvCsQwSrEfAA3wj6PqnMzDBVQ@mail.gmail.com> <20111116075955.GB13706@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 16 14:15:26 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 16 14:34:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQfKm-00081y-P6
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 14:15:25 +0100
+	id 1RQfcq-0000Sq-Lr
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 14:34:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756833Ab1KPNPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Nov 2011 08:15:14 -0500
-Received: from lo.gmane.org ([80.91.229.12]:54133 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756783Ab1KPNPL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2011 08:15:11 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RQfKX-0007uQ-3w
-	for git@vger.kernel.org; Wed, 16 Nov 2011 14:15:09 +0100
-Received: from 94.72.250.67 ([94.72.250.67])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 16 Nov 2011 14:15:09 +0100
-Received: from mw_phil by 94.72.250.67 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 16 Nov 2011 14:15:09 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 94.72.250.67 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110927 Fedora/3.6.23-1.fc14 Firefox/3.6.23)
+	id S1757102Ab1KPNd7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Nov 2011 08:33:59 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:62038 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756655Ab1KPNd6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2011 08:33:58 -0500
+Received: by fagn18 with SMTP id n18so1464030fag.19
+        for <git@vger.kernel.org>; Wed, 16 Nov 2011 05:33:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=GZu0vfATNm6jB6BgatUZ/hFwQnspWH+bYeIAgL60Qr4=;
+        b=FUUkGhteqm/u6skgOTG2KBISA8XW7yg1h664VqVWMJA1R5kk1bJfocTLjBc6lxHpZD
+         RGpJJF8m9nyKJD2Pe0Aogh4Ha+DCKh9U1b766lBn7wgtoYz/PVmobE6QAs5K6oe4GjCj
+         fBEhr1UtcdGKWqxMc1By44NhS6IQQ1SThMC4I=
+Received: by 10.204.154.77 with SMTP id n13mr28865760bkw.83.1321450437117;
+ Wed, 16 Nov 2011 05:33:57 -0800 (PST)
+Received: by 10.204.23.2 with HTTP; Wed, 16 Nov 2011 05:33:26 -0800 (PST)
+In-Reply-To: <20111116075955.GB13706@elie.hsd1.il.comcast.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185545>
 
-"Numbered files" is good for creating patches with uniform filenames, rather
-than verbose filenames containing part of the commit message, but if working for
-example with submodules, there is possible name collision if pooling the patches
-in one place.
+2011/11/16 Jonathan Nieder <jrnieder@gmail.com>:
+> Jokes aside, here's a rough series to do the git_path ->
+> git_path_unsafe renaming. =C2=A0While writing it, I noticed a couple =
+of
+> bugs, hence the two patches before the last one. =C2=A0Patch 2 is the=
+ more
+> interesting one.
 
-I thought that --suffix=$name would be a good way to disambiguate but found that
---numbered-files wins and kills any suffix.
-
-Hence suggestion that --suffix used with --numbered-files is allowed to generate
-a filename suffix as it does when not in "numbered files" mode.
-
-In the absence of a --suffix command, the behaviour would be as now.
+Another approach is do nothing and leave it for a static analysis tool
+to detect potential problems. I'm looking at sparse at the moment,
+although I know nothing about it to say if it can or cannot detect
+such problems. We can at least make sparse detect return value from
+git_path() being passed to an unsafe function, I think.
+--=20
+Duy
