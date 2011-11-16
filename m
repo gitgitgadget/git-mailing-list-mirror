@@ -1,129 +1,75 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] git-show-ref: fix escaping in asciidoc source
-Date: Wed, 16 Nov 2011 06:52:37 +0100
-Message-ID: <4EC34FA5.2020809@alum.mit.edu>
-References: <1319050336-24717-1-git-send-email-mhagger@alum.mit.edu> <4EC27328.3070309@alum.mit.edu> <7vk471urfy.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 3/4] ll-merge: initialize default_opts const
+Date: Wed, 16 Nov 2011 11:36:05 +0530
+Message-ID: <CALkWK0mVxxq0345B_OJQwejpTBD=evOU_iAv39CvXv4mAi=09A@mail.gmail.com>
+References: <1321376379-31750-1-git-send-email-artagnon@gmail.com>
+ <1321376379-31750-4-git-send-email-artagnon@gmail.com> <7vty65t1qp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Thomas Rast <trast@student.ethz.ch>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 16 06:52:48 2011
+X-From: git-owner@vger.kernel.org Wed Nov 16 07:07:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQYQR-0008Ox-Kc
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 06:52:48 +0100
+	id 1RQYf1-0005YG-Dn
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 07:07:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753408Ab1KPFwm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Nov 2011 00:52:42 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:45195 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753077Ab1KPFwl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2011 00:52:41 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.133] (p54BEDA0D.dip.t-dialin.net [84.190.218.13])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pAG5qbEa002993
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 16 Nov 2011 06:52:38 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
-In-Reply-To: <7vk471urfy.fsf@alter.siamese.dyndns.org>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1753536Ab1KPGG2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Nov 2011 01:06:28 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:43734 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753523Ab1KPGG2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2011 01:06:28 -0500
+Received: by wwe5 with SMTP id 5so153956wwe.1
+        for <git@vger.kernel.org>; Tue, 15 Nov 2011 22:06:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=NHrI2kzG0BfHiRhyJ+KOecHj6loyynywvrJmLIbYv9s=;
+        b=lWMYTOVyiTAi3zqN6FGa3B4ctJjEIt9ljWXW5Of02yoeb+xnASWF9df6YD7aEc/xrZ
+         jeux2joyzffLREDSUH15hGbfewRq1KNCW+W85U1rKz+2o3aEEDFtL0B6wl1Ja6DKLsbF
+         rxvWqTibgEj0Whrk7elVITfLrn0sTfH2mOvi4=
+Received: by 10.216.186.196 with SMTP id w46mr262237wem.24.1321423586153; Tue,
+ 15 Nov 2011 22:06:26 -0800 (PST)
+Received: by 10.216.19.209 with HTTP; Tue, 15 Nov 2011 22:06:05 -0800 (PST)
+In-Reply-To: <7vty65t1qp.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185508>
 
-On 11/15/2011 08:16 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
->> Did this one fall through the cracks?  I don't see it in your tree.
-> 
-> Yeah, I was wondering if we can have a concise description in what context
-> any "^" must be spelled as {caret} and what other context "^" can be
-> spelled literally, and possibly which versions of AsciiDoc toolchain have
-> this issue [*1*]. Without a clear guideline, people may unknowingly use
-> literal "^" to new paragraphs, or perhaps worse yet, spell {caret} that
-> end up being shown literally.
-> 
-> Since I didn't find a clear pattern other than that "^" can and should be
-> literally given in a literal paragraph (i.e. an indented paragraph or
-> inside a listing/literal block that shows program examples), I was meaning
-> to ask you if you knew the rules better than I did, and I stopped there,
-> forgetting to follow through.
+Hi Junio,
 
-I didn't know anything about asciidoc, and just tried to fix it using a
-bit of cargo-cult programming.
+Junio C Hamano wrote:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>> [...]
+>> diff --git a/ll-merge.c b/ll-merge.c
+>> index da59738..205aed3 100644
+>> --- a/ll-merge.c
+>> +++ b/ll-merge.c
+>> @@ -351,7 +351,7 @@ int ll_merge(mmbuffer_t *result_buf,
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0const struct ll_merge_optio=
+ns *opts)
+>> =C2=A0{
+>> =C2=A0 =C2=A0 =C2=A0 static struct git_attr_check check[2];
+>> - =C2=A0 =C2=A0 static const struct ll_merge_options default_opts;
+>> + =C2=A0 =C2=A0 static const struct ll_merge_options default_opts =3D=
+ {0, 0, 0, 0};
+>
+> Doesn't "static" tell us that it will be in BSS, initialized to all z=
+ero
+> by definition?
 
-Now I just did about an hour of research about asciidoc (but I still
-don't feel very enlightened).  It seems that asciidoc was interpreting
-the caret, paired with one earlier in the paragraph, as markup asking
-for the enclosed text to be superscripted [1].  Apparently, single
-carets in a paragraph are not treated as markup, which would explain
-some apparent inconsistency about when carets need to be quoted.  But it
-would seem prudent to escape all carets that don't appear in literal blocks.
+I'm uncertain about whether the C89 standard says this explicitly- icc
+is more pedantic than most mainstream compilers.  Feel free to drop
+this part if you don't think it adds value.
 
-Constructs like "{caret}" are "simple attribute references".  In this
-particular case, the attribute that it is referencing is not built into
-asciidoc but rather defined in the file Documentation/asciidoc.conf.
-Empirically it seems that curly braces need to be escaped if they can be
-interpreted to be part of an attribute reference, but not otherwise.
-For example, curly braces with nothing inside of them like "{}" don't
-necessarily need to be quoted, but it doesn't hurt if they are quoted to
-"\{\}".
+Thanks.
 
-The backslash escape rules are a bit mysterious to me.  Backslash can be
-used to escape some special characters.  For example, they can be used
-to escape leading special quoting characters to avoid the special
-effect, like "\_not italic_" [3].  They can also be used to suppress
-attribute references, like "\{caret}" [4].  But it doesn't appear
-possible to use a backslash to escape another backslash; for example
-"\\{carat}" is rendered as "\{carat}".  In such cases, the backslash can
-be spelled "{backslash}" (which is also defined in asciidoc.conf).
-
-How to quote a monstrosity like the regexp in git-show-ref.txt?  We want
-it to render as
-
-    ^(?:<anything>\s)?<refname>(?:\^{})?$
-
-, probably in monospaced font and surrounded by double quotes.  asciidoc
-supports a bewildering variety of quoting mechanisms [5].  Empirically,
-
-    "`^(?:<anything>\s)?<refname>(?:\^{})?$`"
-
-doesn't work (the backticks don't suppress superscripting).
-
-A pedestrian option is
-
-    "`{caret}(?:<anything>\s)?<refname>(?:{backslash}{caret}\{\})?$`"
-
-or
-
-    "`{caret}(?:<anything>\s)?<refname>(?:{backslash}{caret}{})?$`"
-
-Or the whole blob can be quoted en masse using $$:
-
-    "`$$^(?:<anything>\s)?<refname>(?:\^{})?$$$`"
-
-I don't know whether it treats the last dollar signs as "$$ $" or "$
-$$", but either way the result looks OK.
-
-I can't believe I spent my whole morning on this :-(
-
-Michael
-
-[1]
-http://www.methods.co.nz/asciidoc/userguide.html#_superscripts_and_subscripts
-[2]
-http://www.methods.co.nz/asciidoc/userguide.html#_simple_attributes_references
-[3] http://www.methods.co.nz/asciidoc/userguide.html#X51
-[4] http://www.methods.co.nz/asciidoc/userguide.html#_attribute_references
-[5] http://www.methods.co.nz/asciidoc/userguide.html#X77
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+-- Ram
