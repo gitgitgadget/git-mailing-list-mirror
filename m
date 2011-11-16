@@ -1,67 +1,128 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 0/3] avoiding unintended consequences of git_path() usage
-Date: Wed, 16 Nov 2011 20:33:26 +0700
-Message-ID: <CACsJy8A2=qBiyY3SD-PZo+E=U+Dfjm1UQidgq6khQARZ3d41WQ@mail.gmail.com>
-References: <1320510586-3940-1-git-send-email-artagnon@gmail.com>
- <1320510586-3940-4-git-send-email-artagnon@gmail.com> <20111106002645.GE27272@elie.hsd1.il.comcast.net>
- <CALkWK0nGhUshwJM1vmAUhBG9foH+=6+_KFhfTTF6+kNS0Hm2JA@mail.gmail.com>
- <7v7h33oifq.fsf@alter.siamese.dyndns.org> <CALkWK0nUuzn2_itdACHLQBpUaVv97tFAjNGdVBEhWC7a6Rp75w@mail.gmail.com>
- <20111115095225.GB23139@elie.hsd1.il.comcast.net> <7v7h31wduv.fsf@alter.siamese.dyndns.org>
- <CALkWK0kOrGzjcGNcf2qPahJSgkvCsQwSrEfAA3wj6PqnMzDBVQ@mail.gmail.com> <20111116075955.GB13706@elie.hsd1.il.comcast.net>
+From: Steinar Bang <sb@dod.no>
+Subject: Re: Merging back from master but keeping a subtree
+Date: Wed, 16 Nov 2011 14:39:40 +0100
+Organization: Probably a good idea
+Message-ID: <87aa7wrxsz.fsf@dod.no>
+References: <87y5xn8v6z.fsf@dod.no>
+	<20110918033719.GB17977@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 16 14:34:05 2011
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 16 14:40:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQfcq-0000Sq-Lr
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 14:34:05 +0100
+	id 1RQfib-0003VR-PJ
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 14:40:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757102Ab1KPNd7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Nov 2011 08:33:59 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:62038 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756655Ab1KPNd6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2011 08:33:58 -0500
-Received: by fagn18 with SMTP id n18so1464030fag.19
-        for <git@vger.kernel.org>; Wed, 16 Nov 2011 05:33:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=GZu0vfATNm6jB6BgatUZ/hFwQnspWH+bYeIAgL60Qr4=;
-        b=FUUkGhteqm/u6skgOTG2KBISA8XW7yg1h664VqVWMJA1R5kk1bJfocTLjBc6lxHpZD
-         RGpJJF8m9nyKJD2Pe0Aogh4Ha+DCKh9U1b766lBn7wgtoYz/PVmobE6QAs5K6oe4GjCj
-         fBEhr1UtcdGKWqxMc1By44NhS6IQQ1SThMC4I=
-Received: by 10.204.154.77 with SMTP id n13mr28865760bkw.83.1321450437117;
- Wed, 16 Nov 2011 05:33:57 -0800 (PST)
-Received: by 10.204.23.2 with HTTP; Wed, 16 Nov 2011 05:33:26 -0800 (PST)
-In-Reply-To: <20111116075955.GB13706@elie.hsd1.il.comcast.net>
+	id S1757291Ab1KPNj5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Nov 2011 08:39:57 -0500
+Received: from lo.gmane.org ([80.91.229.12]:52179 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757112Ab1KPNj4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2011 08:39:56 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RQfiS-0003QY-UE
+	for git@vger.kernel.org; Wed, 16 Nov 2011 14:39:52 +0100
+Received: from cm-84.208.231.161.getinternet.no ([84.208.231.161])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 16 Nov 2011 14:39:52 +0100
+Received: from sb by cm-84.208.231.161.getinternet.no with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 16 Nov 2011 14:39:52 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+Mail-Followup-To: git@vger.kernel.org
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: cm-84.208.231.161.getinternet.no
+Mail-Copies-To: never
+User-Agent: Gnus/5.110018 (No Gnus v0.18) Emacs/23.1 (gnu/linux)
+Cancel-Lock: sha1:JevIiI0lyP9ZALVsMlbRKAQalUc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185546>
 
-2011/11/16 Jonathan Nieder <jrnieder@gmail.com>:
-> Jokes aside, here's a rough series to do the git_path ->
-> git_path_unsafe renaming. =C2=A0While writing it, I noticed a couple =
-of
-> bugs, hence the two patches before the last one. =C2=A0Patch 2 is the=
- more
-> interesting one.
+>>>>> Jeff King <peff@peff.net>:
 
-Another approach is do nothing and leave it for a static analysis tool
-to detect potential problems. I'm looking at sparse at the moment,
-although I know nothing about it to say if it can or cannot detect
-such problems. We can at least make sparse detect return value from
-git_path() being passed to an unsafe function, I think.
---=20
-Duy
+> Git should generally do that automatically, unless both sides are
+> changing mydirectory. In which case it will produce conflicts.
+
+I thought so too, but the end result didn't build, and I was unable to
+figure out why.
+
+> Are you sure you really want to just throw out what the other side did
+> in mydirectory?
+
+Yes, that's the only thing I'm sure about.  All changes to mydirectory
+should come from my branch.  If there are changes necessary to make
+things build, they are better done by me.
+
+> If git was able to auto-merge some files, then they will not be marked
+> as conflicts in the index. And "git checkout --ours" is about looking in
+> the index for conflicted entries, and then selecting one side.
+
+> I think what you want instead is to do is (assuming you really want to
+> throw out their side):
+
+Thanks for the suggestion.  I tried following this approach, but...
+
+>   1. Start a merge between them and us:
+
+>        git merge --no-commit remoterepo/master
+
+>   2. Throw out whatever the merge came up with and make it look like
+>      their tree:
+
+...I never quite could figure out if I did the right thing here.
+Ie. when throwing out what the commit came up with.
+
+>        git checkout remoterepo/master -- top
+
+>   3. Now overwrite their version of mydirectory with what was in your
+>      branch:
+
+>        git checkout HEAD -- top/middle/mydirectory
+
+>   4. Commit the resulting tree:
+
+>        git commit
+
+The problem was that the end result didn't build, wit pretty much the
+same obscure failures that the regular merge had.
+
+But I eventually tried something that worked:
+ 1. First create a local branch off master
+ 2. Merge in mybranch with "-s ours --no-commit"
+ 3. Checkout mydirectory from mybranch
+ 4. Commit
+ 5. Switch to mybranch
+ 6. Merge in the new local branch, which resulted in a conflict-free
+    merge that has my changes in mydirectory and the rest of the world
+    in the rest of the working directory, and the history of mydirectory
+    looks ok
+
+The end result built and worked.
+
+If git had had a "-s theirs" strategy, I wouldn't have needed the
+temporary branch made off master.  That need for that branch is probably
+the most cryptic thing for people following my instructions for future
+merges.
+
+To sum up the commands:
+ git checkout master
+ git checkout -b master_nicely_merged_with_mybranch
+ git merge -s ours --no-commit origin/mybranch
+ git checkout origin/mybranch top/middle/mydirectory
+ git commit
+ git checkout mybranch
+ git merge master_nicely_merged_with_mybranch
+
+Thanks!
+
+
+- Steinar
