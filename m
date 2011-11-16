@@ -1,80 +1,69 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: input director not compatible with git right-click
-Date: Wed, 16 Nov 2011 10:22:19 +0530
-Message-ID: <CAMK1S_hx3QkyBAq=7qhT17cqcfXWNNvnpphP5bu1cMV53TunmA@mail.gmail.com>
-References: <loom.20111113T173332-656@post.gmane.org>
-	<20111114144024.GD10025@beez.lab.cmartin.tk>
-	<CAMK1S_jWcLQTqzqQcAMk8PjZ4ir7Y7a8QY=JvmX2qbQnzJO4ew@mail.gmail.com>
-	<20111115173843.GB5453@centaur.lab.cmartin.tk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: odd name-rev behavior?
+Date: Tue, 15 Nov 2011 21:41:01 -0800
+Message-ID: <7vr518sjyq.fsf@alter.siamese.dyndns.org>
+References: <20111115211514.GE27706@comcast.net>
+ <7vpqgtt1kb.fsf@alter.siamese.dyndns.org>
+ <7vlirht1fw.fsf@alter.siamese.dyndns.org>
+ <20111116014842.GF27706@comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Eric <eric@mansionis.fr>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 16 05:52:36 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Tim Walberg <twalberg@comcast.net>
+X-From: git-owner@vger.kernel.org Wed Nov 16 06:41:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQXUB-0005t2-TD
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 05:52:36 +0100
+	id 1RQYFI-0004a1-H6
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 06:41:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752544Ab1KPEwU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Nov 2011 23:52:20 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:33708 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752449Ab1KPEwU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2011 23:52:20 -0500
-Received: by ggnb2 with SMTP id b2so8303387ggn.19
-        for <git@vger.kernel.org>; Tue, 15 Nov 2011 20:52:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=xxH3vv2VdXQatcjml2ocRUgGd40qrT8kojgkVLg2AZ4=;
-        b=L0TaR5PR94GC05eO54srz+CJwzBrMyEXIzHVqxRduI5PCjIi2dmzUF3Riw/C6FvGO5
-         UAYixif0QGDReCJvdKzu5GFWCYTa9vOXR9Q+mABArIbOUh1kH8RnhYEBH5zEo+K5USva
-         9lK4k7kv4hhOQC6qG8oNPbmlQTMOGH4+hZgUQ=
-Received: by 10.182.111.8 with SMTP id ie8mr6698739obb.50.1321419139432; Tue,
- 15 Nov 2011 20:52:19 -0800 (PST)
-Received: by 10.182.165.9 with HTTP; Tue, 15 Nov 2011 20:52:19 -0800 (PST)
-In-Reply-To: <20111115173843.GB5453@centaur.lab.cmartin.tk>
+	id S1753077Ab1KPFlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Nov 2011 00:41:05 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45476 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752916Ab1KPFlE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2011 00:41:04 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6ED4068C4;
+	Wed, 16 Nov 2011 00:41:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gKqj19pgoUGPTdXp6J35QgAG5Bg=; b=ZO2r3V
+	O5vV6FYNwEchx0ooiLISGiLC6FOv2LgJRLysDHbwCsW/7pf4z3Aof3WRKsJCNOfJ
+	iIYSvYI6qVA3Y25wLk04j5bnPQzhj++KoPrJiteL/8abdptrQcPF8zFjl0svY7mi
+	aYSLstyrRoPTxuBqjvnWp0zqGivadnuIXbZTA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KOkYVPQlEl6GUY/PW3jcUu4B4WTT0W7K
+	mhUs9MaNvSgvgeYgNBhqExY9tDiEl614ePcT41L3RrKhZCTNVYv8kmn4M6XTafJn
+	uQ0DYL/TZRg6+DFHNt9igdQTD8+ggQ8qjIBTWzADRPt7ZlBMcik6V7UXvKtIWSxC
+	L6HEqt33Frg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 66E8868C3;
+	Wed, 16 Nov 2011 00:41:03 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F0D0868C2; Wed, 16 Nov 2011
+ 00:41:02 -0500 (EST)
+In-Reply-To: <20111116014842.GF27706@comcast.net> (Tim Walberg's message of
+ "Tue, 15 Nov 2011 19:48:42 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 92234584-1015-11E1-B586-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185506>
 
-On Tue, Nov 15, 2011 at 11:08 PM, Carlos Mart=C3=ADn Nieto <cmn@elego.d=
-e> wrote:
-> On Tue, Nov 15, 2011 at 09:39:25PM +0530, Sitaram Chamarty wrote:
->> On Mon, Nov 14, 2011 at 8:10 PM, Carlos Mart=C3=ADn Nieto <cmn@elego=
-=2Ede> wrote:
->> > On Sun, Nov 13, 2011 at 04:34:26PM +0000, Eric wrote:
->> >> Hi,
->> >>
->> >> New in Git use, I use it do dev on window some administrative scr=
-ipt. I use as
->> >> well Input director to share keyboard and mouse on multiple compu=
-ter.
->> >
->> > Do you mean you're using it on the Windows OS?
->> >
->> >>
->> >> when I right-clicked on an item, it works when input director is =
-disabled. If
->> >
->> > Right-click on what? git doesn't have a graphical interface. If yo=
-u're
->> > using a graphical front-end to git, you should send them a bug rep=
-ort.
->>
->> git comes with 3 perfectly cromulent graphical programs, and one of
->> them is indispensable.
->
-> I guess we have diferent ideas of where "git" ends and other stuff
-> starts. gitk, git-gui and what is the last one?
+Tim Walberg <twalberg@comcast.net> writes:
 
-'git gui blame'
+> That does indeed seem to work on first try. Not sure it was
+> a particularly critical issue - just unexpected.
+
+I didn't think it is particularly critical, either, and that is why I said
+it has been like this for eons at least since v1.6.0.
+
+And it turns out that this was pretty much from day one of name-rev at
+bd321bc (Add git-name-rev, 2005-10-26).
