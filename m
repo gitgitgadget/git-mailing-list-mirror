@@ -1,62 +1,66 @@
-From: Peter Vereshagin <peter@vereshagin.org>
-Subject: Re: delete deprecated refs to release disk space
-Date: Thu, 17 Nov 2011 03:44:22 +0400
-Organization: '
-Message-ID: <20111116234422.GA5131@external.screwed.box>
-References: <20111113151033.GD16065@external.screwed.box>
- <CACBZZX5kBqM1eye40_Vw0W=8qnNsUQBVCE0q9JrixYomGPuZbg@mail.gmail.com>
- <20111114142525.GB8641@external.screwed.box>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Cc: ??var Arnfj??r?? Bjarmason <avarab@gmail.com>, git@vger.kernel.org
+From: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>
+Subject: [PATCH] mailmap: xcalloc mailmap_info
+Date: Thu, 17 Nov 2011 00:51:13 +0100
+Message-ID: <1321487473-29194-1-git-send-email-marcandre.lureau@gmail.com>
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 17 00:45:49 2011
+X-From: git-owner@vger.kernel.org Thu Nov 17 00:51:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQpAq-0001PJ-C0
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Nov 2011 00:45:48 +0100
+	id 1RQpGG-0004Ie-LH
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Nov 2011 00:51:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754590Ab1KPXpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Nov 2011 18:45:44 -0500
-Received: from ns1.skyriver.ru ([89.108.118.221]:59703 "EHLO mx1.skyriver.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751674Ab1KPXpn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2011 18:45:43 -0500
-Received: from localhost (rainbowwarrior.torservers.net [77.247.181.164])
-	by mx1.skyriver.ru (Postfix) with ESMTPSA id 18BC15A94;
-	Thu, 17 Nov 2011 03:10:57 +0400 (MSK)
-Content-Disposition: inline
-In-Reply-To: <20111114142525.GB8641@external.screwed.box>
-X-Face: 8T>{1owI$Byj]]a;^G]kRf*dkq>E-3':F>4ODP[#X4s"dr?^b&2G@'3lukno]A1wvJ_L(~u
- 6>I2ra/<,j1%@C[LN=>p#_}RIV+#:KTszp-X$bQOj,K
+	id S1754127Ab1KPXvU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Nov 2011 18:51:20 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:46804 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753862Ab1KPXvT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2011 18:51:19 -0500
+Received: by bke11 with SMTP id 11so1257838bke.19
+        for <git@vger.kernel.org>; Wed, 16 Nov 2011 15:51:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=CEpwEBzCaJ0qBHNirIZH3hZyAsaPwe7hXeA64IcMDDk=;
+        b=p848CUXRQFep4NQy4OM+D3yHdOqgGtr9C2FaKVOzyTmwgMBgjpd/wnC3wYep9Ozzc4
+         FYTcMM1j5v9RO1wbhMmqLX4b4hw3UbuZRog7xQtCZ6ghX+dqxnghqi58EPKQKhh9Pos9
+         obsUHCj0LXOaxYmocVIbEXDwzs+NAvVN9SgKs=
+Received: by 10.205.127.134 with SMTP id ha6mr30826780bkc.23.1321487478471;
+        Wed, 16 Nov 2011 15:51:18 -0800 (PST)
+Received: from localhost (102.Red-83-43-162.dynamicIP.rima-tde.net. [83.43.162.102])
+        by mx.google.com with ESMTPS id g25sm237814fae.16.2011.11.16.15.51.16
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 16 Nov 2011 15:51:17 -0800 (PST)
+X-Mailer: git-send-email 1.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185562>
 
-Hello.
+This is to avoid reaching free of uninitialized members.
 
-2011/11/14 18:25:25 +0400 Peter Vereshagin <peter@vereshagin.org> => To ??var Arnfj??r?? Bjarmason :
-PV> N commits ago is a fine setting for me as it's a cron job backup. Thanks?
+With an invalid .mailmap (and perhaps in other cases), it can reach
+free(mi->name) with garbage for example.
+---
+ mailmap.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-* = Thanks!
-
-Here is the PoC QnD code that releases disk space for me by far:
-
-    git rev-list --all --timestamp |\
-        perl -Mstrict -MTime::ParseDate -wE \
-            'my $match = 0; my $expire = parsedate( "3 days ago" ); while (<>)
-                { chomp; my ( $tstamp => $graft_id ) = split /\s+/;
-                    if ( not( $match ) and $tstamp < $expire )
-                        { say $graft_id; $match = 1; } }
-            ' > .git/info/grafts && \
-    git filter-branch -f
-
-for case a one shall seek for it.
-
---
-Peter Vereshagin <peter@vereshagin.org> (http://vereshagin.org) pgp: A0E26627 
+diff --git a/mailmap.c b/mailmap.c
+index 02fcfde..fbf7764 100644
+--- a/mailmap.c
++++ b/mailmap.c
+@@ -88,7 +88,7 @@ static void add_mapping(struct string_list *map,
+ 			me->email = xstrdup(new_email);
+ 		}
+ 	} else {
+-		struct mailmap_info *mi = xmalloc(sizeof(struct mailmap_info));
++		struct mailmap_info *mi = xcalloc(1, sizeof(struct mailmap_info));
+ 		debug_mm("mailmap: adding (complex) entry for %s at index %d\n", old_email, index);
+ 		if (new_name)
+ 			mi->name = xstrdup(new_name);
+-- 
+1.7.7
