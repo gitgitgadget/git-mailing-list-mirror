@@ -1,60 +1,88 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: Git 1.7.5 problem with HTTPS
-Date: Wed, 16 Nov 2011 15:34:09 +0800
-Message-ID: <CALUzUxrM8o1uahQgSFUuvZ0mSPxG_zVQ9awOantRM2A8kkbbtA@mail.gmail.com>
-References: <CACf55T6BGds_D=nbb8G=m+Jwr+bHFruCs-Q0+FOO+WXitXEJ-g@mail.gmail.com>
-	<CAJo=hJvdstr39suGMwxNoT+_cKThxsEYHi96eqja7HuHyPmhWA@mail.gmail.com>
-	<7v1ut9uglb.fsf@alter.siamese.dyndns.org>
-	<CACf55T6SRAfdOP1+qQdjeFv13B=G8w+DR-GCSEz=6swFhLJzcw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/5] sequencer: sequencer state is useless without todo
+Date: Tue, 15 Nov 2011 23:38:49 -0800
+Message-ID: <7vhb24qzxy.fsf@alter.siamese.dyndns.org>
+References: <1320510586-3940-1-git-send-email-artagnon@gmail.com>
+ <1320510586-3940-4-git-send-email-artagnon@gmail.com>
+ <20111106002645.GE27272@elie.hsd1.il.comcast.net>
+ <CALkWK0nGhUshwJM1vmAUhBG9foH+=6+_KFhfTTF6+kNS0Hm2JA@mail.gmail.com>
+ <7v7h33oifq.fsf@alter.siamese.dyndns.org>
+ <CALkWK0nUuzn2_itdACHLQBpUaVv97tFAjNGdVBEhWC7a6Rp75w@mail.gmail.com>
+ <20111115095225.GB23139@elie.hsd1.il.comcast.net>
+ <7v7h31wduv.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kOrGzjcGNcf2qPahJSgkvCsQwSrEfAA3wj6PqnMzDBVQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
-To: Dmitry Smirnov <divis1969@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 16 08:34:17 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 16 08:38:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQa0e-0001gH-64
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 08:34:16 +0100
+	id 1RQa5C-0003Ps-Tn
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 08:38:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754450Ab1KPHeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Nov 2011 02:34:11 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:57725 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754082Ab1KPHeK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2011 02:34:10 -0500
-Received: by bke11 with SMTP id 11so204606bke.19
-        for <git@vger.kernel.org>; Tue, 15 Nov 2011 23:34:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=n5vBq9fyhSHLv25MohkL9/QSFsfmuEiWZawRcRU/HX4=;
-        b=ApZqPWCU2b2h5a5cBwPaGVfdIFqJ1/dsEaklwe0pmqBZsSXcgCO7+oDwSVix4l6TUz
-         Ep1mkdqJ5ak6N6jugfcxspjer0ic1cKYfmUbuX4Z3u49N0rzdRCp4FTZWLyhipY8zocY
-         tc6yxRxVZ9WmOVGENHyN57AZdIwsuvtgErkCk=
-Received: by 10.204.152.196 with SMTP id h4mr27219244bkw.1.1321428849304; Tue,
- 15 Nov 2011 23:34:09 -0800 (PST)
-Received: by 10.223.71.206 with HTTP; Tue, 15 Nov 2011 23:34:09 -0800 (PST)
-In-Reply-To: <CACf55T6SRAfdOP1+qQdjeFv13B=G8w+DR-GCSEz=6swFhLJzcw@mail.gmail.com>
+	id S1754537Ab1KPHiy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Nov 2011 02:38:54 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48516 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754098Ab1KPHix (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2011 02:38:53 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EFDD32C1;
+	Wed, 16 Nov 2011 02:38:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jYXqjgG0B8Tc87WBcRdRVUpqyi8=; b=l8F5ku
+	II5RUaHVwADpU1cUTQKP9k148l2DjcrtcWXyMrvXH13QbtPjbovX207R4bfZ01x/
+	ICYj1W9k3+uNJ7vVhSo4fFE4+DrmlRAMz8YHrWnVO9Wp1+f0D+WM+iMwDa7VoDCB
+	MV+G5ac3RFlmyyHTTsq8wr5LpazG96ILhUx40=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CZWu3CeQmZunlqpS5FIOGUHG6wXpOVp1
+	+IdiUXvXUrr8ooe0fd032bvmmzkgO4hiPTkQT0xzAHwyW6RTCWR3pMfwCE+qSCcz
+	7GytRJzQ5X+3drXfReuoBDxJDr+FhDBRW64v5GJ4A3HXdiOmFVyXstLw5VZzUnW2
+	23d7c34mFTI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 46AB532BF;
+	Wed, 16 Nov 2011 02:38:53 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F3E6132BE; Wed, 16 Nov 2011
+ 02:38:50 -0500 (EST)
+In-Reply-To: <CALkWK0kOrGzjcGNcf2qPahJSgkvCsQwSrEfAA3wj6PqnMzDBVQ@mail.gmail.com>
+ (Ramkumar Ramachandra's message of "Wed, 16 Nov 2011 11:47:43 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 07006F34-1026-11E1-8AE2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185519>
 
-On Wed, Nov 16, 2011 at 3:11 PM, Dmitry Smirnov <divis1969@gmail.com> wrote:
-> What if problem is caused by curl or TLS lib (libcurl-gnutls?) which
-> is used by my git? Is there any to log something from git-remote-https
-> ?
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-You can run git with GIT_CURL_VERBOSE set, like this
+> I noticed that sha1_to_hex() also operates like this.
 
-  GIT_CURL_VERBOSE=1 git ls-remote ...
+A function to externalize our internal representation like sha1_to_hex()
+is not such a big problem in practice, as the lifetime of its result is
+inherently much shorter.
 
--- 
-Cheers,
-Ray Chuan
+Anybody sane with a datum that eventually needs to be externalized will
+keep it in its internal representation as long as possible, and then call
+such an internal-to-external function just before it becomes absolutely
+necessary to externalize it (e.g. calling printf(), packet_write(), etc).
+This is because the whole point of having an internal representation
+(e.g. when our code talks about an object name, we always use "unsigned
+char[20]") is so that all of our functions can use that representation to
+pass it around. It would be insane to call such a function earlier than
+necessary, having to pass external representation around.
+
+On the other hand, resolve_ref() is an interface to canonicalize external
+representation into a form suitable to be kept and passed around as its
+internal representation. The lifetime of its result fundamentally has to
+be a lot longer than that of functions that work in the opposite
+direction, e.g. sha1_to_hex().
