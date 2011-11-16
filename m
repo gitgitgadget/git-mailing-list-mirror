@@ -1,64 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] revert: prettify fatal messages
-Date: Tue, 15 Nov 2011 17:05:33 -0800
-Message-ID: <7vvcqkswpu.fsf@alter.siamese.dyndns.org>
-References: <1321349492-5653-1-git-send-email-artagnon@gmail.com>
+From: Tim Walberg <twalberg@comcast.net>
+Subject: Re: odd name-rev behavior?
+Date: Tue, 15 Nov 2011 19:48:42 -0600
+Message-ID: <20111116014842.GF27706@comcast.net>
+References: <20111115211514.GE27706@comcast.net> <7vpqgtt1kb.fsf@alter.siamese.dyndns.org> <7vlirht1fw.fsf@alter.siamese.dyndns.org>
+Reply-To: Tim Walberg <twalberg@comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 16 02:05:44 2011
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="BwCQnh7xodEAoBMC"
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 16 02:54:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQTwd-0006fv-8P
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 02:05:43 +0100
+	id 1RQUht-0001Ii-JR
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 02:54:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932772Ab1KPBFh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Nov 2011 20:05:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42258 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756943Ab1KPBFg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2011 20:05:36 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5E3A5767;
-	Tue, 15 Nov 2011 20:05:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4m431X2wf3V/mC+tZ9ecuD+HauY=; b=X7Cg6V
-	hNmXmUu9iMAK11TGOPLuT4vLCQozZPRoMqqFEaYsoPuXutI0mc2TEVQ3/yEg6t39
-	NpKqlEsvkQVe0tMaIvnRDePNaWQl7rfFDTflhhbKL+QQtVhjKzARbTSd69jblfoh
-	P2WTfoeJmi5C2gvdz1RduoNrqnUYmymvdhRXM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=X8/ox/Cvc4+iXs1Vg0wg2O+TD/+FH+42
-	tGAdVJuvpbfErXI+sb17g9gDASJfDETNJYDxxphibSo/F9t8TEZWQP+MVH8uwLBX
-	eajC+7Ce5cbAd9YRSAfMF8AE68uNTLB5re1/GJAKgsm/Z2cb47iOUJxpR7rKn/UA
-	ByEGJ7veFEc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC8EE5766;
-	Tue, 15 Nov 2011 20:05:35 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 594AC5764; Tue, 15 Nov 2011
- 20:05:35 -0500 (EST)
-In-Reply-To: <1321349492-5653-1-git-send-email-artagnon@gmail.com> (Ramkumar
- Ramachandra's message of "Tue, 15 Nov 2011 15:01:32 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 16E88990-0FEF-11E1-AC73-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932906Ab1KPBy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Nov 2011 20:54:29 -0500
+Received: from qmta07.westchester.pa.mail.comcast.net ([76.96.62.64]:53805
+	"EHLO qmta07.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932834Ab1KPBy2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2011 20:54:28 -0500
+X-Greylist: delayed 344 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Nov 2011 20:54:28 EST
+Received: from omta10.westchester.pa.mail.comcast.net ([76.96.62.28])
+	by qmta07.westchester.pa.mail.comcast.net with comcast
+	id xdoe1h00E0cZkys57dolFo; Wed, 16 Nov 2011 01:48:45 +0000
+Received: from beta.localdomain ([67.184.156.247])
+	by omta10.westchester.pa.mail.comcast.net with comcast
+	id xdok1h00V5LYcRf3WdokGC; Wed, 16 Nov 2011 01:48:45 +0000
+Received: from calvin.localdomain ([10.0.0.8])
+	by beta.localdomain with esmtp (Exim 4.69)
+	(envelope-from <twalberg@comcast.net>)
+	id 1RQUcE-0005Ee-TX; Tue, 15 Nov 2011 19:48:42 -0600
+Received: from tew by calvin.localdomain with local (Exim 4.69)
+	(envelope-from <tew@calvin.localdomain>)
+	id 1RQUcE-00023a-OS; Tue, 15 Nov 2011 19:48:42 -0600
+Content-Disposition: inline
+In-Reply-To: <7vlirht1fw.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185503>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
->  Candidate for 'maint'?
+--BwCQnh7xodEAoBMC
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Too minor to matter when 'master' is already at -rc2.
+That does indeed seem to work on first try. Not sure it was
+a particularly critical issue - just unexpected. For what I
+was using it for it was simple to work around. But thanks
+for the quick fix!
 
-Thanks.
+			tw
+
+
+On 11/15/2011 15:23 -0800, Junio C Hamano wrote:
+>>	Junio C Hamano <gitster@pobox.com> writes:
+>>=09
+>>	> Tim Walberg <twalberg@comcast.net> writes:
+>>	>
+>>	>> Never noticed this before - is this expected? It doesn't seem to
+>>	>> match documentation, in any case...
+>>	>>
+>>	>> Basically, 'git name-rev --all' lists a lot of lines that are
+>>	>> marked as "undefined", and most, if not all, of the objects
+>>	>> represented are trees, not commits... I wouldn't have expected
+>>	>> name-rev to follow the link from a commit to a tree and try to
+>>	>> process that result...
+>>	>
+>>	> I wouldn't either, but this does not look like a recent breakage. v1.6=
+=2E0
+>>	> seems to show the same broken behaviour.
+>>=09
+>>	And this one-liner should be sufficient (untested).
+>>=09
+>>	 builtin/name-rev.c |    2 +-
+>>	 1 files changed, 1 insertions(+), 1 deletions(-)
+>>=09
+>>	diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+>>	index 7864056..1b37458 100644
+>>	--- a/builtin/name-rev.c
+>>	+++ b/builtin/name-rev.c
+>>	@@ -291,7 +291,7 @@ int cmd_name_rev(int argc, const char **argv, const =
+char *prefix)
+>>	 		max =3D get_max_object_index();
+>>	 		for (i =3D 0; i < max; i++) {
+>>	 			struct object *obj =3D get_indexed_object(i);
+>>	-			if (!obj)
+>>	+			if (!obj || obj->type !=3D OBJ_COMMIT)
+>>	 				continue;
+>>	 			show_name(obj, NULL,
+>>	 				  always, allow_undefined, data.name_only);
+End of included message
+
+
+
+--=20
++----------------------+
+| Tim Walberg          |
+| 830 Carriage Dr.     |
+| Algonquin, IL 60102  |
+| twalberg@comcast.net |
++----------------------+
+
+--BwCQnh7xodEAoBMC
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAk7DFnoACgkQw+Wcj22rJWYbRgCgyDdr6uExaWb8xrLcMENChNnJ
+jYsAnjGVwKfVaONztoBWPXAk6xnLEu4L
+=0pf+
+-----END PGP SIGNATURE-----
+
+--BwCQnh7xodEAoBMC--
