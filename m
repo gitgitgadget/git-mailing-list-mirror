@@ -1,91 +1,67 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: gitweb ignores git-daemon-export-ok and displays all repositories
-Date: Wed, 16 Nov 2011 16:47:06 -0600
-Message-ID: <20111116224706.GA17851@elie.hsd1.il.comcast.net>
-References: <20111113001730.3945.75979.reportbug@gpl.code.de>
- <20111113011932.GA12434@elie.hsd1.il.comcast.net>
- <D765D350-947E-4DB2-8A91-4B9653064F80@code.de>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Git Gems
+Date: Wed, 16 Nov 2011 15:18:15 -0800
+Message-ID: <CAE1pOi1gyshz_502NQvLNAByfwiYXW2fzA+EnGKz8tuFrCpkxg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Erik Wenzel <erik@code.de>, Jakub Narebski <jnareb@gmail.com>,
-	John 'Warthog9' Hawley <warthog9@kernel.org>,
-	Matthias Lederhofer <matled@gmx.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 16 23:47:24 2011
+Content-Type: text/plain; charset=UTF-8
+To: Git Users <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Nov 17 00:18:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQoGJ-0007Hg-5E
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 23:47:23 +0100
+	id 1RQokH-0004Ts-HO
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Nov 2011 00:18:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753898Ab1KPWrT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Nov 2011 17:47:19 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:48008 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752238Ab1KPWrS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2011 17:47:18 -0500
-Received: by yenq3 with SMTP id q3so282224yen.19
-        for <git@vger.kernel.org>; Wed, 16 Nov 2011 14:47:18 -0800 (PST)
+	id S1754128Ab1KPXSQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Nov 2011 18:18:16 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:33655 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753974Ab1KPXSQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2011 18:18:16 -0500
+Received: by ywt32 with SMTP id 32so311784ywt.19
+        for <git@vger.kernel.org>; Wed, 16 Nov 2011 15:18:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=eOd0dldC4J+VdnCwqQZjmgh0HuDOOQnQjoXZVeQZEdI=;
-        b=n5cVsl5G4EoDiknpDcPAwxFVOsPdeZbvuMlzYTtMJh+y57KdPHSwh1dzIj/5FeOs0P
-         9CAFEiVkM+5AosXFKICgMRl2fmaZOt7M1nc1oC1ICNC9YJIfMLDiyBSkR7xPguWfoY7U
-         b9bm2MkHcyZ5x+Vcerhluij0pAhb6A5m7noXw=
-Received: by 10.100.240.5 with SMTP id n5mr4145696anh.102.1321483637868;
-        Wed, 16 Nov 2011 14:47:17 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id y1sm43685312anj.18.2011.11.16.14.47.15
-        (version=SSLv3 cipher=OTHER);
-        Wed, 16 Nov 2011 14:47:16 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <D765D350-947E-4DB2-8A91-4B9653064F80@code.de>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=0yxq4Papas7cb0CTsACUh8Y/KH8HwEF3gIXeTmb+QdE=;
+        b=UYBA2+ugXJPjwQwgz/qB4nnFThjwR3FfOPsDmNwJFXsFGazPwNoMpeOib+OuxXf5QG
+         P/H1zm8yGEvIGE7BdiPfi9s4DlJDwFhZ5g8/Jquehb/2HXHzmgayNfWs3KkBIP7vSt0H
+         QEk4QkMW+l2pB2qSvVujd3rD4a5IBOxLDp+d4=
+Received: by 10.236.155.74 with SMTP id i50mr5383493yhk.23.1321485495655; Wed,
+ 16 Nov 2011 15:18:15 -0800 (PST)
+Received: by 10.236.61.41 with HTTP; Wed, 16 Nov 2011 15:18:15 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185560>
 
-Hi gitwebbers,
+Hi all,
 
-Erik Wenzel wrote[1]:
-> Am 13.11.2011 um 02.19 schrieb Jonathan Nieder:
+Just today, I found out about 'git add -p'. I had never even thought
+of this but, now that I know, I can't imagine life without it. :-)
+Actually, it's a bit scary to note that the Git devs apparently aren't
+just telepathic but they can read my thoughts even before I think
+them. ;-)
 
->> The git-daemon(1) manpage describes git daemon, not gitweb, so I guess
->> you mean that
->>
->>	# Do not list projects without git-daemon-export-ok in the
->>	# projects list.
->>	our $export_ok = "git-daemon-export-ok";
->>
->>	# Do not allow access to projects not listed in the projects
->>	# list.
->>	our $strict_export = 1;
->>
->> should be the default.
-[...]
-> Because I think this is the way a user is expecting the behavior of gitweb.
-> As I do. Don't let gitweb overwrite the meaning of "git-daemon-export-ok".
-> Just act like git-daemon. Keep it simple and stupid.
+All kidding aside, I'm starting to wonder which other Git Gems I don't
+know about. For me, the list of Git Gems would include Git's Bash
+command line prompt, 'git add -p', 'git rebase', 'git commit --amend',
+and 'git-new-workdir'. I realize there are plenty of books and such
+out there but I'm really just looking for a list of Git commands
+and/or options that are worth looking into. Finding out more about a
+particular command/script/option is easy, realizing that a particular
+one is the one you need is not. Especially, if you don't even know you
+have a problem.
 
-My first thought was that if we could turn back time, it would
-probably be best for both git-daemon and gitweb to look for a file
-named git-export-ok.  In the present world, maybe git-daemon-export-ok
-is a good substitute for that.
+As an example, 'git rebase' didn't really seem useful until I
+understood (well, more or less) what it did. Until then, I just
+naively assumed that merge commits and non-linear history were
+something you simply had to live with. I'm guessing that, like me, a
+lot of people come to Git with quite a few assumptions and
+preconceived notions due to their exposure to other SCM tools. :-(
 
-What do you think?  Should the default in the makefile be changed?  If
-so, how could we go about it to avoid disturbing existing
-installations?  (For example, in a system where no repositories have
-the export-ok files and "git daemon" is configured to run with
---export-all, the effect would be to make repos suddenly disappear
-from the projects list in gitweb.  Unpleasant.)
-
-Looking forward to your thoughts,
-Jonathan
-
-[1] http://bugs.debian.org/648561
+Cheers,
+Hilco
