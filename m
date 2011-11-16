@@ -1,91 +1,93 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] i18n: add infrastructure for translating Git with gettext
-Date: Wed, 16 Nov 2011 04:33:19 -0600
-Message-ID: <20111116103319.GB30753@elie.hsd1.il.comcast.net>
-References: <1321191835-24062-1-git-send-email-avarab@gmail.com>
- <7vlirhx14x.fsf@alter.siamese.dyndns.org>
- <CACBZZX4nypBW1agNw6NrC-7LBWbjZ1ycgpn-zvBsg0x4EDBD0g@mail.gmail.com>
+From: =?UTF-8?B?TWF0xJtqIENlcGw=?= <mcepl@redhat.com>
+Subject: Monotone to git mirroring ... how to do updates
+Date: Wed, 16 Nov 2011 11:49:57 +0100
+Message-ID: <4EC39555.3060500@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>,
-	Jeff Epler <jepler@unpythonic.net>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Peter Krefting <peter@softwolves.pp.se>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 16 11:33:33 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 16 11:48:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQco7-0004No-03
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 11:33:31 +0100
+	id 1RQd2h-0003Oa-M1
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 11:48:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755856Ab1KPKd0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Nov 2011 05:33:26 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:59965 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755620Ab1KPKdZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2011 05:33:25 -0500
-Received: by yenq3 with SMTP id q3so1762034yen.19
-        for <git@vger.kernel.org>; Wed, 16 Nov 2011 02:33:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=0JFeQiAi43OtVkja6gmWaYrFtSqCcnPsASk4O96UngE=;
-        b=CnCQJum3IEwTl13GyPOGgM+fKzN9XR5MIvJYbzdmpaDxjQGDYvnXgnmQecLUe7L2vY
-         LI/7yVSgQDKwxfvXFC/LV4e3VYaVm/lhgk1MPAxUOIamI4FoaXMjM5KVh4pHJmmYN6SM
-         tbDGy1gIC3YMstNmgaz6VkqT461l3VPUV4pnA=
-Received: by 10.50.77.229 with SMTP id v5mr32364754igw.13.1321439604981;
-        Wed, 16 Nov 2011 02:33:24 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id dd36sm42744051ibb.7.2011.11.16.02.33.23
-        (version=SSLv3 cipher=OTHER);
-        Wed, 16 Nov 2011 02:33:24 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CACBZZX4nypBW1agNw6NrC-7LBWbjZ1ycgpn-zvBsg0x4EDBD0g@mail.gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1755918Ab1KPKsb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Nov 2011 05:48:31 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:60003 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755586Ab1KPKsa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2011 05:48:30 -0500
+Received: from int-mx02.intmail.prod.int.phx2.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id pAGAmUL8009311
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
+	for <git@vger.kernel.org>; Wed, 16 Nov 2011 05:48:30 -0500
+Received: from mitmanek.ceplovi.cz (ovpn-116-28.ams2.redhat.com [10.36.116.28])
+	by int-mx02.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id pAGAmSSn012770
+	for <git@vger.kernel.org>; Wed, 16 Nov 2011 05:48:29 -0500
+Received: from mitmanek.ceplovi.cz (mitmanek.ceplovi.cz [127.0.0.1])
+	by mitmanek.ceplovi.cz (Postfix) with ESMTP id D80C842B52
+	for <git@vger.kernel.org>; Wed, 16 Nov 2011 11:49:57 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20111105 Thunderbird/8.0
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185537>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Hi,
 
-> Here's what we do with the sharedir currently:
->
->  * It's used as the gitwebdir already, and is used also as the
->    localedir with this patch:
->
->     sharedir =3D $(prefix)/share
->     gitwebdir =3D $(sharedir)/gitweb
->     localedir =3D $(sharedir)/locale
+I am trying to make script to be run from crontab which would=20
+periodically mirror pidgin monotone repo to my git one (using=20
+https://github.com/felipec/pidgin-git-import).
 
-This has $(prefix)/ (e.g., /usr/) at the start.
+The main script in this repo is import:
 
->  * Even then I can't find the option that makes gitweb put something
->    in it, after a "make" with this patch:
->
->     $ find share -type f
->     share/locale/is/LC_MESSAGES/git.mo
+#!/bin/sh
 
-This does not.
+export GIT_DIR=3Dpidgin.git
 
->  * It *is* important that we have this under a
->    $SOMETHING/is/LC_MESSAGES/git.mo structure, since we set
->    GIT_TEXTDOMAINDIR to $SOMETHING, and the gettext library will only
->    understand something in this layout.
->
->    But that $SOMETHING doesn't have to be $ROOT/share, it could be
->    e.g. $ROOT/po/generated, which would make it not conflict with the
->    gitwebdir.
+git init
 
-Yeah, makes sense.  bin-wrappers/git has to get its locales from
-somewhere.
+git_marks=3D"marks-git.txt"
+mtn_marks=3D"marks-mtn.txt"
+
+touch $git_marks $mtn_marks
+
+mtn --db pidgin.mtn pull
+mtn git_export --db pidgin.mtn --authors-file=3Dauthors_map.txt \
+     --branches-file=3Dbranches_map.txt \
+     --refs=3Drevs --import-marks=3D$mtn_marks --export-marks=3D$mtn_ma=
+rks \
+     --use-one-changelog | \
+   git fast-import --import-marks=3D$git_marks --export-marks=3D$git_ma=
+rks
+
+I can see what this script does on the first run (when creating new git=
+=20
+repo), but what it does when I try to update with it already existing=20
+repo from updated pidgin.mtn database? Where I can see the new changes?=
+=20
+Probably remote branches should be updated, right? (yes, I don't=20
+understand well what actually git fast-import does, that's the problem)=
+=2E
+
+Also, if I get eventually new changes to the remote branches on the git=
+=20
+repo, how can I update (preferably by one command) 140+ branches at=20
+once? Or do I have to do something in the tune of?
+
+for remote_branch in $(git branches -r) ; do
+    local_branch=3D$(echo $remote_branch |sed -e 's/origin\///')
+    git checkout $local_branch
+    git merge $remote_branch
+done
+
+Thank you in advance for any ideas,
+
+Mat=C4=9Bj
