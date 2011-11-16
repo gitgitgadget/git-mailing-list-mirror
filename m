@@ -1,91 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] ll-merge: initialize default_opts const
-Date: Tue, 15 Nov 2011 23:49:07 -0800
-Message-ID: <7vd3csqzgs.fsf@alter.siamese.dyndns.org>
-References: <1321376379-31750-1-git-send-email-artagnon@gmail.com>
- <1321376379-31750-4-git-send-email-artagnon@gmail.com>
- <7vty65t1qp.fsf@alter.siamese.dyndns.org>
- <CALkWK0mVxxq0345B_OJQwejpTBD=evOU_iAv39CvXv4mAi=09A@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 0/3] avoiding unintended consequences of git_path() usage
+Date: Wed, 16 Nov 2011 01:59:55 -0600
+Message-ID: <20111116075955.GB13706@elie.hsd1.il.comcast.net>
+References: <1320510586-3940-1-git-send-email-artagnon@gmail.com>
+ <1320510586-3940-4-git-send-email-artagnon@gmail.com>
+ <20111106002645.GE27272@elie.hsd1.il.comcast.net>
+ <CALkWK0nGhUshwJM1vmAUhBG9foH+=6+_KFhfTTF6+kNS0Hm2JA@mail.gmail.com>
+ <7v7h33oifq.fsf@alter.siamese.dyndns.org>
+ <CALkWK0nUuzn2_itdACHLQBpUaVv97tFAjNGdVBEhWC7a6Rp75w@mail.gmail.com>
+ <20111115095225.GB23139@elie.hsd1.il.comcast.net>
+ <7v7h31wduv.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kOrGzjcGNcf2qPahJSgkvCsQwSrEfAA3wj6PqnMzDBVQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Thomas Rast <trast@student.ethz.ch>
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 16 08:49:16 2011
+X-From: git-owner@vger.kernel.org Wed Nov 16 09:00:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQaFA-0007D1-2q
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 08:49:16 +0100
+	id 1RQaPi-00034H-IP
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 09:00:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754769Ab1KPHtL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Nov 2011 02:49:11 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51987 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754675Ab1KPHtK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2011 02:49:10 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B1AA73530;
-	Wed, 16 Nov 2011 02:49:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=A1NAmuCDiIbe
-	3RLJB1HMK0m83q0=; b=vLZyIpEQlIHZSXh1uCbLlUCE4EvYJfysZuMm3AROr+Tb
-	cArMAjdfVznZ/dfiRKbhcw4/BQAlWQzit9a9vnRrdTso6Hk5RyiJRfDqR22JPrc9
-	u6Nj0+JvxwQhrIA7iCVG8PbnzRP85fTcQK0No3Sa5ErJ1qnODBLuk0XN846gB7Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=B3xmrE
-	nveVVVWCSAVagv3mraFn063v9BuDyo5KhaCmmUMB0msPaDOTDxZxhmI2ni+wGvVV
-	FTEyc9uwQVu+WUbcFLIzUT7zCOYDp4lAJBxCKCz9dNuYnbJy0+o7kUIwMq2YFbjf
-	2ekGnjQAtbcTE5aPQ2tf795bQKlZosC5aM7EU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A6B59352F;
-	Wed, 16 Nov 2011 02:49:09 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B09B352C; Wed, 16 Nov 2011
- 02:49:08 -0500 (EST)
-In-Reply-To: <CALkWK0mVxxq0345B_OJQwejpTBD=evOU_iAv39CvXv4mAi=09A@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Wed, 16 Nov 2011 11:36:05 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7762EB52-1027-11E1-BCDF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754698Ab1KPIAE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Nov 2011 03:00:04 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:43531 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754688Ab1KPIAC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2011 03:00:02 -0500
+Received: by ywt32 with SMTP id 32so4469124ywt.19
+        for <git@vger.kernel.org>; Wed, 16 Nov 2011 00:00:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=A6RjSdtHkws7A/pParI3pz+3zEd9eXhYmbAvfWyVdyY=;
+        b=vjsHmKJqU41GPAdDZyUyFW8NK1Na4DSN7fIo2sQhV5TCEq7n3AgJqvjL0hauLeqfJ3
+         Jclo0JPxyGLn14isWq7lnEVXbr6cTtL2xjwMU8/PezpzkUMLbjYXSd/7fJUp/wrPmzdM
+         VAmyjaoKoU0gi2cBGstp4gp40gzP46hKlOaQg=
+Received: by 10.101.201.1 with SMTP id d1mr556304anq.44.1321430401889;
+        Wed, 16 Nov 2011 00:00:01 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id 33sm67836651ano.1.2011.11.16.00.00.00
+        (version=SSLv3 cipher=OTHER);
+        Wed, 16 Nov 2011 00:00:01 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0kOrGzjcGNcf2qPahJSgkvCsQwSrEfAA3wj6PqnMzDBVQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185521>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
-
-> Hi Junio,
->
+Ramkumar Ramachandra wrote:
 > Junio C Hamano wrote:
->> Ramkumar Ramachandra <artagnon@gmail.com> writes:
->>> [...]
->>> - =C2=A0 =C2=A0 static const struct ll_merge_options default_opts;
->>> + =C2=A0 =C2=A0 static const struct ll_merge_options default_opts =3D=
- {0, 0, 0, 0};
->>
->> Doesn't "static" tell us that it will be in BSS, initialized to all =
-zero
->> by definition?
+
+>> Or perhaps http://thread.gmane.org/gmane.comp.version-control.git/184963/focus=185436
 >
-> I'm uncertain about whether the C89 standard says this explicitly- ic=
-c
-> is more pedantic than most mainstream compilers.
+> I noticed that sha1_to_hex() also operates like this.  The
+> resolve_ref() function is really important, but using the same
+> technique for these tiny functions is probably an overkill
 
-Actually I take a part of the comment back; as this is "static const", =
-it
-is entirely plausible for a compiler to tell the linker to put it in ro=
-data
-instead of bss, to cause any attempt to modify it to segv.
+I don't follow.  Do you mean that not being confusing is overkill,
+because the function is small that no one will bother to look up the
+right semantics?  Wait, that sentence didn't come out the way I
+wanted. ;-)
 
-A datum that is implicitly initialized to all zero and not allowed to b=
-e
-modified might appear suspect to some compiler writers (especially when
-they are under influence ;-)), so I am not so surprised if a compiler
-issued a warning saying "did you forget to initialize it?".
+Jokes aside, here's a rough series to do the git_path ->
+git_path_unsafe renaming.  While writing it, I noticed a couple of
+bugs, hence the two patches before the last one.  Patch 2 is the more
+interesting one.
+
+Patches are against "master", but patch 2 probably should be thought
+of as being against maint-1.7.6.  Improvements welcome, as always.
+
+Thanks,
+
+Jonathan Nieder (3):
+  do not let git_path clobber errno when reporting errors
+  Bigfile: dynamically allocate buffer for marks file name
+  rename git_path() to git_path_unsafe()
+
+ Documentation/technical/api-string-list.txt |    5 +-
+ attr.c                                      |    2 +-
+ bisect.c                                    |    8 ++--
+ branch.c                                    |   12 ++--
+ builtin/add.c                               |    2 +-
+ builtin/commit.c                            |   57 ++++++++++++-----------
+ builtin/config.c                            |    4 +-
+ builtin/fetch-pack.c                        |    4 +-
+ builtin/fetch.c                             |    5 +-
+ builtin/fsck.c                              |    2 +-
+ builtin/init-db.c                           |   12 ++--
+ builtin/merge.c                             |   67 +++++++++++++++------------
+ builtin/notes.c                             |    2 +-
+ builtin/remote.c                            |    6 +-
+ builtin/reset.c                             |    2 +-
+ builtin/revert.c                            |   25 +++++-----
+ cache.h                                     |    3 +-
+ contrib/examples/builtin-fetch--tool.c      |    4 +-
+ dir.c                                       |    2 +-
+ fast-import.c                               |    2 +-
+ http-backend.c                              |    2 +-
+ notes-merge.c                               |   22 +++++----
+ pack-refs.c                                 |    6 +-
+ path.c                                      |    2 +-
+ refs.c                                      |   51 +++++++++++---------
+ remote.c                                    |    4 +-
+ rerere.c                                    |   12 ++--
+ run-command.c                               |    4 +-
+ sequencer.c                                 |    6 +-
+ server-info.c                               |    2 +-
+ sha1_file.c                                 |   22 ++++++--
+ shallow.c                                   |    2 +-
+ transport.c                                 |    4 +-
+ unpack-trees.c                              |    2 +-
+ 34 files changed, 200 insertions(+), 167 deletions(-)
+
+-- 
+1.7.8.rc0
