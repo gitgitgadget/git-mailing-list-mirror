@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 1/3] do not let git_path clobber errno when reporting errors
-Date: Wed, 16 Nov 2011 02:03:36 -0600
-Message-ID: <20111116080336.GC13706@elie.hsd1.il.comcast.net>
+Subject: [PATCH 2/3] Bigfile: dynamically allocate buffer for marks file name
+Date: Wed, 16 Nov 2011 02:04:20 -0600
+Message-ID: <20111116080420.GD13706@elie.hsd1.il.comcast.net>
 References: <1320510586-3940-1-git-send-email-artagnon@gmail.com>
  <1320510586-3940-4-git-send-email-artagnon@gmail.com>
  <20111106002645.GE27272@elie.hsd1.il.comcast.net>
@@ -17,37 +17,37 @@ Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
 	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 16 09:03:49 2011
+X-From: git-owner@vger.kernel.org Wed Nov 16 09:04:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQaTD-0004V0-Pw
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 09:03:48 +0100
+	id 1RQaTw-0004lz-17
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 09:04:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754798Ab1KPIDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Nov 2011 03:03:43 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:60731 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754687Ab1KPIDm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2011 03:03:42 -0500
-Received: by yenq3 with SMTP id q3so1635420yen.19
-        for <git@vger.kernel.org>; Wed, 16 Nov 2011 00:03:41 -0800 (PST)
+	id S1754814Ab1KPIE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Nov 2011 03:04:28 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:47749 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754687Ab1KPIE1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2011 03:04:27 -0500
+Received: by ywt32 with SMTP id 32so4472508ywt.19
+        for <git@vger.kernel.org>; Wed, 16 Nov 2011 00:04:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=8uX3Cqcsb3RTqF64koEMK2skXJUmwEqw2mGjactBSOg=;
-        b=sJdK5vHptETQ1sotLikBVB6AwlhpEep2+INb6Kv7PXrxOKl4BjUHkY7DwYzDKl+IjO
-         dmHATEJ8b3rP8P3ItgTTRdkXl1GugTyszzhJAnIxPkfFq8xGwcaQHVxlwAwKO2jAtuOn
-         XmdPLoNK2Z6MyhS4yQp81SPYlUMKlCbtkB8bc=
-Received: by 10.101.149.20 with SMTP id b20mr9274165ano.142.1321430621881;
-        Wed, 16 Nov 2011 00:03:41 -0800 (PST)
+        bh=5I2j9ZX22L7EAhWQ+eMAz/R5N05Jhkv6MnBLwrMmYZA=;
+        b=Z/5X6LJz3wx78XSTmU38QP4/xwh7mm9k0RnXOgL4vSQgaIkX0WNG9sbbOg1GPaMhWe
+         tIZwS5IQzDrBGpndcG2Y/jag/XF2o6ePWaTzoZtJMrxqyhf2cQt3WDP5G/tQZacijbnk
+         JryOqbZbcHKhq720lE0s3Q9Tsr9NPgUk8rZCg=
+Received: by 10.101.54.9 with SMTP id g9mr3544079ank.50.1321430666103;
+        Wed, 16 Nov 2011 00:04:26 -0800 (PST)
 Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id k20sm83519089ann.15.2011.11.16.00.03.40
+        by mx.google.com with ESMTPS id l18sm54529721anb.22.2011.11.16.00.04.25
         (version=SSLv3 cipher=OTHER);
-        Wed, 16 Nov 2011 00:03:41 -0800 (PST)
+        Wed, 16 Nov 2011 00:04:25 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20111116075955.GB13706@elie.hsd1.il.comcast.net>
 User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
@@ -55,179 +55,64 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185523>
 
-Because git_path() calls vsnprintf(), code like
-
-	fd = open(git_path("SQUASH_MSG"), O_WRONLY | O_CREAT, 0666);
-	die_errno(_("Could not write to '%s'"), git_path("SQUASH_MSG"));
-
-can end up printing an error indicator from vsnprintf() instead of
-open() by mistake.  Store the path we are trying to write to in a
-temporary variable and pass _that_ to die_errno(), so the messages
-written by git cherry-pick/revert and git merge can avoid this source
-of confusion.
+This prevents a buffer overrun that could otherwise be triggered by
+creating a .git file with a long destination path and trying to "git
+add" a file larger than the big-file threshold (which defaults to 512
+MiB), ever since v1.7.6-rc0~31^2 (Bigfile: teach "git add" to send a
+large file straight to a pack, 2011-05-08).
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- builtin/merge.c  |   49 +++++++++++++++++++++++++++++--------------------
- builtin/revert.c |    9 +++++----
- 2 files changed, 34 insertions(+), 24 deletions(-)
+ sha1_file.c |   20 +++++++++++++++-----
+ 1 files changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index dffd5ec1..2870a6af 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -316,13 +316,15 @@ static void squash_message(struct commit *commit)
- 	struct rev_info rev;
- 	struct strbuf out = STRBUF_INIT;
- 	struct commit_list *j;
-+	const char *filename;
- 	int fd;
- 	struct pretty_print_context ctx = {0};
- 
- 	printf(_("Squash commit -- not updating HEAD\n"));
--	fd = open(git_path("SQUASH_MSG"), O_WRONLY | O_CREAT, 0666);
-+	filename = git_path("SQUASH_MSG");
-+	fd = open(filename, O_WRONLY | O_CREAT, 0666);
- 	if (fd < 0)
--		die_errno(_("Could not write to '%s'"), git_path("SQUASH_MSG"));
-+		die_errno(_("Could not write to '%s'"), filename);
- 
- 	init_revisions(&rev, NULL);
- 	rev.ignore_merges = 1;
-@@ -492,14 +494,16 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 
- 	if (!strcmp(remote, "FETCH_HEAD") &&
- 			!access(git_path("FETCH_HEAD"), R_OK)) {
-+		const char *filename;
- 		FILE *fp;
- 		struct strbuf line = STRBUF_INIT;
- 		char *ptr;
- 
--		fp = fopen(git_path("FETCH_HEAD"), "r");
-+		filename = git_path("FETCH_HEAD");
-+		fp = fopen(filename, "r");
- 		if (!fp)
- 			die_errno(_("could not open '%s' for reading"),
--				  git_path("FETCH_HEAD"));
-+				  filename);
- 		strbuf_getline(&line, fp, '\n');
- 		fclose(fp);
- 		ptr = strstr(line.buf, "\tnot-for-merge\t");
-@@ -847,20 +851,22 @@ static void add_strategies(const char *string, unsigned attr)
- 
- static void write_merge_msg(struct strbuf *msg)
+diff --git a/sha1_file.c b/sha1_file.c
+index 27f3b9b2..86705bc9 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2697,20 +2697,28 @@ static int index_stream(unsigned char *sha1, int fd, size_t size,
+ 			unsigned flags)
  {
--	int fd = open(git_path("MERGE_MSG"), O_WRONLY | O_CREAT, 0666);
-+	const char *filename = git_path("MERGE_MSG");
-+	int fd = open(filename, O_WRONLY | O_CREAT, 0666);
- 	if (fd < 0)
- 		die_errno(_("Could not open '%s' for writing"),
--			  git_path("MERGE_MSG"));
-+			  filename);
- 	if (write_in_full(fd, msg->buf, msg->len) != msg->len)
--		die_errno(_("Could not write to '%s'"), git_path("MERGE_MSG"));
-+		die_errno(_("Could not write to '%s'"), filename);
- 	close(fd);
- }
+ 	struct child_process fast_import;
+-	char export_marks[512];
+-	const char *argv[] = { "fast-import", "--quiet", export_marks, NULL };
+-	char tmpfile[512];
++	const char *argv[4];	/* command, two args, NULL */
++	const char **arg;
++	struct strbuf export_marks = STRBUF_INIT;
++	char *tmpfile;
+ 	char fast_import_cmd[512];
+ 	char buf[512];
+ 	int len, tmpfd;
  
- static void read_merge_msg(struct strbuf *msg)
- {
-+	const char *filename = git_path("MERGE_MSG");
- 	strbuf_reset(msg);
--	if (strbuf_read_file(msg, git_path("MERGE_MSG"), 0) < 0)
--		die_errno(_("Could not read from '%s'"), git_path("MERGE_MSG"));
-+	if (strbuf_read_file(msg, filename, 0) < 0)
-+		die_errno(_("Could not read from '%s'"), filename);
- }
- 
- static void write_merge_state(void);
-@@ -948,13 +954,14 @@ static int finish_automerge(struct commit *head,
- 
- static int suggest_conflicts(int renormalizing)
- {
-+	const char *filename;
- 	FILE *fp;
- 	int pos;
- 
--	fp = fopen(git_path("MERGE_MSG"), "a");
-+	filename = git_path("MERGE_MSG");
-+	fp = fopen(filename, "a");
- 	if (!fp)
--		die_errno(_("Could not open '%s' for writing"),
--			  git_path("MERGE_MSG"));
-+		die_errno(_("Could not open '%s' for writing"), filename);
- 	fprintf(fp, "\nConflicts:\n");
- 	for (pos = 0; pos < active_nr; pos++) {
- 		struct cache_entry *ce = active_cache[pos];
-@@ -1046,6 +1053,7 @@ static int setup_with_upstream(const char ***argv)
- 
- static void write_merge_state(void)
- {
-+	const char *filename;
- 	int fd;
- 	struct commit_list *j;
- 	struct strbuf buf = STRBUF_INIT;
-@@ -1053,24 +1061,25 @@ static void write_merge_state(void)
- 	for (j = remoteheads; j; j = j->next)
- 		strbuf_addf(&buf, "%s\n",
- 			sha1_to_hex(j->item->object.sha1));
--	fd = open(git_path("MERGE_HEAD"), O_WRONLY | O_CREAT, 0666);
-+	filename = git_path("MERGE_HEAD");
-+	fd = open(filename, O_WRONLY | O_CREAT, 0666);
- 	if (fd < 0)
--		die_errno(_("Could not open '%s' for writing"),
--			  git_path("MERGE_HEAD"));
-+		die_errno(_("Could not open '%s' for writing"), filename);
- 	if (write_in_full(fd, buf.buf, buf.len) != buf.len)
--		die_errno(_("Could not write to '%s'"), git_path("MERGE_HEAD"));
-+		die_errno(_("Could not write to '%s'"), filename);
- 	close(fd);
- 	strbuf_addch(&merge_msg, '\n');
- 	write_merge_msg(&merge_msg);
--	fd = open(git_path("MERGE_MODE"), O_WRONLY | O_CREAT | O_TRUNC, 0666);
+-	strcpy(tmpfile, git_path("hashstream_XXXXXX"));
++	strbuf_addstr(&export_marks, "--export-marks=");
++	strbuf_addstr(&export_marks, git_path("hashstream_XXXXXX"));
++	tmpfile = export_marks.buf + strlen("--export-marks=");
+ 	tmpfd = git_mkstemp_mode(tmpfile, 0600);
+ 	if (tmpfd < 0)
+ 		die_errno("cannot create tempfile: %s", tmpfile);
+ 	if (close(tmpfd))
+ 		die_errno("cannot close tempfile: %s", tmpfile);
+-	sprintf(export_marks, "--export-marks=%s", tmpfile);
 +
-+	filename = git_path("MERGE_MODE");
-+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
- 	if (fd < 0)
--		die_errno(_("Could not open '%s' for writing"),
--			  git_path("MERGE_MODE"));
-+		die_errno(_("Could not open '%s' for writing"), filename);
- 	strbuf_reset(&buf);
- 	if (!allow_fast_forward)
- 		strbuf_addf(&buf, "no-ff");
- 	if (write_in_full(fd, buf.buf, buf.len) != buf.len)
--		die_errno(_("Could not write to '%s'"), git_path("MERGE_MODE"));
-+		die_errno(_("Could not write to '%s'"), filename);
- 	close(fd);
- }
++	arg = argv;
++	*arg++ = "fast-import";
++	*arg++ = "--quiet";
++	*arg++ = export_marks.buf;
++	*arg++ = NULL;
  
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 87df70ed..985f95b0 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -288,17 +288,18 @@ static char *get_encoding(const char *message)
- 
- static void write_cherry_pick_head(struct commit *commit)
- {
-+	const char *filename;
- 	int fd;
- 	struct strbuf buf = STRBUF_INIT;
- 
- 	strbuf_addf(&buf, "%s\n", sha1_to_hex(commit->object.sha1));
- 
--	fd = open(git_path("CHERRY_PICK_HEAD"), O_WRONLY | O_CREAT, 0666);
-+	filename = git_path("CHERRY_PICK_HEAD");
-+	fd = open(filename, O_WRONLY | O_CREAT, 0666);
- 	if (fd < 0)
--		die_errno(_("Could not open '%s' for writing"),
--			  git_path("CHERRY_PICK_HEAD"));
-+		die_errno(_("Could not open '%s' for writing"), filename);
- 	if (write_in_full(fd, buf.buf, buf.len) != buf.len || close(fd))
--		die_errno(_("Could not write to '%s'"), git_path("CHERRY_PICK_HEAD"));
-+		die_errno(_("Could not write to '%s'"), filename);
- 	strbuf_release(&buf);
+ 	memset(&fast_import, 0, sizeof(fast_import));
+ 	fast_import.in = -1;
+@@ -2754,6 +2762,8 @@ static int index_stream(unsigned char *sha1, int fd, size_t size,
+ 	    memcmp(":1 ", buf, 3) ||
+ 	    get_sha1_hex(buf + 3, sha1))
+ 		die_errno("index-stream: unexpected fast-import mark: <%s>", buf);
++
++	strbuf_release(&export_marks);
+ 	return 0;
  }
  
 -- 
