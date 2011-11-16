@@ -1,112 +1,81 @@
-From: Robie Basak <robie.basak@canonical.com>
-Subject: [PATCH] apply: squash consecutive slashes with p_value > 0
-Date: Wed, 16 Nov 2011 12:04:03 +0000
-Message-ID: <20111116120403.GA10342@mal.justgohome.co.uk>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Finding info about git svn
+Date: Wed, 16 Nov 2011 13:39:46 +0100
+Message-ID: <CAGdFq_g+UmgihbTxe7yW3j8S33EiS=Kc2z+=H1NXNs5PxmniRg@mail.gmail.com>
+References: <CAEtpghyV+w_9hN-hF_Z2MbKAUKyen6e=E9-XSyPxawAyamy3oA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Cc: "John 'Warthog9' Hawley" <warthog9@kernel.org>,
+	Tim van Heugten <stimme@gmail.com>,
+	Petr Baudis <pasky@ucw.cz>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 16 13:04:13 2011
+X-From: git-owner@vger.kernel.org Wed Nov 16 13:40:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQeDs-0006i7-K2
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 13:04:12 +0100
+	id 1RQen9-0007E1-3W
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 13:40:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756613Ab1KPMEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Nov 2011 07:04:06 -0500
-Received: from youngberry.canonical.com ([91.189.89.112]:33064 "EHLO
-	youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756422Ab1KPMEF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2011 07:04:05 -0500
-Received: from 107.27.187.81.in-addr.arpa ([81.187.27.107] helo=localhost)
-	by youngberry.canonical.com with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.71)
-	(envelope-from <robie.basak@canonical.com>)
-	id 1RQeDk-0000Gk-Iq
-	for git@vger.kernel.org; Wed, 16 Nov 2011 12:04:04 +0000
-Content-Disposition: inline
+	id S1752839Ab1KPMkd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Nov 2011 07:40:33 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:44138 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752675Ab1KPMkd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2011 07:40:33 -0500
+Received: by fagn18 with SMTP id n18so1395268fag.19
+        for <git@vger.kernel.org>; Wed, 16 Nov 2011 04:40:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=6/fNU+1Mv74uYixkoykSxD3NjSlO1Pya5xsAJicrV4E=;
+        b=l2SpV+YAdJQXo+/Qxg0NShUjvRsawQEFPqn7c1/UXTwGMM6LSrDKQvv1vjZjFPZ62l
+         ug0J/JJvZRVxeuJhNSdtP5C9UGzyXAa5S5GkEDFLvNXKs5+ciqln2D46ggStBYJa+F5l
+         LS2XsKwP5CMhnw1GIfZ3kQqUXkX3MJfkKOc8o=
+Received: by 10.182.45.102 with SMTP id l6mr7019527obm.0.1321447231266; Wed,
+ 16 Nov 2011 04:40:31 -0800 (PST)
+Received: by 10.182.203.6 with HTTP; Wed, 16 Nov 2011 04:39:46 -0800 (PST)
+In-Reply-To: <CAEtpghyV+w_9hN-hF_Z2MbKAUKyen6e=E9-XSyPxawAyamy3oA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185540>
 
-"patch" works with -p1 and diffs in the following form:
-    --- foo.orig//bar
-    +++ foo//bar
-    ...
+Heya,
 
-patch(1) says that "A sequence of one or more adjacent slashes is
-counted as a single slash."
+[+git, without HTML part this time, and trying Petr's other address]
 
-This patch amends git-apply's filename parsing to behave in the same
-way, eliminating both '/'s with -p1 in this example.
+On Wed, Nov 16, 2011 at 13:32, Tim van Heugten <stimme@gmail.com> wrote:
+> Hi,
+>
+> When I was looking for info on git svn, the first google hit took me to
+> http://git.or.cz/course/svn.html.
+> The first thing on the page I notice is a message that the page is no longer
+> maintained.
+> Unfortunately, GitCrashCourse link from http://git.or.cz/course/svn.html
+> gives a 404.
+>
+> Instead I moved to the root at https://git.wiki.kernel.org to find out more
+> about git svn.
+> In my hurry I just wanted to jump to the relevant page, and started a
+> search.
+> Unfortunately, performing a search on git.wiki.kernel.org gives a 404.
+>
+> I found the relevant page the 'slow' way ;), but I suggest you have a look
+> at the search.
+> Btw. via the slow way, on the Documentation page I find this: "Git SVN crash
+> course (superseded by GitSvnCrashCourse)" - a link back to git.or.cz.
+> Shouldn't this link be removed, since it is superseded?
+>
+> Thanks!
+>
+>
+> Tim van Heugten
 
-Test case included.
-
-Signed-off-by: Robie Basak <robie.basak@canonical.com>
----
- builtin/apply.c              |    8 ++++++--
- t/t4153-apply-doubleslash.sh |   29 +++++++++++++++++++++++++++++
- 2 files changed, 35 insertions(+), 2 deletions(-)
- create mode 100755 t/t4153-apply-doubleslash.sh
-
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 84a8a0b..78e25fa 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -627,9 +627,13 @@ static char *find_name_common(const char *line, char *def, int p_value,
- 			if (name_terminate(start, line-start, c, terminate))
- 				break;
- 		}
--		line++;
--		if (c == '/' && !--p_value)
-+		if (c == '/' && !--p_value) {
-+			while (*line == '/')
-+			    line++;
- 			start = line;
-+		} else {
-+			line++;
-+		}
- 	}
- 	if (!start)
- 		return squash_slash(def);
-diff --git a/t/t4153-apply-doubleslash.sh b/t/t4153-apply-doubleslash.sh
-new file mode 100755
-index 0000000..1ea76b5
---- /dev/null
-+++ b/t/t4153-apply-doubleslash.sh
-@@ -0,0 +1,29 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2011 Canonical Ltd.
-+#
-+
-+test_description='git apply filenames with double slashes
-+
-+Try to apply a patch with git-apply where the filename specified has a double
-+slash after the first (to-be-stripped) component'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	test_commit 1 f &&
-+	cat > good.patch <<EOF
-+diff -u a//f b//f
-+--- a//f
-++++ b//f
-+@@ -1 +1 @@
-+-1
-++2
-+EOF
-+'
-+
-+test_expect_success 'apply diff with double slashes in filenames' '
-+	git apply good.patch 2>err
-+'
-+
-+test_done
 -- 
-1.7.5.4
+Cheers,
+
+Sverre Rabbelier
