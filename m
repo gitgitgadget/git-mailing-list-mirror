@@ -1,128 +1,72 @@
-From: Steinar Bang <sb@dod.no>
-Subject: Re: Merging back from master but keeping a subtree
-Date: Wed, 16 Nov 2011 14:39:40 +0100
-Organization: Probably a good idea
-Message-ID: <87aa7wrxsz.fsf@dod.no>
-References: <87y5xn8v6z.fsf@dod.no>
-	<20110918033719.GB17977@sigill.intra.peff.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 0/3] avoiding unintended consequences of git_path() usage
+Date: Wed, 16 Nov 2011 14:44:51 +0100
+Message-ID: <4EC3BE53.3020705@alum.mit.edu>
+References: <1320510586-3940-1-git-send-email-artagnon@gmail.com> <1320510586-3940-4-git-send-email-artagnon@gmail.com> <20111106002645.GE27272@elie.hsd1.il.comcast.net> <CALkWK0nGhUshwJM1vmAUhBG9foH+=6+_KFhfTTF6+kNS0Hm2JA@mail.gmail.com> <7v7h33oifq.fsf@alter.siamese.dyndns.org> <CALkWK0nUuzn2_itdACHLQBpUaVv97tFAjNGdVBEhWC7a6Rp75w@mail.gmail.com> <20111115095225.GB23139@elie.hsd1.il.comcast.net> <7v7h31wduv.fsf@alter.siamese.dyndns.org> <CALkWK0kOrGzjcGNcf2qPahJSgkvCsQwSrEfAA3wj6PqnMzDBVQ@mail.gmail.com> <20111116075955.GB13706@elie.hsd1.il.comcast.net> <CACsJy8A2=qBiyY3SD-PZo+E=U+Dfjm1UQidgq6khQARZ3d41WQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 16 14:40:02 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 16 14:45:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQfib-0003VR-PJ
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 14:40:02 +0100
+	id 1RQfnR-000677-56
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Nov 2011 14:45:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757291Ab1KPNj5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Nov 2011 08:39:57 -0500
-Received: from lo.gmane.org ([80.91.229.12]:52179 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757112Ab1KPNj4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2011 08:39:56 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RQfiS-0003QY-UE
-	for git@vger.kernel.org; Wed, 16 Nov 2011 14:39:52 +0100
-Received: from cm-84.208.231.161.getinternet.no ([84.208.231.161])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 16 Nov 2011 14:39:52 +0100
-Received: from sb by cm-84.208.231.161.getinternet.no with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 16 Nov 2011 14:39:52 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-Mail-Followup-To: git@vger.kernel.org
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: cm-84.208.231.161.getinternet.no
-Mail-Copies-To: never
-User-Agent: Gnus/5.110018 (No Gnus v0.18) Emacs/23.1 (gnu/linux)
-Cancel-Lock: sha1:JevIiI0lyP9ZALVsMlbRKAQalUc=
+	id S1757407Ab1KPNo4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Nov 2011 08:44:56 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:52248 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757388Ab1KPNoz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2011 08:44:55 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pAGDiprH010313
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 16 Nov 2011 14:44:52 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
+In-Reply-To: <CACsJy8A2=qBiyY3SD-PZo+E=U+Dfjm1UQidgq6khQARZ3d41WQ@mail.gmail.com>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185547>
 
->>>>> Jeff King <peff@peff.net>:
+On 11/16/2011 02:33 PM, Nguyen Thai Ngoc Duy wrote:
+> 2011/11/16 Jonathan Nieder <jrnieder@gmail.com>:
+>> Jokes aside, here's a rough series to do the git_path ->
+>> git_path_unsafe renaming.  While writing it, I noticed a couple of
+>> bugs, hence the two patches before the last one.  Patch 2 is the more
+>> interesting one.
+> 
+> Another approach is do nothing and leave it for a static analysis tool
+> to detect potential problems. I'm looking at sparse at the moment,
+> although I know nothing about it to say if it can or cannot detect
+> such problems. We can at least make sparse detect return value from
+> git_path() being passed to an unsafe function, I think.
 
-> Git should generally do that automatically, unless both sides are
-> changing mydirectory. In which case it will produce conflicts.
+For the cases when static analysis doesn't suffice, recently I posted
+some patches that make it possible for debug a problem that results from
+the use of a "stale" buffer [1].  But having myself also been bitten by
+this problem, I'd also be in favor of a more systematic solution, even
+if it has a small runtime cost.  After all, most of the time the
+filename created by git_path() is going to be passed to the kernel a
+moment later, which will usually be vastly slower than an extra malloc/free.
 
-I thought so too, but the end result didn't build, and I was unable to
-figure out why.
+Michael
 
-> Are you sure you really want to just throw out what the other side did
-> in mydirectory?
+[1] http://comments.gmane.org/gmane.comp.version-control.git/182209
 
-Yes, that's the only thing I'm sure about.  All changes to mydirectory
-should come from my branch.  If there are changes necessary to make
-things build, they are better done by me.
-
-> If git was able to auto-merge some files, then they will not be marked
-> as conflicts in the index. And "git checkout --ours" is about looking in
-> the index for conflicted entries, and then selecting one side.
-
-> I think what you want instead is to do is (assuming you really want to
-> throw out their side):
-
-Thanks for the suggestion.  I tried following this approach, but...
-
->   1. Start a merge between them and us:
-
->        git merge --no-commit remoterepo/master
-
->   2. Throw out whatever the merge came up with and make it look like
->      their tree:
-
-...I never quite could figure out if I did the right thing here.
-Ie. when throwing out what the commit came up with.
-
->        git checkout remoterepo/master -- top
-
->   3. Now overwrite their version of mydirectory with what was in your
->      branch:
-
->        git checkout HEAD -- top/middle/mydirectory
-
->   4. Commit the resulting tree:
-
->        git commit
-
-The problem was that the end result didn't build, wit pretty much the
-same obscure failures that the regular merge had.
-
-But I eventually tried something that worked:
- 1. First create a local branch off master
- 2. Merge in mybranch with "-s ours --no-commit"
- 3. Checkout mydirectory from mybranch
- 4. Commit
- 5. Switch to mybranch
- 6. Merge in the new local branch, which resulted in a conflict-free
-    merge that has my changes in mydirectory and the rest of the world
-    in the rest of the working directory, and the history of mydirectory
-    looks ok
-
-The end result built and worked.
-
-If git had had a "-s theirs" strategy, I wouldn't have needed the
-temporary branch made off master.  That need for that branch is probably
-the most cryptic thing for people following my instructions for future
-merges.
-
-To sum up the commands:
- git checkout master
- git checkout -b master_nicely_merged_with_mybranch
- git merge -s ours --no-commit origin/mybranch
- git checkout origin/mybranch top/middle/mydirectory
- git commit
- git checkout mybranch
- git merge master_nicely_merged_with_mybranch
-
-Thanks!
-
-
-- Steinar
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
