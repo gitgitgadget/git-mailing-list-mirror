@@ -1,110 +1,79 @@
-From: Nicolas Dudebout <nicolas.dudebout@gmail.com>
-Subject: Re: [patch] color of branches in git status -sb
-Date: Wed, 16 Nov 2011 21:25:51 -0500
-Message-ID: <CA+TMmKkM0B8Bge4Jz7KVjR=F-dK0ojuVJp-fe2vj96uq5z0DrA@mail.gmail.com>
-References: <CA+TMmKns-9jiedxY4FiJoBg8akkxwkPBib11EmvCD3r7mRA6vQ@mail.gmail.com>
-	<7v4ny3pn4v.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: git clone --reference not working
+Date: Thu, 17 Nov 2011 05:49:49 +0100
+Message-ID: <4EC4926D.5050004@alum.mit.edu>
+References: <20111116234314.GF3306@redhat.com> <7vobwbpnzr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Andrea Arcangeli <aarcange@redhat.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 17 03:25:59 2011
+X-From: git-owner@vger.kernel.org Thu Nov 17 05:50:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQrfq-0001ma-GI
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Nov 2011 03:25:58 +0100
+	id 1RQtvK-0003au-D0
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Nov 2011 05:50:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755212Ab1KQCZx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Nov 2011 21:25:53 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:64464 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755046Ab1KQCZw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2011 21:25:52 -0500
-Received: by fagn18 with SMTP id n18so2355947fag.19
-        for <git@vger.kernel.org>; Wed, 16 Nov 2011 18:25:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=kQ3W5EGTTZLSGoFfzTvRFz+bR1SAdwsduh5c9cHpWkM=;
-        b=C4WdrlnR5CB5R/DQKWqyVFKfxTsD4mZQWnasQI17Q8yLDafZzu5UuYsiNm7NatNLNv
-         rMiKfv16qbOoYuYvLUQVD0z5MTMw7xJwyS06+92IR1TpV/T7z/ujPL9slhDACpxzfldT
-         9ETH3AZQsvqjjY7rRSIr5t1KwHk4DY0AkAJZk=
-Received: by 10.152.105.132 with SMTP id gm4mr3091119lab.39.1321496751645;
- Wed, 16 Nov 2011 18:25:51 -0800 (PST)
-Received: by 10.152.13.105 with HTTP; Wed, 16 Nov 2011 18:25:51 -0800 (PST)
-In-Reply-To: <7v4ny3pn4v.fsf@alter.siamese.dyndns.org>
+	id S1755507Ab1KQEt5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Nov 2011 23:49:57 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:33620 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755106Ab1KQEt4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2011 23:49:56 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.133] (p54BEBB0A.dip.t-dialin.net [84.190.187.10])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pAH4nnXv029542
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 17 Nov 2011 05:49:50 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
+In-Reply-To: <7vobwbpnzr.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185570>
 
-Please disregard this as a patch. I do not have the time to understand
-how they have to be properly formatted. I just pasted the output of my
-git client.
-I am just letting you know that there is a problem that can be easily
-fixed. I can resend a separate email if that makes it easier for your
-bug tracking.
+On 11/17/2011 01:54 AM, Junio C Hamano wrote:
+> Andrea Arcangeli <aarcange@redhat.com> writes:
+> 
+>> latest git.git won't clone linux upstream with --reference. Those
+>> v*^{} tags breaks it. What's that stuff anyway, looks totally ugly
+>> (two commits with same data contents and header) bah.
+> 
+> They point at commits they tag, and are essential for auto-following. They
+> have been there forever in ls-remote output and they are not the real
+> problem.
+> 
+> A recent topic that was merged at 9bd5000 tightened the refname checking
+> code without thinking and started to needlessly barf upon seeing them. I
+> think we have discussed about the issue on the list, but I do not think
+> there were fixes yet.
+> 
+> Thanks for reminding.
+> 
+> Michael, how does this look?
+>
+> -- >8 --
+> Subject: refs: loosen over-strict "format" check
+> [...]
 
-On Wed, Nov 16, 2011 at 8:13 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nicolas Dudebout <nicolas.dudebout@gmail.com> writes:
->
->> The following patch fixes the fact that two colors of the status
->> output could not be configured in .git/config.
->>
->> The color of the current branch could not be modified because of the
->> name WT_STATUS_ONBRANCH having been changed to WT_STATUS_LOCAL_BRANC=
-H.
->>
->> The color of the remote branch was not defined at all.
->>
->> By the way, when I do 'git status' instead of git 'status -sb' the
->> local and remote branch do not get colored. Is this a desired
->> behavior?
->>
->> Nicolas
->
-> Please follow Documentation/SubmittingPatches.
->
-> Also expect that patches to add new feature this deep in the pre-rele=
-ase
-> feature freeze period is not likely to get reviewed by regular list
-> members.
->
->>
->> =C2=A0 =C2=A0 =C2=A0 Modified =C2=A0 Documentation/config.txt
->
-> Don't do this. We can tell what is modified from "diff --git" lines.
->
->> diff --git a/Documentation/config.txt b/Documentation/config.txt
->> index 5a841da..7a0ddd6 100644
->> --- a/Documentation/config.txt
->> +++ b/Documentation/config.txt
->> @@ -809 +809,2 @@ color.status.<slot>::
->> - =C2=A0 =C2=A0 `branch` (the current branch), or
->> + =C2=A0 =C2=A0 `branch` (the current branch),
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0`remote` (the remote branch) or
->
-> Don't do this. Proper patches have context lines for good reasons.
->
->> =C2=A0 =C2=A0 =C2=A0 Modified =C2=A0 builtin/commit.c
->> diff --git a/builtin/commit.c b/builtin/commit.c
->> index c46f2d1..4674600 100644
->> --- a/builtin/commit.c
->> +++ b/builtin/commit.c
->> @@ -1118 +1118,3 @@ static int parse_status_slot(const char *var, in=
-t offset)
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return WT_STATUS_ONBRANC=
-H;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return WT_STATUS_LOCAL_B=
-RANCH;
->> + =C2=A0 =C2=A0 if (!strcasecmp(var+offset, "remote"))
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return WT_STATUS_REMOTE_=
-BRANCH;
->
+I reviewed the patch (and ran the test suite here for good measure).
+Looks good.
+
+>From SubmittingPatches it looks like I should authorize
+
+Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
+
+Is there a standard way to do so?
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
