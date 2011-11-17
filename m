@@ -1,129 +1,81 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Suggestions for gitk
-Date: Thu, 17 Nov 2011 06:53:41 +0100
-Message-ID: <4EC4A165.2060002@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git clone --reference not working
+Date: Wed, 16 Nov 2011 21:55:12 -0800
+Message-ID: <7vr517nvi7.fsf@alter.siamese.dyndns.org>
+References: <20111116234314.GF3306@redhat.com>
+ <7vobwbpnzr.fsf@alter.siamese.dyndns.org> <4EC4926D.5050004@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git discussion list <git@vger.kernel.org>,
-	Paul Mackerras <paulus@samba.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Andrea Arcangeli <aarcange@redhat.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
 X-From: git-owner@vger.kernel.org Thu Nov 17 06:58:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQuzL-0006yo-Nx
+	id 1RQuzM-0006yo-8H
 	for gcvg-git-2@lo.gmane.org; Thu, 17 Nov 2011 06:58:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751182Ab1KQFyK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Nov 2011 00:54:10 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:34352 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751075Ab1KQFyJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2011 00:54:09 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.133] (p54BEBB0A.dip.t-dialin.net [84.190.187.10])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pAH5rfQT000412
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 17 Nov 2011 06:53:42 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1751438Ab1KQFzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Nov 2011 00:55:17 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44863 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751075Ab1KQFzQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2011 00:55:16 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CFFD133FE;
+	Thu, 17 Nov 2011 00:55:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kGchWozdAkEu9nmspGgbAvDlMng=; b=s6HSqn
+	W1Dj4mlFNmbUcbqBu8MiKYYG/9Zj25xXPdgokbzKl/rcHZg0Dubt504/06HDN865
+	weyYz0kyvxgm5Ok0I774JOCTNL3pjsRPK2bXHt0MC9uDlwTybr3VmodP3bg1GnuB
+	ukT6edDu5I9elG51grprDplwOM1ojIpXdkdxk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JyHyHe+tEH8mLVh8AVDcu7ZjBOWIs1rj
+	6FnPaNdTZZRlHK2R6CLakdOMEM/y1sI22SbGNj+IC+sQaYcuX7Ps+l8pzTl2YIKJ
+	a6CJv3x6XJ2rllpRVBXHBxm8INS5ghIedMmUn6bZKTZKjbe/MOfMrUl5FEQJjJZN
+	Asap1Tk/Hpg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C767233FD;
+	Thu, 17 Nov 2011 00:55:15 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5680F33FC; Thu, 17 Nov 2011
+ 00:55:14 -0500 (EST)
+In-Reply-To: <4EC4926D.5050004@alum.mit.edu> (Michael Haggerty's message of
+ "Thu, 17 Nov 2011 05:49:49 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B8017E76-10E0-11E1-9443-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185572>
 
-I use gitk every day and love it.  I have a few suggestions that IMO
-would make it even better.  Please note that I've been collecting these
-ideas for a while, and they are only small niggles about an excellent tool.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-1. Add a "HEAD" button
+> On 11/17/2011 01:54 AM, Junio C Hamano wrote:
+> ...
+> Looks good.
+>
+>>From SubmittingPatches it looks like I should authorize
+>
+> Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
+>
+> Is there a standard way to do so?
 
-Frequently I want to jump to the HEAD revision after having moved around
-in the history for a while.  Since HEAD is not always at the top of the
-revision list, I do this by typing "HEAD" into the "SHA1 ID" field.  Is
-there a better way already?  If not, I think it would be very convenient
-to have a small "HEAD" button near that field that causes gitk to jump
-there.
+That's perfect. I asked for an extra set of eyeballs from somebody who is
+familiar with the codepath that had a problem, and that person eyeballed
+and found the change to be an appropriate fix to the problem.
 
-2. Option to check out new branch
+Either Acked-by or Reviewed-by is fine by me.
 
-After I "Create new branch", I often want to check out the new branch
-(the equivalent of "git checkout -b BRANCH REV").  So it would be
-convenient if the dialog opened by right-clicking on a commit and select
-"Create new branch" offered the option to check out the newly-created
-branch.  For example, it could have a third confirmation button "Create
-and check out", or it could have a tick box "Check out new branch".
+As a tentative measure, for tonight's pushout, I am inclined to queue an
+equivalent of this patch on top of both mh/ref-api-2 and mh/ref-api-3
+topic and merge them to 'next' and 'pu'. I'd appreciate if you can double
+check the two merges on master..pu after I push them out in a few hours.
 
-3. Allow "Branches: many (N)" to be expanded
-
-There is some limit above which the commit window doesn't list the
-branches that contain the commit, but instead displays "Branches: many
-(N)".  But sometimes one wants to know anyway.  For example, the field
-could be a link that one could click on to open a dialog box listing all
-of the branches containing the commit.
-
-In fact, a tabular format would often be more convenient than the
-current format (which is hard to skim through due to its horizontal
-layout and often scrolls off the right side of the screen) even if there
-are only a few branches, and the same applies to "Tags", "Precedes",
-etc.  So perhaps this dialog could be made available in all cases, even
-if the branches/tags/etc are expanded in the commit summary.
-
-4. Hide "commit" part of window
-
-When I'm trying to get an overview of the history, I am often not
-interested in the commit summary.  So it would be great if there were a
-hotkey to hide the "commit" part of the window and allow the "log" part
-of the window to use the whole surface.  This would be like
-Thunderbird's "F8" key (which I also use all the time), so if this
-feature is implemented you might consider using "F8" for it.
-
-5. Tab completion in "SHA1 ID" field
-
-It would be wonderful if the SHA1 ID field supported some kind of tab
-completion for branch names, similar to that offered by the git mode for
-bash.  Currently it is painful to type a long branch name into this field.
-
-6. Display "git log" command line
-
-I assume that gitk is using something like "git log" to generate the
-list of commits that it displays.  The "git log" command line can be
-configured quite flexibly using the "F4" dialog.  So flexibly, in fact,
-that I often wonder what options it is passing to "git log".  I think it
-would be cool if gitk would display the "git log" command line that
-corresponds to the options currently selected in the "F4" dialog.
-
-7. Tags squeeze out commit message in the "log" window
-
-If a commit has a tag, the tag is listed next in the first column of the
-"log" window, pushing the first line of the commit message off to the
-right.  If a commit has multiple tags, it can easily happen that the
-tags push the commit's log message completely out of the window.  There
-is no scrollbar, so there is no way to see the commit message in this
-situation.
-
-The inability to read the commit message is not such a problem, because
-one can select the commit and see the commit message in the bottom part
-of the window.  More frustrating is that in this situation, it is
-impossible to get to the menu that is normally accessed by
-right-clicking on the commit message.
-
-So perhaps the menu could also be made available elsewhere, for example
-by right-clicking on the blue dot on the "graph" part of the display,
-and/or by right clicking on author and date associated with the commit.
-
-
-I don't know tcl/tk; otherwise I'd try to make some of these changes by
-myself...
-
-Thanks for listening,
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Thanks.
