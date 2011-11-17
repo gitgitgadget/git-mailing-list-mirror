@@ -1,70 +1,67 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 4/8] cmd_merge: convert to single exit point
-Date: Thu, 17 Nov 2011 04:44:06 -0600
-Message-ID: <20111117104406.GB5277@elie.hsd1.il.comcast.net>
-References: <1321522335-24193-1-git-send-email-pclouds@gmail.com>
- <1321522335-24193-5-git-send-email-pclouds@gmail.com>
- <CALkWK0kME4fgLK0S+sFRXmDX1uj_N5+PZnvLFJp33qNssPptWQ@mail.gmail.com>
+Subject: Re: [patch] color of branches in git status -sb
+Date: Thu, 17 Nov 2011 04:55:30 -0600
+Message-ID: <20111117105320.GA5591@elie.hsd1.il.comcast.net>
+References: <CA+TMmKns-9jiedxY4FiJoBg8akkxwkPBib11EmvCD3r7mRA6vQ@mail.gmail.com>
+ <7v4ny3pn4v.fsf@alter.siamese.dyndns.org>
+ <CA+TMmKkM0B8Bge4Jz7KVjR=F-dK0ojuVJp-fe2vj96uq5z0DrA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 17 11:44:20 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Dudebout <nicolas.dudebout@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 17 11:55:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQzS7-0006Hv-HN
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Nov 2011 11:44:19 +0100
+	id 1RQzdH-0004j8-6N
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Nov 2011 11:55:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756594Ab1KQKoP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Nov 2011 05:44:15 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:56044 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756516Ab1KQKoO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Nov 2011 05:44:14 -0500
-Received: by yenq3 with SMTP id q3so847400yen.19
-        for <git@vger.kernel.org>; Thu, 17 Nov 2011 02:44:14 -0800 (PST)
+	id S1756594Ab1KQKzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Nov 2011 05:55:46 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:47467 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756494Ab1KQKzp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2011 05:55:45 -0500
+Received: by ggnb2 with SMTP id b2so864619ggn.19
+        for <git@vger.kernel.org>; Thu, 17 Nov 2011 02:55:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=XID0bSkh79e3mjrEMyNWiuswA2opoTUDzVv9e+6dvkQ=;
-        b=bR26iaW2Cki9bJzhgv6znPyq+nq4eCYS8bPEZcWk4hI+4cwtES5mgOUgHSgqM2nxSX
-         WFahb0p1QIx+QN/+MacoQ5z4krnYocr12BbgYHHiv+tyoYk0myoB1z09SPwSuAjVDn7J
-         q2YTJphx4SDUu2Ta74nLsz+na6byyQiNz2kvw=
-Received: by 10.50.47.168 with SMTP id e8mr42448154ign.15.1321526654046;
-        Thu, 17 Nov 2011 02:44:14 -0800 (PST)
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=EHanf5m1qLzSli+0NByuHgoIH/PkJIBuK5NtOFbLgxE=;
+        b=nJ6w6opqo19chkqdVn6mYdWIwcJZkydwwXL6CVyDsSFTFyQ/05tRth6ro/+8zY6om7
+         J3LJp7FG5kJFzsqlC/WkqfMZAoGIST751b9lfd7VTJgVXfXl/+1oU1MUoFgwSlq0008k
+         oALKhYPPLYteDlFvBa2tbXd0cbGZ8SlX+pOcE=
+Received: by 10.50.180.193 with SMTP id dq1mr27258027igc.34.1321527344306;
+        Thu, 17 Nov 2011 02:55:44 -0800 (PST)
 Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id ai7sm22613895igc.0.2011.11.17.02.44.12
+        by mx.google.com with ESMTPS id el2sm56550147ibb.10.2011.11.17.02.55.39
         (version=SSLv3 cipher=OTHER);
-        Thu, 17 Nov 2011 02:44:13 -0800 (PST)
+        Thu, 17 Nov 2011 02:55:43 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <CALkWK0kME4fgLK0S+sFRXmDX1uj_N5+PZnvLFJp33qNssPptWQ@mail.gmail.com>
+In-Reply-To: <CA+TMmKkM0B8Bge4Jz7KVjR=F-dK0ojuVJp-fe2vj96uq5z0DrA@mail.gmail.com>
 User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185595>
 
-Ramkumar Ramachandra wrote:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Hi,
 
->> [Subject: [PATCH 4/8] cmd_merge: convert to single exit point]
->>
->> This makes post-processing easier.
->>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
-[...]
-> Um, (how) does this seemingly unrelated patch belong to the series?
+Nicolas Dudebout wrote:
 
-It's as Duy says --- it makes post-processing, for example to free()
-a variable before returning, easier.  Which simplifies the next patch.
+> Please disregard this as a patch. I do not have the time to understand
+> how they have to be properly formatted. I just pasted the output of my
+> git client.
+
+What git client are you using?  Maybe it can be fixed to produce
+patches that others can easily apply.
+
+The 'git diff' and 'git format-patch' commands produce applicable
+patches when I try, though that doesn't mean much.
+
+Hope that helps,
+Jonathan
