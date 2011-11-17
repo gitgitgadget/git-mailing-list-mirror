@@ -1,85 +1,107 @@
-From: Alexey Shumkin <Alex.Crezoff@gmail.com>
-Subject: BUG. git rebase -i  successfully continues (and also skips
- rewording) when pre-commit hook fails (exits with non-zero code)
-Date: Thu, 17 Nov 2011 12:58:47 +0400
-Message-ID: <20111117125847.190e9b25@ashu.dyn.rarus.ru>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 0/8] nd/resolve-ref v2
+Date: Thu, 17 Nov 2011 16:32:07 +0700
+Message-ID: <1321522335-24193-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 17 09:58:58 2011
+X-From: git-owner@vger.kernel.org Thu Nov 17 10:28:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RQxo9-0004k7-Rx
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Nov 2011 09:58:58 +0100
+	id 1RQyH2-0002SV-G5
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Nov 2011 10:28:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755471Ab1KQI6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Nov 2011 03:58:53 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:49554 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754693Ab1KQI6w (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2011 03:58:52 -0500
-Received: by eye27 with SMTP id 27so1614024eye.19
-        for <git@vger.kernel.org>; Thu, 17 Nov 2011 00:58:50 -0800 (PST)
+	id S1751579Ab1KQJ2n convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Nov 2011 04:28:43 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:44094 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751400Ab1KQJ2l (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2011 04:28:41 -0500
+Received: by iage36 with SMTP id e36so1839093iag.19
+        for <git@vger.kernel.org>; Thu, 17 Nov 2011 01:28:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rarus.ru; s=google;
-        h=sender:date:from:to:subject:message-id:x-mailer:mime-version
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
          :content-type:content-transfer-encoding;
-        bh=7yaBi/Au4L+xx+BtywwXk0EEsKGeHgMT0kXYeoA2yY8=;
-        b=PpSHBpQedXdBJx7Yjpebi+W8UJ6xXyIpArbYdkRI+He5TDcuGjmogZmOUXxBVTHYOz
-         pqF+Yhi3EFeWKX0/S0zNNeLR3Nj1NgKv1Up1zgvDWhR2oN83HzHqUVZ9QxhMvvM0AcQP
-         P+j3vhPeJ0BQ+qZoPxzmGrlRFJgqA3Vu7tjTQ=
-Received: by 10.213.34.202 with SMTP id m10mr575758ebd.1.1321520330303;
-        Thu, 17 Nov 2011 00:58:50 -0800 (PST)
-Received: from ashu.dyn.rarus.ru ([85.21.218.130])
-        by mx.google.com with ESMTPS id k13sm2974740fah.0.2011.11.17.00.58.48
-        (version=SSLv3 cipher=OTHER);
-        Thu, 17 Nov 2011 00:58:49 -0800 (PST)
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
+        bh=Z6KwocvKNmioQStAphcLp9dv2jyYPxla4XS97lxulK0=;
+        b=kocLFg4N/f0HTjBWw9X1C4HTQKhUPbDGSdtlfEtkMbqefAt6D3KKzHhOGe52qU98aM
+         OjW0Dc7ZCnbpueyoQTNbU8P5BhYxGUGtqI7oV1YitmTXz/be/Gm14+9ud2DTwq7uv0v+
+         9IpY2BDHgkiXBXbfyEcw81hHSbdnmQuTHxO3k=
+Received: by 10.231.5.225 with SMTP id 33mr9347486ibw.3.1321522120708;
+        Thu, 17 Nov 2011 01:28:40 -0800 (PST)
+Received: from tre ([115.74.43.88])
+        by mx.google.com with ESMTPS id jm11sm55744017ibb.1.2011.11.17.01.28.36
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 17 Nov 2011 01:28:39 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Thu, 17 Nov 2011 16:32:16 +0700
+X-Mailer: git-send-email 1.7.4.74.g639db
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185580>
 
-For a project I have a pre-commit hook that monitors
-whether files in a folder (scripts of DB) changed or not
-and fails if another special file (DB version) did not changed, too.
+The first part of actually nd/resolve-ref v2.
 
-So, I did some commits and then I decided to change the order of them.
-Of course, I used a lovely "git rebase -i" command. I changed the order
-of the commits, then rebasing went ok. But I noticed that my pre-commit
-hook output failure message (one of the commits did not meet
-above-mentioned condition). It's not too bad but ugly. But when I
-decided to correct a message of that specific commit I ran
-"git rebase -i" again, marked that commit for rewording, rewording did
-not start (because pre-commit hook failed, obviously) and rebasing went
-on (commit had an unchanged message) and successfully finished. That is
-not what I expected.
-I guess if any of hooks fail (which usually fail the commit), rebasing
-have to be interrupted (as when there are conflicts)
+The last two patches are an attempt to catch overwriting faults in
+future. git_pathname() and resolve_ref_unsafe() are guarded.
 
-Here is a sample to reproduce the error
-git init .
-echo content > file
-git add -fv file
-git commit -a -m 'first commit'
-echo line 2 >> file
-git commit -a -m 'secont commit' # note a typo ;)
-echo '#!/bin/bash
-echo commit failed
-exit 1' > .git/hooks/pre-commit
-chmod +x .git/hooks/pre-commit
-echo fail >> file
-git commit -a -m 'failed commit' # to show that pre-commit hook fails
-# and outputs "commit failed"
-git reset --hard
-git rebase -i HEAD^
-# mark commit for rewording and exit an editor
+(Un)fortunately I ran "make memcheck" but found no new segfaults.
+Either test coverage is insufficient, or we have done a very good
+job of reviewing/testing git.git
 
-note following output after all this:
->commit fail/1)
->Successfully rebased and updated refs/heads/master
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (8):
+  Convert many resolve_ref() calls to read_ref*() and ref_exists()
+  Rename resolve_ref() to resolve_ref_unsafe()
+  Re-add resolve_ref() that always returns an allocated buffer
+  cmd_merge: convert to single exit point
+  Use resolve_ref() instead of resolve_ref_unsafe()
+  Convert resolve_ref_unsafe+xstrdup to resolve_ref
+  Guard memory overwriting in resolve_ref_unsafe's static buffer
+  Enable GIT_DEBUG_MEMCHECK on git_pathname()
+
+ Makefile                |    3 ++
+ branch.c                |    2 +-
+ builtin/branch.c        |   11 +++----
+ builtin/checkout.c      |   17 ++++++------
+ builtin/commit.c        |    3 +-
+ builtin/fmt-merge-msg.c |    8 ++++-
+ builtin/for-each-ref.c  |    7 +---
+ builtin/fsck.c          |    2 +-
+ builtin/merge.c         |   56 +++++++++++++++++++++++++--------------=
+--
+ builtin/notes.c         |    8 ++++-
+ builtin/receive-pack.c  |    5 ++-
+ builtin/remote.c        |   10 +++----
+ builtin/replace.c       |    4 +-
+ builtin/show-branch.c   |    6 +---
+ builtin/show-ref.c      |    2 +-
+ builtin/symbolic-ref.c  |    2 +-
+ builtin/tag.c           |    4 +-
+ bundle.c                |    2 +-
+ cache.h                 |   17 +++++++++---
+ git-compat-util.h       |    9 ++++++
+ notes-merge.c           |    2 +-
+ path.c                  |   28 ++++++++++++++------
+ reflog-walk.c           |   13 +++++----
+ refs.c                  |   63 +++++++++++++++++++++++++++++++--------=
+-------
+ remote.c                |   10 +++---
+ transport.c             |    2 +-
+ wrapper.c               |   21 +++++++++++++++
+ wt-status.c             |    4 +--
+ 28 files changed, 203 insertions(+), 118 deletions(-)
+
+--=20
+1.7.4.74.g639db
