@@ -1,63 +1,92 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: git clone --reference not working
-Date: Thu, 17 Nov 2011 15:56:08 +0100
-Message-ID: <4EC52088.3030308@alum.mit.edu>
-References: <20111116234314.GF3306@redhat.com> <7vobwbpnzr.fsf@alter.siamese.dyndns.org> <4EC4926D.5050004@alum.mit.edu> <7vr517nvi7.fsf@alter.siamese.dyndns.org>
+From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+Subject: [PATCH] honour GIT_ASKPASS for querying username in git-svn
+Date: Thu, 17 Nov 2011 16:15:20 +0100
+Message-ID: <4EC52508.9070907@tu-clausthal.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Andrea Arcangeli <aarcange@redhat.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 17 15:56:20 2011
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Nov 17 16:25:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RR3Nz-0005L9-AG
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Nov 2011 15:56:19 +0100
+	id 1RR3q5-00051r-Hw
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Nov 2011 16:25:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757749Ab1KQO4O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Nov 2011 09:56:14 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:43078 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757712Ab1KQO4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2011 09:56:14 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pAHEu8bq021007
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 17 Nov 2011 15:56:08 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
-In-Reply-To: <7vr517nvi7.fsf@alter.siamese.dyndns.org>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1757004Ab1KQPZP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Nov 2011 10:25:15 -0500
+Received: from hades.rz.tu-clausthal.de ([139.174.2.20]:30399 "EHLO
+	hades.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932196Ab1KQPZN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2011 10:25:13 -0500
+X-Greylist: delayed 664 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Nov 2011 10:25:13 EST
+Received: from hades.rz.tu-clausthal.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 8657042205B;
+	Thu, 17 Nov 2011 16:14:07 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:subject:content-type
+	:content-transfer-encoding; s=dkim1; bh=aftMWPA43owwzid2Eg55l720
+	lys=; b=BzzYWPh3VmSb9Iwz4JZLAh3JnjIQmcrhJ2o8lUbccAQU79D2MDbGDFPh
+	0h/Z0k/so4PeIE16UYM2WKD5WtUd2+2EI3u86Lix3qdeoF5LMYMcLXwlLwboI2C6
+	5ShZ0n2rZu982ma29FdcYXpDX1tobsNctjh/v6m1a/e/OM84/Gg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:subject:content-type
+	:content-transfer-encoding; q=dns; s=dkim1; b=hFLQ3xnqeGS8Qba8jk
+	6oH2POtGgKlqxM6nMsylHZVp6qSFLaouMJroiABXuhPPv0n42ZSjS2XTw6IZ5UOQ
+	58xkOCutX/fXz2sOI7SC/jepwQX3xFTDRr6wSprJsgh4I7BZDPWCy1ADzneKXq+1
+	mmdZMV2ZVfy5FX3HaNbJSga9E=
+Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
+	by hades.rz.tu-clausthal.de (Postfix) with ESMTP id 49FC842203C;
+	Thu, 17 Nov 2011 16:14:07 +0100 (CET)
+Received: from [139.174.101.48] (account sstri@tu-clausthal.de [139.174.101.48] verified)
+  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.2)
+  with ESMTPSA id 23491104; Thu, 17 Nov 2011 16:14:07 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
+X-Enigmail-Version: 1.3.3
+X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185600>
 
-On 11/17/2011 06:55 AM, Junio C Hamano wrote:
-> As a tentative measure, for tonight's pushout, I am inclined to queue an
-> equivalent of this patch on top of both mh/ref-api-2 and mh/ref-api-3
-> topic and merge them to 'next' and 'pu'. I'd appreciate if you can double
-> check the two merges on master..pu after I push them out in a few hours.
+>From 8e576705ca949c32ff22d3216006073ee70652eb Mon Sep 17 00:00:00 2001
+From: Sven Strickroth <email@cs-ware.de>
+Date: Thu, 17 Nov 2011 15:43:25 +0100
+Subject: [PATCH 1/2] honour GIT_ASKPASS for querying username
 
-I checked the merges in the following (but didn't run the test suite, as
-I assume that you have already done that):
+git-svn reads usernames from an interactive terminal.
+This behavior cause GUIs to hang waiting for git-svn to
+complete (http://code.google.com/p/tortoisegit/issues/detail?id=967).
 
-   bc1bbe0..09116a1  master     -> gitster/master
-   973592c..ada4ec6  mh/ref-api-2 -> gitster/mh/ref-api-2
-   caa8069..37817ba  mh/ref-api-3 -> gitster/mh/ref-api-3
-   25e8838..cc76151  next       -> gitster/next
- + 06ad567...b032ac4 pu         -> gitster/pu  (forced update)
+Also see commit 56a853b62c0ae7ebaad0a7a0a704f5ef561eb795.
 
-They all look fine.
+Signed-off-by: Sven Strickroth <email@cs-ware.de>
+---
+ git-svn.perl |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-Michael
+diff --git a/git-svn.perl b/git-svn.perl
+index e30df22..8ec3dfc 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -4403,6 +4403,11 @@ sub username {
+ 	my $username;
+ 	if (defined $_username) {
+ 		$username = $_username;
++	} else if (exists $ENV{GIT_ASKPASS}) {
++		open(PH, "-|", $ENV{GIT_ASKPASS}, "Username: ");
++		$username = <PH>;
++		$username =~ s/[\012\015]//; # \n\r
++		close(PH);
+ 	} else {
+ 		print STDERR "Username: ";
+ 		STDERR->flush;
+-- 
+1.7.7.1.msysgit.0
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Best regards,
+ Sven Strickroth
