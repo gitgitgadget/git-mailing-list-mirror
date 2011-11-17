@@ -1,92 +1,81 @@
-From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-Subject: [PATCH] honour GIT_ASKPASS for querying username in git-svn
-Date: Thu, 17 Nov 2011 16:15:20 +0100
-Message-ID: <4EC52508.9070907@tu-clausthal.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git clone --reference not working
+Date: Thu, 17 Nov 2011 09:40:17 -0800
+Message-ID: <7vvcqimyv2.fsf@alter.siamese.dyndns.org>
+References: <20111116234314.GF3306@redhat.com>
+ <7vobwbpnzr.fsf@alter.siamese.dyndns.org> <4EC4926D.5050004@alum.mit.edu>
+ <7vr517nvi7.fsf@alter.siamese.dyndns.org> <4EC52088.3030308@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Nov 17 16:25:22 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Andrea Arcangeli <aarcange@redhat.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Nov 17 18:40:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RR3q5-00051r-Hw
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Nov 2011 16:25:21 +0100
+	id 1RR5wp-0000e8-W2
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Nov 2011 18:40:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757004Ab1KQPZP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Nov 2011 10:25:15 -0500
-Received: from hades.rz.tu-clausthal.de ([139.174.2.20]:30399 "EHLO
-	hades.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932196Ab1KQPZN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2011 10:25:13 -0500
-X-Greylist: delayed 664 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Nov 2011 10:25:13 EST
-Received: from hades.rz.tu-clausthal.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id 8657042205B;
-	Thu, 17 Nov 2011 16:14:07 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:subject:content-type
-	:content-transfer-encoding; s=dkim1; bh=aftMWPA43owwzid2Eg55l720
-	lys=; b=BzzYWPh3VmSb9Iwz4JZLAh3JnjIQmcrhJ2o8lUbccAQU79D2MDbGDFPh
-	0h/Z0k/so4PeIE16UYM2WKD5WtUd2+2EI3u86Lix3qdeoF5LMYMcLXwlLwboI2C6
-	5ShZ0n2rZu982ma29FdcYXpDX1tobsNctjh/v6m1a/e/OM84/Gg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:subject:content-type
-	:content-transfer-encoding; q=dns; s=dkim1; b=hFLQ3xnqeGS8Qba8jk
-	6oH2POtGgKlqxM6nMsylHZVp6qSFLaouMJroiABXuhPPv0n42ZSjS2XTw6IZ5UOQ
-	58xkOCutX/fXz2sOI7SC/jepwQX3xFTDRr6wSprJsgh4I7BZDPWCy1ADzneKXq+1
-	mmdZMV2ZVfy5FX3HaNbJSga9E=
-Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
-	by hades.rz.tu-clausthal.de (Postfix) with ESMTP id 49FC842203C;
-	Thu, 17 Nov 2011 16:14:07 +0100 (CET)
-Received: from [139.174.101.48] (account sstri@tu-clausthal.de [139.174.101.48] verified)
-  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.2)
-  with ESMTPSA id 23491104; Thu, 17 Nov 2011 16:14:07 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
-X-Enigmail-Version: 1.3.3
-X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
+	id S1753400Ab1KQRkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Nov 2011 12:40:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52518 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751144Ab1KQRkW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2011 12:40:22 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B1EE5935;
+	Thu, 17 Nov 2011 12:40:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=21tQT3ZWUSerGRFVDPjwsONBYJc=; b=vcu5+K
+	gCsTFoq74hl1PF7FyOQa152w5GOggpi38W2RsFSf+GUElpJEzgRk2XyQa9913IvA
+	XK837uCFa0qw4nXfugxcb2AI/0V0T7FAsemSCy3HDn19j4KA6MnpRonwOTyhYphW
+	N9gL477THS0gaJo7LU7unk/V00n3VBIfQfN6E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tGnpUG3z2XqBzYAa4IKdDgYgJpxbANUb
+	qaFhB3SFq1K3ilQ9x6kjuxO8APbtOTOWFtWDrCQI0fbOcaoe67wf6YsVUACSETDl
+	El+0fniLB43jVekSCpPD1KHGStqGVpBBwl/D2uNqrIBd2xqkdMYKHSpCDjiZL/pz
+	w39PFUxbFqc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2175E5934;
+	Thu, 17 Nov 2011 12:40:21 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 84E435932; Thu, 17 Nov 2011
+ 12:40:19 -0500 (EST)
+In-Reply-To: <4EC52088.3030308@alum.mit.edu> (Michael Haggerty's message of
+ "Thu, 17 Nov 2011 15:56:08 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 37DE3960-1143-11E1-8991-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185601>
 
->From 8e576705ca949c32ff22d3216006073ee70652eb Mon Sep 17 00:00:00 2001
-From: Sven Strickroth <email@cs-ware.de>
-Date: Thu, 17 Nov 2011 15:43:25 +0100
-Subject: [PATCH 1/2] honour GIT_ASKPASS for querying username
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-git-svn reads usernames from an interactive terminal.
-This behavior cause GUIs to hang waiting for git-svn to
-complete (http://code.google.com/p/tortoisegit/issues/detail?id=967).
+> On 11/17/2011 06:55 AM, Junio C Hamano wrote:
+>> As a tentative measure, for tonight's pushout, I am inclined to queue an
+>> equivalent of this patch on top of both mh/ref-api-2 and mh/ref-api-3
+>> topic and merge them to 'next' and 'pu'. I'd appreciate if you can double
+>> check the two merges on master..pu after I push them out in a few hours.
+>
+> I checked the merges in the following...
 
-Also see commit 56a853b62c0ae7ebaad0a7a0a704f5ef561eb795.
+Sorry, what I meant was eyeballing these two merges
 
-Signed-off-by: Sven Strickroth <email@cs-ware.de>
----
- git-svn.perl |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+  aee9699 Merge branch 'mh/ref-api-3' into jch
+  9f8b195 Merge branch 'mh/ref-api-2' into jch
 
-diff --git a/git-svn.perl b/git-svn.perl
-index e30df22..8ec3dfc 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -4403,6 +4403,11 @@ sub username {
- 	my $username;
- 	if (defined $_username) {
- 		$username = $_username;
-+	} else if (exists $ENV{GIT_ASKPASS}) {
-+		open(PH, "-|", $ENV{GIT_ASKPASS}, "Username: ");
-+		$username = <PH>;
-+		$username =~ s/[\012\015]//; # \n\r
-+		close(PH);
- 	} else {
- 		print STDERR "Username: ";
- 		STDERR->flush;
--- 
-1.7.7.1.msysgit.0
+in "git log --oneline --first-parent master..pu" to see if I screwed them
+up.
 
--- 
-Best regards,
- Sven Strickroth
+Going forward, I think after 1.7.8 final is tagged, when rewinding and
+rebuilding the 'next' branch, it would be ideal to rebase these two topics
+(actually, -3 builds on top of -2, so rebasing only the lower one should
+be sufficient) on top of 1.7.8 that will include the fix in the patch that
+started this thread.
