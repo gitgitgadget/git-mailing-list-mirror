@@ -1,68 +1,180 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 8/8] Enable GIT_DEBUG_MEMCHECK on git_pathname()
-Date: Thu, 17 Nov 2011 23:35:44 -0800
-Message-ID: <7vobw9lw6n.fsf@alter.siamese.dyndns.org>
-References: <1321522335-24193-1-git-send-email-pclouds@gmail.com>
- <1321522335-24193-9-git-send-email-pclouds@gmail.com>
- <CALkWK0ndE1Q_jNSV7CBB5W2NyVhcy7kgNO5woWWOw6CXx3cxcA@mail.gmail.com>
- <20111117134201.GA30718@sigill.intra.peff.net>
- <CACsJy8A25SyLVKv8GwkYaHBJwU5tHqgdJK6L-upF9HWseFzCtQ@mail.gmail.com>
- <20111118012746.GA22485@elie.hsd1.il.comcast.net>
- <CALKQrgfTKmSd8se3n3xq89SXRmNPm3qz3Ckv2mUghot8kStKxA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v2] Makefile: add option to disable automatic dependency
+ generation
+Date: Fri, 18 Nov 2011 03:58:21 -0600
+Message-ID: <20111118095820.GF25145@elie.hsd1.il.comcast.net>
+References: <CACsJy8BZMDyf4MCiKxPJ5Z+XS+C-MC82SpMFyWgiXmb9xCnScw@mail.gmail.com>
+ <20111118034142.GA25228@elie.hsd1.il.comcast.net>
+ <CACsJy8A44PFtYrm8NQU+48sVkOe8mjJyO9opO5-TwRtAd-TKsQ@mail.gmail.com>
+ <20111118045742.GA25145@elie.hsd1.il.comcast.net>
+ <7vty62klg9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Nov 18 08:35:53 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Fredrik Kuivinen <frekui@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 18 10:58:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RRIzI-0006mS-Fc
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 08:35:52 +0100
+	id 1RRLDP-0003R9-VY
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 10:58:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751843Ab1KRHfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Nov 2011 02:35:47 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34242 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751365Ab1KRHfq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2011 02:35:46 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4245F287F;
-	Fri, 18 Nov 2011 02:35:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8Qdmo/WcyVFd0bXoj4hjipY42Xo=; b=yU0tnZ
-	vU+SjPeFhZBDE9gsr6uS5dwENmZ3tmbu42fAVTNIx9oeGWDU5/jX5CNjVbp+C1bv
-	yAxr/9AhkuNLcIFm92pgWz7AaVWZFkXoEqf37026nI5db4uKjH7ucOO4Mv3yl9lA
-	SBHCJnbqYlRjLRTtmppd/vPgcCrX9Uh6WibYE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ioTmiZC6YDrZ35ZBzeiJXWAqJ6nmHtNr
-	6YiIwQ1hw+yK72TuQEoj3OPBHzyNCbTtAR7gu5H7GO7vz6m36GiRaJpa5784SUdk
-	StpmReFQTXb+MBtwUGGq2NHC8rehaasRk7NRGdfRTqT9gQMoIZo4QjlOGGFvmT8Z
-	F58JmvPV0uc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 375A4287E;
-	Fri, 18 Nov 2011 02:35:46 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8AE32287D; Fri, 18 Nov 2011
- 02:35:45 -0500 (EST)
-In-Reply-To: <CALKQrgfTKmSd8se3n3xq89SXRmNPm3qz3Ckv2mUghot8kStKxA@mail.gmail.com> (Johan
- Herland's message of "Fri, 18 Nov 2011 07:16:13 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: ED526E46-11B7-11E1-AF18-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755570Ab1KRJ6b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Nov 2011 04:58:31 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:40103 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752611Ab1KRJ63 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2011 04:58:29 -0500
+Received: by ggnb2 with SMTP id b2so2248848ggn.19
+        for <git@vger.kernel.org>; Fri, 18 Nov 2011 01:58:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Rax81LUJ884bTaiYILGehvgH9+HFykE9Qlbaf1bZVQQ=;
+        b=m/mvIvZ3fiEBkiT5kF5SBHZC9ySB33jW9LODT2dhRQNubgJj1esycMcmnlU8AckHv6
+         I6FYIKoCRUEnW0cuqoayaeft5sIhB1DSrqSP6D/6g8ml8v1mmb0r+K9N/YyuoB+VIxNu
+         6EGrx3vA+NhYpHu7q9AFQB50Sfa+CO5CSNG84=
+Received: by 10.50.194.231 with SMTP id hz7mr2614940igc.7.1321610309051;
+        Fri, 18 Nov 2011 01:58:29 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id el2sm982913ibb.10.2011.11.18.01.58.28
+        (version=SSLv3 cipher=OTHER);
+        Fri, 18 Nov 2011 01:58:28 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vty62klg9.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185644>
 
-Thanks, both. Will queue.
+Now that the COMPUTE_HEADER_DEPENDENCIES feature is turned on
+automatically for compilers that support it (see v1.7.8-rc0~142^2~1,
+2011-08-18), there is no easy way to force it off.  For example,
+setting COMPUTE_HEADER_DEPENDENCIES to the empty string in config.mak
+just tells the makefile to treat it as undefined and run a test
+command to see if the -MMD option is supported.
+
+So allow setting COMPUTE_HEADER_DEPENDENCIES=3Dno to explicitly force
+the feature off.  The new semantics:
+
+ - "yes" means to explicitly enable the feature
+ - "no" means to disable it
+ - "auto" means to autodetect
+
+The default is still "auto".  Any value other than these three will
+cause the build to error out with a descriptive message so typos and
+stale settings in config.mak don't result in mysterious behavior.
+
+	Makefile:1278: *** please set COMPUTE_HEADER_DEPENDENCIES to
+	yes, no, or auto (not "1").  Stop.
+
+So now when someone using a compiler without -MMD support reports
+trouble building git, you can reproduce it by running "make
+COMPUTE_HEADER_DEPENDENCIES=3Dno".
+
+Suggested-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
+com>
+Improved-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Junio C Hamano wrote:
+
+> Eek. At least at the end user UI level, couldn't we do this as a tris=
+tate?
+
+Nice idea.  Here it is.
+
+ Makefile |   31 ++++++++++++++++++++++++-------
+ 1 files changed, 24 insertions(+), 7 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 34ac7957..b1c80a67 100644
+--- a/Makefile
++++ b/Makefile
+@@ -250,6 +250,12 @@ all::
+ #   DEFAULT_EDITOR=3D'$GIT_FALLBACK_EDITOR',
+ #   DEFAULT_EDITOR=3D'"C:\Program Files\Vim\gvim.exe" --nofork'
+ #
++# Define COMPUTE_HEADER_DEPENDENCIES to "yes" if you want dependencies=
+ on
++# header files to be automatically computed, to avoid rebuilding objec=
+ts when
++# an unrelated header file changes.  Define it to "no" to use the hard=
+-coded
++# dependency rules.  The default is "auto", which means to use compute=
+d header
++# dependencies if your compiler is detected to support it.
++#
+ # Define CHECK_HEADER_DEPENDENCIES to check for problems in the hard-c=
+oded
+ # dependency rules.
+ #
+@@ -1246,21 +1252,32 @@ endif
+ endif
+=20
+ ifdef CHECK_HEADER_DEPENDENCIES
+-COMPUTE_HEADER_DEPENDENCIES =3D
++COMPUTE_HEADER_DEPENDENCIES =3D no
+ USE_COMPUTED_HEADER_DEPENDENCIES =3D
+-else
++endif
++
+ ifndef COMPUTE_HEADER_DEPENDENCIES
++COMPUTE_HEADER_DEPENDENCIES =3D auto
++endif
++
++ifeq ($(COMPUTE_HEADER_DEPENDENCIES),auto)
+ dep_check =3D $(shell $(CC) $(ALL_CFLAGS) \
+ 	-c -MF /dev/null -MMD -MP -x c /dev/null -o /dev/null 2>&1; \
+ 	echo $$?)
+ ifeq ($(dep_check),0)
+-COMPUTE_HEADER_DEPENDENCIES=3DYesPlease
+-endif
++override COMPUTE_HEADER_DEPENDENCIES =3D yes
++else
++override COMPUTE_HEADER_DEPENDENCIES =3D no
+ endif
+ endif
+=20
+-ifdef COMPUTE_HEADER_DEPENDENCIES
++ifeq ($(COMPUTE_HEADER_DEPENDENCIES),yes)
+ USE_COMPUTED_HEADER_DEPENDENCIES =3D YesPlease
++else
++ifneq ($(COMPUTE_HEADER_DEPENDENCIES),no)
++$(error please set COMPUTE_HEADER_DEPENDENCIES to yes, no, or auto \
++(not "$(COMPUTE_HEADER_DEPENDENCIES)"))
++endif
+ endif
+=20
+ ifdef SANE_TOOL_PATH
+@@ -1907,7 +1924,7 @@ OBJECTS :=3D $(GIT_OBJS) $(XDIFF_OBJS) $(VCSSVN_O=
+BJS)
+ dep_files :=3D $(foreach f,$(OBJECTS),$(dir $f).depend/$(notdir $f).d)
+ dep_dirs :=3D $(addsuffix .depend,$(sort $(dir $(OBJECTS))))
+=20
+-ifdef COMPUTE_HEADER_DEPENDENCIES
++ifeq ($(COMPUTE_HEADER_DEPENDENCIES),yes)
+ $(dep_dirs):
+ 	@mkdir -p $@
+=20
+@@ -1920,7 +1937,7 @@ Please unset CHECK_HEADER_DEPENDENCIES and try ag=
+ain)
+ endif
+ endif
+=20
+-ifndef COMPUTE_HEADER_DEPENDENCIES
++ifneq ($(COMPUTE_HEADER_DEPENDENCIES),yes)
+ ifndef CHECK_HEADER_DEPENDENCIES
+ dep_dirs =3D
+ missing_dep_dirs =3D
+--=20
+1.7.8.rc2
