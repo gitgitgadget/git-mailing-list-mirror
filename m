@@ -1,102 +1,88 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] Makefile: add missing header file dependencies
-Date: Fri, 18 Nov 2011 04:02:02 -0600
-Message-ID: <20111118100202.GG25145@elie.hsd1.il.comcast.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v2] Makefile: add option to disable automatic dependency generation
+Date: Fri, 18 Nov 2011 17:07:44 +0700
+Message-ID: <CACsJy8AY9bFR_DXnOhbfMGFBD4Ep6OmKF4EiCgUdNiZi-rjMLA@mail.gmail.com>
 References: <CACsJy8BZMDyf4MCiKxPJ5Z+XS+C-MC82SpMFyWgiXmb9xCnScw@mail.gmail.com>
- <20111118034142.GA25228@elie.hsd1.il.comcast.net>
- <CACsJy8A44PFtYrm8NQU+48sVkOe8mjJyO9opO5-TwRtAd-TKsQ@mail.gmail.com>
- <20111118045742.GA25145@elie.hsd1.il.comcast.net>
- <7vty62klg9.fsf@alter.siamese.dyndns.org>
+ <20111118034142.GA25228@elie.hsd1.il.comcast.net> <CACsJy8A44PFtYrm8NQU+48sVkOe8mjJyO9opO5-TwRtAd-TKsQ@mail.gmail.com>
+ <20111118045742.GA25145@elie.hsd1.il.comcast.net> <7vty62klg9.fsf@alter.siamese.dyndns.org>
  <20111118095820.GF25145@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Fredrik Kuivinen <frekui@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 18 11:02:21 2011
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 18 11:08:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RRLH2-0005Bz-PC
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 11:02:21 +0100
+	id 1RRLMu-0007vZ-28
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 11:08:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756669Ab1KRKCN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Nov 2011 05:02:13 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:43634 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751917Ab1KRKCM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2011 05:02:12 -0500
-Received: by ggnb2 with SMTP id b2so2251990ggn.19
-        for <git@vger.kernel.org>; Fri, 18 Nov 2011 02:02:11 -0800 (PST)
+	id S1757565Ab1KRKIS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Nov 2011 05:08:18 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:53273 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757462Ab1KRKIQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2011 05:08:16 -0500
+Received: by bke11 with SMTP id 11so3211245bke.19
+        for <git@vger.kernel.org>; Fri, 18 Nov 2011 02:08:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=0Bqq7KHEbx3hn0QunzKX6YeTnQnS+dgW51qP+7Nx0E8=;
-        b=RIfR92fGRUt5t0wTpu94U1liPBnoMdt8iLbo2FeC642dcgGhxLpTwKxrBx+u3quE2n
-         T2j+pbXPh+kudUuQOmDVc2hicnKh4A92Agy0WIbDYwqeAd8Fqa+s32tjKV+ppyFiNIcR
-         MpKBdBfGHTjBeVBVJx9lWDRJvn6MYlj7T/i+Y=
-Received: by 10.50.169.99 with SMTP id ad3mr2366448igc.6.1321610531538;
-        Fri, 18 Nov 2011 02:02:11 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id bu33sm1003816ibb.11.2011.11.18.02.02.10
-        (version=SSLv3 cipher=OTHER);
-        Fri, 18 Nov 2011 02:02:10 -0800 (PST)
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=9XNbyweV6Hql/p92lf0Ho5DWCiICwS0k63+WBlh1/c0=;
+        b=l8J8rOUdlkHWk7DqMW138HDLZJVJNEgPhee5G5SQtK/u2mlB2o3/hai1uFoyuvheRM
+         Zn0ynlpyfp3mUwhop/wY/lyPYVkVLu86bwIGiRFcwDIfJ6kQZFUzRlnvWtVrWGTsSXyd
+         320Eeu6RtY+mXQXWZvg6hEeIRcChkAXK1f2Fo=
+Received: by 10.204.10.81 with SMTP id o17mr2605784bko.65.1321610895292; Fri,
+ 18 Nov 2011 02:08:15 -0800 (PST)
+Received: by 10.204.23.2 with HTTP; Fri, 18 Nov 2011 02:07:44 -0800 (PST)
 In-Reply-To: <20111118095820.GF25145@elie.hsd1.il.comcast.net>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185646>
 
-When the streaming filter API was introduced in v1.7.7-rc0~60^2~7
-(2011-05-20), we forgot to add its header to LIB_H.  Most translation
-units depend on streaming.h via cache.h.
+On Fri, Nov 18, 2011 at 4:58 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Now that the COMPUTE_HEADER_DEPENDENCIES feature is turned on
+> automatically for compilers that support it (see v1.7.8-rc0~142^2~1,
+> 2011-08-18), there is no easy way to force it off. =C2=A0For example,
+> setting COMPUTE_HEADER_DEPENDENCIES to the empty string in config.mak
+> just tells the makefile to treat it as undefined and run a test
+> command to see if the -MMD option is supported.
+>
+> So allow setting COMPUTE_HEADER_DEPENDENCIES=3Dno to explicitly force
+> the feature off. =C2=A0The new semantics:
+>
+> =C2=A0- "yes" means to explicitly enable the feature
+> =C2=A0- "no" means to disable it
+> =C2=A0- "auto" means to autodetect
+>
+> The default is still "auto". =C2=A0Any value other than these three w=
+ill
+> cause the build to error out with a descriptive message so typos and
+> stale settings in config.mak don't result in mysterious behavior.
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Makefile:1278: *** please set COMPUTE_HEAD=
+ER_DEPENDENCIES to
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0yes, no, or auto (not "1"). =C2=A0Stop.
+>
+> So now when someone using a compiler without -MMD support reports
+> trouble building git, you can reproduce it by running "make
+> COMPUTE_HEADER_DEPENDENCIES=3Dno".
+>
+> Suggested-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmai=
+l.com>
+> Improved-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
-v1.7.5-rc0~48 (Fix sparse warnings, 2011-03-22) introduced undeclared
-dependencies by url.o on url.h and thread-utils.o on thread-utils.h.
-
-Noticed by make CHECK_HEADER_DEPENDENCIES=1.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Some makefile buglets found while testing.
-
- Makefile |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index ee34eab8..34ac7957 100644
---- a/Makefile
-+++ b/Makefile
-@@ -518,6 +518,7 @@ LIB_H += compat/win32/syslog.h
- LIB_H += compat/win32/poll.h
- LIB_H += compat/win32/dirent.h
- LIB_H += connected.h
-+LIB_H += convert.h
- LIB_H += csum-file.h
- LIB_H += decorate.h
- LIB_H += delta.h
-@@ -2009,13 +2010,13 @@ builtin/branch.o builtin/checkout.o builtin/clone.o builtin/reset.o branch.o tra
- builtin/bundle.o bundle.o transport.o: bundle.h
- builtin/bisect--helper.o builtin/rev-list.o bisect.o: bisect.h
- builtin/clone.o builtin/fetch-pack.o transport.o: fetch-pack.h
--builtin/grep.o builtin/pack-objects.o transport-helper.o: thread-utils.h
-+builtin/grep.o builtin/pack-objects.o transport-helper.o thread-utils.o: thread-utils.h
- builtin/send-pack.o transport.o: send-pack.h
- builtin/log.o builtin/shortlog.o: shortlog.h
- builtin/prune.o builtin/reflog.o reachable.o: reachable.h
- builtin/commit.o builtin/revert.o wt-status.o: wt-status.h
- builtin/tar-tree.o archive-tar.o: tar.h
--connect.o transport.o http-backend.o: url.h
-+connect.o transport.o url.o http-backend.o: url.h
- http-fetch.o http-walker.o remote-curl.o transport.o walker.o: walker.h
- http.o http-walker.o http-push.o http-fetch.o remote-curl.o: http.h url.h
- 
--- 
-1.7.8.rc2
+Tested-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
+>
+--=20
+Duy
