@@ -1,78 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] refresh_index: notice typechanges in output
-Date: Fri, 18 Nov 2011 12:40:29 -0800
-Message-ID: <7vwraxjhaa.fsf@alter.siamese.dyndns.org>
-References: <20111114225056.GA27370@sigill.intra.peff.net>
- <20111114225651.GD3993@sigill.intra.peff.net>
- <7vaa7yi6wv.fsf@alter.siamese.dyndns.org>
- <20111115020506.GA6305@sigill.intra.peff.net>
- <20111118110938.GA5940@sigill.intra.peff.net>
+From: Shawn Ferris <shawn.ferris@gmail.com>
+Subject: .git ignored regardless of --git-dir value
+Date: Fri, 18 Nov 2011 13:56:56 -0700
+Message-ID: <CAC2kKA_PZNDg_dPjWXKeFU4ZVpMas3PubZfSgTnfCfVPuNPdsA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 18 21:40:41 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 18 21:57:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RRVEj-0006Eb-LI
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 21:40:38 +0100
+	id 1RRVUb-000403-PA
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 21:57:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754364Ab1KRUkd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Nov 2011 15:40:33 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50903 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753605Ab1KRUkc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2011 15:40:32 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A9336782;
-	Fri, 18 Nov 2011 15:40:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iyv1n1aByAxF/05RaWoWgEE/4hM=; b=TL7Yeq
-	MQlMQQKgEJYf0All190Arpdq9McQ/YekcZXiAWNtKnDxP6tBz/AkaVyUDFPr2Pp6
-	Ctj1tFfij+PDhW0sLyELxdPPirJ6GJ6Co1VQAtECMQkGMO6h+j8LXoJhbWgRYj09
-	ZFS48LmDQAjoDDZc9dBppEFwOyaSqE/AyxLAI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AHVS4ozysA23F00/JY36aU8BsnAUNLK7
-	vs9UvdAAV4GyHnO8BLFNGT4q063ZIPoBJIXJMC+Hdb2KXWGcrWdcp2mDfdbIxuaH
-	FVcbcZcT/fB235Jp2JLYdiquqSmeIChXvqJDZ5ZD/paRVFYFYcTOMxeLPm8zRpuz
-	9bSjsdQILqE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 620DA6781;
-	Fri, 18 Nov 2011 15:40:31 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC1FA677E; Fri, 18 Nov 2011
- 15:40:30 -0500 (EST)
-In-Reply-To: <20111118110938.GA5940@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 18 Nov 2011 06:09:38 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8E632C40-1225-11E1-AB8C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753511Ab1KRU45 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Nov 2011 15:56:57 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:43061 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751300Ab1KRU44 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2011 15:56:56 -0500
+Received: by vbbfc21 with SMTP id fc21so593494vbb.19
+        for <git@vger.kernel.org>; Fri, 18 Nov 2011 12:56:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=7panC9w47axTulHLbGNohZ0yqZ90b6HFZO3gbJtLkyo=;
+        b=g+1GhLuClX2Mg/HuBAKDAAyeOydYhlhXbGwgwmgTZvbBEFOyV/wC/S2E7OK6shBKa+
+         I/hhWP4tfDSmgMeobIJPcmWa5IOz2Gx3BQV0frFDRXDlNcI+CMk4KxXjP5iM9QnlDmam
+         LoihILYedIKm+q9OqwZt54kCstOyKUzIMJ6C0=
+Received: by 10.52.68.240 with SMTP id z16mr5012185vdt.120.1321649816164; Fri,
+ 18 Nov 2011 12:56:56 -0800 (PST)
+Received: by 10.220.227.3 with HTTP; Fri, 18 Nov 2011 12:56:56 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185678>
 
-Jeff King <peff@peff.net> writes:
+Hi All --
 
-> On Mon, Nov 14, 2011 at 09:05:06PM -0500, Jeff King wrote:
->
->> Do you want to add your patch on top, or do you want me to re-roll with
->> this squashed in? I can also hold the re-roll until post-release if you
->> want.
->
-> You mentioned squashing in the "what's cooking" message. Rather than
-> squashing just the typechange bits, how about this re-roll, which I
-> think is a little easier to follow:
->
->   [1/3]: read-cache: let refresh_cache_ent pass up changed flags
->   [2/3]: refresh_index: rename format variables
->   [3/3]: refresh_index: make porcelain output more specific
+Is it expected behavior to have the .git directory ignored, even after
+specifying an alternate location with --git-dir? For example:
 
-Looks sensible; thanks. Will replace.
+$ git --git-dir=.foo init
+Initialized empty Git repository in /home/sferris/work/t/.foo/
+
+$ mkdir .git
+$ touch .git/filea
+
+$ git --git-dir=.foo --work-tree=. add .
+
+$ git --git-dir=.foo --work-tree=. status
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#   (use "git rm --cached <file>..." to unstage)
+#
+#    new file:   .foo/HEAD
+#    new file:   .foo/config
+#    new file:   .foo/description
+#    new file:   .foo/hooks/applypatch-msg.sample
+#    new file:   .foo/hooks/commit-msg.sample
+#    new file:   .foo/hooks/post-update.sample
+#    new file:   .foo/hooks/pre-applypatch.sample
+#    new file:   .foo/hooks/pre-commit.sample
+#    new file:   .foo/hooks/pre-rebase.sample
+#    new file:   .foo/hooks/prepare-commit-msg.sample
+#    new file:   .foo/hooks/update.sample
+#    new file:   .foo/index.lock
+#    new file:   .foo/info/exclude
+#
+# Changes not staged for commit:
+#   (use "git add/rm <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#    deleted:    .foo/index.lock
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#    .foo/index
+#    .foo/objects/
+
+Notice that .foo was added, but .git was ignored. I would have
+expected .foo to be ignored and .git to be added? (right, wrong or
+indifferent..)
+
+Thanks for any info!
+
+Shawn
