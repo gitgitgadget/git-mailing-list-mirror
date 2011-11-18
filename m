@@ -1,64 +1,60 @@
-From: Shawn Ferris <shawn.ferris@gmail.com>
-Subject: Re: .git ignored regardless of --git-dir value
-Date: Fri, 18 Nov 2011 16:44:03 -0700
-Message-ID: <CAC2kKA-E4KstQCGV=gMJHFdUdzM0boc7SmZNzvSh9_OQWvHcdQ@mail.gmail.com>
-References: <CAC2kKA_PZNDg_dPjWXKeFU4ZVpMas3PubZfSgTnfCfVPuNPdsA@mail.gmail.com>
-	<7vsjlljf57.fsf@alter.siamese.dyndns.org>
-	<7v7h2xjbf4.fsf@alter.siamese.dyndns.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] receive-pack, fetch-pack: reject bogus pack that records
+ objects twice
+Date: Fri, 18 Nov 2011 15:50:51 -0800
+Message-ID: <CAJo=hJukf1C56-rSurJm5voKw+8T9up=9_Umhn032n4rNnLviw@mail.gmail.com>
+References: <7v7h2znv36.fsf@alter.siamese.dyndns.org> <20111118103355.GA4854@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 19 00:44:26 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Nov 19 00:51:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RRY6a-00072W-AC
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Nov 2011 00:44:24 +0100
+	id 1RRYDF-0000pF-Ar
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Nov 2011 00:51:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755898Ab1KRXoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Nov 2011 18:44:05 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:48882 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753595Ab1KRXoE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2011 18:44:04 -0500
-Received: by vbbfc21 with SMTP id fc21so724054vbb.19
-        for <git@vger.kernel.org>; Fri, 18 Nov 2011 15:44:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=6ILaUB3sGz1/b1+VDALj33Or59bDEYnH3Ofh+MTds5Q=;
-        b=Rql/UkWkSCc5tWvEb35EIF3/hRmOvVr24ulJ4qGGZ8wWA9u+akUr8ZArjRAVoQAfHy
-         BazENJO+HjCCJfgLvS/s5HM+VYURDdZZ39uSanYZZVI9+G2tiDOnEeao9q8hdpDRbI31
-         +QM08CB3x5C7xk+0JT+FlKlVeSGtd12ZYTGfk=
-Received: by 10.52.74.162 with SMTP id u2mr5647014vdv.69.1321659843971; Fri,
- 18 Nov 2011 15:44:03 -0800 (PST)
-Received: by 10.220.227.3 with HTTP; Fri, 18 Nov 2011 15:44:03 -0800 (PST)
-In-Reply-To: <7v7h2xjbf4.fsf@alter.siamese.dyndns.org>
+	id S1756593Ab1KRXvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Nov 2011 18:51:13 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:63608 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753697Ab1KRXvM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2011 18:51:12 -0500
+Received: by ggnr5 with SMTP id r5so680541ggn.19
+        for <git@vger.kernel.org>; Fri, 18 Nov 2011 15:51:12 -0800 (PST)
+Received: by 10.101.3.15 with SMTP id f15mr1331522ani.160.1321660272195; Fri,
+ 18 Nov 2011 15:51:12 -0800 (PST)
+Received: by 10.147.167.10 with HTTP; Fri, 18 Nov 2011 15:50:51 -0800 (PST)
+In-Reply-To: <20111118103355.GA4854@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185686>
 
-On Fri, Nov 18, 2011 at 3:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Nov 18, 2011 at 02:33, Jeff King <peff@peff.net> wrote:
+> On Wed, Nov 16, 2011 at 10:04:13PM -0800, Junio C Hamano wrote:
+>
+>> When receive-pack & fetch-pack are run and store the pack obtained over
+>> the wire to a local repository, they internally run the index-pack command
+>> with the --strict option. Make sure that we reject incoming packfile that
+>> records objects twice to avoid spreading such a damage.
+>
+> If we are fixing a thin pack (which should be the case most of the
+> time), we are rewriting the packfile anyway. Shouldn't we just omit
+> the duplicate?
+>
+> I guess I'm a little confused about what is generating these duplicates.
+> A buggy git? A malicious server? Bad luck?
 
->>
->> GIT_DIR and --git-dir are meant to refer to a different .git dir (or a
->> bare-looking repository) located elsewhere, and not for a random pathname
->> like ".foo". No matter what, ".git/" anywhere is ignored from very early
+A buggy Git. We found a case where JGit could generate duplicate
+objects in the pack stream during a clone. The resulting client
+worked... until it tried to do `git gc` or really any sort of `git
+pack-objects`.
 
-I'm extremely green to git, so please forgive if this is obvious, but,
-could I indulge and ask what a sample use case of that would be?
-(since it's not intended for what I assumed it was) And, if the
-behavior I expected was possible, simply, with perhaps a separate
-option, what is the likelihood a patch would be accepted? (Or am I
-just talking nonsense and should just go away) ;D
-
-Thanks Again!
-
-Shawn
+In my opinion, a pack should never contain duplicate objects. Its a
+buggy remote that sends them. What I like about this patch is it stops
+and tells the user the remote is broken, which it is.
