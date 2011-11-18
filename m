@@ -1,76 +1,89 @@
 From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] honour GIT_ASKPASS for querying username in git-svn
-Date: Fri, 18 Nov 2011 15:19:37 +0100
-Message-ID: <CABPQNSbfM0JRVPk3fxfSEq7QaO-fynHM8FBGpPribdgeRqpZKA@mail.gmail.com>
-References: <4EC52508.9070907@tu-clausthal.de> <CABPQNSZ0iPAE+BnDU6Nz8_PkrAtPbjL4RoJuQS=Um2wxPt-2DQ@mail.gmail.com>
- <4EC65DE4.90005@tu-clausthal.de>
+Subject: Re: [PATCH] Compile fix for MSVC: Move poll.h out of sys-folder
+Date: Fri, 18 Nov 2011 15:28:42 +0100
+Message-ID: <CABPQNSaV-TyznoOsRNQPYEWZCz553cuPOdRsyRQSpzU8QngBZA@mail.gmail.com>
+References: <1321624070-4246-1-git-send-email-vfr@lyx.org> <CABPQNSa+ZjAMSxpBTqGW7P=v-tJTW_jdx3MO=vCpzc-z_XdHTg@mail.gmail.com>
 Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-X-From: git-owner@vger.kernel.org Fri Nov 18 15:20:24 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com, msysgit@googlegroups.com,
+	j.sixt@viscovery.net
+To: Vincent van Ravesteijn <vfr@lyx.org>
+X-From: git-owner@vger.kernel.org Fri Nov 18 15:29:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RRPIm-0000dS-7b
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 15:20:24 +0100
+	id 1RRPRa-0004qs-Tv
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 15:29:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756409Ab1KROUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Nov 2011 09:20:19 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:56240 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754933Ab1KROUT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2011 09:20:19 -0500
-Received: by ywt32 with SMTP id 32so2487670ywt.19
-        for <git@vger.kernel.org>; Fri, 18 Nov 2011 06:20:18 -0800 (PST)
+	id S1756415Ab1KRO30 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Nov 2011 09:29:26 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:49037 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755940Ab1KRO30 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2011 09:29:26 -0500
+Received: by ggnr5 with SMTP id r5so138914ggn.19
+        for <git@vger.kernel.org>; Fri, 18 Nov 2011 06:29:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=CfVNpCl/Ru0qa22S2jyO0CPXjoKJHSsQucExxy3KfiA=;
-        b=Vy0tKHFBd+9UdtHqPyER8SEY1b3LUsHkDG1Si0RvQAcobSAqD6wWPNHTKW5vPF1Ulm
-         CSAoJUqIHhjv+uQq5UQqiUhZBZrlirAOwydrHvTHReqZq5JiW5b6xBv/RPprQ34Zp9Uh
-         0gxKJgMEo7vohlDEzg4pFvLLfUxHsGtIMFmq0=
-Received: by 10.68.39.98 with SMTP id o2mr9995106pbk.119.1321626018161; Fri,
- 18 Nov 2011 06:20:18 -0800 (PST)
-Received: by 10.68.71.135 with HTTP; Fri, 18 Nov 2011 06:19:37 -0800 (PST)
-In-Reply-To: <4EC65DE4.90005@tu-clausthal.de>
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=/B10X6vs2m4UsEFmgl2IPR0aw0vtcDQWt+YIg7I/tps=;
+        b=Fp13uL0YR5fTy7LnfXqfIFuOJ7mvS8VSLSHtPfLS2ZH1u3CBrXZYSXmK0k3kpwLnyj
+         Und5L1ofGAYKl4fRUFt6tiGVN1MNZKYVUklzonFmTuB1merJdkUmJqpeClxEOoDnZhHc
+         l95BxDuceN7wA7vj6FNlyzStQktLZ06c2dUgU=
+Received: by 10.68.39.98 with SMTP id o2mr10051368pbk.119.1321626563072; Fri,
+ 18 Nov 2011 06:29:23 -0800 (PST)
+Received: by 10.68.71.135 with HTTP; Fri, 18 Nov 2011 06:28:42 -0800 (PST)
+In-Reply-To: <CABPQNSa+ZjAMSxpBTqGW7P=v-tJTW_jdx3MO=vCpzc-z_XdHTg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185664>
 
-On Fri, Nov 18, 2011 at 2:30 PM, Sven Strickroth
-<sven.strickroth@tu-clausthal.de> wrote:
-> Am 18.11.2011 12:36 schrieb Erik Faye-Lund:
->> On Thu, Nov 17, 2011 at 4:15 PM, Sven Strickroth
->> <sven.strickroth@tu-clausthal.de> wrote:
->>> From 8e576705ca949c32ff22d3216006073ee70652eb Mon Sep 17 00:00:00 2001
->>> From: Sven Strickroth <email@cs-ware.de>
->>> Date: Thu, 17 Nov 2011 15:43:25 +0100
->>> Subject: [PATCH 1/2] honour GIT_ASKPASS for querying username
->>>
->>> git-svn reads usernames from an interactive terminal.
->>> This behavior cause GUIs to hang waiting for git-svn to
->>> complete (http://code.google.com/p/tortoisegit/issues/detail?id=967).
->>>
->>> Also see commit 56a853b62c0ae7ebaad0a7a0a704f5ef561eb795.
->>>
->>> Signed-off-by: Sven Strickroth <email@cs-ware.de>
+On Fri, Nov 18, 2011 at 3:09 PM, Erik Faye-Lund <kusmabite@gmail.com> w=
+rote:
+> On Fri, Nov 18, 2011 at 2:47 PM, Vincent van Ravesteijn <vfr@lyx.org>=
+ wrote:
+>> In v1.7.7.1-432-g0f77dea (Oct 24 2011; Erik Faye-Lund; mingw: move
+>> poll out of sys-folder) poll.h was moved out of the compat/win32/sys
+>> folder. As the change in the Makefile also affects the MSVC build,
+>> the same must be done for poll.h in compat/vcbuild/include/sys/poll.=
+h.
 >>
->> IIUC, GIT_ASKPASS is intended for passwords and not usernames. Won't
->> this cause console-users to not see their username prompted anymore?
+>> Signed-off-by: Vincent van Ravesteijn <vfr@lyx.org>
+>> ---
+>> =A0compat/vcbuild/include/poll.h =A0 =A0 | =A0 =A01 +
+>> =A0compat/vcbuild/include/sys/poll.h | =A0 =A01 -
+>> =A02 files changed, 1 insertions(+), 1 deletions(-)
+>> =A0create mode 100644 compat/vcbuild/include/poll.h
+>> =A0delete mode 100644 compat/vcbuild/include/sys/poll.h
+>>
 >
-> git also asks for username using the GIT_ASKPASS tool (if GIT_ASKPASS is
-> set).
+> This looks strange to me. vcbuild/include/poll.h will only prevent th=
+e
+> correct header from being included, while compiling an linking agains=
+t
+> compat/win32/poll.[co]... That seems dangerous to me, because the
+> interface might be declared differently.
 >
+> Instead, I think compat/vcbuild/include/poll.h should be removed, and
+> _WIN32_WINNT set to a value below 0x600. That way the poll-stuff
+> doesn't get pulled in by winsock2.h (as it's Vista and above only).
+>
+> This was already discussed in your "[PATCHv2] Compile fix for MSVC" t=
+hread:
+> http://mid.gmane.org/CABPQNSaCRRRpEQPG1Mb4DovkMdQSBhHTm-i7y5M4iT+ndHX=
+4XA@mail.gmail.com
+>
+> Here's the patch that fixes it.
 
-You are right, it does. Documentation/config.txt documents it as being
-for passwords without mentioning that it also affects usernames,
-that's why I wondered. I've also verified what happens here on my
-config, and git-svn doesn't prompt my username here without the patch
-either. So consider my comment withdrawn ;)
+Johannes Schindelin was nice enough to create a commit based on my
+e-mail, feel free to pick it up and submit it:
+
+https://github.com/msysgit/git/commit/9ca803910f3625bf686699f6b0bf71a8c=
+68bccae
