@@ -1,63 +1,62 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: A flaw in dep generation with gcc -MMD?
-Date: Fri, 18 Nov 2011 18:34:25 +0700
-Message-ID: <CACsJy8BuCdT3rRjc5u6Ex5RRgSbL_0SFF0GW-dTGqet4sG2cwg@mail.gmail.com>
-References: <CACsJy8BZMDyf4MCiKxPJ5Z+XS+C-MC82SpMFyWgiXmb9xCnScw@mail.gmail.com>
- <20111118034142.GA25228@elie.hsd1.il.comcast.net> <CACsJy8A44PFtYrm8NQU+48sVkOe8mjJyO9opO5-TwRtAd-TKsQ@mail.gmail.com>
- <buor516m3w7.fsf@dhlpc061.dev.necel.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH] honour GIT_ASKPASS for querying username in git-svn
+Date: Fri, 18 Nov 2011 12:36:31 +0100
+Message-ID: <CABPQNSZ0iPAE+BnDU6Nz8_PkrAtPbjL4RoJuQS=Um2wxPt-2DQ@mail.gmail.com>
+References: <4EC52508.9070907@tu-clausthal.de>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Nov 18 12:35:10 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+X-From: git-owner@vger.kernel.org Fri Nov 18 12:38:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RRMio-0002GL-3v
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 12:35:06 +0100
+	id 1RRMlv-0003qS-IV
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 12:38:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756258Ab1KRLe7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Nov 2011 06:34:59 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:50890 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755480Ab1KRLe6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2011 06:34:58 -0500
-Received: by bke11 with SMTP id 11so3295430bke.19
-        for <git@vger.kernel.org>; Fri, 18 Nov 2011 03:34:57 -0800 (PST)
+	id S1757398Ab1KRLhR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Nov 2011 06:37:17 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:38632 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752772Ab1KRLhM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2011 06:37:12 -0500
+Received: by ggnb2 with SMTP id b2so2334612ggn.19
+        for <git@vger.kernel.org>; Fri, 18 Nov 2011 03:37:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=qLk/7OIisWwyo6xnTCef6VnphKRZAGXMPWycDyaIePo=;
-        b=FBhuC4fUR6UY6HA5K1asi5FFHSp3fGgkhDd7Ue3yzhfqTvhJ8gjnrfUyOqFjg1h28d
-         NSKwFEA4iSFr0GGdtDIF1EhNy3j3LCsMDx5M7KG8j30xaBf1WpzMZn83iLE1LSEEuFnU
-         9xko8DTWoskwhc0uDnOaMKUBBe5jqVc1Be9II=
-Received: by 10.204.152.66 with SMTP id f2mr2876589bkw.137.1321616096942; Fri,
- 18 Nov 2011 03:34:56 -0800 (PST)
-Received: by 10.204.23.2 with HTTP; Fri, 18 Nov 2011 03:34:25 -0800 (PST)
-In-Reply-To: <buor516m3w7.fsf@dhlpc061.dev.necel.com>
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=sdnoAfARYMzifuRgRyBQJVx/1CyD6gXx4flm0/Cqz4k=;
+        b=S789wdPHo07kc6N11N2mOMzy6tnZ5F6wyjHgIKKm3F7GtykA9CxZzPEn/2jprla0+o
+         1Yy7xhVgx1lsyXNiBxGy+wLaBF5y+Tl+UXgUYmqKnEhxeWynkDS5Hfl9uv5xo+CwzBO7
+         cjW9VBM/UuVJDdCAAFkzghZT5OKXdy5qdT3BI=
+Received: by 10.68.39.98 with SMTP id o2mr8834697pbk.119.1321616232123; Fri,
+ 18 Nov 2011 03:37:12 -0800 (PST)
+Received: by 10.68.71.135 with HTTP; Fri, 18 Nov 2011 03:36:31 -0800 (PST)
+In-Reply-To: <4EC52508.9070907@tu-clausthal.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185654>
 
-On Fri, Nov 18, 2011 at 11:49 AM, Miles Bader <miles@gnu.org> wrote:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->>> Interesting. =C2=A0What compiler do you use?
->>
->> $ gcc --version
->> gcc (Gentoo 4.4.4-r2 p1.2, pie-0.4.5) 4.4.4
+On Thu, Nov 17, 2011 at 4:15 PM, Sven Strickroth
+<sven.strickroth@tu-clausthal.de> wrote:
+> From 8e576705ca949c32ff22d3216006073ee70652eb Mon Sep 17 00:00:00 2001
+> From: Sven Strickroth <email@cs-ware.de>
+> Date: Thu, 17 Nov 2011 15:43:25 +0100
+> Subject: [PATCH 1/2] honour GIT_ASKPASS for querying username
 >
-> FWIW, gcc 4.4.6 on debian does the correct thing too...
+> git-svn reads usernames from an interactive terminal.
+> This behavior cause GUIs to hang waiting for git-svn to
+> complete (http://code.google.com/p/tortoisegit/issues/detail?id=967).
 >
+> Also see commit 56a853b62c0ae7ebaad0a7a0a704f5ef561eb795.
+>
+> Signed-off-by: Sven Strickroth <email@cs-ware.de>
 
-OK it's not gcc problem. I upgraded to 4.5.3 and still had the same
-problem. I used ccache though. Without ccache, gcc produced correct
-=2Eo.d files.
---=20
-Duy
+IIUC, GIT_ASKPASS is intended for passwords and not usernames. Won't
+this cause console-users to not see their username prompted anymore?
