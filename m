@@ -1,82 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] receive-pack, fetch-pack: reject bogus pack that records
- objects twice
-Date: Fri, 18 Nov 2011 11:22:08 -0800
-Message-ID: <7v62ihkzhb.fsf@alter.siamese.dyndns.org>
-References: <7v7h2znv36.fsf@alter.siamese.dyndns.org>
- <20111118103355.GA4854@sigill.intra.peff.net>
- <7vd3cpl1cw.fsf@alter.siamese.dyndns.org>
- <20111118184455.GA13782@sigill.intra.peff.net>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: A flaw in dep generation with gcc -MMD?
+Date: Fri, 18 Nov 2011 20:27:17 +0100
+Message-ID: <m21ut5dyei.fsf@igel.home>
+References: <CACsJy8BZMDyf4MCiKxPJ5Z+XS+C-MC82SpMFyWgiXmb9xCnScw@mail.gmail.com>
+	<20111118034142.GA25228@elie.hsd1.il.comcast.net>
+	<CACsJy8A44PFtYrm8NQU+48sVkOe8mjJyO9opO5-TwRtAd-TKsQ@mail.gmail.com>
+	<buor516m3w7.fsf@dhlpc061.dev.necel.com>
+	<CACsJy8BuCdT3rRjc5u6Ex5RRgSbL_0SFF0GW-dTGqet4sG2cwg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 18 20:22:21 2011
+Content-Type: text/plain
+Cc: Miles Bader <miles@gnu.org>, Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 18 20:27:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RRU0y-0007pi-DO
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 20:22:20 +0100
+	id 1RRU5w-0001hS-BA
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 20:27:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755243Ab1KRTWO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Nov 2011 14:22:14 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48634 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753175Ab1KRTWL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2011 14:22:11 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 319206F63;
-	Fri, 18 Nov 2011 14:22:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lvRDuvZt1CAYmsekPHNlOHIYts0=; b=kXtORI
-	JOYvGuWao+Chxbc7TLp/6bwVY9VkI9Gbb170vVFuQiku+8ZU1noDaGHQ3rp2wMcM
-	2Zhknx60KSG9l2lJWnCRlXTH3D2/mB7zbKTM7zTM9bi4E4BsC0isXmbXCPgCKRcZ
-	jC+b4sDpNOFfl/wGhbk7Sm0tF2sO+stq8TXgA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OVrqRtwmzYYSJchvyk2uX3JM56h4AgVV
-	pJml6Ik6QDVOkCS/CZz/3KZsVCXUyZoKzl9WUzxdX3g70HLv5r8ez3U8y0pfEtnE
-	n3IlPPEwaFe+3X+NhHRiiVjzCsvhKFXOKsFZESwQ2FqUA8IdAuasko0F+e4iU/wk
-	77o860Q3jDA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 275886F62;
-	Fri, 18 Nov 2011 14:22:10 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AFFB46F61; Fri, 18 Nov 2011
- 14:22:09 -0500 (EST)
-In-Reply-To: <20111118184455.GA13782@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 18 Nov 2011 13:44:55 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9C3A0966-121A-11E1-BEA2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755713Ab1KRT1Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Nov 2011 14:27:24 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:50374 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755407Ab1KRT1X (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2011 14:27:23 -0500
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id D09DD1C1DA11;
+	Fri, 18 Nov 2011 20:27:19 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id C8DA61C00101;
+	Fri, 18 Nov 2011 20:27:19 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id aEFMTRUe+v3z; Fri, 18 Nov 2011 20:27:18 +0100 (CET)
+Received: from igel.home (ppp-88-217-105-250.dynamic.mnet-online.de [88.217.105.250])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Fri, 18 Nov 2011 20:27:18 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id AEF1CCA29C; Fri, 18 Nov 2011 20:27:17 +0100 (CET)
+X-Yow: Did I do an INCORRECT THING??
+In-Reply-To: <CACsJy8BuCdT3rRjc5u6Ex5RRgSbL_0SFF0GW-dTGqet4sG2cwg@mail.gmail.com>
+	(Nguyen Thai Ngoc Duy's message of "Fri, 18 Nov 2011 18:34:25 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185675>
 
-Jeff King <peff@peff.net> writes:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> On Fri, Nov 18, 2011 at 10:41:35AM -0800, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->> 
->> > If we are fixing a thin pack (which should be the case most of the
->> > time), we are rewriting the packfile anyway. Shouldn't we just omit
->> > the duplicate?
->> ...
-> ... But I guess there is some complexity
-> with deltified entries? As in, if the first entry is deltified but the
-> second is not, you would want to keep the second one?
+> OK it's not gcc problem. I upgraded to 4.5.3 and still had the same
+> problem. I used ccache though. Without ccache, gcc produced correct
+> .o.d files.
 
-I think you answered your own question here; it is not "some complexity"
-but is exactly the "you need to memmove() in the output file" situation in
-the message you are responding to.
+I'm also using ccache (version 3.1.3) and get correct dependencies.
 
-Upon seeing a delta, you would not know if the same object as this delta
-represents appears later in the pack stream, which means until you read to
-the end you wouldn't know.  You obviously would not want to hold onto all
-deltas in-core to "just omit the duplicate".
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
