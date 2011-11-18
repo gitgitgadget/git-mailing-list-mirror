@@ -1,96 +1,105 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Fixing a broken GIT repo
-Date: Fri, 18 Nov 2011 14:49:15 +0100
-Message-ID: <4EC6625B.2070301@viscovery.net>
-References: <ja5dgo$nlf$1@dough.gmane.org>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH] Compile fix for MSVC: Move poll.h out of sys-folder
+Date: Fri, 18 Nov 2011 15:09:49 +0100
+Message-ID: <CABPQNSa+ZjAMSxpBTqGW7P=v-tJTW_jdx3MO=vCpzc-z_XdHTg@mail.gmail.com>
+References: <1321624070-4246-1-git-send-email-vfr@lyx.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Bart van den Burg <bart@burgov.nl>
-X-From: git-owner@vger.kernel.org Fri Nov 18 14:49:26 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com, msysgit@googlegroups.com,
+	j.sixt@viscovery.net
+To: Vincent van Ravesteijn <vfr@lyx.org>
+X-From: git-owner@vger.kernel.org Fri Nov 18 15:10:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RROom-0003CH-Uk
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 14:49:25 +0100
+	id 1RRP9H-0004aE-31
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 15:10:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757215Ab1KRNtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Nov 2011 08:49:20 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:10445 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756074Ab1KRNtT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2011 08:49:19 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1RROoe-0000Ks-6U; Fri, 18 Nov 2011 14:49:16 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id E54F11660F;
-	Fri, 18 Nov 2011 14:49:15 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.24) Gecko/20111103 Thunderbird/3.1.16
-In-Reply-To: <ja5dgo$nlf$1@dough.gmane.org>
-X-Spam-Score: -1.4 (-)
+	id S1757975Ab1KROKb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Nov 2011 09:10:31 -0500
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:62601 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756830Ab1KROKa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2011 09:10:30 -0500
+Received: by pzk36 with SMTP id 36so6074507pzk.1
+        for <git@vger.kernel.org>; Fri, 18 Nov 2011 06:10:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=cn8K77VQs2km0Rs1hjMnQzbinD9nvaK1DtrmhxxHd0o=;
+        b=oMr2FYquSSxUl8DYZyv8TIEWcwEL7is31SjhUtkBNj7xTGWIJlpfn6mpU56CNDERjt
+         RI7ViettPa7SFwjzCb+V89lj0PLgiD9rtbojKWX/TA/AsRMohR/8UQN7dhJ6kI2M1aGi
+         vtU53RqYzs5FS4RwvU64ayuUO7KxlnpsRKn4Y=
+Received: by 10.68.0.68 with SMTP id 4mr9758207pbc.51.1321625430061; Fri, 18
+ Nov 2011 06:10:30 -0800 (PST)
+Received: by 10.68.71.135 with HTTP; Fri, 18 Nov 2011 06:09:49 -0800 (PST)
+In-Reply-To: <1321624070-4246-1-git-send-email-vfr@lyx.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185661>
 
-Am 11/18/2011 11:54, schrieb Bart van den Burg:
-> I somehow managed to break my GIT repo. Whenever I try to clone or fetch
-> from a clean local repo, I get an error.
-> 
-> I'm able to go back on the server, to the very last commit where
-> everything works, but as soon as I make a change locally and push it, it
-> breaks again.
-...
-> $ git clone git@git.samson-it.nl:/home/git/shifter_rai
-...
-> Receiving objects: 100% (9557/9557), 2.85 MiB | 1.06 MiB/s, done.
-...
-> $ git push
-> Counting objects: 4, done.
-> Delta compression using up to 4 threads.
-> Compressing objects: 100% (2/2), done.
-> Writing objects: 100% (3/3), 271 bytes, done.
-> Total 3 (delta 1), reused 0 (delta 0)
-> To git@git.samson-it.nl:/home/git/shifter_rai
->    cc5693a..85d1ee9  master -> master
-
-It looks like you are pushing via git protocol from Windows
-(Git-for-Windows). This is known to dead-lock in most cases, and even
-though it did not here, I would not be surprised if it had other issues.
-
-Do not do it. Push via ssh instead.
-
-> bbu@SIT-WST-05 /d/workspace9
-> $ git clone git@git.samson-it.nl:/home/git/shifter_rai
-> Cloning into shifter_rai...
-> remote: Counting objects: 9557, done.
-> remote: Compressing objects: 100% (1887/1887), done.
-> remote: Total 9557 (delta 7107), reused 9397 (delta 7019)
-> Receiving objects: 100% (9557/9557), 2.85 MiB | 1.16 MiB/s, done.
-> Resolving deltas: 100% (7107/7107), done.
-
-Did you notice that this downloaded the exact same number of objects as
-the first clone? There should have been at least 9558, but most likely
-9560 objects. There's something fishy.
-
-> error: refs/remotes/origin/master does not point to a valid object!
-> error: Trying to write ref refs/heads/master with nonexistant object
-> 85d1ee957c65485ed9c937a4f1bfdd44fda4ea35
-> fatal: Cannot update the ref 'HEAD'.
+On Fri, Nov 18, 2011 at 2:47 PM, Vincent van Ravesteijn <vfr@lyx.org> w=
+rote:
+> In v1.7.7.1-432-g0f77dea (Oct 24 2011; Erik Faye-Lund; mingw: move
+> poll out of sys-folder) poll.h was moved out of the compat/win32/sys
+> folder. As the change in the Makefile also affects the MSVC build,
+> the same must be done for poll.h in compat/vcbuild/include/sys/poll.h=
+=2E
 >
-> Needless to say, the mentioned object in fact does exist on the server:
-> git@server:~/shifter_rai.git$ ls -la
-> objects/85/d1ee957c65485ed9c937a4f1bfdd44fda4ea35
-> -r--r--r-- 1 git git 153 Nov 18 11:39
-> objects/85/d1ee957c65485ed9c937a4f1bfdd44fda4ea35
+> Signed-off-by: Vincent van Ravesteijn <vfr@lyx.org>
+> ---
+> =A0compat/vcbuild/include/poll.h =A0 =A0 | =A0 =A01 +
+> =A0compat/vcbuild/include/sys/poll.h | =A0 =A01 -
+> =A02 files changed, 1 insertions(+), 1 deletions(-)
+> =A0create mode 100644 compat/vcbuild/include/poll.h
+> =A0delete mode 100644 compat/vcbuild/include/sys/poll.h
+>
 
-Does git fsck --full on the server indeed report a good repository? Can
-you clone this repository to a different client?
+This looks strange to me. vcbuild/include/poll.h will only prevent the
+correct header from being included, while compiling an linking against
+compat/win32/poll.[co]... That seems dangerous to me, because the
+interface might be declared differently.
 
--- Hannes
+Instead, I think compat/vcbuild/include/poll.h should be removed, and
+_WIN32_WINNT set to a value below 0x600. That way the poll-stuff
+doesn't get pulled in by winsock2.h (as it's Vista and above only).
+
+This was already discussed in your "[PATCHv2] Compile fix for MSVC" thr=
+ead:
+http://mid.gmane.org/CABPQNSaCRRRpEQPG1Mb4DovkMdQSBhHTm-i7y5M4iT+ndHX4X=
+A@mail.gmail.com
+
+Here's the patch that fixes it. I still can't build Junio's master,
+due to sys/resource.h missing. This comes from ebae9ff ("compat: add
+missing #include <sys/resource.h>"), and is only guarded against
+MinGW, not MSVC...
+
+$ git diff
+diff --git a/compat/mingw.h b/compat/mingw.h
+index dfb0e87..a06269d 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -1,3 +1,4 @@
++#define _WIN32_WINNT 0x0501
+ #include <winsock2.h>
+ #include <ws2tcpip.h>
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 5ef8ff7..c52be6c 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -85,6 +85,7 @@
+ #define _SGI_SOURCE 1
+
+ #ifdef WIN32 /* Both MinGW and MSVC */
++#define _WIN32_WINNT 0x0501
+ #define WIN32_LEAN_AND_MEAN  /* stops windows.h including winsock.h */
+ #include <winsock2.h>
+ #include <windows.h>
