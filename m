@@ -1,59 +1,51 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 8/8] Enable GIT_DEBUG_MEMCHECK on git_pathname()
-Date: Thu, 17 Nov 2011 21:06:33 -0500
-Message-ID: <20111118020633.GA9635@sigill.intra.peff.net>
-References: <1321522335-24193-1-git-send-email-pclouds@gmail.com>
- <1321522335-24193-9-git-send-email-pclouds@gmail.com>
- <CALkWK0ndE1Q_jNSV7CBB5W2NyVhcy7kgNO5woWWOw6CXx3cxcA@mail.gmail.com>
- <20111117134201.GA30718@sigill.intra.peff.net>
- <CACsJy8A25SyLVKv8GwkYaHBJwU5tHqgdJK6L-upF9HWseFzCtQ@mail.gmail.com>
- <20111118012715.GA7826@sigill.intra.peff.net>
- <CACsJy8CB6VXjyC-M4C9qGm-n73Kuf1Q0SbH4Ync5Osts-uufQQ@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: A flaw in dep generation with gcc -MMD?
+Date: Fri, 18 Nov 2011 09:24:12 +0700
+Message-ID: <CACsJy8BZMDyf4MCiKxPJ5Z+XS+C-MC82SpMFyWgiXmb9xCnScw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 18 03:06:40 2011
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 18 03:24:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RRDqi-000637-7d
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 03:06:40 +0100
+	id 1RRE8I-0003kL-1G
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 03:24:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755398Ab1KRCGg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Nov 2011 21:06:36 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44516
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755038Ab1KRCGf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2011 21:06:35 -0500
-Received: (qmail 27387 invoked by uid 107); 18 Nov 2011 02:06:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 17 Nov 2011 21:06:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Nov 2011 21:06:33 -0500
-Content-Disposition: inline
-In-Reply-To: <CACsJy8CB6VXjyC-M4C9qGm-n73Kuf1Q0SbH4Ync5Osts-uufQQ@mail.gmail.com>
+	id S1755898Ab1KRCYp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Nov 2011 21:24:45 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:45107 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755576Ab1KRCYo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2011 21:24:44 -0500
+Received: by bke11 with SMTP id 11so2848852bke.19
+        for <git@vger.kernel.org>; Thu, 17 Nov 2011 18:24:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=i9zhF5QxfkeQnomSTCvGabtTcWSTN/+a1lGYJx88FIc=;
+        b=FcU2IHzdM6mrFoHwKGr4UFpOPoJagPWTsgC+VYxCKBZVMdy6Nd3jrjjd6PWysovJZQ
+         KczBlVF4IDErVt8iqGtg+zj5M8KvzbQ0ZcvweKUF7hvMeAFvCE48tZmgXoVwldAZhb2I
+         G2ble9OS0qEtaV+HG4X5vhe4jZSSw9Hj44YmI=
+Received: by 10.205.124.144 with SMTP id go16mr1035720bkc.119.1321583083164;
+ Thu, 17 Nov 2011 18:24:43 -0800 (PST)
+Received: by 10.204.23.2 with HTTP; Thu, 17 Nov 2011 18:24:12 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185625>
 
-On Fri, Nov 18, 2011 at 08:50:20AM +0700, Nguyen Thai Ngoc Duy wrote:
+Hi,
 
-> > Unless you really need macro-like behavior, you're probably better off
-> > using a variadic function and making it a static inline on platforms
-> > which can do so.
-> 
-> I need to save __FILE__ and __LINE__ of call site, inline functions
-> probably don't help.
+My builtin/.depend/add.o.d says
 
-Yeah, you'd have to pass them in to the function. Which of course you
-can't wrap with a macro, because the whole thing is variadic.
+add.o: .... cache.h ...
 
--Peff
+Shouldn't it be "builtin/add.o: ... cache.h ..."? I tried to touch
+cache.h and "make builtin/add.o". It did not remake builtin/add.o. If
+I modify add.o.d by hand and remake, it works.
+-- 
+Duy
