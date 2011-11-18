@@ -1,77 +1,73 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Git Gems
-Date: Fri, 18 Nov 2011 10:08:45 +0530
-Message-ID: <CALkWK0n6msuDSLP-rjAw93E_fsi3pdPk8S2W+fjfQr2rFMrhdQ@mail.gmail.com>
-References: <CAE1pOi1gyshz_502NQvLNAByfwiYXW2fzA+EnGKz8tuFrCpkxg@mail.gmail.com>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: A flaw in dep generation with gcc -MMD?
+Date: Fri, 18 Nov 2011 13:49:12 +0900
+Message-ID: <buor516m3w7.fsf@dhlpc061.dev.necel.com>
+References: <CACsJy8BZMDyf4MCiKxPJ5Z+XS+C-MC82SpMFyWgiXmb9xCnScw@mail.gmail.com>
+ <20111118034142.GA25228@elie.hsd1.il.comcast.net>
+ <CACsJy8A44PFtYrm8NQU+48sVkOe8mjJyO9opO5-TwRtAd-TKsQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 18 05:39:17 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 18 05:49:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RRGEO-0004r9-2v
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 05:39:16 +0100
+	id 1RRGOE-0007qY-5w
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 05:49:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756605Ab1KREjJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Nov 2011 23:39:09 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:53157 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756387Ab1KREjH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2011 23:39:07 -0500
-Received: by wwe5 with SMTP id 5so4426600wwe.1
-        for <git@vger.kernel.org>; Thu, 17 Nov 2011 20:39:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=fEIGwHM7trzD64huhuDnow7SdtFOwnX+hK+u/TknYJA=;
-        b=gR0vLLjuJjl0PKXqSTFdT3WXcHKs7GXf7LavyGWj7zuLoFyneQBb2RioxvaMI1+Z88
-         cnDS1yPzDR3F5uwai43DuCIgsNHCLjigwXksu9HCdm+CaRsqyqk+s8KjTjpuaQRRwi/L
-         Gcw96LnLBBU1xnjM6U0uU7zo//gXsCE69gWaI=
-Received: by 10.227.208.147 with SMTP id gc19mr881787wbb.25.1321591146098;
- Thu, 17 Nov 2011 20:39:06 -0800 (PST)
-Received: by 10.216.19.209 with HTTP; Thu, 17 Nov 2011 20:38:45 -0800 (PST)
-In-Reply-To: <CAE1pOi1gyshz_502NQvLNAByfwiYXW2fzA+EnGKz8tuFrCpkxg@mail.gmail.com>
+	id S1756535Ab1KREtV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Nov 2011 23:49:21 -0500
+Received: from relmlor2.renesas.com ([210.160.252.172]:64186 "EHLO
+	relmlor2.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756288Ab1KREtV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Nov 2011 23:49:21 -0500
+Received: from relmlir2.idc.renesas.com ([10.200.68.152])
+ by relmlor2.idc.renesas.com ( SJSMS)
+ with ESMTP id <0LUU00EATAQ73R90@relmlor2.idc.renesas.com> for
+ git@vger.kernel.org; Fri, 18 Nov 2011 13:49:19 +0900 (JST)
+Received: from relmlac2.idc.renesas.com ([10.200.69.22])
+ by relmlir2.idc.renesas.com ( SJSMS)
+ with ESMTP id <0LUU00BTQAQ7SU40@relmlir2.idc.renesas.com> for
+ git@vger.kernel.org; Fri, 18 Nov 2011 13:49:19 +0900 (JST)
+Received: by relmlac2.idc.renesas.com (Postfix, from userid 0)
+	id A5A4D28076; Fri, 18 Nov 2011 13:49:19 +0900 (JST)
+Received: from relmlac2.idc.renesas.com (localhost [127.0.0.1])
+	by relmlac2.idc.renesas.com (Postfix) with ESMTP id 88E5528070; Fri,
+ 18 Nov 2011 13:49:19 +0900 (JST)
+Received: from relmlii1.idc.renesas.com [10.200.68.65]	by
+ relmlac2.idc.renesas.com with ESMTP id PAC08951; Fri,
+ 18 Nov 2011 13:49:19 +0900
+X-IronPort-AV: E=Sophos;i="4.69,530,1315148400";   d="scan'208";a="55401491"
+Received: from unknown (HELO relay61.aps.necel.com) ([10.29.19.64])
+ by relmlii1.idc.renesas.com with ESMTP; Fri, 18 Nov 2011 13:49:19 +0900
+Received: from dhlpc061 (dhlpc061.dev.necel.com [10.114.97.34])
+	by relay61.aps.necel.com (8.14.4+Sun/8.14.4) with ESMTP id pAI4nEC2028339;
+ Fri, 18 Nov 2011 13:49:15 +0900 (JST)
+Received: by dhlpc061 (Postfix, from userid 31295)	id 6A11052E295; Fri,
+ 18 Nov 2011 13:49:14 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-reply-to: <CACsJy8A44PFtYrm8NQU+48sVkOe8mjJyO9opO5-TwRtAd-TKsQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185630>
 
-Hi Hilco,
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+>> Interesting. =A0What compiler do you use?
+>
+> $ gcc --version
+> gcc (Gentoo 4.4.4-r2 p1.2, pie-0.4.5) 4.4.4
 
-Hilco Wijbenga wrote:
-> [CC: Git Users <git@vger.kernel.org>]
+=46WIW, gcc 4.4.6 on debian does the correct thing too...
 
-For the record, this is the official Git list: both "developers" and
-"users" hang out here.
+-Miles
 
-> [...]
-> As an example, 'git rebase' didn't really seem useful until I
-> understood (well, more or less) what it did. Until then, I just
-> naively assumed that merge commits and non-linear history were
-> something you simply had to live with. I'm guessing that, like me, a
-> lot of people come to Git with quite a few assumptions and
-> preconceived notions due to their exposure to other SCM tools. :-(
-
-I'm not sure how a listing is going to help; nevertheless, here are a
-few of the lesser-known features of the top of my head (in no
-particular order): rerere, attributes, replace refs, filter-branch,
-blame's -C and -M switches, log's -S switch, custom diff drivers,
-bundle, submodule, stash, notes, and reflog.
-[You can find more by digging through the sources]
-
-Which brings us to an interesting aside: unlike many other SCMs which
-have a definite and finite set of features, git is really just a
-toolkit that grows everyday- various people use various subsets and
-write up their own custom scripts to help them automate tasks.  The
-"git rev-list/ git rev-parse/ git cat-file" is an awesome trio to
-start writing shell scripts with :)
-
-Cheers.
-
--- Ram
+--=20
+Yo mama's so fat when she gets on an elevator it HAS to go down.
