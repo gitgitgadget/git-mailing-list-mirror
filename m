@@ -1,79 +1,73 @@
-From: Vincent van Ravesteijn <vfr@lyx.org>
-Subject: Re: [PATCH] Compile fix for MSVC: Move poll.h out of sys-folder
-Date: Fri, 18 Nov 2011 17:47:29 +0100
-Message-ID: <4EC68C21.7030902@lyx.org>
-References: <1321624070-4246-1-git-send-email-vfr@lyx.org> <CABPQNSa+ZjAMSxpBTqGW7P=v-tJTW_jdx3MO=vCpzc-z_XdHTg@mail.gmail.com> <CABPQNSaV-TyznoOsRNQPYEWZCz553cuPOdRsyRQSpzU8QngBZA@mail.gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH 2/3] Compile fix for MSVC: fix poll-related macro redefines
+Date: Fri, 18 Nov 2011 18:36:13 +0100
+Message-ID: <4EC6978D.3020604@gmail.com>
+References: <1321634670-4968-1-git-send-email-vfr@lyx.org> <1321634670-4968-2-git-send-email-vfr@lyx.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com, msysgit@googlegroups.com,
-	j.sixt@viscovery.net
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Fri Nov 18 17:47:53 2011
+Cc: git@vger.kernel.org, gitster@pobox.com, kusmabite@gmail.com,
+	msysgit@googlegroups.com, j.sixt@viscovery.net,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Vincent van Ravesteijn <vfr@lyx.org>
+X-From: git-owner@vger.kernel.org Fri Nov 18 18:36:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RRRbP-0007eK-RM
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 17:47:48 +0100
+	id 1RRSMS-0004Nj-Aw
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 18:36:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758187Ab1KRQrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Nov 2011 11:47:36 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:63930 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757975Ab1KRQrf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2011 11:47:35 -0500
-Received: by eye27 with SMTP id 27so3547171eye.19
-        for <git@vger.kernel.org>; Fri, 18 Nov 2011 08:47:34 -0800 (PST)
-Received: by 10.213.32.200 with SMTP id e8mr639341ebd.46.1321634853986;
-        Fri, 18 Nov 2011 08:47:33 -0800 (PST)
-Received: from [192.168.1.5] (j175101.upc-j.chello.nl. [24.132.175.101])
-        by mx.google.com with ESMTPS id 49sm4122252eec.1.2011.11.18.08.47.32
-        (version=SSLv3 cipher=OTHER);
-        Fri, 18 Nov 2011 08:47:33 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <CABPQNSaV-TyznoOsRNQPYEWZCz553cuPOdRsyRQSpzU8QngBZA@mail.gmail.com>
+	id S1752791Ab1KRRgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Nov 2011 12:36:20 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:42481 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751773Ab1KRRgT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2011 12:36:19 -0500
+Received: by fagn18 with SMTP id n18so4575889fag.19
+        for <git@vger.kernel.org>; Fri, 18 Nov 2011 09:36:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=0SFXAyFZRTOZ10BYIKThB7HA7qOrjsMkHinJ4PFYmRQ=;
+        b=o3BTHI6YHjKSmcCbo+OTZXGRYpIdpJ3GKgAsVC1yVRfHqMwnZXn4JKU4Dx53FXDRn1
+         1R3ql/n4KVBrsyawUuAF/TBqRMY5OT43C/o7b/O/38SkcqgplXg/et8fo7VGLJgcgjT/
+         5OUMBjWbxji/LvxR5tGfu2WVLCabBqv0nCC+I=
+Received: by 10.205.119.11 with SMTP id fs11mr4447613bkc.58.1321637778033;
+        Fri, 18 Nov 2011 09:36:18 -0800 (PST)
+Received: from [130.73.68.203] (jambul.zib.de. [130.73.68.203])
+        by mx.google.com with ESMTPS id o7sm1271813bkw.16.2011.11.18.09.36.15
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 18 Nov 2011 09:36:16 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+Newsgroups: gmane.comp.version-control.git,gmane.comp.version-control.msysgit
+In-Reply-To: <1321634670-4968-2-git-send-email-vfr@lyx.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185670>
 
-Op 18-11-2011 15:28, Erik Faye-Lund schreef:
-> On Fri, Nov 18, 2011 at 3:09 PM, Erik Faye-Lund<kusmabite@gmail.com>  wrote:
->> On Fri, Nov 18, 2011 at 2:47 PM, Vincent van Ravesteijn<vfr@lyx.org>  wrote:
->>> In v1.7.7.1-432-g0f77dea (Oct 24 2011; Erik Faye-Lund; mingw: move
->>> poll out of sys-folder) poll.h was moved out of the compat/win32/sys
->>> folder. As the change in the Makefile also affects the MSVC build,
->>> the same must be done for poll.h in compat/vcbuild/include/sys/poll.h.
->>>
->>> Signed-off-by: Vincent van Ravesteijn<vfr@lyx.org>
->>> ---
->>>   compat/vcbuild/include/poll.h     |    1 +
->>>   compat/vcbuild/include/sys/poll.h |    1 -
->>>   2 files changed, 1 insertions(+), 1 deletions(-)
->>>   create mode 100644 compat/vcbuild/include/poll.h
->>>   delete mode 100644 compat/vcbuild/include/sys/poll.h
->>>
->> This looks strange to me. vcbuild/include/poll.h will only prevent the
->> correct header from being included, while compiling an linking against
->> compat/win32/poll.[co]... That seems dangerous to me, because the
->> interface might be declared differently.
->>
->> Instead, I think compat/vcbuild/include/poll.h should be removed, and
->> _WIN32_WINNT set to a value below 0x600. That way the poll-stuff
->> doesn't get pulled in by winsock2.h (as it's Vista and above only).
->>
->> This was already discussed in your "[PATCHv2] Compile fix for MSVC" thread:
->> http://mid.gmane.org/CABPQNSaCRRRpEQPG1Mb4DovkMdQSBhHTm-i7y5M4iT+ndHX4XA@mail.gmail.com
->>
->> Here's the patch that fixes it.
-> Johannes Schindelin was nice enough to create a commit based on my
-> e-mail, feel free to pick it up and submit it:
+On 18.11.2011 17:44, Vincent van Ravesteijn wrote:
+
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 5ef8ff7..76cbfe6 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -85,6 +85,7 @@
+>  #define _SGI_SOURCE 1
 >
-> https://github.com/msysgit/git/commit/9ca803910f3625bf686699f6b0bf71a8c68bccae
+>  #ifdef WIN32 /* Both MinGW and MSVC */
+> +#  define _WIN32_WINNT 0x0501
+>  #define WIN32_LEAN_AND_MEAN  /* stops windows.h including winsock.h */
+>  #include<winsock2.h>
+>  #include<windows.h>
 
-I resended a patch series including this one.
+It seems the indentation is wrong (does not match the surrounding code) 
+here.
 
-Vincent
+-- 
+Sebastian Schuberth
