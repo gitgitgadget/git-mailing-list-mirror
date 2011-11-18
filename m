@@ -1,94 +1,75 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: A flaw in dep generation with gcc -MMD?
-Date: Fri, 18 Nov 2011 15:16:45 -0600
-Message-ID: <20111118211645.GA27440@elie.hsd1.il.comcast.net>
-References: <CACsJy8BZMDyf4MCiKxPJ5Z+XS+C-MC82SpMFyWgiXmb9xCnScw@mail.gmail.com>
- <20111118034142.GA25228@elie.hsd1.il.comcast.net>
- <CACsJy8A44PFtYrm8NQU+48sVkOe8mjJyO9opO5-TwRtAd-TKsQ@mail.gmail.com>
- <buor516m3w7.fsf@dhlpc061.dev.necel.com>
- <CACsJy8BuCdT3rRjc5u6Ex5RRgSbL_0SFF0GW-dTGqet4sG2cwg@mail.gmail.com>
- <CACsJy8CKmjq01KoLRzOnnaf6RwFCQJfjxziqKTZW9HDyd8CagA@mail.gmail.com>
- <loom.20111118T191851-152@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: .git ignored regardless of --git-dir value
+Date: Fri, 18 Nov 2011 13:26:44 -0800
+Message-ID: <7vsjlljf57.fsf@alter.siamese.dyndns.org>
+References: <CAC2kKA_PZNDg_dPjWXKeFU4ZVpMas3PubZfSgTnfCfVPuNPdsA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Miles Bader <miles@gnu.org>
-To: Samuel Bronson <naesten@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 18 22:17:04 2011
+Cc: git@vger.kernel.org
+To: Shawn Ferris <shawn.ferris@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 18 22:26:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RRVnz-0003YI-PM
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 22:17:04 +0100
+	id 1RRVxV-0007Qu-2R
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Nov 2011 22:26:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755327Ab1KRVQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Nov 2011 16:16:59 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:35940 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751280Ab1KRVQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2011 16:16:59 -0500
-Received: by ywt32 with SMTP id 32so2929223ywt.19
-        for <git@vger.kernel.org>; Fri, 18 Nov 2011 13:16:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=T4hLswdceYIGZkzqSE47N1A6GohZUMChSRv1lG8nF9A=;
-        b=f2drOs2kE8V+kmFi8lPkMFz1zVPoSHrKoenVAzeGLNjN9w5uhaYTfJUsTwJ+jv8lSC
-         AnhL7Dq6JKNb7oIrzn1Ba97gfvpvlXfJhpPrDBkbnDn6R0iLmJZeK/8rsJP6iHJtN/Q+
-         ckGY9xFFNQk2sf92IinXlBl+42KK5LPgVaWKw=
-Received: by 10.236.197.99 with SMTP id s63mr8054816yhn.14.1321651018483;
-        Fri, 18 Nov 2011 13:16:58 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id j25sm2455519yhm.12.2011.11.18.13.16.56
-        (version=SSLv3 cipher=OTHER);
-        Fri, 18 Nov 2011 13:16:57 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <loom.20111118T191851-152@post.gmane.org>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1753070Ab1KRV0s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Nov 2011 16:26:48 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38330 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751105Ab1KRV0r (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2011 16:26:47 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 13C2653BE;
+	Fri, 18 Nov 2011 16:26:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=M2dNXYopeCZWB3clsWG9RzpHrLM=; b=jnubEN
+	IzYJOKrO+TsEZ0g1NS9E2OdFDoejMqOnIOxrZVCTd/Dhq9KozecPtCtg2o+Dk7jA
+	nStrUGauABk6qb7+jq5fPbF6gWxSYW6iOzz5HQDyO4LzYfwQppFfOvV72KXT/O3E
+	cSr06zik+ME5sEX4NJdODSmavrU6N4n9WqkG8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Es7ssrYAwqm3jZm0BxJ3FWLYPCGLLgGB
+	wM85rJHdgoDIV8lCe4XHvyLrKJakkzfRGLjhfejATQHnyGAJnDUhVpY2uPwJCNWO
+	Sphlqpbf+AH9UXD2ZnIpviBFI8d/0Pu0oDel5kqIY3eem/8kHP5gl26oBBCw9r1G
+	EePJH8XOfY8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F379A53BD;
+	Fri, 18 Nov 2011 16:26:46 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7EB3153BC; Fri, 18 Nov 2011
+ 16:26:46 -0500 (EST)
+In-Reply-To: <CAC2kKA_PZNDg_dPjWXKeFU4ZVpMas3PubZfSgTnfCfVPuNPdsA@mail.gmail.com> (Shawn
+ Ferris's message of "Fri, 18 Nov 2011 13:56:56 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 04BED2B2-122C-11E1-8BFD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185681>
 
-Hi,
+Shawn Ferris <shawn.ferris@gmail.com> writes:
 
-(restoring cc list.  Unfortunately gmane's web interface doesn't
- provide a built-in way to reply-to-all.  [1] has a hackish
- workaround.)
-Samuel Bronson wrote:
-> Nguyen Thai Ngoc Duy writes:
+> Is it expected behavior to have the .git directory ignored, even after
+> specifying an alternate location with --git-dir? For example:
+>
+> $ git --git-dir=.foo init
+> Initialized empty Git repository in /home/sferris/work/t/.foo/
 
->> "gcc -MF depfile -MMD -MP -c -o path/to/file.o" will produce "depfile"
->> with target given by "-o". When ccache runs, it executes "gcc -MF
->> depfile -MMD -MP -E" instead to get the final content for hashing.
->> Notice that "-c -o" combination is replaced by "-E". The latter
->> produces target without leading path.
-[...]
-> I'm pretty sure you should report this against ccache; GCC seems to be
-> behaving as documented.
+GIT_DIR and --git-dir are meant to refer to a different .git dir (or a
+bare-looking repository) located elsewhere, and not for a random pathname
+like ".foo". No matter what, ".git/" anywhere is ignored from very early
+days of Git, as Linus himself writes in the source, e.g. 8695c8b (Add
+"show-files" command to show the list of managed (or non-managed) files.,
+2005-04-11):
 
-Seems to have been fixed by v3.0pre0~187:
-
- commit e8354384
- Author: Andrea Bittau <a.bittau@cs.ucl.ac.uk>
- Date:   Sun Nov 1 19:39:58 2009 +0100
-
-     Fix handling of the -MD and -MDD options
-
-     From <http://lists.samba.org/archive/ccache/2007q2/000272.html>:
-
-     The -MD and -MDD options automatically determine where the dependency file
-     should land and what the target should look like based on the -o option.
-     However, ccache drops -o and things mess up. The original patch was posted by
-     Kaz Kylheku but I reworked it to make it work properly. Here is his post:
-
-     http://lists.samba.org/archive/ccache/2006q4/000249.html
-
-Workaround incoming in a few moments.
-
-Thanks,
-Jonathan
+ ...
+ * Also, we currently ignore all names starting with a dot.
+ * That likely will not change. 
+ ...
