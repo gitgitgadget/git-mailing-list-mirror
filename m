@@ -1,152 +1,77 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: Fwd: I: [1] new comment on LinkedIn - in search of a git guru from paypal
-Date: Sat, 19 Nov 2011 17:30:39 +0100
-Message-ID: <CA+EOSBmu60VL9MvVCnUNcvS-NUz9WPNyx5DswMMazzh2GH7dEw@mail.gmail.com>
+From: Matthias Fechner <idefix@fechner.net>
+Subject: Switch from svn to git and modify repo completely
+Date: Sat, 19 Nov 2011 18:11:06 +0100
+Message-ID: <4EC7E32A.9040903@fechner.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=f46d04446b5562601204b218f9c2
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
 To: Git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 19 17:30:48 2011
+X-From: git-owner@vger.kernel.org Sat Nov 19 18:18:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RRnoU-0005Vk-81
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Nov 2011 17:30:46 +0100
+	id 1RRoYb-0005yH-Qe
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Nov 2011 18:18:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752554Ab1KSQal (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Nov 2011 11:30:41 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:46147 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751897Ab1KSQak (ORCPT <rfc822;Git@vger.kernel.org>);
-	Sat, 19 Nov 2011 11:30:40 -0500
-Received: by ggnr5 with SMTP id r5so1102791ggn.19
-        for <Git@vger.kernel.org>; Sat, 19 Nov 2011 08:30:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=mdPULK0eXmmL4HOFY/kMxqBqx0iAU/wSniViKINvCNo=;
-        b=XHmKq0HfLzFyjNKYSiftwpDZ6QK6VyyWJMR4p6IVodki4Do+/Fq9mhSnqcXw/E4Tmp
-         4weh3q9U3iR5SMWGPyZSQ5bTG2jPnYBgm1PRd/YE+TvnTFSRcOvuq6qLcWErkIQ3CfCa
-         vQuRhw6nMZtIlKfWisaHf51zQ4e5JOxBVeObk=
-Received: by 10.182.226.33 with SMTP id rp1mr1683015obc.18.1321720239775; Sat,
- 19 Nov 2011 08:30:39 -0800 (PST)
-Received: by 10.182.52.133 with HTTP; Sat, 19 Nov 2011 08:30:39 -0800 (PST)
+	id S1752196Ab1KSRSE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Nov 2011 12:18:04 -0500
+Received: from anny.lostinspace.de ([80.190.182.2]:21282 "EHLO
+	anny.lostinspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751375Ab1KSRSD (ORCPT <rfc822;Git@vger.kernel.org>);
+	Sat, 19 Nov 2011 12:18:03 -0500
+X-Greylist: delayed 405 seconds by postgrey-1.27 at vger.kernel.org; Sat, 19 Nov 2011 12:18:03 EST
+Received: from server.idefix.lan (ppp-93-104-88-159.dynamic.mnet-online.de [93.104.88.159])
+	(authenticated bits=0)
+	by anny.lostinspace.de (8.14.5/8.14.5) with ESMTP id pAJHBAks047105
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO)
+	for <Git@vger.kernel.org>; Sat, 19 Nov 2011 18:11:14 +0100 (CET)
+	(envelope-from idefix@fechner.net)
+Received: from server.idefix.lan (localhost [IPv6:::1])
+	by server.idefix.lan (Postfix) with ESMTP id 2073E6B8E1
+	for <Git@vger.kernel.org>; Sat, 19 Nov 2011 18:12:05 +0100 (CET)
+X-Virus-Scanned: amavisd-new at fechner.net
+Received: from server.idefix.lan ([127.0.0.1])
+	by server.idefix.lan (server.idefix.lan [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id YA_n-oLfr4OG for <Git@vger.kernel.org>;
+	Sat, 19 Nov 2011 18:12:04 +0100 (CET)
+Received: from [IPv6:2001:a60:f035:1:85bc:94f4:eba3:8b36] (unknown [IPv6:2001:a60:f035:1:85bc:94f4:eba3:8b36])
+	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
+	(No client certificate requested)
+	by server.idefix.lan (Postfix) with ESMTPSA id 81E5F6B8D6
+	for <Git@vger.kernel.org>; Sat, 19 Nov 2011 18:12:04 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
+X-Enigmail-Version: 1.3.3
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.7 (anny.lostinspace.de [80.190.182.2]); Sat, 19 Nov 2011 18:11:14 +0100 (CET)
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,UNPARSEABLE_RELAY
+	autolearn=ham version=3.3.2
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on anny.lostinspace.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185695>
 
---f46d04446b5562601204b218f9c2
-Content-Type: text/plain; charset=ISO-8859-1
+Dear Git List,
 
- Sorry for the OT. But perhaps someone here could be interested.  best regards.
+I just started to migrate a svn repo to a git repo and was successfully
+with the "git svn" command and waiting a long time :)
 
----------- Forwarded message ----------
-From: "pinto.elia@gmail.com" <pinto.elia@gmail.com>
-Date: Sat, 19 Nov 2011 15:48:26 +0000
-Subject: I: [1] new comment on LinkedIn
-To: "gitter.spiros@gmail.com" <gitter.spiros@gmail.com>
+I have now some confidential documents in the repository I must remove
+completely (including the complete history). These are single files
+spread over the complete repository. Is this possible with git?
 
+The next step I would like to do is separate the repo and smaller ones.
+The problem here is it is not only take this directory and move it out,
+it is a complete mess and the files are spread over the complete repo
+and over all the revisions (files were moved around in the old
+subversion repo from folder to folder). Is there a possibility to say
+take file1, file2, fileN and directory1, directoryN and move it to
+another repo or remove all not matching files/directories completely?
 
-----Messaggio originale----
-Da: Git Version Control System Group Members
-Inviato:  19/11/2011, 13:36
-A: Elia Pinto
-Oggetto: [1] new comment on LinkedIn
+Thanks a lot for some hints which commands I could use here or if it is
+possible.
 
-
-Git Version Control System
-  Today's new discussions from Git Version Control System group
-members.  Change the frequency of this digest:
-  http://www.linkedin.com/e/-b9sv29-gv6lq696-2k/ahs/1742047/EMLt_anet_settings/?hs=false&tok=1CjwcIloCk8501
-
-
-
-
-
-
-Send me an email for each new discussion &#187;
-http://www.linkedin.com/e/-b9sv29-gv6lq696-2k/snp/1742047/true/grp_email_subscribe_new_posts/?hs=false&tok=2_AZzjcLek8501
-
-
-Active Discussion of the day
-
- * Marie  Godeloson started a discussion on a news article:
-  Seeking a Git Guru - will work closely with architects and other key
-engineering teams to help build and deploy our next generation
-applications for PayPal. Email resume to mgodeloson@paypal.com (1)
-
-  > Is this vacancy applicable for India based locations ?
-
-
-
- View discussion &raquo;
-http://www.linkedin.com/e/-b9sv29-gv6lq696-2k/vai/1742047/80991981/member/EMLt_anet_act_disc/?hs=false&tok=35hWQM5KSk8501
-
-
-
-
-
-
--- 
-Inviato dal mio dispositivo mobile
-
---f46d04446b5562601204b218f9c2
-Content-Type: application/octet-stream; name="INBOX__184637_1.txt"
-Content-Disposition: attachment; filename="INBOX__184637_1.txt"
-Content-Transfer-Encoding: base64
-Content-ID: s/scds/common/u//img/logos/logo_emails_trans_98x24.png
-X-Attachment-Id: 35ac0e7e89053d97_0.1
-
-iVBORw0KGgoAAAANSUhEUgAAAGIAAAAYCAMAAAA2wtibAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
-bWFnZVJlYWR5ccllPAAAAORQTFRFycjIAIGzAJPAZ7TW1tbWgb/dwODsc7jXAIO1TazRPzs8BZjE
-MaTMGJ7HMS0u8vLyhIGCraysTElKf8DZAIK0P5/FaGVm5OTkAIW2n52eAI+9AIm5AIe3AIy7u7q6
-f8Hav+PvdnN0H5C7X7nW4PD2sNjnf8Pbf8Tc7/f63/H3f8Xdf8Lav+Ht9Pr8H5S/kMjdQrDR7/j7
-hsbg8Pj6cLfXT6zNPp7GkNHkxebxvuDuL53FT7LSy+jyT7DQSKPJ0OjxM6vOn9Hjj87iWLXVeLva
-AICykY+QgMDZWldYIx8g////////pns/3QAAAEx0Uk5T////////////////////////////////
-////////////////////////////////////////////////////////////////////AJ6N5MwA
-AAJPSURBVHjarJUJe+IgEIZxl90qagip5vCqVttu273v+5YE+P//pzMEo9ll1W39nicwDJN5EwYS
-Yu6uVw89WlTT5O6Exdsjj74uDoh49vqBR7/zAyLy+15tIIqiEG4glJK1uwVMbkkOsyEgWq3WB/3k
-ZauuDYRa5wVT1XLIPx11wSw8Qd7p/NJaf+7U5UcEt0N0u88B8b5blx8hgkDcAtFut9/pF9/bdfkR
-f2k/xD2v/IgQywclDidMKTapEDHUNTMkhlFgY3kYoOkQg8FgOp3OB/Pp9OenS60v5+AZ+BEF3gI3
-Yk1AxCFm0EY8LJ2YlEdKrUf5eDyGWlyNr7R+pK2+gGs7wikuEZib8Qm2EiKU2AixiOFwCGkvhhd6
-pcfg2oGYUZvR2gKXhxpm02FIZHdexpPYIUajEaQ9H51j8o9v8E3AtQPBra2qx6UmQSSUhOEIrhDj
-S2yepilkvU6voX2apj+gA9cOxGozyWo1yHptFLF1WsWbvNlsQtaT5gm0YLvuPxBY2sxQ9xYoYj2g
-aBdCSJmUiBmx8iNouVJBWQsKj8PL6uAnzSJ6vR5kPe4dQwu26wARBkXMqEU4+RG2YdweggzOQ8EN
-1llFbLWjGo0GIhqYG2zX5SaJ5IzJeA8EroeK12dhYpKgtmn/hSBSBowX+yDsUgl39hgWmlpeEW1H
-8CgMmZwRQyoZSghsT7RM2Tkb/DBhOMkEdTuDioyW8SZfLpf9fv90eQot2K7L8bMaxowf4q+39Ap3
-VJJN+CF+rN/8iLMD/rvNWe5RRTA3AgwAM00qSBtiN3oAAAAASUVORK5CYII=
---f46d04446b5562601204b218f9c2
-Content-Type: application/octet-stream; name="INBOX__184637_2.txt"
-Content-Disposition: attachment; filename="INBOX__184637_2.txt"
-Content-Transfer-Encoding: base64
-Content-ID: m/mpr/mpr/shrink_60_30/p/3/000/019/2b1/0d13d33.png
-X-Attachment-Id: 35ac0e7e89053d97_0.2
-
-/9j/4AAQSkZJRgABAgAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a
-HBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy
-MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAeADwDASIA
-AhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQA
-AAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3
-ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWm
-p6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEA
-AwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSEx
-BhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElK
-U1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3
-uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD34AAA
-AYApa5XxVpVncXtnc3niPXNL890soYrC5MaSSMWK5AU8nkZPGAKh1/QrNP7L+2eKfENluEWnw/Zr
-sr58nO1nwpy7c5Y4HFZubVzZRoWXNUt302Oworj9f0KzT+y/tninxDZbhFp8P2a7K+fJztZ8Kcu3
-OWOBxXVWlv8AZLKC286abyY1j82ZtzvgY3Me5PUn1qlJt2JmqaXuyu+1tiaivPNW+KX9nXGprDo3
-nQWF2tm7vdbGZyH5ChCMZjbv6ccnFu61W4T4q6Zp1wLqLzLd2jSC/JgdAJcNJEYxl+P73GF5OKz+
-sQez62OP61TekXfVL79DuKztMkdr3V42YlIrsLGP7oMMTED/AIEzH8a5LS/EPiO4+JuoaPOLU2sN
-urm2EvyxAiPLK/lhnPzH5TgcnngV1Wlf8hHXP+v1f/SeGrhUU726GlOqqibXR2MzxR4H03xReWd3
-cDZPBIgkb5j5sKliYsBgBkt97qKh134e6Prf9mfJ5P2Hyourtvt0z+6+8MZz97k1uSS60kjLFZWE
-qDo73joW+qiJsfmaZ5+vf9A3Tf8AwYP/APGal0abvdbkyoUpXvHcxtd+Huj63/ZnyeT9h8qLq7b7
-dM/uvvDGc/e5NdPa2sNlZwWlumyCCNY41yTtVRgDJ56CqPn69/0DdN/8GD//ABmjz9e/6Bum/wDg
-wf8A+M1UYRi20i40oRblFWbOb1/4b22uajNMtzFZwT3CTzrBC++QgEHJMmzJ3Md2zIz3yc7lx4R0
-a61QanNFdG+Gds4vp1ZAc5CkP8o+Y8DA5NWPP17/AKBum/8Agwf/AOM0efr3/QN03/wYP/8AGalU
-aabdtyFh6SbfLuNPhnSjrj60IJU1CTbvmjuZE3hcYBUMAR8q8EYOOadpX/IR1z/r9X/0nho8/Xv+
-gbpv/gwf/wCM0ujWl9bi+m1A2/2i6uTNttySqLsRFGSAScIMnArRJLZGiio7I//Z
---f46d04446b5562601204b218f9c2--
+Bye
+Matthias
