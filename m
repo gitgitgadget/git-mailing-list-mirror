@@ -1,60 +1,61 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] receive-pack, fetch-pack: reject bogus pack that records
- objects twice
-Date: Fri, 18 Nov 2011 15:50:51 -0800
-Message-ID: <CAJo=hJukf1C56-rSurJm5voKw+8T9up=9_Umhn032n4rNnLviw@mail.gmail.com>
-References: <7v7h2znv36.fsf@alter.siamese.dyndns.org> <20111118103355.GA4854@sigill.intra.peff.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: A flaw in dep generation with gcc -MMD?
+Date: Sat, 19 Nov 2011 11:53:38 +0700
+Message-ID: <CACsJy8BLJmDc6jGOW+GzYC9yM2DE6U6ONmfakZvcKNxgVNgCnw@mail.gmail.com>
+References: <CACsJy8BZMDyf4MCiKxPJ5Z+XS+C-MC82SpMFyWgiXmb9xCnScw@mail.gmail.com>
+ <20111118034142.GA25228@elie.hsd1.il.comcast.net> <CACsJy8A44PFtYrm8NQU+48sVkOe8mjJyO9opO5-TwRtAd-TKsQ@mail.gmail.com>
+ <buor516m3w7.fsf@dhlpc061.dev.necel.com> <CACsJy8BuCdT3rRjc5u6Ex5RRgSbL_0SFF0GW-dTGqet4sG2cwg@mail.gmail.com>
+ <m21ut5dyei.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Nov 19 00:51:18 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Miles Bader <miles@gnu.org>, Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Sat Nov 19 05:54:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RRYDF-0000pF-Ar
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Nov 2011 00:51:17 +0100
+	id 1RRcwS-0004Ur-UJ
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Nov 2011 05:54:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756593Ab1KRXvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Nov 2011 18:51:13 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:63608 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753697Ab1KRXvM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2011 18:51:12 -0500
-Received: by ggnr5 with SMTP id r5so680541ggn.19
-        for <git@vger.kernel.org>; Fri, 18 Nov 2011 15:51:12 -0800 (PST)
-Received: by 10.101.3.15 with SMTP id f15mr1331522ani.160.1321660272195; Fri,
- 18 Nov 2011 15:51:12 -0800 (PST)
-Received: by 10.147.167.10 with HTTP; Fri, 18 Nov 2011 15:50:51 -0800 (PST)
-In-Reply-To: <20111118103355.GA4854@sigill.intra.peff.net>
+	id S1752105Ab1KSEyM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Nov 2011 23:54:12 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:50043 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754829Ab1KSEyL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2011 23:54:11 -0500
+Received: by bke11 with SMTP id 11so4223012bke.19
+        for <git@vger.kernel.org>; Fri, 18 Nov 2011 20:54:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Erl8db0Fu+qJWF8b+unW+HI1cJ5jxAGnQNDoFqlfD10=;
+        b=tCF79LI92/Xdacwi123yC92mL7CCsT5sp3At3RUf7G6eWLkuEWW/wOtPToXgJhbEfo
+         uIn86/bWM5JlAY0T2Nbr9wLo/ktj4HfYujXZgmXjBm3NWfKx+LE2S5578rw4svmvQw5l
+         wJ5GRUu2M4/Qb72UCiIQuEV+K1uamrjQJ1JDs=
+Received: by 10.205.131.3 with SMTP id ho3mr6163563bkc.11.1321678450158; Fri,
+ 18 Nov 2011 20:54:10 -0800 (PST)
+Received: by 10.204.23.2 with HTTP; Fri, 18 Nov 2011 20:53:38 -0800 (PST)
+In-Reply-To: <m21ut5dyei.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185687>
 
-On Fri, Nov 18, 2011 at 02:33, Jeff King <peff@peff.net> wrote:
-> On Wed, Nov 16, 2011 at 10:04:13PM -0800, Junio C Hamano wrote:
+On Sat, Nov 19, 2011 at 2:27 AM, Andreas Schwab <schwab@linux-m68k.org> wrote:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 >
->> When receive-pack & fetch-pack are run and store the pack obtained over
->> the wire to a local repository, they internally run the index-pack command
->> with the --strict option. Make sure that we reject incoming packfile that
->> records objects twice to avoid spreading such a damage.
+>> OK it's not gcc problem. I upgraded to 4.5.3 and still had the same
+>> problem. I used ccache though. Without ccache, gcc produced correct
+>> .o.d files.
 >
-> If we are fixing a thin pack (which should be the case most of the
-> time), we are rewriting the packfile anyway. Shouldn't we just omit
-> the duplicate?
->
-> I guess I'm a little confused about what is generating these duplicates.
-> A buggy git? A malicious server? Bad luck?
+> I'm also using ccache (version 3.1.3) and get correct dependencies.
 
-A buggy Git. We found a case where JGit could generate duplicate
-objects in the pack stream during a clone. The resulting client
-worked... until it tried to do `git gc` or really any sort of `git
-pack-objects`.
-
-In my opinion, a pack should never contain duplicate objects. Its a
-buggy remote that sends them. What I like about this patch is it stops
-and tells the user the remote is broken, which it is.
+I use ccache-2.4. Jonathan pointed out 3.x has been fixed elsewhere in
+this thread . I'm going to ask Gentoo to stablize one of 3.x version.
+-- 
+Duy
