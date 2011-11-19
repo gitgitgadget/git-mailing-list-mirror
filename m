@@ -1,59 +1,107 @@
-From: Alexey Shumkin <alex.crezoff@gmail.com>
-Subject: Re: Switch from svn to git and modify repo completely
-Date: Sat, 19 Nov 2011 22:50:48 +0400
-Message-ID: <20111119225048.384189bc@zappedws>
-References: <4EC7E32A.9040903@fechner.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] MSVC: Do not close stdout to prevent a crash
+Date: Sat, 19 Nov 2011 11:11:54 -0800
+Message-ID: <7v39dkj5ad.fsf@alter.siamese.dyndns.org>
+References: <1321710345-2299-1-git-send-email-vfr@lyx.org>
+ <m2sjlkcgyl.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Matthias Fechner <idefix@fechner.net>
-X-From: git-owner@vger.kernel.org Sat Nov 19 19:51:15 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Vincent van Ravesteijn <vfr@lyx.org>, git@vger.kernel.org,
+	msysgit@googlegroups.com, gitster@pobox.com, kusmabite@gmail.com,
+	Johannes.Schindelin@gmx.de
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Sat Nov 19 20:12:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RRq0R-0002rf-6j
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Nov 2011 19:51:15 +0100
+	id 1RRqKZ-0001YE-LW
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Nov 2011 20:12:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752683Ab1KSSvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Nov 2011 13:51:07 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:35998 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751788Ab1KSSvF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Nov 2011 13:51:05 -0500
-Received: by bke11 with SMTP id 11so4777075bke.19
-        for <git@vger.kernel.org>; Sat, 19 Nov 2011 10:51:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        bh=BUi2Mjv+kAGy65VqHyD4+X3HTxMKxO8E1JnRXJx++xA=;
-        b=GVLguCEm27ggY8XI2Dx9aoGzmfV4XOyLieZ6F+TSLkCtmBYMKggCXNzKuqUK0Uepje
-         e4moh+4n7cBIwNpM4qvRGey3VDecfdatwSQFAtdeQ9kVv4dg07Bg4ImGYd4mbDk4FWKg
-         My+bEodxjlhRVfgsv4M03MLNKxj3n0Teq68RE=
-Received: by 10.205.142.4 with SMTP id jg4mr1489428bkc.119.1321728664201;
-        Sat, 19 Nov 2011 10:51:04 -0800 (PST)
-Received: from zappedws (ppp91-77-24-178.pppoe.mtu-net.ru. [91.77.24.178])
-        by mx.google.com with ESMTPS id h7sm3433266bkw.12.2011.11.19.10.51.00
-        (version=SSLv3 cipher=OTHER);
-        Sat, 19 Nov 2011 10:51:03 -0800 (PST)
-In-Reply-To: <4EC7E32A.9040903@fechner.net>
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
+	id S1752191Ab1KSTL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Nov 2011 14:11:58 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47311 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751885Ab1KSTL5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Nov 2011 14:11:57 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7B52487C;
+	Sat, 19 Nov 2011 14:11:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zSh7XMOwPiorA1FUqlG/AtAeIz4=; b=lGXvIW
+	UM04yp3GzNyJdSX9iHE5tVO4iU7C7KleQPVxpnvhg6nmaPouOgJZ1nvX0ekIXu/0
+	qdSAP4n/TJD9htet6TSWKbue1FIHzBL4H+wIZrZxd3awjpavq1upjzSUV/GFBs80
+	G2oBtKpIss1bRsxE1qObcO50nF8azAF03cj2E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BR14ejXczbq3BIHNgrKe2x6UIfn8BJZx
+	CZQGUZpvDUoGr6kMJomO48VW8NjlIukPMe8ZBEGaTI57F7gVvRm20iShgUAM3/M8
+	sVlRM5FTmN5L+us5ENN7yNXB8Ffw8NxLQCBMxgjhZp0/wMQ035b9ZF9Kzdo3tHvJ
+	16PU6glQ1Hg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF29D487B;
+	Sat, 19 Nov 2011 14:11:56 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4BE19487A; Sat, 19 Nov 2011
+ 14:11:56 -0500 (EST)
+In-Reply-To: <m2sjlkcgyl.fsf@igel.home> (Andreas Schwab's message of "Sat, 19
+ Nov 2011 15:41:38 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 591258B4-12E2-11E1-BAEC-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185697>
 
-> Dear Git List,
-> 
-> I just started to migrate a svn repo to a git repo and was
-> successfully with the "git svn" command and waiting a long time :)
-> 
-> I have now some confidential documents in the repository I must remove
-> completely (including the complete history). These are single files
-> spread over the complete repository. Is this possible with git?
+Andreas Schwab <schwab@linux-m68k.org> writes:
 
-take a look at "git filter-branch"
+> Vincent van Ravesteijn <vfr@lyx.org> writes:
+>
+>> When compiled with MSVC, git crashes on Windows when calling
+>> fstat(stdout) when stdout is closed. fstat is being called at the end of
+>
+> ITYM fileno(stdout).
+> 
+>> run_builtin and this will thus be a problem for builtin command that close
+>> stdout. This happens for 'format-patch' which closes stdout after a call to
+>> freopen which directs stdout to the format patch file.
+>
+> It shouldn't do that in the first place.  This is an error on any
+> platform.
+
+Correct. The clean-up codepath is for built-in command implementations
+that write out their result and return 0 to signal success. If we let the
+crt0 to run its usual clean-ups like closing the standard output stream,
+we wouldn't be able to catch errors from there.
+
+For built-ins that perform their own clean-ups, it is their responsibility
+to be careful, hence we skip this part of the code.
+
+We have relied on fstat(-1, &st) to correctly error out, and if MSVC build
+crashes, it is a bug in its fstat() emulation, I would think.
+
+We could do something like the following patch to be extra defensive,
+though.
+
+ git.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git.c b/git.c
+index 8e34903..64c28e4 100644
+--- a/git.c
++++ b/git.c
+@@ -309,8 +309,8 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
+ 	if (status)
+ 		return status;
+ 
+-	/* Somebody closed stdout? */
+-	if (fstat(fileno(stdout), &st))
++	if (fileno(stdout) < 0 || /* Somebody closed stdout? */
++	    fstat(fileno(stdout), &st))
+ 		return 0;
+ 	/* Ignore write errors for pipes and sockets.. */
+ 	if (S_ISFIFO(st.st_mode) || S_ISSOCK(st.st_mode))
