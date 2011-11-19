@@ -1,77 +1,59 @@
-From: Matthias Fechner <idefix@fechner.net>
-Subject: Switch from svn to git and modify repo completely
-Date: Sat, 19 Nov 2011 18:11:06 +0100
-Message-ID: <4EC7E32A.9040903@fechner.net>
+From: Alexey Shumkin <alex.crezoff@gmail.com>
+Subject: Re: Switch from svn to git and modify repo completely
+Date: Sat, 19 Nov 2011 22:50:48 +0400
+Message-ID: <20111119225048.384189bc@zappedws>
+References: <4EC7E32A.9040903@fechner.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-To: Git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 19 18:18:26 2011
+Cc: git@vger.kernel.org
+To: Matthias Fechner <idefix@fechner.net>
+X-From: git-owner@vger.kernel.org Sat Nov 19 19:51:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RRoYb-0005yH-Qe
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Nov 2011 18:18:26 +0100
+	id 1RRq0R-0002rf-6j
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Nov 2011 19:51:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752196Ab1KSRSE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Nov 2011 12:18:04 -0500
-Received: from anny.lostinspace.de ([80.190.182.2]:21282 "EHLO
-	anny.lostinspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751375Ab1KSRSD (ORCPT <rfc822;Git@vger.kernel.org>);
-	Sat, 19 Nov 2011 12:18:03 -0500
-X-Greylist: delayed 405 seconds by postgrey-1.27 at vger.kernel.org; Sat, 19 Nov 2011 12:18:03 EST
-Received: from server.idefix.lan (ppp-93-104-88-159.dynamic.mnet-online.de [93.104.88.159])
-	(authenticated bits=0)
-	by anny.lostinspace.de (8.14.5/8.14.5) with ESMTP id pAJHBAks047105
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO)
-	for <Git@vger.kernel.org>; Sat, 19 Nov 2011 18:11:14 +0100 (CET)
-	(envelope-from idefix@fechner.net)
-Received: from server.idefix.lan (localhost [IPv6:::1])
-	by server.idefix.lan (Postfix) with ESMTP id 2073E6B8E1
-	for <Git@vger.kernel.org>; Sat, 19 Nov 2011 18:12:05 +0100 (CET)
-X-Virus-Scanned: amavisd-new at fechner.net
-Received: from server.idefix.lan ([127.0.0.1])
-	by server.idefix.lan (server.idefix.lan [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id YA_n-oLfr4OG for <Git@vger.kernel.org>;
-	Sat, 19 Nov 2011 18:12:04 +0100 (CET)
-Received: from [IPv6:2001:a60:f035:1:85bc:94f4:eba3:8b36] (unknown [IPv6:2001:a60:f035:1:85bc:94f4:eba3:8b36])
-	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
-	(No client certificate requested)
-	by server.idefix.lan (Postfix) with ESMTPSA id 81E5F6B8D6
-	for <Git@vger.kernel.org>; Sat, 19 Nov 2011 18:12:04 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
-X-Enigmail-Version: 1.3.3
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.7 (anny.lostinspace.de [80.190.182.2]); Sat, 19 Nov 2011 18:11:14 +0100 (CET)
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,UNPARSEABLE_RELAY
-	autolearn=ham version=3.3.2
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on anny.lostinspace.de
+	id S1752683Ab1KSSvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Nov 2011 13:51:07 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:35998 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751788Ab1KSSvF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Nov 2011 13:51:05 -0500
+Received: by bke11 with SMTP id 11so4777075bke.19
+        for <git@vger.kernel.org>; Sat, 19 Nov 2011 10:51:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=BUi2Mjv+kAGy65VqHyD4+X3HTxMKxO8E1JnRXJx++xA=;
+        b=GVLguCEm27ggY8XI2Dx9aoGzmfV4XOyLieZ6F+TSLkCtmBYMKggCXNzKuqUK0Uepje
+         e4moh+4n7cBIwNpM4qvRGey3VDecfdatwSQFAtdeQ9kVv4dg07Bg4ImGYd4mbDk4FWKg
+         My+bEodxjlhRVfgsv4M03MLNKxj3n0Teq68RE=
+Received: by 10.205.142.4 with SMTP id jg4mr1489428bkc.119.1321728664201;
+        Sat, 19 Nov 2011 10:51:04 -0800 (PST)
+Received: from zappedws (ppp91-77-24-178.pppoe.mtu-net.ru. [91.77.24.178])
+        by mx.google.com with ESMTPS id h7sm3433266bkw.12.2011.11.19.10.51.00
+        (version=SSLv3 cipher=OTHER);
+        Sat, 19 Nov 2011 10:51:03 -0800 (PST)
+In-Reply-To: <4EC7E32A.9040903@fechner.net>
+X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185696>
 
-Dear Git List,
+> Dear Git List,
+> 
+> I just started to migrate a svn repo to a git repo and was
+> successfully with the "git svn" command and waiting a long time :)
+> 
+> I have now some confidential documents in the repository I must remove
+> completely (including the complete history). These are single files
+> spread over the complete repository. Is this possible with git?
 
-I just started to migrate a svn repo to a git repo and was successfully
-with the "git svn" command and waiting a long time :)
-
-I have now some confidential documents in the repository I must remove
-completely (including the complete history). These are single files
-spread over the complete repository. Is this possible with git?
-
-The next step I would like to do is separate the repo and smaller ones.
-The problem here is it is not only take this directory and move it out,
-it is a complete mess and the files are spread over the complete repo
-and over all the revisions (files were moved around in the old
-subversion repo from folder to folder). Is there a possibility to say
-take file1, file2, fileN and directory1, directoryN and move it to
-another repo or remove all not matching files/directories completely?
-
-Thanks a lot for some hints which commands I could use here or if it is
-possible.
-
-Bye
-Matthias
+take a look at "git filter-branch"
