@@ -1,72 +1,70 @@
-From: Vincent van Ravesteijn <vfr@lyx.org>
-Subject: [PATCH 2/2] MSVC: Use _putenv instead of putenv to prevent a crash
-Date: Sat, 19 Nov 2011 14:52:25 +0100
-Message-ID: <1321710745-2341-1-git-send-email-vfr@lyx.org>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH 1/2] MSVC: Do not close stdout to prevent a crash
+Date: Sat, 19 Nov 2011 15:41:38 +0100
+Message-ID: <m2sjlkcgyl.fsf@igel.home>
 References: <1321710345-2299-1-git-send-email-vfr@lyx.org>
-Cc: msysgit@googlegroups.com, gitster@pobox.com, kusmabite@gmail.com,
-	Johannes.Schindelin@gmx.de, Vincent van Ravesteijn <vfr@lyx.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 19 14:53:06 2011
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, msysgit@googlegroups.com, gitster@pobox.com,
+	kusmabite@gmail.com, Johannes.Schindelin@gmx.de
+To: Vincent van Ravesteijn <vfr@lyx.org>
+X-From: git-owner@vger.kernel.org Sat Nov 19 15:41:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RRlLr-0003Pr-IW
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Nov 2011 14:53:03 +0100
+	id 1RRm76-0002eX-Hh
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Nov 2011 15:41:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752811Ab1KSNwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Nov 2011 08:52:37 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:65070 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752637Ab1KSNwg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Nov 2011 08:52:36 -0500
-Received: by eye27 with SMTP id 27so4237049eye.19
-        for <git@vger.kernel.org>; Sat, 19 Nov 2011 05:52:35 -0800 (PST)
-Received: by 10.213.33.65 with SMTP id g1mr899639ebd.62.1321710755547;
-        Sat, 19 Nov 2011 05:52:35 -0800 (PST)
-Received: from localhost.localdomain (j175101.upc-j.chello.nl. [24.132.175.101])
-        by mx.google.com with ESMTPS id q28sm12397101eea.6.2011.11.19.05.52.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 19 Nov 2011 05:52:35 -0800 (PST)
-X-Mailer: git-send-email 1.7.4.1
-In-Reply-To: <1321710345-2299-1-git-send-email-vfr@lyx.org>
+	id S1751365Ab1KSOlq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Nov 2011 09:41:46 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:44484 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751084Ab1KSOlp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Nov 2011 09:41:45 -0500
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 1221B188A18B;
+	Sat, 19 Nov 2011 15:44:16 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id 2D2311C000FE;
+	Sat, 19 Nov 2011 15:41:40 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id IU2zjgQvNt8W; Sat, 19 Nov 2011 15:41:40 +0100 (CET)
+Received: from igel.home (ppp-88-217-98-198.dynamic.mnet-online.de [88.217.98.198])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Sat, 19 Nov 2011 15:41:39 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 2044ACA29C; Sat, 19 Nov 2011 15:41:38 +0100 (CET)
+X-Yow: I know th'MAMBO!!  I have a TWO-TONE CHEMISTRY SET!!
+In-Reply-To: <1321710345-2299-1-git-send-email-vfr@lyx.org> (Vincent van
+	Ravesteijn's message of "Sat, 19 Nov 2011 14:45:44 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185693>
 
-Git crashes when trying to clear a nonexistent environment variable using
-the putenv function. The crash occurs when freeing the option string. In
-debug mode the assert "CrtIsValidHeapPointer" fails.
+Vincent van Ravesteijn <vfr@lyx.org> writes:
 
-Using _putenv instead of putenv makes the crash and assert disappear.
+> When compiled with MSVC, git crashes on Windows when calling
+> fstat(stdout) when stdout is closed. fstat is being called at the end of
 
-Signed-off-by: Vincent van Ravesteijn <vfr@lyx.org>
----
-The strange thing is that all over the internet people are claiming
-that there is no difference between putenv and _putenv. Still, using
-_putenv fixes the crash for me. 
+ITYM fileno(stdout).
 
-If there is someone around who is more knowledgeable in this area,
-please comment.
+> run_builtin and this will thus be a problem for builtin command that close
+> stdout. This happens for 'format-patch' which closes stdout after a call to
+> freopen which directs stdout to the format patch file.
 
- compat/setenv.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+It shouldn't do that in the first place.  This is an error on any
+platform.
 
-diff --git a/compat/setenv.c b/compat/setenv.c
-index 3a22ea7..b23937d 100644
---- a/compat/setenv.c
-+++ b/compat/setenv.c
-@@ -23,7 +23,7 @@ int gitsetenv(const char *name, const char *value, int replace)
- 	memcpy(envstr + namelen + 1, value, valuelen);
- 	envstr[namelen + valuelen + 1] = 0;
- 
--	out = putenv(envstr);
-+	out = _putenv(envstr);
- 	/* putenv(3) makes the argument string part of the environment,
- 	 * and changing that string modifies the environment --- which
- 	 * means we do not own that storage anymore.  Do not free
+Andreas.
+
 -- 
-1.7.4.1
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
