@@ -1,75 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug report - local (and git ignored) file silently removed after
- checkout
-Date: Sun, 20 Nov 2011 13:16:27 -0800
-Message-ID: <7vehx2ijf8.fsf@alter.siamese.dyndns.org>
-References: <CAPRVejcpAZrLWCeHTZJr9Uk6_z6hTPQLLd6pCOKteYnRGMQ5ig@mail.gmail.com>
+From: Matthias Fechner <idefix@fechner.net>
+Subject: Re: Switch from svn to git and modify repo completely
+Date: Sun, 20 Nov 2011 23:21:06 +0100
+Message-ID: <4EC97D52.1010308@fechner.net>
+References: <4EC7E32A.9040903@fechner.net> <20111119225048.384189bc@zappedws>
+Reply-To: Git@vger.kernel.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bertrand BENOIT <projettwk@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Sun Nov 20 22:16:37 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 20 23:28:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RSEkc-0002Qc-TB
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Nov 2011 22:16:35 +0100
+	id 1RSFsT-0000bw-SW
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Nov 2011 23:28:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753933Ab1KTVQa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Nov 2011 16:16:30 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50417 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753824Ab1KTVQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Nov 2011 16:16:29 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 57E426963;
-	Sun, 20 Nov 2011 16:16:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1AInrj9H2fpXwRTN09OdLwlqOBU=; b=UW0C2I
-	XJdH3QOEIIRmZ6Pwa2i+wqBx1oKOqaSzi75NePE3FIJ+4ibLT8p3UMezWDr9jaYo
-	7WaA7oSMxv6pOoE6ymsTfHvroVujU9Ty7w6yKrfhC2vXzhDg7nQ6qeamaf8aWPC6
-	DUGPx/ocWzaxBZTvfEitGRFQzohPU42ofo6oc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VDBB51F1TdOP9ZfJP7aB6tRnorbhVVCP
-	uWqK0Jopy1vLXJ8LV/DSSQcBs9RquvsJFxxDK+ZNA59QDIYUAyZsh1egS7Qmtlqc
-	8U7JJpU6d+R6521j4V2zN4jFf+lHDUmwHktQaN3GO+2V8ABJdCXujG9Gw3Nu8v2x
-	AYS36ZdWqEE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 502D86962;
-	Sun, 20 Nov 2011 16:16:29 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DA6836961; Sun, 20 Nov 2011
- 16:16:28 -0500 (EST)
-In-Reply-To: <CAPRVejcpAZrLWCeHTZJr9Uk6_z6hTPQLLd6pCOKteYnRGMQ5ig@mail.gmail.com>
- (Bertrand BENOIT's message of "Sun, 20 Nov 2011 14:42:36 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E97030D6-13BC-11E1-AA7F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754121Ab1KTWVR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Nov 2011 17:21:17 -0500
+Received: from anny.lostinspace.de ([80.190.182.2]:49015 "EHLO
+	anny.lostinspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753588Ab1KTWVQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Nov 2011 17:21:16 -0500
+Received: from server.idefix.lan (ppp-93-104-88-159.dynamic.mnet-online.de [93.104.88.159])
+	(authenticated bits=0)
+	by anny.lostinspace.de (8.14.5/8.14.5) with ESMTP id pAKML9A1007758
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Sun, 20 Nov 2011 23:21:13 +0100 (CET)
+	(envelope-from idefix@fechner.net)
+Received: from server.idefix.lan (localhost [IPv6:::1])
+	by server.idefix.lan (Postfix) with ESMTP id 01F7B6BBD4
+	for <git@vger.kernel.org>; Sun, 20 Nov 2011 23:22:10 +0100 (CET)
+X-Virus-Scanned: amavisd-new at fechner.net
+Received: from server.idefix.lan ([127.0.0.1])
+	by server.idefix.lan (server.idefix.lan [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id XwBc2Crafx6x for <git@vger.kernel.org>;
+	Sun, 20 Nov 2011 23:22:09 +0100 (CET)
+Received: from [IPv6:2001:a60:f035:1:b5bf:a398:a55c:89dc] (unknown [IPv6:2001:a60:f035:1:b5bf:a398:a55c:89dc])
+	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
+	(No client certificate requested)
+	by server.idefix.lan (Postfix) with ESMTPSA id 4ABFB6BBC8
+	for <git@vger.kernel.org>; Sun, 20 Nov 2011 23:22:09 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <20111119225048.384189bc@zappedws>
+X-Enigmail-Version: 1.3.3
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.7 (anny.lostinspace.de [80.190.182.2]); Sun, 20 Nov 2011 23:21:13 +0100 (CET)
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,UNPARSEABLE_RELAY
+	autolearn=ham version=3.3.2
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on anny.lostinspace.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185727>
 
-Bertrand BENOIT <projettwk@users.sourceforge.net> writes:
+Am 19.11.2011 19:50, schrieb Alexey Shumkin:
+> take a look at "git filter-branch"
 
-> Context:
->   - in previous version of my project, the TODO file was versioned
->   - in current development version, this file is NO more versioned AND
-> it is ignored by a gitignore rule,...
+thanks a lot for your answer. I checked the manual page, but it does not
+work like I expected it or it is described. What I did:
 
-What you observed is expected with all the versions of Git since the
-gitignore mechanism was introduced. The ignored files are "not tracked,
-are cruft that can be removed to make room if it is necessary for checking
-out a tracked version, and would not want to track (e.g. build artifacts
-like '*.o')" (I am not saying that it is the most sane semantics, I am
-just stating the fact).
+1. I searched the path name with the command:
+git show --pretty="format:" --name-only firstrev..endrev | sort | uniq
+|grep sdcc
 
-We do not have "not tracked, but precious (e.g. your TODO)" category; from
-time to time we have discussed possibilities of adding such to enrich the
-categorization, but nobody stepped up to actually do the work of designing
-let alone coding such a beast.
+2. I tried to remove the file with the command:
+git filter-branch -f --tree-filter 'rm -f
+software/tools/net.sourceforge.eclipsesdcc-1.0.0-win32.x86.zip'
+--prune-empty -- --all
+
+git told me:
+Ref 'refs/heads/master' was rewritten
+Ref 'refs/remotes/origin/master' was rewritten
+WARNING: Ref 'refs/remotes/origin/master' is unchanged
+
+3. I cloned the repository with:
+git clone --no-hardlinks repo-orig.git repo-filtered.git
+
+4. After this I verified in the repo-filtered.git that the file was
+really completely removed, but it was not the case. I was able to
+checkout the revision which holds the file.
+
+Regarding the manual page it should work... but reality is different.
+Has here anyone an idea what I did wrong?
+
+Bye
+Matthias
+
+-- 
+
+"Programming today is a race between software engineers striving to
+build bigger and better idiot-proof programs, and the universe trying to
+produce bigger and better idiots. So far, the universe is winning." --
+Rich Cook
