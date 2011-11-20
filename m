@@ -1,75 +1,81 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Stack overflow at write_one()
-Date: Sat, 19 Nov 2011 18:00:31 -0800
-Message-ID: <CAJo=hJtBKmf_yuJDXoKPA7OXrXhaZtm+P6rQx1376dngAmQNiA@mail.gmail.com>
-References: <4EC81131.2010704@cesarb.net> <7vty5zizwn.fsf@alter.siamese.dyndns.org>
- <4EC823A0.3010603@cesarb.net> <CAJo=hJv2aGEFcMjTPxJsyLerqUn3w3hc3hWnc1ScaDrSGihzyQ@mail.gmail.com>
- <4EC8437C.6000808@cesarb.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] MSVC: Do not close stdout to prevent a crash
+Date: Sat, 19 Nov 2011 19:27:02 -0800
+Message-ID: <7vpqgniid5.fsf@alter.siamese.dyndns.org>
+References: <1321710345-2299-1-git-send-email-vfr@lyx.org>
+ <m2sjlkcgyl.fsf@igel.home> <7v39dkj5ad.fsf@alter.siamese.dyndns.org>
+ <m2obw7dg1e.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Cesar Eduardo Barros <cesarb@cesarb.net>
-X-From: git-owner@vger.kernel.org Sun Nov 20 03:01:00 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Vincent van Ravesteijn <vfr@lyx.org>, git@vger.kernel.org,
+	msysgit@googlegroups.com, kusmabite@gmail.com,
+	Johannes.Schindelin@gmx.de
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Sun Nov 20 04:27:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RRwiK-0007jr-4q
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Nov 2011 03:01:00 +0100
+	id 1RRy3v-0007yl-2W
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Nov 2011 04:27:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754657Ab1KTCAy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Nov 2011 21:00:54 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:39212 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753831Ab1KTCAx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Nov 2011 21:00:53 -0500
-Received: by ggnr5 with SMTP id r5so1314907ggn.19
-        for <git@vger.kernel.org>; Sat, 19 Nov 2011 18:00:53 -0800 (PST)
-Received: by 10.236.128.226 with SMTP id f62mr12590350yhi.104.1321754453130;
- Sat, 19 Nov 2011 18:00:53 -0800 (PST)
-Received: by 10.147.167.10 with HTTP; Sat, 19 Nov 2011 18:00:31 -0800 (PST)
-In-Reply-To: <4EC8437C.6000808@cesarb.net>
+	id S1755117Ab1KTD1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Nov 2011 22:27:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52625 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754993Ab1KTD1G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Nov 2011 22:27:06 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF9C75981;
+	Sat, 19 Nov 2011 22:27:04 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xNCkUiwL83c1pOaypvJwVemBMeM=; b=r0ejVM
+	RZbf+Ok4SzSOTnFFpuzrvyO91IBu+b7ltmoMcuY2iOSrqaV/p/4TxW1PYHuzZIJI
+	pGPbMUlfrwZcKIgrCatAXf7fca5dffWIoY8iLo69e6Jz+0b2vA1cbnSnz6tYhhQ5
+	PHxuEumiZHH2SvxssdPEee33W5bYBheEVNqAg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Jv8iTEUi1E3srnZr4z3U8D8W0YzmYMDi
+	bFOtdBqVzxsoFn20e8oXxFvhtnO6cmvp90UxUl2DPWSxNLONhDH6uyz1ZS2qRDOy
+	cNeNNmciwR8OBMVh92u0FL6kYg7HjLffveRl4vE7ufLWw311itkgHqZyZIJOiD+/
+	wyyCUxR+73M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C360C5980;
+	Sat, 19 Nov 2011 22:27:04 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5759F597F; Sat, 19 Nov 2011
+ 22:27:04 -0500 (EST)
+In-Reply-To: <m2obw7dg1e.fsf@igel.home> (Andreas Schwab's message of "Sat, 19
+ Nov 2011 21:16:13 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 846525CE-1327-11E1-BD96-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185715>
 
-On Sat, Nov 19, 2011 at 16:02, Cesar Eduardo Barros <cesarb@cesarb.net>=
- wrote:
-> Em 19-11-2011 21:30, Shawn Pearce escreveu:
->>
->> On Sat, Nov 19, 2011 at 13:46, Cesar Eduardo Barros<cesarb@cesarb.ne=
-t>
->> =A0wrote:
->>>
->>> Em 19-11-2011 19:08, Junio C Hamano escreveu:
->>>>
->>>> Already found the real cause (jGit bug) and workaround posted, I t=
-hink.
->>>
->>> I presume the cause then is what was fixed by
->>>
->>> http://egit.eclipse.org/w/?p=3Djgit.git;a=3Dcommit;h=3D2fbf296fda20=
-5446eac11a13abd4fcdb182f28d9
->>> ?
->>
->> Yes. The AOSP servers were all updated with the above JGit patch, so
->> the servers are no longer sending duplicate objects. But yes, for a
->> period of time there were duplicates in the kernel repositories,
->> particularly kernal/omap.
+Andreas Schwab <schwab@linux-m68k.org> writes:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> So, would an alternative workaround in my situation be to delete
-> kernel/omap.git and let repo sync recreate it? It seems repo does not=
- have
-> extra metadata anywhere else, so just removing the directory should b=
-e
-> enough for it to clone again from scratch, hopefully getting a correc=
-ted
-> pack from the server.
+>> We have relied on fstat(-1, &st) to correctly error out, and if MSVC build
+>> crashes, it is a bug in its fstat() emulation, I would think.
+>
+> fileno(stdout) is alread wrong if stdout was closed.
 
-Yes. repo does not have extra state, so just removing the directory
-and running `repo sync` again to clone the repository would correct
-the local repository.
+The "-1" in my message comes from here:
+
+    DESCRIPTION
+
+    The fileno() function shall return the integer file descriptor
+    associated with the stream pointed to by stream.
+
+    RETURN VALUE
+
+    Upon successful completion, fileno() shall return the integer value of
+    the file descriptor associated with stream. Otherwise, the value -1
+    shall be returned and errno set to indicate the error.
