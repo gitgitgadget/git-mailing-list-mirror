@@ -1,74 +1,80 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [msysGit] Re: [PATCH 1/2] MSVC: Do not close stdout to prevent
- a crash
-Date: Sun, 20 Nov 2011 10:27:26 +0100
-Message-ID: <4EC8C7FE.5050903@kdbg.org>
-References: <1321710345-2299-1-git-send-email-vfr@lyx.org> <m2sjlkcgyl.fsf@igel.home> <7v39dkj5ad.fsf@alter.siamese.dyndns.org> <m2obw7dg1e.fsf@igel.home> <7vpqgniid5.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [RFC/PATCH 0/3] Re: cherry-pick/revert error messages
+Date: Sun, 20 Nov 2011 03:46:50 -0600
+Message-ID: <20111120094650.GB2278@elie.hsd1.il.comcast.net>
+References: <20111120073059.GA2278@elie.hsd1.il.comcast.net>
+ <CALkWK0=45OwcBoH2TorsgwTbaXjnffVuh0mGxh2+ShN9cuF-=A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
-	Vincent van Ravesteijn <vfr@lyx.org>, git@vger.kernel.org,
-	msysgit@googlegroups.com, kusmabite@gmail.com,
-	Johannes.Schindelin@gmx.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 20 10:27:36 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Phil Hord <phil.hord@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 20 10:47:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RS3gV-00017B-Vk
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Nov 2011 10:27:36 +0100
+	id 1RS3zu-0005mB-DB
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Nov 2011 10:47:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752117Ab1KTJ1b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Nov 2011 04:27:31 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:23238 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751818Ab1KTJ1a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Nov 2011 04:27:30 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 612F510013;
-	Sun, 20 Nov 2011 10:26:49 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id BC79219F390;
-	Sun, 20 Nov 2011 10:27:26 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <7vpqgniid5.fsf@alter.siamese.dyndns.org>
+	id S1752387Ab1KTJrE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Nov 2011 04:47:04 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:38829 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752200Ab1KTJrC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Nov 2011 04:47:02 -0500
+Received: by iage36 with SMTP id e36so5853295iag.19
+        for <git@vger.kernel.org>; Sun, 20 Nov 2011 01:47:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=DzV3k0uD+Z2nORfStF8JdXaeuA/PCKOKvoHDswwWAqs=;
+        b=fIZQRqhWvLYEWMnwmkfw29dCwR8liTWTMYUqv6Is8Z9+sYsJBLlKaImlmSGdTIISRp
+         q0zL0Hmnmb6Ct17rsdzLFgZsr5xc7AfoySW8D2z5h8x3EpjccD0BeDidAIzU99+OFnJN
+         /gbswGL2oavNgLfUFdviPbQuXdYkyfhB8iyNo=
+Received: by 10.50.189.231 with SMTP id gl7mr10620056igc.44.1321782421892;
+        Sun, 20 Nov 2011 01:47:01 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id p16sm29643412ibk.6.2011.11.20.01.47.00
+        (version=SSLv3 cipher=OTHER);
+        Sun, 20 Nov 2011 01:47:00 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0=45OwcBoH2TorsgwTbaXjnffVuh0mGxh2+ShN9cuF-=A@mail.gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185720>
 
-Am 20.11.2011 04:27, schrieb Junio C Hamano:
-> Andreas Schwab <schwab@linux-m68k.org> writes:
-> 
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> We have relied on fstat(-1, &st) to correctly error out, and if MSVC build
->>> crashes, it is a bug in its fstat() emulation, I would think.
->>
->> fileno(stdout) is alread wrong if stdout was closed.
-> 
-> The "-1" in my message comes from here:
-> 
->     DESCRIPTION
-> 
->     The fileno() function shall return the integer file descriptor
->     associated with the stream pointed to by stream.
-> 
->     RETURN VALUE
-> 
->     Upon successful completion, fileno() shall return the integer value of
->     the file descriptor associated with stream. Otherwise, the value -1
->     shall be returned and errno set to indicate the error.
+Ramkumar Ramachandra wrote:
 
-But in the description of fclose() there is also:
+> Looks much better!  Yes, a series pretty'fying error messages would be
+> really nice.
 
-  After the call to fclose(), any use of stream results in undefined
-  behavior.
+Good to hear.  Here's a rough one.
 
-And we do call fclose(stdout) in cmd_format_patch.
+I realize patch 1/3 might not be conservative enough, even though
+there hasn't been much time for people to get used to --reset yet.  So
+I might be sending a second version that treats --reset as a synonym.
+But please forget I said that when judging this version (i.e., if it
+looks like a problem, I do want to know).
 
--- Hannes
+Thoughts?
+
+Jonathan Nieder (3):
+  revert: rename --reset option to --quit
+  revert: restructure pick_revisions() for clarity
+  revert: improve error message for cherry-pick during cherry-pick
+
+ Documentation/git-cherry-pick.txt |    2 +-
+ Documentation/git-revert.txt      |    2 +-
+ Documentation/sequencer.txt       |   10 +++---
+ builtin/revert.c                  |   71 ++++++++++++++++++-------------------
+ sequencer.h                       |    2 +-
+ t/t3510-cherry-pick-sequence.sh   |   10 +++---
+ t/t7106-reset-sequence.sh         |    2 +-
+ 7 files changed, 49 insertions(+), 50 deletions(-)
