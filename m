@@ -1,81 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] MSVC: Do not close stdout to prevent a crash
-Date: Sat, 19 Nov 2011 19:27:02 -0800
-Message-ID: <7vpqgniid5.fsf@alter.siamese.dyndns.org>
-References: <1321710345-2299-1-git-send-email-vfr@lyx.org>
- <m2sjlkcgyl.fsf@igel.home> <7v39dkj5ad.fsf@alter.siamese.dyndns.org>
- <m2obw7dg1e.fsf@igel.home>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: cherry-pick/revert error messages
+Date: Sun, 20 Nov 2011 01:30:59 -0600
+Message-ID: <20111120073059.GA2278@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Vincent van Ravesteijn <vfr@lyx.org>, git@vger.kernel.org,
-	msysgit@googlegroups.com, kusmabite@gmail.com,
-	Johannes.Schindelin@gmx.de
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sun Nov 20 04:27:24 2011
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 20 08:41:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RRy3v-0007yl-2W
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Nov 2011 04:27:23 +0100
+	id 1RS21b-0003og-CC
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Nov 2011 08:41:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755117Ab1KTD1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Nov 2011 22:27:07 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52625 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754993Ab1KTD1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Nov 2011 22:27:06 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF9C75981;
-	Sat, 19 Nov 2011 22:27:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xNCkUiwL83c1pOaypvJwVemBMeM=; b=r0ejVM
-	RZbf+Ok4SzSOTnFFpuzrvyO91IBu+b7ltmoMcuY2iOSrqaV/p/4TxW1PYHuzZIJI
-	pGPbMUlfrwZcKIgrCatAXf7fca5dffWIoY8iLo69e6Jz+0b2vA1cbnSnz6tYhhQ5
-	PHxuEumiZHH2SvxssdPEee33W5bYBheEVNqAg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Jv8iTEUi1E3srnZr4z3U8D8W0YzmYMDi
-	bFOtdBqVzxsoFn20e8oXxFvhtnO6cmvp90UxUl2DPWSxNLONhDH6uyz1ZS2qRDOy
-	cNeNNmciwR8OBMVh92u0FL6kYg7HjLffveRl4vE7ufLWw311itkgHqZyZIJOiD+/
-	wyyCUxR+73M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C360C5980;
-	Sat, 19 Nov 2011 22:27:04 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5759F597F; Sat, 19 Nov 2011
- 22:27:04 -0500 (EST)
-In-Reply-To: <m2obw7dg1e.fsf@igel.home> (Andreas Schwab's message of "Sat, 19
- Nov 2011 21:16:13 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 846525CE-1327-11E1-BD96-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751401Ab1KTHbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Nov 2011 02:31:14 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:35355 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751271Ab1KTHbO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Nov 2011 02:31:14 -0500
+Received: by iage36 with SMTP id e36so5753165iag.19
+        for <git@vger.kernel.org>; Sat, 19 Nov 2011 23:31:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=YNzeEu4nzTcIM9tkzYa/1SB58NHkThofBCw1hC4dbpg=;
+        b=sggCZdqrQ+BzYBfHxgBk+HkmxDjma20J2RtGsSdrtBSKN4AMS5kTwA8agmajr7tAyE
+         yoEnJCwib2bePbKC9Mtla3Oj9XWsAdffZcI+T90kBWr1XhP2BKXUfS9EiLZJnd0YEott
+         zTS8iccs+NjYV8yId4AvJ66Sd9757c05whK54=
+Received: by 10.42.159.72 with SMTP id k8mr7433266icx.14.1321774273646;
+        Sat, 19 Nov 2011 23:31:13 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id a2sm16004326igj.7.2011.11.19.23.31.12
+        (version=SSLv3 cipher=OTHER);
+        Sat, 19 Nov 2011 23:31:12 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185716>
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
+Hi Ram,
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> We have relied on fstat(-1, &st) to correctly error out, and if MSVC build
->> crashes, it is a bug in its fstat() emulation, I would think.
->
-> fileno(stdout) is alread wrong if stdout was closed.
+Today I encountered the following error message:
 
-The "-1" in my message comes from here:
+	$ git cherry-pick foo..bar
+	error: .git/sequencer already exists.
+	error: A cherry-pick or revert is in progress.
+	hint: Use --continue to continue the operation
+	hint: or --reset to forget about it
+	fatal: cherry-pick failed
+	$
 
-    DESCRIPTION
+The double "error" seemed a little weird.  Also, the capital letters
+and periods feel out of place, when compared with other messages
+emited by git with an "error:" prefix.  The final "fatal: cherry-pick
+failed" seems redundant, too.  I guess I would have expected something
+like the following instead:
 
-    The fileno() function shall return the integer file descriptor
-    associated with the stream pointed to by stream.
+	$ git cherry-pick foo..bar
+	fatal: a cherry-pick or revert is already in progress
+	hint: try "git cherry-pick (--continue | --quit)"
+	$
 
-    RETURN VALUE
-
-    Upon successful completion, fileno() shall return the integer value of
-    the file descriptor associated with stream. Otherwise, the value -1
-    shall be returned and errno set to indicate the error.
+What do you think?
