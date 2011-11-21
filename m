@@ -1,85 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: [PATCH] Add test that checkout does not overwrite entries in
  .git/info/exclude
-Date: Sun, 20 Nov 2011 23:59:23 -0800
-Message-ID: <7vobw5hpno.fsf@alter.siamese.dyndns.org>
+Date: Mon, 21 Nov 2011 15:17:01 +0700
+Message-ID: <20111121081701.GA7985@do>
 References: <CAPRVejcpAZrLWCeHTZJr9Uk6_z6hTPQLLd6pCOKteYnRGMQ5ig@mail.gmail.com>
  <7vehx2ijf8.fsf@alter.siamese.dyndns.org>
  <20111120221930.GF14902@foodlogiq3-xp-d620.thebe.ath.cx>
- <7vzkfqgn91.fsf@alter.siamese.dyndns.org> <4EC9FC81.3080306@viscovery.net>
- <00392567F0B045E38A429F95594C1BD2@PhilipOakley>
+ <7vzkfqgn91.fsf@alter.siamese.dyndns.org>
+ <4EC9FC81.3080306@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Johannes Sixt" <j.sixt@viscovery.net>,
-	"Taylor Hedberg" <tmhedberg@gmail.com>,
-	"Bertrand BENOIT" <projettwk@users.sourceforge.net>,
-	<git@vger.kernel.org>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Mon Nov 21 08:59:32 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Taylor Hedberg <tmhedberg@gmail.com>,
+	Bertrand BENOIT <projettwk@users.sourceforge.net>,
+	git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Nov 21 09:17:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RSOmp-00070Y-PW
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Nov 2011 08:59:32 +0100
+	id 1RSP4H-0003RD-0B
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Nov 2011 09:17:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754619Ab1KUH70 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Nov 2011 02:59:26 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34173 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754414Ab1KUH70 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2011 02:59:26 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC2472926;
-	Mon, 21 Nov 2011 02:59:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hPn+Fg6BtSxIJgdjPtOr3eltNtQ=; b=qW7xjy
-	7+hHTuJlFYpGlO5+DJxFpErFkx+M4OJWV9yCYEr36oex2CH08UMXxDGuJMkRk1m5
-	PoJqw2YLHvp8NWjcLzGUfKJrT0CfVdBlVyWUKOHKsfH459BQlf0v18xtDuewh0t6
-	qJ+fefUnzT1nHATTIMk55nCnupP+FkuYg2fsw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HpFzjtjkHCwYmXwCHZAWk8V1cEkpamKt
-	RE+xnQkZzVOt1pZ69dUkQfB+t44tfKCTLIIiCBQXyrRLOME2srbo7bxvNVxl3puE
-	lv1C9tAa7BHMGb+0QlwE3HGLQns3y9kzTqls7vIuY/PQjsH9sOXyNStQ26nxCBYP
-	Mn3Z8LNRdNc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B421A2925;
-	Mon, 21 Nov 2011 02:59:25 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 48C322924; Mon, 21 Nov 2011
- 02:59:25 -0500 (EST)
-In-Reply-To: <00392567F0B045E38A429F95594C1BD2@PhilipOakley> (Philip Oakley's
- message of "Mon, 21 Nov 2011 07:45:01 -0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BAC466D0-1416-11E1-85ED-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754577Ab1KUIRL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Nov 2011 03:17:11 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:54955 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753937Ab1KUIRJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Nov 2011 03:17:09 -0500
+Received: by iage36 with SMTP id e36so6970955iag.19
+        for <git@vger.kernel.org>; Mon, 21 Nov 2011 00:17:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=/JKcsc5sN6ADcobXI1WlEdpSYVpbL/yjIB5NLdIoyOY=;
+        b=wGFnNXJ8FlDbGjYrkUBMXyEv/R6GGSW5sow9SxLZjDw2rkGFXJIXc1vSwMDZqfJ18f
+         G6R4XMC1AGV4/b3LuENHuwX37XETPb83V4epQRtb4eS1DMtL0homlydYwsM5IDE63Ic7
+         0OpErFQ5evDwIC/GaXLMpbUbd/BlM8Mr1bkEo=
+Received: by 10.231.29.79 with SMTP id p15mr3017682ibc.16.1321863429073;
+        Mon, 21 Nov 2011 00:17:09 -0800 (PST)
+Received: from pclouds@gmail.com ([115.74.42.172])
+        by mx.google.com with ESMTPS id a2sm24767711igj.7.2011.11.21.00.17.04
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 21 Nov 2011 00:17:07 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 21 Nov 2011 15:17:01 +0700
+Content-Disposition: inline
+In-Reply-To: <4EC9FC81.3080306@viscovery.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185737>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+On Mon, Nov 21, 2011 at 08:23:45AM +0100, Johannes Sixt wrote:
+> From: Johannes Sixt <j6t@kdbg.org>
+> 
+> It is an unintended accident that entries matched by .git/info/exclude are
+> considered precious, but entries matched by .gitignore are not. That is,
+> 'git checkout' will overwrite untracked files matched by .gitignore, but
+> refuses to overwrite files matched by .git/info/exclude.
+> 
+> It is a lucky accident: it allows the distinction between "untracked but
+> precious" and "untracked and garbage". And it is a doubly lucky accident:
+> .gitignore entries are meant for files like build products, which usually
+> affect all consumers of a repository, whereas .git/info/exclude is
+> intended for personal files, which frequently are precious (think of a
+> TODO file).
+> 
+> Add a test that codifies the accident as wanted behavior.
 
-> Shouldn't there be some documentation changes to support this very
-> useful feature.
+If you want to keep this accident (which is a bug to me), you may want
+to add the reason: callers to unpack_trees() are supposed to also
+setup exclude rules in .git/info/exclude before calling
+unpack_trees(), which they don't.
 
-I do not agree it is "useful", if it is info/exclude only, which by design
-would not propagate across repositories and histories.
+So .git/info/exclude is entirely dismissed. This patch makes t2023.3
+fail. I haven't dug into history to see if this is on purpose though.
 
-If we were to support "precious" as a feature, we should do that properly
-with a properly defined syntax (e.g. just like '!' prefix is "no, this is
-not 'ignored' entry", use some prefix to say "well, this is ignored in the
-sense that not to be tracked, but that does not mean this can be nuked")
-that can be in any exclude sources.
-
-Exclude patterns in info/exclude should work just like ones in the in-tree
-.gitignore only at different precedence for uniformity and consistency, so
-the behaviour J6t showed in the new test should be fixed.
-
-The entries in info/exclude are at lower priority than the ones in in-tree
-.gitignore files, which probably was a design mistake, but that is a
-separate issue.
+-- 8< --
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 2a80772..c2fc2ba 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -412,6 +412,8 @@ static int merge_working_tree(struct checkout_opts *opts,
+ 		topts.dir = xcalloc(1, sizeof(*topts.dir));
+ 		topts.dir->flags |= DIR_SHOW_IGNORED;
+ 		topts.dir->exclude_per_dir = ".gitignore";
++		if (!access(git_path("info/exclude"), R_OK))
++			add_excludes_from_file(topts.dir, git_path("info/exclude"));
+ 		tree = parse_tree_indirect(old->commit ?
+ 					   old->commit->object.sha1 :
+ 					   EMPTY_TREE_SHA1_BIN);
+-- 8< --
+--
+Duy
