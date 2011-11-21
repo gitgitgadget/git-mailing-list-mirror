@@ -1,145 +1,152 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] remote: add new sync command
-Date: Mon, 21 Nov 2011 16:44:50 -0500
-Message-ID: <20111121214450.GA20338@sigill.intra.peff.net>
-References: <20111107183938.GA5155@sigill.intra.peff.net>
- <CAMP44s0M-qnZeHCUadSJJCYO=t881sUOi11G3fCG2vaAakPyBQ@mail.gmail.com>
- <20111107210134.GA7380@sigill.intra.peff.net>
- <CAMP44s089xbEo4VT8rqgS=BJMUu=qsb8Hm5z8bTR2akU8-5QhA@mail.gmail.com>
- <20111108181442.GA17317@sigill.intra.peff.net>
- <CAMP44s2RjcFtdO2jft0Hg9RtqK-DRK47gX8By-dBFSBcSA+yFA@mail.gmail.com>
- <20111111181352.GA16055@sigill.intra.peff.net>
- <CAMP44s06p+KyJAu4ddiCa8CFRq5eogbqxxJU16Z-SUb3GSp67Q@mail.gmail.com>
- <20111114122556.GB19746@sigill.intra.peff.net>
- <CAMP44s1G9jJyiis7z7XbPvW925E-u=0_-h9jJKkj2wyPS9o5ig@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 21 22:45:01 2011
+From: Frans Klaver <fransklaver@gmail.com>
+Subject: [PATCH] run-command.c: Accept EACCES as command not found
+Date: Mon, 21 Nov 2011 22:53:07 +0100
+Message-ID: <1321912387-4569-1-git-send-email-fransklaver@gmail.com>
+Cc: git@vger.kernel.org, Frans Klaver <fransklaver@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 21 22:54:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RSbfg-00014R-3Z
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Nov 2011 22:45:00 +0100
+	id 1RSboN-0004om-Mp
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Nov 2011 22:54:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755436Ab1KUVox (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Nov 2011 16:44:53 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48824
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753405Ab1KUVox (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2011 16:44:53 -0500
-Received: (qmail 23562 invoked by uid 107); 21 Nov 2011 21:45:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 Nov 2011 16:45:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Nov 2011 16:44:50 -0500
-Content-Disposition: inline
-In-Reply-To: <CAMP44s1G9jJyiis7z7XbPvW925E-u=0_-h9jJKkj2wyPS9o5ig@mail.gmail.com>
+	id S1757075Ab1KUVxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Nov 2011 16:53:55 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:58304 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755000Ab1KUVxy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Nov 2011 16:53:54 -0500
+Received: by eye27 with SMTP id 27so5898680eye.19
+        for <git@vger.kernel.org>; Mon, 21 Nov 2011 13:53:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=KF1QNMbETNg3ViAHi00blBnYH/UcpxxfZprKekjK5HY=;
+        b=t0D6LlNYaSYmt0y8TdYERveR5dJUjTQMPuolr615WILlSe9dVtl+NLwitjqCuSWb5B
+         NtpInBACtei07k40EoJ6CQORvhk2t3Eds+Y2BgAGWc97IkId4VPwVgmchKTbV/odCAED
+         r8IyTCfW1HzNc5879PDM85O9fCqqmjdj7nimw=
+Received: by 10.213.22.18 with SMTP id l18mr474278ebb.51.1321912432579;
+        Mon, 21 Nov 2011 13:53:52 -0800 (PST)
+Received: from localhost.localdomain (82-136-253-149.ip.telfort.nl. [82.136.253.149])
+        by mx.google.com with ESMTPS id 5sm35283973eev.2.2011.11.21.13.53.51
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 21 Nov 2011 13:53:51 -0800 (PST)
+X-Mailer: git-send-email 1.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185763>
 
-On Mon, Nov 14, 2011 at 03:57:07PM +0200, Felipe Contreras wrote:
+execvp returns ENOENT if a command was not found after searching PATH.
+If path contains a directory that current user has insufficient
+privileges to, EACCES is returned. This may still mean the program
+wasn't found.
 
-> >> I'm not going to investigate the subtleties of these different setups,
-> >> I'm going to put my common user hat and ask; how do I fetch as a
-> >> mirror?
-> >
-> > The problem with that question is that you haven't defined mirror. Does
-> > that mean you just want pruning, or does it mean that you want your
-> > local ref namespace to match that of the remote?
-> 
-> Exactly, no mirror has been defined, because I don't want a mirror. A
-> mirror is supposed to have all the refs in sync all the time; that's
-> not what I want.
+If the latter case is encountered, git errors out without giving aliases
+a try, which breaks t0001.3 and alias handling in general.
 
-I didn't mean "you didn't define a mirror in your config". I meant "your
-question is not well-defined, because you haven't defined the term
-'mirror'". IOW, I can't answer your question without knowing exactly
-what you meant.
+This can be fixed by handling the EACCES case equally to the ENOENT
+case.
 
-> > BTW, right now there is "git remote add --mirror ...", which sets up the
-> > fetch refspec for you (in this case, mirror is "make your refs look like
-> > the remote's"). Perhaps rather than adding syntactic sugar to fetch, it
-> > would be best to channel users into configuring a remote that selects
-> > from one of a few common setups (including different types of mirrors).
-> 
-> But that assumes that they would want the same refspec operation *all
-> the time* which is not the case (at least for me). Sometimes I want to
-> update only existing branches, sometimes I want to fetch new branches
-> too, sometimes I want to prune local branches, sometimes not.
+Signed-off-by: Frans Klaver <fransklaver@gmail.com>
+---
 
-OK, then that means it must be a fetch command-line thing, not a
-configured thing. Though note that even leaving prune out, I don't think
-git does what you want (e.g., how are you fetching only to update
-existing branches?).
+I'm actually not too happy about the location of the tests. I couldn't
+find out from the available tests and the documentation where I would
+have to create the new ones. For now, I've added the tests to the same
+set that I found the issue with.
 
-> > No, you would just do "--prune", because your refspecs are _already_
-> > indicating that you are writing into the local namespace, and anything
-> > you have locally would be deleted by the prune operation. I.e., there is
-> > no need for --prune-local in this scenario; --prune already does what we
-> > want.
-> 
-> That's very risky. The user might forget that this is a mirror repo,
-> and delete the local branches unintentionally. Plus, it would be then
-> impossible to prune remote tracking branches.
+ run-command.c   |   10 ++++++++--
+ t/t0001-init.sh |   48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 56 insertions(+), 2 deletions(-)
 
-Sorry, but I don't see how "--prune" is supposed to know what to prune
-except through the refspecs that have been provided to it (either in
-configuration or on the command line). So what is:
-
-  git fetch --prune <remote> refs/*:refs/*
-
-_supposed_ to do, if not prune your local namespace?
-
-I don't buy the "it's too risky" argument. You have configured a remote
-that will fetch and overwrite your local branches already, if you ever
-run "git fetch foo". But somehow running "git fetch --prune foo" is too
-risky, because you might forget that it will delete all of your
-branches?
-
-> > As a user, how do I resolve the situation? I might say topic-Y is
-> > obsolete and get rid of it. I might rebase it onto another branch. Or I
-> > might declare it to have no upstream. But all of those are branch
-> > operations, not fetch operations.
-> 
-> Yes, but that has nothing to do with the operation I want to achieve:
-> git remote sync. By which I mean synchronize the local branches with
-> the branches of a certain remote.
-
-Right. I was only trying to explain a case where you would want to prune
-in the local namespace, when fetch is not configured to touch the local
-namespace. Which is the only use case I could think of for something
-named --prune-local. But let's forget it. My point was that it is not
-related to fetch, and I was just guessing at what you might want from
---prune-local.
-
-> > So what I was trying to say was that either your fetch refspecs tell
-> > fetch to write into your local branch namespace, or not. If they do,
-> > then --prune is sufficient (with no -local variant required). If not,
-> > then touching your local branch namespace is outside the scope of fetch.
-> 
-> I don't want this to be a *permanent* configuration. I see this
-> similar to --force. You can achieve the same by adding a + at the
-> beginning of the refspec, but this is something that should be
-> activated on a per-command basis, thus the option. I think this should
-> be the same.
-
-Then you can tweak what is pruned on a per-command basis by providing
-alternate refspecs. Right now that would probably mean:
-
-  git fetch --prune <remote> refs/*:refs/*
-
-or
-
-  git fetch --prune <remote> refs/heads/*:refs/remotes/<remote>/*
-
-but as we discussed earlier in the thread, those can be made less scary
-with syntactic sugar.
-
--Peff
+diff --git a/run-command.c b/run-command.c
+index 1c51043..ad3c120 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -280,12 +280,18 @@ fail_pipe:
+ 		} else {
+ 			execvp(cmd->argv[0], (char *const*) cmd->argv);
+ 		}
+-		if (errno == ENOENT) {
++		switch (errno) {
++		case ENOENT:
+ 			if (!cmd->silent_exec_failure)
+ 				error("cannot run %s: %s", cmd->argv[0],
+ 					strerror(ENOENT));
+ 			exit(127);
+-		} else {
++		case EACCES:
++			if (!cmd->silent_exec_failure)
++				error("fatal: cannot exec '%s': %s", cmd->argv[0],
++					strerror(EACCES));
++			exit(127);
++		default:
+ 			die_errno("cannot exec '%s'", cmd->argv[0]);
+ 		}
+ 	}
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index ad66410..d40966a 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -63,6 +63,54 @@ test_expect_success 'plain through aliased command, outside any git repo' '
+ 	check_config plain-aliased/.git false unset
+ '
+ 
++test_expect_success 'plain through aliased command, inaccessible path, outside any git repo' '
++	(
++		sane_unset GIT_DIR GIT_WORK_TREE &&
++		HOME=$(pwd)/alias-config-path &&
++		export HOME &&
++		mkdir alias-config-path &&
++		echo "[alias] aliasedinit = init" >alias-config-path/.gitconfig &&
++
++		GIT_CEILING_DIRECTORIES=$(pwd) &&
++		export GIT_CEILING_DIRECTORIES &&
++
++		mkdir searchpath &&
++		chmod 400 searchpath &&
++		PATH=$(pwd)/searchpath:$PATH &&
++		export PATH &&
++
++		mkdir plain-aliased-path &&
++		cd plain-aliased-path &&
++		git aliasedinit
++	) &&
++	check_config plain-aliased-path/.git false unset
++'
++
++test_expect_success 'plain through aliased command, inaccessible command, outside any git repo' '
++	(
++		sane_unset GIT_DIR GIT_WORK_TREE &&
++		HOME=$(pwd)/alias-config-cmd &&
++		export HOME &&
++		mkdir alias-config-cmd &&
++		echo "[alias] aliasedinit = init" >alias-config-cmd/.gitconfig &&
++
++		GIT_CEILING_DIRECTORIES=$(pwd) &&
++		export GIT_CEILING_DIRECTORIES &&
++
++		mkdir searchpathcmd &&
++		chmod 755 searchpathcmd &&
++		PATH=$(pwd)/searchpathcmd:$PATH &&
++		export PATH &&
++
++		touch searchpathcmd/git-aliasedinit &&
++
++		mkdir plain-aliased-cmd &&
++		cd plain-aliased-cmd &&
++		git aliasedinit
++	) &&
++	check_config plain-aliased-cmd/.git false unset
++'
++
+ test_expect_failure 'plain nested through aliased command' '
+ 	(
+ 		sane_unset GIT_DIR GIT_WORK_TREE &&
+-- 
+1.7.7
