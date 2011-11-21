@@ -1,74 +1,76 @@
-From: dexen deVries <dexen.devries@gmail.com>
-Subject: Feature requset: listing of current stash in git gui
-Date: Mon, 21 Nov 2011 11:00:52 +0100
-Message-ID: <201111211100.52367.dexen.devries@gmail.com>
+From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
+Subject: Re: Feature requset: listing of current stash in git gui
+Date: Mon, 21 Nov 2011 11:53:03 +0100
+Message-ID: <4ECA2D8F.4060005@atlas-elektronik.com>
+References: <201111211100.52367.dexen.devries@gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 21 11:01:07 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: dexen deVries <dexen.devries@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 21 11:53:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RSQgU-0003Ig-Qf
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Nov 2011 11:01:07 +0100
+	id 1RSRUu-0005Tw-KL
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Nov 2011 11:53:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754113Ab1KUKBA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Nov 2011 05:01:00 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:53892 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753510Ab1KUKA7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Nov 2011 05:00:59 -0500
-Received: by eye27 with SMTP id 27so5126851eye.19
-        for <git@vger.kernel.org>; Mon, 21 Nov 2011 02:00:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:x-face:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        bh=adC4MKQJJ29gpbaglShr/Nl0kEBg3d/rEMgP3IXXDGs=;
-        b=CieGTE/fwnduMCKIqnJbYAmEaduWef73DqHqx63Lsjav59caGAqmHePpqp541uj8DX
-         38FW5zAZDH4RNnL35rsmNLrv38nb/q8P9wx8AzZA8S3IaTpF9Rev52/AWPaY+z2Hwd5N
-         HIK4yhMOUDLjTrVPP1kDnfGAUCiPxKgKSTO/s=
-Received: by 10.14.18.94 with SMTP id k70mr881626eek.203.1321869658539;
-        Mon, 21 Nov 2011 02:00:58 -0800 (PST)
-Received: from coil.localnet ([89.228.8.130])
-        by mx.google.com with ESMTPS id f36sm29721915eef.4.2011.11.21.02.00.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 21 Nov 2011 02:00:57 -0800 (PST)
-User-Agent: KMail/1.13.6 (Linux/3.2.0-rc1-l41; KDE/4.5.5; x86_64; ; )
-X-Face: 1TH%]0KlR_DQ/V9+m_"neC|Yj3$MU@B/vVI\}^j`G/[9JKe=5`p[$l|z^\MRO%<
- =?utf-8?q?k=3A9xXL=5B=0A=09=5F!jEZo8=24=5B=5Dyo=7B7O-=5Dt=5F?=@Qj`v5H@L[YyU<#j7(H)P\{pMs))9$@Vww1"
- =?utf-8?q?ni-=7B+=7B5olk=3DXY=26G=0A=09?=,}|UHQMC08506\0=+p|75ucH!S!1UcXoC1vgpN_{lOMt_54_N5;)ngh6=D^uZN,
- =?utf-8?q?=7DZI9-k9=0A=09?="v<!}`jpCUMM,//`>H6w{K<geM^bS]jwD8'lAEX9>F[ScIHig1.r%65;
+	id S1755220Ab1KUKxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Nov 2011 05:53:06 -0500
+Received: from mail96.atlas.de ([194.156.172.86]:16663 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752799Ab1KUKxF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Nov 2011 05:53:05 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mail96.atlas.de (Postfix) with ESMTP id C850710074;
+	Mon, 21 Nov 2011 11:53:03 +0100 (CET)
+X-Virus-Scanned: amavisd-new at lxsrv96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (lxsrv96.atlas.de [127.0.0.1]) (amavisd-new, port 10124)
+	with ESMTP id Z7vOahbFGBL4; Mon, 21 Nov 2011 11:53:03 +0100 (CET)
+Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP;
+	Mon, 21 Nov 2011 11:53:03 +0100 (CET)
+Received: from [141.200.19.108] (as112671.atlas.de [141.200.19.108])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id 4213A2717B;
+	Mon, 21 Nov 2011 11:53:03 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <201111211100.52367.dexen.devries@gmail.com>
+X-Enigmail-Version: 1.3.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185740>
 
-Hi,
+Am 21.11.2011 11:00, schrieb dexen deVries:
+> Hi,
+> 
+> 
+> please consider listing modifications stored in git's stash somewhere in git 
+> gui window. Perhaps above the `Staged Changes' subframe. Format of the listing 
+> similar to output of `git stash list'. Available operations would be Pop, 
+> Apply, Save and Drop.
 
+You can simply put the following in your ~/.gitconfig:
 
-please consider listing modifications stored in git's stash somewhere i=
-n git=20
-gui window. Perhaps above the `Staged Changes' subframe. Format of the =
-listing=20
-similar to output of `git stash list'. Available operations would be Po=
-p,=20
-Apply, Save and Drop.
+[guitool "Stash/show"]
+	cmd = git stash show -p
+[guitool "Stash/list"]
+	cmd = git stash list
+[guitool "Stash/pop"]
+	cmd = git stash pop
+[guitool "Stash/drop"]
+	cmd = git stash drop
+	confirm = yes
 
+That will give you a new sub-menu in the 'Tools' menu of git gui.
 
 Regards,
---=20
-dexen deVries
-
-[[[=E2=86=93][=E2=86=92]]]
-
-``As my friend Jacob Gabrielson once put it, advocating Object-Oriented=
-=20
-Programming is like advocating Pants-Oriented Clothing.''
- -- Steve Yegge, in
-http://steve-yegge.blogspot.com/2006/03/execution-in-kingdom-of-nouns.h=
-tml
+  Stefan
+-- 
+----------------------------------------------------------------
+/dev/random says: Dreams are free, but you get soaked on the connect time.
+python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6e696b2e636f6d'.decode('hex')"
