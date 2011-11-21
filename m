@@ -1,86 +1,99 @@
-From: Taylor Hedberg <tmhedberg@gmail.com>
-Subject: Re: Bug report - local (and git ignored) file silently removed after
- checkout
-Date: Sun, 20 Nov 2011 17:19:30 -0500
-Message-ID: <20111120221930.GF14902@foodlogiq3-xp-d620.thebe.ath.cx>
-References: <CAPRVejcpAZrLWCeHTZJr9Uk6_z6hTPQLLd6pCOKteYnRGMQ5ig@mail.gmail.com>
- <7vehx2ijf8.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] t5501-*.sh: Fix url passed to clone in setup test
+Date: Sun, 20 Nov 2011 19:24:49 -0800
+Message-ID: <7vaa7qi2da.fsf@alter.siamese.dyndns.org>
+References: <4EC805CE.10203@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="8nsIa27JVQLqB7/C"
-Cc: Bertrand BENOIT <projettwk@users.sourceforge.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 20 23:28:46 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Mon Nov 21 04:25:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RSFsT-0000bw-Bq
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Nov 2011 23:28:45 +0100
+	id 1RSKVJ-0006OG-1V
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Nov 2011 04:25:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754110Ab1KTWTe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Nov 2011 17:19:34 -0500
-Received: from tmh.cc ([173.230.128.92]:39724 "EHLO elara.tmh.cc"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753588Ab1KTWTd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Nov 2011 17:19:33 -0500
-Received: by elara.tmh.cc (Postfix, from userid 1001)
-	id B771C3420A; Sun, 20 Nov 2011 22:19:32 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on elara.tmh.cc
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED,FREEMAIL_FROM
-	autolearn=unavailable version=3.3.2
-Received: from foodlogiq3-xp-d620.thebe.ath.cx (cpe-069-134-223-189.nc.res.rr.com [69.134.223.189])
-	by elara.tmh.cc (Postfix) with ESMTPSA id E68CB341B5;
-	Sun, 20 Nov 2011 22:19:31 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <7vehx2ijf8.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752063Ab1KUDYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Nov 2011 22:24:54 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39938 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751759Ab1KUDYy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Nov 2011 22:24:54 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E5A25F03;
+	Sun, 20 Nov 2011 22:24:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QDOb+9sYAb39r/pjAPEKy28RIsI=; b=aFI2nV
+	XHujDn+t2XMo1hjc5BRIsDmi/goxp54MbxeRKIqOMA7MLKqne74t672CuHUARkEb
+	lMU2/dPBdUPVzgwpV0Gu48UhgWBqG9+s8EBQJ3h7qfUNjMu7wx5jJuMNXQfy7TO2
+	bg6HZUsUItRnQI4+4P0vrNxXeuDGRC2QdviP0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aoAMe0pb10p5xw9L8Lll7aYg1AblH2Gp
+	wNj/tVA6Cf04ZevPwUDgQ17cII6YRpDiUsF0h1ITliJOfOCVtwl/iROSTUIfdu59
+	u6gG5se+j3AagdCJekkuD4UlFteA28OgzqM9XXMxF12k6anz+Kxt+vqcUBC9kEZe
+	5aVqHzQPh5o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3487E5F02;
+	Sun, 20 Nov 2011 22:24:51 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9A75C5F00; Sun, 20 Nov 2011
+ 22:24:50 -0500 (EST)
+In-Reply-To: <4EC805CE.10203@ramsay1.demon.co.uk> (Ramsay Jones's message of
+ "Sat, 19 Nov 2011 19:38:54 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5F19E57E-13F0-11E1-B240-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185729>
+
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+
+> In particular, the url passed to git-clone has an extra '/' given
+> after the 'file://' schema prefix, thus:
+>
+>     git clone --reference=original "file:///$(pwd)/original one
+>
+> Once the prefix is removed, the remainder of the url looks something
+> like "//home/ramsay/git/t/...", which is then interpreted as an
+> network path. This then results in a "Permission denied" error, like
+> so:
+>
+>     ramsay $ ls //home
+>     ls: cannot access //home: No such host or network path
+>     ramsay $ ls //home/ramsay
+>     ls: cannot access //home/ramsay: Permission denied
+>     ramsay $
+>
+> In order to fix the problem, we simply remove the extraneous '/'
+> character from the url.
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+> ---
+
+Thanks; obviously correct.
 
 
---8nsIa27JVQLqB7/C
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-Junio C Hamano, Sun 2011-11-20 @ 13:16:27-0800:
-> We do not have "not tracked, but precious (e.g. your TODO)" category;
-> from time to time we have discussed possibilities of adding such to
-> enrich the categorization, but nobody stepped up to actually do the
-> work of designing let alone coding such a beast.
-
-If I'm not mistaken, files ignored by .git/info/exclude rather than
-.gitignore do exhibit this behavior. That is, Git will refuse a checkout
-with an error message if it would overwrite a path listed in that file.
-
-I don't know if that's actually intended behavior, but I've noticed it
-before and made use of it.
-
---8nsIa27JVQLqB7/C
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQIcBAEBAgAGBQJOyXzxAAoJEDTWeng2oxKKPM4QALXbegyw/vXI+RdfXKCCp37v
-Ir5Uwk91z0h2XXLzIhtvlZAlYX0IWtNoajBHDFZ1RiWPJLHUW2vTD8gAb0T0xqWM
-auN0x3VYx93Ja9vlbTOU7NtF3eSRHtJ4QaHe97gqoNvSRok0KNhWxmoQODcmPVMh
-4sOsDCcOe6QCZeUlMOrw8BrqKopFY459HBSiDEMwJ0TKzW3iS1FOst62DdBkdAyP
-LIS76RgNMnzYraJtVmVd5+ZlWPJbuqjrQAr7mQ+hSWpwDOGrYrreLyBeWUdzDNNU
-suIJfA0JToWgfsW/a/Fcbd5JzqY7MS5/8iqsVYwDEupVsQjbuqvy/AsFx4nsUPqN
-RFSKfdaEjFV/wDOjXuDocWyreqz76GcTSNEHbKh0YlZ8vAXLwe9/RMW7HL+SHFfX
-xDsLGTNOr8uI9KTGCGeOqia0UUGmRAF2yhriSDJ+N4CmLCO2TOMaOpgHygDH34ue
-vP4V1XDav6sWXvmVGEGK+vhYHwxdQkfYwgYL0zyd9+Re9do90EI8yVdqZOWa45Ut
-/MJ9vR7dzisWxp5ijeHy6g8ntAd/n7AqPO7PI9UGdvWvCfPJxE3i+ysUaBKsv9yJ
-YQnEjJgEM3cwIk9Qrn0gf6fTNNdWhPOa7AzAXpvX7rvRo6ta36uDel78XtdSQ+2E
-p71zIWfk6dqbxL3mp5h4
-=kG9P
------END PGP SIGNATURE-----
-
---8nsIa27JVQLqB7/C--
+>  t/t5501-fetch-push-alternates.sh |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/t/t5501-fetch-push-alternates.sh b/t/t5501-fetch-push-alternates.sh
+> index b5ced84..1bc57ac 100755
+> --- a/t/t5501-fetch-push-alternates.sh
+> +++ b/t/t5501-fetch-push-alternates.sh
+> @@ -28,7 +28,7 @@ test_expect_success setup '
+>  		done
+>  	) &&
+>  	(
+> -		git clone --reference=original "file:///$(pwd)/original" one &&
+> +		git clone --reference=original "file://$(pwd)/original" one &&
+>  		cd one &&
+>  		echo Z >count &&
+>  		git add count &&
