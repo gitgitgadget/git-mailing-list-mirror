@@ -1,69 +1,84 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: clean bug on ignored subdirectories with no tracked files?
-Date: Mon, 21 Nov 2011 15:03:43 -0500
-Message-ID: <CAG+J_DzBgQTdCoj8Y185+=+SpMMYgPXQXkta=o-Rson2xL8ytQ@mail.gmail.com>
-References: <CAG+J_Dxw00e_cr7i3R9DAbTrqZvJHYk2yeUa=xGKh+Zqqmp-SA@mail.gmail.com>
-	<7vy5vbj4rb.fsf@alter.siamese.dyndns.org>
-	<CAG+J_DwKeWntmi22vHS6CRud6Lo0P_+D5u5ih2Bbc50ekYji5w@mail.gmail.com>
-	<7vy5v9fgel.fsf@alter.siamese.dyndns.org>
-	<7vty5xff6l.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] revert: rename --reset option to --quit
+Date: Mon, 21 Nov 2011 12:36:23 -0800
+Message-ID: <7vpqglfc1k.fsf@alter.siamese.dyndns.org>
+References: <20111120073059.GA2278@elie.hsd1.il.comcast.net>
+ <CALkWK0=45OwcBoH2TorsgwTbaXjnffVuh0mGxh2+ShN9cuF-=A@mail.gmail.com>
+ <20111120094650.GB2278@elie.hsd1.il.comcast.net>
+ <20111120094824.GC2278@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 21 21:03:53 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Phil Hord <phil.hord@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 21 21:36:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RSa5o-0008Rn-KG
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Nov 2011 21:03:52 +0100
+	id 1RSabk-0006QT-TZ
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Nov 2011 21:36:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756598Ab1KUUDq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Nov 2011 15:03:46 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:49168 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756232Ab1KUUDo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Nov 2011 15:03:44 -0500
-Received: by ggnr5 with SMTP id r5so2743054ggn.19
-        for <git@vger.kernel.org>; Mon, 21 Nov 2011 12:03:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=WXR+JlSntPqj7Fk0TE7ccCvQkkVG4zyOIpSFd+mGV8s=;
-        b=sSvT6zoe4x6oreGP1DHNR/zRIE4e9T9ONVSN4haz0ULI2/xUAOGQ4Yo5i17h2Hd9Ie
-         /2Of/V3y3RwVSlS7OKbzJ+nIwLUZDsdSbeVk4F956RK5f0ANSdrqe30gLPVlrVbmIiA/
-         RhzHMwhb1AxcoMbtt9wRyNaKbElubKhXFzBUo=
-Received: by 10.236.155.36 with SMTP id i24mr12384818yhk.43.1321905824050;
- Mon, 21 Nov 2011 12:03:44 -0800 (PST)
-Received: by 10.146.1.15 with HTTP; Mon, 21 Nov 2011 12:03:43 -0800 (PST)
-In-Reply-To: <7vty5xff6l.fsf@alter.siamese.dyndns.org>
+	id S1756293Ab1KUUg3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Nov 2011 15:36:29 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50662 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756613Ab1KUUgZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Nov 2011 15:36:25 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E29AA5B12;
+	Mon, 21 Nov 2011 15:36:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iyFzfv90x2NXN2TJTPubauBHAUo=; b=M6dAMX
+	p2rXwBVFlOBnOd5tAbKyG9UZGw/msCTFrKLIoVVJ8yGl6JtP2Iq1wd4zQGv6ZiK4
+	GJEKwfIi/3E4L50y9h6n+/UNOJzB84XyRJ/ZrdF1F6QrksRVIuDEEZvKcbezZUSI
+	9QaAutckacP32dWFma+1dwVmSmmNyZf1ln+RY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IzhxZ0B3B4PDwXd5PnTP5Hya/XtIEDiF
+	/fMXDEhcCSt/g/uMjKa35ZIFiEKYiuLF/OLCxvpdQEoDS0iqoR18o1z8dHIpKV+5
+	vHntaPcqjIVjMh0TDHRbkw2Dcj55RrQm8pxir8MQHoW0ot98BBOOOSqB4mVwRs1z
+	lmGqQ1B+RgQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D97555B10;
+	Mon, 21 Nov 2011 15:36:24 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 688065B0F; Mon, 21 Nov 2011
+ 15:36:24 -0500 (EST)
+In-Reply-To: <20111120094824.GC2278@elie.hsd1.il.comcast.net> (Jonathan
+ Nieder's message of "Sun, 20 Nov 2011 03:48:24 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7AB2734C-1480-11E1-8AD0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185761>
 
-On Mon, Nov 21, 2011 at 2:28 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> "clean" without "-x" is meant to preserve untracked but expendable pa=
-ths
-> (e.g. build products), so if something is removed that is untracked b=
-ut
-> matches the ignore pattern, then that is a bug to be fixed. =C2=A0Car=
-e to roll
-> a patch to fix it?
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Okay, just confirming it is a bug. I'll add this e-mail to my todo
-list, but I don't have time for a patch anytime soon. :-(
+> The option to "git cherry-pick" and "git revert" to discard the
+> sequencer state introduced by v1.7.8-rc0~141^2~6 (revert: Introduce
+> --reset to remove sequencer state, 2011-08-04) has a confusing name.
+> Change it now, while we still have the time.
+>
+> Mechanics:
+>
+> This commit removes the "git cherry-pick --reset" option.  Hopefully
+> nobody was using it.  If somebody was, we can add it back again as a
+> synonym.
+>
+> The new name for "cherry-pick, please get out of my way, since I've
+> long forgotten about the sequence of commits I was cherry-picking when
+> you wrote that old .git/sequencer directory" is --quit.  
 
-> Sorry for the confusion, but as I said, I do not use (hence nor care =
-much
-> about) "clean" myself, so...
+Wouldn't it match other commands better if we called this --abort instead
+of --quit?
 
-Okay.
-
-j.
+Other than that I think I agree with the reasoning (and I think I too had
+encountered the irritation with the "sequencer state").
