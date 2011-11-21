@@ -1,68 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] run-command.c: Accept EACCES as command not found
-Date: Mon, 21 Nov 2011 14:13:58 -0800
-Message-ID: <7vbos5f7ix.fsf@alter.siamese.dyndns.org>
-References: <1321912387-4569-1-git-send-email-fransklaver@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] deprecating and eventually removing "git relink"?
+Date: Mon, 21 Nov 2011 17:19:34 -0500
+Message-ID: <20111121221934.GA21882@sigill.intra.peff.net>
+References: <7v4ny7mtbx.fsf@alter.siamese.dyndns.org>
+ <buomxbzutjm.fsf@dhlpc061.dev.necel.com>
+ <CAD=rjTXgH+AivmK+zLurQVC+=p1UYqFy_p=wBF-1-TOQ=Cqjtw@mail.gmail.com>
+ <20111114103451.GA10847@sigill.intra.peff.net>
+ <4ECACC13.7050507@cfl.rr.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Frans Klaver <fransklaver@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 21 23:14:09 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Simon Brenner <olsner@gmail.com>, git@vger.kernel.org
+To: Phillip Susi <psusi@cfl.rr.com>
+X-From: git-owner@vger.kernel.org Mon Nov 21 23:19:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RSc7r-0004t3-Ge
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Nov 2011 23:14:07 +0100
+	id 1RScDG-00077A-E7
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Nov 2011 23:19:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756450Ab1KUWOD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Nov 2011 17:14:03 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57713 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753692Ab1KUWOB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2011 17:14:01 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5646A56AA;
-	Mon, 21 Nov 2011 17:14:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=oIaM7KkmKjEeOUmsRhHm3r+uvD0=; b=FOTO6i
-	HWydsePumygzLDeCn7ISNQz1yfsecWiQqwk/oufT4gGT6joqYTdFX9YzB5Ej7sYj
-	JRZolBt9M6Tl/MjPwAt0SYgZSGhz/x/DHh+n4whKSb3ssIgWs3QyeNXJpJAlLtCS
-	yhZHSYrEgloiWDiSnBnctqETZguG3NECeGr5I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GcidWgMbAgBrypKMVHCh7EUx18z/JzYj
-	OWei+vkgmbS+owLRBJMNA0FMrFIajCqp3S/fKUrUZ8vTdYOcxsxy5gX9fST1Q6J7
-	xDgSKM7a5K2NqRBYS6wS+v6CLrweL0FNs5QmXzDQV7jiIk7OChvrbm0ACb1rUJ8y
-	4sv9pO86grY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D9E056A9;
-	Mon, 21 Nov 2011 17:14:00 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6AFA756A8; Mon, 21 Nov 2011
- 17:13:59 -0500 (EST)
-In-Reply-To: <1321912387-4569-1-git-send-email-fransklaver@gmail.com> (Frans
- Klaver's message of "Mon, 21 Nov 2011 22:53:07 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1C89145C-148E-11E1-BA0D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757481Ab1KUWTh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Nov 2011 17:19:37 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48845
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756427Ab1KUWTg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Nov 2011 17:19:36 -0500
+Received: (qmail 23909 invoked by uid 107); 21 Nov 2011 22:19:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 Nov 2011 17:19:44 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Nov 2011 17:19:34 -0500
+Content-Disposition: inline
+In-Reply-To: <4ECACC13.7050507@cfl.rr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185766>
 
-Frans Klaver <fransklaver@gmail.com> writes:
+On Mon, Nov 21, 2011 at 05:09:23PM -0500, Phillip Susi wrote:
 
-> execvp returns ENOENT if a command was not found after searching PATH.
-> If path contains a directory that current user has insufficient
-> privileges to, EACCES is returned. This may still mean the program
-> wasn't found.
->
-> If the latter case is encountered, git errors out without giving aliases
-> a try,...
+> I hacked together a setup a few weeks ago that doesn't suffer from
+> that problem.  I had two repos that had considerable shared history (
+> one forked from the other ), so I created a temporary repository and
+> pointed its alternates to the other two.  I then did some shell magic
+> to generate a list of all objects shared by both repos, and sent that
+> list to git-pack-objects.  This gave me a pack file in the temp repo
+> that contained all of the shared objects.  I then made a .keep file
+> and hard linked this pack file ( and index, and .keep file ) into
+> both original repos, deleted the temp repo, and then repacked both
+> original repos. This left them both with two pack files: one that is
+> shared, and one that is all of the objects specific to that repo.
+> 
+> Because the shared objects are in a pack file that both repos hard
+> link to, neither one will break if I (re)move the other.
 
-Isn't that a *good* thing in general, though, so that the user can
-diagnose the breakage in the $PATH and fix it?
+Yes, that is one way to do it. The big drawback there is that by using
+hard links, you can only share objects between repos within the same
+filesystem.
+
+I think the presence of the '.keep' files should make "git gc" do the
+right thing, and not waste space. The relinking procedure is a little
+more complex, but that's not a big deal. It's just a periodic
+maintenance thing that will happen inside a script (and you would want
+to do the periodic maintenance as often as you would with the shared
+repo approach).
+
+Nothing is maintaining the list of "here are all of the related repos
+that are sharing objects".  Which is a feature in some ways, because you
+don't have to care if repos go away or move. But when your periodic "git
+relink" comes around, the burden is on the user to redecide the set of
+related repos.
+
+So unlike with the shared repo, where "git gc" in a child repo could say
+"Oh, I have a shared parent; I should go there and do the parent-gc
+there", relinking would be a more manual thing. On the other hand,
+nothing is stopping you from building something more automated around
+this relink-repos-together building block.
+
+So yeah, I think it's a perfectly reasonable approach, if you don't mind
+the hard link requirement, and your relink is something like "git relink
+~/linux-repos/*".
+
+Patches? :)
+
+-Peff
