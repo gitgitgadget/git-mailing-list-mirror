@@ -1,67 +1,111 @@
-From: Vincent van Ravesteijn <vfr@lyx.org>
-Subject: Re: [PATCH 2/3] Compile fix for MSVC: fix poll-related macro redefines
-Date: Tue, 22 Nov 2011 08:30:00 +0100
-Message-ID: <4ECB4F78.40309@lyx.org>
-References: <1321634670-4968-1-git-send-email-vfr@lyx.org> <1321634670-4968-2-git-send-email-vfr@lyx.org> <4EC6978D.3020604@gmail.com>
+From: Frans Klaver <fransklaver@gmail.com>
+Subject: Re: [PATCH] run-command.c: Accept EACCES as command not found
+Date: Tue, 22 Nov 2011 10:31:48 +0100
+Message-ID: <CAH6sp9MxbDhQ3RiA6jO1fswAZX3R6C2fv0gzJdpGp432ovWsjQ@mail.gmail.com>
+References: <1321912387-4569-1-git-send-email-fransklaver@gmail.com>
+	<7vbos5f7ix.fsf@alter.siamese.dyndns.org>
+	<op.v5bjtk1r0aolir@keputer>
+	<7v62idf2vy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com, kusmabite@gmail.com,
-	msysgit@googlegroups.com, j.sixt@viscovery.net,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 22 08:30:16 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 22 10:39:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RSko3-0003wQ-BD
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Nov 2011 08:30:15 +0100
+	id 1RSmpL-0000Nh-2N
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Nov 2011 10:39:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754844Ab1KVHaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Nov 2011 02:30:08 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:60038 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753682Ab1KVHaH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2011 02:30:07 -0500
-Received: by wwe5 with SMTP id 5so11998878wwe.1
-        for <git@vger.kernel.org>; Mon, 21 Nov 2011 23:30:05 -0800 (PST)
-Received: by 10.227.207.146 with SMTP id fy18mr7405993wbb.18.1321947005357;
-        Mon, 21 Nov 2011 23:30:05 -0800 (PST)
-Received: from [192.168.40.217] (221-44.206-83.static-ip.oleane.fr. [83.206.44.221])
-        by mx.google.com with ESMTPS id z39sm8286659wbm.12.2011.11.21.23.30.02
-        (version=SSLv3 cipher=OTHER);
-        Mon, 21 Nov 2011 23:30:04 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <4EC6978D.3020604@gmail.com>
+	id S1756208Ab1KVJje convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Nov 2011 04:39:34 -0500
+Received: from mail-qw0-f53.google.com ([209.85.216.53]:57579 "EHLO
+	mail-qw0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754005Ab1KVJjc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2011 04:39:32 -0500
+X-Greylist: delayed 463 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Nov 2011 04:39:32 EST
+Received: by qadb14 with SMTP id b14so138303qad.19
+        for <git@vger.kernel.org>; Tue, 22 Nov 2011 01:39:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=LSB4V82yItMOoIVmaRi86qdEUaKeLPHhZoLpnxTZHY8=;
+        b=uZm0BQOXF0oLx20WW/Y7R2D9BXME6ZuABVei6w+qpApRvAMHnaPxJpEkF9M+jJl8ij
+         kxo7ByCm5nFdPnnMGOp3O1uVzYkKLvHySgyDRlVhK+rW3P7gutU+e7m++2s6sshDkVH7
+         usGAYveLP5tNE1EfZ8xlfzfMn+Wi7Ig3yNML0=
+Received: by 10.224.217.66 with SMTP id hl2mr2425586qab.84.1321954308895; Tue,
+ 22 Nov 2011 01:31:48 -0800 (PST)
+Received: by 10.224.86.11 with HTTP; Tue, 22 Nov 2011 01:31:48 -0800 (PST)
+In-Reply-To: <7v62idf2vy.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185778>
 
-Op 18-11-2011 18:36, Sebastian Schuberth schreef:
-> On 18.11.2011 17:44, Vincent van Ravesteijn wrote:
->
->> diff --git a/git-compat-util.h b/git-compat-util.h
->> index 5ef8ff7..76cbfe6 100644
->> --- a/git-compat-util.h
->> +++ b/git-compat-util.h
->> @@ -85,6 +85,7 @@
->>  #define _SGI_SOURCE 1
->>
->>  #ifdef WIN32 /* Both MinGW and MSVC */
->> +#  define _WIN32_WINNT 0x0501
->>  #define WIN32_LEAN_AND_MEAN  /* stops windows.h including winsock.h */
->>  #include<winsock2.h>
->>  #include<windows.h>
->
-> It seems the indentation is wrong (does not match the surrounding 
-> code) here.
->
+On Tue, Nov 22, 2011 at 12:54 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
 
-Yes, you're right. I will reroll the patch series when there is somewhat 
-more feedback on the series.
+> Imagine you did not have alias.aliasedinit in ~/.gitconfig but had a
+> script called $(pwd)/searchpath/git-aliasedinit which we would fail t=
+o
+> execute. What message would we get in that case? Currently I think we=
+ get
+> permission denied.
 
-Vincent
+Correct.
+
+> Would we get the same with your patch, or something that does not hin=
+t
+> at all that there is a permission problem?
+
+Nope. That would be just as confusing and inarguably incorrect at that
+-- bash differentiates between commands that exist, but cannot be
+executed due to permissions (access denied) and paths that cannot be
+read (they are ignored in the search).
+
+
+> See also the "tangent" part of
+>
+> =C2=A0 =C2=A0http://thread.gmane.org/gmane.comp.version-control.git/1=
+71755
+>
+> and the discussion that follows it. I do not think we reached any
+> conclusion nor a patch.
+
+There's no black-on-white conclusion there. I get the impression that
+no one really has an idea of what they want when encountering EACCES.
+Git has to do what's reasonable to provide the user with information.
+Currently I think it does too little. Jonathan N. gave the option of
+optionally using libexplain[1]. It's pretty verbose and accurate:
+
+fatal: cannot exec 'git-frotz': execvp(pathname =3D "git-frotz", argv =3D
+["git-frotz"]) failed, Permission denied (13, EACCES) because the
+process does not have search permission to the pathname
+"/home/frans/devsw/searchpath" directory, the process effective UID
+1000 "frans" matches the directory owner UID 1000 "frans" and the
+owner permission mode is "r--", and the process is not privileged
+(does not have the DAC_READ_SEARCH capability): Success
+
+I wouldn't be in favor of adding the dependency just to enable users
+to track down PATH issues though. Also, I think "Cannot access
+/home/frans/devsw/searchpath" would just as well do the trick.
+
+=46or Jonathan's example[2] libexplain doesn't have a clear answer eith=
+er:
+fatal: cannot exec 'git-frotz': execvp(pathname =3D "git-frotz", argv =3D
+["git-frotz"]) failed, Permission denied (13, EACCES): Permission
+denied
+
+If git is going to do some diagnostics on why the execvp returned
+EACCES, it can still give a few hints. Most of the more likely options
+are then ruled out.
+
+=46rans
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/171860
+[2] http://article.gmane.org/gmane.comp.version-control.git/171848
