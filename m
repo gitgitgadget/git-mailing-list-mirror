@@ -1,80 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git ticket / issue tracking ERA: Git shouldn't allow to push a
- new branch called HEAD
-Date: Tue, 22 Nov 2011 11:46:54 -0800
-Message-ID: <7v8vn8djo1.fsf@alter.siamese.dyndns.org>
-References: <1321970646.3289.19.camel@mastroc3.mobc3.local>
- <CAH5451==iXuB=QPW7bQvahB-jMnKC2axJYnW2OfFq=UNO9U6mg@mail.gmail.com>
- <1321977372.3289.38.camel@mastroc3.mobc3.local>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [msysGit] [PATCH 1/2] MSVC: Do not close stdout to prevent a
+ crash
+Date: Tue, 22 Nov 2011 21:24:03 +0100
+Message-ID: <4ECC04E3.70407@kdbg.org>
+References: <1321710345-2299-1-git-send-email-vfr@lyx.org> <4EC80D84.2010202@kdbg.org> <4ECB4501.1060100@lyx.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andrew Ardill <andrew.ardill@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Daniele Segato <daniele.bilug@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 22 20:47:08 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, msysgit@googlegroups.com, gitster@pobox.com,
+	kusmabite@gmail.com, Johannes.Schindelin@gmx.de
+To: Vincent van Ravesteijn <vfr@lyx.org>
+X-From: git-owner@vger.kernel.org Tue Nov 22 21:24:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RSwJ5-0003cp-Bm
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Nov 2011 20:47:03 +0100
+	id 1RSwt4-0003LQ-P1
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Nov 2011 21:24:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757117Ab1KVTq6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Nov 2011 14:46:58 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44130 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757066Ab1KVTq4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2011 14:46:56 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 619AE6FA0;
-	Tue, 22 Nov 2011 14:46:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vXyJxXmxyzXI3CJlFjNqKsjLGAA=; b=ezIcac
-	bmaGh88+0SM0R9MnGQapece+1uLIVgZywK18z2NN5N2Bs6GYLQXFgkixDQ0Z7mS4
-	2fJopD/GMrG6+u8KyoScva1ZSWvg8hTQb1Ul5NyRXOOpZbldc+MK+PVqK/XSp6NB
-	to6gIrybAlSweJsmgpsk9o/Ve2GlvFjVBg44E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qOdCPpuY5Ag+ALbhi/FN3HEFIE9riU/9
-	bQImfyrW/605wvVc7Secd4nMCPDaGGnwstO1U28ZP9PNE4WJqj2sqOmTnevQv/E9
-	gYy/wbLc7IXlsIQjC/h1VLB+yK6ceX9dR4chmuRNyvbvQopXN8j2YH3hqaKdfreW
-	DynC65suZxs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 542A96F9F;
-	Tue, 22 Nov 2011 14:46:56 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C6C1C6F9E; Tue, 22 Nov 2011
- 14:46:55 -0500 (EST)
-In-Reply-To: <1321977372.3289.38.camel@mastroc3.mobc3.local> (Daniele
- Segato's message of "Tue, 22 Nov 2011 16:56:12 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BBA8E29C-1542-11E1-94A4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755758Ab1KVUYI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Nov 2011 15:24:08 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:49081 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755951Ab1KVUYH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Nov 2011 15:24:07 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 3B34B130068;
+	Tue, 22 Nov 2011 21:24:04 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id E4F7B19F3ED;
+	Tue, 22 Nov 2011 21:24:03 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <4ECB4501.1060100@lyx.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185809>
 
-Daniele Segato <daniele.bilug@gmail.com> writes:
+Am 22.11.2011 07:45, schrieb Vincent van Ravesteijn:
+>>> To prevent the crash and to prevent git from writing cruft into the
+>>> patch
+>>> file, we do not close stdout, but redirect it to "nul" instead.
+>> A more robust solution is to add invalidcontinue.obj to the linker
+>> command line. This installs an invalid argument handler that does not
+>> abort, and restores a sane behavior.
+> 
+> This seems to work only for release builds or did I miss something ?
 
-> Let me explain my idea with an example:
->
-> An issue is discussed, a bug is acknowledged and a proposed solution is
-> discussed, this all happen in the mailing list, like it always has.
->
-> Someone in the "git management" (the one that usually choose how git
-> should evolve) open a ticket, copy the relevant part of the mailing list
-> (or link to the discussion in the archive) and (optionally) place the
-> bug / feature / enhancement into a roadmap / milestone
+I cannot tell, but I would be surprised if that were the case. I didn't
+test with debug builds (only our 'make MSVC=1' build). A cursory look at
+the CRT source code does not show anything that would be different
+between a debug and a release build regarding invalidcontinue.obj.
 
-This step I wouldn't buy, if you count me as part of "management".
+> Is there any argument to not redirect stdout to "/dev/null" on all
+> platforms ?
 
-But I suspect that curation of issues, prodding parties involved and
-closing inactive/stale ones can be done by volunteer project secretaries
-without requiring an authority to choose how git should evolve.
+You paper over a crack in the wall. You hide a bug.
 
-cf. http://thread.gmane.org/gmane.comp.version-control.git/110117/focus=110129
+-- Hannes
