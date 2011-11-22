@@ -1,102 +1,90 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: How to deal with mixed tree?
-Date: Tue, 22 Nov 2011 16:08:04 +0100
-Message-ID: <4ECBBAD4.6080206@ira.uka.de>
-References: <CA+9ZNic-9U0nP1NGL0shUijnxdhaoEHwyxWM8rOzR2B6Qjq6zQ@mail.gmail.com> <4ECB8917.8010305@ira.uka.de> <4ECBAFB7.9040505@obry.net>
+From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
+Subject: Re: Feature requset: listing of current stash in git gui
+Date: Tue, 22 Nov 2011 16:19:14 +0100
+Message-ID: <4ECBBD72.40101@atlas-elektronik.com>
+References: <201111211100.52367.dexen.devries@gmail.com> <4ECA2D8F.4060005@atlas-elektronik.com> <30417194.1411.1321907485839.JavaMail.mobile-sync@ieja14> <-8099236111493298698@unknownmsgid>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: pascal@obry.net
-X-From: git-owner@vger.kernel.org Tue Nov 22 16:07:49 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: dexen deVries <dexen.devries@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 22 16:19:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RSrwn-0003v4-3M
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Nov 2011 16:07:45 +0100
+	id 1RSs7y-0000SP-Ja
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Nov 2011 16:19:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757188Ab1KVPH1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Nov 2011 10:07:27 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:48531 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757209Ab1KVPHY (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2011 10:07:24 -0500
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1RSrwM-0004Ru-BH; Tue, 22 Nov 2011 16:07:23 +0100
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1RSrwM-0002Dl-51; Tue, 22 Nov 2011 16:07:18 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <4ECBAFB7.9040505@obry.net>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1321974443.542766000
+	id S1754867Ab1KVPTN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Nov 2011 10:19:13 -0500
+Received: from mail96.atlas.de ([194.156.172.86]:21913 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751716Ab1KVPTN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Nov 2011 10:19:13 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mail96.atlas.de (Postfix) with ESMTP id E27DA10074;
+	Tue, 22 Nov 2011 16:19:11 +0100 (CET)
+X-Virus-Scanned: amavisd-new at lxsrv96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (lxsrv96.atlas.de [127.0.0.1]) (amavisd-new, port 10124)
+	with ESMTP id eq6l65BK8iO6; Tue, 22 Nov 2011 16:19:11 +0100 (CET)
+Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP;
+	Tue, 22 Nov 2011 16:19:11 +0100 (CET)
+Received: from [141.200.19.108] (as112671.atlas.de [141.200.19.108])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id 3FC622718D;
+	Tue, 22 Nov 2011 16:19:11 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <-8099236111493298698@unknownmsgid>
+X-Enigmail-Version: 1.3.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185796>
 
-On 22.11.2011 15:20, Pascal Obry wrote:
->
-> Holger,
->
->> Remove SD in P1, make a logical link from P2 to SD, add SD to
->> .git/info/exclude
->
-> Thanks for your quick reply. That's what I have tested but...
->
->> (see "Bug report - local (and git ignored) file silently removed after
->> checkout" on the mailing list why exclude is better than .gitignore at
->> the moment)
->
-> Seems like this is working only if file names are different. This is not
-> my case as the replacement is very similar. With the following script
-> I'm expecting empty status and no diff:
->
-> <<
-> #!/bin/sh
->
-> # create sd (directory that will replace src2)
-> mkdir sd
-> echo sd1>  sd/file1
-> echo sd2>  sd/file2
->
-> # create Git repo
-> mkdir repo
-> cd repo
-> git init
-> mkdir src1
-> mkdir src2
-> echo file>  src1/file
-> echo 3>  src2/file3
-> git add .
-> git ci -a -m "first"
->
-> # let's replace src2 by sd
->
-> rm -fr src2
-> # ln -s ../sd src2
-> cp -r ../sd src2
->
-> # make sure src2 is excluded
->
-> echo 'src2/*'>>  .git/info/exclude
->
-> # the following output should be clean
+Am 22.11.2011 11:24, schrieb David Aguilar:
+> On Nov 21, 2011, at 4:41 AM, dexen deVries <dexen.devries@gmail.com> =
+wrote:
+>=20
+>> On Monday 21 of November 2011 11:53:03 Stefan N=C3=A4we wrote:
+>>> You can simply put the following in your ~/.gitconfig:
+>>>
+>>> [guitool "Stash/show"]
+>>>    cmd =3D git stash show -p
+>>> [guitool "Stash/list"]
+>>>    cmd =3D git stash list
+>>> [guitool "Stash/pop"]
+>>>    cmd =3D git stash pop
+>>> [guitool "Stash/drop"]
+>>>    cmd =3D git stash drop
+>>>    confirm =3D yes
+>>
+>> that's nice, but doesn't list visually the stashed changes. I'd rath=
+er have a
+>> listing similar to Unstanged Changes / Staged Changes, with ability =
+to view
+>> line-by-line diff just like for Changes.
+>=20
+> [blatant plug]
+>=20
+> git-cola has this feature.
+>>
+>=20
+>    http://git-cola.github.com/
 
-You should also remove src2 and all files in it from the git repository. 
-Something like
+Yeah, right. I totally forgot about git cola.
 
-git rm -r src2
-git ci
-echo 'src2' >> .git/info/exclude
+But I guess there's no way of starting only the stash view like the 'DA=
+G'=20
+view, is there ?
 
-instead of
-
-rm -fr src2
-echo 'src2/*' >> .git/info/exclude
+Stefan
+--=20
+----------------------------------------------------------------
+/dev/random says: This is a Tagline mirror><rorrim enilgaT a si sihT
+python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6=
+e696b2e636f6d'.decode('hex')"
