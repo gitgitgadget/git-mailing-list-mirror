@@ -1,66 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to deal with mixed tree?
-Date: Tue, 22 Nov 2011 10:29:40 -0800
-Message-ID: <7vk46sdn8r.fsf@alter.siamese.dyndns.org>
-References: <CA+9ZNic-9U0nP1NGL0shUijnxdhaoEHwyxWM8rOzR2B6Qjq6zQ@mail.gmail.com>
- <4ECB8917.8010305@ira.uka.de>
+From: Semen Vadishev <semen.vadishev@tmatesoft.com>
+Subject: [ANN] SubGit Early Access Program Build #789
+Date: Tue, 22 Nov 2011 20:15:59 +0100
+Organization: TMate Software
+Message-ID: <4ECBF4EF.7070705@tmatesoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pascal Obry <pascal@obry.net>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: jgit-dev <jgit-dev@eclipse.org>,
+	EGit developer discussion <egit-dev@eclipse.org>,
 	Git Mailing List <git@vger.kernel.org>
-To: Holger Hellmuth <hellmuth@ira.uka.de>
-X-From: git-owner@vger.kernel.org Tue Nov 22 19:29:54 2011
+X-From: git-owner@vger.kernel.org Tue Nov 22 20:16:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RSv6M-0004Eb-0s
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Nov 2011 19:29:50 +0100
+	id 1RSvpD-00071a-JO
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Nov 2011 20:16:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754336Ab1KVS3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Nov 2011 13:29:44 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45080 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752970Ab1KVS3n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2011 13:29:43 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F8EE5800;
-	Tue, 22 Nov 2011 13:29:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=erWDgU7Nj3QGFdcTCWQubbRDX00=; b=IZyJ6B
-	4hKPIwoSOI0NUuereSOORHrqDxQqY2fdeVSncKNwP4p0l+99ZFWAze5gvqI+T/rq
-	yo0NLPaE8wWuEdJg6/9YHxl07jjhgyYfnrZPXquWwdJ2M7XxGeTwbtkWzcMIAVH/
-	5L1hyuwUomlDj7BPlxf/xvsZwhCabbDWjvs/Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NAmq4NL/7yWSZ3hvWc85RMLcThtnXiAt
-	TZwSsgOc4/g1ugTB+9Ge/wg9U0Z3poLKiDsynzYOQ5VkYxS4Stjka/ufefeZpeNs
-	8MOSJZz/qW0BGvUM/oppRdmeRXncjuR/i00vmKDe6l1HHX0W2+66Zs4ltWI32E5e
-	1KnSEb7grSU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6676C57FF;
-	Tue, 22 Nov 2011 13:29:42 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DD8FB57FE; Tue, 22 Nov 2011
- 13:29:41 -0500 (EST)
-In-Reply-To: <4ECB8917.8010305@ira.uka.de> (Holger Hellmuth's message of
- "Tue, 22 Nov 2011 12:35:51 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F1A29EF2-1537-11E1-B244-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753095Ab1KVTQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Nov 2011 14:16:05 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:55637 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750884Ab1KVTQD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Nov 2011 14:16:03 -0500
+Received: by bke11 with SMTP id 11so616937bke.19
+        for <git@vger.kernel.org>; Tue, 22 Nov 2011 11:16:02 -0800 (PST)
+Received: by 10.204.9.209 with SMTP id m17mr20443984bkm.101.1321989362100;
+        Tue, 22 Nov 2011 11:16:02 -0800 (PST)
+Received: from vs.local ([109.80.120.205])
+        by mx.google.com with ESMTPS id k26sm19603314fab.8.2011.11.22.11.16.00
+        (version=SSLv3 cipher=OTHER);
+        Tue, 22 Nov 2011 11:16:00 -0800 (PST)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:8.0) Gecko/20111105 Thunderbird/8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185806>
 
-Holger Hellmuth <hellmuth@ira.uka.de> writes:
+Hello All,
 
-> (see "Bug report - local (and git ignored) file silently removed after
-> checkout" on the mailing list why exclude is better than .gitignore at
-> the moment)
+Let me introduce our new project: SubGit (http://subgit.com/).
 
-Don't look at it or encourage people to rely on that bug to be
-fixed. exclude and .gitignore should behave the same way.
+SubGit is a tool for smooth migration from Subversion to Git. As well as
+from Git to Subversion. Without git-svn insanity.
+
+It works like this:
+
+- Install SubGit into your repository on the server side
+
+- Let initial translation complete (time depends on the size of repository)
+
+- SubGit installs hooks into repository, so it translates every svn
+revision and git commit
+
+- Committers may now use either Git or Subversion (or both) with the
+tools of their choice
+
+SubGit uses JGit to work with the Git stuff. JGit handles heavy load
+perfectly thus fitting our needs, and we appreciate efforts JGit
+community put into this excellent library. Thank you, guys!
+
+SubGit EAP builds are free to use, you may try these and let us know
+what do you miss, so that we make sure that all the features you need
+are included into the final version of SubGit.
+
+SubGit works on Linux, Windows or OS X and requires Java 5 or newer.
+
+Download new SubGit EAP build from http://subgit.com/ and follow us at
+@subgit and +subgit.
+
+-- 
+Semen Vadishev,
+TMate Software,
+http://subgit.com/ - Two Way Ticket to The Dark Side
