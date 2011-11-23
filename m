@@ -1,57 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin-branch: Fix crash on invalid use of --force
-Date: Wed, 23 Nov 2011 13:30:11 -0800
-Message-ID: <7vsjlea5ng.fsf@alter.siamese.dyndns.org>
-References: <1322029915-18486-1-git-send-email-vfr@lyx.org>
+From: "Frans Klaver" <fransklaver@gmail.com>
+Subject: Re: Git ticket / issue tracking ERA: Git shouldn't allow to push a
+ new branch called HEAD
+Date: Wed, 23 Nov 2011 22:30:50 +0100
+Message-ID: <op.v5e4podr0aolir@keputer.lokaal>
+References: <1321970646.3289.19.camel@mastroc3.mobc3.local>
+ <7vd3ckdjx9.fsf@alter.siamese.dyndns.org>
+ <CAHVLzc=SPD+AHhAPP_=mEVv5cJvn0oiJ_k-KBEkG=Qhcw2UxHA@mail.gmail.com>
+ <CAH6sp9OXzHj=r707zyRQxaJmndHm5_DcWWMLn_1zyLdEZ_TSbA@mail.gmail.com>
+ <7v4nxudb73.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: vfr@lyx.org
-X-From: git-owner@vger.kernel.org Wed Nov 23 22:30:24 2011
+Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>,
+	"Daniele Segato" <daniele.bilug@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Jeff King" <peff@peff.net>, "Scott Chacon" <schacon@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 23 22:31:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTKOd-00089H-6I
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 22:30:23 +0100
+	id 1RTKPC-0008Qo-85
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 22:30:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755099Ab1KWVaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Nov 2011 16:30:16 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39980 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753079Ab1KWVaP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2011 16:30:15 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4AE7459AB;
-	Wed, 23 Nov 2011 16:30:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LCqHmLiT/mpBIxFIMDUbhNpDM6w=; b=hIrFGr
-	YtF1nMQOjHUBJDWjAg9aJGtZR3j0VjCgS6ya1xrORjelRljJxQtTi/oQRJTC80Qm
-	Ltng8kjuXp+6Tt4Xbfq+Z4NpRDmcJW81z+ir9Nzfhp0K10DFKdIKwFJUgRQb60Lw
-	6pt5Y+pKk/vFjX98skkwoDKK4iTlw+0riaIhg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=N1rFtw0L5KNpS6gBg3e8xa8mS2b523ZX
-	aDkZQrpjMNNvgji2ujm4pN/sarFvf5StfLssq17KXhH6g5zGeAY4DAxO9vevMh6I
-	B5tQmkIm10Wg7RfPRddLCusCtwXeLkgTxPWJwkdZTSLPpZW5oqqOJyM7xhwtvUA8
-	9KxAsf58uCM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4025959AA;
-	Wed, 23 Nov 2011 16:30:14 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D03E759A9; Wed, 23 Nov 2011
- 16:30:12 -0500 (EST)
-In-Reply-To: <1322029915-18486-1-git-send-email-vfr@lyx.org> (vfr@lyx.org's
- message of "Wed, 23 Nov 2011 07:31:55 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 53CB972C-161A-11E1-A73B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755879Ab1KWVay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Nov 2011 16:30:54 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:52964 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755346Ab1KWVax (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 16:30:53 -0500
+Received: by wwp14 with SMTP id 14so457650wwp.1
+        for <git@vger.kernel.org>; Wed, 23 Nov 2011 13:30:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=content-type:to:cc:subject:references:date:mime-version
+         :content-transfer-encoding:from:message-id:in-reply-to:user-agent;
+        bh=nLMJaVRzoMeaS4Ot9PutcDv+DNN6RZUb8G6YHSvD3OQ=;
+        b=w3I0Jti+1fBUt/+228eyrcgHYA9smbrkV+1HlDZB590ZHapfRdGzbDhS3rFVaWlYAi
+         nC2kCgxJACLYhOy1syu9UMxW9DFybJDkck2jOx0Wg92X5KUdKkoCD3Ck5HvIz+X9p+x+
+         bHVJLqBmwU5PLCkhsXa6ty47MwgnZAbMzzqKY=
+Received: by 10.216.185.85 with SMTP id t63mr3923839wem.7.1322083852239;
+        Wed, 23 Nov 2011 13:30:52 -0800 (PST)
+Received: from keputer.lokaal (82-136-253-149.ip.telfort.nl. [82.136.253.149])
+        by mx.google.com with ESMTPS id bl10sm8645136wib.15.2011.11.23.13.30.50
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 23 Nov 2011 13:30:51 -0800 (PST)
+In-Reply-To: <7v4nxudb73.fsf@alter.siamese.dyndns.org>
+User-Agent: Opera Mail/12.00 (Win32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185877>
 
-Makes sense and is a nice fix for a regression on 'master'. Thanks.
+On Wed, 23 Nov 2011 18:02:08 +0100, Junio C Hamano <gitster@pobox.com>  
+wrote:
+
+> Frans Klaver <fransklaver@gmail.com> writes:
+>
+>> The note from the maintainer[1] mentions
+>>
+>> 	git://git.kernel.org/pub/scm/git/git.git/
+>> 	git://repo.or.cz/alt-git.git
+>> 	https://github.com/git/git
+>> 	https://code.google.com/p/git-core/
+>>
+>> I would assume one of those would be a nomination for 'official' repo.
+>>
+>> Maybe something for Scott C. to address?
+>
+> As long as the link says "Git source repository" without "the official",
+> Scott is doing the right thing. It is just one of the copies that I push
+> into, so it may be considered more official than a fork of my history by  
+> a
+> random unknown person.
+>
+> As Git is distributed, we do not need a single "official" repository. If
+> you really want to name one, my private working repository at my home
+> machine would be what is closest to one, as patches and pull requests are
+> processed there and then the result is pushed out to the above four and a
+> few others. But that "official" one is not exposed to the outside world  
+> ;-)
+
+Since official is a rather unreal term here, let's just drop it. There are  
+a few repositories that the maintainer currently pushes to, and those are  
+the most reliable ones to use if you want the latest git vanilla. Other  
+than that, there's going to be no difference from the next git.git clone.
+
+It might remove some confusion if these repos would be reflected on  
+websites focusing on git as they are in the maintainers notes, but that's  
+probably up to the respective webmasters then.
+
+Frans
