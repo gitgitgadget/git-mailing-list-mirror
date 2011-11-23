@@ -1,430 +1,63 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 5/3] revert: introduce --abort to cancel a failed
- cherry-pick
-Date: Tue, 22 Nov 2011 19:27:21 -0600
-Message-ID: <20111123012721.GA14217@elie.hsd1.il.comcast.net>
-References: <20111120073059.GA2278@elie.hsd1.il.comcast.net>
- <CALkWK0=45OwcBoH2TorsgwTbaXjnffVuh0mGxh2+ShN9cuF-=A@mail.gmail.com>
- <20111120094650.GB2278@elie.hsd1.il.comcast.net>
- <20111122111207.GA7399@elie.hsd1.il.comcast.net>
- <20111122112001.GF7399@elie.hsd1.il.comcast.net>
- <7vr50zd5x0.fsf@alter.siamese.dyndns.org>
+From: Paul Brossier <piem@piem.org>
+Subject: git not resuming push
+Date: Tue, 22 Nov 2011 20:58:56 -0700
+Message-ID: <4ECC6F80.6010907@piem.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Phil Hord <phil.hord@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 23 02:27:42 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 23 05:18:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RT1ci-0004NB-SG
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 02:27:41 +0100
+	id 1RT4Hf-0004Fs-JI
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 05:18:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754473Ab1KWB1b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Nov 2011 20:27:31 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:45721 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754106Ab1KWB1a (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2011 20:27:30 -0500
-Received: by yenq3 with SMTP id q3so859809yen.19
-        for <git@vger.kernel.org>; Tue, 22 Nov 2011 17:27:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=RvkKMztaEOBZ92HbT9qwBETvHQBt4tREz6bK/lsc4e4=;
-        b=hxKBhsouMaFs2RfUO+vBwoCNlxYf4/xM2bS8DCLM2ogt5UFd/CgHdfTd2JhmUBfJsG
-         eCGyLM074xMnKzPxM9ax0Kb1rvamZEdI+sSr7MTHKg7bjm1gTIJTgTlKIWp0uM8dkXeP
-         VA3VQeS8w1F1Cb5tsXtVADD1D0nYt6lHERn6A=
-Received: by 10.236.154.201 with SMTP id h49mr27986714yhk.2.1322011649911;
-        Tue, 22 Nov 2011 17:27:29 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id k3sm44349184ann.0.2011.11.22.17.27.27
-        (version=SSLv3 cipher=OTHER);
-        Tue, 22 Nov 2011 17:27:28 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vr50zd5x0.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1759647Ab1KWESB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Nov 2011 23:18:01 -0500
+Received: from goyave.piem.org ([213.251.135.79]:49626 "EHLO goyave.piem.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758375Ab1KWESB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Nov 2011 23:18:01 -0500
+X-Greylist: delayed 1133 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Nov 2011 23:18:00 EST
+Received: from localhost ([127.0.0.1] helo=groseille.lan)
+	by goyave.piem.org with esmtp (Exim 4.72)
+	(envelope-from <piem@piem.org>)
+	id 1RT3zD-0000ks-NF
+	for git@vger.kernel.org; Wed, 23 Nov 2011 04:59:05 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:8.0) Gecko/20111105 Thunderbird/8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185818>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi!
 
->> ...
->> @@ -168,6 +265,7 @@ test_expect_success '--continue continues after conflicts are resolved' '
->>  	OBJID
->>  	:100644 100644 OBJID OBJID M	unrelated
->>  	OBJID
->> +	:000000 100644 OBJID OBJID A	bar
->>  	:000000 100644 OBJID OBJID A	foo
->>  	:000000 100644 OBJID OBJID A	unrelated
->>  	EOF
->
-> What is this hunk about?
+I'm trying to upload large amount of data from a connection that often
+cuts.
 
-Just laziness.  It would have been more polite for changes to the
-script's setup to be made in such a way as not to require changing
-unrelated tests, like this.
+If the connection fails after uploading part of the data, it seems I
+need to start over from zero again. Is there a way to resume the upload
+instead?
 
--- >8 --
-Subject: revert: introduce --abort to cancel a failed cherry-pick
+Here is an example:
 
-After running some ill-advised command like "git cherry-pick
-HEAD..linux-next", the bewildered novice may want to return to more
-familiar territory.  Introduce a "git cherry-pick --abort" command
-that rolls back the entire cherry-pick sequence and places the
-repository back on solid ground.
+$ git push
+Counting objects: 504, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (475/475), done.
+Write failed: Broken pipe1/476), 533.78 MiB | 60 KiB/s
+fatal: The remote end hung up unexpectedly
+error: pack-objects died of signal 13
+error: failed to push some refs to 'myhost.org:/git/myrepo/'
 
-Just like "git merge --abort", this internally uses "git reset
---merge", so local changes not involved in the conflict resolution are
-preserved.
+$ git push
+Counting objects: 504, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (475/475), done.
+Writing objects:  12% (61/476), 89.34 MiB | 23 KiB/s
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- Documentation/git-cherry-pick.txt |    1 +
- Documentation/git-revert.txt      |    1 +
- Documentation/sequencer.txt       |    3 +
- builtin/revert.c                  |   87 ++++++++++++++++++++++++++++++++-
- t/t3510-cherry-pick-sequence.sh   |   96 +++++++++++++++++++++++++++++++++++++
- 5 files changed, 185 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-index 21998b82..fed5097e 100644
---- a/Documentation/git-cherry-pick.txt
-+++ b/Documentation/git-cherry-pick.txt
-@@ -11,6 +11,7 @@ SYNOPSIS
- 'git cherry-pick' [--edit] [-n] [-m parent-number] [-s] [-x] [--ff] <commit>...
- 'git cherry-pick' --continue
- 'git cherry-pick' --quit
-+'git cherry-pick' --abort
- 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
-index b0fcabc8..b699a345 100644
---- a/Documentation/git-revert.txt
-+++ b/Documentation/git-revert.txt
-@@ -11,6 +11,7 @@ SYNOPSIS
- 'git revert' [--edit | --no-edit] [-n] [-m parent-number] [-s] <commit>...
- 'git revert' --continue
- 'git revert' --quit
-+'git revert' --abort
- 
- DESCRIPTION
- -----------
-diff --git a/Documentation/sequencer.txt b/Documentation/sequencer.txt
-index 75f8e869..5747f442 100644
---- a/Documentation/sequencer.txt
-+++ b/Documentation/sequencer.txt
-@@ -7,3 +7,6 @@
- 	Forget about the current operation in progress.  Can be used
- 	to clear the sequencer state after a failed cherry-pick or
- 	revert.
-+
-+--abort::
-+	Cancel the operation and return to the pre-sequence state.
-diff --git a/builtin/revert.c b/builtin/revert.c
-index f5ba67a5..70a5fbb6 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -40,7 +40,12 @@ static const char * const cherry_pick_usage[] = {
- };
- 
- enum replay_action { REVERT, CHERRY_PICK };
--enum replay_subcommand { REPLAY_NONE, REPLAY_REMOVE_STATE, REPLAY_CONTINUE };
-+enum replay_subcommand {
-+	REPLAY_NONE,
-+	REPLAY_REMOVE_STATE,
-+	REPLAY_CONTINUE,
-+	REPLAY_ROLLBACK
-+};
- 
- struct replay_opts {
- 	enum replay_action action;
-@@ -135,9 +140,11 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 	const char *me = action_name(opts);
- 	int remove_state = 0;
- 	int contin = 0;
-+	int rollback = 0;
- 	struct option options[] = {
- 		OPT_BOOLEAN(0, "quit", &remove_state, "end revert or cherry-pick sequence"),
- 		OPT_BOOLEAN(0, "continue", &contin, "resume revert or cherry-pick sequence"),
-+		OPT_BOOLEAN(0, "abort", &rollback, "cancel revert or cherry-pick sequence"),
- 		OPT_BOOLEAN('n', "no-commit", &opts->no_commit, "don't automatically commit"),
- 		OPT_BOOLEAN('e', "edit", &opts->edit, "edit the commit message"),
- 		OPT_NOOP_NOARG('r', NULL),
-@@ -173,6 +180,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 	verify_opt_mutually_compatible(me,
- 				"--quit", remove_state,
- 				"--continue", contin,
-+				"--abort", rollback,
- 				NULL);
- 
- 	/* Set the subcommand */
-@@ -180,6 +188,8 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 		opts->subcommand = REPLAY_REMOVE_STATE;
- 	else if (contin)
- 		opts->subcommand = REPLAY_CONTINUE;
-+	else if (rollback)
-+		opts->subcommand = REPLAY_ROLLBACK;
- 	else
- 		opts->subcommand = REPLAY_NONE;
- 
-@@ -188,8 +198,12 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 		char *this_operation;
- 		if (opts->subcommand == REPLAY_REMOVE_STATE)
- 			this_operation = "--quit";
--		else
-+		else if (opts->subcommand == REPLAY_CONTINUE)
- 			this_operation = "--continue";
-+		else {
-+			assert(opts->subcommand == REPLAY_ROLLBACK);
-+			this_operation = "--abort";
-+		}
- 
- 		verify_opt_compatible(me, this_operation,
- 				"--no-commit", opts->no_commit,
-@@ -850,7 +864,7 @@ static int create_seq_dir(void)
- 
- 	if (file_exists(seq_dir)) {
- 		error(_("a cherry-pick or revert is already in progress"));
--		advise(_("try \"git cherry-pick (--continue | --quit)\""));
-+		advise(_("try \"git cherry-pick (--continue | --quit | --abort)\""));
- 		return -1;
- 	}
- 	else if (mkdir(seq_dir, 0777) < 0)
-@@ -873,6 +887,71 @@ static void save_head(const char *head)
- 		die(_("Error wrapping up %s."), head_file);
- }
- 
-+static int reset_for_rollback(const unsigned char *sha1)
-+{
-+	const char *argv[4];	/* reset --merge <arg> + NULL */
-+	argv[0] = "reset";
-+	argv[1] = "--merge";
-+	argv[2] = sha1_to_hex(sha1);
-+	argv[3] = NULL;
-+	return run_command_v_opt(argv, RUN_GIT_CMD);
-+}
-+
-+static int rollback_single_pick(void)
-+{
-+	unsigned char head_sha1[20];
-+
-+	if (!file_exists(git_path("CHERRY_PICK_HEAD")) &&
-+	    !file_exists(git_path("REVERT_HEAD")))
-+		return error(_("no cherry-pick or revert in progress"));
-+	if (!resolve_ref("HEAD", head_sha1, 0, NULL))
-+		return error(_("cannot resolve HEAD"));
-+	if (is_null_sha1(head_sha1))
-+		return error(_("cannot abort from a branch yet to be born"));
-+	return reset_for_rollback(head_sha1);
-+}
-+
-+static int sequencer_rollback(struct replay_opts *opts)
-+{
-+	const char *filename;
-+	FILE *f;
-+	unsigned char sha1[20];
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	filename = git_path(SEQ_HEAD_FILE);
-+	f = fopen(filename, "r");
-+	if (!f && errno == ENOENT) {
-+		/*
-+		 * There is no multiple-cherry-pick in progress.
-+		 * If CHERRY_PICK_HEAD or REVERT_HEAD indicates
-+		 * a single-cherry-pick in progress, abort that.
-+		 */
-+		return rollback_single_pick();
-+	}
-+	if (!f)
-+		return error(_("cannot open %s: %s"), filename,
-+						strerror(errno));
-+	if (strbuf_getline(&buf, f, '\n')) {
-+		error(_("cannot read %s: %s"), filename, ferror(f) ?
-+			strerror(errno) : _("unexpected end of file"));
-+		goto fail;
-+	}
-+	if (get_sha1_hex(buf.buf, sha1) || buf.buf[40] != '\0') {
-+		error(_("stored pre-cherry-pick HEAD file '%s' is corrupt"),
-+			filename);
-+		goto fail;
-+	}
-+	if (reset_for_rollback(sha1))
-+		goto fail;
-+	strbuf_release(&buf);
-+	fclose(f);
-+	return 0;
-+fail:
-+	strbuf_release(&buf);
-+	fclose(f);
-+	return -1;
-+}
-+
- static void save_todo(struct commit_list *todo_list, struct replay_opts *opts)
- {
- 	const char *todo_file = git_path(SEQ_TODO_FILE);
-@@ -977,6 +1056,8 @@ static int pick_revisions(struct replay_opts *opts)
- 		remove_sequencer_state(1);
- 		return 0;
- 	}
-+	if (opts->subcommand == REPLAY_ROLLBACK)
-+		return sequencer_rollback(opts);
- 	if (opts->subcommand == REPLAY_CONTINUE) {
- 		if (!file_exists(git_path(SEQ_TODO_FILE)))
- 			return error(_("No %s in progress"), action_name(opts));
-diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index bb67cdcb..e97397f9 100755
---- a/t/t3510-cherry-pick-sequence.sh
-+++ b/t/t3510-cherry-pick-sequence.sh
-@@ -2,6 +2,7 @@
- 
- test_description='Test cherry-pick continuation features
- 
-+  + yetanotherpick: rewrites foo to e
-   + anotherpick: rewrites foo to d
-   + picked: rewrites foo to c
-   + unrelatedpick: rewrites unrelated to reallyunrelated
-@@ -19,6 +20,12 @@ pristine_detach () {
- 	git clean -d -f -f -q -x
- }
- 
-+test_cmp_rev () {
-+	git rev-parse --verify "$1" >expect.rev &&
-+	git rev-parse --verify "$2" >actual.rev &&
-+	test_cmp expect.rev actual.rev
-+}
-+
- test_expect_success setup '
- 	echo unrelated >unrelated &&
- 	git add unrelated &&
-@@ -27,6 +34,7 @@ test_expect_success setup '
- 	test_commit unrelatedpick unrelated reallyunrelated &&
- 	test_commit picked foo c &&
- 	test_commit anotherpick foo d &&
-+	test_commit yetanotherpick foo e &&
- 	git config advice.detachedhead false
- 
- '
-@@ -75,6 +83,11 @@ test_expect_success '--quit does not complain when no cherry-pick is in progress
- 	git cherry-pick --quit
- '
- 
-+test_expect_success '--abort requires cherry-pick in progress' '
-+	pristine_detach initial &&
-+	test_must_fail git cherry-pick --abort
-+'
-+
- test_expect_success '--quit cleans up sequencer state' '
- 	pristine_detach initial &&
- 	test_must_fail git cherry-pick base..picked &&
-@@ -103,6 +116,79 @@ test_expect_success 'cherry-pick --reset (another name for --quit)' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '--abort to cancel multiple cherry-pick' '
-+	pristine_detach initial &&
-+	test_must_fail git cherry-pick base..anotherpick &&
-+	git cherry-pick --abort &&
-+	test_path_is_missing .git/sequencer &&
-+	test_cmp_rev initial HEAD &&
-+	git update-index --refresh &&
-+	git diff-index --exit-code HEAD
-+'
-+
-+test_expect_success '--abort to cancel single cherry-pick' '
-+	pristine_detach initial &&
-+	test_must_fail git cherry-pick picked &&
-+	git cherry-pick --abort &&
-+	test_path_is_missing .git/sequencer &&
-+	test_cmp_rev initial HEAD &&
-+	git update-index --refresh &&
-+	git diff-index --exit-code HEAD
-+'
-+
-+test_expect_success 'cherry-pick --abort to cancel multiple revert' '
-+	pristine_detach anotherpick &&
-+	test_must_fail git revert base..picked &&
-+	git cherry-pick --abort &&
-+	test_path_is_missing .git/sequencer &&
-+	test_cmp_rev anotherpick HEAD &&
-+	git update-index --refresh &&
-+	git diff-index --exit-code HEAD
-+'
-+
-+test_expect_success 'revert --abort works, too' '
-+	pristine_detach anotherpick &&
-+	test_must_fail git revert base..picked &&
-+	git revert --abort &&
-+	test_path_is_missing .git/sequencer &&
-+	test_cmp_rev anotherpick HEAD
-+'
-+
-+test_expect_success '--abort to cancel single revert' '
-+	pristine_detach anotherpick &&
-+	test_must_fail git revert picked &&
-+	git revert --abort &&
-+	test_path_is_missing .git/sequencer &&
-+	test_cmp_rev anotherpick HEAD &&
-+	git update-index --refresh &&
-+	git diff-index --exit-code HEAD
-+'
-+
-+test_expect_success '--abort keeps unrelated change, easy case' '
-+	pristine_detach unrelatedpick &&
-+	echo changed >expect &&
-+	test_must_fail git cherry-pick picked..yetanotherpick &&
-+	echo changed >unrelated &&
-+	git cherry-pick --abort &&
-+	test_cmp expect unrelated
-+'
-+
-+test_expect_success '--abort refuses to clobber unrelated change, harder case' '
-+	pristine_detach initial &&
-+	echo changed >expect &&
-+	test_must_fail git cherry-pick base..anotherpick &&
-+	echo changed >unrelated &&
-+	test_must_fail git cherry-pick --abort &&
-+	test_cmp expect unrelated &&
-+	git rev-list HEAD >log &&
-+	test_line_count = 2 log &&
-+	test_must_fail git update-index --refresh &&
-+
-+	git checkout unrelated &&
-+	git cherry-pick --abort &&
-+	test_cmp_rev initial HEAD
-+'
-+
- test_expect_success 'cherry-pick cleans up sequencer state when one commit is left' '
- 	pristine_detach initial &&
- 	test_must_fail git cherry-pick base..picked &&
-@@ -127,6 +213,16 @@ test_expect_success 'cherry-pick cleans up sequencer state when one commit is le
- 	test_cmp expect actual
- '
- 
-+test_expect_failure '--abort after last commit in sequence' '
-+	pristine_detach initial &&
-+	test_must_fail git cherry-pick base..picked &&
-+	git cherry-pick --abort &&
-+	test_path_is_missing .git/sequencer &&
-+	test_cmp_rev initial HEAD &&
-+	git update-index --refresh &&
-+	git diff-index --exit-code HEAD
-+'
-+
- test_expect_success 'cherry-pick does not implicitly stomp an existing operation' '
- 	pristine_detach initial &&
- 	test_must_fail git cherry-pick base..anotherpick &&
--- 
-1.7.8.rc3
+Thanks, piem
