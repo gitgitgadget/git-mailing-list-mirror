@@ -1,57 +1,98 @@
-From: Joshua Jensen <jjensen@workspacewhiz.com>
-Subject: Re: Possible bug with branch names and case sensitivity
-Date: Wed, 23 Nov 2011 15:08:36 -0700
-Message-ID: <4ECD6EE4.6080702@workspacewhiz.com>
-References: <D144F6C9-C6A3-4516-BC88-B9EB50890EF4@bitart.com> <CAG+J_Dz6nK5fPhBRmoojmgYSv5OviN7pfgNKnRy9_9WmDS1_2w@mail.gmail.com> <4ECB315F.4080701@alum.mit.edu> <CAG+J_DxREbykWggrD49L7qvR9M36wKL7+_kOYbvcWmLBCF2Gog@mail.gmail.com> <CACBZZX4qs8-u33bZbrxYS1CrwjTQc=4YOk2SUjtYzL=vc9KYgA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git fetch overwriting local tags
+Date: Wed, 23 Nov 2011 17:16:58 -0500
+Message-ID: <20111123221658.GA22313@sigill.intra.peff.net>
+References: <20111123090821.GL19986@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Gerd Knops <gerti@bitart.com>, git@vger.kernel.org
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 23 23:07:38 2011
+Cc: git@vger.kernel.org, John Kacur <jkacur@gmail.com>
+To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+X-From: git-owner@vger.kernel.org Wed Nov 23 23:20:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTKyf-0008Q1-Hk
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 23:07:37 +0100
+	id 1RTLB1-0005Zo-0s
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 23:20:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756353Ab1KWWHe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Nov 2011 17:07:34 -0500
-Received: from hsmail.qwknetllc.com ([208.71.137.138]:48016 "EHLO
-	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756343Ab1KWWHd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2011 17:07:33 -0500
-Received: (qmail 25685 invoked by uid 399); 23 Nov 2011 15:07:27 -0700
-Received: from unknown (HELO ?192.168.1.109?) (jjensen@workspacewhiz.com@67.171.115.152)
-  by hsmail.qwknetllc.com with ESMTPAM; 23 Nov 2011 15:07:27 -0700
-X-Originating-IP: 67.171.115.152
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <CACBZZX4qs8-u33bZbrxYS1CrwjTQc=4YOk2SUjtYzL=vc9KYgA@mail.gmail.com>
+	id S1753024Ab1KWWRA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Nov 2011 17:17:00 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49469
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750882Ab1KWWRA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 17:17:00 -0500
+Received: (qmail 7022 invoked by uid 107); 23 Nov 2011 22:17:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 23 Nov 2011 17:17:09 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Nov 2011 17:16:58 -0500
+Content-Disposition: inline
+In-Reply-To: <20111123090821.GL19986@pengutronix.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185882>
 
------ Original Message -----
-=46rom: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-Date: 11/23/2011 1:50 PM
->
->
-> Note that Git doesn't only have confusing behavior with refs on
-> case-insensitive filesystems. The other day HFS+ users @ work had
-> issues because of a case collision in the checked out tree, which
-> confused git status et al.
-Is core.ignorecase set to true?  Is the repository shared with a case=20
-sensitive file system?
+On Wed, Nov 23, 2011 at 10:08:21AM +0100, Uwe Kleine-K=C3=B6nig wrote:
 
-I have a patch sitting around for 'git update-index --add' that fixes=20
-some case insensitivity issues, especially when using Git Gui.  This=20
-patch complements the core.ignorecase patches I sent in the past.
+> John and I wondered about git fetch overwriting local tags. I was sur=
+e
+> enough to claim that git fetch won't overwrite local tags with remote
+> tags having the same name. But after John pointed me to
+>=20
+> 	http://www.pythian.com/news/9067/on-the-perils-of-importing-remote-t=
+ags-in-git/
+>=20
+> I tested that (using Debian's 1.7.7.3) and really, git does overwrite
+> local tags.
+>=20
+> Here is my test script:
+> [...]
+> 	git fetch --tags ../a
+> [...]
+> Is this intended?
 
--Josh
+Sort of.
+
+By default, "git fetch" will "auto-follow" tags; if you fetch a commit
+which is pointed to by a tag, then git will fetch that tag, too. So
+generally, you shouldn't need to specify "--tags" at all, because you
+will already be getting the relevant tags.
+
+The "--tags" option, however, is a short-hand for saying "fetch all of
+the tags", and is equivalent to providing the refspec:
+
+  git fetch ../a refs/tags/*:refs/tags/*
+
+Which of course will update your local tags with similarly-named ones
+from the remote.  So in that sense, there is no bug, and it is working
+as intended; the problem is that the author's intent was not the same a=
+s
+your intent. :)
+
+I'm not sure why you're using "--tags" in the first place. That might
+help us figure out if there's another way to do what you want that is
+safer.
+
+That being said, it would be nice if "--tags" wasn't so surprising.
+Three things that I think could help are:
+
+  1. We usually require a "+" on the refspec (or "--force") to update
+     non-fast-forward branches. But there is no such safety on tags
+     (which generally shouldn't be updated at all). Should we at least
+     be enforcing the same fast-forward rules on tag fetches (or even
+     something more strict, like forbidding tag update at all unless
+     forced)?
+
+  2. We don't keep a reflog on tags. Generally there's no point. But
+     it wouldn't be very expensive (since they don't usually change),
+     and could provide a safety mechanism here.
+
+  3. Keeping tags from remotes in separate namespaces, but collating
+     them at lookup time. This has been discussed, and I think is
+     generally a fine idea, but nobody has moved forward with code.
+
+-Peff
