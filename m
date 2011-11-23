@@ -1,73 +1,116 @@
-From: =?iso-8859-1?Q?Henrik_Grubbstr=F6m?= <grubba@grubba.org>
-Subject: Infinite loop in cascade_filter_fn()
-Date: Wed, 23 Nov 2011 18:40:47 +0100 (CET)
-Organization: Roxen Internet Software AB
-Message-ID: <Pine.GSO.4.63.1111231801580.5099@shipon.roxen.com>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: [PATCH] git-apply: fix rubbish handling in --check case
+Date: Wed, 23 Nov 2011 12:44:52 -0600
+Message-ID: <CA+sFfMf2+XJGtQACeh=J4BA1rGP=KsFDnzw0UECjmTPp2-ZUzQ@mail.gmail.com>
+References: <1322065563-3651-1-git-send-email-dedekind1@gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-559023410-1827104807-1322070047=:5099"
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 23 18:41:01 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Artem Bityutskiy <dedekind1@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 23 19:45:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTGof-0000px-64
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 18:41:01 +0100
+	id 1RTHoa-00070B-29
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 19:45:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755329Ab1KWRk4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Nov 2011 12:40:56 -0500
-Received: from mail.roxen.com ([212.247.29.220]:57934 "EHLO mail.roxen.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751189Ab1KWRkz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2011 12:40:55 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.roxen.com (Postfix) with ESMTP id 762D7628112;
-	Wed, 23 Nov 2011 18:40:54 +0100 (CET)
-X-Virus-Scanned: amavisd-new at roxen.com
-Received: from mail.roxen.com ([212.247.29.220])
-	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0GpzWmx-kepQ; Wed, 23 Nov 2011 18:40:47 +0100 (CET)
-Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
-	by mail.roxen.com (Postfix) with ESMTP id 8DE256280E9;
-	Wed, 23 Nov 2011 18:40:47 +0100 (CET)
-X-X-Sender: grubba@shipon.roxen.com
+	id S1754194Ab1KWSoy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Nov 2011 13:44:54 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:46062 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752800Ab1KWSox convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Nov 2011 13:44:53 -0500
+Received: by yenq3 with SMTP id q3so1724070yen.19
+        for <git@vger.kernel.org>; Wed, 23 Nov 2011 10:44:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=KbMTiOY/Ft6h1LenXtpk+i1OPueT59aYWU29xCVsg2Q=;
+        b=r9ABAt9Eb6K9bItlTLooaIuDNh46dNbGE8mMhwyvPERgvXo7hNZgahs4r45hEKftPh
+         XHr47XTY6s/so9Z1Y/xgLXuAsovLwVO+MxnfqGBtSBYlcvTeO/z06dx+XgS37Xzi7i0R
+         qj5FpBohhQ7y7Xe1V8ZlV8pDXOeX0CcUPuf5c=
+Received: by 10.182.2.164 with SMTP id 4mr8828027obv.49.1322073892854; Wed, 23
+ Nov 2011 10:44:52 -0800 (PST)
+Received: by 10.182.188.104 with HTTP; Wed, 23 Nov 2011 10:44:52 -0800 (PST)
+In-Reply-To: <1322065563-3651-1-git-send-email-dedekind1@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185861>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, Nov 23, 2011 at 10:26 AM, Artem Bityutskiy <dedekind1@gmail.com=
+> wrote:
+> From: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
 
----559023410-1827104807-1322070047=:5099
-Content-Type: TEXT/PLAIN; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: 8BIT
+> $ git apply --check /bin/bash
+> $ echo $?
+> 0
+>
+> Not exactly what I expected :-) The same happnes if you use an empty =
+file.
+>
+> Signed-off-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
+> ---
+>
+> Note, I did not extensively test it!
+>
+> =C2=A0Makefile =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0 =C2=A02 +-
+> =C2=A0builtin/apply.c | =C2=A0 =C2=A08 +++++---
+> =C2=A02 files changed, 6 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/apply.c b/builtin/apply.c
+> index 84a8a0b..2d6862a 100644
+> --- a/builtin/apply.c
+> +++ b/builtin/apply.c
+> @@ -3596,9 +3596,6 @@ static int write_out_results(struct patch *list=
+, int skipped_patch)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0int errs =3D 0;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct patch *l;
+>
+> - =C2=A0 =C2=A0 =C2=A0 if (!list && !skipped_patch)
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error("No c=
+hanges");
+> -
 
-Hi.
+I think write_out_results() can lose the skipped_patch parameter now.
 
-My git repository walker just got bitten by what seems to be a reasonably 
-new bug in convert.c:cascade_filter_fn() (git 1.7.8.rc3 (gentoo)).
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0for (phase =3D 0; phase < 2; phase++) {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0l =3D list;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0while (l) {
+> @@ -3741,6 +3738,11 @@ static int apply_patch(int fd, const char *fil=
+ename, int options)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0!apply_with_reject)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0exit(1);
+>
+> + =C2=A0 =C2=A0 =C2=A0 if (!list && !skipped_patch) {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error("No changes"=
+);
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 exit(1);
 
-How to reproduce:
+You can use die() instead of error followed by exit.
 
-   git clone git@github.com:pikelang/Pike.git
+Also, I don't see any reason why this check shouldn't be moved up so
+that it is performed immediately after the while loop, avoiding any
+unnecessary work.
 
-   git checkout -f 0e2080f838c6f0bc7d670ac7549676a353451dca^
+btw. die'ing like this affects diffstat, numstat, summary etc. too
+since now they will report an error instead of just displaying an
+informational message describing zero changes when passed a bogus
+patch. But that seems correct to me.
 
-   git checkout -f 0e2080f838c6f0bc7d670ac7549676a353451dca
+I would have also suggested changing the error message to something
+more descriptive than "No changes", but apparently apply is a plumbing
+command.  It seems kind of an "in-between plumbing and porcelain"
+command.
 
-The first two commands complete as expected, while the last hangs forever.
-Performing the same with git 1.7.6.4 works as expected.
+It still seems like the correct behavior change with respect to
+diffstat, numstat et al that I mentioned above after rethinking from a
+plumbing perspective. git apply should error out if it cannot
+recognize its input.
 
-The problematic file seems to be /src/modules/_Crypto/rijndael_ecb_vt.txt 
-which has the attributes: text ident eol=crlf
-
-Thanks,
-
---
-Henrik Grubbström					grubba@grubba.org
-Roxen Internet Software AB				grubba@roxen.com
----559023410-1827104807-1322070047=:5099--
+-Brandon
