@@ -1,83 +1,90 @@
-From: vfr@lyx.org
-Subject: [PATCH] builtin-reset: Documentation update
-Date: Wed, 23 Nov 2011 07:44:16 +0100
-Message-ID: <1322030656-18683-1-git-send-email-vfr@lyx.org>
-Cc: gitster@pobox.com, Vincent van Ravesteijn <vfr@lyx.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 23 07:44:42 2011
+From: "Steinmann  Ruedi" <ruediste@student.ethz.ch>
+Subject: [PATCH] Fix https interactive authentication problem
+Date: Wed, 23 Nov 2011 07:58:02 +0000
+Message-ID: <F6A589D6B10801478E0DE246A9EF187C1BD5E8@MBX12.d.ethz.ch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"gitster@pobox.com" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 23 09:04:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RT6ZV-0004rU-Cc
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 07:44:41 +0100
+	id 1RT7ob-000338-UR
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 09:04:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755187Ab1KWGog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Nov 2011 01:44:36 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:44960 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753048Ab1KWGof (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2011 01:44:35 -0500
-Received: by bke11 with SMTP id 11so1216259bke.19
-        for <git@vger.kernel.org>; Tue, 22 Nov 2011 22:44:34 -0800 (PST)
-Received: by 10.205.83.73 with SMTP id af9mr22718900bkc.24.1322030674353;
-        Tue, 22 Nov 2011 22:44:34 -0800 (PST)
-Received: from vincent-VirtualBox.tudelft.nl (221-44.206-83.static-ip.oleane.fr. [83.206.44.221])
-        by mx.google.com with ESMTPS id j9sm11948099bkd.2.2011.11.22.22.44.32
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 22 Nov 2011 22:44:33 -0800 (PST)
-X-Mailer: git-send-email 1.7.8-rc3
+	id S1758720Ab1KWIEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Nov 2011 03:04:16 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:16342 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752576Ab1KWIEQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Nov 2011 03:04:16 -0500
+X-Greylist: delayed 370 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Nov 2011 03:04:16 EST
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.339.1; Wed, 23 Nov
+ 2011 08:58:01 +0100
+Received: from MBX12.d.ethz.ch ([fe80::fcbd:f3f9:2031:cf24]) by
+ CAS22.d.ethz.ch ([fe80::dd0e:466a:b055:c090%10]) with mapi id 14.01.0339.001;
+ Wed, 23 Nov 2011 08:58:03 +0100
+Thread-Topic: [PATCH] Fix https interactive authentication problem
+Thread-Index: AcyptUaJjqOdDLGZTkaNc3d3IkAACg==
+Accept-Language: de-CH, en-US
+Content-Language: de-CH
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [80.218.216.248]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185823>
 
-From: Vincent van Ravesteijn <vfr@lyx.org>
+>From 986e29085ee2215a3e0a412ee7874dc2d0ef36be Mon Sep 17 00:00:00 2001
+From: Ruedi Steinmann <ruediste@student.ethz.ch>
+Date: Wed, 23 Nov 2011 08:41:52 +0100
+Subject: [PATCH] Fix https interactive authentication problem
 
-The second mode of 'git reset' is defined by the --patch
-option, while the third mode is defined by the <mode> option.
-Hence, these options are mandatory in the description of the
-individual modes.
+Cloning a repository over https works fine when the username/password is
+given in the URL. But if it is queried interactively, an error occurs(see below).
+I found that the username/password is not set when a connection is reused.
 
-Signed-off-by: Vincent van Ravesteijn <vfr@lyx.org>
+With this patch, the username/password is set whenever a connection is reused.
+
+Sample output showing the error:
+
+git clone https://n.ethz.ch/student/...
+Cloning into ...
+Username:
+Password:
+error: Unable to get pack file https://n.ethz.ch/student/.../objects/pack/pack-1ced2ebff0c9fc1f07e0c7cc9dd3fc75f6ac6962.pack
+The requested URL returned error: 401
+...
+error: Fetch failed.
+
+
+Signed-off-by: Ruedi Steinmann <ruediste@student.ethz.ch>
 ---
- Documentation/git-reset.txt |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+ http.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index b2832fc..b674866 100644
---- a/Documentation/git-reset.txt
-+++ b/Documentation/git-reset.txt
-@@ -9,8 +9,8 @@ SYNOPSIS
- --------
- [verse]
- 'git reset' [-q] [<commit>] [--] <paths>...
--'git reset' [--patch|-p] [<commit>] [--] [<paths>...]
--'git reset' [--soft | --mixed | --hard | --merge | --keep] [-q] [<commit>]
-+'git reset' (--patch | -p) [<commit>] [--] [<paths>...]
-+'git reset' (--soft | --mixed | --hard | --merge | --keep) [-q] [<commit>]
- 
- DESCRIPTION
- -----------
-@@ -34,7 +34,7 @@ Alternatively, using linkgit:git-checkout[1] and specifying a commit, you
- can copy the contents of a path out of a commit to the index and to the
- working tree in one go.
- 
--'git reset' --patch|-p [<commit>] [--] [<paths>...]::
-+'git reset' (--patch | -p) [<commit>] [--] [<paths>...]::
- 	Interactively select hunks in the difference between the index
- 	and <commit> (defaults to HEAD).  The chosen hunks are applied
- 	in reverse to the index.
-@@ -43,7 +43,7 @@ This means that `git reset -p` is the opposite of `git add -p`, i.e.
- you can use it to selectively reset hunks. See the ``Interactive Mode''
- section of linkgit:git-add[1] to learn how to operate the `\--patch` mode.
- 
--'git reset' [--<mode>] [<commit>]::
-+'git reset' --<mode> [<commit>]::
- 	This form resets the current branch head to <commit> and
- 	possibly updates the index (resetting it to the tree of <commit>) and
- 	the working tree depending on <mode>, which
--- 
-1.7.8-rc3
+diff --git a/http.c b/http.c
+index e6c7597..c7b3558 100644
+--- a/http.c
++++ b/http.c
+@@ -550,7 +550,10 @@ struct active_request_slot *get_active_slot(void)
+     curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDS, NULL);
+     curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 0);
+     curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
+-
++
++    // set username and password if already set
++    init_curl_http_auth(slot->curl);
++
+     return slot;
+ }
+
+--
+1.7.5.4
