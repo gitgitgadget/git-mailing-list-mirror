@@ -1,90 +1,63 @@
-From: "Steinmann  Ruedi" <ruediste@student.ethz.ch>
-Subject: [PATCH] Fix https interactive authentication problem
-Date: Wed, 23 Nov 2011 07:58:02 +0000
-Message-ID: <F6A589D6B10801478E0DE246A9EF187C1BD5E8@MBX12.d.ethz.ch>
+From: Frans Klaver <fransklaver@gmail.com>
+Subject: Re: [PATCH] run-command.c: Accept EACCES as command not found
+Date: Wed, 23 Nov 2011 09:17:43 +0100
+Message-ID: <CAH6sp9N2ycsoU=is3BVanH33CowD+sMNmWq=Z1MsPJX=HGYY+g@mail.gmail.com>
+References: <1321912387-4569-1-git-send-email-fransklaver@gmail.com>
+	<7vbos5f7ix.fsf@alter.siamese.dyndns.org>
+	<op.v5bjtk1r0aolir@keputer>
+	<7v62idf2vy.fsf@alter.siamese.dyndns.org>
+	<CAH6sp9MxbDhQ3RiA6jO1fswAZX3R6C2fv0gzJdpGp432ovWsjQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"gitster@pobox.com" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 23 09:04:24 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 23 09:17:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RT7ob-000338-UR
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 09:04:22 +0100
+	id 1RT81d-0007lt-E8
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 09:17:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758720Ab1KWIEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Nov 2011 03:04:16 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:16342 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752576Ab1KWIEQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Nov 2011 03:04:16 -0500
-X-Greylist: delayed 370 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Nov 2011 03:04:16 EST
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.339.1; Wed, 23 Nov
- 2011 08:58:01 +0100
-Received: from MBX12.d.ethz.ch ([fe80::fcbd:f3f9:2031:cf24]) by
- CAS22.d.ethz.ch ([fe80::dd0e:466a:b055:c090%10]) with mapi id 14.01.0339.001;
- Wed, 23 Nov 2011 08:58:03 +0100
-Thread-Topic: [PATCH] Fix https interactive authentication problem
-Thread-Index: AcyptUaJjqOdDLGZTkaNc3d3IkAACg==
-Accept-Language: de-CH, en-US
-Content-Language: de-CH
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [80.218.216.248]
+	id S932165Ab1KWIRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Nov 2011 03:17:44 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:53174 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753219Ab1KWIRn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 03:17:43 -0500
+Received: by qadc14 with SMTP id c14so2192819qad.19
+        for <git@vger.kernel.org>; Wed, 23 Nov 2011 00:17:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=/eI+Pn6qjMe/BCALDzRAGddZ/RvnqG26OZVputDvrnY=;
+        b=OFO5xjghaqtZyQzNMC8/9Epbw2+DAxUFQhKPj6Rv4FyqMQJqLLIsVrql57+UX3FbPa
+         r4MTtJz3lDyh330ZFCMG25LiMPCIXLLCcvWp+BhLZl0aT2/56DltDkBe5Cpp4lVWoqCI
+         VM/wxJ2yiVuXh5cKv/pnAliz8VDUmTALK2E1E=
+Received: by 10.224.76.141 with SMTP id c13mr9934560qak.97.1322036263193; Wed,
+ 23 Nov 2011 00:17:43 -0800 (PST)
+Received: by 10.224.86.11 with HTTP; Wed, 23 Nov 2011 00:17:43 -0800 (PST)
+In-Reply-To: <CAH6sp9MxbDhQ3RiA6jO1fswAZX3R6C2fv0gzJdpGp432ovWsjQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185824>
 
->From 986e29085ee2215a3e0a412ee7874dc2d0ef36be Mon Sep 17 00:00:00 2001
-From: Ruedi Steinmann <ruediste@student.ethz.ch>
-Date: Wed, 23 Nov 2011 08:41:52 +0100
-Subject: [PATCH] Fix https interactive authentication problem
+On Tue, Nov 22, 2011 at 10:31 AM, Frans Klaver <fransklaver@gmail.com> wrote:
 
-Cloning a repository over https works fine when the username/password is
-given in the URL. But if it is queried interactively, an error occurs(see below).
-I found that the username/password is not set when a connection is reused.
+> If git is going to do some diagnostics on why the execvp returned
+> EACCES, it can still give a few hints. Most of the more likely options
+> are then ruled out.
 
-With this patch, the username/password is set whenever a connection is reused.
+If there are no objections, I'm going to cook up a patch that
 
-Sample output showing the error:
+- Keeps the current behavior (bail on EACCES)
+- Adds a more helpful diagnostic message somewhat like libexplain's,
+but more terse and if possible with slightly more domain knowledge
+- Takes into account the notes made following
+http://article.gmane.org/gmane.comp.version-control.git/171838
 
-git clone https://n.ethz.ch/student/...
-Cloning into ...
-Username:
-Password:
-error: Unable to get pack file https://n.ethz.ch/student/.../objects/pack/pack-1ced2ebff0c9fc1f07e0c7cc9dd3fc75f6ac6962.pack
-The requested URL returned error: 401
-...
-error: Fetch failed.
-
-
-Signed-off-by: Ruedi Steinmann <ruediste@student.ethz.ch>
----
- http.c |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
-
-diff --git a/http.c b/http.c
-index e6c7597..c7b3558 100644
---- a/http.c
-+++ b/http.c
-@@ -550,7 +550,10 @@ struct active_request_slot *get_active_slot(void)
-     curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDS, NULL);
-     curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 0);
-     curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
--
-+
-+    // set username and password if already set
-+    init_curl_http_auth(slot->curl);
-+
-     return slot;
- }
-
---
-1.7.5.4
+Frans
