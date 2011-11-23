@@ -1,63 +1,87 @@
-From: Philippe Vaucher <philippe.vaucher@gmail.com>
-Subject: git reset --merge documentation improvments
-Date: Wed, 23 Nov 2011 09:31:06 +0100
-Message-ID: <CAGK7Mr59bN8rjhLHAK0Vq=bOBBHG=N02CgGe-np=OBdTyS+rsA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Proposal: create meaningful aliases for git reset's hard/soft/mixed
+Date: Wed, 23 Nov 2011 09:49:13 +0100
+Message-ID: <vpq4nxvusty.fsf@bauges.imag.fr>
+References: <CAGK7Mr4GZq5eXn4OB+B0ZborX-OVoXiWU8Lo1XM5LRZDuRe1YA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 23 09:31:44 2011
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Philippe Vaucher <philippe.vaucher@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 23 09:49:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RT8F4-0004pS-GU
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 09:31:42 +0100
+	id 1RT8WF-0003Bz-Ly
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 09:49:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758766Ab1KWIbi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Nov 2011 03:31:38 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:38660 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753337Ab1KWIbh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2011 03:31:37 -0500
-Received: by iage36 with SMTP id e36so1290272iag.19
-        for <git@vger.kernel.org>; Wed, 23 Nov 2011 00:31:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=McCuRbF4OZAGVV9FSiPyfVqi819kl/fodMIho9JoJJM=;
-        b=BivVkjuJTjM9982KxhTbIAVKJRVJ6Qmuwe+P5NJtaZ4HgNDAQuWnVh0ycwehtOu011
-         QFr/TV00zF/yZk491nOPrZ6TR2nKUdZpuSh5yh8zAREy7X0UC63YgZ5aHCfhZBh0WsYK
-         8iJFqQYsksnLNgLF0eTzijQ/HVK+L2nDq2vtY=
-Received: by 10.231.60.76 with SMTP id o12mr6059386ibh.83.1322037097056; Wed,
- 23 Nov 2011 00:31:37 -0800 (PST)
-Received: by 10.50.195.199 with HTTP; Wed, 23 Nov 2011 00:31:06 -0800 (PST)
+	id S1753586Ab1KWItU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Nov 2011 03:49:20 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:44415 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752340Ab1KWItT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 03:49:19 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id pAN8hxwb004620
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 23 Nov 2011 09:43:59 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1RT8W1-0005tp-8o; Wed, 23 Nov 2011 09:49:13 +0100
+In-Reply-To: <CAGK7Mr4GZq5eXn4OB+B0ZborX-OVoXiWU8Lo1XM5LRZDuRe1YA@mail.gmail.com>
+	(Philippe Vaucher's message of "Wed, 23 Nov 2011 09:28:19 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 23 Nov 2011 09:43:59 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: pAN8hxwb004620
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1322642643.00925@YwcFMdcFKbTrKCHL0VuwsA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185827>
 
-Hello,
+Philippe Vaucher <philippe.vaucher@gmail.com> writes:
 
-The current documentation for --merge is:
+> A lot of time when I want to use reset for smth else than "--hard" I
+> have to go and look the documentation.
 
-"Resets the index [1] and updates the files in the working tree that
-are different between <commit> and HEAD, but keeps those which are
-different between the index [2] and working tree"
+I have to agree with this, I took a lot of time to understand/memorize
+the meaning of reset options.
 
-I think this is confusing, because [1] is the *after-reset* index and
-[2] is the *before-reset* index. If you fail to realise this it looks
-like this "resets index (so index is empty) and then updates worktree
-but skip files staged from index" --> "but there's nothing staged, the
-index was reset!"
+> Optional: a new mode would be introduced for consistency:
+> --worktree (or maybe --tree): only updates the worktree but not the index
 
-I think a better sentence would be:
+That would be an alias for "git checkout <rev> -- path", right?
 
-"Updates the files in the working tree that are different between
-<commit> and HEAD, but keeps those which are different between the
-index and working tree, and finally resets the index."
+I don't really like this "there is more than one way to do it" in Git's
+command-line, I think we should think very carefully before introducing
+yet another instance of it.
 
-Or something along those lines.
+> --keep could be removed in favor of an additional --safe flag
 
-Philippe
+If you are to change the option names, then you should also make the
+behavior safe by default:
+
+* "git reset --all" = "git reset --keep"
+* "git reset --all --force" = "git reset --hard"
+
+With the current terminology, --hard has the advantage that it makes it
+realatively clear how dangerous it is. Still, I've seen users losing
+data because they did a "git reset --hard" with uncommited changes. Git
+is safe by default most of the time, and "git reset --hard" is one
+unfortunate exception (because it was there before --keep, people are
+more used to it).
+
+"git reset --all" would make it worse, because the option name is less
+scary, people would be less reluctant to use it, and would get more
+chance to lose data.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
