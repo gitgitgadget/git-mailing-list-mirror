@@ -1,96 +1,92 @@
-From: "Frans Klaver" <fransklaver@gmail.com>
-Subject: Re: Git ticket / issue tracking ERA: Git shouldn't allow to push a
- new branch called HEAD
-Date: Wed, 23 Nov 2011 22:30:50 +0100
-Message-ID: <op.v5e4podr0aolir@keputer.lokaal>
-References: <1321970646.3289.19.camel@mastroc3.mobc3.local>
- <7vd3ckdjx9.fsf@alter.siamese.dyndns.org>
- <CAHVLzc=SPD+AHhAPP_=mEVv5cJvn0oiJ_k-KBEkG=Qhcw2UxHA@mail.gmail.com>
- <CAH6sp9OXzHj=r707zyRQxaJmndHm5_DcWWMLn_1zyLdEZ_TSbA@mail.gmail.com>
- <7v4nxudb73.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-bisect working only from toplevel dir
+Date: Wed, 23 Nov 2011 16:36:05 -0500
+Message-ID: <20111123213605.GA21835@sigill.intra.peff.net>
+References: <20111123145034.GB17927@angband.pl>
+ <7vd3cibqqe.fsf@alter.siamese.dyndns.org>
+ <20111123192329.GA21630@sigill.intra.peff.net>
+ <20111123202643.GB6291@m62s10.vlinux.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>,
-	"Daniele Segato" <daniele.bilug@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Jeff King" <peff@peff.net>, "Scott Chacon" <schacon@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 23 22:31:01 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Adam Borowski <kilobyte@angband.pl>, git@vger.kernel.org
+To: Peter Baumann <waste.manager@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 23 22:36:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTKPC-0008Qo-85
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 22:30:58 +0100
+	id 1RTKUI-0002Vb-6z
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 22:36:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755879Ab1KWVay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Nov 2011 16:30:54 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:52964 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755346Ab1KWVax (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2011 16:30:53 -0500
-Received: by wwp14 with SMTP id 14so457650wwp.1
-        for <git@vger.kernel.org>; Wed, 23 Nov 2011 13:30:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=content-type:to:cc:subject:references:date:mime-version
-         :content-transfer-encoding:from:message-id:in-reply-to:user-agent;
-        bh=nLMJaVRzoMeaS4Ot9PutcDv+DNN6RZUb8G6YHSvD3OQ=;
-        b=w3I0Jti+1fBUt/+228eyrcgHYA9smbrkV+1HlDZB590ZHapfRdGzbDhS3rFVaWlYAi
-         nC2kCgxJACLYhOy1syu9UMxW9DFybJDkck2jOx0Wg92X5KUdKkoCD3Ck5HvIz+X9p+x+
-         bHVJLqBmwU5PLCkhsXa6ty47MwgnZAbMzzqKY=
-Received: by 10.216.185.85 with SMTP id t63mr3923839wem.7.1322083852239;
-        Wed, 23 Nov 2011 13:30:52 -0800 (PST)
-Received: from keputer.lokaal (82-136-253-149.ip.telfort.nl. [82.136.253.149])
-        by mx.google.com with ESMTPS id bl10sm8645136wib.15.2011.11.23.13.30.50
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 23 Nov 2011 13:30:51 -0800 (PST)
-In-Reply-To: <7v4nxudb73.fsf@alter.siamese.dyndns.org>
-User-Agent: Opera Mail/12.00 (Win32)
+	id S1755099Ab1KWVgI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Nov 2011 16:36:08 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49442
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753079Ab1KWVgH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 16:36:07 -0500
+Received: (qmail 6659 invoked by uid 107); 23 Nov 2011 21:36:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 23 Nov 2011 16:36:16 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Nov 2011 16:36:05 -0500
+Content-Disposition: inline
+In-Reply-To: <20111123202643.GB6291@m62s10.vlinux.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185878>
 
-On Wed, 23 Nov 2011 18:02:08 +0100, Junio C Hamano <gitster@pobox.com>  
-wrote:
+On Wed, Nov 23, 2011 at 09:26:43PM +0100, Peter Baumann wrote:
 
-> Frans Klaver <fransklaver@gmail.com> writes:
->
->> The note from the maintainer[1] mentions
->>
->> 	git://git.kernel.org/pub/scm/git/git.git/
->> 	git://repo.or.cz/alt-git.git
->> 	https://github.com/git/git
->> 	https://code.google.com/p/git-core/
->>
->> I would assume one of those would be a nomination for 'official' repo.
->>
->> Maybe something for Scott C. to address?
->
-> As long as the link says "Git source repository" without "the official",
-> Scott is doing the right thing. It is just one of the copies that I push
-> into, so it may be considered more official than a fork of my history by  
-> a
-> random unknown person.
->
-> As Git is distributed, we do not need a single "official" repository. If
-> you really want to name one, my private working repository at my home
-> machine would be what is closest to one, as patches and pull requests are
-> processed there and then the result is pushed out to the above four and a
-> few others. But that "official" one is not exposed to the outside world  
-> ;-)
+> > If we cd_to_toplevel, we can remember the prefix that we started from
+> > and cd to it before running the user's command, but there is no
+> > guarantee that it actually exists. Maybe that commit should be
+> > considered indeterminate then?
+> > 
+> 
+> Why not simply fail the run with exit(-1)? If the directory doesn't exist
+> in an older commit (which I think is not that common) git bisect should
+> simply stop and let the user proceed.
 
-Since official is a rather unreal term here, let's just drop it. There are  
-a few repositories that the maintainer currently pushes to, and those are  
-the most reliable ones to use if you want the latest git vanilla. Other  
-than that, there's going to be no difference from the next git.git clone.
+The point of "git bisect run" is to run unattended until we reach an
+answer. I don't think most people would be happy with it not running to
+come to _some_ answer (e.g., imagine checking the results of an
+overnight "bisect run" in the morning only to find that it stopped 20
+minutes in).
 
-It might remove some confusion if these repos would be reflected on  
-websites focusing on git as they are in the maintainers notes, but that's  
-probably up to the respective webmasters then.
+That's why I think just marking the commit as indeterminate would be
+better; it jumps over parts of history that omit the directory, and will
+generally still come to a good conclusion. If it's possible to get an
+answer, that is. It might say "we can't come up with an answer because
+all of these commits are not testable". But that tells you something,
+too: your bisection test is not a good one.
 
-Frans
+> And yes, I find the current behaviour to forbid running git bisect from
+> a subdirectory slighly annoying and I'm glad somebody took a stab at it.
+
+Agreed. I often bisect by hand with two terminals, doing something like:
+
+  [terminal 1]
+  git bisect start ...
+  make
+
+  [terminal 2]
+  cd t
+  ./t1234-whatever -v
+
+  [terminal 1]
+  git bisect good|bad
+  make
+
+  [terminal 2]
+  ./t1234-whatever
+
+And then want to type "git bisect good|bad" into terminal 2. Which
+doesn't work, of course (yes, in this simple case I could automate the
+running of the test script from terminal 1; but often times it is
+simpler to just eyeball the output during the bisection).
+
+-Peff
