@@ -1,67 +1,68 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: svn to git with non-standard layout
-Date: Wed, 23 Nov 2011 15:22:14 -0500 (EST)
-Message-ID: <2d5f33eb-c1dc-491a-a8ed-e8ceaaf2e2b1@mail>
-References: <jajh7m$it7$1@dough.gmane.org>
+From: Thomas Jarosch <thomas.jarosch@intra2net.com>
+Subject: [PATCH] imap-send: Remove unused 'use_namespace' variable
+Date: Wed, 23 Nov 2011 21:32:37 +0100
+Message-ID: <4ECD5865.4080908@intra2net.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Bernd Schubert <bernd.schubert@itwm.fraunhofer.de>
-X-From: git-owner@vger.kernel.org Wed Nov 23 21:29:46 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 23 21:36:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTJRx-0005WL-9m
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 21:29:45 +0100
+	id 1RTJY0-0008Uf-Qh
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 21:36:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754214Ab1KWU3i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Nov 2011 15:29:38 -0500
-Received: from hq.genarts.com ([173.9.65.1]:50412 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754109Ab1KWU3h (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2011 15:29:37 -0500
-X-Greylist: delayed 438 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Nov 2011 15:29:37 EST
-Received: from localhost (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id CD340BE64C8;
-	Wed, 23 Nov 2011 15:22:20 -0500 (EST)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id d0ZzKXQI2Ftp; Wed, 23 Nov 2011 15:22:14 -0500 (EST)
-Received: from mail.hq.genarts.com (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id B9120BE64C7;
-	Wed, 23 Nov 2011 15:22:14 -0500 (EST)
-In-Reply-To: <jajh7m$it7$1@dough.gmane.org>
-X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC15 (Mac)/7.1.3_GA_3346)
+	id S1754395Ab1KWUf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Nov 2011 15:35:56 -0500
+Received: from re04.intra2net.com ([82.165.46.26]:55767 "EHLO
+	re04.intra2net.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754092Ab1KWUfz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 15:35:55 -0500
+Received: from intranator.m.i2n (unknown [172.16.1.99])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by re04.intra2net.com (Postfix) with ESMTP id A67543013A
+	for <git@vger.kernel.org>; Wed, 23 Nov 2011 21:35:54 +0100 (CET)
+Received: from localhost (intranator.m.i2n [127.0.0.1])
+	by localhost (Postfix) with ESMTP id 6E6412AC54
+	for <git@vger.kernel.org>; Wed, 23 Nov 2011 21:35:54 +0100 (CET)
+X-Virus-Scanned: by Intranator (www.intra2net.com) with AMaViS and F-Secure
+	AntiVirus (fsavdb 2011-11-23_08)
+X-Spam-Status: 
+X-Spam-Level: 0
+Received: from pikkukde.a.i2n (unknown [192.168.12.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by intranator.m.i2n (Postfix) with ESMTPS id 9FF952AC53
+	for <git@vger.kernel.org>; Wed, 23 Nov 2011 21:35:52 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20111115 Thunderbird/8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185871>
 
------ Original Message -----
-> From: "Bernd Schubert" <bernd.schubert@itwm.fraunhofer.de>
-> To: git@vger.kernel.org
-> Sent: Wednesday, November 23, 2011 2:23:34 PM
-> Subject: svn to git with non-standard layout
-> 
-> So we have something like this:
-> 
-> svn-root -> main-project
->              /       |    \
->             /        |     \
->            proj1    proj2   proj{n}
->           /    \     /   \    /    \
->          /      \   /     \  trunk  tags
->         /       \ trunk   tags
->         trunk   tags
->                 /   \
->                tag1 tag{2...n}
+Reported by cppcheck
 
-Just for clarification: are there files and/or directories in main-project that are not sub-projects?
+Signed-off-by: Thomas Jarosch <thomas.jarosch@intra2net.com>
+---
+ imap-send.c |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
 
-Thanks,
-Stephen
+diff --git a/imap-send.c b/imap-send.c
+index e1ad1a4..80e0e8c 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -161,7 +161,6 @@ static struct imap_server_conf server = {
+ struct imap_store_conf {
+ 	struct store_conf gen;
+ 	struct imap_server_conf *server;
+-	unsigned use_namespace:1;
+ };
+ 
+ #define NIL	(void *)0x1
+-- 
+1.7.6.4
