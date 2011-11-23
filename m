@@ -1,80 +1,59 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] revert: do not pass non-literal string as format to git_path()
-Date: Wed, 23 Nov 2011 19:45:36 +0700
-Message-ID: <1322052336-13619-1-git-send-email-pclouds@gmail.com>
+From: Frans Klaver <fransklaver@gmail.com>
+Subject: Re: [PATCH] run-command.c: Accept EACCES as command not found
+Date: Wed, 23 Nov 2011 14:25:38 +0100
+Message-ID: <CAH6sp9PMjywExthnizo-UOf26V-9f1q1DjAtTfA+Buihuuj+fg@mail.gmail.com>
+References: <1321912387-4569-1-git-send-email-fransklaver@gmail.com>
+	<7vbos5f7ix.fsf@alter.siamese.dyndns.org>
+	<op.v5bjtk1r0aolir@keputer>
+	<7v62idf2vy.fsf@alter.siamese.dyndns.org>
+	<CAH6sp9MxbDhQ3RiA6jO1fswAZX3R6C2fv0gzJdpGp432ovWsjQ@mail.gmail.com>
+	<CAH6sp9N2ycsoU=is3BVanH33CowD+sMNmWq=Z1MsPJX=HGYY+g@mail.gmail.com>
+	<CACsJy8ATJ33i5YaM-APtUPq_fDkj9=JpKj9pmvqWK2QodgbexQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 23 13:45:56 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 23 14:25:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTCD4-0003xg-77
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 13:45:54 +0100
+	id 1RTCpd-00040y-Gw
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 14:25:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751659Ab1KWMpu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Nov 2011 07:45:50 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:65111 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750742Ab1KWMpt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2011 07:45:49 -0500
-Received: by iage36 with SMTP id e36so1528822iag.19
-        for <git@vger.kernel.org>; Wed, 23 Nov 2011 04:45:48 -0800 (PST)
+	id S1755499Ab1KWNZk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Nov 2011 08:25:40 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:46373 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755408Ab1KWNZj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 08:25:39 -0500
+Received: by qyd20 with SMTP id 20so359816qyd.19
+        for <git@vger.kernel.org>; Wed, 23 Nov 2011 05:25:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=5uzEIQzDOMc2dPxpcOeRczZR+z0vwVbQzRo6mWmmcK8=;
-        b=OTXKlxtNpYvz6NPSay6ehYClIqDeedq8v/e7u8F+tkzlQAs6ZjawyQeRwJTP/z/ULW
-         kKCbIE0cchVNvSkpRd/3dGjRM3ROJQXv1ijVIAeqrQReBifWePAFZdxyBRDp4ukvzKsG
-         YRW5pOU2YopVx0s23bHFTXz6eUFMxKCGszGtg=
-Received: by 10.42.154.7 with SMTP id o7mr2764764icw.48.1322052348808;
-        Wed, 23 Nov 2011 04:45:48 -0800 (PST)
-Received: from pclouds@gmail.com ([115.74.52.218])
-        by mx.google.com with ESMTPS id wo4sm41106568igc.5.2011.11.23.04.45.43
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 23 Nov 2011 04:45:48 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 23 Nov 2011 19:45:39 +0700
-X-Mailer: git-send-email 1.7.4.74.g639db
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=iTu+Bo/J2N4ECY4FwkVsXEyDB/ajQcwMjIxonwx2NO4=;
+        b=EGMNU32pTzeMXPSDA81yNtXGLnEAofA0CJDzsCNWSlZ2aoImgdGdCqQ/48GikBPlWv
+         yoRz1JGja3rDRShw+lm8ubX2y7SWdjdo0rorNZY/igZRKPEwKvXMuw79cXp7xsnCb/oo
+         9EIUJjGP4blIS/qAuZnxiyHlnZo4kt8r3apIQ=
+Received: by 10.224.217.66 with SMTP id hl2mr5551848qab.84.1322054738637; Wed,
+ 23 Nov 2011 05:25:38 -0800 (PST)
+Received: by 10.224.86.11 with HTTP; Wed, 23 Nov 2011 05:25:38 -0800 (PST)
+In-Reply-To: <CACsJy8ATJ33i5YaM-APtUPq_fDkj9=JpKj9pmvqWK2QodgbexQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185848>
 
-This fixes the following warning.
+On Wed, Nov 23, 2011 at 1:04 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
 
-    CC builtin/revert.o
-builtin/revert.c: In function =E2=80=98write_cherry_pick_head=E2=80=99:
-builtin/revert.c:311: warning: format not a string literal and no forma=
-t arguments
+> If you print diagnostic messages with trace_printf() and friends (only
+> showed when GIT_TRACE variable is set), then there's no need for being
+> terse.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- builtin/revert.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+I'll keep that in mind, thanks.
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 0c61668..9b9b2e5 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -308,7 +308,7 @@ static void write_cherry_pick_head(struct commit *c=
-ommit, const char *pseudoref)
-=20
- 	strbuf_addf(&buf, "%s\n", sha1_to_hex(commit->object.sha1));
-=20
--	filename =3D git_path(pseudoref);
-+	filename =3D git_path("%s", pseudoref);
- 	fd =3D open(filename, O_WRONLY | O_CREAT, 0666);
- 	if (fd < 0)
- 		die_errno(_("Could not open '%s' for writing"), filename);
---=20
-1.7.4.74.g639db
+Frans
