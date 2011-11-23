@@ -1,72 +1,76 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Fix revert --abort on Windows
-Date: Wed, 23 Nov 2011 11:21:41 +0100
-Message-ID: <4ECCC935.7010407@viscovery.net>
-References: <20111120073059.GA2278@elie.hsd1.il.comcast.net> <CALkWK0=45OwcBoH2TorsgwTbaXjnffVuh0mGxh2+ShN9cuF-=A@mail.gmail.com> <20111120094650.GB2278@elie.hsd1.il.comcast.net> <20111122111207.GA7399@elie.hsd1.il.comcast.net> <20111122112001.GF7399@elie.hsd1.il.comcast.net> <7vr50zd5x0.fsf@alter.siamese.dyndns.org> <20111123012721.GA14217@elie.hsd1.il.comcast.net> <4ECCB3A2.5030102@viscovery.net> <20111123100452.GA30629@elie.hsd1.il.comcast.net>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: Feature requset: listing of current stash in git gui
+Date: Wed, 23 Nov 2011 03:20:24 -0800
+Message-ID: <CAJDDKr78CV+eDrfSg4Tqp5W2N4MDTaqAcxiB5JrNpUyEn5vqAQ@mail.gmail.com>
+References: <201111211100.52367.dexen.devries@gmail.com>
+	<4ECA2D8F.4060005@atlas-elektronik.com>
+	<30417194.1411.1321907485839.JavaMail.mobile-sync@ieja14>
+	<-8099236111493298698@unknownmsgid>
+	<4ECBBD72.40101@atlas-elektronik.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Phil Hord <phil.hord@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 23 11:21:54 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: dexen deVries <dexen.devries@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
+X-From: git-owner@vger.kernel.org Wed Nov 23 12:20:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RT9xh-0005BK-PC
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 11:21:54 +0100
+	id 1RTAsQ-0003lr-Vq
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 12:20:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753160Ab1KWKVs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Nov 2011 05:21:48 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:57442 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753117Ab1KWKVr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2011 05:21:47 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1RT9xW-00074h-6B; Wed, 23 Nov 2011 11:21:42 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id D8E9E1660F;
-	Wed, 23 Nov 2011 11:21:41 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.24) Gecko/20111103 Thunderbird/3.1.16
-In-Reply-To: <20111123100452.GA30629@elie.hsd1.il.comcast.net>
-X-Enigmail-Version: 1.1.1
-X-Spam-Score: -1.4 (-)
+	id S1751706Ab1KWLU1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Nov 2011 06:20:27 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:47625 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750985Ab1KWLU0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Nov 2011 06:20:26 -0500
+Received: by ywt32 with SMTP id 32so1233046ywt.19
+        for <git@vger.kernel.org>; Wed, 23 Nov 2011 03:20:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=xkU1up1N9HZvXXuP7XWwX3tU82dq2RR9d7/5d8fdFbE=;
+        b=n3gFI38h3M+Wxx+keeUVNpR298hXVWpsj73UzATuY8ac43gYDWKS5Z+d+urNjtSVcN
+         njYRhEYXtetWib/0QXW1VyHUv08kWD/hEALJJZFnTWIrifgeNq/ZM7ArUx1wTgp5Hkvb
+         m1Tcrnn453ftXm0hxIQURzawpuJtC2bRzBLNQ=
+Received: by 10.236.77.233 with SMTP id d69mr32987695yhe.84.1322047224220;
+ Wed, 23 Nov 2011 03:20:24 -0800 (PST)
+Received: by 10.150.190.2 with HTTP; Wed, 23 Nov 2011 03:20:24 -0800 (PST)
+In-Reply-To: <4ECBBD72.40101@atlas-elektronik.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185837>
 
-Am 11/23/2011 11:04, schrieb Jonathan Nieder:
-> ... "git reset --merge <commit>" renames the
-> .git/sequencer directory as a secondary effect --- after moving to
-> <commit>, or so the logic goes, it is unlikely but possible that the
-> caller of git reset wants to continue the series of cherry-picks that
-> was in progress, so git renames the sequencer state to
-> .git/sequencer-old to be helpful while allowing the cherry-pick to be
-> resumed if the caller did not want to end the sequence after all.
-> ...
-> By the way, as the length of [this paragraph] might
-> have hinted, I am not convinced that allowing "git reset --hard" as an
-> escape route from a cherry-pick sequence was very sensible.  It
-> _would_ be nice to have a command to return to a known state,
-> discarding progress in all pending multiple-command guided workflows
-> (am, rebase, bisect), but git reset is not that command.
+On Tue, Nov 22, 2011 at 7:19 AM, Stefan N=C3=A4we
+<stefan.naewe@atlas-elektronik.com> wrote:
+> Am 22.11.2011 11:24, schrieb David Aguilar:
+>>
+>> git-cola has this feature.
+>>>
+>>
+>> =C2=A0 =C2=A0http://git-cola.github.com/
+>
+> Yeah, right. I totally forgot about git cola.
+>
+> But I guess there's no way of starting only the stash view like the '=
+DAG'
+> view, is there ?
 
-IMO, it doesn't make sense that git-reset aborts a cherry-pick sequence:
-When I messed up a difficult conflict in the middle of a cherry-pick
-sequence, it might be useful to be able to 'git reset --hard && git
-cherry-pick that-one-commit' to restart the conflict resolution.
+That's a good idea.
 
-(But does a single-commit cherry-pick during a multi-commit cherry-pick
-work to begin with?)
+https://github.com/git-cola/git-cola/commit/0b1bf59c0b4a455cc8a9149dcfc=
+afb5bed3a19ab
 
--- Hannes
+    git cola stash
+    git cola classic
+    (and a few others)
+    ...
+--=20
+=C2=A0 =C2=A0 David
