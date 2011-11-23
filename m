@@ -1,54 +1,59 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Proposal: create meaningful aliases for git reset's hard/soft/mixed
-Date: Wed, 23 Nov 2011 19:02:35 +0700
-Message-ID: <CACsJy8CuEaH33B_wrLo0BXYaYWi5tHB3tncftHhBQgiv9QcgaA@mail.gmail.com>
-References: <CAGK7Mr4GZq5eXn4OB+B0ZborX-OVoXiWU8Lo1XM5LRZDuRe1YA@mail.gmail.com>
+Subject: Re: [PATCH] run-command.c: Accept EACCES as command not found
+Date: Wed, 23 Nov 2011 19:04:58 +0700
+Message-ID: <CACsJy8ATJ33i5YaM-APtUPq_fDkj9=JpKj9pmvqWK2QodgbexQ@mail.gmail.com>
+References: <1321912387-4569-1-git-send-email-fransklaver@gmail.com>
+ <7vbos5f7ix.fsf@alter.siamese.dyndns.org> <op.v5bjtk1r0aolir@keputer>
+ <7v62idf2vy.fsf@alter.siamese.dyndns.org> <CAH6sp9MxbDhQ3RiA6jO1fswAZX3R6C2fv0gzJdpGp432ovWsjQ@mail.gmail.com>
+ <CAH6sp9N2ycsoU=is3BVanH33CowD+sMNmWq=Z1MsPJX=HGYY+g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Philippe Vaucher <philippe.vaucher@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 23 13:03:26 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Frans Klaver <fransklaver@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 23 13:05:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTBXx-0003dO-7t
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 13:03:25 +0100
+	id 1RTBa5-0004bR-UV
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 13:05:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754181Ab1KWMDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Nov 2011 07:03:09 -0500
-Received: from mail-dy0-f46.google.com ([209.85.220.46]:52424 "EHLO
-	mail-dy0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753242Ab1KWMDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2011 07:03:08 -0500
-Received: by dyi18 with SMTP id 18so91356dyi.19
-        for <git@vger.kernel.org>; Wed, 23 Nov 2011 04:03:07 -0800 (PST)
+	id S1754214Ab1KWMFb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Nov 2011 07:05:31 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:47607 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753242Ab1KWMFa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 07:05:30 -0500
+Received: by bke11 with SMTP id 11so1499538bke.19
+        for <git@vger.kernel.org>; Wed, 23 Nov 2011 04:05:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=ITegWiZHKdjxg/AzKJfjehhq1k+6ZlY8JCGiO332Sz0=;
-        b=UH2Ol9ckpBH5bFGLEDCjpBZnBg4BT16z25R3nCYi8Iaek8ySXCrxDo1oSOWaLFCbXs
-         7J8DtHg8xY9GIgOF8kqmvUAcLF8hqc2ToqxmGJCmAFl/7rfCqBNZdFR3AtkfnX+1KTdp
-         f63znQ/J3IE4E96kWg/ggv7zCeXo3n65g5gF4=
-Received: by 10.205.131.3 with SMTP id ho3mr23914076bkc.11.1322049786118; Wed,
- 23 Nov 2011 04:03:06 -0800 (PST)
-Received: by 10.204.23.2 with HTTP; Wed, 23 Nov 2011 04:02:35 -0800 (PST)
-In-Reply-To: <CAGK7Mr4GZq5eXn4OB+B0ZborX-OVoXiWU8Lo1XM5LRZDuRe1YA@mail.gmail.com>
+        bh=nWDBHJ3hr/5DqI3VX3zxRBIVRq26WPtrRtBShXp35lk=;
+        b=jhtbMx9+crMPviyHKox1k/lpBKLY5cnGM9DBsSRnF3eBtE9+ulNAoGHW1Y3+Q/0E8s
+         Jyq3EA/phFDKn8NXr83jDjY/arhJHXic0TCNCO2gdRpRwgGfDJNniMy2Zg0FeiiDd6E+
+         i8L3JMEPh1/woRPpxcXczJmVHlAwowKVxU9kA=
+Received: by 10.204.154.77 with SMTP id n13mr24222677bkw.83.1322049929161;
+ Wed, 23 Nov 2011 04:05:29 -0800 (PST)
+Received: by 10.204.23.2 with HTTP; Wed, 23 Nov 2011 04:04:58 -0800 (PST)
+In-Reply-To: <CAH6sp9N2ycsoU=is3BVanH33CowD+sMNmWq=Z1MsPJX=HGYY+g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185844>
 
-On Wed, Nov 23, 2011 at 3:28 PM, Philippe Vaucher
-<philippe.vaucher@gmail.com> wrote:
-> Hello,
+On Wed, Nov 23, 2011 at 3:17 PM, Frans Klaver <fransklaver@gmail.com> wrote:
+> If there are no objections, I'm going to cook up a patch that
 >
-> A lot of time when I want to use reset for smth else than "--hard" I
-> have to go and look the documentation.
+> - Keeps the current behavior (bail on EACCES)
+> - Adds a more helpful diagnostic message somewhat like libexplain's,
+> but more terse and if possible with slightly more domain knowledge
 
-May be related: http://thread.gmane.org/gmane.comp.version-control.git/170266
+If you print diagnostic messages with trace_printf() and friends (only
+showed when GIT_TRACE variable is set), then there's no need for being
+terse.
 -- 
 Duy
