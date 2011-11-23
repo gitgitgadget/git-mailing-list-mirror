@@ -1,81 +1,98 @@
-From: Frans Klaver <fransklaver@gmail.com>
-Subject: Re: Git ticket / issue tracking ERA: Git shouldn't allow to push a
- new branch called HEAD
-Date: Wed, 23 Nov 2011 16:47:00 +0100
-Message-ID: <CAH6sp9OXzHj=r707zyRQxaJmndHm5_DcWWMLn_1zyLdEZ_TSbA@mail.gmail.com>
-References: <1321970646.3289.19.camel@mastroc3.mobc3.local>
-	<7vd3ckdjx9.fsf@alter.siamese.dyndns.org>
-	<CAHVLzc=SPD+AHhAPP_=mEVv5cJvn0oiJ_k-KBEkG=Qhcw2UxHA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Daniele Segato <daniele.bilug@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>
-To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 23 16:47:11 2011
+From: Artem Bityutskiy <dedekind1@gmail.com>
+Subject: [PATCH] git-apply: fix rubbish handling in --check case
+Date: Wed, 23 Nov 2011 18:26:02 +0200
+Message-ID: <1322065563-3651-1-git-send-email-dedekind1@gmail.com>
+Cc: Artem Bityutskiy <dedekind1@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 23 17:25:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTF2S-0001Xn-KB
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 16:47:09 +0100
+	id 1RTFdW-0004E4-Np
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 17:25:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756709Ab1KWPrC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Nov 2011 10:47:02 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:33034 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756691Ab1KWPrB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2011 10:47:01 -0500
-Received: by qadc14 with SMTP id c14so2660068qad.19
-        for <git@vger.kernel.org>; Wed, 23 Nov 2011 07:47:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=QMywg7c/4JkJZhzOkZKSqm7cx1dqDWPOUoOwa+CWgmU=;
-        b=wnF8pN5Wv7jWE2moFyvUAU5rXABI3U/fAm+XarZuEX0NuhAIkrOJ5IHHJbKUrv0H17
-         4HTyd1pF0KOhPUoRgfUzR9OaAt07wrM66mIrnykcgsyFXdQBGkqxFTi99ReaBnuMOFrR
-         eQk4TZ8QyYsZhNzBBzQF73GAq/gEIgeI3FO48=
-Received: by 10.224.117.144 with SMTP id r16mr10823272qaq.71.1322063220527;
- Wed, 23 Nov 2011 07:47:00 -0800 (PST)
-Received: by 10.224.86.11 with HTTP; Wed, 23 Nov 2011 07:47:00 -0800 (PST)
-In-Reply-To: <CAHVLzc=SPD+AHhAPP_=mEVv5cJvn0oiJ_k-KBEkG=Qhcw2UxHA@mail.gmail.com>
+	id S1753154Ab1KWQZU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Nov 2011 11:25:20 -0500
+Received: from mga14.intel.com ([143.182.124.37]:47267 "EHLO mga14.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752645Ab1KWQZT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 11:25:19 -0500
+Received: from azsmga002.ch.intel.com ([10.2.17.35])
+  by azsmga102.ch.intel.com with ESMTP; 23 Nov 2011 08:25:18 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.69,559,1315206000"; 
+   d="scan'208";a="40547020"
+Received: from sauron.fi.intel.com ([10.237.72.160])
+  by AZSMGA002.ch.intel.com with ESMTP; 23 Nov 2011 08:25:17 -0800
+X-Mailer: git-send-email 1.7.6.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185852>
 
-On Wed, Nov 23, 2011 at 2:44 PM, Paolo Ciarrocchi
-<paolo.ciarrocchi@gmail.com> wrote:
-> On Tue, Nov 22, 2011 at 8:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Daniele Segato <daniele.bilug@gmail.com> writes:
->>
->>> [1] according to http://git-scm.com/ the link on "Git source repository"
->>> is https://github.com/gitster/git
->>
->> That one is as official as anybody's "git clone" from many of the
->> distribution points.
->>
->> I do not see any reason to name an official repository, but if I were
->> pressed, that copy at github is not the one I would nominate.
->
-> But that's the only repo mentioned in the git-scm home page.
+From: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
 
-The note from the maintainer[1] mentions
+This patch fixes the following inconsistency:
 
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git
-	https://github.com/git/git
-	https://code.google.com/p/git-core/
+Let's take my bash binary.
 
-I would assume one of those would be a nomination for 'official' repo.
+$ ls -l /bin/bash
+-rwxr-xr-x. 1 root root 924200 Jun 22 16:49 /bin/bash
+$ file /bin/bash
+/bin/bash: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.32, stripped
 
-Maybe something for Scott C. to address?
+Let's try to apply it
 
-Cheers,
-Frans
+$ git apply /bin/bash
+error: No changes
+$ echo $?
+1
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/184174
+Good, rejected and error code is returned. Let's try with --check:
+
+$ git apply --check /bin/bash
+$ echo $?
+0
+
+Not exactly what I expected :-) The same happnes if you use an empty file.
+
+Signed-off-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
+---
+
+Note, I did not extensively test it!
+
+ Makefile        |    2 +-
+ builtin/apply.c |    8 +++++---
+ 2 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 84a8a0b..2d6862a 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -3596,9 +3596,6 @@ static int write_out_results(struct patch *list, int skipped_patch)
+ 	int errs = 0;
+ 	struct patch *l;
+ 
+-	if (!list && !skipped_patch)
+-		return error("No changes");
+-
+ 	for (phase = 0; phase < 2; phase++) {
+ 		l = list;
+ 		while (l) {
+@@ -3741,6 +3738,11 @@ static int apply_patch(int fd, const char *filename, int options)
+ 	    !apply_with_reject)
+ 		exit(1);
+ 
++	if (!list && !skipped_patch) {
++		error("No changes");
++		exit(1);
++	}
++
+ 	if (apply && write_out_results(list, skipped_patch))
+ 		exit(1);
+ 
+-- 
+1.7.6.4
