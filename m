@@ -1,91 +1,64 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH] Fix revert --abort on Windows
-Date: Wed, 23 Nov 2011 09:49:38 +0100
-Message-ID: <4ECCB3A2.5030102@viscovery.net>
-References: <20111120073059.GA2278@elie.hsd1.il.comcast.net> <CALkWK0=45OwcBoH2TorsgwTbaXjnffVuh0mGxh2+ShN9cuF-=A@mail.gmail.com> <20111120094650.GB2278@elie.hsd1.il.comcast.net> <20111122111207.GA7399@elie.hsd1.il.comcast.net> <20111122112001.GF7399@elie.hsd1.il.comcast.net> <7vr50zd5x0.fsf@alter.siamese.dyndns.org> <20111123012721.GA14217@elie.hsd1.il.comcast.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Possible bug with branch names and case sensitivity
+Date: Wed, 23 Nov 2011 09:54:45 +0100
+Message-ID: <4ECCB4D5.3090200@alum.mit.edu>
+References: <D144F6C9-C6A3-4516-BC88-B9EB50890EF4@bitart.com>	<CAG+J_Dz6nK5fPhBRmoojmgYSv5OviN7pfgNKnRy9_9WmDS1_2w@mail.gmail.com>	<4ECB315F.4080701@alum.mit.edu> <CAG+J_DxREbykWggrD49L7qvR9M36wKL7+_kOYbvcWmLBCF2Gog@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Phil Hord <phil.hord@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 23 09:49:55 2011
+Cc: Gerd Knops <gerti@bitart.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 23 09:55:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RT8Wf-0003KT-Uu
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 09:49:54 +0100
+	id 1RT8bc-0005B1-2T
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 09:55:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758766Ab1KWItq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Nov 2011 03:49:46 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:10917 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753270Ab1KWIto (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2011 03:49:44 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1RT8WR-0004YH-63; Wed, 23 Nov 2011 09:49:39 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id CE4EB1660F;
-	Wed, 23 Nov 2011 09:49:38 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.24) Gecko/20111103 Thunderbird/3.1.16
-In-Reply-To: <20111123012721.GA14217@elie.hsd1.il.comcast.net>
-X-Spam-Score: -1.4 (-)
+	id S1758831Ab1KWIy4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Nov 2011 03:54:56 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:51329 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755451Ab1KWIy4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 03:54:56 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pAN8sjYm028205
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 23 Nov 2011 09:54:46 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
+In-Reply-To: <CAG+J_DxREbykWggrD49L7qvR9M36wKL7+_kOYbvcWmLBCF2Gog@mail.gmail.com>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185829>
 
-From: Johannes Sixt <j6t@kdbg.org>
+On 11/22/2011 06:31 PM, Jay Soffian wrote:
+> I wonder what the downside would be of always using packed refs on
+> case-insenstive file systems. This would seem analogous to how git no
+> longer uses symlinks.
 
-On Windows, it is not possible to rename or remove a directory that has
-open files. 'revert --abort' renamed .git/sequencer when it still had
-.git/sequencer/head open. Close the file as early as possible to allow
-the rename operation on Windows.
+The theoretical downside is that when the total number of packed refs is
+very large, it is more expensive to access or change a single ref if it
+is packed than if it is loose (because the whole packed refs file has to
+be read, parsed, then rewritten, and thus scales like O(N)).  OTOH the
+number of references must be quite large before loose references win,
+because the constant factor for loose references is much larger than
+that for packed references.  I also believe that there is still scope
+for optimizing the handling of packed references to make them yet faster
+and perhaps even improve their scaling.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- I guess it's too late to squash this in. ;)
+But I think that a lot of code would have to change to make this happen.
 
- -- Hannes
+Michael
 
- builtin/revert.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 0c61668..5dedb51 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -931,8 +931,10 @@ static int sequencer_rollback(struct replay_opts *opts)
- 	if (strbuf_getline(&buf, f, '\n')) {
- 		error(_("cannot read %s: %s"), filename, ferror(f) ?
- 			strerror(errno) : _("unexpected end of file"));
-+		fclose(f);
- 		goto fail;
- 	}
-+	fclose(f);
- 	if (get_sha1_hex(buf.buf, sha1) || buf.buf[40] != '\0') {
- 		error(_("stored pre-cherry-pick HEAD file '%s' is corrupt"),
- 			filename);
-@@ -941,11 +943,9 @@ static int sequencer_rollback(struct replay_opts *opts)
- 	if (reset_for_rollback(sha1))
- 		goto fail;
- 	strbuf_release(&buf);
--	fclose(f);
- 	return 0;
- fail:
- 	strbuf_release(&buf);
--	fclose(f);
- 	return -1;
- }
- 
 -- 
-1.7.8.rc3.1164.gba869.dirty
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
