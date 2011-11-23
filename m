@@ -1,63 +1,68 @@
-From: Frans Klaver <fransklaver@gmail.com>
-Subject: Re: [PATCH] run-command.c: Accept EACCES as command not found
-Date: Wed, 23 Nov 2011 09:17:43 +0100
-Message-ID: <CAH6sp9N2ycsoU=is3BVanH33CowD+sMNmWq=Z1MsPJX=HGYY+g@mail.gmail.com>
-References: <1321912387-4569-1-git-send-email-fransklaver@gmail.com>
-	<7vbos5f7ix.fsf@alter.siamese.dyndns.org>
-	<op.v5bjtk1r0aolir@keputer>
-	<7v62idf2vy.fsf@alter.siamese.dyndns.org>
-	<CAH6sp9MxbDhQ3RiA6jO1fswAZX3R6C2fv0gzJdpGp432ovWsjQ@mail.gmail.com>
+From: Philippe Vaucher <philippe.vaucher@gmail.com>
+Subject: Proposal: create meaningful aliases for git reset's hard/soft/mixed
+Date: Wed, 23 Nov 2011 09:28:19 +0100
+Message-ID: <CAGK7Mr4GZq5eXn4OB+B0ZborX-OVoXiWU8Lo1XM5LRZDuRe1YA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 23 09:17:50 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 23 09:29:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RT81d-0007lt-E8
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 09:17:49 +0100
+	id 1RT8CV-0003cd-KO
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 09:29:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932165Ab1KWIRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Nov 2011 03:17:44 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:53174 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753219Ab1KWIRn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2011 03:17:43 -0500
-Received: by qadc14 with SMTP id c14so2192819qad.19
-        for <git@vger.kernel.org>; Wed, 23 Nov 2011 00:17:43 -0800 (PST)
+	id S932249Ab1KWI2v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Nov 2011 03:28:51 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:41715 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932242Ab1KWI2t (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 03:28:49 -0500
+Received: by ggnr5 with SMTP id r5so1151216ggn.19
+        for <git@vger.kernel.org>; Wed, 23 Nov 2011 00:28:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=/eI+Pn6qjMe/BCALDzRAGddZ/RvnqG26OZVputDvrnY=;
-        b=OFO5xjghaqtZyQzNMC8/9Epbw2+DAxUFQhKPj6Rv4FyqMQJqLLIsVrql57+UX3FbPa
-         r4MTtJz3lDyh330ZFCMG25LiMPCIXLLCcvWp+BhLZl0aT2/56DltDkBe5Cpp4lVWoqCI
-         VM/wxJ2yiVuXh5cKv/pnAliz8VDUmTALK2E1E=
-Received: by 10.224.76.141 with SMTP id c13mr9934560qak.97.1322036263193; Wed,
- 23 Nov 2011 00:17:43 -0800 (PST)
-Received: by 10.224.86.11 with HTTP; Wed, 23 Nov 2011 00:17:43 -0800 (PST)
-In-Reply-To: <CAH6sp9MxbDhQ3RiA6jO1fswAZX3R6C2fv0gzJdpGp432ovWsjQ@mail.gmail.com>
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=v9HOe113RYO8enFdhf1rtzwxzN8Ys2vc/Nado477LHs=;
+        b=uct+WwBKlhk1fFNOOaGOPGRDYINFpXSecSd0OIhDFy8tOwlkBuc7zKN0depRWEOl3V
+         bVG11MYUXUP+b/frVaQHux4sZJMIY1e9duGdcVJ51718rnA4WjujUzdKAlfpQnOI2KBR
+         s2uYC6NRx7AcmMB/p4sG8nHUp/4ZCdATdN2z4=
+Received: by 10.50.85.129 with SMTP id h1mr26830564igz.47.1322036929064; Wed,
+ 23 Nov 2011 00:28:49 -0800 (PST)
+Received: by 10.50.195.199 with HTTP; Wed, 23 Nov 2011 00:28:19 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185825>
 
-On Tue, Nov 22, 2011 at 10:31 AM, Frans Klaver <fransklaver@gmail.com> wrote:
+Hello,
 
-> If git is going to do some diagnostics on why the execvp returned
-> EACCES, it can still give a few hints. Most of the more likely options
-> are then ruled out.
+A lot of time when I want to use reset for smth else than "--hard" I
+have to go and look the documentation.
+I think the modes could be improved by creating new aliases like this:
 
-If there are no objections, I'm going to cook up a patch that
+Optional: a new mode would be introduced for consistency:
+--worktree (or maybe --tree): only updates the worktree but not the index
 
-- Keeps the current behavior (bail on EACCES)
-- Adds a more helpful diagnostic message somewhat like libexplain's,
-but more terse and if possible with slightly more domain knowledge
-- Takes into account the notes made following
-http://article.gmane.org/gmane.comp.version-control.git/171838
+Then the existing mode could be aliased like this:
+--mixed would be aliased as --index
+--hard would be aliased as --all
+--soft could be aliased as --no-changes
 
-Frans
+Additionally:
+--merge could be removed in favor of an additional --preserve-staged flag
+--keep could be removed in favor of an additional --safe flag
+
+So if I recap my ideas:
+
+"I want to discard my changes" --> git reset --all HEAD^
+"I want to discard the last commit" --> git reset --index HEAD^
+"I want to discard the last commit, but let's be safe in case I forgot
+about a modified file" --> git reset --all --safe HEAD^
+"I want to discard the last commit, keep my current staged changes"
+--> git reset --all --preserve-staged HEAD^
+
+Philippe
