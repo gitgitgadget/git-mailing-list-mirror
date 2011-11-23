@@ -1,88 +1,80 @@
-From: =?iso-8859-1?Q?Henrik_Grubbstr=F6m?= <grubba@roxen.com>
-Subject: Re: Incremental use of fast-import may cause conflicting notes
-Date: Wed, 23 Nov 2011 13:10:57 +0100 (CET)
-Organization: Roxen Internet Software AB
-Message-ID: <Pine.GSO.4.63.1111231310090.5099@shipon.roxen.com>
-References: <Pine.GSO.4.63.1111231137350.5099@shipon.roxen.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] revert: do not pass non-literal string as format to git_path()
+Date: Wed, 23 Nov 2011 19:45:36 +0700
+Message-ID: <1322052336-13619-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-559023410-1312796756-1322050257=:5099"
-Cc: Johan Herland <johan@herland.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Git Mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 23 13:39:47 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 23 13:45:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTC78-0001LS-Ct
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 13:39:46 +0100
+	id 1RTCD4-0003xg-77
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 13:45:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754665Ab1KWMjk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Nov 2011 07:39:40 -0500
-Received: from mail.roxen.com ([212.247.29.220]:42779 "EHLO mail.roxen.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753745Ab1KWMjj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2011 07:39:39 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.roxen.com (Postfix) with ESMTP id 9C9A7628124;
-	Wed, 23 Nov 2011 13:11:04 +0100 (CET)
-X-Virus-Scanned: amavisd-new at roxen.com
-Received: from mail.roxen.com ([212.247.29.220])
-	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id MB8CwQNZ3vJT; Wed, 23 Nov 2011 13:10:57 +0100 (CET)
-Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
-	by mail.roxen.com (Postfix) with ESMTP id D81A36280DA;
-	Wed, 23 Nov 2011 13:10:57 +0100 (CET)
-In-Reply-To: <Pine.GSO.4.63.1111231137350.5099@shipon.roxen.com>
+	id S1751659Ab1KWMpu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Nov 2011 07:45:50 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:65111 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750742Ab1KWMpt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 07:45:49 -0500
+Received: by iage36 with SMTP id e36so1528822iag.19
+        for <git@vger.kernel.org>; Wed, 23 Nov 2011 04:45:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=5uzEIQzDOMc2dPxpcOeRczZR+z0vwVbQzRo6mWmmcK8=;
+        b=OTXKlxtNpYvz6NPSay6ehYClIqDeedq8v/e7u8F+tkzlQAs6ZjawyQeRwJTP/z/ULW
+         kKCbIE0cchVNvSkpRd/3dGjRM3ROJQXv1ijVIAeqrQReBifWePAFZdxyBRDp4ukvzKsG
+         YRW5pOU2YopVx0s23bHFTXz6eUFMxKCGszGtg=
+Received: by 10.42.154.7 with SMTP id o7mr2764764icw.48.1322052348808;
+        Wed, 23 Nov 2011 04:45:48 -0800 (PST)
+Received: from pclouds@gmail.com ([115.74.52.218])
+        by mx.google.com with ESMTPS id wo4sm41106568igc.5.2011.11.23.04.45.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 23 Nov 2011 04:45:48 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 23 Nov 2011 19:45:39 +0700
+X-Mailer: git-send-email 1.7.4.74.g639db
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185847>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+This fixes the following warning.
 
----559023410-1312796756-1322050257=:5099
-Content-Type: TEXT/PLAIN; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: 8BIT
+    CC builtin/revert.o
+builtin/revert.c: In function =E2=80=98write_cherry_pick_head=E2=80=99:
+builtin/revert.c:311: warning: format not a string literal and no forma=
+t arguments
 
-On Wed, 23 Nov 2011, Henrik Grubbström wrote:
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ builtin/revert.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> Hi.
->
-> Background: I have an incremental repository-walker creating a corresponding 
-> documentation repository from a source repository
-> that uses git-notes to store its state, a use for which notes
-> seem very suitable.
->
-> Problem: When the number of notes in the root of the notes branch
-> increases beyond a threshold, fast-import changes the fanout. This is as 
-> designed, but the problem is that when fast-import is restarted
-> it won't remember the fanout, and will start writing files in the root again. 
-> This means that there may be multiple notes-files for the same commit, eg 
-> both de/adbeef and deadbeef.
->
-> This is not what the user expects, and is not good practice, even if it in 
-> this case actually works, since the latter is defined to have priority.
-> I'm however not sure if eg fast_import.c:do_change_note_fanout() will do the 
-> right thing if/when the fanout is changed again.
->
-> The problem is probably due to b->num_notes not being initialized properly 
-> when the old non-empty root commit for the notes branch is loaded in 
-> parse_from()/parse_new_commit().
->
-> My workaround for now is to use filedeleteall and restore all the notes
-> by hand in the first new commit on the notes branch.
->
-> Version of git: 1.7.6.4 (gentoo)
-
-Oops, wrong machine... 1.7.8.rc3 (gentoo)
-
-> Thanks,
-
---
-Henrik Grubbström					grubba@roxen.com
-Roxen Internet Software AB
----559023410-1312796756-1322050257=:5099--
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 0c61668..9b9b2e5 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -308,7 +308,7 @@ static void write_cherry_pick_head(struct commit *c=
+ommit, const char *pseudoref)
+=20
+ 	strbuf_addf(&buf, "%s\n", sha1_to_hex(commit->object.sha1));
+=20
+-	filename =3D git_path(pseudoref);
++	filename =3D git_path("%s", pseudoref);
+ 	fd =3D open(filename, O_WRONLY | O_CREAT, 0666);
+ 	if (fd < 0)
+ 		die_errno(_("Could not open '%s' for writing"), filename);
+--=20
+1.7.4.74.g639db
