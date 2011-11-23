@@ -1,37 +1,39 @@
 From: Artem Bityutskiy <dedekind1@gmail.com>
 Subject: [PATCH] git-apply: fix rubbish handling in --check case
-Date: Wed, 23 Nov 2011 18:26:02 +0200
-Message-ID: <1322065563-3651-1-git-send-email-dedekind1@gmail.com>
+Date: Wed, 23 Nov 2011 18:26:03 +0200
+Message-ID: <1322065563-3651-2-git-send-email-dedekind1@gmail.com>
+References: <1322065563-3651-1-git-send-email-dedekind1@gmail.com>
 Cc: Artem Bityutskiy <dedekind1@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 23 17:25:28 2011
+X-From: git-owner@vger.kernel.org Wed Nov 23 17:25:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTFdW-0004E4-Np
+	id 1RTFdX-0004E4-9H
 	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 17:25:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753154Ab1KWQZU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Nov 2011 11:25:20 -0500
+	id S1753485Ab1KWQZW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Nov 2011 11:25:22 -0500
 Received: from mga14.intel.com ([143.182.124.37]:47267 "EHLO mga14.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752645Ab1KWQZT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2011 11:25:19 -0500
+	id S1753008Ab1KWQZU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 11:25:20 -0500
 Received: from azsmga002.ch.intel.com ([10.2.17.35])
-  by azsmga102.ch.intel.com with ESMTP; 23 Nov 2011 08:25:18 -0800
+  by azsmga102.ch.intel.com with ESMTP; 23 Nov 2011 08:25:20 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="4.69,559,1315206000"; 
-   d="scan'208";a="40547020"
+   d="scan'208";a="40547026"
 Received: from sauron.fi.intel.com ([10.237.72.160])
-  by AZSMGA002.ch.intel.com with ESMTP; 23 Nov 2011 08:25:17 -0800
+  by AZSMGA002.ch.intel.com with ESMTP; 23 Nov 2011 08:25:18 -0800
 X-Mailer: git-send-email 1.7.6.4
+In-Reply-To: <1322065563-3651-1-git-send-email-dedekind1@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185853>
 
 From: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
 
