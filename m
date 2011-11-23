@@ -1,98 +1,116 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: git fetch overwriting local tags
-Date: Wed, 23 Nov 2011 17:16:58 -0500
-Message-ID: <20111123221658.GA22313@sigill.intra.peff.net>
-References: <20111123090821.GL19986@pengutronix.de>
+Subject: Re: [PATCH] Fix https interactive authentication problem
+Date: Wed, 23 Nov 2011 17:51:21 -0500
+Message-ID: <20111123225121.GA23357@sigill.intra.peff.net>
+References: <F6A589D6B10801478E0DE246A9EF187C1BD5E8@MBX12.d.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, John Kacur <jkacur@gmail.com>
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Wed Nov 23 23:20:23 2011
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"gitster@pobox.com" <gitster@pobox.com>
+To: Steinmann Ruedi <ruediste@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Nov 23 23:51:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTLB1-0005Zo-0s
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 23:20:23 +0100
+	id 1RTLf7-00027R-C0
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 23:51:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753024Ab1KWWRA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Nov 2011 17:17:00 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49469
+	id S1756482Ab1KWWvY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Nov 2011 17:51:24 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49479
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750882Ab1KWWRA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2011 17:17:00 -0500
-Received: (qmail 7022 invoked by uid 107); 23 Nov 2011 22:17:09 -0000
+	id S1756079Ab1KWWvY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 17:51:24 -0500
+Received: (qmail 7186 invoked by uid 107); 23 Nov 2011 22:51:32 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 23 Nov 2011 17:17:09 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Nov 2011 17:16:58 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 23 Nov 2011 17:51:32 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Nov 2011 17:51:21 -0500
 Content-Disposition: inline
-In-Reply-To: <20111123090821.GL19986@pengutronix.de>
+In-Reply-To: <F6A589D6B10801478E0DE246A9EF187C1BD5E8@MBX12.d.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185883>
 
-On Wed, Nov 23, 2011 at 10:08:21AM +0100, Uwe Kleine-K=C3=B6nig wrote:
+On Wed, Nov 23, 2011 at 07:58:02AM +0000, Steinmann  Ruedi wrote:
 
-> John and I wondered about git fetch overwriting local tags. I was sur=
-e
-> enough to claim that git fetch won't overwrite local tags with remote
-> tags having the same name. But after John pointed me to
->=20
-> 	http://www.pythian.com/news/9067/on-the-perils-of-importing-remote-t=
-ags-in-git/
->=20
-> I tested that (using Debian's 1.7.7.3) and really, git does overwrite
-> local tags.
->=20
-> Here is my test script:
-> [...]
-> 	git fetch --tags ../a
-> [...]
-> Is this intended?
+> Cloning a repository over https works fine when the username/password is
+> given in the URL. But if it is queried interactively, an error occurs(see below).
+> I found that the username/password is not set when a connection is reused.
+> 
+> With this patch, the username/password is set whenever a connection is reused.
+> 
+> Sample output showing the error:
+> 
+> git clone https://n.ethz.ch/student/...
+> Cloning into ...
+> Username:
+> Password:
+> error: Unable to get pack file https://n.ethz.ch/student/.../objects/pack/pack-1ced2ebff0c9fc1f07e0c7cc9dd3fc75f6ac6962.pack
+> The requested URL returned error: 401
+> ...
+> error: Fetch failed.
 
-Sort of.
+Hmm. What version of git are you using?
 
-By default, "git fetch" will "auto-follow" tags; if you fetch a commit
-which is pointed to by a tag, then git will fetch that tag, too. So
-generally, you shouldn't need to specify "--tags" at all, because you
-will already be getting the relevant tags.
+We used to always set up the auth information in get_curl_handle, so all
+handles had any auth information that we already got. But we removed
+that recently in 986bbc0 (http: don't always prompt for password,
+2011-11-04), which is in v1.7.8-rc1 and later.
 
-The "--tags" option, however, is a short-hand for saying "fetch all of
-the tags", and is equivalent to providing the refspec:
+I'm wondering if this was an unintended side effect of that patch.
 
-  git fetch ../a refs/tags/*:refs/tags/*
+Usually git will notice the 401 and retry with credentials (requesting
+them from the user if necessary). That used to not work for all requests
+but I fixed that in 8d677ed (http: retry authentication failures for all
+http requests, 2011-07-18), which is also in v1.7.8-rc*.
 
-Which of course will update your local tags with similarly-named ones
-from the remote.  So in that sense, there is no bug, and it is working
-as intended; the problem is that the author's intent was not the same a=
-s
-your intent. :)
+However, it looks like the packfile-fetching code for dumb http does not
+actually go through the usual http_request method, and does not
+recognize the 401.
 
-I'm not sure why you're using "--tags" in the first place. That might
-help us figure out if there's another way to do what you want that is
-safer.
+So if you are using v1.7.8-rc*, then I think that is the issue. And your
+patch is just undoing what 8d677ed did. But the right fix is to refactor
+the packfile-fetching function on top of the other http-fetching code,
+so it can get the benefit of that logic.
 
-That being said, it would be nice if "--tags" wasn't so surprising.
-Three things that I think could help are:
+If you are using an older version of git (pre-8d677ed), then one guess
+about what is happening is a race condition with setting up multiple
+curl handles:
 
-  1. We usually require a "+" on the refspec (or "--force") to update
-     non-fast-forward branches. But there is no such safety on tags
-     (which generally shouldn't be updated at all). Should we at least
-     be enforcing the same fast-forward rules on tag fetches (or even
-     something more strict, like forbidding tag update at all unless
-     forced)?
+  1. we get curl handle 1 from get_curl_handle, calling
+     init_curl_http_auth. But we have no username in the url, so we
+     assume no credentials are needed.
 
-  2. We don't keep a reflog on tags. Generally there's no point. But
-     it wouldn't be very expensive (since they don't usually change),
-     and could provide a safety mechanism here.
+  2. we get curl handle 2 from get_curl_handle, as above.
 
-  3. Keeping tags from remotes in separate namespaces, but collating
-     them at lookup time. This has been discussed, and I think is
-     generally a fine idea, but nobody has moved forward with code.
+  3. we make a request on handle one, get a 401, and ask for
+     credentials.
+
+  4. we make a request for a packfile on handle 2, but we never copied
+     the auth from step (3) into the curl handle from step (2), and it
+     fails.
+
+(I haven't looked closely at our usage of curl_multi_*, so I am not 100%
+sure that this can even happen. So consider it just a theory).
+
+If this is the case, your fix works because it calls init_curl_http_auth
+more often (i.e., before making any request, not just when we create the
+handle). But that means it is also undoing what 8d677ed did; we will ask
+the user for credentials before actually seeing a 401.
+
+We could still fix this by teaching the packfile-fetching code to
+respect 401s. However, it does incur an unnecessary round-trip (we
+already know from the other request that credentials are required, but
+we don't bother to use them).
+
+So I think the logic you want instead is "if we already have
+credentials, use them with this curl slot, but otherwise don't bother
+the user". Which would mean splitting the prompting bit out of
+init_curl_http_auth.
 
 -Peff
