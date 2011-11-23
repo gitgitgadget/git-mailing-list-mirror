@@ -1,107 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-bisect working only from toplevel dir
-Date: Wed, 23 Nov 2011 12:45:18 -0800
-Message-ID: <7vzkfma7q9.fsf@alter.siamese.dyndns.org>
-References: <20111123145034.GB17927@angband.pl>
- <7vd3cibqqe.fsf@alter.siamese.dyndns.org>
- <20111123192329.GA21630@sigill.intra.peff.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Possible bug with branch names and case sensitivity
+Date: Wed, 23 Nov 2011 21:50:44 +0100
+Message-ID: <CACBZZX4qs8-u33bZbrxYS1CrwjTQc=4YOk2SUjtYzL=vc9KYgA@mail.gmail.com>
+References: <D144F6C9-C6A3-4516-BC88-B9EB50890EF4@bitart.com>
+ <CAG+J_Dz6nK5fPhBRmoojmgYSv5OviN7pfgNKnRy9_9WmDS1_2w@mail.gmail.com>
+ <4ECB315F.4080701@alum.mit.edu> <CAG+J_DxREbykWggrD49L7qvR9M36wKL7+_kOYbvcWmLBCF2Gog@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Adam Borowski <kilobyte@angband.pl>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 23 21:45:28 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Gerd Knops <gerti@bitart.com>, git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 23 21:51:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTJh9-0004O9-85
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 21:45:27 +0100
+	id 1RTJmk-00070a-Uc
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 21:51:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754380Ab1KWUpW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Nov 2011 15:45:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55662 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753120Ab1KWUpV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2011 15:45:21 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B3F856D32;
-	Wed, 23 Nov 2011 15:45:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KtFAYhqxCFE6n96K14E6hj8dWcA=; b=axtJT/
-	57QUlB/Q/xim7H/LWfn7SL+ot5oDFPkBEqWBmRSAgDpAjG6SXqJrmispaprZ0c57
-	pdwK4mpLFcK33PPB2a7OdhJoZ6KqJgZ66RxtDx8mYzFi3EfUr6CTgeswMTCKR/21
-	MAeq5cxVIRg1z6oew6o0BsoCtlixplobAyJQA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cPp0H3fJaoK1Wv/PfMYo9cuQYHgVDrYp
-	C1O6xbddy628+cP6aQqnfZ1yTuROUHgKMmLuos+zQF+Tf6/z0Y1S9jQkLbGyC2Hh
-	TGfqV4k2ZH2PUwWhmlWkKirKJ3zvQ6St7wCwU52ABW08UQRHpjcHCJDkqDHVI/h6
-	cv80h9aDdlg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC7126D31;
-	Wed, 23 Nov 2011 15:45:20 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0F7B36D30; Wed, 23 Nov 2011
- 15:45:19 -0500 (EST)
-In-Reply-To: <20111123192329.GA21630@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 23 Nov 2011 14:23:29 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0EC48126-1614-11E1-B317-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755234Ab1KWUvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Nov 2011 15:51:09 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:54969 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754822Ab1KWUvG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 15:51:06 -0500
+Received: by bke11 with SMTP id 11so2049788bke.19
+        for <git@vger.kernel.org>; Wed, 23 Nov 2011 12:51:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=ANgn+OzdeH9bG6aCR/uQlfJp4xh9bzgbPrhC/cdff7Y=;
+        b=TldiqXQOGxAmTvgawbw8QTMbKzqK1IWYQclZ7fF75S90VowK7GdOf9+TU0wOPx4QlD
+         kz9l4kg/X/Ce5ujjo40RnGATltJ8qMttdc6KoJYvAZIjKYyhB0rOxPOewdj073DnyBHe
+         qdDOX5p7fR4qjmaX4IH4NjEvITgwp4iKVb5pY=
+Received: by 10.205.117.134 with SMTP id fm6mr22175856bkc.93.1322081465160;
+ Wed, 23 Nov 2011 12:51:05 -0800 (PST)
+Received: by 10.204.69.71 with HTTP; Wed, 23 Nov 2011 12:50:44 -0800 (PST)
+In-Reply-To: <CAG+J_DxREbykWggrD49L7qvR9M36wKL7+_kOYbvcWmLBCF2Gog@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185873>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Nov 22, 2011 at 18:31, Jay Soffian <jaysoffian@gmail.com> wrote:
+> I wonder what the downside would be of always using packed refs on
+> case-insenstive file systems. This would seem analogous to how git no
+> longer uses symlinks.
 
-> On Wed, Nov 23, 2011 at 11:09:29AM -0800, Junio C Hamano wrote:
->
->> As to the approach, I suspect that it would be far better if it made
->> workable with cd_to_toplevel at the beginning, instead of saying
->> SUBDIRECTORY_OK.
->> 
->> After all, the current directory may disappear during the course of
->> bisection, upon checking out a revision that did not have the directory
->> you started your bisection from.
->
-> But from what directory would you expect:
->
->   git bisect run make
+Note that Git doesn't only have confusing behavior with refs on
+case-insensitive filesystems. The other day HFS+ users @ work had
+issues because of a case collision in the checked out tree, which
+confused git status et al.
 
-My usual way to enlighten somebody is by forcing him/her to think the
-consequences, but because you did the thinking for the OP in this thread
-instead, it didn't work. Makes me somewhat sad ;-<.
+Note that HFS+ in particular is case-insensitive *but* case
+preserving. E.g.:
 
-> If we cd_to_toplevel, we can remember the prefix that we started from
-> and cd to it before running the user's command, but there is no
-> guarantee that it actually exists. Maybe that commit should be
-> considered indeterminate then?
+    $ touch Foo; perl -wle 'opendir my $d, "."; print while readdir
+$d; -f and print "yes" for qw(foo Foo FOO)'
+    .
+    ..
+    Foo
+    yes
+    yes
+    yes
 
-Yeah that sounds like a reasonable thing to do.
+On case-insensitive and not-case-preserving systems the third line
+would usually print either "foo" or "FOO", but on HFS+ the system
+preserves the original name.
 
-> I dunno. I haven't thought that hard about it. But I don't think it's
-> quite as simple as just telling bisect it's OK to run from a subdir.
-
-Absolutely. Saying SUBDIRECTORY_OK without thinking about the consequence
-through is a good discussion starter but is not a good patch.
-
-Also didn't we make bisect workable in a bare repository recently? So the
-start-up sequence has to be something more elaborate like...
-
-        . git-sh-setup
-        if we are in a bare repository
-        then
-         	: we are happy...nothing funky needs to be done
-	elif we are not in a working tree
-		barf
-	elif we are not at the top
-        	prefix=$(git rev-parse --show-prefix)
-		cd_to_toplevel
-	fi
-
-and then inside bisect_next() you would check if $prefix exists, and go
-there to run bisect--helper (or fail to go there and say "cannot test").
+This means that you can in some cases figure out what's going on by
+doing a readdir() in addition to a stat() as you could do on
+POSIX-compliant systems.
