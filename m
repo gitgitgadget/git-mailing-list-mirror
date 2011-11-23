@@ -1,89 +1,57 @@
-From: Bernd Schubert <bernd.schubert@itwm.fraunhofer.de>
-Subject: Re: svn to git with non-standard layout
-Date: Wed, 23 Nov 2011 22:45:32 +0100
-Message-ID: <4ECD697C.5010109@itwm.fraunhofer.de>
-References: <jajh7m$it7$1@dough.gmane.org> <op.v5e36lxp0aolir@keputer.lokaal>
+From: Joshua Jensen <jjensen@workspacewhiz.com>
+Subject: Re: Possible bug with branch names and case sensitivity
+Date: Wed, 23 Nov 2011 15:08:36 -0700
+Message-ID: <4ECD6EE4.6080702@workspacewhiz.com>
+References: <D144F6C9-C6A3-4516-BC88-B9EB50890EF4@bitart.com> <CAG+J_Dz6nK5fPhBRmoojmgYSv5OviN7pfgNKnRy9_9WmDS1_2w@mail.gmail.com> <4ECB315F.4080701@alum.mit.edu> <CAG+J_DxREbykWggrD49L7qvR9M36wKL7+_kOYbvcWmLBCF2Gog@mail.gmail.com> <CACBZZX4qs8-u33bZbrxYS1CrwjTQc=4YOk2SUjtYzL=vc9KYgA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Frans Klaver <fransklaver@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 23 22:45:43 2011
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Gerd Knops <gerti@bitart.com>, git@vger.kernel.org
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 23 23:07:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTKdQ-0006sG-8j
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 22:45:40 +0100
+	id 1RTKyf-0008Q1-Hk
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 23:07:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756212Ab1KWVpg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Nov 2011 16:45:36 -0500
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:53509 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755929Ab1KWVpf (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Nov 2011 16:45:35 -0500
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 3656C21455
-	for <git@vger.kernel.org>; Wed, 23 Nov 2011 16:45:34 -0500 (EST)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute4.internal (MEProxy); Wed, 23 Nov 2011 16:45:34 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=mcDAX43s2g4Mbamx5Ccp+Z
-	jfCBo=; b=k7Eerbl2De/AQwUDHhyeSk09xx+rkmDntUPKtLVD/Q40Ej0COEOD1/
-	ElenhTL8ut26DAH9pMX98WOBd+OPWxEW+Oe427r6Zk3WiF7pd9gXdfgxKMTsoeGW
-	gJA14bxF3PWVxjWajcLyfLQue8DGwwbcsvB7iAvSzH0SOWquHoYGM=
-X-Sasl-enc: zW99gMFrrdeAU0egxLmWOXGap8Io+dlM/2notmhS1IQw 1322084733
-Received: from [192.168.178.29] (95-89-141-39-dynip.superkabel.de [95.89.141.39])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 9C2678E0102;
-	Wed, 23 Nov 2011 16:45:33 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:7.0.1) Gecko/20111031 Thunderbird/7.0.1
-In-Reply-To: <op.v5e36lxp0aolir@keputer.lokaal>
+	id S1756353Ab1KWWHe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Nov 2011 17:07:34 -0500
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:48016 "EHLO
+	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756343Ab1KWWHd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 17:07:33 -0500
+Received: (qmail 25685 invoked by uid 399); 23 Nov 2011 15:07:27 -0700
+Received: from unknown (HELO ?192.168.1.109?) (jjensen@workspacewhiz.com@67.171.115.152)
+  by hsmail.qwknetllc.com with ESMTPAM; 23 Nov 2011 15:07:27 -0700
+X-Originating-IP: 67.171.115.152
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <CACBZZX4qs8-u33bZbrxYS1CrwjTQc=4YOk2SUjtYzL=vc9KYgA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185881>
 
-On 11/23/2011 10:19 PM, Frans Klaver wrote:
-> On Wed, 23 Nov 2011 20:23:34 +0100, Bernd Schubert
-> <bernd.schubert@itwm.fraunhofer.de> wrote:
+----- Original Message -----
+=46rom: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+Date: 11/23/2011 1:50 PM
 >
->> we just want to migrate from subversion to git, but so far all
->> attempts to do that resulted in missing commit information.
 >
-> What are all attempts? Did you try only git-svn, or did you try tools
-> like svn2git?
+> Note that Git doesn't only have confusing behavior with refs on
+> case-insensitive filesystems. The other day HFS+ users @ work had
+> issues because of a case collision in the checked out tree, which
+> confused git status et al.
+Is core.ignorecase set to true?  Is the repository shared with a case=20
+sensitive file system?
 
-We are trying to do this ever since Monday and it included svn2git as 
-well. The problem with svn2git is that you can provide several tags and 
-branch paths, but only a single trunk path.
+I have a patch sitting around for 'git update-index --add' that fixes=20
+some case insensitivity issues, especially when using Git Gui.  This=20
+patch complements the core.ignorecase patches I sent in the past.
 
->
->
->> Any ideas what I still could try to do?
->
-> If you haven't tried anything other than git-svn, try svneverever &
-> svn2git[1] for an actual repository conversion. Or have a look at the
-> newest kid on the block called SubGit[2][3]. In both I don't have any
-> experience, but of svn2git I know Qt and KDE have used it successfully
-> to convert their repositories.
->
-> I assume both are somewhat more complex to use and set up than to simply
-> use git-svn, but I guess it will be worth the effort.
->
-> Good luck,
-> Frans
->
-> [1] http://techbase.kde.org/Projects/MoveToGit/UsingSvn2Git
-> [2] http://subgit.com/
-> [3] http://thread.gmane.org/gmane.comp.version-control.git/185806
-
-Thanks, I'm going to read about svneverever and SubGit tomorrow. We will 
-also try another tool that can convert an svn dump (once we get a dump, 
-as we don't have easy access to the svn database).
-
-Thanks,
-Bernd
+-Josh
