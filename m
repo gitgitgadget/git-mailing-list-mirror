@@ -1,63 +1,54 @@
-From: Paul Brossier <piem@piem.org>
-Subject: git not resuming push
-Date: Tue, 22 Nov 2011 20:58:56 -0700
-Message-ID: <4ECC6F80.6010907@piem.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git not resuming push
+Date: Wed, 23 Nov 2011 00:02:20 -0500
+Message-ID: <20111123050220.GA9127@sigill.intra.peff.net>
+References: <4ECC6F80.6010907@piem.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 23 05:18:08 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Paul Brossier <piem@piem.org>
+X-From: git-owner@vger.kernel.org Wed Nov 23 06:02:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RT4Hf-0004Fs-JI
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 05:18:07 +0100
+	id 1RT4yh-000689-33
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 06:02:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759647Ab1KWESB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Nov 2011 23:18:01 -0500
-Received: from goyave.piem.org ([213.251.135.79]:49626 "EHLO goyave.piem.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758375Ab1KWESB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2011 23:18:01 -0500
-X-Greylist: delayed 1133 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Nov 2011 23:18:00 EST
-Received: from localhost ([127.0.0.1] helo=groseille.lan)
-	by goyave.piem.org with esmtp (Exim 4.72)
-	(envelope-from <piem@piem.org>)
-	id 1RT3zD-0000ks-NF
-	for git@vger.kernel.org; Wed, 23 Nov 2011 04:59:05 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:8.0) Gecko/20111105 Thunderbird/8.0
+	id S1751311Ab1KWFCX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Nov 2011 00:02:23 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49212
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751288Ab1KWFCW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 00:02:22 -0500
+Received: (qmail 976 invoked by uid 107); 23 Nov 2011 05:02:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 23 Nov 2011 00:02:30 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Nov 2011 00:02:20 -0500
+Content-Disposition: inline
+In-Reply-To: <4ECC6F80.6010907@piem.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185819>
 
-Hi!
+On Tue, Nov 22, 2011 at 08:58:56PM -0700, Paul Brossier wrote:
 
-I'm trying to upload large amount of data from a connection that often
-cuts.
+> If the connection fails after uploading part of the data, it seems I
+> need to start over from zero again. Is there a way to resume the upload
+> instead?
 
-If the connection fails after uploading part of the data, it seems I
-need to start over from zero again. Is there a way to resume the upload
-instead?
+No, there isn't a way to resume just using push.
 
-Here is an example:
+If you have shell access on the server, one workaround you can do is to
+create a bundle with the commits in question, upload it via some
+resumable protocol (like sftp, http, rsync, etc), possibly taking many
+attempts, and then fetch the result on the server side from the bundle
+into the repository.
 
-$ git push
-Counting objects: 504, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (475/475), done.
-Write failed: Broken pipe1/476), 533.78 MiB | 60 KiB/s
-fatal: The remote end hung up unexpectedly
-error: pack-objects died of signal 13
-error: failed to push some refs to 'myhost.org:/git/myrepo/'
+See "git help bundle" for some examples.
 
-$ git push
-Counting objects: 504, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (475/475), done.
-Writing objects:  12% (61/476), 89.34 MiB | 23 KiB/s
-
-Thanks, piem
+-Peff
