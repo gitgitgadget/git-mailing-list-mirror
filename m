@@ -1,95 +1,78 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: git fetch overwriting local tags
-Date: Wed, 23 Nov 2011 10:08:21 +0100
-Message-ID: <20111123090821.GL19986@pengutronix.de>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Possible bug with branch names and case sensitivity
+Date: Wed, 23 Nov 2011 10:22:05 +0100
+Message-ID: <4ECCBB3D.7070204@alum.mit.edu>
+References: <D144F6C9-C6A3-4516-BC88-B9EB50890EF4@bitart.com> <CAG+J_Dz6nK5fPhBRmoojmgYSv5OviN7pfgNKnRy9_9WmDS1_2w@mail.gmail.com> <4ECB315F.4080701@alum.mit.edu> <7vwrasdp3t.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: John Kacur <jkacur@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 23 10:08:32 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jay Soffian <jaysoffian@gmail.com>, Gerd Knops <gerti@bitart.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 23 10:22:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RT8oh-0001eL-0w
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 10:08:31 +0100
+	id 1RT924-0006Vm-2P
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Nov 2011 10:22:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755849Ab1KWJIZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Nov 2011 04:08:25 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:58238 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750864Ab1KWJIX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2011 04:08:23 -0500
-Received: from dude.hi.pengutronix.de ([2001:6f8:1178:2:21e:67ff:fe11:9c5c])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1RT8oY-0002tU-Kj; Wed, 23 Nov 2011 10:08:22 +0100
-Received: from ukl by dude.hi.pengutronix.de with local (Exim 4.77)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1RT8oX-0007kx-Ve; Wed, 23 Nov 2011 10:08:21 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:21e:67ff:fe11:9c5c
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1753673Ab1KWJWN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Nov 2011 04:22:13 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:51613 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753104Ab1KWJWL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 04:22:11 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pAN9M5EA030135
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 23 Nov 2011 10:22:05 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
+In-Reply-To: <7vwrasdp3t.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185833>
 
-Hello,
+On 11/22/2011 06:49 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>> Currently git handles references names case-sensitively and allows
+>> multiple reference names that differ only in case.
+> 
+> We do the same for in-tree paths, by the way.  Ultimately, I think the
+> sane thing to do is to appeal to the user's common sense.  [...common
+> sense aka "if it hurts don't do it" omitted...]
+> 
+> I think refnames have exactly the same issue. In theory, you could have
+> "Master" and "master" branches, and nothing stops you from trying to do
+> so, but in practice, if it is not useful for you and your project, and
+> if it is equally fine to use some other name instead of "Master" for the
+> purpose of you and your project, then there is no strong reason for doing
+> so, unless you are trying to irritate users on case folding platforms.
 
-John and I wondered about git fetch overwriting local tags. I was sure
-enough to claim that git fetch won't overwrite local tags with remote
-tags having the same name. But after John pointed me to
+I agree.
 
-	http://www.pythian.com/news/9067/on-the-perils-of-importing-remote-tag=
-s-in-git/
+But git could nevertheless help users (1) by providing config settings
+or hook scripts or something that could be configured in a repository to
+prevent case-conflicts from entering the project history; (2) by
+emitting an error when such a conflict arises rather than getting so
+confused.
 
-I tested that (using Debian's 1.7.7.3) and really, git does overwrite
-local tags.
+Note that Unicode encoding differences can cause very similar problems
+(even assuming utf8, there can be multiple ways to encode the same
+string) and should maybe be addressed similarly.
 
-Here is my test script:
+By the way, I'm not volunteering for this project; case-sensitive
+ASCII's good enough for me :-)
 
-	mkdir a
-	cd a
-	echo some content > some_file
-	git init=20
-	git add some_file
-	git commit -m 'some commit log'
-	git tag some_tag
+Michael
 
-	cd ..
-
-	mkdir b
-	cd b
-	echo some different content > another_file
-	git init=20
-	git add another_file
-	git commit -m 'another commit log'
-	git tag some_tag
-
-	git fetch --tags ../a
-
-After that I have:
-
-	git log -1 --oneline some_tag
-	c4ad89a some commit log
-
-so b's tag was overwritten.
-
-Is this intended?
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
