@@ -1,94 +1,50 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 13/13] t: add test harness for external credential helpers
-Date: Thu, 24 Nov 2011 06:09:04 -0500
-Message-ID: <20111124110904.GK8417@sigill.intra.peff.net>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH 0/13] credential helpers, take two
+Date: Thu, 24 Nov 2011 12:45:39 +0100
+Message-ID: <CABPQNSaT+4F=EW_agAh_FY0h_ZRgMCzpukdKuvZTdfmz5_Nueg@mail.gmail.com>
 References: <20111124105801.GA6168@sigill.intra.peff.net>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 24 12:09:14 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 24 12:46:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTXB3-0007U7-52
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Nov 2011 12:09:13 +0100
+	id 1RTXl4-0005ga-Ah
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Nov 2011 12:46:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751660Ab1KXLJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Nov 2011 06:09:08 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49657
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751288Ab1KXLJH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Nov 2011 06:09:07 -0500
-Received: (qmail 10413 invoked by uid 107); 24 Nov 2011 11:09:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 Nov 2011 06:09:15 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Nov 2011 06:09:04 -0500
-Content-Disposition: inline
+	id S1752291Ab1KXLqV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Nov 2011 06:46:21 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:52472 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752151Ab1KXLqV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Nov 2011 06:46:21 -0500
+Received: by ggnr5 with SMTP id r5so2455859ggn.19
+        for <git@vger.kernel.org>; Thu, 24 Nov 2011 03:46:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=tXIT3yOyyVoLHuohWx9J41YDOT1qoYIvIHvLe9owsTQ=;
+        b=Tk3h+pwTkm4eFFlyMRT3Sv6WfUJAS84duXXnXHfH6AEE+QG23HHSNnpPLm2gdNi7uz
+         W6ZE9+O6kv2Y0foX+uBWnWv23mvLMolqkiXA5ry9KYdayDbRyq9imuV/u8MSmIYyrOCU
+         GKxx+eKPf2OF2zec7OUbXwHuHbA2UfyrUCGU8=
+Received: by 10.68.23.226 with SMTP id p2mr3060359pbf.122.1322135180041; Thu,
+ 24 Nov 2011 03:46:20 -0800 (PST)
+Received: by 10.68.21.39 with HTTP; Thu, 24 Nov 2011 03:45:39 -0800 (PST)
 In-Reply-To: <20111124105801.GA6168@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185909>
 
-We already have tests for the internal helpers, but it's
-nice to give authors of external tools an easy way to
-sanity-check their helpers.
+On Thu, Nov 24, 2011 at 11:58 AM, Jeff King <peff@peff.net> wrote:
+> Here's a revised version of the http-auth / credential-helper series.
+>
 
-If you have written the "git-credential-foo" helper, you can
-do so with:
-
-  GIT_TEST_CREDENTIAL_HELPER=foo \
-  make t0303-credential-external.sh
-
-This assumes that your helper is capable of both storing and
-retrieving credentials (some helpers may be read-only, and
-they will fail these tests).
-
-If your helper supports time-based expiration with a
-configurable timeout, you can test that feature like this:
-
-  GIT_TEST_CREDENTIAL_HELPER_TIMEOUT="foo --timeout=1" \
-  make t0303-credential-external.sh
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I haven't tried porting or testing any of the older helpers to the new
-interface. So this script has only been lightly tested with:
-
-  GIT_TEST_CREDENTIAL_HELPER=cache
-
- t/t0303-credential-external.sh |   19 +++++++++++++++++++
- 1 files changed, 19 insertions(+), 0 deletions(-)
- create mode 100755 t/t0303-credential-external.sh
-
-diff --git a/t/t0303-credential-external.sh b/t/t0303-credential-external.sh
-new file mode 100755
-index 0000000..f3953d4
---- /dev/null
-+++ b/t/t0303-credential-external.sh
-@@ -0,0 +1,19 @@
-+#!/bin/sh
-+
-+test_description='external credential helper tests'
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-credential.sh
-+
-+if test -z "$GIT_TEST_CREDENTIAL_HELPER"; then
-+	say "# skipping external helper tests (set GIT_TEST_CREDENTIAL_HELPER)"
-+else
-+	helper_test "$GIT_TEST_CREDENTIAL_HELPER"
-+fi
-+
-+if test -z "$GIT_TEST_CREDENTIAL_HELPER_TIMEOUT"; then
-+	say "# skipping external helper timeout tests"
-+else
-+	helper_test_timeout "$GIT_TEST_CREDENTIAL_HELPER_TIMEOUT"
-+fi
-+
-+test_done
--- 
-1.7.7.4.5.gb32a5
+Nice. Do you have the branch somewhere public I can pull it from?
