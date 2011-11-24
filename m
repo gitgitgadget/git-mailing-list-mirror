@@ -1,109 +1,156 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: git-bisect working only from toplevel dir
-Date: Thu, 24 Nov 2011 08:06:59 +0100
-Message-ID: <20111124070659.GC6291@m62s10.vlinux.de>
-References: <20111123145034.GB17927@angband.pl>
- <7vd3cibqqe.fsf@alter.siamese.dyndns.org>
- <20111123192329.GA21630@sigill.intra.peff.net>
- <7vzkfma7q9.fsf@alter.siamese.dyndns.org>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: git fetch overwriting local tags
+Date: Thu, 24 Nov 2011 08:07:28 +0100
+Message-ID: <20111124070728.GR19986@pengutronix.de>
+References: <20111123090821.GL19986@pengutronix.de>
+ <20111123221658.GA22313@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Adam Borowski <kilobyte@angband.pl>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 24 08:07:14 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, John Kacur <jkacur@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 24 08:07:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTTOs-0006By-EE
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Nov 2011 08:07:14 +0100
+	id 1RTTPD-0006H8-2J
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Nov 2011 08:07:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752017Ab1KXHHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Nov 2011 02:07:06 -0500
-Received: from mailout-de.gmx.net ([213.165.64.23]:43580 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1750987Ab1KXHHF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Nov 2011 02:07:05 -0500
-Received: (qmail invoked by alias); 24 Nov 2011 07:07:02 -0000
-Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
-  by mail.gmx.net (mp013) with SMTP; 24 Nov 2011 08:07:02 +0100
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX192dOsObfB2XH5XYie7hoxuhp1TwXwXd991+dq9D0
-	QExHAaogX8fql7
-Received: by m62s10.vlinux.de (Postfix, from userid 1000)
-	id E034ED4003; Thu, 24 Nov 2011 08:06:59 +0100 (CET)
+	id S1752192Ab1KXHHa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Nov 2011 02:07:30 -0500
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:46706 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751230Ab1KXHHa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Nov 2011 02:07:30 -0500
+Received: from dude.hi.pengutronix.de ([2001:6f8:1178:2:21e:67ff:fe11:9c5c])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1RTTP6-0006kq-Vy; Thu, 24 Nov 2011 08:07:28 +0100
+Received: from ukl by dude.hi.pengutronix.de with local (Exim 4.77)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1RTTP6-0005Qt-1a; Thu, 24 Nov 2011 08:07:28 +0100
 Content-Disposition: inline
-In-Reply-To: <7vzkfma7q9.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
+In-Reply-To: <20111123221658.GA22313@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:21e:67ff:fe11:9c5c
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185892>
 
-On Wed, Nov 23, 2011 at 12:45:18PM -0800, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Wed, Nov 23, 2011 at 11:09:29AM -0800, Junio C Hamano wrote:
-> >
-> >> As to the approach, I suspect that it would be far better if it made
-> >> workable with cd_to_toplevel at the beginning, instead of saying
-> >> SUBDIRECTORY_OK.
-> >> 
-> >> After all, the current directory may disappear during the course of
-> >> bisection, upon checking out a revision that did not have the directory
-> >> you started your bisection from.
-> >
-> > But from what directory would you expect:
-> >
-> >   git bisect run make
-> 
-> My usual way to enlighten somebody is by forcing him/her to think the
-> consequences, but because you did the thinking for the OP in this thread
-> instead, it didn't work. Makes me somewhat sad ;-<.
-> 
-> > If we cd_to_toplevel, we can remember the prefix that we started from
-> > and cd to it before running the user's command, but there is no
-> > guarantee that it actually exists. Maybe that commit should be
-> > considered indeterminate then?
-> 
-> Yeah that sounds like a reasonable thing to do.
-> 
-> > I dunno. I haven't thought that hard about it. But I don't think it's
-> > quite as simple as just telling bisect it's OK to run from a subdir.
-> 
-> Absolutely. Saying SUBDIRECTORY_OK without thinking about the consequence
-> through is a good discussion starter but is not a good patch.
-> 
-> Also didn't we make bisect workable in a bare repository recently? So the
-> start-up sequence has to be something more elaborate like...
-> 
->         . git-sh-setup
->         if we are in a bare repository
->         then
->          	: we are happy...nothing funky needs to be done
-> 	elif we are not in a working tree
-> 		barf
-> 	elif we are not at the top
->         	prefix=$(git rev-parse --show-prefix)
-> 		cd_to_toplevel
-> 	fi
-> 
-> and then inside bisect_next() you would check if $prefix exists, and go
-> there to run bisect--helper (or fail to go there and say "cannot test").
-> 
+Hi Jeff,
 
-But is the "cannot test" aka exit(127) the best we can do in this case?
-I think having a failing make, because someone has checked in code which doesn't
-even compile, is something totally different than having no Makefile at all,
-because the directory doesn't even exist. To me, this seems more like an error
-in the run script to not handle all the cases of the (dis)appearing directory.
+On Wed, Nov 23, 2011 at 05:16:58PM -0500, Jeff King wrote:
+> On Wed, Nov 23, 2011 at 10:08:21AM +0100, Uwe Kleine-K=F6nig wrote:
+>=20
+> > John and I wondered about git fetch overwriting local tags. I was s=
+ure
+> > enough to claim that git fetch won't overwrite local tags with remo=
+te
+> > tags having the same name. But after John pointed me to
+> >=20
+> > 	http://www.pythian.com/news/9067/on-the-perils-of-importing-remote=
+-tags-in-git/
+> >=20
+> > I tested that (using Debian's 1.7.7.3) and really, git does overwri=
+te
+> > local tags.
+> >=20
+> > Here is my test script:
+> > [...]
+> > 	git fetch --tags ../a
+> > [...]
+> > Is this intended?
+>=20
+> Sort of.
+>=20
+> By default, "git fetch" will "auto-follow" tags; if you fetch a commi=
+t
+> which is pointed to by a tag, then git will fetch that tag, too. So
+> generally, you shouldn't need to specify "--tags" at all, because you
+> will already be getting the relevant tags.
+Hmm, if I do:
 
-On the other hand we don't waste much time trying to test such an "untestable"
-commit, because this check will be fast because no compiling is involved.
-The only time wasted will bethe build time for the "usable" commits and the
-time the user needs to figure out why the heck some(/most?) of his commits
-are "untestable".
+        mkdir a
+        cd a
+        echo some content > some_file
+        git init
+        git add some_file
+        git commit -m 'some commit log'
+        git tag some_tag
+
+        cd ..
+
+        mkdir b
+        cd b
+        echo some different content > another_file
+        git init
+        git add another_file
+        git commit -m 'another commit log'
+
+	git fetch ../a
+
+I don't get the tag. That's why I added --tags. I guess that's because
+some_tag is a lightweight tag. Hmm, but even if I change the command to
+create the tag to
+
+	git tag -a -m 'tag desc' some_tag
+
+I don't get it without --tags?!
+
+> The "--tags" option, however, is a short-hand for saying "fetch all o=
+f
+> the tags", and is equivalent to providing the refspec:
+>=20
+>   git fetch ../a refs/tags/*:refs/tags/*
+>=20
+> Which of course will update your local tags with similarly-named ones
+> from the remote.  So in that sense, there is no bug, and it is workin=
+g
+> as intended; the problem is that the author's intent was not the same=
+ as
+> your intent. :)
+>=20
+> I'm not sure why you're using "--tags" in the first place. That might
+> help us figure out if there's another way to do what you want that is
+> safer.
+>=20
+> That being said, it would be nice if "--tags" wasn't so surprising.
+> Three things that I think could help are:
+>=20
+>   1. We usually require a "+" on the refspec (or "--force") to update
+>      non-fast-forward branches. But there is no such safety on tags
+>      (which generally shouldn't be updated at all). Should we at leas=
+t
+>      be enforcing the same fast-forward rules on tag fetches (or even
+>      something more strict, like forbidding tag update at all unless
+>      forced)?
+That sounds fine for me.
+
+>   2. We don't keep a reflog on tags. Generally there's no point. But
+>      it wouldn't be very expensive (since they don't usually change),
+>      and could provide a safety mechanism here.
+I prefer 1, but that would be better than the current situation at
+least.
+=20
+>   3. Keeping tags from remotes in separate namespaces, but collating
+>      them at lookup time. This has been discussed, and I think is
+>      generally a fine idea, but nobody has moved forward with code.
+That's something that John said in our discussion, too. That's the
+suggestion I like the most.
+
+Best regards and thanks for your time,
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
