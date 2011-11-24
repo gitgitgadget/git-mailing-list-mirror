@@ -1,92 +1,57 @@
-From: Philippe Vaucher <philippe.vaucher@gmail.com>
-Subject: Re: Proposal: create meaningful aliases for git reset's hard/soft/mixed
-Date: Thu, 24 Nov 2011 00:00:38 +0100
-Message-ID: <CAGK7Mr5nQoubAw11KDj4WKwQnXrfgteKbMj2=AR-HhsGKi52wQ@mail.gmail.com>
-References: <CAGK7Mr4GZq5eXn4OB+B0ZborX-OVoXiWU8Lo1XM5LRZDuRe1YA@mail.gmail.com>
- <7vlir6brjw.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Revisiting metadata storage
+Date: Wed, 23 Nov 2011 19:10:23 -0600
+Message-ID: <20111124011022.GA14842@elie.hsd1.il.comcast.net>
+References: <CAD77+gQB+0zJG62jrtPn_MwLLR7zgH=5gBtkvPxrKgiLPZsbsw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 24 00:01:17 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Joey Hess <joey@kitenet.net>,
+	David Barr <davidbarr@google.com>
+To: Richard Hartmann <richih.mailinglist@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 24 02:10:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTLoa-0006V0-VZ
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Nov 2011 00:01:17 +0100
+	id 1RTNpm-0004Q7-FZ
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Nov 2011 02:10:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755162Ab1KWXBM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Nov 2011 18:01:12 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:51599 "EHLO
+	id S1752268Ab1KXBKd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Nov 2011 20:10:33 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:59481 "EHLO
 	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752023Ab1KWXBM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Nov 2011 18:01:12 -0500
-Received: by yenq3 with SMTP id q3so1938625yen.19
-        for <git@vger.kernel.org>; Wed, 23 Nov 2011 15:01:11 -0800 (PST)
+	with ESMTP id S1751827Ab1KXBKc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2011 20:10:32 -0500
+Received: by yenq3 with SMTP id q3so2025577yen.19
+        for <git@vger.kernel.org>; Wed, 23 Nov 2011 17:10:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=xjmgiZoAfTh91EPKt/WYT0LfIwUIZU3zQ5Z+CHpskAk=;
-        b=Vq9OO/t9oL5Rk+42caHMP297jTSPBOzxBI5l9XG9A/4dl7CWggfbK88zDAV2gspua5
-         bH5N3/wnoAFhz1kDzvUco1DtH2Xe3rf4RSz0Vp+JyFQFyu2AhDDNTLVuwygpdbcJBNQi
-         SyBmVvX0TIVP/3ZWB+47rZc7SnHOm0smZ0HjM=
-Received: by 10.50.47.201 with SMTP id f9mr29617471ign.18.1322089270987; Wed,
- 23 Nov 2011 15:01:10 -0800 (PST)
-Received: by 10.50.195.199 with HTTP; Wed, 23 Nov 2011 15:00:38 -0800 (PST)
-In-Reply-To: <7vlir6brjw.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=i+L27mnoVWaVKsYSvet8HAFfCvfgdJ0BeKzbPRo8q2I=;
+        b=lbIJZxkqP2CKAELsairq0juGSkziEc0DfGjyVGG/zDLislABbSM8w6v1Byj1fKMxqz
+         rEQyEKFucXB62tkl4wTcZNn6QQAl7VLpcCAJfeNNmthVA7iYEOQzPkD3Fv7Zlon89Zjf
+         bGVXANaj3zzAFLlFm6rc9fCaW3xfnIxDHRS9o=
+Received: by 10.236.190.40 with SMTP id d28mr38823232yhn.92.1322097032291;
+        Wed, 23 Nov 2011 17:10:32 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id c10sm27938468yhj.2.2011.11.23.17.10.31
+        (version=SSLv3 cipher=OTHER);
+        Wed, 23 Nov 2011 17:10:31 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CAD77+gQB+0zJG62jrtPn_MwLLR7zgH=5gBtkvPxrKgiLPZsbsw@mail.gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185886>
 
->> "I want to discard my changes" --> git reset --all HEAD^
->
-> That is discarding your changes and also the last commit.
+Richard Hartmann wrote:
 
-Yes, of course.
+> To make a long story short: Does anyone have a working solution,
+> today?
 
-
->> "I want to discard the last commit" --> git reset --index HEAD^
->
-> I do not think this has a clear meaning. "discard the last commit but
-> leave the contents in the working tree. I do not care a newly added f=
-iles
-> are forgotten by the index, I'll remember to re-add them if I need to=
-" is
-> what you are saying here, but the word "index" does not hint it. =A0W=
-hen
-> used as an option name, "--index" means "this command usually works o=
-n or
-> touches working tree but for this invocation please also affect the i=
-ndex";
-> "please look at or affect _only_ the index" is usually spelled "--cac=
-hed".
-
-Well, it's certainly a bit more descriptive and easy to remember than
-"--mixed". I understand it could confuse people because of the other
-commands, but maybe something like "--index-only"?
-
-
-> In any case, I think your proposal makes it even worse than the curre=
-nt
-> state, and you should aim higher.
-
-Why worse? I'd understand if you said it's doesn't improve it enough
-for it to be worth the change tho.
-Anyway, my proposal was to get a discussion going, and I'm all for
-aiming higher if there's a way. What do you propose instead? You
-seemed to imply we'd remove --soft and --merge, and make --keep as an
-option for --hard but named differently, something like
---keep-changes. Maybe I didn't fully understand.
-
-Mathieu even suggested that it'd have the behavior of --keep by
-default, and that you have to add --force to get today's --hard
-behavior, which sounds like a good idea to me (avoid destructive
-behavior by default).
-
-Philippe
+Sure.  etckeeper handles metadata such as owner and permissions
+reasonably well.
