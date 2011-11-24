@@ -1,64 +1,66 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] make git-svn resilient to log.abbrevcommit = true
-Date: Thu, 24 Nov 2011 14:11:05 +0100
-Message-ID: <201111241411.05655.trast@student.ethz.ch>
-References: <3A78B8F7-803C-4278-8B5F-4A1B02C9FF04@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 12/13] credentials: add "store" helper
+Date: Thu, 24 Nov 2011 09:29:36 -0500
+Message-ID: <CAPig+cQ_eP0wG=AFB0rt-SueW-XxrFXKYAXr+4PneYC-dciyuw@mail.gmail.com>
+References: <20111124105801.GA6168@sigill.intra.peff.net>
+	<20111124110756.GJ8417@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>
-To: Shahid Alam <shahid.alam@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 24 14:11:17 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 24 15:29:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTZ5A-0008C5-Oh
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Nov 2011 14:11:17 +0100
+	id 1RTaJ4-0001Cm-Tp
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Nov 2011 15:29:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755871Ab1KXNLL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Nov 2011 08:11:11 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:20627 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753024Ab1KXNLK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Nov 2011 08:11:10 -0500
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.339.1; Thu, 24 Nov
- 2011 14:11:02 +0100
-Received: from thomas.inf.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.339.1; Thu, 24 Nov
- 2011 14:11:06 +0100
-User-Agent: KMail/1.13.7 (Linux/3.1.0-47-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <3A78B8F7-803C-4278-8B5F-4A1B02C9FF04@gmail.com>
-X-Originating-IP: [129.132.153.233]
+	id S1752781Ab1KXO3h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Nov 2011 09:29:37 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:48908 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752719Ab1KXO3h (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Nov 2011 09:29:37 -0500
+Received: by iage36 with SMTP id e36so3061121iag.19
+        for <git@vger.kernel.org>; Thu, 24 Nov 2011 06:29:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=X82NtYRFbwHbB2+1fPI3ktwOcJN/NFrj40aR61sk6kg=;
+        b=XRsFt/M+Rh31euP3ioYw1ppd1gAREfbB4zAliwasWT7GSUiju+er6RgMjs95u747a7
+         DZxgEubNZ1TUCz4bF1xUaCYmgtyoY9VDIHt0wvSZNdERy2W8WJrWWA7bDzBhfFGoLwdY
+         p5QSB/eedUpq0GO+ETYepb/YSGJ3RMIRQI1Vs=
+Received: by 10.50.85.129 with SMTP id h1mr33081310igz.47.1322144976628; Thu,
+ 24 Nov 2011 06:29:36 -0800 (PST)
+Received: by 10.231.105.1 with HTTP; Thu, 24 Nov 2011 06:29:36 -0800 (PST)
+In-Reply-To: <20111124110756.GJ8417@sigill.intra.peff.net>
+X-Google-Sender-Auth: U0i9xrYs9L8t5V45Z56GYrI4fRg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185914>
 
-[add Eric to Cc]
+On Thu, Nov 24, 2011 at 6:07 AM, Jeff King <peff@peff.net> wrote:
+> diff --git a/Documentation/git-credential-store.txt b/Documentation/git-credential-store.txt
+> new file mode 100644
+> index 0000000..3dcffbd
+> --- /dev/null
+> +++ b/Documentation/git-credential-store.txt
+> @@ -0,0 +1,75 @@
+> [snip]
+> +The `.git-credentials` file is stored in plaintext. Each credential is
+> +stored on its own line as a URL like:
+> +
+> +------------------------------
+> +https://user:pass@example.com
+> +------------------------------
+> +
+> +When git needs authentication for a particular context URL context,
 
-Shahid Alam wrote:
-> Add --no-abbrev-commit arg to working_head_Info()'s invocation
-> of git log.
-[...]
-> @@ -1803,7 +1803,7 @@ sub cmt_sha2rev_batch {
-> sub working_head_info {
-> 	my ($head, $refs) = @_;
-> 	my @args = qw/log --no-color --no-decorate --first-parent
-> -	              --pretty=medium/;
-> +	              --no-abbrev-commit --pretty=medium/;
+"context URL context"?
 
-Undeniably a bug, but to prevent the same from happening again,
-wouldn't it be better to rewrite it using simply
-
-  rev-list --first-parent --pretty=medium
-
-?
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+-- ES
