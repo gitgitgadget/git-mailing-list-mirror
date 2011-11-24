@@ -1,145 +1,101 @@
-From: "Desmond William" <gjabaay771@aol.com>
-Subject: Let Us Work Together.
-Date: Thu, 24 Nov 2011 02:23:17 -0800
-Message-ID: <201111241025.pAOAP548017485@imr-db01.mx.aol.com>
-Reply-To: <deswilliamsp2@yahoo.co.jp>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/13] credential helpers, take two
+Date: Thu, 24 Nov 2011 05:58:02 -0500
+Message-ID: <20111124105801.GA6168@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="----=_NextPart_000_00EC_01C2A9A6.161F4212"
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Thu Nov 24 11:25:55 2011
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 24 11:58:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTWV8-0006UN-VX
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Nov 2011 11:25:55 +0100
+	id 1RTX0Q-0002ag-Ff
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Nov 2011 11:58:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755693Ab1KXKZu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Nov 2011 05:25:50 -0500
-Received: from imr-db01.mx.aol.com ([205.188.91.95]:32834 "EHLO
-	imr-db01.mx.aol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755026Ab1KXKZt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Nov 2011 05:25:49 -0500
-Received: from mtaout-da01.r1000.mx.aol.com (mtaout-da01.r1000.mx.aol.com [172.29.51.129])
-	by imr-db01.mx.aol.com (8.14.1/8.14.1) with ESMTP id pAOAP548017485;
-	Thu, 24 Nov 2011 05:25:05 -0500
-Received: from omh-db01.r1000.mx.aol.com (omh-db01.r1000.mx.aol.com [172.29.167.234])
-	by mtaout-da01.r1000.mx.aol.com (MUA/Third Party Client Interface) with ESMTP id 065DEE0001E5;
-	Thu, 24 Nov 2011 05:25:04 -0500 (EST)
-Received: from mtaout-da03.r1000.mx.aol.com (mtaout-da03.r1000.mx.aol.com [172.29.51.131])
-	by omh-db01.r1000.mx.aol.com (AOL Outbound Holding Interface) with ESMTP id C9DE1E0001DC;
-	Thu, 24 Nov 2011 05:23:18 -0500 (EST)
-Received: from User (c-174-59-20-121.hsd1.pa.comcast.net [174.59.20.121])
-	by mtaout-da03.r1000.mx.aol.com (MUA/Third Party Client Interface) with ESMTPA id 965CBE0000A2;
-	Thu, 24 Nov 2011 05:23:14 -0500 (EST)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-X-AOL-VSS-INFO: 5400.1158/76356
-X-AOL-VSS-CODE: clean
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mx.aol.com;
-	s=20110426; t=1322130198;
-	bh=8kMlHOgQsT7L5n0KJRJx+c4fX7BTzaF9nzlPJkq7ixY=;
-	h=From:Subject:Date:MIME-Version:Content-Type;
-	b=nnLRKa85Q7MxNHoq/3yKLWecoXePtLzOXTETgbvt2+HXreYzMFs8hIxcRzVOt5BZr
-	 lmqaJpidEzLKHlOi8freKGyjx8ClKRNwjtyNoBs7b7pxZya4uy224ZOJeJvkz+UMFm
-	 tQLH5FBOAyzMSr9A77XN8cP2KvD98oLxbzsG6Lg4=
-X-AOL-SCOLL-SCORE: 0:2:279140480:93952408  
-X-AOL-SCOLL-URL_COUNT: 0  
-x-aol-global-disposition: G
-X-AOL-VSS-INFO: 5400.1158/76356
-X-AOL-VSS-CODE: clean
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mx.aol.com;
-	s=20110426; t=1322130305;
-	bh=8kMlHOgQsT7L5n0KJRJx+c4fX7BTzaF9nzlPJkq7ixY=;
-	h=From:Subject:Date:MIME-Version:Content-Type;
-	b=nzw5yCz0bCFxdz1d0JDpGbIMCqCeTtMMKyYoBjStYPJ+szKAPbBdlKJbSV+eEWZOJ
-	 xFWAY5Ct6Tt4Zo9MeCC6gCt6vUDKBWvYA8HGIpXkrq9qqUmfeXI0OSMT9SyynXNd6h
-	 vob2UZKt6MQAPbkw43j4Duo30suxP1cFKd9UEHFM=
-X-AOL-SCOLL-SCORE: 0:2:195013488:93952408  
-X-AOL-SCOLL-URL_COUNT: 0  
-x-aol-sid: 3039ac1d33814ece1b8010e2
+	id S1755845Ab1KXK6I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Nov 2011 05:58:08 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49628
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752227Ab1KXK6H (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Nov 2011 05:58:07 -0500
+Received: (qmail 9965 invoked by uid 107); 24 Nov 2011 10:58:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 Nov 2011 05:58:14 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Nov 2011 05:58:02 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 7.0 points;
- *  1.7 SARE_CSBIG BODY: Only Spicy food gives me an Explosive Gain.
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5000]
- *  0.6 RCVD_IN_SORBS_WEB RBL: SORBS: sender is a abuseable web server
- *      [174.59.20.121 listed in dnsbl.sorbs.net]
- *  0.8 MSGID_FROM_MTA_HEADER Message-Id was added by a relay
- *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
- *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185895>
 
-This is a multi-part message in MIME format.
+Here's a revised version of the http-auth / credential-helper series.
 
-------=_NextPart_000_00EC_01C2A9A6.161F4212
-Content-Type: text/plain;
-	charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
+It has the same basic premise as the first series (git contacts external
+programs to access secure storage, thus enabling secure password
+caching), but there are a number of tweaks in the implementation.
 
-I bring to your notice vital business that will yield huge gains.... It will be yielding if you read the attached file and reply 
+The main departures are:
 
-------=_NextPart_000_00EC_01C2A9A6.161F4212
-Content-Type: application/octet-stream;
-	name="contract.awrd.rtf"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
-	filename="contract.awrd.rtf"
+  1. Helpers now _only_ act as storage; they never ask for credentials
+     directly from the user.  This makes writing them much simpler.
 
-Q29udHJhY3QgQXdhcmRpbmcgY29tbWl0dGVlIEFiaWRqYW4gQ290ZSBEYCBJ
-dm9pcmUNCkdyZWV0aW5ncywNCg0KUGxlYXNlIGFsbG93IG1lIHRvIGludGlt
-YXRlIHlvdSB3aXRoIGEgYnVzaW5lc3MgdHJhbnNhY3Rpb24gdGhhdCB3b3Vs
-ZCBiZW5lZml0IGJvdGggb2YgdXMuIE15IG5hbWUgaXMgRHIgRGVzbW9uZCBX
-aWxsaWFtcywgSSBhbSB0aGUgZGlyZWN0b3Igb2YgdGhlIHByb2plY3QgYW5k
-IGVuZ2luZWVyaW5nIGRpdmlzaW9uIG9mIFNPREVDSSAoU29jaT90PyBkZSBk
-aXN0cmlidXRpb24gZCdlYXUgZGUgQz90ZSBkJ0l2b2lyZSkuIEkgd2lsbCB3
-YW50IHlvdSB0byBhc3Npc3QgbWUgaW4gdGhlIGNsYWltIGFuZCB0cmFuc2Zl
-ciBvZiAkMjUgTWlsbGlvbiBVbml0ZWQgU3RhdGVzIG9mIEFtZXJpY2FuIERv
-bGxhcnMuDQogDQpUaGlzIGFtb3VudCB3YXMgcmVhbGl6ZWQgZnJvbSBvdmVy
-LWludm9pY2VkIGNvbnRyYWN0IGFtb3VudCBhd2FyZGVkIGJ5IHVzIGluIDIw
-MDcgdG8gZXhwYXRyaWF0ZSBjb21wYW5pZXMuIFRoZSBDb250cmFjdCdzIEFt
-b3VudCB3YXMgZGVsaWJlcmF0ZWx5IG92ZXJlc3RpbWF0ZWQgdG8gcmVhZCBt
-b3JlIHRoYW4gdGhlIGFjdHVhbCBjb3N0IG9mIHRoZSBwcm9qZWN0IHRodXMg
-bGVhdmluZyBhIHN1cnBsdXMgb2YgJDI1IE1pbGxpb24gVW5pdGVkIFN0YXRl
-cyBvZiBBbWVyaWNhbiBEb2xsYXJzLiBIb3dldmVyLCBhcyBhIGhlYWQgc3Rh
-ZmYgb2YgU09ERUNJLCBJIGNhbm5vdCBjbGFpbSB0aGlzIG1vbmV5IHdpdGhv
-dXQgYSBmb3JlaWduIHBhcnRuZXIgd2hvIHdpbGwgYWN0IGFzIHRoZSBjb250
-cmFjdG9yLCBlbnRpdGxlZCB0byByZWNlaXZlIHRoZSBmdW5kcyBhcyBoaXMg
-b3V0c3RhbmRpbmcgQ29udHJhY3QgcGF5bWVudC4gQXMgSSB3YW50IHRvIHVz
-ZSB1bWJyZWxsYSBvZiB5b3VyIGNvbXBhbnkgaW4gdGhlIG5hbWUgb2YgdGhl
-IG9yaWdpbmFsIGNvbnRyYWN0b3IgdG8gY2xhaW0gdGhpcyBmdW5kLCB0aGUg
-b3JpZ2luYWwgY29udHJhY3RvciBoYXMgcmVjZWl2ZWQgaGlzIGNvbXBsZXRl
-IHBheW1lbnQgbGVhdmluZyBvdmVyIGludm9pY2UgYnV0IGFzIHBvbGl0aWNh
-bCB3YXIgY29udGludWUgaW4gQz90ZSBkJ0l2b2lyZSwgd2hpY2ggZGVsYXlz
-IHRoaXMgcGF5bWVudC4NCiANCkZyYW5jZSBhbmQgVU4gcmVjb2duaXplZCAg
-RWxlY3RlZCBQcmVzaWRlbnQgb2YgQ290ZSBkYEl2b2lyZSAgQWxhc3NhbmUg
-T3VhdHRhcmEgYXBwb2ludGVkIHByaW1lIE1pbnN0ZXIgZm9ybWFsIHJlYmVs
-IGxlYWRlciBzZWNyZXRhcnkgTXIuIFNPTE8gR1VJTExBVU1FIHdobyBoYXMg
-ZGVjaWRlZCB0byBwYXkgb2ZmIGFsbCBvdXRzdGFuZGluZyBjb250cmFjdCBk
-ZWJ0cyB0byByZWRlZW0gYmFjayB0aGUgaW1hZ2Ugb2YgdGhlIGNvdW50cnku
-IEZvbGxvd2luZyB0aGUgc3VmZmVyZWQgYnkgY29tcGFuaWVzIGFuZCBjb250
-cmFjdG9yIGhlcmUgaXMgQWJpZGphbiBDP3RlIGQnSXZvaXJlIHdoaWxlIHdh
-aXRpbmcgdGhlaXIgcGF5bWVudHMsIGF2YWlsYWJsZSBub3cgdmlhIENvdGUg
-RGBJdm9pcmUgR292ZXJubWVudCBhY2NyZWRpdGVkIHBheWluZyBiYW5rcyBD
-aXR5IEJhbmsgR3JvdXAgVmlhIEFmcmljYW4gRGV2ZWxvcG1lbnQgQmFuay4g
-U2VxdWVsIHRvIHRoaXMgSSBuZWVkIHlvdXIgQ29tcGFueSBsZXR0ZXIgaGVh
-ZGVkIHBhcGVyIHdpdGggYWRkcmVzcyBvbmx5IGZvciB1cyB0byBwcm9jZWVk
-Lg0KIA0KUGxlYXNlIHNob3cgbWUgeW91ciB3aWxsaW5nIHRvIGFzc2lzdCBt
-ZSBpbiB0aGlzIHRyYW5zYWN0aW9uIGJ5IGdldHRpbmcgYmFjayB0byBtZSBz
-byBJIGNhbiBnaXZlIHlvdSBmdXJ0aGVyIGRldGFpbHMgYWJvdXQgdGhpcyB0
-cmFuc2FjdGlvbi4gSSBhbSB3aWxsaW5nIHRvIGdpdmUgeW91IDI1JSBvZiB0
-aGUgdG90YWwgYW1vdW50IGFmdGVyIHRoZSB0cmFuc2ZlciwgdGhlIHJlc3Qg
-d2lsbCBiZSBoZWxkIGFuZCByZWxlYXNlZCB0byBtZSB3aGVuIEkgZ2V0IHRv
-IHlvdXIgY291bnRyeS4gSWBtIGxvb2sgZm9yd2FyZCB0byBoZWFyIGZyb20g
-eW91Lg0KIA0KUmVnYXJkcw0KRHIgRGVzbW9uZCBXaWxsaWFtcw0KVGVsZXBo
-b25lICgrMjI1MDQyMDI5MjYpDQpkZXN3aWxsaWFtc3AxQHlhaG9vLmNvLmpw
-DQo=
+     It also means that "askpass" remains the only way to get input from
+     the user. However, I've left room in the helper protocol to add an
+     "ask" action. If people really want something like a classy
+     username/password dialog from the helpers, it will be easy to add.
 
-------=_NextPart_000_00EC_01C2A9A6.161F4212--
+  2. The helper protocol now happens completely over pipes. In the first
+     round, we gave information to helpers on the command line. That was
+     OK, since we never gave them a password; they only gave them to us
+     (and cached them if they wanted to). But now that git is asking for
+     the password itself, it has to send the password to the helper to
+     store. And that definitely shouldn't go on the command line.
+
+     The parsing load on the helper is therefore a little higher.
+     However, it's still really quite easy.
+
+  3. The old "unique" token has been broken into components. That means
+     less parsing for most helpers, which wanted the broken-down fields.
+     Helpers that want a single token can pretty easily reassemble.
+
+  4. I dropped the "description" field. I noticed that all of the
+     components of a credential context are actually parts of a URL. So
+     we can just show the URL (or a subset thereof) to the user in the
+     prompt. See the discussion in patches 05 and 08.
+
+  5. Config handling happens at the right place (before helpers) now.
+
+If you want an overview without reading the patches too carefully, I
+recommend reading the documentation added in patches 03 and 09, which
+contain the API and end-user documentation respectively.
+
+Helper writers may want to look at t0303 added in patch 13; it's an
+adaptation of the test script I posted earlier for testing new external
+helpers.
+
+  [01/13]: test-lib: add test_config_global variant
+  [02/13]: t5550: fix typo
+  [03/13]: introduce credentials API
+  [04/13]: credential: add function for parsing url components
+  [05/13]: http: use credential API to get passwords
+  [06/13]: credential: apply helper config
+  [07/13]: credential: add credential.*.username
+  [08/13]: credential: make relevance of http path configurable
+  [09/13]: docs: end-user documentation for the credential subsystem
+  [10/13]: credentials: add "cache" helper
+  [11/13]: strbuf: add strbuf_add*_urlencode
+  [12/13]: credentials: add "store" helper
+  [13/13]: t: add test harness for external credential helpers
+
+I've been running with this for a few days, so I think the most horrible
+bugs are shaken out. But I had to rewrite almost all of the code from
+the first series, so I wouldn't be surprised if there are some new bugs
+lurking in there. If you are reviewing, please read from scratch and
+don't assume that something that worked in the first series is still
+working. :)
+
+-Peff
