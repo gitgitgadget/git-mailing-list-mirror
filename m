@@ -1,69 +1,85 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: what are the chances of a 'pre-upload' hook?
-Date: Fri, 25 Nov 2011 09:43:14 +0530
-Message-ID: <CAMK1S_gh_CsWc-DnbOuUwn+H1i3skm99xzDbWe-wxsKKS0Qw-w@mail.gmail.com>
-References: <CAMK1S_jaEWV=F6iHKZw_6u5ncDW0bPosNx-03W9bOLOfEEEY1Q@mail.gmail.com>
+From: Ruedi Steinmann <ruediste@student.ethz.ch>
+Subject: Re: [PATCH] Fix https interactive authentication problem
+Date: Fri, 25 Nov 2011 12:10:26 +0000 (UTC)
+Message-ID: <loom.20111125T125630-755@post.gmane.org>
+References: <F6A589D6B10801478E0DE246A9EF187C1BD5E8@MBX12.d.ethz.ch> <20111123225121.GA23357@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Nov 25 05:13:23 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 25 13:15:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTnA9-0005MS-Ik
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Nov 2011 05:13:21 +0100
+	id 1RTuh1-0001Aq-Js
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Nov 2011 13:15:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752501Ab1KYENQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Nov 2011 23:13:16 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:50243 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751458Ab1KYENP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Nov 2011 23:13:15 -0500
-Received: by ghrr1 with SMTP id r1so3077590ghr.19
-        for <git@vger.kernel.org>; Thu, 24 Nov 2011 20:13:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=coHmY6D8rOE22UFkFhsvmKX2GJw5UIqda4va5WNzW7I=;
-        b=SeUVH/pMh64I3UKIFT5Lg8+yep+Ot84U86VekOXQuJGoWrbQwlubJZOhlC8XH+DMVw
-         BlG9Tx7VOy3KA8R29Hn3lk9h6ufbgnfbMMeZ6vI8EsXOpuf133/cnKsfbgb11mVjbiwh
-         K8/+MVBpqVny7mziP+NIcPQzmzKlwCeLl1CNA=
-Received: by 10.182.147.4 with SMTP id tg4mr9963203obb.60.1322194394963; Thu,
- 24 Nov 2011 20:13:14 -0800 (PST)
-Received: by 10.182.6.41 with HTTP; Thu, 24 Nov 2011 20:13:14 -0800 (PST)
-In-Reply-To: <CAMK1S_jaEWV=F6iHKZw_6u5ncDW0bPosNx-03W9bOLOfEEEY1Q@mail.gmail.com>
+	id S1754913Ab1KYMPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Nov 2011 07:15:42 -0500
+Received: from lo.gmane.org ([80.91.229.12]:44154 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754876Ab1KYMPl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Nov 2011 07:15:41 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RTugl-00010s-G1
+	for git@vger.kernel.org; Fri, 25 Nov 2011 13:15:35 +0100
+Received: from 80-218-216-248.dclient.hispeed.ch ([80.218.216.248])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 25 Nov 2011 13:15:31 +0100
+Received: from ruediste by 80-218-216-248.dclient.hispeed.ch with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 25 Nov 2011 13:15:31 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 80.218.216.248 (Mozilla/5.0 (X11; Linux i686; rv:7.0.1) Gecko/20100101 Firefox/7.0.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185927>
 
-On Fri, Nov 25, 2011 at 8:46 AM, Sitaram Chamarty <sitaramc@gmail.com> wrote:
-> (...and/or a post-upload hook)
->
-> Has this ever come up?
+Jeff King <peff <at> peff.net> writes:
 
-Sorry for the google-fu fail and for replying to my own post.
-http://git.661346.n2.nabble.com/Removal-of-post-upload-hook-td4394312.html
-is the longest thread I (later) found.
+> 
+> Hmm. What version of git are you using?
+> 
 
-The quick summary, in the words of Jeff (second post in that link) is:
-"Because [upload]-pack runs as the user who is [fetching], not as the
-repository owner. So by convincing you to [fetch from] my repository
-in a multi-user environment, I convince you to run some arbitrary code
-of mine."
+Hi Jeff,
 
-My contention (today) is:
+I'm a little short of time at the moment, I'll come to this back later. So just
+the quick infos. I discovered the error in my preinstalled version of git
+(1.7.5.4). I reproduced the error with the version of git I have the source code
+of: (which I should have done before, sorry)
 
-  - you're already taking that risk for push
-  - so this would add a new risk only for people who fetch but don't push
-  - which, I submit, is a very small (if not almost empty) set of people
+../git/git/git clone https://n.ethz.ch/...
+Cloning into 'masterthesis'...
+warning: templates not found /home/ruedi/share/git-core/templates
+Username for 'n.ethz.ch': 
+Password for 'n.ethz.ch': 
+error: The requested URL returned error: 401 (curl_result = 22, http_code = 401,
+sha1 = 4e69f4215f0d8c02ec1c29aadcd4ea39bb4e7c5e)
+error: Unable to find 4e69f4215f0d8c02ec1c29aadcd4ea39bb4e7c5e under
+https://n.ethz.ch/.../masterthesis.git
+Cannot obtain needed commit 4e69f4215f0d8c02ec1c29aadcd4ea39bb4e7c5e
+while processing commit 0fa41a9d4b3282891173ec54c04e0e3763867807.
+error: Fetch failed.
 
-I may be wrong but I imagine shared environments are those where
-almost everyone will push at least once in a while.  It's a closed
-group of people, probably all developers, etc etc etc...
+I am working with the git repository from https://github.com/gitster/git.git.
 
-Thanks for listening.
+>From the first few lines of my commit from gitk:
+
+Parent: 017d1e134545db0d162908f3538077eaa1f34fb6 (Update 1.7.8 draft release
+notes in preparation for rc4)
+Branch: master
+Follows: v1.7.7.4, v1.7.8-rc3
+
+Hope this helps
+
+Cheers
+Ruedi
