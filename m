@@ -1,79 +1,103 @@
-From: =?iso-8859-1?Q?Henrik_Grubbstr=F6m?= <grubba@roxen.com>
-Subject: Re: Infinite loop in cascade_filter_fn()
-Date: Fri, 25 Nov 2011 17:14:17 +0100 (CET)
-Organization: Roxen Internet Software AB
-Message-ID: <Pine.GSO.4.63.1111251705330.22588@shipon.roxen.com>
-References: <Pine.GSO.4.63.1111231801580.5099@shipon.roxen.com>
- <20111125153829.GB10417@beez.lab.cmartin.tk>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: what are the chances of a 'pre-upload' hook?
+Date: Fri, 25 Nov 2011 21:48:12 +0530
+Message-ID: <CAMK1S_i8e4q8kJxkQam+Tim1mPfo7dGPbi8bmgLt=ZqeA=1MOQ@mail.gmail.com>
+References: <CAMK1S_jaEWV=F6iHKZw_6u5ncDW0bPosNx-03W9bOLOfEEEY1Q@mail.gmail.com>
+	<CAMK1S_gh_CsWc-DnbOuUwn+H1i3skm99xzDbWe-wxsKKS0Qw-w@mail.gmail.com>
+	<4ECF939D.8020706@op5.se>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-559023410-1251336619-1322237657=:22588"
-Cc: Git Mailing list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Fri Nov 25 17:14:36 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Fri Nov 25 17:18:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTyQ5-0004qc-OM
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Nov 2011 17:14:34 +0100
+	id 1RTyTi-0006kO-9W
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Nov 2011 17:18:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754031Ab1KYQOZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Nov 2011 11:14:25 -0500
-Received: from mail.roxen.com ([212.247.29.220]:45893 "EHLO mail.roxen.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751571Ab1KYQOZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Nov 2011 11:14:25 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.roxen.com (Postfix) with ESMTP id EE3196280F5;
-	Fri, 25 Nov 2011 17:14:23 +0100 (CET)
-X-Virus-Scanned: amavisd-new at roxen.com
-Received: from mail.roxen.com ([212.247.29.220])
-	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TgRJ1YdEKQmY; Fri, 25 Nov 2011 17:14:17 +0100 (CET)
-Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
-	by mail.roxen.com (Postfix) with ESMTP id 27FB1628125;
-	Fri, 25 Nov 2011 17:14:17 +0100 (CET)
-In-Reply-To: <20111125153829.GB10417@beez.lab.cmartin.tk>
+	id S1754194Ab1KYQSN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Nov 2011 11:18:13 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:59502 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754070Ab1KYQSN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Nov 2011 11:18:13 -0500
+Received: by yenl6 with SMTP id l6so1252952yen.19
+        for <git@vger.kernel.org>; Fri, 25 Nov 2011 08:18:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=8pxfP2CWZ4A2Sfjh5WMrQF7lMbgUKLdGtoZMdyJnBKc=;
+        b=F7/pyKQ+qZlYFdLXJneGgV/Xxecuy2qNkbf9zsUue7soeLIolpgUfTqwJRNwuB7Czm
+         Y3cNa9eT1dOEIzYt9s+BpEs4e3U2IXppzR7Kqi6VDapwEpVu7BhS/+H8DBlt824gwegu
+         q8OmYg+coj0nF1qoFMUjiBa2rxS0FdO4tgu2U=
+Received: by 10.182.2.225 with SMTP id 1mr10451237obx.30.1322237892779; Fri,
+ 25 Nov 2011 08:18:12 -0800 (PST)
+Received: by 10.182.6.41 with HTTP; Fri, 25 Nov 2011 08:18:12 -0800 (PST)
+In-Reply-To: <4ECF939D.8020706@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185938>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Fri, Nov 25, 2011 at 6:39 PM, Andreas Ericsson <ae@op5.se> wrote:
 
----559023410-1251336619-1322237657=:22588
-Content-Type: TEXT/PLAIN; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: 8BIT
+> People who fetch but don't push is, by far, the vast majority of git =
+users.
+> Think of everyone fetching from any public software repository withou=
+t
+> having write access to it. If you think of git.git and linux.git alon=
+e
+> I think it's safe to assume the number of "fetch-no-push" outnumber t=
+he
+> "push-and-whatnot" group by some quarter million to one.
 
-On Fri, 25 Nov 2011, Carlos Martín Nieto wrote:
+But in those environments the person pulling does not even have an ID
+so how is he at risk with the hook running?
 
-> This patch fixes this, but I think it would still break if the LF is
-> at the end of the file. Changing the `if (!input)` to put the LF in
-> the output buffer may or may not be the right soulution. I feel like
-> this should be handled by cascade_filter_fn rather than the actual
-> filter somehow, but Junio's comment (4ae66704 'stream filter: add "no
-> more input" to the filters') suggests otherwise.
+>> I may be wrong but I imagine shared environments are those where
+>> almost everyone will push at least once in a while. =C2=A0It's a clo=
+sed
+>> group of people, probably all developers, etc etc etc...
+>>
 >
-> I'm working on a cleaner patch that takes care of a bit of state, but
-> this is the general idea.
+> Not really. We fetch from each other quite a lot at work, and from
+> each others semi-public repositories on a shared server where we've
+> all got accounts (ie, write access), but we very, very rarely push
+> into each others repositories. The sharepoint is the "official" repo
+> on the repo-server, which the buildbots gets its code from and where
+> everything to be released, maintained or handled in some way in the
+> future resides.
 
-Looks good to me (and seems to work in my case).
-Typo in the commit subject though.
+Yes, and this is the only situation where it does have the issue.  I'm
+just not sure how common this is.
 
->   cmn
-> --- 8< ---
-> Subject: [PATCH] convert: don't loop indefintely if at LF-to-CRLF streaming
-                                        ^^^^^^^^^^^
-This should be either "infinitely", or "indefinitely", but since we know 
-that the loop won't terminate "infinitely" is to be preferred.
+It's fine if you tell me I'm wrong and that this *is* still very
+common.  I'll back off.
 
-Thanks,
+But everyone seems to be bringing in github and public repos as part
+of the argument, and I don't see how they're relevant to the original
+security issue of the guy who pulls having his account compromised.
 
---
-Henrik Grubbström					grubba@roxen.com
-Roxen Internet Software AB
----559023410-1251336619-1322237657=:22588--
+> Anyways. Shooting down the arguments *against* pre-upload hooks are
+> quite silly if it's not combined with some fresh arguments *for* such
+> a hook.
+>
+> So... What usecase do you envision where you'd need one?
+
+I'm writing a caching proxy that helps with bandwidth issues when too
+many people in a bad-WAN site want to clone some huge repo from its
+canonical site.  The only one I found by googling fiddles with the git
+protocol itself, and I hate doing things like that.
+
+Ignoring all the details, the pre-upload hook would have checked some
+conditions and fired off a fetch from the remote site if those checks
+passed.
+
+It's easy enough to do it from cron but it would have been more
+elegant this way.
