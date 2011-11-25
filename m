@@ -1,90 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: what are the chances of a 'pre-upload' hook?
-Date: Fri, 25 Nov 2011 09:40:07 -0500
-Message-ID: <20111125144007.GA4047@sigill.intra.peff.net>
-References: <CAMK1S_jaEWV=F6iHKZw_6u5ncDW0bPosNx-03W9bOLOfEEEY1Q@mail.gmail.com>
- <CAMK1S_gh_CsWc-DnbOuUwn+H1i3skm99xzDbWe-wxsKKS0Qw-w@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] grep: load funcname patterns for -W
+Date: Fri, 25 Nov 2011 15:46:18 +0100
+Message-ID: <5e3bcf651b31b299ca411296e6e7c4d11f6ae617.1322232319.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 25 15:40:19 2011
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 25 15:46:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RTwwr-0002x2-Nd
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Nov 2011 15:40:18 +0100
+	id 1RTx2o-0005l1-Vs
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Nov 2011 15:46:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755800Ab1KYOkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Nov 2011 09:40:10 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43644
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755724Ab1KYOkJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Nov 2011 09:40:09 -0500
-Received: (qmail 5022 invoked by uid 107); 25 Nov 2011 14:46:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Nov 2011 09:46:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Nov 2011 09:40:07 -0500
-Content-Disposition: inline
-In-Reply-To: <CAMK1S_gh_CsWc-DnbOuUwn+H1i3skm99xzDbWe-wxsKKS0Qw-w@mail.gmail.com>
+	id S1755891Ab1KYOqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Nov 2011 09:46:22 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:23372 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755468Ab1KYOqV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Nov 2011 09:46:21 -0500
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.339.1; Fri, 25 Nov
+ 2011 15:46:15 +0100
+Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.339.1; Fri, 25 Nov
+ 2011 15:46:18 +0100
+X-Mailer: git-send-email 1.7.8.rc3.415.gbcbb2
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185932>
 
-On Fri, Nov 25, 2011 at 09:43:14AM +0530, Sitaram Chamarty wrote:
+git-grep avoids loading the funcname patterns unless they are needed.
+ba8ea74 (grep: add option to show whole function as context,
+2011-08-01) forgot to extend this test also to the new funcbody
+feature.  Do so.
 
-> The quick summary, in the words of Jeff (second post in that link) is:
-> "Because [upload]-pack runs as the user who is [fetching], not as the
-> repository owner. So by convincing you to [fetch from] my repository
-> in a multi-user environment, I convince you to run some arbitrary code
-> of mine."
-> 
-> My contention (today) is:
-> 
->   - you're already taking that risk for push
->   - so this would add a new risk only for people who fetch but don't push
->   - which, I submit, is a very small (if not almost empty) set of people
-> 
-> I may be wrong but I imagine shared environments are those where
-> almost everyone will push at least once in a while.  It's a closed
-> group of people, probably all developers, etc etc etc...
+The catch is that we also have to disable threading when using
+userdiff, as explained in grep_threads_ok().  So we must be careful to
+introduce the same test there.
+---
+ grep.c          |    7 ++++---
+ t/t7810-grep.sh |   14 ++++++++++++++
+ 2 files changed, 18 insertions(+), 3 deletions(-)
 
-One thing to note is that this is _only_ an issue on systems where the
-user running upload-pack (or receive-pack, for push) is not the same as
-the user who owns the hooks directory. So basically two situations:
-
-  1. Alice and Bob are developers on a multi-user system with ssh
-     access. Alice will run "git fetch ~bob/project.git" or "git fetch
-     alice@server:~bob/project.git". She executes Bob's hooks as
-     herself on the server.
-
-  2. Somebody runs a git:// server, locked down under a "git" user (or a
-     smart-http server, under a "www" account).  If users of the service
-     can write their own hooks, they will run as the "git" user.
-
-But there are many situations that don't fall under this umbrella. In
-(1), maybe Alice and Bob decide that they trust each other enough, and
-the hook is more important than the security issue. In (2), users of the
-service might not be able to write their own hooks (this is the case for
-GitHub, and I assume also for Gerrit).
-
-There should be a way for people who aren't in one of those dangerous
-situations to be able to use a hook. The important thing is to set the
-defaults in such a way that the people who _are_ in that situation
-aren't left in a vulnerable situation.
-
-The easiest way would be something like a "trust remote hooks"
-environment variable, off by default. Admins in situation (2) could set
-it for their git-daemon (or webserver, or whatever, or
-gitolite-over-ssh), once they decided it was safe.
-
-It could also help with (1), but I think you would need to take special
-steps to propagate the variable in the "git fetch server:project.git"
-case.
-
--Peff
+diff --git a/grep.c b/grep.c
+index b29d09c..7a070e9 100644
+--- a/grep.c
++++ b/grep.c
+@@ -948,8 +948,8 @@ int grep_threads_ok(const struct grep_opt *opt)
+ 	 * machinery in grep_buffer_1. The attribute code is not
+ 	 * thread safe, so we disable the use of threads.
+ 	 */
+-	if (opt->funcname && !opt->unmatch_name_only && !opt->status_only &&
+-	    !opt->name_only)
++	if ((opt->funcname || opt->funcbody)
++	    && !opt->unmatch_name_only && !opt->status_only && !opt->name_only)
+ 		return 0;
+ 
+ 	return 1;
+@@ -1008,7 +1008,8 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
+ 	}
+ 
+ 	memset(&xecfg, 0, sizeof(xecfg));
+-	if (opt->funcname && !opt->unmatch_name_only && !opt->status_only &&
++	if ((opt->funcname || opt->funcbody)
++	    && !opt->unmatch_name_only && !opt->status_only &&
+ 	    !opt->name_only && !binary_match_only && !collect_hits) {
+ 		struct userdiff_driver *drv = userdiff_find_by_path(name);
+ 		if (drv && drv->funcname.pattern) {
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 81263b7..7ba5b16 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -523,6 +523,20 @@ test_expect_success 'grep -W' '
+ 	test_cmp expected actual
+ '
+ 
++cat >expected <<EOF
++hello.c=	printf("Hello world.\n");
++hello.c:	return 0;
++hello.c-	/* char ?? */
++EOF
++
++test_expect_success 'grep -W with userdiff' '
++	test_when_finished "rm -f .gitattributes" &&
++	git config diff.custom.xfuncname "(printf.*|})$" &&
++	echo "hello.c diff=custom" >.gitattributes &&
++	git grep -W return >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'grep from a subdirectory to search wider area (1)' '
+ 	mkdir -p s &&
+ 	(
+-- 
+1.7.8.rc3.415.gbcbb2
