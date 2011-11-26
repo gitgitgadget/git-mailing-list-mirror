@@ -1,283 +1,99 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] grep: enable multi-threading for -p and -W
-Date: Sat, 26 Nov 2011 13:15:49 +0100
-Message-ID: <4ED0D875.5050900@lsrfire.ath.cx>
-References: <5e3bcf651b31b299ca411296e6e7c4d11f6ae617.1322232319.git.trast@student.ethz.ch> <4ECFC320.4030003@lsrfire.ath.cx>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb ignores git-daemon-export-ok and displays all repositories
+Date: Sat, 26 Nov 2011 15:37:51 +0100
+Message-ID: <201111261537.52613.jnareb@gmail.com>
+References: <20111113001730.3945.75979.reportbug@gpl.code.de> <D765D350-947E-4DB2-8A91-4B9653064F80@code.de> <20111116224706.GA17851@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat Nov 26 13:19:43 2011
+Cc: git@vger.kernel.org, Erik Wenzel <erik@code.de>,
+	John 'Warthog9' Hawley <warthog9@kernel.org>,
+	Matthias Lederhofer <matled@gmx.net>,
+	Sitaram Chamarty <sitaramc@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 26 15:41:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RUHEM-00061q-UT
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Nov 2011 13:19:43 +0100
+	id 1RUJRW-0002my-EM
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Nov 2011 15:41:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754615Ab1KZMP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Nov 2011 07:15:58 -0500
-Received: from india601.server4you.de ([85.25.151.105]:37204 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754459Ab1KZMP5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Nov 2011 07:15:57 -0500
-Received: from [192.168.2.104] (p4FFDBDDB.dip.t-dialin.net [79.253.189.219])
-	by india601.server4you.de (Postfix) with ESMTPSA id 81E862F8038;
-	Sat, 26 Nov 2011 13:15:55 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <4ECFC320.4030003@lsrfire.ath.cx>
+	id S1752340Ab1KZOiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Nov 2011 09:38:00 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:53530 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751974Ab1KZOh7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Nov 2011 09:37:59 -0500
+Received: by bke11 with SMTP id 11so5747516bke.19
+        for <git@vger.kernel.org>; Sat, 26 Nov 2011 06:37:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=g2h+RXT7tjzrOr4EBgxbvvp0nWtRBn5QNTiVhJAQyic=;
+        b=qg2PT5ltyPOHsXkWgnql+tAMAL8uS30DOHJH+Lh5I61THcBJc/wHLCtvKsx12uvsah
+         J1k1imU/zhX0DNrhV/nf2OXFMH3pk9+2ve4gDr6Sw81pdtol4AKpXBWaZVMFGumYlOiE
+         MyNVhYq+7bkwJ3JMBW2HnUs5p3j8zP12Or3/A=
+Received: by 10.204.12.68 with SMTP id w4mr37643990bkw.31.1322318278173;
+        Sat, 26 Nov 2011 06:37:58 -0800 (PST)
+Received: from [192.168.1.13] (abwd237.neoplus.adsl.tpnet.pl. [83.8.227.237])
+        by mx.google.com with ESMTPS id z1sm2328478fab.22.2011.11.26.06.37.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 26 Nov 2011 06:37:56 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20111116224706.GA17851@elie.hsd1.il.comcast.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185953>
 
-Move attribute reading, which is not thread-safe, into add_work(), under
-grep_mutex.  That way we can stop turning off multi-threading if -p or -W
-is given, as the diff attribute for each file is gotten safely now.
+I'm sorry for the delay in responding.
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
-Goes on top of your patch.  Needs testing..
+On Wed, 16 Nov 2011, Jonathan Nieder wrote:
+> Erik Wenzel wrote (http://bugs.debian.org/648561):
+>> Am 13.11.2011 um 02.19 schrieb Jonathan Nieder:
+>> 
+>>> The git-daemon(1) manpage describes git daemon, not gitweb, so I guess
+>>> you mean that
+>>>
+>>>	# Do not list projects without git-daemon-export-ok in the
+>>>	# projects list.
+>>>	our $export_ok = "git-daemon-export-ok";
+>>>
+>>>	# Do not allow access to projects not listed in the projects
+>>>	# list.
+>>>	our $strict_export = 1;
+>>>
+>>> should be the default.
+>> [...]
+>> Because I think this is the way a user is expecting the behavior of gitweb.
+>> As I do. Don't let gitweb overwrite the meaning of "git-daemon-export-ok".
+>> Just act like git-daemon. Keep it simple and stupid.
+> 
+> My first thought was that if we could turn back time, it would
+> probably be best for both git-daemon and gitweb to look for a file
+> named git-export-ok.  In the present world, maybe git-daemon-export-ok
+> is a good substitute for that.
+> 
+> What do you think?  Should the default in the makefile be changed?  If
+> so, how could we go about it to avoid disturbing existing
+> installations?  (For example, in a system where no repositories have
+> the export-ok files and "git daemon" is configured to run with
+> --export-all, the effect would be to make repos suddenly disappear
+> from the projects list in gitweb.  Unpleasant.)
 
- builtin/grep.c |   33 +++++++++++++++++++++++++--------
- grep.c         |   25 +++++++------------------
- grep.h         |    5 +++--
- revision.c     |    2 +-
- 4 files changed, 36 insertions(+), 29 deletions(-)
+I think the best solution would be to leave it up to the tool that
+manages both git-daemon and git (manages access to git repositories),
+like e.g. gitolite.  It would be this tool that is to be responsible
+for synchronizing git-daemon and gitweb behavior, i.e. make either
+both use 'git-daemon-export-ok', or both export all.
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 3d7329d..5534111 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -18,6 +18,7 @@
- #include "quote.h"
- #include "dir.h"
- #include "thread-utils.h"
-+#include "userdiff.h"
- 
- static char const * const grep_usage[] = {
- 	"git grep [options] [-e] <pattern> [<rev>...] [[--] <path>...]",
-@@ -43,6 +44,7 @@ enum work_type {WORK_SHA1, WORK_FILE};
- struct work_item {
- 	enum work_type type;
- 	char *name;
-+	struct userdiff_driver *userdiff_driver;
- 
- 	/* if type == WORK_SHA1, then 'identifier' is a SHA1,
- 	 * otherwise type == WORK_FILE, and 'identifier' is a NUL
-@@ -114,7 +116,17 @@ static pthread_cond_t cond_result;
- 
- static int skip_first_line;
- 
--static void add_work(enum work_type type, char *name, void *id)
-+/* Reading attributes is not thread-safe, so callers need to lock. */
-+static struct userdiff_driver *get_userdiff_driver(struct grep_opt *opt,
-+						   const char *name)
-+{
-+	if (opt->funcbody || opt->funcname)
-+		return userdiff_find_by_path(name);
-+	return NULL;
-+}
-+
-+static void add_work(struct grep_opt *opt, enum work_type type, char *name,
-+		     void *id)
- {
- 	grep_lock();
- 
-@@ -124,6 +136,7 @@ static void add_work(enum work_type type, char *name, void *id)
- 
- 	todo[todo_end].type = type;
- 	todo[todo_end].name = name;
-+	todo[todo_end].userdiff_driver = get_userdiff_driver(opt, name);
- 	todo[todo_end].identifier = id;
- 	todo[todo_end].done = 0;
- 	strbuf_reset(&todo[todo_end].out);
-@@ -158,13 +171,13 @@ static void grep_sha1_async(struct grep_opt *opt, char *name,
- 	unsigned char *s;
- 	s = xmalloc(20);
- 	memcpy(s, sha1, 20);
--	add_work(WORK_SHA1, name, s);
-+	add_work(opt, WORK_SHA1, name, s);
- }
- 
- static void grep_file_async(struct grep_opt *opt, char *name,
- 			    const char *filename)
- {
--	add_work(WORK_FILE, name, xstrdup(filename));
-+	add_work(opt, WORK_FILE, name, xstrdup(filename));
- }
- 
- static void work_done(struct work_item *w)
-@@ -212,24 +225,26 @@ static void *run(void *arg)
- 	struct grep_opt *opt = arg;
- 
- 	while (1) {
-+		struct userdiff_driver *drv;
- 		struct work_item *w = get_work();
- 		if (!w)
- 			break;
- 
- 		opt->output_priv = w;
-+		drv = w->userdiff_driver;
- 		if (w->type == WORK_SHA1) {
- 			unsigned long sz;
- 			void* data = load_sha1(w->identifier, &sz, w->name);
- 
- 			if (data) {
--				hit |= grep_buffer(opt, w->name, data, sz);
-+				hit |= grep_buffer(opt, w->name, drv, data, sz);
- 				free(data);
- 			}
- 		} else if (w->type == WORK_FILE) {
- 			size_t sz;
- 			void* data = load_file(w->identifier, &sz);
- 			if (data) {
--				hit |= grep_buffer(opt, w->name, data, sz);
-+				hit |= grep_buffer(opt, w->name, drv, data, sz);
- 				free(data);
- 			}
- 		} else {
-@@ -417,10 +432,11 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
- 		int hit;
- 		unsigned long sz;
- 		void *data = load_sha1(sha1, &sz, name);
-+		struct userdiff_driver *drv = get_userdiff_driver(opt, name);
- 		if (!data)
- 			hit = 0;
- 		else
--			hit = grep_buffer(opt, name, data, sz);
-+			hit = grep_buffer(opt, name, drv, data, sz);
- 
- 		free(data);
- 		free(name);
-@@ -479,10 +495,11 @@ static int grep_file(struct grep_opt *opt, const char *filename)
- 		int hit;
- 		size_t sz;
- 		void *data = load_file(filename, &sz);
-+		struct userdiff_driver *drv = get_userdiff_driver(opt, name);
- 		if (!data)
- 			hit = 0;
- 		else
--			hit = grep_buffer(opt, name, data, sz);
-+			hit = grep_buffer(opt, name, drv, data, sz);
- 
- 		free(data);
- 		free(name);
-@@ -1001,7 +1018,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		opt.regflags |= REG_ICASE;
- 
- #ifndef NO_PTHREADS
--	if (online_cpus() == 1 || !grep_threads_ok(&opt))
-+	if (online_cpus() == 1)
- 		use_threads = 0;
- 
- 	if (use_threads) {
-diff --git a/grep.c b/grep.c
-index 7a070e9..ff14a98 100644
---- a/grep.c
-+++ b/grep.c
-@@ -942,25 +942,13 @@ static int look_ahead(struct grep_opt *opt,
- 	return 0;
- }
- 
--int grep_threads_ok(const struct grep_opt *opt)
--{
--	/* If this condition is true, then we may use the attribute
--	 * machinery in grep_buffer_1. The attribute code is not
--	 * thread safe, so we disable the use of threads.
--	 */
--	if ((opt->funcname || opt->funcbody)
--	    && !opt->unmatch_name_only && !opt->status_only && !opt->name_only)
--		return 0;
--
--	return 1;
--}
--
- static void std_output(struct grep_opt *opt, const void *buf, size_t size)
- {
- 	fwrite(buf, size, 1, stdout);
- }
- 
- static int grep_buffer_1(struct grep_opt *opt, const char *name,
-+			 struct userdiff_driver *drv,
- 			 char *buf, unsigned long size, int collect_hits)
- {
- 	char *bol = buf;
-@@ -1011,7 +999,6 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
- 	if ((opt->funcname || opt->funcbody)
- 	    && !opt->unmatch_name_only && !opt->status_only &&
- 	    !opt->name_only && !binary_match_only && !collect_hits) {
--		struct userdiff_driver *drv = userdiff_find_by_path(name);
- 		if (drv && drv->funcname.pattern) {
- 			const struct userdiff_funcname *pe = &drv->funcname;
- 			xdiff_set_find_func(&xecfg, pe->pattern, pe->cflags);
-@@ -1167,23 +1154,25 @@ static int chk_hit_marker(struct grep_expr *x)
- 	}
- }
- 
--int grep_buffer(struct grep_opt *opt, const char *name, char *buf, unsigned long size)
-+int grep_buffer(struct grep_opt *opt, const char *name,
-+		struct userdiff_driver *userdiff_driver,
-+		char *buf, unsigned long size)
- {
- 	/*
- 	 * we do not have to do the two-pass grep when we do not check
- 	 * buffer-wide "all-match".
- 	 */
- 	if (!opt->all_match)
--		return grep_buffer_1(opt, name, buf, size, 0);
-+		return grep_buffer_1(opt, name, userdiff_driver, buf, size, 0);
- 
- 	/* Otherwise the toplevel "or" terms hit a bit differently.
- 	 * We first clear hit markers from them.
- 	 */
- 	clr_hit_marker(opt->pattern_expression);
--	grep_buffer_1(opt, name, buf, size, 1);
-+	grep_buffer_1(opt, name, userdiff_driver, buf, size, 1);
- 
- 	if (!chk_hit_marker(opt->pattern_expression))
- 		return 0;
- 
--	return grep_buffer_1(opt, name, buf, size, 0);
-+	return grep_buffer_1(opt, name, userdiff_driver, buf, size, 0);
- }
-diff --git a/grep.h b/grep.h
-index a652800..20224b5 100644
---- a/grep.h
-+++ b/grep.h
-@@ -121,14 +121,15 @@ struct grep_opt {
- 	void *output_priv;
- };
- 
-+struct userdiff_driver;
-+
- extern void append_grep_pat(struct grep_opt *opt, const char *pat, size_t patlen, const char *origin, int no, enum grep_pat_token t);
- extern void append_grep_pattern(struct grep_opt *opt, const char *pat, const char *origin, int no, enum grep_pat_token t);
- extern void append_header_grep_pattern(struct grep_opt *, enum grep_header_field, const char *);
- extern void compile_grep_patterns(struct grep_opt *opt);
- extern void free_grep_patterns(struct grep_opt *opt);
--extern int grep_buffer(struct grep_opt *opt, const char *name, char *buf, unsigned long size);
-+extern int grep_buffer(struct grep_opt *opt, const char *name, struct userdiff_driver *userdiff_driver, char *buf, unsigned long size);
- 
- extern struct grep_opt *grep_opt_dup(const struct grep_opt *opt);
--extern int grep_threads_ok(const struct grep_opt *opt);
- 
- #endif
-diff --git a/revision.c b/revision.c
-index 8764dde..95cb8c2 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2126,7 +2126,7 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
- 	if (!opt->grep_filter.pattern_list && !opt->grep_filter.header_list)
- 		return 1;
- 	return grep_buffer(&opt->grep_filter,
--			   NULL, /* we say nothing, not even filename */
-+			   NULL, NULL, /* we say nothing, not even filename */
- 			   commit->buffer, strlen(commit->buffer));
- }
- 
 -- 
-1.7.7
+Jakub Narebski
+Poland
