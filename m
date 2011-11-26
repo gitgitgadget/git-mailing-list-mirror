@@ -1,246 +1,104 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git branch -M" regression in 1.7.7?
-Date: Sat, 26 Nov 2011 02:54:55 -0600
-Message-ID: <20111126085455.GB22656@elie.hsd1.il.comcast.net>
-References: <CALxtSbRbwkVDKJcXiKY9rHYCjA3XGgCytbXQnRhQvbEnY8SpjA@mail.gmail.com>
- <20111126023002.GA17652@elie.hsd1.il.comcast.net>
- <CAOTq_pv4dyAkbqye+diK9mTTsrTg9OKg0tExKcfDgs8RfiTwTQ@mail.gmail.com>
+From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+Subject: Re: [PATCH] honour GIT_ASKPASS for querying username in git-svn
+Date: Sat, 26 Nov 2011 12:33:31 +0100
+Message-ID: <4ED0CE8B.70205@tu-clausthal.de>
+References: <4EC52508.9070907@tu-clausthal.de> <CABPQNSZ0iPAE+BnDU6Nz8_PkrAtPbjL4RoJuQS=Um2wxPt-2DQ@mail.gmail.com> <4EC65DE4.90005@tu-clausthal.de> <CABPQNSbfM0JRVPk3fxfSEq7QaO-fynHM8FBGpPribdgeRqpZKA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?4piCSm9zaCBDaGlhICjosKLku7vkuK0p?= <joshchia@gmail.com>,
-	git@vger.kernel.org, Soeren Sonnenburg <sonne@debian.org>
-To: =?utf-8?Q?Conrad=C2=A0Irwin?= <conrad.irwin@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 26 09:55:11 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 26 12:33:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RUE2O-0001xW-TL
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Nov 2011 09:55:09 +0100
+	id 1RUGVh-0000JH-Jx
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Nov 2011 12:33:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752942Ab1KZIzA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Nov 2011 03:55:00 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:44022 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752808Ab1KZIy7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 Nov 2011 03:54:59 -0500
-Received: by iage36 with SMTP id e36so5745220iag.19
-        for <git@vger.kernel.org>; Sat, 26 Nov 2011 00:54:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=/MC31SRNwTVjCBdakrDZKNMjRT6mymkrG67oHYvOnSU=;
-        b=Y5ZStu8tHmcpFHVbIBpwBLmTCpn9kX2ZbWB8AVCjMk499Qo0spL2mXiwAjPJ31nFdw
-         9aJ2wtAI4ZaCRybyyk0glh/xD+cPrLL9hJwIIGFaRalCmp4B12tRxOL1sKz4ZmNz3gG5
-         j6tPh9fwEu/2RxqcOB3BLZ8bPl78EFskKU2pQ=
-Received: by 10.42.161.132 with SMTP id t4mr16516001icx.16.1322297699310;
-        Sat, 26 Nov 2011 00:54:59 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id dd36sm13555264ibb.7.2011.11.26.00.54.58
-        (version=SSLv3 cipher=OTHER);
-        Sat, 26 Nov 2011 00:54:58 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAOTq_pv4dyAkbqye+diK9mTTsrTg9OKg0tExKcfDgs8RfiTwTQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1754589Ab1KZLd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Nov 2011 06:33:28 -0500
+Received: from hades.rz.tu-clausthal.de ([139.174.2.20]:61485 "EHLO
+	hades.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754254Ab1KZLd1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Nov 2011 06:33:27 -0500
+Received: from hades.rz.tu-clausthal.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 7BE4E42207E;
+	Sat, 26 Nov 2011 12:33:25 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
+	 bh=0lr6JcXPnZU0K01p2zT90anYJ7U=; b=448i1OMVDyLCX4le/2NtViuja2fm
+	0lL9m4kKQjh1VgD5EcDhebdgdiVpq5tfEw9iieV5G7TgX0GYaHxrd5f2mvC+kvZQ
+	x61CkmE5OUryjAzT9vp6h8Og41t1owZHjReU9VdCGYuSj98ilSSuKguXP7fGqmnK
+	r3BQB3+L732kswo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
+	dkim1; b=of2Oryljjo2FJFBiHtKiAwIjgrpIOd2vcdbiGNmV9onNSl031uywxJI
+	OctdS0oJ38ItQ2PgL664y6DcORfXzSMFeCbig3ANXyVRxjrl2oktuC3CszqmHe9w
+	EDsz/uuexwxXoWlhdquSp+J4CAh5/3hstk/YLnwlUWlEzKltXlJw=
+Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
+	by hades.rz.tu-clausthal.de (Postfix) with ESMTP id 3E91742204F;
+	Sat, 26 Nov 2011 12:33:25 +0100 (CET)
+Received: from [91.4.123.74] (account sstri@tu-clausthal.de HELO [192.168.178.20])
+  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.2)
+  with ESMTPSA id 23911624; Sat, 26 Nov 2011 12:33:25 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <CABPQNSbfM0JRVPk3fxfSEq7QaO-fynHM8FBGpPribdgeRqpZKA@mail.gmail.com>
+X-Enigmail-Version: 1.3.3
+X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185951>
 
-Conrad=C2=A0Irwin wrote:
+Hi,
 
-> I thought after reading your patch about making it just do:
->
->     if (!strcmp(oldname, newname))
->         exit(0);
->
-> but I guess it would then not mark an entry in the reflog that people
-> could be relying on...
+there's also another point where git-svn doesn't honour GIT_ASKPASS:
 
-Ah, this deserves a comment.
+>From 632c264d0de127c35fbe45866ed81e832f357d56 Mon Sep 17 00:00:00 2001
+From: Sven Strickroth <email@cs-ware.de>
+Date: Sat, 26 Nov 2011 12:01:19 +0100
+Subject: [PATCH] honour GIT_ASKPASS for querying further actions on unknown
+ certificates
 
-I thought about doing the same thing, and then didn't do it because I
-wanted to make sure that
+git-svn reads user answers from an interactive terminal.
+This behavior cause GUIs to hang waiting for git-svn to
+complete.
 
-	git branch -M nonexistent nonexistent
-
-does not succeed.  Which presumably warrants another test:
-
- test_expect_success "rename-to-self dwimery doesn't hide nonexistent r=
-ef" '
-	test_must_fail git branch -M nonexistent nonexistent &&
-	test_must_fail git rev-parse --verify nonexistent
- '
-
-Sloppy of me.
-
->> + =C2=A0 =C2=A0 =C2=A0 clobber_head_ok =3D !strcmp(oldname, newname)=
-;
->> +
->> + =C2=A0 =C2=A0 =C2=A0 validate_new_branchname(newname, &newref, for=
-ce, clobber_head_ok);
->
-> This looks ok, and will be improvable if the NEEDSWORK in branch.h is=
- done.
-
-Thanks for looking it over.
-
-> The other thing I wonder is whether "git checkout -B master HEAD" or
-> "git branch -f master master" should have the same short-cut?
-
-I think "git branch -M" is the only one buildbot was relying on.
-
-As an aside, I'm not convinced the check is needed for checkout -B at
-all.  In an ideal world, the order of operations would be:
-
-	1. look up commit argument
-	2. merge working tree
-	3. update branch to match commit
-	4. update HEAD symref to point to branch
-
-In other words, when on master, "git checkout -B master <commit>"
-would be another way to say "git reset --keep <commit>", except that
-it also sets up tracking.
-
-Surprisingly, switch_branches() seems to match that pretty well already=
-=2E
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Sven Strickroth <email@cs-ware.de>
 ---
- branch.c                   |    6 ++++--
- branch.h                   |    3 ++-
- builtin/branch.c           |    2 +-
- builtin/checkout.c         |   15 +++++++++++----
- t/t2018-checkout-branch.sh |    9 +++++----
- 5 files changed, 23 insertions(+), 12 deletions(-)
+ git-svn.perl |   9 +++++++++--
+ 1 files changed, 8 insertions(+), 1 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index 025a97be..f85c4382 100644
---- a/branch.c
-+++ b/branch.c
-@@ -160,7 +160,8 @@ int validate_new_branchname(const char *name, struc=
-t strbuf *ref,
-=20
- void create_branch(const char *head,
- 		   const char *name, const char *start_name,
--		   int force, int reflog, enum branch_track track)
-+		   int force, int reflog, int clobber_head,
-+		   enum branch_track track)
- {
- 	struct ref_lock *lock =3D NULL;
- 	struct commit *commit;
-@@ -175,7 +176,8 @@ void create_branch(const char *head,
- 		explicit_tracking =3D 1;
-=20
- 	if (validate_new_branchname(name, &ref, force,
--				    track =3D=3D BRANCH_TRACK_OVERRIDE)) {
-+				    track =3D=3D BRANCH_TRACK_OVERRIDE ||
-+				    clobber_head)) {
- 		if (!force)
- 			dont_change_ref =3D 1;
- 		else
-diff --git a/branch.h b/branch.h
-index 1285158d..e125ff4c 100644
---- a/branch.h
-+++ b/branch.h
-@@ -13,7 +13,8 @@
-  * branch for (if any).
-  */
- void create_branch(const char *head, const char *name, const char *sta=
-rt_name,
--		   int force, int reflog, enum branch_track track);
-+		   int force, int reflog,
-+		   int clobber_head, enum branch_track track);
-=20
- /*
-  * Validates that the requested branch may be created, returning the
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 51ca6a02..730f9139 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -730,7 +730,7 @@ int cmd_branch(int argc, const char **argv, const c=
-har *prefix)
- 		if (kinds !=3D REF_LOCAL_BRANCH)
- 			die(_("-a and -r options to 'git branch' do not make sense with a b=
-ranch name"));
- 		create_branch(head, argv[0], (argc =3D=3D 2) ? argv[1] : head,
--			      force_create, reflog, track);
-+			      force_create, reflog, 0, track);
- 	} else
- 		usage_with_options(builtin_branch_usage, options);
-=20
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 2a807724..ca00a853 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -540,7 +540,9 @@ static void update_refs_for_switch(struct checkout_=
-opts *opts,
- 		else
- 			create_branch(old->name, opts->new_branch, new->name,
- 				      opts->new_branch_force ? 1 : 0,
--				      opts->new_branch_log, opts->track);
-+				      opts->new_branch_log,
-+				      opts->new_branch_force ? 1 : 0,
-+				      opts->track);
- 		new->name =3D opts->new_branch;
- 		setup_branch_path(new);
- 	}
-@@ -565,8 +567,12 @@ static void update_refs_for_switch(struct checkout=
-_opts *opts,
- 		create_symref("HEAD", new->path, msg.buf);
- 		if (!opts->quiet) {
- 			if (old->path && !strcmp(new->path, old->path)) {
--				fprintf(stderr, _("Already on '%s'\n"),
--					new->name);
-+				if (opts->new_branch_force)
-+					fprintf(stderr, _("Reset branch '%s'\n"),
-+						new->name);
-+				else
-+					fprintf(stderr, _("Already on '%s'\n"),
-+						new->name);
- 			} else if (opts->new_branch) {
- 				if (opts->branch_exists)
- 					fprintf(stderr, _("Switched to and reset branch '%s'\n"), new->na=
-me);
-@@ -1057,7 +1063,8 @@ int cmd_checkout(int argc, const char **argv, con=
-st char *prefix)
- 		struct strbuf buf =3D STRBUF_INIT;
-=20
- 		opts.branch_exists =3D validate_new_branchname(opts.new_branch, &buf=
-,
--							     !!opts.new_branch_force, 0);
-+							     !!opts.new_branch_force,
-+							     !!opts.new_branch_force);
-=20
- 		strbuf_release(&buf);
- 	}
-diff --git a/t/t2018-checkout-branch.sh b/t/t2018-checkout-branch.sh
-index 75874e85..27412623 100755
---- a/t/t2018-checkout-branch.sh
-+++ b/t/t2018-checkout-branch.sh
-@@ -189,12 +189,13 @@ test_expect_success 'checkout -b <describe>' '
- 	test_cmp expect actual
- '
-=20
--test_expect_success 'checkout -B to the current branch fails before me=
-rging' '
-+test_expect_success 'checkout -B to the current branch works' '
- 	git checkout branch1 &&
-+	git checkout -B branch1-scratch &&
-+
- 	setup_dirty_mergeable &&
--	git commit -mfooble &&
--	test_must_fail git checkout -B branch1 initial &&
--	test_must_fail test_dirty_mergeable
-+	git checkout -B branch1-scratch initial &&
-+	test_dirty_mergeable
- '
-=20
- test_done
---=20
-1.7.8.rc3
+diff --git a/git-svn.perl b/git-svn.perl
+index e30df22..d7aeb11 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -4361,7 +4361,14 @@ prompt:
+ 	      "(R)eject, accept (t)emporarily or accept (p)ermanently? " :
+ 	      "(R)eject or accept (t)emporarily? ";
+ 	STDERR->flush;
+-	$choice = lc(substr(<STDIN> || 'R', 0, 1));
++	if (exists $ENV{GIT_ASKPASS}) {
++		print STDERR "\n";
++		open(PH, "-|", $ENV{GIT_ASKPASS}, "Certificate unknown");
++		$choice = lc(substr(<PH> || 'R', 0, 1));
++		close(PH);
++	} else {
++		$choice = lc(substr(<STDIN> || 'R', 0, 1));
++	}
+ 	if ($choice =~ /^t$/i) {
+ 		$cred->may_save(undef);
+ 	} elsif ($choice =~ /^r$/i) {
+-- 
+1.7.7.1.msysgit.0
+
+-- 
+Best regards,
+ Sven Strickroth
+ ClamAV, a GPL anti-virus toolkit   http://www.clamav.net
+ PGP key id F5A9D4C4 @ any key-server
