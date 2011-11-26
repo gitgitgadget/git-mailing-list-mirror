@@ -1,74 +1,85 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: git branch -M" regression in 1.7.7?
-Date: Sun, 27 Nov 2011 00:09:21 +0100
-Message-ID: <m2bory5vmm.fsf@igel.home>
-References: <CALxtSbRbwkVDKJcXiKY9rHYCjA3XGgCytbXQnRhQvbEnY8SpjA@mail.gmail.com>
-	<20111126023002.GA17652@elie.hsd1.il.comcast.net>
-	<CAOTq_pv4dyAkbqye+diK9mTTsrTg9OKg0tExKcfDgs8RfiTwTQ@mail.gmail.com>
-	<20111126085455.GB22656@elie.hsd1.il.comcast.net>
-	<7v39day0fb.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: what are the chances of a 'pre-upload' hook?
+Date: Sat, 26 Nov 2011 18:31:33 -0500
+Message-ID: <20111126233133.GA31129@sigill.intra.peff.net>
+References: <CAMK1S_jaEWV=F6iHKZw_6u5ncDW0bPosNx-03W9bOLOfEEEY1Q@mail.gmail.com>
+ <CAMK1S_gh_CsWc-DnbOuUwn+H1i3skm99xzDbWe-wxsKKS0Qw-w@mail.gmail.com>
+ <20111125144007.GA4047@sigill.intra.peff.net>
+ <7v7h2my0ky.fsf@alter.siamese.dyndns.org>
+ <20111126225519.GA29482@sigill.intra.peff.net>
+ <7vr50uwk7x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Conrad Irwin <conrad.irwin@gmail.com>,
-	=?utf-8?B?4piCSm9zaCBDaGlhICjosKLku7vkuK0p?= <joshchia@gmail.com>,
-	git@vger.kernel.org, Soeren Sonnenburg <sonne@debian.org>
+Content-Type: text/plain; charset=utf-8
+Cc: Sitaram Chamarty <sitaramc@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 27 00:14:37 2011
+X-From: git-owner@vger.kernel.org Sun Nov 27 00:43:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RURS4-0006Ld-Ps
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Nov 2011 00:14:33 +0100
+	id 1RURu6-0006UN-Gw
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Nov 2011 00:43:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755100Ab1KZXO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Nov 2011 18:14:28 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:45272 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755078Ab1KZXO1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Nov 2011 18:14:27 -0500
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 766441C1DA09;
-	Sun, 27 Nov 2011 00:14:24 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
-	by mail.m-online.net (Postfix) with ESMTP id E4A131C000FA;
-	Sun, 27 Nov 2011 00:14:23 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
-	with ESMTP id PrU+NXwya3qi; Sun, 27 Nov 2011 00:09:23 +0100 (CET)
-Received: from igel.home (ppp-93-104-150-139.dynamic.mnet-online.de [93.104.150.139])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Sun, 27 Nov 2011 00:09:23 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id A689ECA29C; Sun, 27 Nov 2011 00:09:22 +0100 (CET)
-X-Yow: Am I elected yet?
-In-Reply-To: <7v39day0fb.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sat, 26 Nov 2011 14:38:16 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.91 (gnu/linux)
+	id S1755066Ab1KZXbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Nov 2011 18:31:36 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53536
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754181Ab1KZXbf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Nov 2011 18:31:35 -0500
+Received: (qmail 8643 invoked by uid 107); 26 Nov 2011 23:38:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 26 Nov 2011 18:38:08 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 26 Nov 2011 18:31:33 -0500
+Content-Disposition: inline
+In-Reply-To: <7vr50uwk7x.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185961>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sat, Nov 26, 2011 at 03:13:38PM -0800, Junio C Hamano wrote:
 
-> I havn't look at the patch (not a regression between 1.7.7 and 1.7.8 so
-> not a candidate for the remainder of this cycle), but I like the above
-> description quite a lot. I think Linus's "git reset --sane" which was
-> initially called "git reset --merge" but ended up as "git reset --keep"
-> should have been spelled as "checkout -B <current-branch>" from the
-> beginning.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Bob could run a specialized server for (b) that listens on a unix socket
+> > and triggers his hook. But why? Why not just do the whole thing over
+> > git-daemon or smart http, which already exist?
+> 
+> If that "whole thing" is "to allow an arbitrary code to run anywhere as
+> incoming user", I would apply the "why?" to a different part of the
+> statemennt. Why allow running an arbitrary code at all?
 
-It is more convenient if you don't have to spell out the name of the
-current branch (which fails if you aren't on a branch).
+Because there are useful hooks that Bob wants to run when somebody
+fetches or pushes to/from his repository?
 
-Andreas.
+> A pre-anything hook wants to see if the accessing user, not the owner of
+> the repository, can or cannot do something to the repository and decide
+> what to do.
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+It depends on what you want your hook to do. I thought Sitaram's
+use-case was putting something like "git fetch upstream" into a hook
+that runs before upload-pack, to create a transparent proxy. That has
+nothing to do with the accessing user.
+
+At GitHub, we run a pre-upload-pack hook to keep statistics. That has
+nothing to do with the accessing user. We have to patch git to provide
+the hook.
+
+And even if you _did_ want to know something about the accessing user,
+that doesn't mean you necessarily can or want to be running code as
+them. If I'm running a smart-http server, I might have verified the user
+already via cookie, client cert, or basic auth. That information could
+be passed down to a pre-upload-pack hook where it could make a decision.
+
+But we don't _have_ a pre-upload-pack hook, because it can be dangerous
+in some situations. My point is to make it available, give it safe
+semantics by default, and let people who are running daemon-like service
+(i.e., where the admin controls the daemon and arbitrary users can't
+write into the hooks directory) use it by setting an environment
+variable, rather than patching git.
+
+-Peff
