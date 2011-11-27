@@ -1,131 +1,110 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 6/6] compat/getpass: add a /dev/tty implementation
-Date: Sun, 27 Nov 2011 03:31:51 -0500
-Message-ID: <20111127083151.GF1702@sigill.intra.peff.net>
-References: <20111127082744.GA32068@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: what are the chances of a 'pre-upload' hook?
+Date: Sun, 27 Nov 2011 00:56:22 -0800
+Message-ID: <7v8vn2vt8p.fsf@alter.siamese.dyndns.org>
+References: <CAMK1S_jaEWV=F6iHKZw_6u5ncDW0bPosNx-03W9bOLOfEEEY1Q@mail.gmail.com>
+ <CAMK1S_gh_CsWc-DnbOuUwn+H1i3skm99xzDbWe-wxsKKS0Qw-w@mail.gmail.com>
+ <20111125144007.GA4047@sigill.intra.peff.net>
+ <7v7h2my0ky.fsf@alter.siamese.dyndns.org>
+ <20111126225519.GA29482@sigill.intra.peff.net>
+ <7vr50uwk7x.fsf@alter.siamese.dyndns.org>
+ <20111126233133.GA31129@sigill.intra.peff.net>
+ <CAPc5daXY_4aimugj8Z4BFE8YvBSM1K+evPU69rLGH5ETo6PO=Q@mail.gmail.com>
+ <20111126235135.GA7606@sigill.intra.peff.net>
+ <CAPc5daUodry_=6pZxA=QOpuRUj9C2ed9Gzp6E1_G93iGfOOvOA@mail.gmail.com>
+ <20111127000603.GA7687@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 27 09:31:58 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git <git@vger.kernel.org>, Sitaram Chamarty <sitaramc@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Nov 27 09:56:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RUa9W-0003Rf-3g
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Nov 2011 09:31:58 +0100
+	id 1RUaXG-00011Y-Uy
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Nov 2011 09:56:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755289Ab1K0Iby (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Nov 2011 03:31:54 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53671
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754462Ab1K0Ibx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Nov 2011 03:31:53 -0500
-Received: (qmail 13206 invoked by uid 107); 27 Nov 2011 08:38:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 27 Nov 2011 03:38:26 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 27 Nov 2011 03:31:51 -0500
-Content-Disposition: inline
-In-Reply-To: <20111127082744.GA32068@sigill.intra.peff.net>
+	id S1750757Ab1K0I40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Nov 2011 03:56:26 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63628 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750742Ab1K0I4Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Nov 2011 03:56:25 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B61C7395B;
+	Sun, 27 Nov 2011 03:56:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=IZCgL4mlVKXi20WLj1UICQpu6ag=; b=hMx9pT
+	DzWn1XsItUMh6RtlQ1ddA6/aKlBdHRd829xlItyeo+ytgJUsXVkp3xtJ54rhwOwN
+	wh6oArjY9cSxXsFI/1/0FpHiqROKP8ua8EMbQd4SUiX7lwhi1rhH3R3KOVbvcauP
+	78kAvCDlUn80BNt7DH0Vubjd5laSOFifpEepk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NpV02xyUVkhxik+62vQlWvaab3t7JcHw
+	RXu463cJmN7T+WXjLn2uPpcYutVybxbnDaieQ6hXsiSei9pE/hUZdfiwIonBin12
+	BE/avenyxbY+RJewjGZ9JsNfORuF0wy2qTBf49JwgEJRbHNfwX3MbqZHVbolmvw6
+	0wdlHkIwy14=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB2C4395A;
+	Sun, 27 Nov 2011 03:56:24 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2F8343959; Sun, 27 Nov 2011
+ 03:56:24 -0500 (EST)
+In-Reply-To: <20111127000603.GA7687@sigill.intra.peff.net> (Jeff King's
+ message of "Sat, 26 Nov 2011 19:06:03 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AF110B72-18D5-11E1-8140-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185977>
 
-This is more or less what regular getpass() does, but
-without turning off character echoing. You have to set
-HAVE_DEV_TTY to enable it.
+Jeff King <peff@peff.net> writes:
 
-For now, only Linux enables this by default. People on other
-/dev/tty-enabled systems can submit patches to turn it on
-once they have tested it.
+> Just because it is passed through the environment does not mean you need
+> to have it set all the time. There is nothing wrong with:
+>
+>   GIT_ALLOW_UNTRUSTED_HOOKS=true git fetch ~bob/repo.git
+>
+> We can even spell it:
+>
+>   git --allow-untrusted-hooks fetch ~bob/repo.git
+>
+> but it should probably still end up as an environment variable to make
+> it through to the remote side (you could also tack it on to the
+> upload-pack command line; that wouldn't make it across git:// or http://
+> connections, but those are irrelevant here anyway).
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Makefile         |    8 ++++++++
- compat/getpass.c |   35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 43 insertions(+), 0 deletions(-)
+I actually like the idea of allowing pre-upload-pack hook on git:// and
+possibly http:// only. git-daemon can tell the upload-pack that it is OK
+to run the hook, and the hook can do the things that only the daemon can
+do, never touching what the original requestor would but the repository
+owner would not have an access to. Normal file:// and ssh:// transfer
+should not be needed for GitHub's stats or Sitaram's proxy usage, and we
+should be able to unconditionally disable the hook when transfer is going
+over these protocols, no?
 
-diff --git a/Makefile b/Makefile
-index d133e2b..a2afe31 100644
---- a/Makefile
-+++ b/Makefile
-@@ -227,6 +227,9 @@ all::
- #
- # Define NO_REGEX if you have no or inferior regex support in your C library.
- #
-+# Define HAVE_DEV_TTY if your system can open /dev/tty to interact with the
-+# user.
-+#
- # Define GETTEXT_POISON if you are debugging the choice of strings marked
- # for translation.  In a GETTEXT_POISON build, you can turn all strings marked
- # for translation into gibberish by setting the GIT_GETTEXT_POISON variable
-@@ -835,6 +838,7 @@ ifeq ($(uname_S),Linux)
- 	NO_STRLCPY = YesPlease
- 	NO_MKSTEMPS = YesPlease
- 	HAVE_PATHS_H = YesPlease
-+	HAVE_DEV_TTY = YesPlease
- endif
- ifeq ($(uname_S),GNU/kFreeBSD)
- 	NO_STRLCPY = YesPlease
-@@ -1641,6 +1645,10 @@ ifdef HAVE_PATHS_H
- 	BASIC_CFLAGS += -DHAVE_PATHS_H
- endif
- 
-+ifdef HAVE_DEV_TTY
-+	BASIC_CFLAGS += -DHAVE_DEV_TTY
-+endif
-+
- ifdef DIR_HAS_BSD_GROUP_SEMANTICS
- 	COMPAT_CFLAGS += -DDIR_HAS_BSD_GROUP_SEMANTICS
- endif
-diff --git a/compat/getpass.c b/compat/getpass.c
-index 8ae82f0..b5bd1dd 100644
---- a/compat/getpass.c
-+++ b/compat/getpass.c
-@@ -1,6 +1,41 @@
- #include "../git-compat-util.h"
- 
-+#ifdef HAVE_DEV_TTY
-+
-+char *getpass_echo(const char *prompt)
-+{
-+	static char buf[1024];
-+	FILE *fh;
-+	int i;
-+
-+	fh = fopen("/dev/tty", "w+");
-+	if (!fh)
-+		return NULL;
-+
-+	fputs(prompt, fh);
-+	fflush(fh);
-+	for (i = 0; i < sizeof(buf) - 1; i++) {
-+		int ch = getc(fh);
-+		if (ch == EOF || ch == '\n')
-+			break;
-+		buf[i] = ch;
-+	}
-+	buf[i] = '\0';
-+
-+	if (ferror(fh)) {
-+		fclose(fh);
-+		return NULL;
-+	}
-+
-+	fclose(fh);
-+	return buf;
-+}
-+
-+#else
-+
- char *getpass_echo(const char *prompt)
- {
- 	return getpass(prompt);
- }
-+
-+#endif
--- 
-1.7.7.4.7.g24824
+One scenario I do not want to see is this. Suppose there is a company that
+runs more than one project, and one of the projects is so secret that only
+engineers working on the project have access to its repository, while all
+people, including the project-A engineers, in the company have access to
+other repositories. Further suppose that people involved in some or many
+of the general repositories want to do something before a fetch from them
+happens. They will use the pre-upload-hook to implement it if we make it
+available, and their new-hire training course will tell their engineers to
+set the GIT_ALLOW_UNTRUSTED_HOOKS. Perhaps the /etc/skel/profile the
+company gives the new-hires already defines it.
+
+And somebody who controls one of the general repositories installs a
+pre-upload-hook that borrows credential of a project-A engineer who
+happens to fetch from it to access repositories of the project-A.
+
+Imagine how the blame game that will ensue goes after materials from
+project-A is exposed. Of course, the owner of the rogue hook will get the
+first blame, but I do not think Git will come unscathed out of it. At
+least we will be blamed for adding an inherently unsafe mechanism.
