@@ -1,118 +1,127 @@
-From: Matthias Fechner <idefix@fechner.net>
-Subject: Re: Switch from svn to git and modify repo completely
-Date: Sun, 27 Nov 2011 11:56:22 +0100
-Message-ID: <4ED21756.70705@fechner.net>
-References: <4EC7E32A.9040903@fechner.net> <20111119225048.384189bc@zappedws> <4EC97D52.1010308@fechner.net> <20111121070247.GA16708@elie.hsd1.il.comcast.net>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: what are the chances of a 'pre-upload' hook?
+Date: Sun, 27 Nov 2011 18:46:25 +0530
+Message-ID: <CAMK1S_jbofsWyag3Sospz8wYHqD4Z1Fs0p+MJWi02eCq0e+uHQ@mail.gmail.com>
+References: <CAMK1S_jaEWV=F6iHKZw_6u5ncDW0bPosNx-03W9bOLOfEEEY1Q@mail.gmail.com>
+	<CAMK1S_gh_CsWc-DnbOuUwn+H1i3skm99xzDbWe-wxsKKS0Qw-w@mail.gmail.com>
+	<20111125144007.GA4047@sigill.intra.peff.net>
+	<7v7h2my0ky.fsf@alter.siamese.dyndns.org>
+	<20111126225519.GA29482@sigill.intra.peff.net>
+	<7vr50uwk7x.fsf@alter.siamese.dyndns.org>
+	<20111126233133.GA31129@sigill.intra.peff.net>
+	<CAPc5daXY_4aimugj8Z4BFE8YvBSM1K+evPU69rLGH5ETo6PO=Q@mail.gmail.com>
+	<20111126235135.GA7606@sigill.intra.peff.net>
+	<CAPc5daUodry_=6pZxA=QOpuRUj9C2ed9Gzp6E1_G93iGfOOvOA@mail.gmail.com>
+	<20111127000603.GA7687@sigill.intra.peff.net>
+	<7v8vn2vt8p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Alexey Shumkin <alex.crezoff@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 27 11:57:01 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 27 14:16:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RUcPq-0000YF-Bb
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Nov 2011 11:56:58 +0100
+	id 1RUeb4-00080c-3b
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Nov 2011 14:16:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752950Ab1K0K4e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Nov 2011 05:56:34 -0500
-Received: from anny.lostinspace.de ([80.190.182.2]:49775 "EHLO
-	anny.lostinspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751841Ab1K0K4d (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Nov 2011 05:56:33 -0500
-Received: from server.idefix.lan (ppp-93-104-88-159.dynamic.mnet-online.de [93.104.88.159])
-	(authenticated bits=0)
-	by anny.lostinspace.de (8.14.5/8.14.5) with ESMTP id pARAuNU8024261
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Sun, 27 Nov 2011 11:56:28 +0100 (CET)
-	(envelope-from idefix@fechner.net)
-Received: from server.idefix.lan (localhost [IPv6:::1])
-	by server.idefix.lan (Postfix) with ESMTP id 797D46B643;
-	Sun, 27 Nov 2011 11:57:52 +0100 (CET)
-X-Virus-Scanned: amavisd-new at fechner.net
-Received: from server.idefix.lan ([127.0.0.1])
-	by server.idefix.lan (server.idefix.lan [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 6UOMk_ciP7BF; Sun, 27 Nov 2011 11:57:51 +0100 (CET)
-Received: from [IPv6:2001:a60:f035:1:4422:7925:f429:c9e0] (unknown [IPv6:2001:a60:f035:1:4422:7925:f429:c9e0])
-	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
-	(No client certificate requested)
-	by server.idefix.lan (Postfix) with ESMTPSA id DAD9E6B634;
-	Sun, 27 Nov 2011 11:57:51 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <20111121070247.GA16708@elie.hsd1.il.comcast.net>
-X-Enigmail-Version: 1.3.3
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.7 (anny.lostinspace.de [80.190.182.2]); Sun, 27 Nov 2011 11:56:29 +0100 (CET)
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,UNPARSEABLE_RELAY
-	autolearn=ham version=3.3.2
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on anny.lostinspace.de
+	id S1754865Ab1K0NQ1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Nov 2011 08:16:27 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:47504 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752433Ab1K0NQ0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Nov 2011 08:16:26 -0500
+Received: by ywa9 with SMTP id 9so2169850ywa.19
+        for <git@vger.kernel.org>; Sun, 27 Nov 2011 05:16:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=S53mGjNwhyKqxX5EoF5D545Zl3ckOTheX1mnPGrU/0g=;
+        b=VGN1/s5SeAejLB2Lu6hHJ9UpvStJCT0xcB9F/1ybT6uCkK6wN2wCajitFoCXOhWFYf
+         sJdDWQG9Pa4MphEo57r8mYTaeCQxN+UIWdzwJnSJip6Z79zBAJEmXehcspZOSrNFfQrc
+         qjG6eWW9m/A/DiG5jsu2iA3ZLBDVLRvphpJDA=
+Received: by 10.182.147.4 with SMTP id tg4mr11671640obb.60.1322399786216; Sun,
+ 27 Nov 2011 05:16:26 -0800 (PST)
+Received: by 10.182.6.41 with HTTP; Sun, 27 Nov 2011 05:16:25 -0800 (PST)
+In-Reply-To: <7v8vn2vt8p.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185984>
 
-Am 21.11.2011 08:02, schrieb Jonathan Nieder:
-> The section "CHECKLIST FOR SHRINKING A REPOSITORY" from the
-> git-filter-branch(1) manual page has some hints.  In particular, "git
-> clone --no-hardlinks" still _copies_ all objects --- you probably
-> would want "git clone file://$(pwd)/repo-orig" to make sure the
-> ordinary transfer negotiation kicks in.
-> 
-> It's very important that the documentation not be misleading, so if
-> you can point to places where the wording can be less confusing, that
-> would be very welcome.
+On Sun, Nov 27, 2011 at 2:26 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Jeff King <peff@peff.net> writes:
+>
+>> Just because it is passed through the environment does not mean you =
+need
+>> to have it set all the time. There is nothing wrong with:
+>>
+>> =C2=A0 GIT_ALLOW_UNTRUSTED_HOOKS=3Dtrue git fetch ~bob/repo.git
+>>
+>> We can even spell it:
+>>
+>> =C2=A0 git --allow-untrusted-hooks fetch ~bob/repo.git
+>>
+>> but it should probably still end up as an environment variable to ma=
+ke
+>> it through to the remote side (you could also tack it on to the
+>> upload-pack command line; that wouldn't make it across git:// or htt=
+p://
+>> connections, but those are irrelevant here anyway).
+>
+> I actually like the idea of allowing pre-upload-pack hook on git:// a=
+nd
+> possibly http:// only. git-daemon can tell the upload-pack that it is=
+ OK
+> to run the hook, and the hook can do the things that only the daemon =
+can
+> do, never touching what the original requestor would but the reposito=
+ry
+> owner would not have an access to. Normal file:// and ssh:// transfer
+> should not be needed for GitHub's stats or Sitaram's proxy usage, and=
+ we
+> should be able to unconditionally disable the hook when transfer is g=
+oing
+> over these protocols, no?
+>
+> One scenario I do not want to see is this. Suppose there is a company=
+ that
+> runs more than one project, and one of the projects is so secret that=
+ only
+> engineers working on the project have access to its repository, while=
+ all
+> people, including the project-A engineers, in the company have access=
+ to
+> other repositories. Further suppose that people involved in some or m=
+any
+> of the general repositories want to do something before a fetch from =
+them
+> happens. They will use the pre-upload-hook to implement it if we make=
+ it
+> available, and their new-hire training course will tell their enginee=
+rs to
+> set the GIT_ALLOW_UNTRUSTED_HOOKS. Perhaps the /etc/skel/profile the
+> company gives the new-hires already defines it.
+>
+> And somebody who controls one of the general repositories installs a
+> pre-upload-hook that borrows credential of a project-A engineer who
+> happens to fetch from it to access repositories of the project-A.
+>
+> Imagine how the blame game that will ensue goes after materials from
+> project-A is exposed. Of course, the owner of the rogue hook will get=
+ the
+> first blame, but I do not think Git will come unscathed out of it. At
+> least we will be blamed for adding an inherently unsafe mechanism.
+>
 
-it would be fantastic if exactly this information is noted in the
-manual. For me it is not really clear what is the difference between a
-git clone with and without --no-hardlinks.
+I'm sorry I started this discussion.  I worked around it, though it's
+a bit kludgy, so maybe time to drop the debate.
 
-I was now able to convert my svn repo to a git repo and split the new
-git repo in several different ones, including the complete history.
-
-Here a short summary for all how need to do the same.
-At first convert the svn into a git reposity:
-git svn clone file:///path/to/svn -A authors -s gitrepo.git
-
-To create the authors file, check the man page.
-
-To get a list of all files:
-git show --pretty="format:" --name-only startrev..endrev | sort | uniq
-
-Maybe you want to remove some branches from the repo because svn users
-used it in a completely wrong way:
-git branch -rd badbranch
-
-Now clone the repo and remove files from it you do not want anymore:
-git clone gitrepo.git tofilter.git
-cd tofilter.git
-git filter-branch -f --tree-filter 'rm -Rf file1 file2.bla dir1 \
-projekt1/dir2' --prune-empty -- --all
-git gc
-cd ..
-
-Repeat this step for all combination you need.
-
-Now create a bare repository and enable some options to use it as a
-central repo:
-git clone --bare tofilter.git tofilter_bare.git
-cd tofilter_bare.git
-git config core.sharedRepository 1
-git config receive.denyNonFastForwards true
-git gc
-cd ..
-
-Now you can copy the repo to the target server/directory and clone it
-from there.
-
-Bye
-Matthias
-
--- 
-
-"Programming today is a race between software engineers striving to
-build bigger and better idiot-proof programs, and the universe trying to
-produce bigger and better idiots. So far, the universe is winning." --
-Rich Cook
+--=20
+Sitaram
