@@ -1,69 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
 Subject: Re: [PATCH 0/6] echo usernames as they are typed
-Date: Sun, 27 Nov 2011 00:56:56 -0800
-Message-ID: <7v4nxqvt7r.fsf@alter.siamese.dyndns.org>
-References: <20111124105801.GA6168@sigill.intra.peff.net>
- <20111127082744.GA32068@sigill.intra.peff.net>
+Date: Sun, 27 Nov 2011 10:17:26 +0100
+Message-ID: <CABPQNSb09kxjvdvz2P-WqU2VtMspaaA8ujTNLJ4+MuCrV=2zsw@mail.gmail.com>
+References: <20111124105801.GA6168@sigill.intra.peff.net> <20111127082744.GA32068@sigill.intra.peff.net>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 27 09:57:05 2011
+X-From: git-owner@vger.kernel.org Sun Nov 27 10:18:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RUaXp-0001Bs-GG
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Nov 2011 09:57:05 +0100
+	id 1RUasL-0006b0-83
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Nov 2011 10:18:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750921Ab1K0I5A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Nov 2011 03:57:00 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63809 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750743Ab1K0I47 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Nov 2011 03:56:59 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD387396C;
-	Sun, 27 Nov 2011 03:56:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tQZtvTkEyyJmK+ZLSlyQnmBe/NY=; b=lMjUhn
-	9TcgIEXomSQ4xrPAybaBC6l1rm35VgOGl0ZjdWTyTMGPsxYAaAqe4HkWgLo+fYGo
-	NZzxbb74p9fK2BXVZQE/dHG5ln7uFJ2Rd9ew8eEP68eVvhg2tMpXasIMx93fWgvb
-	kEs816CmYC65bkh+wASK40TtGWyjndNHaOb/0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=n6EXdVnH34DocTlpyVtpZw/28WdWyCgP
-	XBtmugiSWOEWjPQfC28Zl2ueshv8/idWWwCiACY+uTTjXy8zWK4xUHZcTh7G+CGD
-	X78gCJXMPlt81+nNYkeZOIdf7g85sZq3RU+DuPY+ZuHX2fr8AHBQtMoAUGemVoRy
-	YT8XicHQKxg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C4E2F396B;
-	Sun, 27 Nov 2011 03:56:58 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5AA62396A; Sun, 27 Nov 2011
- 03:56:58 -0500 (EST)
-In-Reply-To: <20111127082744.GA32068@sigill.intra.peff.net> (Jeff King's
- message of "Sun, 27 Nov 2011 03:27:45 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C36FD418-18D5-11E1-A248-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751196Ab1K0JSM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Nov 2011 04:18:12 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:54701 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750900Ab1K0JSI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Nov 2011 04:18:08 -0500
+Received: by ggnr5 with SMTP id r5so4433888ggn.19
+        for <git@vger.kernel.org>; Sun, 27 Nov 2011 01:18:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=jGrD0CRl7lqVoPauk+SEyT0YgkoCXbUXg/ztHZ533TY=;
+        b=Yek6mgqjp4NjLKLaMiCVwabsxGRy29BbwI4eD051zv7yF6oGBYlQy2S9zZ/9drFHlA
+         nrJx7pZx6Sac2CVM/EvMNKAml0qGQlQMuDeJ6Uaf3ExArDbes0Tivz/OaUsETJmQPste
+         4XlyhDWdZsuP6hc9ZNb5/ydrkZXH7SV80GbiA=
+Received: by 10.68.36.1 with SMTP id m1mr36197347pbj.3.1322385487065; Sun, 27
+ Nov 2011 01:18:07 -0800 (PST)
+Received: by 10.68.21.39 with HTTP; Sun, 27 Nov 2011 01:17:26 -0800 (PST)
+In-Reply-To: <20111127082744.GA32068@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/185979>
 
-Jeff King <peff@peff.net> writes:
-
+On Sun, Nov 27, 2011 at 9:27 AM, Jeff King <peff@peff.net> wrote:
 > On Thu, Nov 24, 2011 at 05:58:01AM -0500, Jeff King wrote:
 >
->> Here's a revised version of the http-auth / credential-helper series.
+>> Here's a revised version of the http-auth / credential-helper series=
+=2E
 >
 > And here's something I've been meaning to do on top: actually echo
-> characters at the username prompt. We can't do this portably, but we can
-> at least stub out a compatibility layer and let each system do something
+> characters at the username prompt. We can't do this portably, but we =
+can
+> at least stub out a compatibility layer and let each system do someth=
+ing
 > sensible.
+>
+> =A0[1/6]: move git_getpass to its own source file
+> =A0[2/6]: refactor git_getpass into generic prompt function
+> =A0[3/6]: stub out getpass_echo function
+> =A0[4/6]: prompt: add PROMPT_ECHO flag
+> =A0[5/6]: credential: use git_prompt instead of git_getpass
+> =A0[6/6]: compat/getpass: add a /dev/tty implementation
+>
+> -Peff
 
-Yay ;-)
+Interesting, I've been working on something pretty similar: getting
+rid of getpass usage all together:
+
+https://github.com/kusma/git/tree/work/askpass
+
+My reason to write a getpass replacement was to avoid capping input to
+PASS_MAX, which can be as low as 8 characters (and AFAIK is just that
+on Solaris)...
