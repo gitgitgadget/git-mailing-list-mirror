@@ -1,92 +1,185 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: what are the chances of a 'pre-upload' hook?
-Date: Sun, 27 Nov 2011 22:41:39 -0800
-Message-ID: <7vzkfgvjdo.fsf@alter.siamese.dyndns.org>
-References: <CAMK1S_jaEWV=F6iHKZw_6u5ncDW0bPosNx-03W9bOLOfEEEY1Q@mail.gmail.com>
- <CAMK1S_gh_CsWc-DnbOuUwn+H1i3skm99xzDbWe-wxsKKS0Qw-w@mail.gmail.com>
- <20111125144007.GA4047@sigill.intra.peff.net>
- <7v7h2my0ky.fsf@alter.siamese.dyndns.org>
- <20111126225519.GA29482@sigill.intra.peff.net>
- <7vr50uwk7x.fsf@alter.siamese.dyndns.org>
- <20111126233133.GA31129@sigill.intra.peff.net>
- <CAPc5daXY_4aimugj8Z4BFE8YvBSM1K+evPU69rLGH5ETo6PO=Q@mail.gmail.com>
- <20111126235135.GA7606@sigill.intra.peff.net>
- <CAPc5daUodry_=6pZxA=QOpuRUj9C2ed9Gzp6E1_G93iGfOOvOA@mail.gmail.com>
- <20111127000603.GA7687@sigill.intra.peff.net>
- <7v8vn2vt8p.fsf@alter.siamese.dyndns.org>
- <CAMK1S_jbofsWyag3Sospz8wYHqD4Z1Fs0p+MJWi02eCq0e+uHQ@mail.gmail.com>
+Date: Mon, 28 Nov 2011 02:51:07 -0500
+Message-ID: <20111128075107.GA16901@sigill.intra.peff.net>
+References: <7v8vn2vt8p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Git <git@vger.kernel.org>
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 28 07:41:48 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Sitaram Chamarty <sitaramc@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 28 08:51:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RUuuS-00056m-4o
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Nov 2011 07:41:48 +0100
+	id 1RUvzg-0005AP-OT
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Nov 2011 08:51:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751275Ab1K1Gln (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Nov 2011 01:41:43 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58869 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751101Ab1K1Glm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Nov 2011 01:41:42 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C64F12F3C;
-	Mon, 28 Nov 2011 01:41:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=f+oYVFPzsHCMh557iWhfv6d2Ah0=; b=LPW1Or
-	tzHpFDNZFM3eb8Zng4/4HlXDbXs/KMVO6gtuoKG2Q9m50e9/fL76eFVQK15sxf03
-	p0DE2DVSRwHN2VN/eWmeiVi1P863mfUbrz6e2Px7RMzp0Khst2QjC1KNFoKVt+sW
-	XsI+Bp7v0v//b4veMUZtpqk3mwtSXIXPlvzks=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FYbZErq33Agut7iHekFiQXstunnigRmX
-	8tFX41VtGKQHN9+AS056WO7/H40a4/9qO0x3REcWNIbCycZMXCgYeBH1X5m3c0TO
-	kXeGXIiqEVwhWekPZpd5qzZjHLgtQY3PTehqIxYixicPbGCClRzhByN+9zx1nzk4
-	YJ/ZBx5e+MU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BE7052F3B;
-	Mon, 28 Nov 2011 01:41:41 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 452392F2F; Mon, 28 Nov 2011
- 01:41:41 -0500 (EST)
-In-Reply-To: <CAMK1S_jbofsWyag3Sospz8wYHqD4Z1Fs0p+MJWi02eCq0e+uHQ@mail.gmail.com> (Sitaram
- Chamarty's message of "Sun, 27 Nov 2011 18:46:25 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 07B073A6-198C-11E1-BC42-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752541Ab1K1HvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Nov 2011 02:51:11 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53933
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752573Ab1K1HvJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Nov 2011 02:51:09 -0500
+Received: (qmail 22189 invoked by uid 107); 28 Nov 2011 07:57:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 Nov 2011 02:57:42 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Nov 2011 02:51:07 -0500
+Content-Disposition: inline
+In-Reply-To: <7v8vn2vt8p.fsf@alter.siamese.dyndns.org>
+ <7vmxbivw8u.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186001>
 
-Sitaram Chamarty <sitaramc@gmail.com> writes:
+On Sat, Nov 26, 2011 at 11:51:29PM -0800, Junio C Hamano wrote:
 
->> I actually like the idea of allowing pre-upload-pack hook on git:// and
->> possibly http:// only....
->>
->> One scenario I do not want to see is this. Suppose ...
->
-> I'm sorry I started this discussion.  I worked around it, though it's
-> a bit kludgy, so maybe time to drop the debate.
+> I personally have a huge problem with shipping an inherently unsafe
+> mechanism that is disabled by default even if it is marked with big red
+> letters saying that it is unsafe and should not be enabled casually. It
+> makes it up to the system administrator to decide what is casual and what
+> is not, but when end users are get harmed by a clueless administrator's
+> decision, the repercussion will come back to the Git software, not to the
+> clueless administrator who enabled an unsafe mechanism in an environment
+> where it was not designed to support.
 
-I do not want you to feel sorry, and I do not understand why you feel that
-way.
+I agree. If we can avoid adding any feature which is even potentially
+dangerous, it's good to explore alternatives. At the same time, the
+subject of remote fetch hooks has come up before, and I don't think it's
+going away. It would be nice to reach more resolution this time.
 
-I think a reasonable and safe way to trigger an action in response to a
-request to fetch from a repository _is_ a sensible thing to wish for. So
-far, we established that we cannot just simply add pre-upload hook back in
-and be done with it, as that is not a safe way. We learned something.
+I also have mild concerns about the current receive-pack hooks. The
+thought so far has been "well, you're less likely push into a bad
+person's repository". Which is probably true. But it seems like a flaky
+thing to base security on, especially in multi-user environments with
+shared repositories.
 
-Jeff may be right that any approach based on hooks cannot be made totally
-safe. But the discussion can lead to a workable alternative. The "enable
-the hook only on git:// and http:// and no other" approach might or might
-not be such a workable alternative. The "try talking to a service process
-via named pipe, instead of spawning a hook" might or might not be such a
-workable alternative. Other possibilities may be there to be explored.
+> If the mechanism to notify the external machinery (i.e. counting accesses,
+> learning the true destination of a new fetch request and have the fetcher
+> wait while the real fetch goes to the origin site) were not via a hook
+> that runs as the fetcher but were via something else that runs as the
+> owner of that external service (i.e. counting accesses, maintaining the
+> proxy object pool), I wouldn't have trouble with the proposal.
+> 
+> For example, upload-pack could write the details of the original request
+> to a named pipe to ask the "service" process listening on the other end,
+> and wait for its response.
+
+Right, that was the "socket" solution I mentioned earlier. The problem
+is that it's a pain to set up. If you really want to have a daemon
+running and handling git tasks, then you might as well just have the
+whole upload-pack/receive-pack side accessible over a socket (e.g., just
+run git-daemon if you don't care about authentication, and
+git-over-https if you do).
+
+If you really care about ssh authentication and keeping track of
+individual unix users, then one possibility is to run git-daemon
+listening on a unix socket, use SO_PEERCRED to get the user on the other
+end, and then process everything as a single git user.
+
+For example, imagine Bob and Alice are in the "research" group, and use
+a shared central repo. Bob wants to push:
+
+  1. Bob runs "git push" on his workstation. Git on the workstation
+     connects to "ssh bob@server git-receive-pack $repo".
+
+  2. git-receive-pack on the server runs as Bob. It notices that
+     $repo/daemon-socket exists, and runs in "shim" mode, connecting to
+     the socket and proxying data over the socket.
+
+  3. git-daemon, running as the "research" user, listens on the other
+     end of the socket (and potentially sockets for other repos). It
+     sees the connection and serves it. The daemon already knows which
+     repo to serve because it knows which socket Bob connected to. And
+     it knows it's OK for Bob to access it, because he was able to get
+     to the socket via filesystem permissions.
+
+     The daemon can use getsockopt(SO_PEERCRED) to find out that Bob is
+     the user, and probably set an environment variable. It can freely
+     run any hooks, because the hooks are owned by the "research" user,
+     and that's the user the daemon runs as. Hooks can trust the
+     environment from the daemon, and can use Bob's identity for further
+     authorization checks if they want to. IOW, we are roughly at the
+     same place you would get by connecting over git-over-https.
+
+This naturally extends to "Bob fetches" or "Bob runs his push from the
+server".  As an added bonus over the usual shared-central-repo model,
+malicious users can't just ignore hooks (in the usual shared-repo model,
+everybody can write directly to the object db and refs, so hooks are
+somewhat advisory).
+
+I suspect people who really care about this use case are already running
+git-over-https, possibly with something like gerrit doing some policy
+enforcement. I also suspect there are a lot of corporate environments
+where they just have a big shared repo, set core.sharedRepository, and
+don't worry too much about users hurting each other (in most dev
+environments I've seen, people are perfectly willing to fetch and run
+make without looking at the diff, so it's sort of a moot point).
+
+People in the latter half would be one of the potential audiences for
+the "screw it, just run hooks from the remote repo" flag.
+
+> I actually like the idea of allowing pre-upload-pack hook on git:// and
+> possibly http:// only. git-daemon can tell the upload-pack that it is OK
+> to run the hook, and the hook can do the things that only the daemon can
+> do, never touching what the original requestor would but the repository
+> owner would not have an access to.
+
+That's not necessarily safe. Think about a site like kernel.org. The
+administrator is the one running the daemon, on behalf of all of the
+users. But my impression is that pre-August, developers had shell access
+to their own repos and could write their own hook files. So if
+git-daemon runs hooks, then any repo owner could run arbitrary code as
+the git-daemon, including killing the running daemon and running their
+own trojan.
+
+So you really need some way for the admin to say "it's OK, hooks are
+locked down and it's safe for them to run". Which again, I was thinking
+of as an environment variable.
+
+However, I think for the daemon case, the other alternative I mentioned
+earlier is a bit more elegant: an environment variable which doesn't say
+"respect the hooks in the repo", but rather "run this _particular_
+program as the pre-upload-pack hook".  And then the admin doesn't have
+to care what's in the repos. The daemon runs some particular program
+every time a fetch happens.
+
+It's tempting to say "can't they just replace git-upload-pack with a
+shim that does what they want and then runs upload-pack?"[1]. But I
+think the answer is no, for the same reason we have hooks at all: they
+might want to operate under a lock, or use some data produced by
+upload-pack, or make a decision that blocks the fetch.
+
+[1] Actually, I think Sitaram's case may not be a pre-upload-pack hook,
+    but rather the simple "run before upload-pack" case. Because a
+    pre-upload-pack would probably feed the set of requested objects to
+    the hook. But he will want to fetch from the upstream before even
+    advertising any refs to the client.
+
+> One scenario I do not want to see is this. Suppose there is a company that
+> runs more than one project, and one of the projects is so secret that only
+> engineers working on the project have access to its repository, while all
+> people, including the project-A engineers, in the company have access to
+> other repositories. Further suppose that people involved in some or many
+> of the general repositories want to do something before a fetch from them
+> happens. They will use the pre-upload-hook to implement it if we make it
+> available, and their new-hire training course will tell their engineers to
+> set the GIT_ALLOW_UNTRUSTED_HOOKS. Perhaps the /etc/skel/profile the
+> company gives the new-hires already defines it.
+
+Right. This is a failure of the training course and/or the admin who
+wrote the default profile, and is exactly the thing that would be
+mentioned in the red flags in the docs. I agree there is a risk of
+bone-headed admins, though.
+
+This, btw, is more or less the case I am concerned about _now_ with
+receive-pack. With current git, if any of those general repositories is
+a shared central repo, then project A is similarly vulnerable to anyone
+who can write the hook.
+
+-Peff
