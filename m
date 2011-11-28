@@ -1,149 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 03/13] introduce credentials API
-Date: Mon, 28 Nov 2011 13:46:35 -0800
-Message-ID: <7v4nxnvs1w.fsf@alter.siamese.dyndns.org>
-References: <20111124105801.GA6168@sigill.intra.peff.net>
- <20111124110105.GA8417@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb: in-page errors don't work with mod_perl
+Date: Mon, 28 Nov 2011 23:32:06 +0100
+Message-ID: <201111282332.07276.jnareb@gmail.com>
+References: <CAKD0UuweWoY5ObXgyN9vrOXWrKdNYWuG7CGB0V7HvcuiwRJD+A@mail.gmail.com> <CAKD0Uuws=zU+Pg8afn91mm0t4Rp_GNF++dTYnjA9okndyR=cXQ@mail.gmail.com> <CAKD0UuzsV7A_j8YD4b0Lb95L2NcRcSu5PH8C9aZQmEx3tOuQjQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Nov 28 22:46:45 2011
+To: =?utf-8?q?J=C3=BCrgen_Kreileder?= <jk@blackdown.de>
+X-From: git-owner@vger.kernel.org Mon Nov 28 23:32:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RV92C-0002fa-S6
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Nov 2011 22:46:45 +0100
+	id 1RV9kM-0003qT-Uu
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Nov 2011 23:32:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754369Ab1K1Vqk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Nov 2011 16:46:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48603 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753322Ab1K1Vqj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Nov 2011 16:46:39 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E89164E4;
-	Mon, 28 Nov 2011 16:46:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0kuNO3Zfi3gc+pEDBsBwZd6e8hE=; b=SryAz/
-	YvCM3e2QxBeFNaIHgEDfR87n/Ve2hnK6zQ5zuBHKapKX5HrPRNibf4EZat7EhRoC
-	eGP1/IAFNXwSsStFJinu7MgF89JO1W2HSl0bG58Ih2lInA3djyGHNq8f0DzDWSDb
-	O5QjW7kU5f2S3Cz/Iq0kz5HlogFi5/48bhzKA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sYSWwh+pYUYyiMsUXTG0FdDe+LcSH9iM
-	843HfoNQ0263Msc0Pn9ls6nItKuOxpUNW9CjON7BLedCfjlJBugOp8ut60k1nqU7
-	ww8UEnZfsJqUe2yYziW/dviCTBdrnX8bSVCuCnu+4UKZh8KAh8bs+SLOMD5q/xi4
-	DFMdmBS2lBY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 14BBF64E3;
-	Mon, 28 Nov 2011 16:46:38 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 41CE564E2; Mon, 28 Nov 2011
- 16:46:37 -0500 (EST)
-In-Reply-To: <20111124110105.GA8417@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 24 Nov 2011 06:01:06 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 729E5862-1A0A-11E1-93DC-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753972Ab1K1WcO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Nov 2011 17:32:14 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:63381 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753955Ab1K1WcM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Nov 2011 17:32:12 -0500
+Received: by bke11 with SMTP id 11so9157910bke.19
+        for <git@vger.kernel.org>; Mon, 28 Nov 2011 14:32:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=+SpIiSLAoiMRiF1kKy7JjszRjSy7SgqqSLrOnWEqusU=;
+        b=VpswAcHfm6s2F1UWM3nmOZJOfWufOQiSf96sDOEhWOxLfJWE14iLbthvTsfJf7FbYk
+         RG50GGydWX5ZXqQKso+8CPyGrT2OwB/2A1JWcSZML135Lr85+gI5I44ptv00GsLX7qOV
+         MZd6H2/q/ggz1dXNNcypcT7JyfBuZYgsnYeP4=
+Received: by 10.204.38.16 with SMTP id z16mr48658889bkd.66.1322519529129;
+        Mon, 28 Nov 2011 14:32:09 -0800 (PST)
+Received: from [192.168.1.13] (abwn156.neoplus.adsl.tpnet.pl. [83.8.237.156])
+        by mx.google.com with ESMTPS id f14sm32749783bkv.3.2011.11.28.14.32.06
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 28 Nov 2011 14:32:07 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <CAKD0UuzsV7A_j8YD4b0Lb95L2NcRcSu5PH8C9aZQmEx3tOuQjQ@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186036>
 
-Jeff King <peff@peff.net> writes:
+J=C3=BCrgen Kreileder wrote:
+> On Mon, Nov 28, 2011 at 21:13, J=C3=BCrgen Kreileder <jk@blackdown.de=
+> wrote:
+> > On Mon, Nov 28, 2011 at 17:54, Jakub Narebski <jnareb@gmail.com> wr=
+ote:
+> > =C2=A0[...]
+> > >
+> > > The configuration is very similar. =C2=A0Perhaps that is the diff=
+erence between
+> > > Apache 2.0.x (mine) and Apache 2.2.x (yours).
+> > >
+> > > Does adding `$r->err_headers_out();` before `$r->status(200);` he=
+lps?
+> > > I'm grasping at straws here. =C2=A0mod_perl documentation is not =
+very helpful.
+> >
+> > Doesn't help unfortunately. =C2=A0It's hard to find any information=
+ about
+> > this on the net (except for your comment on stackoverflow :).
+> >
+> > The only way to get mod_perl to return a custom error message with
+> > correct status code I've found so far is $r->custom_response($statu=
+s,
+> > $msg). =C2=A0Unfortunately mod_perl then ignores headers I set, e.g=
+=2E
+> > content-type.
+>=20
+> I guess this explains it:
+> http://foertsch.name/ModPerl-Tricks/custom-content_type-with-custom_r=
+esponse.shtml
+> Requires quite some restructuring to gitweb.perl.
 
-> diff --git a/Documentation/technical/api-credentials.txt b/Documentation/technical/api-credentials.txt
-> new file mode 100644
-> index 0000000..3061077
-> --- /dev/null
-> +++ b/Documentation/technical/api-credentials.txt
-> @@ -0,0 +1,148 @@
-> + ...
-> +`credential_fill`::
-> +
-> +	Attempt to fill the username and password fields of the passed
-> +	credential struct, first consulting storage helpers, then asking
-> +	the user. Guarantees that the username and password fields will
-> +	be filled afterwards (or die() will be called).
-> +
-> +`credential_reject`::
-> +
-> +	Inform the credential subsystem that the provided credentials
-> +	have been rejected. This will notify any storage helpers of the
-> +	rejection (which allows them to, for example, purge the invalid
-> +	credentials from storage), and then clear the username and
-> +	password fields in `struct credential`. It can then be
-> +	`credential_fill`-ed again.
-> +
-> +`credential_approve`::
-> +
-> +	Inform the credential subsystem that the provided credentials
-> +	were successfully used for authentication. This will notify any
-> +	storage helpers of the approval, so that they can store the
-> +	result to be used again.
+I'm coming close to declaring that ModPerl::Registry is horribly broken
+with respect to error pages created by CGI, and say that we don't suppo=
+rt
+it, removing mod_perl configuration examples from gitweb documentation.
 
-It's a bit hard to read and understand which part of the system calls
-these and which other part of the system is responsible for implementing
-them, and how "helper" fits into the picture (perhaps calling some of
-these interfaces will result in "helper" getting called?).
+WTF 'return Apache2::Const::DONE;' doesn't work with ModPerl::Registry?
+It is supposed to work with native mod_perl scripts...
 
-> +Credential Storage Helpers
-> +--------------------------
-> +
-> +Credential storage helpers are programs executed by git to fetch or save
-> +credentials from and to long-term storage (where "long-term" is simply
-> +longer than a single git process; e.g., credentials may be stored
-> +in-memory for a few minutes, or indefinitely on disk).
-> +
-> +Helper scripts should generally be found in the PATH, and have names of
-> +the form "git-credential-$HELPER".
-
-Is this normal PATH or can a helper be moved away into $GIT_EXEC_PATH?
-
-I briefly wondered if they want to be git-credential--$HELPER; I do not
-deeply care either way, though.
-
-> When the helper string "$HELPER" is
-> +passed to credential functions, they will run "git-credential-$HELPER"
-> +via the shell. If the first word of $HELPER contains non-alphanumeric
-> +characters, then $HELPER is executed as a shell command. This makes it
-> +possible to specify individual scripts by their full path (e.g.,
-> +`/path/to/helper`) or even shell snippets (`f() { do_whatever; }; f`).
-
-The definition of "the first word" above is not specified but it seems to
-be "space separated". In other words, 'f() { do_whatever; }; f' would be
-OK but 'f () { do_whatever; }; f' would not be. Am I reading and guessing
-your intention correctly?
-
-Funnily enough, 'f<TAB>() { do_whatever; }; f' would qualify as the first
-word having a non alphanumeric.
-
-> +The details of the credential will be provided on the helper's stdin
-> +stream. The credential is split into a set of named attributes.
-> +Attributes are provided to the helper, one per line. Each attribute is
-> +specified by a key-value pair, separated by an `=` (equals) sign,
-> +followed by a newline. The key may contain any bytes except `=` or
-> +newline. The value may contain any bytes except a newline.  In both
-> +cases, all bytes are treated as-is (i.e., there is no quoting, and one
-> +cannot transmit a value with newline in it).
-
-Can k or v contain a NUL? The literal reading of the above implies they
-could, but I do not think you meant to.
-
-> +int credential_read(struct credential *c, FILE *fp)
-> +{
-> ...
-> +			c->host = xstrdup(value);
-> +		}
-> +		else if (!strcmp(key, "path")) {
-> ...
-> +		/* ignore other lines; we don't know what they mean, but
-> +		 * this future-proofs us when later versions of git do
-> +		 * learn new lines, and the helpers are updated to match */
-
-Two style nits.
+--=20
+Jakub Narebski
+Poland
