@@ -1,95 +1,76 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb: 404 links on some blob pages
-Date: Mon, 28 Nov 2011 18:24:53 +0100
-Message-ID: <201111281824.53338.jnareb@gmail.com>
-References: <CAKD0UuxBO_Uj4dHr9g3zryO=03_ds0omFFnGY89_MPJGfxLZMA@mail.gmail.com> <m3y5v1kwwm.fsf@localhost.localdomain> <CAKD0Uuyom0chUGfsh+oBRw8NoH4XutbmkVVKoQon6YO2V5oWkA@mail.gmail.com>
+Subject: Re: Permissions per git repository
+Date: Mon, 28 Nov 2011 09:40:11 -0800 (PST)
+Message-ID: <m3ty5okuxu.fsf@localhost.localdomain>
+References: <1322487502060-7038724.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-4
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?utf-8?q?J=C3=BCrgen_Kreileder?= <jk@blackdown.de>
-X-From: git-owner@vger.kernel.org Mon Nov 28 18:25:03 2011
+To: pcm2a <cameron@ree-yees.com>
+X-From: git-owner@vger.kernel.org Mon Nov 28 18:40:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RV4wx-0000fb-6c
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Nov 2011 18:25:03 +0100
+	id 1RV5Bm-0006vg-JC
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Nov 2011 18:40:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753215Ab1K1RY6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Nov 2011 12:24:58 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:41409 "EHLO
+	id S1752494Ab1K1RkQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Nov 2011 12:40:16 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:41390 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751415Ab1K1RY5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Nov 2011 12:24:57 -0500
-Received: by bke11 with SMTP id 11so8799710bke.19
-        for <git@vger.kernel.org>; Mon, 28 Nov 2011 09:24:56 -0800 (PST)
+	with ESMTP id S1751873Ab1K1RkQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Nov 2011 12:40:16 -0500
+Received: by bke11 with SMTP id 11so8816357bke.19
+        for <git@vger.kernel.org>; Mon, 28 Nov 2011 09:40:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=bxjiT3y6dMfWvBX/QAmhP0Ceyi14yyn6iCpfy5UQa38=;
-        b=nXt84pj66XP9ru/CtLRF6S+B1qJL2FK01y2mhT/W2D73TSM/gEWwNctH+gHOliKEx1
-         gyQZHrj3R9QtcTEoACNzTZ3Rxm9jUGvQJeKgmH1wy6HzP2V51Eg+g/0gsXaS+/a2J8FI
-         r0CRQ1hh3QinV6y3m15mTpvo3dv5eoBVMl/O4=
-Received: by 10.204.157.151 with SMTP id b23mr46757410bkx.30.1322501096553;
-        Mon, 28 Nov 2011 09:24:56 -0800 (PST)
-Received: from [192.168.1.13] (abwn156.neoplus.adsl.tpnet.pl. [83.8.237.156])
-        by mx.google.com with ESMTPS id hw14sm18008878bkc.16.2011.11.28.09.24.53
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=qOA0em4AYKs8YHD1XoYP4DiIccHa7stjuzFkOoZ1XnQ=;
+        b=utiFX3j9snd/HKBcdk7Irt4yxjbJjkHBAhpclAOwP8+AXsofySEaZjAms0j4ZSjfMc
+         IoxgHDp8zndfxswadOgPj20iPzw++/39+O1y0W4cR1NFDCrLpRUxsDAbhIUFHiogftc8
+         UBOWETOj5NwpIcDDHeaLTjQvxwt08GNpi6PMA=
+Received: by 10.204.154.77 with SMTP id n13mr47279468bkw.83.1322502012731;
+        Mon, 28 Nov 2011 09:40:12 -0800 (PST)
+Received: from localhost.localdomain (abwn156.neoplus.adsl.tpnet.pl. [83.8.237.156])
+        by mx.google.com with ESMTPS id cc2sm31053513bkb.8.2011.11.28.09.40.10
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 28 Nov 2011 09:24:54 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <CAKD0Uuyom0chUGfsh+oBRw8NoH4XutbmkVVKoQon6YO2V5oWkA@mail.gmail.com>
-Content-Disposition: inline
+        Mon, 28 Nov 2011 09:40:11 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id pASHdxtD015426;
+	Mon, 28 Nov 2011 18:40:10 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id pASHdfM1015418;
+	Mon, 28 Nov 2011 18:39:41 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1322487502060-7038724.post@n2.nabble.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186023>
 
-J=C3=BCrgen Kreileder wrote:
-> 2011/11/27 Jakub Narebski <jnareb@gmail.com>:
-> > J=C3=BCrgen Kreileder <jk@blackdown.de> writes:
-> >
-> > > some blob pages have broken links:
-> > >
-> > > For example, on
-> > > https://git.blackdown.de/?p=3Dcontactalbum.git;a=3Dblob;f=3DClass=
-es/WindowController.m;h=3Db84d1882cb6c3a2d2058cbdd56b2280b48f1690a;hb=3D=
-b84d1882cb6c3a2d2058cbdd56b2280b48f1690a
-> > > the blob_plain link for WindowController.m leads to '404 - Cannot=
- find file':
-> > > https://git.blackdown.de/?p=3Dcontactalbum.git;a=3Dblob_plain;f=3D=
-Classes/WindowController.m;hb=3Db84d1882cb6c3a2d2058cbdd56b2280b48f1690=
-a
-> >
-> > That is strange. =C2=A0The check is the same for 'blob' and 'blob_p=
-lain'
-> > action...
+pcm2a <cameron@ree-yees.com> writes:
+
+> I have a central git repository running on Windows Server 2008 using =
+Apache
+> 2.2 + Smart HTTP + SSPI (for authentication).  I can easily limit use=
+rs to
+> all of the repositories with the 'require' command in apache. This is=
+ for
+> all repositories and not just certain ones.
 >=20
-> The problem is the missing hash (h) parameter for the latter URL.
-> Adding it to the blob_plain link makes it work.  Just as removing it
-> from the blob link breaks that one as well.
+> How can I limit user(s) or group(s) to one repository and a different
+> user(s) or group(s) to another repository using git or apache configu=
+ration?
 
-Strange.  From the look of the page it looks like the 'hb' ("hash_base"=
-)
-parameter that should lead to the commit from which we get the file is
-bogus.
-
-But the "raw" link uses=20
-
-  href(action=3D>"blob_plain", -replay=3D>1)
-
-which means that if 'blob' has "h" set correctly, then 'blob_plain'
-should too.
-
-> Adding h=3D... to the tree link doesn't fix that case, though.
-
-Of course it doesn't if you just copy _blob_ hash as _tree_ hash... :-P
-(i.e. if you just copy "h" parameter from 'blob' URL).
+If I remember correctly gitolite (a tool to manage access to git
+repositories) has support for controlling access via smart HTTP.
 
 --=20
-Jakub Narebski
-Poland
+Jakub Nar=EAbski
