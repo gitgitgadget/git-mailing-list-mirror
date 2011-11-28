@@ -1,70 +1,59 @@
-From: Andrew Eikum <aeikum@codeweavers.com>
-Subject: Re: Copy branch into master
-Date: Mon, 28 Nov 2011 12:36:16 -0600
-Message-ID: <20111128183616.GB29503@foghorn.codeweavers.com>
-References: <CAHxBh_T-f7O4r0zn=NtLTYtdbNqd3qSo2tW84aYRJp7ugDSMpw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/6] echo usernames as they are typed
+Date: Mon, 28 Nov 2011 13:59:56 -0500
+Message-ID: <20111128185956.GA28191@sigill.intra.peff.net>
+References: <20111124105801.GA6168@sigill.intra.peff.net>
+ <20111127082744.GA32068@sigill.intra.peff.net>
+ <CABPQNSb09kxjvdvz2P-WqU2VtMspaaA8ujTNLJ4+MuCrV=2zsw@mail.gmail.com>
+ <20111128035321.GA15640@sigill.intra.peff.net>
+ <CABPQNSbLvWh-ivaqBk-Du+kwZvV3t+ajEJhHATRzyGZbHYyM=Q@mail.gmail.com>
+ <20111128113127.GA23408@sigill.intra.peff.net>
+ <CABPQNSYd8PFsoRi6NtjQYNQzM+NHv_aRCLRWQ=XsFuw2gGWAng@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Ron Eggler <ron.eggler@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 28 19:36:27 2011
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 28 20:00:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RV641-0005sH-4Z
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Nov 2011 19:36:25 +0100
+	id 1RV6RA-0006jF-HF
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Nov 2011 20:00:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753846Ab1K1SgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Nov 2011 13:36:19 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:58745 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752280Ab1K1SgS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Nov 2011 13:36:18 -0500
-Received: from foghorn.codeweavers.com ([216.251.189.130])
-	by mail.codeweavers.com with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <aeikum@codeweavers.com>)
-	id 1RV63u-0003Ys-1c; Mon, 28 Nov 2011 12:36:18 -0600
+	id S1753892Ab1K1S77 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Nov 2011 13:59:59 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54117
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752843Ab1K1S76 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Nov 2011 13:59:58 -0500
+Received: (qmail 26202 invoked by uid 107); 28 Nov 2011 19:06:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 Nov 2011 14:06:31 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Nov 2011 13:59:56 -0500
 Content-Disposition: inline
-In-Reply-To: <CAHxBh_T-f7O4r0zn=NtLTYtdbNqd3qSo2tW84aYRJp7ugDSMpw@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <CABPQNSYd8PFsoRi6NtjQYNQzM+NHv_aRCLRWQ=XsFuw2gGWAng@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186026>
 
-On Mon, Nov 28, 2011 at 10:25:33AM -0800, Ron Eggler wrote:
-> Some time ago I created a DVT branch in my project and I have almost been
-> exclusively working in it. Now the time for some test deployment came and I
-> didn't have time to merge it all back into the master thus I gave out the
-> DVT branch version. Now I would like to copy exactly what I have in that
-> branch back into my master to have an exact copy in my master of what got
-> deployed with out any changes.
-> How can I do this?
+On Mon, Nov 28, 2011 at 01:59:34PM +0100, Erik Faye-Lund wrote:
 
-Couple options, depending on what you want:
+> > Certainly on non-Windows something like that would not be welcome. The
+> > user can already have specified GIT_ASKPASS if they don't have a
+> > terminal. And once the credential-helper code is in, they can use a
+> > platform-specific helper that provides a nice dialog if they want it.
+> >
+> 
+> Yes, that's certainly cleaner implementation-wise. But didn't you
+> change it to only do the storage-part in the last round, or did I
+> misunderstand the updated series?
 
-Rename DVT to master (similar to 'mv DVT master', including
-losing the contents of 'master'):
-$ git checkout --detach HEAD
-$ git branch -M DVT master
-$ git checkout master
+Yeah, sorry, I'm getting ahead of myself. I left room in the spec for an
+"ask" operation on helpers, but I haven't implemented it yet.
 
-Retain old master (like 'mv master old_master; mv DVT master'):
-$ git checkout --detach HEAD
-$ git branch -m master old_master
-$ git branch -m DVT master
-$ git checkout master
-
-The "checkout --detach" is just so Git doesn't complain about
-moving/deleting the currently checked out branch.
-
-If you haven't yet, be sure to read ProGit, which should make
-questions like this trivial for you to answer yourself in the future:
-<http://progit.org/book/>
-
-Hope this helps,
-Andrew
+-Peff
