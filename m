@@ -1,78 +1,92 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [BUG] difftool falls back to normal diff when used during merge resolution
-Date: Mon, 28 Nov 2011 03:16:27 -0800
-Message-ID: <2814991420316381881@unknownmsgid>
-References: <CAHWJSOSB768hWsNqrR559wef3-k_yZ=TjS_mxfj3TxXdgwm5iQ@mail.gmail.com>
-Mime-Version: 1.0 (iPhone Mail 8C148a)
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jakub Turski <yacoob@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 28 12:16:36 2011
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/6] echo usernames as they are typed
+Date: Mon, 28 Nov 2011 06:31:27 -0500
+Message-ID: <20111128113127.GA23408@sigill.intra.peff.net>
+References: <20111124105801.GA6168@sigill.intra.peff.net>
+ <20111127082744.GA32068@sigill.intra.peff.net>
+ <CABPQNSb09kxjvdvz2P-WqU2VtMspaaA8ujTNLJ4+MuCrV=2zsw@mail.gmail.com>
+ <20111128035321.GA15640@sigill.intra.peff.net>
+ <CABPQNSbLvWh-ivaqBk-Du+kwZvV3t+ajEJhHATRzyGZbHYyM=Q@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 28 12:31:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RUzCM-0004IT-Mg
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Nov 2011 12:16:35 +0100
+	id 1RUzQt-0002YG-Ts
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Nov 2011 12:31:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752072Ab1K1LQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Nov 2011 06:16:31 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:63883 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751223Ab1K1LQb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Nov 2011 06:16:31 -0500
-Received: by ywa9 with SMTP id 9so2766021ywa.19
-        for <git@vger.kernel.org>; Mon, 28 Nov 2011 03:16:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=references:from:in-reply-to:mime-version:date:message-id:subject:to
-         :cc:content-type;
-        bh=FQtFSbaB4J2vhqrhWZsUAMXGmhcg9tX8oclhMorYIIg=;
-        b=H0InokseBNGJFTLImBEo7p426KyT3O6OyOLoyb1eXMSUrt8/pGsWv6o9uuzUuNT0b3
-         JHts2ekO9tEaEnnzbNC+s700Pzh9DTJLcpMMgjhXeRH3WhL57UZ6el8D3ymlxUXGPZxz
-         UJcBme+w/0SxHfPOTE5swu5twTaXxlOGjB2+g=
-Received: by 10.100.28.29 with SMTP id b29mr323625anb.126.1322478990820; Mon,
- 28 Nov 2011 03:16:30 -0800 (PST)
-In-Reply-To: <CAHWJSOSB768hWsNqrR559wef3-k_yZ=TjS_mxfj3TxXdgwm5iQ@mail.gmail.com>
+	id S1752933Ab1K1Lbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Nov 2011 06:31:31 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54046
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752852Ab1K1Lba (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Nov 2011 06:31:30 -0500
+Received: (qmail 24575 invoked by uid 107); 28 Nov 2011 11:38:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 Nov 2011 06:38:03 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Nov 2011 06:31:27 -0500
+Content-Disposition: inline
+In-Reply-To: <CABPQNSbLvWh-ivaqBk-Du+kwZvV3t+ajEJhHATRzyGZbHYyM=Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186012>
 
-On Nov 27, 2011, at 10:09 AM, Jakub Turski <yacoob@gmail.com> wrote:
+On Mon, Nov 28, 2011 at 10:36:21AM +0100, Erik Faye-Lund wrote:
 
-> Hello there,
->
-> Just found this behavior, and after a chat on IRC it looks to me like
-> an actual bug. I have 'git difftool' configured to use vimdiff - and
-> it worked fine. Despite that config, git still falls back to plain
-> diff when I launch difftool mid-way through merge conflict resolution.
->
-> Here's a reproducable testcase (w/ version 1.7.7.3)
->
-> $ mkdir a; cd a; git init; echo A>A; git add A; git commit -m A; git
-> branch alt; echo AA>A; git commit -am AA; git checkout alt; echo B>A;
-> git commit -m B; git commit -am B; git checkout master; git merge alt;
-> git difftool -t vimdiff A
->
-> Results:
-> http://pastie.org/2929336
+> > You really want to open "/dev/tty" on most Unix systems (which is what
+> > getpass() does).
+> 
+> Yes, you're right. Opening "/dev/tty" is much better. But what happens
+> for processes started by GUI applications (with no easily observable
+> tty, if any)? Does open simply fail? If so, is it desirable for us to
+> fail in that case?
 
-I think this is an unfortunate case where the implementation leaks
-into the user experience.
+Yes, the open will fail (on Linux, I get ENXIO).
 
-I haven't checked, but I'm pretty sure this is because
-GIT_EXTERNAL_DIFF has no affect when the conflicts exist.
+And yes, we should fail in that case. getpass() will generally return
+NULL in that instance, and the current implementation of git_getpass()
+will die(), explaining that we could not get the password.
 
-git mergetool can be used in this situation.
+> > I have no idea what would be appropriate on Windows.
+> 
+> It's pretty similar, but not exactly: CreateFile("CONIN$", ...) or
+> CreateFile("CONOUT$", ...), depending on if you want the read-handle
+> or the write-handle... I can probably cook up something a bit more
+> concrete, though.
 
-We could do a check up front in difftool to see whether conflicts
-exist and exit with an error message. The difftool script is quite
-small and basically a very thin wrapper around git diff, though, so I
-do hesitate before making it more complicated.
+OK, that maps to the /dev/tty concept quite well. Though I suspect the
+code for turning off character echo-ing is going to also be different.
 
-anyways, try "git mergetool".
--- 
-            David
+> But _getch() that we already use always reads from the console
+> (according to MSDN, I haven't actually tested this myself:
+> http://msdn.microsoft.com/en-us/library/078sfkak%28v=VS.80%29.aspx).
+> But I don't think this allows us to fail when no console is attached.
+> Question is, should we fail in such cases? Windows does have an API to
+> prompt for passwords in a GUI window... Perhaps fallbacking to those
+> are the way to go? Something like:
+> 
+> if (GetConsoleWindow()) {
+> 	/*  normal console-stuff */
+> } else {
+> 	/* call CredUIPromptForWindowsCredentials(...) instead */
+> }
+
+Certainly on non-Windows something like that would not be welcome. The
+user can already have specified GIT_ASKPASS if they don't have a
+terminal. And once the credential-helper code is in, they can use a
+platform-specific helper that provides a nice dialog if they want it.
+
+So I would say trying to do something graphical would be surprising and
+unwelcome. But then, I am a very Unix-y kind of guy. Maybe on Windows
+something like that would be more favorable. I'll leave that decision to
+people who know more.
+
+-Peff
