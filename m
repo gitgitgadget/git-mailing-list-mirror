@@ -1,62 +1,70 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: Git Submodule Problem - Bug?
-Date: Tue, 29 Nov 2011 11:25:41 +0100
-Message-ID: <201111291125.41943.trast@student.ethz.ch>
-References: <38AE3033-6902-48AA-819B-DB4083F1F8EF@gmail.com> <201111291024.01230.trast@student.ethz.ch> <20111129101546.GB2829@kolya>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Implement fast hash-collision detection
+Date: Tue, 29 Nov 2011 05:29:29 -0500
+Message-ID: <20111129102929.GA28024@sigill.intra.peff.net>
+References: <1322546563.1719.22.camel@yos>
+ <20111129090733.GA22046@sigill.intra.peff.net>
+ <CACBZZX59PiO0GGfPg=Gn0h_yWFnAMxmtDtecv9Yd_Pu8Jz0gzg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Manuel Koller <koller.manuel@gmail.com>, <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Tue Nov 29 11:25:51 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 29 11:29:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVKsn-0007PT-Tx
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 11:25:50 +0100
+	id 1RVKwV-0000Na-77
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 11:29:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754572Ab1K2KZo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Nov 2011 05:25:44 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:32476 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753967Ab1K2KZo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Nov 2011 05:25:44 -0500
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 29 Nov
- 2011 11:25:41 +0100
-Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 29 Nov
- 2011 11:25:42 +0100
-User-Agent: KMail/1.13.7 (Linux/3.1.0-47-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <20111129101546.GB2829@kolya>
-X-Originating-IP: [129.132.153.233]
+	id S1753783Ab1K2K3e convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Nov 2011 05:29:34 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55580
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750880Ab1K2K3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Nov 2011 05:29:34 -0500
+Received: (qmail 29987 invoked by uid 107); 29 Nov 2011 10:36:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Nov 2011 05:36:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Nov 2011 05:29:29 -0500
+Content-Disposition: inline
+In-Reply-To: <CACBZZX59PiO0GGfPg=Gn0h_yWFnAMxmtDtecv9Yd_Pu8Jz0gzg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186052>
 
-Fredrik Gustafsson wrote:
-> > [removing a submodule and adding another under the same name
-> > confuses git]
-> 
-> This is something I did not thought about when writing that patch. The
-> reason that this fails is that the part when the first submodule is
-> removed is no longer complete (as intended). Before this patch
->      git config --remove-section submodule.sub &&
->      git rm .gitmodules &&
->      rm -rf sub &&
-> Did remove all the data associated with the submodule. That's no longer
-> the case.
+On Tue, Nov 29, 2011 at 11:24:18AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
 
-So maybe the right questions to ask would be: what's the *official*
-way of removing a submodule completely?  Do we support overwriting
-submodules in the way Manuel wanted to?  Why not? :-)
+> On Tue, Nov 29, 2011 at 10:07, Jeff King <peff@peff.net> wrote:
+>=20
+> > However, it may be of interest that the Sun is expected to burn out=
+ in a
+> > mere 10^10 years[1].
+>=20
+> Off topic, but it's a a lot sooner than that. The total age of the su=
+n
+> is is around 10^10 (10 billion) years, but we're already ~4.6 billion
+> years along that line.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Yeah, I checked Wikipedia, but rounded up for simplicity. I did use 5
+billion for my fun fact at the end of the email, which is close to
+accurate.
+
+> However the Sun is currently in a stage of gradual heating until it
+> turns into a red giant in ~5 billion years. In around 500 million
+> years the earth will be uninhabitable as we know it, and in around 1
+> billion years the surface will be hot enough to have boiled all the
+> oceans. In other words the earth in a billion years will probably loo=
+k
+> similar to how Venus looks now.
+
+Good point. If we want an accidental collision in the next 500 million
+years, we'd better step up the pace of development!
+
+-Peff
