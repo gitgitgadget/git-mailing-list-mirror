@@ -1,70 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: t/t1304: avoid -d option to setfacl (db82657)
-Date: Tue, 29 Nov 2011 07:23:33 -0500
-Message-ID: <20111129122333.GB30456@sigill.intra.peff.net>
-References: <gitster/git/commit/db826571e4099066fe44233d95642591016c831b@github.com>
- <gitster/git/commit/db826571e4099066fe44233d95642591016c831b/729354@github.com>
- <CA+sFfMc6BCPvk1FCjZwyY_pWqXBut3D--OfrFEcfK5p97D-KHQ@mail.gmail.com>
- <D95BFEA0-BAC1-4CBD-8B56-27DB4BDF147C@gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: Copy branch into master
+Date: Tue, 29 Nov 2011 20:49:49 +0800
+Message-ID: <CALUzUxrxX7Av6OSb5qHMSCua-Y8dGdf8ux1yLoCwNJeXtd-kow@mail.gmail.com>
+References: <CAHxBh_T-f7O4r0zn=NtLTYtdbNqd3qSo2tW84aYRJp7ugDSMpw@mail.gmail.com>
+	<20111128183616.GB29503@foghorn.codeweavers.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Brandon Casey <drafnel@gmail.com>,
-	wsp 
-	<reply+c-729354-3460aca0fa61e627f9d1a271cf70a99d5c1e7e4e-921167@reply.github.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Scott Parrish <wsparrish@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 29 13:23:53 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Ron Eggler <ron.eggler@gmail.com>, git@vger.kernel.org
+To: Andrew Eikum <aeikum@codeweavers.com>
+X-From: git-owner@vger.kernel.org Tue Nov 29 13:49:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVMj2-0001fu-Vi
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 13:23:53 +0100
+	id 1RVN8G-0003YW-Lj
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 13:49:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755099Ab1K2MXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Nov 2011 07:23:38 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55636
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754087Ab1K2MXg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Nov 2011 07:23:36 -0500
-Received: (qmail 31134 invoked by uid 107); 29 Nov 2011 12:30:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Nov 2011 07:30:09 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Nov 2011 07:23:33 -0500
-Content-Disposition: inline
-In-Reply-To: <D95BFEA0-BAC1-4CBD-8B56-27DB4BDF147C@gmail.com>
+	id S1753437Ab1K2Mtw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Nov 2011 07:49:52 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:63811 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753211Ab1K2Mtv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Nov 2011 07:49:51 -0500
+Received: by faaq16 with SMTP id q16so135584faa.19
+        for <git@vger.kernel.org>; Tue, 29 Nov 2011 04:49:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Jm1bPCS/jRlqYMR5Peq6qEGafQh4JCGrt61VkBJwE0I=;
+        b=rKv1XR0A2eFHgrjC2gXangOsGv9PtwR2ObboS7I33tIy+E6SCTpaxxm2laKqt6d801
+         QX6oheQmOALcehuumRFf8f46XWER+onSS6YVf8uQXezVmdA+Z8Pb+Fxkw2wyj9q8CjAX
+         LJIzelUW7WtCNkj0OsgX3edbw6pPQsRKU0WP4=
+Received: by 10.204.8.77 with SMTP id g13mr49098250bkg.89.1322570989963; Tue,
+ 29 Nov 2011 04:49:49 -0800 (PST)
+Received: by 10.223.71.206 with HTTP; Tue, 29 Nov 2011 04:49:49 -0800 (PST)
+In-Reply-To: <20111128183616.GB29503@foghorn.codeweavers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186056>
 
-On Sat, Nov 19, 2011 at 03:28:49PM -0500, Scott Parrish wrote:
+On Tue, Nov 29, 2011 at 2:36 AM, Andrew Eikum <aeikum@codeweavers.com> wrote:
+> On Mon, Nov 28, 2011 at 10:25:33AM -0800, Ron Eggler wrote:
+>> Some time ago I created a DVT branch in my project and I have almost been
+>> exclusively working in it. Now the time for some test deployment came and I
+>> didn't have time to merge it all back into the master thus I gave out the
+>> DVT branch version. Now I would like to copy exactly what I have in that
+>> branch back into my master to have an exact copy in my master of what got
+>> deployed with out any changes.
+>> How can I do this?
+>
+> Couple options, depending on what you want:
+>
+> Rename DVT to master (similar to 'mv DVT master', including
+> losing the contents of 'master'):
+> $ git checkout --detach HEAD
+> $ git branch -M DVT master
+> $ git checkout master
 
-> > The abandoned POSIX draft does actually specify the FreeBSD behavior.
-> > 
-> > So I think it's kind of a toss-up.  Which option we choose should
-> > probably depend on whether we get more test coverage by using the
-> > "d[efault]" notation or by using the -d option.  That depends on
-> > whether there are more Solaris users compiling git or whether there
-> > are more FreeBSD users.  I don't know the answer to that either.  I
-> > tend to think there are very few of either.
-> 
-> Is there a reason conditional logic can't be used (perhaps keying off
-> of `uname -s` or the like) so that we have coverage in all cases?
+It might not be wise to take the strict definition of rename = move
+(copy + delete). You will lose *all* your reflog associated with
+master. The old master is gone forever.
 
-It's nice if we can auto-detect such things based on behavior, and then
-there's no need for maintaining a "uname -s" guess. Perhaps we can
-check at the beginning of t1304 which one works (or neither), and set a
-flag appropriately? It looks like we already check whether setfacl works
-at all, so this would be a natural extension.
+Resetting the branch is "safer". It's like pseudo-copying the branch.
+The reflog for both branches are still around. You can do this with
 
-I started to do a "how about this" patch, but I realized that in order
-to see whether "-d" worked as "default" versus "delete", we'll have to
-check the output of "getfacl" to see if it reports the default entry.
-And then I realized I have no idea what FreeBSD shows in such a case
-(surely not "d:*", right?).
+ # on master
+ $ git reset --hard DVT
 
--Peff
+or
+
+ # not on master
+ $ git branch -f master dvt
+
+-- 
+Cheers,
+Ray Chuan
