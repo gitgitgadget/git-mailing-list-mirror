@@ -1,115 +1,60 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] grep: enable multi-threading for -p and -W
-Date: Tue, 29 Nov 2011 15:07:04 +0100
-Message-ID: <201111291507.04754.trast@student.ethz.ch>
-References: <5e3bcf651b31b299ca411296e6e7c4d11f6ae617.1322232319.git.trast@student.ethz.ch> <201111291054.39477.trast@student.ethz.ch> <4ED4E2D7.9090804@lsrfire.ath.cx>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Implement fast hash-collision detection
+Date: Tue, 29 Nov 2011 07:23:19 -0800
+Message-ID: <CAJo=hJvavm6feUjxOZ-qvJjs0nT=uKtFqs1Z82rcyEqazFxUOg@mail.gmail.com>
+References: <1322546563.1719.22.camel@yos> <20111129090733.GA22046@sigill.intra.peff.net>
+ <CACsJy8BRhoYM+Lb8afp=3rKzYNOEq0JY8uS9mD1ovz3uyJVWOA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: =?iso-8859-1?q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Nov 29 15:07:17 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, Bill Zaumen <bill.zaumen+git@gmail.com>,
+	git@vger.kernel.org, gitster@pobox.com,
+	torvalds@linux-foundation.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 29 16:23:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVOL7-00039E-5M
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 15:07:17 +0100
+	id 1RVPXA-0005iS-UH
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 16:23:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755704Ab1K2OHJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Nov 2011 09:07:09 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:9193 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755690Ab1K2OHH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2011 09:07:07 -0500
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 29 Nov
- 2011 15:07:05 +0100
-Received: from thomas.inf.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 29 Nov
- 2011 15:07:04 +0100
-User-Agent: KMail/1.13.7 (Linux/3.1.0-47-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <4ED4E2D7.9090804@lsrfire.ath.cx>
-X-Originating-IP: [129.132.153.233]
+	id S1754525Ab1K2PXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Nov 2011 10:23:44 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:62010 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752475Ab1K2PXn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Nov 2011 10:23:43 -0500
+Received: by ywa9 with SMTP id 9so4189571ywa.19
+        for <git@vger.kernel.org>; Tue, 29 Nov 2011 07:23:43 -0800 (PST)
+Received: by 10.236.161.103 with SMTP id v67mr69984295yhk.87.1322580222755;
+ Tue, 29 Nov 2011 07:23:42 -0800 (PST)
+Received: by 10.147.167.10 with HTTP; Tue, 29 Nov 2011 07:23:19 -0800 (PST)
+In-Reply-To: <CACsJy8BRhoYM+Lb8afp=3rKzYNOEq0JY8uS9mD1ovz3uyJVWOA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186061>
 
-Ren=E9 Scharfe wrote:
-> > * none of the patches:
-> >   git grep --cached INITRAMFS_ROOT_UID
-> >     2.13user 0.14system 0:02.10elapsed
-> >   git grep --cached -W INITRAMFS_ROOT_UID    # note: broken!
-> >     2.23user 0.18system 0:02.21elapsed=20
->=20
-> Broken is a tad too hard a word
+On Tue, Nov 29, 2011 at 05:17, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> On Tue, Nov 29, 2011 at 4:07 PM, Jeff King <peff@peff.net> wrote:
+>> However, it's harder for trees. Each entry needs to have the new digest
+>> added, but there simply isn't room in the format. So we would have to
+>> change the tree format, breaking interoperability with older versions of
+>> git. And all of your tree sha1's would change as soon as you wrote them
+>> with the new format. That's only slightly better than just swapping
+>> sha1 out for a better algorithm.
+>
+> I think we could hide the new digest after NUL at the end of path
+> name. C Git at least does not seem to care whatever after NUL.
 
-Sorry, I just wanted to mark it as: this is unattainable since we're
-now doing extra work.
+No, you can't. The next byte after the NUL at the end of a path name
+is the SHA-1 of that entry. After those 20 bytes of SHA-1 data is
+consumed, the "mode SP name\0" of the next entry is parsed.
 
-> > * my patch, but not yours:
-> >   git grep --cached -W INITRAMFS_ROOT_UID
-> >     3.01user 0.05system 0:03.07elapsed
-> >=20
-> > * my patch + your patch:
-> >   git grep --cached -W INITRAMFS_ROOT_UID
-> >     4.45user 0.22system 0:02.67elapsed
-> >=20
-> > So while it ends up being faster overall, it also uses way more CPU
-> > and would presumably be *slower* on a single-processor system.
-> > Apparently those attribute lookups really hurt.
->=20
-> Hmm, why are they *that* expensive?
->=20
-> callgrind tells me that userdiff_find_by_path() contributes only 0.18=
-%
-> to the total cost with your first patch.  Timings in my virtual machi=
-ne
-> are very volatile, but it seems that here the difference is in the
-> system time while user is basically the same for all combinations of
-> patches.
-
-Not sure, perhaps callgrind does not model syscalls as expensive
-enough.  I also suspect (from my very cursory look at the attributes
-machinery) that loading attributes for all paths *in random order*
-(i.e., threaded) causes a lot of discards of the existing attributes
-data.  (The order is still random with my new patch, but we only load
-them for files that have matches.)
-
-> I wonder what caused the slight speedup for the case without -W.  It'=
-s
-> probably just noise, though.
-
-Yeah, it's very noisy, but I was too lazy for best-of-50 or something ;=
--)
-
-[...]
-> > +#ifndef NO_PTHREADS
-> > +static inline void grep_attr_lock(struct grep_opt *opt)
-[...]
-> We'd need stubs here for the case of NO_PTHREADS being defined.
-
-Right, thanks.  Sorry for not testing with NO_PTHREADS to begin with.
-
-> Perhaps leave the thread stuff in builtin/grep.c and export a functio=
-n
-> from there that does [the userdiff lookup], with locking and all?
-
-That seems like a layering violation to me.  Isn't builtin/grep.c
-supposed to call out to grep.c, but not the other way around?
-
-Maybe it would be less messy if we had a global (across all of git)
-flag that says whether threads are on.  Then subsystems that are used
-from threaded code, but cannot handle it, can learn to lock themselves
-around their work.  But it would be pretty much the opposite of what
-git-grep now does.
-
-
-Thanks for the review.  I'll reroll as a proper patch later.
-
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+There is not room in the tree format for any additional data. Period.
+At best you can modify the mode value to be a new octal code that is
+not recognized by current Git implementations. But that doesn't get
+you a whole lot of data, and its pretty risky change because its
+rather incompatible.
