@@ -1,89 +1,115 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] Implement fast hash-collision detection
-Date: Tue, 29 Nov 2011 21:04:06 +0700
-Message-ID: <CACsJy8DboVU4kSbJSV=8NP08OyLYVgOKsm8tt=koZ0=JcGSE=A@mail.gmail.com>
-References: <1322546563.1719.22.camel@yos> <20111129090733.GA22046@sigill.intra.peff.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] grep: enable multi-threading for -p and -W
+Date: Tue, 29 Nov 2011 15:07:04 +0100
+Message-ID: <201111291507.04754.trast@student.ethz.ch>
+References: <5e3bcf651b31b299ca411296e6e7c4d11f6ae617.1322232319.git.trast@student.ethz.ch> <201111291054.39477.trast@student.ethz.ch> <4ED4E2D7.9090804@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Bill Zaumen <bill.zaumen+git@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, spearce@spearce.org,
-	torvalds@linux-foundation.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 29 15:04:47 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: =?iso-8859-1?q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue Nov 29 15:07:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVOIh-0001rH-1C
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 15:04:47 +0100
+	id 1RVOL7-00039E-5M
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 15:07:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755610Ab1K2OEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Nov 2011 09:04:39 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:38868 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755604Ab1K2OEi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Nov 2011 09:04:38 -0500
-Received: by bkas6 with SMTP id s6so553301bka.19
-        for <git@vger.kernel.org>; Tue, 29 Nov 2011 06:04:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=fy+EzSZqPe9tkoaPakzK/IYK//UC2vNsJTsLTEVSJj8=;
-        b=TP3dX1Enb9cu8aiCX0FTeIqiy/upp1Wrftnb97sfAfqUa/5Pzj7T+l9xqn+nwLXqbX
-         nJNrs2rOPOb6ITGPUO5iXFKqJjuPS8wyJ/xZL6BmikVuNVXCkxVcSEe9OrsRpQiqMSQb
-         J9Z76FXi7ACnBiiN1ZzLopj+8TT9yJZokPPeE=
-Received: by 10.204.9.211 with SMTP id m19mr49465929bkm.92.1322575477179; Tue,
- 29 Nov 2011 06:04:37 -0800 (PST)
-Received: by 10.204.23.2 with HTTP; Tue, 29 Nov 2011 06:04:06 -0800 (PST)
-In-Reply-To: <20111129090733.GA22046@sigill.intra.peff.net>
+	id S1755704Ab1K2OHJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Nov 2011 09:07:09 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:9193 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755690Ab1K2OHH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2011 09:07:07 -0500
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 29 Nov
+ 2011 15:07:05 +0100
+Received: from thomas.inf.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 29 Nov
+ 2011 15:07:04 +0100
+User-Agent: KMail/1.13.7 (Linux/3.1.0-47-desktop; KDE/4.6.5; x86_64; ; )
+In-Reply-To: <4ED4E2D7.9090804@lsrfire.ath.cx>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186060>
 
-On Tue, Nov 29, 2011 at 4:07 PM, Jeff King <peff@peff.net> wrote:
-> That brings me to my second concern: how does this alternative message
-> digest have any authority?
->
-> For example, your patch teaches the git protocol a new extension to pass
-> these digests along with the object sha1s. But how do we know the server
-> isn't feeding us a bad digest along with the bad object?
->
-> The "usual" security model discussed in git is that of verifying a
-> signed tag. Linus signs a tag and pushes it to a server. I fetch the
-> tag, and can verify the signature on the tag. I want to know that I have
-> the exact same objects that Linus had. But I can't assume the server is
-> trustworthy; it may have fed me a bad object with a collided sha1.
->
-> But what's in the signed part of the tag object? Only the sha1 of the
-> commit the tag points to, but not the new digest. So an attacker can
-> replace the commit with one that collides, and it can in turn point to
-> arbitrary trees and blobs.
->
-> You can fix this by including an extra header in the signed part of the
-> tag that says "also, the digest of the commit I point to is X". Then you
-> know you have the same commit that Linus had. But the commit points to a
-> tree by its sha1. So you have to add a similar header in the commit
-> object that says "also, the digest of the tree I point to is X". And
-> ditto for all of the parent pointers, if you want to care about signing
-> history. And then you have the same problem in the tree: each sub-tree
-> and blob is referenced by its sha1.
->
-> ..
+Ren=E9 Scharfe wrote:
+> > * none of the patches:
+> >   git grep --cached INITRAMFS_ROOT_UID
+> >     2.13user 0.14system 0:02.10elapsed
+> >   git grep --cached -W INITRAMFS_ROOT_UID    # note: broken!
+> >     2.23user 0.18system 0:02.21elapsed=20
+>=20
+> Broken is a tad too hard a word
 
-(Security ignorant speaking)
+Sorry, I just wanted to mark it as: this is unattainable since we're
+now doing extra work.
 
-Can we just hash all objects in a pack from bottom up, (replacing
-sha-1 in trees/commits/tags with the new digest in memory before
-hashing), then attach the new top digest to tag's content? The sender
-is required by the receiver to send new digests for all objects in the
-pack together with the pack. The receiver can then go through the same
-process to produce the top digest and match it with one saved in tag.
+> > * my patch, but not yours:
+> >   git grep --cached -W INITRAMFS_ROOT_UID
+> >     3.01user 0.05system 0:03.07elapsed
+> >=20
+> > * my patch + your patch:
+> >   git grep --cached -W INITRAMFS_ROOT_UID
+> >     4.45user 0.22system 0:02.67elapsed
+> >=20
+> > So while it ends up being faster overall, it also uses way more CPU
+> > and would presumably be *slower* on a single-processor system.
+> > Apparently those attribute lookups really hurt.
+>=20
+> Hmm, why are they *that* expensive?
+>=20
+> callgrind tells me that userdiff_find_by_path() contributes only 0.18=
+%
+> to the total cost with your first patch.  Timings in my virtual machi=
+ne
+> are very volatile, but it seems that here the difference is in the
+> system time while user is basically the same for all combinations of
+> patches.
 
-I do agree that we should use stronger digests, not weaker, preferably
-a combination of them.
--- 
-Duy
+Not sure, perhaps callgrind does not model syscalls as expensive
+enough.  I also suspect (from my very cursory look at the attributes
+machinery) that loading attributes for all paths *in random order*
+(i.e., threaded) causes a lot of discards of the existing attributes
+data.  (The order is still random with my new patch, but we only load
+them for files that have matches.)
+
+> I wonder what caused the slight speedup for the case without -W.  It'=
+s
+> probably just noise, though.
+
+Yeah, it's very noisy, but I was too lazy for best-of-50 or something ;=
+-)
+
+[...]
+> > +#ifndef NO_PTHREADS
+> > +static inline void grep_attr_lock(struct grep_opt *opt)
+[...]
+> We'd need stubs here for the case of NO_PTHREADS being defined.
+
+Right, thanks.  Sorry for not testing with NO_PTHREADS to begin with.
+
+> Perhaps leave the thread stuff in builtin/grep.c and export a functio=
+n
+> from there that does [the userdiff lookup], with locking and all?
+
+That seems like a layering violation to me.  Isn't builtin/grep.c
+supposed to call out to grep.c, but not the other way around?
+
+Maybe it would be less messy if we had a global (across all of git)
+flag that says whether threads are on.  Then subsystems that are used
+from threaded code, but cannot handle it, can learn to lock themselves
+around their work.  But it would be pretty much the opposite of what
+git-grep now does.
+
+
+Thanks for the review.  I'll reroll as a proper patch later.
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
