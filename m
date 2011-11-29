@@ -1,66 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Implement fast hash-collision detection
-Date: Tue, 29 Nov 2011 17:05:07 -0500
-Message-ID: <20111129220507.GF1793@sigill.intra.peff.net>
-References: <1322546563.1719.22.camel@yos>
- <CAJo=hJtFT55Ucyij9esr3Hd9yJ6XCxatK7vjPOLMKow57HqBoQ@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [RFC/PATCH] add update to branch support for "floating
+ submodules"
+Date: Tue, 29 Nov 2011 23:08:55 +0100
+Message-ID: <20111129220854.GB2812@sandbox-rc.fritz.box>
+References: <20111109174027.GA28825@book.fritz.box>
+ <7vr51htbsy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Bill Zaumen <bill.zaumen+git@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, pclouds@gmail.com, torvalds@linux-foundation.org
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Nov 29 23:05:19 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 29 23:09:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVVnf-0004Xs-Hk
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 23:05:15 +0100
+	id 1RVVrJ-00062W-Ml
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 23:09:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754985Ab1K2WFL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Nov 2011 17:05:11 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55872
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754668Ab1K2WFK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Nov 2011 17:05:10 -0500
-Received: (qmail 3419 invoked by uid 107); 29 Nov 2011 22:11:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Nov 2011 17:11:43 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Nov 2011 17:05:07 -0500
+	id S1754352Ab1K2WI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Nov 2011 17:08:57 -0500
+Received: from darksea.de ([83.133.111.250]:55254 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751310Ab1K2WI4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Nov 2011 17:08:56 -0500
+Received: (qmail 3045 invoked from network); 29 Nov 2011 23:08:55 +0100
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 29 Nov 2011 23:08:55 +0100
 Content-Disposition: inline
-In-Reply-To: <CAJo=hJtFT55Ucyij9esr3Hd9yJ6XCxatK7vjPOLMKow57HqBoQ@mail.gmail.com>
+In-Reply-To: <7vr51htbsy.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186093>
 
-On Tue, Nov 29, 2011 at 09:08:27AM -0800, Shawn O. Pearce wrote:
+Hi,
 
-> As Peff pointed out elsewhere in this thread, the odds of a SHA-1
-> collision in a project are low, on the order of 1/(2^80).
+On Wed, Nov 09, 2011 at 10:01:33AM -0800, Junio C Hamano wrote:
+> Heiko Voigt <hvoigt@hvoigt.net> writes:
+> 
+> > This is almost ready but I would like to know what users of the
+> > "floating submodule" think about this.
+> 
+> Thanks for working on this.
+> 
+> I do like to hear from potential users as well, because the general
+> impression we got was that floating submodules is not a real need of
+> anybody, but it is merely an inertia of people who (perhaps mistakenly)
+> thought svn externals that are not anchored to a particular revision is a
+> feature when it is just a limitation in reality. During the GitTogether'11
+> we learned that Android that uses floating model does not really have to.
 
-Minor nit: it's actually way less than that. You have to do on the order
-of 2^80 operations to get a 50% chance of a collision. But that's not
-the probability for a collision given a particular number of
-operations[1].
+Since we did not get any reply from potential floating submodule users I
+do not mind to drop this patch for now. It is archived in the mailing list
+and it should be easy to revive once there is real world need for it.
 
-The probability for a SHA-1 collision on 10 million hashes (where
-linux-2.6 will be in a decade or two) is about 1/(2^115).
+Once we have the "exact" model support for checkout and friends this
+might be a handy tool to update submodules before releases and such. But
+currently I would like to focus on the "exact" front first.
 
-That doesn't change the validity of any of your points, of course. 1 in
-2^80 and 1 in 2^115 are both in the range of "impossibly small enough
-not to care about".
-
-To continue our astronomy analogies, NASA estimates[2] the impact
-probability of most tracked asteroids in the 10^6 range (around 2^20).
-So getting a collision in linux-2.6 in the next decade has roughly the
-same odds as the Earth being hit by 5 or 6 large asteroids.
-
--Peff
-
-[1] http://en.wikipedia.org/wiki/Birthday_problem#Cast_as_a_collision_problem
-
-[2] http://neo.jpl.nasa.gov/risk/
+Cheers Heiko
