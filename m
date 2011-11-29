@@ -1,84 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 10/13] credentials: add "cache" helper
-Date: Mon, 28 Nov 2011 16:42:00 -0800
-Message-ID: <7vr50ru5d3.fsf@alter.siamese.dyndns.org>
-References: <20111124105801.GA6168@sigill.intra.peff.net>
- <20111124110710.GH8417@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb: in-page errors don't work with mod_perl
+Date: Tue, 29 Nov 2011 01:49:36 +0100
+Message-ID: <201111290149.36931.jnareb@gmail.com>
+References: <CAKD0UuweWoY5ObXgyN9vrOXWrKdNYWuG7CGB0V7HvcuiwRJD+A@mail.gmail.com> <201111282332.07276.jnareb@gmail.com> <CAKD0Uuw35Kdno=OxqP5SYtaVjqUFZCLL9fSSscN7sq=KmycyxA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 29 01:42:13 2011
+To: =?utf-8?q?J=C3=BCrgen_Kreileder?= <jk@blackdown.de>
+X-From: git-owner@vger.kernel.org Tue Nov 29 01:49:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVBlz-0001cx-GZ
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 01:42:11 +0100
+	id 1RVBtJ-00040A-6s
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 01:49:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753047Ab1K2AmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Nov 2011 19:42:06 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33031 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752994Ab1K2AmE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Nov 2011 19:42:04 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 139D46237;
-	Mon, 28 Nov 2011 19:42:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=D25DQYMV5YSbmO2ekWtAicfzH3w=; b=UnKBa0
-	V4ZGM88HKlMPsxrd+cMgXXnWvo79/h2/HHXpix71sY7p0xUHluCROCbbfaepzE91
-	PNuX9ms4ShIegGm6J97gFfuc7XulLywx1XDyfIo4n8WV90/69/UhSDk/IqTwxbkk
-	JEcFHTw4yVXgdt/BZ2HravuLZsRWqU6YlHZZc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Kudqh0aF8toTsZBn/a8vv0obOB4rXnVD
-	uDXhHbF6JXvFejy58mhGExOEpdCtFKQ2EBMtfsFLNaLSS/F2usG7g2Zi+/5qqBsL
-	j1efHFYV7kflsC+AfbUADjv34adGPxFaPCXYdNgKUquEMs9dJtZPyYYo9ZVbpZgC
-	PLrfpZ+NuHI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C04C6236;
-	Mon, 28 Nov 2011 19:42:03 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 690756235; Mon, 28 Nov 2011
- 19:42:02 -0500 (EST)
-In-Reply-To: <20111124110710.GH8417@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 24 Nov 2011 06:07:10 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F41A598C-1A22-11E1-9A32-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753185Ab1K2Atk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Nov 2011 19:49:40 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:49647 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752929Ab1K2Atj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Nov 2011 19:49:39 -0500
+Received: by bke11 with SMTP id 11so9323597bke.19
+        for <git@vger.kernel.org>; Mon, 28 Nov 2011 16:49:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=KWIqIhPFIEVveZCUS99MGoxN8CxjpHlqMXfGkShPhcc=;
+        b=UpdgPXCG68/phrny0Rj0B12HP51giUbNYXhhBJ5eQE0gFmfbqf7AsIkyaICdrOqwV0
+         oF8C6vz6yHoepHlxJLrNCY4AEBvohHdpel+xbGwEXUqwwAy/Zifolk38/0a3UOPjydad
+         POP5wUEX8cAVawz12B3iNJC3bJ4y70s4IxfLg=
+Received: by 10.204.129.88 with SMTP id n24mr46942053bks.19.1322527778193;
+        Mon, 28 Nov 2011 16:49:38 -0800 (PST)
+Received: from [192.168.1.13] (abwn156.neoplus.adsl.tpnet.pl. [83.8.237.156])
+        by mx.google.com with ESMTPS id cc2sm33354335bkb.8.2011.11.28.16.49.35
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 28 Nov 2011 16:49:36 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <CAKD0Uuw35Kdno=OxqP5SYtaVjqUFZCLL9fSSscN7sq=KmycyxA@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186041>
 
-Jeff King <peff@peff.net> writes:
+J=C3=BCrgen Kreileder wrote:
+> On Mon, Nov 28, 2011 at 23:32, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
+>> J=C3=BCrgen Kreileder wrote:
+>>> On Mon, Nov 28, 2011 at 21:13, J=C3=BCrgen Kreileder <jk@blackdown.=
+de> wrote:
+>>>> On Mon, Nov 28, 2011 at 17:54, Jakub Narebski <jnareb@gmail.com> w=
+rote:
+>>>> =C2=A0[...]
+>>>>>
+>>>>> The configuration is very similar. =C2=A0Perhaps that is the diff=
+erence between
+>>>>> Apache 2.0.x (mine) and Apache 2.2.x (yours).
+>>>>>
+>>>>> Does adding `$r->err_headers_out();` before `$r->status(200);` he=
+lps?
+>>>>> I'm grasping at straws here. =C2=A0mod_perl documentation is not =
+very helpful.
+>>>>
+>>>> Doesn't help unfortunately. =C2=A0It's hard to find any informatio=
+n about
+>>>> this on the net (except for your comment on stackoverflow :).
+>>>>
+>>>> The only way to get mod_perl to return a custom error message with
+>>>> correct status code I've found so far is $r->custom_response($stat=
+us,
+>>>> $msg). =C2=A0Unfortunately mod_perl then ignores headers I set, e.=
+g.
+>>>> content-type.
+>>>
+>>> I guess this explains it:
+>>> http://foertsch.name/ModPerl-Tricks/custom-content_type-with-custom=
+_response.shtml
+>>> Requires quite some restructuring to gitweb.perl.
+>>
+>> I'm coming close to declaring that ModPerl::Registry is horribly bro=
+ken
+>> with respect to error pages created by CGI, and say that we don't su=
+pport
+>> it, removing mod_perl configuration examples from gitweb documentati=
+on.
+>=20
+> Makes sense.  The benefits of mod_perl are properly small for gitweb =
+anyway.
 
-> diff --git a/t/lib-credential.sh b/t/lib-credential.sh
-> index 54ae1f4..ac54b38 100755
-> --- a/t/lib-credential.sh
-> +++ b/t/lib-credential.sh
-> @@ -21,6 +21,225 @@ read_chunk() {
-> ...
-> +	test_expect_success "helper ($HELPER) can forget user" '
-> +		check reject $HELPER <<-\EOF &&
-> +		protocol=https
-> +		host=example.com
-> +		username=user1
-> +		EOF
-> +		check fill $HELPER <<-\EOF
-> +		protocol=https
-> +		host=example.com
-> +		username=user1
-> +		--
-> +		username=user1
-> +		password=askpass-password
-> +		--
-> +		askpass: Password for '\''https://user1@example.com'\'':
-> +	'
+Anyway you can run gitweb with FastCGI (supposedly - I don't know if it
+was tested), which provides the same (or most of the) advantages that
+mod_perl gives, without the troubles.  Just rename gitweb.cgi to
+gitweb.fcgi and configure web server appropriately (and have FCGI Perl
+module installed).
 
-Missing EOF for here document; I fixed this already in 'pu', but please
-squash it in when rerolling after 1.7.8 final.
+--=20
+Jakub Narebski
+Poland
