@@ -1,86 +1,73 @@
-From: Manuel Koller <koller.manuel@gmail.com>
-Subject: Re: Git Submodule Problem - Bug?
-Date: Tue, 29 Nov 2011 19:15:39 +0100
-Message-ID: <839E634E-76C0-40ED-8CCC-43E52F782079@gmail.com>
-References: <38AE3033-6902-48AA-819B-DB4083F1F8EF@gmail.com> <201111291024.01230.trast@student.ethz.ch> <20111129101546.GB2829@kolya> <201111291125.41943.trast@student.ethz.ch> <20111129104105.GA10839@kolya> <4ED5196B.5030200@web.de>
-Mime-Version: 1.0 (Apple Message framework v1251.1)
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Nov 29 19:15:50 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] checkout,merge: loosen overwriting untracked file
+ check based on info/exclude
+Date: Tue, 29 Nov 2011 10:17:30 -0800
+Message-ID: <7v7h2iu72d.fsf@alter.siamese.dyndns.org>
+References: <CACsJy8AXLBNSPmeEJjD1QX2zF1ic+S9kb_+4=EBO9xd07xhAYQ@mail.gmail.com>
+ <1322388933-6284-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
+	Taylor Hedberg <tmhedberg@gmail.com>,
+	Bertrand BENOIT <projettwk@users.sourceforge.net>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 29 19:17:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVSDc-0003UC-Ce
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 19:15:48 +0100
+	id 1RVSFO-0004Eu-BH
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 19:17:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756075Ab1K2SPo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Nov 2011 13:15:44 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:45396 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754722Ab1K2SPn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2011 13:15:43 -0500
-Received: by eaak14 with SMTP id k14so3432946eaa.19
-        for <git@vger.kernel.org>; Tue, 29 Nov 2011 10:15:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=ywcrTN1UEMXqDL0nPddlxIewBEmBkfFlkW5f0o/BhXo=;
-        b=xEcFF931UJyfEDliRxWRAF2oh1rIiAEL8gEla+aNwjg3i+7lfv9FC52vvMpxLdkadr
-         tN4odaClck8bcwfGE4auQ0rGr2rp4I265ukvYDUHi/Eg/PjKDExBMEG5FtK5dK4Q1J/B
-         NbrVYWt4ljEadJDoLJUJfIBCkjHAtrp3e1kCg=
-Received: by 10.216.132.144 with SMTP id o16mr96284wei.63.1322590541736;
-        Tue, 29 Nov 2011 10:15:41 -0800 (PST)
-Received: from [192.168.1.5] (178-83-214-151.dynamic.hispeed.ch. [178.83.214.151])
-        by mx.google.com with ESMTPS id eg7sm4149725wib.8.2011.11.29.10.15.40
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 29 Nov 2011 10:15:41 -0800 (PST)
-In-Reply-To: <4ED5196B.5030200@web.de>
-X-Mailer: Apple Mail (2.1251.1)
+	id S1756098Ab1K2SRd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Nov 2011 13:17:33 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36036 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756092Ab1K2SRc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2011 13:17:32 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E2E49681F;
+	Tue, 29 Nov 2011 13:17:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=uL4ITrKYOtofErbflxaxaxz1v
+	9U=; b=BJMRt7rM1aa3KOm4wyaR0w5jQZt6yd/GX1p3xeLK15GgqOfHcAttKL5T1
+	qudE/PDYdCXNy2vNkx/giNKcm9nr0ORx9gVxh/xYDVRI8ZgHHcpnB4DUYEk69rs6
+	fSEBH6tXId2CsqQC5WLs0Pyk+bP4YYzA0TkeNbNWfxw0q9okBQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=OLmrt5R6LOgxZOyCXzO
+	VN86qU12oBXBFNkDAStAHcbx7L6dS/huMMuK5U05NoXRWsR+VUun9jNQ5pOMb45N
+	POM/O8P+2GLMbkrBX766NC9hbTg6hYSFY5QHaOp/5IQlhb1v+DytESbNHRVFfCVu
+	svMGiFdOIKXToEkHIYOvkOOA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D8984681C;
+	Tue, 29 Nov 2011 13:17:31 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6F0EA6818; Tue, 29 Nov 2011
+ 13:17:31 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6724EB70-1AB6-11E1-806C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186068>
 
-Thanks for taking my problem seriously.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-On 29.11.2011, at 18:42, Jens Lehmann wrote:
+> Back in 1127148 (Loosen "working file will be lost" check in
+> Porcelain-ish - 2006-12-04), git-checkout.sh learned to quietly
+> overwrite ignored files. Howver the code only took .gitignore files
+> into account.
 
-> Am 29.11.2011 11:41, schrieb Fredrik Gustafsson:
->> On Tue, Nov 29, 2011 at 11:25:41AM +0100, Thomas Rast wrote:
->>> So maybe the right questions to ask would be: what's the *official*
->>> way of removing a submodule completely?  Do we support overwriting
->>> submodules in the way Manuel wanted to?  Why not? :-)
->> 
->> I suggest that we add a command for that;
->> git submodule remove <submodule>
-> 
-> Hmm, to me it looks like the problem is in "git submodule add". It
-> doesn't check if the submodule repo it finds in .git/modules matches
-> the one the user wants to create. So we end up reviving the first
-> submodule although the user wants to use a completely different repo.
+v1.5.3.5-721-g039bc64 also tried to make it harder to make this kind of
+mistake, and forgot to spot it in git-checkout.sh which was a bit
+unfortunate.
 
-In have wrote a workaround for the problem i posted that goes into this direction. I just check whether the url has changed and remove the submodule by hand if it did. See https://github.com/kollerma/git-submodule-tools if you're interested (its in git-fix-submodules).
-
-> One solution could be to only let "git submodule update" revive
-> submodules from .git/modules and make "git submodule add" error out
-> if it finds the git directory of a submodule with the same name in
-> .git/modules. But currently there is no way to tell "git submodule add"
-> to use a different submodule name (it always uses the path as a name),
-> so we might have to add an option to do that and tell the user in the
-> error message how he can add a different submodule under the same
-> path.
-> 
-> Another solution could be that "git submodule add" detects that a
-> submodule with the name "sub" did exist and chooses a different name
-> (say "sub2") for the the new one. Then the user wouldn't have to
-> cope with the problem himself.
-
-What is the purpose of having two different submodules in the same path? Identifying the submodule by url however would probably make things considerably faster. At least in my case, since I have checked out different branches of the same repo at different paths as submodules. 
+Thanks. I think both patches make sense, and especially 2/2 opens the d=
+oor
+to possibly make ignored ones automatically precious.
