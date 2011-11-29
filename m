@@ -1,156 +1,157 @@
-From: =?UTF-8?Q?J=C3=BCrgen_Kreileder?= <jk@blackdown.de>
-Subject: Re: [PATCH] gitweb: Don't append ';js=(0|1)' to external links
-Date: Tue, 29 Nov 2011 22:31:20 +0100
-Message-ID: <CAKD0UuyH3m0RR2=jk5apFjVMgbD5iWeztR94mE-m7q9dyYKR2Q@mail.gmail.com>
-References: <CAKD0UuzU4hAe7RGYukGyPpvfGeYJ3pgJ5pynupneMpQSaX5Cjw@mail.gmail.com>
- <m3pqgaloda.fsf@localhost.localdomain>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 12/13] credentials: add "store" helper
+Date: Tue, 29 Nov 2011 16:38:46 -0500
+Message-ID: <20111129213846.GE1793@sigill.intra.peff.net>
+References: <20111124105801.GA6168@sigill.intra.peff.net>
+ <20111124110756.GJ8417@sigill.intra.peff.net>
+ <7vsjl6ssf9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 29 22:31:50 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 29 22:38:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVVHJ-0006EA-GK
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 22:31:50 +0100
+	id 1RVVOB-000106-C6
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 22:38:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756809Ab1K2Vbn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Nov 2011 16:31:43 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:62032 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756377Ab1K2Vbn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2011 16:31:43 -0500
-Received: by faaq16 with SMTP id q16so144712faa.19
-        for <git@vger.kernel.org>; Tue, 29 Nov 2011 13:31:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=blackdown.de; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=AWcZs1B/obVq+Mm3S7JDFZvSkBomx5NJX9YrVF+IQYw=;
-        b=V7q0XUfX9hyWjijgVHa1wx8e3istAyH2hQFq9/ONRwzqSaJ3iTaOiYCKTB7lBPeA5P
-         nNW7TdjiKj4FNvYC+Uu1PtwDYpYr1jDK+rwR83YMhBeIPvY8JZ9vh08Eq6R9w2ygSX7J
-         hHVLitqVsMhSPMuWpIFRM9yNOOMHKEAw7tBJo=
-Received: by 10.180.24.65 with SMTP id s1mr49353944wif.59.1322602301210; Tue,
- 29 Nov 2011 13:31:41 -0800 (PST)
-Received: by 10.180.87.37 with HTTP; Tue, 29 Nov 2011 13:31:20 -0800 (PST)
-In-Reply-To: <m3pqgaloda.fsf@localhost.localdomain>
+	id S1756839Ab1K2Vis (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Nov 2011 16:38:48 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55858
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756717Ab1K2Vis (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Nov 2011 16:38:48 -0500
+Received: (qmail 3053 invoked by uid 107); 29 Nov 2011 21:45:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Nov 2011 16:45:22 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Nov 2011 16:38:46 -0500
+Content-Disposition: inline
+In-Reply-To: <7vsjl6ssf9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186086>
 
-On Tue, Nov 29, 2011 at 20:28, Jakub Narebski <jnareb@gmail.com> wrote:
-> J=C3=BCrgen Kreileder <jk@blackdown.de> writes:
-[...]
-> Thanks for this, but I think a better solution would be to explicitly
-> mark the few external links we have e.g. with 'class=3D"external"', a=
-nd
-> use that to avoid adding ';js=3D(0|1)' to them.
+On Tue, Nov 29, 2011 at 10:19:06AM -0800, Junio C Hamano wrote:
 
-This won't work because there are more than a few external links.  Thin=
-k of
-links added in the header or footer or via a project specific README.ht=
-ml.
+> > +	while (strbuf_getline(&line, fh, '\n') != EOF) {
+> > +		credential_from_url(&entry, line.buf);
+> > +		if (entry.username && entry.password &&
+> > +		    credential_match(c, &entry)) {
+> 
+> This looks curious; isn't checking .username and .password part of the
+> responsibility of credential_match()? And even if entry lacks password
+> (which won't happen in the context of this program, given the
+> implementation of store_credential() below) shouldn't it still be
+> considered a match?
 
-You would have to do it the other way round: Mark all internal links.
+credential_match will check .username, if the pattern mentions it. It
+will never check .password. My intent here was to enforce well-formed
+entries in the credential file. So you could add:
 
-> This has the advantage that we can use different style to mark
-> outgoing external links.
->
-> I even have such patch somewhere in the StGit stack...
-> -- >8 --
-> Subject: [PATCH] gitweb: Mark external links
->
-> ...and do not add 'js=3D1' to them with JavaScript.
->
-> Both $logo_url and $home_link links are now marked with "external"
-> class, and fixLink does not add 'js=3D1' to them on click. =C2=A0We a=
-dd
-> 'js=3D1' to internal link to make server-side of gitweb know that it =
-can
-> use JavaScript-only actions; we shouldn't do this for extrenal links,
-> as 'js=3D1' might mean something else to them.
->
-> Note that only links using A element matter: images (linked using
-> IMG), stylesheets (linked using STYLE) and JavaScript files (linked
-> using SCRIPT) were never affected.
->
-> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-> ---
-> =C2=A0gitweb/gitweb.perl =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A05 ++++-
-> =C2=A0gitweb/static/js/javascript-detection.js | =C2=A0 =C2=A05 +++++
-> =C2=A02 files changed, 9 insertions(+), 1 deletions(-)
->
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 7456a4b..f1c1caa 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -3626,13 +3626,16 @@ EOF
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0print "<div class=3D\"page_header\">\n";
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (defined $logo) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0print $cgi->a(=
-{-href =3D> esc_url($logo_url),
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-class =3D> "external",
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -title =3D> $logo_label},
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0$cgi->img({-src =3D> esc_url($logo),
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
--width =3D> 72, -height =3D> 27,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
--alt =3D> "git",
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
--class =3D> "logo"}));
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-> - =C2=A0 =C2=A0 =C2=A0 print $cgi->a({-href =3D> esc_url($home_link)}=
-, $home_link_str) . " / ";
-> + =C2=A0 =C2=A0 =C2=A0 print $cgi->a({-href =3D> esc_url($home_link)
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0-class =3D> "external"},
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- $home_link_str) . " / ";
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (defined $project) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0print $cgi->a(=
-{-href =3D> href(action=3D>"summary")}, esc_html($project));
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (defined $a=
-ction) {
-> diff --git a/gitweb/static/js/javascript-detection.js b/gitweb/static=
-/js/javascript-detection.js
-> index 2b51e55..fc59e42 100644
-> --- a/gitweb/static/js/javascript-detection.js
-> +++ b/gitweb/static/js/javascript-detection.js
-> @@ -60,6 +60,11 @@ function fixLink(link) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 */
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0var jsExceptionsRe =3D /[;?]js=3D[01]$/;
->
-> + =C2=A0 =C2=A0 =C2=A0 // don't change links marked as external ($log=
-o_url, $home_link)
-> + =C2=A0 =C2=A0 =C2=A0 if (link.className =3D=3D=3D 'external') {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;
-> + =C2=A0 =C2=A0 =C2=A0 }
-> +
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!jsExceptionsRe.test(link)) { // =3D~ =
-/[;?]js=3D[01]$/;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0link.href +=3D
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0(link.href.indexOf('?') =3D=3D=3D -1 ? '?' : ';') + 'js=3D=
-1';
->
->
->
+  http://example.com/
 
+to the credential file, but it's just meaningless noise. It
+doesn't actually tell us a username or password.
 
+The helper won't add such an entry itself, but given the simplicity of
+the format, I wanted to leave the door open for curious hackers to
+populate it manually if they choose.
 
---=20
-http://blog.blackdown.de/
-http://www.flickr.com/photos/jkreileder/
+I think you're right that:
+
+  http://user@example.com/
+
+is potentially meaningful, and this would skip that. OTOH, you would be
+much better served to just do:
+
+  git config credential.http://example.com.username user
+
+So I consider it a slight abuse of this helper in the first place.
+
+> > +static void rewrite_credential_file(const char *fn, struct credential *c,
+> > +				    struct strbuf *extra)
+> > +{
+> > +	umask(077);
+> 
+> Curious placement of umask(). I would expect a function that has its own
+> call to umask() restore it before it returns, and a stand-alone program
+> whose sole purpose is to work with a private file, setting a tight umask
+> upfront at the beginning of main() may be easier to understand.
+
+I think that is largely a holdover from the original implementation,
+which set the umask and did other black magic before calling
+git_config_set. I agree it would make more sense at the beginning of the
+program. Will change.
+
+> > +	if (hold_lock_file_for_update(&credential_lock, fn, 0) < 0)
+> > +		die_errno("unable to get credential storage lock");
+> > +	parse_credential_file(fn, c, NULL, print_line);
+> > +	if (extra)
+> > +		print_line(extra);
+> 
+> An entry for a newly updated password comes at the end of the file,
+> instead of replacing an entry already in the file in-place? Given that
+> parse_credential_file() when processing a look-up request (which is the
+> majority of the case) stops upon finding a match, it might make more sense
+> to have the new one (which may be expected to be used often) at the
+> beginning instead, no?
+
+Yeah. It's a linear search. Your worst-case is always going to be O(n),
+but I just assumed n would remain relatively small and we wouldn't care
+(if it isn't, the right solution is probably a smarter data structure).
+
+But your optimization is trivial to implement, so it's probably worth
+doing.
+
+> > +	if (commit_lock_file(&credential_lock) < 0)
+> > +		die_errno("unable to commit credential store");
+> > +}
+> > +
+> > +static void store_credential(const char *fn, struct credential *c)
+> > +{
+> > +	struct strbuf buf = STRBUF_INIT;
+> > +
+> > +	if (!c->protocol || !(c->host || c->path) ||
+> > +	    !c->username || !c->password)
+> > +		return;
+> [...]
+> > +static void remove_credential(const char *fn, struct credential *c)
+> > +{
+> > +	if (!c->protocol || !(c->host || c->path))
+> > +		return;
+> 
+> The choice of the fields looks rather arbitrary. I cannot say "remove all
+> the credentials whose username is 'gitster' at 'github.com' no matter what
+> protocol is used", but I can say "remove all credentials under any name
+> for any host as long as the transfer goes over 'https' and accesses a
+> repository at 'if/xyzzy' path", it seems.
+
+It is kind of arbitrary. The storage format is URLs, which is why
+store_credential is a little pedantic. We can't store something that
+doesn't have a protocol part, as that is a required part of the URL
+(actually, in URL-speak this is the "scheme"; I wonder if we should use
+the same term here).
+
+I was thinking we need a protocol for the same reason in
+remove_credential, but I think you are right. We never actually convert
+it to a URL, so in theory you could do:
+
+  git credential-store erase <<\EOF
+  username=gitster
+  host=github.com
+  EOF
+
+Again, not an operation that git will ever perform, but I guess
+something that people might want to do (I had always assumed the
+"$EDITOR ~/.git-credentials" was going to be the preferred way of doing
+such operations :) ).
+
+I don't think there's any harm in loosening that condition.
+
+-Peff
