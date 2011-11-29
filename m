@@ -1,224 +1,181 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Implement fast hash-collision detection
-Date: Tue, 29 Nov 2011 04:07:33 -0500
-Message-ID: <20111129090733.GA22046@sigill.intra.peff.net>
-References: <1322546563.1719.22.camel@yos>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Git Submodule Problem - Bug?
+Date: Tue, 29 Nov 2011 10:24:01 +0100
+Message-ID: <201111291024.01230.trast@student.ethz.ch>
+References: <38AE3033-6902-48AA-819B-DB4083F1F8EF@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
-	spearce@spearce.org, torvalds@linux-foundation.org
-To: Bill Zaumen <bill.zaumen+git@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 29 10:07:46 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Fredrik Gustafsson <iveqy@iveqy.com>
+To: Manuel Koller <koller.manuel@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 29 10:24:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVJfG-0002cR-5Y
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 10:07:46 +0100
+	id 1RVJvE-0000UZ-EI
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 10:24:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753116Ab1K2JHl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Nov 2011 04:07:41 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55556
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752621Ab1K2JHf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Nov 2011 04:07:35 -0500
-Received: (qmail 29532 invoked by uid 107); 29 Nov 2011 09:14:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Nov 2011 04:14:09 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Nov 2011 04:07:33 -0500
-Content-Disposition: inline
-In-Reply-To: <1322546563.1719.22.camel@yos>
+	id S1754286Ab1K2JYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Nov 2011 04:24:12 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:37087 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754315Ab1K2JYE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Nov 2011 04:24:04 -0500
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.339.1; Tue, 29 Nov
+ 2011 10:24:00 +0100
+Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 29 Nov
+ 2011 10:24:01 +0100
+User-Agent: KMail/1.13.7 (Linux/3.1.0-47-desktop; KDE/4.6.5; x86_64; ; )
+In-Reply-To: <38AE3033-6902-48AA-819B-DB4083F1F8EF@gmail.com>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186047>
 
-[Your original message was almost certainly bounced by git@vger because
- it surpassed the 100K limit; I'll try to quote liberally for those who
- missed the original. You may want to split your content and repost.]
+Manuel Koller wrote:
+> 
+> The problem arises when I pull a commit that switches a submodule with another one and then run git submodule update. Say I have a repo "super" that has one submodule "sub1" in the folder "sub" and a clone "super2". Now I remove the submodule in "super2" and add another one ("sub2") again named "sub", commit this and push it. Now after pulling the commit to "super", I need to run git submodule sync and then git submodule update. 
+> 
+> I expect to end up with the submodule "sub2" in sub. But the log clearly shows that the commits from "sub1" are still there (the master branch belongs to "sub1" while origin/master comes from "sub2").  I get the following output:
+> 
+> > ...
+> > commit 77d8d11fed3b07e1d4e47b3df9fc44c278694a39
+> > Author: Manuel Koller <koller@stat.math.ethz.ch>
+> > Date:   Mon Nov 28 17:46:45 2011 +0100
+> > 
+> >     initial commit sub1
+> > commit 346fe6bd9e7957f10c5e833bb1155153379da41c
+> > Author: Manuel Koller <koller@stat.math.ethz.ch>
+> > Date:   Mon Nov 28 17:46:45 2011 +0100
+> > 
+> >     initial commit sub2
+> 
+> I think it should be twice the same, and "sub2". I checked also with Charon, on his machine, the two log messages reported are "sub1" which completely baffles me.
 
-On Mon, Nov 28, 2011 at 10:02:43PM -0800, Bill Zaumen wrote:
+I used the test script at the end (just a testification of your
+attachment) to bisect this to the following commit:
 
-> Maintains a database of CRCs of Git objects to allow SHA-1 hash
-> collisions to be detected with high probability (1 - 1/2^32) and with
-> little computational overhead.  The CRCs cover the content of Git
-> objects, but not the header.  For loose objects, these are stored in
-> subdirectories of GIT_DIRECTORY/objects/crcs, with each subdirectory's
-> name consisting of the first two hexadecimal digits of the
-> corresponding object's SHA-1 hash.  For each pack file, FILE.pack, the
-> CRCs are stored in a FILE.mds, in the same order as the SHA-1 hashes
-> that appear in FILE.idx.  Checks for hash collisions are made whenever
-> a new loose object is created.
+    commit 501770e1bb5d132ae4f79aa96715f07f6b84e1f6
+    Author: Fredrik Gustafsson <iveqy@iveqy.com>
+    Date:   Mon Aug 15 23:17:47 2011 +0200
 
-I'm confused. Is this about avoiding accidental collisions, or about
-avoiding malicious collision attacks?
+        Move git-dir for submodules
+        
+        Move git-dir for submodules into $GIT_DIR/modules/[name_of_submodule] of
+        the superproject. This is a step towards being able to delete submodule
+        directories without loosing the information from their .git directory
+        as that is now stored outside the submodules work tree.
+        
+        This is done relying on the already existent .git-file functionality.
+        When adding or updating a submodule whose git directory is found under
+        $GIT_DIR/modules/[name_of_submodule], don't clone it again but simply
+        point the .git-file to it and remove the now stale index file from it.
+        The index will be recreated by the following checkout.
+        
+        This patch will not affect already cloned submodules at all.
+        
+        Tests that rely on .git being a directory have been fixed.
+        
+        Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
+        Mentored-by: Jens Lehmann <Jens.Lehmann@web.de>
+        Mentored-by: Heiko Voigt <hvoigt@hvoigt.net>
+        Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Let's assume the former for a minute. The usual way of considering
-collision likelihood is not by probabilities, but by the number of items
-that must be selected to achieve a >50% probability that there is a
-collision. Which is the square root of the number of total items, or
-half the bit-space.
+That is, before 501770 I get sub1/sub2 as Manuel said above.  After
+501770 I get sub1/sub1 (!).  I have not been able to reproduce the
+sub2/sub2 behavior with any version I tried (1.7.0, 1.7.3.4, 1.7.6,
+etc.).  Perhaps there is a configuration setting that changes this?
 
-So we expect to see a collision in 160-bit SHA-1 after writing about
-2^80 objects. The linux-2.6 repository has about 2.2 million objects
-after 6.5 years of development. If development continues at this pace,
-we would expect a collision in a mere 10^18 years.
+In any case, since it's -rc4 time and 501770 is set to go into the
+release, it would be nice if you could check whether this is indeed
+correct/intended.
 
-Assuming your 32-bit CRC is statistically independent of the SHA-1
-value, it adds 32 bits to the hash, or 16 bits to the number of objects
-we expect to generate (i.e., 2^96). That bumps us up to 10^23 years.
 
-However, it may be of interest that the Sun is expected to burn out in a
-mere 10^10 years[1].
 
-So I'm not sure there is really any point in adding a few bits to the
-hash length to detect an accidental collision. It's already
-fantastically unlikely. Adding another probability on top does make it
-less likely, but in the same ballpark of fantastic.
+---- 8< ----
+#!/bin/sh
 
-You can argue about whether linux-2.6 is a representative sample, or
-whether the pace of object creation might increase. But the simple
-answer is that we're many orders of magnitude away from having to care.
+test_description='submodule change bug'
+. ./test-lib.sh
 
-However, in your patch you write:
+## set current directory as working directory
+wd=`pwd`
 
-> +Security-Issue Details
-> +----------------------
-> +
-> +Without hash-collision detection, Git has a higher risk of data
-> +corruption due to the obvious hash-collision vulnerability, so the
-> +issue is really whether a usable vulnerability exists. Recent research
-> +has shown that SHA-1 collisions can be found in 2^63 operations or
-> +less.  While one result claimed 2^53 operations, the paper claiming
-> +that value was withdrawn from publication due to an error in the
-> +estimate. Another result claimed a complexity of between 2^51 and 2^57
-> +operations, and still another claimed a complexity of 2^57.5 SHA-1
-> +computations. A summary is available at
-> +<http://hackipedia.org/Checksums/SHA/html/SHA-1.htm#SHA-1>. Given the
-> +number of recent attacks, possibly by governments or large-scale
-> +criminal enterprises
-> +(<http://www.csmonitor.com/World/terrorism-security/2011/0906/Iranian-government-may-be-behind-hack-of-Dutch-security-firm>,
-> +<http://en.wikipedia.org/wiki/Operation_Aurora>,
-> +<http://en.wikipedia.org/wiki/Botnet#Historical_list_of_botnets>),
-> +which include botnets with an estimated 30 million computers, there is
-> +reason for some concern: while generating a SHA-1 collision for
-> +purposes of damaging a Git repository is extremely expensive
-> +computationally, it is possibly within reach of very well funded
-> +organizations. 2^32 operations, even if the operations are as
-> +expensive as computing a SHA-1 hash of a modest source-code file, can
-> +be performed in a reasonably short period of time on the type of
-> +hardware widely used in desktop or laptop computers at present. With
-> +sufficient parallelism, 30 million personal computers sufficient for
-> +playing the latest video games could perform 2^56 operations in a
-> +reasonable time.
+test_expect_success 'set up submodules' '
+## create repositories to be used as submodules
+mkdir sub1 sub2 remote &&
+(cd sub1 &&
+    git init &&
+    echo "test sub1" >> file &&
+    git add file &&
+    git commit -m "initial commit sub1"
+) &&
+git clone --bare sub1 remote/sub1.git &&
+(cd sub2 &&
+    git init &&
+    echo "test sub2" >> file &&
+    git add file &&
+    git commit -m "initial commit sub2"
+) &&
+git clone --bare sub2 remote/sub2.git
+'
 
-...which makes me think that you do care about malicious collisions. All
-of what you wrote above seems fairly accurate. Let's leave aside that
-those numbers are for a collision attack as opposed to a pre-image
-attack (collision attacks are hard to execute, as they require you to
-generate two "matched" objects, one good and one evil, and then convince
-somebody to first accept your good object, only to later replace it with
-the evil one).
+test_expect_success 'set up super-repo' '
+## create super repository
+git init --bare remote/super.git &&
+git clone remote/super.git super &&
+(cd super &&
+    git submodule add "$wd"/remote/sub1.git sub &&
+    git commit -m "Added submodule sub1 as sub" &&
+    git push -u origin master
+)'
 
-I have two concerns with this as a security mechanism:
+test_expect_success 'make super-repo with sub1->sub2' '
+## clone super repository again
+## and switch submodule sub1 by sub2
+git clone --recursive remote/super.git super2 &&
+(cd super2 &&
+    ## remote submodule sub
+    git config --remove-section submodule.sub &&
+    git rm .gitmodules &&
+    rm -rf sub &&
+    git rm sub &&
+    git commit -m "Removed submodule sub" &&
+    ## add submodule sub2 as sub
+    git submodule add "$wd"/remote/sub2.git sub &&
+    git commit -m "Added submodule sub2 as sub" &&
+    git push
+)
+'
 
-First, let us assume that the implementation details of your scheme
-work, and that git users will effectively be checking not just a SHA-1,
-but now a SHA-1 plus your additional digest.
+test_expect_success 'pull from super2' '
+## now pull super
+(cd super &&
+    git pull &&
+    ## this will fail
+    if ! git submodule update --init; then
+    ## so sync first und update again
+        git submodule sync &&
+        git submodule update --init
+    fi &&
+    ## now sub is corrupt
+    (cd sub &&
+        git log master >log1 && ## this is from sub1
+        echo "# next line should be: initial commit from sub1" &&
+        grep sub1 log1 &&
+        echo "# next line should be: initial commit from sub2" &&
+        git log origin/master >log2 && ## this is from sub2
+        grep sub2 log2
+    )
+)
+'
 
-In that case, why use crc32 as the digest? It seems like a terrible
-choice. Assuming it's cryptographically secure, then it's adding a mere
-16 bits to the numbers you mentioned above. IOW, it's at best a band-aid
-that pushes attacks off for a few years. But more importantly, it's
-_not_ secure, and can be trivially forged.
-
-But that's a relatively simple problem. crc32 could be replaced in your
-scheme with any of the SHA-2 family, or the upcoming SHA-3, or whatever.
-
-That brings me to my second concern: how does this alternative message
-digest have any authority?
-
-For example, your patch teaches the git protocol a new extension to pass
-these digests along with the object sha1s. But how do we know the server
-isn't feeding us a bad digest along with the bad object?
-
-The "usual" security model discussed in git is that of verifying a
-signed tag. Linus signs a tag and pushes it to a server. I fetch the
-tag, and can verify the signature on the tag. I want to know that I have
-the exact same objects that Linus had. But I can't assume the server is
-trustworthy; it may have fed me a bad object with a collided sha1.
-
-But what's in the signed part of the tag object? Only the sha1 of the
-commit the tag points to, but not the new digest. So an attacker can
-replace the commit with one that collides, and it can in turn point to
-arbitrary trees and blobs.
-
-You can fix this by including an extra header in the signed part of the
-tag that says "also, the digest of the commit I point to is X". Then you
-know you have the same commit that Linus had. But the commit points to a
-tree by its sha1. So you have to add a similar header in the commit
-object that says "also, the digest of the tree I point to is X". And
-ditto for all of the parent pointers, if you want to care about signing
-history. And then you have the same problem in the tree: each sub-tree
-and blob is referenced by its sha1.
-
-In other words, authority flows from the gpg-signed tag portion, and
-links in the chain to each object are made by referencing sha1s. Every
-time such a link is made, you need to also include the digest of the
-object, or you are giving the attacker a place to insert a collided
-object.
-
-For tag and commit objects, this actually isn't that hard; they have a
-relatively small number of links, and they have room for arbitrary
-headers. I.e., add a "tree-md-sha256" header that gives the expected
-sha-256 of the tree object referenced by sha-1 in the "tree" header.
-Older versions of git will skip over this header (though obviously they
-won't be smart enough to do the more-secure verification).
-
-However, it's harder for trees. Each entry needs to have the new digest
-added, but there simply isn't room in the format. So we would have to
-change the tree format, breaking interoperability with older versions of
-git. And all of your tree sha1's would change as soon as you wrote them
-with the new format. That's only slightly better than just swapping
-sha1 out for a better algorithm.
-
-One trick you could do is to include the digest of each blob in the
-commit object itself. This really bloats the size of commit objects,
-though. You can store a digest of their digests instead (which your
-patch actually calculates, but AFAICT does not actually insert into the
-commit object). That is small and relatively cheap (it turns commit from
-an O(1) operation into an O(number of files) operation, but the per-file
-constant is pretty inexpensive). But it comes at the expense of not being
-able to tell which of the constituent blobs was actually attacked.
-
-So I think all of that would work for verification starting at a signed
-tag that points to a commit or a blob. For a tag pointing straight to a
-tree, it could include the same "digest of digests" that the commit
-would.
-
-But it can never handle direct sha1 references outside of git. For
-example, a bug tracker or CI system that references a commit in git will
-do so by sha1. But that's an insecure link in the chain; you really need
-it to refer to both the sha1 _and_ the digest, and then you can verify
-that the object you have under that sha1 matches the digest. So you'd
-have to teach a whole generation of tools that they can't trust git sha1
-ids, and that you need an "extended" id that includes the digest.
-
-At that point, I really wonder if a flag day to switch to a new
-repository format is all that bad. You'd have to either rewrite existing
-history (which means re-signing tags if you care about them!), or just
-decide to leave the new and old histories disconnected.  Whereas a
-scheme based around an added-on digest could keep the old history
-connected. But at the same time, the old history will have zero value
-from a security perspective. If sha1 is broken, then those old
-signatures are worthless, anyway. And just switching to a new algorithm
-means the implementation remains very simple.
-
--Peff
-
-[1] Fun fact of the day: if linux development continues at the same
-    rate until the Sun burns out, there is a 1/2^60 chance of a
-    collision!
+test_done
