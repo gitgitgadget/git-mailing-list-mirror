@@ -1,60 +1,49 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Implement fast hash-collision detection
-Date: Tue, 29 Nov 2011 07:23:19 -0800
-Message-ID: <CAJo=hJvavm6feUjxOZ-qvJjs0nT=uKtFqs1Z82rcyEqazFxUOg@mail.gmail.com>
-References: <1322546563.1719.22.camel@yos> <20111129090733.GA22046@sigill.intra.peff.net>
- <CACsJy8BRhoYM+Lb8afp=3rKzYNOEq0JY8uS9mD1ovz3uyJVWOA@mail.gmail.com>
+From: Jason <ashbyj@imsweb.com>
+Subject: Re: subversion-perl missing
+Date: Tue, 29 Nov 2011 15:39:55 +0000 (UTC)
+Message-ID: <loom.20111129T163826-35@post.gmane.org>
+References: <4E8066AB.7000208@gjlay.de> <m3k48vp6l7.fsf@localhost.localdomain> <4E82F18E.9080304@gjlay.de> <201109281459.31689.jnareb@gmail.com> <4E83433E.9000702@gjlay.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>, Bill Zaumen <bill.zaumen+git@gmail.com>,
-	git@vger.kernel.org, gitster@pobox.com,
-	torvalds@linux-foundation.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 29 16:23:51 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 29 16:45:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVPXA-0005iS-UH
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 16:23:49 +0100
+	id 1RVPsc-0000BT-CU
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Nov 2011 16:45:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754525Ab1K2PXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Nov 2011 10:23:44 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:62010 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752475Ab1K2PXn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Nov 2011 10:23:43 -0500
-Received: by ywa9 with SMTP id 9so4189571ywa.19
-        for <git@vger.kernel.org>; Tue, 29 Nov 2011 07:23:43 -0800 (PST)
-Received: by 10.236.161.103 with SMTP id v67mr69984295yhk.87.1322580222755;
- Tue, 29 Nov 2011 07:23:42 -0800 (PST)
-Received: by 10.147.167.10 with HTTP; Tue, 29 Nov 2011 07:23:19 -0800 (PST)
-In-Reply-To: <CACsJy8BRhoYM+Lb8afp=3rKzYNOEq0JY8uS9mD1ovz3uyJVWOA@mail.gmail.com>
+	id S1754628Ab1K2Ppx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Nov 2011 10:45:53 -0500
+Received: from lo.gmane.org ([80.91.229.12]:59021 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752552Ab1K2Ppx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Nov 2011 10:45:53 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RVPsU-00007q-SD
+	for git@vger.kernel.org; Tue, 29 Nov 2011 16:45:51 +0100
+Received: from cpe-174-106-076-135.ec.res.rr.com ([174.106.76.135])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 29 Nov 2011 16:45:50 +0100
+Received: from ashbyj by cpe-174-106-076-135.ec.res.rr.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 29 Nov 2011 16:45:50 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 174.106.76.135 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20100101 Firefox/8.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186062>
 
-On Tue, Nov 29, 2011 at 05:17, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> On Tue, Nov 29, 2011 at 4:07 PM, Jeff King <peff@peff.net> wrote:
->> However, it's harder for trees. Each entry needs to have the new digest
->> added, but there simply isn't room in the format. So we would have to
->> change the tree format, breaking interoperability with older versions of
->> git. And all of your tree sha1's would change as soon as you wrote them
->> with the new format. That's only slightly better than just swapping
->> sha1 out for a better algorithm.
->
-> I think we could hide the new digest after NUL at the end of path
-> name. C Git at least does not seem to care whatever after NUL.
-
-No, you can't. The next byte after the NUL at the end of a path name
-is the SHA-1 of that entry. After those 20 bytes of SHA-1 data is
-consumed, the "mode SP name\0" of the next entry is parsed.
-
-There is not room in the tree format for any additional data. Period.
-At best you can modify the mode value to be a new octal code that is
-not recognized by current Git implementations. But that doesn't get
-you a whole lot of data, and its pretty risky change because its
-rather incompatible.
+Hi Johann,
+Were you able to get this working?  I'm also getting the "Bad URL passed to RA
+layer: Unrecognized URL scheme" error when trying to run "git svn clone".  
