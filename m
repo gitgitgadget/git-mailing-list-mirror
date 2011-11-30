@@ -1,153 +1,73 @@
-From: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-Subject: Re: BUG: "--work-tree blah" does not imply "--git-dir blah/.git" or
- fix misleading error message
-Date: Wed, 30 Nov 2011 19:22:30 +0100
-Message-ID: <20111130182230.GC12096@centaur.lab.cmartin.tk>
-References: <CAEUMa-cA8qPjJuPBREE1RqhgwmcZG7x1MjBYkxa3i+ZSAnMPOA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: log: option "--follow" not the default for a single file?
+Date: Wed, 30 Nov 2011 10:27:26 -0800
+Message-ID: <7vipm1qxdd.fsf@alter.siamese.dyndns.org>
+References: <CAN0XMOJsiw0c4j_LooRrj80CVVy0omGLUcjDg4QoD4mNS3y1GA@mail.gmail.com>
+ <20111130063743.GB5317@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="LpQ9ahxlCli8rRTG"
-Cc: git@vger.kernel.org
-To: John Twilley <mathuin@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 30 19:22:38 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Ralf Thielow <ralf.thielow@googlemail.com>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 30 19:27:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVonl-0004Gj-C1
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 19:22:37 +0100
+	id 1RVosY-0006pw-Fi
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 19:27:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751544Ab1K3SWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Nov 2011 13:22:32 -0500
-Received: from kimmy.cmartin.tk ([91.121.65.165]:46114 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750926Ab1K3SWc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Nov 2011 13:22:32 -0500
-Received: from centaur.lab.cmartin.tk (brln-4dbc7c68.pool.mediaWays.net [77.188.124.104])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 60A5E461A5;
-	Wed, 30 Nov 2011 19:21:49 +0100 (CET)
-Received: (nullmailer pid 10050 invoked by uid 1000);
-	Wed, 30 Nov 2011 18:22:30 -0000
-Mail-Followup-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	John Twilley <mathuin@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <CAEUMa-cA8qPjJuPBREE1RqhgwmcZG7x1MjBYkxa3i+ZSAnMPOA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751416Ab1K3S13 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Nov 2011 13:27:29 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50846 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751154Ab1K3S12 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Nov 2011 13:27:28 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CA8255A3;
+	Wed, 30 Nov 2011 13:27:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=330+U/Nmpe7AZPumvbkXRecrjNI=; b=CBqUVU
+	e1/9UTPwqO2xzWsIPeX5aJwYrbt/mCzu2kI5RGWC1sLgdOLekKgo3NuGP5olnTqW
+	rgtYvFDTeePO7FKW4c0nT7WFPujtswzJ21PB3SQwBlAIKKJacKz4un4DjVX8HpLM
+	mcmi45pMB9yiF+flKlyl13AiZ5l7r7G5TLSmk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PjHgufgkZ/Ax3GytwZr8Y7rpyPZkaRts
+	LNzda+MGvehaytfizsEeT6oITEP+KHhlly1v49LB6iQAEJAunQeVl3mOFanU7DHE
+	DwnhAEdNgzbxwJl59dXykvwUzPVxu9HyUP9DwOoOdChN1LturhgMhadEgRojS2xi
+	qzbxkCi+QoI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 42E9C55A2;
+	Wed, 30 Nov 2011 13:27:28 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B099655A1; Wed, 30 Nov 2011
+ 13:27:27 -0500 (EST)
+In-Reply-To: <20111130063743.GB5317@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 30 Nov 2011 01:37:43 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F4F6412C-1B80-11E1-BEE2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186133>
 
+Jeff King <peff@peff.net> writes:
 
---LpQ9ahxlCli8rRTG
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>   2. It can be slower than a regular traversal, since we have to do
+>      rename detection whenever we see a deletion. In practice I don't
+>      think it is much slower, though (mainly because files don't get
+>      moved all that much).
 
-On Wed, Nov 30, 2011 at 09:43:08AM -0800, John Twilley wrote:
-> Today someone asked me if there was a way to run git against a
-> directory other than the current directory.  I looked at the output of
-> --help and ran this:
->=20
-> $ git --work-tree blah status
->=20
-> I got the following output:
->=20
-> fatal: Not a git repository (or any parent up to mount parent /home)
-> Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
->=20
-> I mistakenly thought the error message meant that blah was not a git
-> repository.  What it meant was that there was no .git in the current
-> directory or any parent directory up to /home.
-
-Yes, git looks at the current directory and .git/ to see if there's a
-git repository there. This is what happens unless you tell git to look
-for it somewhere else.
-
->=20
-> This command worked as expected:
->=20
-> $ git --work-tree blah --git-dir blah/.git status
->=20
-> The documentation is somewhat fuzzy about what constitutes a git
-> repository.  The gittutorial describes the git repository as .git when
-> talking about "git init" while the Git User's Manual describes the git
-> repository as the working tree and the special top-level directory
-> named .git when talking about "git clone".
-
-A git repository is what's under .git/ (or in foo.git/ for bare
-repos). Non-bare repositories have a working tree associated with
-them, which by default lives just above the repository, because it'd
-be silly to have it somewhere else by default. Often you can think of
-both as the repository, as they're both. When you tell git to look for
-the worktree somewhere else, you're only overriding that particular
-variable, as git expects to be run from the repository (or just above,
-in the worktree).
-
->=20
-> It's clear (to me at least) that --work-tree should be used to
-> identify the root of the working tree when not inside the working
-> tree.  I expected that the git directory would be automatically set to
-> .git in the root of the working tree, as that would match the
-> documentation.  Instead, the current directory and its parents were
-> checked -- which could provide dangerously misleading information to
-> the user.
-
-What part of the documentation exactly? --work-tree tells git to look
-for the working tree somewhere else. This option exists in order to
-support a multiple-workdir workflow.
-
->=20
-> I think that one of two things should be done:  either the --git-dir
-> default should be changed when the --work-tree option is set, or the
-> error message cited above should be changed to explicitly identify the
-> directory being tested as a potential git repository.  I personally
-
-Git does tell you explicitly, but only when you specify a gitdir (via
-GIT_DIR or --git-dir), otherwise it looks at the current directory.
-
-> believe the first option is superior because it fulfills the
-> expectations of average users (folks who read git's documentation
-> instead of its source code) while permitting flexibility to those who
-
-It's not likely that it will get changed because that would break
-backwards-compatability in a very big way. If your concern is for
-"average user", she shouldn't be using that option, but changing to
-that directory instead. If you want your working tree to be ./foo/ and
-your gitdir to be ./foo/.git, why don't you just cd to ./foo/?
-
-> wish to refer to the current directory or some other directory for
-> their --git-dir value.  If the current behavior is somehow not a bug
-> but instead a critical and significant feature which if changed would
-> cause more harm than good, please consider the second option.
-
-You get two different messages depending on how git is looking for the
-repository. The message you mentioned gets printed when git tries to
-find it automatically. A "fatal: Not a git repository: '/tmp'" gets
-printed if you've told git to look for it in a specific place. The
-information is already there, though I guess you do have to know about
-the difference. Adding the current directory to the "default" message
-probably wouldn't hurt, as it's unlikely that a script is parsing
-that, and might be useful.
-
-   cmn
-
---LpQ9ahxlCli8rRTG
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAEBAgAGBQJO1nRmAAoJEHKRP1jG7ZzTqLsH/1V/2CTQsdyVjue0qY+eIdlW
-edisfAo62rFawByTpgJ5F8N5tPPLj1k10RCxOeiOjywIweR1C3a+uTzQIX4qSDC3
-f33vu6yy+yfVoseZun8zRjTDTYQYFMkNqhPFmWMD0N2GyVCub/rOvGTj/6m4HWXP
-m21FokVzdz4diHcbR7h2tYS7h3IE43DZWLvk93IXfZ/ohGbpftmynXuP7/IWYoBR
-5LI+prQ9fCY6yFcbYzm/tzSdNDXE3ub1Tb7uBvvMkBiY7PC9KqANasfHopODGUwy
-WtbIoG4kEsMeXcV+ihX/cGWrmFyMw+fSk+duL4vWSH6NcWpOMIdTInnPYPzhQHU=
-=KQYr
------END PGP SIGNATURE-----
-
---LpQ9ahxlCli8rRTG--
+There is no difference between a regular traversal and a follow traversal
+while the path is still there. When a path disappear during a regular
+traversal, most likely the remaining traversal will yield nothing but the
+user has already seen what is there to see. If a follow traversal was in
+use, the user has seen the same as the regular traversal up to that point,
+we spend a bit of time in rename detection, and then we start showing the
+result of the traversal using an updated pathspec. I doubt that "slowness"
+is an issue here.
