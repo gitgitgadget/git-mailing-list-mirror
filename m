@@ -1,78 +1,68 @@
-From: Max Krasnyansky <maxk@qualcomm.com>
-Subject: Auto update submodules after merge and reset
-Date: Tue, 29 Nov 2011 16:55:09 -0800
-Message-ID: <4ED57EED.4040705@qualcomm.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 11/13] strbuf: add strbuf_add*_urlencode
+Date: Tue, 29 Nov 2011 22:20:28 -0500
+Message-ID: <20111130032028.GA24704@sigill.intra.peff.net>
+References: <20111124105801.GA6168@sigill.intra.peff.net>
+ <20111124110728.GI8417@sigill.intra.peff.net>
+ <7vzkfessff.fsf@alter.siamese.dyndns.org>
+ <20111129211950.GD1793@sigill.intra.peff.net>
+ <4ED56A1C.9050800@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 30 01:55:28 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Wed Nov 30 04:20:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVYSN-0007YS-GP
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 01:55:28 +0100
+	id 1RVaj1-0005JF-Tu
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 04:20:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756823Ab1K3AzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Nov 2011 19:55:22 -0500
-Received: from wolverine01.qualcomm.com ([199.106.114.254]:47616 "EHLO
-	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753269Ab1K3AzV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Nov 2011 19:55:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=qualcomm.com; i=maxk@qualcomm.com; q=dns/txt;
-  s=qcdkim; t=1322614521; x=1354150521;
-  h=message-id:date:from:user-agent:mime-version:to:subject:
-   content-type:content-transfer-encoding:x-originating-ip;
-  z=Message-ID:=20<4ED57EED.4040705@qualcomm.com>|Date:=20Tu
-   e,=2029=20Nov=202011=2016:55:09=20-0800|From:=20Max=20Kra
-   snyansky=20<maxk@qualcomm.com>|User-Agent:=20Mozilla/5.0
-   =20(X11=3B=20Linux=20x86_64=3B=20rv:8.0)=20Gecko/20111124
-   =20Thunderbird/8.0|MIME-Version:=201.0|To:=20<git@vger.ke
-   rnel.org>|Subject:=20Auto=20update=20submodules=20after
-   =20merge=20and=20reset|Content-Type:=20text/plain=3B=20ch
-   arset=3D"ISO-8859-1"=3B=20format=3Dflowed
-   |Content-Transfer-Encoding:=207bit|X-Originating-IP:=20[1
-   72.30.48.1];
-  bh=P0BqxUfLI3B9Y+0rc6Dy+DpvbPon7JhuZKW29J2e9sE=;
-  b=g7cdjVkdsawLi09nk8Kssp2PMQCLd4B9G6cO 
-X-IronPort-AV: E=McAfee;i="5400,1158,6545"; a="142085620"
-Received: from ironmsg04-r.qualcomm.com ([172.30.46.18])
-  by wolverine01.qualcomm.com with ESMTP; 29 Nov 2011 16:55:20 -0800
-X-IronPort-AV: E=Sophos;i="4.69,591,1315206000"; 
-   d="scan'208";a="208855767"
-Received: from nasanexhc05.na.qualcomm.com ([172.30.48.2])
-  by Ironmsg04-R.qualcomm.com with ESMTP/TLS/AES128-SHA; 29 Nov 2011 16:55:20 -0800
-Received: from [10.50.16.20] (172.30.48.1) by qcmail1.qualcomm.com
- (172.30.48.2) with Microsoft SMTP Server (TLS) id 14.1.339.1; Tue, 29 Nov
- 2011 16:55:11 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20111124 Thunderbird/8.0
-X-Originating-IP: [172.30.48.1]
+	id S1751827Ab1K3DUb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Nov 2011 22:20:31 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55946
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751514Ab1K3DUa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Nov 2011 22:20:30 -0500
+Received: (qmail 5997 invoked by uid 107); 30 Nov 2011 03:27:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Nov 2011 22:27:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Nov 2011 22:20:28 -0500
+Content-Disposition: inline
+In-Reply-To: <4ED56A1C.9050800@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186098>
 
-Does anyone have a pointer to a thread/discussion that explains why git 
-submodules are not auto
-updated when the superproject is updated (merge, reset, etc) by default?
+On Wed, Nov 30, 2011 at 12:26:20AM +0100, Ren=C3=A9 Scharfe wrote:
 
-Assuming a simple and default setup where submodule update policy is set 
-to "checkout".
-It seems that the default and sane behavior should be to update 
-(checkout) corresponding submodule
-commit to track the superproject.
-I can't seem to find convincing explanation why it's not the case :). 
-Having to manually update
-submodules after pull or reset has been error prone and confusing for 
-the devs I work with.
+> >>> +static int is_rfc3986_reserved(char ch)
+> >>> +{
+> >>> +	switch (ch) {
+> >>> +	case '!': case '*': case '\'': case '(': case ')': case ';':
+> >>> +	case ':': case '@': case '&': case '=3D': case '+': case '$':
+> >>> +	case ',': case '/': case '?': case '#': case '[': case ']':
+> >>> +		return 1;
+> >>> +	}
+> [...]
+> Sorry for my bikeshedding, but I'd paint it like this:
+>=20
+> 	return !!strchr("!*'();:@&=3D+$,/?#[]", ch);
 
-I'm thinking about adding a config option that would enable automatic 
-submodule update but wanted
-to see if there is some fundamental reason why it would not be accepted.
+I was always under the impression that computed jumps via "switch" woul=
+d
+out-perform even an optimized strchr. Of course, I never tested. And I
+doubt performance is even relevant here, and I admit I don't care overl=
+y
+much. I find them both equally readable.
 
-Thanx
-Max
+I'm going to leave it as-is unless somebody else wants to say "I
+strongly prefer version X".
+
+-Peff
