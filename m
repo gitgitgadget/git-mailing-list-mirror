@@ -1,968 +1,614 @@
 From: Bill Zaumen <bill.zaumen@gmail.com>
-Subject: [PATCH 1/3] Add CRCDB and PACKDB modules for fast collision
- detection
-Date: Tue, 29 Nov 2011 21:59:24 -0800
-Message-ID: <1322632764.1728.317.camel@yos>
+Subject: [PATCH 2/3] Add documentation for fast hash collision detection
+Date: Tue, 29 Nov 2011 22:12:39 -0800
+Message-ID: <1322633559.1728.331.camel@yos>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 Cc: gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 30 06:59:41 2011
+X-From: git-owner@vger.kernel.org Wed Nov 30 07:12:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVdCl-00013Y-R5
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 06:59:40 +0100
+	id 1RVdPc-0004Qc-JN
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 07:12:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752314Ab1K3F7e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Nov 2011 00:59:34 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:63689 "EHLO
+	id S1752750Ab1K3GMv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Nov 2011 01:12:51 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:56379 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750895Ab1K3F7d (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Nov 2011 00:59:33 -0500
-Received: by iage36 with SMTP id e36so246054iag.19
-        for <git@vger.kernel.org>; Tue, 29 Nov 2011 21:59:32 -0800 (PST)
+	with ESMTP id S1752373Ab1K3GMu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Nov 2011 01:12:50 -0500
+Received: by iage36 with SMTP id e36so261981iag.19
+        for <git@vger.kernel.org>; Tue, 29 Nov 2011 22:12:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=subject:from:to:cc:content-type:date:message-id:mime-version
          :x-mailer:content-transfer-encoding;
-        bh=BJlI7Wm2/NrPeL7FuvhcY4eeuPb+ovv8hQHZYHhAy1s=;
-        b=lgBwwIv+d4LGiTepgRuJJelYZsmJcMna2A8eMvpDHJ9kcyB0dZ/MZva7zAH4ih4Yz4
-         c/33bQ/F5TFczQwjwJQ9R+ErB799iTVio/UDj9R+UMo+p/LYFAczj6aFMaAi8qtp+OGD
-         DyLbItx6ELv3PLyDryDscybH4dovjimR/Q4v0=
-Received: by 10.231.73.142 with SMTP id q14mr152377ibj.3.1322632772472;
-        Tue, 29 Nov 2011 21:59:32 -0800 (PST)
+        bh=Q4luI0Oe1OgQ7k5blT/Ad+srSXMQTiP0uQ8Ws4zCbSQ=;
+        b=cDmt7HptmVvMsWZOsmY9jAUe8WCFlBTK2NtF6+yfqmeJ6+M+hIhG/SzADNX0kkDVuA
+         plDeRs+0fmzLVWyHHoqQ8YCZ234E9vU04uLdcmoUdNUq9pmgHzRMfVyFoAtYcIO+EM/z
+         ZkD3uWCOBIIk5hZ7Pgs4Sldc2eWJJKSNMTRE4=
+Received: by 10.42.115.136 with SMTP id k8mr961907icq.46.1322633567622;
+        Tue, 29 Nov 2011 22:12:47 -0800 (PST)
 Received: from [192.168.1.20] (adsl-209-233-20-69.dsl.snfc21.pacbell.net. [209.233.20.69])
-        by mx.google.com with ESMTPS id p16sm3733241ibk.6.2011.11.29.21.59.29
+        by mx.google.com with ESMTPS id wo4sm2122153igc.5.2011.11.29.22.12.44
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 29 Nov 2011 21:59:31 -0800 (PST)
+        Tue, 29 Nov 2011 22:12:46 -0800 (PST)
 X-Mailer: Evolution 2.30.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186104>
 
-The CRCDB module maintains a persistent mapping from SHA-1 hashes
-to CRCs or message digests for Git objects. The current implementation
-uses one file per CRC.  Documentation is in the header file crcdb.h
-and there is a preprocessor directive CRCDB that should be set to 0
-or 1, with the current choice being 0.
+The documentation added is technical documentation describing
+how fast hash collision detection operates and changes to
+several git commands (a few new command-line arguments, mostly).
 
-The PACKDB module (normally not turned on but can be conditionally
-compiled) can be turned on for debugging/testing. This module
-allows a CRC for an object to always be found, computing it from
-scratch and storing it in a GDBM database.  It is intended for
-use while building index files.  Testing seems to show that it is
-not necessary as the needed information is always there.
+Note: the change to the implementation is in the child of
+this commit.
 
 Signed-off-by: Bill Zaumen <bill.zaumen+git@gmail.com>
 ---
- crcdb.h       |  191 +++++++++++++++++++++++++++++++++
- gdbm-packdb.c |  247 +++++++++++++++++++++++++++++++++++++++++++
- objd-crcdb.c  |  324 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- packdb.h      |  107 +++++++++++++++++++
- 4 files changed, 869 insertions(+), 0 deletions(-)
- create mode 100644 crcdb.h
- create mode 100644 gdbm-packdb.c
- create mode 100644 objd-crcdb.c
- create mode 100644 packdb.h
+ Documentation/git-count-objects.txt          |   12 +-
+ Documentation/git-index-pack.txt             |   16 +-
+ Documentation/git-verify-pack.txt            |   23 ++
+ Documentation/technical/collision-detect.txt |  385 ++++++++++++++++++++++++++
+ Documentation/technical/pack-format.txt      |   40 +++
+ 5 files changed, 471 insertions(+), 5 deletions(-)
+ create mode 100644 Documentation/technical/collision-detect.txt
 
-diff --git a/crcdb.h b/crcdb.h
+diff --git a/Documentation/git-count-objects.txt b/Documentation/git-count-objects.txt
+index 23c80ce..4cdbaf5 100644
+--- a/Documentation/git-count-objects.txt
++++ b/Documentation/git-count-objects.txt
+@@ -8,7 +8,7 @@ git-count-objects - Count unpacked number of objects and their disk consumption
+ SYNOPSIS
+ --------
+ [verse]
+-'git count-objects' [-v]
++'git count-objects' [-v] [-M]
+ 
+ DESCRIPTION
+ -----------
+@@ -25,6 +25,16 @@ OPTIONS
+ 	objects, number of packs, disk space consumed by those packs,
+ 	and number of objects that can be removed by running
+ 	`git prune-packed`.
++-M::
++--count-md::
++	Report the number of loose objects with no stored message digests.
++	With the -v option, the number of missing "mds" files (these
++	contain the message digests for the SHA1 hashes in the corresponding
++	"idx" files) is reported, along with a count of the number of
++	mds files whose size is wrong (e.g., an index was created but the
++	existing MDS file was not updated) and a count of the number of
++	objects in pack files that do not have a stored message digest.
++	Values that are zero are not shown.
+ 
+ GIT
+ ---
+diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
+index 909687f..3285fae 100644
+--- a/Documentation/git-index-pack.txt
++++ b/Documentation/git-index-pack.txt
+@@ -11,14 +11,14 @@ SYNOPSIS
+ [verse]
+ 'git index-pack' [-v] [-o <index-file>] <pack-file>
+ 'git index-pack' --stdin [--fix-thin] [--keep] [-v] [-o <index-file>]
+-                 [<pack-file>]
++		 [-m <mds-file>] [<pack-file>]
+ 
+
+ DESCRIPTION
+ -----------
+-Reads a packed archive (.pack) from the specified file, and
+-builds a pack index file (.idx) for it.  The packed archive
+-together with the pack index can then be placed in the
++Reads a packed archive (.pack) from the specified file, and builds a
++pack index file (.idx) and a pack mds file (.mds) for it.  The packed
++archive together with the pack index can then be placed in the
+ objects/pack/ directory of a git repository.
+ 
+
+@@ -35,6 +35,14 @@ OPTIONS
+ 	fails if the name of packed archive does not end
+ 	with .pack).
+ 
++-m <mds-file>::
++	Write the generated pack mds file into the specified.
++	file Without this option, the name of the pack mds
++	file is constructed from the name of packed archive
++	file by replacing .pack with .idx (and the program
++	fails if the name of packed archive does not end
++	with .pack).
++
+ --stdin::
+ 	When this flag is provided, the pack is read from stdin
+ 	instead and a copy is then written to <pack-file>. If
+diff --git a/Documentation/git-verify-pack.txt b/Documentation/git-verify-pack.txt
+index cd23076..e81c514 100644
+--- a/Documentation/git-verify-pack.txt
++++ b/Documentation/git-verify-pack.txt
+@@ -33,6 +33,15 @@ OPTIONS
+ 	Do not verify the pack contents; only show the histogram of delta
+ 	chain length.  With `--verbose`, list of objects is also shown.
+ 
++-M::
++--show-mds::
++	Show the message digests along with the 40-character object names
++	(SHA1 value in hexidecimal). Ignored if --stat-only is set. If
++	--verbose is not set, only the table indexed by object names is
++	shown, although the files will be verified.  The message digests
++	printed are the actual ones - if the MDS file does not contain these,
++	the verification will fail.
++
+ \--::
+ 	Do not interpret any more arguments as options.
+ 
+@@ -48,6 +57,20 @@ for objects that are not deltified in the pack, and
+ 
+ for objects that are deltified.
+ 
++When the -M option is used, the offset-in-pack field is followed by an
++entry giving the message digest.  The format used is:
++
++      md=0xHEX_VALUE
++
++when a message digest exists, and
++
++     <no md>
++
++when a message digest does not exist.  These entries precede the depth
++entry for deltified objects.  A non-existent message digest will be shown
++only if the MDS file is missing - while the MDS-file format allows missing
++entries, the file will not be considered valid.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/Documentation/technical/collision-detect.txt b/Documentation/technical/collision-detect.txt
 new file mode 100644
-index 0000000..6eabb4f
+index 0000000..0d33da8
 --- /dev/null
-+++ b/crcdb.h
-@@ -0,0 +1,191 @@
-+#ifndef CRCDB_H
-+#define CRCDB_H
-+
-+/**
-+ * CRC Database Support.
-+ *
-+ * This module uses GDBM to maintain a database mapping SHA-1 object keys
-+ * to a 32-bit CRC for purposes of detecting hash collisions.  The CRCs
-+ * are stored in the database in network byte order (i.e., as big-endian
-+ * 32-bit unsigned integers).  The functions allow for initialization,
-+ * queries, adding new entries (with a collision check), and managing
-+ * access to alternate databases.
-+ *
-+ * The preprocessor symbol CRCDB determines the implementation of the
-+ * module.
-+ * Values:
-+ *   0, 1 - implement using directories and files - the first byte of a
-+ *       SHA1 hash determines a subdirectory of ../objects/crcs, and
-+ *       the remaining bytes determine the file name, with the names
-+ *       consisting of the hexadecimal representation of each byte's
-+n *       value. The files then contain 32-bit CRCs stored in network
-+ *       byte order.  A large number of 4-byte files is a poor use of
-+ *       disk space, but may be useful for testing.  A value of 1 implies
-+ *       that packdb will also be used.
-+ */
-+
-+#include<stdint.h>
-+
-+#include "cache.h"
-+
-+#if (CRCDB == 0) || (CRCDB == 1)
-+/**
-+ * Opaque data type - because the typedef is for a pointer, we
-+ * don't need the structure defined in files that use the pointer.
-+ * We do need it defined somewhere, in this case in the file
-+ * objd-crcdb.c, which is the only place the fields are used.
-+ */
-+typedef struct objd_crcdb *crcdb_t;
-+#endif
-+
-+/**
-+ *  Initialize the database.
-+ *  This opens a database file in the objects directory named crcs,
-+ *  used to store CRCS of objects (uncompressed, excluding the header)
-+ *  for hash-collision detection.
-+ */
-+extern void crcdb_init(void);
-+
-+/**
-+ * Check if the database has been initialized.
-+ * Returns:
-+ *   1 if crcdb_init has been called; false otherwise.
-+ */
-+extern int crcdb_initialized(void);
-+
-+/**
-+ * Initializes alternative databases by adding them to a table with
-+ * these databases closed.
-+ */
-+extern void crcdb_init_alts();
-+
-+
-+/**
-+ * Open a database file.
-+ *
-+ * The default database can be read or written. alternate database
-+ * files are read-only databases.  Multiple calls without intervening
-+ * calls to crcdb_close for a given argument will result in the same
-+ * object being returned each successive time.  The pathname must match
-+ * one stored by a call to crcdb_init_alts.
-+ *
-+ * Arguments:
-+ *    pathname - the pathname of the file; NULL for the default db;
-+ *
-+ * Returns:
-+ *    the database (NULL indicates the default)
-+ */
-+extern crcdb_t crcdb_open(char *pathname);
-+
-+/**
-+ * Open a database file given an alterate object database pointer.
-+ *
-+ * The default database can be read or written. alternate database
-+ * files are read-only databases.  Multiple calls without intervening
-+ * calls to crcdb_close for a given argument will result in the same
-+ * object being returned each successive time The argument must match
-+ * an alternate object database pointer stored by a precding call to
-+ * crcdb_init_alts.
-+ *
-+ * Arguments:
-+ *    alt - an alternate object database pointer (which provides the
-+ *          pathname).
-+ *
-+ * Returns:
-+ *    the database (NULL indicates the default)
-+ */
-+extern crcdb_t crcdb_open_alt(struct alternate_object_database *alt);
-+
-+/**
-+ * Lookup a CRC from a database.
-+ *
-+ * Arguments:
-+ *        dbf - the CRC database; NULL for the default database
-+ *       sha1 - the key for the lookup (a 20-byte SHA1 digest)
-+ *  objcrc32p - a pointer to a uint32_t to store the returned value when
-+ *              an entry in the database exists.
-+ *
-+ * Returns:
-+ *   0 if no entry, 1 if there is an existing entry.
-+ */
-+extern int crcdb_lookup(crcdb_t dbf, const unsigned char *sha1,
-+			uint32_t *objcrc32p);
-+
-+/**
-+ * Remove a CRC from a database.
-+ *
-+ * Arguments:
-+ *        dbf - the CRC database; NULL for the default database
-+ *       sha1 - the key for the lookup (a 20-byte SHA1 digest)
-+ *
-+ * Returns:
-+ *   0 on success; -1 if the entry did not exist or if an entry
-+ *   could not be deleted
-+ */
-+extern int crcdb_remove(crcdb_t dbf, const unsigned char *sha1);
-+
-+/**
-+ * Process a CRC for a SHA-1 key.
-+ *
-+ * Arguments:
-+ *        dbf - the CRC database; NULL for the default database
-+ *       sha1 - the key for the lookup (a 20-byte SHA1 digest)
-+ *   objcrc32 - the crc to store.
-+ *
-+ * Returns:
-+ *   0 if this is a new entry; 1 if it is an existing entry, -1 if
-+ *   an entry cannot be added ot the database.
-+ *
-+ * Errors:
-+ *   Will call 'die' and exit if there is a hash collision. Will call
-+ *   'error' if the value cannot be entered.
-+ */
-+extern int crcdb_process(crcdb_t dbf, const unsigned char *sha1,
-+			 uint32_t objcrc32);
-+
-+/**
-+ * Reorganize a CRC database.
-+ *
-+ * Arguments:
-+ *        dbf - the CRC database; NULL for the default database
-+ * Returns:
-+ *   0 on success; -1 on failure
-+ */
-+extern int crcdb_reorganize(crcdb_t dbf);
-+
-+
-+/**
-+ * Close a  database file.
-+ *
-+ * If the same database was opened multiple times, a reference count is
-+ * decremented and the the database will not be closed until the count
-+ * reaches zero.  Calls to crcdb_open or crcdb_open_alt must be balanced
-+ * by calls to crcdb_close or crcdb_close_alt.
-+ *
-+ * Arguments:
-+ *        dbf - the CRC database.
-+ */
-+extern void crcdb_close(crcdb_t dbf);
-+
-+/**
-+ * Close a database file given an alternate object database pointer.
-+ *
-+ * If the same database was opened multiple times, a reference count is
-+ * decremented and the the database will not be closed until the count
-+ * reaches zero.  Calls to crcdb_open or crcdb_open_alt must be balanced
-+ * by calls to crcdb_close or crcdb_close_alt.
-+ *
-+ * Arguments:
-+ *       alt - a pointer ot an alternate object database
-+ */
-+extern void crcdb_close_alt(struct alternate_object_database *alt);
-+
-+/**
-+ * Shutdown the database files.
-+ * This will shut down the default database and the cached alternative
-+ * databases.  All others should be closed by calling crcb_alt_close
-+ * explicitly
-+ */
-+extern void crcdb_finish(void);
-+
-+#endif /*CRCDB_H */
-diff --git a/gdbm-packdb.c b/gdbm-packdb.c
-new file mode 100644
-index 0000000..0115f87
---- /dev/null
-+++ b/gdbm-packdb.c
-@@ -0,0 +1,247 @@
-+#include<sys/types.h>
-+#include<sys/stat.h>
-+#include <sys/param.h>
-+#include<stdio.h>
-+#include<string.h>
-+#include<malloc.h>
-+#include <unistd.h>
-+#include <stdlib.h>
-+#include <fcntl.h>
-+#include <time.h>
-+#include <pthread.h>
-+#include <errno.h>
-+#include <gdbm.h>
-+
-+#include "cache.h"
-+#include "packdb.h"
-+#include "crcdb.h"
-+
-+static void nsleep() {
-+#if _POSIX_C_SOURCE >= 199309L
-+	struct timespec ts;
-+	ts.tv_sec = 0;
-+	ts.tv_nsec = 100000;
-+	nanosleep(&ts, NULL);
-+#else
-+	sleep(1);
-+#endif
-+}
-+
-+
-+static int initialized = 0;
-+
-+static GDBM_FILE dbf = NULL;
-+char *dbf_name;
-+static int dbf_depth = 0;
-+
-+pthread_mutex_t gdbm_mutex = PTHREAD_MUTEX_INITIALIZER;
-+
-+static void packdb_close_nolock(void);
-+
-+void packdb_init(void) {
-+	char *last;
-+	pthread_mutex_lock(&gdbm_mutex);
-+	if (initialized) {
-+		pthread_mutex_unlock(&gdbm_mutex);
-+		return;
-+	}
-+	dbf_name = get_object_packdb_node();
-+	last = rindex(dbf_name, '/');
-+	*last = 0;
-+	if (!access(dbf_name, R_OK|W_OK|X_OK)) {
-+		initialized = 1;
-+	}
-+	*last = '/';
-+	pthread_mutex_unlock(&gdbm_mutex);
-+}
-+
-+int packdb_initialized(void) {
-+  return initialized;
-+}
-+
-+static void packdb_open_nolock(void) {
-+	if (dbf_depth == 0) {
-+	AGAIN_W:
-+		dbf = gdbm_open(dbf_name, 0, GDBM_WRCREAT, PERM_GROUP, NULL);
-+		if (dbf == NULL && gdbm_errno == GDBM_CANT_BE_WRITER) {
-+			nsleep();
-+			goto AGAIN_W;
-+		}
-+	}
-+	dbf_depth++;
-+}
-+
-+void packdb_open(void) {
-+	pthread_mutex_lock(&gdbm_mutex);
-+	packdb_open_nolock();
-+	pthread_mutex_unlock(&gdbm_mutex);
-+}
-+
-+
-+int packdb_lookup(const unsigned char *sha1, uint32_t *objcrc32p) {
-+	datum key;
-+	datum ovalue;
-+	uint32_t oldcrc;
-+	pthread_mutex_lock(&gdbm_mutex);
-+
-+	if (!initialized) {
-+		pthread_mutex_unlock(&gdbm_mutex);
-+		return -1;
-+	}
-+
-+	key.dptr = (char *)sha1;
-+	key.dsize = 20;
-+
-+	packdb_open_nolock();
-+	if (dbf == NULL) {
-+		packdb_close_nolock();
-+		pthread_mutex_unlock(&gdbm_mutex);
-+		return -1;
-+	}
-+	ovalue = gdbm_fetch(dbf, key);
-+	packdb_close_nolock();
-+	pthread_mutex_unlock(&gdbm_mutex);
-+
-+	if (ovalue.dptr == NULL) return 0;
-+	oldcrc = *(uint32_t *)(ovalue.dptr);
-+	free(ovalue.dptr);
-+	if (objcrc32p) *objcrc32p = (oldcrc);
-+	return 1;
-+}
-+
-+int packdb_remove(const unsigned char *sha1) {
-+	datum key;
-+	int result;
-+	pthread_mutex_lock(&gdbm_mutex);
-+	if ((!initialized)  || dbf == NULL) {
-+		pthread_mutex_unlock(&gdbm_mutex);
-+		return -1;
-+	}
-+	key.dptr = (char *)sha1;
-+	key.dsize = 20;
-+	packdb_open_nolock();
-+	result = gdbm_delete(dbf, key);
-+	packdb_close_nolock();
-+	pthread_mutex_unlock(&gdbm_mutex);
-+	return result;
-+}
-+
-+
-+int packdb_process(const unsigned char *sha1, uint32_t objcrc32) {
-+	datum key;
-+	datum nvalue;
-+	datum ovalue;
-+	uint32_t newcrc = (objcrc32);
-+	uint32_t oldcrc;
-+	pthread_mutex_lock(&gdbm_mutex);
-+	if ((!initialized) || dbf == NULL) {
-+		pthread_mutex_unlock(&gdbm_mutex);
-+		return -1;
-+	}
-+	key.dptr = (char *)sha1;
-+	key.dsize = 20;
-+
-+	nvalue.dptr = (char *)&newcrc;
-+	nvalue.dsize = sizeof(uint32_t);
-+
-+	packdb_open_nolock();
-+	ovalue = gdbm_fetch(dbf, key);
-+	if (dbf == dbf && ovalue.dptr == NULL) {
-+		int status;
-+		status = gdbm_store(dbf, key, nvalue, GDBM_INSERT);
-+		packdb_close_nolock();
-+		pthread_mutex_unlock(&gdbm_mutex);
-+		switch (status) {
-+		case 0:
-+			return 0;
-+		case -1:
-+		  error("could not enter crc into database - key = %s",
-+		      sha1_to_hex(sha1));
-+		      return -1;
-+		case 1:
-+			return 1;
-+		}
-+		return -1;	/* should not occur */
-+	} else if (ovalue.dptr == NULL) {
-+		packdb_close_nolock();
-+		pthread_mutex_unlock(&gdbm_mutex);
-+		return 0;
-+	} else {
-+		packdb_close_nolock();
-+		pthread_mutex_unlock(&gdbm_mutex);
-+
-+		oldcrc = *(uint32_t *)ovalue.dptr;
-+		free(ovalue.dptr);
-+		/*
-+		 * Both oldcrc and newcrc are in network byte order.
-+		 */
-+		if (oldcrc != newcrc) {
-+			die("SHA1  COLLISION WHEN INSERTING OBJECT %s",
-+			    sha1_to_hex(sha1));
-+			return -1;
-+		}
-+		return 1;
-+	}
-+}
-+
-+int packdb_store(unsigned char *sha1) {
-+	int status;
-+	uint32_t objcrc32;
-+	status = crcdb_lookup(NULL, sha1, &objcrc32);
-+	if (status == 1) {
-+		return packdb_process(sha1, objcrc32);
-+	} else if (status == 0) {
-+	  return packdb_lookup(sha1, &objcrc32)? 1: -1;
-+	} else {
-+	  return -1;
-+	}
-+}
-+
-+int packdb_reorganize() {
-+	int status;
-+	pthread_mutex_lock(&gdbm_mutex);
-+	if ((!initialized)  || dbf == NULL) {
-+		pthread_mutex_unlock(&gdbm_mutex);
-+		return -1;
-+	}
-+	packdb_open_nolock();
-+	status = gdbm_reorganize(dbf);
-+	packdb_close_nolock();
-+	pthread_mutex_unlock(&gdbm_mutex);
-+	return status;
-+}
-+
-+
-+static void packdb_close_nolock(void) {
-+	  if (!initialized) {
-+		return;
-+	  }
-+	  dbf_depth--;
-+	  if (dbf_depth == 0 && dbf != NULL) {
-+		gdbm_close(dbf);
-+		dbf = NULL;
-+	  }
-+	  if (dbf_depth < 0) {
-+		die("packdb dbf_depth %d < 0", dbf_depth);
-+	  }
-+	  return;
-+}
-+
-+void packdb_close(void) {
-+	  pthread_mutex_lock(&gdbm_mutex);
-+	  packdb_close_nolock();
-+	  pthread_mutex_unlock(&gdbm_mutex);
-+}
-+
-+void packdb_finish(void) {
-+	pthread_mutex_lock(&gdbm_mutex);
-+	if (!initialized) {
-+		pthread_mutex_unlock(&gdbm_mutex);
-+		return;
-+	}
-+	if (dbf != NULL) gdbm_close(dbf);
-+	dbf = NULL;
-+	dbf_depth = 0;
-+	initialized = 0;
-+	pthread_mutex_unlock(&gdbm_mutex);
-+}
-diff --git a/objd-crcdb.c b/objd-crcdb.c
-new file mode 100644
-index 0000000..2bf6fd9
---- /dev/null
-+++ b/objd-crcdb.c
-@@ -0,0 +1,324 @@
-+#include<sys/types.h>
-+#include "cache.h"
-+#include "crcdb.h"
-+
-+struct objd_crcdb {
-+  char *root;
-+};
-+
-+static struct objd_crcdb db;
-+
-+static crcdb_t no_dbf = (crcdb_t) 4;
-+
-+static crcdb_t dbf = NULL;
-+
-+#define ALT_DBF_LIMIT  512
-+
-+
-+struct alt_map {
-+	struct objd_crcdb db;
-+	struct alternate_object_database *alt;
-+	struct alt_map *refer;
-+};
-+
-+struct alt_map alt_map[ALT_DBF_LIMIT];
-+static int alt_in_use = 0;
-+static int initialized = 0;
-+
-+
-+void crcdb_init(void) {
-+	if (initialized) {
-+		return;
-+	}
-+	dbf = &db;
-+	db.root = get_object_crc_node();
-+	initialized = 1;
-+}
-+
-+int crcdb_initialized(void) {
-+	return initialized;
-+}
-+
-+static int setup_alt(struct alternate_object_database *alt, void *param) {
-+	static char buffer[PATH_MAX];
-+	int i;
-+	int lim = alt->name - alt->base;
-+	memcpy(buffer, alt->base, lim);
-+	memcpy(buffer, alt->base, lim);
-+	memcpy(buffer+lim, "crcs", 4);
-+	buffer[lim+4] = 0;
-+	for (i = 0; i < alt_in_use; i++) {
-+		if (alt_map[i].alt == alt) {
-+			/* don't put in the same entry twice */
-+			return 0;
-+		}
-+		if (strcmp(buffer, alt_map[i].db.root) == 0) {
-+			break;
-+		}
-+	}
-+	alt_map[alt_in_use].db.root = xstrdup(buffer);
-+	alt_map[alt_in_use].alt = alt;
-+	if (i < alt_in_use) {
-+		alt_map[alt_in_use].refer = alt_map + i;
-+	} else {
-+		alt_map[alt_in_use].refer = NULL;
-+	}
-+	alt_in_use++;
-+	return 0;
-+}
-+
-+static int alt_initialized = 0;
-+
-+void crcdb_init_alts(void){
-+	if (alt_initialized) return;
-+	foreach_alt_odb(setup_alt, NULL);
-+	alt_initialized = 1;
-+}
-+
-+
-+crcdb_t crcdb_open(char *name) {
-+	int i;
-+	if (name == NULL) return NULL;
-+	for (i = 0; i < alt_in_use; i++) {
-+		if (strcmp(alt_map[i].db.root, name) == 0) {
-+			if (alt_map[i].refer) {
-+				i = (alt_map[i].refer - alt_map);
-+			}
-+			return (crcdb_t)&(alt_map[i].db);
-+		}
-+	}
-+	return no_dbf;
-+}
-+
-+crcdb_t crcdb_open_alt(struct alternate_object_database *alt) {
-+	int i;
-+	for (i = 0; i < alt_in_use; i++) {
-+		if (alt_map[i].alt == alt) {
-+			return (crcdb_t)&(alt_map[i].db);
-+		}
-+	}
-+	return no_dbf;
-+
-+}
-+/* copied from sha1_file.c */
-+static void fill_sha1_path(char *pathbuf, const unsigned char *sha1)
-+{
-+	int i;
-+	for (i = 0; i < 20; i++) {
-+		static char hex[] = "0123456789abcdef";
-+		unsigned int val = sha1[i];
-+		char *pos = pathbuf + i*2 + (i > 0);
-+		*pos++ = hex[val >> 4];
-+		*pos = hex[val & 0xf];
-+	}
-+}
-+
-+/*
-+ * Warning: returns a static buffer so be careful about threading.
-+ */
-+static char *crc32_file_name(const char *path, const unsigned char *sha1)
-+{
-+	static char buf[PATH_MAX];
-+	const char *objcrcdir;
-+	int len;
-+
-+	objcrcdir = path;
-+	len = strlen(objcrcdir);
-+
-+	/* '/' + sha1(2) + '/' + sha1(38) + '\0' */
-+	if (len + 43 > PATH_MAX)
-+		die("insanely long object crc directory %s", objcrcdir);
-+	memcpy(buf, objcrcdir, len);
-+	buf[len] = '/';
-+	buf[len+3] = '/';
-+	buf[len+42] = '\0';
-+	fill_sha1_path(buf + len + 1, sha1);
-+	return buf;
-+}
-+
-+static int crcdb_lookup_aux(char *path, uint32_t *objcrc32p)
-+{
-+	if (!access(path, F_OK)) {
-+		if (objcrc32p) {
-+			int fd = open(path, O_RDONLY);
-+			if (fd < 0) {
-+				return 0;
-+			}
-+			if(read_in_full(fd, objcrc32p, sizeof(uint32_t))
-+			   != sizeof (uint32_t)) {
-+				close(fd);
-+				return 0;
-+			}
-+			close(fd);
-+			*objcrc32p = (*objcrc32p);
-+		}
-+		return 1;
-+	} else {
-+		return 0;
-+	}
-+}
-+
-+
-+int crcdb_lookup(crcdb_t gdbf, const unsigned char *sha1, uint32_t *objcrc32p) {
-+	char *path;
-+
-+	if (!initialized || gdbf == no_dbf) {
-+	  return -1;
-+	}
-+	if (gdbf == NULL) gdbf = dbf;
-+
-+	path = crc32_file_name(gdbf->root, sha1);
-+	return crcdb_lookup_aux(path, objcrc32p);
-+}
-+
-+int crcdb_remove(crcdb_t gdbf, const unsigned char *sha1) {
-+	char *path;
-+	if (!initialized || gdbf == no_dbf) {
-+	  return -1;
-+	}
-+
-+	if (gdbf == NULL) {
-+		gdbf = dbf;
-+	} else {
-+		return -1;
-+	}
-+	path = crc32_file_name(gdbf->root, sha1);
-+	return unlink(path);
-+}
-+
-+/* copied from sha1_file.c */
-+/* Size of directory component, including the ending '/' */
-+static inline int directory_size(const char *filename)
-+{
-+	const char *s = strrchr(filename, '/');
-+	if (!s)
-+		return 0;
-+	return s - filename + 1;
-+}
-+
-+
-+/* copied from sha1_file.c */
-+static int create_tmpfile(char *buffer, size_t bufsiz, const char *filename)
-+{
-+	int fd, dirlen = directory_size(filename);
-+
-+	if (dirlen + 20 > bufsiz) {
-+		errno = ENAMETOOLONG;
-+		return -1;
-+	}
-+	memcpy(buffer, filename, dirlen);
-+	strcpy(buffer + dirlen, "tmp_obj_XXXXXX");
-+	fd = git_mkstemp_mode(buffer, 0444);
-+	if (fd < 0 && dirlen && errno == ENOENT) {
-+		/* Make sure the directory exists */
-+		memcpy(buffer, filename, dirlen);
-+		buffer[dirlen-1] = 0;
-+		if (mkdir(buffer, 0777) || adjust_shared_perm(buffer))
-+			return -1;
-+
-+		/* Try again */
-+		strcpy(buffer + dirlen - 1, "/tmp_obj_XXXXXX");
-+		fd = git_mkstemp_mode(buffer, 0444);
-+	}
-+	return fd;
-+}
-+
-+/* copied from sha1_file.c */
-+static int write_buffer(int fd, const void *buf, size_t len)
-+{
-+	if (write_in_full(fd, buf, len) < 0)
-+		return error("file write error (%s)", strerror(errno));
-+	return 0;
-+}
-+
-+/* copied from sha1_file.c */
-+/* Finalize a file on disk, and close it. */
-+static void close_sha1_file(int fd)
-+{
-+	if (fsync_object_files)
-+		fsync_or_die(fd, "sha1 file");
-+	if (close(fd) != 0)
-+		die_errno("error when closing sha1 file");
-+}
-+
-+
-+int crcdb_process(crcdb_t gdbf, const unsigned char *sha1, uint32_t objcrc32) {
-+	uint32_t oldcrc;
-+	int has_oldcrc = 0;
-+	char *path;
-+	if (!initialized || gdbf == no_dbf) {
-+	  return -1;
-+	}
-+	if (gdbf == NULL) gdbf = dbf;
-+	path = crc32_file_name(gdbf->root, sha1);
-+	has_oldcrc = crcdb_lookup_aux(path, &oldcrc);
-+	if (gdbf == dbf && !has_oldcrc) {
-+		uint32_t crc;
-+		static char ctmpfile[PATH_MAX];
-+		int fdc = create_tmpfile(ctmpfile, sizeof(ctmpfile), path);
-+		if (fdc < 0) {
-+		  return -1;
-+		}
-+		crc = (objcrc32);
-+		if (fdc >= 0 && write_buffer(fdc, &crc, sizeof (crc)) < 0) {
-+			close_sha1_file(fdc);
-+			return -1;
-+		}
-+		if (fdc >= 0) {
-+			close_sha1_file(fdc);
-+			return (move_temp_to_file(ctmpfile, path) == 0)?
-+				0: -1;
-+		}
-+		return -1;
-+	} else if (has_oldcrc) {
-+		if (oldcrc != objcrc32) {
-+			die("SHA1 COLLISION WHEN INSERTING OBJECT %s",
-+			    sha1_to_hex(sha1));
-+			return -1;
-+		}
-+		return 1;
-+	} else {
-+		return 0;
-+	}
-+}
-+
-+
-+void crcdb_close(crcdb_t gdbf) {
-+	return;
-+}
-+
-+void crcdb_close_alt(struct alternate_object_database *alt) {
-+	return;
-+}
-+
-+
-+
-+int crcdb_reorganize(crcdb_t gdbf) {
-+	if (!initialized || gdbf == no_dbf) {
-+	  return -1;
-+	}
-+	if (gdbf == NULL) {
-+		return 0;
-+	} else {
-+		return -1;
-+	}
-+}
-+
-+
-+
-+void crcdb_finish(void) {
-+	int i;
-+	if (!initialized) {
-+		return;
-+	}
-+	dbf->root = NULL;
-+
-+	for (i = 0; i < alt_in_use; i++) {
-+		free(alt_map[i].db.root);
-+		alt_map[i].db.root = NULL;
-+	}
-+	memset(alt_map, 0, sizeof(struct alt_map) *alt_in_use);
-+	alt_in_use = 0;
-+	initialized = 0;
-+	alt_initialized = 0;
-+}
-diff --git a/packdb.h b/packdb.h
-new file mode 100644
-index 0000000..c4320ac
---- /dev/null
-+++ b/packdb.h
-@@ -0,0 +1,107 @@
-+#ifndef PACKDB_H
-+#define PACKDB_H
-+
-+#include<stdint.h>
-+
-+/**
-+ *  Initialize the database.
-+ *  This opens a database file in the objects directory named crcs,
-+ *  used to store CRCS of objects (uncompressed, excluding the header)
-+ *  for hash-collision detection.
-+ */
-+extern void packdb_init(void);
-+
-+/**
-+ * Check if the database has been initialized.
-+ * Returns:
-+ *   1 if packdb_init has been called; false otherwise.
-+ */
-+extern int packdb_initialized(void);
-+
-+/**
-+ * Open the persistent database to store a copy of obj CRCs in pack index files.
-+ * Nested calls are allowed, but must be balanced by calls to packdb_close.
-+ * For nested calls, subsequent ones merely increment a reference count.
-+ *
-+ * This is used to create space-efficient storage of object CRCs that
-+ * are not associated with loose objects (e.g., because they are in pack
-+ * files).  Intended for use when building pack files.
-+ *
-+ * Note:
-+ *   Interacting with another process that calls this function on the
-+ *   same repository may lead to deadlock unless packdb_close is
-+ *   called before that interaction.
-+ */
-+extern void packdb_open(void);
-+
-+/**
-+ * Store a crc in the persistent database for creating pack index files.
-+ *
-+ * Arguments:
-+ *   sha1 - the key for the entry (a 20-byte sha1 hash)
-+ *   crc - the crc to store (the crc of an object's data)
-+ * Returns:
-+ *   0 if we added a new entry, 1 if the entry already exists, -1 on error
-+ */
-+extern int packdb_process(const unsigned char *sha1, uint32_t objcrc32);
-+
-+/**
-+ * Lookup a CRC from a database.
-+ *
-+ * Arguments:
-+ *        dbf - the CRC database; NULL for the default database
-+ *       sha1 - the key for the lookup (a 20-byte SHA1 digest)
-+ *  objcrc32p - a pointer to a uint32_t to store the returned value when
-+ *              an entry in the database exists.
-+ * Returns:
-+ *   0 if no entry, 1 if there is an existing entry.
-+ */
-+extern int packdb_lookup(const unsigned char *sha1, uint32_t *objcrc32p);
-+
-+/**
-+ * Moves a crc into the persistent database for creating pack index files.
-+ * This will delete the entry from the 'loose-object' crc database.
-+ *
-+ * Arguments:
-+ *   sha1 - the key for the entry (a 20-byte sha1 hash)
-+ * Returns:
-+ *   0 if we stored an entry in the crcdb database, 1 if the entry already
-+ *     existed in the packdb database, -1 on error or if there was no entry
-+ *     to store.
-+ */
-+extern int packdb_store(unsigned char *sha1);
-+
-+
-+/**
-+ * Remove a CRC from a database.
-+ *
-+ * Arguments:
-+ *        dbf - the CRC database; NULL for the default database
-+ *       sha1 - the key for the lookup (a 20-byte SHA1 digest)
-+ *
-+ * Returns:
-+ *   0 on success; -1 if the entry did not exist or if an entry
-+ *   could not be deleted
-+ */
-+extern int packdb_remove(const unsigned char *sha1);
-+
-+
-+/**
-+ * Reorganize the database.
-+ * Returns:
-+ *   0 on success; -1 on failure
-+ */
-+extern int packdb_reorganize(void);
-+
-+/**
-+ * Close the database file.
-+ */
-+extern void packdb_close(void);
-+
-+/**
-+ * Close the database if opened and uninitialize the module.
-+ * This is intended to be called when the module is no longer needed.
-+ */
-+extern void packdb_finish(void);
-+
-+#endif
++++ b/Documentation/technical/collision-detect.txt
+@@ -0,0 +1,385 @@
++Fast Hash-Collision Detection
++=============================
++
++Initially Git used a SHA-1 hash as an object ID under the assumption
++that a hash collision would never occur in practice. While an
++accidental SHA-1 collision is extremely unlikely, it is possible,
++although very expensive, to generate multiple files with the same
++SHA-1 value in under 2^57 operations.  With computer performance
++increasing significantly from one year to the next, Git's assumptions
++about SHA-1 will eventually not hold in the case of a malicious
++attempt to damage a project.  One should note that just because the
++probability of a SHA-1 collision occurring accidentally is extremely
++low does not mean a priori that SHA-1 provides an adequate safety
++margin for preventing a malicious attempt to damage repositories and a
++discussion below outlines some of the issues regarding this
++possibility.
++
++While one could modify Git to use SHA-224, SHA-256, SHA-384, or
++SHA-512 instead of SHA-1, the change would have to support the
++original format as well (in order to deal with existing Git
++repositories). While one could convert an existing repository to use
++the new hash function, this would require rewriting every object,
++including trees and commits.  The outcome would be problematic given
++the existence of email and documentation that might name commits by
++their SHA-1 hashes. One should note that Git performs a byte-by-byte
++check for hash collisions when a pack file is indexed.  Unfortunately,
++during fetch or pull operations, Git tries to avoid copying objects
++when a peer already has a copy, and this is determined solely on the
++basis of SHA-1 hashes.
++
++The following describes a modification to Git's initial design that is
++(a) relatively easy to implement, (b) is compatible with and can
++interoperate with older versions of Git (both the program and the
++repositories) (c) has a small computational overhead, and (d)
++increases security substantially, with a goal of detecting hash
++collisions early and automatically.  Because the implementation is
++relatively simple and the overhead very low, it makes sense to
++incorporate this change (or some alternative) before the security
++issue becomes a serious problem.
++
++Although Git generally uses that assumption that there will never be a
++hash collision using SHA-1 in practice, under some circumstances, Git
++will detect collisions via a byte-by-byte comparison as objects are
++added to the repository or as pack files are indexed.  This test is
++performed when an index is built (via the Git pack-index command), but
++a byte-by-byte comparison was deemed too computationally expensive to
++use in all circumstances: with pack files in particular, simply
++extracting an object can require not only decompressing it, but
++handling a series of delta encodings.
++
++Collision detection has been extended by computing a message digest or
++CRC of the object's contents (i.e., excluding the Git header). These
++message digests are stored separately from Git objects and are used
++for an independent collision test - looking up the message digests or
++CRCs using the SHA-1 IDs as a key can be done quickly, and comparing
++them is fast as well (a single unsigned-integer comparison for a
++32-bit CRC).  Assuming statistical independence in the CRC case, the
++changes of an undetected SHA-1 collision, should one occur, is 1 in
++2^32.  This extension is computationally cheap (timing the Git test
++suite (run via 'make test') showed only a small increase in running
++time and the extension is backwards compatible with existing Git
++repositories - if a CRC is not available for a SHA-1 value, the
++implementation reverts to its former behavior and simply compares
++SHA-1 values.  The CRC can, of course, be easily replaced with a
++SHA-256 or SHA-512 digest to reduce the chances of an undetected SHA-1
++collision to nearly zero.  For that reason, in the following we will
++use the terms MD (Message Digest) and CRC interchangeably.
++
++The implementation creates a directory in .git/objects named "crcs",
++which contains sub-directories and file names identical to the
++sub-directories in objects used to store loose objects: a two
++character directory name, with a 38-character file name, the
++concatenation of which gives the SHA-1 hash for the object.  the files
++in sub-directories of "crcs", however, simply contain 32-bit CRCs
++stored in network byte order.  In addition, for each pack file
++(.../objects/pack/FILE.pack), there is a corresponding file named
++.../objects/pack/FILE.mds in addition to .../objects/pack/FILE.idx.
++The MDS file contains the CRCs, stored in the same order as the SHA-1
++hashes in .../objects/pack/FILE.idx.  The format of the MDS file is
++described in pack-format.txt.
++
++Thus, the directory structure (only part of it is shown) is as
++follows:
++
++ .git---.
++	|
++	|-objects-.
++	|	  |--XX--.
++	.	  |	 |--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
++	.	  |	 .
++	.	  |	 .
++		  |	 .
++		  .
++		  .
++		  .
++		  |-crcs-.
++		  |	 |--XX--.
++		  |	 |	|--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
++		  |	 .	.
++		  |	 .	.
++		  |	 .	.
++		  |
++		  |-pack-.
++		  |	 |--YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY.pack
++		  |	 |--YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY.idx
++		  |	 |--YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY.mds
++		  |	 .
++		  |	 .
++		  |	 .
++		  |
++		  `-info-.
++			 .
++			 .
++
++The mds files are relatively short - an average of 5 bytes per CRC
++plus some fixed overhead due to a header and trailer, with the CRCs
++listed in the same order as the SHA-1 values in the matching idx file
++(a function named nth_packed_object_objcrc32 has the same signature as
++the previously-defined function nth_packed_object_offset, so the
++procedure to look up the MD/CRC value from a pack file is the same).
++
++For fetch and push operations, the commands fetch-pack, send-pack,
++receive-pack, and upload-pack were modified so that various object IDs
++can have any one of the following formats, with each number
++represented in hexadecimal:
++
++		SHA1
++		SHA1-MD
++		SHA1-MD-BlobMD
++
++where SHA1 is the SHA-1 hash of a commit, MD is the 32-bit CRC of the
++commit (uncompressed, not including the Git object header), and BlobMD
++is a CRC of the CRCs for each blob found by traversing the commit's
++tree using a depth-first search, with blobs processed in the order
++they appear in the trees (this is a relatively fast operation because
++the CRCs of each blob are stored in the repository).
++
++Both receive-pack and upload-pack send a capability named "mds-check"
++to allow the two longer object IDs.  When the CRCs are available, the
++longer formats are used, but are generated only by fetch-pack and
++send-pack: because of backwards-compatibility constraints,
++receive-pack and upload-pack cannot determine the capabilities of
++fetch-pack and send-pack when connected to a remote repository).
++While the message digests associated with each object are computed
++once and stored, the "BlobMD" ones are computed each time - the
++"BlobMD" ones are only used by the Git commands fetch-pack,
++upload-pack, send-pack, and receive-pack.  In each case, a
++hash-collision check is performed only if the message digest used is
++available.  The collision checks during a fetch, push, or pull command
++are done by receive-pack and upload pack because send-pack and
++fetch-pack do not receive their peers' MD and BlobMD values.
++
++
++Implementation Details
++----------------------
++
++Functions to manipulate the message digest/CRC database are declared
++in the file crcdb.h.  The implementation as described above is in the
++file objd-crcdb.c: it is thus easy to change the implementation of how
++these objects are stored with minimal impact on the rest of the source
++code.
++
++In pack-write.c, there is a new function named write_mds_file with the
++same function signature as write_idx_file.  Both are called in pairs
++(write_idx_file first) so that the idx file and mds file for the
++corresponding pack file will always be created.
++
++In commit.c, there is a new function that recursively traverses the
++tree associated with a commit and finds the "blob" entries and looks
++up those entries' message digests in order to compute a message digest
++of these message digests (which is faster than computing a message
++digest of all the bytes in the blobs associated with a commit).
++
++Various function names signatures in sha1_file.c were changed to take
++two additional arguments, the first a pointer to an int used as a flag
++to indicate whether a MD/CRC exists, and the second a pointer to a
++uint32_t containing the MD/CRC (a CRC currently).  For backwards
++compatibility with previously existing functions, those functions had
++there names changed by adding "_extended" to them, with macros in
++cache.h defined so that existing code that does not need to obtain a
++MD/CRC would not be changed. There are a few additional functions
++added to sha1_file.c such as one to determine if there is an MD/CRC
++for a given SHA-1 value. Many changes in the rest of Git that result
++from this simply change the arguments to these functions.  As a
++convention, most such arguments use names like objcrc32, objcrc32p,
++has_objcrc32 and has_objcrc32p in order to make it easy to find areas
++of the code implementing hash-collision detection using the git-grep
++command.
++
++A few data structures (notably struct pack_idx_entry and struct
++packed_git) contain fields used to store has_objcrc32 and objcrc32
++values or data associated with MDS files.  These are used while
++building new MDS files.
++
++Some of the Git commands (count-objects, index-pack, and verify-pack)
++have additional command-line options related to the MD/CRCs and mds
++files. This makes it possible to explicitly name an mds file being
++created and to request that various listings show both the MD/CRC
++values in addition to SHA-1 hashes (the MD/CRC values are not listed
++by default in case user-defined scripts assume the current behavior).
++
++For C files, changes were made to the following files (compared to
++commit 017d1e13) for the initial collision-detection implementation:
++
++       * builtin/count-objects.c
++       * builtin/fetch-pack.c
++       * builtin/index-pack.c
++       * builtin/init-db.c
++       * builtin/pack-objects.c
++       * builtin/pack-redundant.c
++       * builtin/prune-packed.c
++       * builtin/prune.c
++       * builtin/receive-pack.c
++       * builtin/send-pack.c
++       * builtin/verify-pack.c
++       * commit.c
++       * environment.c
++       * fast-import.c
++       * gdbm-packdb.c (new file)
++       * git.c
++       * hex.c
++       * http.c
++       * objd-crcdb.c (new file)
++       * pack-write.c
++       * sha1_file.c
++       * upload-pack.c
++
++The other files had changes that reflected changes to function
++signatures.
++
++The header files that were modified are
++
++    * cache.h
++    * commit.h
++    * crcdb.h (new file)
++    * pack.h
++    * packdb.h (new file)
++
++where the changes are mostly new function declarations, a few macros
++for backwards-compatibility, and a few additional fields in some
++data structures.
++
++Minor changes were made to the test suite: t0000-basic.sh,
++t5300-pack-object.sh, t5304-prune.sh, t5500-fetch-pack.sh, and
++t5510-fetch.sh.
++
++The packdb functions are conditionally compiled and by default are not
++used.  When used, these use GDBM to store CRCs for SHA-1 hashes in
++cases in which the hash was not available - in this case the hash will
++be recomputed and stored for future use.  Testing indicates that
++packdb is not needed. It may be worth turning on during debugging to
++verify if a problem is discovered involving a missing MD/CRC. (As an
++aside, the packdb code is based on a test to see if GDBM would be
++efficient enough to store the MD/CRC values in general, thus avoiding
++the need to create "mds" files and reducing the number of files in the
++"crcs" directory, but it turned out that performance was not
++acceptable.)
++
++Security-Issue Details
++----------------------
++
++Without hash-collision detection, Git has a higher risk of data
++corruption due to the obvious hash-collision vulnerability, so the
++issue is really whether a usable vulnerability exists. Recent research
++has shown that SHA-1 collisions can be found in 2^63 operations or
++less.  While one result claimed 2^53 operations, the paper claiming
++that value was withdrawn from publication due to an error in the
++estimate. Another result claimed a complexity of between 2^51 and 2^57
++operations, and still another claimed a complexity of 2^57.5 SHA-1
++computations. A summary is available at
++<http://hackipedia.org/Checksums/SHA/html/SHA-1.htm#SHA-1>. Given the
++number of recent attacks, possibly by governments or large-scale
++criminal enterprises
++(<http://www.csmonitor.com/World/terrorism-security/2011/0906/Iranian-government-may-be-behind-hack-of-Dutch-security-firm>,
++<http://en.wikipedia.org/wiki/Operation_Aurora>,
++<http://en.wikipedia.org/wiki/Botnet#Historical_list_of_botnets>),
++which include botnets with an estimated 30 million computers, there is
++reason for some concern: while generating a SHA-1 collision for
++purposes of damaging a Git repository is extremely expensive
++computationally, it is possibly within reach of very well funded
++organizations. 2^32 operations, even if the operations are as
++expensive as computing a SHA-1 hash of a modest source-code file, can
++be performed in a reasonably short period of time on the type of
++hardware widely used in desktop or laptop computers at present. With
++sufficient parallelism, 30 million personal computers sufficient for
++playing the latest video games could perform 2^56 operations in a
++reasonable time.
++
++The security implications depend on how Git is used.  In the simplest
++case in which a single, shared repository is used by a number of
++developers, with source code only shared though this repository, the
++problems are minimal - Git will not allow one to insert an object
++whose SHA-1 hash matches that of an existing object.  Since an
++attacker would not know the SHA-1 hash until the correct object is
++already in the shared repository, all an attacker would succeed in
++doing is to create some confusion in his/her private repository and
++working copy (but note that some of the assumptions break down if
++developers email source files between themselves rather than transferring
++everything via a Git repository).
++developers, with source code only shared though this repository, the
++problems are minimal - Git will not allow one to insert an object
++whose SHA-1 hash matches that of an existing object.  Since an
++attacker would not know the SHA-1 hash until the correct object is
++already in the shared repository, all an attacker would succeed in
++doing is to create some confusion in his/her private repository and
++working copy (but note that some of the assumptions break down if
++developers email source files between themselves rather than transferring
++everything via a Git repository).
++
++In other cases, however, there could be an issue if a SHA-1 collision
++can be created quickly enough. As an example, suppose one is using the
++"Integration-manager workflow" described in "Pro Git" (see
++<http://progit.org/book/ch5-1.html>) with a "blessed repository" BR
++and two public developer repositories DPR1 and DPR2.  Suppose a
++developer puts a legitimate change to the code into DPR2. Another
++developer with read access to DPR2 and write access to DPR1
++immediately fetches this commit, and replaces one file with a modified
++version of the same size that has the same SHA-1 value, and then puts
++the commit into DPR1 (the change may be a trivial one designed to
++introduce an obscure buffer overflow error that can be exploited and
++may not stand out in a code review).  At this point DPR1 and DPR2 have
++identical commits (i.e., the same commit object) but with one file
++modified.  No local test on either DPR1 or DPR2 will uncover a
++discrepancy based on SHA-1 values, object contents, and digital
++signatures for commits.  Further assume that both developers send an
++email to the "integration manager" notifying him/her of the changes.
++
++Now suppose the above changes occurred late on a Friday afternoon and
++over a weekend.  On the next Monday morning, the "integration manager"
++reads the emails and pulls changes from DPR1 and then DPR2.  Once a
++'fetch' from DPR1 is complete, a subsequent fetch from DBR2 will not
++transfer any data related to the commit, as the integration manager's
++repository already has a commit with the matching SHA-1 value.  A
++modified copy will have been introduced into the system, and the
++developers using DPR2 may never notice the difference - as they will
++pull from DPR2 more often than BR, they will most likely have the
++correct files and the commit in their local repositories and the
++transfer protocol will avoid sending the commit if it is already
++available.  Furthermore, if the modified file introduces a hard-to-find
++buffer overflow testing may not uncover the problem.
++
++If the file in question is modified again, and a thin pack is used in
++a fetch so that the change is delta-encoded, the SHA-1 hashes may
++differ after de-deltafication, but such a change might not be
++introduced before a release.  While obtaining a different SHA-1
++hash than expected would be detected, the error would be a corrupted
++repository - a missing SHA-1 value in the tree associated with a commit.
++It would take some effort to figure out what went wrong - what
++happens depends on the state of both the client and server when a
++git-fetch operation runs.
++
++As a justification for the scenarios just described, one can use MD5
++as a model: http://www.mscs.dal.ca/~selinger/md5collision/ gives the
++following two 128-byte sequences (expressed in hexadecimal) as ones
++with the same MD5 hash:
++
++d131dd02c5e6eec4693d9a0698aff95c 2fcab58712467eab4004583eb8fb7f89
++55ad340609f4b30283e488832571415a 085125e8f7cdc99fd91dbdf280373c5b
++d8823e3156348f5bae6dacd436c919c6 dd53e2b487da03fd02396306d248cda0
++e99f33420f577ee8ce54b67080a80d1e c69821bcb6a8839396f9652b6ff72a70
++
++and
++
++d131dd02c5e6eec4693d9a0698aff95c 2fcab50712467eab4004583eb8fb7f89
++55ad340609f4b30283e4888325f1415a 085125e8f7cdc99fd91dbd7280373c5b
++d8823e3156348f5bae6dacd436c919c6 dd53e23487da03fd02396306d248cda0
++e99f33420f577ee8ce54b67080280d1e c69821bcb6a8839396f965ab6ff72a70
++
++These can be used for test purposes.  If you change the first 16 bytes
++of both sequences to the same new value, before the point where the
++files differ, you will get different MD5 hash values.  If you append
++the same text to both files, the MD5 values of the modified files are
++equal (and, of course, different from the previous value) but
++fortunately Git includes the length of an object's contents in the
++object's header, and the SHA-1 hash includes the header).  In most
++cases, whever a file is modified during software development, the
++file's length will change.  This causes a change early enough in the
++object so that applying the same patch to two different files that
++have the same SHA-1 value will typically result in two files with
++different SHA-1 values.  So, the result of a hash collision when
++multiple remote repositories are used would initially be different
++versions of the same file for the same commit in different
++repositories, possibly followed by some of the repositories being
++corrupted as one of these files is modified, depending on the state
++of each server and client when a fetch or pull operation is run.
+diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
+index 1803e64..4dfaf92 100644
+--- a/Documentation/technical/pack-format.txt
++++ b/Documentation/technical/pack-format.txt
+@@ -158,3 +158,43 @@ Pack file entry: <+
+     corresponding packfile.
+ 
+     20-byte SHA1-checksum of all of the above.
++
++
++= pack-*.mds files contain message digests for objects (CRCs
++  initially, with other options possibly added at a later date such as
++  SHA-256).  The digests are stored in the same order as the sha-1 values
++  in the matching idx file.  These files have the following format:
++
++  - A 6-byte magic number consisting the the characters "PKMDS" followed
++    by a NULL character (0).
++
++  - A one-byte version number (= 1)
++
++  - A one-byte field-length value for message digest fields, in units of
++    4-byte words, with the legal value being 1. The length of the message
++    digest fields in bytes is denoted as wsize below).
++
++  - A set of blocks, each of which contains 4 entries encoded as follows:
++
++      * four one-byte fields, one per entry, for which a zero value
++	indicates that a matching entry does not exist and for which a
++	value of 1 indicates that the field contains a 32-bit CRC stored
++	in network byte order.
++
++      * 4 wsize-byte fields, one per entry, each containing a CRC
++	(by conventionwhich should be 0 if the CRC does not exist).
++	For each field, the data it contains should start at the first
++	byte, padded with NULL characters if the field is longer than
++	the digest it stores.
++
++    For the set of all blocks, the nth one-byte field and the nth 4-byte
++    field store the values for the nth entry in the file. The format
++    ensures that each message digest starts on a 32-bit boundary,
++    allowing 32-bit integer operations to be used in copying or
++    comparing values.
++
++  - A 20 byte SHA-1 hash of the SHA-1 hashes naming the objects whose
++    message digests are being stored, in the same order as they
++    appear in the corresponding idx file.
++
++  - A 20 byte SHA-1 hash of all of the above.
 -- 
 1.7.1
