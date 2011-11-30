@@ -1,125 +1,112 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: [PATCHv2 3/4] git-p4: importing labels should cope with missing owner
-Date: Wed, 30 Nov 2011 09:03:36 +0000
-Message-ID: <1322643817-13051-4-git-send-email-luke@diamand.org>
-References: <1322643817-13051-1-git-send-email-luke@diamand.org>
-Cc: Pete Wyckoff <pw@padd.com>, Luke Diamand <luke@diamand.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 30 10:04:48 2011
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [RFC/PATCH] remote: add new sync command
+Date: Wed, 30 Nov 2011 13:47:24 +0200
+Message-ID: <CAMP44s2WxveGAmzaz8kwKRxia1TBWYwxwPBdb14K93TKr1sfsA@mail.gmail.com>
+References: <20111107210134.GA7380@sigill.intra.peff.net>
+	<CAMP44s089xbEo4VT8rqgS=BJMUu=qsb8Hm5z8bTR2akU8-5QhA@mail.gmail.com>
+	<20111108181442.GA17317@sigill.intra.peff.net>
+	<CAMP44s2RjcFtdO2jft0Hg9RtqK-DRK47gX8By-dBFSBcSA+yFA@mail.gmail.com>
+	<20111111181352.GA16055@sigill.intra.peff.net>
+	<CAMP44s06p+KyJAu4ddiCa8CFRq5eogbqxxJU16Z-SUb3GSp67Q@mail.gmail.com>
+	<20111114122556.GB19746@sigill.intra.peff.net>
+	<CAMP44s1G9jJyiis7z7XbPvW925E-u=0_-h9jJKkj2wyPS9o5ig@mail.gmail.com>
+	<20111121214450.GA20338@sigill.intra.peff.net>
+	<CAMP44s3StLjb9KgBkRrG4nPqJD_ZjeSyFUwuP4A3b+mJKBgHWQ@mail.gmail.com>
+	<20111130070111.GE5317@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 30 12:47:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVg5u-0005LU-II
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 10:04:47 +0100
+	id 1RVidP-0004Et-JM
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 12:47:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757235Ab1K3JEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Nov 2011 04:04:39 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:61786 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757206Ab1K3JE2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Nov 2011 04:04:28 -0500
-Received: by bkas6 with SMTP id s6so571120bka.19
-        for <git@vger.kernel.org>; Wed, 30 Nov 2011 01:04:27 -0800 (PST)
-Received: by 10.204.0.82 with SMTP id 18mr1232158bka.86.1322643867317;
-        Wed, 30 Nov 2011 01:04:27 -0800 (PST)
-Received: from ethel.cable.virginmedia.net (cpc1-cmbg14-2-0-cust973.5-4.cable.virginmedia.com. [86.26.7.206])
-        by mx.google.com with ESMTPS id c4sm2565364bkk.13.2011.11.30.01.04.25
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 30 Nov 2011 01:04:26 -0800 (PST)
-X-Mailer: git-send-email 1.7.8.rc1.209.geac91.dirty
-In-Reply-To: <1322643817-13051-1-git-send-email-luke@diamand.org>
+	id S1754595Ab1K3Lr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Nov 2011 06:47:26 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:45473 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753592Ab1K3LrZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Nov 2011 06:47:25 -0500
+Received: by faaq16 with SMTP id q16so318086faa.19
+        for <git@vger.kernel.org>; Wed, 30 Nov 2011 03:47:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=qtDJXy+HZheRmn6gGITgu1+1JqKzULhAZ6klOz36mfs=;
+        b=ux2cs0qkwPAOsoMRrU3gGtXzuFcAmXTgiFhPYTVOH0tQcG3QtwnjVjEQhfyLZCT2vL
+         UjmMBFzg47X6JLTXCFTD6tQdMoKJ4xHGlhX78ZSWX7Tmzyj9BQ0H5yARau6f04rr9+eQ
+         4LUFz/aPdCgqMXceFe5KJzqNUfuTu1FrvuAp8=
+Received: by 10.204.149.144 with SMTP id t16mr1817043bkv.134.1322653644178;
+ Wed, 30 Nov 2011 03:47:24 -0800 (PST)
+Received: by 10.204.197.201 with HTTP; Wed, 30 Nov 2011 03:47:24 -0800 (PST)
+In-Reply-To: <20111130070111.GE5317@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186122>
 
-In p4, the Owner field is optional. If it is missing,
-construct something sensible rather than crashing.
+On Wed, Nov 30, 2011 at 9:01 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Nov 22, 2011 at 01:47:36AM +0200, Felipe Contreras wrote:
+>
+>> > I didn't mean "you didn't define a mirror in your config". I meant "your
+>> > question is not well-defined, because you haven't defined the term
+>> > 'mirror'". IOW, I can't answer your question without knowing exactly
+>> > what you meant.
+>>
+>> I wasn't the one that brought the mirror up, you did:
+>
+> Yes, because that is the most related concept in current git. But I
+> thought you were asking from the perspective of a clueless user, and I
+> don't know what that clueless user meant by "mirror".
 
-Signed-off-by: Luke Diamand <luke@diamand.org>
----
- contrib/fast-import/git-p4 |   45 +++++++++++++++++++++++--------------------
- 1 files changed, 24 insertions(+), 21 deletions(-)
+I don't think common users know, or should care about, what a "mirror" is.
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 02f0f54..d97f927 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -553,6 +553,27 @@ class Command:
-     def __init__(self):
-         self.usage = "usage: %prog [options]"
-         self.needsGit = True
-+        self.myP4UserId = None
-+
-+    def p4UserId(self):
-+        if self.myP4UserId:
-+            return self.myP4UserId
-+
-+        results = p4CmdList("user -o")
-+        for r in results:
-+            if r.has_key('User'):
-+                self.myP4UserId = r['User']
-+                return r['User']
-+        die("Could not find your p4 user id")
-+
-+    def p4UserIsMe(self, p4User):
-+        # return True if the given p4 user is actually me
-+        me = self.p4UserId()
-+        if not p4User or p4User != me:
-+            return False
-+        else:
-+            return True
-+
- 
- class P4UserMap:
-     def __init__(self):
-@@ -694,7 +715,6 @@ class P4Submit(Command, P4UserMap):
-         self.verbose = False
-         self.preserveUser = gitConfig("git-p4.preserveUser").lower() == "true"
-         self.isWindows = (platform.system() == "Windows")
--        self.myP4UserId = None
- 
-     def check(self):
-         if len(p4CmdList("opened ...")) > 0:
-@@ -802,25 +822,6 @@ class P4Submit(Command, P4UserMap):
-                     return 1
-         return 0
- 
--    def p4UserId(self):
--        if self.myP4UserId:
--            return self.myP4UserId
--
--        results = p4CmdList("user -o")
--        for r in results:
--            if r.has_key('User'):
--                self.myP4UserId = r['User']
--                return r['User']
--        die("Could not find your p4 user id")
--
--    def p4UserIsMe(self, p4User):
--        # return True if the given p4 user is actually me
--        me = self.p4UserId()
--        if not p4User or p4User != me:
--            return False
--        else:
--            return True
--
-     def prepareSubmitTemplate(self):
-         # remove lines in the Files section that show changes to files outside the depot path we're committing into
-         template = ""
-@@ -1506,7 +1507,9 @@ class P4Sync(Command, P4UserMap):
- 
-                     owner = labelDetails["Owner"]
-                     tagger = ""
--                    if author in self.users:
-+                    if not owner:
-+                        tagger = "%s <a@b> %s %s" % (self.p4UserId(), epoch, self.tz)
-+                    elif author in self.users:
-                         tagger = "%s %s %s" % (self.users[owner], epoch, self.tz)
-                     else:
-                         tagger = "%s <a@b> %s %s" % (owner, epoch, self.tz)
+> Anyway, I don't think it's important.
+
+Me neither.
+
+> I read over your whole message, and I feel like our discussion isn't
+> really moving towards an actual goal. Junio and I both mentioned that in
+> the long-term, features like this should be part of "push", not
+> "remote". Do you want to try revising your patch in that direction?
+
+Yes, I can try that for 'git push', but my worry is about 'git fetch'.
+To me it's really clear that what I am trying to achieve is more
+complicated than a simple push/fetch.
+
+You still haven't replied to my solution to synchronize the local
+branches, which to first do a 'git fetch' so we have the remote
+branches tracked locally, and go through each one of them and do
+something to the local ones. This solution works, is simple, and
+allows all kinds of options, but IMO it's not part of 'git fetch'.
+
+> That will give us something concrete to talk about (and hopefully
+> apply).
+
+Yes, but that's basically 'git push --prune', which I think is the
+only thing we have agreed. But what about the rest?
+
+I feel you are trying to ignore the fact that 'refs/heads/*' is not
+user-friendly, neither is BRANCHES, or :, and 'git fetch' would be
+even more cumbersome.
+
+The user-friendliness of git is one of the biggest complains people
+have, and while it makes sense to keep certain operations under
+push/fetch, there's only so much pureness we can have before things
+become too complicated for the users. The fact of the matter is that
+these particular remote synchronization operations are much easier to
+picture mentally in a group like 'git remote sync'. That not only
+works for all the cases, including 'git fetch', but it's
+non-intrusive, and most importantly: user-friendly.
+
+Cheers.
+
 -- 
-1.7.8.rc1.209.geac91.dirty
+Felipe Contreras
