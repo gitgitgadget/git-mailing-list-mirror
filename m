@@ -1,78 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [HELP] Adding git awareness to the darning patch management
- system.
-Date: Wed, 30 Nov 2011 02:22:48 -0500
-Message-ID: <20111130072248.GG5317@sigill.intra.peff.net>
-References: <4ED59232.3000807@users.sourceforge.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Auto update submodules after merge and reset
+Date: Wed, 30 Nov 2011 09:31:14 +0100
+Message-ID: <4ED5E9D2.4060503@web.de>
+References: <4ED57EED.4040705@qualcomm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Peter Williams <peter_ono@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Wed Nov 30 08:22:59 2011
+To: Max Krasnyansky <maxk@qualcomm.com>
+X-From: git-owner@vger.kernel.org Wed Nov 30 09:38:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVeVP-0005lF-4T
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 08:22:59 +0100
+	id 1RVfgt-0004Lt-F9
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 09:38:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754919Ab1K3HWv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Nov 2011 02:22:51 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56037
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751193Ab1K3HWu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Nov 2011 02:22:50 -0500
-Received: (qmail 8176 invoked by uid 107); 30 Nov 2011 07:29:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 Nov 2011 02:29:25 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Nov 2011 02:22:48 -0500
-Content-Disposition: inline
-In-Reply-To: <4ED59232.3000807@users.sourceforge.net>
+	id S1756259Ab1K3Iiu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Nov 2011 03:38:50 -0500
+Received: from fmmailgate05.web.de ([217.72.192.243]:34582 "EHLO
+	fmmailgate05.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756147Ab1K3Iiu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Nov 2011 03:38:50 -0500
+X-Greylist: delayed 423 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Nov 2011 03:38:49 EST
+Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
+	by fmmailgate05.web.de (Postfix) with ESMTP id C37D267ABC7D
+	for <git@vger.kernel.org>; Wed, 30 Nov 2011 09:31:45 +0100 (CET)
+Received: from [192.168.178.25] ([80.187.97.97]) by smtp.web.de (mrweb001)
+ with ESMTPA (Nemesis) id 0Mg7Zl-1R8FPV17wr-00NSUl; Wed, 30 Nov 2011 09:31:45
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <4ED57EED.4040705@qualcomm.com>
+X-Provags-ID: V02:K0:xxfghAKdDHjEO3Emrzjp0WTx1yOklUMyAV7ngakHdSj
+ ro88dEvBuJ8O6/HqSB7Gj4gY51PIKmv2jG3MK63SEPLuHK8Ez7
+ QYQEoZu2HOuaayL2/jYZjDMFHfF/M+wT4nHO1ayI2O/pM+/SMH
+ 3GR7nDEETzj0a4SJB6ANqARNvGFxcRy0L4ZbTwYIfspe76tZ2U
+ vBPb/4jD7JikXzU3ueioA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186114>
 
-On Wed, Nov 30, 2011 at 12:17:22PM +1000, Peter Williams wrote:
+Am 30.11.2011 01:55, schrieb Max Krasnyansky:
+> Does anyone have a pointer to a thread/discussion that explains why git submodules are not auto
+> updated when the superproject is updated (merge, reset, etc) by default?
 
-> 1. presenting the file tree of the sources being patched in a way
-> that makes sense to the user including the current status of files
-> from the point of view of the underlying SCM (in this case, git), and
+This is because in current git a submodules work tree gets only updated
+when running "git submodule update". A default auto update wouldn't be
+backwards compatible (and some users really like it the way it is now).
+I'm working on a patch series to teach Git to optionally update the
+submodules work trees on checkout, reset merge and so on, but I'm not
+there yet.
 
-I'm not exactly sure what this means.
+> Assuming a simple and default setup where submodule update policy is set to "checkout".
+> It seems that the default and sane behavior should be to update (checkout) corresponding submodule
+> commit to track the superproject.
 
-> 2. detecting files with uncommitted changes (from the SCM's point of
-> view) when the user adds them to a patch (or pushes a patch that
-> contains them) so that they may be alerted to the fact and offered
-> the choice of absorbing the uncommitted changes into the patch (or
-> not).
+I agree, but we should decide about a sane default when the feature is
+there. In the first version it will be off by default, so people can make
+up their minds about breaking backwards compatibility.
 
-For this, you probably want "git diff-files --name-only", which will
-show files with differences in the working tree. Keep in mind that git
-has an "index" or "staging area", which means that you have three states
-of content for a given path:
+> I can't seem to find convincing explanation why it's not the case :). Having to manually update
+> submodules after pull or reset has been error prone and confusing for the devs I work with.
 
-  1. the state of the prior commit (i.e., HEAD)
+Yes, we even had some mis-merges because of that.
 
-  2. the state that is marked to be committed when "git commit" is run
-     (i.e., the index)
+> I'm thinking about adding a config option that would enable automatic submodule update but wanted
+> to see if there is some fundamental reason why it would not be accepted.
 
-  3. the state in the working tree
-
-You can compare the first two with "git diff-index", and the latter two
-with "git diff-files". You can also use "git status --porcelain" to get
-a machine-readable output that shows how the three states match up, with
-one line per file.
-
-> I've already implemented this interface for Mercurial (with which I
-> am familiar) and looked at doing the same with git but had difficulty
-> discovering the definitive mechanisms for obtaining the necessary
-> data.  So I'm soliciting your help in overcoming these problems.
-
-I hope the above helps you some. If not, just ask. It might be easier to
-understand what you are looking for if you can give concrete examples.
-
--Peff
+I think adding something like an "submodule.autoupdate" config makes lots
+of sense, but IMO it should affect all work tree updating porcelain commands,
+not just merge.
