@@ -1,152 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/3] revert: introduce --abort to cancel a failed
- cherry-pick
-Date: Wed, 30 Nov 2011 14:52:23 -0800
-Message-ID: <7vty5lp6jc.fsf@alter.siamese.dyndns.org>
-References: <20111120073059.GA2278@elie.hsd1.il.comcast.net>
- <CALkWK0=45OwcBoH2TorsgwTbaXjnffVuh0mGxh2+ShN9cuF-=A@mail.gmail.com>
- <20111120094650.GB2278@elie.hsd1.il.comcast.net>
- <20111122111207.GA7399@elie.hsd1.il.comcast.net>
- <20111122112001.GF7399@elie.hsd1.il.comcast.net>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCHv2 0/4] git-p4: small fixes to branches and labels; tests
+Date: Wed, 30 Nov 2011 17:58:13 -0500
+Message-ID: <20111130225813.GA11544@arf.padd.com>
+References: <1322643817-13051-1-git-send-email-luke@diamand.org>
+ <loom.20111130T155409-599@post.gmane.org>
+ <4ED6809A.9020703@diamand.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Phil Hord <phil.hord@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 30 23:52:40 2011
+Cc: Vitor Antunes <vitor.hda@gmail.com>, git@vger.kernel.org
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Wed Nov 30 23:58:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVt14-0006nm-JJ
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 23:52:38 +0100
+	id 1RVt6c-0000wu-OM
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 23:58:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751780Ab1K3Ww1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Nov 2011 17:52:27 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52412 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751659Ab1K3Ww0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Nov 2011 17:52:26 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EB2B648D;
-	Wed, 30 Nov 2011 17:52:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=AGDxnwbd++aiK2zXDiabx9o8eAU=; b=GkQZanZqj2dmQo0urXZR
-	MnvtIthHdVFmKEW9v5+cUDuGq2Ef2rs9q0MgjnD8boCDXaGNLMJNi40axbDGYrDv
-	XW/jqSimZlMj/FCejBfPLbqSoasTqOCXehUnUx95LlvvLhBbXcJW9WNHfuLb1bYD
-	TqaDNqRM6fvF2nhd+T4NsUo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=CTqTPhjujOdT1mL7oo97TYcjJxmD1cURm4B1JYfcowpSrh
-	sLSiLsVGuWXeP1/UDsrav6aY1eTfCKn3K/udFoVk/u7Y/W0bTw5upjO1gi7W6my1
-	uoQWdaOm1shSZdrBlM4rJjTf/McFEwD44ApEERwaWjP4RmEbpu+TXOqGYHapA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 51ED3648C;
-	Wed, 30 Nov 2011 17:52:25 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9E8B56488; Wed, 30 Nov 2011
- 17:52:24 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F848A0D4-1BA5-11E1-AE55-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752102Ab1K3W6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Nov 2011 17:58:18 -0500
+Received: from honk.padd.com ([74.3.171.149]:38583 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751890Ab1K3W6R (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Nov 2011 17:58:17 -0500
+Received: from arf.padd.com (unknown [50.52.169.245])
+	by honk.padd.com (Postfix) with ESMTPSA id D1B7F31BF;
+	Wed, 30 Nov 2011 14:58:16 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id B19A03196F; Wed, 30 Nov 2011 17:58:13 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <4ED6809A.9020703@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186143>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+luke@diamand.org wrote on Wed, 30 Nov 2011 19:14 +0000:
+> On 30/11/11 14:55, Vitor Antunes wrote:
+> >Luke Diamand<luke<at>  diamand.org>  writes:
+> >
+> >>In adding the test case for labels I also found and fixed a few other
+> >>small bugs in the label handling:
+> >>
+> >>  - labels missing a description or "EOT" in their text cause problems;
+> >>  - labels without an owner cause problems.
+> >>
+> >>I also noticed, but did not fix, that you can't have more than one label
+> >>per commit (the others are silently dropped) and the documentation for
+> >>branch import could be improved. I've added a (failing) test case for
+> >>the multiple label problem.
 
-> After running some ill-advised command like "git cherry-pick
-> HEAD..linux-next", the bewildered novice may want to return to more
-> familiar territory.  Introduce a "git cherry-pick --abort" command
-> that rolls back the entire cherry-pick sequence and places the
-> repository back on solid ground.
+I was hanging onto your v1, and made a comment on the v1's 3/4
+that perhaps you missed.  Also acked the entire thing.  I can
+resend if my mailer ate it.
 
-This is confusing; if you have many commits in the range, and a handful of
-them replayed without conflicts and then you hit a conflict, where should
-(I am not asking "where does ... with your patch") abort take us? The
-state after the random commit that happened to have replayed successfully?
-The state before the entire cherry-pick sequence started?  "back on solid
-ground" does not tell us which one you meant.
+Don't expect Junio to pick it up until after 1.7.8 goes out.
 
-I am assuming that it is the latter.
+> >Hi Luke,
+> >
+> >Seeing that you have some experience using labels, could I kindly ask you to
+> >include some description of it in git-p4.txt?
+> 
+> OK, if you can help me understand what's going on...
+> 
+> The label-detection bug that I've described, on further
+> investigation, looks to be a fundamental limitation.
+> 
+> With perforce, I can check out the head revision, and then tag just
+> a single file. If I then check out on that tag, I get just that one
+> file.
+> 
+> I think I can't do that with git; certainly fast-import can't do it.
 
-> diff --git a/Documentation/sequencer.txt b/Documentation/sequencer.txt
-> index 75f8e869..5747f442 100644
-> --- a/Documentation/sequencer.txt
-> +++ b/Documentation/sequencer.txt
-> @@ -7,3 +7,6 @@
->  	Forget about the current operation in progress.  Can be used
->  	to clear the sequencer state after a failed cherry-pick or
->  	revert.
-> +
-> +--abort::
-> +	Cancel the operation and return to the pre-sequence state.
+This is another fundamental disconnect between p4 and git.
+Reading
 
-Ok, it is the latter.
+http://www.perforce.com/perforce/doc.current/manuals/p4guide/07_labels.html
 
-> +static int reset_for_rollback(const unsigned char *sha1)
-> +{
-> +	const char *argv[4];	/* reset --merge <arg> + NULL */
-> +	argv[0] = "reset";
-> +	argv[1] = "--merge";
-> +	argv[2] = sha1_to_hex(sha1);
-> +	argv[3] = NULL;
-> +	return run_command_v_opt(argv, RUN_GIT_CMD);
-> +}
+it is clear that labels are supposed to be used exactly where
+tags cannot:  to specify a collection of files as they existed
+at _different_ points in the commit history.
 
-So you give the value of the HEAD before the sequence started to this
-function and all should go well. Where do you read that value from?
+Thus I think supporting labels is kind of pointless.  But in the
+restricted use case that perforce docs tell us not to do, namely
+using labels to identify change numbers, git can reflect that
+with tags.
 
-> +static int rollback_single_pick(void)
-> +{
-> +	unsigned char head_sha1[20];
-> +
-> +	if (!file_exists(git_path("CHERRY_PICK_HEAD")) &&
-> +	    !file_exists(git_path("REVERT_HEAD")))
-> +		return error(_("no cherry-pick or revert in progress"));
-> +	if (!resolve_ref("HEAD", head_sha1, 0, NULL))
-> +		return error(_("cannot resolve HEAD"));
-> +	if (is_null_sha1(head_sha1))
-> +		return error(_("cannot abort from a branch yet to be born"));
+> So the code in git-p4 that is checking the file vs label counts
+> (git-p4 around line 1496) is actually trying to say "this label
+> can't be imported into git".
+> 
+> If my understanding is correct, I can then fix my test and update
+> the docs and the code to explain this.
 
-Ok, this is for single-pick so HEAD is where we came from. Good.
+Yeah.  It's just a big restriction on how labels get imported.
+A better error message and some docs would be useful.
 
-> +	return reset_for_rollback(head_sha1);
-> +}
-> +
-> +static int sequencer_rollback(struct replay_opts *opts)
-> +{
-> +	const char *filename;
-> +	FILE *f;
-> +	unsigned char sha1[20];
-> +	struct strbuf buf = STRBUF_INIT;
-> +
-> +	filename = git_path(SEQ_HEAD_FILE);
-> +	f = fopen(filename, "r");
-> +	if (!f && errno == ENOENT) {
-> +		/*
-> +		 * There is no multiple-cherry-pick in progress.
-> +		 * If CHERRY_PICK_HEAD or REVERT_HEAD indicates
-> +		 * a single-cherry-pick in progress, abort that.
-> +		 */
-> +		return rollback_single_pick();
-> +	}
-> +	if (!f)
-> +		return error(_("cannot open %s: %s"), filename,
-> +						strerror(errno));
-> +	if (strbuf_getline(&buf, f, '\n')) {
-> +		error(_("cannot read %s: %s"), filename, ferror(f) ?
-> +			strerror(errno) : _("unexpected end of file"));
-> +		goto fail;
-> +	}
+> As an aside, git-p4.txt currently has quite good information on the
+> config variables, but nothing on the command line variables.
+> Possibly that should be fixed.
 
-And when we are in multi-pick, SEQ_HEAD_FILE has it.
+Recently, I wrote an asciidoc-style document for git-p4, and
+tried to find all the options on all the commands.  There's a lot
+more than I ever knew about.  :)  I'll take another pass
+through it then send it out for review.  Maybe we can get rid
+of the old git-p4.txt then and work on improving a more
+structured document.
 
-Looks good from a cursory review. Thanks.
+		-- Pete
