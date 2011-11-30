@@ -1,85 +1,78 @@
-From: Samuel Bronson <naesten@gmail.com>
-Subject: Re: [PATCH] git-gui: Set both 16x16 and 32x32 icons on X to pacify Xming.
-Date: Tue, 29 Nov 2011 19:02:29 -0500
-Message-ID: <CAJYzjmcsGQ8xxmOEvDCZGyT5e=gKkjC7fDxdcbNg4FZRddERpw@mail.gmail.com>
-References: <1321640015-6663-1-git-send-email-naesten@gmail.com>
+From: Max Krasnyansky <maxk@qualcomm.com>
+Subject: Auto update submodules after merge and reset
+Date: Tue, 29 Nov 2011 16:55:09 -0800
+Message-ID: <4ED57EED.4040705@qualcomm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Samuel Bronson <naesten@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 30 01:02:51 2011
+Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 30 01:55:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVXdS-0007YD-78
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 01:02:50 +0100
+	id 1RVYSN-0007YS-GP
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 01:55:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757190Ab1K3ACd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Nov 2011 19:02:33 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:47310 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757045Ab1K3ACa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2011 19:02:30 -0500
-Received: by eaak14 with SMTP id k14so3803876eaa.19
-        for <git@vger.kernel.org>; Tue, 29 Nov 2011 16:02:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=VlExLFFvwlgShHbdCRbH9h6nG2AKeQW2ejQoLy2dRD8=;
-        b=QLeTzYOU9Ub5eUTe4olX5LGUTBZc0xJe0302S08D84RNUyUGOnUChe/wFnagWjwKEz
-         XhVjyPL1viqI2w5DnvUtAmZwkudiP+Kx52tPnq5V4vadtZuH0FCqhWfjpNdmyE0ejQiw
-         vQ2XUZ5szM5xBY1p+dq+N48WIOOp0zn+sRyV4=
-Received: by 10.180.104.35 with SMTP id gb3mr49488wib.11.1322611349196; Tue,
- 29 Nov 2011 16:02:29 -0800 (PST)
-Received: by 10.180.103.228 with HTTP; Tue, 29 Nov 2011 16:02:29 -0800 (PST)
-In-Reply-To: <1321640015-6663-1-git-send-email-naesten@gmail.com>
+	id S1756823Ab1K3AzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Nov 2011 19:55:22 -0500
+Received: from wolverine01.qualcomm.com ([199.106.114.254]:47616 "EHLO
+	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753269Ab1K3AzV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Nov 2011 19:55:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=qualcomm.com; i=maxk@qualcomm.com; q=dns/txt;
+  s=qcdkim; t=1322614521; x=1354150521;
+  h=message-id:date:from:user-agent:mime-version:to:subject:
+   content-type:content-transfer-encoding:x-originating-ip;
+  z=Message-ID:=20<4ED57EED.4040705@qualcomm.com>|Date:=20Tu
+   e,=2029=20Nov=202011=2016:55:09=20-0800|From:=20Max=20Kra
+   snyansky=20<maxk@qualcomm.com>|User-Agent:=20Mozilla/5.0
+   =20(X11=3B=20Linux=20x86_64=3B=20rv:8.0)=20Gecko/20111124
+   =20Thunderbird/8.0|MIME-Version:=201.0|To:=20<git@vger.ke
+   rnel.org>|Subject:=20Auto=20update=20submodules=20after
+   =20merge=20and=20reset|Content-Type:=20text/plain=3B=20ch
+   arset=3D"ISO-8859-1"=3B=20format=3Dflowed
+   |Content-Transfer-Encoding:=207bit|X-Originating-IP:=20[1
+   72.30.48.1];
+  bh=P0BqxUfLI3B9Y+0rc6Dy+DpvbPon7JhuZKW29J2e9sE=;
+  b=g7cdjVkdsawLi09nk8Kssp2PMQCLd4B9G6cO 
+X-IronPort-AV: E=McAfee;i="5400,1158,6545"; a="142085620"
+Received: from ironmsg04-r.qualcomm.com ([172.30.46.18])
+  by wolverine01.qualcomm.com with ESMTP; 29 Nov 2011 16:55:20 -0800
+X-IronPort-AV: E=Sophos;i="4.69,591,1315206000"; 
+   d="scan'208";a="208855767"
+Received: from nasanexhc05.na.qualcomm.com ([172.30.48.2])
+  by Ironmsg04-R.qualcomm.com with ESMTP/TLS/AES128-SHA; 29 Nov 2011 16:55:20 -0800
+Received: from [10.50.16.20] (172.30.48.1) by qcmail1.qualcomm.com
+ (172.30.48.2) with Microsoft SMTP Server (TLS) id 14.1.339.1; Tue, 29 Nov
+ 2011 16:55:11 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20111124 Thunderbird/8.0
+X-Originating-IP: [172.30.48.1]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186097>
 
-On Fri, Nov 18, 2011 at 1:13 PM, Samuel Bronson <naesten@gmail.com> wro=
-te:
-> It would be better if the 32x32 icon was equivalent to the one used o=
-n
-> Windows (in git-gui.ico), but I'm not sure how that would best be don=
-e,
-> so I copied this code from gitk instead.
-> ---
-> =C2=A0git-gui.sh | =C2=A0 =C2=A07 ++++++-
-> =C2=A01 files changed, 6 insertions(+), 1 deletions(-)
->
-> diff --git a/git-gui.sh b/git-gui.sh
-> index c190cbe..9d01039 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -729,7 +729,12 @@ if {[is_Windows]} {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gitlogo put gr=
-ay26 =C2=A0-to =C2=A05 15 11 16
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gitlogo redith=
-er
->
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 wm iconphoto . -de=
-fault gitlogo
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # TODO: should use=
- something equivalent to the 32x32 image in
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # the .ico file
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 image create photo=
- gitlogo32 =C2=A0 =C2=A0-width 32 -height 32
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 gitlogo32 copy git=
-logo -zoom 2 2
-> +
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 wm iconphoto . -de=
-fault gitlogo gitlogo32
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-> =C2=A0}
+Does anyone have a pointer to a thread/discussion that explains why git 
+submodules are not auto
+updated when the superproject is updated (merge, reset, etc) by default?
 
-Hmm. Nothing seems to have happened with this patch yet. Any
-suggestions on how to bring it to the attention of the git-gui people?
+Assuming a simple and default setup where submodule update policy is set 
+to "checkout".
+It seems that the default and sane behavior should be to update 
+(checkout) corresponding submodule
+commit to track the superproject.
+I can't seem to find convincing explanation why it's not the case :). 
+Having to manually update
+submodules after pull or reset has been error prone and confusing for 
+the devs I work with.
+
+I'm thinking about adding a config option that would enable automatic 
+submodule update but wanted
+to see if there is some fundamental reason why it would not be accepted.
+
+Thanx
+Max
