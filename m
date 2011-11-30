@@ -1,122 +1,107 @@
-From: Andrew Wong <andrew.kw.w@gmail.com>
-Subject: [PATCH] rebase -i: interrupt rebase when "commit --amend" failed during "reword"
-Date: Wed, 30 Nov 2011 10:52:51 -0500
-Message-ID: <1322668371-21218-2-git-send-email-andrew.kw.w@gmail.com>
-References: <7vk46isncq.fsf@alter.siamese.dyndns.org>
- <1322668371-21218-1-git-send-email-andrew.kw.w@gmail.com>
-Cc: Andrew Wong <andrew.kw.w@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 30 16:53:48 2011
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 3/3] fast-export: output reset command for commandline revs
+Date: Wed, 30 Nov 2011 17:56:32 +0100
+Message-ID: <201111301756.32305.trast@student.ethz.ch>
+References: <1320535407-4933-1-git-send-email-srabbelier@gmail.com> <1320535407-4933-4-git-send-email-srabbelier@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Eric Herman <eric@freesa.org>,
+	Fernando Vezzosi <buccia@repnz.net>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 30 17:56:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVmTj-0003cG-UK
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 16:53:48 +0100
+	id 1RVnSa-0002Zr-Ln
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 17:56:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757339Ab1K3Pxo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Nov 2011 10:53:44 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:45953 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757291Ab1K3Pxn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Nov 2011 10:53:43 -0500
-Received: by vbbfc26 with SMTP id fc26so467463vbb.19
-        for <git@vger.kernel.org>; Wed, 30 Nov 2011 07:53:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=Ke79QKhOGi2m/4RmysTZw5OBDZvYElQcM6z3DzdQwJ4=;
-        b=STdE93NL98/6vnav5du0w2lsr7/iHDlliwEd7nbMc5RtbN+kwupOurbcmai8bT7OpD
-         9sixeO9kf6E96SxAKm+clIuD6YJxggvUFde3atNJz+J6yn+vCSWIR6VGOnVejlmHpWvX
-         IOKr5HNmv/TaoU1DJgPfWeLC18ZFRPwhsbrfw=
-Received: by 10.52.35.147 with SMTP id h19mr2553906vdj.38.1322668422568;
-        Wed, 30 Nov 2011 07:53:42 -0800 (PST)
-Received: from nigel.sohovfx-toronto.com ([66.207.196.114])
-        by mx.google.com with ESMTPS id em3sm2956136vdc.10.2011.11.30.07.53.41
-        (version=SSLv3 cipher=OTHER);
-        Wed, 30 Nov 2011 07:53:41 -0800 (PST)
-X-Mailer: git-send-email 1.7.8.rc3.32.gb0399.dirty
-In-Reply-To: <1322668371-21218-1-git-send-email-andrew.kw.w@gmail.com>
+	id S1757742Ab1K3Q4g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Nov 2011 11:56:36 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:1334 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751248Ab1K3Q4f (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Nov 2011 11:56:35 -0500
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 30 Nov
+ 2011 17:56:31 +0100
+Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 30 Nov
+ 2011 17:56:32 +0100
+User-Agent: KMail/1.13.7 (Linux/3.1.3-1-desktop; KDE/4.6.5; x86_64; ; )
+In-Reply-To: <1320535407-4933-4-git-send-email-srabbelier@gmail.com>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186129>
 
-"commit --amend" could fail in cases like the user empties the commit
-message, or pre-commit failed.  When it fails, rebase should be
-interrupted and alert the user, rather than ignoring the error and
-continue on rebasing.  This also gives users a way to gracefully
-interrupt a "reword" if they decided they actually want to do an "edit",
-or even "rebase --abort".
+Sverre Rabbelier wrote:
+> When a revision is specified on the commandline we explicitly output
+> a 'reset' command for it if it was not handled already. This allows
+> for example the remote-helper protocol to use fast-export to create
+> branches that point to a commit that has already been exported.
+> 
+> Initial-patch-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
 
-Signed-off-by: Andrew Wong <andrew.kw.w@gmail.com>
----
- git-rebase--interactive.sh |   36 +++++++++++++++++++++++-------------
- 1 files changed, 23 insertions(+), 13 deletions(-)
+My apologies if this is redundant, I'm not up to speed on progress
+here.  But a crash in t9350.19 caught my eye:
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 804001b..5812222 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -143,6 +143,21 @@ die_with_patch () {
- 	die "$2"
- }
- 
-+exit_with_patch () {
-+	echo "$1" > "$state_dir"/stopped-sha
-+	make_patch $1
-+	git rev-parse --verify HEAD > "$amend"
-+	warn "You can amend the commit now, with"
-+	warn
-+	warn "	git commit --amend"
-+	warn
-+	warn "Once you are satisfied with your changes, run"
-+	warn
-+	warn "	git rebase --continue"
-+	warn
-+	exit $2
-+}
-+
- die_abort () {
- 	rm -rf "$state_dir"
- 	die "$1"
-@@ -408,7 +423,13 @@ do_next () {
- 		mark_action_done
- 		pick_one $sha1 ||
- 			die_with_patch $sha1 "Could not apply $sha1... $rest"
--		git commit --amend --no-post-rewrite
-+		git commit --amend --no-post-rewrite || {
-+			warn "Could not amend commit after successfully picking $sha1... $rest"
-+			warn "This is most likely due to an empty commit message, or the pre-commit hook"
-+			warn "failed. If the pre-commit hook failed, you may need to resolve the issue before"
-+			warn "you are able to reword the commit."
-+			exit_with_patch $sha1 1
-+		}
- 		record_in_rewritten $sha1
- 		;;
- 	edit|e)
-@@ -417,19 +438,8 @@ do_next () {
- 		mark_action_done
- 		pick_one $sha1 ||
- 			die_with_patch $sha1 "Could not apply $sha1... $rest"
--		echo "$sha1" > "$state_dir"/stopped-sha
--		make_patch $sha1
--		git rev-parse --verify HEAD > "$amend"
- 		warn "Stopped at $sha1... $rest"
--		warn "You can amend the commit now, with"
--		warn
--		warn "	git commit --amend"
--		warn
--		warn "Once you are satisfied with your changes, run"
--		warn
--		warn "	git rebase --continue"
--		warn
--		exit 0
-+		exit_with_patch $sha1 0
- 		;;
- 	squash|s|fixup|f)
- 		case "$command" in
+  checking known breakage: 
+          (
+                  cd limit-by-paths &&
+                  git fast-export master~2..master~1 > output &&
+                  test_cmp output expected
+          )
+
+  ==23766== Invalid read of size 1
+  ==23766==    at 0x4FD21E: prefixcmp (strbuf.c:9)
+  ==23766==    by 0x42B936: handle_tags_and_duplicates (fast-export.c:563)
+  ==23766==    by 0x42C274: cmd_fast_export (fast-export.c:732)
+  ==23766==    by 0x4051F1: run_builtin (git.c:308)
+  ==23766==    by 0x40538B: handle_internal_command (git.c:466)
+  ==23766==    by 0x4054A5: run_argv (git.c:512)
+  ==23766==    by 0x40562C: main (git.c:585)
+  ==23766==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+  ==23766== 
+  {
+     <insert_a_suppression_name_here>
+     Memcheck:Addr1
+     fun:prefixcmp
+     fun:handle_tags_and_duplicates
+     fun:cmd_fast_export
+     fun:run_builtin
+     fun:handle_internal_command
+     fun:run_argv
+     fun:main
+  }
+  ==23766== 
+  ==23766== Process terminating with default action of signal 11 (SIGSEGV)
+  ==23766==  Access not within mapped region at address 0x0
+  ==23766==    at 0x4FD21E: prefixcmp (strbuf.c:9)
+  ==23766==    by 0x42B936: handle_tags_and_duplicates (fast-export.c:563)
+  ==23766==    by 0x42C274: cmd_fast_export (fast-export.c:732)
+  ==23766==    by 0x4051F1: run_builtin (git.c:308)
+  ==23766==    by 0x40538B: handle_internal_command (git.c:466)
+  ==23766==    by 0x4054A5: run_argv (git.c:512)
+  ==23766==    by 0x40562C: main (git.c:585)
+
+The crash is hidden by the fact that the test is test_expect_failure.
+It bisects to this commit.  Perhaps we should distinguish between
+test_expect_failure and test_expect_crash?...
+
 -- 
-1.7.8.rc3.32.gb0399.dirty
+Thomas Rast
+trast@{inf,student}.ethz.ch
