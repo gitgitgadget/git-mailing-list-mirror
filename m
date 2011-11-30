@@ -1,83 +1,152 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: BUG: "--work-tree blah" does not imply "--git-dir blah/.git" or
- fix misleading error message
-Date: Wed, 30 Nov 2011 12:45:41 -0800
-Message-ID: <7v1uspqqyy.fsf@alter.siamese.dyndns.org>
-References: <CAEUMa-cA8qPjJuPBREE1RqhgwmcZG7x1MjBYkxa3i+ZSAnMPOA@mail.gmail.com>
- <7vaa7dquva.fsf@alter.siamese.dyndns.org>
- <20111130194233.GD12096@centaur.lab.cmartin.tk>
+Subject: Re: [PATCH 5/3] revert: introduce --abort to cancel a failed
+ cherry-pick
+Date: Wed, 30 Nov 2011 14:52:23 -0800
+Message-ID: <7vty5lp6jc.fsf@alter.siamese.dyndns.org>
+References: <20111120073059.GA2278@elie.hsd1.il.comcast.net>
+ <CALkWK0=45OwcBoH2TorsgwTbaXjnffVuh0mGxh2+ShN9cuF-=A@mail.gmail.com>
+ <20111120094650.GB2278@elie.hsd1.il.comcast.net>
+ <20111122111207.GA7399@elie.hsd1.il.comcast.net>
+ <20111122112001.GF7399@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: John Twilley <mathuin@gmail.com>, git@vger.kernel.org
-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <carlos@cmartin.tk>
-X-From: git-owner@vger.kernel.org Wed Nov 30 21:45:51 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Phil Hord <phil.hord@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 30 23:52:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVr2L-0006yn-Kk
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 21:45:50 +0100
+	id 1RVt14-0006nm-JJ
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 23:52:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752227Ab1K3Upo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Nov 2011 15:45:44 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54267 "EHLO
+	id S1751780Ab1K3Ww1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Nov 2011 17:52:27 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52412 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752165Ab1K3Upo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Nov 2011 15:45:44 -0500
+	id S1751659Ab1K3Ww0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Nov 2011 17:52:26 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2AAF95FD6;
-	Wed, 30 Nov 2011 15:45:43 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EB2B648D;
+	Wed, 30 Nov 2011 17:52:25 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=/cJKjoJcQLIh
-	qKXYCrQ5pEAO1HU=; b=e53jlM2KM27Osh0LrnnHRNFaagfjRq5PWVPCiETOPDsw
-	0Mxn2JGEUmc4qWTb5g/XTREpVeQ05PcF8jfH9jJxgu6nwWsdV+Q0gFkMwD/2OyVz
-	tNzxPIhT1i7Fg4YemOs4n2GRWlSBlIfuQzaQSCcMlLhPR0/49u7E7teuJFAvnuE=
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=AGDxnwbd++aiK2zXDiabx9o8eAU=; b=GkQZanZqj2dmQo0urXZR
+	MnvtIthHdVFmKEW9v5+cUDuGq2Ef2rs9q0MgjnD8boCDXaGNLMJNi40axbDGYrDv
+	XW/jqSimZlMj/FCejBfPLbqSoasTqOCXehUnUx95LlvvLhBbXcJW9WNHfuLb1bYD
+	TqaDNqRM6fvF2nhd+T4NsUo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=TJjYny
-	wydQNJylqmSi2o0PBrPb3k+KCIo6bi6rJnYu9GZQsiP4pjk+j9nUnReKekxgN5Sj
-	poTRjp2RhXEXBZJaHbanRJCp6XB8uFQ+ogXjZW6XwaJAf+HTh6J5qE4cGvwiFGj4
-	XbC4fo+EiP93CN/T6285C3NgLibwaT1+1VGFQ=
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=CTqTPhjujOdT1mL7oo97TYcjJxmD1cURm4B1JYfcowpSrh
+	sLSiLsVGuWXeP1/UDsrav6aY1eTfCKn3K/udFoVk/u7Y/W0bTw5upjO1gi7W6my1
+	uoQWdaOm1shSZdrBlM4rJjTf/McFEwD44ApEERwaWjP4RmEbpu+TXOqGYHapA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F5635FD5;
-	Wed, 30 Nov 2011 15:45:43 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 51ED3648C;
+	Wed, 30 Nov 2011 17:52:25 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A5D6C5FD3; Wed, 30 Nov 2011
- 15:45:42 -0500 (EST)
-In-Reply-To: <20111130194233.GD12096@centaur.lab.cmartin.tk> ("Carlos
- =?utf-8?Q?Mart=C3=ADn?= Nieto"'s message of "Wed, 30 Nov 2011 20:42:33
- +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9E8B56488; Wed, 30 Nov 2011
+ 17:52:24 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4523AEE2-1B94-11E1-97F4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F848A0D4-1BA5-11E1-AE55-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186142>
 
-Carlos Mart=C3=ADn Nieto <carlos@cmartin.tk> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> On Wed, Nov 30, 2011 at 11:21:29AM -0800, Junio C Hamano wrote:
->> subdirectory "blah/.git"), but I do not think this is likely to chan=
-ge, as
->> I suspect that people and scripts are relying on the current behavio=
-ur to
->> be able to do something like this:
->>=20
->>     cd /pub/scm/git/git.git ;# this is a bare repository
->>     mkdir /var/tmp/git
->>     git --work-tree=3D/var/tmp/git checkout
->
-> This is in fact the way that many (or from what I can see the most
-> popular) tutorials for abusing git as a deployment system tell you to
-> run it (though more often than not setting GIT_WORKTREE in the
-> environment).
+> After running some ill-advised command like "git cherry-pick
+> HEAD..linux-next", the bewildered novice may want to return to more
+> familiar territory.  Introduce a "git cherry-pick --abort" command
+> that rolls back the entire cherry-pick sequence and places the
+> repository back on solid ground.
 
-Heh, *ab*using is a good description if they really mean to use it as a
-deployment system. For one thing it won't do anything a proper deployme=
-nt
-should do if the target directory is not empty ;-)
+This is confusing; if you have many commits in the range, and a handful of
+them replayed without conflicts and then you hit a conflict, where should
+(I am not asking "where does ... with your patch") abort take us? The
+state after the random commit that happened to have replayed successfully?
+The state before the entire cherry-pick sequence started?  "back on solid
+ground" does not tell us which one you meant.
+
+I am assuming that it is the latter.
+
+> diff --git a/Documentation/sequencer.txt b/Documentation/sequencer.txt
+> index 75f8e869..5747f442 100644
+> --- a/Documentation/sequencer.txt
+> +++ b/Documentation/sequencer.txt
+> @@ -7,3 +7,6 @@
+>  	Forget about the current operation in progress.  Can be used
+>  	to clear the sequencer state after a failed cherry-pick or
+>  	revert.
+> +
+> +--abort::
+> +	Cancel the operation and return to the pre-sequence state.
+
+Ok, it is the latter.
+
+> +static int reset_for_rollback(const unsigned char *sha1)
+> +{
+> +	const char *argv[4];	/* reset --merge <arg> + NULL */
+> +	argv[0] = "reset";
+> +	argv[1] = "--merge";
+> +	argv[2] = sha1_to_hex(sha1);
+> +	argv[3] = NULL;
+> +	return run_command_v_opt(argv, RUN_GIT_CMD);
+> +}
+
+So you give the value of the HEAD before the sequence started to this
+function and all should go well. Where do you read that value from?
+
+> +static int rollback_single_pick(void)
+> +{
+> +	unsigned char head_sha1[20];
+> +
+> +	if (!file_exists(git_path("CHERRY_PICK_HEAD")) &&
+> +	    !file_exists(git_path("REVERT_HEAD")))
+> +		return error(_("no cherry-pick or revert in progress"));
+> +	if (!resolve_ref("HEAD", head_sha1, 0, NULL))
+> +		return error(_("cannot resolve HEAD"));
+> +	if (is_null_sha1(head_sha1))
+> +		return error(_("cannot abort from a branch yet to be born"));
+
+Ok, this is for single-pick so HEAD is where we came from. Good.
+
+> +	return reset_for_rollback(head_sha1);
+> +}
+> +
+> +static int sequencer_rollback(struct replay_opts *opts)
+> +{
+> +	const char *filename;
+> +	FILE *f;
+> +	unsigned char sha1[20];
+> +	struct strbuf buf = STRBUF_INIT;
+> +
+> +	filename = git_path(SEQ_HEAD_FILE);
+> +	f = fopen(filename, "r");
+> +	if (!f && errno == ENOENT) {
+> +		/*
+> +		 * There is no multiple-cherry-pick in progress.
+> +		 * If CHERRY_PICK_HEAD or REVERT_HEAD indicates
+> +		 * a single-cherry-pick in progress, abort that.
+> +		 */
+> +		return rollback_single_pick();
+> +	}
+> +	if (!f)
+> +		return error(_("cannot open %s: %s"), filename,
+> +						strerror(errno));
+> +	if (strbuf_getline(&buf, f, '\n')) {
+> +		error(_("cannot read %s: %s"), filename, ferror(f) ?
+> +			strerror(errno) : _("unexpected end of file"));
+> +		goto fail;
+> +	}
+
+And when we are in multi-pick, SEQ_HEAD_FILE has it.
+
+Looks good from a cursory review. Thanks.
