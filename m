@@ -1,98 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 1/2] pull: pass the --no-ff-only flag through to
- merge, not fetch
-Date: Thu, 01 Dec 2011 10:06:54 -0800
-Message-ID: <7vvcq0np35.fsf@alter.siamese.dyndns.org>
-References: <1322703537-3914-1-git-send-email-naesten@gmail.com>
- <7vborsq45x.fsf@alter.siamese.dyndns.org>
- <CAJYzjmep7sKxiSNhMzAX2DRYJhANDQkPL5pX4HOZ9CssJxcWbw@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] Makefile: Add missing "sparse object" to gettext target-specific
+ rule
+Date: Wed, 30 Nov 2011 20:43:52 +0000
+Message-ID: <4ED69588.9020207@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Samuel Bronson <naesten@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 01 19:07:04 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: avarab@gmail.com
+X-From: git-owner@vger.kernel.org Thu Dec 01 19:17:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RWB2F-0002Y2-6q
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Dec 2011 19:07:03 +0100
+	id 1RWBCn-0008Bb-0i
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Dec 2011 19:17:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756013Ab1LASG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Dec 2011 13:06:58 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56862 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755432Ab1LASG5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Dec 2011 13:06:57 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A41954B8;
-	Thu,  1 Dec 2011 13:06:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tH0w17V+a6fes1w9odC4KnpaeZg=; b=N3ylCS
-	GDsdxJ8qOHOyZl1iLt34cuCJSE0n+zYB5JeGvDwMNEGiOEch65JyLh4dq8PiZTAL
-	Ds73nTTbQs+RtXe+ducyLXxRsQ0OqXMLBXiy7r578eebIsNk1+E2w2W7kRGdf4wU
-	3Yl09hRjdwi1zASaMhzY1OA0vZDB8PRq66lk8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qxhQFkUAePtDB6g7JzRUdquZaJOXfIvA
-	NYT1svvFFqW6F8z+GqU/PWgXsBw7FdIBkT7BA/hlCCPStpxGzJFm0oJmxttWirUr
-	eot9bcHGrZm4ml7nMD56YAuPi9T05HO5trQVpib3fXDhvJtNTyR1BNoEjuUDfzDR
-	B1MJpxoX80w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BAA954B6;
-	Thu,  1 Dec 2011 13:06:56 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9B60554B2; Thu,  1 Dec 2011
- 13:06:55 -0500 (EST)
-In-Reply-To: <CAJYzjmep7sKxiSNhMzAX2DRYJhANDQkPL5pX4HOZ9CssJxcWbw@mail.gmail.com> (Samuel
- Bronson's message of "Thu, 1 Dec 2011 12:18:54 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 40FE0E3A-1C47-11E1-9124-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756095Ab1LASRu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Dec 2011 13:17:50 -0500
+Received: from lon1-post-1.mail.demon.net ([195.173.77.148]:47836 "EHLO
+	lon1-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756035Ab1LASRs (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Dec 2011 13:17:48 -0500
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by lon1-post-1.mail.demon.net with esmtp (Exim 4.69)
+	id 1RWBCc-0002lf-XL; Thu, 01 Dec 2011 18:17:46 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186179>
 
-Samuel Bronson <naesten@gmail.com> writes:
 
-> Hmm, yes, I had noticed that it was a tristate (merge.ff clearly is),
-> and I guess --no-ff-only is a pretty ugly flag. I do have to ask,
-> though: why give --ff these new values? Wouldn't it make more sense to
-> reuse the values accepted by merge.ff; namely, 'true' (the implied
-> default), 'false', and 'only'?
+In particular, we add gettext.sp to the target-specific rule which
+adds the GIT_LOCALE_PATH setting to EXTRA_CPPFLAGS, otherwise sparse
+complains thus:
 
-The 'true' and 'false' values to merge.ff are carry-over from the days
-when it was a boolean, _not_ a tristate. If we were to make the UI more
-rational by making it clear that this is not a boolean, it is a good time
-for us to aim a bit higher than merely repeating the mistakes we made in
-the past due to historical accident. In other words, we could add a
-synonym for the "default" mode in addition to "--ff=true" (and for the
-"always merge" mode in addition to "--ff=false") that makes it clear that
-the value is _not_ a boolean [*1*]. If we were to go the "--ff=<value>"
-route, we have to add support for other ways to spell boolean 'true'
-(e.g. 'yes', '1', and 'on') anyway, so it is not that much extra work to
-do so, I would think.
+        SP gettext.c
+    gettext.c:125:25: error: undefined identifier 'GIT_LOCALE_PATH'
 
-> Otherwise, this looks like a very nice way to implement what I want: I
-> guess it is probably a mistake that the existing (documented) flags do
-> not behave in this way?
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
 
-Yeah, right now if you say "merge --ff-only --no-ff", we say these are
-mutually exclusive (which is true), but if you think about the tristate
-nature of the 'ff' option and spell it differently in your head, i.e.
-"merge --ff=only --ff=never", it is reasonable to argue that we should
-apply the usual "last one overrides" rule and behave as if "merge --no-ff"
-were given (for the purpose of "last one overrides", the configured
-defaults can be treated as if they come very early on the command line).
-After all "merge --no-ff --ff" does seem to use the "last one overrides"
-rule.
+Hi Avar,
 
-[Footnote]
+If you are going to re-roll your latest i18n patch (commit 6c856c48,
+"i18n: add infrastructure for translating Git with gettext", 18-11-2011),
+could you please squash this patch into it.
 
-*1* Perhaps 'allowed' instead of 'normal' (which I wrote out of thin-air;
-I do not have any strong preference on the actual values) may be a better
-choice for such a "this is not a boolean" spelling for the default mode.
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index ac8c76d..f926b5f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2129,7 +2129,7 @@ config.sp config.s config.o: EXTRA_CPPFLAGS = \
+ attr.sp attr.s attr.o: EXTRA_CPPFLAGS = \
+ 	-DETC_GITATTRIBUTES='"$(ETC_GITATTRIBUTES_SQ)"'
+ 
+-gettext.s gettext.o: EXTRA_CPPFLAGS = \
++gettext.sp gettext.s gettext.o: EXTRA_CPPFLAGS = \
+ 	-DGIT_LOCALE_PATH='"$(localedir_SQ)"'
+ 
+ http.sp http.s http.o: EXTRA_CPPFLAGS = \
+-- 
+1.7.7
