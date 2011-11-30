@@ -1,172 +1,125 @@
 From: Luke Diamand <luke@diamand.org>
-Subject: [PATCHv2 4/4] git-p4: add test for p4 labels
-Date: Wed, 30 Nov 2011 09:03:37 +0000
-Message-ID: <1322643817-13051-5-git-send-email-luke@diamand.org>
+Subject: [PATCHv2 3/4] git-p4: importing labels should cope with missing owner
+Date: Wed, 30 Nov 2011 09:03:36 +0000
+Message-ID: <1322643817-13051-4-git-send-email-luke@diamand.org>
 References: <1322643817-13051-1-git-send-email-luke@diamand.org>
 Cc: Pete Wyckoff <pw@padd.com>, Luke Diamand <luke@diamand.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 30 10:04:46 2011
+X-From: git-owner@vger.kernel.org Wed Nov 30 10:04:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVg5u-0005LU-1R
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 10:04:46 +0100
+	id 1RVg5u-0005LU-II
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 10:04:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757422Ab1K3JEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Nov 2011 04:04:35 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:54127 "EHLO
+	id S1757235Ab1K3JEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Nov 2011 04:04:39 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:61786 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757265Ab1K3JE3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Nov 2011 04:04:29 -0500
-Received: by mail-bw0-f46.google.com with SMTP id s6so570681bka.19
-        for <git@vger.kernel.org>; Wed, 30 Nov 2011 01:04:29 -0800 (PST)
-Received: by 10.204.148.4 with SMTP id n4mr1316296bkv.42.1322643868922;
-        Wed, 30 Nov 2011 01:04:28 -0800 (PST)
+	with ESMTP id S1757206Ab1K3JE2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Nov 2011 04:04:28 -0500
+Received: by bkas6 with SMTP id s6so571120bka.19
+        for <git@vger.kernel.org>; Wed, 30 Nov 2011 01:04:27 -0800 (PST)
+Received: by 10.204.0.82 with SMTP id 18mr1232158bka.86.1322643867317;
+        Wed, 30 Nov 2011 01:04:27 -0800 (PST)
 Received: from ethel.cable.virginmedia.net (cpc1-cmbg14-2-0-cust973.5-4.cable.virginmedia.com. [86.26.7.206])
-        by mx.google.com with ESMTPS id c4sm2565364bkk.13.2011.11.30.01.04.27
+        by mx.google.com with ESMTPS id c4sm2565364bkk.13.2011.11.30.01.04.25
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 30 Nov 2011 01:04:28 -0800 (PST)
+        Wed, 30 Nov 2011 01:04:26 -0800 (PST)
 X-Mailer: git-send-email 1.7.8.rc1.209.geac91.dirty
 In-Reply-To: <1322643817-13051-1-git-send-email-luke@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186121>
 
-Add basic test of p4 label import. Checks label import and
-import with shell metachars; labels with different length
-descriptions.
-
-Add failure test case for multiple labels.
+In p4, the Owner field is optional. If it is missing,
+construct something sensible rather than crashing.
 
 Signed-off-by: Luke Diamand <luke@diamand.org>
 ---
- t/t9804-git-p4-label.sh |  114 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 114 insertions(+), 0 deletions(-)
- create mode 100755 t/t9804-git-p4-label.sh
+ contrib/fast-import/git-p4 |   45 +++++++++++++++++++++++--------------------
+ 1 files changed, 24 insertions(+), 21 deletions(-)
 
-diff --git a/t/t9804-git-p4-label.sh b/t/t9804-git-p4-label.sh
-new file mode 100755
-index 0000000..a46763f
---- /dev/null
-+++ b/t/t9804-git-p4-label.sh
-@@ -0,0 +1,114 @@
-+test_description='git-p4 p4 label tests'
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index 02f0f54..d97f927 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -553,6 +553,27 @@ class Command:
+     def __init__(self):
+         self.usage = "usage: %prog [options]"
+         self.needsGit = True
++        self.myP4UserId = None
 +
-+. ./lib-git-p4.sh
++    def p4UserId(self):
++        if self.myP4UserId:
++            return self.myP4UserId
 +
-+test_expect_success 'start p4d' '
-+	start_p4d
-+'
++        results = p4CmdList("user -o")
++        for r in results:
++            if r.has_key('User'):
++                self.myP4UserId = r['User']
++                return r['User']
++        die("Could not find your p4 user id")
 +
-+# Basic p4 label tests.
-+#
-+# Note: can't have more than one label per commit - others
-+# are silently discarded.
-+#
-+test_expect_success 'basic p4 labels' '
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$cli" &&
-+		mkdir -p main &&
++    def p4UserIsMe(self, p4User):
++        # return True if the given p4 user is actually me
++        me = self.p4UserId()
++        if not p4User or p4User != me:
++            return False
++        else:
++            return True
 +
-+		echo f1 >main/f1 &&
-+		p4 add main/f1 &&
-+		p4 submit -d "main/f1" &&
-+
-+		echo f2 >main/f2 &&
-+		p4 add main/f2 &&
-+		p4 submit -d "main/f2" &&
-+
-+		echo f3 >main/file_with_\$metachar &&
-+		p4 add main/file_with_\$metachar &&
-+		p4 submit -d "file with metachar" &&
-+
-+		p4 tag -l tag_f1_only main/f1 &&
-+		p4 tag -l tag_with\$_shell_char main/... &&
-+
-+		echo f4 >main/f4 &&
-+		p4 add main/f4 &&
-+		p4 submit -d "main/f4" &&
-+
-+		p4 label -i <<-EOF &&
-+		Label: long_label
-+		Description:
-+		   A Label first line
-+		   A Label second line
-+		View:	//depot/...
-+		EOF
-+
-+		p4 tag -l long_label ... &&
-+
-+		p4 labels ... &&
-+
-+		cd "$git" &&
-+		pwd &&
-+		"$GITP4" clone --dest=. --detect-labels //depot@all &&
-+
-+		git tag &&
-+		git tag >taglist &&
-+		test_line_count = 3 taglist &&
-+
-+		cd main &&
-+		git checkout tag_tag_f1_only &&
-+		! test -f f2 &&
-+		git checkout tag_tag_with\$_shell_char &&
-+		test -f f1 && test -f f2 && test -f file_with_\$metachar &&
-+
-+		git show tag_long_label | grep -q "A Label second line"
-+	)
-+'
-+
-+# Test some label corner cases:
-+#
-+# - two tags on the same file; both should be available
-+# - a tag that is only on one file; the other file should
-+#   not be checked out on the tag.
-+
-+test_expect_failure 'two labels on the same changelist' '
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$cli" &&
-+		mkdir -p main &&
-+
-+		p4 edit main/f1 main/f2 &&
-+		echo "hello world" >main/f1 &&
-+		echo "not in the tag" >main/f2 &&
-+		p4 submit -d "main/f[12]: testing two labels" &&
-+
-+		p4 tag -l tag_f1_1 main/f1 &&
-+		p4 tag -l tag_f1_2 main/f1 &&
-+
-+		p4 labels ... &&
-+
-+		cd "$git" &&
-+		pwd &&
-+		"$GITP4" clone --dest=. --detect-labels //depot@all &&
-+
-+		git tag | grep -q tag_f1_1 &&
-+		git tag | grep -q tag_f1_2 &&
-+
-+		cd main &&
-+
-+		git checkout tag_tag_f1_1 &&
-+		test -f f1 &&
-+
-+		git checkout tag_tag_f1_1 &&
-+		test -f f1 &&
-+
-+		! test -f f2
-+	)
-+'
-+
-+test_expect_success 'kill p4d' '
-+	kill_p4d
-+'
-+
-+test_done
+ 
+ class P4UserMap:
+     def __init__(self):
+@@ -694,7 +715,6 @@ class P4Submit(Command, P4UserMap):
+         self.verbose = False
+         self.preserveUser = gitConfig("git-p4.preserveUser").lower() == "true"
+         self.isWindows = (platform.system() == "Windows")
+-        self.myP4UserId = None
+ 
+     def check(self):
+         if len(p4CmdList("opened ...")) > 0:
+@@ -802,25 +822,6 @@ class P4Submit(Command, P4UserMap):
+                     return 1
+         return 0
+ 
+-    def p4UserId(self):
+-        if self.myP4UserId:
+-            return self.myP4UserId
+-
+-        results = p4CmdList("user -o")
+-        for r in results:
+-            if r.has_key('User'):
+-                self.myP4UserId = r['User']
+-                return r['User']
+-        die("Could not find your p4 user id")
+-
+-    def p4UserIsMe(self, p4User):
+-        # return True if the given p4 user is actually me
+-        me = self.p4UserId()
+-        if not p4User or p4User != me:
+-            return False
+-        else:
+-            return True
+-
+     def prepareSubmitTemplate(self):
+         # remove lines in the Files section that show changes to files outside the depot path we're committing into
+         template = ""
+@@ -1506,7 +1507,9 @@ class P4Sync(Command, P4UserMap):
+ 
+                     owner = labelDetails["Owner"]
+                     tagger = ""
+-                    if author in self.users:
++                    if not owner:
++                        tagger = "%s <a@b> %s %s" % (self.p4UserId(), epoch, self.tz)
++                    elif author in self.users:
+                         tagger = "%s %s %s" % (self.users[owner], epoch, self.tz)
+                     else:
+                         tagger = "%s <a@b> %s %s" % (owner, epoch, self.tz)
 -- 
 1.7.8.rc1.209.geac91.dirty
