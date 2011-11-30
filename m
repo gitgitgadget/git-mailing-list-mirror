@@ -1,80 +1,153 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Implement fast hash-collision detection
-Date: Wed, 30 Nov 2011 10:05:24 -0800
-Message-ID: <7vzkfdqye3.fsf@alter.siamese.dyndns.org>
-References: <1322546563.1719.22.camel@yos>
- <20111129090733.GA22046@sigill.intra.peff.net>
- <CACsJy8DboVU4kSbJSV=8NP08OyLYVgOKsm8tt=koZ0=JcGSE=A@mail.gmail.com>
- <20111129205905.GA1793@sigill.intra.peff.net>
- <CACsJy8A6kGmn0h0xdxfTC4krXgc8hzO1fHTdqfk0YnASGN5K0w@mail.gmail.com>
+From: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+Subject: Re: BUG: "--work-tree blah" does not imply "--git-dir blah/.git" or
+ fix misleading error message
+Date: Wed, 30 Nov 2011 19:22:30 +0100
+Message-ID: <20111130182230.GC12096@centaur.lab.cmartin.tk>
+References: <CAEUMa-cA8qPjJuPBREE1RqhgwmcZG7x1MjBYkxa3i+ZSAnMPOA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Bill Zaumen <bill.zaumen+git@gmail.com>,
-	git@vger.kernel.org, gitster@pobox.com, spearce@spearce.org,
-	torvalds@linux-foundation.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 30 19:05:52 2011
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="LpQ9ahxlCli8rRTG"
+Cc: git@vger.kernel.org
+To: John Twilley <mathuin@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 30 19:22:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVoXW-0004Du-0w
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 19:05:50 +0100
+	id 1RVonl-0004Gj-C1
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 19:22:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751201Ab1K3SF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Nov 2011 13:05:28 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39783 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751154Ab1K3SF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Nov 2011 13:05:27 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B3CD26E20;
-	Wed, 30 Nov 2011 13:05:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Df1Tksh+5oopEzVqnQVdbczFZJ0=; b=B8gTic
-	ZeQpyCjCHCFDHy7R7vUTfTeP5EDn7u6i+SX+mn5VpW1yHj2X/NXuCDlKozB3vHYK
-	Y0wTYCLvkto9UhW52ygClz55eXK+jbbWRW7G1ALjqmDXdQAkgZH4QeRPBL+tmJyn
-	jumBB/SNo1siE2AJVLGdl6cny4+h1ljzYLIT4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JLNB7LekUWr3eIPghS1CDtNZUiYbGrHc
-	Bmcq3s0z11HAW6z8YrXkM4RkYDbimMQKQ848C7EbuPeocYLif8fpBznQ8xAJ2cZA
-	61TEZ+ERwQYfBa1dzAcfIEKqUUJNeJnnN7/qB9wRyxBNEqNgaUKtnBrXWc4ns1GY
-	om88o3uHgqI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AADB86E1F;
-	Wed, 30 Nov 2011 13:05:26 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3496C6E1D; Wed, 30 Nov 2011
- 13:05:26 -0500 (EST)
-In-Reply-To: <CACsJy8A6kGmn0h0xdxfTC4krXgc8hzO1fHTdqfk0YnASGN5K0w@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Wed, 30 Nov 2011 20:35:02 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E14CF7F4-1B7D-11E1-9A39-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751544Ab1K3SWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Nov 2011 13:22:32 -0500
+Received: from kimmy.cmartin.tk ([91.121.65.165]:46114 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750926Ab1K3SWc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Nov 2011 13:22:32 -0500
+Received: from centaur.lab.cmartin.tk (brln-4dbc7c68.pool.mediaWays.net [77.188.124.104])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id 60A5E461A5;
+	Wed, 30 Nov 2011 19:21:49 +0100 (CET)
+Received: (nullmailer pid 10050 invoked by uid 1000);
+	Wed, 30 Nov 2011 18:22:30 -0000
+Mail-Followup-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	John Twilley <mathuin@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <CAEUMa-cA8qPjJuPBREE1RqhgwmcZG7x1MjBYkxa3i+ZSAnMPOA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186132>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> What I'm thinking is whether it's possible to decouple two sha-1 roles
-> in git, as object identifier and digest, separately.
+--LpQ9ahxlCli8rRTG
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Why it would be a good thing? If you have a collided identifier, somebody
-has to choose which blob a particular tree wants to have at the path, and
-because the tree would not record anything but the identifier, you cannot.
+On Wed, Nov 30, 2011 at 09:43:08AM -0800, John Twilley wrote:
+> Today someone asked me if there was a way to run git against a
+> directory other than the current directory.  I looked at the output of
+> --help and ran this:
+>=20
+> $ git --work-tree blah status
+>=20
+> I got the following output:
+>=20
+> fatal: Not a git repository (or any parent up to mount parent /home)
+> Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+>=20
+> I mistakenly thought the error message meant that blah was not a git
+> repository.  What it meant was that there was no .git in the current
+> directory or any parent directory up to /home.
 
-> ...
-> The day sha-1 is broken, a project can generate new digests from its
-> old good repo and enforce developers to use new digests for
-> verification instead of sha-1. sha-1 is still used by git as
-> identifier after that day.
+Yes, git looks at the current directory and .git/ to see if there's a
+git repository there. This is what happens unless you tell git to look
+for it somewhere else.
 
-And an old blob that is identified with a SHA-1 now has a new blob that
-has different contents but happens to have the same SHA-1. How does Git
-decide which blob to use when a particular object is named by the SHA-1?
+>=20
+> This command worked as expected:
+>=20
+> $ git --work-tree blah --git-dir blah/.git status
+>=20
+> The documentation is somewhat fuzzy about what constitutes a git
+> repository.  The gittutorial describes the git repository as .git when
+> talking about "git init" while the Git User's Manual describes the git
+> repository as the working tree and the special top-level directory
+> named .git when talking about "git clone".
+
+A git repository is what's under .git/ (or in foo.git/ for bare
+repos). Non-bare repositories have a working tree associated with
+them, which by default lives just above the repository, because it'd
+be silly to have it somewhere else by default. Often you can think of
+both as the repository, as they're both. When you tell git to look for
+the worktree somewhere else, you're only overriding that particular
+variable, as git expects to be run from the repository (or just above,
+in the worktree).
+
+>=20
+> It's clear (to me at least) that --work-tree should be used to
+> identify the root of the working tree when not inside the working
+> tree.  I expected that the git directory would be automatically set to
+> .git in the root of the working tree, as that would match the
+> documentation.  Instead, the current directory and its parents were
+> checked -- which could provide dangerously misleading information to
+> the user.
+
+What part of the documentation exactly? --work-tree tells git to look
+for the working tree somewhere else. This option exists in order to
+support a multiple-workdir workflow.
+
+>=20
+> I think that one of two things should be done:  either the --git-dir
+> default should be changed when the --work-tree option is set, or the
+> error message cited above should be changed to explicitly identify the
+> directory being tested as a potential git repository.  I personally
+
+Git does tell you explicitly, but only when you specify a gitdir (via
+GIT_DIR or --git-dir), otherwise it looks at the current directory.
+
+> believe the first option is superior because it fulfills the
+> expectations of average users (folks who read git's documentation
+> instead of its source code) while permitting flexibility to those who
+
+It's not likely that it will get changed because that would break
+backwards-compatability in a very big way. If your concern is for
+"average user", she shouldn't be using that option, but changing to
+that directory instead. If you want your working tree to be ./foo/ and
+your gitdir to be ./foo/.git, why don't you just cd to ./foo/?
+
+> wish to refer to the current directory or some other directory for
+> their --git-dir value.  If the current behavior is somehow not a bug
+> but instead a critical and significant feature which if changed would
+> cause more harm than good, please consider the second option.
+
+You get two different messages depending on how git is looking for the
+repository. The message you mentioned gets printed when git tries to
+find it automatically. A "fatal: Not a git repository: '/tmp'" gets
+printed if you've told git to look for it in a specific place. The
+information is already there, though I guess you do have to know about
+the difference. Adding the current directory to the "default" message
+probably wouldn't hurt, as it's unlikely that a script is parsing
+that, and might be useful.
+
+   cmn
+
+--LpQ9ahxlCli8rRTG
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAEBAgAGBQJO1nRmAAoJEHKRP1jG7ZzTqLsH/1V/2CTQsdyVjue0qY+eIdlW
+edisfAo62rFawByTpgJ5F8N5tPPLj1k10RCxOeiOjywIweR1C3a+uTzQIX4qSDC3
+f33vu6yy+yfVoseZun8zRjTDTYQYFMkNqhPFmWMD0N2GyVCub/rOvGTj/6m4HWXP
+m21FokVzdz4diHcbR7h2tYS7h3IE43DZWLvk93IXfZ/ohGbpftmynXuP7/IWYoBR
+5LI+prQ9fCY6yFcbYzm/tzSdNDXE3ub1Tb7uBvvMkBiY7PC9KqANasfHopODGUwy
+WtbIoG4kEsMeXcV+ihX/cGWrmFyMw+fSk+duL4vWSH6NcWpOMIdTInnPYPzhQHU=
+=KQYr
+-----END PGP SIGNATURE-----
+
+--LpQ9ahxlCli8rRTG--
