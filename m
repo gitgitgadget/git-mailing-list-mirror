@@ -1,107 +1,89 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 3/3] fast-export: output reset command for commandline revs
-Date: Wed, 30 Nov 2011 17:56:32 +0100
-Message-ID: <201111301756.32305.trast@student.ethz.ch>
-References: <1320535407-4933-1-git-send-email-srabbelier@gmail.com> <1320535407-4933-4-git-send-email-srabbelier@gmail.com>
+From: John Twilley <mathuin@gmail.com>
+Subject: BUG: "--work-tree blah" does not imply "--git-dir blah/.git" or fix
+ misleading error message
+Date: Wed, 30 Nov 2011 09:43:08 -0800
+Message-ID: <CAEUMa-cA8qPjJuPBREE1RqhgwmcZG7x1MjBYkxa3i+ZSAnMPOA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Eric Herman <eric@freesa.org>,
-	Fernando Vezzosi <buccia@repnz.net>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 30 17:56:41 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 30 18:43:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVnSa-0002Zr-Ln
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 17:56:41 +0100
+	id 1RVoBg-0001GT-0I
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 18:43:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757742Ab1K3Q4g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Nov 2011 11:56:36 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:1334 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751248Ab1K3Q4f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Nov 2011 11:56:35 -0500
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 30 Nov
- 2011 17:56:31 +0100
-Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 30 Nov
- 2011 17:56:32 +0100
-User-Agent: KMail/1.13.7 (Linux/3.1.3-1-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <1320535407-4933-4-git-send-email-srabbelier@gmail.com>
-X-Originating-IP: [129.132.153.233]
+	id S1751149Ab1K3RnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Nov 2011 12:43:12 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:57446 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751104Ab1K3RnJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Nov 2011 12:43:09 -0500
+Received: by iage36 with SMTP id e36so1081907iag.19
+        for <git@vger.kernel.org>; Wed, 30 Nov 2011 09:43:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=gfKw6q16Uy7q0ptt8jGT/OH/kd8ixz/Ffbtwv4tq1L4=;
+        b=swSBvw9929i67lkoWea7LetBTaN5YHNirq1vb6CMkM9v0D+j8YUpCuNJxH8G4bp1xz
+         LzAogoWczkCCwozLbWD62+5MrAqAxCeFq1xBwjZjGS5RQG0CMLTblClMOd7WP7HZTMsX
+         IpPz7dPDn8J+2LXqHqoIp2YVs2J9h/xmAba0Y=
+Received: by 10.50.169.33 with SMTP id ab1mr3817330igc.0.1322674989225; Wed,
+ 30 Nov 2011 09:43:09 -0800 (PST)
+Received: by 10.231.42.21 with HTTP; Wed, 30 Nov 2011 09:43:08 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186130>
 
-Sverre Rabbelier wrote:
-> When a revision is specified on the commandline we explicitly output
-> a 'reset' command for it if it was not handled already. This allows
-> for example the remote-helper protocol to use fast-export to create
-> branches that point to a commit that has already been exported.
-> 
-> Initial-patch-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
+Today someone asked me if there was a way to run git against a
+directory other than the current directory.  I looked at the output of
+--help and ran this:
 
-My apologies if this is redundant, I'm not up to speed on progress
-here.  But a crash in t9350.19 caught my eye:
+$ git --work-tree blah status
 
-  checking known breakage: 
-          (
-                  cd limit-by-paths &&
-                  git fast-export master~2..master~1 > output &&
-                  test_cmp output expected
-          )
+I got the following output:
 
-  ==23766== Invalid read of size 1
-  ==23766==    at 0x4FD21E: prefixcmp (strbuf.c:9)
-  ==23766==    by 0x42B936: handle_tags_and_duplicates (fast-export.c:563)
-  ==23766==    by 0x42C274: cmd_fast_export (fast-export.c:732)
-  ==23766==    by 0x4051F1: run_builtin (git.c:308)
-  ==23766==    by 0x40538B: handle_internal_command (git.c:466)
-  ==23766==    by 0x4054A5: run_argv (git.c:512)
-  ==23766==    by 0x40562C: main (git.c:585)
-  ==23766==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
-  ==23766== 
-  {
-     <insert_a_suppression_name_here>
-     Memcheck:Addr1
-     fun:prefixcmp
-     fun:handle_tags_and_duplicates
-     fun:cmd_fast_export
-     fun:run_builtin
-     fun:handle_internal_command
-     fun:run_argv
-     fun:main
-  }
-  ==23766== 
-  ==23766== Process terminating with default action of signal 11 (SIGSEGV)
-  ==23766==  Access not within mapped region at address 0x0
-  ==23766==    at 0x4FD21E: prefixcmp (strbuf.c:9)
-  ==23766==    by 0x42B936: handle_tags_and_duplicates (fast-export.c:563)
-  ==23766==    by 0x42C274: cmd_fast_export (fast-export.c:732)
-  ==23766==    by 0x4051F1: run_builtin (git.c:308)
-  ==23766==    by 0x40538B: handle_internal_command (git.c:466)
-  ==23766==    by 0x4054A5: run_argv (git.c:512)
-  ==23766==    by 0x40562C: main (git.c:585)
+fatal: Not a git repository (or any parent up to mount parent /home)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
 
-The crash is hidden by the fact that the test is test_expect_failure.
-It bisects to this commit.  Perhaps we should distinguish between
-test_expect_failure and test_expect_crash?...
+I mistakenly thought the error message meant that blah was not a git
+repository.  What it meant was that there was no .git in the current
+directory or any parent directory up to /home.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+This command worked as expected:
+
+$ git --work-tree blah --git-dir blah/.git status
+
+The documentation is somewhat fuzzy about what constitutes a git
+repository.  The gittutorial describes the git repository as .git when
+talking about "git init" while the Git User's Manual describes the git
+repository as the working tree and the special top-level directory
+named .git when talking about "git clone".
+
+It's clear (to me at least) that --work-tree should be used to
+identify the root of the working tree when not inside the working
+tree.  I expected that the git directory would be automatically set to
+.git in the root of the working tree, as that would match the
+documentation.  Instead, the current directory and its parents were
+checked -- which could provide dangerously misleading information to
+the user.
+
+I think that one of two things should be done:  either the --git-dir
+default should be changed when the --work-tree option is set, or the
+error message cited above should be changed to explicitly identify the
+directory being tested as a potential git repository.  I personally
+believe the first option is superior because it fulfills the
+expectations of average users (folks who read git's documentation
+instead of its source code) while permitting flexibility to those who
+wish to refer to the current directory or some other directory for
+their --git-dir value.  If the current behavior is somehow not a bug
+but instead a critical and significant feature which if changed would
+cause more harm than good, please consider the second option.
+
+Jack.
+--
+mathuin at gmail dot com
