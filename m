@@ -1,69 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] remote: add new sync command
-Date: Wed, 30 Nov 2011 02:01:11 -0500
-Message-ID: <20111130070111.GE5317@sigill.intra.peff.net>
-References: <20111107210134.GA7380@sigill.intra.peff.net>
- <CAMP44s089xbEo4VT8rqgS=BJMUu=qsb8Hm5z8bTR2akU8-5QhA@mail.gmail.com>
- <20111108181442.GA17317@sigill.intra.peff.net>
- <CAMP44s2RjcFtdO2jft0Hg9RtqK-DRK47gX8By-dBFSBcSA+yFA@mail.gmail.com>
- <20111111181352.GA16055@sigill.intra.peff.net>
- <CAMP44s06p+KyJAu4ddiCa8CFRq5eogbqxxJU16Z-SUb3GSp67Q@mail.gmail.com>
- <20111114122556.GB19746@sigill.intra.peff.net>
- <CAMP44s1G9jJyiis7z7XbPvW925E-u=0_-h9jJKkj2wyPS9o5ig@mail.gmail.com>
- <20111121214450.GA20338@sigill.intra.peff.net>
- <CAMP44s3StLjb9KgBkRrG4nPqJD_ZjeSyFUwuP4A3b+mJKBgHWQ@mail.gmail.com>
+From: Peter Williams <peter_ono@users.sourceforge.net>
+Subject: [HELP] Adding git awareness to the darning patch management system.
+Date: Wed, 30 Nov 2011 12:17:22 +1000
+Message-ID: <4ED59232.3000807@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 30 08:01:19 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 30 08:03:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVeAQ-00005J-Cf
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 08:01:18 +0100
+	id 1RVeCi-0000ez-D3
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Nov 2011 08:03:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754674Ab1K3HBO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Nov 2011 02:01:14 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56007
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753406Ab1K3HBN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Nov 2011 02:01:13 -0500
-Received: (qmail 7883 invoked by uid 107); 30 Nov 2011 07:07:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 Nov 2011 02:07:47 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Nov 2011 02:01:11 -0500
-Content-Disposition: inline
-In-Reply-To: <CAMP44s3StLjb9KgBkRrG4nPqJD_ZjeSyFUwuP4A3b+mJKBgHWQ@mail.gmail.com>
+	id S1754882Ab1K3HDf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Nov 2011 02:03:35 -0500
+Received: from nschwqsrv01p.mx.bigpond.com ([61.9.189.231]:64723 "EHLO
+	nschwqsrv01p.mx.bigpond.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753406Ab1K3HDf (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Nov 2011 02:03:35 -0500
+Received: from nschwotgx04p.mx.bigpond.com ([60.231.88.110])
+          by nschwmtas02p.mx.bigpond.com with ESMTP
+          id <20111130021723.VKAY391.nschwmtas02p.mx.bigpond.com@nschwotgx04p.mx.bigpond.com>
+          for <git@vger.kernel.org>; Wed, 30 Nov 2011 02:17:23 +0000
+Received: from mudlark.pw.nest ([60.231.88.110])
+          by nschwotgx04p.mx.bigpond.com with ESMTP
+          id <20111130021723.QVFH1687.nschwotgx04p.mx.bigpond.com@mudlark.pw.nest>
+          for <git@vger.kernel.org>; Wed, 30 Nov 2011 02:17:23 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20111115 Thunderbird/8.0
+X-Authentication-Info: Submitted using SMTP AUTH PLAIN at nschwotgx04p.mx.bigpond.com from [60.231.88.110] using ID pwil3058@bigpond.net.au at Wed, 30 Nov 2011 02:17:23 +0000
+X-SIH-MSG-ID: rBo3FNL4TECznTh522DtQVUtlUy7/yU1v8pWRYIhuRwYUkTAuN/WS9SicqNRptuyxEATcAqGPnEgYablWoXTscmyIb1QYA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186111>
 
-On Tue, Nov 22, 2011 at 01:47:36AM +0200, Felipe Contreras wrote:
+I'm the author of the darning patch management system 
+<http://darning.sourceforge.net/> and would like some help adding git 
+awareness to the system.  At this stage of the development, "awareness" 
+is fairly simple concept with two broad aims:
 
-> > I didn't mean "you didn't define a mirror in your config". I meant "your
-> > question is not well-defined, because you haven't defined the term
-> > 'mirror'". IOW, I can't answer your question without knowing exactly
-> > what you meant.
-> 
-> I wasn't the one that brought the mirror up, you did:
+1. presenting the file tree of the sources being patched in a way that 
+makes sense to the user including the current status of files from the 
+point of view of the underlying SCM (in this case, git), and
 
-Yes, because that is the most related concept in current git. But I
-thought you were asking from the perspective of a clueless user, and I
-don't know what that clueless user meant by "mirror".
+2. detecting files with uncommitted changes (from the SCM's point of 
+view) when the user adds them to a patch (or pushes a patch that 
+contains them) so that they may be alerted to the fact and offered the 
+choice of absorbing the uncommitted changes into the patch (or not).
 
-Anyway, I don't think it's important.
+I've already implemented this interface for Mercurial (with which I am 
+familiar) and looked at doing the same with git but had difficulty 
+discovering the definitive mechanisms for obtaining the necessary data. 
+  So I'm soliciting your help in overcoming these problems.
 
-I read over your whole message, and I feel like our discussion isn't
-really moving towards an actual goal. Junio and I both mentioned that in
-the long-term, features like this should be part of "push", not
-"remote". Do you want to try revising your patch in that direction?
-That will give us something concrete to talk about (and hopefully
-apply).
+Darning's source is managed by Mercurial and can be perused at:
 
--Peff
+<http://darning.hg.sourceforge.net/hgweb/darning/darning>
+
+The interface to be implemented is defined in the file 
+darning/scm_ifce.py and the implementation for Mercurial is in the file 
+scm_ifce_hg.py.
+
+Any help or pointers would be appreciated.
+
+Thanks
+Peter
