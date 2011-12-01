@@ -1,76 +1,95 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: Workflow Recommendation - Probably your 1000th
-Date: Thu, 01 Dec 2011 13:55:03 -0500 (EST)
-Message-ID: <363b3901-eee6-4265-adae-267f4662a1f7@mail>
-References: <CAEbKVFSXn3we7Btb3fN5DUW7BMub_ZrBeUwLUZrRFTmESoW97A@mail.gmail.com>
+From: Samuel Bronson <naesten@gmail.com>
+Subject: Re: [PATCH/RFC 1/2] pull: pass the --no-ff-only flag through to
+ merge, not fetch
+Date: Thu, 1 Dec 2011 13:59:36 -0500
+Message-ID: <CAJYzjmcePWriGLr5a0oe_=6qUkfKp5OyFGGEabj6S8vy+hb4+g@mail.gmail.com>
+References: <1322703537-3914-1-git-send-email-naesten@gmail.com>
+	<7vborsq45x.fsf@alter.siamese.dyndns.org>
+	<CAJYzjmep7sKxiSNhMzAX2DRYJhANDQkPL5pX4HOZ9CssJxcWbw@mail.gmail.com>
+	<7vvcq0np35.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: bradford <fingermark@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 01 19:55:40 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 01 19:59:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RWBnF-0000cj-BV
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Dec 2011 19:55:37 +0100
+	id 1RWBrC-0002TG-Cy
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Dec 2011 19:59:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755995Ab1LASzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Dec 2011 13:55:09 -0500
-Received: from hq.genarts.com ([173.9.65.1]:63611 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755728Ab1LASzH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Dec 2011 13:55:07 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 4D5DEBE7AA2;
-	Thu,  1 Dec 2011 13:55:09 -0500 (EST)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zBmoP4g4l17x; Thu,  1 Dec 2011 13:55:03 -0500 (EST)
-Received: from mail.hq.genarts.com (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 133F9BE7AE4;
-	Thu,  1 Dec 2011 13:55:03 -0500 (EST)
-In-Reply-To: <CAEbKVFSXn3we7Btb3fN5DUW7BMub_ZrBeUwLUZrRFTmESoW97A@mail.gmail.com>
-X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC15 (Mac)/7.1.3_GA_3346)
+	id S1755985Ab1LAS7i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Dec 2011 13:59:38 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:48541 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755789Ab1LAS7h (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Dec 2011 13:59:37 -0500
+Received: by eaak14 with SMTP id k14so2502110eaa.19
+        for <git@vger.kernel.org>; Thu, 01 Dec 2011 10:59:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=9cZnOeHirch3EkMt2GmPOtRjXgLWjzlmBH0w+XOSNv8=;
+        b=AR6wriaQveYzJ1NBSRXP4bwHeA/yz/H3iWbEHtmfj2BUu0pt/hFxBWOl81aXg/Nxq1
+         bmqQiVzocWHsc6ulf9c27bd8PFdUnykCbooCWddwHWm0s4W0wD+oiLzFsGIwQVP7wHpk
+         5QMMhblIw3uxzM9DTL+NNCSkv0wA8Y6pJxjX0=
+Received: by 10.227.206.144 with SMTP id fu16mr3431853wbb.23.1322765976094;
+ Thu, 01 Dec 2011 10:59:36 -0800 (PST)
+Received: by 10.180.103.228 with HTTP; Thu, 1 Dec 2011 10:59:36 -0800 (PST)
+In-Reply-To: <7vvcq0np35.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186186>
 
------ Original Message -----
-> From: "bradford" <fingermark@gmail.com>
-> To: git@vger.kernel.org
-> Sent: Thursday, December 1, 2011 1:26:10 PM
-> Subject: Workflow Recommendation - Probably your 1000th
-> 
-> You guys probably receive a ton of workflow related questions.  I'm
-> trying to convert from svn to git.  In order to complete, I would
-> like to be able to provide a workflow to our team.  We typically go 
-> from dev -> qa -> production (Java and Rails projects).  The problem 
-> is that sometimes QA can get backed up and we'll need to release
-> something to production while QA is doing their thing.  What is a
-> good workflow?  I would like to not use git-flow, because it's another
-> tool.  
+On Thu, Dec 1, 2011 at 1:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Samuel Bronson <naesten@gmail.com> writes:
+>
+>> Hmm, yes, I had noticed that it was a tristate (merge.ff clearly is),
+>> and I guess --no-ff-only is a pretty ugly flag. I do have to ask,
+>> though: why give --ff these new values? Wouldn't it make more sense to
+>> reuse the values accepted by merge.ff; namely, 'true' (the implied
+>> default), 'false', and 'only'?
+>
+> The 'true' and 'false' values to merge.ff are carry-over from the days
+> when it was a boolean, _not_ a tristate. If we were to make the UI more
+> rational by making it clear that this is not a boolean, it is a good time
+> for us to aim a bit higher than merely repeating the mistakes we made in
+> the past due to historical accident. In other words, we could add a
+> synonym for the "default" mode in addition to "--ff=true" (and for the
+> "always merge" mode in addition to "--ff=false") that makes it clear that
+> the value is _not_ a boolean [*1*]. If we were to go the "--ff=<value>"
+> route, we have to add support for other ways to spell boolean 'true'
+> (e.g. 'yes', '1', and 'on') anyway, so it is not that much extra work to
+> do so, I would think.
 
-Hey wow...  I read that Driessen's workflow post [1] a long time ago, but hadn't run into the git-flow tools until a few days ago.  Guess I was just oblivious...  Anyway, if it's any consolation, my company runs a model very much inspired by Driessen's post without using git-flow itself.
+Sure, that makes sense. I was just a little worried that you might be
+(accidentally) proposing that --ff use a different set of names than
+merge.ff for a moment there...
 
-[1] http://nvie.com/posts/a-successful-git-branching-model/
+>> Otherwise, this looks like a very nice way to implement what I want: I
+>> guess it is probably a mistake that the existing (documented) flags do
+>> not behave in this way?
+>
+> Yeah, right now if you say "merge --ff-only --no-ff", we say these are
+> mutually exclusive (which is true), but if you think about the tristate
+> nature of the 'ff' option and spell it differently in your head, i.e.
+> "merge --ff=only --ff=never", it is reasonable to argue that we should
+> apply the usual "last one overrides" rule and behave as if "merge --no-ff"
+> were given (for the purpose of "last one overrides", the configured
+> defaults can be treated as if they come very early on the command line).
+> After all "merge --no-ff --ff" does seem to use the "last one overrides"
+> rule.
 
-> I've read suggestions to use environment branches (master,
-> staging, production).  I've also read not to do this and just use
-> master, tagging your production releases.  How well would our setup,
-> where things can get backed up, work with the latter?  Are there any
-> alternative suggestions?
+Yes, I totally agree that it would make more sense that way; I
+certainly tried that before I even began to look at any of the code.
 
-In our workflow we flip Driessen's model on its head.  master is the newest code, while we branch off maintenance branches just before each release.  We tag each release so it's easy to identify which versions in the field contain a given bug or fix (multiple minor versions come off a single maintenance branch).  Our QA guys follow the maintenance branches (they're relatively stable).  We recently had to do a hot-fix release which I think would be similar to your "release to production".  Basically we found the last commit on the maintenance branch that was well tested, created a new branch from there, did the hot fix, QA did some real fast testing (sounds like you'd skip this step), and we shipped that.  As always that hot-fix release gets tagged, so in the future we can still reference t
- hat particular build (and in this case the branch merged back into the maintenance branch -- we've had other situations where the branch was simply deleted after tagging).
-
-In the grand scheme of things our model isn't that different than Driessen's; we just name the branches differently.  Commits go on the oldest branch that's safe for them, and then everything merges to the newer branches.  Tags provide easy reference for where on a given branch a release came from.
-
-Hope that helps.
-
-Stephen
+> [Footnote]
+>
+> *1* Perhaps 'allowed' instead of 'normal' (which I wrote out of thin-air;
+> I do not have any strong preference on the actual values) may be a better
+> choice for such a "this is not a boolean" spelling for the default mode.
