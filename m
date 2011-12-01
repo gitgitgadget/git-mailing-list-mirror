@@ -1,118 +1,108 @@
-From: bradford <fingermark@gmail.com>
-Subject: Re: Workflow Recommendation - Probably your 1000th
-Date: Thu, 1 Dec 2011 15:46:52 -0500
-Message-ID: <CAEbKVFQLvyTq+VL9DJZtp4YZLUgeR56N9u5RrsGqEB=e81O3zQ@mail.gmail.com>
-References: <CAEbKVFSXn3we7Btb3fN5DUW7BMub_ZrBeUwLUZrRFTmESoW97A@mail.gmail.com>
-	<363b3901-eee6-4265-adae-267f4662a1f7@mail>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: Proposal: create meaningful aliases for git reset's hard/soft/mixed
+Date: Thu, 1 Dec 2011 16:02:09 -0500
+Message-ID: <CABURp0oAvt4uES1kjqE0OfSiS9DR6Uj+0bf=zgUi5qkw0rqCSQ@mail.gmail.com>
+References: <CAGK7Mr4GZq5eXn4OB+B0ZborX-OVoXiWU8Lo1XM5LRZDuRe1YA@mail.gmail.com>
+ <7vlir6brjw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Thu Dec 01 21:47:02 2011
+Cc: Philippe Vaucher <philippe.vaucher@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 01 22:02:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RWDX3-0003ad-9F
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Dec 2011 21:47:01 +0100
+	id 1RWDm9-0002JX-7k
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Dec 2011 22:02:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753453Ab1LAUq4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Dec 2011 15:46:56 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:50595 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752413Ab1LAUqz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Dec 2011 15:46:55 -0500
-Received: by eeaq14 with SMTP id q14so802785eea.19
-        for <git@vger.kernel.org>; Thu, 01 Dec 2011 12:46:54 -0800 (PST)
+	id S1753755Ab1LAVCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Dec 2011 16:02:32 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:37198 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753633Ab1LAVCc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Dec 2011 16:02:32 -0500
+Received: by faaq16 with SMTP id q16so1750807faa.19
+        for <git@vger.kernel.org>; Thu, 01 Dec 2011 13:02:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=c4NSQA3TSnXmGpS/t/Mkqw+VVy7/lbROsfj/08caKGE=;
-        b=cv3BfEHp1KsXYPW6Zr7d7P2v4SYC6sJpZw+yvBwj1il2Deu//OVguzD1Is3jlb3e0n
-         upI0Tumet8dVPnCZ/Erg3pjP/oP9q9FNof/lb4Xu0atClc4Hlku2cTgubpNXy+mzGKRZ
-         1A7N/LZ82f/FxxTjvuKx32U1l6igjVpLclwE4=
-Received: by 10.227.207.205 with SMTP id fz13mr3604519wbb.0.1322772412775;
- Thu, 01 Dec 2011 12:46:52 -0800 (PST)
-Received: by 10.227.130.150 with HTTP; Thu, 1 Dec 2011 12:46:52 -0800 (PST)
-In-Reply-To: <363b3901-eee6-4265-adae-267f4662a1f7@mail>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=HMqfo9or/3iDuuuXXX/Bv602NU/ZInuJJLAyWRnufe8=;
+        b=K2s7c0ZS/7sx4uqcQ5HaCL6G9GzjUE06Du8xgnqWPcpCQN99HzpsK+pQxMCuFKcReO
+         Z0U5zQNe+M3yws6kz0vaLt8QiIOa1GRwA9tfc/y+MxDk7wtMWmLIJdEbeH1CuI44lLkI
+         aBZU8eDwpWfIoqP3EMElraDpA11ZLfrl71SZ0=
+Received: by 10.180.102.162 with SMTP id fp2mr951285wib.50.1322773350548; Thu,
+ 01 Dec 2011 13:02:30 -0800 (PST)
+Received: by 10.216.61.142 with HTTP; Thu, 1 Dec 2011 13:02:09 -0800 (PST)
+In-Reply-To: <7vlir6brjw.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186193>
 
-Thanks, Stephen.   I guess I'm looking for more input on the
-advantages and disadvantages of using a QA and production branch vs
-just doing everything out of master.
+On Wed, Nov 23, 2011 at 1:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> "git reset --hard HEAD" is an unambiguously descriptive good name for the
+> option. It is a "hard reset" like power cycling a machinery to discard
+> anything in progress and get back to a clean slate. I do not see anything
+> confusing with this mode nor its name.
 
-Trying to go through the following:
-http://news.ycombinator.com/item?id=3D1617425
-scottchacon.com/2011/08/31/github-flow.html
+As a git expert-user, I agree.
 
-We have some weeks where we release very frequently and some weeks
-where we release only once a week and have to do production fixes in
-the meantime.  Sure other people have similar experiences.
+But, honestly, as a git new-user, I had a lot of trouble with this
+command.  It is mysterious and powerful and new users do not
+understand it.  Everyone learns "git reset --hard HEAD" as a single
+command.  Only much later (if ever) do they learn about the other
+git-reset options.  --hard is the only useful option for the new user,
+so it seems superfluous.  HEAD is a foreign concept for the new-user
+and makes little sense when this command is first memorized.  And at
+the early stages of the git learning curve, that's what it is:
+memorized.  _The spelling is what counts; the meaning is mysterious._
+(For all its flaws, though, at least "git reset --hard HEAD" serves to
+introduce the new-user to the concept of HEAD.)
 
-On Thu, Dec 1, 2011 at 1:55 PM, Stephen Bash <bash@genarts.com> wrote:
-> ----- Original Message -----
->> From: "bradford" <fingermark@gmail.com>
->> To: git@vger.kernel.org
->> Sent: Thursday, December 1, 2011 1:26:10 PM
->> Subject: Workflow Recommendation - Probably your 1000th
->>
->> You guys probably receive a ton of workflow related questions. =A0I'=
-m
->> trying to convert from svn to git. =A0In order to complete, I would
->> like to be able to provide a workflow to our team. =A0We typically g=
-o
->> from dev -> qa -> production (Java and Rails projects). =A0The probl=
-em
->> is that sometimes QA can get backed up and we'll need to release
->> something to production while QA is doing their thing. =A0What is a
->> good workflow? =A0I would like to not use git-flow, because it's ano=
-ther
->> tool.
->
-> Hey wow... =A0I read that Driessen's workflow post [1] a long time ag=
-o, but hadn't run into the git-flow tools until a few days ago. =A0Gues=
-s I was just oblivious... =A0Anyway, if it's any consolation, my compan=
-y runs a model very much inspired by Driessen's post without using git-=
-flow itself.
->
-> [1] http://nvie.com/posts/a-successful-git-branching-model/
->
->> I've read suggestions to use environment branches (master,
->> staging, production). =A0I've also read not to do this and just use
->> master, tagging your production releases. =A0How well would our setu=
-p,
->> where things can get backed up, work with the latter? =A0Are there a=
-ny
->> alternative suggestions?
->
-> In our workflow we flip Driessen's model on its head. =A0master is th=
-e newest code, while we branch off maintenance branches just before eac=
-h release. =A0We tag each release so it's easy to identify which versio=
-ns in the field contain a given bug or fix (multiple minor versions com=
-e off a single maintenance branch). =A0Our QA guys follow the maintenan=
-ce branches (they're relatively stable). =A0We recently had to do a hot=
--fix release which I think would be similar to your "release to product=
-ion". =A0Basically we found the last commit on the maintenance branch t=
-hat was well tested, created a new branch from there, did the hot fix, =
-QA did some real fast testing (sounds like you'd skip this step), and w=
-e shipped that. =A0As always that hot-fix release gets tagged, so in th=
-e future we can still reference that particular build (and in this case=
- the branch merged back into the maintenance branch -- we've had other =
-situations where the branch was simply deleted after tagging).
->
-> In the grand scheme of things our model isn't that different than Dri=
-essen's; we just name the branches differently. =A0Commits go on the ol=
-dest branch that's safe for them, and then everything merges to the new=
-er branches. =A0Tags provide easy reference for where on a given branch=
- a release came from.
->
-> Hope that helps.
->
-> Stephen
+So, as a git new-user, what I wanted was this:
+  git clean-checkout [or "git checkout --clean"]
+
+What I found instead was this:
+  git reset --hard HEAD
+
+What does this have to do with "checking out my files from the last
+commit" or "discarding my local, uncommitted edits"?  To the new-user,
+nothing at all.  reset?  Meaningless.  --hard?  Whatever.  HEAD?
+Shrug.
+
+In the end it doesn't even do what I wanted.  What I really wanted was this:
+  git reset --hard HEAD && git clean -fd
+
+I think the git-reset modes should be relegated to plumbing.  I can
+see how 'git reset --mixed' is useful for resetting changes out of the
+index, but reset is so mired in all sorts of extra mumbo-jumbo that
+this usage becomes a forgotten detail for me.  I didn't even learn
+that usage until later, where it makes loads of sense on its own:
+
+     FTH: This means that git reset <paths> is the opposite of git add <paths>.
+
+That is beautiful, clean and useful.  If that's all it did, it would be perfect.
+
+Problems with git-reset--hard:
+ * It has no safety nets (except the reflog, another concept foreign
+to new-users)
+ * It requires extra switches/arguments to be useful
+ * Surprisingly (at first), it can move your branch, but it's not
+spelled 'branch' or 'commit' or 'move'
+
+That last one is particularly troubling in light of the description of
+'git reset --hard':
+     Resets the index and working tree. Any changes to tracked
+     files in the working tree since <commit> are discarded.
+
+Maybe we should add "and by the way, your currently checked-out branch
+is moved to point to <commit>".
+
+</rant>
+
+Phil
