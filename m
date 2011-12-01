@@ -1,67 +1,54 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: Anyone have a commit hook for forbidding old branches from being merged in?
-Date: Thu, 1 Dec 2011 16:50:51 +0100
-Message-ID: <201112011650.51547.trast@student.ethz.ch>
-References: <CACBZZX4LyTaz=fU1vvgpeL904QFjJULCMVSP0uutcuxZT+-vWQ@mail.gmail.com>
+From: Andrew Wong <andrew.w@sohovfx.com>
+Subject: Re: mini-wierdness with "git am"
+Date: Thu, 01 Dec 2011 10:38:26 -0500
+Message-ID: <4ED79F72.4000003@sohovfx.com>
+References: <CAKCZoVb5-JfzTXK9pUoem_0oQHrSLkrxQZUOZGTX3GGgebPGwA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 01 16:51:00 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>
+To: Aghiles <aghilesk@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 01 16:56:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RW8ua-0000ru-7d
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Dec 2011 16:51:00 +0100
+	id 1RW90M-000433-Hn
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Dec 2011 16:56:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755186Ab1LAPu4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Dec 2011 10:50:56 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:1501 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755124Ab1LAPuz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Dec 2011 10:50:55 -0500
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 1 Dec
- 2011 16:50:50 +0100
-Received: from thomas.inf.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 1 Dec
- 2011 16:50:51 +0100
-User-Agent: KMail/1.13.7 (Linux/3.1.3-1-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <CACBZZX4LyTaz=fU1vvgpeL904QFjJULCMVSP0uutcuxZT+-vWQ@mail.gmail.com>
-X-Originating-IP: [129.132.153.233]
+	id S1755360Ab1LAP4w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Dec 2011 10:56:52 -0500
+Received: from smtp04.beanfield.com ([76.9.193.173]:51925 "EHLO
+	smtp04.beanfield.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755124Ab1LAP4u (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Dec 2011 10:56:50 -0500
+X-Greylist: delayed 1093 seconds by postgrey-1.27 at vger.kernel.org; Thu, 01 Dec 2011 10:56:50 EST
+X-Spam-Status: No
+X-beanfield-mta04-MailScanner-From: andrew.w@sohovfx.com
+X-beanfield-mta04-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
+	score=-2.9, required 6, autolearn=not spam, ALL_TRUSTED -1.00,
+	BAYES_00 -1.90)
+X-beanfield-mta04-MailScanner: Found to be clean
+X-beanfield-mta04-MailScanner-ID: 1RW8iQ-0005ha-OI
+Received: from [66.207.196.114] (helo=[192.168.1.112])
+	by mta04.beanfield.com with esmtpa (Exim 4.76)
+	(envelope-from <andrew.w@sohovfx.com>)
+	id 1RW8iQ-0005ha-OI; Thu, 01 Dec 2011 10:38:26 -0500
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101026 SUSE/3.0.10 Thunderbird/3.0.10
+In-Reply-To: <CAKCZoVb5-JfzTXK9pUoem_0oQHrSLkrxQZUOZGTX3GGgebPGwA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186175>
 
-=C6var Arnfj=F6r=F0 Bjarmason wrote:
->=20
-> So before I write a hook to do this, is there anything that implement=
-s
-> a hook that:
->=20
->  * Checks if you're pushing a merge commit
->  * If so, is that merge based off and old version of $MAINBRANCH
+On 11/30/2011 06:12 PM, Aghiles wrote:
+> At this point, my repository is back to ORIG_HEAD!
+> Meaning that it reverted my preivous "git reset --hard HEAD~1".
+>   
 
-I think it suffices to check whether any boundary commit in the
-updated range is older than what you allow, e.g.
+This behavior seems to have been fixed in v1.7.3.5 and later. The new
+behavior will skip the reverting, and only perform the clean up.
 
-while read old new rev; do
-    # omitted: check it's an update, i.e., neither old nor new is 0..0
-    git rev-list --boundary $old..$new |
-    sed -n 's/^-//p' |
-    xargs git rev-list --no-walk --before=3D'cutoff limit' >bad
-    test -s bad || exit 1
-done
-
-(Not tested much; in particular I'm not sure you can get away without
-limiting the number of args to rev-list to 1.  A simple test seems to
-indicate so, however.)
-
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+http://article.gmane.org/gmane.comp.version-control.git/164045
