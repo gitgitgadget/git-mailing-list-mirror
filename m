@@ -1,83 +1,78 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCHv2 0/4] git-p4: small fixes to branches and labels; tests
-Date: Wed, 30 Nov 2011 23:02:59 -0500
-Message-ID: <20111201040259.GA22189@arf.padd.com>
-References: <1322643817-13051-1-git-send-email-luke@diamand.org>
- <loom.20111130T155409-599@post.gmane.org>
- <4ED6809A.9020703@diamand.org>
- <20111130225813.GA11544@arf.padd.com>
- <CAOpHH-U3PF0v7EPqnO0FNxNKh+uF1GH=cnA_MA09SaQTxo0cDA@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] Implement fast hash-collision detection
+Date: Thu, 1 Dec 2011 11:43:23 +0700
+Message-ID: <CACsJy8Dmyha-L-iW3KVzAZ6wX+gH4qWSXPUT-XQJX1xYewuzMw@mail.gmail.com>
+References: <1322546563.1719.22.camel@yos> <20111129090733.GA22046@sigill.intra.peff.net>
+ <CACsJy8DboVU4kSbJSV=8NP08OyLYVgOKsm8tt=koZ0=JcGSE=A@mail.gmail.com>
+ <20111129205905.GA1793@sigill.intra.peff.net> <CACsJy8A6kGmn0h0xdxfTC4krXgc8hzO1fHTdqfk0YnASGN5K0w@mail.gmail.com>
+ <7vzkfdqye3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Luke Diamand <luke@diamand.org>, git@vger.kernel.org
-To: Vitor Antunes <vitor.hda@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 01 05:03:13 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Bill Zaumen <bill.zaumen+git@gmail.com>,
+	git@vger.kernel.org, spearce@spearce.org,
+	torvalds@linux-foundation.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 01 05:44:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RVxrb-0008A5-C4
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Dec 2011 05:03:11 +0100
+	id 1RVyV6-00033Y-Pn
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Dec 2011 05:44:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754063Ab1LAEDF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Nov 2011 23:03:05 -0500
-Received: from honk.padd.com ([74.3.171.149]:42126 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753799Ab1LAEDE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Nov 2011 23:03:04 -0500
-Received: from arf.padd.com (unknown [50.52.169.245])
-	by honk.padd.com (Postfix) with ESMTPSA id A00E8278;
-	Wed, 30 Nov 2011 20:03:03 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 6D5783196F; Wed, 30 Nov 2011 23:02:59 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <CAOpHH-U3PF0v7EPqnO0FNxNKh+uF1GH=cnA_MA09SaQTxo0cDA@mail.gmail.com>
+	id S1754032Ab1LAEn4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Nov 2011 23:43:56 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:45562 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752520Ab1LAEnz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Nov 2011 23:43:55 -0500
+Received: by bkas6 with SMTP id s6so1878778bka.19
+        for <git@vger.kernel.org>; Wed, 30 Nov 2011 20:43:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=PSwFjKHGNwvjXau40giSXrdEK/wRtwsuztBKUaKh7uY=;
+        b=FRXwY4daNs9LyIp+F5kQR/Mo7Mdnk6mGUr6lg2yzfTtMifIXEsJEvQDb187uT42AJD
+         TMvEUo9lgwnX9r/9rJWD10MG/SQluikIJOXSZxddrDDwaHG1aCVQIGAF8NvnPWjy1HtB
+         bsudn5UjCotpXMsnOvkV3MNcBvHx2hSLf0GSM=
+Received: by 10.204.14.208 with SMTP id h16mr5445396bka.2.1322714634209; Wed,
+ 30 Nov 2011 20:43:54 -0800 (PST)
+Received: by 10.204.23.2 with HTTP; Wed, 30 Nov 2011 20:43:23 -0800 (PST)
+In-Reply-To: <7vzkfdqye3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186161>
 
-vitor.hda@gmail.com wrote on Thu, 01 Dec 2011 00:33 +0000:
-> On Wed, Nov 30, 2011 at 10:58 PM, Pete Wyckoff <pw@padd.com> wrote:
-> > This is another fundamental disconnect between p4 and git.
-> > Reading
-> >
-> > http://www.perforce.com/perforce/doc.current/manuals/p4guide/07_lab=
-els.html
-> >
-> > it is clear that labels are supposed to be used exactly where
-> > tags cannot: =A0to specify a collection of files as they existed
-> > at _different_ points in the commit history.
->=20
-> Check the "Use Tag Fixup Branches" section in fast-import manual, it
-> might help on this. The basic concept is to create a special branch
-> that puts all files in the same state the P4 label would put them and
-> then tag it in git.
->=20
-> Tried to use this for my branch stuff, but with no success.
+On Thu, Dec 1, 2011 at 1:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+>
+>> What I'm thinking is whether it's possible to decouple two sha-1 roles
+>> in git, as object identifier and digest, separately.
+>
+> Why it would be a good thing? If you have a collided identifier, somebody
+> has to choose which blob a particular tree wants to have at the path, and
+> because the tree would not record anything but the identifier, you cannot.
 
-Interesting, thanks.  One could certainly construct any arbitrary
-tree to represent the tag.  But it would be a truly evil merge of
-possibly many commits.
+Accidental collision likelihood is small enough we don't have to care about.
 
-> > Thus I think supporting labels is kind of pointless. =A0But in the
-> > restricted use case that perforce docs tell us not to do, namely
-> > using labels to identify change numbers, git can reflect that
-> > with tags.
->=20
-> I still use labels as simple tags. Telling that we should use
-> changelists instead of labels is the same as saying that we should us=
-e
-> IP addresses instead of host names. It works, but I doubt you will
-> ever remember it unless you write it down somewhere.
+>> ...
+>> The day sha-1 is broken, a project can generate new digests from its
+>> old good repo and enforce developers to use new digests for
+>> verification instead of sha-1. sha-1 is still used by git as
+>> identifier after that day.
+>
+> And an old blob that is identified with a SHA-1 now has a new blob that
+> has different contents but happens to have the same SHA-1. How does Git
+> decide which blob to use when a particular object is named by the SHA-1?
 
-I see your point.  P4 labels are the only way that they support
-tagging, apparently.  I'm okay with leaving label support in
-git-p4.  And it will be nice if Luke makes it behave a bit
-better.  But doing heroics to emulate cross-commit tags feels
-like a lot of work, and the wrong direction.
-
-		-- Pete
+Again, I assume the likelihood that a content happens to have the same
+sha-1 with another one is too low to care about. If they are, it's
+must be an attack. We do not allow malicious objects to enter in the
+first place using other digests. Once objects are in, they are safe to
+use.
+-- 
+Duy
