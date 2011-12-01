@@ -1,91 +1,59 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: Proposal: create meaningful aliases for git reset's hard/soft/mixed
-Date: Thu, 1 Dec 2011 16:23:57 -0500
-Message-ID: <CABURp0rtCUbJXLHtXv_1g6GRKL3mX-T+3vN1=QO4CUibqXdEMg@mail.gmail.com>
-References: <CAGK7Mr4GZq5eXn4OB+B0ZborX-OVoXiWU8Lo1XM5LRZDuRe1YA@mail.gmail.com>
- <7vlir6brjw.fsf@alter.siamese.dyndns.org> <CAGK7Mr5nQoubAw11KDj4WKwQnXrfgteKbMj2=AR-HhsGKi52wQ@mail.gmail.com>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: [PATCHv2 0/4] git-p4: small fixes to branches and labels; tests
+Date: Thu, 1 Dec 2011 21:59:29 +0000
+Message-ID: <CAOpHH-XL5OGpnihEgqnXqUUFsMxXn2wSdLadegnC1epg44vs8A@mail.gmail.com>
+References: <1322643817-13051-1-git-send-email-luke@diamand.org>
+ <loom.20111130T155409-599@post.gmane.org> <4ED6809A.9020703@diamand.org>
+ <20111130225813.GA11544@arf.padd.com> <CAOpHH-U3PF0v7EPqnO0FNxNKh+uF1GH=cnA_MA09SaQTxo0cDA@mail.gmail.com>
+ <20111201040259.GA22189@arf.padd.com> <CAOpHH-UMdLpCPx1+D2dtQJs+=t1+0U2srKfTwBi-TEF4F7EDyw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Philippe Vaucher <philippe.vaucher@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 01 22:24:27 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Thu Dec 01 23:00:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RWE7F-0003pN-5z
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Dec 2011 22:24:25 +0100
+	id 1RWEfq-00031a-E2
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Dec 2011 23:00:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754084Ab1LAVYU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Dec 2011 16:24:20 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:51816 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753526Ab1LAVYT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Dec 2011 16:24:19 -0500
-Received: by eeaq14 with SMTP id q14so828945eea.19
-        for <git@vger.kernel.org>; Thu, 01 Dec 2011 13:24:18 -0800 (PST)
+	id S1754343Ab1LAWAD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Dec 2011 17:00:03 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:47207 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754144Ab1LAWAB convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 1 Dec 2011 17:00:01 -0500
+Received: by lagw12 with SMTP id w12so841450lag.19
+        for <git@vger.kernel.org>; Thu, 01 Dec 2011 14:00:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=0y2ZFhFrsdF1jBi4itsE8NtaBYNl2tD0ZR/knP6SGjI=;
-        b=PbdwQ++vJCHttlvPLszH3dzbtd2xVFXfRwZi08hJJUwZh9SNMY19tJpJRuInzA65d6
-         8ai1zzWbFpztczHQSC92771L2mL77tmzSarF+BZ0JONQckaaDC3mb9mlNExddE0qo2ih
-         ueafHyt3rYWi0i7kM6a/dLubkotEHwo7ZbiUA=
-Received: by 10.180.102.162 with SMTP id fp2mr985880wib.50.1322774658604; Thu,
- 01 Dec 2011 13:24:18 -0800 (PST)
-Received: by 10.216.61.142 with HTTP; Thu, 1 Dec 2011 13:23:57 -0800 (PST)
-In-Reply-To: <CAGK7Mr5nQoubAw11KDj4WKwQnXrfgteKbMj2=AR-HhsGKi52wQ@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=+teg2493Txp2lu7ItnOxocfbe13nqLRuwtLojTFir0I=;
+        b=bqGTRNBARw8kaEl0tCGcBGUaw16Y/OtUSjG5f1UW1wWMvlXiCNJ4xQ0I7wHXIQRxoG
+         X8HHbwLw9nb9a1AFJtpeiVpnYdKpmPQiIKxwBisoxIrE8j/5enDFjGHuLGaIKwj//SUE
+         bXSTeK3HGuZS15pgCuOyDRS5dE/HTgAPibL7A=
+Received: by 10.152.103.132 with SMTP id fw4mr2847249lab.37.1322776800313;
+ Thu, 01 Dec 2011 14:00:00 -0800 (PST)
+Received: by 10.152.5.105 with HTTP; Thu, 1 Dec 2011 13:59:29 -0800 (PST)
+In-Reply-To: <CAOpHH-UMdLpCPx1+D2dtQJs+=t1+0U2srKfTwBi-TEF4F7EDyw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186195>
 
-On Wed, Nov 23, 2011 at 6:00 PM, Philippe Vaucher
-<philippe.vaucher@gmail.com> wrote:
->> In any case, I think your proposal makes it even worse than the current
->> state, and you should aim higher.
->
-> Why worse? I'd understand if you said it's doesn't improve it enough
-> for it to be worth the change tho.
+On Dec 1, 2011 4:03 AM, "Pete Wyckoff" <pw@padd.com> wrote:
+> I see your point. =A0P4 labels are the only way that they support
+> tagging, apparently. =A0I'm okay with leaving label support in
+> git-p4. =A0And it will be nice if Luke makes it behave a bit
+> better. =A0But doing heroics to emulate cross-commit tags feels
+> like a lot of work, and the wrong direction.
 
-I think that's what "you should aim higher" means.
+Agreed. Lets keep it simple.
 
-> Anyway, my proposal was to get a discussion going, and I'm all for
-> aiming higher if there's a way. What do you propose instead? You
-> seemed to imply we'd remove --soft and --merge, and make --keep as an
-> option for --hard but named differently, something like
-> --keep-changes. Maybe I didn't fully understand.
-
-I think there are too many scripts dependent on these switches to
-remove them.  But I love the direction you're going in.
-
-Aim higher.
-
-> Mathieu even suggested that it'd have the behavior of --keep by
-> default, and that you have to add --force to get today's --hard
-> behavior, which sounds like a good idea to me (avoid destructive
-> behavior by default).
-
-Think outside the "reset" command.  Like this:
-
->From the "most popular" comment on http://progit.org/2011/07/11/reset.html:
-> I remember them as:
-> --soft      -> git uncommit
-> --mixed  -> git unadd
-> --hard     -> git undo
-
-I don't particular like these names, but conceptually they are helpful.
-
-What other commands can we embellish or create to replace the overload
-git-reset functionality?
-
-How about:
-  --soft: git checkout -B <commit>
-  --mixed: git reset -- <paths>
-  --hard:  git checkout --clean
-
-Phil
+--=20
+Vitor Antunes
