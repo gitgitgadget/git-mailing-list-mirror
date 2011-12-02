@@ -1,78 +1,67 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Suggestion on hashing
-Date: Fri, 2 Dec 2011 13:09:51 -0500
-Message-ID: <20111202180951.GC24093@sigill.intra.peff.net>
-References: <1322813319.4340.109.camel@yos>
- <CACsJy8CO1GtpZVo-oA2eKbQadsXYBEKVLfUH0GONR5jovuvH+Q@mail.gmail.com>
+Subject: Re: git auto-repack is broken...
+Date: Fri, 2 Dec 2011 13:13:59 -0500
+Message-ID: <20111202181358.GD24093@sigill.intra.peff.net>
+References: <CA+55aFznj49hx6Ce6NhJ1rRd2nvNyOERseyyrC6SNcW-z9dyfg@mail.gmail.com>
+ <CACBZZX7Q5qb1r_Oh0QfMiWh9UAM1c6QWBn4abv-xHpFBaKuyKg@mail.gmail.com>
+ <CA+55aFyq28vmo9dk-5mVm+nNn86qSjNT6VJGc09iaJo=+OP1Sg@mail.gmail.com>
+ <20111202171017.GB23447@sigill.intra.peff.net>
+ <7vobvqoozr.fsf@alter.siamese.dyndns.org>
+ <20111202174546.GA24093@sigill.intra.peff.net>
+ <7vd3c6onhs.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Bill Zaumen <bill.zaumen@gmail.com>,
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 02 19:10:03 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 02 19:14:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RWXYc-0001lF-HR
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 19:09:58 +0100
+	id 1RWXcd-0003wv-Nt
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 19:14:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757315Ab1LBSJy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Dec 2011 13:09:54 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39081
+	id S932102Ab1LBSOC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Dec 2011 13:14:02 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39092
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757270Ab1LBSJx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Dec 2011 13:09:53 -0500
-Received: (qmail 8742 invoked by uid 107); 2 Dec 2011 18:16:29 -0000
+	id S932085Ab1LBSOA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Dec 2011 13:14:00 -0500
+Received: (qmail 8836 invoked by uid 107); 2 Dec 2011 18:20:36 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Dec 2011 13:16:29 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Dec 2011 13:09:51 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Dec 2011 13:20:36 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Dec 2011 13:13:59 -0500
 Content-Disposition: inline
-In-Reply-To: <CACsJy8CO1GtpZVo-oA2eKbQadsXYBEKVLfUH0GONR5jovuvH+Q@mail.gmail.com>
+In-Reply-To: <7vd3c6onhs.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186237>
 
-On Fri, Dec 02, 2011 at 09:22:31PM +0700, Nguyen Thai Ngoc Duy wrote:
+On Fri, Dec 02, 2011 at 10:08:15AM -0800, Junio C Hamano wrote:
 
-> > So the question is whether
-> > using SHA-1 as an ID and SHA-256(?) as a digest is a better long term
-> > solution than simply replacing SHA-1.
+> Jeff King <peff@peff.net> writes:
 > 
-> I would not stick with any algorithm permanently. No one knows when
-> SHA-256 might be broken.
-
-Yeah, you could stick a few bits of algorithm parameter in the beginning
-of each identifier. It would mean unique hashes get one character or so
-longer (and they would all start with "1", or whatever the identifier
-is).
-
-SHA-256 doesn't suffer from SHA-1's problems, though they are based on
-related constructions, so I think there is some concern that it may
-eventually fail in the same way. SHA-3 is a better bet in that sense,
-but it will also be very unproven, even once it is actually
-standardized.
-
-> > Replacing SHA-1 with something like SHA-256 sounds easier to implement,
+> > But we shouldn't be packing totally unreferenced objects.
 > 
-> SHA-1 charateristics (like 20 byte length) are hard coded everywhere
-> in git, it'd be a big audit.
+> Everything you said is correct in today's Git and I obviously know it, but
+> I was taking the "Or have an extra option to..." at the end of the OP's
+> message in the thread into account, so...
 
-In theory, you could truncate a longer hash to 160-bits. It's not the
-bit-strength of SHA-1 that is the problem, but the attacks on the
-algorithm itself which reduce the bit-strength to something too low.
-I would think a truncated result would retain the same cryptographic
-properties, as one of the properties of the un-truncated hash is that
-changes in the input data are reflected throughout the hash. Some
-hashes, like Skein, explicitly have a big internal state, and then just
-let you output as many bytes as is appropriate (i.e., being a drop-in
-replacement for SHA-1 is an explicit goal).
+Ah, sorry, I missed the subtlety of Linus's "repacking the objects
+results in problems..." from his later message and thought he just meant
+repacking in general. Yes, it's a bad idea to repack unreachable objects
+because then you could never prune anything.
 
-But I'm not a cryptographer, so there may be some subtle issues with
-doing that to arbitrary hash functions.
+I think just shrinking the --expire window that we already use is a much
+more reasonable bet. It's not about preventing the loss of old work
+(reflogs are there for that), but about avoiding hurting an actively
+running, about-to-reference-the-objects git process. And 2 weeks is
+quite conservative for that.
 
 -Peff
