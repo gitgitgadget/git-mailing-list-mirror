@@ -1,70 +1,83 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: Workflow Recommendation - Probably your 1000th
-Date: Fri, 02 Dec 2011 10:14:36 -0500 (EST)
-Message-ID: <aedcd0aa-d5b9-4fc6-a5e7-6039945287c4@mail>
-References: <CAEbKVFQLvyTq+VL9DJZtp4YZLUgeR56N9u5RrsGqEB=e81O3zQ@mail.gmail.com>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: Proposal: create meaningful aliases for git reset's hard/soft/mixed
+Date: Fri, 2 Dec 2011 10:28:08 -0500
+Message-ID: <CABURp0qcHaoi58EQ1FLGo2atPuWfS5x4p_SK7ZA_AqV7as212w@mail.gmail.com>
+References: <CAGK7Mr4GZq5eXn4OB+B0ZborX-OVoXiWU8Lo1XM5LRZDuRe1YA@mail.gmail.com>
+ <CAGK7Mr5nQoubAw11KDj4WKwQnXrfgteKbMj2=AR-HhsGKi52wQ@mail.gmail.com>
+ <CABURp0rtCUbJXLHtXv_1g6GRKL3mX-T+3vN1=QO4CUibqXdEMg@mail.gmail.com> <201112020826.14114.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: bradford <fingermark@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 02 16:14:48 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Philippe Vaucher <philippe.vaucher@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Dec 02 16:28:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RWUp4-0006pB-OB
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 16:14:47 +0100
+	id 1RWV2R-0005Y9-Vx
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 16:28:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754424Ab1LBPOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Dec 2011 10:14:41 -0500
-Received: from hq.genarts.com ([173.9.65.1]:42296 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753969Ab1LBPOl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Dec 2011 10:14:41 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id C9A17BE82F8;
-	Fri,  2 Dec 2011 10:14:42 -0500 (EST)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id u9vfRYOAqEpV; Fri,  2 Dec 2011 10:14:36 -0500 (EST)
-Received: from mail.hq.genarts.com (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id A25A6BE82FB;
-	Fri,  2 Dec 2011 10:14:36 -0500 (EST)
-In-Reply-To: <CAEbKVFQLvyTq+VL9DJZtp4YZLUgeR56N9u5RrsGqEB=e81O3zQ@mail.gmail.com>
-X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC15 (Mac)/7.1.3_GA_3346)
+	id S1756779Ab1LBP2b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Dec 2011 10:28:31 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:46559 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754065Ab1LBP2a convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Dec 2011 10:28:30 -0500
+Received: by wgbdr13 with SMTP id dr13so1391647wgb.1
+        for <git@vger.kernel.org>; Fri, 02 Dec 2011 07:28:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=XZHnB7Nq33blmM3SkctZE1JdJJmNPw6OF0FDPPBMGZY=;
+        b=OwGb1L9cygZ2u9ThSeRkSLzefxT9jzILGI+L/YJURbBs3vnanm0siraOERo9+2mVtm
+         RZDaSehzA919Amy1Mz3VrbRPjhEDTSwr0mJdkVrBlrWEyQUPgfoPaEz5Dr9Ap4LA2jO0
+         utCdFHN9QQIlETyRwHXB7+8nMpmjgW3YS3RzA=
+Received: by 10.227.203.131 with SMTP id fi3mr8119824wbb.17.1322839709482;
+ Fri, 02 Dec 2011 07:28:29 -0800 (PST)
+Received: by 10.216.61.142 with HTTP; Fri, 2 Dec 2011 07:28:08 -0800 (PST)
+In-Reply-To: <201112020826.14114.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186222>
 
------ Original Message -----
-> From: "bradford" <fingermark@gmail.com>
-> To: "Stephen Bash" <bash@genarts.com>
-> Cc: git@vger.kernel.org
-> Sent: Thursday, December 1, 2011 3:46:52 PM
-> Subject: Re: Workflow Recommendation - Probably your 1000th
-> 
-> Thanks, Stephen.   I guess I'm looking for more input on the
-> advantages and disadvantages of using a QA and production branch vs
-> just doing everything out of master.
-> 
-> Trying to go through the following:
-> http://news.ycombinator.com/item?id=1617425
-> scottchacon.com/2011/08/31/github-flow.html
-> 
-> We have some weeks where we release very frequently and some weeks
-> where we release only once a week and have to do production fixes in
-> the meantime.  Sure other people have similar experiences.
+On Fri, Dec 2, 2011 at 2:26 AM, Thomas Rast <trast@student.ethz.ch> wro=
+te:
+> Phil Hord wrote:
+>>
+>> Think outside the "reset" command. =A0Like this:
+>>
+>> From the "most popular" comment on http://progit.org/2011/07/11/rese=
+t.html:
+>> > I remember them as:
+>> > --soft =A0 =A0 =A0-> git uncommit
+>> > --mixed =A0-> git unadd
+>> > --hard =A0 =A0 -> git undo
+>>
+>> I don't particular like these names, but conceptually they are helpf=
+ul.
+>
+> I think all of these, but the last one in particular, are *very*
+> dangerous oversimplifications. =A0Doubly so if you then use "undo" wi=
+th
+> a revision argument.
 
-Before continuing I guess two key assumptions factor into our workflow:
- 1) we still work in a traditional major/minor release cycle with potentially weeks or even months between releases
- 2) our customers can be running almost any historical version of our software
+I agree.  That's why I also said this:
 
->From that perspective having a maintenance branch for each major revision of our software gives us a holding area where devs can fix bugs at any time without necessarily going through the entire tag/release/merge process (you can envision a "hot fix branch" that is long-lived).  For example, we often have documentation fixes that will sit on the maintenance branch until a software fix needs to go out.  But other non-critical fixes also end up waiting on something that really requires a maintenance release (or enough fixes pile up and necessitate a release themselves).
+> How about:
+>  --soft: git checkout -B <commit>
+>  --mixed: git reset -- <paths>
+>  --hard:  git checkout --clean
 
-HTH,
-Stephen
+But maybe I wasn't clear enough.  I'm not suggesting git-alias for
+these.  I am proposing new commands to replace common usages of
+git-reset.  These commands would need basic safeguards against
+foot-shooting, of course.
+
+Phil
