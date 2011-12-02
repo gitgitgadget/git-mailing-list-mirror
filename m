@@ -1,169 +1,172 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 3/6] new representation types in the packstream
-Date: Thu,  1 Dec 2011 16:40:46 -0800
-Message-ID: <1322786449-25753-4-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 6/6] chunked-object: fallback checkout codepaths
+Date: Thu,  1 Dec 2011 16:40:49 -0800
+Message-ID: <1322786449-25753-7-git-send-email-gitster@pobox.com>
 References: <1322699263-14475-6-git-send-email-gitster@pobox.com>
  <1322786449-25753-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 02 01:41:12 2011
+X-From: git-owner@vger.kernel.org Fri Dec 02 01:41:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RWHBe-0006z8-9T
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 01:41:10 +0100
+	id 1RWHBy-000769-Dw
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 01:41:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756104Ab1LBAlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Dec 2011 19:41:00 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50033 "EHLO
+	id S1756151Ab1LBAlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Dec 2011 19:41:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50155 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755770Ab1LBAk6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Dec 2011 19:40:58 -0500
+	id S1756102Ab1LBAlE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Dec 2011 19:41:04 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 56BAE6B2B
-	for <git@vger.kernel.org>; Thu,  1 Dec 2011 19:40:58 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 593276B38
+	for <git@vger.kernel.org>; Thu,  1 Dec 2011 19:41:04 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=9ZtF
-	SrfEwiySjiaHHOjbBzL/rWY=; b=QjhoF5Vmy+W/NKlnTXtclBwHRnRBlb5oUYer
-	T3/JsAcK1sofBtV5TCjQygS5qbhil8QtMr3J1PpV4UkYfpu2habfnhWcl3yXHVAx
-	RQKNeoO2N4jfVZsy1zu0TCTabzIZRgMUleUxAV0ol8U2FPwj/cfJ6z6uvIpupBTQ
-	bcpIILA=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=7enz
+	gr4cHqXcoxoo8cOdrJUeNEw=; b=PbVkqxMxxYruKkTe8vwix1vmY+QFPmTA0o4p
+	dYGkRzGK9uHIw2h3lZdJ4Jk/SzyhjfS4RwlBJ46rto1kth8kLAl4qB1elXFrKrLA
+	wyz74VadKhkCCzzRbBGFbbvy5ExM4naxA741WoRMNH5ET1SOG07KalVnMfPgFxQ9
+	HHmZSFc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=vbRsXP
-	fd0/+xLZhvWI6XLaJmUQ6FBYnhahgrFsIYW0g1qmTmhQhtldghX80cnm2udXUk8e
-	vlQwDMOwNjDBWE12rCs0qjmyZqNsDskU3wqOrsItiVtkKw/oxqMVIsHKzPXONZ9l
-	oqwbLzTZxLNQGjpwcutdLnzITkDimLYx+Xwkw=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=nuQMCs
+	VeaiDOls5aR1Ac+cmL5fSjeUus6v+3JX3mz+/0GQ2RMx/6qqcwgNqwev+sUzjeRc
+	J15baPITQu+DFBfImHIO/uEWtHlij+uv8lPtIPnMux9m2bWnPlU431eTspJvBfQT
+	XjmzsrZlkMwv3YZ/WJIuOfPOVWRz1E/Ifgfyw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DEE86B2A
-	for <git@vger.kernel.org>; Thu,  1 Dec 2011 19:40:58 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 503B46B37
+	for <git@vger.kernel.org>; Thu,  1 Dec 2011 19:41:04 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A654B6B27 for
- <git@vger.kernel.org>; Thu,  1 Dec 2011 19:40:57 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A36CE6B36 for
+ <git@vger.kernel.org>; Thu,  1 Dec 2011 19:41:03 -0500 (EST)
 X-Mailer: git-send-email 1.7.8.rc4.177.g4d64
 In-Reply-To: <1322786449-25753-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 4CBF9C7A-1C7E-11E1-BC2F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 50514E88-1C7E-11E1-9698-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186204>
 
-In addition to four basic types (commit, tree, blob and tag), the pack
-stream can encode a few other "representation" types, such as REF_DELTA
-and OFS_DELTA. As we allocate 3 bits in the first byte for this purpose,
-we do not have much room to add new representation types in place, but we
-do have one value reserved for future expansion.
-
-When encoding a new representation type, the early part of the in-pack
-object header is encoded as if its type is OBJ_EXT (= 5) using exactly the
-same way as before. That is, the lower 4-bit of the first byte is used for
-the lowest 4-bit of the size information, the next 3-bit has the type
-information, and the MSB says if the subsequent bytes encodes higher bits
-for the size information.
-
-An in-pack object header that records OBJ_EXT as the type is followed by
-an integer in the same variable-length encoding as OFS_DELTA offset is
-encoded. This value is the real type of the representation minus 8 (as we
-do not need to use OBJ_EXT to encode types smaller than 8).  Because we do
-not foresee very many representation types, in practice we would have a
-single byte with its MSB clear, to represent types 8-135.
-
-The code does not type=8 and upwards for anything yet.
+This prepares the default codepaths based on the traditional "slurping
+everything in-core" model around read_sha1_file() API for objects that use
+chunked encoding. Needless to say, these codepaths are unsuitable for the
+kind of objects that use chunked encoding and are intended to only serve
+as the fallback where specialized "large object API" support is still
+lacking.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- cache.h      |    4 +++-
- pack-write.c |   23 +++++++++++++++++------
- sha1_file.c  |   11 +++++++++++
- 3 files changed, 31 insertions(+), 7 deletions(-)
+ sha1_file.c      |   54 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ t/t1050-large.sh |   14 +++++++++++++-
+ 2 files changed, 67 insertions(+), 1 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 4f20861..4a3b421 100644
---- a/cache.h
-+++ b/cache.h
-@@ -381,12 +381,14 @@ enum object_type {
- 	OBJ_TREE = 2,
- 	OBJ_BLOB = 3,
- 	OBJ_TAG = 4,
--	/* 5 for future expansion */
-+	OBJ_EXT = 5,
- 	OBJ_OFS_DELTA = 6,
- 	OBJ_REF_DELTA = 7,
- 	OBJ_ANY,
- 	OBJ_MAX
- };
-+#define OBJ_LAST_BASE_TYPE OBJ_REF_DELTA
-+#define OBJ_LAST_VALID_TYPE OBJ_REF_DELTA
- 
- static inline enum object_type object_type(unsigned int mode)
- {
-diff --git a/pack-write.c b/pack-write.c
-index 5702cec..9309dd1 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -338,22 +338,33 @@ int encode_in_pack_varint(uintmax_t value, unsigned char *buf)
-  */
- int encode_in_pack_object_header(enum object_type type, uintmax_t size, unsigned char *hdr)
- {
--	int n = 1;
-+	unsigned char *hdr_base;
- 	unsigned char c;
-+	enum object_type header_type;
- 
--	if (type < OBJ_COMMIT || type > OBJ_REF_DELTA)
-+	if (type < OBJ_COMMIT || OBJ_LAST_VALID_TYPE < type)
- 		die("bad type %d", type);
-+	else if (OBJ_LAST_BASE_TYPE < type)
-+		header_type = OBJ_EXT;
-+	else
-+		header_type = type;
- 
--	c = (type << 4) | (size & 15);
-+	c = (header_type << 4) | (size & 15);
- 	size >>= 4;
-+	hdr_base = hdr;
- 	while (size) {
- 		*hdr++ = c | 0x80;
- 		c = size & 0x7f;
- 		size >>= 7;
--		n++;
- 	}
--	*hdr = c;
--	return n;
-+	*hdr++ = c;
-+	if (header_type != type) {
-+		int sz;
-+		type = type - (OBJ_LAST_BASE_TYPE + 1);
-+		sz = encode_in_pack_varint(type, hdr);
-+		hdr += sz;
-+	}
-+	return hdr - hdr_base;
- }
- 
- struct sha1file *create_tmp_packfile(char **pack_tmp_name)
 diff --git a/sha1_file.c b/sha1_file.c
-index f066c2b..14902cc 100644
+index 14902cc..7355716 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -1275,6 +1275,17 @@ unsigned long unpack_object_header_buffer(const unsigned char *buf,
- 		shift += 7;
- 	}
- 	*sizep = size;
-+	if (*type == OBJ_EXT) {
-+		const unsigned char *p = buf + used;
-+		uintmax_t val = decode_in_pack_varint(&p);
-+
-+		if (p == buf + used && !val) {
-+			error("bad extended object type");
-+			return 0;
-+		}
-+		*type = val + (OBJ_LAST_BASE_TYPE + 1);
-+		used = p - buf;
-+	}
- 	return used;
+@@ -1607,6 +1607,11 @@ static int packed_object_info(struct packed_git *p, off_t obj_offset,
+ 		if (sizep)
+ 			*sizep = size;
+ 		break;
++	case OBJ_CHUNKED_BLOB:
++		if (sizep)
++			*sizep = size;
++		type = OBJ_DEKNUHC(type);
++		break;
+ 	default:
+ 		error("unknown object type %i at offset %"PRIuMAX" in %s",
+ 		      type, (uintmax_t)obj_offset, p->pack_name);
+@@ -1648,6 +1653,51 @@ static void *unpack_compressed_entry(struct packed_git *p,
+ 	return buffer;
  }
+ 
++static void *unpack_chunked_entry(struct packed_git *p,
++				  struct pack_window **w_curs,
++				  off_t curpos,
++				  unsigned long size)
++{
++	/*
++	 * *NOTE* *NOTE* *NOTE*
++	 *
++	 * In the longer term, we should aim to exercise this codepath
++	 * less and less often, as it defeats the whole purpose of
++	 * chuncked object encoding!
++	 */
++	unsigned char *buffer;
++	const unsigned char *in, *ptr;
++	unsigned long avail, ofs;
++	int chunk_cnt;
++
++	buffer = xmallocz(size);
++	in = use_pack(p, w_curs, curpos, &avail);
++	ptr = in;
++	chunk_cnt = decode_in_pack_varint(&ptr);
++	curpos += ptr - in;
++	ofs = 0;
++	while (chunk_cnt--) {
++		unsigned long csize;
++		unsigned char *data;
++		enum object_type type;
++
++		in = use_pack(p, w_curs, curpos, &avail);
++		data = read_sha1_file(in, &type, &csize);
++		if (!data)
++			die("malformed chunked object contents ('%s' does not exist)",
++			    sha1_to_hex(in));
++		if (type != OBJ_BLOB)
++			die("malformed chunked object contents (not a blob)");
++		if (size < ofs + csize)
++			die("malformed chunked object contents (sizes do not add up)");
++		memcpy(buffer + ofs, data, csize);
++		ofs += csize;
++		curpos += 20;
++		free(data);
++	}
++	return buffer;
++}
++
+ #define MAX_DELTA_CACHE (256)
+ 
+ static size_t delta_base_cached;
+@@ -1883,6 +1933,10 @@ void *unpack_entry(struct packed_git *p, off_t obj_offset,
+ 	case OBJ_TAG:
+ 		data = unpack_compressed_entry(p, &w_curs, curpos, *sizep);
+ 		break;
++	case OBJ_CHUNKED_BLOB:
++		data = unpack_chunked_entry(p, &w_curs, curpos, *sizep);
++		*type = OBJ_DEKNUHC(*type);
++		break;
+ 	default:
+ 		data = NULL;
+ 		error("unknown object type %i at offset %"PRIuMAX" in %s",
+diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+index d6cb66d..eea45d1 100755
+--- a/t/t1050-large.sh
++++ b/t/t1050-large.sh
+@@ -124,8 +124,20 @@ test_expect_success 'split limit' '
+ 		# switch to a better chunking heuristics.
+ 		echo cruft >head &&
+ 		cat split >>head &&
+-		git add head
++		git add head &&
+ 
++		echo blob >expect &&
++		git cat-file -t :split >actual &&
++		test_cmp expect actual &&
++
++		git cat-file -p :split >actual &&
++		# You probably do not want to use test_cmp here...
++		cmp split actual &&
++
++		mv split expect &&
++		git checkout split &&
++		# You probably do not want to use test_cmp here...
++		cmp expect split
+ 	)
+ '
  
 -- 
 1.7.8.rc4.177.g4d64
