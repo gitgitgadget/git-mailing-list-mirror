@@ -1,57 +1,235 @@
-From: Eric Herman <eric@freesa.org>
-Subject: Re: [PATCH v2 0/3] grep multithreading and scaling
-Date: Fri, 02 Dec 2011 21:02:44 +0100
-Message-ID: <4ED92EE4.7030404@freesa.org>
-References: <201111291507.04754.trast@student.ethz.ch> <cover.1322830368.git.trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git 1.7.8
+Date: Fri, 02 Dec 2011 12:25:58 -0800
+Message-ID: <7v7h2eoh49.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Dec 02 21:03:08 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Fri Dec 02 21:26:16 2011
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RWZK6-0004AL-Uk
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 21:03:07 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1RWZgV-0005j9-4H
+	for glk-linux-kernel-3@lo.gmane.org; Fri, 02 Dec 2011 21:26:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754752Ab1LBUCt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Dec 2011 15:02:49 -0500
-Received: from dsl017-020-053.chi1.dsl.speakeasy.net ([69.17.20.53]:55350 "EHLO
-	chirm.localdomain" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754402Ab1LBUCt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Dec 2011 15:02:49 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by chirm.localdomain (Postfix) with ESMTP id CC5F0217B99;
-	Fri,  2 Dec 2011 15:10:23 -0600 (CST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:8.0) Gecko/20111124 Thunderbird/8.0
-In-Reply-To: <cover.1322830368.git.trast@student.ethz.ch>
-Sender: git-owner@vger.kernel.org
+	id S1755041Ab1LBU0E (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 2 Dec 2011 15:26:04 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64747 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754752Ab1LBU0C (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 2 Dec 2011 15:26:02 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC0B36D61;
+	Fri,  2 Dec 2011 15:26:00 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:cc:date:message-id:mime-version:content-type; s=sasl;
+	 bh=2BuTtE7iUs4Ltq3kL8WO573OArg=; b=mqXC616PqCiq6pIdJIEm9VEkxxs7
+	hc2fHdaeTk22sOjUkX6dhaBi00t1fn80QPBmB90UGdPv/gCJjw87hHbQZpTtMomI
+	adyJY6FeHZsZQd2d8Hm7ZutyynRJUikWNQoEgROJPcHD41xoy0sVs7AhGhTWEDHF
+	eR0h/nXR0Vr2ocM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:cc:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
+	MolIFoHlV9OmktzkkGrJ8c0vWQySfpwZCPMpN4TdVgOEg+LwDpcOmh82pgKsLfsJ
+	N48onkWxl9NAudJUn9MUFByfDft3ATtklUL0h3ztSgD/61YLQ5ExgP06c9DKzKmf
+	m7DJ8kxW7kylDwOkBxogB6K8qPXywjwbGXNVWZeaCrM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C39176D60;
+	Fri,  2 Dec 2011 15:26:00 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E28CC6D5F; Fri,  2 Dec 2011
+ 15:25:59 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D8FDACD6-1D23-11E1-9293-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186238>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186239>
 
-Hello Thomas,
+The latest feature release Git 1.7.8 is available.
 
-Thanks for the work and the great info.
-Some of the numbers are quite surprising.
+The release tarballs are found at:
 
-I do, indeed, have a machine with more cores, but I have been either 
-busy with out-of-town guests or generally plain lazy in the last couple 
-of weeks. I intend to set aside some time to do some benchmarking this 
-weekend.
+    http://code.google.com/p/git-core/downloads/list
 
-I'll let you know what I find.
+and their SHA-1 checksums are:
 
-Cheers,
-  -Eric
+7453e737e008f7319a5eca24a9ef3c5fb1f13398  git-1.7.8.tar.gz
+2734079e22a0a6e3e78779582be9138ffc7de6f7  git-htmldocs-1.7.8.tar.gz
+93315f7f51d7f27d3e421c9b0d64afa27f3d16df  git-manpages-1.7.8.tar.gz
+
+Also the following public repositories all have a copy of the v1.7.8
+tag and the master branch that the tag points at:
+
+  url = git://repo.or.cz/alt-git.git
+  url = https://code.google.com/p/git-core/
+  url = git://git.sourceforge.jp/gitroot/git-core/git.git
+  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url = https://github.com/gitster/git
 
 
+Git v1.7.8 Release Notes
+========================
 
--- 
-http://www.freesa.org/ -- mobile: +31 620719662
-aim: ericigps -- skype: eric_herman -- jabber: eric.herman@gmail.com
+Updates since v1.7.7
+--------------------
+
+ * Some git-svn, git-gui, git-p4 (in contrib) and msysgit updates.
+
+ * Updates to bash completion scripts.
+
+ * The build procedure has been taught to take advantage of computed
+   dependency automatically when the complier supports it.
+
+ * The date parser now accepts timezone designators that lack minutes
+   part and also has a colon between "hh:mm".
+
+ * The contents of the /etc/mailname file, if exists, is used as the
+   default value of the hostname part of the committer/author e-mail.
+
+ * "git am" learned how to read from patches generated by Hg.
+
+ * "git archive" talking with a remote repository can report errors
+   from the remote side in a more informative way.
+
+ * "git branch" learned an explicit --list option to ask for branches
+   listed, optionally with a glob matching pattern to limit its output.
+
+ * "git check-attr" learned "--cached" option to look at .gitattributes
+   files from the index, not from the working tree.
+
+ * Variants of "git cherry-pick" and "git revert" that take multiple
+   commits learned to "--continue" and "--abort".
+
+ * "git daemon" gives more human readble error messages to clients
+   using ERR packets when appropriate.
+
+ * Errors at the network layer is logged by "git daemon".
+
+ * "git diff" learned "--minimal" option to spend extra cycles to come
+   up with a minimal patch output.
+
+ * "git diff" learned "--function-context" option to show the whole
+   function as context that was affected by a change.
+
+ * "git difftool" can be told to skip launching the tool for a path by
+   answering 'n' to its prompt.
+
+ * "git fetch" learned to honor transfer.fsckobjects configuration to
+   validate the objects that were received from the other end, just like
+   "git receive-pack" (the receiving end of "git push") does.
+
+ * "git fetch" makes sure that the set of objects it received from the
+   other end actually completes the history before updating the refs.
+   "git receive-pack" (the receiving end of "git push") learned to do the
+   same.
+
+ * "git fetch" learned that fetching/cloning from a regular file on the
+   filesystem is not necessarily a request to unpack a bundle file; the
+   file could be ".git" with "gitdir: <path>" in it.
+
+ * "git for-each-ref" learned "%(contents:subject)", "%(contents:body)"
+   and "%(contents:signature)". The last one is useful for signed tags.
+
+ * "git grep" used to incorrectly pay attention to .gitignore files
+   scattered in the directory it was working in even when "--no-index"
+   option was used. It no longer does this. The "--exclude-standard"
+   option needs to be given to explicitly activate the ignore
+   mechanism.
+
+ * "git grep" learned "--untracked" option, where given patterns are
+    searched in untracked (but not ignored) files as well as tracked
+    files in the working tree, so that matches in new but not yet
+    added files do not get missed.
+
+ * The recursive merge backend no longer looks for meaningless
+   existing merges in submodules unless in the outermost merge.
+
+ * "git log" and friends learned "--children" option.
+
+ * "git ls-remote" learned to respond to "-h"(elp) requests.
+
+ * "mediawiki" remote helper can interact with (surprise!) MediaWiki
+   with "git fetch" & "git push".
+
+ * "git merge" learned the "--edit" option to allow users to edit the
+   merge commit log message.
+
+ * "git rebase -i" can be told to use special purpose editor suitable
+   only for its insn sheet via sequence.editor configuration variable.
+
+ * "git send-email" learned to respond to "-h"(elp) requests.
+
+ * "git send-email" allows the value given to sendemail.aliasfile to begin
+   with "~/" to refer to the $HOME directory.
+
+ * "git send-email" forces use of Authen::SASL::Perl to work around
+   issues between Authen::SASL::Cyrus and AUTH PLAIN/LOGIN.
+
+ * "git stash" learned "--include-untracked" option to stash away
+   untracked/ignored cruft from the working tree.
+
+ * "git submodule clone" does not leak an error message to the UI
+   level unnecessarily anymore.
+
+ * "git submodule update" learned to honor "none" as the value for
+   submodule.<name>.update to specify that the named submodule should
+   not be checked out by default.
+
+ * When populating a new submodule directory with "git submodule init",
+   the $GIT_DIR metainformation directory for submodules is created inside
+   $GIT_DIR/modules/<name>/ directory of the superproject and referenced
+   via the gitfile mechanism. This is to make it possible to switch
+   between commits in the superproject that has and does not have the
+   submodule in the tree without re-cloning.
+
+ * "gitweb" leaked unescaped control characters from syntax hiliter
+   outputs.
+
+ * "gitweb" can be told to give custom string at the end of the HTML
+   HEAD element.
+
+ * "gitweb" now has its own manual pages.
+
+
+Also contains other documentation updates and minor code cleanups.
+
+
+Fixes since v1.7.7
+------------------
+
+Unless otherwise noted, all fixes in the 1.7.7.X maintenance track are
+included in this release.
+
+ * HTTP transport did not use pushurl correctly, and also did not tell
+   what host it is trying to authenticate with when asking for
+   credentials.
+   (merge deba493 jk/http-auth later to maint).
+
+ * "git blame" was aborted if started from an uncommitted content and
+   the path had the textconv filter in effect.
+   (merge 8518088 ss/blame-textconv-fake-working-tree later to maint).
+
+ * Adding many refs to the local repository in one go (e.g. "git fetch"
+   that fetches many tags) and looking up a ref by name in a repository
+   with too many refs were unnecessarily slow.
+   (merge 17d68a54d jp/get-ref-dir-unsorted later to maint).
+
+ * Report from "git commit" on untracked files was confused under
+   core.ignorecase option.
+   (merge 395c7356 jk/name-hash-dirent later to maint).
+
+ * "git merge" did not understand ":/<pattern>" as a way to name a commit.
+
+ " "git push" on the receiving end used to call post-receive and post-update
+   hooks for attempted removal of non-existing refs.
+   (merge 160b81ed ph/push-to-delete-nothing later to maint).
+
+ * Help text for "git remote set-url" and "git remote set-branches"
+   were misspelled.
+   (merge c49904e fc/remote-seturl-usage-fix later to maint).
+   (merge 656cdf0 jc/remote-setbranches-usage-fix later to maint).
