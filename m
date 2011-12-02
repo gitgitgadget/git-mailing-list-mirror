@@ -1,77 +1,74 @@
-From: "norbert.nemec" <norbert.nemec@native-instruments.de>
-Subject: Re: Status after 'git clone --no-checkout' ?
-Date: Fri, 02 Dec 2011 08:53:03 +0100
-Message-ID: <jba050$uhs$1@dough.gmane.org>
-References: <jb59h0$p3e$1@dough.gmane.org> <20111201190058.GC2873@sigill.intra.peff.net>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCHv2 0/4] git-p4: small fixes to branches and labels; tests
+Date: Fri, 02 Dec 2011 08:49:25 +0000
+Message-ID: <4ED89115.6040309@diamand.org>
+References: <1322643817-13051-1-git-send-email-luke@diamand.org> <loom.20111130T155409-599@post.gmane.org> <4ED6809A.9020703@diamand.org> <20111130225813.GA11544@arf.padd.com> <CAOpHH-U3PF0v7EPqnO0FNxNKh+uF1GH=cnA_MA09SaQTxo0cDA@mail.gmail.com> <20111201040259.GA22189@arf.padd.com> <CAOpHH-UMdLpCPx1+D2dtQJs+=t1+0U2srKfTwBi-TEF4F7EDyw@mail.gmail.com> <CAOpHH-XL5OGpnihEgqnXqUUFsMxXn2wSdLadegnC1epg44vs8A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 02 08:53:31 2011
+Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
+To: Vitor Antunes <vitor.hda@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 02 09:49:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RWNw1-0004Db-1I
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 08:53:29 +0100
+	id 1RWOoD-0006Ri-Jq
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 09:49:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752529Ab1LBHxV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Dec 2011 02:53:21 -0500
-Received: from lo.gmane.org ([80.91.229.12]:37555 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752387Ab1LBHxU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Dec 2011 02:53:20 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RWNvr-0004Bd-7U
-	for git@vger.kernel.org; Fri, 02 Dec 2011 08:53:19 +0100
-Received: from 93.92.134.38 ([93.92.134.38])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 02 Dec 2011 08:53:19 +0100
-Received: from norbert.nemec by 93.92.134.38 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 02 Dec 2011 08:53:19 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 93.92.134.38
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <20111201190058.GC2873@sigill.intra.peff.net>
+	id S1752709Ab1LBItN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Dec 2011 03:49:13 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:64241 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752273Ab1LBItN (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Dec 2011 03:49:13 -0500
+Received: by lagp5 with SMTP id p5so40939lag.19
+        for <git@vger.kernel.org>; Fri, 02 Dec 2011 00:49:11 -0800 (PST)
+Received: by 10.152.104.206 with SMTP id gg14mr7092049lab.41.1322815751193;
+        Fri, 02 Dec 2011 00:49:11 -0800 (PST)
+Received: from [86.26.7.206] (cpc1-cmbg14-2-0-cust973.5-4.cable.virginmedia.com. [86.26.7.206])
+        by mx.google.com with ESMTPS id ne3sm7715449lab.7.2011.12.02.00.49.07
+        (version=SSLv3 cipher=OTHER);
+        Fri, 02 Dec 2011 00:49:08 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+In-Reply-To: <CAOpHH-XL5OGpnihEgqnXqUUFsMxXn2wSdLadegnC1epg44vs8A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186213>
 
-Thanks a lot for this concise explanation -- exactly what I was hoping for!
+On 01/12/11 21:59, Vitor Antunes wrote:
+> On Dec 1, 2011 4:03 AM, "Pete Wyckoff"<pw@padd.com>  wrote:
+>> I see your point.  P4 labels are the only way that they support
+>> tagging, apparently.  I'm okay with leaving label support in
+>> git-p4.  And it will be nice if Luke makes it behave a bit
+>> better.  But doing heroics to emulate cross-commit tags feels
+>> like a lot of work, and the wrong direction.
+>
+> Agreed. Lets keep it simple.
+>
+
+I think I'm going to have to go away and do a bit more work on this. The 
+existing label code is still quite buggy (or my understanding is 
+broken). Either way I'd rather get it to the point where it actually 
+works and passes all its tests.
+
+The two issues I'm seeing are:
+
+- two p4 labels covering the same set of files; only one of them gets 
+imported.
+
+- if you have a p4 label on a subset of files then it gets dropped 
+(which is fine) but so do most of the other labels (as far as I can tell).
+
+I think if this could be made to work it would actually be really useful 
+though.
+
+(Pete - I've found your previous email; not sure why I didn't see it 
+before. I'll roll that change in with what I'm doing).
 
 
-Am 01.12.11 20:00, schrieb Jeff King:
-> On Wed, Nov 30, 2011 at 02:02:22PM +0100, norbert.nemec wrote:
->
->> what exactly is the status after 'git clone --no-checkout'? Is there
->> any straightforward way how one could end up in this state starting
->> from a regularly checked out repository?
->
-> You have a HEAD which points to some actual commit, but no index or
-> working tree. I don't think there is a particular name for this state.
->
-> You can get something similar in an existing repo by deleting all of the
-> working tree files and removing .git/index.
->
->> 'git checkout' without any further options serves to move from the
->> aforementioned special state to a regular checked out state.
->> Otherwise it never seems to do anything. Are there any other
->> situations where 'git checkout' on its own would have any effect?
->
-> By itself, I don't think so. But you can use "git checkout -f" to
-> discard changes in the index and working tree, setting them back to the
-> state in HEAD.
->
-> At one point, some people used "git checkout" as a no-op, because it
-> would print the "ahead/behind" information with respect to the upstream.
-> These days, that information is part of "git status", so I suspect
-> people use that instead.
->
-> -Peff
+Regards!
+Luke
