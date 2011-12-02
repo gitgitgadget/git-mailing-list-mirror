@@ -1,208 +1,152 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 2/6] varint-in-pack: refactor varint encoding/decoding
-Date: Thu,  1 Dec 2011 16:40:45 -0800
-Message-ID: <1322786449-25753-3-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 4/6] bulk-checkin: allow the same data to be multiply
+ hashed
+Date: Thu,  1 Dec 2011 16:40:47 -0800
+Message-ID: <1322786449-25753-5-git-send-email-gitster@pobox.com>
 References: <1322699263-14475-6-git-send-email-gitster@pobox.com>
  <1322786449-25753-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 02 01:41:47 2011
+X-From: git-owner@vger.kernel.org Fri Dec 02 01:41:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RWHCF-0007B0-7D
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 01:41:47 +0100
+	id 1RWHCG-0007B0-LC
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 01:41:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756097Ab1LBAk7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Dec 2011 19:40:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50015 "EHLO
+	id S1756185Ab1LBAli (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Dec 2011 19:41:38 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50061 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756085Ab1LBAk4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Dec 2011 19:40:56 -0500
+	id S1755770Ab1LBAlA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Dec 2011 19:41:00 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F88E6B25
-	for <git@vger.kernel.org>; Thu,  1 Dec 2011 19:40:56 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 327AF6B31
+	for <git@vger.kernel.org>; Thu,  1 Dec 2011 19:41:00 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=jLtz
-	viJPUXhUzG+GnxgRxAUjnJc=; b=vQRc4jjHjT2nps5mGwczn5oSw9VYx0fINIZp
-	AQTwojJsnXW0o2h4pBZjPpx8rqDti/lyG7Vlb5yG6epxv8BcSHVXW3QZfq1ItoB4
-	0Pf7CVYh6sPhdTFR0cqZ0P3uL/DyuKqK8VFcjp2kCUsSKkeTploy9+DrPUsAAvcs
-	43XM+gc=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=zIpq
+	d7MFgzHGK3dK7Dowy2x1VGI=; b=thy1GEh/Lxx7BDAmsBOiFxR6lFGjKH6f4e8+
+	5RZ8iflD4c0ONWUkZ34AbmYQAEAd2Gzi4cgpDAtbBxbWvzDbmiKFQII2JjLEkCpQ
+	K+Eznh0avEaUCWUbp6rvTmUScIQsdiCwYBtwDCk8jqJ69ELLOeEIxQekAJ+SVaIb
+	l5MiiV4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=BuwoBK
-	y1cOjMXYBjOMNvxAICcYa8P27UxLm3UkzM9I5jqxDOYFLnPe6IoaI4QCiDJNVcgD
-	8CG96sL2b38JlHk/YYDSQjJePm+TTuA5d5EPIO3tDxk0D9UGGshSDEAR5GdPRFOs
-	9IUxBMRV89RPF6Fg9jE+jMJvI6g7ayfUtKnd0=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=EBbqVu
+	YhrMsMu31bPJjUbUCG/stAJXtlLCr6zkqhgy3AXejgG2w7Yy55C43AEuF7grQm/9
+	EFcWQHD/hDdhEEmA8Urzk6ZK8gmVw2DMF7VZCJ5mHlqim9YhHkFvRQuw7P4EHw7+
+	s+P7vkzXwlK4GqxkgfpVvMgh5KW7q0Nltyv/M=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 571576B24
-	for <git@vger.kernel.org>; Thu,  1 Dec 2011 19:40:56 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 28D0B6B30
+	for <git@vger.kernel.org>; Thu,  1 Dec 2011 19:41:00 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A263F6B23 for
- <git@vger.kernel.org>; Thu,  1 Dec 2011 19:40:55 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8FD106B2D for
+ <git@vger.kernel.org>; Thu,  1 Dec 2011 19:40:59 -0500 (EST)
 X-Mailer: git-send-email 1.7.8.rc4.177.g4d64
 In-Reply-To: <1322786449-25753-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 4B8C001E-1C7E-11E1-BCA5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 4DE2BED4-1C7E-11E1-974E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186206>
 
-Refactor encode/decode_in_pack_varint() functions from OFS_DELTA codepaths
-to read and write variable-length integers in the pack stream.
+This updates stream_to_pack() machinery to feed the data it is writing out
+to multiple hash contexts at the same time. Right now we only use a single
+git_SHA_CTX, so there is no change in functionality.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/pack-objects.c |   28 +++++++++++++---------------
- pack-write.c           |   27 +++++++++++++++++++++++++++
- pack.h                 |    2 ++
- sha1_file.c            |   18 ++++++------------
- 4 files changed, 48 insertions(+), 27 deletions(-)
+ bulk-checkin.c |   33 +++++++++++++++++++++++++--------
+ 1 files changed, 25 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index dde913e..72206a9 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -210,7 +210,7 @@ static unsigned long write_object(struct sha1file *f,
- {
- 	unsigned long size, limit, datalen;
- 	void *buf;
--	unsigned char header[10], dheader[10];
-+	unsigned char header[10];
- 	unsigned hdrlen;
- 	enum object_type type;
- 	int usable_delta, to_reuse;
-@@ -304,17 +304,16 @@ static unsigned long write_object(struct sha1file *f,
- 			 * base from this object's position in the pack.
- 			 */
- 			off_t ofs = entry->idx.offset - entry->delta->idx.offset;
--			unsigned pos = sizeof(dheader) - 1;
--			dheader[pos] = ofs & 127;
--			while (ofs >>= 7)
--				dheader[--pos] = 128 | (--ofs & 127);
--			if (limit && hdrlen + sizeof(dheader) - pos + datalen + 20 >= limit) {
-+			unsigned char dheader[10];
-+			unsigned pos = encode_in_pack_varint(ofs, dheader);
-+
-+			if (limit && hdrlen + pos + datalen + 20 >= limit) {
- 				free(buf);
- 				return 0;
- 			}
- 			sha1write(f, header, hdrlen);
--			sha1write(f, dheader + pos, sizeof(dheader) - pos);
--			hdrlen += sizeof(dheader) - pos;
-+			sha1write(f, dheader, pos);
-+			hdrlen += pos;
- 		} else if (type == OBJ_REF_DELTA) {
- 			/*
- 			 * Deltas with a base reference contain
-@@ -369,17 +368,16 @@ static unsigned long write_object(struct sha1file *f,
- 
- 		if (type == OBJ_OFS_DELTA) {
- 			off_t ofs = entry->idx.offset - entry->delta->idx.offset;
--			unsigned pos = sizeof(dheader) - 1;
--			dheader[pos] = ofs & 127;
--			while (ofs >>= 7)
--				dheader[--pos] = 128 | (--ofs & 127);
--			if (limit && hdrlen + sizeof(dheader) - pos + datalen + 20 >= limit) {
-+			unsigned char dheader[10];
-+			unsigned pos = encode_in_pack_varint(ofs, dheader);
-+
-+			if (limit && hdrlen + pos + datalen + 20 >= limit) {
- 				unuse_pack(&w_curs);
- 				return 0;
- 			}
- 			sha1write(f, header, hdrlen);
--			sha1write(f, dheader + pos, sizeof(dheader) - pos);
--			hdrlen += sizeof(dheader) - pos;
-+			sha1write(f, dheader, pos);
-+			hdrlen += pos;
- 			reused_delta++;
- 		} else if (type == OBJ_REF_DELTA) {
- 			if (limit && hdrlen + 20 + datalen + 20 >= limit) {
-diff --git a/pack-write.c b/pack-write.c
-index cadc3e1..5702cec 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -302,6 +302,33 @@ char *index_pack_lockfile(int ip_out)
- 	return NULL;
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 6b0b6d4..6f1ce58 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -75,6 +75,20 @@ static int already_written(struct bulk_checkin_state *state, unsigned char sha1[
+ 	return 0;
  }
  
-+uintmax_t decode_in_pack_varint(const unsigned char **bufp)
-+{
-+	const unsigned char *buf = *bufp;
-+	unsigned char c = *buf++;
-+	uintmax_t val = c & 127;
-+	while (c & 128) {
-+		val += 1;
-+		if (!val || MSB(val, 7))
-+			return 0; /* overflow */
-+		c = *buf++;
-+		val = (val << 7) + (c & 127);
-+	}
-+	*bufp = buf;
-+	return val;
-+}
++struct chunk_ctx {
++	struct chunk_ctx *up;
++	git_SHA_CTX ctx;
++};
 +
-+int encode_in_pack_varint(uintmax_t value, unsigned char *buf)
++static void chunk_SHA1_Update(struct chunk_ctx *ctx,
++			      const unsigned char *buf, size_t size)
 +{
-+	unsigned char varint[16];
-+	unsigned pos = sizeof(varint) - 1;
-+	varint[pos] = value & 127;
-+	while (value >>= 7)
-+		varint[--pos] = 128 | (--value & 127);
-+	memcpy(buf, varint + pos, sizeof(varint) - pos);
-+	return sizeof(varint) - pos;
++	while (ctx) {
++		git_SHA1_Update(&ctx->ctx, buf, size);
++		ctx = ctx->up;
++	}
 +}
 +
  /*
-  * The per-object header is a pretty dense thing, which is
-  *  - first byte: low four bits are "size", then three bits of "type",
-diff --git a/pack.h b/pack.h
-index cfb0f69..d7dc6ca 100644
---- a/pack.h
-+++ b/pack.h
-@@ -79,6 +79,8 @@ extern off_t write_pack_header(struct sha1file *f, uint32_t);
- extern void fixup_pack_header_footer(int, unsigned char *, const char *, uint32_t, unsigned char *, off_t);
- extern char *index_pack_lockfile(int fd);
- extern int encode_in_pack_object_header(enum object_type, uintmax_t, unsigned char *);
-+extern int encode_in_pack_varint(uintmax_t, unsigned char *);
-+extern uintmax_t decode_in_pack_varint(const unsigned char **);
+  * Read the contents from fd for size bytes, streaming it to the
+  * packfile in state while updating the hash in ctx. Signal a failure
+@@ -91,7 +105,7 @@ static int already_written(struct bulk_checkin_state *state, unsigned char sha1[
+  * with a new pack.
+  */
+ static int stream_to_pack(struct bulk_checkin_state *state,
+-			  git_SHA_CTX *ctx, off_t *already_hashed_to,
++			  struct chunk_ctx *ctx, off_t *already_hashed_to,
+ 			  int fd, size_t size, enum object_type type,
+ 			  const char *path, unsigned flags)
+ {
+@@ -123,7 +137,7 @@ static int stream_to_pack(struct bulk_checkin_state *state,
+ 				if (rsize < hsize)
+ 					hsize = rsize;
+ 				if (hsize)
+-					git_SHA1_Update(ctx, ibuf, hsize);
++					chunk_SHA1_Update(ctx, ibuf, hsize);
+ 				*already_hashed_to = offset;
+ 			}
+ 			s.next_in = ibuf;
+@@ -185,10 +199,11 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
+ 			   unsigned char result_sha1[],
+ 			   int fd, size_t size,
+ 			   enum object_type type, const char *path,
+-			   unsigned flags)
++			   unsigned flags,
++			   struct chunk_ctx *up)
+ {
+ 	off_t seekback, already_hashed_to;
+-	git_SHA_CTX ctx;
++	struct chunk_ctx ctx;
+ 	unsigned char obuf[16384];
+ 	unsigned header_len;
+ 	struct sha1file_checkpoint checkpoint;
+@@ -200,8 +215,10 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
  
- #define PH_ERROR_EOF		(-1)
- #define PH_ERROR_PACK_SIGNATURE	(-2)
-diff --git a/sha1_file.c b/sha1_file.c
-index c96e366..f066c2b 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1484,20 +1484,14 @@ static off_t get_delta_base(struct packed_git *p,
- 	 * is stupid, as then a REF_DELTA would be smaller to store.
- 	 */
- 	if (type == OBJ_OFS_DELTA) {
--		unsigned used = 0;
--		unsigned char c = base_info[used++];
--		base_offset = c & 127;
--		while (c & 128) {
--			base_offset += 1;
--			if (!base_offset || MSB(base_offset, 7))
--				return 0;  /* overflow */
--			c = base_info[used++];
--			base_offset = (base_offset << 7) + (c & 127);
--		}
--		base_offset = delta_obj_offset - base_offset;
-+		const unsigned char *buf = base_info;
-+		uintmax_t ofs = decode_in_pack_varint(&buf);
-+		if (!ofs && buf == base_info)
-+			return 0; /* overflow */
-+		base_offset = delta_obj_offset - ofs;
- 		if (base_offset <= 0 || base_offset >= delta_obj_offset)
- 			return 0;  /* out of bound */
--		*curpos += used;
-+		*curpos += buf - base_info;
- 	} else if (type == OBJ_REF_DELTA) {
- 		/* The base entry _must_ be in the same pack */
- 		base_offset = find_pack_entry_one(base_info, p);
+ 	header_len = sprintf((char *)obuf, "%s %" PRIuMAX,
+ 			     typename(type), (uintmax_t)size) + 1;
+-	git_SHA1_Init(&ctx);
+-	git_SHA1_Update(&ctx, obuf, header_len);
++	memset(&ctx, 0, sizeof(ctx));
++	ctx.up = up;
++	git_SHA1_Init(&ctx.ctx);
++	git_SHA1_Update(&ctx.ctx, obuf, header_len);
+ 
+ 	/* Note: idx is non-NULL when we are writing */
+ 	if ((flags & HASH_WRITE_OBJECT) != 0)
+@@ -232,7 +249,7 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
+ 		if (lseek(fd, seekback, SEEK_SET) == (off_t) -1)
+ 			return error("cannot seek back");
+ 	}
+-	git_SHA1_Final(result_sha1, &ctx);
++	git_SHA1_Final(result_sha1, &ctx.ctx);
+ 	if (!idx)
+ 		return 0;
+ 
+@@ -256,7 +273,7 @@ int index_bulk_checkin(unsigned char *sha1,
+ 		       const char *path, unsigned flags)
+ {
+ 	int status = deflate_to_pack(&state, sha1, fd, size, type,
+-				     path, flags);
++				     path, flags, NULL);
+ 	if (!state.plugged)
+ 		finish_bulk_checkin(&state);
+ 	return status;
 -- 
 1.7.8.rc4.177.g4d64
