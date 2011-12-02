@@ -1,58 +1,117 @@
-From: Graham Wideman <initcontact@grahamwideman.com>
-Subject: Git Install link is broken
-Date: Thu, 01 Dec 2011 15:56:12 -0800
-Message-ID: <20111201235608.EGUQ3756.fed1rmfepo203.cox.net@fed1rmimpo306.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 0/6] Bulk check-in
+Date: Thu,  1 Dec 2011 16:40:43 -0800
+Message-ID: <1322786449-25753-1-git-send-email-gitster@pobox.com>
+References: <1322699263-14475-6-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 02 01:10:56 2011
+X-From: git-owner@vger.kernel.org Fri Dec 02 01:40:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RWGiM-0005J5-9Z
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 01:10:54 +0100
+	id 1RWHBS-0006tS-Kl
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 01:40:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755687Ab1LBAKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Dec 2011 19:10:49 -0500
-Received: from fed1rmfepi102.cox.net ([68.230.241.133]:54260 "EHLO
-	fed1rmfepi102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755618Ab1LBAKt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Dec 2011 19:10:49 -0500
-Received: from fed1rmimpo306.cox.net ([68.230.241.174])
-          by fed1rmfepo203.cox.net
-          (InterMail vM.8.01.04.00 201-2260-137-20101110) with ESMTP
-          id <20111201235608.EGUQ3756.fed1rmfepo203.cox.net@fed1rmimpo306.cox.net>
-          for <git@vger.kernel.org>; Thu, 1 Dec 2011 18:56:08 -0500
-Received: from PhenX6.grahamwideman.com ([68.7.45.46])
-	by fed1rmimpo306.cox.net with bizsmtp
-	id 3zuw1i0060zmbFG03zux7G; Thu, 01 Dec 2011 18:54:57 -0500
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A02020A.4ED81418.00B6,ss=1,re=0.000,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=1.1 cv=dLinpSRpD/siYDweLtUcKy2MkOOT9IlUWnc+SxVPJKw=
- c=1 sm=1 a=l18yqJLiAdkA:10 a=kj9zAlcOel0A:10 a=NYLzHsgdu0FSDA/2viggnA==:17
- a=1XWaLZrsAAAA:8 a=VwQbUJbxAAAA:8 a=a67oaSN1j1K11Ad4SOEA:9 a=CjuIK1q_8ugA:10
- a=NYLzHsgdu0FSDA/2viggnA==:117
-X-CM-Score: 0.00
-Authentication-Results: cox.net; none
-X-Mailer: QUALCOMM Windows Eudora Version 7.1.0.9
+	id S1756079Ab1LBAkx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Dec 2011 19:40:53 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49964 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755770Ab1LBAkw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Dec 2011 19:40:52 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC7806B0F
+	for <git@vger.kernel.org>; Thu,  1 Dec 2011 19:40:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=aGO4
+	U5dOewKIpO7FpSO7t5qicxI=; b=o+kcFHHS57PqSYmt47BqzlBaernwHLLB0PSA
+	RqnUMANHAo2IJFO1ar8zLEFhgjp+7lfWBWeOb5FJjdzu6QRcuyBLnHppfXY+/AOi
+	aghMnj9VqkWu5DPQhncz7OXgP6/wJDzR9nQfN4Md9NCzrqxVeQkpY7reYkU6yiYm
+	1NH8S0A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=qs0Xaw
+	Ij2U32EnTiV5FMHZjLlYwKDU5ukoz1ONwlO4R9wVxExuSdJRczllVovAISFHkLqn
+	Cu0eJxbbv33XYt58Q1FmwCXVPOypuc0tv/Fm8HzPJYAYrqkvMcTMaBigtKHsoMlS
+	e97z5bUait+OrSlP/WINFXpWqLR8XxZ2w1Ws4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A3BA46B0E
+	for <git@vger.kernel.org>; Thu,  1 Dec 2011 19:40:51 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 273106B0B for
+ <git@vger.kernel.org>; Thu,  1 Dec 2011 19:40:51 -0500 (EST)
+X-Mailer: git-send-email 1.7.8.rc4.177.g4d64
+In-Reply-To: <1322699263-14475-6-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 48DCA472-1C7E-11E1-A293-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186201>
 
-Hi folks:
+I would declare that the earlier parts of the v2 that are about factoring
+out various API pieces from existing code are basically completed, so they
+are not part of this iteration.
 
-On this page:
-http://code.google.com/p/msysgit/
+The bulk-checkin patch from v2 has been tweaked a bit (deflate_to_pack()
+initializes "already_hashed_to" pointer to 0, instead of the current file
+position "seekback"), and then the rest of the series builds on top of it
+to add a new in-pack encoding that I am tentatively calling "chunked".
 
-the links to "install msysGit" point to:
-https://git.wiki.kernel.org/index.php/MSysGit:InstallMSysGit
+The basic idea is to represent a large/huge blob as a concatenation of
+smaller blobs. An entry in a pack in "chunked" representation records a
+list of object names of the component blob objects.  The object name given
+to such a blob is computed exactly the same way as before. In other words,
+the name of a object does not depend on its representation; we hash "blob
+<size> NUL" and the whole large blob contents to come up with its name. It
+is *not* the hash of the component blob object names.
 
-.. which returns page not found error.
+As can be seen in the log message of the "support chunked-object encoding"
+patch, many pieces are still missing from this series and filling them
+will be a long and tortuous journey. But we need to start somewhere.
 
--- Graham
+I specifically excluded any heuristics to split large objects into chunks
+in a self-synchronising way so that a small edit near the beginning of a
+large blob results in a handful of new component blobs followed by the
+same component blobs as used to represent the same blob before such an
+edit, and I do not plan to work on that part myself. My impression from
+listening Avery's plug for "bup" is that it is a solved problem; it should
+be reasonably straightforward to lift the logic and plug it into the
+framework presented here (once the codebase gets solid enough, that is).
+
+After this series, the next step for me is likely to teach the streaming
+interface about "chunked" objects, and then pack-objects to take notice
+and reuse "chunked" representation when sending things out (which means
+that sending a "chunked" encoded blob would involve sending the component
+blobs it uses, among other things), but I expect that it will extend well
+into next year.
+
+Junio C Hamano (6):
+  bulk-checkin: replace fast-import based implementation
+  varint-in-pack: refactor varint encoding/decoding
+  new representation types in the packstream
+  bulk-checkin: allow the same data to be multiply hashed
+  bulk-checkin: support chunked-object encoding
+  chunked-object: fallback checkout codepaths
+
+ Makefile               |    3 +
+ builtin/add.c          |    5 +
+ builtin/pack-objects.c |   34 ++---
+ bulk-checkin.c         |  415 ++++++++++++++++++++++++++++++++++++++++++++++++
+ bulk-checkin.h         |   17 ++
+ cache.h                |   13 ++-
+ config.c               |    9 +
+ environment.c          |    2 +
+ pack-write.c           |   50 +++++-
+ pack.h                 |    2 +
+ sha1_file.c            |  150 +++++++++---------
+ split-chunk.c          |   28 ++++
+ t/t1050-large.sh       |  135 +++++++++++++++-
+ zlib.c                 |    9 +-
+ 14 files changed, 760 insertions(+), 112 deletions(-)
+ create mode 100644 bulk-checkin.c
+ create mode 100644 bulk-checkin.h
+ create mode 100644 split-chunk.c
+
+-- 
+1.7.8.rc4.177.g4d64
