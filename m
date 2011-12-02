@@ -1,131 +1,82 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Suggestion on hashing
-Date: Fri, 2 Dec 2011 21:22:31 +0700
-Message-ID: <CACsJy8CO1GtpZVo-oA2eKbQadsXYBEKVLfUH0GONR5jovuvH+Q@mail.gmail.com>
-References: <1322813319.4340.109.camel@yos>
+From: Philippe Vaucher <philippe.vaucher@gmail.com>
+Subject: Re: Proposal: create meaningful aliases for git reset's hard/soft/mixed
+Date: Fri, 2 Dec 2011 15:27:13 +0100
+Message-ID: <CAGK7Mr7zdstbm7QsrYq9a6m9ui_r8Ak8XtyWADLQ0n-mXiov4w@mail.gmail.com>
+References: <CAGK7Mr4GZq5eXn4OB+B0ZborX-OVoXiWU8Lo1XM5LRZDuRe1YA@mail.gmail.com>
+ <7vlir6brjw.fsf@alter.siamese.dyndns.org> <CAGK7Mr5nQoubAw11KDj4WKwQnXrfgteKbMj2=AR-HhsGKi52wQ@mail.gmail.com>
+ <CABURp0rtCUbJXLHtXv_1g6GRKL3mX-T+3vN1=QO4CUibqXdEMg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-To: Bill Zaumen <bill.zaumen@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 02 15:26:05 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 02 15:27:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RWU3v-0007rS-Io
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 15:26:03 +0100
+	id 1RWU5e-0000Fy-CP
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 15:27:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756707Ab1LBOXF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Dec 2011 09:23:05 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:54047 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755408Ab1LBOXD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Dec 2011 09:23:03 -0500
-Received: by bkas6 with SMTP id s6so3908634bka.19
-        for <git@vger.kernel.org>; Fri, 02 Dec 2011 06:23:02 -0800 (PST)
+	id S1756736Ab1LBO1p convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Dec 2011 09:27:45 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:48943 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754865Ab1LBO1o convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Dec 2011 09:27:44 -0500
+Received: by iage36 with SMTP id e36so4259792iag.19
+        for <git@vger.kernel.org>; Fri, 02 Dec 2011 06:27:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=r6A0WtlwiCsApzHZknw14ikjOnA6bRL0TfYFcjXGYzo=;
-        b=VjSASqIJR/4Lu26cBZNFQsVRLPmA1h3jsObCaN9T00RMzp99ECOLXrIwOOOGCAnQg/
-         jjDJtHMxqbkAQIw1NkwapDOkjAjyNW1UCHVU0jj3thfEImToWePFtUVSK6VRncMl7R04
-         nOuqvgafHeIRGtWuX4DBC838kk+QbF97YgurU=
-Received: by 10.204.9.211 with SMTP id m19mr10823589bkm.92.1322835782386; Fri,
- 02 Dec 2011 06:23:02 -0800 (PST)
-Received: by 10.204.23.2 with HTTP; Fri, 2 Dec 2011 06:22:31 -0800 (PST)
-In-Reply-To: <1322813319.4340.109.camel@yos>
+        bh=fDPabhfVbaCJnya1pUSpmXFida5pkt8u7E3wgpdQst4=;
+        b=KedwNeU6sJrWVnXrdLHe4v1fPucBmlSBGMwILnKqlSOd3n2+YdWAq8Z6B1BzzSJFgN
+         Oxj03xtxnHyRPDVqI0RaXF6oLtwS1jOyGxTyJncccA1DLIzr5whOYXY2b+HoRZTmOGe3
+         LLP+8t8VKArgwjlpyLo/BMPtkNbi77yummyXU=
+Received: by 10.231.28.28 with SMTP id k28mr3046894ibc.61.1322836064132; Fri,
+ 02 Dec 2011 06:27:44 -0800 (PST)
+Received: by 10.50.189.166 with HTTP; Fri, 2 Dec 2011 06:27:13 -0800 (PST)
+In-Reply-To: <CABURp0rtCUbJXLHtXv_1g6GRKL3mX-T+3vN1=QO4CUibqXdEMg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186220>
 
-(I'm not sure why you dropped git@vger. I see nothing private here so
-I bring git@vger back)
-
-On Fri, Dec 2, 2011 at 3:08 PM, Bill Zaumen <bill.zaumen@gmail.com> wro=
-te:
-> At one point Nguyen said that "What I'm thinking is whether it's
-> possible to decouple two sha-1 roles in git, as object identifier
-> and digest, separately. Each sha-1 identifies an object and an extra
-> set of digests on the "same" object."
+> > Why worse? I'd understand if you said it's doesn't improve it enoug=
+h
+> > for it to be worth the change tho.
 >
-> My code pretty much does that (it just uses a CRC instead of a real
-> digest, but I can easily change that).
+> I think that's what "you should aim higher" means.
 
-It'd be easier to look at your code if you split it into a series of
-smaller patches.
+Yes, but my question was why was the proposal _worse_ in his mind.
+Anyway, it's not really important, probably something he typed in a
+hurry.
 
-> So the question is whether
-> using SHA-1 as an ID and SHA-256(?) as a digest is a better long term
-> solution than simply replacing SHA-1.
 
-I would not stick with any algorithm permanently. No one knows when
-SHA-256 might be broken.
+> How about:
+> =A0--soft: git checkout -B <commit>
+> =A0--mixed: git reset -- <paths>
+> =A0--hard: =A0git checkout --clean
 
-> If there is some interest in pursuing it further, I could make those
-> changes fairly easily. =C2=A0Then you'd have two message digests, a S=
-HA-1
-> and a longer one, with the longer one stored parallel to the actual
-> object. Then it becomes easy to compute a digest of all the digests
-> in a commit's tree and store that in a commit, if that is what you
-> want to do.
+I like the idea... but as other pointed out those are not equivalent.
 
-I personally would like to see how it works out especially when
-computing new digests is much more expensive than SHA-1. And I hope
-that by delaying computing new digests (stored outside actual
-objects), we could make minimum code changes to git. Though security
-concerns may be the killer factor and I haven't worked that out yet.
+Maybe we'd start by listing the features we want to be able to do:
 
-> Replacing SHA-1 with something like SHA-256 sounds easier to implemen=
-t,
+- Move git's HEAD to a particular commit without touching the files or =
+the index
+- Move git's HEAD to a particular commit and clear the index but
+without touching the files
+- Move git's HEAD to a particular commit and clear the index and have
+all the files match that particular commit files
+- Move git's HEAD to a particular commit and clear the index and have
+all the files match that particular commit files and remove files that
+are unknown to that commit
 
-SHA-1 charateristics (like 20 byte length) are hard coded everywhere
-in git, it'd be a big audit.
+Is there a scenario I'm missing? Once we have the scenarios nailed
+down we can start thinking about how to express them.
 
-> but the problem is all the existing repositories. =C2=A0While rewriti=
-ng all
-> the objects and trees to use new hashes is similar to a rebase in mos=
-t
-> cases, there is a complication - submodules. =C2=A0Git stores the has=
-h of
-> a submodule's commit in its tree because a particular revision of
-> a project 'goes' with a particular revision of a submodule. But, a
-> submodule can exist in one revision and not in the next or previous
-> revision =C2=A0Furthermore A could be a submodule of B at one point i=
-n time,
-> and many commits later, B could end up being a submodule of A.
-> Fixing it up could be pretty complicated (plus having to deal with
-> network failures - to update GitHub for example, you'd have to downlo=
-ad
-> submodules it uses, possibly from somewhere else and some submodules =
-may
-> not be publicly accessible (e.g., a private project kept on GitHub bu=
-t
-> with a critical submodule kept in house behind a corporate firewall).
-> Also, you might have to update a git repository and its submodules
-> concurrently, so that you always can find a new value when you need
-> it.
->
-> My guess is that this could be far more complicated than what I did.
-> Excluding two files that are not used (the symbol PACKDB is not
-> defined), I added two new files, crcdb.h and objd-crcdb.c which store
-> CRCs for loose objects - 517 lines total including lots of comments i=
-n
-> the header file - full documentation for each function. =C2=A0The oth=
-er
-> changes include 1475 lines of new code in previously existing git fil=
-es
-> and 136 deletions (most trivial). =C2=A0There were also minor changes=
- to
-> the makefile and test scripts.
-
-You'd need to convince git maintainer this is worth doing first,
-before talking how big the changes are ;-)
-
-> Bill
---=20
-Duy
+Philippe
