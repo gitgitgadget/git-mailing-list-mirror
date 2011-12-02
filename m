@@ -1,107 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/3] grep multithreading and scaling
-Date: Fri, 2 Dec 2011 12:34:00 -0500
-Message-ID: <20111202173400.GC23447@sigill.intra.peff.net>
-References: <201111291507.04754.trast@student.ethz.ch>
- <cover.1322830368.git.trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git auto-repack is broken...
+Date: Fri, 02 Dec 2011 09:35:52 -0800
+Message-ID: <7vobvqoozr.fsf@alter.siamese.dyndns.org>
+References: <CA+55aFznj49hx6Ce6NhJ1rRd2nvNyOERseyyrC6SNcW-z9dyfg@mail.gmail.com>
+ <CACBZZX7Q5qb1r_Oh0QfMiWh9UAM1c6QWBn4abv-xHpFBaKuyKg@mail.gmail.com>
+ <CA+55aFyq28vmo9dk-5mVm+nNn86qSjNT6VJGc09iaJo=+OP1Sg@mail.gmail.com>
+ <20111202171017.GB23447@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Eric Herman <eric@freesa.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Dec 02 18:34:17 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	=?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+	<avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Dec 02 18:36:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RWX04-0001aq-KC
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 18:34:17 +0100
+	id 1RWX1k-0002RY-Fg
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 18:36:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757240Ab1LBReG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Dec 2011 12:34:06 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39048
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757236Ab1LBReD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Dec 2011 12:34:03 -0500
-Received: (qmail 8355 invoked by uid 107); 2 Dec 2011 17:40:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Dec 2011 12:40:38 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Dec 2011 12:34:00 -0500
-Content-Disposition: inline
-In-Reply-To: <cover.1322830368.git.trast@student.ethz.ch>
+	id S1757214Ab1LBRf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Dec 2011 12:35:56 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58439 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757170Ab1LBRfz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Dec 2011 12:35:55 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B3D215E2B;
+	Fri,  2 Dec 2011 12:35:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0gSS/8kv2RqyOHbQGkbtEpy0pFc=; b=AG6roh
+	PPpgEyDx1S9ABNn3jKNI7lzCyUxQJzPw9YARzGnVHfkbnqAirJ++CjIhBKbO+4Sh
+	IXNUUmSCLJg4X8ML/POmu8m+484NI5Mnm/H/Q2ZE9QnIid9eQ1fRiKSi66N1AUkN
+	fUw2GnPkyVtCxa5ONVTk8IGnprEn6a+ywQPB4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yIH7CvaVPrIO3/tTRYDlHhPCtIRSLRl/
+	9u9GBVRRA0iaWPhuhXgicAj+2ggwaXYBcYxB2ZR/UW5Z0m+HVXXLkwFR7U3LUIyq
+	FOJ50ury5WPn1/m31uctcMApMRTowqU83txrCC7TPnAmCwBfPwESaJdDE4ESGFv0
+	E8l6empj4cE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB1535E2A;
+	Fri,  2 Dec 2011 12:35:54 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3C91E5E29; Fri,  2 Dec 2011
+ 12:35:54 -0500 (EST)
+In-Reply-To: <20111202171017.GB23447@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 2 Dec 2011 12:10:17 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 15EE91AE-1D0C-11E1-B4E4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186232>
 
-On Fri, Dec 02, 2011 at 02:07:45PM +0100, Thomas Rast wrote:
+Jeff King <peff@peff.net> writes:
 
-> where I put the --cached originally because that makes it independent
-> of the worktree (which in the very first measurements I still had
-> wiped, as I tend to do for this repo; I checked it out again after
-> that).  This in fact gives me (~/g/git-grep --cached
-> INITRAMFS_ROOT_UID, leaving aside -W; best of 10):
-> 
->   THREADS=8:   2.88user 0.21system 0:02.94elapsed
->   THREADS=4:   2.89user 0.29system 0:02.99elapsed
->   THREADS=2:   2.83user 0.36system 0:02.87elapsed
->   NO_PTHREADS: 2.16user 0.08system 0:02.25elapsed
-> 
-> Uhuh.  Doesn't scale so well after all.  But removing the --cached, as
-> most people probably would:
-> 
->   THREADS=8:   0.19user 0.32system 0:00.16elapsed
->   THREADS=4:   0.16user 0.34system 0:00.17elapsed
->   THREADS=2:   0.18user 0.32system 0:00.26elapsed
->   NO_PTHREADS: 0.12user 0.17system 0:00.31elapsed
-> 
-> So I conclude that during any grep that cannot use the worktree,
-> having any threads hurts.
+> When the objects become unreferenced, we eject them from the pack into
+> loose form again. If they don't become referenced in the 2-week window,
+> they get pruned then. So yes, you drop the age information, but they do
+> eventually go away.
 
-Wow, that's horrible. Leaving aside the parallelism, it's just terrible
-that reading from the cache is 20 times slower than the worktree. I get
-similar results on my quad-core machine.
-
-A quick perf run shows most of the time is spent inflating objects. The
-diff code has a sneaky trick to re-use worktree files when we know they
-are stat-clean (in diff's case it is to avoid writing a tempfile). I
-wonder if we should use the same trick here.
-
-It would hurt the cold cache case, though, as the compressed versions
-require fewer disk accesses, of course.
-
--Peff
-
-PS I suspect your timings are somewhat affected by the simplicity of the
-   regex you are asking for. The time to inflate the blobs dominates,
-   because the search is just a memmem(). On my quad-core w/
-   hyperthreading (i.e., 8 apparent cores):
-
-   [no caching, simple regex; we get some parallelism, but the regex
-    task is just not that intensive]
-   $ /usr/bin/time git grep INITRAMFS_ROOT_UID >/dev/null
-   0.42user 0.45system 0:00.15elapsed 578%CPU
-
-   [no caching, harder regex; we get much higher CPU utilization]
-   $ /usr/bin/time git grep 'a.*b' >/dev/null
-   14.68user 0.50system 0:02.00elapsed 758%CPU
-
-   [with caching, simple regex; we get almost _no_ parallelism because
-    all of our time is spent deflating under a lock, and the regex task
-    takes very little time]
-   $ /usr/bin/time git grep --cached INITRAMFS_ROOT_UID >/dev/null
-   7.64user 0.41system 0:07.61elapsed 105%CPU
-
-   [with caching, harder regex; not as much parallelism as we hoped for,
-    but still much more than before. Because there is actually work to
-    parallelize in the regex]
-   $ /usr/bin/time git grep --cached 'a.*b' >/dev/null
-   23.46user 0.47system 0:08.42elapsed 284%CPU
-
-   So I think there is value in parallelizing even --cached greps. But
-   we could do so much better if blob inflation could be done in
-   parallel.
+If you update gc/repack -A to put them in a separate pack, then you would
+never be able to get rid of them, no? You pack, then eject (which gives
+them a fresher timestamp), then notice that you are within the 2-week window
+and pack them again,...
