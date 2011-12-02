@@ -1,70 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git auto-repack is broken...
-Date: Fri, 02 Dec 2011 10:08:15 -0800
-Message-ID: <7vd3c6onhs.fsf@alter.siamese.dyndns.org>
-References: <CA+55aFznj49hx6Ce6NhJ1rRd2nvNyOERseyyrC6SNcW-z9dyfg@mail.gmail.com>
- <CACBZZX7Q5qb1r_Oh0QfMiWh9UAM1c6QWBn4abv-xHpFBaKuyKg@mail.gmail.com>
- <CA+55aFyq28vmo9dk-5mVm+nNn86qSjNT6VJGc09iaJo=+OP1Sg@mail.gmail.com>
- <20111202171017.GB23447@sigill.intra.peff.net>
- <7vobvqoozr.fsf@alter.siamese.dyndns.org>
- <20111202174546.GA24093@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Suggestion on hashing
+Date: Fri, 2 Dec 2011 13:09:51 -0500
+Message-ID: <20111202180951.GC24093@sigill.intra.peff.net>
+References: <1322813319.4340.109.camel@yos>
+ <CACsJy8CO1GtpZVo-oA2eKbQadsXYBEKVLfUH0GONR5jovuvH+Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	=?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-	<avarab@gmail.com>, Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Dec 02 19:08:24 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Bill Zaumen <bill.zaumen@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 02 19:10:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RWXX6-00015Y-2Z
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 19:08:24 +0100
+	id 1RWXYc-0001lF-HR
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Dec 2011 19:09:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757268Ab1LBSIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Dec 2011 13:08:19 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39530 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752168Ab1LBSIS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Dec 2011 13:08:18 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E11BD679C;
-	Fri,  2 Dec 2011 13:08:17 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Nsmyd5e4WfsUAK5aVPwY8iMRnHg=; b=te9jY3
-	W2YLKbuKbDK+9CtRUsBdulrguRh/owaaqCY9WJrkYSI8eED5etRIl2N9+gsNrl4o
-	/R/wCkV5m5N+AutQm16dvNEcEulKYcaV4UVhpi+ughrhdMIMAHodFKgW8+d8cUbj
-	b0pvzDD9qCRwm/1kqAa2PW9f4RMnDpGg762gA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Aet27f9R+WL6qdEkjhwKwKHy8avz7mEB
-	v1fwKIj0HDMEbc8pmnWUimVM8WRZfLjf46/qc2rrsbrDfaZ8DrHcBrtMGAjGLIGU
-	tTY6pS92kyy2K1wvocvqMZJ5QzsrcvOEPIv7WlkoG/3kGEJaJXAKr3ECU9+wOv5M
-	pbSz+6ppTzw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD2EC679B;
-	Fri,  2 Dec 2011 13:08:17 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4304D679A; Fri,  2 Dec 2011
- 13:08:17 -0500 (EST)
-In-Reply-To: <20111202174546.GA24093@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 2 Dec 2011 12:45:46 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9C11039E-1D10-11E1-8104-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757315Ab1LBSJy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Dec 2011 13:09:54 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39081
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757270Ab1LBSJx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Dec 2011 13:09:53 -0500
+Received: (qmail 8742 invoked by uid 107); 2 Dec 2011 18:16:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Dec 2011 13:16:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Dec 2011 13:09:51 -0500
+Content-Disposition: inline
+In-Reply-To: <CACsJy8CO1GtpZVo-oA2eKbQadsXYBEKVLfUH0GONR5jovuvH+Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186236>
 
-Jeff King <peff@peff.net> writes:
+On Fri, Dec 02, 2011 at 09:22:31PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-> But we shouldn't be packing totally unreferenced objects.
+> > So the question is whether
+> > using SHA-1 as an ID and SHA-256(?) as a digest is a better long term
+> > solution than simply replacing SHA-1.
+> 
+> I would not stick with any algorithm permanently. No one knows when
+> SHA-256 might be broken.
 
-Everything you said is correct in today's Git and I obviously know it, but
-I was taking the "Or have an extra option to..." at the end of the OP's
-message in the thread into account, so...
+Yeah, you could stick a few bits of algorithm parameter in the beginning
+of each identifier. It would mean unique hashes get one character or so
+longer (and they would all start with "1", or whatever the identifier
+is).
+
+SHA-256 doesn't suffer from SHA-1's problems, though they are based on
+related constructions, so I think there is some concern that it may
+eventually fail in the same way. SHA-3 is a better bet in that sense,
+but it will also be very unproven, even once it is actually
+standardized.
+
+> > Replacing SHA-1 with something like SHA-256 sounds easier to implement,
+> 
+> SHA-1 charateristics (like 20 byte length) are hard coded everywhere
+> in git, it'd be a big audit.
+
+In theory, you could truncate a longer hash to 160-bits. It's not the
+bit-strength of SHA-1 that is the problem, but the attacks on the
+algorithm itself which reduce the bit-strength to something too low.
+I would think a truncated result would retain the same cryptographic
+properties, as one of the properties of the un-truncated hash is that
+changes in the input data are reflected throughout the hash. Some
+hashes, like Skein, explicitly have a big internal state, and then just
+let you output as many bytes as is appropriate (i.e., being a drop-in
+replacement for SHA-1 is an explicit goal).
+
+But I'm not a cryptographer, so there may be some subtle issues with
+doing that to arbitrary hash functions.
+
+-Peff
