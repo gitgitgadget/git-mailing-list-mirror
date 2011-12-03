@@ -1,145 +1,109 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: [PATCH 2/2] builtin/apply.c: report error on failure to recognize input
-Date: Sat,  3 Dec 2011 14:35:50 -0600
-Message-ID: <1322944550-27344-2-git-send-email-drafnel@gmail.com>
-References: <1322944550-27344-1-git-send-email-drafnel@gmail.com>
-Cc: artem.bityutskiy@linux.intel.com, Brandon Casey <drafnel@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 03 21:36:52 2011
+From: Bill Zaumen <bill.zaumen@gmail.com>
+Subject: Re: Suggestion on hashing
+Date: Sat, 03 Dec 2011 13:21:54 -0800
+Message-ID: <1322947314.1763.41.camel@yos>
+References: <1322813319.4340.109.camel@yos>
+	 <20111202175444.GB24093@sigill.intra.peff.net>
+	 <1322877021.1729.118.camel@yos>
+	 <20111203150842.GA4442@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, pclouds@gmail.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Dec 03 22:23:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RWwKG-0003jF-UI
-	for gcvg-git-2@lo.gmane.org; Sat, 03 Dec 2011 21:36:49 +0100
+	id 1RWx3D-0005Dr-AB
+	for gcvg-git-2@lo.gmane.org; Sat, 03 Dec 2011 22:23:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753625Ab1LCUgH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Dec 2011 15:36:07 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:51427 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752896Ab1LCUgE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Dec 2011 15:36:04 -0500
-Received: by yenm1 with SMTP id m1so1045749yen.19
-        for <git@vger.kernel.org>; Sat, 03 Dec 2011 12:36:03 -0800 (PST)
+	id S1753739Ab1LCVWB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Dec 2011 16:22:01 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:65023 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753321Ab1LCVWA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Dec 2011 16:22:00 -0500
+Received: by iage36 with SMTP id e36so6154073iag.19
+        for <git@vger.kernel.org>; Sat, 03 Dec 2011 13:22:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=TDS6Z1etHSn+VCNRoB1ZmtM9HIx3wObRO07hEoyy4yY=;
-        b=XQOIJQmBk6AWpva/D+sLG1wYOzpjQa0fBoyyIKCtTLJVxtOoHrzMsGZHu79WRUz2cL
-         B8LKpq97Ig62NqZh3DVuG7nU0CxjG+xdlFOVIrf1hL8rURpv9z0F5fQYWCGhIkP+qPX8
-         3yeyjbTgi/BJZalWV3mqQqNG/quEggaVGaUAM=
-Received: by 10.236.154.166 with SMTP id h26mr4173275yhk.88.1322944563420;
-        Sat, 03 Dec 2011 12:36:03 -0800 (PST)
-Received: from localhost.localdomain (adsl-74-243-58-53.bix.bellsouth.net. [74.243.58.53])
-        by mx.google.com with ESMTPS id q16sm13442727anb.19.2011.12.03.12.36.02
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        bh=kUh7MLx8FBLOwz1oxCsG5cWxJy2xobs6U7VlzbnDGrA=;
+        b=Dh9at8+2uwNEqI39BxlIwZWIDjWkyq4OapwoV1W3V7yXGsjI8X9GsEZSOFfLgh+q0u
+         TMMzaw62G859FxUHqwyMYoJOCZ2d0gIA8ok53pHEu6HSvvEfiOhW+FeFlVA1ZGY98pp4
+         UR3Kk8rhnzpNQyM6Cls6yPBuAvpymNiNJsLjw=
+Received: by 10.50.169.97 with SMTP id ad1mr4189341igc.35.1322947320210;
+        Sat, 03 Dec 2011 13:22:00 -0800 (PST)
+Received: from [192.168.1.20] (adsl-209-233-20-69.dsl.snfc21.pacbell.net. [209.233.20.69])
+        by mx.google.com with ESMTPS id eb23sm53087395ibb.2.2011.12.03.13.21.56
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 03 Dec 2011 12:36:02 -0800 (PST)
-X-Mailer: git-send-email 1.7.8
-In-Reply-To: <1322944550-27344-1-git-send-email-drafnel@gmail.com>
+        Sat, 03 Dec 2011 13:21:57 -0800 (PST)
+In-Reply-To: <20111203150842.GA4442@sigill.intra.peff.net>
+X-Mailer: Evolution 2.30.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186261>
 
-When git apply is passed something that is not a patch, it does not produce
-an error message or exit with a non-zero status if it was not actually
-"applying" the patch i.e. --check or --numstat etc were supplied on the
-command line.
+On Sat, 2011-12-03 at 10:08 -0500, Jeff King wrote:
 
-Fix this by producing an error when apply fails to find any hunks whatsoever
-while parsing the patch.
+> > 
+> > Suppose I make the digest pluggable, something I intended to do
+> > eventually anyway?  Then you just use the existing SHA-1 as an
+> > object identifier and the new digest in a signature chain?  What I
+> > did was essentially to compute the new digest (using a CRC as the
+> > trivial case) whenever an object's SHA-1 hash is computed, plus
+> > using the new digest for low-cost collision checks.
+> 
+> If you make the digest stronger (or pluggable) and include it in the
+> actual objects themselves, then you have a start on (2).
+> 
+> I'd drop all of the digest-exchange bits from the protocol, as the
+> actual signatures are the real, trustable verification. I don't think
+> you can drop the external storage of the digests, which is one of the
+> ugliest bits. You'll be asking for the digests all the time to create
+> new commit objects, so you need to have it at hand without rehashing.
 
-This will cause some of the output formats (--numstat, --diffstat, etc) to
-produce an error when they formerly would have reported zero changes and
-exited successfully.  That seems like the correct behavior though.  Failure
-to recognize the input as a patch should be an error.
+The digest-exchange bits, including the tests and response to errors,
+is only 222 lines of new code, so its really a minor part.  The rest
+takes care of what you referred to as "one of the ugliest bits," so
+I think it is useful to have available - you can then try various ways
+of improving the authentication of commit objects without having to do
+a lot of initial work.
 
-Plus, add a test.
+I can make those changes - probably over the next couple of weeks or
+so (have some other non-related things to take care of) and then send
+a new set of patches.
 
-Reported-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
-Signed-off-by: Brandon Casey <drafnel@gmail.com>
----
+> 
+> And I wouldn't get my hopes up that this will go into git any time soon.
+> At this point, we're really guessing about how broken SHA-1 will be in
+> the future, and how much we are going to want to care.
+> 
+> Just my two cents.
 
+Thanks for the discussion.  I might add that it is not just a question
+of how broken SHA-1 is.  If an IT department is considering adopting Git
+as the company's revision control system and authentication is important
+to the company, an IT manager may not accept SHA-1 for authentication
+purposes because NIST claims SHA-1 is not adequate for authentication in
+general and explaining to upper management why NIST's statement is not
+applicable given the way SHA-1 is used in Git is much harder than
+saying, "Git follows the current best practices regarding
+authentication."  That statement is a simple check-list item one can
+show upper management in comparing alternatives.
 
-Initially, I was reluctant to change the error message, thinking that
-error messages for plumbing commands were not supposed to change.  But I
-think I was wrong in that thought, so I changed the error message so it
-was a more descriptive "unrecognized input".
-
--Brandon
-
-
- builtin/apply.c        |   10 +++++-----
- t/t4136-apply-check.sh |   19 +++++++++++++++++++
- 2 files changed, 24 insertions(+), 5 deletions(-)
- create mode 100755 t/t4136-apply-check.sh
-
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 84a8a0b..46dcf3c 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -3590,15 +3590,12 @@ static int write_out_one_reject(struct patch *patch)
- 	return -1;
- }
- 
--static int write_out_results(struct patch *list, int skipped_patch)
-+static int write_out_results(struct patch *list)
- {
- 	int phase;
- 	int errs = 0;
- 	struct patch *l;
- 
--	if (!list && !skipped_patch)
--		return error("No changes");
--
- 	for (phase = 0; phase < 2; phase++) {
- 		l = list;
- 		while (l) {
-@@ -3724,6 +3721,9 @@ static int apply_patch(int fd, const char *filename, int options)
- 		offset += nr;
- 	}
- 
-+	if (!list && !skipped_patch)
-+		die("unrecognized input");
-+
- 	if (whitespace_error && (ws_error_action == die_on_ws_error))
- 		apply = 0;
- 
-@@ -3741,7 +3741,7 @@ static int apply_patch(int fd, const char *filename, int options)
- 	    !apply_with_reject)
- 		exit(1);
- 
--	if (apply && write_out_results(list, skipped_patch))
-+	if (apply && write_out_results(list))
- 		exit(1);
- 
- 	if (fake_ancestor)
-diff --git a/t/t4136-apply-check.sh b/t/t4136-apply-check.sh
-new file mode 100755
-index 0000000..a321f7c
---- /dev/null
-+++ b/t/t4136-apply-check.sh
-@@ -0,0 +1,19 @@
-+#!/bin/sh
-+
-+test_description='git apply should exit non-zero with unrecognized input.'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	test_commit 1
-+'
-+
-+test_expect_success 'apply --check exits non-zero with unrecognized input' '
-+	test_must_fail git apply --check - <<-\EOF
-+	I am not a patch
-+	I look nothing like a patch
-+	git apply must fail
-+	EOF
-+'
-+
-+test_done
--- 
-1.7.8
+Such issues (making technical choices for non-technical reasons) have
+come up before - I once worked on a high-speed (for the time) networking
+project and our manager mentioned that transferring medical records such
+as X-ray pictures was one application - they do not accept lossy data
+compression because, even if it is completely adequate, in a malpractice
+suit, the plaintiff's lawyer would say, "And they purposely threw away
+data critical to my client's health," which would sound pretty damning
+to a typical jury.  The legal risk outweighed the cost of the additional
+bandwidth.
