@@ -1,107 +1,100 @@
-From: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-Subject: Re: Debugging git-commit slowness on a large repo
-Date: Sat, 3 Dec 2011 01:23:47 +0100
-Message-ID: <20111203002347.GB2950@centaur.lab.cmartin.tk>
-References: <CAFE9C7B.2BFEC%joshua.redstone@fb.com>
+From: Bill Zaumen <bill.zaumen@gmail.com>
+Subject: Re: Suggestion on hashing
+Date: Fri, 02 Dec 2011 16:48:43 -0800
+Message-ID: <1322873323.1729.91.camel@yos>
+References: <1322813319.4340.109.camel@yos>
+	 <CACsJy8CO1GtpZVo-oA2eKbQadsXYBEKVLfUH0GONR5jovuvH+Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="k+w/mQv8wyuph6w0"
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Joshua Redstone <joshua.redstone@fb.com>
-X-From: git-owner@vger.kernel.org Sat Dec 03 01:23:59 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 03 01:58:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RWdOX-0003ZO-MJ
-	for gcvg-git-2@lo.gmane.org; Sat, 03 Dec 2011 01:23:58 +0100
+	id 1RWdvy-0005oJ-08
+	for gcvg-git-2@lo.gmane.org; Sat, 03 Dec 2011 01:58:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753204Ab1LCAXt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Dec 2011 19:23:49 -0500
-Received: from kimmy.cmartin.tk ([91.121.65.165]:54122 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752416Ab1LCAXs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Dec 2011 19:23:48 -0500
-Received: from centaur.lab.cmartin.tk (brln-4db9dc94.pool.mediaWays.net [77.185.220.148])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 4F437461A0;
-	Sat,  3 Dec 2011 01:23:05 +0100 (CET)
-Received: (nullmailer pid 2433 invoked by uid 1000);
-	Sat, 03 Dec 2011 00:23:47 -0000
-Mail-Followup-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	Joshua Redstone <joshua.redstone@fb.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <CAFE9C7B.2BFEC%joshua.redstone@fb.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753504Ab1LCAsu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Dec 2011 19:48:50 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:49105 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753287Ab1LCAst (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Dec 2011 19:48:49 -0500
+Received: by iage36 with SMTP id e36so4959550iag.19
+        for <git@vger.kernel.org>; Fri, 02 Dec 2011 16:48:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        bh=hcCEjrlBk1G2lM9FE0WbCqmTlFP9ASfbMtzN28pH9Qc=;
+        b=jEbckhKqJb5paowAhTYXbSFQgj5PK7vPqdbb7HxwdqCT3f6AUfdU4HQBtCDCB2+O/J
+         J6wAKmZOqEKkh8YEhwbtWOOV3WqdrubMNK+HWUYKvYAkYc9aOacCRiHQWBawr4obXYFc
+         R2MVCnnhLRoy3V8gcxF9u3eTYi7uOFK/u1TrM=
+Received: by 10.50.216.167 with SMTP id or7mr650582igc.22.1322873328820;
+        Fri, 02 Dec 2011 16:48:48 -0800 (PST)
+Received: from [192.168.1.20] (adsl-209-233-20-69.dsl.snfc21.pacbell.net. [209.233.20.69])
+        by mx.google.com with ESMTPS id v18sm40912797ibh.4.2011.12.02.16.48.46
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 02 Dec 2011 16:48:47 -0800 (PST)
+In-Reply-To: <CACsJy8CO1GtpZVo-oA2eKbQadsXYBEKVLfUH0GONR5jovuvH+Q@mail.gmail.com>
+X-Mailer: Evolution 2.30.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186248>
 
+On Fri, 2011-12-02 at 21:22 +0700, Nguyen Thai Ngoc Duy wrote:
+> (I'm not sure why you dropped git@vger. I see nothing private here so
+> I bring git@vger back)
 
---k+w/mQv8wyuph6w0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Oh, I just didn't want to flood the mailing list with too much on
+one topic and figured we could summarize a discussion at some point
+and post that, but if you'd rather keep it all on the list, that's 
+fine with me.
 
-On Fri, Dec 02, 2011 at 11:17:10PM +0000, Joshua Redstone wrote:
-> Hi,
-> I have a git repo with about 300k commits,  150k files totaling maybe 7GB.
->  Locally committing a small change - say touching fewer than 300 bytes
-> across 4 files - consistently takes over one second, which seems kinda
-> slow.  This is using git 1.7.7.4 on a linux 2.6 box.  The time does not
-> improve after doing a git-gc (my .git dir has maybe 250 files after a git
-> gc).  The same size commit on a brand new repo takes < 10ms.  Any thoughts
-> on why committing a small change seems to take a long time on larger repo=
-s?
+I can split the code into a series of smaller patches - smaller than
+the set of three I sent, but I'm not sure if the test scripts will work
+with all of the intermediate patches if I do that.
 
-By "same size commit" do you mean the same amount of changes, or the
-same amount of files? Committing doesn't depend on the size of the
-repo (by itself), but on the size of the index, which depends on the
-amount of files to be committed (as git is snapshot-based). At one
-point, commit forgot how to write the tree cache to the index (a
-performance optimisation). Do the times improve if you run 'git
-read-tree HEAD' between one commit and another? Note that this will
-reset the index to the last commit, though for the tests I image you
-use some variation of 'git commit -a'.
+I can also make the digest (current a CRC) pluggable.  Then you can try
+different digests as an experiment and see how that affects performance.
+My implementation uses the CRC or new digests only when
+the object database is being modified or explicitly verified. Basically
+the code provides memoization for an additional hash function, used
+for whatever purpose you desire.
 
-Thomas Rast wrote a patch to re-teach commit to store the tree cache,
-but there were some issues and never got applied.
+If you want to put a digest of message digests into a commit message,
+you can do that fairly quickly as one level of digests has been
+precomputed. I think Jeff's or your suggestion of putting an additional
+digest in the commit message is a good idea.  If you want to experiment
+with such changes, the code would provide a reasonable start on that.
 
->=20
-> Fwiw, I also tried doing the same test using libgit2 (via the pygit2
-> wrapper), and it was ever slower (about 6 seconds to commit the same small
-> change).
+So, I guess I should make those changes - pluggable digest and 
+splitting the patches further.
 
-I don't know about the python bindings, but on the (somewhat
-unscientific) tests for libgit2's write-tree (the slow part of a
-creating a commit), it performs slightly faster than git's (though I
-think git's write-tree does update the tree cache, which libgit2
-doesn't currently). The speed could just be a side-effect of the small
-test repo. From your domain, I assume the data is not for public
-consumption, but it'd be great if you could post your code to pygit2's
-issue tracker so we can see how much of the slowdown comes from the
-bindings or the library.
+> You'd need to convince git maintainer this is worth doing first,
+> before talking how big the changes are ;-)
 
-   cmn
+I'd guess there are several issues: the amount of code, how complex
+the changes are, what the performance impacts are, whether the changes
+are backwards compatible, and what you get for the effort.
 
-
---k+w/mQv8wyuph6w0
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAEBAgAGBQJO2WwTAAoJEHKRP1jG7ZzTTk4IAJ1qnjLe5I6qdVSMPVTQY0Ir
-dOjOFxK6eXQgII/FZYnHjTzrjjWAEQS2uuQaP6ILI7yZDEEncu3HdnCAE6TqAoTu
-FEeZbitG6uaJw2S93TEXpytvo61hX8PoTIO9+d+eKosLnxQTxTKlu6VItNxR+Qy7
-FDypHlmj27JgckNYKuCaIpyD2vDuXoM+tuT3uFOs06EKy+mDc9kDjueHW2khTaBl
-xWP5OrUyu1ra6P0WvDLNemwAORo6W0EiU8AUHYCBnEYOAH4k/66wtRAbxpgRWEai
-A1R+7HDdT3UekYztL8BxwITyTXx+Vvz6fSZDC18Pe24M29PPrbV4g7FxtRlioS8=
-=PdPB
------END PGP SIGNATURE-----
-
---k+w/mQv8wyuph6w0--
+As a start on the last question, "what you get," aside from some extra
+checking to detect problems, if you modify commit messages and signed
+tags to use better digests, you can make a stronger argument regarding
+authentication.  For example, suppose you have a project in which your
+code is dual-licensed - GPL for free use but a separate license if the
+code is used in a proprietary product and there is a legal dispute,
+using a better digest than SHA-1 would have some advantages - when they
+start calling in expert witnesses, one side will bring in a security
+expert who will testify that SHA-1 is too weak to be used for
+authentication, citing government publications such
+as http://csrc.nist.gov/groups/ST/hash/statement.html as evidence. The
+jury is not going to consist of people who can fully understand the
+details, so being able to say that git's authentication matches current
+best practices would be an additional reason to use git.
