@@ -1,79 +1,56 @@
-From: Pete Harlan <pgit@pcharlan.com>
-Subject: [bug?] checkout -m doesn't work without a base version
-Date: Sun, 04 Dec 2011 14:31:49 -0800
-Message-ID: <4EDBF4D5.6030908@pcharlan.com>
+From: Venkatesh Srinivas <vsrinivas@dragonflybsd.org>
+Subject: Bug: git bus error (stack blowout)
+Date: Sun, 4 Dec 2011 17:50:19 -0500
+Message-ID: <CAAcG=3NfvYSjhHDNb8aZ=_O4661bV7jkZBpmc77ZVCFDQQdHJw@mail.gmail.com>
+Reply-To: vsrinivas@ops101.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 04 23:38:45 2011
+X-From: git-owner@vger.kernel.org Sun Dec 04 23:51:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RXKho-0003oQ-BF
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Dec 2011 23:38:44 +0100
+	id 1RXKty-0007A7-Fk
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Dec 2011 23:51:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755854Ab1LDWig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Dec 2011 17:38:36 -0500
-Received: from hapkido.dreamhost.com ([66.33.216.122]:60245 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754742Ab1LDWif (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Dec 2011 17:38:35 -0500
-Received: from homiemail-a44.g.dreamhost.com (caibbdcaaaaf.dreamhost.com [208.113.200.5])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id 6A368184E21
-	for <git@vger.kernel.org>; Sun,  4 Dec 2011 14:32:30 -0800 (PST)
-Received: from homiemail-a44.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a44.g.dreamhost.com (Postfix) with ESMTP id 872CA11805C
-	for <git@vger.kernel.org>; Sun,  4 Dec 2011 14:31:51 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pcharlan.com; h=message-id:date
-	:from:mime-version:to:subject:content-type:
-	content-transfer-encoding; q=dns; s=pcharlan.com; b=FKIKDRijyL2y
-	+qpVnfO0Ih6YSFH8P6is9hIPZNgE8DVfF8VwncJaWPRysrcDv5EEJxXz8lw7XQ4X
-	/aYpeqW5bH7WkHeDOPDcfVYoFuvxpM95YAPIU6QLQ0v0U7bTx3AJA2330xEEfj1w
-	BFddnb0tSje2tniG6iL6u37u6/XtPuE=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pcharlan.com; h=message-id
-	:date:from:mime-version:to:subject:content-type:
-	content-transfer-encoding; s=pcharlan.com; bh=fM4Fu6pwLBz4Jy2clu
-	GKxzSCHVY=; b=Q4pVavKRpXUrJUxPp24UpbFyr9vOhMQV6D8b8ZlHWhwJ8fldIf
-	TkTRDTe+U5ZPgjYtYsAZfVbafQ/WTci4zv9GruZiZucXXrIwoQuuoOs2A7ngFT/i
-	yOc4yHkojD6/jcBNCg9yATJ1aPhjZDBlDk/PiOtF7ENUKFvdoWX5o8jJE=
-Received: from [192.168.0.102] (185.132-78-65.ftth.swbr.surewest.net [65.78.132.185])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: pgit@pcharlan.com)
-	by homiemail-a44.g.dreamhost.com (Postfix) with ESMTPSA id 70875118058
-	for <git@vger.kernel.org>; Sun,  4 Dec 2011 14:31:51 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:8.0) Gecko/20111124 Thunderbird/8.0
+	id S1754742Ab1LDWvB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Dec 2011 17:51:01 -0500
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:61699 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754143Ab1LDWvA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Dec 2011 17:51:00 -0500
+Received: by dadv6 with SMTP id v6so3486421dad.19
+        for <git@vger.kernel.org>; Sun, 04 Dec 2011 14:51:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:sender:from:date:x-google-sender-auth
+         :message-id:subject:to:content-type;
+        bh=Kvd5CT5l3vHxmTFuMJEWJj7YZX10CZCkeDpanMKqBaU=;
+        b=Y414FYfBdEVquq6c4s2oDqt9wgfOBnO9kVUDUuWnDzbCqkdZsuePj6yGUBkEXbpu4x
+         jlIR3dXVd61w8Qt4xy6QbFMx0E7iO7NEmxtrIqm8PggSRQTGBMgMcHYRHJzerZ+jw3/k
+         fpYq067l9QgulrzYWpSxYKjz/9RP8zl3+wWFw=
+Received: by 10.68.72.73 with SMTP id b9mr17692433pbv.74.1323039060223; Sun,
+ 04 Dec 2011 14:51:00 -0800 (PST)
+Received: by 10.143.12.11 with HTTP; Sun, 4 Dec 2011 14:50:19 -0800 (PST)
+X-Google-Sender-Auth: jU6Av72rgRPoqsiXpzb0WnWL9fw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186275>
 
 Hi,
 
-If during a merge I've resolved conflicts in foo.c but want to start
-over with foo.c to resolve them differently, I can say "git checkout
--m foo.c" to restore it to its un-resolved state.
-
-But this only works if there's a base version; if foo.c was added in
-each branch, we get:
-
-   error: path 'foo.c' does not have all three versions
-
-Git didn't need all three versions to create the original conflicted
-file, so why would it need them to recreate it?
-
-(The message is the same if I explicitly tell Git I don't want diff3
-via "git checkout --conflict=merge foo.c".)
-
-If this is considered a bug worth fixing I'll write a test that it
-fails; if it's expected behavior I think the docs should mention
-that.
+When using git 1.7.6.3 from NetBSD's pkgsrc, on this git tree:
+http://gitweb.dragonflybsd.org/pkgsrcv2.git, I got a bus error when
+switching from the pkgsrc-2011q3 branch to the master branch. I have a
+core file and the git binary if it'd be helpful; it looks like
+mark_parents_uninteresting() was called recursively entirely too many
+times (>60,000), originally from prepare_revision_walk(), from
+stat_tracking_info(), from format_tracking_info(),
+update_revs_for_switch(), from cmd_checkout().
 
 Thanks,
-
-Pete Harlan
-pgit@pcharlan.com
+-- vs;
