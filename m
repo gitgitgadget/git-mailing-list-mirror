@@ -1,63 +1,67 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH 2/2] builtin/apply.c: report error on failure to recognize input
-Date: Sun, 04 Dec 2011 09:39:07 -0600
-Message-ID: <197987ca-1fbd-473f-be7e-9e47439c47ee@email.android.com>
-References: <1322944550-27344-1-git-send-email-drafnel@gmail.com> <1322944550-27344-2-git-send-email-drafnel@gmail.com> <1323005418.9400.49.camel@sauron.fi.intel.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCHv2 0/4] git-p4: small fixes to branches and labels; tests
+Date: Sun, 4 Dec 2011 11:07:39 -0500
+Message-ID: <20111204160739.GA13549@arf.padd.com>
+References: <1322643817-13051-1-git-send-email-luke@diamand.org>
+ <loom.20111130T155409-599@post.gmane.org>
+ <4ED6809A.9020703@diamand.org>
+ <20111130225813.GA11544@arf.padd.com>
+ <20111130230007.GA11598@arf.padd.com>
+ <CAOpHH-U6NxRSioRZg9_+f146vVR+S1hWsVbRmHz+vsqtz+vXiA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: artem.bityutskiy@linux.intel.com
-X-From: git-owner@vger.kernel.org Sun Dec 04 16:39:34 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Luke Diamand <luke@diamand.org>, git@vger.kernel.org
+To: Vitor Antunes <vitor.hda@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 04 17:07:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RXEA6-0007oU-Il
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Dec 2011 16:39:30 +0100
+	id 1RXEbU-0007Y6-Ei
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Dec 2011 17:07:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754232Ab1LDPjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Dec 2011 10:39:19 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:35395 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754087Ab1LDPjT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Dec 2011 10:39:19 -0500
-Received: by ghrr1 with SMTP id r1so3874984ghr.19
-        for <git@vger.kernel.org>; Sun, 04 Dec 2011 07:39:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=references:user-agent:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:subject:from:date:to:cc:message-id;
-        bh=O73aSFNCuRjB4nFCYTXXA4MtLZXOQA+vUbtZlhvZelM=;
-        b=sRUmZYQ6GNx4XdoIzzjhlplOkMi3mMeJdGTRDhCc/P26DvcLQsMAeo1n3DYgTdiRLD
-         VaLznzbhCQIZ72x5fBNb5MLS4G3us1nJ5u26dvBE/I1mPdiHoKqbtGcVJzXYOOe255Q6
-         m8HVnk6eFkiyJlWSd68YYV/ps+4BOcneY7T0E=
-Received: by 10.236.153.226 with SMTP id f62mr7051289yhk.62.1323013158484;
-        Sun, 04 Dec 2011 07:39:18 -0800 (PST)
-Received: from [192.168.0.113] ([96.19.140.155])
-        by mx.google.com with ESMTPS id 39sm23128414anu.6.2011.12.04.07.39.16
-        (version=SSLv3 cipher=OTHER);
-        Sun, 04 Dec 2011 07:39:17 -0800 (PST)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <1323005418.9400.49.camel@sauron.fi.intel.com>
+	id S1754319Ab1LDQHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Dec 2011 11:07:44 -0500
+Received: from honk.padd.com ([74.3.171.149]:37457 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754037Ab1LDQHn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Dec 2011 11:07:43 -0500
+Received: from arf.padd.com (unknown [50.52.169.245])
+	by honk.padd.com (Postfix) with ESMTPSA id 386472FE9;
+	Sun,  4 Dec 2011 08:07:42 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 87D423154D; Sun,  4 Dec 2011 11:07:39 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <CAOpHH-U6NxRSioRZg9_+f146vVR+S1hWsVbRmHz+vsqtz+vXiA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186270>
 
-Artem Bityutskiy <artem.bityutskiy@linux.intel.com> wrote:
+vitor.hda@gmail.com wrote on Thu, 01 Dec 2011 00:37 +0000:
+> On Wed, Nov 30, 2011 at 11:00 PM, Pete Wyckoff <pw@padd.com> wrote:
+> > And avoids collision with some Vitor code that will get
+> > added eventually.
+> 
+> I'm starting to doubt I will ever be able to overcome the fast-import
+> limitation on not allowing branch delesetion. Sure, the code I wrote was
+> garbage! But they seem to be very relunctant on the concept of deleting
+> branches on the fly.
+> Did you ever take a look at the patch I sent? Maybe you could help me
+> shape it up a bit.
 
->Brandon, Thanks a lot for picking this. I did not reply because I did
->not have time to look at this after your review yet, it was in my TODO
->list. But I am happy you picked this and fixed the issue.
+I don't think we necessarily need branch deletion inside the
+fast-import.  Can you go back and look at my mail from August and
+see if that approach is doable?  Just make a single commit on a
+throwaway branch with no parent, checkpoint, then do diff-tree
+for each potential parent until you find a match.  Do the commit
+for real where it goes.  As git-p4 exits, we'll delete the branch
+ref of the test commit.
 
-No problem.
+If this works, we can see if fast-import can be taught to
+generate a tree object without a commit to save the need for a
+temporary branch.
 
->Tested-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
-
-Thanks.
-
--Brandon
+		-- Pete
