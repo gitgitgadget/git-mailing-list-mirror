@@ -1,277 +1,207 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH v2] git-p4: introduce skipSubmitEdit
-Date: Sun, 4 Dec 2011 19:22:45 -0500
-Message-ID: <20111205002245.GA8035@arf.padd.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Bug: git bus error (stack blowout)
+Date: Mon, 5 Dec 2011 11:58:17 +0700
+Message-ID: <20111205045816.GA31766@do>
+References: <CAAcG=3NfvYSjhHDNb8aZ=_O4661bV7jkZBpmc77ZVCFDQQdHJw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Loren A. Linden Levy" <lindenle@gmail.com>,
-	Luke Diamand <luke@diamand.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 05 01:23:00 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: vsrinivas@ops101.org
+X-From: git-owner@vger.kernel.org Mon Dec 05 05:58:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RXMKh-0007Z5-14
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Dec 2011 01:22:59 +0100
+	id 1RXQdQ-0005xV-5i
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Dec 2011 05:58:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756037Ab1LEAWv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Dec 2011 19:22:51 -0500
-Received: from honk.padd.com ([74.3.171.149]:35374 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755937Ab1LEAWu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Dec 2011 19:22:50 -0500
-Received: from arf.padd.com (unknown [50.52.169.245])
-	by honk.padd.com (Postfix) with ESMTPSA id AAEB827EE;
-	Sun,  4 Dec 2011 16:22:48 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id EE68831833; Sun,  4 Dec 2011 19:22:45 -0500 (EST)
+	id S1755173Ab1LEE6b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Dec 2011 23:58:31 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:52577 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755042Ab1LEE6a (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Dec 2011 23:58:30 -0500
+Received: by iakc1 with SMTP id c1so1504237iak.19
+        for <git@vger.kernel.org>; Sun, 04 Dec 2011 20:58:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=GTPGZ7HeylZV9GHosCo9qTYNMRSLuNFOdTF1q28cLAs=;
+        b=HHVj4/2RiqMY55U10kWudrBlQXN2iPDehyTBFm0BscfQmIZww3J5M5YMwazs2l38zl
+         jYpnuhTS+rpdyhN5CdIaZPlMEmoXZ3vb2GQ17z5qDUNK7/DVb7gFbGSc13PNlwN08fVo
+         gnNGEFXaa7dm6jDNHmM4/RMKOa3cVAbc0D4Yw=
+Received: by 10.50.149.165 with SMTP id ub5mr8530459igb.23.1323061109809;
+        Sun, 04 Dec 2011 20:58:29 -0800 (PST)
+Received: from pclouds@gmail.com ([115.74.41.182])
+        by mx.google.com with ESMTPS id g16sm71926531ibs.8.2011.12.04.20.58.26
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 04 Dec 2011 20:58:28 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 05 Dec 2011 11:58:17 +0700
 Content-Disposition: inline
+In-Reply-To: <CAAcG=3NfvYSjhHDNb8aZ=_O4661bV7jkZBpmc77ZVCFDQQdHJw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186277>
 
-Add a configuration variable to skip invoking the editor in the
-submit path.
+On Sun, Dec 04, 2011 at 05:50:19PM -0500, Venkatesh Srinivas wrote:
+> Hi,
+>=20
+> When using git 1.7.6.3 from NetBSD's pkgsrc, on this git tree:
+> http://gitweb.dragonflybsd.org/pkgsrcv2.git, I got a bus error when
+> switching from the pkgsrc-2011q3 branch to the master branch. I have =
+a
+> core file and the git binary if it'd be helpful; it looks like
+> mark_parents_uninteresting() was called recursively entirely too many
+> times (>60,000), originally from prepare_revision_walk(), from
+> stat_tracking_info(), from format_tracking_info(),
+> update_revs_for_switch(), from cmd_checkout().
 
-The existing variable skipSubmitEditCheck continues to make sure
-that the submit template was indeed modified by the editor; but,
-it is not considered if skipSubmitEdit is true.
+This patch may fix it for you, although it'd be interesting to
+understand how you get into this (I'm still cloning pkgsrcv2.git).
 
-Reported-by: Loren A. Linden Levy <lindenle@gmail.com>
-Acked-by: Luke Diamand <luke@diamand.org>
-Signed-off-by: Pete Wyckoff <pw@padd.com>
+-- 8< --
+Subject: [PATCH] Eliminate recursion in setting/clearing marks in commi=
+t list
+
+Recursion in a DAG is generally a bad idea because it could be very
+deep. Be defensive and avoid recursion in mark_parents_uninteresting()
+and clear_commit_marks().
+
+mark_parents_uninteresting() learns a trick from clear_commit_marks()
+to avoid malloc() in (dorminant) single-parent case.
+
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
+ commit.c   |   31 ++++++++++++++++++++-----------
+ revision.c |   45 +++++++++++++++++++++++++++++----------------
+ 2 files changed, 49 insertions(+), 27 deletions(-)
 
-This was talked about and reviewed back in September 2011.
-I think it's ready to include in the next release.
-Thanks,
-
-		-- Pete
-
- contrib/fast-import/git-p4     |   59 ++++++++++++++++++----------
- contrib/fast-import/git-p4.txt |   19 ++++++++-
- t/t9805-skip-submit-edit.sh    |   82 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 136 insertions(+), 24 deletions(-)
- create mode 100755 t/t9805-skip-submit-edit.sh
-
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index b975d67..7fd8bf0 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -847,6 +847,38 @@ class P4Submit(Command, P4UserMap):
- 
-         return template
- 
-+    def edit_template(self, template_file):
-+        """Invoke the editor to let the user change the submission
-+           message.  Return true if okay to continue with the submit."""
+diff --git a/commit.c b/commit.c
+index 0775eec..cd19a69 100644
+--- a/commit.c
++++ b/commit.c
+@@ -423,22 +423,31 @@ struct commit *pop_most_recent_commit(struct comm=
+it_list **list,
+=20
+ void clear_commit_marks(struct commit *commit, unsigned int mark)
+ {
+-	while (commit) {
+-		struct commit_list *parents;
++	struct commit_list *list =3D NULL, *l;
++	commit_list_insert(commit, &list);
++	while (list) {
++		commit =3D list->item;
++		l =3D list;
++		list =3D list->next;
++		free(l);
+=20
+-		if (!(mark & commit->object.flags))
+-			return;
++		while (commit) {
++			struct commit_list *parents;
+=20
+-		commit->object.flags &=3D ~mark;
++			if (!(mark & commit->object.flags))
++				break;
+=20
+-		parents =3D commit->parents;
+-		if (!parents)
+-			return;
++			commit->object.flags &=3D ~mark;
 +
-+        # if configured to skip the editing part, just submit
-+        if gitConfig("git-p4.skipSubmitEdit") == "true":
-+            return True
++			parents =3D commit->parents;
++			if (!parents)
++				break;
+=20
+-		while ((parents =3D parents->next))
+-			clear_commit_marks(parents->item, mark);
++			while ((parents =3D parents->next))
++				commit_list_insert(parents->item, &list);
+=20
+-		commit =3D commit->parents->item;
++			commit =3D commit->parents->item;
++		}
+ 	}
+ }
+=20
+diff --git a/revision.c b/revision.c
+index 0aa3638..8d4069e 100644
+--- a/revision.c
++++ b/revision.c
+@@ -139,11 +139,32 @@ void mark_tree_uninteresting(struct tree *tree)
+=20
+ void mark_parents_uninteresting(struct commit *commit)
+ {
+-	struct commit_list *parents =3D commit->parents;
++	struct commit_list *parents =3D NULL, *l;
 +
-+        # look at the modification time, to check later if the user saved
-+        # the file
-+        mtime = os.stat(template_file).st_mtime
++	for (l =3D commit->parents; l; l =3D l->next)
++		commit_list_insert(l->item, &parents);
+=20
+ 	while (parents) {
+ 		struct commit *commit =3D parents->item;
+-		if (!(commit->object.flags & UNINTERESTING)) {
++		l =3D parents;
++		parents =3D parents->next;
++		free(l);
 +
-+        # invoke the editor
-+        if os.environ.has_key("P4EDITOR"):
-+            editor = os.environ.get("P4EDITOR")
-+        else:
-+            editor = read_pipe("git var GIT_EDITOR").strip()
-+        system(editor + " " + template_file)
++		while (commit) {
++			/*
++			 * A missing commit is ok iff its parent is marked
++			 * uninteresting.
++			 *
++			 * We just mark such a thing parsed, so that when
++			 * it is popped next time around, we won't be trying
++			 * to parse it and get an error.
++			 */
++			if (!has_sha1_file(commit->object.sha1))
++				commit->object.parsed =3D 1;
 +
-+        # If the file was not saved, prompt to see if this patch should
-+        # be skipped.  But skip this verification step if configured so.
-+        if gitConfig("git-p4.skipSubmitEditCheck") == "true":
-+            return True
++			if (commit->object.flags & UNINTERESTING)
++				break;
 +
-+        if os.stat(template_file).st_mtime <= mtime:
-+            while True:
-+                response = raw_input("Submit template unchanged. Submit anyway? [y]es, [n]o (skip this patch) ")
-+                if response == 'y':
-+                    return True
-+                if response == 'n':
-+                    return False
-+
-     def applyCommit(self, id):
-         print "Applying %s" % (read_pipe("git log --max-count=1 --pretty=oneline %s" % id))
- 
-@@ -1001,7 +1033,7 @@ class P4Submit(Command, P4UserMap):
- 
-             separatorLine = "######## everything below this line is just the diff #######\n"
- 
--            [handle, fileName] = tempfile.mkstemp()
-+            (handle, fileName) = tempfile.mkstemp()
-             tmpFile = os.fdopen(handle, "w+")
-             if self.isWindows:
-                 submitTemplate = submitTemplate.replace("\n", "\r\n")
-@@ -1009,25 +1041,9 @@ class P4Submit(Command, P4UserMap):
-                 newdiff = newdiff.replace("\n", "\r\n")
-             tmpFile.write(submitTemplate + separatorLine + diff + newdiff)
-             tmpFile.close()
--            mtime = os.stat(fileName).st_mtime
--            if os.environ.has_key("P4EDITOR"):
--                editor = os.environ.get("P4EDITOR")
--            else:
--                editor = read_pipe("git var GIT_EDITOR").strip()
--            system(editor + " " + fileName)
- 
--            if gitConfig("git-p4.skipSubmitEditCheck") == "true":
--                checkModTime = False
--            else:
--                checkModTime = True
--
--            response = "y"
--            if checkModTime and (os.stat(fileName).st_mtime <= mtime):
--                response = "x"
--                while response != "y" and response != "n":
--                    response = raw_input("Submit template unchanged. Submit anyway? [y]es, [n]o (skip this patch) ")
--
--            if response == "y":
-+            if self.edit_template(fileName):
-+                # read the edited message and submit
-                 tmpFile = open(fileName, "rb")
-                 message = tmpFile.read()
-                 tmpFile.close()
-@@ -1039,11 +1055,12 @@ class P4Submit(Command, P4UserMap):
-                 if self.preserveUser:
-                     if p4User:
-                         # Get last changelist number. Cannot easily get it from
--                        # the submit command output as the output is unmarshalled.
-+                        # the submit command output as the output is
-+                        # unmarshalled.
-                         changelist = self.lastP4Changelist()
-                         self.modifyChangelistUser(changelist, p4User)
--
-             else:
-+                # skip this patch
-                 for f in editedFiles:
-                     p4_revert(f)
-                 for f in filesToAdd:
-diff --git a/contrib/fast-import/git-p4.txt b/contrib/fast-import/git-p4.txt
-index 52003ae..5044a12 100644
---- a/contrib/fast-import/git-p4.txt
-+++ b/contrib/fast-import/git-p4.txt
-@@ -202,11 +202,24 @@ able to find the relevant client.  This client spec will be used to
- both filter the files cloned by git and set the directory layout as
- specified in the client (this implies --keep-path style semantics).
- 
--git-p4.skipSubmitModTimeCheck
-+git-p4.skipSubmitEdit
- 
--  git config [--global] git-p4.skipSubmitModTimeCheck false
-+  git config [--global] git-p4.skipSubmitEdit false
- 
--If true, submit will not check if the p4 change template has been modified.
-+Normally, git-p4 invokes an editor after each commit is applied so
-+that you can make changes to the submit message.  Setting this
-+variable to true will skip the editing step, submitting the change as is.
-+
-+git-p4.skipSubmitEditCheck
-+
-+  git config [--global] git-p4.skipSubmitEditCheck false
-+
-+After the editor is invoked, git-p4 normally makes sure you saved the
-+change description, as an indication that you did indeed read it over
-+and edit it.  You can quit without saving to abort the submit (or skip
-+this change and continue).  Setting this variable to true will cause
-+git-p4 not to check if you saved the change description.  This variable
-+only matters if git-p4.skipSubmitEdit has not been set to true.
- 
- git-p4.preserveUser
- 
-diff --git a/t/t9805-skip-submit-edit.sh b/t/t9805-skip-submit-edit.sh
-new file mode 100755
-index 0000000..734ccf2
---- /dev/null
-+++ b/t/t9805-skip-submit-edit.sh
-@@ -0,0 +1,82 @@
-+#!/bin/sh
-+
-+test_description='git-p4 skipSubmitEdit config variables'
-+
-+. ./lib-git-p4.sh
-+
-+test_expect_success 'start p4d' '
-+	start_p4d
-+'
-+
-+test_expect_success 'init depot' '
-+	(
-+		cd "$cli" &&
-+		echo file1 >file1 &&
-+		p4 add file1 &&
-+		p4 submit -d "change 1"
-+	)
-+'
-+
-+# this works because EDITOR is set to :
-+test_expect_success 'no config, unedited, say yes' '
-+	"$GITP4" clone --dest="$git" //depot &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		echo line >>file1 &&
-+		git commit -a -m "change 2" &&
-+		echo y | "$GITP4" submit &&
-+		p4 changes //depot/... >wc &&
-+		test_line_count = 2 wc
-+	)
-+'
-+
-+test_expect_success 'no config, unedited, say no' '
-+	"$GITP4" clone --dest="$git" //depot &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		echo line >>file1 &&
-+		git commit -a -m "change 3 (not really)" &&
-+		printf "bad response\nn\n" | "$GITP4" submit
-+		p4 changes //depot/... >wc &&
-+		test_line_count = 2 wc
-+	)
-+'
-+
-+test_expect_success 'skipSubmitEdit' '
-+	"$GITP4" clone --dest="$git" //depot &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		git config git-p4.skipSubmitEdit true &&
-+		# will fail if editor is even invoked
-+		git config core.editor /bin/false &&
-+		echo line >>file1 &&
-+		git commit -a -m "change 3" &&
-+		"$GITP4" submit &&
-+		p4 changes //depot/... >wc &&
-+		test_line_count = 3 wc
-+	)
-+'
-+
-+test_expect_success 'skipSubmitEditCheck' '
-+	"$GITP4" clone --dest="$git" //depot &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		git config git-p4.skipSubmitEditCheck true &&
-+		echo line >>file1 &&
-+		git commit -a -m "change 4" &&
-+		"$GITP4" submit &&
-+		p4 changes //depot/... >wc &&
-+		test_line_count = 4 wc
-+	)
-+'
-+
-+
-+test_expect_success 'kill p4d' '
-+	kill_p4d
-+'
-+
-+test_done
--- 
-1.7.8.rc4.30.g3c9dc
+ 			commit->object.flags |=3D UNINTERESTING;
+=20
+ 			/*
+@@ -154,21 +175,13 @@ void mark_parents_uninteresting(struct commit *co=
+mmit)
+ 			 * wasn't uninteresting), in which case we need
+ 			 * to mark its parents recursively too..
+ 			 */
+-			if (commit->parents)
+-				mark_parents_uninteresting(commit);
+-		}
++			if (!commit->parents)
++				break;
+=20
+-		/*
+-		 * A missing commit is ok iff its parent is marked
+-		 * uninteresting.
+-		 *
+-		 * We just mark such a thing parsed, so that when
+-		 * it is popped next time around, we won't be trying
+-		 * to parse it and get an error.
+-		 */
+-		if (!has_sha1_file(commit->object.sha1))
+-			commit->object.parsed =3D 1;
+-		parents =3D parents->next;
++			for (l =3D commit->parents->next; l; l =3D l->next)
++				commit_list_insert(l->item, &parents);
++			commit =3D commit->parents->item;
++		}
+ 	}
+ }
+=20
+--=20
+1.7.8.36.g69ee2
+-- 8< --
+--=20
+Duy
