@@ -1,67 +1,132 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH, v4] git-tag: introduce --cleanup option
-Date: Mon, 05 Dec 2011 14:30:04 -0800
-Message-ID: <7v39cylkib.fsf@alter.siamese.dyndns.org>
-References: <1322972426-7591-1-git-send-email-kirill@shutemov.name>
- <20111205215148.GA22663@sigill.intra.peff.net>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: [PATCH 2/2] builtin/apply.c: report error on failure to recognize input
+Date: Mon, 5 Dec 2011 16:38:31 -0600
+Message-ID: <CA+sFfMccK8CLygNPfiGJdJ4LDwwBG-+ji6ofs7L9K60T9CYNWg@mail.gmail.com>
+References: <1322944550-27344-1-git-send-email-drafnel@gmail.com>
+	<1322944550-27344-2-git-send-email-drafnel@gmail.com>
+	<7vzkf6lsyx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Kirill A. Shutemov" <kirill@shutemov.name>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 05 23:30:16 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, artem.bityutskiy@linux.intel.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 05 23:38:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RXh3A-00013P-6I
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Dec 2011 23:30:16 +0100
+	id 1RXhBG-0004Il-1D
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Dec 2011 23:38:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932609Ab1LEWaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Dec 2011 17:30:09 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40197 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932486Ab1LEWaI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Dec 2011 17:30:08 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D176A6A5F;
-	Mon,  5 Dec 2011 17:30:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gXtx9Azqj77FT6XmfbtNN83VKjc=; b=L78Rxu
-	Q+jcqeysElKR6pmGkSx4RatC20YAIuzKYNBvSaEZ8ZV7DUOdoDs6DjiuU8gXfVOh
-	JDCOgAUHVtgf+gqSt30BsDzusmo9804pLaQJ1FBLp0Cogl3GD13ddYjDiW4YD/+l
-	73mr4vGGxFwq58ZNheGjQAmBXErlPNuu30Gm8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AsQiUSsgxXSTQW3R0VsPHTZg3c6jLbqb
-	jZcxQTUcSveRtLS8xDV7P9TeYpCjoGlOGUMt81gIvlpHmfQll5TT+p6AqlxA4+FA
-	RseKpsF/FH7whod9xeRKKisWTZ4O9FdQt/uN6bY8zctJ8La0JCYavbNUkg4gy1nt
-	ig0kj15UNco=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C87226A5E;
-	Mon,  5 Dec 2011 17:30:07 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5CB686A5B; Mon,  5 Dec 2011
- 17:30:06 -0500 (EST)
-In-Reply-To: <20111205215148.GA22663@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 5 Dec 2011 16:51:48 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AEA96F28-1F90-11E1-9E55-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932639Ab1LEWid convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Dec 2011 17:38:33 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:45939 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932486Ab1LEWic convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Dec 2011 17:38:32 -0500
+Received: by ggnr5 with SMTP id r5so5548769ggn.19
+        for <git@vger.kernel.org>; Mon, 05 Dec 2011 14:38:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=/X0+aYRqs1aehwl2Ubt8J5CXSMFb1GudEE0aUrCPhiA=;
+        b=i5UawTUK89onrOc8d7RnNSzdWOFwIOtSY0C9yte2Vjz0CsCpIp7/s0x5EurCDF10Rg
+         ICjyjdSsytbf0byDjp21X0Rq535gbdudnU2+7jhavewzocA48LfrD+hxabnyUj+Bnire
+         fPBwInjEY9xk10JeLD43PCtvs6TCJUUOIRurc=
+Received: by 10.182.47.100 with SMTP id c4mr2165206obn.79.1323124712307; Mon,
+ 05 Dec 2011 14:38:32 -0800 (PST)
+Received: by 10.182.60.4 with HTTP; Mon, 5 Dec 2011 14:38:31 -0800 (PST)
+In-Reply-To: <7vzkf6lsyx.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186296>
 
-Jeff King <peff@peff.net> writes:
+On Mon, Dec 5, 2011 at 1:27 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Brandon Casey <drafnel@gmail.com> writes:
+>
+>> When git apply is passed something that is not a patch, it does not =
+produce
+>> an error message or exit with a non-zero status if it was not actual=
+ly
+>> "applying" the patch i.e. --check or --numstat etc were supplied on =
+the
+>> command line.
+>>
+>> Fix this by producing an error when apply fails to find any hunks wh=
+atsoever
+>> while parsing the patch.
+>>
+>> This will cause some of the output formats (--numstat, --diffstat, e=
+tc) to
+>> produce an error when they formerly would have reported zero changes=
+ and
+>> exited successfully. =C2=A0That seems like the correct behavior thou=
+gh. =C2=A0Failure
+>> to recognize the input as a patch should be an error.
+>>
+>> Plus, add a test.
+>>
+>> Reported-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
+>> Signed-off-by: Brandon Casey <drafnel@gmail.com>
+>> ---
+>>
+>> Initially, I was reluctant to change the error message, thinking tha=
+t
+>> error messages for plumbing commands were not supposed to change. =C2=
+=A0But I
+>> think I was wrong in that thought, so I changed the error message so=
+ it
+>> was a more descriptive "unrecognized input".
+>
+> I am still reluctant to see
+>
+> =C2=A0 =C2=A0$ git apply </dev/null
+> =C2=A0 =C2=A0error: unrecognized input
+>
+> instead of "error: No changes", though.
 
-> More importantly, though, this seems to break t6300 badly. I haven't
-> looked into why yet, though.
+I'm not partial to "unrecognized input", but I thought it was more
+descriptive of what happened than "No changes".  This error message is
+only printed out when absolutely no hunks were found while parsing the
+input.
 
-Also breaks 7004 which is _about_ tags.
+> "git apply --check" is about asking "do you see anything offending in=
+ the
+> diff?" and it is not "git apply --dry-run" that asks "do you promise =
+if I
+> feed this for real to you you will apply it without complaint?".
+>
+> I am slightly in favor of answering "well you do not have a diff to b=
+egin
+> with, which in itself is suspicious" to "do you see anything offendin=
+g?"
+> question, but I have to admit that it is an equally valid answer to s=
+ay
+> "no, there is nothing offending in the diff.", which is what we do wi=
+th
+> the current code.
+>
+> So, I dunno.
 
-Rolling a broken patch in quick succession to v4 without ever running
-tests (and not adding new test pieces to protect new feature) is not a
-very productive way to use the reviewer bandwidth on this list.
+I think the current code is a little inconsistent with respect to
+empty or bogus non-diff input.
+
+It seems more consistent that if it is an error to tell git apply to
+apply zero hunks, then it is also an error to --check zero hunks, or
+--stat etc.  In all cases the cause is the same: failure to find any
+hunks in the input because the input was not a diff.
+
+Also, the man page description of --check says that it checks "if the
+patch is applicable to the current working tree and/or the index".
+The new behavior would answer that with "no, this patch is not
+applicable ... since no hunks were found", rather than "yes, because
+no hunks were found".  But I'm really arguing on the side of
+"unrecognized input should be an error", since the new behavior would
+also be an error for --stat, --numstat, etc.
+
+-Brandon
