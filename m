@@ -1,97 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Roadmap for 1.7.9
-Date: Mon, 05 Dec 2011 12:07:57 -0800
-Message-ID: <7vd3c2lr36.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v2 0/3] grep multithreading and scaling
+Date: Mon, 5 Dec 2011 21:16:47 +0100
+Message-ID: <201112052116.48106.trast@student.ethz.ch>
+References: <201111291507.04754.trast@student.ethz.ch> <20111202173400.GC23447@sigill.intra.peff.net> <201112051038.16423.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 05 21:08:10 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: =?iso-8859-1?q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Eric Herman <eric@freesa.org>, <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 05 21:17:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RXepd-0005DM-B7
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Dec 2011 21:08:09 +0100
+	id 1RXeyC-0000Bm-SP
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Dec 2011 21:17:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756158Ab1LEUIB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Dec 2011 15:08:01 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39476 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756163Ab1LEUIA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Dec 2011 15:08:00 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C20535208;
-	Mon,  5 Dec 2011 15:07:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=i
-	6Le6Ldy1OZ5kuOhokj18hFIths=; b=v6RUbviQigddmVoHAoxEx9xebAiYkO5KT
-	lVKayuhPDIYW2DOh8mL5X3EHq4NkK6KNgVwAMW9JCAC99JCREISM5AdgjdF3Yz/1
-	WKyx+xe4h4U64zZp6Nor3bwl7SYCOFbV9ReeMI+gd5bDEYwBs1RLs6MqAnQxLUhh
-	JmIxIUN5bY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=ZOo
-	e702ZCuKbhYM7tAB322TA6zqrxPqa7zrz6D9O5RUHuBSiYqj0uMa9aCSRLZoHD+D
-	qskWSmgz5CMGL0WdyIPvqPifM1uUnQev4tagYXT/nTcIokX+omvsEOT6k9ozCW7I
-	y2tMO04MoGEfQupnjdCZ9PsQZb9mifb5n+LkmXn8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B94825207;
-	Mon,  5 Dec 2011 15:07:59 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4AB675206; Mon,  5 Dec 2011
- 15:07:59 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D4211E36-1F7C-11E1-B1E0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932415Ab1LEUQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Dec 2011 15:16:54 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:58015 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932079Ab1LEUQy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Dec 2011 15:16:54 -0500
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 5 Dec
+ 2011 21:16:49 +0100
+Received: from thomas.inf.ethz.ch (129.132.211.12) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 5 Dec
+ 2011 21:16:48 +0100
+User-Agent: KMail/1.13.7 (Linux/3.1.3-1-desktop; KDE/4.6.5; x86_64; ; )
+In-Reply-To: <201112051038.16423.trast@student.ethz.ch>
+X-Originating-IP: [129.132.211.12]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186289>
 
-I do not do roadmaps, so the title of this message is not quite correct,
-but I think I should post my current thinking on what have been cooking so
-far that deserve to be polished further to be in the next release.
+Thomas Rast wrote:
+> 
+> I just found out that on Linux, there's mincore() that can tell us
+> (racily, but who cares) whether a given file mapping is in memory.
+[...]
+> So that looks fairly promising, and the order would then be:
+> 
+> - if stat-clean, and we have mincore(), and it tells us we can do it
+>   cheaply: grab file from tree
+> 
+> - if it's a loose object: decompress it
+> 
+> - if stat-clean: grab file from tree
+> 
+> - access packs as usual
 
-I've been aiming for a release cycle that lasts for 8 to 10 weeks, and the
-last 2 or 3 weeks of a cycle is meant for release candidate testing that
-we fix only regressions, which means we need to see how much we can do
-within 5 to 8 weeks. The current cycle is expected to end at the end of
-January next month [*1*].
+Just a small note, I tried two things:
 
-I am not so worried about small and obvious fixes and enhancements, and
-changes in the periphery areas. They can and will be merged as they come
-and cook long enough in 'next' without issues reported by their users. I
-expect what have been cooking in 'next' during the feature-freeze before
-the 1.7.8 release, other than the ones listed below, to be more or less
-ready already and they should be in 'master' shortly.
+* the simpler option of grabbing a loose object if it exists and is
+  mincore() turns out to massively slow down 'git log HEAD', probably
+  because only very few of these objects are loose in the first place
 
-Now, here are the biggies that we would want to try to have in reasonable
-shape before the next release. The list may be a bit too ambitious, given
-that this cycle overlaps with end-of-this-year/beginning-of-new-year
-holiday season in various cultures.
+* doing this only under grep's use_threads, and dropping the lock
+  around unpack_sha1_file() [i.e., zlib decompression] still results
+  in a git-grep that is slower than without this, though not much
 
- * Credentials and keychain (Peff)
- * Pulling signed tag (me, Linus)
- * Update "request-pull" script with information that matters (me)
- * Revisiting threading of grep (Rene, Thomas Rast)
- * Optimization of reading hierarchical refspace lazily (Michael Haggerty)
+So no improvement here.  Will have to look into the worktree trick
+though.
 
-I expect the following will not make much progress without further
-discussion:
-
- * Signed commit (me)
- * Ignored vs Precious (Nguyen Thai Ngoc Duy)
- * Sequencer (Ram, Jonathan Nieder)
-
-I think the following are too big to be ready by the end of this cycle
-(polishing could and will continue as time permits).
-
- * Large-files
-  - bulk check-in (me)
-  - "Chunked" encoding of large files (me)
-
-
-[Reference]
-
-*1* https://www.google.com/calendar/embed?src=jfgbl2mrlipp4pb6ieih0qr3so%40group.calendar.google.com&ctz=America/Los_Angeles
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
