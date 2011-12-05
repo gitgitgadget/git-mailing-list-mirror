@@ -1,132 +1,133 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH 2/2] builtin/apply.c: report error on failure to recognize input
-Date: Mon, 5 Dec 2011 16:38:31 -0600
-Message-ID: <CA+sFfMccK8CLygNPfiGJdJ4LDwwBG-+ji6ofs7L9K60T9CYNWg@mail.gmail.com>
-References: <1322944550-27344-1-git-send-email-drafnel@gmail.com>
-	<1322944550-27344-2-git-send-email-drafnel@gmail.com>
-	<7vzkf6lsyx.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH, v4] git-tag: introduce --cleanup option
+Date: Mon, 05 Dec 2011 14:41:26 -0800
+Message-ID: <7vvcpuk5ex.fsf@alter.siamese.dyndns.org>
+References: <1322972426-7591-1-git-send-email-kirill@shutemov.name>
+ <20111205215148.GA22663@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, artem.bityutskiy@linux.intel.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 05 23:38:38 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: "Kirill A. Shutemov" <kirill@shutemov.name>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 05 23:41:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RXhBG-0004Il-1D
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Dec 2011 23:38:38 +0100
+	id 1RXhE6-0005Kz-Fd
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Dec 2011 23:41:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932639Ab1LEWid convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Dec 2011 17:38:33 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:45939 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932486Ab1LEWic convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Dec 2011 17:38:32 -0500
-Received: by ggnr5 with SMTP id r5so5548769ggn.19
-        for <git@vger.kernel.org>; Mon, 05 Dec 2011 14:38:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=/X0+aYRqs1aehwl2Ubt8J5CXSMFb1GudEE0aUrCPhiA=;
-        b=i5UawTUK89onrOc8d7RnNSzdWOFwIOtSY0C9yte2Vjz0CsCpIp7/s0x5EurCDF10Rg
-         ICjyjdSsytbf0byDjp21X0Rq535gbdudnU2+7jhavewzocA48LfrD+hxabnyUj+Bnire
-         fPBwInjEY9xk10JeLD43PCtvs6TCJUUOIRurc=
-Received: by 10.182.47.100 with SMTP id c4mr2165206obn.79.1323124712307; Mon,
- 05 Dec 2011 14:38:32 -0800 (PST)
-Received: by 10.182.60.4 with HTTP; Mon, 5 Dec 2011 14:38:31 -0800 (PST)
-In-Reply-To: <7vzkf6lsyx.fsf@alter.siamese.dyndns.org>
+	id S932663Ab1LEWla (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Dec 2011 17:41:30 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46394 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932486Ab1LEWl3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Dec 2011 17:41:29 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D25186D99;
+	Mon,  5 Dec 2011 17:41:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vHEroC61NX9zYxAAppxT6d8NNM0=; b=pUL7nR
+	QBeNPksdKmV6RmKDEbSvy5qcBXJF/DzXLaDzmcnhqQYJo5ky/bgT79IktGEtBRVV
+	BuDQxp2FJN16AUgGpOusiszRPQyk+uguNtB1uIaMgDY4fR4OAH+CttMeTwAUG3Qk
+	v9J2ZdummSmW5v3+Y6g/8fiToQ78D3kGZsJwo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KHJD9nncKCYHemH58mq4fHA++IDbZkNc
+	MyoYKGAaNqe6WGP0JBWwMW7BETNkZl4NGSQ6hBfTElKt9ZeREeA2KujfXB79UMnK
+	976/vU73645C9qSKE29tVU2EZf0JyVBHDqWlNXAXm7wKU3TKAMotcb7O8kgBz4lp
+	wv4dpQLsGVE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C94816D98;
+	Mon,  5 Dec 2011 17:41:28 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 45A4D6D97; Mon,  5 Dec 2011
+ 17:41:28 -0500 (EST)
+In-Reply-To: <20111205215148.GA22663@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 5 Dec 2011 16:51:48 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 451BD47C-1F92-11E1-829E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186297>
 
-On Mon, Dec 5, 2011 at 1:27 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Brandon Casey <drafnel@gmail.com> writes:
->
->> When git apply is passed something that is not a patch, it does not =
-produce
->> an error message or exit with a non-zero status if it was not actual=
-ly
->> "applying" the patch i.e. --check or --numstat etc were supplied on =
-the
->> command line.
->>
->> Fix this by producing an error when apply fails to find any hunks wh=
-atsoever
->> while parsing the patch.
->>
->> This will cause some of the output formats (--numstat, --diffstat, e=
-tc) to
->> produce an error when they formerly would have reported zero changes=
- and
->> exited successfully. =C2=A0That seems like the correct behavior thou=
-gh. =C2=A0Failure
->> to recognize the input as a patch should be an error.
->>
->> Plus, add a test.
->>
->> Reported-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
->> Signed-off-by: Brandon Casey <drafnel@gmail.com>
->> ---
->>
->> Initially, I was reluctant to change the error message, thinking tha=
-t
->> error messages for plumbing commands were not supposed to change. =C2=
-=A0But I
->> think I was wrong in that thought, so I changed the error message so=
- it
->> was a more descriptive "unrecognized input".
->
-> I am still reluctant to see
->
-> =C2=A0 =C2=A0$ git apply </dev/null
-> =C2=A0 =C2=A0error: unrecognized input
->
-> instead of "error: No changes", though.
+Jeff King <peff@peff.net> writes:
 
-I'm not partial to "unrecognized input", but I thought it was more
-descriptive of what happened than "No changes".  This error message is
-only printed out when absolutely no hunks were found while parsing the
-input.
+> More importantly, though, this seems to break t6300 badly. I haven't
+> looked into why yet, though.
 
-> "git apply --check" is about asking "do you see anything offending in=
- the
-> diff?" and it is not "git apply --dry-run" that asks "do you promise =
-if I
-> feed this for real to you you will apply it without complaint?".
->
-> I am slightly in favor of answering "well you do not have a diff to b=
-egin
-> with, which in itself is suspicious" to "do you see anything offendin=
-g?"
-> question, but I have to admit that it is an equally valid answer to s=
-ay
-> "no, there is nothing offending in the diff.", which is what we do wi=
-th
-> the current code.
->
-> So, I dunno.
+Probably two issues.
 
-I think the current code is a little inconsistent with respect to
-empty or bogus non-diff input.
+ - opt.message (and the original 'message') was misnamed and confused the
+   patch author what "if (!message && !buf->len)" meant.
 
-It seems more consistent that if it is an error to tell git apply to
-apply zero hunks, then it is also an error to --check zero hunks, or
---stat etc.  In all cases the cause is the same: failure to find any
-hunks in the input because the input was not a diff.
+ - "opt" is a structure meant to be extensible, but is not initialized as
+   a whole, inviting future errors.
 
-Also, the man page description of --check says that it checks "if the
-patch is applicable to the current working tree and/or the index".
-The new behavior would answer that with "no, this patch is not
-applicable ... since no hunks were found", rather than "yes, because
-no hunks were found".  But I'm really arguing on the side of
-"unrecognized input should be an error", since the new behavior would
-also be an error for --stat, --numstat, etc.
+It still seems to be broken with respect to the primary thing the patch
+wanted to do (t7400 "git tag -F commentsfile comments-annotated-tag" does
+not seem to produce an expected result), so I'll kick it back to the
+Kirill to look at.
 
--Brandon
+Thanks.
+
+ builtin/tag.c |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 27a66a3..7883720 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -329,7 +329,7 @@ static int build_tag_object(struct strbuf *buf, int sign, unsigned char *result)
+ }
+ 
+ struct create_tag_options {
+-	unsigned int message;
++	unsigned int message_given:1;
+ 	unsigned int sign;
+ 	enum {
+ 		CLEANUP_NONE,
+@@ -364,7 +364,7 @@ static void create_tag(const unsigned char *object, const char *tag,
+ 	if (header_len > sizeof(header_buf) - 1)
+ 		die(_("tag header too big."));
+ 
+-	if (!opt->message) {
++	if (!opt->message_given) {
+ 		int fd;
+ 
+ 		/* write the template message before editing: */
+@@ -393,7 +393,7 @@ static void create_tag(const unsigned char *object, const char *tag,
+ 	if (opt->cleanup_mode != CLEANUP_NONE)
+ 		stripspace(buf, opt->cleanup_mode == CLEANUP_ALL);
+ 
+-	if (opt->message && !buf->len)
++	if (!opt->message_given && !buf->len)
+ 		die(_("no tag message?"));
+ 
+ 	strbuf_insert(buf, 0, header_buf, header_len);
+@@ -486,7 +486,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 
+ 	git_config(git_tag_config, NULL);
+ 
+-	opt.sign = 0;
++	memset(&opt, 0, sizeof(opt));
+ 
+ 	argc = parse_options(argc, argv, prefix, options, git_tag_usage, 0);
+ 
+@@ -552,10 +552,10 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	else if (!force)
+ 		die(_("tag '%s' already exists"), tag);
+ 
+-	opt.message = msg.given || msgfile;
++	opt.message_given = msg.given || msgfile;
+ 
+ 	if (!cleanup_arg || !strcmp(cleanup_arg, "default"))
+-		opt.cleanup_mode = !opt.message ? CLEANUP_ALL : CLEANUP_SPACE;
++		opt.cleanup_mode = !opt.message_given ? CLEANUP_ALL : CLEANUP_SPACE;
+ 	else if (!strcmp(cleanup_arg, "verbatim"))
+ 		opt.cleanup_mode = CLEANUP_NONE;
+ 	else if (!strcmp(cleanup_arg, "whitespace"))
