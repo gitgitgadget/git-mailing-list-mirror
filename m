@@ -1,82 +1,121 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Debugging git-commit slowness on a large repo
-Date: Mon, 05 Dec 2011 09:38:22 -0800
-Message-ID: <7vr50inckx.fsf@alter.siamese.dyndns.org>
-References: <CAFE9C7B.2BFEC%joshua.redstone@fb.com>
- <20111203002347.GB2950@centaur.lab.cmartin.tk>
+Subject: Re: Evaluation of ref-api branch status
+Date: Mon, 05 Dec 2011 10:26:28 -0800
+Message-ID: <7vfwgynacr.fsf@alter.siamese.dyndns.org>
+References: <4EDAB62E.5070204@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Joshua Redstone <joshua.redstone@fb.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Dec 05 18:38:39 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git discussion list <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Dec 05 19:26:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RXcUv-0000Lz-1j
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Dec 2011 18:38:37 +0100
+	id 1RXdFN-0004XE-Sb
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Dec 2011 19:26:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932790Ab1LERi0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Dec 2011 12:38:26 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37145 "EHLO
+	id S1756488Ab1LES0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Dec 2011 13:26:32 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63207 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932546Ab1LERiZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Dec 2011 12:38:25 -0500
+	id S1753667Ab1LES0b (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Dec 2011 13:26:31 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 37CC86641;
-	Mon,  5 Dec 2011 12:38:24 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 67D0A5413;
+	Mon,  5 Dec 2011 13:26:30 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=2xNRBpS0zgL8
-	RMg5WvOySVbpLbI=; b=VfsB0LcfqvMAjgvIWDX4L1qQMFQwkTf+GMuqw68F2Bru
-	vtINL3V4ZtziWZnvu1HHLBLM1J0xDQmas4EyooVuiEgP0Bawzj0ltFMXesgM5gxm
-	NOoeVlXJwloXspUS+j7SdWVp2URAYzcpitNXH0Akq0xIJiRIHZNd/oiB9oY9MDc=
+	:content-type; s=sasl; bh=CMfhLlv1QCCFuBQussd3c0Hu+HY=; b=sbF3Bn
+	yYyVNAt1JG00ReYNpncMDa2QtLTkPSfFGZu0lEumSd3Rn41rR7H+LHw7Ce7W7s6r
+	ZgIHQ3gTFw/d36F7FC3Z/1Fg2dF06BRc3oRG4RLMVuVAWXBrDkq/sqJHFqJFiCaQ
+	Lltcum5bddtbcXomxvlaaZnDLMJbVuAGj0prs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=MSZ+Sf
-	B8UdrDfJZ7af8tfYfiNClrzBUzDKwXi6Pwxc6VtXfTuTHgK339FxFYOTsJjOfKcf
-	iC6U6R7ZkLFP2YksjKCJJF5Cx2lJYYn/c1YCTz8sOgYTPS2c6irfqnkqW+AQ70la
-	Mdd7NTvFLWxwF7wN2k7iaIK7X2P/DLpZ+gipw=
+	:content-type; q=dns; s=sasl; b=uiGnJnFL5PTYS7xO5pm52BAU+yS1d5s1
+	fboY7CnSXX0viH6YxNtGRLjq9I/8wlMpa5IiFnV+rJ8uVvD7pKNt2+vKWMKeRRQJ
+	ydRxvXRDevLcGxtgtMo0NV3dwNLF2dNFV8V4yC4SvYVR9rpjkfEOSyjXAmH4DxCT
+	xzyeNdV9bps=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2EC966640;
-	Mon,  5 Dec 2011 12:38:24 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EA595412;
+	Mon,  5 Dec 2011 13:26:30 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B331E663F; Mon,  5 Dec 2011
- 12:38:23 -0500 (EST)
-In-Reply-To: <20111203002347.GB2950@centaur.lab.cmartin.tk> ("Carlos
- =?utf-8?Q?Mart=C3=ADn?= Nieto"'s message of "Sat, 3 Dec 2011 01:23:47 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BBC555411; Mon,  5 Dec 2011
+ 13:26:29 -0500 (EST)
+In-Reply-To: <4EDAB62E.5070204@alum.mit.edu> (Michael Haggerty's message of
+ "Sun, 04 Dec 2011 00:52:14 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EE4595A4-1F67-11E1-8396-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A67B6FEE-1F6E-11E1-827C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186283>
 
-Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> ... At one
-> point, commit forgot how to write the tree cache to the index (a
-> performance optimisation). Do the times improve if you run 'git
-> read-tree HEAD' between one commit and another? Note that this will
-> reset the index to the last commit, though for the tests I image you
-> use some variation of 'git commit -a'.
->
-> Thomas Rast wrote a patch to re-teach commit to store the tree cache,
-> but there were some issues and never got applied.
+> Now that 1.7.8 is out, I wanted to figure out the status of the
+> remaining ref-api changes that are in flight, including the differences
+> between between my tree and yours.
 
-Ahh, I forgot all about that exchange.
+I understand that the ultimate and largest objective of these series is to
+make sure that the performance does not suffer from very many negative
+lookups on the refs/replace hierarchy (which almost always is empty in a
+sane repository), and I do want to see that happen. I also think it is
+good that the series tries to make sure that the various codepaths we
+create new refs do not let the user accidentally create refs with bad
+names and/or contents.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/178480/focus=3D=
-178515
+When we see a questionable ref that is _already_ in the respository,
+however, we may warn but it is wrong to declare the repository to be
+broken and refuse to work. That would make it cumbersome or impossible to
+even _fix_ such breakage. Regressions of that kind wer in the earlier part
+of the series already in 1.7.8 and it was rather unpleasant having to
+hotfix them. As our test suite does not deliberately create these
+questionable refs and/or try to use them (and I personally do not in my
+regular workflow either), I am afraid that it is rather hard to realize
+what kind of refnames are what we intended to forbid even from earlier
+days but did not _bother_ to check and enforce the rule against so far,
+but are forbidden by the updated code, until we unleash the new logic to
+the end users with various third party tools that created them [*1*]. I
+would want to see us get this part right and solid, and include it in
+1.7.9.
 
-The cache-tree mechanism has traditionally been one of the more importa=
-nt
-optimizations and it would be very nice if we can resurrect the behavio=
-ur
-for "git commit" too.
+It would be nice if we can include also the bits to read hierarchies
+lazily, but as they come on top of your B & C, it may end up in 1.7.10 and
+I do not mind it at all. Reference resolution is one of the central things
+in the user experience, and we cannot afford to ship anything that is
+half-done-and-mostly-works over slow-but-correct.
+
+Alternatively you _could_ swap the order of your B & C and D and try to
+have your D early while giving B & C more time to cook, but I suspect the
+order you chose would be better in the longer term.
+
+> I understand that "next" will soon be re-rolled.  Will the re-roll be
+> based on the current "pu", or will you start from scratch?
+
+As to the two quickfix patches that are on two remaining topics from you
+in my tree, I did them merely as a short-term band-aid. I was expecting,
+after 1.7.8 when we eject the topics out of 'next', that they will be
+rebased on top of 'master' that already contains a proper fix before these
+topics started touching the same codepath.
+
+My reading of your summary suggests that it would be easiest to drop the
+three mh/ref-api* topics from my tree, especially the 'refs: loosen
+over-strict "format" check' band-aid patches, and re-queue a re-roll from
+you.
+
+Thanks.
+
+[Footnote]
+
+*1* Trying to be lenient when reading and being strict when writing as the
+general principle would be the safe and sane way forward, and making sure
+that we warn *loudly* when we think we are merely being lenient (i.e. we
+think we found a bad ref with questionable name and/or contents) would be
+a good way to catch our mistakes early.  E.g. ".git/config does not record
+a correct object name" glitch was caught only because you added the
+warning so while it was painful to hotfix that late in the cycle, the
+warning was worth it.
