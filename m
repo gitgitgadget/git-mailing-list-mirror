@@ -1,162 +1,82 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v2 0/3] grep multithreading and scaling
-Date: Mon, 5 Dec 2011 10:38:16 +0100
-Message-ID: <201112051038.16423.trast@student.ethz.ch>
-References: <201111291507.04754.trast@student.ethz.ch> <cover.1322830368.git.trast@student.ethz.ch> <20111202173400.GC23447@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Debugging git-commit slowness on a large repo
+Date: Mon, 05 Dec 2011 09:38:22 -0800
+Message-ID: <7vr50inckx.fsf@alter.siamese.dyndns.org>
+References: <CAFE9C7B.2BFEC%joshua.redstone@fb.com>
+ <20111203002347.GB2950@centaur.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: =?iso-8859-1?q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Eric Herman <eric@freesa.org>, <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 05 10:38:27 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Joshua Redstone <joshua.redstone@fb.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Dec 05 18:38:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RXV0D-0007qW-UX
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Dec 2011 10:38:26 +0100
+	id 1RXcUv-0000Lz-1j
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Dec 2011 18:38:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754612Ab1LEJiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Dec 2011 04:38:20 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:14707 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754420Ab1LEJiT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Dec 2011 04:38:19 -0500
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 5 Dec
- 2011 10:38:16 +0100
-Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 5 Dec
- 2011 10:38:16 +0100
-User-Agent: KMail/1.13.7 (Linux/3.1.3-1-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <20111202173400.GC23447@sigill.intra.peff.net>
-X-Originating-IP: [129.132.153.233]
+	id S932790Ab1LERi0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Dec 2011 12:38:26 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37145 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932546Ab1LERiZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Dec 2011 12:38:25 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 37CC86641;
+	Mon,  5 Dec 2011 12:38:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=2xNRBpS0zgL8
+	RMg5WvOySVbpLbI=; b=VfsB0LcfqvMAjgvIWDX4L1qQMFQwkTf+GMuqw68F2Bru
+	vtINL3V4ZtziWZnvu1HHLBLM1J0xDQmas4EyooVuiEgP0Bawzj0ltFMXesgM5gxm
+	NOoeVlXJwloXspUS+j7SdWVp2URAYzcpitNXH0Akq0xIJiRIHZNd/oiB9oY9MDc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=MSZ+Sf
+	B8UdrDfJZ7af8tfYfiNClrzBUzDKwXi6Pwxc6VtXfTuTHgK339FxFYOTsJjOfKcf
+	iC6U6R7ZkLFP2YksjKCJJF5Cx2lJYYn/c1YCTz8sOgYTPS2c6irfqnkqW+AQ70la
+	Mdd7NTvFLWxwF7wN2k7iaIK7X2P/DLpZ+gipw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2EC966640;
+	Mon,  5 Dec 2011 12:38:24 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B331E663F; Mon,  5 Dec 2011
+ 12:38:23 -0500 (EST)
+In-Reply-To: <20111203002347.GB2950@centaur.lab.cmartin.tk> ("Carlos
+ =?utf-8?Q?Mart=C3=ADn?= Nieto"'s message of "Sat, 3 Dec 2011 01:23:47 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EE4595A4-1F67-11E1-8396-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186282>
 
-Jeff King wrote:
-> 
-> A quick perf run shows most of the time is spent inflating objects. The
-> diff code has a sneaky trick to re-use worktree files when we know they
-> are stat-clean (in diff's case it is to avoid writing a tempfile). I
-> wonder if we should use the same trick here.
-> 
-> It would hurt the cold cache case, though, as the compressed versions
-> require fewer disk accesses, of course.
+Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
 
-I just found out that on Linux, there's mincore() that can tell us
-(racily, but who cares) whether a given file mapping is in memory.  If
-you would like to try it, see the source at the end, but I'm getting
-things such as
+> ... At one
+> point, commit forgot how to write the tree cache to the index (a
+> performance optimisation). Do the times improve if you run 'git
+> read-tree HEAD' between one commit and another? Note that this will
+> reset the index to the last commit, though for the tests I image you
+> use some variation of 'git commit -a'.
+>
+> Thomas Rast wrote a patch to re-teach commit to store the tree cache,
+> but there were some issues and never got applied.
 
-  # in a random collection of files, none of which I have accessed lately
-  $ ls -l
-  -rw-r--r-- 1 thomas users    116534 Jul  4  2010 IMG_4884.JPG
-  -rw-r--r-- 1 thomas users   7278081 Aug 25  2010 remoteserverrepo.zip
-  $ ./mincore IMG_4884.JPG 
-  00000000000000000000000000000
-  $ cat IMG_4884.JPG > /dev/null 
-  $ ./mincore IMG_4884.JPG 
-  11111111111111111111111111111
-  $ ./mincore remoteserverrepo.zip 
-  0000000000000000000000[...]
-  $ head -10 remoteserverrepo.zip >/dev/null
-  $ ./mincore remoteserverrepo.zip 
-  1111000000000000000000[...]
+Ahh, I forgot all about that exchange.
 
-So that looks fairly promising, and the order would then be:
+  http://thread.gmane.org/gmane.comp.version-control.git/178480/focus=3D=
+178515
 
-- if stat-clean, and we have mincore(), and it tells us we can do it
-  cheaply: grab file from tree
-
-- if it's a loose object: decompress it
-
-- if stat-clean: grab file from tree
-
-- access packs as usual
-
-> PS I suspect your timings are somewhat affected by the simplicity of the
->    regex you are asking for. The time to inflate the blobs dominates,
->    because the search is just a memmem(). On my quad-core w/
->    hyperthreading (i.e., 8 apparent cores):
-> 
->    $ /usr/bin/time git grep INITRAMFS_ROOT_UID >/dev/null
->    0.42user 0.45system 0:00.15elapsed 578%CPU
->    $ /usr/bin/time git grep 'a.*b' >/dev/null
->    14.68user 0.50system 0:02.00elapsed 758%CPU
->    $ /usr/bin/time git grep --cached INITRAMFS_ROOT_UID >/dev/null
->    7.64user 0.41system 0:07.61elapsed 105%CPU
->    $ /usr/bin/time git grep --cached 'a.*b' >/dev/null
->    23.46user 0.47system 0:08.42elapsed 284%CPU
-> 
->    So I think there is value in parallelizing even --cached greps. But
->    we could do so much better if blob inflation could be done in
->    parallel.
-
-Ok, I see, I missed that part.  Perhaps the heuristic should then be
-"if the regex boils down to memmem, disable threading", but let's see
-what loose object decompression in parallel can give us.
-
-
----- 8< ---- mincore.c ---- 8< ----
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/mman.h>
-#include <fcntl.h>
-
-void die(const char *s)
-{
-	perror(s);
-	exit(1);
-}
-
-int main (int argc, char *argv[])
-{
-	void *mem;
-	size_t len;
-	struct stat st;
-	int fd;
-	unsigned char *vec;
-	int vsize;
-	int i;
-	size_t page = sysconf(_SC_PAGESIZE);
-
-	if (argc != 2) {
-		fprintf(stderr, "usage: %s <file>\n", argv[0]);
-		exit(2);
-	}
-
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-		die("open failed");
-	if (fstat(fd, &st) == -1)
-		die("fstat failed");
-	mem = mmap(NULL, st.st_size, PROT_READ, MAP_SHARED, fd, 0);
-	if (mem == (void*) -1)
-		die("mmap failed");
-
-	vsize = (st.st_size+page-1)/page;
-	vec = malloc(vsize);
-	if (!vec)
-		die("malloc failed");
-	if (mincore(mem, st.st_size, vec) == -1)
-		die("mincore failed");
-	for (i = 0; i < vsize; i++)
-		printf("%d", (int) vec[i]);
-	printf("\n");
-	return 0;
-}
-
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+The cache-tree mechanism has traditionally been one of the more importa=
+nt
+optimizations and it would be very nice if we can resurrect the behavio=
+ur
+for "git commit" too.
