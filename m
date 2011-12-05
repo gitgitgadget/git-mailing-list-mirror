@@ -1,74 +1,55 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v2 0/3] grep multithreading and scaling
-Date: Mon, 5 Dec 2011 21:16:47 +0100
-Message-ID: <201112052116.48106.trast@student.ethz.ch>
-References: <201111291507.04754.trast@student.ethz.ch> <20111202173400.GC23447@sigill.intra.peff.net> <201112051038.16423.trast@student.ethz.ch>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Roadmap for 1.7.9
+Date: Mon, 5 Dec 2011 22:24:33 +0100
+Message-ID: <CACBZZX6aC-E4DxaZzzhfGnK8ovBGCq_gNG3hPU7QjfAiNb3WrA@mail.gmail.com>
+References: <7vd3c2lr36.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: =?iso-8859-1?q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Eric Herman <eric@freesa.org>, <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 05 21:17:02 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 05 22:25:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RXeyC-0000Bm-SP
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Dec 2011 21:17:01 +0100
+	id 1RXg22-000748-Ns
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Dec 2011 22:25:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932415Ab1LEUQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Dec 2011 15:16:54 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:58015 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932079Ab1LEUQy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Dec 2011 15:16:54 -0500
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 5 Dec
- 2011 21:16:49 +0100
-Received: from thomas.inf.ethz.ch (129.132.211.12) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 5 Dec
- 2011 21:16:48 +0100
-User-Agent: KMail/1.13.7 (Linux/3.1.3-1-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <201112051038.16423.trast@student.ethz.ch>
-X-Originating-IP: [129.132.211.12]
+	id S1756393Ab1LEVY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Dec 2011 16:24:56 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:37758 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751259Ab1LEVYz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Dec 2011 16:24:55 -0500
+Received: by eeaq14 with SMTP id q14so2327062eea.19
+        for <git@vger.kernel.org>; Mon, 05 Dec 2011 13:24:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Bx/2EyGrGEH5wQIh3kuBIPvcDDfe8r69VDc+lhV2M2I=;
+        b=Irn19FzOe00R7KtnUFn5+ZfRwRqo4mKWSUK3REZKmO1nN0Z222GL9OBRrBLap4tzoD
+         H33zgWyvui2yYa5VxBFqCWxZNyVrSQ1EHS1je0/wiz/5LWWHlFcc9FAgArYA76mLoaRr
+         MfkEWv20U3Sy2Eu2l42HGVh06TP1Kqj0gQYmY=
+Received: by 10.14.15.16 with SMTP id e16mr1412849eee.72.1323120294256; Mon,
+ 05 Dec 2011 13:24:54 -0800 (PST)
+Received: by 10.204.69.71 with HTTP; Mon, 5 Dec 2011 13:24:33 -0800 (PST)
+In-Reply-To: <7vd3c2lr36.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186290>
 
-Thomas Rast wrote:
-> 
-> I just found out that on Linux, there's mincore() that can tell us
-> (racily, but who cares) whether a given file mapping is in memory.
-[...]
-> So that looks fairly promising, and the order would then be:
-> 
-> - if stat-clean, and we have mincore(), and it tells us we can do it
->   cheaply: grab file from tree
-> 
-> - if it's a loose object: decompress it
-> 
-> - if stat-clean: grab file from tree
-> 
-> - access packs as usual
+On Mon, Dec 5, 2011 at 21:07, Junio C Hamano <gitster@pobox.com> wrote:
 
-Just a small note, I tried two things:
+> Now, here are the biggies that we would want to try to have in reasonable
+> shape before the next release.
 
-* the simpler option of grabbing a loose object if it exists and is
-  mincore() turns out to massively slow down 'git log HEAD', probably
-  because only very few of these objects are loose in the first place
+I'd like to get the i18n series into 1.7.9 as well. I think it's ready
+as-is but some minor issues are sure to arise.
 
-* doing this only under grep's use_threads, and dropping the lock
-  around unpack_sha1_file() [i.e., zlib decompression] still results
-  in a git-grep that is slower than without this, though not much
-
-So no improvement here.  Will have to look into the worktree trick
-though.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+If time permits I'd also like to have a series of po/*.po files in as
+well once it's in "master". Maybe as a submodule, which would be neat
+in itself as we'd start dogfooding submodules.
