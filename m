@@ -1,87 +1,162 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v2 3/3] grep: disable threading in all but worktree case
-Date: Mon, 5 Dec 2011 10:02:21 +0100
-Message-ID: <201112051002.22138.trast@student.ethz.ch>
-References: <cover.1322830368.git.trast@student.ethz.ch> <5328add8b32f83b4cdbd2e66283f77c125ec127a.1322830368.git.trast@student.ethz.ch> <4ED8F9AE.8030605@lsrfire.ath.cx>
+Subject: Re: [PATCH v2 0/3] grep multithreading and scaling
+Date: Mon, 5 Dec 2011 10:38:16 +0100
+Message-ID: <201112051038.16423.trast@student.ethz.ch>
+References: <201111291507.04754.trast@student.ethz.ch> <cover.1322830368.git.trast@student.ethz.ch> <20111202173400.GC23447@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Herman <eric@freesa.org>, <git@vger.kernel.org>,
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: =?iso-8859-1?q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Eric Herman <eric@freesa.org>, <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: =?iso-8859-1?q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Dec 05 10:02:38 2011
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 05 10:38:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RXURY-00039d-Dy
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Dec 2011 10:02:36 +0100
+	id 1RXV0D-0007qW-UX
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Dec 2011 10:38:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753980Ab1LEJC1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Dec 2011 04:02:27 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:8799 "EHLO edge20.ethz.ch"
+	id S1754612Ab1LEJiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Dec 2011 04:38:20 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:14707 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753858Ab1LEJC0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Dec 2011 04:02:26 -0500
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 5 Dec
- 2011 10:02:22 +0100
-Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 5 Dec
- 2011 10:02:22 +0100
+	id S1754420Ab1LEJiT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Dec 2011 04:38:19 -0500
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 5 Dec
+ 2011 10:38:16 +0100
+Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 5 Dec
+ 2011 10:38:16 +0100
 User-Agent: KMail/1.13.7 (Linux/3.1.3-1-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <4ED8F9AE.8030605@lsrfire.ath.cx>
+In-Reply-To: <20111202173400.GC23447@sigill.intra.peff.net>
 X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186281>
 
-Ren=E9 Scharfe wrote:
-> Am 02.12.2011 14:07, schrieb Thomas Rast:
-> > Measuring grep performance showed that in all but the worktree case
-> > (as opposed to --cached,<committish>  or<treeish>), threading
-> > actually slows things down.  For example, on my dual-core
-> > hyperthreaded i7 in a linux-2.6.git at v2.6.37-rc2, I got:
-> >
-> > Threads       worktree case                 | --cached case
-> > -------------------------------------------------------------------=
--------
-> > 8 (default) | 2.17user 0.15sys 0:02.20real  | 0.11user 0.26sys 0:00=
-=2E11real
-> > 4           | 2.06user 0.17sys 0:02.08real  | 0.11user 0.26sys 0:00=
-=2E12real
-> > 2           | 2.02user 0.25sys 0:02.08real  | 0.15user 0.37sys 0:00=
-=2E28real
-> > NO_PTHREADS | 1.57user 0.05sys 0:01.64real  | 0.09user 0.12sys 0:00=
-=2E22real
->=20
-> Are the columns mixed up?
+Jeff King wrote:
+> 
+> A quick perf run shows most of the time is spent inflating objects. The
+> diff code has a sneaky trick to re-use worktree files when we know they
+> are stat-clean (in diff's case it is to avoid writing a tempfile). I
+> wonder if we should use the same trick here.
+> 
+> It would hurt the cold cache case, though, as the compressed versions
+> require fewer disk accesses, of course.
 
-Indeed, sorry.
+I just found out that on Linux, there's mincore() that can tell us
+(racily, but who cares) whether a given file mapping is in memory.  If
+you would like to try it, see the source at the end, but I'm getting
+things such as
 
-In case you were wondering why this table is different from the
-numbers given in the cover letter: I noticed at some point that I had
-an incomplete checkout (apparently 'git checkout -- .' is really not
-the same as 'git reset --hard'... sigh).  Then I saw that while the
-numbers were different, the conclusion was not, so I forgot to update
-it.
+  # in a random collection of files, none of which I have accessed lately
+  $ ls -l
+  -rw-r--r-- 1 thomas users    116534 Jul  4  2010 IMG_4884.JPG
+  -rw-r--r-- 1 thomas users   7278081 Aug 25  2010 remoteserverrepo.zip
+  $ ./mincore IMG_4884.JPG 
+  00000000000000000000000000000
+  $ cat IMG_4884.JPG > /dev/null 
+  $ ./mincore IMG_4884.JPG 
+  11111111111111111111111111111
+  $ ./mincore remoteserverrepo.zip 
+  0000000000000000000000[...]
+  $ head -10 remoteserverrepo.zip >/dev/null
+  $ ./mincore remoteserverrepo.zip 
+  1111000000000000000000[...]
 
-> This is a bit radical.  I think the underlying issue that=20
-> read_sha1_file() is not thread-safe can be solved eventually and then=
-=20
-> we'd need to readd that code.
+So that looks fairly promising, and the order would then be:
 
-I'm also scared of sha1_file.c, especially when it gets down to
-packfiles.  But perhaps it wouldn't be *too* hard to do it in parallel
-iff the object can be read from the loose object store.
+- if stat-clean, and we have mincore(), and it tells us we can do it
+  cheaply: grab file from tree
 
-> PS: Patches one and three missed a signoff.
+- if it's a loose object: decompress it
 
-Oops, thanks, turns out I had a misconfigured alias ...
+- if stat-clean: grab file from tree
 
---=20
+- access packs as usual
+
+> PS I suspect your timings are somewhat affected by the simplicity of the
+>    regex you are asking for. The time to inflate the blobs dominates,
+>    because the search is just a memmem(). On my quad-core w/
+>    hyperthreading (i.e., 8 apparent cores):
+> 
+>    $ /usr/bin/time git grep INITRAMFS_ROOT_UID >/dev/null
+>    0.42user 0.45system 0:00.15elapsed 578%CPU
+>    $ /usr/bin/time git grep 'a.*b' >/dev/null
+>    14.68user 0.50system 0:02.00elapsed 758%CPU
+>    $ /usr/bin/time git grep --cached INITRAMFS_ROOT_UID >/dev/null
+>    7.64user 0.41system 0:07.61elapsed 105%CPU
+>    $ /usr/bin/time git grep --cached 'a.*b' >/dev/null
+>    23.46user 0.47system 0:08.42elapsed 284%CPU
+> 
+>    So I think there is value in parallelizing even --cached greps. But
+>    we could do so much better if blob inflation could be done in
+>    parallel.
+
+Ok, I see, I missed that part.  Perhaps the heuristic should then be
+"if the regex boils down to memmem, disable threading", but let's see
+what loose object decompression in parallel can give us.
+
+
+---- 8< ---- mincore.c ---- 8< ----
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
+#include <fcntl.h>
+
+void die(const char *s)
+{
+	perror(s);
+	exit(1);
+}
+
+int main (int argc, char *argv[])
+{
+	void *mem;
+	size_t len;
+	struct stat st;
+	int fd;
+	unsigned char *vec;
+	int vsize;
+	int i;
+	size_t page = sysconf(_SC_PAGESIZE);
+
+	if (argc != 2) {
+		fprintf(stderr, "usage: %s <file>\n", argv[0]);
+		exit(2);
+	}
+
+	fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
+		die("open failed");
+	if (fstat(fd, &st) == -1)
+		die("fstat failed");
+	mem = mmap(NULL, st.st_size, PROT_READ, MAP_SHARED, fd, 0);
+	if (mem == (void*) -1)
+		die("mmap failed");
+
+	vsize = (st.st_size+page-1)/page;
+	vec = malloc(vsize);
+	if (!vec)
+		die("malloc failed");
+	if (mincore(mem, st.st_size, vec) == -1)
+		die("mincore failed");
+	for (i = 0; i < vsize; i++)
+		printf("%d", (int) vec[i]);
+	printf("\n");
+	return 0;
+}
+
+
+-- 
 Thomas Rast
 trast@{inf,student}.ethz.ch
