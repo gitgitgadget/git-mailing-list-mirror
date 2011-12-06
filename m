@@ -1,58 +1,63 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Set hard limit on delta chain depth
-Date: Tue, 6 Dec 2011 13:56:36 -0500
-Message-ID: <20111206185636.GC9492@sigill.intra.peff.net>
-References: <1323068688-31481-1-git-send-email-pclouds@gmail.com>
- <CABPQNSaE=TWGbBRMnthEuT181=XbOafPfgx88_JQnnQ6TiYyqw@mail.gmail.com>
- <4EDE2C95.5040804@alum.mit.edu>
- <CACsJy8Btwn0=PGS+PJV-6DqYBmzOp7LTB2=R_kCx4SJHA2YDRw@mail.gmail.com>
- <CAJo=hJuy27Uagmubbv=RqAOMx03e6JBgZxObkjFLg9oG2x_UqA@mail.gmail.com>
+Subject: Re: [PATCH] userdiff: allow * between cpp funcname words
+Date: Tue, 6 Dec 2011 14:02:17 -0500
+Message-ID: <20111206190217.GD9492@sigill.intra.peff.net>
+References: <a639d328e15bce3057de9238ee31097d15850de1.1323189110.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>, kusmabite@gmail.com,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Dec 06 19:56:43 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Dec 06 20:02:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RY0C3-0005TM-BE
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 19:56:43 +0100
+	id 1RY0HY-0000Dn-Cu
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 20:02:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751836Ab1LFS4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Dec 2011 13:56:39 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41445
+	id S1752365Ab1LFTCU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Dec 2011 14:02:20 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41456
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751320Ab1LFS4i (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Dec 2011 13:56:38 -0500
-Received: (qmail 7113 invoked by uid 107); 6 Dec 2011 19:03:16 -0000
+	id S1751850Ab1LFTCT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Dec 2011 14:02:19 -0500
+Received: (qmail 7173 invoked by uid 107); 6 Dec 2011 19:08:57 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 06 Dec 2011 14:03:16 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Dec 2011 13:56:36 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 06 Dec 2011 14:08:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Dec 2011 14:02:17 -0500
 Content-Disposition: inline
-In-Reply-To: <CAJo=hJuy27Uagmubbv=RqAOMx03e6JBgZxObkjFLg9oG2x_UqA@mail.gmail.com>
+In-Reply-To: <a639d328e15bce3057de9238ee31097d15850de1.1323189110.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186370>
 
-On Tue, Dec 06, 2011 at 10:12:54AM -0800, Shawn O. Pearce wrote:
+On Tue, Dec 06, 2011 at 05:35:08PM +0100, Thomas Rast wrote:
 
-> > Normal creators (i.e. C Git) use default depth 50 so we should be safe.
+> The cpp pattern, used for C and C++, would not match the start of a
+> declaration such as
 > 
-> JGit is also a "normal creator", and it sometimes produces chains
-> deeper than 50. Junio identified a 255 deep chain a week or two ago.
-> Some people have repacked their repositories very aggressively with
-> deeper chains when they are trying to optimize for space and don't
-> access historical revisions very often. I doubt anyone has packed
-> deeper than 120ish intentionally... but we shouldn't assume that in
-> the code.
+>   static char *prepare_index(int argc,
+> 
+> because it did not allow for * anywhere between the various words that
+> constitute the modifiers, type and function name.  Fix it.
+> 
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+> ---
+> 
+> This is a really sneaky one-character bug that I cannot believe went
+> unnoticed for so long, seeing as there are plenty of instances within
+> git itself where it matters.
 
-"git gc --aggressive" will set the depth to 250.
+Looks reasonable to me. You can see the difference, for instance, with:
+
+  git show -U1 3c73a1d
+
+(The -U1 is because of the annoying "we will start looking for the
+header at the top of context, not the top of changes" behavior I
+mentioned last week).
 
 -Peff
