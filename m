@@ -1,89 +1,95 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] Set hard limit on delta chain depth
-Date: Tue, 6 Dec 2011 22:45:12 +0700
-Message-ID: <CACsJy8AZg3DgZzmPyXhCH9bGBqo9UN7-zLt_feTtpyajf5U1tw@mail.gmail.com>
-References: <1323068688-31481-1-git-send-email-pclouds@gmail.com> <7vvcpthh97.fsf@alter.siamese.dyndns.org>
+From: Vijay Lakshminarayanan <laksvij@gmail.com>
+Subject: Re: Query on git commit amend
+Date: Tue, 06 Dec 2011 21:16:18 +0530
+Message-ID: <87fwgxwvn9.fsf@gmail.com>
+References: <4EDDD0E4.6040003@st.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 06 16:45:57 2011
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	Shiraz HASHIM <shiraz.hashim@st.com>
+To: Viresh Kumar <viresh.kumar@st.com>
+X-From: git-owner@vger.kernel.org Tue Dec 06 16:46:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RXxDK-0007Ki-SY
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 16:45:51 +0100
+	id 1RXxDv-0007f1-18
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 16:46:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751464Ab1LFPps convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Dec 2011 10:45:48 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:38150 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751142Ab1LFPpr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Dec 2011 10:45:47 -0500
-Received: by eeaq14 with SMTP id q14so3019493eea.19
-        for <git@vger.kernel.org>; Tue, 06 Dec 2011 07:45:43 -0800 (PST)
+	id S1751309Ab1LFPqV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Dec 2011 10:46:21 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:42923 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750855Ab1LFPqV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Dec 2011 10:46:21 -0500
+Received: by eaak14 with SMTP id k14so5245034eaa.19
+        for <git@vger.kernel.org>; Tue, 06 Dec 2011 07:46:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=XywOwrrEiGQk4mPXSUILru3FmHQJa0eS5Yo77zCb6dg=;
-        b=BOFsKKr72bHH0cREEjfk88ZSHm3mJiJePjRfEoEC2QS4S3V2rcl41pEHpYjHr+VkiD
-         gwY5oV/DQ6WLwVtxCSRud2WuEx0UWh724BcfWU3j5yWNIa99dSfgshJQeNS3WHUJGQit
-         mM9EQ/HHjEn5lKNI75QisFjhA36e8wf1odDN0=
-Received: by 10.14.17.155 with SMTP id j27mr2613435eej.195.1323186343218; Tue,
- 06 Dec 2011 07:45:43 -0800 (PST)
-Received: by 10.204.23.2 with HTTP; Tue, 6 Dec 2011 07:45:12 -0800 (PST)
-In-Reply-To: <7vvcpthh97.fsf@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=rnssCaAu3oZVmxClHHZzkP3zZzW6nHNS1Q19w6Ru33U=;
+        b=D6t2r/lUmRJlt30NYadiAXU63Kz2RiTqnJY9Nq6yrff8uUgdYC/XsjnandmwBk4gOE
+         Syjbu25WYF8RIvyOWEklB+RK7fAzbLLdAPyum7ncPr7YD+FHheSwBC6sCbemkBs0d6D5
+         /ijZl5BoeOGMo9sJTKoSFMnDvzuDW6EoQoTFY=
+Received: by 10.50.216.137 with SMTP id oq9mr15575992igc.40.1323186379524;
+        Tue, 06 Dec 2011 07:46:19 -0800 (PST)
+Received: from BALROG ([59.92.45.19])
+        by mx.google.com with ESMTPS id e2sm90946680ibe.0.2011.12.06.07.46.16
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 06 Dec 2011 07:46:18 -0800 (PST)
+In-Reply-To: <4EDDD0E4.6040003@st.com> (Viresh Kumar's message of "Tue, 6 Dec
+	2011 13:53:00 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (windows-nt)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186354>
 
-2011/12/6 Junio C Hamano <gitster@pobox.com>:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
-rites:
+Viresh Kumar <viresh.kumar@st.com> writes:
+
+> Hello,
 >
->> Too deep delta chains can cause stack overflow in get_base_data(). S=
-et
->> a hard limit so that index-pack does not run out of stack. Also stop
->> people from producing such a long delta chains using "pack-object
->> --depth=3D<too large>"
->>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->> =C2=A0I used to make very long delta chains and triggered this in in=
-dex-pack.
->> =C2=A0I did not care reporting because it's my fault anyway. Think a=
-gain,
->> =C2=A0index-pack is called at server side and a malicious client can
->> =C2=A0trigger this. This patch does not improve the situation much, =
-but at
->> =C2=A0least we won't get sigsegv at server side.
+> Suppose i want to add few new changes to my last commit (HEAD).
+> The way i do it is
+> $ git add all_changed_files
+> $ git commit --amend
 >
-> Why should we treat this condition any differently from the case wher=
-e the
-> sender of a pack used beefier machine than you have and stuffed a hug=
-e
-> object that the index-pack running on your box cannot hold in core,
-> causing xmalloc() to die on your machine?
+> OR
+> $ git commit --amend -a
+>
+> With both these ways, i get a screen to edit the message too.
+>
+> I want to know if there is a way to skip this screen.
+>
+> i.e.
+> $ git commit --amend -a -some_other_option
+>
+> which simply adds new changes to existing commit, without asking to change
+> message.
+>
+> If there is no such way, then can we add a patch for this, if it looks a valid
+> case.
 
-That's interesting. First of all xmalloc() is controlled by us while
-index-pack code might lead to stack overflow exploit (never done it,
-not sure if it's really pratical to do in this case).
+I've found 
 
-But can I really use up all memory at server side by sending a huge pac=
-k?
+$ GIT_EDITOR=cat git commit --amend
 
-> I do not think this is the right way to handle the issue. Your other =
-patch
-> to flatten the recursion to iteration looked a lot saner approach.
+useful.
 
-It may take me some time as I'm not really familar with this code.
-Anybody is welcome to step up and flatten the function.
---=20
-Duy
+The benefit of this technique is that it even works for git-rebase -i.
+
+In my typical git usage, I do a lot of git-commit --fixup's.  After
+reaching a level of stability, I change the history with:
+
+GIT_EDITOR=cat git rebase -i --autosquash
+
+and my history is adjusted without requiring manual intervention.
+
+-- 
+Cheers
+~vijay
+
+Gnus should be more complicated.
