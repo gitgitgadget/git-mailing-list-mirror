@@ -1,227 +1,289 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] run-command: Add interpreter permissions check
-Date: Tue, 06 Dec 2011 14:47:24 -0800
-Message-ID: <7vk469e2rn.fsf@alter.siamese.dyndns.org>
-References: <op.v5e8mgbc0aolir@keputer>
- <1323207503-26581-1-git-send-email-fransklaver@gmail.com>
- <1323207503-26581-3-git-send-email-fransklaver@gmail.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH v2 3/3] grep: disable threading in all but worktree case
+Date: Tue, 06 Dec 2011 23:48:26 +0100
+Message-ID: <4EDE9BBA.2010409@lsrfire.ath.cx>
+References: <cover.1322830368.git.trast@student.ethz.ch> <5328add8b32f83b4cdbd2e66283f77c125ec127a.1322830368.git.trast@student.ethz.ch> <4ED8F9AE.8030605@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Frans Klaver <fransklaver@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 06 23:47:40 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Herman <eric@freesa.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 06 23:48:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RY3nX-0006Ln-Sw
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 23:47:40 +0100
+	id 1RY3og-0006oX-EP
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 23:48:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755502Ab1LFWrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Dec 2011 17:47:33 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58179 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755488Ab1LFWr1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Dec 2011 17:47:27 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 207046559;
-	Tue,  6 Dec 2011 17:47:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=X3eAk3XQqFIZ3RgARDfRzD+Q93w=; b=dBuqfH
-	my9ELiLBzLXCEL4Uqh2hQPFZo/1W0xhRWbGBoG+2RKiYgZwmX89oXC8tQdZl558K
-	wDKMYxvH1CBsPYMplLzZnwf/V0Y7hdxy3wkj6OIXvkhydZHkdcL2aI2/XGnhGbEa
-	+VqXAVsVw0OLAno4V/Z9TReBGPeJCpP2AEUjM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M3Z9kIxQRMMJ/WQuRjFCKXHS4aWhR9aW
-	LOPcKSNPwXPikk1JvUK+jK2Y+HkrWFwPrWWGNFHYP1lFrP5JlYrrXM4ZxzZF29jP
-	7l2kzK329qwEzJgIGv7jQ0HHjVd4Uk7KyQerzpAuRHFsl8fHzFcsV1oODLVFAXZj
-	Cmw3eFID/0w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 164556558;
-	Tue,  6 Dec 2011 17:47:27 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 344016553; Tue,  6 Dec 2011
- 17:47:26 -0500 (EST)
-In-Reply-To: <1323207503-26581-3-git-send-email-fransklaver@gmail.com> (Frans
- Klaver's message of "Tue, 6 Dec 2011 22:38:23 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 44DD2522-205C-11E1-B437-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755547Ab1LFWso convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Dec 2011 17:48:44 -0500
+Received: from lo.gmane.org ([80.91.229.12]:35225 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755380Ab1LFWso (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Dec 2011 17:48:44 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RY3oX-0006lP-Sd
+	for git@vger.kernel.org; Tue, 06 Dec 2011 23:48:41 +0100
+Received: from p4ffd9bf7.dip.t-dialin.net ([79.253.155.247])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Dec 2011 23:48:41 +0100
+Received: from rene.scharfe by p4ffd9bf7.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Dec 2011 23:48:41 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: p4ffd9bf7.dip.t-dialin.net
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <4ED8F9AE.8030605@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186400>
 
-Frans Klaver <fransklaver@gmail.com> writes:
+Am 02.12.2011 17:15, schrieb Ren=E9 Scharfe:
+> How about adding a parameter to control the number of threads=20
+> (--threads?) instead that defaults to eight (or five) for the worktre=
+e=20
+> and one for the rest? That would also make benchmarking easier.
 
-> If a script is started and the interpreter of that script given in the
-> shebang cannot be started due to permissions, we can get a rather
-> obscure situation. All permission checks pass for the script itself,
-> but we still get EACCES from execvp.
->
-> Try to find out if the above is the case and warn the user about it.
->
-> Signed-off-by: Frans Klaver <fransklaver@gmail.com>
-> ---
->  run-command.c          |   66 +++++++++++++++++++++++++++++++++++++++++++----
->  t/t0061-run-command.sh |   22 ++++++++++++++++
->  2 files changed, 82 insertions(+), 6 deletions(-)
->
-> diff --git a/run-command.c b/run-command.c
-> index 5e38c5a..b8cf8d4 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -194,6 +194,63 @@ static int have_read_execute_permissions(const char *path)
->  	return 0;
->  }
->  
-> +static void check_interpreter(const char *cmd)
-> +{
-> +	FILE *f;
-> +	struct strbuf sb = STRBUF_INIT;
-> +	/* bash reads an 80 character line when determining the interpreter.
-> +	 * BSD apparently only allows 32 characters, as it is the size of
-> +	 * your average binary executable header.
-> +	 */
-> +	char firstline[80];
-> +	char *interpreter = NULL;
-> +	size_t s, i;
-> +
-> +	f = fopen(cmd, "r");
-> +	if (!f) {
-> +		error("cannot open file '%s': %s\n", cmd, strerror(errno));
-> +		return;
-> +	}
-> +
-> +	s = fread(firstline, 1, sizeof(firstline), f);
-> +	if (s < 2) {
-> +		trace_printf("cannot determine file type");
-> +		fclose(f);
-> +		return;
-> +	}
-> +
-> +	if (firstline[0] != '#' || firstline[1] != '!') {
-> +		trace_printf("file '%s' is not a script or"
-> +				" is a script without '#!'", cmd);
-> +		fclose(f);
-> +		return;
-> +	}
+Like this:
 
-Nice touches to silently pass scripts that do not begin with she-bang.
+-- >8 --
+Subject: grep: add parameter --threads
 
-> +
-> +	/* see if the given path has the executable bit set */
-> +	for (i = 2; i < s; i++) {
-> +		if (!interpreter && firstline[i] != ' ' && firstline[i] != '\t')
-> +			interpreter = firstline + i;
-> +
-> +		if (interpreter && (firstline[i] == ' ' ||
-> +				firstline[i] == '\n')) {
+Allow the number of threads to be specified by the user.  This makes
+benchmarking the performance impact of different numbers of threads
+much easier.
 
-Curious.
+Move the code for thread handling after argument parsing.  This allows
+to change the default number of threads based on the kind of search
+(worktree etc.) later on.
 
-"#!<TAB>/bin/bash<TAB><LF>" would cause you to check "/bin/bash<TAB>"?
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+Applies on top of your second patch.
 
-> +			strbuf_add(&sb, interpreter,
-> +					(firstline + i) - interpreter);
-> +			break;
-> +		}
+ Documentation/git-grep.txt |    4 ++
+ builtin/grep.c             |   75 +++++++++++++++++++++++-------------=
+-------
+ 2 files changed, 44 insertions(+), 35 deletions(-)
 
-Wouldn't strcspn() work better instead of this loop?
-
-> +	}
-> +	if (!sb.len) {
-> +		error("could not determine interpreter");
-> +		strbuf_release(&sb);
-> +		return;
-> +	}
-> +
-> +	if (!have_read_execute_permissions(sb.buf))
-> +		error("bad interpreter: no read/execute permissions on '%s'\n",
-> +				sb.buf);
-> +
-> +	strbuf_release(&sb);
-> +}
-> +
->  static void diagnose_execvp_eacces(const char *cmd, const char **argv)
->  {
->  	/* man 2 execve states that EACCES is returned for:
-> @@ -209,8 +266,8 @@ static void diagnose_execvp_eacces(const char *cmd, const char **argv)
->  	char *next;
->  
->  	if (strchr(cmd, '/')) {
-> -		if (!have_read_execute_permissions(cmd))
-> -			error("no read/execute permissions on '%s'\n", cmd);
-> +		if (have_read_execute_permissions(cmd))
-> +			check_interpreter(cmd);
-
-I would have expected the overall logic to be more like this:
-
-	if we cannot read and execute it then
-        	that in itself is an error (i.e. the error message from [1/2])
-	else if we can read it then
-		let's see if there is an error in the interpreter.
-
-It is unnatural to see "if we can read and execute, then see if there is
-anything wrong with the interpreter" and _nothing else_ here. If you made
-the "have_read_execute_permissions()" to issue the error message you used
-to give in your [1/2] patch here, that is OK from the point of view of the
-overall code structure, but then the function is no longer "do we have
-permissions" boolean check and needs to be renamed. And if you didn't,
-then I have to wonder why we do not need the error message you added in
-your [1/2].
-
-> @@ -233,10 +290,7 @@ static void diagnose_execvp_eacces(const char *cmd, const char **argv)
->  				error("no read/execute permissions on '%s'\n",
->  						sb.buf);
->  			else
-> -				warn("file '%s' exists and permissions "
-> -				"seem OK.\nIf this is a script, see if you "
-> -				"have sufficient privileges to run the "
-> -				"interpreter", sb.buf);
-> +				check_interpreter(sb.buf);
->  		}
->  
->  		strbuf_release(&sb);
-> diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-> index b39bd16..39bfaef 100755
-> --- a/t/t0061-run-command.sh
-> +++ b/t/t0061-run-command.sh
-> @@ -13,6 +13,18 @@ cat >hello-script <<-EOF
->  EOF
->  >empty
->  
-> +cat >someinterpreter <<-EOF
-> +	#!$SHELL_PATH
-> +	cat hello-script
-> +EOF
-> +>empty
-> +
-> +cat >incorrect-interpreter-script <<-EOF
-> +	#!someinterpreter
-> +	cat hello-script
-> +EOF
-> +>empty
-> +
->  test_expect_success 'start_command reports ENOENT' '
->  	test-run-command start-command-ENOENT ./does-not-exist
->  '
-> @@ -48,4 +60,14 @@ test_expect_success POSIXPERM 'run_command reports EACCES, search path permision
->  	grep "no read/execute permissions on" err
->  '
->  
-> +test_expect_success POSIXPERM 'run_command reports EACCES, interpreter fails' '
-> +	cat incorrect-interpreter-script >hello.sh &&
-> +	chmod +x hello.sh &&
-> +	chmod -x someinterpreter &&
-> +	test_must_fail test-run-command run-command ./hello.sh 2>err &&
-> +
-> +	grep "fatal: cannot exec.*hello.sh" err &&
-> +	grep "bad interpreter" err
-> +'
-> +
->  test_done
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 15d6711..47ac188 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -227,6 +227,10 @@ OPTIONS
+ 	Do not output matched lines; instead, exit with status 0 when
+ 	there is a match and with non-zero status when there isn't.
+=20
++--threads <n>::
++	Run <n> search threads in parallel.  Default is 8.  This option
++	is ignored if git was built without support for POSIX threads.
++
+ <tree>...::
+ 	Instead of searching tracked files in the working tree, search
+ 	blobs in the given trees.
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 65b1ffe..0bda900 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -24,11 +24,10 @@ static char const * const grep_usage[] =3D {
+ 	NULL
+ };
+=20
+-static int use_threads =3D 1;
+-
+ #ifndef NO_PTHREADS
+ #define THREADS 8
+-static pthread_t threads[THREADS];
++static pthread_t *threads;
++static int nr_threads =3D -1;
+=20
+ static void *load_sha1(const unsigned char *sha1, unsigned long *size,
+ 		       const char *name);
+@@ -76,13 +75,13 @@ static pthread_mutex_t grep_mutex;
+=20
+ static inline void grep_lock(void)
+ {
+-	if (use_threads)
++	if (nr_threads > 0)
+ 		pthread_mutex_lock(&grep_mutex);
+ }
+=20
+ static inline void grep_unlock(void)
+ {
+-	if (use_threads)
++	if (nr_threads > 0)
+ 		pthread_mutex_unlock(&grep_mutex);
+ }
+=20
+@@ -91,13 +90,13 @@ static pthread_mutex_t read_sha1_mutex;
+=20
+ static inline void read_sha1_lock(void)
+ {
+-	if (use_threads)
++	if (nr_threads > 0)
+ 		pthread_mutex_lock(&read_sha1_mutex);
+ }
+=20
+ static inline void read_sha1_unlock(void)
+ {
+-	if (use_threads)
++	if (nr_threads > 0)
+ 		pthread_mutex_unlock(&read_sha1_mutex);
+ }
+=20
+@@ -254,6 +253,8 @@ static void start_threads(struct grep_opt *opt)
+ {
+ 	int i;
+=20
++	threads =3D xcalloc(nr_threads, sizeof(pthread_t));
++
+ 	pthread_mutex_init(&grep_mutex, NULL);
+ 	pthread_mutex_init(&read_sha1_mutex, NULL);
+ 	pthread_mutex_init(&grep_attr_mutex, NULL);
+@@ -265,7 +266,7 @@ static void start_threads(struct grep_opt *opt)
+ 		strbuf_init(&todo[i].out, 0);
+ 	}
+=20
+-	for (i =3D 0; i < ARRAY_SIZE(threads); i++) {
++	for (i =3D 0; i < nr_threads; i++) {
+ 		int err;
+ 		struct grep_opt *o =3D grep_opt_dup(opt);
+ 		o->output =3D strbuf_out;
+@@ -296,7 +297,7 @@ static int wait_all(void)
+ 	pthread_cond_broadcast(&cond_add);
+ 	grep_unlock();
+=20
+-	for (i =3D 0; i < ARRAY_SIZE(threads); i++) {
++	for (i =3D 0; i < nr_threads; i++) {
+ 		void *h;
+ 		pthread_join(threads[i], &h);
+ 		hit |=3D (int) (intptr_t) h;
+@@ -309,6 +310,8 @@ static int wait_all(void)
+ 	pthread_cond_destroy(&cond_write);
+ 	pthread_cond_destroy(&cond_result);
+=20
++	free(threads);
++
+ 	return hit;
+ }
+ #else /* !NO_PTHREADS */
+@@ -410,7 +413,7 @@ static int grep_sha1(struct grep_opt *opt, const un=
+signed char *sha1,
+ 	name =3D strbuf_detach(&pathbuf, NULL);
+=20
+ #ifndef NO_PTHREADS
+-	if (use_threads) {
++	if (nr_threads > 0) {
+ 		grep_sha1_async(opt, name, sha1);
+ 		return 0;
+ 	} else
+@@ -472,7 +475,7 @@ static int grep_file(struct grep_opt *opt, const ch=
+ar *filename)
+ 	name =3D strbuf_detach(&buf, NULL);
+=20
+ #ifndef NO_PTHREADS
+-	if (use_threads) {
++	if (nr_threads > 0) {
+ 		grep_file_async(opt, name, filename);
+ 		return 0;
+ 	} else
+@@ -895,6 +898,13 @@ int cmd_grep(int argc, const char **argv, const ch=
+ar *prefix)
+ 			PARSE_OPT_OPTARG, NULL, (intptr_t)default_pager },
+ 		OPT_BOOLEAN(0, "ext-grep", &external_grep_allowed__ignored,
+ 			    "allow calling of grep(1) (ignored by this build)"),
++#ifdef NO_PTHREADS
++		OPT_INTEGER(0, "threads", &nr_threads,
++			"handle <n> files in parallel (ignored by this build)"),
++#else
++		OPT_INTEGER(0, "threads", &nr_threads,
++			"handle <n> files in parallel"),
++#endif
+ 		{ OPTION_CALLBACK, 0, "help-all", &options, NULL, "show usage",
+ 		  PARSE_OPT_HIDDEN | PARSE_OPT_NOARG, help_callback },
+ 		OPT_END()
+@@ -995,7 +1005,7 @@ int cmd_grep(int argc, const char **argv, const ch=
+ar *prefix)
+ 		opt.output_priv =3D &path_list;
+ 		opt.output =3D append_path;
+ 		string_list_append(&path_list, show_in_pager);
+-		use_threads =3D 0;
++		nr_threads =3D 0;
+ 	}
+=20
+ 	if (!opt.pattern_list)
+@@ -1003,28 +1013,6 @@ int cmd_grep(int argc, const char **argv, const =
+char *prefix)
+ 	if (!opt.fixed && opt.ignore_case)
+ 		opt.regflags |=3D REG_ICASE;
+=20
+-#ifndef NO_PTHREADS
+-	if (online_cpus() =3D=3D 1)
+-		use_threads =3D 0;
+-#else
+-	use_threads =3D 0;
+-#endif
+-
+-	opt.use_threads =3D use_threads;
+-
+-#ifndef NO_PTHREADS
+-	if (use_threads) {
+-		if (opt.pre_context || opt.post_context || opt.file_break ||
+-		    opt.funcbody)
+-			skip_first_line =3D 1;
+-		start_threads(&opt);
+-	}
+-#else
+-	use_threads =3D 0;
+-#endif
+-
+-	compile_grep_patterns(&opt);
+-
+ 	/* Check revs and then paths */
+ 	for (i =3D 0; i < argc; i++) {
+ 		const char *arg =3D argv[i];
+@@ -1056,6 +1044,23 @@ int cmd_grep(int argc, const char **argv, const =
+char *prefix)
+ 	pathspec.max_depth =3D opt.max_depth;
+ 	pathspec.recursive =3D 1;
+=20
++#ifdef NO_PTHREADS
++	nr_threads =3D 0;
++#else
++	if (nr_threads =3D=3D -1)
++		nr_threads =3D (online_cpus() > 1) ? THREADS : 0;
++
++	if (nr_threads > 0) {
++		opt.use_threads =3D 1;
++		if (opt.pre_context || opt.post_context || opt.file_break ||
++		    opt.funcbody)
++			skip_first_line =3D 1;
++		start_threads(&opt);
++	}
++#endif
++
++	compile_grep_patterns(&opt);
++
+ 	if (show_in_pager && (cached || list.nr))
+ 		die(_("--open-files-in-pager only works on the worktree"));
+=20
+@@ -1100,7 +1105,7 @@ int cmd_grep(int argc, const char **argv, const c=
+har *prefix)
+ 		hit =3D grep_objects(&opt, &pathspec, &list);
+ 	}
+=20
+-	if (use_threads)
++	if (nr_threads > 0)
+ 		hit |=3D wait_all();
+ 	if (hit && show_in_pager)
+ 		run_pager(&opt, prefix);
+--=20
+1.7.8
