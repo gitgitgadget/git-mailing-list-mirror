@@ -1,95 +1,94 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: git svn rebase 
- =?utf-8?q?=E2=80=9Cout_of_memory=E2=80=9D_error_after_merging_two?=
- =?utf-8?q?_tracking?= branches
-Date: Tue, 6 Dec 2011 18:56:52 +0100
-Message-ID: <201112061856.52560.trast@student.ethz.ch>
-References: <4EDE4589.9030601@gmx.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Set hard limit on delta chain depth
+Date: Tue, 6 Dec 2011 10:12:54 -0800
+Message-ID: <CAJo=hJuy27Uagmubbv=RqAOMx03e6JBgZxObkjFLg9oG2x_UqA@mail.gmail.com>
+References: <1323068688-31481-1-git-send-email-pclouds@gmail.com>
+ <CABPQNSaE=TWGbBRMnthEuT181=XbOafPfgx88_JQnnQ6TiYyqw@mail.gmail.com>
+ <4EDE2C95.5040804@alum.mit.edu> <CACsJy8Btwn0=PGS+PJV-6DqYBmzOp7LTB2=R_kCx4SJHA2YDRw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Onsager <onsager@gmx.net>
-X-From: git-owner@vger.kernel.org Tue Dec 06 18:57:12 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, kusmabite@gmail.com,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 06 19:13:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RXzGS-00087l-1I
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 18:57:12 +0100
+	id 1RXzW9-0001c5-6V
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 19:13:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752387Ab1LFR44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Dec 2011 12:56:56 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:36614 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752365Ab1LFR4y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Dec 2011 12:56:54 -0500
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 6 Dec
- 2011 18:56:51 +0100
-Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 6 Dec
- 2011 18:56:52 +0100
-User-Agent: KMail/1.13.7 (Linux/3.1.3-1-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <4EDE4589.9030601@gmx.net>
-X-Originating-IP: [129.132.153.233]
+	id S1752840Ab1LFSNR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Dec 2011 13:13:17 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:45584 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752578Ab1LFSNP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Dec 2011 13:13:15 -0500
+Received: by iakc1 with SMTP id c1so4027059iak.19
+        for <git@vger.kernel.org>; Tue, 06 Dec 2011 10:13:15 -0800 (PST)
+Received: by 10.42.163.200 with SMTP id d8mr15147365icy.41.1323195195204; Tue,
+ 06 Dec 2011 10:13:15 -0800 (PST)
+Received: by 10.50.171.39 with HTTP; Tue, 6 Dec 2011 10:12:54 -0800 (PST)
+In-Reply-To: <CACsJy8Btwn0=PGS+PJV-6DqYBmzOp7LTB2=R_kCx4SJHA2YDRw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186364>
 
-Onsager wrote:
-> @list
-> 
-> ... more detailed explanation on stackoverflow:
-> 
-> http://stackoverflow.com/questions/8398405/git-svn-rebase-out-of-memory-error-after-merging-two-tracking-branches
-> 
-> Is there something, I can do about this issue as a common user?
+On Tue, Dec 6, 2011 at 07:30, Nguyen Thai Ngoc Duy <pclouds@gmail.com> =
+wrote:
+> index-pack is called at server side as part of a push. So in theory
+> the sending side can generate very long delta chains and bring down
+> the server side.
 
-In this age of 5-second attention spans, I'm not sure you can expect
-us to follow a link to an external site when a simple cut&paste job
-would have sufficed, like so:
+It is also called at client side during fetch. So in theory the server
+can produce very long delta chains and take down a client.
 
-  I'm tracking two customer SVN branches with msysgit 1.7.7.1 (Win 7 64bit):
+>> =A0Because if not, then the "creator" had better never be configured
+>> to use a chain depth that the "reader" cannot handle.
+>
+> Normal creators (i.e. C Git) use default depth 50 so we should be saf=
+e.
 
-    SVN                Git
+JGit is also a "normal creator", and it sometimes produces chains
+deeper than 50. Junio identified a 255 deep chain a week or two ago.
+Some people have repacked their repositories very aggressively with
+deeper chains when they are trying to optimize for space and don't
+access historical revisions very often. I doubt anyone has packed
+deeper than 120ish intentionally... but we shouldn't assume that in
+the code.
 
-    trunk          --> master
-    release_x_y_z  --> git-local-release_x_y_z 
+>> =A0This in turn
+>> imply that there should be a common limit that is supported by all g=
+it
+>> clients and is a documented part of the protocol. =A0(Or the code ha=
+s to
+>> be rewritten to use an explicit stack instead of recursion.)
+>
+> It's the implementation limitation, not the protocol. If the server
+> propagates error messages from index-pack back to client (I'm not
+> sure), then users can adjust --depth to be accepted by server. We
+> could negotiate the limit over the protocol but not sure we would wan=
+t
+> to go that route.
 
-  After a successful local merge of 'git-local-release_x_y_z' into
-  'master' I'm running out of memory, when trying to synchronize the
-  result with svn:
+What about clients fetching from a server? The client can't change the
+depth the server sends it.
 
-    mb@MMPEPA23 /c/git/MySoft (master)
-    $ git svn rebase
-    First, rewinding head to replay your work on top of it...
-    Applying:
-    fatal: Out of memory, realloc failed
-    Repository lacks necessary blobs to fall back on 3-way merge.
-    Cannot fall back to three-way merge.
-    Patch failed at 0001
+> The troubled code could be rewritten to avoid recursion. However long
+> delta chains may degrade performance, I'd rather have support to spli=
+t
+> long chains (which can be done with --depth at client already) instea=
+d
+> of just recursion elimination. This patch is simpler, so it would be
+> easier to back port it if someone wants to do so.
 
-    When you have resolved this problem run "git rebase --continue".
-    If you would prefer to skip this patch, instead run "git rebase --skip".
-    To check out the original branch and stop rebasing run "git rebase --abort".
-
-    rebase refs/remotes/git-svn: command returned error: 1 
-
-  The .git/rebase-apply directory contains a few files ('patch', '0001')
-  with more than 1GB size. What can I do in order to apply this patch?
-
-
-First you should find out whether something went wrong with the patch
-generation, or if that 1GB size is plausible.  Did your merge bring in
-blobs that were that big?
-
-Second, you could try with the -m option.  This will use a 3-way merge
-to rebase, which avoids generating a full patch.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+JGit long ago changed its IndexPack routine to use a manually managed
+heap based stack instead of recursion, making it immune from
+overrunning the stack due to a long delta chain. That is probably the
+cleaner route. But you also have to fix sha1_file.c and its recursion
+based unpacking of a delta chain... again which JGit fixed a long time
+ago.
