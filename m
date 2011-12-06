@@ -1,84 +1,84 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Suggestion on hashing
-Date: Tue, 6 Dec 2011 13:23:00 +0700
-Message-ID: <CACsJy8CXkz-W3Z3pX-C-+fjLz=WahBajE2uLEG-f3gG_svEhug@mail.gmail.com>
-References: <1322813319.4340.109.camel@yos> <CACsJy8CO1GtpZVo-oA2eKbQadsXYBEKVLfUH0GONR5jovuvH+Q@mail.gmail.com>
- <alpine.DEB.2.00.1112060146121.15104@hoki.goeswhere.com> <CACsJy8CM8xqWxTx14QbY+-bT=306p3U=6gJfRaW=dDD-Swo7-w@mail.gmail.com>
- <1323151347.1745.73.camel@yos>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Evaluation of ref-api branch status
+Date: Mon, 05 Dec 2011 22:57:46 -0800
+Message-ID: <7vzkf6gpat.fsf@alter.siamese.dyndns.org>
+References: <4EDAB62E.5070204@alum.mit.edu>
+ <7vfwgynacr.fsf@alter.siamese.dyndns.org> <4EDDAC4A.4030805@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Chris West (Faux)" <faux@goeswhere.com>,
-	Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Bill Zaumen <bill.zaumen@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 06 07:23:59 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	git discussion list <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Dec 06 07:57:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RXoRa-00051b-AE
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 07:23:58 +0100
+	id 1RXoyR-000548-9Z
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 07:57:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933009Ab1LFGXd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Dec 2011 01:23:33 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:58203 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932909Ab1LFGXc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Dec 2011 01:23:32 -0500
-Received: by eeaq14 with SMTP id q14so2555221eea.19
-        for <git@vger.kernel.org>; Mon, 05 Dec 2011 22:23:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=UO+cxup8eYL2YmtQ4y59kgDcioqaLXNPE5eGDujyL+4=;
-        b=BKBCxMF/kNWjNhseCz6pJZQp5HlZPTuSHw6QhN+3WVQDPEY15uWEkKtCTEETz3c0or
-         Dzrz/61/5puRA7OWOkz0kUao1rX+BK2BTxZ/39BdlnNDwoLrXE5jet8N0WBAHWtUPomx
-         lZAo4WnXUeMeL58TxlCBmOsqZ+WwS+0e2/QXM=
-Received: by 10.14.15.221 with SMTP id f69mr1872120eef.163.1323152611274; Mon,
- 05 Dec 2011 22:23:31 -0800 (PST)
-Received: by 10.204.23.2 with HTTP; Mon, 5 Dec 2011 22:23:00 -0800 (PST)
-In-Reply-To: <1323151347.1745.73.camel@yos>
+	id S932242Ab1LFG5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Dec 2011 01:57:50 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56662 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753124Ab1LFG5t (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Dec 2011 01:57:49 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB34A1B2D;
+	Tue,  6 Dec 2011 01:57:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KtPNUHPlpxe+hCmcmIK/iqixjYg=; b=SlrXPt
+	9zCB2Tk6yS6p39VyoqXklSmDGYz57InZPD+yxQIxTa1TXDhOYwQl8rQlnR09k6Ca
+	cuDVeejm13lvdR75w9sEXT+qLv7RUGRqZp6fBHrLH23obFG0t95XMiIANvcFaovq
+	EqPAauEsrSC1l1sza00PftLwlYi5/b9Q8OOJA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PpBADgsJ3djEx/BgYgoSZr1fHykAKjuM
+	83X5LyAIOhryfrb4KJjXQBun9JhotM1SHRtamSfhlXd7br9Mc7/lOklUR++APhtB
+	86A9xHB8cW9uCSW957QE8kP/Xi1prLye2/Qxr1cT5ZFoPhY8wQPHdxvBWrx0EPLi
+	8igClMJ13UQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A23371B2C;
+	Tue,  6 Dec 2011 01:57:48 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14ACC1B2B; Tue,  6 Dec 2011
+ 01:57:47 -0500 (EST)
+In-Reply-To: <4EDDAC4A.4030805@alum.mit.edu> (Michael Haggerty's message of
+ "Tue, 06 Dec 2011 06:46:50 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9B4079A8-1FD7-11E1-8856-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186334>
 
-On Tue, Dec 6, 2011 at 1:02 PM, Bill Zaumen <bill.zaumen@gmail.com> wro=
-te:
-> On Tue, 2011-12-06 at 11:46 +0700, Nguyen Thai Ngoc Duy wrote:
->> On Tue, Dec 6, 2011 at 8:56 AM, Chris West (Faux) <faux@goeswhere.co=
-m> wrote:
->> >
->> > Nguyen Thai Ngoc Duy wrote:
->> >>
->> >> SHA-1 charateristics (like 20 byte length) are hard coded everywh=
-ere
->> >> in git, it'd be a big audit.
->> >
->> >
->> > I was planning to look at this anyway. =C2=A0My branch[1] allows
->> > =C2=A0init/add/commit with SHA-256, SHA-512 and all the SHA-3 cand=
-idates.
->>
->> Great!
+Michael Haggerty <mhagger@alum.mit.edu> writes:
+
+> On 12/05/2011 07:26 PM, Junio C Hamano wrote:
+> ...
+>> My reading of your summary suggests that it would be easiest to drop the
+>> three mh/ref-api* topics from my tree, especially the 'refs: loosen
+>> over-strict "format" check' band-aid patches, and re-queue a re-roll from
+>> you.
 >
-> If you are replacing SHA-1 as an object ID with another hash function=
-,
-> two things to watch are submodules and alternative object databases.
-> Because of those, it is necessary to worry about the order in which
-> repositories are converted. =C2=A0In the worst case for submodules, y=
-ou'd
-> have to do multiple repositories at the same time, switching between
-> them depending on what you need at each point.
+> OK, then, I will try to re-roll the series on top of master, and build
+> the equivalent of your quick-fix into the logical point in the series.
 
-I know migration would be painful. But note that new repos can benefit
-stronger digest without legacy (of course until it links to an old
-repo). For submodules, I think we should extend it to become something
-similar to soft-link: git link is an SHA-1 to a text file that
-contains SHA-1 and maybe other digests of the submodule's tip.
---=20
-Duy
+These quick-fixes were necessary _only_ because the queued topics predate
+the real fix already in 1.7.8 (and I generally refuse to criss cross merge
+from master to topics), so I expect you won't need their equivalents if
+the topic is rebased on top of 1.7.8
+
+> ... How much time to I have to work on this
+> while still leaving enough time to comfortably integrate it into 1.7.9?
+
+I am hoping we can have rc0 very early next year [*1*].
+
+
+[Reference]
+
+*1* https://www.google.com/calendar/embed?src=jfgbl2mrlipp4pb6ieih0qr3so%40group.calendar.google.com&ctz=America/Los_Angeles
