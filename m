@@ -1,102 +1,95 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH 4/5] commit: write cache-tree data when writing index anyway
-Date: Tue, 6 Dec 2011 18:43:38 +0100
-Message-ID: <fcb51622a521eaf418c82bfd5ff83e8a0b79498b.1323191497.git.trast@student.ethz.ch>
-References: <cover.1323191497.git.trast@student.ethz.ch>
+Subject: Re: git svn rebase 
+ =?utf-8?q?=E2=80=9Cout_of_memory=E2=80=9D_error_after_merging_two?=
+ =?utf-8?q?_tracking?= branches
+Date: Tue, 6 Dec 2011 18:56:52 +0100
+Message-ID: <201112061856.52560.trast@student.ethz.ch>
+References: <4EDE4589.9030601@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 06 18:44:10 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Onsager <onsager@gmx.net>
+X-From: git-owner@vger.kernel.org Tue Dec 06 18:57:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RXz3p-0000N4-87
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 18:44:09 +0100
+	id 1RXzGS-00087l-1I
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 18:57:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752179Ab1LFRnv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Dec 2011 12:43:51 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:35844 "EHLO edge10.ethz.ch"
+	id S1752387Ab1LFR44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Dec 2011 12:56:56 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:36614 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751854Ab1LFRnq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Dec 2011 12:43:46 -0500
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
+	id S1752365Ab1LFR4y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Dec 2011 12:56:54 -0500
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
  (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 6 Dec
- 2011 18:43:39 +0100
-Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 6 Dec
- 2011 18:43:41 +0100
-X-Mailer: git-send-email 1.7.8.431.g2abf2
-In-Reply-To: <cover.1323191497.git.trast@student.ethz.ch>
+ 2011 18:56:51 +0100
+Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 6 Dec
+ 2011 18:56:52 +0100
+User-Agent: KMail/1.13.7 (Linux/3.1.3-1-desktop; KDE/4.6.5; x86_64; ; )
+In-Reply-To: <4EDE4589.9030601@gmx.net>
 X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186363>
 
-In prepare_index(), we refresh the index, and then write it to disk if
-this changed the index data.  After running hooks we re-read the index
-and compute the root tree sha1 with the cache-tree machinery.
+Onsager wrote:
+> @list
+> 
+> ... more detailed explanation on stackoverflow:
+> 
+> http://stackoverflow.com/questions/8398405/git-svn-rebase-out-of-memory-error-after-merging-two-tracking-branches
+> 
+> Is there something, I can do about this issue as a common user?
 
-This gives us a mostly free opportunity to write up-to-date cache-tree
-data: we can compute it in prepare_index() immediately before writing
-the index to disk.
+In this age of 5-second attention spans, I'm not sure you can expect
+us to follow a link to an external site when a simple cut&paste job
+would have sufficed, like so:
 
-If we do this, we were going to write the index anyway, and the later
-cache-tree update has no further work to do.  If we don't do it, we
-don't do any extra work, though we still don't have have cache-tree
-data after the commit.
+  I'm tracking two customer SVN branches with msysgit 1.7.7.1 (Win 7 64bit):
 
-The only case that suffers badly is when the pre-commit hook changes
-many trees in the index.  I'm writing this off as highly unusual.
+    SVN                Git
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+    trunk          --> master
+    release_x_y_z  --> git-local-release_x_y_z 
 
-Don't ask me why git thinks the index has been changed only when
-already building upon an earlier commit.  I don't know.  I suspect
-it's some raciness issue though.
+  After a successful local merge of 'git-local-release_x_y_z' into
+  'master' I'm running out of memory, when trying to synchronize the
+  result with svn:
 
- builtin/commit.c      |    2 ++
- t/t0090-cache-tree.sh |    2 +-
- 2 files changed, 3 insertions(+), 1 deletions(-)
+    mb@MMPEPA23 /c/git/MySoft (master)
+    $ git svn rebase
+    First, rewinding head to replay your work on top of it...
+    Applying:
+    fatal: Out of memory, realloc failed
+    Repository lacks necessary blobs to fall back on 3-way merge.
+    Cannot fall back to three-way merge.
+    Patch failed at 0001
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 0163086..57d028e 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -394,6 +394,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
- 		fd = hold_locked_index(&index_lock, 1);
- 		add_files_to_cache(also ? prefix : NULL, pathspec, 0);
- 		refresh_cache_or_die(refresh_flags);
-+		update_main_cache_tree(1);
- 		if (write_cache(fd, active_cache, active_nr) ||
- 		    close_lock_file(&index_lock))
- 			die(_("unable to write new_index file"));
-@@ -414,6 +415,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
- 		fd = hold_locked_index(&index_lock, 1);
- 		refresh_cache_or_die(refresh_flags);
- 		if (active_cache_changed) {
-+			update_main_cache_tree(1);
- 			if (write_cache(fd, active_cache, active_nr) ||
- 			    commit_locked_index(&index_lock))
- 				die(_("unable to write new_index file"));
-diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
-index 3d0702a..a3527a5 100755
---- a/t/t0090-cache-tree.sh
-+++ b/t/t0090-cache-tree.sh
-@@ -70,7 +70,7 @@ test_expect_success 'test-scrap-cache-tree works' '
- 	test_no_cache_tree
- '
- 
--test_expect_failure 'second commit has cache-tree' '
-+test_expect_success 'second commit has cache-tree' '
- 	test_commit bar &&
- 	test_shallow_cache_tree
- '
+    When you have resolved this problem run "git rebase --continue".
+    If you would prefer to skip this patch, instead run "git rebase --skip".
+    To check out the original branch and stop rebasing run "git rebase --abort".
+
+    rebase refs/remotes/git-svn: command returned error: 1 
+
+  The .git/rebase-apply directory contains a few files ('patch', '0001')
+  with more than 1GB size. What can I do in order to apply this patch?
+
+
+First you should find out whether something went wrong with the patch
+generation, or if that 1GB size is plausible.  Did your merge bring in
+blobs that were that big?
+
+Second, you could try with the -m option.  This will use a 3-way merge
+to rebase, which avoids generating a full patch.
+
 -- 
-1.7.8.425.ga639d3
+Thomas Rast
+trast@{inf,student}.ethz.ch
