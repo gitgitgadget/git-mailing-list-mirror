@@ -1,8 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCHv2 09/13] docs: end-user documentation for the credential
- subsystem
-Date: Tue, 6 Dec 2011 01:22:55 -0500
-Message-ID: <20111206062255.GI29233@sigill.intra.peff.net>
+Subject: [PATCHv2 12/13] credentials: add "store" helper
+Date: Tue, 6 Dec 2011 01:23:05 -0500
+Message-ID: <20111206062305.GL29233@sigill.intra.peff.net>
 References: <20111206062127.GA29046@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -13,262 +12,340 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RXoQt-0004m6-Fk
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 07:23:15 +0100
+	id 1RXoQv-0004m6-7R
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 07:23:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932991Ab1LFGXA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Dec 2011 01:23:00 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:40054
+	id S933000Ab1LFGXK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Dec 2011 01:23:10 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:40060
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932950Ab1LFGW6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Dec 2011 01:22:58 -0500
-Received: (qmail 1269 invoked by uid 107); 6 Dec 2011 06:29:35 -0000
+	id S932992Ab1LFGXI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Dec 2011 01:23:08 -0500
+Received: (qmail 1359 invoked by uid 107); 6 Dec 2011 06:29:45 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 06 Dec 2011 01:29:35 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Dec 2011 01:22:55 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 06 Dec 2011 01:29:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Dec 2011 01:23:05 -0500
 Content-Disposition: inline
 In-Reply-To: <20111206062127.GA29046@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186331>
 
-The credential API and helper format is already defined in
-technical/api-credentials.txt.  This presents the end-user
-view.
+This is like "cache", except that we actually put the
+credentials on disk. This can be terribly insecure, of
+course, but we do what we can to protect them by filesystem
+permissions, and we warn the user in the documentation.
+
+This is not unlike using .netrc to store entries, but it's a
+little more user-friendly. Instead of putting credentials in
+place ahead of time, we transparently store them after
+prompting the user for them once.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Documentation/Makefile           |    1 +
- Documentation/config.txt         |   23 +++++
- Documentation/gitcredentials.txt |  171 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 195 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/gitcredentials.txt
+ .gitignore                             |    1 +
+ Documentation/git-credential-store.txt |   75 ++++++++++++++++
+ Documentation/gitcredentials.txt       |    5 +
+ Makefile                               |    1 +
+ credential-store.c                     |  148 ++++++++++++++++++++++++++++++++
+ t/t0302-credential-store.sh            |    9 ++
+ 6 files changed, 239 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-credential-store.txt
+ create mode 100644 credential-store.c
+ create mode 100755 t/t0302-credential-store.sh
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 304b31e..116f175 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -7,6 +7,7 @@ MAN5_TXT=gitattributes.txt gitignore.txt gitmodules.txt githooks.txt \
- MAN7_TXT=gitcli.txt gittutorial.txt gittutorial-2.txt \
- 	gitcvs-migration.txt gitcore-tutorial.txt gitglossary.txt \
- 	gitdiffcore.txt gitnamespaces.txt gitrevisions.txt gitworkflows.txt
-+MAN7_TXT += gitcredentials.txt
- 
- MAN_TXT = $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
- MAN_XML=$(patsubst %.txt,%.xml,$(MAN_TXT))
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 5a841da..36bcdf2 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -832,6 +832,29 @@ commit.template::
- 	"{tilde}/" is expanded to the value of `$HOME` and "{tilde}user/" to the
- 	specified user's home directory.
- 
-+credential.helper::
-+	Specify an external helper to be called when a username or
-+	password credential is needed; the helper may consult external
-+	storage to avoid prompting the user for the credentials. See
-+	linkgit:gitcredentials[7] for details.
-+
-+credential.useHttpPath::
-+	When acquiring credentials, consider the "path" component of an http
-+	or https URL to be important. Defaults to false. See
-+	linkgit:gitcredentials[7] for more information.
-+
-+credential.username::
-+	If no username is set for a network authentication, use this username
-+	by default. See credential.<context>.* below, and
-+	linkgit:gitcredentials[7].
-+
-+credential.<url>.*::
-+	Any of the credential.* options above can be applied selectively to
-+	some credentials. For example "credential.https://example.com.username"
-+	would set the default username only for https connections to
-+	example.com. See linkgit:gitcredentials[7] for details on how URLs are
-+	matched.
-+
- include::diff-config.txt[]
- 
- difftool.<tool>.path::
-diff --git a/Documentation/gitcredentials.txt b/Documentation/gitcredentials.txt
+diff --git a/.gitignore b/.gitignore
+index a6b0bd4..2b7a3f9 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -32,6 +32,7 @@
+ /git-count-objects
+ /git-credential-cache
+ /git-credential-cache--daemon
++/git-credential-store
+ /git-cvsexportcommit
+ /git-cvsimport
+ /git-cvsserver
+diff --git a/Documentation/git-credential-store.txt b/Documentation/git-credential-store.txt
 new file mode 100644
-index 0000000..07f6596
+index 0000000..3109346
 --- /dev/null
-+++ b/Documentation/gitcredentials.txt
-@@ -0,0 +1,171 @@
-+gitcredentials(7)
-+=================
++++ b/Documentation/git-credential-store.txt
+@@ -0,0 +1,75 @@
++git-credential-store(1)
++=======================
 +
 +NAME
 +----
-+gitcredentials - providing usernames and passwords to git
++git-credential-store - helper to store credentials on disk
 +
 +SYNOPSIS
 +--------
-+------------------
-+git config credential.https://example.com.username myusername
-+git config credential.helper "$helper $options"
-+------------------
++-------------------
++git config credential.helper 'store [options]'
++-------------------
 +
 +DESCRIPTION
 +-----------
 +
-+Git will sometimes need credentials from the user in order to perform
-+operations; for example, it may need to ask for a username and password
-+in order to access a remote repository over HTTP. This manual describes
-+the mechanisms git uses to request these credentials, as well as some
-+features to avoid inputting these credentials repeatedly.
++NOTE: Using this helper will store your passwords unencrypted on disk,
++protected only by filesystem permissions. If this is not an acceptable
++security tradeoff, try linkgit:git-credential-cache[1], or find a helper
++that integrates with secure storage provided by your operating system.
 +
-+REQUESTING CREDENTIALS
-+----------------------
++This command stores credentials indefinitely on disk for use by future
++git programs.
 +
-+Without any credential helpers defined, git will try the following
-+strategies to ask the user for usernames and passwords:
++You probably don't want to invoke this command directly; it is meant to
++be used as a credential helper by other parts of git. See
++linkgit:gitcredentials[7] or `EXAMPLES` below.
 +
-+1. If the `GIT_ASKPASS` environment variable is set, the program
-+   specified by the variable is invoked. A suitable prompt is provided
-+   to the program on the command line, and the user's input is read
-+   from its standard output.
++OPTIONS
++-------
 +
-+2. Otherwise, if the `core.askpass` configuration variable is set, its
-+   value is used as above.
++--store=<path>::
 +
-+3. Otherwise, if the `SSH_ASKPASS` environment variable is set, its
-+   value is used as above.
++	Use `<path>` to store credentials. The file will have its
++	filesystem permissions set to prevent other users on the system
++	from reading it, but will not be encrypted or otherwise
++	protected. Defaults to `~/.git-credentials`.
 +
-+4. Otherwise, the user is prompted on the terminal.
++EXAMPLES
++--------
 +
-+AVOIDING REPETITION
-+-------------------
++The point of this helper is to reduce the number of times you must type
++your username or password. For example:
 +
-+It can be cumbersome to input the same credentials over and over.  Git
-+provides two methods to reduce this annoyance:
++------------------------------------------
++$ git config credential.helper store
++$ git push http://example.com/repo.git
++Username: <type your username>
++Password: <type your password>
 +
-+1. Static configuration of usernames for a given authentication context.
++[several days later]
++$ git push http://example.com/repo.git
++[your credentials are used automatically]
++------------------------------------------
 +
-+2. Credential helpers to cache or store passwords, or to interact with
-+   a system password wallet or keychain.
-+
-+The first is simple and appropriate if you do not have secure storage available
-+for a password. It is generally configured by adding this to your config:
-+
-+---------------------------------------
-+[credential "https://example.com"]
-+	username = me
-+---------------------------------------
-+
-+Credential helpers, on the other hand, are external programs from which git can
-+request both usernames and passwords; they typically interface with secure
-+storage provided by the OS or other programs.
-+
-+To use a helper, you must first select one to use.  Git does not yet
-+include any credential helpers, but you may have third-party helpers
-+installed; search for `credential-*` in the output of `git help -a`, and
-+consult the documentation of individual helpers.  Once you have selected
-+a helper, you can tell git to use it by putting its name into the
-+credential.helper variable.
-+
-+1. Find a helper.
-++
-+-------------------------------------------
-+$ git help -a | grep credential-
-+credential-foo
-+-------------------------------------------
-+
-+2. Read its description.
-++
-+-------------------------------------------
-+$ git help credential-foo
-+-------------------------------------------
-+
-+3. Tell git to use it.
-++
-+-------------------------------------------
-+$ git config --global credential.helper foo
-+-------------------------------------------
-+
-+If there are multiple instances of the `credential.helper` configuration
-+variable, each helper will be tried in turn, and may provide a username,
-+password, or nothing. Once git has acquired both a username and a
-+password, no more helpers will be tried.
-+
-+
-+CREDENTIAL CONTEXTS
-+-------------------
-+
-+Git considers each credential to have a context defined by a URL. This context
-+is used to look up context-specific configuration, and is passed to any
-+helpers, which may use it as an index into secure storage.
-+
-+For instance, imagine we are accessing `https://example.com/foo.git`. When git
-+looks into a config file to see if a section matches this context, it will
-+consider the two a match if the context is a more-specific subset of the
-+pattern in the config file. For example, if you have this in your config file:
-+
-+--------------------------------------
-+[credential "https://example.com"]
-+	username = foo
-+--------------------------------------
-+
-+then we will match: both protocols are the same, both hosts are the same, and
-+the "pattern" URL does not care about the path component at all. However, this
-+context would not match:
-+
-+--------------------------------------
-+[credential "https://kernel.org"]
-+	username = foo
-+--------------------------------------
-+
-+because the hostnames differ. Nor would it match `foo.example.com`; git
-+compares hostnames exactly, without considering whether two hosts are part of
-+the same domain. Likewise, a config entry for `http://example.com` would not
-+match: git compares the protocols exactly.
-+
-+
-+CONFIGURATION OPTIONS
-+---------------------
-+
-+Options for a credential context can be configured either in
-+`credential.\*` (which applies to all credentials), or
-+`credential.<url>.\*`, where <url> matches the context as described
-+above.
-+
-+The following options are available in either location:
-+
-+helper::
-+
-+	The name of an external credential helper, and any associated options.
-+	If the helper name is not an absolute path, then the string `git
-+	credential-` is prepended. The resulting string is executed by the
-+	shell (so, for example, setting this to `foo --option=bar` will execute
-+	`git credential-foo --option=bar` via the shell. See the manual of
-+	specific helpers for examples of their use.
-+
-+username::
-+
-+	A default username, if one is not provided in the URL.
-+
-+useHttpPath::
-+
-+	By default, git does not consider the "path" component of an http URL
-+	to be worth matching via external helpers. This means that a credential
-+	stored for `https://example.com/foo.git` will also be used for
-+	`https://example.com/bar.git`. If you do want to distinguish these
-+	cases, set this option to `true`.
-+
-+
-+CUSTOM HELPERS
++STORAGE FORMAT
 +--------------
 +
-+You can write your own custom helpers to interface with any system in
-+which you keep credentials. See the documentation for git's
-+link:technical/api-credentials.html[credentials API] for details.
++The `.git-credentials` file is stored in plaintext. Each credential is
++stored on its own line as a URL like:
++
++------------------------------
++https://user:pass@example.com
++------------------------------
++
++When git needs authentication for a particular URL context,
++credential-store will consider that context a pattern to match against
++each entry in the credentials file.  If the protocol, hostname, and
++username (if we already have one) match, then the password is returned
++to git. See the discussion of configuration in linkgit:gitcredentials[7]
++for more information.
 +
 +GIT
 +---
 +Part of the linkgit:git[1] suite
+diff --git a/Documentation/gitcredentials.txt b/Documentation/gitcredentials.txt
+index 4e3f860..066f825 100644
+--- a/Documentation/gitcredentials.txt
++++ b/Documentation/gitcredentials.txt
+@@ -71,6 +71,11 @@ cache::
+ 	Cache credentials in memory for a short period of time. See
+ 	linkgit:git-credential-cache[1] for details.
+ 
++store::
++
++	Store credentials indefinitely on disk. See
++	linkgit:git-credential-store[1] for details.
++
+ You may also have third-party helpers installed; search for
+ `credential-*` in the output of `git help -a`, and consult the
+ documentation of individual helpers.  Once you have selected a helper,
+diff --git a/Makefile b/Makefile
+index 5d41c29..2537128 100644
+--- a/Makefile
++++ b/Makefile
+@@ -429,6 +429,7 @@ PROGRAM_OBJS += http-backend.o
+ PROGRAM_OBJS += sh-i18n--envsubst.o
+ PROGRAM_OBJS += credential-cache.o
+ PROGRAM_OBJS += credential-cache--daemon.o
++PROGRAM_OBJS += credential-store.o
+ 
+ PROGRAMS += $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
+ 
+diff --git a/credential-store.c b/credential-store.c
+new file mode 100644
+index 0000000..ed58768
+--- /dev/null
++++ b/credential-store.c
+@@ -0,0 +1,148 @@
++#include "cache.h"
++#include "credential.h"
++#include "string-list.h"
++#include "parse-options.h"
++
++static struct lock_file credential_lock;
++
++static void parse_credential_file(const char *fn,
++				  struct credential *c,
++				  void (*match_cb)(struct credential *),
++				  void (*other_cb)(struct strbuf *))
++{
++	FILE *fh;
++	struct strbuf line = STRBUF_INIT;
++	struct credential entry = CREDENTIAL_INIT;
++
++	fh = fopen(fn, "r");
++	if (!fh) {
++		if (errno != ENOENT)
++			die_errno("unable to open %s", fn);
++		return;
++	}
++
++	while (strbuf_getline(&line, fh, '\n') != EOF) {
++		credential_from_url(&entry, line.buf);
++		if (entry.username && entry.password &&
++		    credential_match(c, &entry)) {
++			if (match_cb) {
++				match_cb(&entry);
++				break;
++			}
++		}
++		else if (other_cb)
++			other_cb(&line);
++	}
++
++	credential_clear(&entry);
++	strbuf_release(&line);
++	fclose(fh);
++}
++
++static void print_entry(struct credential *c)
++{
++	printf("username=%s\n", c->username);
++	printf("password=%s\n", c->password);
++}
++
++static void print_line(struct strbuf *buf)
++{
++	strbuf_addch(buf, '\n');
++	write_or_die(credential_lock.fd, buf->buf, buf->len);
++}
++
++static void rewrite_credential_file(const char *fn, struct credential *c,
++				    struct strbuf *extra)
++{
++	if (hold_lock_file_for_update(&credential_lock, fn, 0) < 0)
++		die_errno("unable to get credential storage lock");
++	if (extra)
++		print_line(extra);
++	parse_credential_file(fn, c, NULL, print_line);
++	if (commit_lock_file(&credential_lock) < 0)
++		die_errno("unable to commit credential store");
++}
++
++static void store_credential(const char *fn, struct credential *c)
++{
++	struct strbuf buf = STRBUF_INIT;
++
++	/*
++	 * Sanity check that what we are storing is actually sensible.
++	 * In particular, we can't make a URL without a protocol field.
++	 * Without either a host or pathname (depending on the scheme),
++	 * we have no primary key. And without a username and password,
++	 * we are not actually storing a credential.
++	 */
++	if (!c->protocol || !(c->host || c->path) ||
++	    !c->username || !c->password)
++		return;
++
++	strbuf_addf(&buf, "%s://", c->protocol);
++	strbuf_addstr_urlencode(&buf, c->username, 1);
++	strbuf_addch(&buf, ':');
++	strbuf_addstr_urlencode(&buf, c->password, 1);
++	strbuf_addch(&buf, '@');
++	if (c->host)
++		strbuf_addstr_urlencode(&buf, c->host, 1);
++	if (c->path) {
++		strbuf_addch(&buf, '/');
++		strbuf_addstr_urlencode(&buf, c->path, 0);
++	}
++
++	rewrite_credential_file(fn, c, &buf);
++	strbuf_release(&buf);
++}
++
++static void remove_credential(const char *fn, struct credential *c)
++{
++	rewrite_credential_file(fn, c, NULL);
++}
++
++static int lookup_credential(const char *fn, struct credential *c)
++{
++	parse_credential_file(fn, c, print_entry, NULL);
++	return c->username && c->password;
++}
++
++int main(int argc, const char **argv)
++{
++	const char * const usage[] = {
++		"git credential-store [options] <action>",
++		NULL
++	};
++	const char *op;
++	struct credential c = CREDENTIAL_INIT;
++	char *file = NULL;
++	struct option options[] = {
++		OPT_STRING_LIST(0, "file", &file, "path",
++				"fetch and store credentials in <path>"),
++		OPT_END()
++	};
++
++	umask(077);
++
++	argc = parse_options(argc, argv, NULL, options, usage, 0);
++	if (argc != 1)
++		usage_with_options(usage, options);
++	op = argv[0];
++
++	if (!file)
++		file = expand_user_path("~/.git-credentials");
++	if (!file)
++		die("unable to set up default path; use --file");
++
++	if (credential_read(&c, stdin) < 0)
++		die("unable to read credential");
++
++	if (!strcmp(op, "get"))
++		lookup_credential(file, &c);
++	else if (!strcmp(op, "erase"))
++		remove_credential(file, &c);
++	else if (!strcmp(op, "store"))
++		store_credential(file, &c);
++	else
++		; /* Ignore unknown operation. */
++
++	return 0;
++}
+diff --git a/t/t0302-credential-store.sh b/t/t0302-credential-store.sh
+new file mode 100755
+index 0000000..f61b40c
+--- /dev/null
++++ b/t/t0302-credential-store.sh
+@@ -0,0 +1,9 @@
++#!/bin/sh
++
++test_description='credential-store tests'
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-credential.sh
++
++helper_test store
++
++test_done
 -- 
 1.7.8.rc4.4.g884ec
