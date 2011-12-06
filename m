@@ -1,69 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] userdiff: allow * between cpp funcname words
-Date: Tue, 06 Dec 2011 13:15:44 -0800
-Message-ID: <7vfwgxflkv.fsf@alter.siamese.dyndns.org>
-References: <a639d328e15bce3057de9238ee31097d15850de1.1323189110.git.trast@student.ethz.ch> <20111206190217.GD9492@sigill.intra.peff.net> <201112062117.57690.trast@student.ethz.ch>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Auto update submodules after merge and reset
+Date: Tue, 06 Dec 2011 22:32:04 +0100
+Message-ID: <4EDE89D4.7040001@web.de>
+References: <4ED57EED.4040705@qualcomm.com> <4ED5E9D2.4060503@web.de> <4EDD6A8C.40008@qualcomm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Dec 06 22:16:00 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Max Krasnyansky <maxk@qualcomm.com>
+X-From: git-owner@vger.kernel.org Tue Dec 06 22:32:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RY2Mi-0002By-8y
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 22:15:52 +0100
+	id 1RY2cb-0001ax-Mn
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 22:32:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754562Ab1LFVPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Dec 2011 16:15:48 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54478 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754559Ab1LFVPr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Dec 2011 16:15:47 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D39A25E45;
-	Tue,  6 Dec 2011 16:15:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+pjs1Qlgf1sqhA8cFQhudUJ4daU=; b=ONhEqE
-	W6sjKa6+hxcn+5GE87UL/HXYnEGfS6gkENqDIlaVx0uVyDI6Mpmf+JSHeyUBZb7k
-	7KWHLx+LkumqJWy3eYFtAGeJEokvJP8jD9qZs9akz/hg1b0FBxkx+QQTNA5oYGyM
-	HZWaQClA2s7gnSy5x0hV8UXAkt30XuFB/qpcE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=k8B5SujgeN47sC14t9x3M3FmYHmxw7Vd
-	QdnbDJlwrM1ce5buNuRBQOAG5Go5XpsGRiVInw4CsfkAHP+kkvTxVv+ID9rPDMzh
-	k89W2uugxK7H6Yfw/ED2i8CfgAQPGoRiD76CFNCfuYIOOzNVNccA9eIE+w4D5FjE
-	sHtcZO3zARo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CB29B5E44;
-	Tue,  6 Dec 2011 16:15:46 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 447715E3F; Tue,  6 Dec 2011
- 16:15:46 -0500 (EST)
-In-Reply-To: <201112062117.57690.trast@student.ethz.ch> (Thomas Rast's
- message of "Tue, 6 Dec 2011 21:17:56 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 76A6136E-204F-11E1-9B26-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754019Ab1LFVcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Dec 2011 16:32:13 -0500
+Received: from fmmailgate05.web.de ([217.72.192.243]:41431 "EHLO
+	fmmailgate05.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753539Ab1LFVcM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Dec 2011 16:32:12 -0500
+Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
+	by fmmailgate05.web.de (Postfix) with ESMTP id 8A5CC67C160F
+	for <git@vger.kernel.org>; Tue,  6 Dec 2011 22:32:11 +0100 (CET)
+Received: from [192.168.178.25] ([80.187.97.183]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0MCZP8-1RgKMM0wgE-009SsP; Tue, 06 Dec 2011 22:32:09
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <4EDD6A8C.40008@qualcomm.com>
+X-Provags-ID: V02:K0:lxDkXz3yBBAWyWo/zSNDW5G9+UZinA9/r8W1RroTWzX
+ CsYKLaMryh49FepDIM1gkJGFTmGrv6ZjpPukSpEP+4HYFibn5v
+ wpBFXgIV4thRDBsXTiRd9p4ccnBlfBSnsoec7TRrsfNWjpxdVd
+ 7/Xi/eAGcfNh+Fax0J01vU07oQvG2+6ZHp7VXkK3e58X4F4l9f
+ k8dWydzxG10jUDaMYpWpg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186387>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Am 06.12.2011 02:06, schrieb Max Krasnyansky:
+> On 11/30/2011 12:31 AM, Jens Lehmann wrote:
+>> I'm working on a patch series to teach Git to optionally update the submodules work trees on checkout, reset merge and so on, but I'm not there yet.
 
-> Actually (sadly) I'll have to revise it.  It doesn't match much of C++
-> either, and I haven't yet come up with a reasonable regex that
-> matches, say,
->
->   foo::Bar<int>::t& Baz::operator<<(
->
-> which I would call ludicrous, but it's valid C++.
+> Everything you suggested sounds great. We're on the same page (config option, etc).
+> How far along are you? Do you have a tree I could pull from to play with things?
+> I could help with testing, bug fixes and/or implementing parts of it. Let me know.
 
-Heh, I'd rather not see us go that route, which would either end up
-implementing a C++ parser or reverting the heuristics back to "non-blank
-at the beginning of the line" that was already reasonably useful.
+Great to hear that! Please see my GitHub repo for the current state:
+https://github.com/jlehmann/git-submod-enhancements
+
+It has two interesting branches:
+
+git-checkout-recurse-submodules:
+This was my first attempt to tell unpack_trees() to checkout submodules
+and works quite well. Porcelain checks out submodules by default while
+plumbing learned the --recurse-submodules option to do that (and git gui
+and gitk use that option so stuff like "Revert Changes" does work on
+submodules :-). I use it at work for some time and it works quite well,
+but doesn't handle new or deleted submodules. And unfortunately the way
+I added the flag to control submodule checkout doesn't allow to add a
+per-submodule configuration option.
+
+recursive_submodule_checkout:
+This is where new development happens. I added the basic infrastructure
+to have global and per-submodule configuration controlling the checkout
+and ported the unpack_trees() changes from git-checkout-recurse-submodules
+here. I also added removal and creation of submodules based on the now
+moved gitdir. This branch has rudimentary tests but still needs quite some
+work.
+
+I expect to have some time around the end of year to move things forward.
+It'd be cool if you could check the current state, after that we can
+decide how to move the topic forward together.
+
+> For now I implemented automatic submodules update using 'post-merge' hook. But obviously it does
+> not handle reset and things. I'm thinking of adding 'post-reset' and 'pre-merge' that would be useful
+> for this and maybe other things.
+
+I doubt hooks can be more than a band aid for submodule checkout. I thought
+about doing that too and came to the conclusion it will only handle some of
+the issues. And you'll have to provide a real life use case to get a new
+hook accepted ;-)
