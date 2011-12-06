@@ -1,93 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCHv2 13/13] t: add test harness for external credential helpers
-Date: Tue, 6 Dec 2011 01:23:13 -0500
-Message-ID: <20111206062313.GM29233@sigill.intra.peff.net>
-References: <20111206062127.GA29046@sigill.intra.peff.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Suggestion on hashing
+Date: Tue, 6 Dec 2011 13:23:00 +0700
+Message-ID: <CACsJy8CXkz-W3Z3pX-C-+fjLz=WahBajE2uLEG-f3gG_svEhug@mail.gmail.com>
+References: <1322813319.4340.109.camel@yos> <CACsJy8CO1GtpZVo-oA2eKbQadsXYBEKVLfUH0GONR5jovuvH+Q@mail.gmail.com>
+ <alpine.DEB.2.00.1112060146121.15104@hoki.goeswhere.com> <CACsJy8CM8xqWxTx14QbY+-bT=306p3U=6gJfRaW=dDD-Swo7-w@mail.gmail.com>
+ <1323151347.1745.73.camel@yos>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 06 07:23:35 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Chris West (Faux)" <faux@goeswhere.com>,
+	Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Bill Zaumen <bill.zaumen@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 06 07:23:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RXoRC-0004u8-5K
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 07:23:34 +0100
+	id 1RXoRa-00051b-AE
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 07:23:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932954Ab1LFGXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Dec 2011 01:23:18 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:40064
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932909Ab1LFGXQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Dec 2011 01:23:16 -0500
-Received: (qmail 1413 invoked by uid 107); 6 Dec 2011 06:29:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 06 Dec 2011 01:29:53 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Dec 2011 01:23:13 -0500
-Content-Disposition: inline
-In-Reply-To: <20111206062127.GA29046@sigill.intra.peff.net>
+	id S933009Ab1LFGXd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Dec 2011 01:23:33 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:58203 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932909Ab1LFGXc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Dec 2011 01:23:32 -0500
+Received: by eeaq14 with SMTP id q14so2555221eea.19
+        for <git@vger.kernel.org>; Mon, 05 Dec 2011 22:23:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=UO+cxup8eYL2YmtQ4y59kgDcioqaLXNPE5eGDujyL+4=;
+        b=BKBCxMF/kNWjNhseCz6pJZQp5HlZPTuSHw6QhN+3WVQDPEY15uWEkKtCTEETz3c0or
+         Dzrz/61/5puRA7OWOkz0kUao1rX+BK2BTxZ/39BdlnNDwoLrXE5jet8N0WBAHWtUPomx
+         lZAo4WnXUeMeL58TxlCBmOsqZ+WwS+0e2/QXM=
+Received: by 10.14.15.221 with SMTP id f69mr1872120eef.163.1323152611274; Mon,
+ 05 Dec 2011 22:23:31 -0800 (PST)
+Received: by 10.204.23.2 with HTTP; Mon, 5 Dec 2011 22:23:00 -0800 (PST)
+In-Reply-To: <1323151347.1745.73.camel@yos>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186333>
 
-We already have tests for the internal helpers, but it's
-nice to give authors of external tools an easy way to
-sanity-check their helpers.
+On Tue, Dec 6, 2011 at 1:02 PM, Bill Zaumen <bill.zaumen@gmail.com> wro=
+te:
+> On Tue, 2011-12-06 at 11:46 +0700, Nguyen Thai Ngoc Duy wrote:
+>> On Tue, Dec 6, 2011 at 8:56 AM, Chris West (Faux) <faux@goeswhere.co=
+m> wrote:
+>> >
+>> > Nguyen Thai Ngoc Duy wrote:
+>> >>
+>> >> SHA-1 charateristics (like 20 byte length) are hard coded everywh=
+ere
+>> >> in git, it'd be a big audit.
+>> >
+>> >
+>> > I was planning to look at this anyway. =C2=A0My branch[1] allows
+>> > =C2=A0init/add/commit with SHA-256, SHA-512 and all the SHA-3 cand=
+idates.
+>>
+>> Great!
+>
+> If you are replacing SHA-1 as an object ID with another hash function=
+,
+> two things to watch are submodules and alternative object databases.
+> Because of those, it is necessary to worry about the order in which
+> repositories are converted. =C2=A0In the worst case for submodules, y=
+ou'd
+> have to do multiple repositories at the same time, switching between
+> them depending on what you need at each point.
 
-If you have written the "git-credential-foo" helper, you can
-do so with:
-
-  GIT_TEST_CREDENTIAL_HELPER=foo \
-  make t0303-credential-external.sh
-
-This assumes that your helper is capable of both storing and
-retrieving credentials (some helpers may be read-only, and
-they will fail these tests).
-
-If your helper supports time-based expiration with a
-configurable timeout, you can test that feature like this:
-
-  GIT_TEST_CREDENTIAL_HELPER_TIMEOUT="foo --timeout=1" \
-  make t0303-credential-external.sh
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t0303-credential-external.sh |   23 +++++++++++++++++++++++
- 1 files changed, 23 insertions(+), 0 deletions(-)
- create mode 100755 t/t0303-credential-external.sh
-
-diff --git a/t/t0303-credential-external.sh b/t/t0303-credential-external.sh
-new file mode 100755
-index 0000000..79b046f
---- /dev/null
-+++ b/t/t0303-credential-external.sh
-@@ -0,0 +1,23 @@
-+#!/bin/sh
-+
-+test_description='external credential helper tests'
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-credential.sh
-+
-+if test -z "$GIT_TEST_CREDENTIAL_HELPER"; then
-+	say "# skipping external helper tests (set GIT_TEST_CREDENTIAL_HELPER)"
-+else
-+	helper_test_clean "$GIT_TEST_CREDENTIAL_HELPER"
-+	helper_test "$GIT_TEST_CREDENTIAL_HELPER"
-+#	helper_test_clean "$GIT_TEST_CREDENTIAL_HELPER"
-+fi
-+
-+if test -z "$GIT_TEST_CREDENTIAL_HELPER_TIMEOUT"; then
-+	say "# skipping external helper timeout tests"
-+else
-+	helper_test_clean "$GIT_TEST_CREDENTIAL_HELPER_TIMEOUT"
-+	helper_test_timeout "$GIT_TEST_CREDENTIAL_HELPER_TIMEOUT"
-+	helper_test_clean "$GIT_TEST_CREDENTIAL_HELPER_TIMEOUT"
-+fi
-+
-+test_done
--- 
-1.7.8.rc4.4.g884ec
+I know migration would be painful. But note that new repos can benefit
+stronger digest without legacy (of course until it links to an old
+repo). For submodules, I think we should extend it to become something
+similar to soft-link: git link is an SHA-1 to a text file that
+contains SHA-1 and maybe other digests of the submodule's tip.
+--=20
+Duy
