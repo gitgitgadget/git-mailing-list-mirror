@@ -1,97 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] reset: update cache-tree data when appropriate
-Date: Tue, 06 Dec 2011 15:13:28 -0800
-Message-ID: <7v62hte1k7.fsf@alter.siamese.dyndns.org>
-References: <cover.1323191497.git.trast@student.ethz.ch>
- <1385c10084ae41ae4543ef3ccaa1d6c8182b2204.1323191497.git.trast@student.ethz.ch>
+From: Michael Schubert <mschub@elegosoft.com>
+Subject: Re: How to make devs write better commit messages
+Date: Wed, 07 Dec 2011 00:18:58 +0100
+Message-ID: <4EDEA2E2.3030002@elegosoft.com>
+References: <CAOJsP-X0ZWT5HLHcBc2FmhoMpWFOvEFADiM9jGZ9R1ctqHDJ9w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Dec 07 00:13:36 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Joseph Huttner <huttnified@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 07 00:30:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RY4Ce-0007KK-DH
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 00:13:36 +0100
+	id 1RY4TF-0004kG-A3
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 00:30:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755358Ab1LFXNb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Dec 2011 18:13:31 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45693 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753333Ab1LFXNb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Dec 2011 18:13:31 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CE4550FA;
-	Tue,  6 Dec 2011 18:13:30 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wNA+BW2CPhZV5N71rr7dTnu5bbU=; b=W6EW06
-	c5MDdkG2tc/d6YyRLHK+yBO5o9gROw+tP1ZzWwq3VIB3ijG50cH/ywSB2tudGPg8
-	Vj+zsYed3RPrIOTFS5q6/Swecj5FYchmZyvLvxuFI5ov85gCJ3lAKqFJg7+EUAoU
-	mkFdPBah6EHjJj8uzE4LVrot8HINRF9wudcHU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vJBYjiTKMo/WtUtZuu5J9cDfauXv5IiQ
-	+UzNSpjPOw4RAicE3jStpCB0GycqPF5BqWc8Zh2Ijmg8q+lDVOMVjZK6bzM6u5Ez
-	83U2SJTBfMFwToPhJuFYgZegDSFhRQ97xpYLqe89EoLLAPRtLzidD58tIli4itvC
-	Sp2SnCwSlJQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 54C2250F9;
-	Tue,  6 Dec 2011 18:13:30 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DB60F50F8; Tue,  6 Dec 2011
- 18:13:29 -0500 (EST)
-In-Reply-To: <1385c10084ae41ae4543ef3ccaa1d6c8182b2204.1323191497.git.trast@student.ethz.ch> (Thomas Rast's message of "Tue, 6 Dec 2011 18:43:39 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E8E47E24-205F-11E1-95C0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754559Ab1LFXak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Dec 2011 18:30:40 -0500
+Received: from mx0.elegosoft.com ([78.47.87.163]:53332 "EHLO mx0.elegosoft.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753825Ab1LFXaj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Dec 2011 18:30:39 -0500
+X-Greylist: delayed 627 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Dec 2011 18:30:39 EST
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id F02EADE883;
+	Wed,  7 Dec 2011 00:20:10 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id k3PIstWLb0u8; Wed,  7 Dec 2011 00:20:01 +0100 (CET)
+Received: from [192.168.1.101] (g231240206.adsl.alicedsl.de [92.231.240.206])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id 05139DE7EA;
+	Wed,  7 Dec 2011 00:20:00 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20111108 Thunderbird/8.0
+In-Reply-To: <CAOJsP-X0ZWT5HLHcBc2FmhoMpWFOvEFADiM9jGZ9R1ctqHDJ9w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186405>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+On 12/06/2011 11:55 PM, Joseph Huttner wrote:
+> So I know that there is a somewhat standard format of commit messages
+> in Git, which Linus outlines here:
+> 
+> https://github.com/torvalds/subsurface/blob/master/README#L164
+> 
+> Trouble is, when most people go to commit, the file that the editor
+> opens has no reminder of how to write a proper commit message.  Often
+> I find myself having to go back through the commit log, or consulting
+> the above link.
+> 
+> I propose two things:
+> 
+> 1.  An optional flag in the Git config that, if set, shows the format
+> of a typical commit message in your commit message template.
+> 
+> 2.  The ability to modify this commit message template.  Many teams
+> use automated tools to read commit messages and then do automated
+> tasks based on that data, like comment an RT ticket.  Thus, developers
+> need to be reminded of these team-specific settings as well.
+> 
+> What are your thoughts?
 
-> In the case of --mixed and --hard, we throw away the old index and
-> rebuild everything from the tree argument (or HEAD).  So we have an
-> opportunity here to fill in the cache-tree data, just as read-tree
-> did.
->
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-> ---
->  builtin/reset.c       |    7 +++++++
->  t/t0090-cache-tree.sh |    4 ++--
->  2 files changed, 9 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/reset.c b/builtin/reset.c
-> index 811e8e2..8c2c1d5 100644
-> --- a/builtin/reset.c
-> +++ b/builtin/reset.c
-> @@ -43,6 +43,7 @@ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet
->  	int nr = 1;
->  	int newfd;
->  	struct tree_desc desc[2];
-> +	struct tree *tree;
->  	struct unpack_trees_options opts;
->  	struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
->  
-> @@ -84,6 +85,12 @@ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet
->  		return error(_("Failed to find tree of %s."), sha1_to_hex(sha1));
->  	if (unpack_trees(nr, desc, &opts))
->  		return -1;
-> +
-> +	if (reset_type == MIXED || reset_type == HARD) {
-> +		tree = parse_tree_indirect(sha1);
-> +		prime_cache_tree(&active_cache_tree, tree);
-> +	}
-
-The basic idea that MIXED or HARD should result in a cache-tree that match
-the tree we just read is sound, but how expensive is prime_cache_tree()? I
-think it reads the same tree once again. Admittedly, the data needed to
-reconstruct the tree is likely to be hot in core, but it may be necessary
-to measure before deciding if this is a good change.
+If it's no social issue but just due to lack of a reminder you
+could provide a template for commit.template. Either way: you
+still would have to force people to set it.?
