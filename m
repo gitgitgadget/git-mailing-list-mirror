@@ -1,83 +1,65 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] userdiff: allow * between cpp funcname words
-Date: Tue, 06 Dec 2011 22:07:03 +0100
-Message-ID: <4EDE83F7.6030708@lsrfire.ath.cx>
-References: <a639d328e15bce3057de9238ee31097d15850de1.1323189110.git.trast@student.ethz.ch> <20111206190217.GD9492@sigill.intra.peff.net> <201112062117.57690.trast@student.ethz.ch> <20111206201944.GB27930@sigill.intra.peff.net> <4EDE8086.9080303@kdbg.org>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: What's cooking in git.git (Dec 2011, #02; Mon, 5)
+Date: Tue, 06 Dec 2011 21:12:17 +0000
+Message-ID: <4EDE8531.8090406@diamand.org>
+References: <7v8vmqi98f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Dec 06 22:07:22 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 06 22:12:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RY2ET-0006oe-Mg
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 22:07:22 +0100
+	id 1RY2Iz-0000Tq-It
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 22:12:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753333Ab1LFVHO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Dec 2011 16:07:14 -0500
-Received: from india601.server4you.de ([85.25.151.105]:39023 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753136Ab1LFVHO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Dec 2011 16:07:14 -0500
-Received: from [192.168.2.105] (p4FFD9BF7.dip.t-dialin.net [79.253.155.247])
-	by india601.server4you.de (Postfix) with ESMTPSA id B14192F8033;
-	Tue,  6 Dec 2011 22:07:11 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <4EDE8086.9080303@kdbg.org>
+	id S1753327Ab1LFVL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Dec 2011 16:11:57 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:51400 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753267Ab1LFVL4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Dec 2011 16:11:56 -0500
+Received: by bkbzv3 with SMTP id zv3so4001322bkb.19
+        for <git@vger.kernel.org>; Tue, 06 Dec 2011 13:11:55 -0800 (PST)
+Received: by 10.180.80.162 with SMTP id s2mr19553450wix.27.1323205915220;
+        Tue, 06 Dec 2011 13:11:55 -0800 (PST)
+Received: from [86.26.7.206] (cpc1-cmbg14-2-0-cust973.5-4.cable.virginmedia.com. [86.26.7.206])
+        by mx.google.com with ESMTPS id m25sm35456991wbp.6.2011.12.06.13.11.51
+        (version=SSLv3 cipher=OTHER);
+        Tue, 06 Dec 2011 13:11:51 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+In-Reply-To: <7v8vmqi98f.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186385>
 
-Am 06.12.2011 21:52, schrieb Johannes Sixt:
-> Am 06.12.2011 21:19, schrieb Jeff King:
->> On Tue, Dec 06, 2011 at 09:17:56PM +0100, Thomas Rast wrote:
->>
->>>> Looks reasonable to me. You can see the difference, for instance, =
-with:
->>>>
->>>>    git show -U1 3c73a1d
->>>>
->>>> (The -U1 is because of the annoying "we will start looking for the
->>>> header at the top of context, not the top of changes" behavior I
->>>> mentioned last week).
->>>
->>> Actually (sadly) I'll have to revise it.  It doesn't match much of =
-C++
->>> either, and I haven't yet come up with a reasonable regex that
->>> matches, say,
->>>
->>>    foo::Bar<int>::t&  Baz::operator<<(
->>>
->>> which I would call ludicrous, but it's valid C++.
->>
->> Ick, yeah. Maybe it is worth doing the "*" thing for now, and then
->> worrying about advanced C++ stuff on top as another patch. AFAICT, y=
-our
->> original patch is a strict improvement.
+On 06/12/11 05:01, Junio C Hamano wrote:
+> Here are the topics that have been cooking.  Commits prefixed with '-' are
+> only in 'pu' (proposed updates) while commits prefixed with '+' are in
+> 'next'.
 >
-> Excuse me, where's the problem? The above example shows this
+
+
 >
-> @@ -105,8 +105,8 @@ char *url_decode(const char *url)
->          struct strbuf out =3D STRBUF_INIT;
-> -       const char *slash =3D strchr(url, '/');
-> +       const char *colon =3D strchr(url, ':');
-> ...
+> Will merge to 'next'.
 >
-> with current 4cb5d10b. This looks quite correct, no?
+> * ld/p4-labels-branches (2011-11-30) 4 commits
+>   - git-p4: importing labels should cope with missing owner
+>   - git-p4: add test for p4 labels
+>   - git-p4: cope with labels with empty descriptions
+>   - git-p4: handle p4 branches and labels containing shell chars
+>
+> I understand this has been retracted---please correct me otherwise.
+> Will discard, expecting a reroll.
 
-That's with the default heuristic; try something like this first to tur=
-n=20
-on userdiff:
+Yes, discard this one and I'll re-roll it with fixes for the other label 
+issues.
 
-	$ echo url.c diff=3Dcpp >>.gitattributes
-
-Ren=C3=A9
+Thanks
+Luke
