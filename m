@@ -1,67 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] Add test-scrap-cache-tree
-Date: Tue, 06 Dec 2011 14:51:53 -0800
-Message-ID: <7vfwgxe2k6.fsf@alter.siamese.dyndns.org>
-References: <cover.1323191497.git.trast@student.ethz.ch>
- <534454506f92428863de8fe0638f4129e962a073.1323191497.git.trast@student.ethz.ch>
+From: Joseph Huttner <huttnified@gmail.com>
+Subject: How to make devs write better commit messages
+Date: Tue, 6 Dec 2011 17:55:07 -0500
+Message-ID: <CAOJsP-X0ZWT5HLHcBc2FmhoMpWFOvEFADiM9jGZ9R1ctqHDJ9w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Dec 06 23:52:05 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 06 23:55:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RY3rk-00083R-M0
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 23:52:01 +0100
+	id 1RY3vC-0000s4-9Z
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 23:55:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751243Ab1LFWv4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Dec 2011 17:51:56 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62449 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750988Ab1LFWvz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Dec 2011 17:51:55 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5DA01674C;
-	Tue,  6 Dec 2011 17:51:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3+fWbuXdD+/65iSURAyS0GPcnKg=; b=rNArun
-	iNJjEZwhAnzR/V8Fxw5N6Rjei8YVQqxn46exUgK1Gkcrj+QQxP51wr0No/H7lS1f
-	FLs7wnjbvnX/JLyLpXJmWRqrYNMIugq+1B7VGYSSSbJxtC/Rj29kqzMYb2m82aWS
-	8YmJU1Z8sT6VNsCeJD8e74WPjyqmDv1kC6bMU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MtOLyCoM3OWe1yHqnkmMm/A8PTugg+ca
-	5v8oPr0sIqJ0Y1ookUvEUIZIi2MfX7tzx5aqvpk1ynp0Jshv2t2OWqam3+JGX9aY
-	u539xvpXz7KWB8JILrIH3PSCOqQVrmPJzIRz/XFSVsvthwe/zn6wy6C4ljvFStht
-	gmK8iMhYVZc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 54EA3674B;
-	Tue,  6 Dec 2011 17:51:55 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DA4376747; Tue,  6 Dec 2011
- 17:51:54 -0500 (EST)
-In-Reply-To: <534454506f92428863de8fe0638f4129e962a073.1323191497.git.trast@student.ethz.ch> (Thomas Rast's message of "Tue, 6 Dec 2011 18:43:35 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E5026530-205C-11E1-9553-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751744Ab1LFWza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Dec 2011 17:55:30 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:50368 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751300Ab1LFWz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Dec 2011 17:55:29 -0500
+Received: by eaak14 with SMTP id k14so5655662eaa.19
+        for <git@vger.kernel.org>; Tue, 06 Dec 2011 14:55:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=YESTylXrkxspH3ojusphuSre/I5CV2HEEo4SS8zR+w8=;
+        b=D6isk9C28PUgXOrBPCmhtC2lbQO2/fx7EoUFlJfmjfdFmGnR8B4YH3arS9RVkeTnS0
+         kw0TcRDfN7JqY25b0uLBTA+4FANIQz4aIxiCVPq7FDFkTerjppcMPwgZC/FsW1bJN6rP
+         vr2wsZYny2hUyh2g01vViXntnkA0UhcTSbpig=
+Received: by 10.213.110.14 with SMTP id l14mr2994456ebp.54.1323212128200; Tue,
+ 06 Dec 2011 14:55:28 -0800 (PST)
+Received: by 10.204.155.20 with HTTP; Tue, 6 Dec 2011 14:55:07 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186402>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+So I know that there is a somewhat standard format of commit messages
+in Git, which Linus outlines here:
 
-> A simple utility that invalidates all existing cache-tree data.  We
-> need this for tests.  (We don't need a tool to rebuild the cache-tree
-> data; git read-tree HEAD works for that.)
+https://github.com/torvalds/subsurface/blob/master/README#L164
 
-"git read-tree -m HEAD HEAD" would work for that, I suspect ;-)
+Trouble is, when most people go to commit, the file that the editor
+opens has no reminder of how to write a proper commit message.  Often
+I find myself having to go back through the commit log, or consulting
+the above link.
 
-But that can be improved later, so it is very sensible to add a test tool
-like this.
+I propose two things:
+
+1.  An optional flag in the Git config that, if set, shows the format
+of a typical commit message in your commit message template.
+
+2.  The ability to modify this commit message template.  Many teams
+use automated tools to read commit messages and then do automated
+tasks based on that data, like comment an RT ticket.  Thus, developers
+need to be reminded of these team-specific settings as well.
+
+What are your thoughts?
+
+The bottom line is that good commit messages are really important, so
+we should make it as easy as possible for developers to go ahead and
+write a perfect commit message every time they commit code.
+
+
+E.g.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+# modified:   application/views/layouts/layout.phtml
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+# public/js/databases/
+#
+# How to properly format your commit message:
+#
+# 	Header line: explaining the commit in one line
+#
+#	Body of commit message is a few lines of text, explaining things
+#	in more detail, possibly giving some background about the issue
+#	being fixed, etc etc.
+#
+#	The body of the commit message can be several paragraphs, and
+#	please do proper word-wrap and keep columns shorter than about
+#	74 characters or so. That way "git log" will show things
+#	nicely even when it's indented.
+#
+#	RT: 123, 456 [a comma-separated list of RT tickets this commit refers to]
+#
