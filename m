@@ -1,61 +1,241 @@
 From: Frans Klaver <fransklaver@gmail.com>
-Subject: [PATCH 0/2] run-command: Add EACCES diagnostics
-Date: Tue,  6 Dec 2011 22:38:21 +0100
-Message-ID: <1323207503-26581-1-git-send-email-fransklaver@gmail.com>
+Subject: [PATCH 1/2] run-command: Add checks after execvp fails with EACCES
+Date: Tue,  6 Dec 2011 22:38:22 +0100
+Message-ID: <1323207503-26581-2-git-send-email-fransklaver@gmail.com>
 References: <op.v5e8mgbc0aolir@keputer>
-Cc: Junio C Hamano <gitster@pobox.com>
+ <1323207503-26581-1-git-send-email-fransklaver@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Frans Klaver <fransklaver@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 06 22:39:04 2011
+X-From: git-owner@vger.kernel.org Tue Dec 06 22:39:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RY2j9-0004JE-Mo
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 22:39:04 +0100
+	id 1RY2jJ-0004N5-2T
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Dec 2011 22:39:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753959Ab1LFVi5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Dec 2011 16:38:57 -0500
+	id S1754775Ab1LFVjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Dec 2011 16:39:07 -0500
 Received: from mail-ee0-f46.google.com ([74.125.83.46]:54231 "EHLO
 	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752965Ab1LFVi5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Dec 2011 16:38:57 -0500
-Received: by eeaq14 with SMTP id q14so3376202eea.19
-        for <git@vger.kernel.org>; Tue, 06 Dec 2011 13:38:55 -0800 (PST)
+	with ESMTP id S1752965Ab1LFVjE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Dec 2011 16:39:04 -0500
+Received: by mail-ee0-f46.google.com with SMTP id q14so3376202eea.19
+        for <git@vger.kernel.org>; Tue, 06 Dec 2011 13:39:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=9orZ47YgnyJ6YRboaz1R6trSwjr8A42NVDFbIvIxeX4=;
-        b=HMf8Tz7IcAkIV5Y02xFDXwpxP1fRNfjDIPOA8vFyS94ZI60PBFIgvh2wWnY28751eQ
-         JtJE2fhMCssDEjdyTk+VskpZop2+2FUC8OoGBSYyAwzFo3YllSuwPnP81DKvbq8qtDGA
-         LOHOoe+reudyGfeAwJ1aUBI9B3kxRDJHUbmNk=
-Received: by 10.14.14.80 with SMTP id c56mr2866450eec.197.1323207535771;
-        Tue, 06 Dec 2011 13:38:55 -0800 (PST)
+        bh=NdwBBkNdhGeAdtEfd0oqVhen4r0F+W60ph7aciyLy9U=;
+        b=UfVzgJ53loQ+w2ZTL1tdtOeYpmvqa5zzlTiyDcvcO3RtfgGX4J6dxDatwnoWHeZQrY
+         iXCs7XqHsSnFs9urr2T1D1quOBx9+F+vavJGi67prsWvqNJImjanisXG/zG6TAxuBHZL
+         cRL6o8UkkFZqfN4wW5K/Gak34QnKyydGiTHCs=
+Received: by 10.14.14.80 with SMTP id c56mr2866529eec.197.1323207543987;
+        Tue, 06 Dec 2011 13:39:03 -0800 (PST)
 Received: from localhost.localdomain (82-136-253-149.ip.telfort.nl. [82.136.253.149])
-        by mx.google.com with ESMTPS id 65sm51275159eeg.8.2011.12.06.13.38.54
+        by mx.google.com with ESMTPS id 65sm51275159eeg.8.2011.12.06.13.39.02
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 06 Dec 2011 13:38:55 -0800 (PST)
+        Tue, 06 Dec 2011 13:39:03 -0800 (PST)
 X-Mailer: git-send-email 1.7.8
-In-Reply-To: <op.v5e8mgbc0aolir@keputer>
+In-Reply-To: <1323207503-26581-1-git-send-email-fransklaver@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186389>
 
-So here's a couple of patches that introduce some more elaborate investigation
-into what went wrong when receiving EACCES. This is probably something that
-could be expanded in the future, as running a command doesn't always produce
-equally obvious error messages.
+execvp returns ENOENT if a command was not found after searching PATH.
+If path contains a directory that current user has insufficient
+privileges to, EACCES is returned. This may still mean the program
+wasn't found and may cause confusion to the user, especially when the
+file mentioned doesn't exist -- that is, the user would expect NOENT to
+be returned -- and the user was actually hoping for an alias to be executed.
 
-"run-command: Add checks after execvp fails with EACCES" provides some basic checks
-on the permissions in PATH, and gives just a warning that none of its checks 
-indicate a problem, so the user should check at least the interpreter permissions.
+To help users track down the core issue more easily, perform some checks
+on the path and file permissions involved. Output errors when paths or
+files don't have enough permissions.
 
-"run-command: Add interpreter permissions check" actually adds interpreter checking.
-
+Signed-off-by: Frans Klaver <fransklaver@gmail.com>
 ---
+ run-command.c          |  118 ++++++++++++++++++++++++++++++++++++++++++++++++
+ t/t0061-run-command.sh |   16 ++++++-
+ 2 files changed, 133 insertions(+), 1 deletions(-)
 
- run-command.c          |  172 ++++++++++++++++++++++++++++++++++++++++++++++++
- t/t0061-run-command.sh |   38 ++++++++++-
- 2 files changed, 209 insertions(+), 1 deletions(-)
+diff --git a/run-command.c b/run-command.c
+index 1c51043..5e38c5a 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -2,6 +2,7 @@
+ #include "run-command.h"
+ #include "exec_cmd.h"
+ #include "argv-array.h"
++#include "dir.h"
+ 
+ static inline void close_pair(int fd[2])
+ {
+@@ -134,6 +135,119 @@ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
+ 	return code;
+ }
+ 
++#ifndef WIN32
++static int is_in_group(gid_t gid)
++{
++	gid_t *groups;
++	int ngroups, gc;
++	int yes;
++
++	if (gid == getgid())
++		return 1;
++
++	groups = NULL;
++	ngroups = getgroups(0, NULL);
++	if (ngroups > 0) {
++		groups = (gid_t *)xmalloc(ngroups * sizeof(gid_t));
++		if (getgroups(ngroups, groups) < 0) {
++			free(groups);
++			return 0;
++		}
++	}
++
++	yes = 0;
++	for (gc = 0; gc < ngroups; gc++)
++		if (groups[gc] == gid)
++			yes = 1;
++
++	free(groups);
++	return yes;
++}
++
++static int have_read_execute_permissions(const char *path)
++{
++	struct stat s;
++	trace_printf("checking '%s'\n", path);
++
++	if (stat(path, &s) < 0) {
++		trace_printf("could not stat '%s': %s\n",
++				path, strerror(errno));
++		return 0;
++	}
++	trace_printf("uid: %d, gid: %d\n", s.st_uid, s.st_gid);
++	trace_printf("mode: %o\n", s.st_mode);
++
++	/* check world permissions */
++	if ((s.st_mode&(S_IXOTH|S_IROTH)) == (S_IXOTH|S_IROTH))
++		return 1;
++
++	/* check group permissions & membership */
++	if ((s.st_mode&(S_IXGRP|S_IRGRP)) == (S_IXGRP|S_IRGRP) &&
++		is_in_group(s.st_gid))
++		return 1;
++
++	/* check owner permissions & ownership */
++	if ((s.st_mode&(S_IXUSR|S_IRUSR)) == (S_IXUSR|S_IRUSR) &&
++		s.st_uid == getuid())
++		return 1;
++
++	return 0;
++}
++
++static void diagnose_execvp_eacces(const char *cmd, const char **argv)
++{
++	/* man 2 execve states that EACCES is returned for:
++	 * - Search permission is denied on a component of the path prefix
++	 *   of cmd or the name of a script interpreter
++	 * - The file or script interpreter is not a regular file
++	 * - Execute permission is denied for the file, script or ELF
++	 *   interpreter
++	 * - The file system is mounted noexec
++	 */
++	struct strbuf sb = STRBUF_INIT;
++	char *path = getenv("PATH");
++	char *next;
++
++	if (strchr(cmd, '/')) {
++		if (!have_read_execute_permissions(cmd))
++			error("no read/execute permissions on '%s'\n", cmd);
++		return;
++	}
++
++	for (;;) {
++		next = strchrnul(path, ':');
++		if (path < next)
++			strbuf_add(&sb, path, next - path);
++		else
++			strbuf_addch(&sb, '.');
++
++		if (!have_read_execute_permissions(sb.buf))
++			error("no read/execute permissions on '%s'\n", sb.buf);
++
++		if (sb.len && sb.buf[sb.len - 1] != '/')
++			strbuf_addch(&sb, '/');
++		strbuf_addstr(&sb, cmd);
++
++		if (file_exists(sb.buf)) {
++			if (!have_read_execute_permissions(sb.buf))
++				error("no read/execute permissions on '%s'\n",
++						sb.buf);
++			else
++				warn("file '%s' exists and permissions "
++				"seem OK.\nIf this is a script, see if you "
++				"have sufficient privileges to run the "
++				"interpreter", sb.buf);
++		}
++
++		strbuf_release(&sb);
++
++		if (!*next)
++			break;
++		path = next + 1;
++	}
++}
++#endif
++
+ int start_command(struct child_process *cmd)
+ {
+ 	int need_in, need_out, need_err;
+@@ -285,6 +399,10 @@ fail_pipe:
+ 				error("cannot run %s: %s", cmd->argv[0],
+ 					strerror(ENOENT));
+ 			exit(127);
++		} else if (errno == EACCES) {
++			diagnose_execvp_eacces(cmd->argv[0], cmd->argv);
++			die("cannot exec '%s': %s", cmd->argv[0],
++				strerror(EACCES));
+ 		} else {
+ 			die_errno("cannot exec '%s'", cmd->argv[0]);
+ 		}
+diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
+index 8d4938f..b39bd16 100755
+--- a/t/t0061-run-command.sh
++++ b/t/t0061-run-command.sh
+@@ -26,7 +26,7 @@ test_expect_success 'run_command can run a command' '
+ 	test_cmp empty err
+ '
+ 
+-test_expect_success POSIXPERM 'run_command reports EACCES' '
++test_expect_success POSIXPERM 'run_command reports EACCES, file permissions' '
+ 	cat hello-script >hello.sh &&
+ 	chmod -x hello.sh &&
+ 	test_must_fail test-run-command run-command ./hello.sh 2>err &&
+@@ -34,4 +34,18 @@ test_expect_success POSIXPERM 'run_command reports EACCES' '
+ 	grep "fatal: cannot exec.*hello.sh" err
+ '
+ 
++test_expect_success POSIXPERM 'run_command reports EACCES, search path permisions' '
++	mkdir -p inaccessible &&
++	PATH=$(pwd)/inaccessible:$PATH &&
++	export PATH &&
++
++	cat hello-script >inaccessible/hello.sh &&
++	chmod 400 inaccessible &&
++	test_must_fail test-run-command run-command hello.sh 2>err &&
++	chmod 755 inaccessible &&
++
++	grep "fatal: cannot exec.*hello.sh" err &&
++	grep "no read/execute permissions on" err
++'
++
+ test_done
+-- 
+1.7.8
