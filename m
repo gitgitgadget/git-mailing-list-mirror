@@ -1,86 +1,79 @@
-From: Vijay Lakshminarayanan <laksvij@gmail.com>
-Subject: Re: Query on git commit amend
-Date: Wed, 07 Dec 2011 20:36:03 +0530
-Message-ID: <87ehwgv2uc.fsf@gmail.com>
-References: <4EDDD0E4.6040003@st.com> <87fwgxwvn9.fsf@gmail.com>
-	<7vobvlfowk.fsf@alter.siamese.dyndns.org> <87wra9und4.fsf@gmail.com>
-	<4EDEE988.2070902@st.com> <20111207045325.GA22990@atjola.homenet>
-	<4EDEFD66.4020404@st.com>
+From: Matthias Fechner <idefix@fechner.net>
+Subject: Re: Undo a commit that is already pushed to central server and merged
+ to several branches
+Date: Wed, 07 Dec 2011 16:35:02 +0100
+Message-ID: <4EDF87A6.4000703@fechner.net>
+References: <4EDF74EC.6090504@fechner.net> <CALkWK0k46HnWTHx3iYuWFUegTgZhAMShx9MT2E83QCmxrvZOxg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Shiraz HASHIM <shiraz.hashim@st.com>,
-	Vipin KUMAR <vipin.kumar@st.com>
-To: Viresh Kumar <viresh.kumar@st.com>
-X-From: git-owner@vger.kernel.org Wed Dec 07 16:06:17 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 07 16:35:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYJ4a-00085b-MM
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 16:06:17 +0100
+	id 1RYJWl-0004wj-GV
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 16:35:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756251Ab1LGPGI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Dec 2011 10:06:08 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:47316 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755818Ab1LGPGG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Dec 2011 10:06:06 -0500
-Received: by iakc1 with SMTP id c1so1052347iak.19
-        for <git@vger.kernel.org>; Wed, 07 Dec 2011 07:06:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=zaI7x6tJJJQzRhZcMex/HYaIlhNEHCRCqEIG61hnPuQ=;
-        b=kXA1AwdwbN3cJUF4fM03COEPbnVsj3ZtIGeCOggVHl8c8rxc2Q5oxwmehkNR1a2qkK
-         AQiUk9MT7Rqxbk0CY66zoavRIiCDkgkKRLlw5Q/OrwT3RHh024SaOKPU+3mIs3OVVr53
-         EGbqajC9a5+rPYQSFMC2zHU15k5LaArvZiv5Y=
-Received: by 10.231.81.136 with SMTP id x8mr4653664ibk.10.1323270366252;
-        Wed, 07 Dec 2011 07:06:06 -0800 (PST)
-Received: from BALROG ([59.92.48.171])
-        by mx.google.com with ESMTPS id ew6sm4235717igc.4.2011.12.07.07.06.02
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 07 Dec 2011 07:06:05 -0800 (PST)
-In-Reply-To: <4EDEFD66.4020404@st.com> (Viresh Kumar's message of "Wed, 7 Dec
-	2011 11:15:10 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (windows-nt)
+	id S1756503Ab1LGPfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Dec 2011 10:35:16 -0500
+Received: from anny.lostinspace.de ([80.190.182.2]:20936 "EHLO
+	anny.lostinspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755564Ab1LGPfP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Dec 2011 10:35:15 -0500
+Received: from server.idefix.lan (ppp-93-104-88-159.dynamic.mnet-online.de [93.104.88.159])
+	(authenticated bits=0)
+	by anny.lostinspace.de (8.14.5/8.14.5) with ESMTP id pB7FZ42Z065925
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Wed, 7 Dec 2011 16:35:08 +0100 (CET)
+	(envelope-from idefix@fechner.net)
+Received: from server.idefix.lan (localhost [IPv6:::1])
+	by server.idefix.lan (Postfix) with ESMTP id 3C4076B817;
+	Wed,  7 Dec 2011 16:35:04 +0100 (CET)
+X-Virus-Scanned: amavisd-new at fechner.net
+Received: from server.idefix.lan ([127.0.0.1])
+	by server.idefix.lan (server.idefix.lan [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id bV7zvFHvBRDF; Wed,  7 Dec 2011 16:35:03 +0100 (CET)
+Received: from matthias-fechners-macbook.local (unknown [192.168.20.6])
+	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
+	(No client certificate requested)
+	by server.idefix.lan (Postfix) with ESMTPSA id B9F506B810;
+	Wed,  7 Dec 2011 16:35:03 +0100 (CET)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <CALkWK0k46HnWTHx3iYuWFUegTgZhAMShx9MT2E83QCmxrvZOxg@mail.gmail.com>
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.7 (anny.lostinspace.de [80.190.182.2]); Wed, 07 Dec 2011 16:35:08 +0100 (CET)
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,UNPARSEABLE_RELAY
+	autolearn=ham version=3.3.2
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on anny.lostinspace.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186463>
 
-Viresh Kumar <viresh.kumar@st.com> writes:
+Am 07.12.11 15:42, schrieb Ramkumar Ramachandra:
+> Assuming that you actually want to rewrite the history, the situation
+> calls for a git-reset(1).  Just "git reset --hard HEAD~1" on each of
+> your branches (Caution: first understand what it does!) and you'll
 
-[snip]
+that will not work, because in the master branch I already have around 
+15 commits after the bogus commit and I want to keep these commits.
 
-> Now, whats the benefit of 
->
-> GIT_EDITOR=cat git commit --amend
->
-> over
->
-> git commit --amend -C HEAD
->
-> ?
+And in some other branches there are tons of commits (over 100) after 
+the bogus commit with the merge and I only want to remove that bogus 
+commit but keep all other commits after the bogus commit (all commits 
+are not related to the bogus one, they are all in different files).
 
-The latter preserves the original timestamp of the commit and other
-environment variables like GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL
-whereas GIT_EDITOR=cat (or true or :) are equivalent to opening up the
-commit in an editor and so consider these variables during execution.
+It is even fine if I could remove the bogus commit from all branches.
 
-For instance, you could say
-
-$ GIT_EDITOR=cat GIT_COMMITTER_EMAIL=foo@bar.baz git commit --amend
-
-and the commiter email would be set to foo@bar.baz
+Bye
+Matthias
 
 -- 
-Cheers
-~vijay
-
-Gnus should be more complicated.
+"Programming today is a race between software engineers striving to 
+build bigger and better idiot-proof programs, and the universe trying to 
+produce bigger and better idiots. So far, the universe is winning." -- 
+Rich Cook
