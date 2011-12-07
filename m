@@ -1,218 +1,104 @@
-From: Frans Klaver <fransklaver@gmail.com>
-Subject: Re: [PATCH 2/2] run-command: Add interpreter permissions check
-Date: Wed, 7 Dec 2011 09:37:48 +0100
-Message-ID: <CAH6sp9MqwKppcrtP7YM8FZAs=odmUicTvsxiYyH0ENmJrPxqEA@mail.gmail.com>
-References: <op.v5e8mgbc0aolir@keputer>
-	<1323207503-26581-1-git-send-email-fransklaver@gmail.com>
-	<1323207503-26581-3-git-send-email-fransklaver@gmail.com>
-	<7vk469e2rn.fsf@alter.siamese.dyndns.org>
+From: "Andreas T.Auer" <andreas.t.auer_gtml_37453@ursus.ath.cx>
+Subject: Re: Auto update submodules after merge and reset
+Date: Wed, 07 Dec 2011 10:07:34 +0100
+Message-ID: <jbnadt$hf8$1@dough.gmane.org>
+References: <4ED57EED.4040705@qualcomm.com> <4ED5E9D2.4060503@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 07 09:37:55 2011
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 07 10:08:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYD0k-0008Uw-PA
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 09:37:55 +0100
+	id 1RYDUS-0002yf-1C
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 10:08:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752902Ab1LGIhu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Dec 2011 03:37:50 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:38742 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752425Ab1LGIht convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Dec 2011 03:37:49 -0500
-Received: by qcqz2 with SMTP id z2so151080qcq.19
-        for <git@vger.kernel.org>; Wed, 07 Dec 2011 00:37:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=2/4k1ODUj/zUKel+I6LA8usZUj4S7kmllwsLnbTLeK4=;
-        b=RsvxyKn6D5gi60h4ge0MlMPCv308bvPF89BrrpsBG9cnq+QPWIAXSAHnKqYprclZt5
-         Zg3j8pjJ61kR/D+ZieNxqRSJ/6vFX+mP1GAARokUK5PkiVoOd4KH6OzFwj4ad2fPqUgU
-         G7srdiWb3V1S9FLY+pe5d7Uc/UP1d6TUcRQac=
-Received: by 10.229.61.65 with SMTP id s1mr3790930qch.253.1323247068709; Wed,
- 07 Dec 2011 00:37:48 -0800 (PST)
-Received: by 10.224.86.11 with HTTP; Wed, 7 Dec 2011 00:37:48 -0800 (PST)
-In-Reply-To: <7vk469e2rn.fsf@alter.siamese.dyndns.org>
+	id S1751130Ab1LGJIa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Dec 2011 04:08:30 -0500
+Received: from lo.gmane.org ([80.91.229.12]:51268 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750992Ab1LGJI2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Dec 2011 04:08:28 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RYDUI-0002vv-OR
+	for git@vger.kernel.org; Wed, 07 Dec 2011 10:08:26 +0100
+Received: from brln-4dba4613.pool.mediaways.net ([77.186.70.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Dec 2011 10:08:26 +0100
+Received: from andreas.t.auer_gtml_37453 by brln-4dba4613.pool.mediaways.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Dec 2011 10:08:26 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: brln-4dba4613.pool.mediaways.net
+User-Agent: KNode/4.4.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186449>
 
-On Tue, Dec 6, 2011 at 11:47 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Frans Klaver <fransklaver@gmail.com> writes:
->
->> If a script is started and the interpreter of that script given in t=
-he
->> shebang cannot be started due to permissions, we can get a rather
->> obscure situation. All permission checks pass for the script itself,
->> but we still get EACCES from execvp.
->>
->> Try to find out if the above is the case and warn the user about it.
->>
->> Signed-off-by: Frans Klaver <fransklaver@gmail.com>
->> ---
->> =C2=A0run-command.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0 66 ++=
-+++++++++++++++++++++++++++++++++++++++++----
->> =C2=A0t/t0061-run-command.sh | =C2=A0 22 ++++++++++++++++
->> =C2=A02 files changed, 82 insertions(+), 6 deletions(-)
->>
->> diff --git a/run-command.c b/run-command.c
->> index 5e38c5a..b8cf8d4 100644
->> --- a/run-command.c
->> +++ b/run-command.c
->> @@ -194,6 +194,63 @@ static int have_read_execute_permissions(const =
-char *path)
->> =C2=A0 =C2=A0 =C2=A0 return 0;
->> =C2=A0}
->>
->> +static void check_interpreter(const char *cmd)
->> +{
->> + =C2=A0 =C2=A0 FILE *f;
->> + =C2=A0 =C2=A0 struct strbuf sb =3D STRBUF_INIT;
->> + =C2=A0 =C2=A0 /* bash reads an 80 character line when determining =
-the interpreter.
->> + =C2=A0 =C2=A0 =C2=A0* BSD apparently only allows 32 characters, as=
- it is the size of
->> + =C2=A0 =C2=A0 =C2=A0* your average binary executable header.
->> + =C2=A0 =C2=A0 =C2=A0*/
->> + =C2=A0 =C2=A0 char firstline[80];
->> + =C2=A0 =C2=A0 char *interpreter =3D NULL;
->> + =C2=A0 =C2=A0 size_t s, i;
->> +
->> + =C2=A0 =C2=A0 f =3D fopen(cmd, "r");
->> + =C2=A0 =C2=A0 if (!f) {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error("cannot open file =
-'%s': %s\n", cmd, strerror(errno));
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;
->> + =C2=A0 =C2=A0 }
->> +
->> + =C2=A0 =C2=A0 s =3D fread(firstline, 1, sizeof(firstline), f);
->> + =C2=A0 =C2=A0 if (s < 2) {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 trace_printf("cannot det=
-ermine file type");
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fclose(f);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;
->> + =C2=A0 =C2=A0 }
->> +
->> + =C2=A0 =C2=A0 if (firstline[0] !=3D '#' || firstline[1] !=3D '!') =
-{
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 trace_printf("file '%s' =
-is not a script or"
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 " is a script without '#!'", cmd);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fclose(f);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;
->> + =C2=A0 =C2=A0 }
->
-> Nice touches to silently pass scripts that do not begin with she-bang=
-=2E
->
->> +
->> + =C2=A0 =C2=A0 /* see if the given path has the executable bit set =
-*/
->> + =C2=A0 =C2=A0 for (i =3D 2; i < s; i++) {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!interpreter && firs=
-tline[i] !=3D ' ' && firstline[i] !=3D '\t')
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 interpreter =3D firstline + i;
->> +
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (interpreter && (firs=
-tline[i] =3D=3D ' ' ||
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 firstline[i] =3D=3D '\n')) {
->
-> Curious.
->
-> "#!<TAB>/bin/bash<TAB><LF>" would cause you to check "/bin/bash<TAB>"=
-?
+Jens Lehmann wrote:
 
-Apparently so. Thanks for catching.
-
-
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 strbuf_add(&sb, interpreter,
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (firstline =
-+ i) - interpreter);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 break;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
+> Am 30.11.2011 01:55, schrieb Max Krasnyansky:
+> I'm working on a patch series to teach Git to optionally update the
+> submodules work trees on checkout, reset merge and so on, but I'm not
+> there yet.
 >
-> Wouldn't strcspn() work better instead of this loop?
+>> I'm thinking about adding a config option that would enable automatic
+>> submodule update but wanted to see if there is some fundamental reason
+>> why it would not be accepted.
+Because there is no good way to do so. It would be fine when you just track 
+the submodules "read-only", but if you are actually working on submodules, 
+it is a bad idea to always get a detached HEAD. It is also a bad idea to 
+merge or rebase on the currently checkedout branch. Because if you are 
+working on a maint branch in the submodule and then you checkout a pu branch 
+in the superproject, because you have forgotten that maint branch in the 
+submodule then all the proposed updates go to the maintenance branch -> bad. 
+So auto-update is not easy. But below I describe an idea that might solve 
+these issues and help auto-udpate to work in a sane way.
+ 
+> I think adding something like an "submodule.autoupdate" config makes lots
+> of sense, but IMO it should affect all work tree updating porcelain
+> commands, not just merge.
 
-Probably. Will revise.
+I was thinking about submodule integration and had the idea to bind a 
+submodule to the superproject by having special references in the submodule 
+like refs/super/master, refs/super/featureX... So these references are like 
+tracking branches for the refs/heads/* of the superproject.
 
+If you have tracking branches, the supermodule can just update the 
+corresponding branch. If this branch is currently checkedout and the work 
+area is clean, then the work area is updated, too. If there is currently a 
+local branch or a diffent super-branch checked out then the working area 
+should be considered "detached" from the superproject and not updated. 
 
->> + =C2=A0 =C2=A0 }
->> + =C2=A0 =C2=A0 if (!sb.len) {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error("could not determi=
-ne interpreter");
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strbuf_release(&sb);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;
->> + =C2=A0 =C2=A0 }
->> +
->> + =C2=A0 =C2=A0 if (!have_read_execute_permissions(sb.buf))
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error("bad interpreter: =
-no read/execute permissions on '%s'\n",
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sb.buf);
->> +
->> + =C2=A0 =C2=A0 strbuf_release(&sb);
->> +}
->> +
->> =C2=A0static void diagnose_execvp_eacces(const char *cmd, const char=
- **argv)
->> =C2=A0{
->> =C2=A0 =C2=A0 =C2=A0 /* man 2 execve states that EACCES is returned =
-for:
->> @@ -209,8 +266,8 @@ static void diagnose_execvp_eacces(const char *c=
-md, const char **argv)
->> =C2=A0 =C2=A0 =C2=A0 char *next;
->>
->> =C2=A0 =C2=A0 =C2=A0 if (strchr(cmd, '/')) {
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!have_read_execute_p=
-ermissions(cmd))
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 error("no read/execute permissions on '%s'\n", cmd);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (have_read_execute_pe=
-rmissions(cmd))
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 check_interpreter(cmd);
->
-> I would have expected the overall logic to be more like this:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if we cannot read and execute it then
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0that in itself=
- is an error (i.e. the error message from [1/2])
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0else if we can read it then
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0let's see if t=
-here is an error in the interpreter.
->
-> It is unnatural to see "if we can read and execute, then see if there=
- is
-> anything wrong with the interpreter" and _nothing else_ here. If you =
-made
-> the "have_read_execute_permissions()" to issue the error message you =
-used
-> to give in your [1/2] patch here, that is OK from the point of view o=
-f the
-> overall code structure, but then the function is no longer "do we hav=
-e
-> permissions" boolean check and needs to be renamed. And if you didn't=
-,
-> then I have to wonder why we do not need the error message you added =
-in
-> your [1/2].
+With this concept you could even switch branches in the superproject and the 
+attached submodules follow - still having no detached HEAD. When you want to 
+do some local work on the submodule you checkout a local branch and merge 
+back into the super branch later. The head of that super branch might have 
+changed by the update procedure meanwhile, but that is fine, then you just 
+have a merge instead of a fast-forward.
 
-Hm, yea makes sense. I'll rethink this a bit.
+Another nice feature would be a recursive commit. So all changed index files 
+in the _attached_ submodules would first be committed in their submodules 
+and then the superproject commits too - all with one command. Currently it 
+feels a little bit like CVS - commit one file(submodule), commit the other 
+file(submodule) and then apply a label(commit the superproject) to keep the 
+changes together. 
 
-Again, thanks for the review.
+If the submodule is not attached the commit in the superproject can still 
+detect changes that have been made to the corresponding tracking branch and 
+pick these up.
+
+As a summary: Tracking submodule branches in the superproject instead of 
+only the current HEAD of the submodule gives you more freedom to install 
+sane auto-update procedures. Even though it will raise a lot of detailed 
+questions like "should the refs/super/* be pushed/pulled when syncing the 
+submodule repositories".
