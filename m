@@ -1,77 +1,87 @@
-From: Matthias Fechner <idefix@fechner.net>
-Subject: Undo a commit that is already pushed to central server and merged
- to several branches
-Date: Wed, 07 Dec 2011 15:15:08 +0100
-Message-ID: <4EDF74EC.6090504@fechner.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH/RFC 0/4] Re: commit: honor --no-edit
+Date: Wed, 7 Dec 2011 08:42:17 -0600
+Message-ID: <20111207144217.GA30157@elie.hsd1.il.comcast.net>
+References: <4EDDD0E4.6040003@st.com>
+ <87fwgxwvn9.fsf@gmail.com>
+ <7vobvlfowk.fsf@alter.siamese.dyndns.org>
+ <7vk469fm9j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 07 15:15:30 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Vijay Lakshminarayanan <laksvij@gmail.com>,
+	Viresh Kumar <viresh.kumar@st.com>,
+	Shiraz HASHIM <shiraz.hashim@st.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 07 15:42:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYIHP-0002ZY-IG
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 15:15:27 +0100
+	id 1RYIhb-0005Y9-PM
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 15:42:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755955Ab1LGOPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Dec 2011 09:15:22 -0500
-Received: from anny.lostinspace.de ([80.190.182.2]:29207 "EHLO
-	anny.lostinspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755902Ab1LGOPV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Dec 2011 09:15:21 -0500
-Received: from server.idefix.lan (ppp-93-104-88-159.dynamic.mnet-online.de [93.104.88.159])
-	(authenticated bits=0)
-	by anny.lostinspace.de (8.14.5/8.14.5) with ESMTP id pB7EFAwU049956
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Wed, 7 Dec 2011 15:15:15 +0100 (CET)
-	(envelope-from idefix@fechner.net)
-Received: from server.idefix.lan (localhost [IPv6:::1])
-	by server.idefix.lan (Postfix) with ESMTP id EE5C16BF41
-	for <git@vger.kernel.org>; Wed,  7 Dec 2011 15:15:09 +0100 (CET)
-X-Virus-Scanned: amavisd-new at fechner.net
-Received: from server.idefix.lan ([127.0.0.1])
-	by server.idefix.lan (server.idefix.lan [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id Tj6J5njfE7Nv for <git@vger.kernel.org>;
-	Wed,  7 Dec 2011 15:15:09 +0100 (CET)
-Received: from matthias-fechners-macbook.local (unknown [192.168.20.6])
-	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
-	(No client certificate requested)
-	by server.idefix.lan (Postfix) with ESMTPSA id 7ED4D6BF3A
-	for <git@vger.kernel.org>; Wed,  7 Dec 2011 15:15:09 +0100 (CET)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:8.0) Gecko/20111105 Thunderbird/8.0
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.7 (anny.lostinspace.de [80.190.182.2]); Wed, 07 Dec 2011 15:15:15 +0100 (CET)
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,UNPARSEABLE_RELAY
-	autolearn=ham version=3.3.2
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on anny.lostinspace.de
+	id S1756187Ab1LGOm1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Dec 2011 09:42:27 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:32970 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755798Ab1LGOm0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Dec 2011 09:42:26 -0500
+Received: by qadb40 with SMTP id b40so3377245qad.19
+        for <git@vger.kernel.org>; Wed, 07 Dec 2011 06:42:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=m5V4f4lvf/QAAvNlQA2Tr13W2FEe/RA4rI81xTbZg4Y=;
+        b=J2cKCnfBpktekCdG2zBDYYK/4634XdJWf6LEalx23mGnyscZAq0xs5GcNvdoSQ9ZOv
+         amiCzaAE2kwD/N6ES27S6JK+GOHFlAW0h9FlAn4P2F7A4zl0Bsd/50T8dvgdJTAP3Aj5
+         zPS3VPRdimfQW8CDpmkvdOaMvzVDRuOTuFlc0=
+Received: by 10.50.51.234 with SMTP id n10mr19826045igo.10.1323268945919;
+        Wed, 07 Dec 2011 06:42:25 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id df6sm351735ibb.1.2011.12.07.06.42.24
+        (version=SSLv3 cipher=OTHER);
+        Wed, 07 Dec 2011 06:42:25 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vk469fm9j.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186456>
 
-Dear git list,
+Junio C Hamano wrote:
 
-I commited two files into the master branch (later I figured out that 
-the files included a lot bugs).
+> And this should fix it (only lightly tested).
+>
+> -- >8 --
+> Subject: [PATCH] commit: honor --no-edit
+>
+> After making fixes to the contents to be committed, it is not unusual to
+> update the current commit without rewording the message. Idioms to do
+> tell "commit --amend" that we do not need an editor have been:
+>
+>     $ EDITOR=: git commit --amend
+>     $ git commit --amend -C HEAD
+>
+> but that was only because a more natural
+>
+>     $ git commit --amend --no-edit
+>
+> did not honour "--no-edit" option.    
 
-I continued to work then on different branches and merged the bad master 
-branch to all my other branches.
+I like it.
 
-I pushed the master branch then to the server including the bogus commit.
+Here are a couple of tests.  The three patches before are just to make
+it less frightening to add to the relevant test script.
 
-What I would like to do is move this bogus commit into a different 
-branch and remove all changes from this bogus commit from every branch.
+Jonathan Nieder (4):
+  test: add missing "&&" after echo command
+  test: remove a test of porcelain that hardcodes commit ids
+  t7501 (commit): modernize style
+  test: commit --amend should honor --no-edit
 
-Is this possible and how?
-
-Bye
-Matthias
-
--- 
-"Programming today is a race between software engineers striving to 
-build bigger and better idiot-proof programs, and the universe trying to 
-produce bigger and better idiots. So far, the universe is winning." -- 
-Rich Cook
+ t/t7501-commit.sh |  335 ++++++++++++++++++++++++++++-------------------------
+ 1 files changed, 175 insertions(+), 160 deletions(-)
