@@ -1,75 +1,139 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/2] grep: turn off threading for non-worktree
-Date: Wed, 7 Dec 2011 13:28:43 -0500
-Message-ID: <20111207182843.GB6124@sigill.intra.peff.net>
-References: <cover.1322830368.git.trast@student.ethz.ch>
- <5328add8b32f83b4cdbd2e66283f77c125ec127a.1322830368.git.trast@student.ethz.ch>
- <4ED8F9AE.8030605@lsrfire.ath.cx>
- <4EDE9BBA.2010409@lsrfire.ath.cx>
- <4EDE9ED1.8010502@lsrfire.ath.cx>
- <20111207044242.GB10765@sigill.intra.peff.net>
- <4EDF9E53.7090702@lsrfire.ath.cx>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: =?UTF-8?q?Re=3A=20=26=26-chaining=20tester?=
+Date: Thu,  8 Dec 2011 01:06:36 +0530
+Message-ID: <1323286611-4806-1-git-send-email-artagnon@gmail.com>
+References: <20111207100858.GB13374@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Eric Herman <eric@freesa.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Wed Dec 07 19:28:51 2011
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 07 20:38:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYMEc-0004Us-SF
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 19:28:51 +0100
+	id 1RYNJY-0000vX-Ir
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 20:38:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757247Ab1LGS2p convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Dec 2011 13:28:45 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42807
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756504Ab1LGS2p (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Dec 2011 13:28:45 -0500
-Received: (qmail 18706 invoked by uid 107); 7 Dec 2011 18:35:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 07 Dec 2011 13:35:23 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Dec 2011 13:28:43 -0500
-Content-Disposition: inline
-In-Reply-To: <4EDF9E53.7090702@lsrfire.ath.cx>
+	id S1756990Ab1LGThz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Dec 2011 14:37:55 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:48222 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756712Ab1LGThy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Dec 2011 14:37:54 -0500
+Received: by qcqz2 with SMTP id z2so701321qcq.19
+        for <git@vger.kernel.org>; Wed, 07 Dec 2011 11:37:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=wcR3eOBp9Q8R+iS8QX+FamJQvrSe9LZEC+6SlAqTeYU=;
+        b=LIH+7P1mLnJHXIPal6DPm+plHJ9tSF1h7OuAK8V62HwzysnDYuNUze5Vo5mryT5EKV
+         za80nQCR86p5yYT/+5yUmnupN3Jj8pZdnLi8ZHm/NX9Ycg5rc576qjc6nzMx7TQFMaq8
+         ToYtC/XQJjMQ16sJfQ/vGhevH/73QPQPvww8A=
+Received: by 10.50.149.165 with SMTP id ub5mr275721igb.23.1323286673664;
+        Wed, 07 Dec 2011 11:37:53 -0800 (PST)
+Received: from localhost.localdomain ([203.110.240.205])
+        by mx.google.com with ESMTPS id ds5sm10016838ibb.5.2011.12.07.11.37.50
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 07 Dec 2011 11:37:53 -0800 (PST)
+X-Mailer: git-send-email 1.7.7.3
+In-Reply-To: <20111207100858.GB13374@elie.hsd1.il.comcast.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186481>
 
-On Wed, Dec 07, 2011 at 06:11:47PM +0100, Ren=C3=A9 Scharfe wrote:
+Hi,
 
-> >   $ time git grep --threads=3D8 'a.*b' HEAD >/dev/null
-> >   real    0m8.655s
-> >   user    0m23.817s
-> >   sys     0m0.480s
-> [...]
+Jonathan Nieder wrote:
+> Ramkumar Ramachandra wrote:
 >
-> Ugh, right, Turbo Boost complicates matters.
->=20
-> I don't understand the multiplied user time in the threaded case,
-> though.  Is it caused by busy-waiting?  Thomas reported similar numbe=
-rs
-> earlier.
+>> Missing the chaining '&&' seems to be quite a common
+>> error: I vaguely remember seeing a patch to detect this sometime ago=
+=2E
+>> Jonathan?
+>
+> [...]
+> =C2=A0- fix all cases of broken &&-chaining. =C2=A0For extra bonus po=
+ints,
+> =C2=A0 send out those patches, respond to reviews, and gently usher
+> =C2=A0 them into Junio's tree
 
-I think it's mostly the clock speed. This processor runs at 1.86GHz but
-boosts to 3.2GHz. So we'd expect just the actual work to take close to
-twice as long. Plus it's a quad-core with hyperthreading, so 8 threads
-is going to mean two threads sharing each core, including cache (i.e.,
-hyperthreading a core does not let you double performance, even though
-it presents itself as an extra core).
 
-And then you have context switching and lock overhead. So I can believe
-that it takes 3x the CPU time to accomplish the task. In an ideal world=
-,
-it would be mitigated by having 8x the threads, but in this case, lock
-contention brings us down to less than 3x, and it's a slight net loss.
+Hm, involves a huge amount of janitorial work.  Anyway, thanks for
+pointing me in the right direction- here's a small start.
 
--Peff
+[What I used; for reference]
+--
+ t/test-lib.sh |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index bdd9513..3bf75ac 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -472,7 +472,17 @@ test_eval_ () {
+ 	eval >&3 2>&4 "$*"
+ }
+=20
++check_command_chaining_ () {
++	eval >&3 2>&4 "(exit 189) && $1"
++	eval_chain_ret=3D$?
++	if test "$eval_chain_ret" !=3D 189
++	then
++		echo '[CHAIN_BUG] in the test script: missing "&&" in test commands'
++	fi
++}
++
+ test_run_ () {
++	check_command_chaining_ "$1"
+ 	test_cleanup=3D:
+ 	expecting_failure=3D$2
+ 	test_eval_ "$1"
+--=20
+
+Thanks.
+
+-- Ram
+
+Ramkumar Ramachandra (15):
+  t1013 (loose-object-format): fix && chaining
+  t1300 (repo-config): fix && chaining
+  t1412 (reflog-loop): fix && chaining
+  t1007 (hash-object): fix && chaining
+  t1510 (repo-setup): fix && chaining
+  t1511 (rev-parse-caret): fix && chaining
+  t1510 (worktree): fix && chaining
+  t3200 (branch): fix && chaining
+  t3418 (rebase-continue): fix && chaining
+  t3400 (rebase): fix && chaining
+  t3310 (notes-merge-manual-resolve): fix && chaining
+  t3419 (rebase-patch-id): fix && chaining
+  t3030 (merge-recursive): use test_expect_code
+  t1006 (cat-file): use test_cmp
+  t3040 (subprojects-basic): modernize style
+
+ t/t1006-cat-file.sh                   |   53 +++---------
+ t/t1007-hash-object.sh                |   16 ++--
+ t/t1013-loose-object-format.sh        |    2 +-
+ t/t1300-repo-config.sh                |    2 +-
+ t/t1412-reflog-loop.sh                |    2 +-
+ t/t1501-worktree.sh                   |    6 +-
+ t/t1510-repo-setup.sh                 |    4 +-
+ t/t1511-rev-parse-caret.sh            |    2 +-
+ t/t3030-merge-recursive.sh            |   72 ++---------------
+ t/t3040-subprojects-basic.sh          |  144 ++++++++++++++++---------=
+-------
+ t/t3200-branch.sh                     |    4 +-
+ t/t3310-notes-merge-manual-resolve.sh |   10 +-
+ t/t3400-rebase.sh                     |    4 +-
+ t/t3418-rebase-continue.sh            |    4 +-
+ t/t3419-rebase-patch-id.sh            |    2 +-
+ 15 files changed, 119 insertions(+), 208 deletions(-)
+
+--=20
+1.7.7.3
