@@ -1,87 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH/RFC 0/4] Re: commit: honor --no-edit
-Date: Wed, 7 Dec 2011 08:42:17 -0600
-Message-ID: <20111207144217.GA30157@elie.hsd1.il.comcast.net>
-References: <4EDDD0E4.6040003@st.com>
- <87fwgxwvn9.fsf@gmail.com>
- <7vobvlfowk.fsf@alter.siamese.dyndns.org>
- <7vk469fm9j.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Undo a commit that is already pushed to central server and merged
+ to several branches
+Date: Wed, 7 Dec 2011 20:12:22 +0530
+Message-ID: <CALkWK0k46HnWTHx3iYuWFUegTgZhAMShx9MT2E83QCmxrvZOxg@mail.gmail.com>
+References: <4EDF74EC.6090504@fechner.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Vijay Lakshminarayanan <laksvij@gmail.com>,
-	Viresh Kumar <viresh.kumar@st.com>,
-	Shiraz HASHIM <shiraz.hashim@st.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 07 15:42:32 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Matthias Fechner <idefix@fechner.net>
+X-From: git-owner@vger.kernel.org Wed Dec 07 15:42:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYIhb-0005Y9-PM
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 15:42:32 +0100
+	id 1RYIi0-0005jW-SW
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 15:42:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756187Ab1LGOm1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Dec 2011 09:42:27 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:32970 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755798Ab1LGOm0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Dec 2011 09:42:26 -0500
-Received: by qadb40 with SMTP id b40so3377245qad.19
-        for <git@vger.kernel.org>; Wed, 07 Dec 2011 06:42:26 -0800 (PST)
+	id S1756562Ab1LGOmp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Dec 2011 09:42:45 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:35965 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756557Ab1LGOmo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Dec 2011 09:42:44 -0500
+Received: by wgbdr13 with SMTP id dr13so1439933wgb.1
+        for <git@vger.kernel.org>; Wed, 07 Dec 2011 06:42:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=m5V4f4lvf/QAAvNlQA2Tr13W2FEe/RA4rI81xTbZg4Y=;
-        b=J2cKCnfBpktekCdG2zBDYYK/4634XdJWf6LEalx23mGnyscZAq0xs5GcNvdoSQ9ZOv
-         amiCzaAE2kwD/N6ES27S6JK+GOHFlAW0h9FlAn4P2F7A4zl0Bsd/50T8dvgdJTAP3Aj5
-         zPS3VPRdimfQW8CDpmkvdOaMvzVDRuOTuFlc0=
-Received: by 10.50.51.234 with SMTP id n10mr19826045igo.10.1323268945919;
-        Wed, 07 Dec 2011 06:42:25 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id df6sm351735ibb.1.2011.12.07.06.42.24
-        (version=SSLv3 cipher=OTHER);
-        Wed, 07 Dec 2011 06:42:25 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vk469fm9j.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=YBQJ6dMQvXkaHBVP1U1ZCbm7Tsi73s20B9dtu9zNgsg=;
+        b=x5Zu/TW62LSSjKHVq5Wg+rkDaOIFN7fEmK5kkrKdIUsW7ntW6SuXxM7HdWpPDx9les
+         wUdOoncx/BxD9dsmQxfJSxzPm5Fi4pR/+NMNwkP8e+7qQNWGEpEPQLjX46i3naydnC8B
+         8E29Ro4bmr1OCFY2M/HLX3yjnId/CKvSWNPV4=
+Received: by 10.227.203.10 with SMTP id fg10mr15479247wbb.1.1323268963420;
+ Wed, 07 Dec 2011 06:42:43 -0800 (PST)
+Received: by 10.216.51.141 with HTTP; Wed, 7 Dec 2011 06:42:22 -0800 (PST)
+In-Reply-To: <4EDF74EC.6090504@fechner.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186457>
 
-Junio C Hamano wrote:
+Hi Matthias,
 
-> And this should fix it (only lightly tested).
+Matthias Fechner wrote:
+> [...]
+> I continued to work then on different branches and merged the bad master
+> branch to all my other branches.
+> [...]
 >
-> -- >8 --
-> Subject: [PATCH] commit: honor --no-edit
->
-> After making fixes to the contents to be committed, it is not unusual to
-> update the current commit without rewording the message. Idioms to do
-> tell "commit --amend" that we do not need an editor have been:
->
->     $ EDITOR=: git commit --amend
->     $ git commit --amend -C HEAD
->
-> but that was only because a more natural
->
->     $ git commit --amend --no-edit
->
-> did not honour "--no-edit" option.    
+> What I would like to do is move this bogus commit into a different branch
+> and remove all changes from this bogus commit from every branch.
 
-I like it.
+If I understand correctly, each of your branches looks like*:
 
-Here are a couple of tests.  The three patches before are just to make
-it less frightening to add to the relevant test script.
+o  <--- HEAD of branch; merge commit referencing bogus commit
+| \
+o  \   <--- This is where you want to move the HEAD to
+|   \
+o    o  <-- Bogus commit from master branch
+|
+o
+|
+o  <-- Branch born
 
-Jonathan Nieder (4):
-  test: add missing "&&" after echo command
-  test: remove a test of porcelain that hardcodes commit ids
-  t7501 (commit): modernize style
-  test: commit --amend should honor --no-edit
+Assuming that you actually want to rewrite the history, the situation
+calls for a git-reset(1).  Just "git reset --hard HEAD~1" on each of
+your branches (Caution: first understand what it does!) and you'll
+rewind the HEAD to "undo" the bad merge.  After that you can just "git
+push +foo:foo" to overwrite the foo branch on your server.  If you
+don't want to rewrite anything and simply commit the inverse of the
+bad commit, see git-revert(1).
 
- t/t7501-commit.sh |  335 ++++++++++++++++++++++++++++-------------------------
- 1 files changed, 175 insertions(+), 160 deletions(-)
+* If you're having difficulty understanding the diagram, please read:
+http://eagain.net/articles/git-for-computer-scientists/
+
+Cheers.
+
+-- Ram
