@@ -1,78 +1,75 @@
-From: Chris Patti <cpatti@gmail.com>
-Subject: Re: Odd issue - The Diffs That WILL NOT DIE.
-Date: Wed, 7 Dec 2011 13:16:30 -0500
-Message-ID: <CAJ8P3RC5DemBCvQxGgejtfy1oA7dF6QheTsEbobP_Tchayqyug@mail.gmail.com>
-References: <CAJ8P3RBm=RhNf6LKLqprqX6Rqx0OgRnJR+=+-Qhg4PvpeqaUDg@mail.gmail.com>
-	<20111206215102.GA3654@centaur.lab.cmartin.tk>
-	<CAJ8P3RCPt9Kwi1F7_TEkZQhkm1mwR_TFKhYszS5LL50kXU8oNQ@mail.gmail.com>
-	<CAGK7Mr7z6hqoda=pr3syzC5mO1+ZExMeD7sReeyRaYL5OMhemw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/2] grep: turn off threading for non-worktree
+Date: Wed, 7 Dec 2011 13:28:43 -0500
+Message-ID: <20111207182843.GB6124@sigill.intra.peff.net>
+References: <cover.1322830368.git.trast@student.ethz.ch>
+ <5328add8b32f83b4cdbd2e66283f77c125ec127a.1322830368.git.trast@student.ethz.ch>
+ <4ED8F9AE.8030605@lsrfire.ath.cx>
+ <4EDE9BBA.2010409@lsrfire.ath.cx>
+ <4EDE9ED1.8010502@lsrfire.ath.cx>
+ <20111207044242.GB10765@sigill.intra.peff.net>
+ <4EDF9E53.7090702@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
-	git@vger.kernel.org
-To: Philippe Vaucher <philippe.vaucher@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 07 19:16:44 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Eric Herman <eric@freesa.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Wed Dec 07 19:28:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYM2n-0006zz-CO
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 19:16:37 +0100
+	id 1RYMEc-0004Us-SF
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 19:28:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757334Ab1LGSQd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Dec 2011 13:16:33 -0500
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:57447 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756855Ab1LGSQc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Dec 2011 13:16:32 -0500
-Received: by wgbds13 with SMTP id ds13so2027873wgb.1
-        for <git@vger.kernel.org>; Wed, 07 Dec 2011 10:16:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=De4HShO4nzwPLHIWkVghHVqxq8SKvlS+rrR7lJgchXo=;
-        b=xQc14QSN77bsDcIsPPsH62rdFMioYB/zwBIRP24Hc/ABVIKYsbvy6IsCmZuhcHIvyt
-         Beb1/iPVEeoSFFmRMrOUlgt8MujsjwcRRWfnbaDKHFNMFe6FeBzQYu+OITOLhvYMruG/
-         JotYGx+SJZpfDXM7raJoeDKacjXLgwwaIVsMg=
-Received: by 10.180.19.42 with SMTP id b10mr31739547wie.39.1323281790679; Wed,
- 07 Dec 2011 10:16:30 -0800 (PST)
-Received: by 10.223.88.132 with HTTP; Wed, 7 Dec 2011 10:16:30 -0800 (PST)
-In-Reply-To: <CAGK7Mr7z6hqoda=pr3syzC5mO1+ZExMeD7sReeyRaYL5OMhemw@mail.gmail.com>
+	id S1757247Ab1LGS2p convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Dec 2011 13:28:45 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42807
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756504Ab1LGS2p (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Dec 2011 13:28:45 -0500
+Received: (qmail 18706 invoked by uid 107); 7 Dec 2011 18:35:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 07 Dec 2011 13:35:23 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Dec 2011 13:28:43 -0500
+Content-Disposition: inline
+In-Reply-To: <4EDF9E53.7090702@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186480>
 
-On Wed, Dec 7, 2011 at 12:20 PM, Philippe Vaucher
-<philippe.vaucher@gmail.com> wrote:
->> 11:35][admin@Hiram-Abiff-2:~/src]$ rm -rf framework/
->> [11:44][admin@Hiram-Abiff-2:~/src]$ git clone
-> ...snip...
->> [11:51][admin@Hiram-Abiff-2:~/src]$ cd framework/
->> [11:51][admin@Hiram-Abiff-2:~/src/framework(master)]$ git diff
-> ...snip...
+On Wed, Dec 07, 2011 at 06:11:47PM +0100, Ren=C3=A9 Scharfe wrote:
+
+> >   $ time git grep --threads=3D8 'a.*b' HEAD >/dev/null
+> >   real    0m8.655s
+> >   user    0m23.817s
+> >   sys     0m0.480s
+> [...]
 >
-> Can you paste the output of "git status" right after the "cd framework"?
->
-> Looks like you have some external process that goes and touches your
-> file after the git clone, or that git fails to check out the files
-> after cloning but isn't able to work out it failed to checkout those
-> files.
->
-> Philippe
+> Ugh, right, Turbo Boost complicates matters.
+>=20
+> I don't understand the multiplied user time in the threaded case,
+> though.  Is it caused by busy-waiting?  Thomas reported similar numbe=
+rs
+> earlier.
 
+I think it's mostly the clock speed. This processor runs at 1.86GHz but
+boosts to 3.2GHz. So we'd expect just the actual work to take close to
+twice as long. Plus it's a quad-core with hyperthreading, so 8 threads
+is going to mean two threads sharing each core, including cache (i.e.,
+hyperthreading a core does not let you double performance, even though
+it presents itself as an extra core).
 
-FYI this behavior persists across reboots so this rogue process is
-also restarting itself :)
+And then you have context switching and lock overhead. So I can believe
+that it takes 3x the CPU time to accomplish the task. In an ideal world=
+,
+it would be mitigated by having 8x the threads, but in this case, lock
+contention brings us down to less than 3x, and it's a slight net loss.
 
-Thanks,
--Chris
-
-
--- 
-Christopher Patti - Geek At Large | GTalk: cpatti@gmail.com | AIM:
-chrisfeohpatti | P: (260) 54PATTI
-"Technology challenges art, art inspires technology." - John Lasseter, Pixar
+-Peff
