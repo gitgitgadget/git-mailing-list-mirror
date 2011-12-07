@@ -1,8 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 2/4] test: remove a porcelain test that hard-codes commit
- names
-Date: Wed, 7 Dec 2011 08:49:29 -0600
-Message-ID: <20111207144929.GC30157@elie.hsd1.il.comcast.net>
+Subject: [PATCH 3/4] t7501 (commit): modernize style
+Date: Wed, 7 Dec 2011 08:50:23 -0600
+Message-ID: <20111207145022.GD30157@elie.hsd1.il.comcast.net>
 References: <4EDDD0E4.6040003@st.com>
  <87fwgxwvn9.fsf@gmail.com>
  <7vobvlfowk.fsf@alter.siamese.dyndns.org>
@@ -14,37 +13,37 @@ Cc: git@vger.kernel.org, Vijay Lakshminarayanan <laksvij@gmail.com>,
 	Viresh Kumar <viresh.kumar@st.com>,
 	Shiraz HASHIM <shiraz.hashim@st.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 07 15:49:42 2011
+X-From: git-owner@vger.kernel.org Wed Dec 07 15:50:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYIoW-0008Pg-Aa
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 15:49:40 +0100
+	id 1RYIpN-0000ON-QL
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 15:50:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756187Ab1LGOtf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Dec 2011 09:49:35 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:40984 "EHLO
+	id S1756273Ab1LGOu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Dec 2011 09:50:29 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:59554 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756105Ab1LGOte (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Dec 2011 09:49:34 -0500
-Received: by iakc1 with SMTP id c1so1032370iak.19
-        for <git@vger.kernel.org>; Wed, 07 Dec 2011 06:49:34 -0800 (PST)
+	with ESMTP id S1756105Ab1LGOu2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Dec 2011 09:50:28 -0500
+Received: by iakc1 with SMTP id c1so1033533iak.19
+        for <git@vger.kernel.org>; Wed, 07 Dec 2011 06:50:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=GyK0f9ZwuUhpW8G1/yEVU/wk1808cBP9u1wGLmQ2gIc=;
-        b=acR7E09bbiKOxykdmfjUYNyk4l6unMsCoZqWisqGrjfqaobcWwLBjeDdwDN4+NybFG
-         gRQkTDpSe1uN2XMMG3uQ3AHHWGFodAAQrn6siXw4RQvXJEWtWrzowPWzHj63Y/t/iXe1
-         hzV9SwaZAxJGTek+Lc5k+ARRH7zHqlQI0Ue9Q=
-Received: by 10.42.163.202 with SMTP id d10mr18905055icy.47.1323269373932;
-        Wed, 07 Dec 2011 06:49:33 -0800 (PST)
+        bh=GA0QdzmzABeR9NAne/p4rpmzC8LbQuZ/+RvfpvIilzU=;
+        b=EBNOmLLpAEST61/lfgB8TYY7Mx/JwymzdX9SrwxyhyCfo3g88Ut9gu+PjmMuqRwiuk
+         jUCZjYFp/WiW7tOi0ISdPrTyF+nlCkl6fBZlRYu15LZyev4U+l6QICS4r36cxRGZpfNQ
+         +RHpesXEvbY6TpOT4aMyWlqUttOVOzGgJ9l2s=
+Received: by 10.231.80.17 with SMTP id r17mr4373783ibk.62.1323269428050;
+        Wed, 07 Dec 2011 06:50:28 -0800 (PST)
 Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id p16sm7570234ibk.6.2011.12.07.06.49.33
+        by mx.google.com with ESMTPS id v18sm7601936ibh.4.2011.12.07.06.50.27
         (version=SSLv3 cipher=OTHER);
-        Wed, 07 Dec 2011 06:49:33 -0800 (PST)
+        Wed, 07 Dec 2011 06:50:27 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20111207144217.GA30157@elie.hsd1.il.comcast.net>
 User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
@@ -52,65 +51,369 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186460>
 
-The rev-list output in this test depends on the details of test_tick's
-dummy dates and the choice of hash function.  Worse, it depends on the
-order and nature of commits made in the earlier tests, so adding new
-tests or rearranging existing ones breaks it.
+Put the opening quote starting each test on the same line as the
+test_expect_* invocation.  While at it:
 
-It would be nice to check that "git commit" and commit-tree name
-objects consistently and that commit objects' text is as documented,
-but this particular test checks everything at once and hence is not a
-robust test for that.  Remove it.
+- guard commands that prepare test input for individual tests in
+  the same test_expect_success, so their scope is clearer and
+  errors at that stage can be caught;
+- use the compare_diff_patch helper function when comparing patches;
+- use single-quotes in preference to double-quotes and <<\EOF in
+  preference to <<EOF, to save readers the trouble of looking for
+  variable interpolations;
+- lift the setting of the $author variable used throughout the
+  test script to the top of the test script;
+- include "setup" in the titles of test assertions that prepare for
+  later ones to make it more obvious which tests can be skipped;
+- use test_must_fail instead of "if ...; then:; else false; fi",
+  for clarity and to catch segfaults when they happen;
+- break up some pipelines into separate commands that read and write
+  to ordinary files, and test the exit status at each stage;
+- chain commands with &&.  Breaks in a test assertion's && chain can
+  potentially hide failures from earlier commands in the chain;
+- combine two initial tests that do not make as much sense alone.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-Hence the odd hunk in the previous patch.
+Miscellaneous cleanups.
 
-Maybe this doesn't belong in this series, but it's the kind of thing
-that drives me batty when writing new tests.
-
- t/t7501-commit.sh |   20 --------------------
- 1 files changed, 0 insertions(+), 20 deletions(-)
+ t/t7501-commit.sh |  278 ++++++++++++++++++++++++++---------------------------
+ 1 files changed, 136 insertions(+), 142 deletions(-)
 
 diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index da75abc1..9c507b08 100755
+index 9c507b08..bf025df6 100755
 --- a/t/t7501-commit.sh
 +++ b/t/t7501-commit.sh
-@@ -144,10 +144,6 @@ test_expect_success PERL \
- 	git diff >diff2 &&
- 	test_cmp diff1 diff2"
+@@ -8,39 +8,39 @@
+ 
+ test_description='git commit'
+ . ./test-lib.sh
++. "$TEST_DIRECTORY/diff-lib.sh"
++
++author='The Real Author <someguy@his.email.org>'
+ 
+ test_tick
  
 -test_expect_success \
--	"showing committed revisions" \
--	"git rev-list HEAD >current"
+-	"initial status" \
+-	"echo 'bongo bongo' >file &&
+-	 git add file"
 -
- cat >editor <<\EOF
- #!/bin/sh
- sed -e "s/good/bad/g" < "$1" > "$1-"
-@@ -168,22 +164,6 @@ test_expect_success \
- 	 echo "Another good message." | EDITOR=./editor git commit -a -F - &&
- 	 git show -s --pretty=format:"%s" | grep -q good
- 	 '
--# We could just check the head sha1, but checking each commit makes it
--# easier to isolate bugs.
--
--cat >expected <<\EOF
--285fcf7ec0d61b14249dfdb4c1e1fe03eaf15ee0
--0b8148b9afce917b87d71199b900466dc8ea8b6e
--43fb8826314939ce79a856face7953557fdca3d1
--eaa04bc3ae0f0b003f7f1d86bf869ec5d73eaf3e
--ee1963b250ee0f02a3fe37be0e4a02bb5af6a1ad
--b49f306003c627361a0304d151a6b4c8b26af6a1
--402702b49136e7587daa9280e91e4bb7cb2179f7
--EOF
+-test_expect_success "Constructing initial commit" '
++test_expect_success 'initial status' '
++	echo bongo bongo >file &&
++	git add file &&
+ 	git status >actual &&
+ 	test_i18ngrep "Initial commit" actual
+ '
+ 
+-test_expect_success \
+-	"fail initial amend" \
+-	"test_must_fail git commit --amend"
++test_expect_success 'fail initial amend' '
++	test_must_fail git commit --amend
++'
+ 
+-test_expect_success \
+-	"initial commit" \
+-	"git commit -m initial"
++test_expect_success 'setup: initial commit' '
++	git commit -m initial
++'
+ 
+-test_expect_success \
+-	"invalid options 1" \
+-	"test_must_fail git commit -m foo -m bar -F file"
++test_expect_success '-m and -F do not mix' '
++	test_must_fail git commit -m foo -m bar -F file
++'
+ 
+-test_expect_success \
+-	"invalid options 2" \
+-	"test_must_fail git commit -C HEAD -m illegal"
++test_expect_success '-m and -C do not mix' '
++	test_must_fail git commit -C HEAD -m illegal
++'
+ 
+-test_expect_success \
+-	"using paths with -a" \
+-	"echo King of the bongo >file &&
+-	test_must_fail git commit -m foo -a file"
++test_expect_success 'paths and -a do not mix' '
++	echo King of the bongo >file &&
++	test_must_fail git commit -m foo -a file
++'
+ 
+ test_expect_success PERL 'can use paths with --interactive' '
+ 	echo bong-o-bong >file &&
+@@ -50,120 +50,123 @@ test_expect_success PERL 'can use paths with --interactive' '
+ 	git reset --hard HEAD^
+ '
+ 
+-test_expect_success \
+-	"using invalid commit with -C" \
+-	"test_must_fail git commit -C bogus"
 -
 -test_expect_success \
--    'validate git rev-list output.' \
--    'test_cmp expected current'
+-	"testing nothing to commit" \
+-	"test_must_fail git commit -m initial"
+-
+-test_expect_success \
+-	"next commit" \
+-	"echo 'bongo bongo bongo' >file && \
+-	 git commit -m next -a"
+-
+-test_expect_success \
+-	"commit message from non-existing file" \
+-	"echo 'more bongo: bongo bongo bongo bongo' >file && \
+-	 test_must_fail git commit -F gah -a"
+-
+-# Empty except stray tabs and spaces on a few lines.
+-sed -e 's/@$//' >msg <<EOF
+-		@
+-
+-  @
+-Signed-off-by: hula
+-EOF
+-test_expect_success \
+-	"empty commit message" \
+-	"test_must_fail git commit -F msg -a"
+-
+-test_expect_success \
+-	"commit message from file" \
+-	"echo 'this is the commit message, coming from a file' >msg && \
+-	 git commit -F msg -a"
+-
+-cat >editor <<\EOF
+-#!/bin/sh
+-sed -e "s/a file/an amend commit/g" < "$1" > "$1-"
+-mv "$1-" "$1"
+-EOF
+-chmod 755 editor
+-
+-test_expect_success \
+-	"amend commit" \
+-	"EDITOR=./editor git commit --amend"
+-
+-test_expect_success \
+-	"passing -m and -F" \
+-	"echo 'enough with the bongos' >file && \
+-	 test_must_fail git commit -F msg -m amending ."
+-
+-test_expect_success \
+-	"using message from other commit" \
+-	"git commit -C HEAD^ ."
+-
+-cat >editor <<\EOF
+-#!/bin/sh
+-sed -e "s/amend/older/g"  < "$1" > "$1-"
+-mv "$1-" "$1"
+-EOF
+-chmod 755 editor
+-
+-test_expect_success \
+-	"editing message from other commit" \
+-	"echo 'hula hula' >file && \
+-	 EDITOR=./editor git commit -c HEAD^ -a"
+-
+-test_expect_success \
+-	"message from stdin" \
+-	"echo 'silly new contents' >file && \
+-	 echo commit message from stdin | git commit -F - -a"
+-
+-test_expect_success \
+-	"overriding author from command line" \
+-	"echo 'gak' >file && \
+-	 git commit -m 'author' --author 'Rubber Duck <rduck@convoy.org>' -a >output 2>&1"
+-
+-test_expect_success \
+-	"commit --author output mentions author" \
+-	"grep Rubber.Duck output"
+-
+-test_expect_success PERL \
+-	"interactive add" \
+-	"echo 7 | git commit --interactive | grep 'What now'"
+-
+-test_expect_success PERL \
+-	"commit --interactive doesn't change index if editor aborts" \
+-	"echo zoo >file &&
++test_expect_success 'using invalid commit with -C' '
++	test_must_fail git commit -C bogus
++'
++
++test_expect_success 'nothing to commit' '
++	test_must_fail git commit -m initial
++'
++
++test_expect_success 'setup: non-initial commit' '
++	echo bongo bongo bongo >file &&
++	git commit -m next -a
++'
++
++test_expect_success 'commit message from non-existing file' '
++	echo more bongo: bongo bongo bongo bongo >file &&
++	test_must_fail git commit -F gah -a
++'
++
++test_expect_success 'empty commit message' '
++	# Empty except stray tabs and spaces on a few lines.
++	sed -e "s/@//g" >msg <<-\EOF &&
++		@		@
++		@@
++		@  @
++		@Signed-off-by: hula@
++	EOF
++	test_must_fail git commit -F msg -a
++'
++
++test_expect_success 'setup: commit message from file' '
++	echo this is the commit message, coming from a file >msg &&
++	git commit -F msg -a
++'
++
++test_expect_success 'amend commit' '
++	cat >editor <<-\EOF &&
++	#!/bin/sh
++	sed -e "s/a file/an amend commit/g" < "$1" > "$1-"
++	mv "$1-" "$1"
++	EOF
++	chmod 755 editor &&
++	EDITOR=./editor git commit --amend
++'
++
++test_expect_success '-m and -F do not mix' '
++	echo enough with the bongos >file &&
++	test_must_fail git commit -F msg -m amending .
++'
++
++test_expect_success 'using message from other commit' '
++	git commit -C HEAD^ .
++'
++
++test_expect_success 'editing message from other commit' '
++	cat >editor <<-\EOF &&
++	#!/bin/sh
++	sed -e "s/amend/older/g"  < "$1" > "$1-"
++	mv "$1-" "$1"
++	EOF
++	chmod 755 editor &&
++	echo hula hula >file &&
++	EDITOR=./editor git commit -c HEAD^ -a
++'
++
++test_expect_success 'message from stdin' '
++	echo silly new contents >file &&
++	echo commit message from stdin |
++	git commit -F - -a
++'
++
++test_expect_success 'overriding author from command line' '
++	echo gak >file &&
++	git commit -m author \
++		--author "Rubber Duck <rduck@convoy.org>" -a >output 2>&1 &&
++	grep Rubber.Duck output
++'
++
++test_expect_success PERL 'interactive add' '
++	echo 7 |
++	git commit --interactive |
++	grep "What now"
++'
++
++test_expect_success PERL "commit --interactive doesn't change index if editor aborts" '
++	echo zoo >file &&
+ 	test_must_fail git diff --exit-code >diff1 &&
+-	(echo u ; echo '*' ; echo q) |
+-	(EDITOR=: && export EDITOR &&
+-	 test_must_fail git commit --interactive) &&
++	(echo u ; echo "*" ; echo q) |
++	(
++		EDITOR=: &&
++		export EDITOR &&
++		test_must_fail git commit --interactive
++	) &&
+ 	git diff >diff2 &&
+-	test_cmp diff1 diff2"
++	compare_diff_patch diff1 diff2
++'
+ 
+-cat >editor <<\EOF
+-#!/bin/sh
+-sed -e "s/good/bad/g" < "$1" > "$1-"
+-mv "$1-" "$1"
+-EOF
+-chmod 755 editor
++test_expect_success 'editor not invoked if -F is given' '
++	cat >editor <<-\EOF &&
++	#!/bin/sh
++	sed -e s/good/bad/g <"$1" >"$1-"
++	mv "$1-" "$1"
++	EOF
++	chmod 755 editor &&
+ 
+-cat >msg <<EOF
+-A good commit message.
+-EOF
++	echo A good commit message. >msg &&
++	echo moo >file &&
+ 
+-test_expect_success \
+-	'editor not invoked if -F is given' '
+-	 echo "moo" >file &&
+-	 EDITOR=./editor git commit -a -F msg &&
+-	 git show -s --pretty=format:"%s" | grep -q good &&
+-	 echo "quack" >file &&
+-	 echo "Another good message." | EDITOR=./editor git commit -a -F - &&
+-	 git show -s --pretty=format:"%s" | grep -q good
+-	 '
++	EDITOR=./editor git commit -a -F msg &&
++	git show -s --pretty=format:%s >subject &&
++	grep -q good subject &&
++
++	echo quack >file &&
++	echo Another good message. |
++	EDITOR=./editor git commit -a -F - &&
++	git show -s --pretty=format:%s >subject &&
++	grep -q good subject
++'
  
  test_expect_success 'partial commit that involves removal (1)' '
+ 
+@@ -197,7 +200,6 @@ test_expect_success 'partial commit that involves removal (3)' '
+ 
+ '
+ 
+-author="The Real Author <someguy@his.email.org>"
+ test_expect_success 'amend commit to fix author' '
+ 
+ 	oldtick=$GIT_AUTHOR_DATE &&
+@@ -326,7 +328,6 @@ test_expect_success 'multiple -m' '
+ 
+ '
+ 
+-author="The Real Author <someguy@his.email.org>"
+ test_expect_success 'amend commit to fix author' '
+ 
+ 	oldtick=$GIT_AUTHOR_DATE &&
+@@ -353,15 +354,8 @@ test_expect_success 'git commit <file> with dirty index' '
+ 
+ test_expect_success 'same tree (single parent)' '
+ 
+-	git reset --hard
+-
+-	if git commit -m empty
+-	then
+-		echo oops -- should have complained
+-		false
+-	else
+-		: happy
+-	fi
++	git reset --hard &&
++	test_must_fail git commit -m empty
+ 
+ '
  
 -- 
 1.7.8.rc3
