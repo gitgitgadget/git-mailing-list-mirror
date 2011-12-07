@@ -1,90 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/2] grep: turn off threading for non-worktree
-Date: Wed, 7 Dec 2011 15:45:31 -0500
-Message-ID: <20111207204530.GA20907@sigill.intra.peff.net>
-References: <cover.1322830368.git.trast@student.ethz.ch>
- <5328add8b32f83b4cdbd2e66283f77c125ec127a.1322830368.git.trast@student.ethz.ch>
- <4ED8F9AE.8030605@lsrfire.ath.cx>
- <4EDE9BBA.2010409@lsrfire.ath.cx>
- <4EDE9ED1.8010502@lsrfire.ath.cx>
- <20111207044242.GB10765@sigill.intra.peff.net>
- <20111207201105.GA22995@fieldses.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] userdiff: allow * between cpp funcname words
+Date: Wed, 07 Dec 2011 22:13:10 +0100
+Message-ID: <4EDFD6E6.5050301@kdbg.org>
+References: <a639d328e15bce3057de9238ee31097d15850de1.1323189110.git.trast@student.ethz.ch> <201112062117.57690.trast@student.ethz.ch> <7vfwgxflkv.fsf@alter.siamese.dyndns.org> <201112070904.28212.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Eric Herman <eric@freesa.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Wed Dec 07 21:45:41 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Dec 07 22:13:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYON2-0001Ly-F2
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 21:45:40 +0100
+	id 1RYOo2-0004ut-TH
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 22:13:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757652Ab1LGUpe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Dec 2011 15:45:34 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42878
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757578Ab1LGUpd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Dec 2011 15:45:33 -0500
-Received: (qmail 19855 invoked by uid 107); 7 Dec 2011 20:52:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 07 Dec 2011 15:52:11 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Dec 2011 15:45:31 -0500
-Content-Disposition: inline
-In-Reply-To: <20111207201105.GA22995@fieldses.org>
+	id S1758078Ab1LGVNQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Dec 2011 16:13:16 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:40288 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1757046Ab1LGVNP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Dec 2011 16:13:15 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 41D1C130059;
+	Wed,  7 Dec 2011 22:13:11 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id CDB9D19F49D;
+	Wed,  7 Dec 2011 22:13:10 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <201112070904.28212.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186500>
 
-On Wed, Dec 07, 2011 at 03:11:05PM -0500, J. Bruce Fields wrote:
-
-> >   $ time git grep --threads=8 'a.*b' HEAD >/dev/null
-> >   real    0m8.655s
-> >   user    0m23.817s
-> >   sys     0m0.480s
+Am 07.12.2011 09:04, schrieb Thomas Rast:
+> Junio C Hamano wrote:
+>> Thomas Rast <trast@student.ethz.ch> writes:
+>>
+>>> Actually (sadly) I'll have to revise it.  It doesn't match much of C++
+>>> either, and I haven't yet come up with a reasonable regex that
+>>> matches, say,
+>>>
+>>>   foo::Bar<int>::t& Baz::operator<<(
+>>>
+>>> which I would call ludicrous, but it's valid C++.
+>>
+>> Heh, I'd rather not see us go that route, which would either end up
+>> implementing a C++ parser or reverting the heuristics back to "non-blank
+>> at the beginning of the line" that was already reasonably useful.
 > 
-> Dumb question (I missed the beginning of the conversation): what kind of
-> storage are you using, and is the data already cached?
-
-Sorry, I should have been clear: all of those numbers are with a warm
-cache. So this is measuring only CPU.
-
-> I seem to recall part of the motivation for the multithreading being
-> NFS, where the goal isn't so much to keep CPU's busy as it is to keep
-> the network busy.
+> Well, there are many things that we deliberately do not match right
+> now and for which that's a good thing:
 > 
-> Probably a bigger problem for something like "git status" which I think
-> ends up doing a series of stat's (which can each require a round trip to
-> the server in the NFS case), as it is a problem for something like
-> git-grep that's also doing reads.
+>   label:
+>   public:
+>   void declaration_only(...);
+>   int global_variable;
 > 
-> Just a plea for considering the IO cost as well when making these kinds
-> of decisions....
+> At some point I was wondering whether it would be better to just
+> declare a non-match for '.*;' and '^[A-Za-z_][A-Za-z_0-9]+:', and
+> otherwise match all '^[A-Za-z].*\(' but I may be missing something.
 
-This system has a decent-quality SSD, so the I/O timings are perhaps
-not as interesting as they might otherwise be. But here are cold cache
-numbers (each run after 'echo 3 >/proc/sys/vm/drop_caches'):
+The current cpp pattern doesn't work that well with C++. Since it
+requires a blank before a name before the opening parentheses, it
+doesn't catch constructors:
 
-  HEAD, --threads=0: 4.956s
-  HEAD, --threads=8: 9.917s
-  working tree, --threads=0: 17.444s
-  working tree, --threads=8: 6.462s
+Foo::Foo()
 
-So when pulling from the object db, threads are still a huge loss
-(because the data is compressed, the SSD is fast, and we spend a lot of
-CPU time inflating; so it ends up close to the warm cache results). But
-for the working tree, the I/O parallelism is a huge win.
+and it should fail for GNU style C function definitions as well (I
+didn't test):
 
-So at least on my system, cold cache vs. warm cache leads to the same
-conclusion. "git grep --threads=8 ... HEAD" might still be a win on slow
-disks or NFS, though.
+void
+do_the_foo()
 
--Peff
+I'll run this pattern for a while:
+
+diff.cpp.xfuncname=!^[a-zA-Z_][a-zA-Z_0-9]*[[:space:]]*:[[:space:]]*$
+^[a-zA-Z_].*
+
+BTW, your match pattern requires an opening parenthesis; it would not
+catch class definitions.
+
+-- Hannes
