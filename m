@@ -1,222 +1,148 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 15/15] t3040 (subprojects-basic): modernize style
-Date: Wed, 7 Dec 2011 16:21:26 -0600
-Message-ID: <20111207222126.GF2911@elie.hsd1.il.comcast.net>
-References: <20111207100858.GB13374@elie.hsd1.il.comcast.net>
- <1323286611-4806-1-git-send-email-artagnon@gmail.com>
- <1323286611-4806-16-git-send-email-artagnon@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Auto update submodules after merge and reset
+Date: Wed, 07 Dec 2011 23:23:24 +0100
+Message-ID: <4EDFE75C.5050201@web.de>
+References: <4ED57EED.4040705@qualcomm.com> <4ED5E9D2.4060503@web.de> <jbnadt$hf8$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 07 23:21:42 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Andreas T.Auer" <andreas.t.auer_gtml_37453@ursus.ath.cx>
+X-From: git-owner@vger.kernel.org Wed Dec 07 23:23:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYPru-0000I2-P2
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 23:21:39 +0100
+	id 1RYPtk-00019C-VH
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 23:23:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758471Ab1LGWVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Dec 2011 17:21:33 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:36780 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757752Ab1LGWVc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Dec 2011 17:21:32 -0500
-Received: by yenm11 with SMTP id m11so529159yen.19
-        for <git@vger.kernel.org>; Wed, 07 Dec 2011 14:21:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=/jDlqg6uBUr+zSqvsq+HTdliUcfKkt8SN3w9lUGVrZo=;
-        b=WYexUMpmNVmy6T1Ql+n5heiWPpXuDHJETW+uizOZmaa6aQfJEYlB6glE7iYDLVR7Uf
-         q1vSWGCKsooXyMcJRuhzAZAmIW7tZSBRnykiPb/ZL3VIwdtDdXXZr7pJk4wkng20gEmo
-         4Eaf5sNLIElHnjclFNnybSuEHNhH5quEyt8fI=
-Received: by 10.236.197.97 with SMTP id s61mr467992yhn.57.1323296492108;
-        Wed, 07 Dec 2011 14:21:32 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id f17sm8572446ang.20.2011.12.07.14.21.30
-        (version=SSLv3 cipher=OTHER);
-        Wed, 07 Dec 2011 14:21:31 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1323286611-4806-16-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1758490Ab1LGWX2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Dec 2011 17:23:28 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:47043 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757988Ab1LGWX1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Dec 2011 17:23:27 -0500
+Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
+	by fmmailgate03.web.de (Postfix) with ESMTP id AC7881AB3EB86
+	for <git@vger.kernel.org>; Wed,  7 Dec 2011 23:23:26 +0100 (CET)
+Received: from [192.168.178.25] ([80.187.110.206]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0MPY5x-1RTl3k2IzJ-004kRX; Wed, 07 Dec 2011 23:23:26
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <jbnadt$hf8$1@dough.gmane.org>
+X-Provags-ID: V02:K0:0XDnKHzi5Y4l4lvBHCI5p5EVtn1OODwX+ib5N06DEsD
+ 6al7ybckdpC63Vk0V1qrbMe+goOzQprNVoYyxvXFjptNvsbQwb
+ 1FS94eF7WQjbok7+a/1dUjTBEFNUvS9vVB4hdnYiVuMPzjN+8/
+ SNlzYVDvmdZvLN0nied/3MzxUthN9X5XZxhQrvBgo8MFatVILI
+ SrTsq/TrYXjnr9iWQKn9Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186512>
 
-Ramkumar Ramachandra wrote:
+Am 07.12.2011 10:07, schrieb Andreas T.Auer:
+> Jens Lehmann wrote:
+> 
+>> Am 30.11.2011 01:55, schrieb Max Krasnyansky:
+>> I'm working on a patch series to teach Git to optionally update the
+>> submodules work trees on checkout, reset merge and so on, but I'm not
+>> there yet.
+>>
+>>> I'm thinking about adding a config option that would enable automatic
+>>> submodule update but wanted to see if there is some fundamental reason
+>>> why it would not be accepted.
+> Because there is no good way to do so. It would be fine when you just track 
+> the submodules "read-only", but if you are actually working on submodules, 
+> it is a bad idea to always get a detached HEAD.
 
-> Put the opening quote starting each test on the same line as the
-> test_expect_* invocation.  While at it:
-[...]
-> - Use <<\-EOF in preference to <<EOF to save readers the trouble of
->   looking for variable interpolations.
+YMMV. We get along *really* well with this because all developers know that
+if they want to hack on a submodule, they have to create a branch in there
+first (and if they forget to do that, git status and friends will tell them).
+What bugs us is that submodule HEADs don't follow what is checked out (or
+merged, or reset ...) in the superproject. We had some really nasty
+mismerges because of that, so we need the option to enable it.
 
-I think you mean <<-\EOF. :)
+> It is also a bad idea to
+> merge or rebase on the currently checkedout branch.
 
-[...]
-> - Chain commands with &&.  Breaks in a test assertion's && chain can
->   potentially hide failures from earlier commands in the chain.
->
-> - Use test_expect_code() in preference to checking the exit status of
->   various statements by hand.
+As I'm no user of update=merge|rebase, I have no first hand experience on
+that. But people do use those settings, no?
 
-I guess these two are the motivation?
+> Because if you are
+> working on a maint branch in the submodule and then you checkout a pu branch 
+> in the superproject, because you have forgotten that maint branch in the 
+> submodule then all the proposed updates go to the maintenance branch -> bad. 
 
-> Inspired-by: Jonathan Nieder <jrnieder@gmail.com>
+Nope, checkout will fail and not do anything as it will detect changes in
+the submodule to be updated by the checkout (just as it would do with a
+regular file).
 
-Oh, dear.
+> So auto-update is not easy.
 
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-[...]
-> --- a/t/t3040-subprojects-basic.sh
-> +++ b/t/t3040-subprojects-basic.sh
-> @@ -3,81 +3,81 @@
->  test_description='Basic subproject functionality'
->  . ./test-lib.sh
+No, it is, and it works really well. But it might not fit your use case.
+
+> But below I describe an idea that might solve
+> these issues and help auto-udpate to work in a sane way.
 >  
-> -test_expect_success 'Super project creation' \
-> -    ': >Makefile &&
-> -    git add Makefile &&
-> -    git commit -m "Superproject created"'
-> -
-> -
-> -cat >expected <<EOF
-[...]
+>> I think adding something like an "submodule.autoupdate" config makes lots
+>> of sense, but IMO it should affect all work tree updating porcelain
+>> commands, not just merge.
+> 
+> I was thinking about submodule integration and had the idea to bind a 
+> submodule to the superproject by having special references in the submodule 
+> like refs/super/master, refs/super/featureX... So these references are like 
+> tracking branches for the refs/heads/* of the superproject.
 
-It would be easier to read if each preimage test assertion were next to
-the corresponding postimage test assertion.  Does "git diff --patience"
-do better?
+Having stuff in the submodule reference branches in the superproject
+sounds upside down, as a superproject has (and should have) zero knowledge
+about the superproject (as it could have many different of them).
 
-> -test_expect_success 'Super project creation' \
-> -    ': >Makefile &&
-> -    git add Makefile &&
-> -    git commit -m "Superproject created"'
-> -
-> -
-> +test_expect_success 'setup: create superproject' '
-> +	: >Makefile &&
-> +	git add Makefile &&
-> +	git commit -m "Superproject created"
-> +'
-> +
+> If you have tracking branches, the supermodule can just update the 
+> corresponding branch. If this branch is currently checkedout and the work 
+> area is clean, then the work area is updated, too. If there is currently a 
+> local branch or a diffent super-branch checked out then the working area 
+> should be considered "detached" from the superproject and not updated. 
 
-Ok, makes sense.
+This sounds a lot like the "follow branch tip" model we discussed
+recently (which could be configured via .gitmodules), but I'm not sure
+you really are in the same boat here.
 
-> -cat >expected <<EOF
-> -:000000 160000 00000... A	sub1
-> -:000000 160000 00000... A	sub2
-> -EOF
-> -test_expect_success 'create subprojects' \
-> -    'mkdir sub1 &&
-> -    ( cd sub1 && git init && : >Makefile && git add * &&
-> -    git commit -q -m "subproject 1" ) &&
-> +test_expect_success 'setup: create subprojects' '
-> +	mkdir sub1 &&
-> +	( cd sub1 && git init && : >Makefile && git add * &&
-> +	git commit -q -m "subproject 1" ) &&
+> With this concept you could even switch branches in the superproject and the 
+> attached submodules follow - still having no detached HEAD. When you want to 
+> do some local work on the submodule you checkout a local branch and merge 
+> back into the super branch later.
 
-If cleaning up the style anyway, I would write this as
+You lost me here. How can you merge a submodule branch into one of the
+superproject?
 
-	mkdir sub1 &&
-	(
-		cd sub1 &&
-		git init &&
-		>Makefile &&
-		git add Makefile &&
-		git commit -m "subproject 1"
-	)
+> The head of that super branch might have 
+> changed by the update procedure meanwhile, but that is fine, then you just 
+> have a merge instead of a fast-forward.
+> 
+> Another nice feature would be a recursive commit. So all changed index files 
+> in the _attached_ submodules would first be committed in their submodules 
+> and then the superproject commits too - all with one command. Currently it 
+> feels a little bit like CVS - commit one file(submodule), commit the other 
+> file(submodule) and then apply a label(commit the superproject) to keep the 
+> changes together. 
+> 
+> If the submodule is not attached the commit in the superproject can still 
+> detect changes that have been made to the corresponding tracking branch and 
+> pick these up.
+> 
+> As a summary: Tracking submodule branches in the superproject instead of 
+> only the current HEAD of the submodule gives you more freedom to install 
+> sane auto-update procedures.
 
-Or
+But we would want to have a deterministic update procedure, no? (And what
+has more freedom than a detached HEAD? ;-)
 
-	mkdir sub1 &&
-	(
-		cd sub1 &&
-		git init &&
-		test_commit subproject-1 Makefile
-	)
+> Even though it will raise a lot of detailed
+> questions like "should the refs/super/* be pushed/pulled when syncing the 
+> submodule repositories".
 
-But leaving it alone like you did is probably better. ;-)
-
-[...]
-> -    git diff-tree --abbrev=5 HEAD^ HEAD |cut -d" " -f-3,5- >current &&
-> -    test_cmp expected current'
-> -
-> -git branch save HEAD
-> -
-> +	git diff-tree --abbrev=5 HEAD^ HEAD |cut -d" " -f-3,5- >current &&
-> +	git branch save HEAD &&
-> +	cat >expected <<-\EOF &&
-> +	:000000 160000 00000... A	sub1
-> +	:000000 160000 00000... A	sub2
-> +	EOF
-> +	test_cmp expected current
-> +'
-> +
-
-At first I wondered if "git branch save HEAD" is logically part of the
-same test.  After all, it's just meant as a baseline for use by later
-tests.
-
-After thinking about it for a few seconds, though, that's exactly what
-this test is about.  Maybe it would have been clearer if the two setup
-tests were combined into one (but please don't take this advice too
-seriously; I'm just musing).
-
-> -test_expect_success 'check if fsck ignores the subprojects' \
-> -    'git fsck --full'
-> +test_expect_success 'check if fsck ignores the subprojects' '
-> +	git fsck --full
-> +'
-
-Does this test imply that one of the subprojects is broken somehow?
-
-> -
-> -test_expect_success 'check if commit in a subproject detected' \
-> -    '( cd sub1 &&
-> -    echo "all:" >>Makefile &&
-> -    echo "	true" >>Makefile &&
-> -    git commit -q -a -m "make all" ) && {
-> -        git diff-files --exit-code
-> -	test $? = 1
-> -    }'
-> +
-> +test_expect_success 'check if commit in a subproject detected' '
-> +	( cd sub1 &&
-> +	echo "all:" >>Makefile &&
-> +	echo "	true" >>Makefile &&
-> +	git commit -q -a -m "make all" ) &&
-> +	test_expect_code 1 git diff-files --exit-code
-> +'
-
-Nice.  Style again: I'd be tempted to reformat as
-
-	(
-		cd sub1 &&
-		echo "all:" >>Makefile &&
-		...
-	) &&
-	test_expect_code 1 git diff-files --exit-code
-
-to make the subshell scope a little clearer, but exercising restraint
-like you did may be better.
-
-[...]
->  
->  # the index must contain the object name the HEAD of the
->  # subproject sub1 was at the point "save"
-> -test_expect_success 'checkout in superproject' \
-> -    'git checkout save &&
-> -    git diff-index --exit-code --raw --cached save -- sub1'
-> +test_expect_success 'checkout in superproject' '
-> +	git checkout save &&
-> +	git diff-index --exit-code --raw --cached save -- sub1
-> +'
-
-Thanks much.  The result really is a little easier on the eyes, and
-the changes look safe.
+I doubt that is a good idea, as that might conflict with the same submodule
+sitting in a different superproject. But I'm interested to hear how you
+want to solve that.
