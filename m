@@ -1,89 +1,80 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] userdiff: allow * between cpp funcname words
-Date: Wed, 07 Dec 2011 22:13:10 +0100
-Message-ID: <4EDFD6E6.5050301@kdbg.org>
-References: <a639d328e15bce3057de9238ee31097d15850de1.1323189110.git.trast@student.ethz.ch> <201112062117.57690.trast@student.ethz.ch> <7vfwgxflkv.fsf@alter.siamese.dyndns.org> <201112070904.28212.trast@student.ethz.ch>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 04/15] t1007 (hash-object): fix && chaining
+Date: Wed, 7 Dec 2011 15:47:16 -0600
+Message-ID: <20111207214716.GA2911@elie.hsd1.il.comcast.net>
+References: <20111207100858.GB13374@elie.hsd1.il.comcast.net>
+ <1323286611-4806-1-git-send-email-artagnon@gmail.com>
+ <1323286611-4806-5-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Dec 07 22:13:36 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 07 22:47:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYOo2-0004ut-TH
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 22:13:35 +0100
+	id 1RYPKu-0002pP-6r
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 22:47:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758078Ab1LGVNQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Dec 2011 16:13:16 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:40288 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1757046Ab1LGVNP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Dec 2011 16:13:15 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 41D1C130059;
-	Wed,  7 Dec 2011 22:13:11 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id CDB9D19F49D;
-	Wed,  7 Dec 2011 22:13:10 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <201112070904.28212.trast@student.ethz.ch>
+	id S1758032Ab1LGVr1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Dec 2011 16:47:27 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:64162 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757954Ab1LGVr0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Dec 2011 16:47:26 -0500
+Received: by yenm11 with SMTP id m11so502575yen.19
+        for <git@vger.kernel.org>; Wed, 07 Dec 2011 13:47:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=jJUs+BRAohlfCTuLDoIPXhaUuVm/m3jKO60CCeWqIFc=;
+        b=wmlD8gVYL6s28bxImuym/Lbi3jIVgD5aMyUP/I8ZXxxhNPvOzAwKf2+YmMuCglj8UN
+         TXRdDBCQTEoFDM7M3sv0CJ0XLubPurWi3dC/cJQWiLl7IesaiAUwiWRb49HGXhPPSXGY
+         Fy5gxmgDodyAmEQSeoSWR42tS6zIGGEJ5dgdo=
+Received: by 10.236.155.74 with SMTP id i50mr437004yhk.23.1323294446248;
+        Wed, 07 Dec 2011 13:47:26 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id l19sm8364664anc.14.2011.12.07.13.47.24
+        (version=SSLv3 cipher=OTHER);
+        Wed, 07 Dec 2011 13:47:25 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1323286611-4806-5-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186501>
 
-Am 07.12.2011 09:04, schrieb Thomas Rast:
-> Junio C Hamano wrote:
->> Thomas Rast <trast@student.ethz.ch> writes:
->>
->>> Actually (sadly) I'll have to revise it.  It doesn't match much of C++
->>> either, and I haven't yet come up with a reasonable regex that
->>> matches, say,
->>>
->>>   foo::Bar<int>::t& Baz::operator<<(
->>>
->>> which I would call ludicrous, but it's valid C++.
->>
->> Heh, I'd rather not see us go that route, which would either end up
->> implementing a C++ parser or reverting the heuristics back to "non-blank
->> at the beginning of the line" that was already reasonably useful.
-> 
-> Well, there are many things that we deliberately do not match right
-> now and for which that's a good thing:
-> 
->   label:
->   public:
->   void declaration_only(...);
->   int global_variable;
-> 
-> At some point I was wondering whether it would be better to just
-> declare a non-match for '.*;' and '^[A-Za-z_][A-Za-z_0-9]+:', and
-> otherwise match all '^[A-Za-z].*\(' but I may be missing something.
+Ramkumar Ramachandra wrote:
 
-The current cpp pattern doesn't work that well with C++. Since it
-requires a blank before a name before the opening parentheses, it
-doesn't catch constructors:
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 
-Foo::Foo()
+I think there's room for at least one line of description about why
+one would want to do this.
 
-and it should fail for GNU style C function definitions as well (I
-didn't test):
+IMHO if the patches are only being sent to me, Junio, and the
+mailing list (and not cc-ed to different people), then there's no
+reason to split them up when they have the same topic.
 
-void
-do_the_foo()
+Aside from that, patches 1-3 look good.  Now for this one:
 
-I'll run this pattern for a while:
+[...]
+> --- a/t/t1007-hash-object.sh
+> +++ b/t/t1007-hash-object.sh
+> @@ -154,13 +154,13 @@ test_expect_success 'check that --no-filters option works with --stdin-paths' '
+>  pop_repo
+>  
+>  for args in "-w --stdin" "--stdin -w"; do
+> -	push_repo
+> +	push_repo &&
+>  
+>  	test_expect_success "hash from stdin and write to database ($args)" '
+>  		test $example_sha1 = $(git hash-object $args < example)
+> -	'
+> +	' &&
 
-diff.cpp.xfuncname=!^[a-zA-Z_][a-zA-Z_0-9]*[[:space:]]*:[[:space:]]*$
-^[a-zA-Z_].*
-
-BTW, your match pattern requires an opening parenthesis; it would not
-catch class definitions.
-
--- Hannes
+I don't see how this would have any effect.  Is it intended?
