@@ -1,117 +1,86 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 4/4] test: commit --amend should honor --no-edit
-Date: Wed, 7 Dec 2011 08:54:14 -0600
-Message-ID: <20111207145414.GE30157@elie.hsd1.il.comcast.net>
-References: <4EDDD0E4.6040003@st.com>
- <87fwgxwvn9.fsf@gmail.com>
- <7vobvlfowk.fsf@alter.siamese.dyndns.org>
- <7vk469fm9j.fsf@alter.siamese.dyndns.org>
- <20111207144217.GA30157@elie.hsd1.il.comcast.net>
+From: Vijay Lakshminarayanan <laksvij@gmail.com>
+Subject: Re: Query on git commit amend
+Date: Wed, 07 Dec 2011 20:36:03 +0530
+Message-ID: <87ehwgv2uc.fsf@gmail.com>
+References: <4EDDD0E4.6040003@st.com> <87fwgxwvn9.fsf@gmail.com>
+	<7vobvlfowk.fsf@alter.siamese.dyndns.org> <87wra9und4.fsf@gmail.com>
+	<4EDEE988.2070902@st.com> <20111207045325.GA22990@atjola.homenet>
+	<4EDEFD66.4020404@st.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Vijay Lakshminarayanan <laksvij@gmail.com>,
-	Viresh Kumar <viresh.kumar@st.com>,
-	Shiraz HASHIM <shiraz.hashim@st.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 07 15:54:26 2011
+Content-Type: text/plain
+Cc: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Shiraz HASHIM <shiraz.hashim@st.com>,
+	Vipin KUMAR <vipin.kumar@st.com>
+To: Viresh Kumar <viresh.kumar@st.com>
+X-From: git-owner@vger.kernel.org Wed Dec 07 16:06:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYIt7-0001zH-RF
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 15:54:26 +0100
+	id 1RYJ4a-00085b-MM
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 16:06:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756156Ab1LGOyV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Dec 2011 09:54:21 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:59175 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756019Ab1LGOyV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Dec 2011 09:54:21 -0500
-Received: by yenm11 with SMTP id m11so130075yen.19
-        for <git@vger.kernel.org>; Wed, 07 Dec 2011 06:54:20 -0800 (PST)
+	id S1756251Ab1LGPGI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Dec 2011 10:06:08 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:47316 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755818Ab1LGPGG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Dec 2011 10:06:06 -0500
+Received: by iakc1 with SMTP id c1so1052347iak.19
+        for <git@vger.kernel.org>; Wed, 07 Dec 2011 07:06:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=TzjSuWmXiBSvfZmWzdWlujsEy8MBVOIblmIrkyqGh2o=;
-        b=jkO9a8PQ+66XUYA/bya73dNrPRGJwigTwpBSv6x1dE1PmFXGWYdC2DSKGUgi+l9U7N
-         tnzBbxIU23+PHGrtwJeaCs6v1BU3tsOyizrt4qgW/WS1rRcJSWXLEVJVaAzH2tRxaR5i
-         TcBTG8y6jZei+uZgMWXu1bc0oIU5/L4/IbwDI=
-Received: by 10.236.187.1 with SMTP id x1mr27235986yhm.58.1323269660442;
-        Wed, 07 Dec 2011 06:54:20 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id 11sm5585406anp.13.2011.12.07.06.54.19
-        (version=SSLv3 cipher=OTHER);
-        Wed, 07 Dec 2011 06:54:19 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20111207144217.GA30157@elie.hsd1.il.comcast.net>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=zaI7x6tJJJQzRhZcMex/HYaIlhNEHCRCqEIG61hnPuQ=;
+        b=kXA1AwdwbN3cJUF4fM03COEPbnVsj3ZtIGeCOggVHl8c8rxc2Q5oxwmehkNR1a2qkK
+         AQiUk9MT7Rqxbk0CY66zoavRIiCDkgkKRLlw5Q/OrwT3RHh024SaOKPU+3mIs3OVVr53
+         EGbqajC9a5+rPYQSFMC2zHU15k5LaArvZiv5Y=
+Received: by 10.231.81.136 with SMTP id x8mr4653664ibk.10.1323270366252;
+        Wed, 07 Dec 2011 07:06:06 -0800 (PST)
+Received: from BALROG ([59.92.48.171])
+        by mx.google.com with ESMTPS id ew6sm4235717igc.4.2011.12.07.07.06.02
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 07 Dec 2011 07:06:05 -0800 (PST)
+In-Reply-To: <4EDEFD66.4020404@st.com> (Viresh Kumar's message of "Wed, 7 Dec
+	2011 11:15:10 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (windows-nt)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186462>
 
-A quick test to make sure git doesn't lose the functionality added by
-the recent patch "commit: honor --no-edit", plus another test to check
-the classical --edit use case (use with "-m").
+Viresh Kumar <viresh.kumar@st.com> writes:
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- t/t7501-commit.sh |   40 ++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 40 insertions(+), 0 deletions(-)
+[snip]
 
-diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index bf025df6..c462bf3b 100755
---- a/t/t7501-commit.sh
-+++ b/t/t7501-commit.sh
-@@ -94,6 +94,46 @@ test_expect_success 'amend commit' '
- 	EDITOR=./editor git commit --amend
- '
- 
-+test_expect_success 'set up editor' '
-+	cat >editor <<-\EOF &&
-+	#!/bin/sh
-+	sed -e "s/unamended/amended/g" <"$1" >"$1-"
-+	mv "$1-" "$1"
-+	EOF
-+	chmod 755 editor
-+'
-+
-+test_expect_success 'amend without launching editor' '
-+	echo unamended >expect &&
-+	git commit --allow-empty -m "unamended" &&
-+	echo needs more bongo >file &&
-+	git add file &&
-+	EDITOR=./editor git commit --no-edit --amend &&
-+	git diff --exit-code HEAD -- file &&
-+	git diff-tree -s --format=%s HEAD >msg &&
-+	test_cmp expect msg
-+'
-+
-+test_expect_success '--amend --edit' '
-+	echo amended >expect &&
-+	git commit --allow-empty -m "unamended" &&
-+	echo bongo again >file &&
-+	git add file &&
-+	EDITOR=./editor git commit --edit --amend &&
-+	git diff-tree -s --format=%s HEAD >msg &&
-+	test_cmp expect msg
-+'
-+
-+test_expect_success '-m --edit' '
-+	echo amended >expect &&
-+	git commit --allow-empty -m buffer &&
-+	echo bongo bongo >file &&
-+	git add file &&
-+	EDITOR=./editor git commit -m unamended --edit &&
-+	git diff-tree -s  --format=%s HEAD >msg &&
-+	test_cmp expect msg
-+'
-+
- test_expect_success '-m and -F do not mix' '
- 	echo enough with the bongos >file &&
- 	test_must_fail git commit -F msg -m amending .
+> Now, whats the benefit of 
+>
+> GIT_EDITOR=cat git commit --amend
+>
+> over
+>
+> git commit --amend -C HEAD
+>
+> ?
+
+The latter preserves the original timestamp of the commit and other
+environment variables like GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL
+whereas GIT_EDITOR=cat (or true or :) are equivalent to opening up the
+commit in an editor and so consider these variables during execution.
+
+For instance, you could say
+
+$ GIT_EDITOR=cat GIT_COMMITTER_EMAIL=foo@bar.baz git commit --amend
+
+and the commiter email would be set to foo@bar.baz
+
 -- 
-1.7.8.rc3
+Cheers
+~vijay
+
+Gnus should be more complicated.
