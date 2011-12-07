@@ -1,65 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Yo dawg, I heard you like trees...
-Date: Wed, 7 Dec 2011 17:12:02 -0500
-Message-ID: <20111207221202.GB21596@sigill.intra.peff.net>
-References: <20111205235740.GB27318@thinkpad>
- <CABURp0rBkGtGfU=od2XeuhD6otUWUfL2ASqo1XBckra18WKy7w@mail.gmail.com>
- <20111207155411.GB2003@thinkpad>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: git auto-repack is broken...
+Date: Wed, 07 Dec 2011 17:12:14 -0500 (EST)
+Message-ID: <alpine.LFD.2.02.1112071709250.2907@xanadu.home>
+References: <CA+55aFznj49hx6Ce6NhJ1rRd2nvNyOERseyyrC6SNcW-z9dyfg@mail.gmail.com>
+ <CACBZZX7Q5qb1r_Oh0QfMiWh9UAM1c6QWBn4abv-xHpFBaKuyKg@mail.gmail.com>
+ <CA+55aFyq28vmo9dk-5mVm+nNn86qSjNT6VJGc09iaJo=+OP1Sg@mail.gmail.com>
+ <20111202171017.GB23447@sigill.intra.peff.net>
+ <7vobvqoozr.fsf@alter.siamese.dyndns.org>
+ <20111202174546.GA24093@sigill.intra.peff.net>
+ <CA+sFfMdeVoz8XU5j4hNn1qCHHzaiDi0Bw=QbbuU3cwT9mMPZOA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Phil Hord <phil.hord@gmail.com>, git@vger.kernel.org
-To: Sebastian Morr <sebastian@morr.cc>
-X-From: git-owner@vger.kernel.org Wed Dec 07 23:12:12 2011
+Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	=?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 07 23:12:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYPil-0004Qf-Th
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 23:12:12 +0100
+	id 1RYPiu-0004Vh-Eg
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 23:12:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758474Ab1LGWMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Dec 2011 17:12:06 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42908
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752852Ab1LGWMF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Dec 2011 17:12:05 -0500
-Received: (qmail 20543 invoked by uid 107); 7 Dec 2011 22:18:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 07 Dec 2011 17:18:43 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Dec 2011 17:12:02 -0500
-Content-Disposition: inline
-In-Reply-To: <20111207155411.GB2003@thinkpad>
+	id S1758496Ab1LGWMQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Dec 2011 17:12:16 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:19836 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758486Ab1LGWMP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Dec 2011 17:12:15 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-VM-MR004.ip.videotron.ca
+ (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
+ 2011)) with ESMTP id <0LVU00G7PTIBRN40@VL-VM-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 07 Dec 2011 17:08:35 -0500 (EST)
+In-reply-to: <CA+sFfMdeVoz8XU5j4hNn1qCHHzaiDi0Bw=QbbuU3cwT9mMPZOA@mail.gmail.com>
+User-Agent: Alpine 2.02 (LFD 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186510>
 
-On Wed, Dec 07, 2011 at 04:54:11PM +0100, Sebastian Morr wrote:
+On Sat, 3 Dec 2011, Brandon Casey wrote:
 
-> > Git uses a DAG. The A stands for "acyclic". Loops are not allowed.
-> 
-> I'm aware of that. It's acyclic by design, but is this actually enforced
-> by the code? Or does it simply trust that no loops will ever occur,
-> because it's so improbable?
+> Linus's scenario of fetching a lot of stuff that never actually makes
+> it into the reflogs is still a valid problem.  I'm not sure that
+> people who don't know what they are doing are going to run into this
+> problem though.  Since he fetches a lot of stuff without ever checking
+> it out or creating a branch from it, potentially many objects become
+> unreferenced every time FETCH_HEAD changes.
 
-The latter. And not just "improbable", but "so improbable that trying to
-do it on purpose should still take billions of years".
+Maybe  FETCH_HEAD should have a reflog too?
 
-Assuming sha1 isn't totally broken, of course.
 
-> After Andrew's response I investigated a bit, and it seems I
-> overvalued the attempts to "break" SHA-1. Wikipedia quotes a 2008
-> attack, that can create a collision with 2^51 hash function calls.
-
-According to wikipedia, it _may_ produce collisions in 2^51 to 2^57.
-
-Worrisome numbers, certainly, but 2^51 is probably within our ability to
-compute if a big project is undertaken. Yet to my knowledge nobody has
-actually created such a collision. So the attack is still theoretical at
-this point, and there's no good way to create a loop within the git DAG
-(or within a tree).
-
--Peff
+Nicolas
