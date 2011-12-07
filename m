@@ -1,148 +1,116 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Auto update submodules after merge and reset
-Date: Wed, 07 Dec 2011 23:23:24 +0100
-Message-ID: <4EDFE75C.5050201@web.de>
-References: <4ED57EED.4040705@qualcomm.com> <4ED5E9D2.4060503@web.de> <jbnadt$hf8$1@dough.gmane.org>
+From: Chris Patti <cpatti@gmail.com>
+Subject: Re: Odd issue - The Diffs That WILL NOT DIE.
+Date: Wed, 7 Dec 2011 17:24:01 -0500
+Message-ID: <CAJ8P3RB=Gj-QCe6meqXSZ7N8+PnfNxSD8omUxT6dDh00bUf0QQ@mail.gmail.com>
+References: <CAJ8P3RBm=RhNf6LKLqprqX6Rqx0OgRnJR+=+-Qhg4PvpeqaUDg@mail.gmail.com>
+	<20111206215102.GA3654@centaur.lab.cmartin.tk>
+	<CAJ8P3RCPt9Kwi1F7_TEkZQhkm1mwR_TFKhYszS5LL50kXU8oNQ@mail.gmail.com>
+	<20111207220345.GA21596@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Andreas T.Auer" <andreas.t.auer_gtml_37453@ursus.ath.cx>
-X-From: git-owner@vger.kernel.org Wed Dec 07 23:23:34 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 07 23:24:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYPtk-00019C-VH
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 23:23:33 +0100
+	id 1RYPuf-0001Xx-6Q
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 23:24:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758490Ab1LGWX2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Dec 2011 17:23:28 -0500
-Received: from fmmailgate03.web.de ([217.72.192.234]:47043 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757988Ab1LGWX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Dec 2011 17:23:27 -0500
-Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
-	by fmmailgate03.web.de (Postfix) with ESMTP id AC7881AB3EB86
-	for <git@vger.kernel.org>; Wed,  7 Dec 2011 23:23:26 +0100 (CET)
-Received: from [192.168.178.25] ([80.187.110.206]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0MPY5x-1RTl3k2IzJ-004kRX; Wed, 07 Dec 2011 23:23:26
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <jbnadt$hf8$1@dough.gmane.org>
-X-Provags-ID: V02:K0:0XDnKHzi5Y4l4lvBHCI5p5EVtn1OODwX+ib5N06DEsD
- 6al7ybckdpC63Vk0V1qrbMe+goOzQprNVoYyxvXFjptNvsbQwb
- 1FS94eF7WQjbok7+a/1dUjTBEFNUvS9vVB4hdnYiVuMPzjN+8/
- SNlzYVDvmdZvLN0nied/3MzxUthN9X5XZxhQrvBgo8MFatVILI
- SrTsq/TrYXjnr9iWQKn9Q==
+	id S1758517Ab1LGWYF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Dec 2011 17:24:05 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:33599 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758497Ab1LGWYC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Dec 2011 17:24:02 -0500
+Received: by wgbdr13 with SMTP id dr13so2054591wgb.1
+        for <git@vger.kernel.org>; Wed, 07 Dec 2011 14:24:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=/MutBAK2XNyrHUzeJd4o5LprVQFe/VtDWIgAUYGUT0U=;
+        b=lyFbNBvUxAwY4ey648vIFYsp1DbmPDf62nm8xXUQBfgVVrOTFPCN0OnhVYkJlBPDqx
+         pv+boRrVq9sBGrWNleAP8Tedz5VWRho/zv2h5Ga1SHzEC62n17UuUU5JQ7hqq5zDhhtU
+         iPxAWQH1WSXVpPKg6XdECee/XwiDgaVEn1xoA=
+Received: by 10.227.205.130 with SMTP id fq2mr390820wbb.17.1323296641279; Wed,
+ 07 Dec 2011 14:24:01 -0800 (PST)
+Received: by 10.223.88.132 with HTTP; Wed, 7 Dec 2011 14:24:01 -0800 (PST)
+In-Reply-To: <20111207220345.GA21596@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186513>
 
-Am 07.12.2011 10:07, schrieb Andreas T.Auer:
-> Jens Lehmann wrote:
-> 
->> Am 30.11.2011 01:55, schrieb Max Krasnyansky:
->> I'm working on a patch series to teach Git to optionally update the
->> submodules work trees on checkout, reset merge and so on, but I'm not
->> there yet.
+On Wed, Dec 7, 2011 at 5:03 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Dec 07, 2011 at 11:54:26AM -0500, Chris Patti wrote:
+>
+>> OK. =C2=A0Let me give you a very specific series of commands, sorry =
+about
+>> the poor question / report (Not convinced it's a bug, probably pilot
+>> error?)
 >>
->>> I'm thinking about adding a config option that would enable automatic
->>> submodule update but wanted to see if there is some fundamental reason
->>> why it would not be accepted.
-> Because there is no good way to do so. It would be fine when you just track 
-> the submodules "read-only", but if you are actually working on submodules, 
-> it is a bad idea to always get a detached HEAD.
+>> If my understanding of the way Git works is correct, there should be
+>> NO pending diffs in a freshly cloned repository, yes?
+>
+> Yes. It's probably a bug, perhaps related to the case-insensitive
+> filesystem (we've seen similar weird "phantom changes right after clo=
+ne"
+> bugs before).
+>
+>> 11:35][admin@Hiram-Abiff-2:~/src]$ rm -rf framework/
+>> [11:37][admin@Hiram-Abiff-2:~/src]$
+>> [11:44][admin@Hiram-Abiff-2:~/src]$ git clone
+>> ssh://git.bluestatedigital.com/home/git/framework.git
+>> Cloning into 'framework'...
+>> remote: Counting objects: 378540, done.
+>> remote: Compressing objects: 100% (100469/100469), done.
+>> remote: Total 378540 (delta 261046), reused 374685 (delta 258447)
+>> Receiving objects: 100% (378540/378540), 148.33 MiB | 2.08 MiB/s, do=
+ne.
+>> Resolving deltas: 100% (261046/261046), done.
+>> [11:51][admin@Hiram-Abiff-2:~/src]$ cd framework/
+>> [11:51][admin@Hiram-Abiff-2:~/src/framework(master)]$ git diff
+>> diff --git a/app/modules/Core/controllers/CloudSponge.php b/app/modu=
+les/Core/con
+>> index 615a7b3..911d456 100644
+>> --- a/app/modules/Core/controllers/CloudSponge.php
+>> +++ b/app/modules/Core/controllers/CloudSponge.php
+>
+> Are there other files in the repository that differ from this path on=
+ly
+> in capitalization? Can you show us the output of "git ls-files"?
+>
+> Is it possible to make this repo public, or at least available privat=
+ely
+> to git developers?
+>
+> You mentioned v1.7.8. Do you see the bug with other git versions? If
+> not, can you try bisecting?
+>
+> -Peff
 
-YMMV. We get along *really* well with this because all developers know that
-if they want to hack on a submodule, they have to create a branch in there
-first (and if they forget to do that, git status and friends will tell them).
-What bugs us is that submodule HEADs don't follow what is checked out (or
-merged, or reset ...) in the superproject. We had some really nasty
-mismerges because of that, so we need the option to enable it.
+Yup, you nailed it.  The files in question are CloudSponge.php
+(deleted) and Cloudsponge.php (still being actively maintained).
 
-> It is also a bad idea to
-> merge or rebase on the currently checkedout branch.
+I am seeing the same behavior with 1.7.7.4 which I backrevved to
+yesterday while troubleshooting this issue.  Can you suggest an older
+version for me to try next?
 
-As I'm no user of update=merge|rebase, I have no first hand experience on
-that. But people do use those settings, no?
+I'm not sure how I would git bisect in this case, I'd need to have all
+the different git revs installed in order to do that right? (I'm
+relatively new to git bisect, just figured it out the other day).
 
-> Because if you are
-> working on a maint branch in the submodule and then you checkout a pu branch 
-> in the superproject, because you have forgotten that maint branch in the 
-> submodule then all the proposed updates go to the maintenance branch -> bad. 
+Thanks,
+-Chris
 
-Nope, checkout will fail and not do anything as it will detect changes in
-the submodule to be updated by the checkout (just as it would do with a
-regular file).
-
-> So auto-update is not easy.
-
-No, it is, and it works really well. But it might not fit your use case.
-
-> But below I describe an idea that might solve
-> these issues and help auto-udpate to work in a sane way.
->  
->> I think adding something like an "submodule.autoupdate" config makes lots
->> of sense, but IMO it should affect all work tree updating porcelain
->> commands, not just merge.
-> 
-> I was thinking about submodule integration and had the idea to bind a 
-> submodule to the superproject by having special references in the submodule 
-> like refs/super/master, refs/super/featureX... So these references are like 
-> tracking branches for the refs/heads/* of the superproject.
-
-Having stuff in the submodule reference branches in the superproject
-sounds upside down, as a superproject has (and should have) zero knowledge
-about the superproject (as it could have many different of them).
-
-> If you have tracking branches, the supermodule can just update the 
-> corresponding branch. If this branch is currently checkedout and the work 
-> area is clean, then the work area is updated, too. If there is currently a 
-> local branch or a diffent super-branch checked out then the working area 
-> should be considered "detached" from the superproject and not updated. 
-
-This sounds a lot like the "follow branch tip" model we discussed
-recently (which could be configured via .gitmodules), but I'm not sure
-you really are in the same boat here.
-
-> With this concept you could even switch branches in the superproject and the 
-> attached submodules follow - still having no detached HEAD. When you want to 
-> do some local work on the submodule you checkout a local branch and merge 
-> back into the super branch later.
-
-You lost me here. How can you merge a submodule branch into one of the
-superproject?
-
-> The head of that super branch might have 
-> changed by the update procedure meanwhile, but that is fine, then you just 
-> have a merge instead of a fast-forward.
-> 
-> Another nice feature would be a recursive commit. So all changed index files 
-> in the _attached_ submodules would first be committed in their submodules 
-> and then the superproject commits too - all with one command. Currently it 
-> feels a little bit like CVS - commit one file(submodule), commit the other 
-> file(submodule) and then apply a label(commit the superproject) to keep the 
-> changes together. 
-> 
-> If the submodule is not attached the commit in the superproject can still 
-> detect changes that have been made to the corresponding tracking branch and 
-> pick these up.
-> 
-> As a summary: Tracking submodule branches in the superproject instead of 
-> only the current HEAD of the submodule gives you more freedom to install 
-> sane auto-update procedures.
-
-But we would want to have a deterministic update procedure, no? (And what
-has more freedom than a detached HEAD? ;-)
-
-> Even though it will raise a lot of detailed
-> questions like "should the refs/super/* be pushed/pulled when syncing the 
-> submodule repositories".
-
-I doubt that is a good idea, as that might conflict with the same submodule
-sitting in a different superproject. But I'm interested to hear how you
-want to solve that.
+--=20
+Christopher Patti - Geek At Large | GTalk: cpatti@gmail.com | AIM:
+chrisfeohpatti | P: (260) 54PATTI
+"Technology challenges art, art inspires technology." - John Lasseter, =
+Pixar
