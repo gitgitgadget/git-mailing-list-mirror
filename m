@@ -1,100 +1,75 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 04/15] t1007 (hash-object): fix && chaining
-Date: Thu,  8 Dec 2011 01:06:40 +0530
-Message-ID: <1323286611-4806-5-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 05/15] t1510 (repo-setup): fix && chaining
+Date: Thu,  8 Dec 2011 01:06:41 +0530
+Message-ID: <1323286611-4806-6-git-send-email-artagnon@gmail.com>
 References: <20111207100858.GB13374@elie.hsd1.il.comcast.net>
  <1323286611-4806-1-git-send-email-artagnon@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 07 20:38:21 2011
+X-From: git-owner@vger.kernel.org Wed Dec 07 20:38:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYNJo-00013p-AP
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 20:38:16 +0100
+	id 1RYNJw-00018H-6d
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 20:38:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757249Ab1LGTiK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Dec 2011 14:38:10 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:48222 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757154Ab1LGTiJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Dec 2011 14:38:09 -0500
-Received: by mail-qy0-f174.google.com with SMTP id z2so701321qcq.19
-        for <git@vger.kernel.org>; Wed, 07 Dec 2011 11:38:09 -0800 (PST)
+	id S1757286Ab1LGTiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Dec 2011 14:38:14 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:52491 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757154Ab1LGTiN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Dec 2011 14:38:13 -0500
+Received: by mail-iy0-f174.google.com with SMTP id c1so1353523iak.19
+        for <git@vger.kernel.org>; Wed, 07 Dec 2011 11:38:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=iTOmIgyl6j81b8+QZgq6U2Bde7yWau3rrzxFW7ZIs5s=;
-        b=qUVf5pXxVzGxx8668UarZfFU9M1uJiSc8nme3pp5CGcOAyBNYw+gHIkvKGVLGduUmb
-         CrikMHISpLIBJGn5Bzyokk0DcAiZ5HVtppSrWo1Ljul02RlDa8dWRlBSERdAGZtmk0+7
-         s1UDXw1RiGiuiZIrsSG+JG/FrE7cAmNN2tHn4=
-Received: by 10.50.202.65 with SMTP id kg1mr364730igc.1.1323286689262;
-        Wed, 07 Dec 2011 11:38:09 -0800 (PST)
+        bh=PHq0MHcNE100SR7DNtLlS5aWEpAiiE3/eaWXifz4TIY=;
+        b=GO1CYd9wBUvR1HRG9r9DDy7zSW5x03J4BDvl1n7AyS+Kw134czDlq1A1i5FPlqTw8/
+         nBiWrKDGJpoU/eRjNJT4Pbb/dgiM+rHT5vI5HHcQcxKMSB6+oXgmXkJvZq7mHZw5Dtvx
+         mQA1FVxT63qlw3F58hs8H1GHnzdORb9vLfjIk=
+Received: by 10.42.131.135 with SMTP id z7mr251553ics.23.1323286692831;
+        Wed, 07 Dec 2011 11:38:12 -0800 (PST)
 Received: from localhost.localdomain ([203.110.240.205])
-        by mx.google.com with ESMTPS id ds5sm10016838ibb.5.2011.12.07.11.38.06
+        by mx.google.com with ESMTPS id ds5sm10016838ibb.5.2011.12.07.11.38.09
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 07 Dec 2011 11:38:08 -0800 (PST)
+        Wed, 07 Dec 2011 11:38:12 -0800 (PST)
 X-Mailer: git-send-email 1.7.7.3
 In-Reply-To: <1323286611-4806-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186486>
 
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- t/t1007-hash-object.sh |   16 ++++++++--------
- 1 files changed, 8 insertions(+), 8 deletions(-)
+ t/t1510-repo-setup.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
-index 6d52b82..316c60a 100755
---- a/t/t1007-hash-object.sh
-+++ b/t/t1007-hash-object.sh
-@@ -154,13 +154,13 @@ test_expect_success 'check that --no-filters option works with --stdin-paths' '
- pop_repo
+diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
+index ec50a9a..80aedfc 100755
+--- a/t/t1510-repo-setup.sh
++++ b/t/t1510-repo-setup.sh
+@@ -603,7 +603,7 @@ test_expect_success '#22a: core.worktree = GIT_DIR = .git dir' '
+ 	# like case #6.
  
- for args in "-w --stdin" "--stdin -w"; do
--	push_repo
-+	push_repo &&
- 
- 	test_expect_success "hash from stdin and write to database ($args)" '
- 		test $example_sha1 = $(git hash-object $args < example)
--	'
-+	' &&
- 
--	test_blob_exists $example_sha1
-+	test_blob_exists $example_sha1 &&
- 
- 	pop_repo
- done
-@@ -176,20 +176,20 @@ test_expect_success "hash two files with names on stdin" '
- '
- 
- for args in "-w --stdin-paths" "--stdin-paths -w"; do
--	push_repo
-+	push_repo &&
- 
- 	test_expect_success "hash two files with names on stdin and write to database ($args)" '
- 		test "$sha1s" = "$(echo_without_newline "$filenames" | git hash-object $args)"
--	'
-+	' &&
- 
--	test_blob_exists $hello_sha1
--	test_blob_exists $example_sha1
-+	test_blob_exists $hello_sha1 &&
-+	test_blob_exists $example_sha1 &&
- 
- 	pop_repo
- done
- 
- test_expect_success 'corrupt tree' '
--	echo abc >malformed-tree
-+	echo abc >malformed-tree &&
- 	test_must_fail git hash-object -t tree malformed-tree
- '
- 
+ 	setup_repo 22a "$here/22a/.git" "" unset &&
+-	setup_repo 22ab . "" unset
++	setup_repo 22ab . "" unset &&
+ 	mkdir -p 22a/.git/sub 22a/sub &&
+ 	mkdir -p 22ab/.git/sub 22ab/sub &&
+ 	try_case 22a/.git unset . \
+@@ -742,7 +742,7 @@ test_expect_success '#28: core.worktree and core.bare conflict (gitfile case)' '
+ # Case #29: GIT_WORK_TREE(+core.worktree) overrides core.bare (gitfile case).
+ test_expect_success '#29: setup' '
+ 	setup_repo 29 non-existent gitfile true &&
+-	mkdir -p 29/sub/sub 29/wt/sub
++	mkdir -p 29/sub/sub 29/wt/sub &&
+ 	(
+ 		cd 29 &&
+ 		GIT_WORK_TREE="$here/29" &&
 -- 
 1.7.7.3
