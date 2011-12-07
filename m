@@ -1,141 +1,110 @@
-From: Chris Patti <cpatti@gmail.com>
-Subject: Re: Odd issue - The Diffs That WILL NOT DIE.
-Date: Wed, 7 Dec 2011 17:30:19 -0500
-Message-ID: <CAJ8P3RA48W7ZiABvjkn_KkU-JPnCnaF_X_WK0wPtToph3DGDvg@mail.gmail.com>
-References: <CAJ8P3RBm=RhNf6LKLqprqX6Rqx0OgRnJR+=+-Qhg4PvpeqaUDg@mail.gmail.com>
-	<20111206215102.GA3654@centaur.lab.cmartin.tk>
-	<CAJ8P3RCPt9Kwi1F7_TEkZQhkm1mwR_TFKhYszS5LL50kXU8oNQ@mail.gmail.com>
-	<20111207220345.GA21596@sigill.intra.peff.net>
-	<CAJ8P3RB=Gj-QCe6meqXSZ7N8+PnfNxSD8omUxT6dDh00bUf0QQ@mail.gmail.com>
+From: Joshua Redstone <joshua.redstone@fb.com>
+Subject: Re: Debugging git-commit slowness on a large repo
+Date: Wed, 7 Dec 2011 22:48:22 +0000
+Message-ID: <CB051EFC.2C795%joshua.redstone@fb.com>
+References: <CACsJy8Dbd+v+8FzvQS9a4C8DQSxQGgqQNGaLhL1cHv-yMnaCJQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 07 23:30:27 2011
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: =?iso-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
+	Tomas Carnecky <tom@dbservice.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 07 23:49:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYQ0Q-0004Id-3q
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 23:30:26 +0100
+	id 1RYQJ0-0003Lo-G4
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 23:49:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757913Ab1LGWaV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Dec 2011 17:30:21 -0500
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:51330 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757048Ab1LGWaV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Dec 2011 17:30:21 -0500
-Received: by wgbds13 with SMTP id ds13so89288wgb.1
-        for <git@vger.kernel.org>; Wed, 07 Dec 2011 14:30:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=VWpuu9on1aIoT0mAS3HweN2qRqjzAzzg2YluML1+Ch8=;
-        b=fNY9j6/PNkriGBgLKFRUwnoAJp8F3c0zG1QHA7U9YtzmdpjFebugRpdxjOK/XhfCDA
-         wMv6lCrcN1FxGoan7vnkt/G3Hp84A9byOxV14OUE79e09u6+R7qYQrF4MMs1zJTffr6B
-         7XZGXr8HKcG4LVknIw6m0dt5suD5n8Ns2oqhk=
-Received: by 10.180.19.42 with SMTP id b10mr548964wie.39.1323297019376; Wed,
- 07 Dec 2011 14:30:19 -0800 (PST)
-Received: by 10.223.88.132 with HTTP; Wed, 7 Dec 2011 14:30:19 -0800 (PST)
-In-Reply-To: <CAJ8P3RB=Gj-QCe6meqXSZ7N8+PnfNxSD8omUxT6dDh00bUf0QQ@mail.gmail.com>
+	id S1758088Ab1LGWte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Dec 2011 17:49:34 -0500
+Received: from mx0b-00082601.pphosted.com ([67.231.153.30]:49234 "EHLO
+	mx0a-00082601.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1757465Ab1LGWtd convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 7 Dec 2011 17:49:33 -0500
+Received: from pps.filterd (m0004060 [127.0.0.1])
+	by mx0b-00082601.pphosted.com (8.14.4/8.14.4) with SMTP id pB7MjFhc027129;
+	Wed, 7 Dec 2011 14:48:27 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=from : to : cc : subject :
+ date : message-id : in-reply-to : content-type : content-id :
+ content-transfer-encoding : mime-version; s=facebook;
+ bh=SBpx8MCCtr+5yOJisysBJ7gO1gAdhp7Sf8Jjb/Yn+RM=;
+ b=oVzDjSfsaECRVLnsToF8/tMtovqTgs+rjJhOXcVC9afVZvfAuYa6CQ0SLWbvs/hxUwBB
+ H5Cp0gdTFeGHfTmL+R9ddKQfiLgeuLHxMjm94NUK25FuErGQXbnCtJWoqlUMDQPvbIH2
+ RbCRpE7/v599+hfo2yfjRx3+T30iuUJg9IQ= 
+Received: from mail.thefacebook.com (corpout1.snc1.tfbnw.net [66.220.144.38])
+	by mx0b-00082601.pphosted.com with ESMTP id 11jgb3r2he-2
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Wed, 07 Dec 2011 14:48:27 -0800
+Received: from SC-MBX02-5.TheFacebook.com ([fe80::9dc2:cfe6:2745:44cc]) by
+ sc-hub03.TheFacebook.com ([192.168.18.198]) with mapi id 14.01.0289.001; Wed,
+ 7 Dec 2011 14:48:23 -0800
+Thread-Topic: Debugging git-commit slowness on a large repo
+Thread-Index: AQHMsUiE0jGAmaiuRkyp0eiAE6mrR5XJxzCAgAXbCACAAIurgIAA1D+A
+In-Reply-To: <CACsJy8Dbd+v+8FzvQS9a4C8DQSxQGgqQNGaLhL1cHv-yMnaCJQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Microsoft-MacOutlook/14.13.0.110805
+x-originating-ip: [192.168.18.252]
+Content-ID: <DE0A96233931B9408410AB39B22AC004@fb.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.5.7110,1.0.211,0.0.0000
+ definitions=2011-12-07_07:2011-12-07,2011-12-07,1970-01-01 signatures=0
+X-Proofpoint-Spam-Reason: safe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186515>
 
-Actually I'm wrong on that count, but in an interesting way.
+Hi Duy,
+Thanks for the documentation link.
 
-Both CloudSponge.php and Cloudsponge.php exist and are *not* deleted
-in the remote repository, but on OSX only Cloudsponge.php shows up on
-the filesystem, yet CloudSponge.php is being reported as modified.
+git ls-files shows 100k files, which matches # of files in the working
+tree ('find . -type f -print | wc -l').
 
-Turns out two of our other developers are also seeing this behavior.
+I added a 'git read-tree HEAD' before the git-add, and a 'git write-tree'
+after the add.  With that, the commit time slowed down to 8 seconds per
+commit, plus 4 more seconds for the read-tree/add/write-tree ops.  The
+read-tree/add/write-tree each took about a second.
 
--Chris
+As an experiment, I also tried removing the 'git read-tree' and just
+having the git-write-tree.  That sped up commits to 0.6 seconds, but the
+overall time for add/write-tree/commit was still 3 to 6 seconds.
 
+For comparison, without the read-tree and write-tree, commits take about 1
+second and add/commit in total takes about 2 seconds.
 
-On Wed, Dec 7, 2011 at 5:24 PM, Chris Patti <cpatti@gmail.com> wrote:
-> On Wed, Dec 7, 2011 at 5:03 PM, Jeff King <peff@peff.net> wrote:
->> On Wed, Dec 07, 2011 at 11:54:26AM -0500, Chris Patti wrote:
->>
->>> OK. =C2=A0Let me give you a very specific series of commands, sorry=
- about
->>> the poor question / report (Not convinced it's a bug, probably pilo=
-t
->>> error?)
->>>
->>> If my understanding of the way Git works is correct, there should b=
-e
->>> NO pending diffs in a freshly cloned repository, yes?
->>
->> Yes. It's probably a bug, perhaps related to the case-insensitive
->> filesystem (we've seen similar weird "phantom changes right after cl=
-one"
->> bugs before).
->>
->>> 11:35][admin@Hiram-Abiff-2:~/src]$ rm -rf framework/
->>> [11:37][admin@Hiram-Abiff-2:~/src]$
->>> [11:44][admin@Hiram-Abiff-2:~/src]$ git clone
->>> ssh://git.bluestatedigital.com/home/git/framework.git
->>> Cloning into 'framework'...
->>> remote: Counting objects: 378540, done.
->>> remote: Compressing objects: 100% (100469/100469), done.
->>> remote: Total 378540 (delta 261046), reused 374685 (delta 258447)
->>> Receiving objects: 100% (378540/378540), 148.33 MiB | 2.08 MiB/s, d=
-one.
->>> Resolving deltas: 100% (261046/261046), done.
->>> [11:51][admin@Hiram-Abiff-2:~/src]$ cd framework/
->>> [11:51][admin@Hiram-Abiff-2:~/src/framework(master)]$ git diff
->>> diff --git a/app/modules/Core/controllers/CloudSponge.php b/app/mod=
-ules/Core/con
->>> index 615a7b3..911d456 100644
->>> --- a/app/modules/Core/controllers/CloudSponge.php
->>> +++ b/app/modules/Core/controllers/CloudSponge.php
->>
->> Are there other files in the repository that differ from this path o=
-nly
->> in capitalization? Can you show us the output of "git ls-files"?
->>
->> Is it possible to make this repo public, or at least available priva=
-tely
->> to git developers?
->>
->> You mentioned v1.7.8. Do you see the bug with other git versions? If
->> not, can you try bisecting?
->>
->> -Peff
+It surprises me that the presence of git read-tree or write-tree would
+slow things down so much.
+
+Josh
+
+On 12/6/11 6:08 PM, "Nguyen Thai Ngoc Duy" <pclouds@gmail.com> wrote:
+
+>On Wed, Dec 7, 2011 at 8:48 AM, Joshua Redstone <joshua.redstone@fb.com>
+>wrote:
+>> I tried doing a 'git read-tree HEAD' before each 'git add ; git commit'
+>> iteration, and the time for git-commit jumped from about 1 second to
+>>about
+>> 8 seconds.  That is a pretty dramatic slowdown.  Any idea why?  I wonder
+>> if that's related to the overall commit slowness.
 >
-> Yup, you nailed it. =C2=A0The files in question are CloudSponge.php
-> (deleted) and Cloudsponge.php (still being actively maintained).
+>How big is your working directory? "git ls-files | wc -l" should show
+>it. Try "git read-tree HEAD; git add; git write-tree" and see if the
+>write-tree part takes as much time as commit. write-tree is mainly
+>about cache-tree generation.
 >
-> I am seeing the same behavior with 1.7.7.4 which I backrevved to
-> yesterday while troubleshooting this issue. =C2=A0Can you suggest an =
-older
-> version for me to try next?
+>> @Carlos and/or @Junio, can you point me at any docs/code to understand
+>> what a tree-cache is and how it differs from the index?  I did a google
+>> search for [git tree-cache index], but nothing popped out.
 >
-> I'm not sure how I would git bisect in this case, I'd need to have al=
-l
-> the different git revs installed in order to do that right? (I'm
-> relatively new to git bisect, just figured it out the other day).
->
-> Thanks,
-> -Chris
->
-> --
-> Christopher Patti - Geek At Large | GTalk: cpatti@gmail.com | AIM:
-> chrisfeohpatti | P: (260) 54PATTI
-> "Technology challenges art, art inspires technology." - John Lasseter=
-, Pixar
-
-
-
---=20
-Christopher Patti - Geek At Large | GTalk: cpatti@gmail.com | AIM:
-chrisfeohpatti | P: (260) 54PATTI
-"Technology challenges art, art inspires technology." - John Lasseter, =
-Pixar
+>Have a look at Documentation/technical/index-format.txt. Cache tree
+>extension is near the end.
+>-- 
+>Duy
