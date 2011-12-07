@@ -1,63 +1,88 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: ANNOUNCE: Git for Windows 1.7.8
-Date: Wed, 07 Dec 2011 10:44:05 +0100
-Message-ID: <4EDF3565.6060902@gmail.com>
-References: <CABNJ2GJ_1Nf9rWev6BKE9zcqt5yrgq6PbaMLVRD705UapLHf0w@mail.gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [RFC PATCH] git-p4: introduce asciidoc documentation
+Date: Wed, 07 Dec 2011 09:46:57 +0000
+Message-ID: <4EDF3611.3000902@diamand.org>
+References: <20111203235328.GA3866@arf.padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: msysGit <msysgit@googlegroups.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Pat Thoyts <patthoyts@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 07 10:44:24 2011
+Cc: git@vger.kernel.org
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Wed Dec 07 10:46:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYE35-00081Z-Uu
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 10:44:24 +0100
+	id 1RYE5F-0000OW-QR
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 10:46:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752327Ab1LGJoR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Dec 2011 04:44:17 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:56889 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751319Ab1LGJoQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Dec 2011 04:44:16 -0500
-Received: by eaak14 with SMTP id k14so268345eaa.19
-        for <git@vger.kernel.org>; Wed, 07 Dec 2011 01:44:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=mG1voFn+VXrR0XY+iiZFuz/+9ShcqsxrFYsTiUWXUHM=;
-        b=oyTcbVcuNVpBcpTzj79glx7ye4rsxVnSZ+50trQ2EAigbEHgQqAg00165JfFR+YvHB
-         LDvp6EMexJ3jh18bW7umFFdxY/MiFycsj2JQuIHdGIPsjAtkG8TPUCKdeLan7suk9W88
-         pvUYzrGlgEnzJw+RSbSfpONeYpL8DwX/ChLbI=
-Received: by 10.213.22.74 with SMTP id m10mr3372725ebb.40.1323251054994;
-        Wed, 07 Dec 2011 01:44:14 -0800 (PST)
-Received: from [130.73.68.203] (jambul.zib.de. [130.73.68.203])
-        by mx.google.com with ESMTPS id h7sm1470412bkw.12.2011.12.07.01.44.13
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 07 Dec 2011 01:44:14 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
-Newsgroups: gmane.comp.version-control.git,gmane.comp.version-control.msysgit
-In-Reply-To: <CABNJ2GJ_1Nf9rWev6BKE9zcqt5yrgq6PbaMLVRD705UapLHf0w@mail.gmail.com>
+	id S1752705Ab1LGJqc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Dec 2011 04:46:32 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:60027 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752475Ab1LGJqb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Dec 2011 04:46:31 -0500
+Received: by eekd41 with SMTP id d41so272059eek.19
+        for <git@vger.kernel.org>; Wed, 07 Dec 2011 01:46:30 -0800 (PST)
+Received: by 10.14.9.84 with SMTP id 60mr3396872ees.60.1323251189925;
+        Wed, 07 Dec 2011 01:46:29 -0800 (PST)
+Received: from [86.26.7.206] (cpc1-cmbg14-2-0-cust973.5-4.cable.virginmedia.com. [86.26.7.206])
+        by mx.google.com with ESMTPS id fa8sm1471965bkc.14.2011.12.07.01.46.28
+        (version=SSLv3 cipher=OTHER);
+        Wed, 07 Dec 2011 01:46:29 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+In-Reply-To: <20111203235328.GA3866@arf.padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186451>
 
-On 06.12.2011 21:32, Pat Thoyts wrote:
-
-> This release brings the latest release of Git to Windows users.
+On 03/12/11 23:53, Pete Wyckoff wrote:
+> Add proper documentation for git-p4.  Delete the old .txt
+> documentation from contrib/fast-import.
+> ---
 >
-> Pre-built installers are available from
-> http://code.google.com/p/msysgit/downloads/list
+> I'd appreciate review by git-p4 people to make sure I captured
+> everything from the old documentation, and to catch any errors.
+> There's a fair amount of new content in here, describing all
+> the options and variables.  I left out some obscure commands
+> on purpose.
+>
+> Comments from anyone else would be welcome too.  Especially
+> in the area of generic asciidoc formatting or style in git
+> command pages.
 
-Thanks a lot, Pat, for making the release!
+That looks good to me, I can't see anything of note, just one minor nit, 
+below.
 
--- 
-Sebastian Schuberth
+Luke
+
+
+>
+> Thanks,
+> 		-- Pete
+>
+>   Documentation/git-p4.txt       |  456 ++++++++++++++++++++++++++++++++++++++++
+>   contrib/fast-import/git-p4.txt |  289 -------------------------
+>   2 files changed, 456 insertions(+), 289 deletions(-)
+>   create mode 100644 Documentation/git-p4.txt
+>   delete mode 100644 contrib/fast-import/git-p4.txt
+> +
+>
+> +------------
+> +$ cd project
+> +$ vi foo.h
+
+I think it works with other editors as well, although I've not tried it 
+myself. Obviously with reduced functionality :-)
+
+
+> +git-p4.allowSubmit::
+> +	By default, any branch can be used as the source for a 'git p4
+> +	submit' operation.  This configuration variable , if set, permits only
+
+Spacing around comma in "variable , if set"
+
+Luke
