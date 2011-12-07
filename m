@@ -1,77 +1,156 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH v2 3/3] grep: disable threading in all but worktree case
-Date: Wed, 07 Dec 2011 17:52:10 +0100
-Message-ID: <4EDF99BA.3040006@lsrfire.ath.cx>
-References: <cover.1322830368.git.trast@student.ethz.ch> <5328add8b32f83b4cdbd2e66283f77c125ec127a.1322830368.git.trast@student.ethz.ch> <4ED8F9AE.8030605@lsrfire.ath.cx> <4EDE9BBA.2010409@lsrfire.ath.cx> <20111207042431.GA10765@sigill.intra.peff.net>
+From: Chris Patti <cpatti@gmail.com>
+Subject: Re: Odd issue - The Diffs That WILL NOT DIE.
+Date: Wed, 7 Dec 2011 11:54:26 -0500
+Message-ID: <CAJ8P3RCPt9Kwi1F7_TEkZQhkm1mwR_TFKhYszS5LL50kXU8oNQ@mail.gmail.com>
+References: <CAJ8P3RBm=RhNf6LKLqprqX6Rqx0OgRnJR+=+-Qhg4PvpeqaUDg@mail.gmail.com>
+	<20111206215102.GA3654@centaur.lab.cmartin.tk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Eric Herman <eric@freesa.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 07 17:52:37 2011
+To: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
+	Chris Patti <cpatti@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 07 17:54:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYKjU-0001Jl-Gy
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 17:52:36 +0100
+	id 1RYKlU-0002Pe-2x
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 17:54:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754348Ab1LGQw3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Dec 2011 11:52:29 -0500
-Received: from india601.server4you.de ([85.25.151.105]:39089 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754291Ab1LGQw0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Dec 2011 11:52:26 -0500
-Received: from [192.168.2.104] (p4FFD9BF7.dip.t-dialin.net [79.253.155.247])
-	by india601.server4you.de (Postfix) with ESMTPSA id 740272F8032;
-	Wed,  7 Dec 2011 17:52:24 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <20111207042431.GA10765@sigill.intra.peff.net>
+	id S1752546Ab1LGQy2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Dec 2011 11:54:28 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:62093 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751605Ab1LGQy1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Dec 2011 11:54:27 -0500
+Received: by wgbdr13 with SMTP id dr13so1627189wgb.1
+        for <git@vger.kernel.org>; Wed, 07 Dec 2011 08:54:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=IcuS6SX5y3EvSEHIx7YJBmc26u7nBpAE8quPBLay1vs=;
+        b=Ssjyn8QY27sMVS8gIFf50Msen8DZElMH7iyBNoKfKINupf7GClmvT6xPi8YbugWiac
+         IwMVcep+HX/Eqm5A917fhsJUJ8DX4/G3RIVVIfiEGztHytjRbTrak0T7Hd9zndVlwPVg
+         KYmUnPtpw7PzNQKdubPvPiR7mqN7NZ6mCjRng=
+Received: by 10.227.203.131 with SMTP id fi3mr8011594wbb.17.1323276866200;
+ Wed, 07 Dec 2011 08:54:26 -0800 (PST)
+Received: by 10.223.88.132 with HTTP; Wed, 7 Dec 2011 08:54:26 -0800 (PST)
+In-Reply-To: <20111206215102.GA3654@centaur.lab.cmartin.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186471>
 
-Am 07.12.2011 05:24, schrieb Jeff King:
-> On Tue, Dec 06, 2011 at 11:48:26PM +0100, Ren=C3=A9 Scharfe wrote:
->=20
->>  #ifndef NO_PTHREADS
->> -	if (use_threads) {
->> +	if (nr_threads > 0) {
->>  		grep_sha1_async(opt, name, sha1);
->>  		return 0;
->>  	} else
->=20
-> Should this be "if (nr_threads > 1)"?
->=20
-> As a user, I would do:
->=20
->   git grep --threads=3D1 ...
->=20
-> if I wanted a single-threaded process. Instead, we actually spawn a
-> sub-thread and do all of the locking, which has a measurable cost:
+On Tue, Dec 6, 2011 at 4:51 PM, Carlos Mart=C3=ADn Nieto <cmn@elego.de>=
+ wrote:
+> On Tue, Dec 06, 2011 at 04:43:50PM -0500, Chris Patti wrote:
+>> I have a Homebrew installed version if Git 1.7.8 running on OSX Lion=
+=2E
+>>
+>> I'm seeing a very odd issue where these diffs I didn't create keep
+>> recurring in a particular repository.
+>
+> Which diffs? You haven't given us any? What files does this happen
+> with? Do they have any peculiarities?
+>
+> If these are files with non-ASCII filenames, then you're hitting a
+> misfeature of the HFS+ filesystem (it lies when git asks it about
+> files).
+>
+>>
+>> I've tried:
+>>
+>> * Nuking the repo and re-cloning, cloning into a totally different
+>> containing directory
+>> * git reset --hard, git checkout -- of the offending file supposedly
+>> containing the diffs
+>>
+>> Is there some sort of uber persistent local cache that's bound to th=
+e
+>> remote repository?
+>
+> The remote repository shouldn't have anything to do with this.
+>
+> =C2=A0 cmn
 
-Yes, the difference is measurable, and that's exactly how I like it to
-be. :)  A user can turn off threading with --threads=3D0 or (more
-intuitively) --no-threads.  And we can quantify the overhead.
+OK.  Let me give you a very specific series of commands, sorry about
+the poor question / report (Not convinced it's a bug, probably pilot
+error?)
 
->   $ time git grep --threads=3D0 SIMPLE HEAD >/dev/null
->   real    0m2.994s
->   user    0m2.932s
->   sys     0m0.060s
->=20
->   $ time git grep --threads=3D1 SIMPLE HEAD >/dev/null
->   real    0m3.407s
->   user    0m3.392s
->   sys     0m0.140s
->=20
-> Should --threads=3D1 be equivalent to --threads=3D0?
+If my understanding of the way Git works is correct, there should be
+NO pending diffs in a freshly cloned repository, yes?
 
-We can do that if there's another way to calculate this difference, or
-if it is not useful to know.  I find your results interesting at least,
-though. :)
+Note that I tried git diff and git diff -w below with identical results=
+:
+---
+11:35][admin@Hiram-Abiff-2:~/src]$ rm -rf framework/
+[11:37][admin@Hiram-Abiff-2:~/src]$
+[11:44][admin@Hiram-Abiff-2:~/src]$ git clone
+ssh://git.bluestatedigital.com/home/git/framework.git
+Cloning into 'framework'...
+remote: Counting objects: 378540, done.
+remote: Compressing objects: 100% (100469/100469), done.
+remote: Total 378540 (delta 261046), reused 374685 (delta 258447)
+Receiving objects: 100% (378540/378540), 148.33 MiB | 2.08 MiB/s, done.
+Resolving deltas: 100% (261046/261046), done.
+[11:51][admin@Hiram-Abiff-2:~/src]$ cd framework/
+[11:51][admin@Hiram-Abiff-2:~/src/framework(master)]$ git diff
+diff --git a/app/modules/Core/controllers/CloudSponge.php b/app/modules=
+/Core/con
+index 615a7b3..911d456 100644
+--- a/app/modules/Core/controllers/CloudSponge.php
++++ b/app/modules/Core/controllers/CloudSponge.php
+@@ -1,229 +1,71 @@
+-<?php
+-
+-require_once "utils/blue_mailer/queue_mailer.class.php";
+-
+-class Core_CloudSponge_Controller extends Core_PageBase_Controller
+-{
+-    private $_config;
+-    private $_tsFactory;
+-    private $_emailValidator;
+-    private $_formFactory;
+-    private $_rowBuilderFactory;
+-
+-    public function __construct
+-    (
+-        Blue_Config $config,
+-        Blue_SecureTimestamp_Factory $tsFactory,
+-        Blue_Email_Validator $emailValidator,
+-        Framework_Ui_Form_Factory $formFactory,
+[11:51][admin@Hiram-Abiff-2:~/src/framework(master)]$ git diff -w
+diff --git a/app/modules/Core/controllers/CloudSponge.php b/app/modules=
+/Core/con
+index 615a7b3..911d456 100644
+--- a/app/modules/Core/controllers/CloudSponge.php
++++ b/app/modules/Core/controllers/CloudSponge.php
+@@ -1,229 +1,71 @@
+-<?php
+-
+-require_once "utils/blue_mailer/queue_mailer.class.php";
+-
+-class Core_CloudSponge_Controller extends Core_PageBase_Controller
+-{
+-    private $_config;
+-    private $_tsFactory;
+-    private $_emailValidator;
+-    private $_formFactory;
+-    private $_rowBuilderFactory;
+-
+-    public function __construct
+-    (
+-        Blue_Config $config,
+-        Blue_SecureTimestamp_Factory $tsFactory,
+-        Blue_Email_Validator $emailValidator,
+-        Framework_Ui_Form_Factory $formFactory,
+[11:52][admin@Hiram-Abiff-2:~/src/framework(master)]$
 
-Ren=C3=A9
+--=20
+Christopher Patti - Geek At Large | GTalk: cpatti@gmail.com | AIM:
+chrisfeohpatti | P: (260) 54PATTI
+"Technology challenges art, art inspires technology." - John Lasseter, =
+Pixar
