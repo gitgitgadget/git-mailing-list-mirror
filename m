@@ -1,204 +1,218 @@
 From: Frans Klaver <fransklaver@gmail.com>
-Subject: Re: [PATCH 1/2] run-command: Add checks after execvp fails with EACCES
-Date: Wed, 7 Dec 2011 09:31:24 +0100
-Message-ID: <CAH6sp9NsRDWoMtnBUXOP-OMFwjjUm-OuRLpNvcS4pC1S=C93EQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] run-command: Add interpreter permissions check
+Date: Wed, 7 Dec 2011 09:37:48 +0100
+Message-ID: <CAH6sp9MqwKppcrtP7YM8FZAs=odmUicTvsxiYyH0ENmJrPxqEA@mail.gmail.com>
 References: <op.v5e8mgbc0aolir@keputer>
 	<1323207503-26581-1-git-send-email-fransklaver@gmail.com>
-	<1323207503-26581-2-git-send-email-fransklaver@gmail.com>
-	<7vpqg1e3au.fsf@alter.siamese.dyndns.org>
+	<1323207503-26581-3-git-send-email-fransklaver@gmail.com>
+	<7vk469e2rn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 07 09:31:34 2011
+X-From: git-owner@vger.kernel.org Wed Dec 07 09:37:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYCub-0006MK-FF
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 09:31:33 +0100
+	id 1RYD0k-0008Uw-PA
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 09:37:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754732Ab1LGIb0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Dec 2011 03:31:26 -0500
-Received: from mail-qw0-f53.google.com ([209.85.216.53]:62203 "EHLO
-	mail-qw0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754509Ab1LGIbZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Dec 2011 03:31:25 -0500
-Received: by qadb15 with SMTP id b15so245495qad.19
-        for <git@vger.kernel.org>; Wed, 07 Dec 2011 00:31:24 -0800 (PST)
+	id S1752902Ab1LGIhu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Dec 2011 03:37:50 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:38742 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752425Ab1LGIht convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Dec 2011 03:37:49 -0500
+Received: by qcqz2 with SMTP id z2so151080qcq.19
+        for <git@vger.kernel.org>; Wed, 07 Dec 2011 00:37:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=O3nRW4r9u0ROZvYs9p0IQ5nArXlua7x5L/9MCSwkSgs=;
-        b=RSngaAhq3vTeQhsQ+mQeklqlAIeHRX4wwc0sIIICg76DtvhECTW6kkyz7lMNDWfG/w
-         Ql19p9WrJmyxOwV/gBFNhs7Ww3ArwcwRovvXH7nZ/ugCKSOfAuM+5vxCLxXkCZ38UPZ8
-         hWFjPC6QW5BU72BHgceQ9p9WNPnmETrHbwMX4=
-Received: by 10.224.217.66 with SMTP id hl2mr15455876qab.84.1323246684728;
- Wed, 07 Dec 2011 00:31:24 -0800 (PST)
-Received: by 10.224.86.11 with HTTP; Wed, 7 Dec 2011 00:31:24 -0800 (PST)
-In-Reply-To: <7vpqg1e3au.fsf@alter.siamese.dyndns.org>
+        bh=2/4k1ODUj/zUKel+I6LA8usZUj4S7kmllwsLnbTLeK4=;
+        b=RsvxyKn6D5gi60h4ge0MlMPCv308bvPF89BrrpsBG9cnq+QPWIAXSAHnKqYprclZt5
+         Zg3j8pjJ61kR/D+ZieNxqRSJ/6vFX+mP1GAARokUK5PkiVoOd4KH6OzFwj4ad2fPqUgU
+         G7srdiWb3V1S9FLY+pe5d7Uc/UP1d6TUcRQac=
+Received: by 10.229.61.65 with SMTP id s1mr3790930qch.253.1323247068709; Wed,
+ 07 Dec 2011 00:37:48 -0800 (PST)
+Received: by 10.224.86.11 with HTTP; Wed, 7 Dec 2011 00:37:48 -0800 (PST)
+In-Reply-To: <7vk469e2rn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186448>
 
-Thanks for the review. There's a lot of things you mention that I
-either didn't see (staring blind, you know) or that I didn't know of.
-
-On Tue, Dec 6, 2011 at 11:35 PM, Junio C Hamano <gitster@pobox.com> wro=
+On Tue, Dec 6, 2011 at 11:47 PM, Junio C Hamano <gitster@pobox.com> wro=
 te:
 > Frans Klaver <fransklaver@gmail.com> writes:
 >
->> +#ifndef WIN32
->> +static int is_in_group(gid_t gid)
->> ...
->> +static int have_read_execute_permissions(const char *path)
+>> If a script is started and the interpreter of that script given in t=
+he
+>> shebang cannot be started due to permissions, we can get a rather
+>> obscure situation. All permission checks pass for the script itself,
+>> but we still get EACCES from execvp.
+>>
+>> Try to find out if the above is the case and warn the user about it.
+>>
+>> Signed-off-by: Frans Klaver <fransklaver@gmail.com>
+>> ---
+>> =C2=A0run-command.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0 66 ++=
++++++++++++++++++++++++++++++++++++++++++----
+>> =C2=A0t/t0061-run-command.sh | =C2=A0 22 ++++++++++++++++
+>> =C2=A02 files changed, 82 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/run-command.c b/run-command.c
+>> index 5e38c5a..b8cf8d4 100644
+>> --- a/run-command.c
+>> +++ b/run-command.c
+>> @@ -194,6 +194,63 @@ static int have_read_execute_permissions(const =
+char *path)
+>> =C2=A0 =C2=A0 =C2=A0 return 0;
+>> =C2=A0}
+>>
+>> +static void check_interpreter(const char *cmd)
 >> +{
->> + =C2=A0 =C2=A0 struct stat s;
->> + =C2=A0 =C2=A0 trace_printf("checking '%s'\n", path);
->> +
->> + =C2=A0 =C2=A0 if (stat(path, &s) < 0) {
->> + ...
->> + =C2=A0 =C2=A0 /* check world permissions */
->> + =C2=A0 =C2=A0 if ((s.st_mode&(S_IXOTH|S_IROTH)) =3D=3D (S_IXOTH|S_=
-IROTH))
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 1;
->
-> Hmm, do you need to do this with stat(2)?
->
-> Wouldn't access(2) with R_OK|X_OK give you exactly what you want with=
-out
-> this much trouble?
-
-Probably. I'll use access instead in a reroll.
-
-
-> I also think that your permission check is incorrectly implemented.
->
-> =C2=A0 =C2=A0$ cd /var/tmp && date >j && chmod 044 j && ls -l j
-> =C2=A0 =C2=A0----r--r-- 1 junio junio 29 Dec =C2=A06 14:32 j
-> =C2=A0 =C2=A0$ cat j
-> =C2=A0 =C2=A0cat: j: Permission denied
-> =C2=A0 =C2=A0$ su pogo
-> =C2=A0 =C2=A0Password:
-> =C2=A0 =C2=A0$ cat j
-> =C2=A0 =C2=A0Tue Dec =C2=A06 14:32:23 PST 2011
->
-> That's a world-readable but unreadable-only-to-me file.
-
-Hmm, this is a case that didn't fit my expectations. Thanks for catchin=
-g.
-
-
-
->> +static void diagnose_execvp_eacces(const char *cmd, const char **ar=
-gv)
->> +{
->> + =C2=A0 =C2=A0 /* man 2 execve states that EACCES is returned for:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0/*
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 * Just a style, but we tend to write mult=
-i-line comment like
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 * this, without anything else on opening =
-and closing lines of
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 * the comment block.
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 */
->
->> + =C2=A0 =C2=A0 =C2=A0* - The file system is mounted noexec
->> + =C2=A0 =C2=A0 =C2=A0*/
+>> + =C2=A0 =C2=A0 FILE *f;
 >> + =C2=A0 =C2=A0 struct strbuf sb =3D STRBUF_INIT;
->> + =C2=A0 =C2=A0 char *path =3D getenv("PATH");
->> + =C2=A0 =C2=A0 char *next;
+>> + =C2=A0 =C2=A0 /* bash reads an 80 character line when determining =
+the interpreter.
+>> + =C2=A0 =C2=A0 =C2=A0* BSD apparently only allows 32 characters, as=
+ it is the size of
+>> + =C2=A0 =C2=A0 =C2=A0* your average binary executable header.
+>> + =C2=A0 =C2=A0 =C2=A0*/
+>> + =C2=A0 =C2=A0 char firstline[80];
+>> + =C2=A0 =C2=A0 char *interpreter =3D NULL;
+>> + =C2=A0 =C2=A0 size_t s, i;
 >> +
->> + =C2=A0 =C2=A0 if (strchr(cmd, '/')) {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!have_read_execute_p=
-ermissions(cmd))
+>> + =C2=A0 =C2=A0 f =3D fopen(cmd, "r");
+>> + =C2=A0 =C2=A0 if (!f) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error("cannot open file =
+'%s': %s\n", cmd, strerror(errno));
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;
+>> + =C2=A0 =C2=A0 }
+>> +
+>> + =C2=A0 =C2=A0 s =3D fread(firstline, 1, sizeof(firstline), f);
+>> + =C2=A0 =C2=A0 if (s < 2) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 trace_printf("cannot det=
+ermine file type");
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fclose(f);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;
+>> + =C2=A0 =C2=A0 }
+>> +
+>> + =C2=A0 =C2=A0 if (firstline[0] !=3D '#' || firstline[1] !=3D '!') =
+{
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 trace_printf("file '%s' =
+is not a script or"
 >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 error("no read/execute permissions on '%s'\n", cmd);
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 " is a script without '#!'", cmd);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fclose(f);
 >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;
 >> + =C2=A0 =C2=A0 }
 >
-> Ok, execvp() failed and "cmd" has at least one slash, so we know we d=
-id
-> not look for it in $PATH. =C2=A0We check only one and return (did you=
- need
-> getenv() in that case?).
-
-Obviously not. Missed that.
-
+> Nice touches to silently pass scripts that do not begin with she-bang=
+=2E
 >
->> + =C2=A0 =C2=A0 for (;;) {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 next =3D strchrnul(path,=
- ':');
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (path < next)
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 strbuf_add(&sb, path, next - path);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 strbuf_addch(&sb, '.');
->
-> Nice touch that you did not forget an empty component on $PATH.
-
-Yes, that's a relic from me starting work based on one of your
-proposed patches[1]. So that one goes to you.
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/171838
-
-
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!have_read_execute_p=
-ermissions(sb.buf))
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 error("no read/execute permissions on '%s'\n", sb.buf);
->
-> Don't you want to continue here upon error, after resetting sb? You j=
-ust
-> saw the directory is unreadble, so you know next file_exists() will f=
-ail
-> before you try it.
-
-Yes. I thought about that. I didn't do that because of the fact that I
-had to do more than just resetting sb. The path variable has to be
-updated as well. I had the choice of adding a level of indentation {},
-duplicating the code, or just do a check I know before will fail.
-There's probably something to say for each one of them. I'll probably
-refactor that a bit more.
-
-
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (sb.len && sb.buf[sb.=
-len - 1] !=3D '/')
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 strbuf_addch(&sb, '/');
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strbuf_addstr(&sb, cmd);
 >> +
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (file_exists(sb.buf))=
- {
+>> + =C2=A0 =C2=A0 /* see if the given path has the executable bit set =
+*/
+>> + =C2=A0 =C2=A0 for (i =3D 2; i < s; i++) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!interpreter && firs=
+tline[i] !=3D ' ' && firstline[i] !=3D '\t')
 >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 if (!have_read_execute_permissions(sb.buf))
+=A0 interpreter =3D firstline + i;
+>> +
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (interpreter && (firs=
+tline[i] =3D=3D ' ' ||
 >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error("no read/execute permissions on '=
-%s'\n",
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 sb.buf);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 else
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 warn("file '%s' exists and permissions =
-"
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "seem OK.\nIf this is a script, see if =
-you "
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "have sufficient privileges to run the =
-"
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "interpreter", sb.buf);
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 firstline[i] =3D=3D '\n')) {
 >
-> Does "warn()" do the right thing for multi-line strings like this?
+> Curious.
+>
+> "#!<TAB>/bin/bash<TAB><LF>" would cause you to check "/bin/bash<TAB>"=
+?
 
-I don't know/remember. It seemed like a natural thing to do, but I'll f=
-ind out.
+Apparently so. Thanks for catching.
+
+
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 strbuf_add(&sb, interpreter,
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (firstline =
++ i) - interpreter);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 break;
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
+>
+> Wouldn't strcspn() work better instead of this loop?
+
+Probably. Will revise.
+
+
+>> + =C2=A0 =C2=A0 }
+>> + =C2=A0 =C2=A0 if (!sb.len) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error("could not determi=
+ne interpreter");
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strbuf_release(&sb);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;
+>> + =C2=A0 =C2=A0 }
+>> +
+>> + =C2=A0 =C2=A0 if (!have_read_execute_permissions(sb.buf))
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error("bad interpreter: =
+no read/execute permissions on '%s'\n",
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sb.buf);
+>> +
+>> + =C2=A0 =C2=A0 strbuf_release(&sb);
+>> +}
+>> +
+>> =C2=A0static void diagnose_execvp_eacces(const char *cmd, const char=
+ **argv)
+>> =C2=A0{
+>> =C2=A0 =C2=A0 =C2=A0 /* man 2 execve states that EACCES is returned =
+for:
+>> @@ -209,8 +266,8 @@ static void diagnose_execvp_eacces(const char *c=
+md, const char **argv)
+>> =C2=A0 =C2=A0 =C2=A0 char *next;
+>>
+>> =C2=A0 =C2=A0 =C2=A0 if (strchr(cmd, '/')) {
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!have_read_execute_p=
+ermissions(cmd))
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 error("no read/execute permissions on '%s'\n", cmd);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (have_read_execute_pe=
+rmissions(cmd))
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 check_interpreter(cmd);
+>
+> I would have expected the overall logic to be more like this:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if we cannot read and execute it then
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0that in itself=
+ is an error (i.e. the error message from [1/2])
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0else if we can read it then
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0let's see if t=
+here is an error in the interpreter.
+>
+> It is unnatural to see "if we can read and execute, then see if there=
+ is
+> anything wrong with the interpreter" and _nothing else_ here. If you =
+made
+> the "have_read_execute_permissions()" to issue the error message you =
+used
+> to give in your [1/2] patch here, that is OK from the point of view o=
+f the
+> overall code structure, but then the function is no longer "do we hav=
+e
+> permissions" boolean check and needs to be renamed. And if you didn't=
+,
+> then I have to wonder why we do not need the error message you added =
+in
+> your [1/2].
+
+Hm, yea makes sense. I'll rethink this a bit.
+
+Again, thanks for the review.
