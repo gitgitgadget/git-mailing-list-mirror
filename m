@@ -1,82 +1,84 @@
-From: Vijay Lakshminarayanan <laksvij@gmail.com>
-Subject: Re: Query on git commit amend
-Date: Wed, 07 Dec 2011 07:48:09 +0530
-Message-ID: <8739cxw2e6.fsf@gmail.com>
-References: <4EDDD0E4.6040003@st.com> <87fwgxwvn9.fsf@gmail.com>
-	<20111206191124.GE9492@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: How to make devs write better commit messages
+Date: Tue, 06 Dec 2011 18:28:01 -0800
+Message-ID: <7vaa75cdzi.fsf@alter.siamese.dyndns.org>
+References: <CAOJsP-X0ZWT5HLHcBc2FmhoMpWFOvEFADiM9jGZ9R1ctqHDJ9w@mail.gmail.com>
+ <4EDEA2E2.3030002@elegosoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Viresh Kumar <viresh.kumar@st.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Shiraz HASHIM <shiraz.hashim@st.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 07 03:18:18 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Joseph Huttner <huttnified@gmail.com>, git@vger.kernel.org
+To: Michael Schubert <mschub@elegosoft.com>
+X-From: git-owner@vger.kernel.org Wed Dec 07 03:28:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RY75N-0001fx-Kb
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 03:18:17 +0100
+	id 1RY7F1-0003tP-CR
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 03:28:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754028Ab1LGCSN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Dec 2011 21:18:13 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:35884 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751901Ab1LGCSM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Dec 2011 21:18:12 -0500
-Received: by iakc1 with SMTP id c1so123252iak.19
-        for <git@vger.kernel.org>; Tue, 06 Dec 2011 18:18:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=HMYVTM6JdEwLW4nbo3QR3ByhMyO41Vkv7Pa416PYa0w=;
-        b=OLxkREbz3jrgiM4WbMDZro51bqIjnrr1jTtApnGOPQELEokGdzTENBOeXdcQ8VamIw
-         xigWyPYAD0rE0ioBlcHYt7wxMJgB5/CBnmk+UJUxSjbHAqUp3a0AyOkrW37xSX8gjAhL
-         2PxtVxrOACSqbTg6BvNVOOJuTanClvpF/fHW0=
-Received: by 10.50.169.99 with SMTP id ad3mr17715055igc.6.1323224292170;
-        Tue, 06 Dec 2011 18:18:12 -0800 (PST)
-Received: from BALROG ([59.92.45.19])
-        by mx.google.com with ESMTPS id p16sm755743ibk.6.2011.12.06.18.18.08
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 06 Dec 2011 18:18:11 -0800 (PST)
-In-Reply-To: <20111206191124.GE9492@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 6 Dec 2011 14:11:24 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (windows-nt)
+	id S1754308Ab1LGC2H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Dec 2011 21:28:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61125 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751901Ab1LGC2F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Dec 2011 21:28:05 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B25117693;
+	Tue,  6 Dec 2011 21:28:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1Zpsn/tEgf37BRJOXgn9YblCQ74=; b=De8+WA
+	V5AJ4FdCMNxLP7QLge0jRIo5Ybd2eIbybv4Chf20Zt/69nCRu88hT6xyPi8SilX1
+	WiaRLQM8TNur5dNg0qhddJeNjXjWCXft8BAQ52fL1tfw82LxiM6x0XrRh7xJzzVG
+	e7ySvWrzSQZjZvt2WP6xXY2NtBWfpKMuxkUhM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QBqtRkWi06MxVmFXV+W9c0yioQaehzGJ
+	mKq/1uTD0UGwC2fGWZ2OlOjIPhC+I5SY6dXE9qall0EL7CQKa1xAQRD7FZYMrrJh
+	A7IarbmvVV5wz1Mk4ER0frm8yWDPh0PFZ0CVSja0Fsam+bPPPdFa9R9PwBAqym9h
+	RyCgOi0QeUQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 700B17691;
+	Tue,  6 Dec 2011 21:28:03 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9B7A57690; Tue,  6 Dec 2011
+ 21:28:02 -0500 (EST)
+In-Reply-To: <4EDEA2E2.3030002@elegosoft.com> (Michael Schubert's message of
+ "Wed, 07 Dec 2011 00:18:58 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 16631886-207B-11E1-A080-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186415>
 
-Jeff King <peff@peff.net> writes:
+Michael Schubert <mschub@elegosoft.com> writes:
 
-> On Tue, Dec 06, 2011 at 09:16:18PM +0530, Vijay Lakshminarayanan wrote:
+>> What are your thoughts?
 >
->> I've found 
->> 
->> $ GIT_EDITOR=cat git commit --amend
->> 
->> useful.
->> 
->> The benefit of this technique is that it even works for git-rebase -i.
->
-> I sometimes do a similar thing, but I don't use "cat". That will dump
-> all of the log message (including the generated template) to stdout
-> (i.e., the terminal), which is quite noisy. Instead, I use:
->
->   GIT_EDITOR=true git commit --amend
->
-> which silently leaves the file untouched.
+> If it's no social issue but just due to lack of a reminder you
+> could provide a template for commit.template. Either way: you
+> still would have to force people to set it.?
 
-Thanks Peff.  I didn't know about true.  I will use it when rebasing.
-cat's noisiness is useful as a review of the output.
+While that would be a good first step, I think people will learn best when
+they feel by their skin how good log messages help them in the long run.
 
-> -Peff
+Pick a recent bugfix in your project, analyze why the code was broken by
+the bug in the first place, and view the log message of the commit that
+introduced the code that was broken by the buggy commit. You will often
+notice that the original commit did not explain why the code needs to be
+that way sufficiently, risking later breakage, and the buggy commit that
+broke the code did not justify the change any more than "This happens to
+make something work for me in a particular narrow case".
 
--- 
-Cheers
-~vijay
+And then look at the log message of the bugfix. Does it explain why the
+broken change was bad, and the fixed code _has to be_ that way?
 
-Gnus should be more complicated.
+Do this for a handful of examples, and you will start noticing patterns,
+and what makes good messages that become useful in the longer term. Have
+your people learn from good ones _as well as_ the bad ones.
+
+Have fun.
