@@ -1,55 +1,54 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: Johan Herland <johan@herland.net>
 Subject: Re: Undo a commit that is already pushed to central server and merged
  to several branches
-Date: Wed, 7 Dec 2011 21:31:03 +0530
-Message-ID: <CALkWK0msjfebnE=q_ykx3+iVkeT2aa1A2BmtrHCw2wGaZzOC8w@mail.gmail.com>
-References: <4EDF74EC.6090504@fechner.net> <CALkWK0k46HnWTHx3iYuWFUegTgZhAMShx9MT2E83QCmxrvZOxg@mail.gmail.com>
- <4EDF87A6.4000703@fechner.net>
+Date: Wed, 7 Dec 2011 17:01:22 +0100
+Message-ID: <CALKQrgcQ5jv+oDXxDoTGUhmP-Dg344-oSotb+q-4a3fnEBY1Zw@mail.gmail.com>
+References: <4EDF74EC.6090504@fechner.net>
+	<CALkWK0k46HnWTHx3iYuWFUegTgZhAMShx9MT2E83QCmxrvZOxg@mail.gmail.com>
+	<4EDF87A6.4000703@fechner.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Matthias Fechner <idefix@fechner.net>
-X-From: git-owner@vger.kernel.org Wed Dec 07 17:01:30 2011
+X-From: git-owner@vger.kernel.org Wed Dec 07 17:01:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYJw2-0000YR-B2
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 17:01:30 +0100
+	id 1RYJwC-0000cg-9y
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 17:01:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756418Ab1LGQBZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Dec 2011 11:01:25 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:47450 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756349Ab1LGQBZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Dec 2011 11:01:25 -0500
-Received: by qcqz2 with SMTP id z2so470505qcq.19
-        for <git@vger.kernel.org>; Wed, 07 Dec 2011 08:01:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=dPOcDvQS7bdSmtJbevddwXVoHWSTww2ByyK3y+LCPtk=;
-        b=GiA0CEF4hzQxqfrGa7mbiHR3g7q3zzt2OBvXq5INaysJcVkKJWD5kP9ehwHrReBy5E
-         XFQo9X4o69/O7AQAqI4A/PeKFC3NOql5xFpCiJ3Pm2C9ojxCNTTnubPQtli8eEX79zy6
-         kDBU6C92bMcBwUbNQm6pp4+NMCj2UO5KvYOac=
-Received: by 10.229.227.84 with SMTP id iz20mr4184132qcb.164.1323273684703;
- Wed, 07 Dec 2011 08:01:24 -0800 (PST)
-Received: by 10.229.165.194 with HTTP; Wed, 7 Dec 2011 08:01:03 -0800 (PST)
+	id S1756641Ab1LGQBb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Dec 2011 11:01:31 -0500
+Received: from locusts.copyleft.no ([178.255.144.241]:59171 "EHLO
+	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756545Ab1LGQB1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Dec 2011 11:01:27 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1RYJvx-000MKj-Gd
+	for git@vger.kernel.org; Wed, 07 Dec 2011 17:01:25 +0100
+Received: by faar15 with SMTP id r15so186137faa.19
+        for <git@vger.kernel.org>; Wed, 07 Dec 2011 08:01:23 -0800 (PST)
+Received: by 10.50.237.5 with SMTP id uy5mr19874791igc.50.1323273682731; Wed,
+ 07 Dec 2011 08:01:22 -0800 (PST)
+Received: by 10.42.229.193 with HTTP; Wed, 7 Dec 2011 08:01:22 -0800 (PST)
 In-Reply-To: <4EDF87A6.4000703@fechner.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186469>
 
-Hi Matthias,
-
-Matthias Fechner wrote:
+On Wed, Dec 7, 2011 at 16:35, Matthias Fechner <idefix@fechner.net> wro=
+te:
 > Am 07.12.11 15:42, schrieb Ramkumar Ramachandra:
->
+>>
 >> Assuming that you actually want to rewrite the history, the situatio=
 n
 >> calls for a git-reset(1). =C2=A0Just "git reset --hard HEAD~1" on ea=
@@ -68,12 +67,38 @@ it but
 > keep all other commits after the bogus commit (all commits are not re=
 lated
 > to the bogus one, they are all in different files).
+>
+> It is even fine if I could remove the bogus commit from all branches.
 
-I see.  I won't attempt to repeat what Junio and Linus have explained
-in this document then [1].
+Use "git revert $commit" to undo the effects of the given $commit.
+This must be applied to all affected branches (either by reverting in
+the master branch and remerging master to the other branches, or by
+using "git revert" in each individual branch).
 
-Cheers.
+Note that the "git revert" command will NOT remove the original bogus
+commit. Instead, it will create a new commit that undoes the changes
+introduced by the bogus commit. If the same lines/files have been
+touched by other commits in the meantime, you might get conflicts that
+you'll have to resolve, just like a regular merge.
 
-[1]: http://schacon.github.com/git/howto/revert-a-faulty-merge.txt
+If you'd rather want the bogus commit to disappear entirely (i.e.
+rewrite the history so that it looks like the bogus comit never
+happened in the first place), then things get more complicated. You
+will need to recreate the history of your master branch, skipping the
+bogus commit, and then recreate all the other branches in a similar
+manner. The "git rebase" tool will be helpful here, but I recommend
+that you understand and get used to how it works before applying it to
+this problem. Note that rewriting history is only a good idea when you
+haven't shared the history with anyone else. If other people are
+already using any of the branches with the bogus commit, then
+rewriting the history is a BIG NO-NO. In that case, "git revert" is
+the only sane approach.
 
--- Ram
+
+Have fun! :)
+
+=2E..Johan
+
+--=20
+Johan Herland, <johan@herland.net>
+www.herland.net
