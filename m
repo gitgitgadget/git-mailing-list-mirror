@@ -1,87 +1,151 @@
-From: Bill Zaumen <bill.zaumen@gmail.com>
-Subject: Re: Suggestion on hashing
-Date: Tue, 06 Dec 2011 17:44:36 -0800
-Message-ID: <1323222276.1705.434.camel@yos>
-References: <1322813319.4340.109.camel@yos>
-	 <CACsJy8CO1GtpZVo-oA2eKbQadsXYBEKVLfUH0GONR5jovuvH+Q@mail.gmail.com>
-	 <alpine.DEB.2.00.1112060146121.15104@hoki.goeswhere.com>
-	 <CACsJy8CM8xqWxTx14QbY+-bT=306p3U=6gJfRaW=dDD-Swo7-w@mail.gmail.com>
-	 <1323151347.1745.73.camel@yos>
-	 <CACsJy8CXkz-W3Z3pX-C-+fjLz=WahBajE2uLEG-f3gG_svEhug@mail.gmail.com>
+From: Joshua Redstone <joshua.redstone@fb.com>
+Subject: Re: Debugging git-commit slowness on a large repo
+Date: Wed, 7 Dec 2011 01:48:46 +0000
+Message-ID: <CB04005C.2C669%joshua.redstone@fb.com>
+References: <20111203002347.GB2950@centaur.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: "Chris West (Faux)" <faux@goeswhere.com>,
-	Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 07 02:44:53 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: =?iso-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
+	Tomas Carnecky <tom@dbservice.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 07 02:50:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RY6Z0-0001WJ-GB
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 02:44:50 +0100
+	id 1RY6e2-00032F-1H
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Dec 2011 02:50:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753977Ab1LGBop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Dec 2011 20:44:45 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:52104 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752173Ab1LGBoo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Dec 2011 20:44:44 -0500
-Received: by ggnr5 with SMTP id r5so56242ggn.19
-        for <git@vger.kernel.org>; Tue, 06 Dec 2011 17:44:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        bh=Cc2lP8FrF9qvW+Ov+HIIPaewYtU2IKu8onZG7RmBIkc=;
-        b=BJPZqh0X+0HFFRlW8KH5qlZqHmPl5n2VrI5o7313dWFZ8m2ID9xB13I1STFXTo5L7v
-         vyWzVfWdz6YTu15t59lMw8y11WvCDDaY7BsZxx5R8WHcIKB7HVw3uc7VpXF/8XTS3T1S
-         ZG8Ogdl2RZj6MLuS3RkY4jD+t71Z/PcYe8mt4=
-Received: by 10.50.236.5 with SMTP id uq5mr17703308igc.47.1323222283828;
-        Tue, 06 Dec 2011 17:44:43 -0800 (PST)
-Received: from [192.168.1.20] (adsl-209-233-20-69.dsl.snfc21.pacbell.net. [209.233.20.69])
-        by mx.google.com with ESMTPS id e2sm527433ibe.0.2011.12.06.17.44.40
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 06 Dec 2011 17:44:41 -0800 (PST)
-In-Reply-To: <CACsJy8CXkz-W3Z3pX-C-+fjLz=WahBajE2uLEG-f3gG_svEhug@mail.gmail.com>
-X-Mailer: Evolution 2.30.3 
+	id S1754343Ab1LGBt5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Dec 2011 20:49:57 -0500
+Received: from mx0a-00082601.pphosted.com ([67.231.145.42]:46892 "EHLO
+	mx0a-00082601.pphosted.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751907Ab1LGBt4 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 6 Dec 2011 20:49:56 -0500
+Received: from pps.filterd (m0004347 [127.0.0.1])
+	by m0004347.ppops.net (8.14.4/8.14.4) with SMTP id pB71ilOY004550;
+	Tue, 6 Dec 2011 17:48:51 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=from : to : cc : subject :
+ date : message-id : in-reply-to : content-type : content-id :
+ content-transfer-encoding : mime-version; s=facebook;
+ bh=VR9u5RMXDsULnzr907shsR8QoSNiwiSWTALn7NY1OZY=;
+ b=XdhaDUwpe3tMhBSYmMhwCPoWBjnk5iZjKNAw8WCS3nWCDFocH8fOiB3zQh+dTbxhjip4
+ XJfv2B7/PbnQLVMDYNMnqact+3kK6hplv8CQwcH0laeHJv6MB8u7QJmKAO0i30ZIzaX5
+ BvpRDFoJFi5eAqSMd2SvWGSuhMJjWCYVwi4= 
+Received: from mail.thefacebook.com (corpout1.snc1.tfbnw.net [66.220.144.38])
+	by m0004347.ppops.net with ESMTP id 11hvdng5n9-3
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Tue, 06 Dec 2011 17:48:51 -0800
+Received: from SC-MBX02-5.TheFacebook.com ([fe80::9dc2:cfe6:2745:44cc]) by
+ sc-hub04.TheFacebook.com ([192.168.18.212]) with mapi id 14.01.0289.001; Tue,
+ 6 Dec 2011 17:48:46 -0800
+Thread-Topic: Debugging git-commit slowness on a large repo
+Thread-Index: AQHMsUiE0jGAmaiuRkyp0eiAE6mrR5XJxzCAgAXbCAA=
+In-Reply-To: <20111203002347.GB2950@centaur.lab.cmartin.tk>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Microsoft-MacOutlook/14.13.0.110805
+x-originating-ip: [192.168.18.252]
+Content-ID: <1F3187ED2D72364AA56B15AAEA2F28AC@fb.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.5.7110,1.0.211,0.0.0000
+ definitions=2011-12-06_06:2011-12-07,2011-12-06,1970-01-01 signatures=0
+X-Proofpoint-Spam-Reason: safe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186412>
 
-On Tue, 2011-12-06 at 13:23 +0700, Nguyen Thai Ngoc Duy wrote:
-> On Tue, Dec 6, 2011 at 1:02 PM, Bill Zaumen <bill.zaumen@gmail.com> wrote:
+Hi Carlos and Tomas and Junio,
 
-> > If you are replacing SHA-1 as an object ID with another hash function,
-> > two things to watch are submodules and alternative object databases.
-> > Because of those, it is necessary to worry about the order in which
-> > repositories are converted.  In the worst case for submodules, you'd
-> > have to do multiple repositories at the same time, switching between
-> > them depending on what you need at each point.
-> 
-> I know migration would be painful. But note that new repos can benefit
-> stronger digest without legacy (of course until it links to an old
-> repo). For submodules, I think we should extend it to become something
-> similar to soft-link: git link is an SHA-1 to a text file that
-> contains SHA-1 and maybe other digests of the submodule's tip.
+@Tomas, I tried adding the '--no-status' flag to 'git commit' and it sp=
+ed
+things up by maybe 15%, but commits still take a second.
 
-Repositories would need to store a table mapping old SHA-1 values to
-the new ones (for commits).  There's nothing in a repository to
-reliably indicate that it is being used as a submodule, and the choice
-of submodules can vary from commit to commit, making it difficult to
-control the order in which objects have their hashes updated.  In some
-corner cases, you could have two branches in each of two repositories
-with different choices as to which is a submodule of which, although
-I'd be surprised if anyone actually did that.
+@Carlos, by "same size", I mean roughly the same number of files and
+number of bytes modified in each file.  In all experiments, it's less t=
+han
+5 files modified per commit with changes totaling fewer than 10 KB, oft=
+en
+more like 1 KB.  I actually wrote a test script to generate commits,
+customized for the stats on the repo I'm using.  It repeatedly generate=
+s
+some changes, does 'git add [ list of files changed ]' followed by 'git
+commit --no-status -m [ msg ]'.   It generates changes by picking fewer
+than 5 files at random, modifying two 100-byte regions in each file, an=
+d
+occasionally creates a new file of about 1 KB.  If it helps, I can
+probably post the test script I've been using.
 
-Aside from that, in some corporate environments, the IT departments
-want to determine the release schedule for applications, and would
-take a dim view of changes that could not be tested first without being
-widely deployed.  You could end up making Git unacceptable for those
-departments if you do not maintain backwards compatibility with
-existing repositories.
+I tried doing a 'git read-tree HEAD' before each 'git add ; git commit'
+iteration, and the time for git-commit jumped from about 1 second to ab=
+out
+8 seconds.  That is a pretty dramatic slowdown.  Any idea why?  I wonde=
+r
+if that's related to the overall commit slowness.
+
+@Carlos and/or @Junio, can you point me at any docs/code to understand
+what a tree-cache is and how it differs from the index?  I did a google
+search for [git tree-cache index], but nothing popped out.
+
+Cheers,
+Josh
+
+
+On 12/2/11 4:23 PM, "Carlos Mart=EDn Nieto" <cmn@elego.de> wrote:
+
+>On Fri, Dec 02, 2011 at 11:17:10PM +0000, Joshua Redstone wrote:
+>> Hi,
+>> I have a git repo with about 300k commits,  150k files totaling mayb=
+e
+>>7GB.
+>>  Locally committing a small change - say touching fewer than 300 byt=
+es
+>> across 4 files - consistently takes over one second, which seems kin=
+da
+>> slow.  This is using git 1.7.7.4 on a linux 2.6 box.  The time does =
+not
+>> improve after doing a git-gc (my .git dir has maybe 250 files after =
+a
+>>git
+>> gc).  The same size commit on a brand new repo takes < 10ms.  Any
+>>thoughts
+>> on why committing a small change seems to take a long time on larger
+>>repos?
+>
+>By "same size commit" do you mean the same amount of changes, or the
+>same amount of files? Committing doesn't depend on the size of the
+>repo (by itself), but on the size of the index, which depends on the
+>amount of files to be committed (as git is snapshot-based). At one
+>point, commit forgot how to write the tree cache to the index (a
+>performance optimisation). Do the times improve if you run 'git
+>read-tree HEAD' between one commit and another? Note that this will
+>reset the index to the last commit, though for the tests I image you
+>use some variation of 'git commit -a'.
+>
+>Thomas Rast wrote a patch to re-teach commit to store the tree cache,
+>but there were some issues and never got applied.
+>
+>>=20
+>> Fwiw, I also tried doing the same test using libgit2 (via the pygit2
+>> wrapper), and it was ever slower (about 6 seconds to commit the same
+>>small
+>> change).
+>
+>I don't know about the python bindings, but on the (somewhat
+>unscientific) tests for libgit2's write-tree (the slow part of a
+>creating a commit), it performs slightly faster than git's (though I
+>think git's write-tree does update the tree cache, which libgit2
+>doesn't currently). The speed could just be a side-effect of the small
+>test repo. From your domain, I assume the data is not for public
+>consumption, but it'd be great if you could post your code to pygit2's
+>issue tracker so we can see how much of the slowdown comes from the
+>bindings or the library.
+>
+>   cmn
+>
