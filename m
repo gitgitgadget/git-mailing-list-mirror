@@ -1,78 +1,91 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2011, #02; Mon, 5)
-Date: Thu, 8 Dec 2011 20:44:15 +0100
-Message-ID: <CABPQNSYQ=nt9LYzXpQgfwV00e9AxOV3LKj6VCCO8xkMAXb-Lfg@mail.gmail.com>
-References: <7v8vmqi98f.fsf@alter.siamese.dyndns.org> <20111206055239.GA20671@sigill.intra.peff.net>
- <CABPQNSbOReM71HaPmce3v_98NDu17fT3YnySR4pWzJEDa-RKnA@mail.gmail.com> <20111206185218.GB9492@sigill.intra.peff.net>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Parsing a subcommand using parse-options
+Date: Thu, 08 Dec 2011 11:51:24 -0800
+Message-ID: <7v4nxaj0zn.fsf@alter.siamese.dyndns.org>
+References: <1323346028-9201-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <j6t@kdbg.org>, Stephan Beyer <s-beyer@gmx.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 08 20:45:02 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 08 20:51:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYjtt-0006Oj-TK
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 20:45:02 +0100
+	id 1RYk0C-0001Fu-FM
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 20:51:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751383Ab1LHTo5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Dec 2011 14:44:57 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:57970 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750883Ab1LHTo4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Dec 2011 14:44:56 -0500
-Received: by dadv6 with SMTP id v6so1931154dad.19
-        for <git@vger.kernel.org>; Thu, 08 Dec 2011 11:44:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=AQZG/fIxQ49Ub4zTt590XumUGhopac8LSlD0jLTXLWU=;
-        b=V82S+/3TM1Tu8tQSzBCXhACS1dmvBH3vt4PPZet41sQx8ny5GqPhNLCNPFSRzTg7NX
-         aPH2WHlFLxjlnHd2SKaydPVb/7GJfpEOB0yQQEwoy88xvfzywINnKhkLEVaJAK/djauB
-         pcPPdlEyPqN7gsjpysLZJO+wg8TQ2MPQJm4YY=
-Received: by 10.68.74.5 with SMTP id p5mr18029384pbv.56.1323373496259; Thu, 08
- Dec 2011 11:44:56 -0800 (PST)
-Received: by 10.68.21.39 with HTTP; Thu, 8 Dec 2011 11:44:15 -0800 (PST)
-In-Reply-To: <20111206185218.GB9492@sigill.intra.peff.net>
+	id S1751033Ab1LHTv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Dec 2011 14:51:27 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63453 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750883Ab1LHTv1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Dec 2011 14:51:27 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 959C16612;
+	Thu,  8 Dec 2011 14:51:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=i0HZ8vJx+NawXwpzDr+zUndRi1U=; b=oAlaHp
+	rEMhqCKjt/8DQYELafWIlowMIqvmx+SyEHTLad64phtbKZbtlAjos/ofhx4BelR8
+	PyE6Yi7T6/jw0NwHLbZL9D+JjqHZ1MTYgh8MBUe48jFEcVk52OAss5MIncpmeQPU
+	1cdLlVqYHHbwk0a+BVSA9RsCm3mrOSBTyWWhc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=S4TySb67gs5D4nsj5mr7IsVltOvpgSX3
+	r8xQyXPJE4X3k7iX58KtBnpDCRSExU3pZ/hm12I7tuB1fg97hE6xfAi9pNU82z1t
+	rFjcnqL70ddl2h0iswd8bdFA4FmyLw748HzWMNPt+pduYkyFQWQuMTIxFahsk0Xl
+	xsdNwfaeE4M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B3786611;
+	Thu,  8 Dec 2011 14:51:26 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1356B6610; Thu,  8 Dec 2011
+ 14:51:25 -0500 (EST)
+In-Reply-To: <1323346028-9201-1-git-send-email-artagnon@gmail.com> (Ramkumar
+ Ramachandra's message of "Thu, 8 Dec 2011 17:37:06 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 035BEA7C-21D6-11E1-8CB0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186590>
 
-On Tue, Dec 6, 2011 at 7:52 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Dec 06, 2011 at 12:22:06PM +0100, Erik Faye-Lund wrote:
->
->> >> * jk/upload-archive-use-start-command (2011-11-21) 1 commit
->> >> =A0- upload-archive: use start_command instead of fork
->> >>
->> >> What's the status of this one?
->> >
->> > I think what you have in pu is good, but of course I didn't actual=
-ly
->> > test it on Windows. Erik?
->> >
->>
->> I tried to check out ee27ca4 and build, and got hit by a wall of war=
-nings:
->
-> I think you are on the wrong topic. ee27ca4 is the maint topic for
-> "don't let remote clients get unreachable commits", and is based on t=
-he
-> ancient 1.6.2. Which is why you are getting all of those warnings.
->
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-You are indeed right. Thanks for spotting :)
+>   git stash show
+>             ^^ -- The subcommand "show" to the git-stash builtin
 
-> The topic in question is jk/upload-archive-use-start-command, which i=
-s
-> at 1bc01ef, and should be based on recent-ish master.
+Contrasting this with "git tag --list", one uses subcommand verb while the
+other uses operating mode option and one could say they are inconsistent.
 
-t5000-tar-tree pass for that one as well. No warnings this time :P
+But it does not bother me that much, and for a good reason other than
+inertia.
+
+When a command whose primary purpose is very clear (e.g. "git tag" and
+"git branch" are primarily to create these things, just like "git commit"
+is to create a commit), it is more natural to give the primary mode the
+main interface so that you do not have to say "git tag create v1.0"; hence
+operating mode option makes sense than subcommand.
+
+On the other hand, when a command does not have a clear primary mode
+(e.g. if you save a stash you must be able to use (i.e. apply or pop) the
+saved one and both are equally important feature), but its primary purpose
+is to dispatch various different operation, it makes more sense to name
+them as subcommands. You _could_ make all of them into operating mode
+options, but that only requires more typing, i.e. "git stash --save"/"git
+stash --pop", without adding much value to the command. In addition, it
+invites unnecessary confusion "what is the default mode of operation, and
+is it really that important to be the default?", because not requiring an
+explicit "subcommand" but merely allowing "operation mode option" implies
+that you can say "git cmd" without anything, i.e. there must be some
+default.
+
+For "stash", "save" has been the default merely by historical accident,
+but that has been rectified (it now requires you do not have any message
+for the quick stash "git satsh<ENTER>" to work). There really isn't any
+"default" operating mode to the command, and the command is a dispatcher
+to its subcommands.
