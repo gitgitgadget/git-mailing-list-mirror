@@ -1,110 +1,74 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 0/5] cache-tree revisited
-Date: Thu, 8 Dec 2011 15:15:29 +0100
-Message-ID: <201112081515.29652.trast@student.ethz.ch>
-References: <cover.1323191497.git.trast@student.ethz.ch>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/2] parse-options: introduce OPT_SUBCOMMAND
+Date: Thu, 8 Dec 2011 10:30:50 -0600
+Message-ID: <20111208163049.GA2116@elie.hsd1.il.comcast.net>
+References: <1323349817-15737-1-git-send-email-artagnon@gmail.com>
+ <1323349817-15737-2-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Carlos =?iso-8859-1?q?Mart=EDn_Nieto?= <cmn@elego.de>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 08 15:15:39 2011
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 08 17:31:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYel7-000588-IG
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 15:15:37 +0100
+	id 1RYgsA-0005vw-Pc
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 17:31:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753464Ab1LHOPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Dec 2011 09:15:33 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:27110 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751420Ab1LHOPc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Dec 2011 09:15:32 -0500
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 8 Dec
- 2011 15:15:27 +0100
-Received: from thomas.inf.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 8 Dec
- 2011 15:15:29 +0100
-User-Agent: KMail/1.13.7 (Linux/3.1.3-1-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <cover.1323191497.git.trast@student.ethz.ch>
-X-Originating-IP: [129.132.153.233]
+	id S1751648Ab1LHQa6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Dec 2011 11:30:58 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:50504 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751038Ab1LHQa5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Dec 2011 11:30:57 -0500
+Received: by ghbz2 with SMTP id z2so1677791ghb.19
+        for <git@vger.kernel.org>; Thu, 08 Dec 2011 08:30:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=8hKPhxvr7cfJf+rCBgQYrrRvQTshN5jG1irEqh9/Rzo=;
+        b=Z3RmxYvamMAFpwLGJ+p42mn9hjPwMpcPLqoozLC0pXYnsw1y9Ss8yk9z1wnFo+3DUM
+         V3WGTFitfcWmgdRIi3u2rDx7SN43qbDzc4aM3tJdrcr1XhF0jDGz402mtleO+EcGsmWF
+         yD7P59QAskdde7NRcc41q7K9vSNX4Ai/CodxM=
+Received: by 10.236.175.72 with SMTP id y48mr5972436yhl.17.1323361856841;
+        Thu, 08 Dec 2011 08:30:56 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id a15sm7544996ana.1.2011.12.08.08.30.55
+        (version=SSLv3 cipher=OTHER);
+        Thu, 08 Dec 2011 08:30:55 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1323349817-15737-2-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186567>
 
-Thomas Rast wrote:
-> Junio C Hamano wrote:
-> > Ahh, I forgot all about that exchange.
-> > 
-> >   http://thread.gmane.org/gmane.comp.version-control.git/178480/focus=178515
-> > 
-> > The cache-tree mechanism has traditionally been one of the more important
-> > optimizations and it would be very nice if we can resurrect the behaviour
-> > for "git commit" too.
-> 
-> Oh, I buried that.  Let's try something other than the aggressive
-> strategy I had there: only compute cache-tree if
-> 
-> * we know we're going to need it soon, and we're about to write out
->   the index anyway (as in git-commit)
+Hi,
 
-I had another idea: we could write out *just* a new cache-tree data
-set at the end of git-commit.
+Quick thoughts:
 
-Doing it the cheap way would mean rehashing the on-disk data without
-actually touching it.  (That might not be so bad, but then if your
-index is small, why is writing it from scratch expensive?)
+Ramkumar Ramachandra wrote:
 
-Doing it efficiently requires making the sha1 restartable, which is
-entirely doable withblock-sha1/sha1.h (I haven't looked into
-ppc/sha1.h).  As far as I can see it's not feasible with openssl's
-sha1.
+> Currently, the parse-options framework forbids the use of
+> opts->long_name and OPT_PARSE_NODASH, and the parsing has to be done
+> by hand as a result.  Lift this restriction
 
-That is, we would add a new index extension (say PSHA: partial SHA)
-and structure the index as
+This part seems like a sane idea to me.
 
-  signature
-  header
-  cache data
-  PSHA <sha state up until just before PSHA>
-  TREE ...
-  [REUC ...]
-  sha1 footer
+> , and create a new
+> OPT_SUBCOMMAND; this is built on top of OPTION_BIT to allow for the
+> detection of more than one subcommand.
 
-Then it's easy to cheaply replace only the extensions, by restarting
-the hashing from the PSHA data and re-emitting only the extension
-data.
+This part I am not convinced about.  Usually each subcommand takes its
+own options, so I cannot see this OPT_SUBCOMMAND being actually useful
+for commands like "git stash" or "git remote".
 
-I think all the bits are in place, and it would be easy to do.
-However, for it to make sense, we would have to make BLK_SHA1 the
-default for the most-used platforms and also not mind extending the
-SHA1 API.  Do you think that would fly?
-
-I thought about other ways to make the index writing restartable from
-the middle, but the only clean approach I came up with would require a
-format change to something like
-
-     signature
-  0  header
-  1  cache data
-  2  sha1 of 0..1
-  3  extension data A
-  4  sha1 of 2..3
-  5  extension data B
-  6  sha1 of 4..5
-  [possibly more]
-  7  end-of-index marker
-  8  sha1 of 6..7
-
-etc.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Hope that helps,
+Jonathan
