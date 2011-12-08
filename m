@@ -1,66 +1,113 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/2] bundle: rewrite builtin to use parse-options
-Date: Thu, 8 Dec 2011 23:08:00 +0530
-Message-ID: <CALkWK0m89D02aku8J0OXbpyrovHCOpsYS4Qpx2jH-pFG4rOG2A@mail.gmail.com>
-References: <1323349817-15737-1-git-send-email-artagnon@gmail.com>
- <1323349817-15737-4-git-send-email-artagnon@gmail.com> <20111208163946.GB2394@elie.hsd1.il.comcast.net>
- <CALkWK0mmjKSzSbxq2i7=JvcB4LTro-MYDCwQLUUwqcf8qS0zPA@mail.gmail.com> <20111208170319.GD2394@elie.hsd1.il.comcast.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Query on git commit amend
+Date: Thu, 08 Dec 2011 09:52:04 -0800
+Message-ID: <7vvcprar3v.fsf@alter.siamese.dyndns.org>
+References: <4EDDD0E4.6040003@st.com> <87fwgxwvn9.fsf@gmail.com>
+ <7vobvlfowk.fsf@alter.siamese.dyndns.org> <87wra9und4.fsf@gmail.com>
+ <4EDEE988.2070902@st.com> <20111207045325.GA22990@atjola.homenet>
+ <4EDEFD66.4020404@st.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 08 18:38:29 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Vijay Lakshminarayanan <laksvij@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Shiraz HASHIM <shiraz.hashim@st.com>,
+	Vipin KUMAR <vipin.kumar@st.com>
+To: Viresh Kumar <viresh.kumar@st.com>
+X-From: git-owner@vger.kernel.org Thu Dec 08 18:52:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYhvP-0002SI-G6
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 18:38:27 +0100
+	id 1RYi8k-0008Dr-DC
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 18:52:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752710Ab1LHRiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Dec 2011 12:38:22 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:45385 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752478Ab1LHRiW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Dec 2011 12:38:22 -0500
-Received: by qadb40 with SMTP id b40so832518qad.19
-        for <git@vger.kernel.org>; Thu, 08 Dec 2011 09:38:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=dmWBjfaD5b/WzSJ53gbW9GEeuIRxBsbeP9RhkPxVUYQ=;
-        b=se23ET4MnOLDNAlNqUaoFnBOvvoQoP2NkHrBy1hZHAUXFibxOUl+QPCXFNrZGnvnnl
-         UyCmGbzkmTvyyjAV+P/Lymnx0yhJmd0LSvd8XPioIBWKhgOlxqX1An2Vo5gxhfnBZ7qN
-         fPsPMZUQROr1A4TQT7/Nn+WeZp5GMfahq9TFw=
-Received: by 10.224.180.131 with SMTP id bu3mr3984236qab.5.1323365901227; Thu,
- 08 Dec 2011 09:38:21 -0800 (PST)
-Received: by 10.229.165.194 with HTTP; Thu, 8 Dec 2011 09:38:00 -0800 (PST)
-In-Reply-To: <20111208170319.GD2394@elie.hsd1.il.comcast.net>
+	id S1752722Ab1LHRwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Dec 2011 12:52:10 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64847 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752507Ab1LHRwH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Dec 2011 12:52:07 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DC9D74CE;
+	Thu,  8 Dec 2011 12:52:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=H6X48Wc96zNMlaYUSZ3ZHidLvXc=; b=mIjD4x
+	fOCu4mbXfdlwrNTkgM9MTfzvHbd3IulJ0cCQktvCEpZadojSdDtqVrQUG4q6sfyH
+	b7XWr4p1HoSM9wm50v9AT818iYlbtzq6h+h0KDppnDe4cHTPNeFcmE6mQzw+T5ps
+	7fCjWq6x0yaGWTpYD8sfdeSKbeIXaTd5yoLRM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DYGHBSOBbC98O+kXlblMvZ/l11uVK8+M
+	i3N5nTONPYWgYMtGq6uYMasNnawu09fAe8GqOYKomOwfHGEoIT9BQu4W3thB6Mz5
+	0TkHTwOttvX4chBDyElWe0/blMZCZ3pqvtMiZTumPSFVF5hAUk916T3K57Q4H7iM
+	G4zofeww978=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 65AC374CD;
+	Thu,  8 Dec 2011 12:52:06 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E3E0474CC; Thu,  8 Dec 2011
+ 12:52:05 -0500 (EST)
+In-Reply-To: <4EDEFD66.4020404@st.com> (Viresh Kumar's message of "Wed, 7 Dec
+ 2011 11:15:10 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 57990932-21C5-11E1-9D57-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186580>
 
-Hi,
+Viresh Kumar <viresh.kumar@st.com> writes:
 
-Jonathan Nieder wrote:
-> Ramkumar Ramachandra wrote:
+> GIT_EDITOR=cat git commit --amend
 >
->> Sure, you can't create a
->> bundle named "verify", but that's the compromise you'll have to make
->> if you don't want to type out "--" with each option, no?
+> over
 >
-> Having to type "--" or prefix with "./" to escape ordinary filenames
-> that do not start with "-" would be completely weird.
+> git commit --amend -C HEAD
+>
+> ?
+>
+> ...
+> But for single commit probably second one looks easier. Isn't it?
 
-Hm, do you have any suggestions to work around this?  Can we use
-something like a parse-stopper after the the first subcommand is
-encountered, and treat the next argument as a non-subcommand (filename
-or whatever else)?
+I saw "--amend -C HEAD" mentioned in some newbie-guide webpages, and I
+think you just copy/learned from one of them, so it is not entirely your
+fault, but the combination of --amend and "-C HEAD" is an idiotic thing
+that happens to work, if you think about what exactly you are telling to
+the command.
 
--- Ram
+The point of --amend is twofold. One is to let you tweak the contents of
+what is committed, which is not the topic of this thread, and the other is
+to allow the user to reuse the log message from the commit being amended,
+instead of typing the message from scratch.
+
+The "-c <commit>" and its cousin "-C <commit>" options are about telling
+Git that the user does _not_ want the other usual logic to come up with
+the initial commit template (e.g. when committing anew, it may read the
+log template file, when committing a merge, it may read the MERGE_MSG
+prepared by fmt-merge-msg, and most importantly in this context, when
+amending, the one that is prepared by the --amend logic is used) kick in
+at all, and instead wants to start from the log message of the named
+commit.
+
+So by saying "--amend -C HEAD" you are saying "I want to reuse the log
+message of the commit I am amending,... eh, scratch that, I instead want
+to use the log message of the HEAD commit", as if the commit you are
+amending and HEAD are two different things. That is idiotic.
+
+And you say that only for the side effect that capital "-C" stops the
+editor.
+
+Compared to that idiotic statement, "EDITOR=: git commit --amend" is a lot
+saner way to say the same thing in a more direct and straightforward
+way. "I want to reuse the log message of the commit I am amending, and the
+editor to use it while running that commit is the command 'true', i.e. the
+one that does not really touch any line in the text file and successfully
+exits, because I am not going to change anything".
+
+Of course, if "git commit --amend" honoured "--no-edit", that is even more
+direct, straightforward and intuitive way to say so ;-)
