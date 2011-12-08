@@ -1,73 +1,91 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] index-pack: eliminate unlimited recursion in get_delta_base()
-Date: Wed, 7 Dec 2011 19:02:29 -0800
-Message-ID: <CAJo=hJvrk3Jzg3dQhQnfbmKAFovLuEtJAP4rakHPFeuZ0T5R7g@mail.gmail.com>
-References: <7vvcpthh97.fsf@alter.siamese.dyndns.org> <1323280223-7990-1-git-send-email-pclouds@gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: git auto-repack is broken...
+Date: Wed, 07 Dec 2011 22:35:00 -0500 (EST)
+Message-ID: <alpine.LFD.2.02.1112072227510.2907@xanadu.home>
+References: <CA+55aFznj49hx6Ce6NhJ1rRd2nvNyOERseyyrC6SNcW-z9dyfg@mail.gmail.com>
+ <CACBZZX7Q5qb1r_Oh0QfMiWh9UAM1c6QWBn4abv-xHpFBaKuyKg@mail.gmail.com>
+ <CA+55aFyq28vmo9dk-5mVm+nNn86qSjNT6VJGc09iaJo=+OP1Sg@mail.gmail.com>
+ <20111202171017.GB23447@sigill.intra.peff.net>
+ <7vobvqoozr.fsf@alter.siamese.dyndns.org>
+ <20111202174546.GA24093@sigill.intra.peff.net>
+ <CA+sFfMdeVoz8XU5j4hNn1qCHHzaiDi0Bw=QbbuU3cwT9mMPZOA@mail.gmail.com>
+ <alpine.LFD.2.02.1112071709250.2907@xanadu.home>
+ <20111207225318.GA21852@sigill.intra.peff.net>
+ <alpine.LFD.2.02.1112071912570.2907@xanadu.home>
+ <20111208004515.GA23015@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 08 04:02:56 2011
+Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Brandon Casey <drafnel@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	=?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 08 04:35:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYUG8-0005S6-0R
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 04:02:56 +0100
+	id 1RYUlg-0004aY-4L
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 04:35:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756877Ab1LHDCv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Dec 2011 22:02:51 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:41696 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756637Ab1LHDCu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Dec 2011 22:02:50 -0500
-Received: by iakc1 with SMTP id c1so1861105iak.19
-        for <git@vger.kernel.org>; Wed, 07 Dec 2011 19:02:50 -0800 (PST)
-Received: by 10.42.159.195 with SMTP id m3mr1646257icx.33.1323313370162; Wed,
- 07 Dec 2011 19:02:50 -0800 (PST)
-Received: by 10.50.171.39 with HTTP; Wed, 7 Dec 2011 19:02:29 -0800 (PST)
-In-Reply-To: <1323280223-7990-1-git-send-email-pclouds@gmail.com>
+	id S1758621Ab1LHDf2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Dec 2011 22:35:28 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:42235 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758007Ab1LHDf0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Dec 2011 22:35:26 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-VM-MR004.ip.videotron.ca
+ (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
+ 2011)) with ESMTP id <0LVV00B278G89S30@VL-VM-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 07 Dec 2011 22:31:20 -0500 (EST)
+In-reply-to: <20111208004515.GA23015@sigill.intra.peff.net>
+User-Agent: Alpine 2.02 (LFD 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186528>
 
-2011/12/7 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>=
-:
-> Revert the order of delta applying so that by the time a delta is
-> applied, its base is either non-delta or already inflated.
-> get_delta_base() is still recursive, but because base's data is alway=
-s
-> ready, the inner get_delta_base() call never has any chance to call
-> itself again.
-=2E..
-> @@ -508,10 +508,25 @@ static void *get_base_data(struct base_data *c)
-> =C2=A0{
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!c->data) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0struct object_=
-entry *obj =3D c->obj;
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 struct base_data *=
-*delta =3D NULL;
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int delta_nr =3D 0=
-, delta_alloc =3D 0;
->
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (is_delta_type(=
-obj->type)) {
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 void *base =3D get_base_data(c->base);
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 void *raw =3D get_data_from_pack(obj);
+On Wed, 7 Dec 2011, Jeff King wrote:
 
-I think you missed the critical recursion. The real work is the
-recursion within find_unresolved_deltas(). This little helper
-get_base_data() shouldn't be tripping over these cases unless we have
-run out of delta_base_cache_limit and released objects near the base
-end of the delta chain, in which case this will restore them.
+> On Wed, Dec 07, 2011 at 07:18:13PM -0500, Nicolas Pitre wrote:
+> 
+> > I certainly never did a multi-ref fetch myself.
+> 
+> Not consciously, perhaps, but you do it all the time without realizing
+> it:
+> 
+>   $ git clone git://git.kernel.org/pub/scm/git/git.git
+>   $ cd git
+>   $ git fetch -v origin
+>    = [up to date]      maint      -> origin/maint
+>    = [up to date]      master     -> origin/master
+>    = [up to date]      next       -> origin/next
+>    = [up to date]      pu         -> origin/pu
+>    = [up to date]      todo       -> origin/todo
+>   $ cat .git/FETCH_HEAD
+>   b1af9630d758e1728fc0008b3f18d90d8f87f4c5        not-for-merge   branch 'maint' of git://git.kernel.org/pub/scm/git/git
+>   4cb5d10b14dcbe0155bed9c45ccb94e83bd4c599                branch 'master' of git://git.kernel.org/pub/scm/git/git
+>   03e5527c5df33d4550ccc1446d861c0aa5689d58        not-for-merge   branch 'next' of git://git.kernel.org/pub/scm/git/git
+>   cc4e3f01fc6a5e09ae5bbdc464965981fae4cf39        not-for-merge   branch 'pu' of git://git.kernel.org/pub/scm/git/git
+>   7a02dba15bd28826344f9c14a5e2b5c57eeb7e50        not-for-merge   branch 'todo' of git://git.kernel.org/pub/scm/git/git
 
-Maybe this is useful on its own, but in my opinion its not an
-interesting patch to consider without first fixing
-find_unresolved_deltas's recursion.
+OK, nevermind.  I admitedly never have been close enough to the related 
+code.
+
+And I don't think this particular case is interesting anyway as the 
+reflogs for the various branches alre already involved.  I was thinking 
+more about the "git fetch git://some.random.repo foobar" case where the 
+summary also explicitly shows:
+
+From: git://some.random.repo
+  ......  foobar   -> FETCH_HEAD
+
+In that case the only reference to the fetched branch is stored in 
+FETCH_HEAD and that is what might be worthwile for a reflog.
+
+
+Nicolas
