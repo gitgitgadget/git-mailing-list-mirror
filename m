@@ -1,83 +1,110 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 3/6] t1006 (cat-file): use test_cmp
-Date: Thu, 08 Dec 2011 14:41:45 +0100
-Message-ID: <vpqty5bp4di.fsf@bauges.imag.fr>
-References: <1323349817-15737-1-git-send-email-artagnon@gmail.com>
-	<1323349817-15737-6-git-send-email-artagnon@gmail.com>
-	<vpqiplrchvi.fsf@bauges.imag.fr>
-	<CALkWK0=NFxAqmOkObqjVmBQ-TQ=hZhWi=ZScMEGibvS2Pu+XqQ@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 0/5] cache-tree revisited
+Date: Thu, 8 Dec 2011 15:15:29 +0100
+Message-ID: <201112081515.29652.trast@student.ethz.ch>
+References: <cover.1323191497.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 08 14:41:59 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Carlos =?iso-8859-1?q?Mart=EDn_Nieto?= <cmn@elego.de>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 08 15:15:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYeEX-0007RD-5y
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 14:41:57 +0100
+	id 1RYel7-000588-IG
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 15:15:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751091Ab1LHNlx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Dec 2011 08:41:53 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:55240 "EHLO shiva.imag.fr"
+	id S1753464Ab1LHOPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Dec 2011 09:15:33 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:27110 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750796Ab1LHNlw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Dec 2011 08:41:52 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id pB8Da9W0031133
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 8 Dec 2011 14:36:09 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1RYeEM-000533-DJ; Thu, 08 Dec 2011 14:41:46 +0100
-In-Reply-To: <CALkWK0=NFxAqmOkObqjVmBQ-TQ=hZhWi=ZScMEGibvS2Pu+XqQ@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Thu, 8 Dec 2011 19:03:19 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 08 Dec 2011 14:36:09 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: pB8Da9W0031133
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1323956171.47472@6mJt6v5I3MC/Xzfxv9QOoA
+	id S1751420Ab1LHOPc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Dec 2011 09:15:32 -0500
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 8 Dec
+ 2011 15:15:27 +0100
+Received: from thomas.inf.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 8 Dec
+ 2011 15:15:29 +0100
+User-Agent: KMail/1.13.7 (Linux/3.1.3-1-desktop; KDE/4.6.5; x86_64; ; )
+In-Reply-To: <cover.1323191497.git.trast@student.ethz.ch>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186566>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Thomas Rast wrote:
+> Junio C Hamano wrote:
+> > Ahh, I forgot all about that exchange.
+> > 
+> >   http://thread.gmane.org/gmane.comp.version-control.git/178480/focus=178515
+> > 
+> > The cache-tree mechanism has traditionally been one of the more important
+> > optimizations and it would be very nice if we can resurrect the behaviour
+> > for "git commit" too.
+> 
+> Oh, I buried that.  Let's try something other than the aggressive
+> strategy I had there: only compute cache-tree if
+> 
+> * we know we're going to need it soon, and we're about to write out
+>   the index anyway (as in git-commit)
 
-> Hi Matthieu,
->
-> Matthieu Moy wrote:
->> Ramkumar Ramachandra <artagnon@gmail.com> writes:
->>
->>> =A0test_expect_success "--batch-check with multiple sha1s gives cor=
-rect format" '
->>> - =A0 =A0test "$batch_check_output" =3D \
->>> - =A0 =A0"$(echo_without_newline "$batch_check_input" | git cat-fil=
-e
->>> --batch-check)"
->>> + =A0 =A0echo "$batch_check_output" >expect &&
->>> + =A0 =A0echo_without_newline "$batch_check_input" | git cat-file
->>> + --batch-check >actual &&
->>> + =A0 =A0test_cmp expect actual
->>> =A0'
->>
->> Whitespace damage?
->
-> Odd.  Email client issue?
+I had another idea: we could write out *just* a new cache-tree data
+set at the end of git-commit.
 
-It seems so. Weird, Gnus usually doesn't do this sort of things to me.
-Sorry for the noise.
+Doing it the cheap way would mean rehashing the on-disk data without
+actually touching it.  (That might not be so bad, but then if your
+index is small, why is writing it from scratch expensive?)
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Doing it efficiently requires making the sha1 restartable, which is
+entirely doable withblock-sha1/sha1.h (I haven't looked into
+ppc/sha1.h).  As far as I can see it's not feasible with openssl's
+sha1.
+
+That is, we would add a new index extension (say PSHA: partial SHA)
+and structure the index as
+
+  signature
+  header
+  cache data
+  PSHA <sha state up until just before PSHA>
+  TREE ...
+  [REUC ...]
+  sha1 footer
+
+Then it's easy to cheaply replace only the extensions, by restarting
+the hashing from the PSHA data and re-emitting only the extension
+data.
+
+I think all the bits are in place, and it would be easy to do.
+However, for it to make sense, we would have to make BLK_SHA1 the
+default for the most-used platforms and also not mind extending the
+SHA1 API.  Do you think that would fly?
+
+I thought about other ways to make the index writing restartable from
+the middle, but the only clean approach I came up with would require a
+format change to something like
+
+     signature
+  0  header
+  1  cache data
+  2  sha1 of 0..1
+  3  extension data A
+  4  sha1 of 2..3
+  5  extension data B
+  6  sha1 of 4..5
+  [possibly more]
+  7  end-of-index marker
+  8  sha1 of 6..7
+
+etc.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
