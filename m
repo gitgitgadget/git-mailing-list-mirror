@@ -1,57 +1,67 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 2/2] index-pack: a naive attempt to flatten find_unresolved_deltas
-Date: Thu, 8 Dec 2011 08:42:24 -0800
-Message-ID: <CAJo=hJu35cYkWfBXAoL6OoCLVT4fE-mKjgqyGBN5xRLmiBeRdw@mail.gmail.com>
-References: <CAJo=hJvrk3Jzg3dQhQnfbmKAFovLuEtJAP4rakHPFeuZ0T5R7g@mail.gmail.com>
- <4ee0be70.44f2320a.3fe8.632b@mx.google.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 1/2] parse-options: introduce OPT_SUBCOMMAND
+Date: Thu, 8 Dec 2011 22:13:34 +0530
+Message-ID: <CALkWK0ksMPjjh8EJjJz6wKS6ciF9x59n3KFauJvnB-1D4d4N1w@mail.gmail.com>
+References: <1323349817-15737-1-git-send-email-artagnon@gmail.com>
+ <1323349817-15737-2-git-send-email-artagnon@gmail.com> <20111208163049.GA2116@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Thu Dec 08 17:42:52 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 08 17:44:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYh3b-0002pp-4O
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 17:42:51 +0100
+	id 1RYh4i-0003Kb-Gn
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 17:44:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750912Ab1LHQmq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Dec 2011 11:42:46 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:51916 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750763Ab1LHQmq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Dec 2011 11:42:46 -0500
-Received: by iakc1 with SMTP id c1so2794795iak.19
-        for <git@vger.kernel.org>; Thu, 08 Dec 2011 08:42:45 -0800 (PST)
-Received: by 10.42.161.9 with SMTP id r9mr3973251icx.49.1323362565171; Thu, 08
- Dec 2011 08:42:45 -0800 (PST)
-Received: by 10.50.171.39 with HTTP; Thu, 8 Dec 2011 08:42:24 -0800 (PST)
-In-Reply-To: <4ee0be70.44f2320a.3fe8.632b@mx.google.com>
+	id S1751469Ab1LHQn4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Dec 2011 11:43:56 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:52034 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751597Ab1LHQnz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Dec 2011 11:43:55 -0500
+Received: by qcqz2 with SMTP id z2so1447622qcq.19
+        for <git@vger.kernel.org>; Thu, 08 Dec 2011 08:43:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=f7MR2HEyrRsEBrT/DkxzLO1bbAVcTTbNgikyv9Gyj/E=;
+        b=FV5L886X1ffIM9h4i2nJz+SD5oY4MdeOInAP9bml+yxiOPvcriaknaf+mNNX0i1B4J
+         losF3w6Z4Zmzt4b+zPug2tRJcD+nBoQPBgZgeB6ukxfOC8FyzIzlzfL//a2V0NjlH169
+         wW2qQX1F22Hs8e9UJhht2aTd6R9SyY1rjsu68=
+Received: by 10.229.67.142 with SMTP id r14mr977682qci.240.1323362635157; Thu,
+ 08 Dec 2011 08:43:55 -0800 (PST)
+Received: by 10.229.165.194 with HTTP; Thu, 8 Dec 2011 08:43:34 -0800 (PST)
+In-Reply-To: <20111208163049.GA2116@elie.hsd1.il.comcast.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186571>
 
-2011/12/8  <pclouds@gmail.com>:
-> From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+Hi,
+
+Jonathan Nieder wrote:
+> Ramkumar Ramachandra wrote:
+>> , and create a new
+>> OPT_SUBCOMMAND; this is built on top of OPTION_BIT to allow for the
+>> detection of more than one subcommand.
 >
-> This seems to work for me. But I think this approach uses (much?) mor=
-e
-> memory because it turns a tree of calls into a flat list of calls and
-> keep the list until the end, while the recursive version only has to
-> keep one call chain at a time.
->
-> Any ideas how to improve it?
+> This part I am not convinced about. =C2=A0Usually each subcommand tak=
+es its
+> own options, so I cannot see this OPT_SUBCOMMAND being actually usefu=
+l
+> for commands like "git stash" or "git remote".
 
-Well, fortunately JGit is under a very liberal BSD license and has a
-pretty efficient version of a heap based algorithm for delta
-resolution. You could look at [1] for ideas. I am told the BSD license
-is very compatible with the GPLv2. (Unlike the reverse.)
+Hm, what difference does that make?  We still have to parse the
+subcommand, and subsequently use an if-else construct to parse more
+options depending on the subcommand, no?
 
-
-[1] http://egit.eclipse.org/w/?p=3Djgit.git;a=3Dblob;f=3Dorg.eclipse.jg=
-it/src/org/eclipse/jgit/transport/PackParser.java;hb=3DHEAD#l556
+-- Ram
