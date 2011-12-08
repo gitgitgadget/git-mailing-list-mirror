@@ -1,97 +1,110 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] Re-roll rr/revert-cherry-pick
-Date: Thu, 08 Dec 2011 10:41:49 -0800
-Message-ID: <7vpqfyj47m.fsf@alter.siamese.dyndns.org>
-References: <1323239877-24101-1-git-send-email-artagnon@gmail.com>
- <20111207081734.GG11737@elie.hsd1.il.comcast.net>
+Subject: Re: [PATCH] git-send-email: Add auto-cc to all body signatures
+Date: Thu, 08 Dec 2011 11:37:07 -0800
+Message-ID: <7v8vmmj1ng.fsf@alter.siamese.dyndns.org>
+References: <b2937bc06d1bff456b84e51d6edee0bb1afc5f31.1311902983.git.joe@perches.com>
+ <1311903782.20837.42.camel@jtkirshe-mobl>
+ <1323313119.1762.58.camel@joe2Laptop>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 08 19:43:17 2011
+Cc: git@vger.kernel.org, jeffrey.t.kirsher@intel.com
+To: Joe Perches <joe@perches.com>
+X-From: git-owner@vger.kernel.org Thu Dec 08 20:37:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYiw5-0004p5-4W
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 19:43:13 +0100
+	id 1RYjmQ-0002w5-8E
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 20:37:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751464Ab1LHSlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Dec 2011 13:41:52 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58210 "EHLO
+	id S1753366Ab1LHThM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Dec 2011 14:37:12 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55554 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751345Ab1LHSlw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Dec 2011 13:41:52 -0500
+	id S1753338Ab1LHThK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Dec 2011 14:37:10 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C8D395159;
-	Thu,  8 Dec 2011 13:41:51 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C54326220;
+	Thu,  8 Dec 2011 14:37:09 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uH0Zfe5dBZoSqGMCi+gIhEswPoU=; b=A/TLnC
-	Num7xLu6GNwdCAz9sHcwkJNbdw7dQo59/+9jo0dIPCeG/cMM7Zu/yAR5dFrx0Sjt
-	3QHvLgnhLjfvgIku5USoyRasehirD5TDwKN773JbIGRrYK8y2JFHb9FkDBdHe5yY
-	8Gulm7UzP5ajpyUYtKGjmGIwSck0waIxdkczU=
+	:content-type; s=sasl; bh=6PkK7ImLflUptkjOIXl9tNWFSDY=; b=ElBWSA
+	mBTS4wph/TRvsBfNdtKGmI6VJvejLoO5yb9ZfXfyLDtsok6uzXRqpLoAn3Vj0eGC
+	wFWvSqjFw9yRtVAnISIgYsEwuqPcpjAKqPcytOnIvkAX5S3D8htFgEJ+ews1X3tU
+	d/7kis91NHrX4LrhHPmH5BpSyXqwKqbc0Z/xk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ibNGRl9PiMdniZkdYgzRMhxebYWK2ZxN
-	nGeurt0kRNihmXQOoMc8M0mkTZ60Ahaq/uOO0mDn61riNLr6tcowGAtBuzuyVEDs
-	LoxAUw/gpiUwAN9pGk7d9tyRteQCSm0iWm9FpfxEWryCrlBxxbyKWT81DqvNRAt2
-	bW25cixQzaE=
+	:content-type; q=dns; s=sasl; b=Ip6d89kIdRnH92fb4qEXWbe/nvwwSPfx
+	cIBy9X1BtCQ4ShOkwdVLdeAmOOqA4NAypIo5Lq0xNLuC1nmNleK5EdEB+Fyp/bDX
+	ZCulQixrmT9XrhAli1EVntL3jI49xCRSL4JTJAbi0HprYql3nA2Xasu7aJT4VGFw
+	VNacX25M64U=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C09715158;
-	Thu,  8 Dec 2011 13:41:51 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC293621F;
+	Thu,  8 Dec 2011 14:37:09 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 295785155; Thu,  8 Dec 2011
- 13:41:51 -0500 (EST)
-In-Reply-To: <20111207081734.GG11737@elie.hsd1.il.comcast.net> (Jonathan
- Nieder's message of "Wed, 7 Dec 2011 02:17:34 -0600")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4132C621E; Thu,  8 Dec 2011
+ 14:37:09 -0500 (EST)
+In-Reply-To: <1323313119.1762.58.camel@joe2Laptop> (Joe Perches's message of
+ "Wed, 07 Dec 2011 18:58:39 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4AEC4FBC-21CC-11E1-ABAB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 04A8CC62-21D4-11E1-BED3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186586>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Joe Perches <joe@perches.com> writes:
 
-> Ramkumar Ramachandra wrote:
+> Many types of signatures are used by various projects.
 >
->> This is a re-roll of rr/revert-cherry-pick, with Junio's suggestions
->> ($gname/186365) implemented.
->
-> Thanks for this.  I am worried that some of my comments in previous
-> reviews (especially about change descriptions) were not addressed,
-> which could mean one of a few things:
->
->  - you didn't notice them
->  - they were wrong
->  - you noticed them and they were describing real problems, but it
->    wasn't worth the time to fix them
->
-> Fine.  But I would like to know which case they fell into, so I can
-> learn in order to do a better job reviewing the future and know my
-> time is well spent.
+> The most common type is formatted:
+> 	"[some_signature_type]-by: First Last <email@domain.tld>"
+> e.g:
+> 	"Reported-by: First Last <email@domain.tld>" (no quotes are used)
 
-Another thing I often notice after raising an issue during a review (this
-is not limited to Ram) is that I do so in the form of a question "why is
-this function done this way?" expecting either "ah, doing it that way
-instead is simpler and easier to read" or "because of such and such, which
-you may have missed. after all this is a tricky codepath with this and
-that constraints" as a response. The former should and often does result
-in an update of the code in the re-rolled series, but the latter often
-results in a frustrating nothing in a re-roll, when the fact that a
-reviewer needed to ask the question was a sure sign that the code needs
-explanation either in the log message or in-code comment. 
+This is just a phrasing issue, but I am a bit reluctant about the name
+"signature". "Acked-by:", "Tested-by:" and "Reviewed-by:" are originally
+written in the message sent to the author by the person who is giving an
+Ack, a successful test report, and a review comment, and the author (at
+least in spirit) copies & pastes them to the final text used in the commit
+log message, so it would not be incorrect to call them "signatures". But
+other "Random-by:" would not fall into that pattern.
 
-> The series makes various changes, all essentially good, which leaves
-> me all the more motivated to figure out how to get this sort of thing
-> in smoothly without making life difficult for people in the future
-> tracking down regressions.
+"Reported-by:" certainly does not.  It is almost always added by the
+author of the patch that is different from the reporter, and the reporter
+wouldn't have written "Reported-by: me" in the original bug report that
+triggered the discussion and resulted in the commit to fix the bug. Such a
+line is certainly not a signature of/by the reporter. Same can be said for
+"Helped-by:" for the author to share credits.
 
-I looked the series over with your comments and tend to agree with many of
-them. Perhaps I should wait for another round before picking it up again
-(I've already dropped the old series I kept before 1.7.8).
+Also I've seen these "Random-by:", especially the ones that the author
+adds on his own initiative like "Reported-by:", followed by just a name
+but not an addresses [*1*].
+
+Does your change do the right thing on such an address-less entry?  The
+answer to this question must start with the definition of "the right thing
+to do is X", of course.
+
+> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+> index 327233c..17ea825 100644
+> --- a/Documentation/git-send-email.txt
+> +++ b/Documentation/git-send-email.txt
+> @@ -246,8 +246,9 @@ Automating
+>    patch body (commit message) except for self (use 'self' for that).
+>  - 'sob' will avoid including anyone mentioned in Signed-off-by lines except
+>     for self (use 'self' for that).
+> +- 'signatures' will avoid including anyone mentioned in any "<foo>-by:" lines.
+>  - 'cccmd' will avoid running the --cc-cmd.
+> -- 'body' is equivalent to 'sob' + 'bodycc'
+> +- 'body' is equivalent to 'sob' + 'bodycc + signatures'
+
+The quotes do not match quite well.
+
+
+[Footnote]
+
+*1* This seems to be done deliberately so; I understand that this is to
+avoid running afoul of EU privacy legislation or something.
