@@ -1,198 +1,79 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 2/2] bundle: rewrite builtin to use parse-options
-Date: Thu,  8 Dec 2011 17:37:08 +0530
-Message-ID: <1323346028-9201-3-git-send-email-artagnon@gmail.com>
-References: <1323346028-9201-1-git-send-email-artagnon@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 08 13:08:24 2011
+Subject: Re: [PATCH 15/15] t3040 (subprojects-basic): modernize style
+Date: Thu, 8 Dec 2011 18:34:39 +0530
+Message-ID: <CALkWK0mScWsQanBu=cq-qiC3Ls=bYnjA4eiY4mUFs+kr9_OHdQ@mail.gmail.com>
+References: <20111207100858.GB13374@elie.hsd1.il.comcast.net>
+ <1323286611-4806-1-git-send-email-artagnon@gmail.com> <1323286611-4806-16-git-send-email-artagnon@gmail.com>
+ <20111207222126.GF2911@elie.hsd1.il.comcast.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 08 14:05:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYclz-0006aY-LH
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 13:08:23 +0100
+	id 1RYdet-0001ux-0W
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 14:05:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751426Ab1LHMIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Dec 2011 07:08:17 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:41987 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751142Ab1LHMIP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Dec 2011 07:08:15 -0500
-Received: by mail-iy0-f174.google.com with SMTP id c1so2502678iak.19
-        for <git@vger.kernel.org>; Thu, 08 Dec 2011 04:08:15 -0800 (PST)
+	id S1751454Ab1LHNFB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Dec 2011 08:05:01 -0500
+Received: from mail-qw0-f53.google.com ([209.85.216.53]:33984 "EHLO
+	mail-qw0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751289Ab1LHNFA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Dec 2011 08:05:00 -0500
+Received: by qadb15 with SMTP id b15so1642929qad.19
+        for <git@vger.kernel.org>; Thu, 08 Dec 2011 05:05:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=jbY3npIOCxQTEHLFLEf3akdAf+lxgLdJA45iv+KUd5I=;
-        b=jVh5xk9rmLZPud9a32xILTuUCrcGzdsTpyJFQpxuR4kmOUl1I7YWmfBWRZ812lGB2O
-         RgN031cNlKY0im1UewF4wAHDwMUGyYr3uu6djsRLGiiO8QWBZwkPEcYtaGJJbACyHVqV
-         RtGccSGF+QwbgbcsUdKK6RBSJOMeeiECgnOLk=
-Received: by 10.42.153.6 with SMTP id k6mr3268968icw.30.1323346095082;
-        Thu, 08 Dec 2011 04:08:15 -0800 (PST)
-Received: from localhost.localdomain ([203.110.240.205])
-        by mx.google.com with ESMTPS id el2sm18965489ibb.10.2011.12.08.04.08.12
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 08 Dec 2011 04:08:14 -0800 (PST)
-X-Mailer: git-send-email 1.7.7.3
-In-Reply-To: <1323346028-9201-1-git-send-email-artagnon@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=vmLo29sM7JJCr7KAXqgzJPLqp20eUEnBQtKzI34Sdy8=;
+        b=ZnN6AmU1u8oT33mMlEfKVK//2ZVjMB71nNS+Ygk8qzmgjt2N9sru2x9qsx2Yx8Hvo2
+         y1w1ItMSEkuTgVXKZI53Rc0ZQuFOYr7KaM+tnxGO0eUIbmwQgE2bWZ/571uO2GVF7MSZ
+         tqfy6EaG79UITlW3y0cjxcQ8fDRuDSDj6mqDE=
+Received: by 10.224.198.10 with SMTP id em10mr2683936qab.44.1323349500200;
+ Thu, 08 Dec 2011 05:05:00 -0800 (PST)
+Received: by 10.229.165.194 with HTTP; Thu, 8 Dec 2011 05:04:39 -0800 (PST)
+In-Reply-To: <20111207222126.GF2911@elie.hsd1.il.comcast.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186551>
 
-The git-bundle builtin currently parses command-line options by hand;
-this is both fragile and cryptic on failure.  Since we now have an
-OPT_SUBCOMMAND, make use of it to parse the correct subcommand, while
-forbidding the use of more than one subcommand in the same invocation.
+Hi,
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- builtin/bundle.c |  111 +++++++++++++++++++++++++++++++++++------------------
- 1 files changed, 73 insertions(+), 38 deletions(-)
+Jonathan Nieder wrote:
+> It would be easier to read if each preimage test assertion were next =
+to
+> the corresponding postimage test assertion. =C2=A0Does "git diff --pa=
+tience"
+> do better?
 
-diff --git a/builtin/bundle.c b/builtin/bundle.c
-index 92a8a60..c977d9f 100644
---- a/builtin/bundle.c
-+++ b/builtin/bundle.c
-@@ -1,5 +1,6 @@
- #include "builtin.h"
- #include "cache.h"
-+#include "parse-options.h"
- #include "bundle.h"
- 
- /*
-@@ -9,57 +10,91 @@
-  * bundle supporting "fetch", "pull", and "ls-remote".
-  */
- 
--static const char builtin_bundle_usage[] =
--  "git bundle create <file> <git-rev-list args>\n"
--  "   or: git bundle verify <file>\n"
--  "   or: git bundle list-heads <file> [<refname>...]\n"
--  "   or: git bundle unbundle <file> [<refname>...]";
-+static const char * builtin_bundle_usage[] = {
-+	"git bundle create <file> <git-rev-list args>",
-+	"git bundle verify <file>",
-+	"git bundle list-heads <file> [<refname>...]",
-+	"git bundle unbundle <file> [<refname>...]",
-+	NULL
-+};
-+
-+enum bundle_subcommand {
-+	BUNDLE_NONE = 0,
-+	BUNDLE_CREATE = 1,
-+	BUNDLE_VERIFY = 2,
-+	BUNDLE_LIST_HEADS = 4,
-+	BUNDLE_UNBUNDLE = 8
-+};
- 
- int cmd_bundle(int argc, const char **argv, const char *prefix)
- {
--	struct bundle_header header;
--	const char *cmd, *bundle_file;
-+	int prefix_length;
- 	int bundle_fd = -1;
--	char buffer[PATH_MAX];
-+	const char *bundle_file;
-+	struct bundle_header header;
-+	enum bundle_subcommand subcommand = BUNDLE_NONE;
- 
--	if (argc < 3)
--		usage(builtin_bundle_usage);
-+	struct option options[] = {
-+		OPT_SUBCOMMAND("create", &subcommand,
-+			"create a new bundle",
-+			BUNDLE_CREATE),
-+		OPT_SUBCOMMAND("verify", &subcommand,
-+			"verify clean application of the bundle",
-+			BUNDLE_VERIFY),
-+		OPT_SUBCOMMAND("list-heads", &subcommand,
-+			"list references defined in the bundle",
-+			BUNDLE_LIST_HEADS),
-+		OPT_SUBCOMMAND("unbundle", &subcommand,
-+			"pass objects in the bundle to 'git index-pack'",
-+			BUNDLE_UNBUNDLE),
-+		OPT_END(),
-+	};
- 
--	cmd = argv[1];
--	bundle_file = argv[2];
--	argc -= 2;
--	argv += 2;
-+	argc = parse_options(argc, argv, NULL,
-+			options, builtin_bundle_usage,
-+			PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN);
- 
--	if (prefix && bundle_file[0] != '/') {
--		snprintf(buffer, sizeof(buffer), "%s/%s", prefix, bundle_file);
--		bundle_file = buffer;
--	}
-+	if (argc < 2)
-+		usage_with_options(builtin_bundle_usage, options);
- 
--	memset(&header, 0, sizeof(header));
--	if (strcmp(cmd, "create") && (bundle_fd =
--				read_bundle_header(bundle_file, &header)) < 0)
--		return 1;
-+	/* The next parameter on the command line is bundle_file */
-+	prefix_length = prefix ? strlen(prefix) : 0;
-+	bundle_file = prefix_filename(prefix, prefix_length, argv[1]);
-+	argc -= 1;
-+	argv += 1;
- 
--	if (!strcmp(cmd, "verify")) {
-+	/* Read out bundle header, except in BUNDLE_CREATE case */
-+	if (subcommand == BUNDLE_VERIFY || subcommand == BUNDLE_LIST_HEADS ||
-+		subcommand == BUNDLE_UNBUNDLE) {
-+		memset(&header, 0, sizeof(header));
-+		bundle_fd = read_bundle_header(bundle_file, &header);
-+		if (bundle_fd < 0)
-+			die_errno(_("Failed to open bundle file '%s'"), bundle_file);
-+	}
-+
-+	switch (subcommand) {
-+	case BUNDLE_CREATE:
-+		if (!startup_info->have_repository)
-+			die(_("Need a repository to create a bundle."));
-+		return create_bundle(&header, bundle_file, argc, argv);
-+	case BUNDLE_VERIFY:
- 		close(bundle_fd);
- 		if (verify_bundle(&header, 1))
--			return 1;
-+			return -1; /* Error already reported */
- 		fprintf(stderr, _("%s is okay\n"), bundle_file);
--		return 0;
--	}
--	if (!strcmp(cmd, "list-heads")) {
-+		break;
-+	case BUNDLE_LIST_HEADS:
- 		close(bundle_fd);
--		return !!list_bundle_refs(&header, argc, argv);
--	}
--	if (!strcmp(cmd, "create")) {
--		if (!startup_info->have_repository)
--			die(_("Need a repository to create a bundle."));
--		return !!create_bundle(&header, bundle_file, argc, argv);
--	} else if (!strcmp(cmd, "unbundle")) {
--		if (!startup_info->have_repository)
-+		return list_bundle_refs(&header, argc, argv);
-+	case BUNDLE_UNBUNDLE:
-+		if (!startup_info->have_repository) {
-+			close(bundle_fd);
- 			die(_("Need a repository to unbundle."));
--		return !!unbundle(&header, bundle_fd, 0) ||
-+		}
-+		return unbundle(&header, bundle_fd, 0) ||
- 			list_bundle_refs(&header, argc, argv);
--	} else
--		usage(builtin_bundle_usage);
-+	default:
-+		usage_with_options(builtin_bundle_usage, options);
-+	}
-+	return 0;
- }
--- 
-1.7.7.3
+No, unfortunately.
+
+> If cleaning up the style anyway, I would write this as
+> [...]
+> But leaving it alone like you did is probably better. ;-)
+
+Exercising restraint.  Otherwise, I'm tempted to fix every little nit
+in every test I'm touching in the series :P
+
+>> -test_expect_success 'check if fsck ignores the subprojects' \
+>> - =C2=A0 =C2=A0'git fsck --full'
+>> +test_expect_success 'check if fsck ignores the subprojects' '
+>> + =C2=A0 =C2=A0 git fsck --full
+>> +'
+>
+> Does this test imply that one of the subprojects is broken somehow?
+
+Hm, you're right- the test doesn't seem to make any sense.  I'll deal
+with it in another patch (unrelated to this series).
+
+Thanks.
+
+-- Ram
