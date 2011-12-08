@@ -1,110 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-send-email: Add auto-cc to all body signatures
-Date: Thu, 08 Dec 2011 11:37:07 -0800
-Message-ID: <7v8vmmj1ng.fsf@alter.siamese.dyndns.org>
-References: <b2937bc06d1bff456b84e51d6edee0bb1afc5f31.1311902983.git.joe@perches.com>
- <1311903782.20837.42.camel@jtkirshe-mobl>
- <1323313119.1762.58.camel@joe2Laptop>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 2/2] bundle: rewrite builtin to use parse-options
+Date: Fri, 9 Dec 2011 01:09:21 +0530
+Message-ID: <CALkWK0nCuFgS8PKkQLMzqpBsOWouSs5y=CEKS1r0x0=LkhqC9A@mail.gmail.com>
+References: <1323349817-15737-1-git-send-email-artagnon@gmail.com>
+ <1323349817-15737-4-git-send-email-artagnon@gmail.com> <20111208163946.GB2394@elie.hsd1.il.comcast.net>
+ <CALkWK0mmjKSzSbxq2i7=JvcB4LTro-MYDCwQLUUwqcf8qS0zPA@mail.gmail.com>
+ <20111208170319.GD2394@elie.hsd1.il.comcast.net> <CALkWK0m89D02aku8J0OXbpyrovHCOpsYS4Qpx2jH-pFG4rOG2A@mail.gmail.com>
+ <20111208175913.GK2394@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jeffrey.t.kirsher@intel.com
-To: Joe Perches <joe@perches.com>
-X-From: git-owner@vger.kernel.org Thu Dec 08 20:37:18 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 08 20:39:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYjmQ-0002w5-8E
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 20:37:18 +0100
+	id 1RYjoq-00046v-A4
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 20:39:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753366Ab1LHThM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Dec 2011 14:37:12 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55554 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753338Ab1LHThK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Dec 2011 14:37:10 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C54326220;
-	Thu,  8 Dec 2011 14:37:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6PkK7ImLflUptkjOIXl9tNWFSDY=; b=ElBWSA
-	mBTS4wph/TRvsBfNdtKGmI6VJvejLoO5yb9ZfXfyLDtsok6uzXRqpLoAn3Vj0eGC
-	wFWvSqjFw9yRtVAnISIgYsEwuqPcpjAKqPcytOnIvkAX5S3D8htFgEJ+ews1X3tU
-	d/7kis91NHrX4LrhHPmH5BpSyXqwKqbc0Z/xk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ip6d89kIdRnH92fb4qEXWbe/nvwwSPfx
-	cIBy9X1BtCQ4ShOkwdVLdeAmOOqA4NAypIo5Lq0xNLuC1nmNleK5EdEB+Fyp/bDX
-	ZCulQixrmT9XrhAli1EVntL3jI49xCRSL4JTJAbi0HprYql3nA2Xasu7aJT4VGFw
-	VNacX25M64U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC293621F;
-	Thu,  8 Dec 2011 14:37:09 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4132C621E; Thu,  8 Dec 2011
- 14:37:09 -0500 (EST)
-In-Reply-To: <1323313119.1762.58.camel@joe2Laptop> (Joe Perches's message of
- "Wed, 07 Dec 2011 18:58:39 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 04A8CC62-21D4-11E1-BED3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752871Ab1LHTjo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Dec 2011 14:39:44 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:35118 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752839Ab1LHTjn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Dec 2011 14:39:43 -0500
+Received: by wgbdr13 with SMTP id dr13so3956952wgb.1
+        for <git@vger.kernel.org>; Thu, 08 Dec 2011 11:39:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=KUgeJ0zVaUyQgF6GG58mAdlulEN+nV38C1RaLkuplag=;
+        b=gqbC8KjeqY6fgxfTtBOHENeCZDsuG9Oo4Tp7NYvVy1BI9fTXZG1919LBIJBzH+Aw6w
+         EDp/neOIhtzzK82NjOMIwwbcV06+M5CSjYg3Qu9k2MywGfdZgHw104C6dCV588O4vWjR
+         K71iibIlu7eLWluolvYP2f+s2CHEJLdFYZhvc=
+Received: by 10.227.209.9 with SMTP id ge9mr4882067wbb.1.1323373182311; Thu,
+ 08 Dec 2011 11:39:42 -0800 (PST)
+Received: by 10.216.51.141 with HTTP; Thu, 8 Dec 2011 11:39:21 -0800 (PST)
+In-Reply-To: <20111208175913.GK2394@elie.hsd1.il.comcast.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186587>
 
-Joe Perches <joe@perches.com> writes:
+Hi,
 
-> Many types of signatures are used by various projects.
+Jonathan Nieder wrote:
+> What's the desired behavior? =C2=A0Then we can talk about how to impl=
+ement it.
 >
-> The most common type is formatted:
-> 	"[some_signature_type]-by: First Last <email@domain.tld>"
-> e.g:
-> 	"Reported-by: First Last <email@domain.tld>" (no quotes are used)
+> If the goal is "use parse-options for a command that has subcommands"=
+,
+> see builtin/notes.c.
 
-This is just a phrasing issue, but I am a bit reluctant about the name
-"signature". "Acked-by:", "Tested-by:" and "Reviewed-by:" are originally
-written in the message sent to the author by the person who is giving an
-Ack, a successful test report, and a review comment, and the author (at
-least in spirit) copies & pastes them to the final text used in the commit
-log message, so it would not be incorrect to call them "signatures". But
-other "Random-by:" would not fall into that pattern.
+Uses strcmp() to match argv[0].  And you can't specify the options for
+a certain subcommand before the subcommand itself on the command-line,
+although I don't consider this a serious limitation.  I was going for
+something prettier with subcommand-specific help text, albeit a
+serious limitation.  I'll try working towards this for a few more
+hours to see if anything useful comes out of it -- otherwise, I'll
+just drop this patch and focus on eliminating the ugliness in
+builtin/revert.c around '--continue', '--quit' parsing.
 
-"Reported-by:" certainly does not.  It is almost always added by the
-author of the patch that is different from the reporter, and the reporter
-wouldn't have written "Reported-by: me" in the original bug report that
-triggered the discussion and resulted in the commit to fix the bug. Such a
-line is certainly not a signature of/by the reporter. Same can be said for
-"Helped-by:" for the author to share credits.
+That being said, do you see value in lifting the restriction on
+opts->long_name and PARSE_OPTS_NODASH not allowed together?  The
+restriction seems quite arbitrary, but I can't justify lifting it
+unless I can show some valid usecase.
 
-Also I've seen these "Random-by:", especially the ones that the author
-adds on his own initiative like "Reported-by:", followed by just a name
-but not an addresses [*1*].
+Thanks.
 
-Does your change do the right thing on such an address-less entry?  The
-answer to this question must start with the definition of "the right thing
-to do is X", of course.
-
-> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-> index 327233c..17ea825 100644
-> --- a/Documentation/git-send-email.txt
-> +++ b/Documentation/git-send-email.txt
-> @@ -246,8 +246,9 @@ Automating
->    patch body (commit message) except for self (use 'self' for that).
->  - 'sob' will avoid including anyone mentioned in Signed-off-by lines except
->     for self (use 'self' for that).
-> +- 'signatures' will avoid including anyone mentioned in any "<foo>-by:" lines.
->  - 'cccmd' will avoid running the --cc-cmd.
-> -- 'body' is equivalent to 'sob' + 'bodycc'
-> +- 'body' is equivalent to 'sob' + 'bodycc + signatures'
-
-The quotes do not match quite well.
-
-
-[Footnote]
-
-*1* This seems to be done deliberately so; I understand that this is to
-avoid running afoul of EU privacy legislation or something.
+-- Ram
