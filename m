@@ -1,91 +1,128 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Debugging git-commit slowness on a large repo
-Date: Thu, 8 Dec 2011 08:39:32 +0700
-Message-ID: <CACsJy8DiWWr7eo86gzb-XcqfDv4_ENkqWxswTNb-k84xO18c=A@mail.gmail.com>
-References: <CACsJy8Dbd+v+8FzvQS9a4C8DQSxQGgqQNGaLhL1cHv-yMnaCJQ@mail.gmail.com>
- <CB051EFC.2C795%joshua.redstone@fb.com>
+From: Joe Perches <joe@perches.com>
+Subject: [PATCH] git-send-email: Add auto-cc to all body signatures
+Date: Wed, 07 Dec 2011 18:58:39 -0800
+Message-ID: <1323313119.1762.58.camel@joe2Laptop>
+References: <b2937bc06d1bff456b84e51d6edee0bb1afc5f31.1311902983.git.joe@perches.com>
+	 <1311903782.20837.42.camel@jtkirshe-mobl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
-	Tomas Carnecky <tom@dbservice.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Joshua Redstone <joshua.redstone@fb.com>
-X-From: git-owner@vger.kernel.org Thu Dec 08 02:40:14 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: jeffrey.t.kirsher@intel.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 08 03:58:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYSy4-0002iE-Cs
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 02:40:12 +0100
+	id 1RYUC6-0004Wm-DQ
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 03:58:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757149Ab1LHBkF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Dec 2011 20:40:05 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:35744 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755597Ab1LHBkE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Dec 2011 20:40:04 -0500
-Received: by bkbzv3 with SMTP id zv3so1129553bkb.19
-        for <git@vger.kernel.org>; Wed, 07 Dec 2011 17:40:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=tT2Ssy7aD9WXLExWQp+0MKL3sUU4Jqiei9HHoVs/Ny4=;
-        b=H6KGSMQHR4r1PNdBxMmbvlv9EL+rnjvi5PrOdjJUu6zTAxKosy0ARM0KvxoZIScurp
-         0rwVAiaA3xiOY/fBbYX9iYKlD/CKZL37deW/tte4IwHS3E4ti8zPJpsS0a1BPOKP5A+v
-         pmBV1Ub690KnAmIKUS1oETJBqYch50LwEDpxo=
-Received: by 10.204.155.65 with SMTP id r1mr473813bkw.110.1323308403255; Wed,
- 07 Dec 2011 17:40:03 -0800 (PST)
-Received: by 10.204.23.2 with HTTP; Wed, 7 Dec 2011 17:39:32 -0800 (PST)
-In-Reply-To: <CB051EFC.2C795%joshua.redstone@fb.com>
+	id S1756816Ab1LHC6l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Dec 2011 21:58:41 -0500
+Received: from perches-mx.perches.com ([206.117.179.246]:34992 "EHLO
+	labridge.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756637Ab1LHC6k (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Dec 2011 21:58:40 -0500
+Received: from [173.60.85.8] (account joe@perches.com HELO [192.168.1.151])
+  by labridge.com (CommuniGate Pro SMTP 5.0.14)
+  with ESMTPA id 18504810; Wed, 07 Dec 2011 18:58:39 -0800
+In-Reply-To: <1311903782.20837.42.camel@jtkirshe-mobl>
+X-Mailer: Evolution 3.2.1- 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186526>
 
-On Thu, Dec 8, 2011 at 5:48 AM, Joshua Redstone <joshua.redstone@fb.com=
-> wrote:
-> Hi Duy,
-> Thanks for the documentation link.
->
-> git ls-files shows 100k files, which matches # of files in the workin=
-g
-> tree ('find . -type f -print | wc -l').
+Many types of signatures are used by various projects.
 
-Any chance you can split it into smaller repositories, or remove files
-from working directory (e.g. if you store logs, you don't have to keep
-logs from all time in working directory, they can be retrieved from
-history).
+The most common type is formatted:
+	"[some_signature_type]-by: First Last <email@domain.tld>"
+e.g:
+	"Reported-by: First Last <email@domain.tld>" (no quotes are used)
 
-> I added a 'git read-tree HEAD' before the git-add, and a 'git write-t=
-ree'
-> after the add. =C2=A0With that, the commit time slowed down to 8 seco=
-nds per
-> commit, plus 4 more seconds for the read-tree/add/write-tree ops. =C2=
-=A0The
-> read-tree/add/write-tree each took about a second.
+Make git-send-email use these signatures as "CC:" entries.
 
-read-tree destroys stat info in index, refreshing 100k entries in
-index in this case may take some time. Try this to see if commit time
-reduces and how much time update-index takes
+Add command line option --suppress-cc=signatures to avoid
+adding these entries to the cc.
 
-read-tree HEAD
-update-index --refresh
-add ....
-write-tree
-commit -q
+Signed-off-by: Joe Perches <joe@perches.com>
+Acked-by: Jeff Kirsher <jeffrey.t.kirsher@intel.com>
+---
+ Documentation/git-send-email.txt |    3 ++-
+ git-send-email.perl              |   11 ++++++-----
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
-> As an experiment, I also tried removing the 'git read-tree' and just
-> having the git-write-tree. =C2=A0That sped up commits to 0.6 seconds,=
- but the
-> overall time for add/write-tree/commit was still 3 to 6 seconds.
-
-overall time is not really important because we duplicate work here
-(write-tree is done as part of commit again). What I'm trying to do is
-to determine how much time each operation in commit may take.
---=20
-Duy
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 327233c..17ea825 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -246,8 +246,9 @@ Automating
+   patch body (commit message) except for self (use 'self' for that).
+ - 'sob' will avoid including anyone mentioned in Signed-off-by lines except
+    for self (use 'self' for that).
++- 'signatures' will avoid including anyone mentioned in any "<foo>-by:" lines.
+ - 'cccmd' will avoid running the --cc-cmd.
+-- 'body' is equivalent to 'sob' + 'bodycc'
++- 'body' is equivalent to 'sob' + 'bodycc + signatures'
+ - 'all' will suppress all auto cc values.
+ --
+ +
+diff --git a/git-send-email.perl b/git-send-email.perl
+index d491db9..fc5bf41 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -75,7 +75,7 @@ git send-email [options] <file | directory | rev-list options >
+     --identity              <str>  * Use the sendemail.<id> options.
+     --to-cmd                <str>  * Email To: via `<str> \$patch_path`
+     --cc-cmd                <str>  * Email Cc: via `<str> \$patch_path`
+-    --suppress-cc           <str>  * author, self, sob, cc, cccmd, body, bodycc, all.
++    --suppress-cc           <str>  * author, self, sob, cc, cccmd, body, bodycc, signatures, all.
+     --[no-]signed-off-by-cc        * Send to Signed-off-by: addresses. Default on.
+     --[no-]suppress-from           * Send to self. Default off.
+     --[no-]chain-reply-to          * Chain In-Reply-To: fields. Default off.
+@@ -393,13 +393,13 @@ my(%suppress_cc);
+ if (@suppress_cc) {
+ 	foreach my $entry (@suppress_cc) {
+ 		die "Unknown --suppress-cc field: '$entry'\n"
+-			unless $entry =~ /^(?:all|cccmd|cc|author|self|sob|body|bodycc)$/;
++			unless $entry =~ /^(?:all|cccmd|cc|author|self|sob|body|bodycc|signatures)$/;
+ 		$suppress_cc{$entry} = 1;
+ 	}
+ }
+ 
+ if ($suppress_cc{'all'}) {
+-	foreach my $entry (qw (cccmd cc author self sob body bodycc)) {
++	foreach my $entry (qw (cccmd cc author self sob body bodycc signatures)) {
+ 		$suppress_cc{$entry} = 1;
+ 	}
+ 	delete $suppress_cc{'all'};
+@@ -410,7 +410,7 @@ $suppress_cc{'self'} = $suppress_from if defined $suppress_from;
+ $suppress_cc{'sob'} = !$signed_off_by_cc if defined $signed_off_by_cc;
+ 
+ if ($suppress_cc{'body'}) {
+-	foreach my $entry (qw (sob bodycc)) {
++	foreach my $entry (qw (sob bodycc signatures)) {
+ 		$suppress_cc{$entry} = 1;
+ 	}
+ 	delete $suppress_cc{'body'};
+@@ -1276,7 +1276,7 @@ foreach my $t (@files) {
+ 	# Now parse the message body
+ 	while(<$fh>) {
+ 		$message .=  $_;
+-		if (/^(Signed-off-by|Cc): (.*)$/i) {
++		if (/^(Signed-off-by|Cc|[a-z_-]+by): (.*)$/i) {
+ 			chomp;
+ 			my ($what, $c) = ($1, $2);
+ 			chomp $c;
+@@ -1285,6 +1285,7 @@ foreach my $t (@files) {
+ 			} else {
+ 				next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
+ 				next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
++				next if $suppress_cc{'signatures'} and $what =~ /by$/i;
+ 			}
+ 			push @cc, $c;
+ 			printf("(body) Adding cc: %s from line '%s'\n",
+-- 
+1.7.8.dirty
