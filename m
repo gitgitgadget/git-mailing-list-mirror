@@ -1,89 +1,59 @@
-From: Matthias Fechner <idefix@fechner.net>
-Subject: Re: Undo a commit that is already pushed to central server and merged
- to several branches
-Date: Thu, 08 Dec 2011 10:46:26 +0100
-Message-ID: <4EE08772.3070703@fechner.net>
-References: <4EDF74EC.6090504@fechner.net> <CALkWK0k46HnWTHx3iYuWFUegTgZhAMShx9MT2E83QCmxrvZOxg@mail.gmail.com> <4EDF87A6.4000703@fechner.net> <CALKQrgcQ5jv+oDXxDoTGUhmP-Dg344-oSotb+q-4a3fnEBY1Zw@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] index-pack: eliminate unlimited recursion in get_delta_base()
+Date: Thu, 8 Dec 2011 18:06:27 +0700
+Message-ID: <CACsJy8Dr14ek-Fv4a4eAo_QRHyHrg=2X=YaMRy1z8UXRdcescg@mail.gmail.com>
+References: <7vvcpthh97.fsf@alter.siamese.dyndns.org> <1323280223-7990-1-git-send-email-pclouds@gmail.com>
+ <CAJo=hJvrk3Jzg3dQhQnfbmKAFovLuEtJAP4rakHPFeuZ0T5R7g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Dec 08 10:46:50 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Dec 08 12:07:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYaYy-0001rX-Bh
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 10:46:48 +0100
+	id 1RYboo-0006yg-A9
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 12:07:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753004Ab1LHJqo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Dec 2011 04:46:44 -0500
-Received: from anny.lostinspace.de ([80.190.182.2]:28763 "EHLO
-	anny.lostinspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752923Ab1LHJql (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Dec 2011 04:46:41 -0500
-Received: from server.idefix.lan (ppp-93-104-88-159.dynamic.mnet-online.de [93.104.88.159])
-	(authenticated bits=0)
-	by anny.lostinspace.de (8.14.5/8.14.5) with ESMTP id pB89kS0Q090872
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Thu, 8 Dec 2011 10:46:32 +0100 (CET)
-	(envelope-from idefix@fechner.net)
-Received: from server.idefix.lan (localhost [IPv6:::1])
-	by server.idefix.lan (Postfix) with ESMTP id 179E96B3C4;
-	Thu,  8 Dec 2011 10:46:28 +0100 (CET)
-X-Virus-Scanned: amavisd-new at fechner.net
-Received: from server.idefix.lan ([127.0.0.1])
-	by server.idefix.lan (server.idefix.lan [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id CFhr-qpPaE1z; Thu,  8 Dec 2011 10:46:27 +0100 (CET)
-Received: from matthias-fechners-macbook.local (unknown [192.168.20.6])
-	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
-	(No client certificate requested)
-	by server.idefix.lan (Postfix) with ESMTPSA id 834AE6B3B7;
-	Thu,  8 Dec 2011 10:46:27 +0100 (CET)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <CALKQrgcQ5jv+oDXxDoTGUhmP-Dg344-oSotb+q-4a3fnEBY1Zw@mail.gmail.com>
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.7 (anny.lostinspace.de [80.190.182.2]); Thu, 08 Dec 2011 10:46:33 +0100 (CET)
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,UNPARSEABLE_RELAY
-	autolearn=ham version=3.3.2
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on anny.lostinspace.de
+	id S1753375Ab1LHLHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Dec 2011 06:07:00 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:55428 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751922Ab1LHLG7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Dec 2011 06:06:59 -0500
+Received: by bkbzv3 with SMTP id zv3so1470506bkb.19
+        for <git@vger.kernel.org>; Thu, 08 Dec 2011 03:06:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=tGcQRJ97QwHVse3Q6qHcgma27/s+iWc1Mi6Qlag8jCI=;
+        b=RnWadeloPFOBYpXfcV7bEkYqQFmMBoehQOGGLvZkZEs4dZDfcRiuq6YjMCpisLpsnd
+         tNZxN8lcBGK9P+6PSLh6NuMTxWSOPS5NMbT3xLIxL3hXoRHaHPuXaZbQS3oetL+/mNR5
+         v5D4+quM1kpdqdO/OObGIzuBK62E0X5mg/tsA=
+Received: by 10.204.148.77 with SMTP id o13mr1139627bkv.97.1323342418331; Thu,
+ 08 Dec 2011 03:06:58 -0800 (PST)
+Received: by 10.204.129.205 with HTTP; Thu, 8 Dec 2011 03:06:27 -0800 (PST)
+In-Reply-To: <CAJo=hJvrk3Jzg3dQhQnfbmKAFovLuEtJAP4rakHPFeuZ0T5R7g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186547>
 
-Dear Ramkumar and Johan,
+2011/12/8 Shawn Pearce <spearce@spearce.org>:
+> I think you missed the critical recursion. The real work is the
+> recursion within find_unresolved_deltas(). This little helper
+> get_base_data() shouldn't be tripping over these cases unless we have
+> run out of delta_base_cache_limit and released objects near the base
+> end of the delta chain, in which case this will restore them.
+>
+> Maybe this is useful on its own, but in my opinion its not an
+> interesting patch to consider without first fixing
+> find_unresolved_deltas's recursion.
 
-Am 07.12.11 17:01, schrieb Johan Herland:
-> Use "git revert $commit" to undo the effects of the given $commit.
-> This must be applied to all affected branches (either by reverting in
-> the master branch and remerging master to the other branches, or by
-> using "git revert" in each individual branch).
-
-thanks a lot for your help.
-The steps I did now was at first undo everything i did locally with:
-git reset --hard origin/master
-
-Then undo the bad commit:
-git revert commit-id
-git commit
-
-Now the bad commit was undone and I merged the master branch in all 
-other branches.
-
-I create a new branch and cherry-picked the bad commit into it so I can 
-correct the problem there and later merge this branch in all the other ones.
-
-Hopefully this short summary will help other users having the same problem.
-
-Bye
-Matthias
-
+Thanks. I missed that function. Will try to fix it.
 -- 
-"Programming today is a race between software engineers striving to 
-build bigger and better idiot-proof programs, and the universe trying to 
-produce bigger and better idiots. So far, the universe is winning." -- 
-Rich Cook
+Duy
