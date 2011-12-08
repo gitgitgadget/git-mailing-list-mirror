@@ -1,72 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Disabling Delta Compression on a fetch
-Date: Thu, 8 Dec 2011 15:14:43 -0500
-Message-ID: <20111208201443.GA8035@sigill.intra.peff.net>
-References: <070681D4-F87B-435E-8A3B-144E59DE722B@cpanel.net>
+From: Joe Perches <joe@perches.com>
+Subject: Re: [PATCH] git-send-email: Add auto-cc to all body signatures
+Date: Thu, 08 Dec 2011 12:51:26 -0800
+Message-ID: <1323377486.1762.71.camel@joe2Laptop>
+References: <b2937bc06d1bff456b84e51d6edee0bb1afc5f31.1311902983.git.joe@perches.com>
+	 <1311903782.20837.42.camel@jtkirshe-mobl>
+	 <1323313119.1762.58.camel@joe2Laptop>
+	 <7v8vmmj1ng.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Todd Rinaldo <toddr@cpanel.net>
-X-From: git-owner@vger.kernel.org Thu Dec 08 21:14:50 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, jeffrey.t.kirsher@intel.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 08 21:51:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYkMk-0002sh-Ge
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 21:14:50 +0100
+	id 1RYkwI-0002N1-6M
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Dec 2011 21:51:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751227Ab1LHUOp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Dec 2011 15:14:45 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44508
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750988Ab1LHUOp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Dec 2011 15:14:45 -0500
-Received: (qmail 30392 invoked by uid 107); 8 Dec 2011 20:21:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 08 Dec 2011 15:21:23 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Dec 2011 15:14:43 -0500
-Content-Disposition: inline
-In-Reply-To: <070681D4-F87B-435E-8A3B-144E59DE722B@cpanel.net>
+	id S1751918Ab1LHUv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Dec 2011 15:51:29 -0500
+Received: from perches-mx.perches.com ([206.117.179.246]:39671 "EHLO
+	labridge.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751639Ab1LHUv2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Dec 2011 15:51:28 -0500
+Received: from [173.60.85.8] (account joe@perches.com HELO [192.168.1.151])
+  by labridge.com (CommuniGate Pro SMTP 5.0.14)
+  with ESMTPA id 18508468; Thu, 08 Dec 2011 12:51:28 -0800
+In-Reply-To: <7v8vmmj1ng.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 3.2.1- 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186594>
 
-On Thu, Dec 08, 2011 at 11:34:26AM -0600, Todd Rinaldo wrote:
+On Thu, 2011-12-08 at 11:37 -0800, Junio C Hamano wrote:
+> Joe Perches <joe@perches.com> writes:
+> > Many types of signatures are used by various projects.
+> > The most common type is formatted:
+> > 	"[some_signature_type]-by: First Last <email@domain.tld>"
+> > e.g:
+> > 	"Reported-by: First Last <email@domain.tld>" (no quotes are used)
+> This is just a phrasing issue, but I am a bit reluctant about the name
+> "signature".
 
-> All of the git communication happens on 1 subnet all connected by a
-> single gigabit switch. As I see it, the Delta Compression is actually
-> a performance degradation in our environment.
-> 
-> The solution I've come up with is to set pack.window=0 in
-> /etc/gitconfig on the gitorious server. 
+I've called all these markings signatures.
+Maybe email-address-tags or another name could be used.
+I'm not bothered one way or another by any chosen name.
 
-An alternative is to mark the binary files as "-delta" with
-gitattributes on the server. Then you will get the benefits of delta
-compression for other files without bothering to try the binary files.
+> Does your change do the right thing on such an address-less entry?  The
+> answer to this question must start with the definition of "the right thing
+> to do is X", of course.
 
-Note that git won't read the gitattributes file out of the tree in a
-bare repository, so these attributes should go either in
-$REPO/info/attributes (if they are repo-specific), or in
-/etc/gitattributes (if they are in many repos).
-
-I.e., something like:
-
-  echo '*.bin -delta' >/etc/gitattributes
-
-Also, before any of that, make sure that the upstream repos are fully
-packed. Git will not try to delta two objects coming from the same pack
-(since it will already have tried when they were entering the pack).
-That by itself might be enough to solve your problem without any other
-configuration.
-
-> My question is: Are there are any unintended consequences of this
-> approach anyone can think of?
-
-Other than trading bandwidth, you are also trading space on the client
-side, since each client will store the resulting pack.
-
--Peff
+All addresses go through "extract_valid_address".
+Invalid addresses are not used.
