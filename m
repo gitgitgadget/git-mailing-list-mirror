@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 2/9] revert: make commit subjects in insn sheet optional
-Date: Fri,  9 Dec 2011 21:11:59 +0530
-Message-ID: <1323445326-24637-3-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 3/9] revert: tolerate extra spaces, tabs in insn sheet
+Date: Fri,  9 Dec 2011 21:12:00 +0530
+Message-ID: <1323445326-24637-4-git-send-email-artagnon@gmail.com>
 References: <1323445326-24637-1-git-send-email-artagnon@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
@@ -12,186 +12,86 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZ2ba-00010h-JX
+	id 1RZ2bb-00010h-BB
 	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 16:43:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753996Ab1LIPnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Dec 2011 10:43:16 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:45239 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751385Ab1LIPnP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2011 10:43:15 -0500
-Received: by mail-iy0-f174.google.com with SMTP id c1so4391329iak.19
-        for <git@vger.kernel.org>; Fri, 09 Dec 2011 07:43:15 -0800 (PST)
+	id S1754239Ab1LIPnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Dec 2011 10:43:20 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:41561 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751385Ab1LIPnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Dec 2011 10:43:19 -0500
+Received: by mail-qy0-f174.google.com with SMTP id z2so2223292qcq.19
+        for <git@vger.kernel.org>; Fri, 09 Dec 2011 07:43:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=nh4Es4wq3qLwduQWYHI/k84Xo1ibDjCgwmjy3PnLcxE=;
-        b=JL1hXhDvwuJ9+ya5uJy8oTdS++GAOgWKbyBReLei6IaCfHQzzZcTk4IY7cvQ0sgdrr
-         BjrHAHku4qEJzcsXTzNBTKKVnpTNwXyyI6pHBHPnIjEgTMCTE+3ETpAhb/xCDKu86oVN
-         oAvtHr05o4kmcqiC2atQk9oGRt0hB6x8ZL7w4=
-Received: by 10.43.131.196 with SMTP id hr4mr2903769icc.55.1323445394946;
-        Fri, 09 Dec 2011 07:43:14 -0800 (PST)
+        bh=qe/Vrt62mKZpSUOiy9xKzI20zh9uHtmF7eXdagvLtZU=;
+        b=tTPTIWP74dArdH9HbdMQkLU6XA9qcXKQzak50JdmhGhDVjyUvYjeyLVRXDCVFDVy7w
+         5oeYc+rghWMDqqhVuo1Yaflk3u5fZrMcxM5JoPvCSr3vZLPvCAUnoot7BRQgkoKRGRkM
+         dIHtTltA3PmHMhbSrh7ezwVDjobf944qnFZx4=
+Received: by 10.50.208.72 with SMTP id mc8mr3824488igc.19.1323445398642;
+        Fri, 09 Dec 2011 07:43:18 -0800 (PST)
 Received: from localhost.localdomain ([203.110.240.205])
-        by mx.google.com with ESMTPS id a2sm18298821igj.7.2011.12.09.07.43.10
+        by mx.google.com with ESMTPS id a2sm18298821igj.7.2011.12.09.07.43.15
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 09 Dec 2011 07:43:13 -0800 (PST)
+        Fri, 09 Dec 2011 07:43:17 -0800 (PST)
 X-Mailer: git-send-email 1.7.7.3
 In-Reply-To: <1323445326-24637-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186641>
 
-Change the instruction sheet format subtly so that the subject of the
-commit message that follows the object name is optional.  As a result,
-an instruction sheet like this is now perfectly valid:
+Tolerate extra spaces and tabs as part of the the field separator in
+'.git/sequencer/todo', for people with fat fingers.
 
-  pick 35b0426
-  pick fbd5bbcbc2e
-  pick 7362160f
-
-While at it, also fix a bug: currently, we use a commit-id-shaped
-buffer to store the word after "pick" in '.git/sequencer/todo'.  This
-is both wasteful and wrong because it places an artificial limit on
-the line length.  In addition to literal SHA-1 hexes, expressions like
-the following are valid object names in the instruction sheet:
-
-  featurebranch~4
-  rr/revert-cherry-pick-continue^2~12@{12 days ago}
-
-So, eliminate the need for the buffer to keep the object name
-altogether, and add a test demonstrating this.
-
-[jc: simplify parsing]
-
-Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
+Requested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/revert.c                |   37 ++++++++++++++++---------------------
- t/t3510-cherry-pick-sequence.sh |   28 ++++++++++++++++++++++++++++
- 2 files changed, 44 insertions(+), 21 deletions(-)
+ builtin/revert.c                |    6 +++++-
+ t/t3510-cherry-pick-sequence.sh |   11 +++++++++++
+ 2 files changed, 16 insertions(+), 1 deletions(-)
 
 diff --git a/builtin/revert.c b/builtin/revert.c
-index 0c6d3d8..70055e5 100644
+index 70055e5..b976562 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -711,31 +711,27 @@ static int format_todo(struct strbuf *buf, struct commit_list *todo_list,
- 	return 0;
- }
- 
--static struct commit *parse_insn_line(char *start, struct replay_opts *opts)
-+static struct commit *parse_insn_line(char *bol, char *eol, struct replay_opts *opts)
- {
- 	unsigned char commit_sha1[20];
--	char sha1_abbrev[40];
- 	enum replay_action action;
--	int insn_len = 0;
--	char *p, *q;
-+	char *end_of_object_name;
-+	int saved, status;
- 
--	if (!prefixcmp(start, "pick ")) {
-+	if (!prefixcmp(bol, "pick ")) {
- 		action = CHERRY_PICK;
--		insn_len = strlen("pick");
--		p = start + insn_len + 1;
--	} else if (!prefixcmp(start, "revert ")) {
-+		bol += strlen("pick ");
-+	} else if (!prefixcmp(bol, "revert ")) {
- 		action = REVERT;
--		insn_len = strlen("revert");
--		p = start + insn_len + 1;
-+		bol += strlen("revert ");
+@@ -727,7 +727,11 @@ static struct commit *parse_insn_line(char *bol, char *eol, struct replay_opts *
  	} else
  		return NULL;
  
--	q = strchr(p, ' ');
--	if (!q)
--		return NULL;
--	q++;
--
--	strlcpy(sha1_abbrev, p, q - p);
-+	end_of_object_name = bol + strcspn(bol, " \n");
-+	saved = *end_of_object_name;
-+	*end_of_object_name = '\0';
-+	status = get_sha1(bol, commit_sha1);
-+	*end_of_object_name = saved;
- 
- 	/*
- 	 * Verify that the action matches up with the one in
-@@ -748,7 +744,7 @@ static struct commit *parse_insn_line(char *start, struct replay_opts *opts)
- 		return NULL;
- 	}
- 
--	if (get_sha1(sha1_abbrev, commit_sha1) < 0)
-+	if (status < 0)
- 		return NULL;
- 
- 	return lookup_commit_reference(commit_sha1);
-@@ -763,13 +759,12 @@ static int parse_insn_buffer(char *buf, struct commit_list **todo_list,
- 	int i;
- 
- 	for (i = 1; *p; i++) {
--		commit = parse_insn_line(p, opts);
-+		char *eol = strchrnul(p, '\n');
-+		commit = parse_insn_line(p, eol, opts);
- 		if (!commit)
- 			return error(_("Could not parse line %d."), i);
- 		next = commit_list_append(commit, next);
--		p = strchrnul(p, '\n');
--		if (*p)
--			p++;
-+		p = *eol ? eol + 1 : eol;
- 	}
- 	if (!*todo_list)
- 		return error(_("No commits parsed."));
+-	end_of_object_name = bol + strcspn(bol, " \n");
++	/* Eat up extra spaces/ tabs before object name */
++	while (*bol == ' ' || *bol == '\t')
++		bol += 1;
++
++	end_of_object_name = bol + strcspn(bol, " \t\n");
+ 	saved = *end_of_object_name;
+ 	*end_of_object_name = '\0';
+ 	status = get_sha1(bol, commit_sha1);
 diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index 2c4c1c8..6390f2a 100755
+index 6390f2a..781c5ac 100755
 --- a/t/t3510-cherry-pick-sequence.sh
 +++ b/t/t3510-cherry-pick-sequence.sh
-@@ -13,6 +13,9 @@ test_description='Test cherry-pick continuation features
- 
- . ./test-lib.sh
- 
-+# Repeat first match 10 times
-+_r10='\1\1\1\1\1\1\1\1\1\1'
-+
- pristine_detach () {
- 	git cherry-pick --quit &&
- 	git checkout -f "$1^0" &&
-@@ -328,4 +331,29 @@ test_expect_success 'malformed instruction sheet 2' '
+@@ -342,6 +342,17 @@ test_expect_success 'malformed instruction sheet 3' '
  	test_must_fail git cherry-pick --continue
  '
  
-+test_expect_success 'malformed instruction sheet 3' '
-+	pristine_detach initial &&
-+	test_must_fail git cherry-pick base..anotherpick &&
-+	echo "resolved" >foo &&
-+	git add foo &&
-+	git commit &&
-+	sed "s/pick \([0-9a-f]*\)/pick $_r10/" .git/sequencer/todo >new_sheet &&
-+	cp new_sheet .git/sequencer/todo &&
-+	test_must_fail git cherry-pick --continue
-+'
-+
-+test_expect_success 'commit descriptions in insn sheet are optional' '
++test_expect_success 'instruction sheet, fat-fingers version' '
 +	pristine_detach initial &&
 +	test_must_fail git cherry-pick base..anotherpick &&
 +	echo "c" >foo &&
 +	git add foo &&
 +	git commit &&
-+	cut -d" " -f1,2 .git/sequencer/todo >new_sheet &&
++	sed "s/pick \([0-9a-f]*\)/pick 	 \1 	/" .git/sequencer/todo >new_sheet &&
 +	cp new_sheet .git/sequencer/todo &&
-+	git cherry-pick --continue &&
-+	test_path_is_missing .git/sequencer &&
-+	git rev-list HEAD >commits &&
-+	test_line_count = 4 commits
++	git cherry-pick --continue
 +'
 +
- test_done
+ test_expect_success 'commit descriptions in insn sheet are optional' '
+ 	pristine_detach initial &&
+ 	test_must_fail git cherry-pick base..anotherpick &&
 -- 
 1.7.7.3
