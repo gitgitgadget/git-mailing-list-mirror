@@ -1,68 +1,106 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/2] t3401: use test_commit in setup
-Date: Fri, 9 Dec 2011 13:57:52 -0600
-Message-ID: <20111209195752.GA21260@elie.hsd1.il.comcast.net>
-References: <1323449952-14161-1-git-send-email-martin.von.zweigbergk@gmail.com>
- <1323449952-14161-2-git-send-email-martin.von.zweigbergk@gmail.com>
- <CALkWK0k-dL3xZ+dyqdACj7man-Q2QrAPZCCMhXiX0WNGZHv6Fw@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 3/9] revert: tolerate extra spaces, tabs in insn sheet
+Date: Sat, 10 Dec 2011 01:28:21 +0530
+Message-ID: <CALkWK0kCZ7r2-_jF2st3h8MUF_kCgaLvrNZc0uxBxdpiK-7bLg@mail.gmail.com>
+References: <1323445326-24637-1-git-send-email-artagnon@gmail.com>
+ <1323445326-24637-4-git-send-email-artagnon@gmail.com> <20111209194003.GE20913@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 09 20:58:05 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 09 20:58:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZ6a4-000860-NJ
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 20:58:05 +0100
+	id 1RZ6an-0008OC-9f
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 20:58:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754108Ab1LIT6A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Dec 2011 14:58:00 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:58513 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750878Ab1LIT57 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2011 14:57:59 -0500
-Received: by ghbz2 with SMTP id z2so2826208ghb.19
-        for <git@vger.kernel.org>; Fri, 09 Dec 2011 11:57:59 -0800 (PST)
+	id S1754121Ab1LIT6p convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Dec 2011 14:58:45 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:38363 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752426Ab1LIT6o convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Dec 2011 14:58:44 -0500
+Received: by wgbdr13 with SMTP id dr13so6275624wgb.1
+        for <git@vger.kernel.org>; Fri, 09 Dec 2011 11:58:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=y8tibASpv8UvIM0Z8o/+rSwO2ys6OxTPBq8oVw4ie4w=;
-        b=Sh7/734ZP/CEPotOBriNlcMKRy2K3OOEgdw0RK0bFnChO0S02X56FanUTPKPMk/LmV
-         lJ/gg7yCrzYM/gkvR2c6dUDLw2fWH7KDjEaE2al2xwFG2zl9sTuHIVbSZi3QQ9xr8qLq
-         lmjlNcHvzPxoU24W7JHPY899AZXpMtVN9Y41s=
-Received: by 10.236.183.133 with SMTP id q5mr14204366yhm.38.1323460679005;
-        Fri, 09 Dec 2011 11:57:59 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id c10sm16695543yhj.2.2011.12.09.11.57.57
-        (version=SSLv3 cipher=OTHER);
-        Fri, 09 Dec 2011 11:57:58 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0k-dL3xZ+dyqdACj7man-Q2QrAPZCCMhXiX0WNGZHv6Fw@mail.gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=X6hDbKYkWtU8yvA1X09hJOW40jKCbfbtt6obAGb/WTg=;
+        b=sFLFhg3AXEmmyAIKQmesDPfVL0WKsSf1hkdRGHgMwGvHW7o4fYdkNiV4C7svG+5fve
+         tOCsEu6FxJ+Tnre0wqG2bhhYpS9P48Ia6WJWmtONbVEKQCbUStf96xzlBgkKOQAGtiCo
+         n6B3Hxu+bVvvmqPcNRrG3V48T6/d3oK8whxUE=
+Received: by 10.216.136.223 with SMTP id w73mr392515wei.112.1323460723309;
+ Fri, 09 Dec 2011 11:58:43 -0800 (PST)
+Received: by 10.216.51.141 with HTTP; Fri, 9 Dec 2011 11:58:21 -0800 (PST)
+In-Reply-To: <20111209194003.GE20913@elie.hsd1.il.comcast.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186677>
 
-Ramkumar Ramachandra wrote:
-> Martin von Zweigbergk wrote:
+Hi,
 
->> Simplify t3401 by using test_commit in the setup. This lets us refer
->> to commits using their tags and there is no longer a need to create
->> the branch my-topic-branch-merge. Also, the branch master-merge points
->> to the same commit as master (even before this change), so that branch
->> does not need to be created either.
+Jonathan Nieder wrote:
+> Ramkumar Ramachandra wrote:
 >
-> The terms "tag" and "branch" here have no significance, so
-> de-emphasizing them to "ref" is probably a good idea.
+>> +++ b/builtin/revert.c
+>> @@ -727,7 +727,11 @@ static struct commit *parse_insn_line(char *bol=
+, char *eol, struct replay_opts *
+>> =C2=A0 =C2=A0 =C2=A0 } else
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;
+>>
+>> + =C2=A0 =C2=A0 /* Eat up extra spaces/ tabs before object name */
+>> + =C2=A0 =C2=A0 while (*bol =3D=3D ' ' || *bol =3D=3D '\t')
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 bol +=3D 1;
+>> - =C2=A0 =C2=A0 end_of_object_name =3D bol + strcspn(bol, " \n");
+>
+> Why not use strspn? =C2=A0What happens if I use a tab immediately
+> after the pick/revert keyword?
 
-Wha?  No, "tag" refers to refs under refs/tags/, and "branch" refers to
-refs/heads/, just like usual.
+:facepalm: Fixed.  Inter-diff:
 
-I like the patch, for what it's worth.
+diff --git a/builtin/revert.c b/builtin/revert.c
+index b976562..be0686d 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -716,20 +716,22 @@ static struct commit *parse_insn_line(
+ 	unsigned char commit_sha1[20];
+ 	enum replay_action action;
+ 	char *end_of_object_name;
+-	int saved, status;
++	int saved, status, padding;
+
+-	if (!prefixcmp(bol, "pick ")) {
++	if (!prefixcmp(bol, "pick")) {
+ 		action =3D CHERRY_PICK;
+-		bol +=3D strlen("pick ");
+-	} else if (!prefixcmp(bol, "revert ")) {
++		bol +=3D strlen("pick");
++	} else if (!prefixcmp(bol, "revert")) {
+ 		action =3D REVERT;
+-		bol +=3D strlen("revert ");
++		bol +=3D strlen("revert");
+ 	} else
+ 		return NULL;
+
+ 	/* Eat up extra spaces/ tabs before object name */
+-	while (*bol =3D=3D ' ' || *bol =3D=3D '\t')
+-		bol +=3D 1;
++	padding =3D strspn(bol, " \t");
++	if (!padding)
++		return NULL;
++	bol +=3D padding;
+
+ 	end_of_object_name =3D bol + strcspn(bol, " \t\n");
+ 	saved =3D *end_of_object_name;
+--
+
+Thanks.
+
+-- Ram
