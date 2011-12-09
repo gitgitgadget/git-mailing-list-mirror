@@ -1,94 +1,242 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 5/6] t1510 (worktree): fix '&&' chaining
-Date: Fri,  9 Dec 2011 16:59:17 +0530
-Message-ID: <1323430158-14885-6-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 6/6] tests: fix '&&' chaining
+Date: Fri,  9 Dec 2011 16:59:18 +0530
+Message-ID: <1323430158-14885-7-git-send-email-artagnon@gmail.com>
 References: <1323349817-15737-1-git-send-email-artagnon@gmail.com>
  <1323430158-14885-1-git-send-email-artagnon@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Git List <git@vger.kernel.org>
 To: Jonathan Nieder <jrnieder@mgmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 09 12:30:47 2011
+X-From: git-owner@vger.kernel.org Fri Dec 09 12:30:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYyf6-0000M6-Tf
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 12:30:45 +0100
+	id 1RYyfD-0000Ok-L3
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 12:30:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753289Ab1LILaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Dec 2011 06:30:39 -0500
+	id S1753314Ab1LILan (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Dec 2011 06:30:43 -0500
 Received: from mail-iy0-f174.google.com ([209.85.210.174]:34509 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753246Ab1LILai (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2011 06:30:38 -0500
+	with ESMTP id S1753246Ab1LILam (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Dec 2011 06:30:42 -0500
 Received: by mail-iy0-f174.google.com with SMTP id c1so4103014iak.19
-        for <git@vger.kernel.org>; Fri, 09 Dec 2011 03:30:38 -0800 (PST)
+        for <git@vger.kernel.org>; Fri, 09 Dec 2011 03:30:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=yJwojTbOPpZ/QrPycc0NOEZM04fCFJVSm8b3As+uwSI=;
-        b=pL8HaYVpwnd5KUcYVcwm2mL4D57Ol5Z6VU6aIug1gM4fWHnbeyu9a/T7tAVeMf/Q2W
-         yCOOoJZrOwl2BWYtYsvqpGHtzmumLAvINtwsXN/AgVWK/98TxbTfAm22s0B1HnmTBFEj
-         yoGI9ROmswkuMzYsTmUot/D0Q2rzXjqOeVfv0=
-Received: by 10.50.183.133 with SMTP id em5mr3001703igc.73.1323430238296;
-        Fri, 09 Dec 2011 03:30:38 -0800 (PST)
+        bh=IURphfl0gQCVg6I3BpdUBT44cmI4QaKwvRIVKcXNX1A=;
+        b=AKVCXGAlqyggwcPFA/mppWVqVocWdywwIkf/kh+AGfSBw6KTeA0h/wA/GKzYjLAwTH
+         75wnWaZnmUBlUKnqAJgehSdY5RqXOQvNZ7tOxTfXryCyN/s5mlZTqIdbUSaBBgPbXkpj
+         7va2J/uMO5uz5j41G1aGc4PXaw5iZizagziFw=
+Received: by 10.50.181.136 with SMTP id dw8mr3038517igc.71.1323430242221;
+        Fri, 09 Dec 2011 03:30:42 -0800 (PST)
 Received: from localhost.localdomain ([203.110.240.205])
-        by mx.google.com with ESMTPS id d19sm9096588ibh.8.2011.12.09.03.30.34
+        by mx.google.com with ESMTPS id d19sm9096588ibh.8.2011.12.09.03.30.38
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 09 Dec 2011 03:30:37 -0800 (PST)
+        Fri, 09 Dec 2011 03:30:41 -0800 (PST)
 X-Mailer: git-send-email 1.7.7.3
 In-Reply-To: <1323430158-14885-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186630>
 
 Breaks in a test assertion's && chain can potentially hide failures
-from earlier commands in the chain.  Fix these breaks.
-
-'unset' returns non-zero status when the variable passed was already
-unset on some shells; now that its status is tested, change these
-instances to 'sane_unset'.
+from earlier commands in the chain.  Fix instances of this by adding
+'&&' at the end of lines where they're missing; this patch doesn't
+intend to make any other changes.
 
 Acked-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- t/t1501-worktree.sh |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+ t/t1007-hash-object.sh                |    2 +-
+ t/t1013-loose-object-format.sh        |    2 +-
+ t/t1300-repo-config.sh                |    2 +-
+ t/t1412-reflog-loop.sh                |    2 +-
+ t/t1510-repo-setup.sh                 |    4 ++--
+ t/t1511-rev-parse-caret.sh            |    2 +-
+ t/t3310-notes-merge-manual-resolve.sh |   10 +++++-----
+ t/t3400-rebase.sh                     |    4 ++--
+ t/t3418-rebase-continue.sh            |    4 ++--
+ t/t3419-rebase-patch-id.sh            |    2 +-
+ 10 files changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
-index 6384983..e661147 100755
---- a/t/t1501-worktree.sh
-+++ b/t/t1501-worktree.sh
-@@ -48,7 +48,7 @@ test_expect_success 'setup: helper for testing rev-parse' '
+diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
+index 6d52b82..f83df8e 100755
+--- a/t/t1007-hash-object.sh
++++ b/t/t1007-hash-object.sh
+@@ -189,7 +189,7 @@ for args in "-w --stdin-paths" "--stdin-paths -w"; do
+ done
+ 
+ test_expect_success 'corrupt tree' '
+-	echo abc >malformed-tree
++	echo abc >malformed-tree &&
+ 	test_must_fail git hash-object -t tree malformed-tree
  '
  
- test_expect_success 'setup: core.worktree = relative path' '
--	unset GIT_WORK_TREE;
-+	sane_unset GIT_WORK_TREE &&
- 	GIT_DIR=repo.git &&
- 	GIT_CONFIG="$(pwd)"/$GIT_DIR/config &&
- 	export GIT_DIR GIT_CONFIG &&
-@@ -89,7 +89,7 @@ test_expect_success 'subdir of work tree' '
+diff --git a/t/t1013-loose-object-format.sh b/t/t1013-loose-object-format.sh
+index 0a9cedd..fbf5f2f 100755
+--- a/t/t1013-loose-object-format.sh
++++ b/t/t1013-loose-object-format.sh
+@@ -34,7 +34,7 @@ assert_blob_equals() {
+ }
+ 
+ test_expect_success setup '
+-	cp -R "$TEST_DIRECTORY/t1013/objects" .git/
++	cp -R "$TEST_DIRECTORY/t1013/objects" .git/ &&
+ 	git --version
  '
  
- test_expect_success 'setup: core.worktree = absolute path' '
--	unset GIT_WORK_TREE;
-+	sane_unset GIT_WORK_TREE &&
- 	GIT_DIR=$(pwd)/repo.git &&
- 	GIT_CONFIG=$GIT_DIR/config &&
- 	export GIT_DIR GIT_CONFIG &&
-@@ -334,7 +334,7 @@ test_expect_success 'absolute pathspec should fail gracefully' '
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 51caff0..0690e0e 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -38,7 +38,7 @@ cat > expect << EOF
+ 	WhatEver = Second
+ EOF
+ test_expect_success 'similar section' '
+-	git config Cores.WhatEver Second
++	git config Cores.WhatEver Second &&
+ 	test_cmp expect .git/config
  '
  
- test_expect_success 'make_relative_path handles double slashes in GIT_DIR' '
--	>dummy_file
-+	>dummy_file &&
- 	echo git --git-dir="$(pwd)//repo.git" --work-tree="$(pwd)" add dummy_file &&
- 	git --git-dir="$(pwd)//repo.git" --work-tree="$(pwd)" add dummy_file
+diff --git a/t/t1412-reflog-loop.sh b/t/t1412-reflog-loop.sh
+index 647d888..3acd895 100755
+--- a/t/t1412-reflog-loop.sh
++++ b/t/t1412-reflog-loop.sh
+@@ -20,7 +20,7 @@ test_expect_success 'setup reflog with alternating commits' '
  '
+ 
+ test_expect_success 'reflog shows all entries' '
+-	cat >expect <<-\EOF
++	cat >expect <<-\EOF &&
+ 		topic@{0} reset: moving to two
+ 		topic@{1} reset: moving to one
+ 		topic@{2} reset: moving to two
+diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
+index ec50a9a..80aedfc 100755
+--- a/t/t1510-repo-setup.sh
++++ b/t/t1510-repo-setup.sh
+@@ -603,7 +603,7 @@ test_expect_success '#22a: core.worktree = GIT_DIR = .git dir' '
+ 	# like case #6.
+ 
+ 	setup_repo 22a "$here/22a/.git" "" unset &&
+-	setup_repo 22ab . "" unset
++	setup_repo 22ab . "" unset &&
+ 	mkdir -p 22a/.git/sub 22a/sub &&
+ 	mkdir -p 22ab/.git/sub 22ab/sub &&
+ 	try_case 22a/.git unset . \
+@@ -742,7 +742,7 @@ test_expect_success '#28: core.worktree and core.bare conflict (gitfile case)' '
+ # Case #29: GIT_WORK_TREE(+core.worktree) overrides core.bare (gitfile case).
+ test_expect_success '#29: setup' '
+ 	setup_repo 29 non-existent gitfile true &&
+-	mkdir -p 29/sub/sub 29/wt/sub
++	mkdir -p 29/sub/sub 29/wt/sub &&
+ 	(
+ 		cd 29 &&
+ 		GIT_WORK_TREE="$here/29" &&
+diff --git a/t/t1511-rev-parse-caret.sh b/t/t1511-rev-parse-caret.sh
+index e043cb7..eaefc77 100755
+--- a/t/t1511-rev-parse-caret.sh
++++ b/t/t1511-rev-parse-caret.sh
+@@ -6,7 +6,7 @@ test_description='tests for ref^{stuff}'
+ 
+ test_expect_success 'setup' '
+ 	echo blob >a-blob &&
+-	git tag -a -m blob blob-tag `git hash-object -w a-blob`
++	git tag -a -m blob blob-tag `git hash-object -w a-blob` &&
+ 	mkdir a-tree &&
+ 	echo moreblobs >a-tree/another-blob &&
+ 	git add . &&
+diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-manual-resolve.sh
+index 4ec4d11..4367197 100755
+--- a/t/t3310-notes-merge-manual-resolve.sh
++++ b/t/t3310-notes-merge-manual-resolve.sh
+@@ -389,7 +389,7 @@ test_expect_success 'abort notes merge' '
+ 	test_must_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
+ 	test_cmp /dev/null output &&
+ 	# m has not moved (still == y)
+-	test "$(git rev-parse refs/notes/m)" = "$(cat pre_merge_y)"
++	test "$(git rev-parse refs/notes/m)" = "$(cat pre_merge_y)" &&
+ 	# Verify that other notes refs has not changed (w, x, y and z)
+ 	verify_notes w &&
+ 	verify_notes x &&
+@@ -525,9 +525,9 @@ EOF
+ 	test -f .git/NOTES_MERGE_WORKTREE/$commit_sha3 &&
+ 	test -f .git/NOTES_MERGE_WORKTREE/$commit_sha4 &&
+ 	# Refs are unchanged
+-	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)"
+-	test "$(git rev-parse refs/notes/y)" = "$(git rev-parse NOTES_MERGE_PARTIAL^1)"
+-	test "$(git rev-parse refs/notes/m)" != "$(git rev-parse NOTES_MERGE_PARTIAL^1)"
++	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)" &&
++	test "$(git rev-parse refs/notes/y)" = "$(git rev-parse NOTES_MERGE_PARTIAL^1)" &&
++	test "$(git rev-parse refs/notes/m)" != "$(git rev-parse NOTES_MERGE_PARTIAL^1)" &&
+ 	# Mention refs/notes/m, and its current and expected value in output
+ 	grep -q "refs/notes/m" output &&
+ 	grep -q "$(git rev-parse refs/notes/m)" output &&
+@@ -545,7 +545,7 @@ test_expect_success 'resolve situation by aborting the notes merge' '
+ 	test_must_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
+ 	test_cmp /dev/null output &&
+ 	# m has not moved (still == w)
+-	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)"
++	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)" &&
+ 	# Verify that other notes refs has not changed (w, x, y and z)
+ 	verify_notes w &&
+ 	verify_notes x &&
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 6eaecec..c355533 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -172,8 +172,8 @@ test_expect_success 'fail when upstream arg is missing and not configured' '
+ 
+ test_expect_success 'default to @{upstream} when upstream arg is missing' '
+ 	git checkout -b default topic &&
+-	git config branch.default.remote .
+-	git config branch.default.merge refs/heads/master
++	git config branch.default.remote . &&
++	git config branch.default.merge refs/heads/master &&
+ 	git rebase &&
+ 	test "$(git rev-parse default~1)" = "$(git rev-parse master)"
+ '
+diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+index 1e855cd..2680375 100755
+--- a/t/t3418-rebase-continue.sh
++++ b/t/t3418-rebase-continue.sh
+@@ -51,7 +51,7 @@ test_expect_success 'rebase --continue remembers merge strategy and options' '
+ 	test_commit "commit-new-file-F3-on-topic-branch" F3 32 &&
+ 	test_when_finished "rm -fr test-bin funny.was.run" &&
+ 	mkdir test-bin &&
+-	cat >test-bin/git-merge-funny <<-EOF
++	cat >test-bin/git-merge-funny <<-EOF &&
+ 	#!$SHELL_PATH
+ 	case "\$1" in --opt) ;; *) exit 2 ;; esac
+ 	shift &&
+@@ -77,7 +77,7 @@ test_expect_success 'rebase --continue remembers merge strategy and options' '
+ test_expect_success 'rebase --continue remembers --rerere-autoupdate' '
+ 	rm -fr .git/rebase-* &&
+ 	git reset --hard commit-new-file-F3-on-topic-branch &&
+-	git checkout master
++	git checkout master &&
+ 	test_commit "commit-new-file-F3" F3 3 &&
+ 	git config rerere.enabled true &&
+ 	test_must_fail git rebase -m master topic &&
+diff --git a/t/t3419-rebase-patch-id.sh b/t/t3419-rebase-patch-id.sh
+index bd8efaf..e70ac10 100755
+--- a/t/t3419-rebase-patch-id.sh
++++ b/t/t3419-rebase-patch-id.sh
+@@ -39,7 +39,7 @@ run()
+ }
+ 
+ test_expect_success 'setup' '
+-	git commit --allow-empty -m initial
++	git commit --allow-empty -m initial &&
+ 	git tag root
+ '
+ 
 -- 
 1.7.7.3
