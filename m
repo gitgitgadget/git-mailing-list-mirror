@@ -1,66 +1,86 @@
-From: Justin Johnson <justin.johnson3@gmail.com>
-Subject: Re: configure git to not push all remote tracking branches
-Date: Fri, 9 Dec 2011 10:07:50 -0500
-Message-ID: <CAPD5EOgeKpV1bWJZmdUR6ZQuA=objSAApVrz1W9W8C_ij+XN9A@mail.gmail.com>
-References: <CAPD5EOjsu-9=CCUJut_bGqv=asp8FeGqL2GhKewgw3SQsArk_A@mail.gmail.com>
- <CALkWK0m0f-AGLwKqiKx9Aozwr5oN6FrH5ehG03mmEpB7Di8PWQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 09 16:08:18 2011
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH 0/9] Re-roll rr/revert-cherry-pick v2
+Date: Fri,  9 Dec 2011 21:11:57 +0530
+Message-ID: <1323445326-24637-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Dec 09 16:43:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZ23d-00033N-GP
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 16:08:17 +0100
+	id 1RZ2bS-0000ws-1r
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 16:43:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753285Ab1LIPIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Dec 2011 10:08:12 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:52837 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751693Ab1LIPIL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2011 10:08:11 -0500
-Received: by ggnr5 with SMTP id r5so3388274ggn.19
-        for <git@vger.kernel.org>; Fri, 09 Dec 2011 07:08:11 -0800 (PST)
+	id S1753458Ab1LIPnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Dec 2011 10:43:08 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:45239 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751036Ab1LIPnG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Dec 2011 10:43:06 -0500
+Received: by iakc1 with SMTP id c1so4391329iak.19
+        for <git@vger.kernel.org>; Fri, 09 Dec 2011 07:43:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=6wb9VOo4PYLN6ah9kxEXdCx+pfNyMAcIsORe2nKfGR8=;
-        b=ijXeLpskjsuodc8BfaFhmbLmlL12rzXoHoKaD+/yDqC9E6GgeNBFtgsS801628b5qd
-         KN8y1qAMmw8oF8z8S3E4iKlIsH8TSNtFSHZoAkWXgQNZjqaRFW7UWcU7QjwB5BTcnGdq
-         2EFaaAMZTs264HXp+uFrhBei/vLZGULpX6eXs=
-Received: by 10.182.86.229 with SMTP id s5mr528123obz.37.1323443291184; Fri,
- 09 Dec 2011 07:08:11 -0800 (PST)
-Received: by 10.182.114.4 with HTTP; Fri, 9 Dec 2011 07:07:50 -0800 (PST)
-In-Reply-To: <CALkWK0m0f-AGLwKqiKx9Aozwr5oN6FrH5ehG03mmEpB7Di8PWQ@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=xmP6x+LViE4D/iSh9FovLtRHIFypOHF75263QCT4Q5M=;
+        b=xd1hZgVxh2cXXyHKGPr1jD7ZP/31m2s8h5/3MnjJ7kaEVPO3sp49AwNMMv1qHWet3d
+         OwcYEv130ZQ8hWViLRaKWT8xt3iKGJ2vLj3kEJ5gVM8C2He/NwfcnpRXx3fRH034VKV4
+         o1DVy2SZUQKxt6eX7PuWnAOMqTtIkZAghZ9I4=
+Received: by 10.50.87.167 with SMTP id az7mr3786915igb.64.1323445385954;
+        Fri, 09 Dec 2011 07:43:05 -0800 (PST)
+Received: from localhost.localdomain ([203.110.240.205])
+        by mx.google.com with ESMTPS id a2sm18298821igj.7.2011.12.09.07.43.02
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 09 Dec 2011 07:43:05 -0800 (PST)
+X-Mailer: git-send-email 1.7.7.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186638>
 
-On Fri, Dec 9, 2011 at 10:03 AM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Hi Justin,
->
-> Justin Johnson wrote:
->> git push alternateorigin
->> should not do anything, but
->> git push alternateorigin mybranch
->> should push just mybranch.
->
-> $ git config push.default nothing
-> Note: push.default defaults to "matching"
->
-> Cheers.
->
-> -- Ram
+Hi,
 
-Thank you, that's exactly it. I saw it in the docs for git-config but
-wasn't positive that's what I needed.
+The previous iteration had 5 parts ($gmane/186425), and this one has
+9.  So, I have to explain where the four new patches came from:
 
---Justin
+- "revert: report fine-grained error messages from insn parser" arises
+  from Jonathan's request to split "revert: allow mixed pick and
+  revert instructions".
+
+- "revert: tolerate extra spaces, tabs in insn sheet" comes from
+  Junio's request to be considerate towards people with fat fingers.
+
+- I put in the other two patches on my own, because I realized that
+  the tests needed some tightening, lest they hide underlying bugs
+  (it's happened before).
+
+Apart from that, I've just made changes in response to reviews.  I'm
+not yet sure what to do about $gmane/186433.
+
+Thanks for reading.
+
+-- Ram
+
+Jonathan Nieder (1):
+  revert: simplify communicating command-line arguments
+
+Ramkumar Ramachandra (8):
+  revert: free msg in format_todo()
+  revert: make commit subjects in insn sheet optional
+  revert: tolerate extra spaces, tabs in insn sheet
+  revert: simplify getting commit subject in format_todo()
+  t3510 (cherry-pick-sequencer): use exit status
+  t3510 (cherry-pick-sequencer): remove malformed sheet 2
+  revert: allow mixed pick and revert instructions
+  revert: report fine-grained error messages from insn parser
+
+ builtin/revert.c                |  237 ++++++++++++++++++++------------------
+ t/t3510-cherry-pick-sequence.sh |  157 +++++++++++++++++++++-----
+ 2 files changed, 252 insertions(+), 142 deletions(-)
+
+-- 
+1.7.7.3
