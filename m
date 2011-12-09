@@ -1,141 +1,294 @@
-From: =?iso-8859-1?Q?Sidney_San_Mart=EDn?= <s@sidneysm.com>
-Subject: Question about commit message wrapping
-Date: Thu, 8 Dec 2011 20:59:06 -0500
-Message-ID: <35A5A513-91FD-4EF9-B890-AB3D1550D63F@sidneysm.com>
-Mime-Version: 1.0 (Apple Message framework v1251.1)
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 09 02:59:23 2011
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv2 0/13] credential helpers
+Date: Thu, 8 Dec 2011 21:29:13 -0500
+Message-ID: <20111209022913.GA2600@sigill.intra.peff.net>
+References: <20111206062127.GA29046@sigill.intra.peff.net>
+ <7v7h29fkfy.fsf@alter.siamese.dyndns.org>
+ <20111207064231.GA499@sigill.intra.peff.net>
+ <7vmxb2hhne.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 09 03:29:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYpk8-0005Iw-Qd
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 02:59:21 +0100
+	id 1RYqDB-0004CZ-Dk
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 03:29:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754150Ab1LIB7L convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Dec 2011 20:59:11 -0500
-Received: from mail-qw0-f53.google.com ([209.85.216.53]:56415 "EHLO
-	mail-qw0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751454Ab1LIB7H convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Dec 2011 20:59:07 -0500
-Received: by qadb15 with SMTP id b15so2368684qad.19
-        for <git@vger.kernel.org>; Thu, 08 Dec 2011 17:59:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sidneysm.com; s=google;
-        h=from:content-type:content-transfer-encoding:subject:date:message-id
-         :to:mime-version:x-mailer;
-        bh=XIJlxvIDV4dZiRkc5QQYpshlfEGe4txNVoE3ajXsqM4=;
-        b=C6p5VjSB4T7jV4L6hmkB5ypJyFnmhQ+wKSNSW2ZoRdzZrg4ujMtyIuYOKqM7a9x8fz
-         REPfPMtx1LbHVBtPx/BgsIfEP4rqRoUj1Qffe7nErbpBNNYRC/RQlr6u5tEqSKa7gmGZ
-         TJ8XozWoIU4oXWlJRMos8f5Sw8qS6C+zNCccA=
-Received: by 10.224.192.10 with SMTP id do10mr5269011qab.50.1323395947030;
-        Thu, 08 Dec 2011 17:59:07 -0800 (PST)
-Received: from [192.168.1.5] (ool-43536f0d.dyn.optonline.net. [67.83.111.13])
-        by mx.google.com with ESMTPS id ha3sm13433962qab.2.2011.12.08.17.59.05
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 08 Dec 2011 17:59:06 -0800 (PST)
-X-Mailer: Apple Mail (2.1251.1)
+	id S1754039Ab1LIC3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Dec 2011 21:29:17 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44716
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752692Ab1LIC3Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Dec 2011 21:29:16 -0500
+Received: (qmail 421 invoked by uid 107); 9 Dec 2011 02:35:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 08 Dec 2011 21:35:54 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Dec 2011 21:29:13 -0500
+Content-Disposition: inline
+In-Reply-To: <7vmxb2hhne.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186605>
 
-Hey, I want to ask about the practice of wrapping commit messages to 70=
--something charaters.
+On Thu, Dec 08, 2011 at 01:34:29PM -0800, Junio C Hamano wrote:
 
-The webpage most cited about it, which I otherwise really like, is
+> Jeff King <peff@peff.net> writes:
+> 
+> > Because the pattern takes 0 or more lines and no terminator, we can't
+> > distinguish between empty or truncated input and the empty pattern.
+> 
+> I agree that such a positive "Ok here is the end of specification" marker
+> is a good idea, even if we do not worry about "an empty set".
+> 
+> When the requestor wants to specify the credentials with host and user,
+> but the wire is cut after host is communicated but before user is, we do
+> want to notice the communication error, instead of silently erasing all
+> the credentials on the host regardless of the user.
 
-	http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
+OK, I've tweaked the series to require an end-of-credential marker (a
+blank line) both in input and output.
 
-*Nothing else* in my everyday life works this way anymore. Line wrappin=
-g gets done on the display end in my email client, my web browser, my e=
-book reader entirely automatically, and it adapts to the size of the wi=
-ndow.
+In addition, I've changed the code that runs helpers to make reading
+from the helpers an all-or-nothing thing (instead of incrementally
+ovewriting our credential as we read from it). Before, if a helper
+exited with error, we would happily use its partial result. Instead, we
+now read its response into a holding area, and only copy it into our
+credential when we get a successful exit code. This lets us detect
+truncation when reading from the helper, too.
 
-That article gives two reasons why commits should be wrapped to 72 colu=
-mns. First:
+It works, and it detects truncated output both ways properly (I know
+because I had to update every test, since the old output was missing the
+end-of-credential marker).
 
-> git log doesn=92t do any special special wrapping of the commit messa=
-ges. With the default pager of less -S, this means your paragraphs flow=
- far off the edge of the screen, making them difficult to read. On an 8=
-0 column terminal, if we subtract 4 columns for the indent on the left =
-and 4 more for symmetry on the right, we=92re left with 72 columns.
+It makes me a little sad, because the original format (relying on EOF)
+was so Unix-y. You could make a helper like this:
 
-Here, I put a patch at the bottom of this email that wraps commit messa=
-ges to, right now, 80 columns when they're displayed. (It=92s a quick o=
-ne, probably needs configurability. Also, beware, I don=92t program in =
-C too much.)
+  echo password=`gpg -qd ~/.secret.gpg`
 
-Second:
+and now you must remember to tack an extra "echo" at the end. Not a big
+deal, but it somehow just feels less elegant to my gut.  OTOH, classic
+Unix constructs have always been a nightmare for robustness and error
+checking[1], so this is certainly nothing new.
 
-> git format-patch --stdout converts a series of commits to a series of=
- emails, using the messages for the message body. Good email netiquette=
- dictates we wrap our plain text emails such that there=92s room for a =
-few levels of nested reply indicators without overflow in an 80 column =
-terminal. (The current rails.git workflow doesn=92t include email, but =
-who knows what the future will bring.)
+The diff from this tip to the old tip is below to give you a sense of
+the magnitude of the change (the individual changes are squashed into
+their respective patches for the next re-roll, of course). I'll hold off
+on posting the whole series to see if we get any more comments.
 
-There's been a standard for flowed plain text emails (which don't have =
-to wrap at 80 columns) for well over ten years, RFC-2646 and is widely =
-supported. Besides, code in diffs is often longer than 7x characters, a=
-nd wrapping, like `git log`, could be done inside git. FWIW, there are =
-a bunch of merge commits with lines longer than 80 characters in the gi=
-t repo itself.
+-Peff
 
-=46inally, people read commits these days in many other places than `gi=
-t log` (and make commits in many other places than a text editor config=
-ured to wrap). Most every GUI and already word wraps commit messages ju=
-st fine. As a result, there are commits in popular repos much longer th=
-an the 72-column standard and no one notices. Instead, properly-formatt=
-ed commit messages end up looking cramped when you see them in anywhere=
- wider than 80 columns.
+[1] I mean things like:
 
-Am I crazy? If this makes sense to anyone else, I'd be happy to help ma=
-ssage this into something git-worthy, with some help (never worked on G=
-it before).
+      grep foo bar | sed 's/some/transformation/'
 
-- - -
-
-=46rom a93b390d1506652d4ad41d1cbd987ba98a8deca0 Mon Sep 17 00:00:00 200=
-1
-=46rom: =3D?UTF-8?q?Sidney=3D20San=3D20Marti=3DCC=3D81n?=3D <s@sidneysm=
-=2Ecom>
-Date: Thu, 8 Dec 2011 20:26:23 -0500
-Subject: [PATCH] Wrap commit messages on display
-
-- Wrap to 80 characters minus the indent
-- Use a hanging indent for lines which begin with "- "
-- Do not wrap lines which begin with whitespace
+    where we totally ignore errors from grep, and where a truncated
+    output on the pipe would just subtly generate wrong answers.
 ---
- pretty.c |   10 ++++++++--
- 1 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/pretty.c b/pretty.c
-index 230fe1c..15804ce 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1243,8 +1243,14 @@ void pp_remainder(const struct pretty_print_cont=
-ext *pp,
- 			memset(sb->buf + sb->len, ' ', indent);
- 			strbuf_setlen(sb, sb->len + indent);
+ Documentation/technical/api-credentials.txt |    2 +-
+ credential-cache--daemon.c                  |    1 +
+ credential-cache.c                          |    2 +
+ credential-store.c                          |    1 +
+ credential.c                                |   39 +++++++++++++++++++++++---
+ t/lib-credential.sh                         |    1 +
+ t/t0300-credentials.sh                      |    3 ++
+ t/t5550-http-fetch.sh                       |    1 +
+ 8 files changed, 44 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/technical/api-credentials.txt b/Documentation/technical/api-credentials.txt
+index 21ca6a2..0aac899 100644
+--- a/Documentation/technical/api-credentials.txt
++++ b/Documentation/technical/api-credentials.txt
+@@ -199,7 +199,7 @@ followed by a newline. The key may contain any bytes except `=`,
+ newline, or NUL. The value may contain any bytes except newline or NUL.
+ In both cases, all bytes are treated as-is (i.e., there is no quoting,
+ and one cannot transmit a value with newline or NUL in it). The list of
+-attributes is terminated by a blank line or end-of-file.
++attributes is terminated by a blank line.
+ 
+ Git will send the following attributes (but may not send all of
+ them for a given credential; for example, a `host` attribute makes no
+diff --git a/credential-cache--daemon.c b/credential-cache--daemon.c
+index 390f194..38403645 100644
+--- a/credential-cache--daemon.c
++++ b/credential-cache--daemon.c
+@@ -138,6 +138,7 @@ static void serve_one_client(FILE *in, FILE *out)
+ 		if (e) {
+ 			fprintf(out, "username=%s\n", e->item.username);
+ 			fprintf(out, "password=%s\n", e->item.password);
++			fprintf(out, "\n");
  		}
--		strbuf_add(sb, line, linelen);
--		strbuf_addch(sb, '\n');
-+		if (line[0] =3D=3D ' ' || line[0] =3D=3D '\t') {
-+			strbuf_add(sb, line, linelen);
-+		} else {
-+			struct strbuf wrapped =3D STRBUF_INIT;
-+			strbuf_add(&wrapped, line, linelen);
-+			strbuf_add_wrapped_text(sb, wrapped.buf, 0, indent + (line[0] =3D=3D=
- '-' && line[1] =3D=3D ' ' ? 2 : 0), 80 - indent);
-+			strbuf_addch(sb, '\n');
-+		}
  	}
+ 	else if (!strcmp(action.buf, "exit"))
+diff --git a/credential-cache.c b/credential-cache.c
+index dc98372..5b8d8c9 100644
+--- a/credential-cache.c
++++ b/credential-cache.c
+@@ -70,6 +70,8 @@ static void do_cache(const char *socket, const char *action, int timeout,
+ 		if (strbuf_read(&buf, 0, 0) < 0)
+ 			die_errno("unable to relay credential");
+ 	}
++	else
++		strbuf_addch(&buf, '\n');
+ 
+ 	if (!send_request(socket, &buf))
+ 		return;
+diff --git a/credential-store.c b/credential-store.c
+index ed58768..00e38f0 100644
+--- a/credential-store.c
++++ b/credential-store.c
+@@ -43,6 +43,7 @@ static void print_entry(struct credential *c)
+ {
+ 	printf("username=%s\n", c->username);
+ 	printf("password=%s\n", c->password);
++	printf("\n");
  }
-=20
---=20
-1.7.8
+ 
+ static void print_line(struct strbuf *buf)
+diff --git a/credential.c b/credential.c
+index a17eafe..6d2a37d 100644
+--- a/credential.c
++++ b/credential.c
+@@ -147,8 +147,10 @@ int credential_read(struct credential *c, FILE *fp)
+ 		char *key = line.buf;
+ 		char *value = strchr(key, '=');
+ 
+-		if (!line.len)
+-			break;
++		if (!line.len) {
++			strbuf_release(&line);
++			return 0;
++		}
+ 
+ 		if (!value) {
+ 			warning("invalid credential line: %s", key);
+@@ -181,7 +183,7 @@ int credential_read(struct credential *c, FILE *fp)
+ 	}
+ 
+ 	strbuf_release(&line);
+-	return 0;
++	return -1;
+ }
+ 
+ static void credential_write_item(FILE *fp, const char *key, const char *value)
+@@ -198,6 +200,26 @@ static void credential_write(const struct credential *c, FILE *fp)
+ 	credential_write_item(fp, "path", c->path);
+ 	credential_write_item(fp, "username", c->username);
+ 	credential_write_item(fp, "password", c->password);
++	putc('\n', fp);
++}
++
++static void credential_merge_one(char **dst, char **src)
++{
++	if (!*src)
++		return;
++	free(*dst);
++	*dst = *src;
++	*src = NULL;
++}
++
++static void credential_merge(struct credential *dst,
++			     struct credential *src)
++{
++	credential_merge_one(&dst->protocol, &src->protocol);
++	credential_merge_one(&dst->host, &src->host);
++	credential_merge_one(&dst->path, &src->path);
++	credential_merge_one(&dst->username, &src->username);
++	credential_merge_one(&dst->password, &src->password);
+ }
+ 
+ static int run_credential_helper(struct credential *c,
+@@ -206,6 +228,7 @@ static int run_credential_helper(struct credential *c,
+ {
+ 	struct child_process helper;
+ 	const char *argv[] = { NULL, NULL };
++	struct credential response = CREDENTIAL_INIT;
+ 	FILE *fp;
+ 
+ 	memset(&helper, 0, sizeof(helper));
+@@ -227,17 +250,23 @@ static int run_credential_helper(struct credential *c,
+ 
+ 	if (want_output) {
+ 		int r;
++
+ 		fp = xfdopen(helper.out, "r");
+-		r = credential_read(c, fp);
++		r = credential_read(&response, fp);
+ 		fclose(fp);
+ 		if (r < 0) {
++			credential_clear(&response);
+ 			finish_command(&helper);
+ 			return -1;
+ 		}
+ 	}
+ 
+-	if (finish_command(&helper))
++	if (finish_command(&helper)) {
++		credential_clear(&response);
+ 		return -1;
++	}
++
++	credential_merge(c, &response);
+ 	return 0;
+ }
+ 
+diff --git a/t/lib-credential.sh b/t/lib-credential.sh
+index fc34447..c0de4e9 100755
+--- a/t/lib-credential.sh
++++ b/t/lib-credential.sh
+@@ -5,6 +5,7 @@
+ # separated by "--".
+ check() {
+ 	read_chunk >stdin &&
++	echo >>stdin &&
+ 	read_chunk >expect-stdout &&
+ 	read_chunk >expect-stderr &&
+ 	test-credential "$@" <stdin >stdout 2>stderr &&
+diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
+index 885af8f..f0e77dc 100755
+--- a/t/t0300-credentials.sh
++++ b/t/t0300-credentials.sh
+@@ -9,6 +9,7 @@ test_expect_success 'setup helper scripts' '
+ 	whoami=`echo $0 | sed s/.*git-credential-//`
+ 	echo >&2 "$whoami: $*"
+ 	while IFS== read key value; do
++		test -z "$key" && break
+ 		echo >&2 "$whoami: $key=$value"
+ 		eval "$key=$value"
+ 	done
+@@ -28,6 +29,7 @@ test_expect_success 'setup helper scripts' '
+ 	. ./dump
+ 	test -z "$user" || echo username=$user
+ 	test -z "$pass" || echo password=$pass
++	echo
+ 	EOF
+ 	chmod +x git-credential-verbatim &&
+ 
+@@ -196,6 +198,7 @@ HELPER="!f() {
+ 		cat >/dev/null
+ 		echo username=foo
+ 		echo password=bar
++		echo
+ 	}; f"
+ test_expect_success 'respect configured credentials' '
+ 	test_config credential.helper "$HELPER" &&
+diff --git a/t/t5550-http-fetch.sh b/t/t5550-http-fetch.sh
+index 95a133d..b817c69 100755
+--- a/t/t5550-http-fetch.sh
++++ b/t/t5550-http-fetch.sh
+@@ -106,6 +106,7 @@ test_expect_success 'http auth respects credential helper config' '
+ 		cat >/dev/null
+ 		echo username=user@host
+ 		echo password=user@host
++		echo
+ 	}; f" &&
+ 	>askpass-query &&
+ 	echo wrong >askpass-response &&
