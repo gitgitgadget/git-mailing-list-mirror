@@ -1,79 +1,75 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 5/9] t3510 (cherry-pick-sequencer): use exit status
-Date: Fri, 9 Dec 2011 15:00:58 -0600
-Message-ID: <20111209210058.GN20913@elie.hsd1.il.comcast.net>
+Subject: Re: [PATCH 9/9] revert: simplify communicating command-line arguments
+Date: Fri, 9 Dec 2011 15:09:28 -0600
+Message-ID: <20111209210928.GO20913@elie.hsd1.il.comcast.net>
 References: <1323445326-24637-1-git-send-email-artagnon@gmail.com>
- <1323445326-24637-6-git-send-email-artagnon@gmail.com>
- <20111209202149.GH20913@elie.hsd1.il.comcast.net>
- <CALkWK0=a=-4N4aZHuu=5zkNtwmfLsog5WkBVbuJAbYpvaLUsAg@mail.gmail.com>
+ <1323445326-24637-10-git-send-email-artagnon@gmail.com>
+ <20111209190236.GA20913@elie.hsd1.il.comcast.net>
+ <CALkWK0m_6yGuyLt-VqvRZkAiDoSxES8KeNzeXaejYRCpW=HAOg@mail.gmail.com>
+ <20111209192919.GB20913@elie.hsd1.il.comcast.net>
+ <CALkWK0m2veE8FmFVTPEqNAmbtvm1sWVHtFt0QOWU=huQFafeBw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 09 22:01:12 2011
+X-From: git-owner@vger.kernel.org Fri Dec 09 22:09:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZ7Z8-0006fp-6T
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 22:01:10 +0100
+	id 1RZ7hK-00012v-DT
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 22:09:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753680Ab1LIVBF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Dec 2011 16:01:05 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:46021 "EHLO
+	id S1753938Ab1LIVJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Dec 2011 16:09:33 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:41504 "EHLO
 	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751459Ab1LIVBE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Dec 2011 16:01:04 -0500
-Received: by ggnr5 with SMTP id r5so3742616ggn.19
-        for <git@vger.kernel.org>; Fri, 09 Dec 2011 13:01:03 -0800 (PST)
+	with ESMTP id S1750922Ab1LIVJd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Dec 2011 16:09:33 -0500
+Received: by ggnr5 with SMTP id r5so3752395ggn.19
+        for <git@vger.kernel.org>; Fri, 09 Dec 2011 13:09:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=Y5yOCFjgs7qIkitgml8w8S14vUYXrJnXpJTvLSimFyw=;
-        b=IYmvMYmFs8CX5oscdYrExaP+nCC51PyMowPoULqClMqa45pETiZF222pT39MrJNYah
-         VWGWYg3xUp0ptdLm+bAd5icnIlpIec/RcGViNWim6WwRy1bxpzsiZ2PiwPoXoM+w1xLz
-         DAa1Qm7i7Msimkk2a1MD6WvJfFu4fVNwPLiC0=
-Received: by 10.182.41.69 with SMTP id d5mr828190obl.47.1323464463566;
-        Fri, 09 Dec 2011 13:01:03 -0800 (PST)
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=FQlBL5zV4xVFf67P3MXw9BSskC5hLai+PwkyWwpXGSA=;
+        b=Wc3Exvz4S+kCZzCT2+HJt83IpZE0lHuFLtUfCEv0wEqm4NxlRKLBzFmDmUlzTIbUc5
+         RW/zM33w6Plj52+EHS2WfZ6lP4vjA9h+Mt4KCkP1xztrkGmExiRfotw7JqSOG3ktNmg6
+         rhm/PzxvVuKepFSqPTnc/G5vIXQgWbWDYuutY=
+Received: by 10.101.3.9 with SMTP id f9mr2361226ani.54.1323464972708;
+        Fri, 09 Dec 2011 13:09:32 -0800 (PST)
 Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id t9sm883673obv.8.2011.12.09.13.01.02
+        by mx.google.com with ESMTPS id f17sm27099773ang.20.2011.12.09.13.09.31
         (version=SSLv3 cipher=OTHER);
-        Fri, 09 Dec 2011 13:01:02 -0800 (PST)
+        Fri, 09 Dec 2011 13:09:32 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <CALkWK0=a=-4N4aZHuu=5zkNtwmfLsog5WkBVbuJAbYpvaLUsAg@mail.gmail.com>
+In-Reply-To: <CALkWK0m2veE8FmFVTPEqNAmbtvm1sWVHtFt0QOWU=huQFafeBw@mail.gmail.com>
 User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186696>
 
 Ramkumar Ramachandra wrote:
-> Jonathan Nieder wrote:
->> Ramkumar Ramachandra wrote:
 
->>> - =C2=A0 =C2=A0 test_must_fail git cherry-pick -s -m 1 --strategy=3D=
-recursive -X patience -X ours base..anotherpick &&
->>> + =C2=A0 =C2=A0 test_expect_code 128 git cherry-pick -s -m 1 --stra=
-tegy=3Drecursive -X patience -X ours base..anotherpick &&
->>> =C2=A0 =C2=A0 =C2=A0 test_path_is_dir .git/sequencer &&
->>
->> Encountered conflicts, preserving options, but the exit is with stat=
-us
->> 128? =C2=A0Smells like a bug.
->
-> No bug.
+>                                                                a
+> positive exit status can be interpreted as a conflict, but this is
+> clearly not the case here.  How do we fix this problem?  By creating
+> an API for "git commit", not by shelling out like this and letting it
+> take over the exit status.
 
-Ok.  I'm fuzzy on the details, but is it possible to make this change
-in such a way as to make that obvious?  For example, perhaps this
-should be split into several tests: one to check that such mistaken
-use of "-m 1" with non-merge commits correctly interrupts the
-cherry-pick and pleads to the user for advice (should it?), another to
-check that doing so produces an exit status of 128 (if it should), and
-another to make sure that doing so, fixing things up somehow, and
-resuming the sequence allows the effect of "-m 1" to carry over to
-later commits.
+That might be a nice thing to do anyway, but I don't see how it would
+solve anything.  The new "git commit" API would presumably return an
+integer or enum value to indicate the result of trying to commit.
+Tests in the testsuite for the "git commit" API would use the "git
+commit" command, which would expose the newly fine-grained values
+somehow.  And other people scripting but wanting the porcelain to take
+care of basic UI would benefit, too.  Right?
+
+Actually, I think cherry-pick returning a positive exit status for
+"nothing left to commit after resolving conflicts" would be sensible.
+It is "I did what you asked but need your help to determine the final
+content of the commit or decide to skip it", rather than "you asked
+for something unsensible and I am bailing out".
