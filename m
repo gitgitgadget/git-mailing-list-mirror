@@ -1,100 +1,70 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH 4/4] git-p4: test for absolute PWD problem
-Date: Fri,  9 Dec 2011 18:48:17 -0500
-Message-ID: <1323474497-14339-5-git-send-email-pw@padd.com>
-References: <1323474497-14339-1-git-send-email-pw@padd.com>
-Cc: Gary Gibbons <ggibbons@perforce.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 10 00:49:51 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 0/13] credential helpers
+Date: Fri, 09 Dec 2011 15:56:44 -0800
+Message-ID: <7vaa71cn9f.fsf@alter.siamese.dyndns.org>
+References: <20111206062127.GA29046@sigill.intra.peff.net>
+ <7v7h29fkfy.fsf@alter.siamese.dyndns.org>
+ <20111207064231.GA499@sigill.intra.peff.net>
+ <7vmxb2hhne.fsf@alter.siamese.dyndns.org>
+ <20111209022913.GA2600@sigill.intra.peff.net>
+ <7vzkf1fwvn.fsf@alter.siamese.dyndns.org>
+ <20111209231800.GA14376@sigill.intra.peff.net>
+ <7vehwdcob3.fsf@alter.siamese.dyndns.org>
+ <20111209233957.GC10560@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Dec 10 00:56:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZACM-0007FQ-JE
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 00:49:50 +0100
+	id 1RZAJ9-00016X-0r
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 00:56:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754877Ab1LIXtm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Dec 2011 18:49:42 -0500
-Received: from honk.padd.com ([74.3.171.149]:44005 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755108Ab1LIXtm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2011 18:49:42 -0500
-Received: from arf.padd.com (unknown [50.55.144.134])
-	by honk.padd.com (Postfix) with ESMTPSA id ACBC7EE;
-	Fri,  9 Dec 2011 15:49:41 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 3F6EA313BB; Fri,  9 Dec 2011 18:49:38 -0500 (EST)
-X-Mailer: git-send-email 1.7.8.rc4.4.gc2b11.dirty
-In-Reply-To: <1323474497-14339-1-git-send-email-pw@padd.com>
+	id S1755039Ab1LIX4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Dec 2011 18:56:47 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44548 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752602Ab1LIX4q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Dec 2011 18:56:46 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 040A66BD1;
+	Fri,  9 Dec 2011 18:56:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=G8Tut8FTxf7f2REfMsPcH1HNsEU=; b=Scbs7C
+	7CGHbXchJpg1WDbGntrxzAXUjuCBi7cG0GXrUnNA1dN7QA456vAYPSrdRWPPiPwA
+	l/9NnmM+E6uyZhQR36Yammep9zx8GsuroTbWr73CODMnXTSfWxWuZSzCGCoOpBwW
+	GRPfdWtY7lh7z6RTDscTuyufaVeOvSN+FIFXY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AtSGNl/s3Aj8gqLVcGhSQjcWmmZE0VFd
+	yTx/1hP/KD4sdBKMpXEITxTQtNhboa/8Jb3UujCX4J/uZxt0qsZgpjiPrqjpvX3i
+	ppxvaJiYP1iSqt9bdR1xpmff9AoAvqYZMblYBUn/HX3BtZ7toCB6yzY3Bwh2/xR4
+	rplV5+pejcc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EF7FB6BD0;
+	Fri,  9 Dec 2011 18:56:45 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 841A56BCF; Fri,  9 Dec 2011
+ 18:56:45 -0500 (EST)
+In-Reply-To: <20111209233957.GC10560@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 9 Dec 2011 18:39:58 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 734146FC-22C1-11E1-AF01-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186710>
 
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Pete Wyckoff <pw@padd.com>
----
- t/t9808-chdir.sh |   49 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 49 insertions(+), 0 deletions(-)
- create mode 100755 t/t9808-chdir.sh
+> Speaking of which, I hackishly ported Jay's osxkeychain helper to the
+> new format last night. I'll try to clean that up and post it tonight.
 
-diff --git a/t/t9808-chdir.sh b/t/t9808-chdir.sh
-new file mode 100755
-index 0000000..e6fd681
---- /dev/null
-+++ b/t/t9808-chdir.sh
-@@ -0,0 +1,49 @@
-+#!/bin/sh
-+
-+test_description='git-p4 relative chdir'
-+
-+. ./lib-git-p4.sh
-+
-+test_expect_success 'start p4d' '
-+	start_p4d
-+'
-+
-+test_expect_success 'init depot' '
-+	(
-+		cd "$cli" &&
-+		echo file1 >file1 &&
-+		p4 add file1 &&
-+		p4 submit -d "change 1"
-+	)
-+'
-+
-+# P4 reads from P4CONFIG file to find its server params, if the
-+# environment variable is set
-+test_expect_success 'P4CONFIG and absolute dir clone' '
-+	printf "P4PORT=$P4PORT\nP4CLIENT=$P4CLIENT\n" >p4config &&
-+	test_when_finished "rm \"$TRASH_DIRECTORY/p4config\"" &&
-+	test_when_finished cleanup_git &&
-+	(
-+                P4CONFIG=p4config && export P4CONFIG &&
-+		unset P4PORT P4CLIENT &&
-+		"$GITP4" clone --verbose --dest="$git" //depot
-+	)
-+'
-+
-+# same thing, but with relative directory name, note missing $ on --dest
-+test_expect_success 'P4CONFIG and relative dir clone' '
-+	printf "P4PORT=$P4PORT\nP4CLIENT=$P4CLIENT\n" >p4config &&
-+	test_when_finished "rm \"$TRASH_DIRECTORY/p4config\"" &&
-+	test_when_finished cleanup_git &&
-+	(
-+                P4CONFIG=p4config && export P4CONFIG &&
-+		unset P4PORT P4CLIENT &&
-+		"$GITP4" clone --verbose --dest="git" //depot
-+	)
-+'
-+
-+test_expect_success 'kill p4d' '
-+	kill_p4d
-+'
-+
-+test_done
--- 
-1.7.8.rc4.42.g8317d
+;-).
