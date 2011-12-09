@@ -1,71 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv2 0/13] credential helpers
-Date: Fri, 9 Dec 2011 18:39:58 -0500
-Message-ID: <20111209233957.GC10560@sigill.intra.peff.net>
-References: <20111206062127.GA29046@sigill.intra.peff.net>
- <7v7h29fkfy.fsf@alter.siamese.dyndns.org>
- <20111207064231.GA499@sigill.intra.peff.net>
- <7vmxb2hhne.fsf@alter.siamese.dyndns.org>
- <20111209022913.GA2600@sigill.intra.peff.net>
- <7vzkf1fwvn.fsf@alter.siamese.dyndns.org>
- <20111209231800.GA14376@sigill.intra.peff.net>
- <7vehwdcob3.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 10 00:40:09 2011
+From: Pete Wyckoff <pw@padd.com>
+Subject: [PATCH 0/4] git-p4: paths for p4
+Date: Fri,  9 Dec 2011 18:48:13 -0500
+Message-ID: <1323474497-14339-1-git-send-email-pw@padd.com>
+Cc: Gary Gibbons <ggibbons@perforce.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 10 00:48:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZA2x-00042X-Rb
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 00:40:08 +0100
+	id 1RZAB1-0006nf-8r
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 00:48:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751528Ab1LIXkC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Dec 2011 18:40:02 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45445
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752155Ab1LIXkB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2011 18:40:01 -0500
-Received: (qmail 9907 invoked by uid 107); 9 Dec 2011 23:46:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 09 Dec 2011 18:46:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Dec 2011 18:39:58 -0500
-Content-Disposition: inline
-In-Reply-To: <7vehwdcob3.fsf@alter.siamese.dyndns.org>
+	id S1754938Ab1LIXsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Dec 2011 18:48:22 -0500
+Received: from honk.padd.com ([74.3.171.149]:43989 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752209Ab1LIXsW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Dec 2011 18:48:22 -0500
+Received: from arf.padd.com (unknown [50.55.144.134])
+	by honk.padd.com (Postfix) with ESMTPSA id 6B65FEE;
+	Fri,  9 Dec 2011 15:48:21 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 06715313BB; Fri,  9 Dec 2011 18:48:17 -0500 (EST)
+X-Mailer: git-send-email 1.7.8.rc4.4.gc2b11.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186705>
 
-On Fri, Dec 09, 2011 at 03:34:08PM -0800, Junio C Hamano wrote:
+There are two problems associated with how we set up paths for
+use by p4, fixed in this series.  Each fix is accompanied by
+another patch that is the unit test.
 
-> > We _could_ modify credential_match() to automatically reject such a
-> > pattern at that level,...
-> 
-> I do not think that is such a good idea to modify "match()" function
-> either, as I agree match with empty has its uses, but that does not stop
-> "rewrite_credential_file()" from being safe by default, no? After all, the
-> one that makes the decision to drop things that match the pattern is that
-> function (it chooses to give NULL to match_cb).
+There is a break in the sequence in the t98* patches here, but
+that is on purpose to avoid collision with new tests from other
+in-flight patches.
 
-Yeah, you could move it down to that level, but there isn't much point.
-rewrite_credential_file is unique to credential-store, and the only two
-callers are store_credential (which has its own, stricter rules already)
-and remove_credential, which we are modifying here.
+1-2:
+    in submit, create clientPath if it does not exist
 
-Note that I didn't bother with the same safety valve for
-credential-cache. It is, after all, a cache that will go away eventually
-anyway, so safety is less interesting.
+3-4:
+    in clone, make sure p4 sees an absolute path
 
-Third-party helpers will have to do their own checks anyway, as in
-general I don't plan on them linking directly against git code.
+Gary Gibbons (2):
+  git-p4: ensure submit clientPath exists before chdir
+  git-p4: use absolute directory for PWD env var
 
-Speaking of which, I hackishly ported Jay's osxkeychain helper to the
-new format last night. I'll try to clean that up and post it tonight.
+Pete Wyckoff (2):
+  git-p4: submit test for auto-creating clientPath
+  git-p4: test for absolute PWD problem
 
--Peff
+ contrib/fast-import/git-p4 |    9 ++++++-
+ t/t9807-submit.sh          |   38 ++++++++++++++++++++++++++++++++++
+ t/t9808-chdir.sh           |   49 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 94 insertions(+), 2 deletions(-)
+ create mode 100755 t/t9807-submit.sh
+ create mode 100755 t/t9808-chdir.sh
+
+-- 
+1.7.8.rc4.42.g8317d
