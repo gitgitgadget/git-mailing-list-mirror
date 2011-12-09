@@ -1,444 +1,283 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (Dec 2011, #03; Fri, 9)
-Date: Fri, 09 Dec 2011 16:09:51 -0800
-Message-ID: <7vk465b834.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 10 01:10:01 2011
+From: =?iso-8859-1?Q?Sidney_San_Mart=EDn?= <s@sidneysm.com>
+Subject: Re: Question about commit message wrapping
+Date: Fri, 9 Dec 2011 09:10:36 -0500
+Message-ID: <06819C5A-C6D3-4A14-9930-73F66707CE3E@sidneysm.com>
+References: <35A5A513-91FD-4EF9-B890-AB3D1550D63F@sidneysm.com> <op.v57na7120aolir@keputer>
+Mime-Version: 1.0 (Apple Message framework v1251.1)
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "Frans Klaver" <fransklaver@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 10 01:46:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZAVs-0004sV-D2
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 01:10:01 +0100
+	id 1RZB5T-0006ad-7p
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 01:46:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754974Ab1LJAJ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Dec 2011 19:09:56 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50441 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751721Ab1LJAJz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2011 19:09:55 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E3726ED3;
-	Fri,  9 Dec 2011 19:09:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=8
-	RNULZuTwoNxuoyIfRjq1/M9pRw=; b=qR5fq97dDDvwGpCXhMi0uB/uYCnBZIKKN
-	SWzEcn2d/ZqZFsWsV8rAtFjMHaIH5R+AbMHvpERl7B7gg425/WmjYarC2lTVzaYV
-	4wnDR5GJqB9/Zpjz6WBv0/2q4+BG5JbuF0h7tPcTjm17yraTR0iiX6JBJ+s05S19
-	9yYoe15cp0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=sVI
-	mIiv73DzfIMhUMyNxhT27stOLV4FXGu0wA1W13Dfy96a+NWcQ9AE3+WsrA5Fwj/b
-	YrG1rJPiFTmY08n6WHW666fCMoJ6ws1XhLc82D5VvKZ4iXeWDD1VnbPvJEf74bhn
-	7dmYxkvv3UfPmjh2xWyDsKNZQZB7gkBu5ZrNYkUY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 059576ED2;
-	Fri,  9 Dec 2011 19:09:54 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F2CF66ECF; Fri,  9 Dec 2011
- 19:09:52 -0500 (EST)
-X-master-at: 9859a023fef30ffebdd22ad9639c587ac720b8b6
-X-next-at: b9cfa4e96be9817e744fb728360e7f37c730d133
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 489D1D48-22C3-11E1-B723-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752825Ab1LJAqf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Dec 2011 19:46:35 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:57137 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752166Ab1LJAqe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Dec 2011 19:46:34 -0500
+Received: by ggnr5 with SMTP id r5so3931979ggn.19
+        for <git@vger.kernel.org>; Fri, 09 Dec 2011 16:46:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sidneysm.com; s=google;
+        h=content-type:mime-version:subject:from:in-reply-to:date
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        bh=bypjLNmh7xmWrr05IUKITexrCvHA4Luti6fvsGsjkcw=;
+        b=GjCxu/f6N8y97AtAEkh6mCHnPaj1bgcZZ0azv5FyCOZAUq03avnxrs6y6U3O70LtZ9
+         OA4pFz8XeQvLUpQLNs+xZMdOc7YPc+dOT/Ivgo9IiecaWwrJrM9v2w7v3F6MXDsNhfZx
+         IYGdc9UoDJcMtKPyWlpoH3EQ3EsXoR3rhp8hU=
+Received: by 10.101.160.1 with SMTP id m1mr2318830ano.156.1323477993964;
+        Fri, 09 Dec 2011 16:46:33 -0800 (PST)
+Received: from [127.0.0.1] (mobile-166-137-138-116.mycingular.net. [166.137.138.116])
+        by mx.google.com with ESMTPS id v48sm17906426yhk.6.2011.12.09.16.46.17
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 09 Dec 2011 16:46:33 -0800 (PST)
+In-Reply-To: <op.v57na7120aolir@keputer>
+X-Mailer: Apple Mail (2.1251.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186715>
-
-Here are the topics that have been cooking.  Commits prefixed with '-' are
-only in 'pu' (proposed updates) while commits prefixed with '+' are in
-'next'.
-
-Two of the more important topics slated for 1.7.9 have been merged to
-'master'. Let's hope the other ones also will stabilize soonish, so that
-we can smoothly close this cycle early.
-
-Here are the repositories that have my integration branches:
-
-With maint, master, next, pu, todo:
-
-        git://git.kernel.org/pub/scm/git/git.git
-        git://repo.or.cz/alt-git.git
-        https://code.google.com/p/git-core/
-        https://github.com/git/git
-
-With only maint and master:
-
-        git://git.sourceforge.jp/gitroot/git-core/git.git
-        git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-
-With all the topics and integration branches:
-
-        https://github.com/gitster/git
-
-The preformatted documentation in HTML and man format are found in:
-
-        git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
-        git://repo.or.cz/git-{htmldocs,manpages}.git/
-        https://code.google.com/p/git-{htmldocs,manpages}.git/
-        https://github.com/gitster/git-{htmldocs,manpages}.git/
-
---------------------------------------------------
-[Graduated to "master"]
-
-* ab/pull-rebase-config (2011-11-07) 1 commit
-  (merged to 'next' on 2011-12-05 at 6d235a4)
- + pull: introduce a pull.rebase option to enable --rebase
-
-* jc/pull-signed-tag (2011-11-12) 15 commits
-  (merged to 'next' on 2011-12-05 at c949bd1)
- + commit-tree: teach -m/-F options to read logs from elsewhere
- + commit-tree: update the command line parsing
- + commit: teach --amend to carry forward extra headers
- + merge: force edit and no-ff mode when merging a tag object
- + commit: copy merged signed tags to headers of merge commit
- + merge: record tag objects without peeling in MERGE_HEAD
- + merge: make usage of commit->util more extensible
- + fmt-merge-msg: Add contents of merged tag in the merge message
- + fmt-merge-msg: package options into a structure
- + fmt-merge-msg: avoid early returns
- + refs DWIMmery: use the same rule for both "git fetch" and others
- + fetch: allow "git fetch $there v1.0" to fetch a tag
- + merge: notice local merging of tags and keep it unwrapped
- + fetch: do not store peeled tag object names in FETCH_HEAD
- + Split GPG interface into its own helper library
- (this branch is used by jc/signed-commit.)
-
-Allow pulling/merging a signed tag instead of a branch tip, and record
-the GPG signature in the merge commit for later audit.
-
-* jc/request-pull-show-head-4 (2011-11-09) 12 commits
-  (merged to 'next' on 2011-12-05 at 8f05b45)
- + request-pull: use the annotated tag contents
- + fmt-merge-msg.c: Fix an "dubious one-bit signed bitfield" sparse error
- + environment.c: Fix an sparse "symbol not declared" warning
- + builtin/log.c: Fix an "Using plain integer as NULL pointer" warning
- + fmt-merge-msg: use branch.$name.description
- + request-pull: use the branch description
- + request-pull: state what commit to expect
- + request-pull: modernize style
- + branch: teach --edit-description option
- + format-patch: use branch description in cover letter
- + branch: add read_branch_desc() helper function
- + Merge branch 'bk/ancestry-path' into jc/branch-desc
-
-Allow setting "description" for branches and use it to help communications
-between humans in various workflow elements. It also allows requesting for
-a signed tag to be pulled and shows the tag message in the generated message.
-
-* nd/resolve-ref (2011-12-05) 2 commits
-  (merged to 'next' on 2011-12-05 at d55637f)
- + Copy resolve_ref() return value for longer use
- + Convert many resolve_ref() calls to read_ref*() and ref_exists()
-
-* rs/allocate-cache-entry-individually (2011-10-26) 2 commits
-  (merged to 'next' on 2011-12-05 at 241e711)
- + cache.h: put single NUL at end of struct cache_entry
- + read-cache.c: allocate index entries individually
-
-* sg/complete-refs (2011-10-21) 9 commits
-  (merged to 'next' on 2011-12-05 at 03e5527)
- + completion: remove broken dead code from __git_heads() and __git_tags()
- + completion: fast initial completion for config 'remote.*.fetch' value
- + completion: improve ls-remote output filtering in __git_refs_remotes()
- + completion: query only refs/heads/ in __git_refs_remotes()
- + completion: support full refs from remote repositories
- + completion: improve ls-remote output filtering in __git_refs()
- + completion: make refs completion consistent for local and remote repos
- + completion: optimize refs completion
- + completion: document __gitcomp()
-
---------------------------------------------------
-[New Topics]
-
-* rr/revert-cherry-pick (2011-12-09) 9 commits
- - revert: simplify communicating command-line arguments
- - revert: report fine-grained error messages from insn parser
- - revert: allow mixed pick and revert instructions
- - t3510 (cherry-pick-sequencer): remove malformed sheet 2
- - t3510 (cherry-pick-sequencer): use exit status
- - revert: simplify getting commit subject in format_todo()
- - revert: tolerate extra spaces, tabs in insn sheet
- - revert: make commit subjects in insn sheet optional
- - revert: free msg in format_todo()
-
-This is not the latest one but the last one posted to the list.
-
-* ew/keepalive (2011-12-05) 1 commit
- - enable SO_KEEPALIVE for connected TCP sockets
-
-Comments?
-
-* jc/checkout-m-twoway (2011-12-06) 1 commit
-  (merged to 'next' on 2011-12-09 at c946009)
- + checkout -m: no need to insist on having all 3 stages
-
-* tr/cache-tree (2011-12-06) 5 commits
- - reset: update cache-tree data when appropriate
- - commit: write cache-tree data when writing index anyway
- - Refactor cache_tree_update idiom from commit
- - Test the current state of the cache-tree optimization
- - Add test-scrap-cache-tree
-
-Will merge to 'next' after taking another look.
-
-* tr/userdiff-c-returns-pointer (2011-12-06) 1 commit
-  (merged to 'next' on 2011-12-09 at 0b6a092)
- + userdiff: allow * between cpp funcname words
-
-* jc/commit-amend-no-edit (2011-12-08) 5 commits
-  (merged to 'next' on 2011-12-09 at b9cfa4e)
- + test: commit --amend should honor --no-edit
- + commit: honour --no-edit
- + t7501 (commit): modernize style
- + test: remove a porcelain test that hard-codes commit names
- + test: add missing "&&" after echo command
-
-* jl/submodule-status-failure-report (2011-12-08) 1 commit
-  (merged to 'next' on 2011-12-09 at 53eb3b3)
- + diff/status: print submodule path when looking for changes fails
-
-* ks/tag-cleanup (2011-12-09) 1 commit
-  (merged to 'next' on 2011-12-09 at cbea045)
- + git-tag: introduce --cleanup option
-
-* rr/test-chaining (2011-12-09) 5 commits
- - t3040 (subprojects-basic): fix '&&' chaining, modernize style
- - t1510 (worktree): fix '&&' chaining
- - t3030 (merge-recursive): use test_expect_code
- - test: fix '&&' chaining
- - t3200 (branch): fix '&&' chaining
-
-I think Martin's patches to t3401 should also be queued here.
-
---------------------------------------------------
-[Cooking]
-
-* bc/maint-apply-check-no-patch (2011-12-05) 2 commits
-  (merged to 'next' on 2011-12-09 at fc780cd)
- + builtin/apply.c: report error on failure to recognize input
- + t/t4131-apply-fake-ancestor.sh: fix broken test
-
-* aw/rebase-i-stop-on-failure-to-amend (2011-11-30) 1 commit
-  (merged to 'next' on 2011-12-09 at a117e83)
- + rebase -i: interrupt rebase when "commit --amend" failed during "reword"
-
-* jc/split-blob (2011-12-01) 6 commits
- . WIP (streaming chunked)
- - chunked-object: fallback checkout codepaths
- - bulk-checkin: support chunked-object encoding
- - bulk-checkin: allow the same data to be multiply hashed
- - new representation types in the packstream
- - varint-in-pack: refactor varint encoding/decoding
- (this branch uses jc/stream-to-pack.)
-
-Not ready. At least pack-objects and fsck need to learn the new encoding
-for the series to be usable locally, and then index-pack/unpack-objects
-needs to learn it to be used remotely.
-
-* jh/fast-import-notes (2011-11-28) 3 commits
-  (merged to 'next' on 2011-12-09 at 2b01132)
- + fast-import: Fix incorrect fanout level when modifying existing notes refs
- + t9301: Add 2nd testcase exposing bugs in fast-import's notes fanout handling
- + t9301: Fix testcase covering up a bug in fast-import's notes fanout handling
-
-Comments?
-
-* tj/maint-imap-send-remove-unused (2011-11-23) 2 commits
-  (merged to 'next' on 2011-12-09 at 877cc11)
- + Merge branch 'maint' into tj/imap-send-remove-unused
- + imap-send: Remove unused 'use_namespace' variable
-
-* cn/maint-lf-to-crlf-filter (2011-11-28) 1 commit
-  (merged to 'next' on 2011-12-09 at c374d14)
- + convert: track state in LF-to-CRLF filter
-
-* jn/branch-move-to-self (2011-11-28) 2 commits
-  (merged to 'next' on 2011-12-09 at 7d27260)
- + Allow checkout -B <current-branch> to update the current branch
- + branch: allow a no-op "branch -M <current-branch> HEAD"
-
-* jk/credentials (2011-12-09) 20 commits
- - credential: use git_prompt instead of git_getpass
- - prompt: use git_terminal_prompt
- - add generic terminal prompt function
- - refactor git_getpass into generic prompt function
- - move git_getpass to its own source file
- - imap-send: don't check return value of git_getpass
- - imap-send: avoid buffer overflow
- - t: add test harness for external credential helpers
- - credentials: add "store" helper
- - strbuf: add strbuf_add*_urlencode
- - credentials: add "cache" helper
- - docs: end-user documentation for the credential subsystem
- - credential: make relevance of http path configurable
- - credential: add credential.*.username
- - credential: apply helper config
- - http: use credential API to get passwords
- - credential: add function for parsing url components
- - introduce credentials API
- - t5550: fix typo
- - test-lib: add test_config_global variant
-
-Looking good.
-
-* nd/ignore-might-be-precious (2011-11-28) 2 commits
-  (merged to 'next' on 2011-12-09 at 1a94553)
- + checkout,merge: disallow overwriting ignored files with --no-overwrite-ignore
- + Merge branch 'nd/maint-ignore-exclude' into nd/ignore-might-be-precious
-
-* jk/upload-archive-use-start-command (2011-11-21) 1 commit
-  (merged to 'next' on 2011-12-09 at 88cb83a)
- + upload-archive: use start_command instead of fork
-
-* jk/maint-1.6.2-upload-archive (2011-11-21) 1 commit
- + archive: don't let remote clients get unreachable commits
- (this branch is used by jk/maint-upload-archive.)
-
-* jk/maint-upload-archive (2011-11-21) 1 commit
-  (merged to 'next' on 2011-12-09 at 03deb16)
- + Merge branch 'jk/maint-1.6.2-upload-archive' into jk/maint-upload-archive
- (this branch uses jk/maint-1.6.2-upload-archive.)
-
-* ab/enable-i18n (2011-12-05) 1 commit
- - i18n: add infrastructure for translating Git with gettext
-
-Will merge to 'next'.
-
-* jc/signed-commit (2011-11-29) 5 commits
- - gpg-interface: allow use of a custom GPG binary
- - pretty: %G[?GS] placeholders
- - test "commit -S" and "log --show-signature"
- - log: --show-signature
- - commit: teach --gpg-sign option
-
-Not exactly urgent.
-
-* jc/stream-to-pack (2011-12-01) 5 commits
-  (merged to 'next' on 2011-12-09 at d0fd605)
- + bulk-checkin: replace fast-import based implementation
- + csum-file: introduce sha1file_checkpoint
- + finish_tmp_packfile(): a helper function
- + create_tmp_packfile(): a helper function
- + write_pack_header(): a helper function
- (this branch is used by jc/split-blob.)
-
-Teaches "git add" to send large-ish blob data straight to a packfile.
-This is a continuation to the "large file support" topic. The codepath to
-move data from worktree to repository is made aware of streaming, just
-like the checkout codepath that goes the other way, which was done in the
-previous "large file support" topic in the 1.7.7 cycle.
-
-* jn/gitweb-side-by-side-diff (2011-10-31) 8 commits
- - gitweb: Add navigation to select side-by-side diff
- - gitweb: Use href(-replay=>1,...) for formats links in "commitdiff"
- - t9500: Add basic sanity tests for side-by-side diff in gitweb
- - t9500: Add test for handling incomplete lines in diff by gitweb
- - gitweb: Give side-by-side diff extra CSS styling
- - gitweb: Add a feature to show side-by-side diff
- - gitweb: Extract formatting of diff chunk header
- - gitweb: Refactor diff body line classification
-
-Replaces a series from Kato Kazuyoshi on the same topic.
-Is this ready for 'next'?
-
---------------------------------------------------
-[Discarded]
-
-* hv/submodule-merge-search (2011-10-13) 4 commits
- . submodule.c: make two functions static
- . allow multiple calls to submodule merge search for the same path
- . push: Don't push a repository with unpushed submodules
- . push: teach --recurse-submodules the on-demand option
-
-* sr/transport-helper-fix-rfc (2011-07-19) 2 commits
- . t5800: point out that deleting branches does not work
- . t5800: document inability to push new branch with old content
-
-* sr/fix-fast-export-tips (2011-11-05) 3 commits
- . fast-export: output reset command for commandline revs
- . fast-export: do not refer to non-existing marks
- . t9350: point out that refs are not updated correctly
-
-* jc/lookup-object-hash (2011-08-11) 6 commits
- . object hash: replace linear probing with 4-way cuckoo hashing
- . object hash: we know the table size is a power of two
- . object hash: next_size() helper for readability
- . pack-objects --count-only
- . object.c: remove duplicated code for object hashing
- . object.c: code movement for readability
-
-* jc/verbose-checkout (2011-10-16) 2 commits
- . checkout -v: give full status output after switching branches
- . checkout: move the local changes report to the end
-
-* eh/grep-scale-to-cpunum (2011-11-05) 1 commit
- . grep: detect number of CPUs for thread spawning
-
-* jc/commit-tree-extra (2011-11-12) 2 commits
- . commit-tree: teach -C <extra-commit>
- . commit-tree: teach -x <extra>
- (this branch uses jc/pull-signed-tag; is tangled with jc/signed-commit.)
-
-* cb/daemon-permission-errors (2011-10-17) 2 commits
- . daemon: report permission denied error to clients
- . daemon: add tests
-
-* ld/p4-labels-branches (2011-11-30) 4 commits
- . git-p4: importing labels should cope with missing owner
- . git-p4: add test for p4 labels
- . git-p4: cope with labels with empty descriptions
- . git-p4: handle p4 branches and labels containing shell chars
-
-* mh/ref-api-2 (2011-11-16) 15 commits
- . refs: loosen over-strict "format" check
- . resolve_gitlink_ref_recursive(): change to work with struct ref_cache
- . Pass a (ref_cache *) to the resolve_gitlink_*() helper functions
- . resolve_gitlink_ref(): improve docstring
- . get_ref_dir(): change signature
- . refs: change signatures of get_packed_refs() and get_loose_refs()
- . is_dup_ref(): extract function from sort_ref_array()
- . add_ref(): add docstring
- . parse_ref_line(): add docstring
- . is_refname_available(): remove the "quiet" argument
- . clear_ref_array(): rename from free_ref_array()
- . refs: rename parameters result -> sha1
- . refs: rename "refname" variables
- . struct ref_entry: document name member
- . cache.h: add comments for git_path() and git_path_submodule()
- (this branch is tangled with mh/ref-api-3.)
-
-* mh/ref-api-3 (2011-11-16) 26 commits
- . refs: loosen over-strict "format" check
- . is_refname_available(): reimplement using do_for_each_ref_in_array()
- . names_conflict(): simplify implementation
- . names_conflict(): new function, extracted from is_refname_available()
- . repack_without_ref(): reimplement using do_for_each_ref_in_array()
- . do_for_each_ref_in_array(): new function
- . do_for_each_ref(): correctly terminate while processesing extra_refs
- . add_ref(): take a (struct ref_entry *) parameter
- . create_ref_entry(): extract function from add_ref()
- . parse_ref_line(): add a check that the refname is properly formatted
- . repack_without_ref(): remove temporary
- . Rename another local variable name -> refname
- . resolve_gitlink_ref_recursive(): change to work with struct ref_cache
- . Pass a (ref_cache *) to the resolve_gitlink_*() helper functions
- . resolve_gitlink_ref(): improve docstring
- . get_ref_dir(): change signature
- . refs: change signatures of get_packed_refs() and get_loose_refs()
- . is_dup_ref(): extract function from sort_ref_array()
- . add_ref(): add docstring
- . parse_ref_line(): add docstring
- . is_refname_available(): remove the "quiet" argument
- . clear_ref_array(): rename from free_ref_array()
- . refs: rename parameters result -> sha1
- . refs: rename "refname" variables
- . struct ref_entry: document name member
- . cache.h: add comments for git_path() and git_path_submodule()
- (this branch is tangled with mh/ref-api-2.)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186716>
+
+On Dec 9, 2011, at 2:05 AM, Frans Klaver wrote:
+
+> On Fri, 09 Dec 2011 02:59:06 +0100, Sidney San Mart=EDn <s@sidneysm.c=
+om> wrote:
+>=20
+>> Hey, I want to ask about the practice of wrapping commit messages to=
+ 70-something charaters.
+>>=20
+>> The webpage most cited about it, which I otherwise really like, is
+>>=20
+>> 	http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.htm=
+l
+>>=20
+>> *Nothing else* in my everyday life works this way anymore. Line wrap=
+ping gets done on the display end in my email client, my web browser, m=
+y ebook reader entirely automatically, and it adapts to the size of the=
+ window.
+>=20
+> Actually, opera-mail autowraps at 72 characters but sets the text for=
+mat to flowed. It also wraps the quoted text when you reply. But there'=
+s a reasonable chance that you don't use opera in your daily life. On t=
+he other hand I would not be surprised if most decent e-mail clients wo=
+rked that way.
+>=20
+
+Interesting=85 either way, the end result is that the receiving mail cl=
+ient can wrap the lines to whatever length it (or you, as its operator)=
+ desires, which I think we can agree is a good thing, right?
+
+> Nobody's forcing you to use the same practice in your own projects an=
+yway.
+>=20
+>=20
+>>=20
+>> That article gives two reasons why commits should be wrapped to 72 c=
+olumns. First:
+>>=20
+>>> git log doesn=92t do any special special wrapping of the commit mes=
+sages. With the default pager of less -S, this means your paragraphs fl=
+ow far off the edge of the screen, making them difficult to read. On an=
+ 80 column terminal, if we subtract 4 columns for the indent on the lef=
+t and 4 more for symmetry on the right, we=92re left with 72 columns.
+>>=20
+>> Here, I put a patch at the bottom of this email that wraps commit me=
+ssages to, right now, 80 columns when they're displayed. (It=92s a quic=
+k one, probably needs configurability. Also, beware, I don=92t program =
+in C too much.)
+>=20
+> Hm. Saying "that's how the tool works" is not a good reason in my opi=
+nion. There might be tons of other reasons for wrapping at 80 character=
+s. Readability is one that comes to mind for me.
+>=20
+
+That's my basic point. I hope it didn't seem like I was arguing against=
+ reading commit messages wrapped to 80 columns, by default. I only want=
+ed to discuss whether it makes more sense to handle it on the display e=
+nd instead of asking committers to do it in advance.
+
+- My phone shows text most comfortably at about 40 characters per line.=
+ I do look at terminals at 80 columns most of the time, but not always,=
+ and I sometimes browse projects in GUI tools that use a proportional f=
+ont in a window may be narrower or wider than that.
+
+- Right now, when I *am* in an 80-col terminal I have to trust everyone=
+ else to wrap their commit messages. Not everyone does. I feel like it =
+would be more effective to give git the ability to wrap them automatica=
+lly when I read them.
+
+>>=20
+>> Second:
+>>=20
+>>> git format-patch --stdout converts a series of commits to a series =
+of emails, using the messages for the message body. Good email netiquet=
+te dictates we wrap our plain text emails such that there=92s room for =
+a few levels of nested reply indicators without overflow in an 80 colum=
+n terminal. (The current rails.git workflow doesn=92t include email, bu=
+t who knows what the future will bring.)
+>>=20
+>> There's been a standard for flowed plain text emails (which don't ha=
+ve to wrap at 80 columns) for well over ten years, RFC-2646 and is wide=
+ly supported. Besides, code in diffs is often longer than 7x characters=
+, and wrapping, like `git log`, could be done inside git. FWIW, there a=
+re a bunch of merge commits with lines longer than 80 characters in the=
+ git repo itself.
+>=20
+> Yes, that standard allows e-mail clients to display the text more flu=
+idly, even if the source text is word-wrapped. While git uses e-mail fo=
+rmat, it isn't an e-mail client. I always interpreted this whole thing =
+as git basically creating plain-text e-mails. You're actually writing t=
+he source of the e-mail in your commit message. If you care about actua=
+l use in e-mail (like we do here on the list) you might want to add the=
+ relevant header to the mails. That said, Apple Mail (the client you us=
+ed to send your mail) doesn't even use the RFC you quote in the sent me=
+ssage. That mail is going to be a pain in the butt to read in mutt from=
+ work ;).
+>=20
+
+Sorry, I'm not sure what you mean by, =93If you care about actual use i=
+n e-mail (like we do here on the list) you might want to add the releva=
+nt header to the mails=94.
+
+Interesting, I didn't realize that Mail didn't use it. It does, however=
+, use quoted-printable which, as far as I can tell, has a similar effec=
+t on line wrapping. What happens when you view this email in mutt?
+
+>=20
+>>=20
+>> Finally, people read commits these days in many other places than `g=
+it log` (and make commits in many other places than a text editor confi=
+gured to wrap). Most every GUI and already word wraps commit messages j=
+ust fine. As a result, there are commits in popular repos much longer t=
+han the 72-column standard and no one notices. Instead, properly-format=
+ted commit messages end up looking cramped when you see them in anywher=
+e wider than 80 columns.
+>=20
+> Cramped? I think it's compact and actually I prefer it over long line=
+s.
+>=20
+>> Am I crazy?
+>=20
+> Probably not. Don't take my word for it. I'm not a psychiatrist.
+>=20
+>=20
+>> If this makes sense to anyone else, I'd be happy to help massage thi=
+s into something git-worthy, with some help (never worked on Git before=
+).
+>>=20
+>> - - -
+>>=20
+>> From a93b390d1506652d4ad41d1cbd987ba98a8deca0 Mon Sep 17 00:00:00 20=
+01
+>> From: =3D?UTF-8?q?Sidney=3D20San=3D20Marti=3DCC=3D81n?=3D <s@sidneys=
+m.com>
+>> Date: Thu, 8 Dec 2011 20:26:23 -0500
+>> Subject: [PATCH] Wrap commit messages on display
+>>=20
+>> - Wrap to 80 characters minus the indent
+>> - Use a hanging indent for lines which begin with "- "
+>> - Do not wrap lines which begin with whitespace
+>> ---
+>> pretty.c |   10 ++++++++--
+>> 1 files changed, 8 insertions(+), 2 deletions(-)
+>>=20
+>> diff --git a/pretty.c b/pretty.c
+>> index 230fe1c..15804ce 100644
+>> --- a/pretty.c
+>> +++ b/pretty.c
+>> @@ -1243,8 +1243,14 @@ void pp_remainder(const struct pretty_print_c=
+ontext *pp,
+>> 			memset(sb->buf + sb->len, ' ', indent);
+>> 			strbuf_setlen(sb, sb->len + indent);
+>> 		}
+>> -		strbuf_add(sb, line, linelen);
+>> -		strbuf_addch(sb, '\n');
+>> +		if (line[0] =3D=3D ' ' || line[0] =3D=3D '\t') {
+>> +			strbuf_add(sb, line, linelen);
+>> +		} else {
+>> +			struct strbuf wrapped =3D STRBUF_INIT;
+>> +			strbuf_add(&wrapped, line, linelen);
+>> +			strbuf_add_wrapped_text(sb, wrapped.buf, 0, indent + (line[0] =3D=
+=3D '-' && line[1] =3D=3D ' ' ? 2 : 0), 80 - indent);
+>=20
+> While on the subject, In my mail view, the new line started with the =
+[1] from line[1], in the quote the line looks entirely different. Now t=
+his is code we're talking about, so it makes slightly more sense to hav=
+e a proper wrapping hard-coded. Compare the above with the following:
+>=20
+> +			int hanging_indent =3D ((line[0] =3D=3D '-' && line[1] =3D=3D ' '=
+) ? 2 : 0);
+> [...]
+> +			strbuf_add_wrapped_text(sb, wrapped.buf, 0,
+> +									indent + hanging_indent,
+> +									80 - indent);
+>=20
+> Much clearer, no? I personally usually have two or three terminals tu=
+cked next to each other, so I can look at two or three things at the sa=
+me time. 80 characters limit is a nice feature then.
+
+Good point, that makes it clearer either way. I put an updated patch at=
+ the bottom of this email (also fixed forgetting the newline after line=
+s with leading whitespace). I hope it's OK to include patches this way,=
+ I understand that they're supposed to represent whole emails but want =
+to include them with this discussion.
+
+>=20
+>=20
+>> +			strbuf_addch(sb, '\n');
+>> +		}
+>> 	}
+>> }
+>>=20
+>=20
+> Cheers,
+> Frans
+
+
+=46rom 53fd7deedaf5ac522c9d752e79cf71561cc57f07 Mon Sep 17 00:00:00 200=
+1
+=46rom: =3D?UTF-8?q?Sidney=3D20San=3D20Marti=3DCC=3D81n?=3D <s@sidneysm=
+=2Ecom>
+Date: Thu, 8 Dec 2011 20:26:23 -0500
+Subject: [PATCH] Wrap commit messages on display
+
+- Wrap to 80 characters, minus the indent
+- Use a hanging indent for lines which begin with "- "
+- Do not wrap lines which begin with whitespace
+---
+ pretty.c |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
+
+diff --git a/pretty.c b/pretty.c
+index 230fe1c..841ccd1 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1243,7 +1243,14 @@ void pp_remainder(const struct pretty_print_cont=
+ext *pp,
+ 			memset(sb->buf + sb->len, ' ', indent);
+ 			strbuf_setlen(sb, sb->len + indent);
+ 		}
+-		strbuf_add(sb, line, linelen);
++		if (line[0] =3D=3D ' ' || line[0] =3D=3D '\t') {
++			strbuf_add(sb, line, linelen);
++		} else {
++			struct strbuf wrapped =3D STRBUF_INIT;
++			strbuf_add(&wrapped, line, linelen);
++			int hanging_indent =3D ((line[0] =3D=3D '-' && line[1] =3D=3D ' ') =
+? 2 : 0);
++			strbuf_add_wrapped_text(sb, wrapped.buf, 0, indent + hanging_indent=
+, 80 - indent);
++		}
+ 		strbuf_addch(sb, '\n');
+ 	}
+ }
+--=20
+1.7.8
