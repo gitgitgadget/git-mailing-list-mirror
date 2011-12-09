@@ -1,65 +1,78 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 6/9] t3510 (cherry-pick-sequencer): remove malformed sheet 2
-Date: Sat, 10 Dec 2011 02:00:46 +0530
-Message-ID: <CALkWK0mEP5nDgdosOiquQ_FWbNRZesi38NeCD_yGPvJ8JQxkGg@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 0/9] Re-roll rr/revert-cherry-pick v2
+Date: Fri, 9 Dec 2011 14:34:42 -0600
+Message-ID: <20111209203442.GK20913@elie.hsd1.il.comcast.net>
 References: <1323445326-24637-1-git-send-email-artagnon@gmail.com>
- <1323445326-24637-7-git-send-email-artagnon@gmail.com> <20111209202449.GI20913@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 09 21:31:14 2011
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 09 21:34:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZ769-0003er-8R
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 21:31:13 +0100
+	id 1RZ79f-000581-Pl
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 21:34:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754634Ab1LIUbI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Dec 2011 15:31:08 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:51820 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752426Ab1LIUbH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Dec 2011 15:31:07 -0500
-Received: by qadc12 with SMTP id c12so879165qad.19
-        for <git@vger.kernel.org>; Fri, 09 Dec 2011 12:31:06 -0800 (PST)
+	id S1754660Ab1LIUer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Dec 2011 15:34:47 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:63624 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750954Ab1LIUer (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Dec 2011 15:34:47 -0500
+Received: by yenm11 with SMTP id m11so2408654yen.19
+        for <git@vger.kernel.org>; Fri, 09 Dec 2011 12:34:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=mYO4M5G/SjIhdgJoQ+rU9eyBEpCpEl/syEAbqWMJiHU=;
-        b=ERBtanCIuYXyru0l3f3BbiXsUMzqxe7y4bCMRjAhT2iEqB1e2RTWntv1BQYeyYU8Fl
-         i+T3pediYSNRWsB2Ut3xn2+Ls8Ij1KGHBT91AwK3xFTcaqYVV4B6xDm3nx8W6rXyadfD
-         GInHSvK0hdXfdVkTcIPUHJU7v35mIIdBO0CBU=
-Received: by 10.224.180.131 with SMTP id bu3mr8628586qab.5.1323462666159; Fri,
- 09 Dec 2011 12:31:06 -0800 (PST)
-Received: by 10.229.165.194 with HTTP; Fri, 9 Dec 2011 12:30:46 -0800 (PST)
-In-Reply-To: <20111209202449.GI20913@elie.hsd1.il.comcast.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=+mkyZz5XHpXPNJH8zLAyl3Dx7eDsO8uD7DQAMpkShQE=;
+        b=Z/Q+E47ukbdluhUUl0zSwrDTV9nJAydtI7c27Wp4pZcDyJGbYFP+AoTwO51kUw8Keh
+         MDBjnUkznBNJzsWr7Je9SHyhxeIUs383XQCsdRyc/dDgzGNX1FBD9Qdc7ICPMmH+HH86
+         FN6NQs8tb3XfNwKIrlDXAikYqNISpaYYuD0xc=
+Received: by 10.236.136.38 with SMTP id v26mr14701128yhi.69.1323462886378;
+        Fri, 09 Dec 2011 12:34:46 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id q5sm16841034yhm.7.2011.12.09.12.34.45
+        (version=SSLv3 cipher=OTHER);
+        Fri, 09 Dec 2011 12:34:45 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1323445326-24637-1-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186690>
 
-Jonathan Nieder wrote:
-> Ramkumar Ramachandra wrote:
->
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0By removing the "malformed instruction sheet
->> 2" test in advance, it'll be easier to see the changes made by the
->> next patch.
->
-> So, this is a regression in test coverage without a redeeming upside
-> other than allowing the next patch to be prettier. =C2=A0Naturally, I=
- don't
-> like it.
+Ramkumar Ramachandra wrote:
 
-Without this patch, the diffs of _all_ the future commits in this
-series touching this file are totally unreadable.  I've noticed that
-the diffing algorithm performs especially badly for t/*.sh -- rebasing
-tests is generally a huge pain.
+> - "revert: report fine-grained error messages from insn parser" arises
+>   from Jonathan's request to split "revert: allow mixed pick and
+>   revert instructions".
 
--- Ram
+Just to be clear: I wasn't directly requesting that you do anything.
+If I were, then you could carefully read my requirements, fulfill
+them, and you would be done.
+
+Instead, I was reviewing the patch and giving my reaction.  After
+receiving that information, one has plenty of choices:
+
+ - add documentation to avoid the confusion the reaction was based on
+ - rework to fix the underlying problem that caused the reaction
+ - think carefully about it, conclude that the reviewer is crazy, and
+   ignore it
+ - drop the patch
+ - send out a call for help to get others to help work on the
+   underlying problem
+ - ask for clarification
+ ...
+
+>From my point of view as a reviewer, I am happiest when someone
+figures out how I missed the point and comes up with some fix that
+addresses the underlying problem instead (and, incidentally, gets rid
+of the symptom that provoked my reaction on the way).
+
+Well, you get the idea.
