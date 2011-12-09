@@ -1,57 +1,82 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [POC PATCH 0/5] Threaded loose object and pack access
-Date: Fri, 9 Dec 2011 09:45:26 +0100
-Message-ID: <201112090945.26367.trast@student.ethz.ch>
-References: <cover.1323419666.git.trast@student.ethz.ch>
+From: Jerome DE VIVIE <j.devivie@prometil.com>
+Subject: [PATCH] tag deletions not rejected with receive.denyDeletes= true
+Date: Fri, 9 Dec 2011 09:51:14 +0100 (CET)
+Message-ID: <18683796.591323420674000.JavaMail.root@promailix.prometil.com>
+References: <18285669.571323420520289.JavaMail.root@promailix.prometil.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: =?iso-8859-1?q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Herman <eric@freesa.org>, Jeff King <peff@peff.net>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Dec 09 09:45:33 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 09 10:01:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYw5F-0007Iw-5h
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 09:45:33 +0100
+	id 1RYwKW-0004MD-Ot
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 10:01:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752365Ab1LIIp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Dec 2011 03:45:29 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:16208 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752420Ab1LIIp2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2011 03:45:28 -0500
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 9 Dec
- 2011 09:45:26 +0100
-Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 9 Dec
- 2011 09:45:27 +0100
-User-Agent: KMail/1.13.7 (Linux/3.1.3-1-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <cover.1323419666.git.trast@student.ethz.ch>
-X-Originating-IP: [129.132.153.233]
+	id S1752153Ab1LIJBO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Dec 2011 04:01:14 -0500
+Received: from promailix.prometil.com ([87.98.147.193]:53581 "EHLO
+	promailix.prometil.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751887Ab1LIJBO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Dec 2011 04:01:14 -0500
+X-Greylist: delayed 595 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Dec 2011 04:01:14 EST
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by promailix.prometil.com (Postfix) with ESMTP id 49CE71BC8D5
+	for <git@vger.kernel.org>; Fri,  9 Dec 2011 09:51:18 +0100 (CET)
+Received: from promailix.prometil.com ([127.0.0.1])
+	by localhost (promailix.prometil.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id urTjkybnHgna for <git@vger.kernel.org>;
+	Fri,  9 Dec 2011 09:51:14 +0100 (CET)
+Received: from promailix.prometil.com (mail.prometil.com [87.98.147.193])
+	by promailix.prometil.com (Postfix) with ESMTP id 0D48D1BC518
+	for <git@vger.kernel.org>; Fri,  9 Dec 2011 09:51:14 +0100 (CET)
+In-Reply-To: <18285669.571323420520289.JavaMail.root@promailix.prometil.com>
+X-Originating-IP: [193.57.220.1]
+X-Mailer: Zimbra 5.0.18_GA_3011.UBUNTU8 (ZimbraWebClient - FF3.0 (Win)/5.0.18_GA_3011.UBUNTU8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186623>
 
-Thomas Rast wrote:
-> Well, just to make sure we're all left in a confused mess of partly
-> conflicting patches, here's another angle on the same thing:
+Hello,
 
-Bleh, obviously that was intended to be a reply to
+I have try to deny tag deletion over push using denyDeletes parameter:
 
-  http://thread.gmane.org/gmane.comp.version-control.git/185932/focus=186231
+git config --system receive.denyDeletes true
+git daemon --reuseaddr --base-path=3D.. --export-all --verbose --enable=
+=3Dreceive-pack
 
-and CC'd to Peff.
+I can push tag deletions despite what the internet says (http://progit.=
+org/book/ch7-1.html#receivedenydeletes). I don't know if it is a bug. C=
+ould you have a look, pls ? Thank you
 
-Sorry for the mess.  I'll go sulking with a few cups of coffee.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+BR
+J=C3=A9r=C3=B4me
+
+
+Signed-off-by: J=C3=A9r=C3=B4me de Vivie <j.edevivie@prometil.com>
+---
+ builtin/receive-pack.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 7ec68a1..bf91042 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -432,7 +432,7 @@ static const char *update(struct command *cmd)
+ 	}
+=20
+ 	if (!is_null_sha1(old_sha1) && is_null_sha1(new_sha1)) {
+-		if (deny_deletes && !prefixcmp(name, "refs/heads/")) {
++		if (deny_deletes && (!prefixcmp(name, "refs/heads/") || !prefixcmp(n=
+ame, "refs/tags/"))) {
+ 			rp_error("denying ref deletion for %s", name);
+ 			return "deletion prohibited";
+ 		}
+--=20
+1.7.6.msysgit.0
