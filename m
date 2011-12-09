@@ -1,86 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tag deletions not rejected with receive.denyDeletes=
- true
-Date: Fri, 09 Dec 2011 11:15:37 -0800
-Message-ID: <7vy5uleeue.fsf@alter.siamese.dyndns.org>
-References: <18285669.571323420520289.JavaMail.root@promailix.prometil.com>
- <18683796.591323420674000.JavaMail.root@promailix.prometil.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 9/9] revert: simplify communicating command-line arguments
+Date: Fri, 9 Dec 2011 13:29:19 -0600
+Message-ID: <20111209192919.GB20913@elie.hsd1.il.comcast.net>
+References: <1323445326-24637-1-git-send-email-artagnon@gmail.com>
+ <1323445326-24637-10-git-send-email-artagnon@gmail.com>
+ <20111209190236.GA20913@elie.hsd1.il.comcast.net>
+ <CALkWK0m_6yGuyLt-VqvRZkAiDoSxES8KeNzeXaejYRCpW=HAOg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jerome DE VIVIE <j.devivie@prometil.com>
-X-From: git-owner@vger.kernel.org Fri Dec 09 20:15:49 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 09 20:29:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZ5v8-0008Tg-Ay
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 20:15:46 +0100
+	id 1RZ68Q-0005Qj-0p
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 20:29:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754596Ab1LITPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Dec 2011 14:15:41 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47070 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753327Ab1LITPk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2011 14:15:40 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A2A0F52FF;
-	Fri,  9 Dec 2011 14:15:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=u9wD0vhyfbbLDo6DoqOVg5MJ2co=; b=SEKpaR
-	Of3FGPspAOjaURBt4KL9cp/LG/bzlLoqmdvSgI5hbrsjiIm7GxE36lyn4ktV9899
-	aniTl3gxSVYe8rKE30kqre7o+Gtm6U8/9J8zGZYlAng7Q0ng27xXfmZdIhRxL7A4
-	wuh02ewt0hDXeaga4Pw5PmRVbfFpukiRxX/4g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LkL1WPLfMEzilcrjDax/5gt5676wntQl
-	s99Y6/44yxJdX57yJsei4yBPLZDUGuZudxbR6iYMUEV9b4SErDucW8OkiED5okai
-	SdD7p3BgBH4DqjD5KDajGTJXXOm1LZK0hEEZ5NEabPW6CNobeTXs4RGKlvYtY6DN
-	fHE2PAr19KM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 986A252FE;
-	Fri,  9 Dec 2011 14:15:39 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2A1F252FD; Fri,  9 Dec 2011
- 14:15:39 -0500 (EST)
-In-Reply-To: <18683796.591323420674000.JavaMail.root@promailix.prometil.com>
- (Jerome DE VIVIE's message of "Fri, 9 Dec 2011 09:51:14 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2E1DB334-229A-11E1-8B30-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751342Ab1LIT3Z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Dec 2011 14:29:25 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:53124 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750761Ab1LIT3Y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Dec 2011 14:29:24 -0500
+Received: by yenm11 with SMTP id m11so2357084yen.19
+        for <git@vger.kernel.org>; Fri, 09 Dec 2011 11:29:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=q8vbRH+KtZiVxa2HtEQ9ja0pSblfERqNL/Hm6jQ/HSM=;
+        b=YcW9qAtBbaIGjUMxcREDJxP2/tJ5blcVKbjbvFrPf72kNpX70dxl+HcnVfxEe9JKbi
+         ui8tt45GHDXT5v3O1dmOzJdc7PvbzyqdMrxTtakFigsgTLTSFY8zuTzEY+2z5I483F38
+         +kp10YxY6TE8PvEkUebjndNRd91XkTHNe3RMY=
+Received: by 10.236.131.97 with SMTP id l61mr14385801yhi.52.1323458963894;
+        Fri, 09 Dec 2011 11:29:23 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id q16sm26423590anb.19.2011.12.09.11.29.22
+        (version=SSLv3 cipher=OTHER);
+        Fri, 09 Dec 2011 11:29:22 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0m_6yGuyLt-VqvRZkAiDoSxES8KeNzeXaejYRCpW=HAOg@mail.gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186668>
 
-Jerome DE VIVIE <j.devivie@prometil.com> writes:
+Ramkumar Ramachandra wrote:
+>> Ramkumar Ramachandra wrote:
 
-> Hello,
->
-> I have try to deny tag deletion over push using denyDeletes parameter:
->
-> git config --system receive.denyDeletes true
-> git daemon --reuseaddr --base-path=.. --export-all --verbose --enable=receive-pack
->
-> I can push tag deletions despite what the internet says (http://progit.org/book/ch7-1.html#receivedenydeletes). I don't know if it is a bug. Could you have a look, pls ? Thank you
+>>> +++ b/t/t3510-cherry-pick-sequence.sh
+>>> @@ -414,4 +414,15 @@ test_expect_success 'mixed pick and revert ins=
+tructions' '
+>>> +test_expect_success 'commit set passed through --all' '
+>>> + =C2=A0 =C2=A0 pristine_detach initial &&
+>>> + =C2=A0 =C2=A0 test_expect_code 1 git cherry-pick --all &&
+>>> + =C2=A0 =C2=A0 git cherry-pick --continue
+>>> +'
+[...]
+> This one's actually quite interesting.  "git cherry-pick --all" first
+> tries to apply everything from "intial" to "yetanotherpatch" (both
+> inclusive) -- its first "git commit" invocation returns 1, refusing t=
+o
+> create an empty commit.  Then when we say "--continue", it notices
+> that the worktree and index are clean, removes "initial" from the
+> instruction sheet and executes everything else as usual.  This is
+> something we should attempt to fix
 
-The code seems to be written in such a way that it _explicitly_ wants to
-limit the effect of the configuration only to branches. The change was
-introduced by a240de1 (Introduce receive.denyDeletes, 2008-11-01) and the
-motivation was explained as:
+So, is it a bad test?  Was the initial command crazy and ill-defined
+enough that no one would actually do that?  Is the response to the
+command incorrect, meaning that the new test should be instead
+checking for some different result with test_expect_failure?
 
-    Introduce receive.denyDeletes
-    
-    Occasionally, it may be useful to prevent branches from getting deleted from
-    a centralized repository, particularly when no administrative access to the
-    server is available to undo it via reflog. It also makes
-    receive.denyNonFastForwards more useful if it is used for access control
-    since it prevents force-updating by deleting and re-creating a ref.
+I only mentioned --all in the first place because it is a "revision
+pseudo-option" (i.e., option starting with "--" whose position on the
+rev-list command line matters) and gets handled by a slightly
+different revision parsing code path than foo..bar.  There are other
+revision pseudo-options that are easier to control and might make for
+a better test if it's wanted, like --remotes=3Dfoo.
 
-So I would have to say your "the internet" is wrong.
+> Way starts with creating an API for "git commit".
 
-Our documentation can also use some updates, as it dates to the days back
-when we more liberally used "refs" and "branches" interchangeably.
+Not sure what this means.
