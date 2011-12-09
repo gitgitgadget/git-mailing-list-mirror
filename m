@@ -1,78 +1,74 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 0/9] Re-roll rr/revert-cherry-pick v2
-Date: Fri, 9 Dec 2011 14:34:42 -0600
-Message-ID: <20111209203442.GK20913@elie.hsd1.il.comcast.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 5/9] t3510 (cherry-pick-sequencer): use exit status
+Date: Sat, 10 Dec 2011 02:06:47 +0530
+Message-ID: <CALkWK0=a=-4N4aZHuu=5zkNtwmfLsog5WkBVbuJAbYpvaLUsAg@mail.gmail.com>
 References: <1323445326-24637-1-git-send-email-artagnon@gmail.com>
+ <1323445326-24637-6-git-send-email-artagnon@gmail.com> <20111209202149.GH20913@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 09 21:34:52 2011
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 09 21:37:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZ79f-000581-Pl
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 21:34:52 +0100
+	id 1RZ7C9-00069k-QJ
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 21:37:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754660Ab1LIUer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Dec 2011 15:34:47 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:63624 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750954Ab1LIUer (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2011 15:34:47 -0500
-Received: by yenm11 with SMTP id m11so2408654yen.19
-        for <git@vger.kernel.org>; Fri, 09 Dec 2011 12:34:46 -0800 (PST)
+	id S1754783Ab1LIUhM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Dec 2011 15:37:12 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:35812 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750954Ab1LIUhJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Dec 2011 15:37:09 -0500
+Received: by qcqz2 with SMTP id z2so2497327qcq.19
+        for <git@vger.kernel.org>; Fri, 09 Dec 2011 12:37:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=+mkyZz5XHpXPNJH8zLAyl3Dx7eDsO8uD7DQAMpkShQE=;
-        b=Z/Q+E47ukbdluhUUl0zSwrDTV9nJAydtI7c27Wp4pZcDyJGbYFP+AoTwO51kUw8Keh
-         MDBjnUkznBNJzsWr7Je9SHyhxeIUs383XQCsdRyc/dDgzGNX1FBD9Qdc7ICPMmH+HH86
-         FN6NQs8tb3XfNwKIrlDXAikYqNISpaYYuD0xc=
-Received: by 10.236.136.38 with SMTP id v26mr14701128yhi.69.1323462886378;
-        Fri, 09 Dec 2011 12:34:46 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id q5sm16841034yhm.7.2011.12.09.12.34.45
-        (version=SSLv3 cipher=OTHER);
-        Fri, 09 Dec 2011 12:34:45 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1323445326-24637-1-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=IutCb1JDtxJAEDD5wSUpL0XCS8fp7sRicYFtEwxbJ7Y=;
+        b=NJGgxrQ5+yQXI6xqbb0mK38eboK/KbTN7fA1qxFNmuAzmbZjEYE+CA+SMb/MaT4G7E
+         yTPyKH/3UZ48J75n4ScYuund071VvwZClwnDIIP0WESzdcsNEWqYS8/RDFplR8wxNQ7o
+         YZuO3k4P4u60Q59pW+iHjx9ShxzTyL7L5xa/o=
+Received: by 10.229.65.103 with SMTP id h39mr2238217qci.202.1323463028290;
+ Fri, 09 Dec 2011 12:37:08 -0800 (PST)
+Received: by 10.229.165.194 with HTTP; Fri, 9 Dec 2011 12:36:47 -0800 (PST)
+In-Reply-To: <20111209202149.GH20913@elie.hsd1.il.comcast.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186691>
 
-Ramkumar Ramachandra wrote:
+Jonathan Nieder wrote:
+> Ramkumar Ramachandra wrote:
+>
+> [...]
+>> --- a/t/t3510-cherry-pick-sequence.sh
+>> +++ b/t/t3510-cherry-pick-sequence.sh
+> [...]
+>> @@ -53,7 +53,7 @@ test_expect_success 'cherry-pick persists data on =
+failure' '
+>>
+>> =C2=A0test_expect_success 'cherry-pick persists opts correctly' '
+>> =C2=A0 =C2=A0 =C2=A0 pristine_detach initial &&
+>> - =C2=A0 =C2=A0 test_must_fail git cherry-pick -s -m 1 --strategy=3D=
+recursive -X patience -X ours base..anotherpick &&
+>> + =C2=A0 =C2=A0 test_expect_code 128 git cherry-pick -s -m 1 --strat=
+egy=3Drecursive -X patience -X ours base..anotherpick &&
+>> =C2=A0 =C2=A0 =C2=A0 test_path_is_dir .git/sequencer &&
+>
+> Encountered conflicts, preserving options, but the exit is with statu=
+s
+> 128? =C2=A0Smells like a bug.
 
-> - "revert: report fine-grained error messages from insn parser" arises
->   from Jonathan's request to split "revert: allow mixed pick and
->   revert instructions".
+No bug.  Notice that "-m 1" is used when "initial" isn't a merge
+commit.  But yeah, I should probably clarify this by changing the
+revision range to "initial..anotherpick" so as not to distract the
+user.
 
-Just to be clear: I wasn't directly requesting that you do anything.
-If I were, then you could carefully read my requirements, fulfill
-them, and you would be done.
-
-Instead, I was reviewing the patch and giving my reaction.  After
-receiving that information, one has plenty of choices:
-
- - add documentation to avoid the confusion the reaction was based on
- - rework to fix the underlying problem that caused the reaction
- - think carefully about it, conclude that the reviewer is crazy, and
-   ignore it
- - drop the patch
- - send out a call for help to get others to help work on the
-   underlying problem
- - ask for clarification
- ...
-
->From my point of view as a reviewer, I am happiest when someone
-figures out how I missed the point and comes up with some fix that
-addresses the underlying problem instead (and, incidentally, gets rid
-of the symptom that provoked my reaction on the way).
-
-Well, you get the idea.
+-- Ram
