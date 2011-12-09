@@ -1,63 +1,71 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 6/9] t3510 (cherry-pick-sequencer): remove malformed
- sheet 2
-Date: Fri, 9 Dec 2011 14:37:30 -0600
-Message-ID: <20111209203729.GL20913@elie.hsd1.il.comcast.net>
+Subject: Re: [PATCH 8/9] revert: report fine-grained error messages from insn
+ parser
+Date: Fri, 9 Dec 2011 14:47:15 -0600
+Message-ID: <20111209204715.GM20913@elie.hsd1.il.comcast.net>
 References: <1323445326-24637-1-git-send-email-artagnon@gmail.com>
- <1323445326-24637-7-git-send-email-artagnon@gmail.com>
- <20111209202449.GI20913@elie.hsd1.il.comcast.net>
- <CALkWK0mEP5nDgdosOiquQ_FWbNRZesi38NeCD_yGPvJ8JQxkGg@mail.gmail.com>
+ <1323445326-24637-9-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 09 21:37:43 2011
+X-From: git-owner@vger.kernel.org Fri Dec 09 21:47:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZ7CO-0006FR-8y
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 21:37:40 +0100
+	id 1RZ7Lo-0001Pb-Mg
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 21:47:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754716Ab1LIUhf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Dec 2011 15:37:35 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:50463 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750954Ab1LIUhe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2011 15:37:34 -0500
-Received: by ghbz2 with SMTP id z2so2856870ghb.19
-        for <git@vger.kernel.org>; Fri, 09 Dec 2011 12:37:33 -0800 (PST)
+	id S1754626Ab1LIUrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Dec 2011 15:47:20 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:42679 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751079Ab1LIUrT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Dec 2011 15:47:19 -0500
+Received: by yenm11 with SMTP id m11so2418658yen.19
+        for <git@vger.kernel.org>; Fri, 09 Dec 2011 12:47:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Die/UNEBhv3dKGNxlOC1q7DiM/8BlWsuFfv2a9Efoh4=;
-        b=ug1yCFYjXv2TqRVlkL3LPXr08qKESCbbLSGcE53cxbHeC7+M8D/fJpRtp2OdTzF6MN
-         wcLwJ93X+hIW2SwEP8b5jtP1dma4RAH6QlfsL6nCW8stkvEWkAtFhmRyMVwpXyYsSvOD
-         elBrVGzPqVi6/fiO2A6cWGc+Btr2S+LY8pfAc=
-Received: by 10.236.176.2 with SMTP id a2mr14865458yhm.12.1323463053767;
-        Fri, 09 Dec 2011 12:37:33 -0800 (PST)
+        bh=OBwyIXzAmED+aveU7Mk8tJG1qsdCtGCK46lkkd10+gQ=;
+        b=dI4TD89zm4EJJ7CVkfgUx+TUGJWFISg9HMxa7wpHCkQCadVuAnL753gZSB8E717a+7
+         qF43OorMyUm8emEGjoIQSi9O1Evqj/f7lpfqsDK8qJaU+h6x8eAeNQULz5uttQc4AnT5
+         OakAB5mz4XlkgdJdAvcfY+52mDwlJWqKNZFj8=
+Received: by 10.236.155.36 with SMTP id i24mr14770694yhk.43.1323463639370;
+        Fri, 09 Dec 2011 12:47:19 -0800 (PST)
 Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id j25sm16833317yhm.12.2011.12.09.12.37.32
+        by mx.google.com with ESMTPS id 3sm27011005anv.7.2011.12.09.12.47.17
         (version=SSLv3 cipher=OTHER);
-        Fri, 09 Dec 2011 12:37:33 -0800 (PST)
+        Fri, 09 Dec 2011 12:47:18 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <CALkWK0mEP5nDgdosOiquQ_FWbNRZesi38NeCD_yGPvJ8JQxkGg@mail.gmail.com>
+In-Reply-To: <1323445326-24637-9-git-send-email-artagnon@gmail.com>
 User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186693>
 
 Ramkumar Ramachandra wrote:
 
->                                                    I've noticed that
-> the diffing algorithm performs especially badly for t/*.sh -- rebasing
-> tests is generally a huge pain.
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -719,8 +719,10 @@ static int format_todo(struct strbuf *buf, struct replay_insn_list *todo_list)
+>  	return 0;
+>  }
+>  
+> -static int parse_insn_line(char *bol, char *eol, struct replay_insn_list *item)
+> +static int parse_insn_line(char *bol, char *eol,
+> +			struct replay_insn_list *item, int lineno)
+>  {
+> +	const char *todo_file = git_path(SEQ_TODO_FILE);
+>  	unsigned char commit_sha1[20];
 
-No clue about this particular situation, but I suspect the general
-cause for such rebasing trouble is adding tests at the end of the file
-(or some other contended place).  Better to figure out a logical place
-for each test and put it there from the start.
+I know that this function does not call git_path() again before the
+value is used, so this is safe today, but I do not trust people in the
+future to preserve that property (for example, maybe someone will want
+to call get_sha1() earlier).  Why not wait to call git_path() when it
+is time to use the value it returns?
