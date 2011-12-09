@@ -1,7 +1,7 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [POC PATCH 1/5] Turn grep's use_threads into a global flag
-Date: Fri, 9 Dec 2011 09:39:33 +0100
-Message-ID: <16b39f83ed64a2705f2db8880680cd5639f94f56.1323419666.git.trast@student.ethz.ch>
+Subject: [POC PATCH 3/5] sha1_file_name_buf(): sha1_file_name in caller's buffer
+Date: Fri, 9 Dec 2011 09:39:35 +0100
+Message-ID: <bdaa6fad1f9ca46e9e1059bc1d6167732a1e9896.1323419666.git.trast@student.ethz.ch>
 References: <cover.1323419666.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
@@ -15,21 +15,21 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RYvzh-0005RO-JS
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 09:39:49 +0100
+	id 1RYvzi-0005RO-5D
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 09:39:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752526Ab1LIIjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Dec 2011 03:39:44 -0500
+	id S1752540Ab1LIIjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Dec 2011 03:39:46 -0500
 Received: from edge10.ethz.ch ([82.130.75.186]:15752 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752333Ab1LIIjm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2011 03:39:42 -0500
+	id S1751961Ab1LIIjp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Dec 2011 03:39:45 -0500
 Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
  (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 9 Dec
  2011 09:39:38 +0100
 Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
  (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 9 Dec
- 2011 09:39:38 +0100
+ 2011 09:39:39 +0100
 X-Mailer: git-send-email 1.7.8.431.g2abf2
 In-Reply-To: <cover.1323419666.git.trast@student.ethz.ch>
 X-Originating-IP: [129.132.153.233]
@@ -37,149 +37,66 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186617>
 
-In preparation for further work on this, turn use_threads into a flag
-shared across the whole code base.  The supporting (un)lock_if_threaded()
-functions are to be used for locking; they return immediately when not
-threading.
+sha1_file_name is non-reentrant because of its use of a static buffer.
+Split it into just the buffer writing (which can be called even from
+threads as long as the buffer is stack'd) and a small wrapper that
+uses the static buffer as before.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- builtin/grep.c |   20 ++++++++------------
- thread-utils.c |   16 ++++++++++++++++
- thread-utils.h |   16 ++++++++++++++++
- 3 files changed, 40 insertions(+), 12 deletions(-)
+ sha1_file.c |   29 +++++++++++++++++++----------
+ 1 files changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 988ea1d..76f2c4f 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -24,8 +24,6 @@
- 	NULL
- };
+diff --git a/sha1_file.c b/sha1_file.c
+index c3595b3..18648c3 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -153,18 +153,11 @@ static void fill_sha1_path(char *pathbuf, const unsigned char *sha1)
+ }
  
--static int use_threads = 1;
--
- #ifndef NO_PTHREADS
- #define THREADS 8
- static pthread_t threads[THREADS];
-@@ -76,14 +74,12 @@ struct work_item {
- 
- static inline void grep_lock(void)
+ /*
+- * NOTE! This returns a statically allocated buffer, so you have to be
+- * careful about using it. Do an "xstrdup()" if you need to save the
+- * filename.
+- *
+- * Also note that this returns the location for creating.  Reading
+- * SHA1 file can happen from any alternate directory listed in the
+- * DB_ENVIRONMENT environment variable if it is not found in
+- * the primary object database.
++ * Similar to sha1_file_name but you provide a buffer of size at least
++ * PATH_MAX.
+  */
+-char *sha1_file_name(const unsigned char *sha1)
++void sha1_file_name_buf(char *buf, const unsigned char *sha1)
  {
--	if (use_threads)
--		pthread_mutex_lock(&grep_mutex);
-+	lock_if_threaded(&grep_mutex);
- }
+-	static char buf[PATH_MAX];
+ 	const char *objdir;
+ 	int len;
  
- static inline void grep_unlock(void)
- {
--	if (use_threads)
--		pthread_mutex_unlock(&grep_mutex);
-+	unlock_if_threaded(&grep_mutex);
- }
- 
- /* Used to serialize calls to read_sha1_file. */
-@@ -91,14 +87,12 @@ static inline void grep_unlock(void)
- 
- static inline void read_sha1_lock(void)
- {
--	if (use_threads)
--		pthread_mutex_lock(&read_sha1_mutex);
-+	lock_if_threaded(&read_sha1_mutex);
- }
- 
- static inline void read_sha1_unlock(void)
- {
--	if (use_threads)
--		pthread_mutex_unlock(&read_sha1_mutex);
-+	unlock_if_threaded(&read_sha1_mutex);
- }
- 
- /* Signalled when a new work_item is added to todo. */
-@@ -984,6 +978,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		argc--;
- 	}
- 
-+#ifndef NO_PTHREADS
-+	use_threads = 1;
-+#endif
-+
- 	if (show_in_pager == default_pager)
- 		show_in_pager = git_pager(1);
- 	if (show_in_pager) {
-@@ -1011,8 +1009,6 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			skip_first_line = 1;
- 		start_threads(&opt);
- 	}
--#else
--	use_threads = 0;
- #endif
- 
- 	compile_grep_patterns(&opt);
-diff --git a/thread-utils.c b/thread-utils.c
-index 7f4b76a..fb75a29 100644
---- a/thread-utils.c
-+++ b/thread-utils.c
-@@ -1,6 +1,8 @@
- #include "cache.h"
- #include "thread-utils.h"
- 
-+int use_threads;
-+
- #if defined(hpux) || defined(__hpux) || defined(_hpux)
- #  include <sys/pstat.h>
- #endif
-@@ -59,3 +61,17 @@ int init_recursive_mutex(pthread_mutex_t *m)
- 	}
- 	return ret;
- }
-+
-+#ifndef NO_PTHREADS
-+void lock_if_threaded(pthread_mutex_t *m)
-+{
-+	if (use_threads)
-+		pthread_mutex_lock(m);
+@@ -179,6 +172,22 @@ char *sha1_file_name(const unsigned char *sha1)
+ 	buf[len+3] = '/';
+ 	buf[len+42] = '\0';
+ 	fill_sha1_path(buf + len + 1, sha1);
 +}
 +
-+void unlock_if_threaded(pthread_mutex_t *m)
-+{
-+	if (use_threads)
-+		pthread_mutex_unlock(m);
-+}
-+#endif
-diff --git a/thread-utils.h b/thread-utils.h
-index 6fb98c3..9a780a2 100644
---- a/thread-utils.h
-+++ b/thread-utils.h
-@@ -1,11 +1,27 @@
- #ifndef THREAD_COMPAT_H
- #define THREAD_COMPAT_H
- 
 +/*
-+ * This variable is used by commands to globally tell affected
-+ * subsystems that they must use thread-safe mechanisms.
++ * NOTE! This returns a statically allocated buffer, so you have to be
++ * careful about using it. Do an "xstrdup()" if you need to save the
++ * filename.
++ *
++ * Also note that this returns the location for creating.  Reading
++ * SHA1 file can happen from any alternate directory listed in the
++ * DB_ENVIRONMENT environment variable if it is not found in
++ * the primary object database.
 + */
-+extern int use_threads;
-+
- #ifndef NO_PTHREADS
- #include <pthread.h>
++char *sha1_file_name(const unsigned char *sha1)
++{
++	static char buf[PATH_MAX];
++	sha1_file_name_buf(buf, sha1);
+ 	return buf;
+ }
  
- extern int online_cpus(void);
- extern int init_recursive_mutex(pthread_mutex_t*);
- 
-+/* These functions do nothing if use_threads==0 or NO_PTHREADS */
-+extern void lock_if_threaded(pthread_mutex_t*);
-+extern void unlock_if_threaded(pthread_mutex_t*);
-+
-+#else
-+
-+#define lock_if_threaded(lock)
-+#define unlock_if_threaded(lock)
-+
- #endif
-+
- #endif /* THREAD_COMPAT_H */
 -- 
 1.7.8.431.g2abf2
