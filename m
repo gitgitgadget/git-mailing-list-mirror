@@ -1,64 +1,74 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/6] t3040 (subprojects-basic): modernize style
-Date: Sat, 10 Dec 2011 00:02:39 +0530
-Message-ID: <CALkWK0nDtdzsqVZQ9F8w8oWQZp__EXo5_LDEpPmiRBfx=J6Rhw@mail.gmail.com>
-References: <1323349817-15737-1-git-send-email-artagnon@gmail.com>
- <1323349817-15737-3-git-send-email-artagnon@gmail.com> <20111208163448.GA2394@elie.hsd1.il.comcast.net>
- <CALkWK0nbp465915ysrBXi46mur1dutBDtPNjwW=RdyPV03crzg@mail.gmail.com> <7vd3bxfvob.fsf@alter.siamese.dyndns.org>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: git auto-repack is broken...
+Date: Fri, 09 Dec 2011 13:34:04 -0500 (EST)
+Message-ID: <alpine.LFD.2.02.1112091331370.2907@xanadu.home>
+References: <CA+55aFznj49hx6Ce6NhJ1rRd2nvNyOERseyyrC6SNcW-z9dyfg@mail.gmail.com>
+ <CACBZZX7Q5qb1r_Oh0QfMiWh9UAM1c6QWBn4abv-xHpFBaKuyKg@mail.gmail.com>
+ <CA+55aFyq28vmo9dk-5mVm+nNn86qSjNT6VJGc09iaJo=+OP1Sg@mail.gmail.com>
+ <20111202171017.GB23447@sigill.intra.peff.net>
+ <7vobvqoozr.fsf@alter.siamese.dyndns.org>
+ <20111202174546.GA24093@sigill.intra.peff.net>
+ <CA+sFfMdeVoz8XU5j4hNn1qCHHzaiDi0Bw=QbbuU3cwT9mMPZOA@mail.gmail.com>
+ <alpine.LFD.2.02.1112071709250.2907@xanadu.home>
+ <7v4nx9hcmv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Brandon Casey <drafnel@gmail.com>, Jeff King <peff@peff.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	=?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 09 19:33:08 2011
+X-From: git-owner@vger.kernel.org Fri Dec 09 19:34:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZ5Fs-00087x-21
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 19:33:08 +0100
+	id 1RZ5Gt-000089-7J
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 19:34:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753611Ab1LISdD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Dec 2011 13:33:03 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:47469 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753391Ab1LISdB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2011 13:33:01 -0500
-Received: by wgbdr13 with SMTP id dr13so6166635wgb.1
-        for <git@vger.kernel.org>; Fri, 09 Dec 2011 10:33:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=QEeYYiPedF37Cv3W2XaTXnyQXs/dqgoE3vt7+HiSRms=;
-        b=pgfY3iK10meCXmkOF+6icDtR2we2p0rODsUtZPw/NKeVfJAhP/lrM767qXU76PgY2I
-         7QjDTNNVH5XlNOaapf3X57AFMdb4sG9jv95TWwy9Lt/j6iR/LAoiTVqnY/jNTysn8vUC
-         xiYz3I+fUWzxW7/9ty9VkY15qknoiYRze5SGE=
-Received: by 10.227.60.14 with SMTP id n14mr7581826wbh.5.1323455580384; Fri,
- 09 Dec 2011 10:33:00 -0800 (PST)
-Received: by 10.216.51.141 with HTTP; Fri, 9 Dec 2011 10:32:39 -0800 (PST)
-In-Reply-To: <7vd3bxfvob.fsf@alter.siamese.dyndns.org>
+	id S1753289Ab1LISeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Dec 2011 13:34:06 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:43942 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752565Ab1LISeF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Dec 2011 13:34:05 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-VM-MR005.ip.videotron.ca
+ (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
+ 2011)) with ESMTP id <0LVY00CMJ8WKNC80@VL-VM-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 09 Dec 2011 13:33:56 -0500 (EST)
+In-reply-to: <7v4nx9hcmv.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.02 (LFD 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186660>
 
-Hi Junio,
+On Fri, 9 Dec 2011, Junio C Hamano wrote:
 
-Junio C Hamano wrote:
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
->>
->> Right, fixed.
->
-> Does the "fixed" mean "I fixed it locally; please expect to see it in the
-> next re-roll?"
+> Nicolas Pitre <nico@fluxnic.net> writes:
+> 
+> > On Sat, 3 Dec 2011, Brandon Casey wrote:
+> >
+> >> Linus's scenario of fetching a lot of stuff that never actually makes
+> >> it into the reflogs is still a valid problem.  I'm not sure that
+> >> people who don't know what they are doing are going to run into this
+> >> problem though.  Since he fetches a lot of stuff without ever checking
+> >> it out or creating a branch from it, potentially many objects become
+> >> unreferenced every time FETCH_HEAD changes.
+> >
+> > Maybe  FETCH_HEAD should have a reflog too?
+> 
+> It is a feature that the objects that were fetched for a quick peek become
+> immediately unreferenced and eligible for early removal unless they are
+> kept somewhere, e.g. remote tracking refs. What problem are we trying to
+> solve?
 
-Yes, it means exactly that :)
-I respond/ archive the review emails as soon as I fix the
-corresponding issue locally -- it's the only way to make sure that I
-don't miss anything (although I miss a few comments despite that).
+This is indeed a tangential observation to the expiration delay.  I was 
+just suggesting that having a reflog for FETCH_HEAD in the case when you 
+fetch a branch with an explicit URL might be handy.
 
--- Ram
+
+Nicolas
