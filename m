@@ -1,75 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 9/9] revert: simplify communicating command-line arguments
-Date: Fri, 9 Dec 2011 15:09:28 -0600
-Message-ID: <20111209210928.GO20913@elie.hsd1.il.comcast.net>
-References: <1323445326-24637-1-git-send-email-artagnon@gmail.com>
- <1323445326-24637-10-git-send-email-artagnon@gmail.com>
- <20111209190236.GA20913@elie.hsd1.il.comcast.net>
- <CALkWK0m_6yGuyLt-VqvRZkAiDoSxES8KeNzeXaejYRCpW=HAOg@mail.gmail.com>
- <20111209192919.GB20913@elie.hsd1.il.comcast.net>
- <CALkWK0m2veE8FmFVTPEqNAmbtvm1sWVHtFt0QOWU=huQFafeBw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] index_pack: indent find_unresolved_detals one level
+Date: Fri, 09 Dec 2011 13:27:00 -0800
+Message-ID: <7vpqfxcu6z.fsf@alter.siamese.dyndns.org>
+References: <CAJo=hJvrk3Jzg3dQhQnfbmKAFovLuEtJAP4rakHPFeuZ0T5R7g@mail.gmail.com>
+ <4ee0be67.05c1e70a.1956.ffff800b@mx.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 09 22:09:39 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
+To: pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Fri Dec 09 22:27:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZ7hK-00012v-DT
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 22:09:38 +0100
+	id 1RZ7yJ-0007f7-3d
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 22:27:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753938Ab1LIVJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Dec 2011 16:09:33 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:41504 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750922Ab1LIVJd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2011 16:09:33 -0500
-Received: by ggnr5 with SMTP id r5so3752395ggn.19
-        for <git@vger.kernel.org>; Fri, 09 Dec 2011 13:09:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=FQlBL5zV4xVFf67P3MXw9BSskC5hLai+PwkyWwpXGSA=;
-        b=Wc3Exvz4S+kCZzCT2+HJt83IpZE0lHuFLtUfCEv0wEqm4NxlRKLBzFmDmUlzTIbUc5
-         RW/zM33w6Plj52+EHS2WfZ6lP4vjA9h+Mt4KCkP1xztrkGmExiRfotw7JqSOG3ktNmg6
-         rhm/PzxvVuKepFSqPTnc/G5vIXQgWbWDYuutY=
-Received: by 10.101.3.9 with SMTP id f9mr2361226ani.54.1323464972708;
-        Fri, 09 Dec 2011 13:09:32 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id f17sm27099773ang.20.2011.12.09.13.09.31
-        (version=SSLv3 cipher=OTHER);
-        Fri, 09 Dec 2011 13:09:32 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0m2veE8FmFVTPEqNAmbtvm1sWVHtFt0QOWU=huQFafeBw@mail.gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1754604Ab1LIV1H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Dec 2011 16:27:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42255 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751899Ab1LIV1E convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Dec 2011 16:27:04 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EBF22767D;
+	Fri,  9 Dec 2011 16:27:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=cdsvblsPN9A1
+	ZFECMtKA/ZJe3Nk=; b=t/rlPjYRs/S8M8+9Abvx1iNwziuXznExGLH2OTgiRYdj
+	lavfp5TOSdH46UYCl5gGGZo225qxza36ORIkt+FIOT6VheX+JlHK7qHxrwGtg6HO
+	gYIH+7Mq8q7snqIFjpDKUg/hi3cz4cyJQ9XXCeEl9PpsW80AVPo9Pv4S5iWqUMc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=wcJToX
+	fnluiY5bYwS3cAzLpLQ6JXMSuGEdQigdIpvkNHKyAw5E7HCHNQ9HOO2I4axDr49T
+	tkHU8FRXrZgcbIgM7ZX3YNd9xHo2+zoO3rFZLDV04OrlLS3P0HBrQ27DZjFteb6s
+	eBRwOJ+pRgB2ERjWbcZ/0du93Y8mJ30g8RR1M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E355C767C;
+	Fri,  9 Dec 2011 16:27:02 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 61F3B767A; Fri,  9 Dec 2011
+ 16:27:02 -0500 (EST)
+In-Reply-To: <4ee0be67.05c1e70a.1956.ffff800b@mx.google.com>
+ (pclouds@gmail.com's message of "Thu, 8 Dec 2011 20:40:37 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 88E2F7FE-22AC-11E1-81A4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186697>
 
-Ramkumar Ramachandra wrote:
+pclouds@gmail.com writes:
 
->                                                                a
-> positive exit status can be interpreted as a conflict, but this is
-> clearly not the case here.  How do we fix this problem?  By creating
-> an API for "git commit", not by shelling out like this and letting it
-> take over the exit status.
+> From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+>
+> The next patch puts most of the code in one level deeper. By indentin=
+g
+> separately, it'd be easier to see the actual changes.
 
-That might be a nice thing to do anyway, but I don't see how it would
-solve anything.  The new "git commit" API would presumably return an
-integer or enum value to indicate the result of trying to commit.
-Tests in the testsuite for the "git commit" API would use the "git
-commit" command, which would expose the newly fine-grained values
-somehow.  And other people scripting but wanting the porcelain to take
-care of basic UI would benefit, too.  Right?
+Yuck.
 
-Actually, I think cherry-pick returning a positive exit status for
-"nothing left to commit after resolving conflicts" would be sensible.
-It is "I did what you asked but need your help to determine the final
-content of the commit or decide to skip it", rather than "you asked
-for something unsensible and I am bailing out".
+Isn't it a sign that "the next patch" should perhaps be helped by a sma=
+ll
+helper function that does whatever the part you are indenting here?
