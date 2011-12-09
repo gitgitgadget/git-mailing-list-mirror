@@ -1,92 +1,75 @@
-From: =?iso-8859-1?Q?Sidney_San_Mart=EDn?= <s@sidneysm.com>
-Subject: Re: Question about commit message wrapping
-Date: Fri, 9 Dec 2011 12:50:33 -0500
-Message-ID: <E085218D-9287-4F82-B34C-8379742F818A@sidneysm.com>
-References: <35A5A513-91FD-4EF9-B890-AB3D1550D63F@sidneysm.com> <m3zkf1hnh9.fsf@localhost.localdomain>
-Mime-Version: 1.0 (Apple Message framework v1251.1)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Jakub Narebski <jnareb@gmail.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Dec 09 18:50:42 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 0/13] credential helpers
+Date: Fri, 09 Dec 2011 10:00:44 -0800
+Message-ID: <7vzkf1fwvn.fsf@alter.siamese.dyndns.org>
+References: <20111206062127.GA29046@sigill.intra.peff.net>
+ <7v7h29fkfy.fsf@alter.siamese.dyndns.org>
+ <20111207064231.GA499@sigill.intra.peff.net>
+ <7vmxb2hhne.fsf@alter.siamese.dyndns.org>
+ <20111209022913.GA2600@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Dec 09 19:00:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZ4an-0006js-15
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 18:50:41 +0100
+	id 1RZ4kg-0002Zo-29
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 19:00:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752301Ab1LIRud convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Dec 2011 12:50:33 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:47865 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751797Ab1LIRub convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Dec 2011 12:50:31 -0500
-Received: by qcqz2 with SMTP id z2so2361923qcq.19
-        for <git@vger.kernel.org>; Fri, 09 Dec 2011 09:50:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sidneysm.com; s=google;
-        h=content-type:mime-version:subject:from:in-reply-to:date
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=4+B9ZLn0fB0yEJ48BVyrBii4KKRZeNzPlPISF9/ZByE=;
-        b=GV11IAIyV+kP8DElHGiemfGM2JmVQ4sa04QjjqPbdh1Kuk7Xp9tmkVXa/vkS7+b4kL
-         QCWzntqrsdzS/SjzfwXrU0Qk8wzRTZY2C478wVav8LHExTTq0mVZiOj6zc5x8uItZ5rk
-         awFvyR9xjdoWuFmzoUhen1F9Dzz3k5m6xfBL8=
-Received: by 10.229.68.152 with SMTP id v24mr2146251qci.31.1323453030915;
-        Fri, 09 Dec 2011 09:50:30 -0800 (PST)
-Received: from [172.20.1.57] (rrcs-184-75-21-194.nyc.biz.rr.com. [184.75.21.194])
-        by mx.google.com with ESMTPS id i10sm17807615qac.17.2011.12.09.09.50.29
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 09 Dec 2011 09:50:30 -0800 (PST)
-In-Reply-To: <m3zkf1hnh9.fsf@localhost.localdomain>
-X-Mailer: Apple Mail (2.1251.1)
+	id S1752972Ab1LISAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Dec 2011 13:00:49 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41913 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751797Ab1LISAr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Dec 2011 13:00:47 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 61FBB71C4;
+	Fri,  9 Dec 2011 13:00:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YGhOrKp+7pnP0Zo7jD8/QrMuwwo=; b=HGxutw
+	/Fzo0gb46WOk/vtfPKdRgP80e6HrWROI+zKnnvJQc5I4oBuZcc1FvKOEpVK3YzVs
+	ImJ/BGOtBzF2tBXHUbCCQJEjh6qUXBTn34c9mgHkTbyICh2s0xLommaU8b+/TNKO
+	eAsW7GKBP3xXOmLEG7r+inGW8EQdHgxw4pUz0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cQoUOXVvAEyjv7C13tsvhj3rJcJdfQY/
+	6xryHA6dEqcBB3bdRur5WXf14vCGqQww2fea3qvol0MYrk+/ZH8aAvqH8PrVDBA3
+	FFYZ6JG+YMhiWZ6w9vWkDgaf1qwFw9+xcM2ErGJ3eow4o1qtalzqdCLX7KunNlWI
+	vrmWAOsu5x4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59B6A71C3;
+	Fri,  9 Dec 2011 13:00:46 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DDBA571C2; Fri,  9 Dec 2011
+ 13:00:45 -0500 (EST)
+In-Reply-To: <20111209022913.GA2600@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 8 Dec 2011 21:29:13 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B7EBE5BE-228F-11E1-AFD8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186657>
 
+Jeff King <peff@peff.net> writes:
 
-On Dec 9, 2011, at 8:41 AM, Jakub Narebski wrote:
+> It works, and it detects truncated output both ways properly (I know
+> because I had to update every test, since the old output was missing the
+> end-of-credential marker).
+>
+> It makes me a little sad, because the original format (relying on EOF)
+> was so Unix-y.
 
-> Sidney San Mart=C3=ADn <s@sidneysm.com> writes:
->=20
->> *Nothing else* in my everyday life works this way anymore. Line
->> wrapping gets done on the display end in my email client, my web
->> browser, my ebook reader entirely automatically, and it adapts to
->> the size of the window.
->=20
-> The problem with automatic wrapping on the display is that there coul=
-d
-> be parts of commit message that *shouldn't* be wrapped, like code
-> sample, or URL... and in plain text you don't have a way to separate
-> flowed from non-flowed part.
->=20
+It saddens me, too.  A reasonable middle ground would be to stop treating
+an empty input as "no restriction" but "never matches".
 
-I usually lead code, URLs, and other preformatted lines like this with =
-a few spaces. Markdown uses the same convention, and it looks like comm=
-its in this repo do too.
-
-The patch in my last email prints lines which begin with whitespace ver=
-batim. How does that work?
-
-> Also with long non-breakable identifiers you sometimes need to wrap b=
-y
-> hand (or use linebreaking algorithm from TeX) or go bit over the limi=
-t
-> to make it look nice.
->=20
-
-Could you elaborate on this? The patch uses strbuf_add_wrapped_text, wh=
-ich was already in Git. If an identifier is longer than the wrap width,=
- it leaves it alone.
-
-> BTW. proper editor used to create commit message can wrap it for you
-> ;-).
-
-Only if everybody else in the world does it too! And only if I never ca=
-re about seeing my commits at any width besides 80 columns.
-
-> --=20
-> Jakub Nar=C4=99bski
->=20
+I suspect that it is far more likely for a helper to fail (due to
+configuration errors, for example) before it produces any output than
+after it gives some but not all output lines.
