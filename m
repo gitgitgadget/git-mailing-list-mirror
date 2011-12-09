@@ -1,106 +1,95 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 3/9] revert: tolerate extra spaces, tabs in insn sheet
-Date: Sat, 10 Dec 2011 01:28:21 +0530
-Message-ID: <CALkWK0kCZ7r2-_jF2st3h8MUF_kCgaLvrNZc0uxBxdpiK-7bLg@mail.gmail.com>
-References: <1323445326-24637-1-git-send-email-artagnon@gmail.com>
- <1323445326-24637-4-git-send-email-artagnon@gmail.com> <20111209194003.GE20913@elie.hsd1.il.comcast.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/2] t3401: modernize style
+Date: Fri, 9 Dec 2011 14:07:03 -0600
+Message-ID: <20111209200703.GA21280@elie.hsd1.il.comcast.net>
+References: <1323449952-14161-1-git-send-email-martin.von.zweigbergk@gmail.com>
+ <CALkWK0mip_pzUDQO=YLxaVwsWEAUdrk_EKcNG94Xr5+N+kzBtw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 09 20:58:49 2011
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 09 21:07:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZ6an-0008OC-9f
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 20:58:49 +0100
+	id 1RZ6j1-00036c-Fc
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Dec 2011 21:07:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754121Ab1LIT6p convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Dec 2011 14:58:45 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:38363 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752426Ab1LIT6o convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Dec 2011 14:58:44 -0500
-Received: by wgbdr13 with SMTP id dr13so6275624wgb.1
-        for <git@vger.kernel.org>; Fri, 09 Dec 2011 11:58:43 -0800 (PST)
+	id S1754660Ab1LIUHM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Dec 2011 15:07:12 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:39475 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752616Ab1LIUHL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Dec 2011 15:07:11 -0500
+Received: by ghbz2 with SMTP id z2so2832742ghb.19
+        for <git@vger.kernel.org>; Fri, 09 Dec 2011 12:07:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=X6hDbKYkWtU8yvA1X09hJOW40jKCbfbtt6obAGb/WTg=;
-        b=sFLFhg3AXEmmyAIKQmesDPfVL0WKsSf1hkdRGHgMwGvHW7o4fYdkNiV4C7svG+5fve
-         tOCsEu6FxJ+Tnre0wqG2bhhYpS9P48Ia6WJWmtONbVEKQCbUStf96xzlBgkKOQAGtiCo
-         n6B3Hxu+bVvvmqPcNRrG3V48T6/d3oK8whxUE=
-Received: by 10.216.136.223 with SMTP id w73mr392515wei.112.1323460723309;
- Fri, 09 Dec 2011 11:58:43 -0800 (PST)
-Received: by 10.216.51.141 with HTTP; Fri, 9 Dec 2011 11:58:21 -0800 (PST)
-In-Reply-To: <20111209194003.GE20913@elie.hsd1.il.comcast.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=2aSBgog3PcnsHw6o4pAtG9rfYQaQY4At4d/E9raEZvI=;
+        b=cn47sBrK2B4h6NuYZ0MqCppAgh5BJm2AZFHUljUT/sKbxh4zLyTYgMSpx/FEv2cBAg
+         YZGRAYid6sq2stP/7hLMCyU+wxG1XS5WjD/VoU1YtAZAlT4XMGh2FIcsV6jhk3bZ3O/7
+         NFNcfeSqW0LcT56MSq/hkld4k5ASiPydVn0k0=
+Received: by 10.236.190.130 with SMTP id e2mr14047497yhn.107.1323461230722;
+        Fri, 09 Dec 2011 12:07:10 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id u47sm16740664yhl.0.2011.12.09.12.07.09
+        (version=SSLv3 cipher=OTHER);
+        Fri, 09 Dec 2011 12:07:09 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0mip_pzUDQO=YLxaVwsWEAUdrk_EKcNG94Xr5+N+kzBtw@mail.gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186678>
 
-Hi,
+Ramkumar Ramachandra wrote:
 
-Jonathan Nieder wrote:
-> Ramkumar Ramachandra wrote:
+> The motivation is unclear: lazy afternoon? :P
+
+Perhaps he was reading the list and after noticing a few patches in
+the same vein, realized that this test script could be made easier to
+read, too.
+
+[...]
+> Martin von Zweigbergk wrote:
+
+>> + =C2=A0 =C2=A0 =C2=A0 echo First > A &&
+>> + =C2=A0 =C2=A0 =C2=A0 git update-index --add A &&
+>> + =C2=A0 =C2=A0 =C2=A0 git commit -m "Add A." &&
 >
->> +++ b/builtin/revert.c
->> @@ -727,7 +727,11 @@ static struct commit *parse_insn_line(char *bol=
-, char *eol, struct replay_opts *
->> =C2=A0 =C2=A0 =C2=A0 } else
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;
->>
->> + =C2=A0 =C2=A0 /* Eat up extra spaces/ tabs before object name */
->> + =C2=A0 =C2=A0 while (*bol =3D=3D ' ' || *bol =3D=3D '\t')
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 bol +=3D 1;
->> - =C2=A0 =C2=A0 end_of_object_name =3D bol + strcspn(bol, " \n");
+> Style nit: >[^ ] is prevalent FWIW.
+
+At first it wasn't clear to me what you meant here.  Was it that
+quoted text in an email should start with a non-space character, like
+a tab?
+
+=46inally I caught on that you mean that redirection operators tend to
+be flush against the filename they are redirecting to.
+
+[...]
+>> + =C2=A0 =C2=A0 =C2=A0 test ! -d .git/rebase-apply
+>> +'
 >
-> Why not use strspn? =C2=A0What happens if I use a tab immediately
-> after the pick/revert keyword?
+> While at it, why not change this "test ! -d" to
+> "test_path_is_missing"?
 
-:facepalm: Fixed.  Inter-diff:
+Sounds like a useful hint.  The benefits are that it would catch
+failures that make .git/rebase-apply into an ordinary file, and more
+useful output from "sh t3401-* -v -i" when the test fails.  The
+main downside I can think of is that the test script would not run
+against versions of the test harness before v1.7.3.3~5^2~1 (test-lib:
+user-friendly alternatives to test [-d|-f|-e], 2010-08-10).
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index b976562..be0686d 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -716,20 +716,22 @@ static struct commit *parse_insn_line(
- 	unsigned char commit_sha1[20];
- 	enum replay_action action;
- 	char *end_of_object_name;
--	int saved, status;
-+	int saved, status, padding;
+The patch looks good to me, too.  Thanks, both.
 
--	if (!prefixcmp(bol, "pick ")) {
-+	if (!prefixcmp(bol, "pick")) {
- 		action =3D CHERRY_PICK;
--		bol +=3D strlen("pick ");
--	} else if (!prefixcmp(bol, "revert ")) {
-+		bol +=3D strlen("pick");
-+	} else if (!prefixcmp(bol, "revert")) {
- 		action =3D REVERT;
--		bol +=3D strlen("revert ");
-+		bol +=3D strlen("revert");
- 	} else
- 		return NULL;
-
- 	/* Eat up extra spaces/ tabs before object name */
--	while (*bol =3D=3D ' ' || *bol =3D=3D '\t')
--		bol +=3D 1;
-+	padding =3D strspn(bol, " \t");
-+	if (!padding)
-+		return NULL;
-+	bol +=3D padding;
-
- 	end_of_object_name =3D bol + strcspn(bol, " \t\n");
- 	saved =3D *end_of_object_name;
---
-
-Thanks.
-
--- Ram
+Sincerely,
+Jonathan
