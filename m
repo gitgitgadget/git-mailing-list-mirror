@@ -1,70 +1,72 @@
-From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-Subject: Re: Access to git repository through squid proxy: The remote end
- hung up unexpectedly
-Date: Sat, 10 Dec 2011 19:37:53 +0400
-Message-ID: <20111210193753.994055f2.kostix@domain007.com>
-References: <CACjeFCA4h_w2UmYywMBV_P+YZcWAE=zRUz-z5eTfAO+oxWKPjw@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 1/3] Convert resolve_ref+xstrdup to new resolve_refdup function
+Date: Sat, 10 Dec 2011 22:40:22 +0700
+Message-ID: <CACsJy8C0CJyHdtWJ5QVqX9ksHWgdBpm6XekQ+mZP4sxBVA_8vQ@mail.gmail.com>
+References: <1323521631-24320-1-git-send-email-pclouds@gmail.com> <20111210131503.GI22035@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Mathieu Peltier <mathieu.peltier@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 10 16:38:16 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Tony Wang <wwwjfy@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 10 16:41:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZP01-000853-48
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 16:38:08 +0100
+	id 1RZP2s-0000ii-KC
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 16:41:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751788Ab1LJPh6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Dec 2011 10:37:58 -0500
-Received: from mailhub.007spb.ru ([84.204.203.130]:60792 "EHLO
-	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751719Ab1LJPh5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Dec 2011 10:37:57 -0500
-Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id pBAFbqjQ025752;
-	Sat, 10 Dec 2011 19:37:53 +0400
-In-Reply-To: <CACjeFCA4h_w2UmYywMBV_P+YZcWAE=zRUz-z5eTfAO+oxWKPjw@mail.gmail.com>
-X-Mailer: Sylpheed 3.1.1 (GTK+ 2.10.14; i686-pc-mingw32)
-X-Antivirus: Dr.Web (R) for Mail Servers on proxysrv host
-X-Antivirus-Code: 100000
+	id S1751798Ab1LJPk4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Dec 2011 10:40:56 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:42303 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751764Ab1LJPkz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Dec 2011 10:40:55 -0500
+Received: by bkcjm19 with SMTP id jm19so103922bkc.19
+        for <git@vger.kernel.org>; Sat, 10 Dec 2011 07:40:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=hLMutzc0h4XdpWUbCaNXXBWVmwg3mggS868g6DhFWdI=;
+        b=Cxg/SH7xfp6luU49Xlkl+uX3aLcc3iblj5emStH0pddyghMyO4EHOWB6emsmV00hQ7
+         gL9AEQDOzTYNvxCV+YE+fBW8bn2nCudAYhM4rSPo98xwYtRlJj40TnTVymWyPrLXbhWD
+         vos6Fc95sXFEv18372Abr8KYxMgHovd37998U=
+Received: by 10.205.126.18 with SMTP id gu18mr6006285bkc.79.1323531653285;
+ Sat, 10 Dec 2011 07:40:53 -0800 (PST)
+Received: by 10.204.129.205 with HTTP; Sat, 10 Dec 2011 07:40:22 -0800 (PST)
+In-Reply-To: <20111210131503.GI22035@elie.hsd1.il.comcast.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186783>
 
-On Sat, 10 Dec 2011 09:56:07 +0100
-Mathieu Peltier <mathieu.peltier@gmail.com> wrote:
+2011/12/10 Jonathan Nieder <jrnieder@gmail.com>:
+>> --- a/builtin/revert.c
+>> +++ b/builtin/revert.c
+>> @@ -901,7 +901,7 @@ static int rollback_single_pick(void)
+>> =C2=A0 =C2=A0 =C2=A0 if (!file_exists(git_path("CHERRY_PICK_HEAD")) =
+&&
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 !file_exists(git_path("REVERT_HEA=
+D")))
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error(_("no =
+cherry-pick or revert in progress"));
+>> - =C2=A0 =C2=A0 if (!resolve_ref("HEAD", head_sha1, 0, NULL))
+>> + =C2=A0 =C2=A0 if (read_ref_full("HEAD", head_sha1, 0, NULL))
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error(_("can=
+not resolve HEAD"));
+>> =C2=A0 =C2=A0 =C2=A0 if (is_null_sha1(head_sha1))
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error(_("can=
+not abort from a branch yet to be born"));
+>
+> Unrelated change that snuck in, I assume?
 
-> Hi,
-> I am trying to access a git repository (git:// URL) through a squid
-> proxy.
-> 
-> squid allows CONNECT for port 9418:
-[...]
-> 2011/12/09 12:22:44 socat[21428] D shutdown()  -> 0
-> fatal: The remote end hung up unexpectedly
-> 
-> I tried to use also nc but I get the same error.
-> Any advice?
-I think you have to verify the git-daemon (you did not say you're using
-git-daemon, but it can be presupposed based on the port number) works
-by itself before starting to wrap it into layers of complexity.
-What happens if you try to clone a git repo directly, without any
-tunneling?  If this is not possible, try to clone on the host running
-git-daemon (use an URL like git://localhost/path/to/repo.git).
-If it fails (I suppose it will), try increasing the daemon verbosity
-(see git-daemon) manpage.
-After all, may be it's as simple as forgetting to `touch` git-export-ok
-file in the repository you're trying to clone.
-
-P.S.
-As a side note: why are you trying to implement such a strange setup?
-Why not just use plain old SSH which just works and provides good level
-of security (contrary to Basic HTTP authentication you might be using).
-If you need a level of control about who can do what with the repository
-you could look at https://github.com/sitaramc/gitolite
+Yeah that slipped in. It should be part of c689332 (Convert many
+resolve_ref() calls to read_ref*() and ref_exists() - 2011-11-13). I
+guess either I missed it or it was a new call site after that patch.
+Split it out as a separate patch?
+--=20
+Duy
