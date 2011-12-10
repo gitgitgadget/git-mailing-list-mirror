@@ -1,88 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Set hard limit on delta chain depth
-Date: Fri, 09 Dec 2011 16:02:19 -0800
-Message-ID: <7vsjktb8fo.fsf@alter.siamese.dyndns.org>
-References: <1323068688-31481-1-git-send-email-pclouds@gmail.com>
- <7vvcpthh97.fsf@alter.siamese.dyndns.org>
- <CACsJy8AZg3DgZzmPyXhCH9bGBqo9UN7-zLt_feTtpyajf5U1tw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 10 01:02:29 2011
+From: Jesse Keating <jkeating@redhat.com>
+Subject: Bug in filter-branch example for moving into a subdirectory
+Date: Fri, 9 Dec 2011 16:07:49 -0800
+Message-ID: <BD3976C6-7F37-40EF-9FB1-CF55828A807D@redhat.com>
+Mime-Version: 1.0 (Apple Message framework v1251.1)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 10 01:07:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZAOY-0002qg-Vb
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 01:02:27 +0100
+	id 1RZATr-0004Ow-Mq
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 01:07:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752673Ab1LJACW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Dec 2011 19:02:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46560 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751875Ab1LJACW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2011 19:02:22 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2CE06D8F;
-	Fri,  9 Dec 2011 19:02:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=MU7bJ2amXNVtfG2cJdlDiG/b7A0=; b=fp7musZ6Brn3gCwu9qMM
-	bl1TZmJOZakZ1mvLalUQhoCRlBLyJplgCb22tZGnMCC3YM6p25G4BGqGTPm/CQ/2
-	DgnBX5QDEZ1vDtHx9vQHZQKbVBDMxVbLzPW3N+P6hKGUhcpMPOTzXmk0Nrkh2o62
-	wC7uCsKDyK638bRz1PhuDu8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=b5Xfc41H5RW1WH+K22gaRZ3DoqTtwfO2Dv293ybaxqhr7h
-	LWpdBLKBUQ/Ux3RGjmpjej7bQy9WqDEZAIL42Ay8ZSQXTyJBDcBaqLWI0098EgkA
-	4DVX/5HFFyc7heIUfzrPsRnaG45PZQHlyTs7Ox4gSaxR43zrUJxORhzeX3y7o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AADF26D8E;
-	Fri,  9 Dec 2011 19:02:21 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3DD9E6D8C; Fri,  9 Dec 2011
- 19:02:21 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3B5AE4CC-22C2-11E1-A574-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754952Ab1LJAHv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Dec 2011 19:07:51 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:25460 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752541Ab1LJAHv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Dec 2011 19:07:51 -0500
+Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id pBA07o2D029995
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
+	for <git@vger.kernel.org>; Fri, 9 Dec 2011 19:07:50 -0500
+Received: from [10.3.229.212] (vpn-229-212.phx2.redhat.com [10.3.229.212])
+	by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id pBA07nNC031488
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
+	for <git@vger.kernel.org>; Fri, 9 Dec 2011 19:07:50 -0500
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186714>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+I ran into a bug with the example in the man page for filter-branch, fo=
+r moving everything into a subdir:
 
-> That's interesting. First of all xmalloc() is controlled by us while
-> index-pack code might lead to stack overflow exploit (never done it,
-> not sure if it's really pratical to do in this case).
+           git filter-branch --index-filter \
+                   'git ls-files -s | sed "s-\t\"*-&newsubdir/-" |
+                           GIT_INDEX_FILE=3D$GIT_INDEX_FILE.new \
+                                   git update-index --index-info &&
+                    mv "$GIT_INDEX_FILE.new" "$GIT_INDEX_FILE"' HEAD
 
-What do you exactly mean by "stack overflow exploit"?
+The problem seems to be when a commit happens that is just a file remov=
+al with no added file.  In those cases, git ls-files doesn't output any=
+thing.  Trying to throw a -d option in doesn't seem to improve matters.
 
-If your callee has prepares a stackframe that is not sufficiently big but
-carelessly tries to store more than it has space for, such a write can
-overflow the stack (without hardware traps) and overwrite return address,
-and instead of coming back to you, the control can be transferred to
-random places.
+So the problem is that if a commit is just file removals, this example =
+will actually crash.  Unfortunately I don't have a suggested solution a=
+t the moment.
 
-But I do not think that is what we are talking about here.
-
-You attempt to write parameters and return address to the area of memory
-pointed by your stack pointer, advance the stack pointer to create a stack
-frame and the callee attempts to write to its local variables in the newly
-allocated stack frame. These memory accesses eventually attempt to touch
-memory beyond the address range the kernel gave you page table entries to
-be used as your stack space, and hardware traps. If you haven't run out of
-the stack, a new page is lazily added to the page table and your attempted
-access will succeed. If you are recursing too deeply, you won't be given a
-new page and you will be killed by the kernel. That is a rather controlled
-death of the process, unlike smashing the contents of the stack to jump to
-a randomly chosen place, isn't it?
-
-Of course, some platforms do not have an unwritable gap between the stack
-segment that grow downwards and the heap that grow upwards, and also your
-stackframe could be larger than such a gap (in this particular callchain I
-do not think that is the case), so the above discussion does not apply
-universally, though.
+--
+Jesse Keating
+=46edora -- Freedom=B2 is a feature!
+identi.ca: http://identi.ca/jkeating
