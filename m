@@ -1,336 +1,456 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 2/7] revert: allow cherry-pick --continue to commit before
- resuming
-Date: Sat, 10 Dec 2011 06:49:25 -0600
-Message-ID: <20111210124925.GC22035@elie.hsd1.il.comcast.net>
-References: <CALkWK0=45OwcBoH2TorsgwTbaXjnffVuh0mGxh2+ShN9cuF-=A@mail.gmail.com>
- <20111120094650.GB2278@elie.hsd1.il.comcast.net>
- <20111122111207.GA7399@elie.hsd1.il.comcast.net>
- <20111122112001.GF7399@elie.hsd1.il.comcast.net>
- <7vr50zd5x0.fsf@alter.siamese.dyndns.org>
- <20111123012721.GA14217@elie.hsd1.il.comcast.net>
- <4ECCB3A2.5030102@viscovery.net>
- <20111123100452.GA30629@elie.hsd1.il.comcast.net>
- <4ECCC935.7010407@viscovery.net>
- <20111210124644.GA22035@elie.hsd1.il.comcast.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 1/3] Convert resolve_ref+xstrdup to new resolve_refdup function
+Date: Sat, 10 Dec 2011 19:53:48 +0700
+Message-ID: <1323521631-24320-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Sat Dec 10 13:49:37 2011
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Tony Wang <wwwjfy@gmail.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 10 13:55:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZMMx-0001RZ-FF
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 13:49:36 +0100
+	id 1RZMT6-0003Bd-2v
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 13:55:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751141Ab1LJMtb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Dec 2011 07:49:31 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:55412 "EHLO
+	id S1751128Ab1LJMzv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Dec 2011 07:55:51 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:59271 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751033Ab1LJMta (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Dec 2011 07:49:30 -0500
-Received: by iaeh11 with SMTP id h11so190446iae.19
-        for <git@vger.kernel.org>; Sat, 10 Dec 2011 04:49:29 -0800 (PST)
+	with ESMTP id S1750874Ab1LJMzu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Dec 2011 07:55:50 -0500
+Received: by iaeh11 with SMTP id h11so196423iae.19
+        for <git@vger.kernel.org>; Sat, 10 Dec 2011 04:55:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=SCZSOURK0MYvJsJysWx1Ei5vRXcOliZX/P2H34FRsfQ=;
-        b=cg6+6pqNTqPvXv+8FwRdLufqZL/gtF5WErMt0SBiE+7CNZp63/WgC7I/apMe1Y1rZV
-         OEqWK01JRMZad/czpdNJJWzmBP6+9xWr5qan5jJ9bjVUjZBtpKtiouQ8G+L7F2b2PHUS
-         NNymK5jwYIYQt7SJ7YnYj1FYgNK7v8YrW7MXA=
-Received: by 10.50.51.234 with SMTP id n10mr7572769igo.10.1323521369502;
-        Sat, 10 Dec 2011 04:49:29 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id mb4sm24853782igc.1.2011.12.10.04.49.28
-        (version=SSLv3 cipher=OTHER);
-        Sat, 10 Dec 2011 04:49:29 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20111210124644.GA22035@elie.hsd1.il.comcast.net>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=YCf59EiG5FTdfzB9RodL9uR587Ou/UIy/g7MER4TMpo=;
+        b=t+3tffzx3BsV54byXJe3QsgkTCQz+TeVF0xqg68kLbHKRT5cCGz+n7amxtFNcmfd/3
+         hqHNo02g2wznUyD0qdALp+TnZOFKKXKRyWR39v8UvAPPOftJV/t1Umnj0XzvZYQGI0Ru
+         F7B27eUhGctTkqki7ssJf5SXsBMT9YITWc+PE=
+Received: by 10.50.236.35 with SMTP id ur3mr7546471igc.28.1323521749305;
+        Sat, 10 Dec 2011 04:55:49 -0800 (PST)
+Received: from tre ([115.74.36.175])
+        by mx.google.com with ESMTPS id zs7sm24889427igb.0.2011.12.10.04.55.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 10 Dec 2011 04:55:48 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Sat, 10 Dec 2011 19:53:51 +0700
+X-Mailer: git-send-email 1.7.8.36.g69ee2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186769>
 
-When "git cherry-pick ..bar" encounters conflicts, permit the operator
-to use cherry-pick --continue after resolving them as a shortcut for
-"git commit && git cherry-pick --continue" to record the resolution
-and carry on with the rest of the sequence.
 
-This improves the analogy with "git rebase" (in olden days --continue
-was the way to preserve authorship when a rebase encountered
-conflicts) and fits well with a general UI goal of making "git cmd
---continue" save humans the trouble of deciding what to do next.
-
-Example: after encountering a conflict from running "git cherry-pick
-foo bar baz":
-
-	CONFLICT (content): Merge conflict in main.c
-	error: could not apply f78a8d98c... bar!
-	hint: after resolving the conflicts, mark the corrected paths
-	hint: with 'git add <paths>' or 'git rm <paths>'
-	hint: and commit the result with 'git commit'
-
-We edit main.c to resolve the conflict, mark it acceptable with "git
-add main.c", and can run "cherry-pick --continue" to resume the
-sequence.
-
-	$ git cherry-pick --continue
-	[editor opens to confirm commit message]
-	[master 78c8a8c98] bar!
-	 1 files changed, 1 insertions(+), 1 deletions(-)
-	[master 87ca8798c] baz!
-	 1 files changed, 1 insertions(+), 1 deletions(-)
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
- builtin/revert.c                |   23 ++++++-
- t/t3510-cherry-pick-sequence.sh |  139 ++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 156 insertions(+), 6 deletions(-)
+ builtin/branch.c        |   11 ++++-------
+ builtin/checkout.c      |   15 +++++++--------
+ builtin/fmt-merge-msg.c |    6 +++---
+ builtin/for-each-ref.c  |    7 ++-----
+ builtin/merge.c         |   12 +++++-------
+ builtin/notes.c         |    6 +++---
+ builtin/receive-pack.c  |    8 +++-----
+ builtin/revert.c        |    2 +-
+ builtin/show-branch.c   |    4 +---
+ cache.h                 |    1 +
+ reflog-walk.c           |   13 ++++++-------
+ refs.c                  |    6 ++++++
+ wt-status.c             |    4 +---
+ 13 files changed, 43 insertions(+), 52 deletions(-)
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 9f6c85c1..a43b4d85 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -1038,18 +1038,35 @@ static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
+diff --git a/builtin/branch.c b/builtin/branch.c
+index e1e486e..72c4c31 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -103,7 +103,7 @@ static int branch_merged(int kind, const char *name=
+,
+ 	 * safely to HEAD (or the other branch).
+ 	 */
+ 	struct commit *reference_rev =3D NULL;
+-	const char *reference_name =3D NULL;
++	char *reference_name =3D NULL;
+ 	int merged;
+=20
+ 	if (kind =3D=3D REF_LOCAL_BRANCH) {
+@@ -115,10 +115,8 @@ static int branch_merged(int kind, const char *nam=
+e,
+ 		    branch->merge[0] &&
+ 		    branch->merge[0]->dst &&
+ 		    (reference_name =3D
+-		     resolve_ref(branch->merge[0]->dst, sha1, 1, NULL)) !=3D NULL) {
+-			reference_name =3D xstrdup(reference_name);
++		     resolve_refdup(branch->merge[0]->dst, sha1, 1, NULL)) !=3D NULL=
+)
+ 			reference_rev =3D lookup_commit_reference(sha1);
+-		}
+ 	}
+ 	if (!reference_rev)
+ 		reference_rev =3D head_rev;
+@@ -143,7 +141,7 @@ static int branch_merged(int kind, const char *name=
+,
+ 				"         '%s', even though it is merged to HEAD."),
+ 				name, reference_name);
+ 	}
+-	free((char *)reference_name);
++	free(reference_name);
+ 	return merged;
+ }
+=20
+@@ -731,10 +729,9 @@ int cmd_branch(int argc, const char **argv, const =
+char *prefix)
+=20
+ 	track =3D git_branch_track;
+=20
+-	head =3D resolve_ref("HEAD", head_sha1, 0, NULL);
++	head =3D resolve_refdup("HEAD", head_sha1, 0, NULL);
+ 	if (!head)
+ 		die(_("Failed to resolve HEAD as a valid ref."));
+-	head =3D xstrdup(head);
+ 	if (!strcmp(head, "HEAD")) {
+ 		detached =3D 1;
+ 	} else {
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index b7c6302..a66d3eb 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -696,17 +696,14 @@ static int switch_branches(struct checkout_opts *=
+opts, struct branch_info *new)
+ {
+ 	int ret =3D 0;
+ 	struct branch_info old;
++	char *path;
+ 	unsigned char rev[20];
+ 	int flag;
+ 	memset(&old, 0, sizeof(old));
+-	old.path =3D resolve_ref("HEAD", rev, 0, &flag);
+-	if (old.path)
+-		old.path =3D xstrdup(old.path);
++	old.path =3D path =3D resolve_refdup("HEAD", rev, 0, &flag);
+ 	old.commit =3D lookup_commit_reference_gently(rev, 1);
+-	if (!(flag & REF_ISSYMREF)) {
+-		free((char *)old.path);
++	if (!(flag & REF_ISSYMREF))
+ 		old.path =3D NULL;
+-	}
+=20
+ 	if (old.path && !prefixcmp(old.path, "refs/heads/"))
+ 		old.name =3D old.path + strlen("refs/heads/");
+@@ -720,8 +717,10 @@ static int switch_branches(struct checkout_opts *o=
+pts, struct branch_info *new)
+ 	}
+=20
+ 	ret =3D merge_working_tree(opts, &old, new);
+-	if (ret)
++	if (ret) {
++		free(path);
+ 		return ret;
++	}
+=20
+ 	if (!opts->quiet && !old.path && old.commit && new->commit !=3D old.c=
+ommit)
+ 		orphaned_commit_warning(old.commit);
+@@ -729,7 +728,7 @@ static int switch_branches(struct checkout_opts *op=
+ts, struct branch_info *new)
+ 	update_refs_for_switch(opts, &old, new);
+=20
+ 	ret =3D post_checkout_hook(old.commit, new->commit, 1);
+-	free((char *)old.path);
++	free(path);
+ 	return ret || opts->writeout_error;
+ }
+=20
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index bdfa0ea..a27efcd 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -372,14 +372,14 @@ int fmt_merge_msg(struct strbuf *in, struct strbu=
+f *out,
+ 	int i =3D 0, pos =3D 0;
+ 	unsigned char head_sha1[20];
+ 	const char *current_branch;
++	char *ref;
+=20
+ 	/* get current branch */
+-	current_branch =3D resolve_ref("HEAD", head_sha1, 1, NULL);
++	current_branch =3D ref =3D resolve_refdup("HEAD", head_sha1, 1, NULL)=
+;
+ 	if (!current_branch)
+ 		die("No current branch");
+ 	if (!prefixcmp(current_branch, "refs/heads/"))
+ 		current_branch +=3D 11;
+-	current_branch =3D xstrdup(current_branch);
+=20
+ 	/* get a line */
+ 	while (pos < in->len) {
+@@ -421,7 +421,7 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf =
+*out,
+ 	}
+=20
+ 	strbuf_complete_line(out);
+-	free((char *)current_branch);
++	free(ref);
  	return 0;
  }
- 
-+static int continue_single_pick(void)
-+{
-+	const char *argv[] = { "commit", NULL };
+=20
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index d90e5d2..b01d76a 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -628,11 +628,8 @@ static void populate_value(struct refinfo *ref)
+=20
+ 	if (need_symref && (ref->flag & REF_ISSYMREF) && !ref->symref) {
+ 		unsigned char unused1[20];
+-		const char *symref;
+-		symref =3D resolve_ref(ref->refname, unused1, 1, NULL);
+-		if (symref)
+-			ref->symref =3D xstrdup(symref);
+-		else
++		ref->symref =3D resolve_refdup(ref->refname, unused1, 1, NULL);
++		if (!ref->symref)
+ 			ref->symref =3D "";
+ 	}
+=20
+diff --git a/builtin/merge.c b/builtin/merge.c
+index a1c8534..6437db2 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1096,6 +1096,7 @@ int cmd_merge(int argc, const char **argv, const =
+char *prefix)
+ 	struct commit_list *common =3D NULL;
+ 	const char *best_strategy =3D NULL, *wt_strategy =3D NULL;
+ 	struct commit_list **remotes =3D &remoteheads;
++	char *branch_ref;
+=20
+ 	if (argc =3D=3D 2 && !strcmp(argv[1], "-h"))
+ 		usage_with_options(builtin_merge_usage, builtin_merge_options);
+@@ -1104,12 +1105,9 @@ int cmd_merge(int argc, const char **argv, const=
+ char *prefix)
+ 	 * Check if we are _not_ on a detached HEAD, i.e. if there is a
+ 	 * current branch.
+ 	 */
+-	branch =3D resolve_ref("HEAD", head_sha1, 0, &flag);
+-	if (branch) {
+-		if (!prefixcmp(branch, "refs/heads/"))
+-			branch +=3D 11;
+-		branch =3D xstrdup(branch);
+-	}
++	branch =3D branch_ref =3D resolve_refdup("HEAD", head_sha1, 0, &flag)=
+;
++	if (branch && !prefixcmp(branch, "refs/heads/"))
++		branch +=3D 11;
+ 	if (!branch || is_null_sha1(head_sha1))
+ 		head_commit =3D NULL;
+ 	else
+@@ -1520,6 +1518,6 @@ int cmd_merge(int argc, const char **argv, const =
+char *prefix)
+ 		ret =3D suggest_conflicts(option_renormalize);
+=20
+ done:
+-	free((char *)branch);
++	free(branch_ref);
+ 	return ret;
+ }
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 10b8bc7..816c998 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -804,6 +804,7 @@ static int merge_commit(struct notes_merge_options =
+*o)
+ 	struct notes_tree *t;
+ 	struct commit *partial;
+ 	struct pretty_print_context pretty_ctx;
++	char *ref;
+ 	int ret;
+=20
+ 	/*
+@@ -826,10 +827,9 @@ static int merge_commit(struct notes_merge_options=
+ *o)
+ 	t =3D xcalloc(1, sizeof(struct notes_tree));
+ 	init_notes(t, "NOTES_MERGE_PARTIAL", combine_notes_overwrite, 0);
+=20
+-	o->local_ref =3D resolve_ref("NOTES_MERGE_REF", sha1, 0, NULL);
++	o->local_ref =3D ref =3D resolve_refdup("NOTES_MERGE_REF", sha1, 0, N=
+ULL);
+ 	if (!o->local_ref)
+ 		die("Failed to resolve NOTES_MERGE_REF");
+-	o->local_ref =3D xstrdup(o->local_ref);
+=20
+ 	if (notes_merge_commit(o, t, partial, sha1))
+ 		die("Failed to finalize notes merge");
+@@ -846,7 +846,7 @@ static int merge_commit(struct notes_merge_options =
+*o)
+ 	free_notes(t);
+ 	strbuf_release(&msg);
+ 	ret =3D merge_abort(o);
+-	free((char *)o->local_ref);
++	free(ref);
+ 	return ret;
+ }
+=20
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index b6d957c..5cd6fc7 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -36,7 +36,7 @@ static int use_sideband;
+ static int prefer_ofs_delta =3D 1;
+ static int auto_update_server_info;
+ static int auto_gc =3D 1;
+-static const char *head_name;
++static char *head_name;
+ static int sent_capabilities;
+=20
+ static enum deny_action parse_deny_action(const char *var, const char =
+*value)
+@@ -695,10 +695,8 @@ static void execute_commands(struct command *comma=
+nds, const char *unpacker_erro
+=20
+ 	check_aliased_updates(commands);
+=20
+-	free((char *)head_name);
+-	head_name =3D resolve_ref("HEAD", sha1, 0, NULL);
+-	if (head_name)
+-		head_name =3D xstrdup(head_name);
++	free(head_name);
++	head_name =3D resolve_refdup("HEAD", sha1, 0, NULL);
+=20
+ 	for (cmd =3D commands; cmd; cmd =3D cmd->next)
+ 		if (!cmd->skip_update)
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 1ea525c..0c52a83 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -901,7 +901,7 @@ static int rollback_single_pick(void)
+ 	if (!file_exists(git_path("CHERRY_PICK_HEAD")) &&
+ 	    !file_exists(git_path("REVERT_HEAD")))
+ 		return error(_("no cherry-pick or revert in progress"));
+-	if (!resolve_ref("HEAD", head_sha1, 0, NULL))
++	if (read_ref_full("HEAD", head_sha1, 0, NULL))
+ 		return error(_("cannot resolve HEAD"));
+ 	if (is_null_sha1(head_sha1))
+ 		return error(_("cannot abort from a branch yet to be born"));
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 4b480d7..a1f148e 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -726,10 +726,8 @@ int cmd_show_branch(int ac, const char **av, const=
+ char *prefix)
+=20
+ 		if (ac =3D=3D 0) {
+ 			static const char *fake_av[2];
+-			const char *refname;
+=20
+-			refname =3D resolve_ref("HEAD", sha1, 1, NULL);
+-			fake_av[0] =3D xstrdup(refname);
++			fake_av[0] =3D resolve_refdup("HEAD", sha1, 1, NULL);
+ 			fake_av[1] =3D NULL;
+ 			av =3D fake_av;
+ 			ac =3D 1;
+diff --git a/cache.h b/cache.h
+index 8c98d05..4887a3e 100644
+--- a/cache.h
++++ b/cache.h
+@@ -866,6 +866,7 @@ extern int read_ref(const char *filename, unsigned =
+char *sha1);
+  * errno is sometimes set on errors, but not always.
+  */
+ extern const char *resolve_ref(const char *ref, unsigned char *sha1, i=
+nt reading, int *flag);
++extern char *resolve_refdup(const char *ref, unsigned char *sha1, int =
+reading, int *flag);
+=20
+ extern int dwim_ref(const char *str, int len, unsigned char *sha1, cha=
+r **ref);
+ extern int dwim_log(const char *str, int len, unsigned char *sha1, cha=
+r **ref);
+diff --git a/reflog-walk.c b/reflog-walk.c
+index da71a85..5572b42 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -50,11 +50,10 @@ static struct complete_reflogs *read_complete_reflo=
+g(const char *ref)
+ 	for_each_reflog_ent(ref, read_one_reflog, reflogs);
+ 	if (reflogs->nr =3D=3D 0) {
+ 		unsigned char sha1[20];
+-		const char *name =3D resolve_ref(ref, sha1, 1, NULL);
++		char *name =3D resolve_refdup(ref, sha1, 1, NULL);
+ 		if (name) {
+-			name =3D xstrdup(name);
+ 			for_each_reflog_ent(name, read_one_reflog, reflogs);
+-			free((char *)name);
++			free(name);
+ 		}
+ 	}
+ 	if (reflogs->nr =3D=3D 0) {
+@@ -171,11 +170,11 @@ int add_reflog_for_walk(struct reflog_walk_info *=
+info,
+ 	else {
+ 		if (*branch =3D=3D '\0') {
+ 			unsigned char sha1[20];
+-			const char *head =3D resolve_ref("HEAD", sha1, 0, NULL);
+-			if (!head)
+-				die ("No current branch");
+ 			free(branch);
+-			branch =3D xstrdup(head);
++			branch =3D resolve_refdup("HEAD", sha1, 0, NULL);
++			if (!branch)
++				die ("No current branch");
 +
-+	if (!file_exists(git_path("CHERRY_PICK_HEAD")) &&
-+	    !file_exists(git_path("REVERT_HEAD")))
-+		return error(_("no cherry-pick or revert in progress"));
-+	return run_command_v_opt(argv, RUN_GIT_CMD);
+ 		}
+ 		reflogs =3D read_complete_reflog(branch);
+ 		if (!reflogs || reflogs->nr =3D=3D 0) {
+diff --git a/refs.c b/refs.c
+index f5cb297..8ffb32f 100644
+--- a/refs.c
++++ b/refs.c
+@@ -605,6 +605,12 @@ const char *resolve_ref(const char *ref, unsigned =
+char *sha1, int reading, int *
+ 	return ref;
+ }
+=20
++char *resolve_refdup(const char *ref, unsigned char *sha1, int reading=
+, int *flag)
++{
++	const char *ret =3D resolve_ref(ref, sha1, reading, flag);
++	return ret ? xstrdup(ret) : NULL;
 +}
 +
- static int sequencer_continue(struct replay_opts *opts)
+ /* The argument to filter_refs */
+ struct ref_filter {
+ 	const char *pattern;
+diff --git a/wt-status.c b/wt-status.c
+index 70fdb76..9ffc535 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -111,7 +111,6 @@ void status_printf_more(struct wt_status *s, const =
+char *color,
+ void wt_status_prepare(struct wt_status *s)
  {
- 	struct commit_list *todo_list = NULL;
- 
- 	if (!file_exists(git_path(SEQ_TODO_FILE)))
--		return error(_("No %s in progress"), action_name(opts));
-+		return continue_single_pick();
- 	read_populate_opts(&opts);
- 	read_populate_todo(&todo_list, opts);
- 
- 	/* Verify that the conflict has been resolved */
--	if (!index_differs_from("HEAD", 0))
--		todo_list = todo_list->next;
-+	if (file_exists(git_path("CHERRY_PICK_HEAD")) ||
-+	    file_exists(git_path("REVERT_HEAD"))) {
-+		int ret = continue_single_pick();
-+		if (ret)
-+			return ret;
-+	}
-+	if (index_differs_from("HEAD", 0))
-+		return error_dirty_index(opts);
-+	todo_list = todo_list->next;
- 	return pick_commits(todo_list, opts);
- }
- 
-diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index 2c4c1c85..4d1883b7 100755
---- a/t/t3510-cherry-pick-sequence.sh
-+++ b/t/t3510-cherry-pick-sequence.sh
-@@ -2,6 +2,7 @@
- 
- test_description='Test cherry-pick continuation features
- 
-+ +  conflicting: rewrites unrelated to conflicting
-   + yetanotherpick: rewrites foo to e
-   + anotherpick: rewrites foo to d
-   + picked: rewrites foo to c
-@@ -27,6 +28,7 @@ test_cmp_rev () {
- }
- 
- test_expect_success setup '
-+	git config advice.detachedhead false
- 	echo unrelated >unrelated &&
- 	git add unrelated &&
- 	test_commit initial foo a &&
-@@ -35,8 +37,8 @@ test_expect_success setup '
- 	test_commit picked foo c &&
- 	test_commit anotherpick foo d &&
- 	test_commit yetanotherpick foo e &&
--	git config advice.detachedhead false
--
-+	pristine_detach initial &&
-+	test_commit conflicting unrelated
- '
- 
- test_expect_success 'cherry-pick persists data on failure' '
-@@ -243,7 +245,66 @@ test_expect_success '--continue complains when there are unresolved conflicts' '
- 	test_must_fail git cherry-pick --continue
- '
- 
--test_expect_success '--continue continues after conflicts are resolved' '
-+test_expect_success '--continue of single cherry-pick' '
-+	pristine_detach initial &&
-+	echo c >expect &&
-+	test_must_fail git cherry-pick picked &&
-+	echo c >foo &&
-+	git add foo &&
-+	git cherry-pick --continue &&
-+
-+	test_cmp expect foo &&
-+	test_cmp_rev initial HEAD^ &&
-+	git diff --exit-code HEAD &&
-+	test_must_fail git rev-parse --verify CHERRY_PICK_HEAD
-+'
-+
-+test_expect_success '--continue of single revert' '
-+	pristine_detach initial &&
-+	echo resolved >expect &&
-+	echo "Revert \"picked\"" >expect.msg &&
-+	test_must_fail git revert picked &&
-+	echo resolved >foo &&
-+	git add foo &&
-+	git cherry-pick --continue &&
-+
-+	git diff --exit-code HEAD &&
-+	test_cmp expect foo &&
-+	test_cmp_rev initial HEAD^ &&
-+	git diff-tree -s --pretty=tformat:%s HEAD >msg &&
-+	test_cmp expect.msg msg &&
-+	test_must_fail git rev-parse --verify CHERRY_PICK_HEAD &&
-+	test_must_fail git rev-parse --verify REVERT_HEAD
-+'
-+
-+test_expect_success '--continue after resolving conflicts' '
-+	pristine_detach initial &&
-+	echo d >expect &&
-+	cat >expect.log <<-\EOF &&
-+	OBJID
-+	:100644 100644 OBJID OBJID M	foo
-+	OBJID
-+	:100644 100644 OBJID OBJID M	foo
-+	OBJID
-+	:100644 100644 OBJID OBJID M	unrelated
-+	OBJID
-+	:000000 100644 OBJID OBJID A	foo
-+	:000000 100644 OBJID OBJID A	unrelated
-+	EOF
-+	test_must_fail git cherry-pick base..anotherpick &&
-+	echo c >foo &&
-+	git add foo &&
-+	git cherry-pick --continue &&
-+	{
-+		git rev-list HEAD |
-+		git diff-tree --root --stdin |
-+		sed "s/$_x40/OBJID/g"
-+	} >actual.log &&
-+	test_cmp expect foo &&
-+	test_cmp expect.log actual.log
-+'
-+
-+test_expect_success '--continue after resolving conflicts and committing' '
- 	pristine_detach initial &&
- 	test_must_fail git cherry-pick base..anotherpick &&
- 	echo "c" >foo &&
-@@ -270,6 +331,29 @@ test_expect_success '--continue continues after conflicts are resolved' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '--continue asks for help after resolving patch to nil' '
-+	pristine_detach conflicting &&
-+	test_must_fail git cherry-pick initial..picked &&
-+
-+	test_cmp_rev unrelatedpick CHERRY_PICK_HEAD &&
-+	git checkout HEAD -- unrelated &&
-+	test_must_fail git cherry-pick --continue 2>msg &&
-+	test_i18ngrep "The previous cherry-pick is now empty" msg
-+'
-+
-+test_expect_failure 'follow advice and skip nil patch' '
-+	pristine_detach conflicting &&
-+	test_must_fail git cherry-pick initial..picked &&
-+
-+	git checkout HEAD -- unrelated &&
-+	test_must_fail git cherry-pick --continue &&
-+	git reset &&
-+	git cherry-pick --continue &&
-+
-+	git rev-list initial..HEAD >commits &&
-+	test_line_count = 3 commits
-+'
-+
- test_expect_success '--continue respects opts' '
- 	pristine_detach initial &&
- 	test_must_fail git cherry-pick -x base..anotherpick &&
-@@ -288,6 +372,29 @@ test_expect_success '--continue respects opts' '
- 	grep "cherry picked from" anotherpick_msg
- '
- 
-+test_expect_success '--continue of single-pick respects -x' '
-+	pristine_detach initial &&
-+	test_must_fail git cherry-pick -x picked &&
-+	echo c >foo &&
-+	git add foo &&
-+	git cherry-pick --continue &&
-+	test_path_is_missing .git/sequencer &&
-+	git cat-file commit HEAD >msg &&
-+	grep "cherry picked from" msg
-+'
-+
-+test_expect_success '--continue respects -x in first commit in multi-pick' '
-+	pristine_detach initial &&
-+	test_must_fail git cherry-pick -x picked anotherpick &&
-+	echo c >foo &&
-+	git add foo &&
-+	git cherry-pick --continue &&
-+	test_path_is_missing .git/sequencer &&
-+	git cat-file commit HEAD^ >msg &&
-+	picked=$(git rev-parse --verify picked) &&
-+	grep "cherry picked from.*$picked" msg
-+'
-+
- test_expect_success '--signoff is not automatically propagated to resolved conflict' '
- 	pristine_detach initial &&
- 	test_must_fail git cherry-pick --signoff base..anotherpick &&
-@@ -306,6 +413,32 @@ test_expect_success '--signoff is not automatically propagated to resolved confl
- 	grep "Signed-off-by:" anotherpick_msg
- '
- 
-+test_expect_success '--signoff dropped for implicit commit of resolution, multi-pick case' '
-+	pristine_detach initial &&
-+	test_must_fail git cherry-pick -s picked anotherpick &&
-+	echo c >foo &&
-+	git add foo &&
-+	git cherry-pick --continue &&
-+
-+	git diff --exit-code HEAD &&
-+	test_cmp_rev initial HEAD^^ &&
-+	git cat-file commit HEAD^ >msg &&
-+	! grep Signed-off-by: msg
-+'
-+
-+test_expect_success 'sign-off needs to be reaffirmed after conflict resolution, single-pick case' '
-+	pristine_detach initial &&
-+	test_must_fail git cherry-pick -s picked &&
-+	echo c >foo &&
-+	git add foo &&
-+	git cherry-pick --continue &&
-+
-+	git diff --exit-code HEAD &&
-+	test_cmp_rev initial HEAD^ &&
-+	git cat-file commit HEAD >msg &&
-+	! grep Signed-off-by: msg
-+'
-+
- test_expect_success 'malformed instruction sheet 1' '
- 	pristine_detach initial &&
- 	test_must_fail git cherry-pick base..anotherpick &&
--- 
-1.7.8.rc3
+ 	unsigned char sha1[20];
+-	const char *head;
+=20
+ 	memset(s, 0, sizeof(*s));
+ 	memcpy(s->color_palette, default_wt_status_colors,
+@@ -119,8 +118,7 @@ void wt_status_prepare(struct wt_status *s)
+ 	s->show_untracked_files =3D SHOW_NORMAL_UNTRACKED_FILES;
+ 	s->use_color =3D -1;
+ 	s->relative_paths =3D 1;
+-	head =3D resolve_ref("HEAD", sha1, 0, NULL);
+-	s->branch =3D head ? xstrdup(head) : NULL;
++	s->branch =3D resolve_refdup("HEAD", sha1, 0, NULL);
+ 	s->reference =3D "HEAD";
+ 	s->fp =3D stdout;
+ 	s->index_file =3D get_index_file();
+--=20
+1.7.8.36.g69ee2
