@@ -1,283 +1,190 @@
-From: =?iso-8859-1?Q?Sidney_San_Mart=EDn?= <s@sidneysm.com>
-Subject: Re: Question about commit message wrapping
-Date: Fri, 9 Dec 2011 09:10:36 -0500
-Message-ID: <06819C5A-C6D3-4A14-9930-73F66707CE3E@sidneysm.com>
-References: <35A5A513-91FD-4EF9-B890-AB3D1550D63F@sidneysm.com> <op.v57na7120aolir@keputer>
-Mime-Version: 1.0 (Apple Message framework v1251.1)
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "Frans Klaver" <fransklaver@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 10 01:46:48 2011
+From: "Andreas T.Auer" <andreas.t.auer_gtml_37453@ursus.ath.cx>
+Subject: Re: Auto update submodules after merge and reset
+Date: Sat, 10 Dec 2011 02:41:23 +0100
+Message-ID: <4EE2B8C3.6000906@ursus.ath.cx>
+References: <4ED57EED.4040705@qualcomm.com> <4ED5E9D2.4060503@web.de> <jbnadt$hf8$1@dough.gmane.org> <4EDFE75C.5050201@web.de> <4EE07FCD.8090702@ursus.ath.cx> <CABURp0rcT2FR3uOmhyPUV5W3pu7WuJzjXktmUq0eb4nOiUwDKA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 10 02:49:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZB5T-0006ad-7p
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 01:46:47 +0100
+	id 1RZC45-0004Kv-1s
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 02:49:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752825Ab1LJAqf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Dec 2011 19:46:35 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:57137 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752166Ab1LJAqe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Dec 2011 19:46:34 -0500
-Received: by ggnr5 with SMTP id r5so3931979ggn.19
-        for <git@vger.kernel.org>; Fri, 09 Dec 2011 16:46:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sidneysm.com; s=google;
-        h=content-type:mime-version:subject:from:in-reply-to:date
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=bypjLNmh7xmWrr05IUKITexrCvHA4Luti6fvsGsjkcw=;
-        b=GjCxu/f6N8y97AtAEkh6mCHnPaj1bgcZZ0azv5FyCOZAUq03avnxrs6y6U3O70LtZ9
-         OA4pFz8XeQvLUpQLNs+xZMdOc7YPc+dOT/Ivgo9IiecaWwrJrM9v2w7v3F6MXDsNhfZx
-         IYGdc9UoDJcMtKPyWlpoH3EQ3EsXoR3rhp8hU=
-Received: by 10.101.160.1 with SMTP id m1mr2318830ano.156.1323477993964;
-        Fri, 09 Dec 2011 16:46:33 -0800 (PST)
-Received: from [127.0.0.1] (mobile-166-137-138-116.mycingular.net. [166.137.138.116])
-        by mx.google.com with ESMTPS id v48sm17906426yhk.6.2011.12.09.16.46.17
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 09 Dec 2011 16:46:33 -0800 (PST)
-In-Reply-To: <op.v57na7120aolir@keputer>
-X-Mailer: Apple Mail (2.1251.1)
+	id S1751678Ab1LJBtT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Dec 2011 20:49:19 -0500
+Received: from brln-4dba6889.pool.mediaWays.net ([77.186.104.137]:1168 "EHLO
+	here" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751166Ab1LJBtT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Dec 2011 20:49:19 -0500
+X-Greylist: delayed 429 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Dec 2011 20:49:19 EST
+Received: from [192.168.0.14] (unknown [192.168.0.14])
+	by here (Postfix) with ESMTP id 42DF819AC59;
+	Sat, 10 Dec 2011 02:42:12 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20111110 Icedove/3.0.11
+In-Reply-To: <CABURp0rcT2FR3uOmhyPUV5W3pu7WuJzjXktmUq0eb4nOiUwDKA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186716>
-
-On Dec 9, 2011, at 2:05 AM, Frans Klaver wrote:
-
-> On Fri, 09 Dec 2011 02:59:06 +0100, Sidney San Mart=EDn <s@sidneysm.c=
-om> wrote:
->=20
->> Hey, I want to ask about the practice of wrapping commit messages to=
- 70-something charaters.
->>=20
->> The webpage most cited about it, which I otherwise really like, is
->>=20
->> 	http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.htm=
-l
->>=20
->> *Nothing else* in my everyday life works this way anymore. Line wrap=
-ping gets done on the display end in my email client, my web browser, m=
-y ebook reader entirely automatically, and it adapts to the size of the=
- window.
->=20
-> Actually, opera-mail autowraps at 72 characters but sets the text for=
-mat to flowed. It also wraps the quoted text when you reply. But there'=
-s a reasonable chance that you don't use opera in your daily life. On t=
-he other hand I would not be surprised if most decent e-mail clients wo=
-rked that way.
->=20
-
-Interesting=85 either way, the end result is that the receiving mail cl=
-ient can wrap the lines to whatever length it (or you, as its operator)=
- desires, which I think we can agree is a good thing, right?
-
-> Nobody's forcing you to use the same practice in your own projects an=
-yway.
->=20
->=20
->>=20
->> That article gives two reasons why commits should be wrapped to 72 c=
-olumns. First:
->>=20
->>> git log doesn=92t do any special special wrapping of the commit mes=
-sages. With the default pager of less -S, this means your paragraphs fl=
-ow far off the edge of the screen, making them difficult to read. On an=
- 80 column terminal, if we subtract 4 columns for the indent on the lef=
-t and 4 more for symmetry on the right, we=92re left with 72 columns.
->>=20
->> Here, I put a patch at the bottom of this email that wraps commit me=
-ssages to, right now, 80 columns when they're displayed. (It=92s a quic=
-k one, probably needs configurability. Also, beware, I don=92t program =
-in C too much.)
->=20
-> Hm. Saying "that's how the tool works" is not a good reason in my opi=
-nion. There might be tons of other reasons for wrapping at 80 character=
-s. Readability is one that comes to mind for me.
->=20
-
-That's my basic point. I hope it didn't seem like I was arguing against=
- reading commit messages wrapped to 80 columns, by default. I only want=
-ed to discuss whether it makes more sense to handle it on the display e=
-nd instead of asking committers to do it in advance.
-
-- My phone shows text most comfortably at about 40 characters per line.=
- I do look at terminals at 80 columns most of the time, but not always,=
- and I sometimes browse projects in GUI tools that use a proportional f=
-ont in a window may be narrower or wider than that.
-
-- Right now, when I *am* in an 80-col terminal I have to trust everyone=
- else to wrap their commit messages. Not everyone does. I feel like it =
-would be more effective to give git the ability to wrap them automatica=
-lly when I read them.
-
->>=20
->> Second:
->>=20
->>> git format-patch --stdout converts a series of commits to a series =
-of emails, using the messages for the message body. Good email netiquet=
-te dictates we wrap our plain text emails such that there=92s room for =
-a few levels of nested reply indicators without overflow in an 80 colum=
-n terminal. (The current rails.git workflow doesn=92t include email, bu=
-t who knows what the future will bring.)
->>=20
->> There's been a standard for flowed plain text emails (which don't ha=
-ve to wrap at 80 columns) for well over ten years, RFC-2646 and is wide=
-ly supported. Besides, code in diffs is often longer than 7x characters=
-, and wrapping, like `git log`, could be done inside git. FWIW, there a=
-re a bunch of merge commits with lines longer than 80 characters in the=
- git repo itself.
->=20
-> Yes, that standard allows e-mail clients to display the text more flu=
-idly, even if the source text is word-wrapped. While git uses e-mail fo=
-rmat, it isn't an e-mail client. I always interpreted this whole thing =
-as git basically creating plain-text e-mails. You're actually writing t=
-he source of the e-mail in your commit message. If you care about actua=
-l use in e-mail (like we do here on the list) you might want to add the=
- relevant header to the mails. That said, Apple Mail (the client you us=
-ed to send your mail) doesn't even use the RFC you quote in the sent me=
-ssage. That mail is going to be a pain in the butt to read in mutt from=
- work ;).
->=20
-
-Sorry, I'm not sure what you mean by, =93If you care about actual use i=
-n e-mail (like we do here on the list) you might want to add the releva=
-nt header to the mails=94.
-
-Interesting, I didn't realize that Mail didn't use it. It does, however=
-, use quoted-printable which, as far as I can tell, has a similar effec=
-t on line wrapping. What happens when you view this email in mutt?
-
->=20
->>=20
->> Finally, people read commits these days in many other places than `g=
-it log` (and make commits in many other places than a text editor confi=
-gured to wrap). Most every GUI and already word wraps commit messages j=
-ust fine. As a result, there are commits in popular repos much longer t=
-han the 72-column standard and no one notices. Instead, properly-format=
-ted commit messages end up looking cramped when you see them in anywher=
-e wider than 80 columns.
->=20
-> Cramped? I think it's compact and actually I prefer it over long line=
-s.
->=20
->> Am I crazy?
->=20
-> Probably not. Don't take my word for it. I'm not a psychiatrist.
->=20
->=20
->> If this makes sense to anyone else, I'd be happy to help massage thi=
-s into something git-worthy, with some help (never worked on Git before=
-).
->>=20
->> - - -
->>=20
->> From a93b390d1506652d4ad41d1cbd987ba98a8deca0 Mon Sep 17 00:00:00 20=
-01
->> From: =3D?UTF-8?q?Sidney=3D20San=3D20Marti=3DCC=3D81n?=3D <s@sidneys=
-m.com>
->> Date: Thu, 8 Dec 2011 20:26:23 -0500
->> Subject: [PATCH] Wrap commit messages on display
->>=20
->> - Wrap to 80 characters minus the indent
->> - Use a hanging indent for lines which begin with "- "
->> - Do not wrap lines which begin with whitespace
->> ---
->> pretty.c |   10 ++++++++--
->> 1 files changed, 8 insertions(+), 2 deletions(-)
->>=20
->> diff --git a/pretty.c b/pretty.c
->> index 230fe1c..15804ce 100644
->> --- a/pretty.c
->> +++ b/pretty.c
->> @@ -1243,8 +1243,14 @@ void pp_remainder(const struct pretty_print_c=
-ontext *pp,
->> 			memset(sb->buf + sb->len, ' ', indent);
->> 			strbuf_setlen(sb, sb->len + indent);
->> 		}
->> -		strbuf_add(sb, line, linelen);
->> -		strbuf_addch(sb, '\n');
->> +		if (line[0] =3D=3D ' ' || line[0] =3D=3D '\t') {
->> +			strbuf_add(sb, line, linelen);
->> +		} else {
->> +			struct strbuf wrapped =3D STRBUF_INIT;
->> +			strbuf_add(&wrapped, line, linelen);
->> +			strbuf_add_wrapped_text(sb, wrapped.buf, 0, indent + (line[0] =3D=
-=3D '-' && line[1] =3D=3D ' ' ? 2 : 0), 80 - indent);
->=20
-> While on the subject, In my mail view, the new line started with the =
-[1] from line[1], in the quote the line looks entirely different. Now t=
-his is code we're talking about, so it makes slightly more sense to hav=
-e a proper wrapping hard-coded. Compare the above with the following:
->=20
-> +			int hanging_indent =3D ((line[0] =3D=3D '-' && line[1] =3D=3D ' '=
-) ? 2 : 0);
-> [...]
-> +			strbuf_add_wrapped_text(sb, wrapped.buf, 0,
-> +									indent + hanging_indent,
-> +									80 - indent);
->=20
-> Much clearer, no? I personally usually have two or three terminals tu=
-cked next to each other, so I can look at two or three things at the sa=
-me time. 80 characters limit is a nice feature then.
-
-Good point, that makes it clearer either way. I put an updated patch at=
- the bottom of this email (also fixed forgetting the newline after line=
-s with leading whitespace). I hope it's OK to include patches this way,=
- I understand that they're supposed to represent whole emails but want =
-to include them with this discussion.
-
->=20
->=20
->> +			strbuf_addch(sb, '\n');
->> +		}
->> 	}
->> }
->>=20
->=20
-> Cheers,
-> Frans
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186717>
 
 
-=46rom 53fd7deedaf5ac522c9d752e79cf71561cc57f07 Mon Sep 17 00:00:00 200=
-1
-=46rom: =3D?UTF-8?q?Sidney=3D20San=3D20Marti=3DCC=3D81n?=3D <s@sidneysm=
-=2Ecom>
-Date: Thu, 8 Dec 2011 20:26:23 -0500
-Subject: [PATCH] Wrap commit messages on display
 
-- Wrap to 80 characters, minus the indent
-- Use a hanging indent for lines which begin with "- "
-- Do not wrap lines which begin with whitespace
----
- pretty.c |    9 ++++++++-
- 1 files changed, 8 insertions(+), 1 deletions(-)
+On 10.12.2011 00:57 Phil Hord wrote:
+> On Thu, Dec 8, 2011 at 4:13 AM,<andreas.t.auer_gtml_37453@ursus.ath.cx>  wrote:
+>    
+>> On 07.12.2011 23:23 Jens Lehmann wrote:
+>>      
+>>>> If you have tracking branches, the supermodule can just update the
+>>>> corresponding branch. If this branch is currently checkedout and
+>>>> the work area is clean, then the work area is updated, too. If
+>>>> there is currently a local branch or a diffent super-branch
+>>>> checked out then the working area should be considered "detached"
+>>>> from the superproject and not updated.
+>>>>          
+>>>   This sounds a lot like the "follow branch tip" model we discussed
+>>>   recently (which could be configured via .gitmodules), but I'm not
+>>>   sure you really are in the same boat here.
+>>>        
+>> When I understood that correctly it was just a configuration to what branch
+>> should be automatically checked out in the submodule. This seems to be too
+>> complicated IMO, because when you have different branches in the
+>> superproject then you may want to have different branches in the submodules,
+>> too, but you would need to configure that submodule branch in .gitmodules
+>> for each branch separately. I.e. in the master branch the .gitmodule may
+>> contain "master", in the maint branch the .gitmodules may have "maint" as
+>> the branch to follow.
+>>      
+> Yes, but maybe you can update this information in the .gitmodules file
+> easily with a command.  Maybe it could be something simpler than "git
+> sync-gitmodules-branches", but that is essentially what it would do:
+> it would save the current branch in each submodule as the "tracked"
+> branch in the .gitmodules file.
+>
+> The advantages to this, I think, are that
+>
+> 1. Your "submodule A follows branch X" information is explicit in the
+> .gitmodules file and so it is not hidden when I examine your patch.
+> (It sounds to me like the refs/super/* branches would necessarily be
+> hard to find since the refs/ hierarchy is usually meta data about
+> local and remote branches.  Maybe I should think about tags and notes
+> more, though.)
+>    
+Branches can be seen as "dynamic data" that can easily be updated, 
+renamed or even deleted, if a branch is merged into another.
+On the other hand .gitmodules can be seen as "static data" because it is 
+committed to the object database, so if you checkout an old revision, 
+you could get a version of the .gitmodules that refers to a branch, 
+which existed at that time, but was deleted meanwhile.
 
-diff --git a/pretty.c b/pretty.c
-index 230fe1c..841ccd1 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1243,7 +1243,14 @@ void pp_remainder(const struct pretty_print_cont=
-ext *pp,
- 			memset(sb->buf + sb->len, ' ', indent);
- 			strbuf_setlen(sb, sb->len + indent);
- 		}
--		strbuf_add(sb, line, linelen);
-+		if (line[0] =3D=3D ' ' || line[0] =3D=3D '\t') {
-+			strbuf_add(sb, line, linelen);
-+		} else {
-+			struct strbuf wrapped =3D STRBUF_INIT;
-+			strbuf_add(&wrapped, line, linelen);
-+			int hanging_indent =3D ((line[0] =3D=3D '-' && line[1] =3D=3D ' ') =
-? 2 : 0);
-+			strbuf_add_wrapped_text(sb, wrapped.buf, 0, indent + hanging_indent=
-, 80 - indent);
-+		}
- 		strbuf_addch(sb, '\n');
- 	}
- }
---=20
-1.7.8
+> 2. When you change to "submodule A now follows branch Y", this
+> information can be unambiguously saved in the commit where it occurred
+> rather than tucked away, again, in refs/super/*.
+>    
+If you place a reference in refs/super/ it will be displayed by gitk 
+currently, so it is not really hidden.
+> The disadvantage, maybe, are that you must now use 'git submodule
+> sync' or something like that to put any .gitmodules changes into
+> effect.
+> Or maybe that is an advantage.  How often will this branch tracking change?
+>    
+It depends on your use case. In mine it will change quite often.
+> For example, I have some repos like this:
+>
+> super
+>     +--subA
+>     +--subB
+>
+> I wish I could do this:
+>     cd super&&  checkout master
+>
+> to get this:
+>     super   (master)
+>        +--subA  (master)
+>        +--subB  (master)
+>
+> Or, if I have SubB on super/'master' tracking 'foo', I could get this:
+>     super   (master)
+>        +--subA  (master)
+>        +--subB  (foo)
+>    
+No, the branch super/master always follows the master of the 
+superproject. That's why it is called super/, because it contains the 
+branchnames from the supermodule's namespace. The normal "local" 
+submodule branches are in refs/heads/*. The references in refs/super can 
+easily be created "on the fly" by the superproject, so they are not 
+really properties of the submodules. It is a little bit like a cookie 
+jar ;-).
+>    
+>> I do want to follow the tip of the branch, if the superproject has that
+>> currently checked out. If the superproject checks out a tagged version for a
+>> rebuild, then the submodule should not follow the tip, but should get a
+>> detached HEAD of the corresponding commit, just as the superproject. When
+>> the superproject goes back to the branch, the submodule should go back to
+>> its tracking branch.
+>>      
+> Now this makes sense.  I want the same thing.  I want to preserve
+> history on "old" commits, but I want to "advance to tip" on "new"
+> commits.
+> The trouble, I think, is in telling the difference between "old" and
+> "new".
+My approach says: Just like the superproject. If it checks out an old 
+commit, do that, if it checks out the branch, follow.
+
+> So maybe I need a new command that does this:
+>      git checkout master&&  git submodule foreach 'git checkout master'
+>
+> Maybe it's called "git checkout master --recurse-submodules".  But I
+> seem to recall this is already a non-starter for some reason, and
+> anyway it doesn't solve the "variant branches in some submodules"
+> problem.
+>    
+I don't know that problem, but maybe it is because the master branch of 
+the submodule is not corresponding to the master branch of the 
+superproject, which is a common use case, when external modules are used 
+with different release cycles.
+For that reason I chose to use a different namespace in 
+refs/super/master instead of that maybe existing refs/heads/master of 
+the submodule.
+>
+> You can commit to a detached HEAD.  I do it all the time.  The trick
+> is in not switching away from a detached HEAD with your local commits
+> still on it.  :-)
+>    
+Yes. And you can't push it, it can't be fetched, etc. So it really 
+shouldn't be used that way, but you can do a lot of things you shouldn't 
+do in git.
+>> The first answer to my question was "yes, you need to transfer the refs or
+>> you get unreferenced objects" and "no, you can't transfer the refs, because
+>> they are owned by the superproject, not the submodule."
+>> But binding a submodule to a superproject makes perfect sense if it is _one_
+>> project that is split into submodules. In that case you only have one
+>> superproject for a submodule and for that purpose it would be good workflow.
+>>      
+> This is not useful to me, though.  Sorry.
+>
+>    
+It is useful in huge projects.
+>> It is even nice to see which commits in the submodule belong to what
+>> branches in the superproject or to what release version (so tracking
+>> superproject tags would make sense, too). If you have a submodule that has
+>> more than one superproject but these are well-defined, it could be solved
+>> using refspecs (e.g. refs/super/foo/* for one and refs/super/bar/* for the
+>> other superproject), but currently I can't think of a context where this
+>> makes sense.
+>>      
+> I can, but this does put the cart before the horse.  The submodule is
+> subservient to the super project in all my setups.  The submodule is
+> not aware who owns him.  He is a bit like the DAG in reverse.  He
+> knows one direction only (children), not the other (parents).
+>
+>    
+In the setup I have in mind, the submodules are not subservient to the 
+superproject, but a part of the whole project.
