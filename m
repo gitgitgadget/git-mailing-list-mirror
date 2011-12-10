@@ -1,77 +1,147 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [POC PATCH 0/5] Threaded loose object and pack access
-Date: Sat, 10 Dec 2011 22:51:40 +0700
-Message-ID: <CACsJy8DxupdnKturE1Ows6+OcC22wPer0=Q56g+P93mP_+BKZA@mail.gmail.com>
-References: <cover.1323419666.git.trast@student.ethz.ch>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: git-work, git-base: an example of how to use it.
+Date: Sat, 10 Dec 2011 15:54:48 +0000
+Message-ID: <CAOkDyE8BZgVw7TYydz7+WnJ_7EjPeEcVUzjFV+NGRuDn2+cg6g@mail.gmail.com>
+References: <BANLkTim07-a5VwSAt7_vLMzOES_JZad9DA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Herman <eric@freesa.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat Dec 10 16:52:19 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 10 16:54:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZPDl-0003uA-Qc
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 16:52:18 +0100
+	id 1RZPGK-0004fQ-5e
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 16:54:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750934Ab1LJPwO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Dec 2011 10:52:14 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:63091 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750861Ab1LJPwM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Dec 2011 10:52:12 -0500
-Received: by bkcjm19 with SMTP id jm19so108794bkc.19
-        for <git@vger.kernel.org>; Sat, 10 Dec 2011 07:52:11 -0800 (PST)
+	id S1750956Ab1LJPyw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Dec 2011 10:54:52 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:48743 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750798Ab1LJPyv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Dec 2011 10:54:51 -0500
+Received: by wgbdr13 with SMTP id dr13so7852563wgb.1
+        for <git@vger.kernel.org>; Sat, 10 Dec 2011 07:54:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=HVxs7LAzemL7vunb3eyJIcLtQz3ipq53oskh3u/hI1c=;
-        b=iqkpQ449mmdO0M8dSa55xoCIZlEOWn7H7R3b6jp6AgSG4QIhz2H1JgUhdPjAJVg5tx
-         h8q/TBu1pgjZ+cS0wFig3b7X7kTLF3VMDILsz3I1I8qvVxYnBhNpP6E2CnTmFarZY4O8
-         ReB23lDzQgkcrsd+lL9RzNboA05L7ElcsweYA=
-Received: by 10.205.129.148 with SMTP id hi20mr6032579bkc.25.1323532331181;
- Sat, 10 Dec 2011 07:52:11 -0800 (PST)
-Received: by 10.204.129.205 with HTTP; Sat, 10 Dec 2011 07:51:40 -0800 (PST)
-In-Reply-To: <cover.1323419666.git.trast@student.ethz.ch>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=aZpw1nbTFPrBCV+c0qDYjMyJVmxXf9cvf4UtQUSNo2Y=;
+        b=R02QGXQYYN+rNFYH13wAVDE15gKJohdDb2encwzA84HYdPNAEgbx7NkuaO665gF3kb
+         jKx53N2i68D25dCXbslw7TQCjgkMsf+SdihzIqjdYS0zDN05cImWS2yXFDfsgymEQ/X+
+         uRZbZfz5cmxJf8s3LOrUcgi0ge609QDPDgYB4=
+Received: by 10.180.75.204 with SMTP id e12mr14873054wiw.61.1323532489001;
+ Sat, 10 Dec 2011 07:54:49 -0800 (PST)
+Received: by 10.216.243.199 with HTTP; Sat, 10 Dec 2011 07:54:48 -0800 (PST)
+In-Reply-To: <BANLkTim07-a5VwSAt7_vLMzOES_JZad9DA@mail.gmail.com>
+X-Google-Sender-Auth: 6NBOa9WzhWRO7gDDO3Tq74bNolw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186785>
 
-On Fri, Dec 9, 2011 at 3:39 PM, Thomas Rast <trast@student.ethz.ch> wro=
-te:
-> Well, just to make sure we're all left in a confused mess of partly
-> conflicting patches, here's another angle on the same thing:
->
-> Jeff King wrote:
->> Wow, that's horrible. Leaving aside the parallelism, it's just terri=
-ble
->> that reading from the cache is 20 times slower than the worktree. I =
-get
->> similar results on my quad-core machine.
->
-> By poking around in sha1_file.c I got that down to about 10. =C2=A0It=
-'s not
-> great yet, but it seems a start.
->
-> The goal would be to improve it to the point where a patch lookup tha=
-t
-> already has all relevant packs open and windows mapped can proceed
-> without locking. =C2=A0I'm not sure that's doable short of duplicatin=
-g the
-> whole pack state (including fds and windows) across threads, but I'll
-> give it some more thought before going that route.
+Hi Jon,
 
-Another potential user for parallel pack access is fsck. Although fsck
-access pattern may be different from grep, fsck would open and read
-through all packs.
---=20
-Duy
+I've only just discovered git-work, and it looks extremely
+interesting.  From what I can tell so far, it is exactly what I was
+looking for and could have recently saved me considerable pain!
+Here's some initial feedback.
+
+On Mon, Apr 25, 2011 at 11:43 AM, Jon Seymour <jon.seymour@gmail.com> wrote:
+> I haven't had much feedback about git-work, to this point. Peter
+> Baumann mentioned it was a little hard to grok.
+
+I suspect that there is a strong correlation between these two points.
+I also found it hard to grok, although I think this could be easily
+fixed with a few tweaks to your existing docs.  Hopefully this would
+result in more feedback.
+
+First some comments about Documentation/git-work.txt:
+
+The existing DESCRIPTION really isn't a description, but merely a
+legend for the COMMANDS section, which is where it really should
+belong IMHO.  Also, the first sentence refers to the "base" of
+{branch} without explaining what that means.  This is currently the
+first full sentence a potential user is likely to read about git-work,
+but for me at least, unfortunately it triggered a "huh?" reaction
+which sapped my will to continue reading.  Subsequently I discovered
+that git-base.txt gives a definition of the "base" of a working
+branch, but it's such a key ingredient in understanding the whole
+workflow that it needs to be covered in the primary document, not in
+the manual page for the git-base helper command which, if I understand
+correctly, is rarely meant to be invoked directly by the user anyway.
+Furthermore, the "base" is defined in terms of the user's "current
+work", but that is not clearly defined.
+
+In contrast, the contents of the DISCUSSION section are very helpful;
+my initial reaction was "yes! this is exactly what I need!"  So I
+think *this* should be the DESCRIPTION section, so that it's the first
+thing a potential user encounters, other than the SYNOPSIS section
+which by necessity of convention has to be at the top.  BTW, there's
+an "integraton" typo which needs to be fixed.
+
+The EXAMPLES section which immediately follows the DISCUSSION is just
+sequence of one-liners and it's not clear how they are related to each
+other (if at all), and why/when you would want to use each one.
+
+It would be better if the EXAMPLES section showed a use case "story"
+which starts with examples of simple usage and then builds up to more
+sophisticated workflows.  You seem to have already started to address
+this with your README.md example, but the first step in that is a 'git
+add' without even explaining which branch you are on at the time, what
+commits are already on that branch, or how it relates to other
+branches.  So currently (for my small brain, at least) there is too
+much of a "WTF" factor for it to be useful at first sight.
+
+Perhaps part of the confusion arises from a clash between your concept
+of a private working branch which is regularly rebased by 'git work',
+and many people's concept of master, which is often a public branch
+which as such is expected to be safe to regularly merge from.  Maybe
+you could avoid this by recommending that a user adopting a workflow
+based on 'git work' should use it to control an obviously private
+branch, e.g. one named 'private' / 'working' / 'unstable' rather than
+'master'.
+
+In another email to this list (Subject: [PATCH 00/23] RFC: Introducing
+git-test, git-atomic, git-base and git-work) you give some more
+workflow examples, which are useful and could be incorporated into a
+use case story.
+
+A well-constructed story would answer questions implicitly raised
+within the (current) DISCUSSION section, such as:
+
+  - How are dependencies tracked?
+
+  - Can you have chains of dependencies?  If so, what does the
+    dependency graph look like?  Can a branch have multiple (direct)
+    dependencies?
+
+  - In what order are dependencies included in the base of the working
+    branch?
+
+By the way, one of the EXAMPLES one-liners is described as "start
+gitk, showing only the current work", but looks like it might be a
+typo; shouldn't it read:
+
+    $ gitk $(git work)
+
+?
+
+Another suggestion to encourage people to try your work out: provide a
+quick "how to try this out" guide, preferably one which doesn't
+involve building the whole of git.
+
+Finally, please wrap all lines in git-work.txt etc. to less than 80
+columns to conform to existing style.  Currently these files are
+unreadable in certain contexts, e.g.
+
+  https://github.com/jonseymour/git/blob/master/Documentation/git-work.txt
+
+due to the unreadably long lines.
+
+I hope that's useful feedback.  I will continue experimenting with it ...
+
+Adam
