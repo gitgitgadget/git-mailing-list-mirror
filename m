@@ -1,74 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/3] Convert resolve_ref+xstrdup to new resolve_refdup
- function
-Date: Sat, 10 Dec 2011 07:15:03 -0600
-Message-ID: <20111210131503.GI22035@elie.hsd1.il.comcast.net>
-References: <1323521631-24320-1-git-send-email-pclouds@gmail.com>
+From: Gioele Barabucci <gioele@svario.it>
+Subject: Re: [RFC/PATCH] add update to branch support for "floating submodules"
+Date: Sat, 10 Dec 2011 14:16:22 +0000
+Message-ID: <4EE369B6.7060602@svario.it>
+References: <20111109174027.GA28825@book.fritz.box> <7vr51htbsy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Tony Wang <wwwjfy@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 10 14:15:16 2011
+Cc: Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 10 15:20:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZMlm-0000M7-Te
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 14:15:15 +0100
+	id 1RZNmp-0002X2-N3
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 15:20:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751132Ab1LJNPJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Dec 2011 08:15:09 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:44209 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750940Ab1LJNPI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Dec 2011 08:15:08 -0500
-Received: by iaeh11 with SMTP id h11so216581iae.19
-        for <git@vger.kernel.org>; Sat, 10 Dec 2011 05:15:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=EWCwRXkQzSHIpHvGu3Hxqb+oILXcaWfu8LcN8k8/Gh8=;
-        b=jcALWY5P7grFP7YgD0EQC1pG6QyPR7v6FS1Qm4ayMm2McB6WUo1N2wkKuTS3twiOFb
-         k/nakfj0P+FVN1jFWeTS3QzfivRTRFE7b7CFUpHofeVasymaQZU9ylkOevDps0K+4TG5
-         tAYUTpEeumrTFmWsU105nOfLrXvO0tB6lH+1A=
-Received: by 10.50.192.197 with SMTP id hi5mr7519262igc.16.1323522908307;
-        Sat, 10 Dec 2011 05:15:08 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id h9sm23352114ibh.11.2011.12.10.05.15.06
-        (version=SSLv3 cipher=OTHER);
-        Sat, 10 Dec 2011 05:15:07 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1323521631-24320-1-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1751346Ab1LJOUL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Dec 2011 09:20:11 -0500
+Received: from lo.gmane.org ([80.91.229.12]:53269 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751319Ab1LJOUK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Dec 2011 09:20:10 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RZNma-0002QG-A7
+	for git@vger.kernel.org; Sat, 10 Dec 2011 15:20:08 +0100
+Received: from host86-175-212-128.wlms-broadband.com ([86.175.212.128])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 10 Dec 2011 15:20:08 +0100
+Received: from gioele by host86-175-212-128.wlms-broadband.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 10 Dec 2011 15:20:08 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: host86-175-212-128.wlms-broadband.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20111110 Thunderbird/8.0
+In-Reply-To: <7vr51htbsy.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186779>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+On 09/11/2011 18:01, Junio C Hamano wrote:
+>> This is almost ready but I would like to know what users of the
+>> "floating submodule" think about this.
+ >
+> I do like to hear from potential users as well, because the general
+> impression we got was that floating submodules is not a real need of
+> anybody,
 
-> [Subject: Convert resolve_ref+xstrdup to new resolve_refdup function]
+=46loating modules are something much sought after by those who use Git=
+=20
+for non-development purposes, like those who have most of their $HOME=20
+versioned with Git [1]. For example, part of what Joey Hess's `mr` tool=
+=20
+[2] does is to simulate floating submodules for Git-versioned $HOMEs.
 
-I like it.
+In the context of versioned $HOMEs, or with backups in general, precise=
+=20
+tracking of submodules updates is not that important. To quote [3]:=20
+=C2=ABLast, change tracking is a bit more lenient with home directories=
+=2E I=20
+may shuffle some stuff around, and I don't need to explain the changes=20
+to anyone else.=C2=BB. In my case, I want my ~/Documents dir (that is i=
+n a=20
+different repo from $HOME) to be always updated; I would prefer not to=20
+deal with submodule updates, merges and detached HEADs.
 
-> --- a/builtin/revert.c
-> +++ b/builtin/revert.c
-> @@ -901,7 +901,7 @@ static int rollback_single_pick(void)
->  	if (!file_exists(git_path("CHERRY_PICK_HEAD")) &&
->  	    !file_exists(git_path("REVERT_HEAD")))
->  		return error(_("no cherry-pick or revert in progress"));
-> -	if (!resolve_ref("HEAD", head_sha1, 0, NULL))
-> +	if (read_ref_full("HEAD", head_sha1, 0, NULL))
->  		return error(_("cannot resolve HEAD"));
->  	if (is_null_sha1(head_sha1))
->  		return error(_("cannot abort from a branch yet to be born"));
+Bye,
 
-Unrelated change that snuck in, I assume?
+[1] http://vcs-home.branchable.com/
+[2] http://kitenet.net/~joey/code/mr/
+[3] http://joshcarter.com/productivity/svn_hg_git_for_home_directory
 
-The rest of the patch looks very sensible and no-op-like. :)
+--
+Gioele Barabucci <gioele@svario.it>
