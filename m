@@ -1,92 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] add update to branch support for "floating
- submodules"
-Date: Fri, 09 Dec 2011 22:30:23 -0800
-Message-ID: <7vborhaqgw.fsf@alter.siamese.dyndns.org>
-References: <20111109174027.GA28825@book.fritz.box>
- <7vr51htbsy.fsf@alter.siamese.dyndns.org>
- <20111129220854.GB2812@sandbox-rc.fritz.box>
- <loom.20111210T062013-538@post.gmane.org>
+From: Santhosh Kumar Mani <santhoshmani@gmail.com>
+Subject: [RFC/PATCH] show tracking branches with their associated branch
+ names
+Date: Sat, 10 Dec 2011 13:10:29 +0530
+Message-ID: <1323502829.1698.6.camel@sdesktop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Leif Gruenwoldt <leifer@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 10 07:33:42 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 10 08:41:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZGV8-0008KK-NE
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 07:33:39 +0100
+	id 1RZHYT-0004hu-JL
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 08:41:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752050Ab1LJGa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Dec 2011 01:30:26 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62379 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752026Ab1LJGa0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Dec 2011 01:30:26 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DCD92535;
-	Sat, 10 Dec 2011 01:30:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Pu+7ak0kRO3CItOawLvHMzkIADc=; b=bG5kC9
-	pP1ISCTckLlv/Sh8Al21hNJ92rdVkAmvMC9feUzhSRRLC/VulCWCwSn3UCCtQXhg
-	cyVyRIeHtF8SEK0g1MnA+7bZnAnTTBpvudx7eGa0g8oz4txHd4MN6PIzG5kFKTky
-	jhGhHNE4YiWHpZr/ucFI5eIUZvW7xhFT7IXzI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nwHOZhxvScsktJL9rRLgl+9sQbj742Qr
-	gq1aZCIoAw1xwHH8h5UgPytUeIfYcm1TLJqgMHU0R7trP5FlWO/eJ7AU7lFvJXOQ
-	tc3ZyNNLupOOK2i8+DLOP3M2mMm4lCPYGuA3L4ziqikbA27wlV1KVbmJQ+FUPQcc
-	qrbsObtXHwo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C4B92534;
-	Sat, 10 Dec 2011 01:30:25 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E4F6F2533; Sat, 10 Dec 2011
- 01:30:24 -0500 (EST)
-In-Reply-To: <loom.20111210T062013-538@post.gmane.org> (Leif Gruenwoldt's
- message of "Sat, 10 Dec 2011 05:50:59 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7183315E-22F8-11E1-BB86-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751363Ab1LJHkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Dec 2011 02:40:37 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:34188 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751170Ab1LJHkg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Dec 2011 02:40:36 -0500
+Received: by ggnr5 with SMTP id r5so4081546ggn.19
+        for <git@vger.kernel.org>; Fri, 09 Dec 2011 23:40:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=subject:from:to:content-type:date:message-id:mime-version:x-mailer
+         :content-transfer-encoding;
+        bh=uU4E9QON+JUOFg4mSD9u68goS4fRp/fdkzm4tYoxumc=;
+        b=mWHs6NU9to5IvTsB8pdUf1vmNXe8mfHOt/VE/7kex4DR8LYXr0GD8+tzMFF37uJYHx
+         WXntj2LYe2KpsVuHVxsO3GbdCZ/pE5lGCXBMTed/zqHdRNu7VP/MqM1QdQatcyHREj5R
+         ZcJtHQJXicexrRxIlsnMuTvrLwoiOTPg/eztY=
+Received: by 10.182.7.42 with SMTP id g10mr1205510oba.45.1323502835760;
+        Fri, 09 Dec 2011 23:40:35 -0800 (PST)
+Received: from [10.0.0.2] ([122.181.155.85])
+        by mx.google.com with ESMTPS id xa6sm9076577obb.4.2011.12.09.23.40.33
+        (version=SSLv3 cipher=OTHER);
+        Fri, 09 Dec 2011 23:40:35 -0800 (PST)
+X-Mailer: Evolution 2.28.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186727>
 
-Leif Gruenwoldt <leifer@gmail.com> writes:
+The "git branch" command, by default, displays the local branches. There
+is no visual distinction made between the tracking branches and normal
+local branches. This patch enables the "git branch" to display
+tracking info for tracking branches:
 
-> Our use case is as follows. We have several repositories for our common code 
-> (commonA.git, commonB.git, etc) and a few different products that leverage these 
-> common repos (productA.git, productB.git, etc). When one of the products is in 
-> heavy development we often need to do a lot of work in the common repos. Having 
-> to increment the sha1 of the submodules to track the latest tip would be overly 
-> arduous. (Obviously when development of the product stabilizes we would want to 
-> change to anchoring to a specific sha1 in the common repos).
+Before this patch:
+  $ git branch
+  * master
+    local
 
-Nobody forces you to update the commit in the submodule bound to the
-superproject tree every time you update areas that are unrelated to or
-independent from that frequently updated submodule.
+After this patch:
+  $ git branch
+  * master [origin/master]
+    local
 
-During the period the submodule is so often updated that you feel "having
-to increment ... would be overly arduous", it does not matter which exact
-commit in that submodule is used in the tree for your other modules and
-the superproject. Otherwise you _would_ want to say something like "for
-this entire tree state from the top-level superproject to correctly work,
-we absolutely need to have this commit, not any commit that is older and
-is known to be broken, from this submodule", and cannot afford to use
-floating.
+Signed-off-by: Santhosh Kumar Mani <santhoshmani@gmail.com>
+---
+ builtin/branch.c |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
 
-Which means by definition anybody who wants floating can instead let such
-an often updated submodule stay somewhat stale by not running "submodule
-update" for it unnecessarily.  In a well-modularized set of projects, the
-interface to the busy submodule may be stable and I can imagine that kind
-of arrangement would well be not just possible but practical, and probably
-yours may be such a project.
-
-So that use case does not sound like a good rationale to require addition
-of floating submodules.
+diff --git a/builtin/branch.c b/builtin/branch.c
+index e1e486e..4841416 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -373,6 +373,19 @@ static int ref_cmp(const void *r1, const void *r2)
+ 	return strcmp(c1->name, c2->name);
+ }
+ 
++static int get_tracking_branch_name(struct strbuf *name, const char
+*branch_name)
++{
++	struct branch *branch = branch_get(branch_name);
++
++	if (branch && branch->merge && branch->merge[0]->dst) {
++		strbuf_addf(name, " [%s]",
++				shorten_unambiguous_ref(branch->merge[0]->dst, 0));
++		return 1;
++	}
++
++	return 0;
++}
++
+ static void fill_tracking_info(struct strbuf *stat, const char
+*branch_name,
+ 		int show_upstream_ref)
+ {
+@@ -475,6 +488,9 @@ static void print_ref_item(struct ref_item *item,
+int maxwidth, int verbose,
+ 	else if (verbose)
+ 		/* " f7c0c00 [ahead 58, behind 197] vcs-svn: drop obj_pool.h" */
+ 		add_verbose_info(&out, item, verbose, abbrev);
++	else if (get_tracking_branch_name(&out, item->name))
++		;
++
+ 	printf("%s\n", out.buf);
+ 	strbuf_release(&name);
+ 	strbuf_release(&out);
+-- 
+1.7.0.4
