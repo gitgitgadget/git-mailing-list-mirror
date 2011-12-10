@@ -1,68 +1,114 @@
-From: Hao <billhao@gmail.com>
-Subject: process committed files in post-receive hook
-Date: Sat, 10 Dec 2011 10:29:12 +0000 (UTC)
-Message-ID: <loom.20111210T111457-837@post.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCHv3 13/13] t: add test harness for external credential helpers
+Date: Sat, 10 Dec 2011 05:35:55 -0500
+Message-ID: <20111210103554.GM16529@sigill.intra.peff.net>
+References: <20111210102827.GA16460@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 10 11:35:19 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 10 11:36:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZKH0-00076T-34
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 11:35:18 +0100
+	id 1RZKHh-0007HT-Jf
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 11:36:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753220Ab1LJKfO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Dec 2011 05:35:14 -0500
-Received: from lo.gmane.org ([80.91.229.12]:57636 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752588Ab1LJKfN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Dec 2011 05:35:13 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RZKGr-00074l-VY
-	for git@vger.kernel.org; Sat, 10 Dec 2011 11:35:10 +0100
-Received: from cpe-76-170-238-136.socal.res.rr.com ([76.170.238.136])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Dec 2011 11:35:09 +0100
-Received: from billhao by cpe-76-170-238-136.socal.res.rr.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Dec 2011 11:35:09 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 76.170.238.136 (Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2)
+	id S1753378Ab1LJKf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Dec 2011 05:35:57 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47039
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752588Ab1LJKf5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Dec 2011 05:35:57 -0500
+Received: (qmail 14213 invoked by uid 107); 10 Dec 2011 10:42:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 10 Dec 2011 05:42:36 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Dec 2011 05:35:55 -0500
+Content-Disposition: inline
+In-Reply-To: <20111210102827.GA16460@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186746>
 
-Hi guys,
+We already have tests for the internal helpers, but it's
+nice to give authors of external tools an easy way to
+sanity-check their helpers.
 
-I am writing a post-receive hook in Python that examines the content of some 
-files (the HEAD rev). Because the repo is a bare one on the server. My current 
-approach is to check out a working copy on the server and run 'git pull' in post-
-receive to get the most up-to-date version, and then process files in the 
-working copy.
+If you have written the "git-credential-foo" helper, you can
+do so with:
 
-I have two questions. First, is there a way that I can access file content in a 
-bare repo without checking out a working copy? If this is not possible, my 
-approach would be reasonable. However, when 'git pull' was called in the python 
-script post-receive when a commit occurs, it gives an error.
+  GIT_TEST_CREDENTIAL_HELPER=foo \
+  make t0303-credential-external.sh
 
-remote: fatal: Not a git repository: '.'
+This assumes that your helper is capable of both storing and
+retrieving credentials (some helpers may be read-only, and
+they will fail these tests).
 
-The call in python is
+If your helper supports time-based expiration with a
+configurable timeout, you can test that feature like this:
 
-subprocess.Popen(["git", "pull"], cwd="/Users/git/ts.git.workingcopy")
+  GIT_TEST_CREDENTIAL_HELPER_TIMEOUT="foo --timeout=1" \
+  make t0303-credential-external.sh
 
-I read from a post (http://stackoverflow.com/questions/4043609/) that GIT_DIR is 
-causing this error. Is it safe to unset GIT_DIR in post-receive?
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This version adds GIT_TEST_CREDENTIAL_HELPER_SETUP, which is an
+unfortunate hack needed for the OS X helper (I'll post that patch in a
+few minutes).
 
-Thanks a lot.
+ t/t0303-credential-external.sh |   39 +++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 39 insertions(+), 0 deletions(-)
+ create mode 100755 t/t0303-credential-external.sh
+
+diff --git a/t/t0303-credential-external.sh b/t/t0303-credential-external.sh
+new file mode 100755
+index 0000000..267f4c8
+--- /dev/null
++++ b/t/t0303-credential-external.sh
+@@ -0,0 +1,39 @@
++#!/bin/sh
++
++test_description='external credential helper tests'
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-credential.sh
++
++pre_test() {
++	test -z "$GIT_TEST_CREDENTIAL_HELPER_SETUP" ||
++	eval "$GIT_TEST_CREDENTIAL_HELPER_SETUP"
++
++	# clean before the test in case there is cruft left
++	# over from a previous run that would impact results
++	helper_test_clean "$GIT_TEST_CREDENTIAL_HELPER"
++}
++
++post_test() {
++	# clean afterwards so that we are good citizens
++	# and don't leave cruft in the helper's storage, which
++	# might be long-term system storage
++	helper_test_clean "$GIT_TEST_CREDENTIAL_HELPER"
++}
++
++if test -z "$GIT_TEST_CREDENTIAL_HELPER"; then
++	say "# skipping external helper tests (set GIT_TEST_CREDENTIAL_HELPER)"
++else
++	pre_test
++	helper_test "$GIT_TEST_CREDENTIAL_HELPER"
++	post_test
++fi
++
++if test -z "$GIT_TEST_CREDENTIAL_HELPER_TIMEOUT"; then
++	say "# skipping external helper timeout tests"
++else
++	pre_test
++	helper_test_timeout "$GIT_TEST_CREDENTIAL_HELPER_TIMEOUT"
++	post_test
++fi
++
++test_done
+-- 
+1.7.8.rc2.40.gaf387
