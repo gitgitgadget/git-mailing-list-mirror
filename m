@@ -1,261 +1,379 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCHv3 06/13] credential: apply helper config
-Date: Sat, 10 Dec 2011 05:31:24 -0500
-Message-ID: <20111210103124.GF16529@sigill.intra.peff.net>
+Subject: [PATCHv3 05/13] http: use credential API to get passwords
+Date: Sat, 10 Dec 2011 05:31:21 -0500
+Message-ID: <20111210103121.GE16529@sigill.intra.peff.net>
 References: <20111210102827.GA16460@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 10 11:31:30 2011
+X-From: git-owner@vger.kernel.org Sat Dec 10 11:31:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZKDJ-0005uf-K2
+	id 1RZKDI-0005uf-PW
 	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 11:31:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753243Ab1LJKb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Dec 2011 05:31:27 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47012
+	id S1753213Ab1LJKbZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Dec 2011 05:31:25 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47010
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753110Ab1LJKb0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Dec 2011 05:31:26 -0500
-Received: (qmail 13959 invoked by uid 107); 10 Dec 2011 10:38:05 -0000
+	id S1753110Ab1LJKbX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Dec 2011 05:31:23 -0500
+Received: (qmail 13908 invoked by uid 107); 10 Dec 2011 10:38:02 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 10 Dec 2011 05:38:05 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Dec 2011 05:31:24 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 10 Dec 2011 05:38:02 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Dec 2011 05:31:21 -0500
 Content-Disposition: inline
 In-Reply-To: <20111210102827.GA16460@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186738>
 
-The functionality for credential storage helpers is already
-there; we just need to give the users a way to turn it on.
-This patch provides a "credential.helper" configuration
-variable which allows the user to provide one or more helper
-strings.
+This patch converts the http code to use the new credential
+API, both for http authentication as well as for getting
+certificate passwords.
 
-Rather than simply matching credential.helper, we will also
-compare URLs in subsection headings to the current context.
-This means you can apply configuration to a subset of
-credentials. For example:
+Most of the code change is simply variable naming (the
+passwords are now contained inside the credential struct)
+or deletion of obsolete code (the credential code handles
+URL parsing and prompting for us).
 
-  [credential "https://example.com"]
-	helper = foo
+The behavior should be the same, with one exception: the
+credential code will prompt with a description based on the
+credential components. Therefore, the old prompt of:
 
-would match a request for "https://example.com/foo.git", but
-not one for "https://kernel.org/foo.git".
+  Username for 'example.com':
+  Password for 'example.com':
 
-This is overkill for the "helper" variable, since users are
-unlikely to want different helpers for different sites (and
-since helpers run arbitrary code, they could do the matching
-themselves anyway).
+now looks like:
 
-However, future patches will add new config variables where
-this extra feature will be more useful.
+  Username for 'https://example.com/repo.git':
+  Password for 'https://user@example.com/repo.git':
+
+Note that we include more information in each line,
+specifically:
+
+  1. We now include the protocol. While more noisy, this is
+     an important part of knowing what you are accessing
+     (especially if you care about http vs https).
+
+  2. We include the username in the password prompt. This is
+     not a big deal when you have just been prompted for it,
+     but the username may also come from the remote's URL
+     (and after future patches, from configuration or
+     credential helpers).  In that case, it's a nice
+     reminder of the user for which you're giving the
+     password.
+
+  3. We include the path component of the URL. In many
+     cases, the user won't care about this and it's simply
+     noise (i.e., they'll use the same credential for a
+     whole site). However, that is part of a larger
+     question, which is whether path components should be
+     part of credential context, both for prompting and for
+     lookup by storage helpers. That issue will be addressed
+     as a whole in a future patch.
+
+Similarly, for unlocking certificates, we used to say:
+
+  Certificate Password for 'example.com':
+
+and we now say:
+
+  Password for 'cert:///path/to/certificate':
+
+Showing the path to the client certificate makes more sense,
+as that is what you are unlocking, not "example.com".
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- credential.c           |   61 ++++++++++++++++++++++++++++++++++++++++++++++++
- credential.h           |    5 +++-
- t/t0300-credentials.sh |   42 +++++++++++++++++++++++++++++++++
- t/t5550-http-fetch.sh  |   12 +++++++++
- 4 files changed, 119 insertions(+), 1 deletions(-)
+ http.c                |  113 +++++++++++--------------------------------------
+ t/t5550-http-fetch.sh |   38 ++++++++++++-----
+ 2 files changed, 52 insertions(+), 99 deletions(-)
 
-diff --git a/credential.c b/credential.c
-index c349b9a..96be1c2 100644
---- a/credential.c
-+++ b/credential.c
-@@ -22,6 +22,61 @@ void credential_clear(struct credential *c)
- 	credential_init(c);
+diff --git a/http.c b/http.c
+index 44fcc4d..8e72664 100644
+--- a/http.c
++++ b/http.c
+@@ -3,6 +3,7 @@
+ #include "sideband.h"
+ #include "run-command.h"
+ #include "url.h"
++#include "credential.h"
+ 
+ int active_requests;
+ int http_is_verbose;
+@@ -41,7 +42,7 @@
+ static int curl_ftp_no_epsv;
+ static const char *curl_http_proxy;
+ static const char *curl_cookie_file;
+-static char *user_name, *user_pass, *description;
++static struct credential http_auth = CREDENTIAL_INIT;
+ static const char *user_agent;
+ 
+ #if LIBCURL_VERSION_NUM >= 0x071700
+@@ -52,7 +53,7 @@
+ #define CURLOPT_KEYPASSWD CURLOPT_SSLCERTPASSWD
+ #endif
+ 
+-static char *ssl_cert_password;
++static struct credential cert_auth = CREDENTIAL_INIT;
+ static int ssl_cert_password_required;
+ 
+ static struct curl_slist *pragma_header;
+@@ -136,27 +137,6 @@ static void process_curl_messages(void)
+ }
+ #endif
+ 
+-static char *git_getpass_with_description(const char *what, const char *desc)
+-{
+-	struct strbuf prompt = STRBUF_INIT;
+-	char *r;
+-
+-	if (desc)
+-		strbuf_addf(&prompt, "%s for '%s': ", what, desc);
+-	else
+-		strbuf_addf(&prompt, "%s: ", what);
+-	/*
+-	 * NEEDSWORK: for usernames, we should do something less magical that
+-	 * actually echoes the characters. However, we need to read from
+-	 * /dev/tty and not stdio, which is not portable (but getpass will do
+-	 * it for us). http.c uses the same workaround.
+-	 */
+-	r = git_getpass(prompt.buf);
+-
+-	strbuf_release(&prompt);
+-	return xstrdup(r);
+-}
+-
+ static int http_options(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp("http.sslverify", var)) {
+@@ -229,11 +209,11 @@ static int http_options(const char *var, const char *value, void *cb)
+ 
+ static void init_curl_http_auth(CURL *result)
+ {
+-	if (user_name) {
++	if (http_auth.username) {
+ 		struct strbuf up = STRBUF_INIT;
+-		if (!user_pass)
+-			user_pass = xstrdup(git_getpass_with_description("Password", description));
+-		strbuf_addf(&up, "%s:%s", user_name, user_pass);
++		credential_fill(&http_auth);
++		strbuf_addf(&up, "%s:%s",
++			    http_auth.username, http_auth.password);
+ 		curl_easy_setopt(result, CURLOPT_USERPWD,
+ 				 strbuf_detach(&up, NULL));
+ 	}
+@@ -241,18 +221,14 @@ static void init_curl_http_auth(CURL *result)
+ 
+ static int has_cert_password(void)
+ {
+-	if (ssl_cert_password != NULL)
+-		return 1;
+ 	if (ssl_cert == NULL || ssl_cert_password_required != 1)
+ 		return 0;
+-	/* Only prompt the user once. */
+-	ssl_cert_password_required = -1;
+-	ssl_cert_password = git_getpass_with_description("Certificate Password", description);
+-	if (ssl_cert_password != NULL) {
+-		ssl_cert_password = xstrdup(ssl_cert_password);
+-		return 1;
+-	} else
+-		return 0;
++	if (!cert_auth.password) {
++		cert_auth.protocol = xstrdup("cert");
++		cert_auth.path = xstrdup(ssl_cert);
++		credential_fill(&cert_auth);
++	}
++	return 1;
  }
  
-+int credential_match(const struct credential *want,
-+		     const struct credential *have)
-+{
-+#define CHECK(x) (!want->x || (have->x && !strcmp(want->x, have->x)))
-+	return CHECK(protocol) &&
-+	       CHECK(host) &&
-+	       CHECK(path) &&
-+	       CHECK(username);
-+#undef CHECK
-+}
-+
-+static int credential_config_callback(const char *var, const char *value,
-+				      void *data)
-+{
-+	struct credential *c = data;
-+	const char *key, *dot;
-+
-+	key = skip_prefix(var, "credential.");
-+	if (!key)
-+		return 0;
-+
-+	if (!value)
-+		return config_error_nonbool(var);
-+
-+	dot = strrchr(key, '.');
-+	if (dot) {
-+		struct credential want = CREDENTIAL_INIT;
-+		char *url = xmemdupz(key, dot - key);
-+		int matched;
-+
-+		credential_from_url(&want, url);
-+		matched = credential_match(&want, c);
-+
-+		credential_clear(&want);
-+		free(url);
-+
-+		if (!matched)
-+			return 0;
-+		key = dot + 1;
-+	}
-+
-+	if (!strcmp(key, "helper"))
-+		string_list_append(&c->helpers, value);
-+
-+	return 0;
-+}
-+
-+static void credential_apply_config(struct credential *c)
-+{
-+	if (c->configured)
-+		return;
-+	git_config(credential_config_callback, c);
-+	c->configured = 1;
-+}
-+
- static void credential_describe(struct credential *c, struct strbuf *out)
+ static CURL *get_curl_handle(void)
+@@ -279,7 +255,7 @@ static int has_cert_password(void)
+ 	if (ssl_cert != NULL)
+ 		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
+ 	if (has_cert_password())
+-		curl_easy_setopt(result, CURLOPT_KEYPASSWD, ssl_cert_password);
++		curl_easy_setopt(result, CURLOPT_KEYPASSWD, cert_auth.password);
+ #if LIBCURL_VERSION_NUM >= 0x070903
+ 	if (ssl_key != NULL)
+ 		curl_easy_setopt(result, CURLOPT_SSLKEY, ssl_key);
+@@ -321,42 +297,6 @@ static int has_cert_password(void)
+ 	return result;
+ }
+ 
+-static void http_auth_init(const char *url)
+-{
+-	const char *at, *colon, *cp, *slash, *host;
+-
+-	cp = strstr(url, "://");
+-	if (!cp)
+-		return;
+-
+-	/*
+-	 * Ok, the URL looks like "proto://something".  Which one?
+-	 * "proto://<user>:<pass>@<host>/...",
+-	 * "proto://<user>@<host>/...", or just
+-	 * "proto://<host>/..."?
+-	 */
+-	cp += 3;
+-	at = strchr(cp, '@');
+-	colon = strchr(cp, ':');
+-	slash = strchrnul(cp, '/');
+-	if (!at || slash <= at) {
+-		/* No credentials, but we may have to ask for some later */
+-		host = cp;
+-	}
+-	else if (!colon || at <= colon) {
+-		/* Only username */
+-		user_name = url_decode_mem(cp, at - cp);
+-		user_pass = NULL;
+-		host = at + 1;
+-	} else {
+-		user_name = url_decode_mem(cp, colon - cp);
+-		user_pass = url_decode_mem(colon + 1, at - (colon + 1));
+-		host = at + 1;
+-	}
+-
+-	description = url_decode_mem(host, slash - host);
+-}
+-
+ static void set_from_env(const char **var, const char *envname)
  {
- 	if (!c->protocol)
-@@ -195,6 +250,8 @@ void credential_fill(struct credential *c)
- 	if (c->username && c->password)
- 		return;
+ 	const char *val = getenv(envname);
+@@ -429,7 +369,7 @@ void http_init(struct remote *remote, const char *url)
+ 		curl_ftp_no_epsv = 1;
  
-+	credential_apply_config(c);
+ 	if (url) {
+-		http_auth_init(url);
++		credential_from_url(&http_auth, url);
+ 		if (!ssl_cert_password_required &&
+ 		    getenv("GIT_SSL_CERT_PASSWORD_PROTECTED") &&
+ 		    !prefixcmp(url, "https://"))
+@@ -478,10 +418,10 @@ void http_cleanup(void)
+ 		curl_http_proxy = NULL;
+ 	}
+ 
+-	if (ssl_cert_password != NULL) {
+-		memset(ssl_cert_password, 0, strlen(ssl_cert_password));
+-		free(ssl_cert_password);
+-		ssl_cert_password = NULL;
++	if (cert_auth.password != NULL) {
++		memset(cert_auth.password, 0, strlen(cert_auth.password));
++		free(cert_auth.password);
++		cert_auth.password = NULL;
+ 	}
+ 	ssl_cert_password_required = 0;
+ }
+@@ -837,17 +777,11 @@ static int http_request(const char *url, void *result, int target, int options)
+ 		else if (missing_target(&results))
+ 			ret = HTTP_MISSING_TARGET;
+ 		else if (results.http_code == 401) {
+-			if (user_name && user_pass) {
++			if (http_auth.username && http_auth.password) {
++				credential_reject(&http_auth);
+ 				ret = HTTP_NOAUTH;
+ 			} else {
+-				/*
+-				 * git_getpass is needed here because its very likely stdin/stdout are
+-				 * pipes to our parent process.  So we instead need to use /dev/tty,
+-				 * but that is non-portable.  Using git_getpass() can at least be stubbed
+-				 * on other platforms with a different implementation if/when necessary.
+-				 */
+-				if (!user_name)
+-					user_name = xstrdup(git_getpass_with_description("Username", description));
++				credential_fill(&http_auth);
+ 				init_curl_http_auth(slot->curl);
+ 				ret = HTTP_REAUTH;
+ 			}
+@@ -866,6 +800,9 @@ static int http_request(const char *url, void *result, int target, int options)
+ 	curl_slist_free_all(headers);
+ 	strbuf_release(&buf);
+ 
++	if (ret == HTTP_OK)
++		credential_approve(&http_auth);
 +
- 	for (i = 0; i < c->helpers.nr; i++) {
- 		credential_do(c, c->helpers.items[i].string, "get");
- 		if (c->username && c->password)
-@@ -215,6 +272,8 @@ void credential_approve(struct credential *c)
- 	if (!c->username || !c->password)
- 		return;
+ 	return ret;
+ }
  
-+	credential_apply_config(c);
-+
- 	for (i = 0; i < c->helpers.nr; i++)
- 		credential_do(c, c->helpers.items[i].string, "store");
- 	c->approved = 1;
-@@ -224,6 +283,8 @@ void credential_reject(struct credential *c)
- {
- 	int i;
- 
-+	credential_apply_config(c);
-+
- 	for (i = 0; i < c->helpers.nr; i++)
- 		credential_do(c, c->helpers.items[i].string, "erase");
- 
-diff --git a/credential.h b/credential.h
-index 8a6d162..e504272 100644
---- a/credential.h
-+++ b/credential.h
-@@ -5,7 +5,8 @@
- 
- struct credential {
- 	struct string_list helpers;
--	unsigned approved:1;
-+	unsigned approved:1,
-+		 configured:1;
- 
- 	char *username;
- 	char *password;
-@@ -25,5 +26,7 @@ struct credential {
- 
- int credential_read(struct credential *, FILE *);
- void credential_from_url(struct credential *, const char *url);
-+int credential_match(const struct credential *have,
-+		     const struct credential *want);
- 
- #endif /* CREDENTIAL_H */
-diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
-index 81a455f..42d0f5b 100755
---- a/t/t0300-credentials.sh
-+++ b/t/t0300-credentials.sh
-@@ -192,4 +192,46 @@ test_expect_success 'internal getpass does not ask for known username' '
- 	EOF
- '
- 
-+HELPER="!f() {
-+		cat >/dev/null
-+		echo username=foo
-+		echo password=bar
-+	}; f"
-+test_expect_success 'respect configured credentials' '
-+	test_config credential.helper "$HELPER" &&
-+	check fill <<-\EOF
-+	--
-+	username=foo
-+	password=bar
-+	--
-+	EOF
-+'
-+
-+test_expect_success 'match configured credential' '
-+	test_config credential.https://example.com.helper "$HELPER" &&
-+	check fill <<-\EOF
-+	protocol=https
-+	host=example.com
-+	path=repo.git
-+	--
-+	username=foo
-+	password=bar
-+	--
-+	EOF
-+'
-+
-+test_expect_success 'do not match configured credential' '
-+	test_config credential.https://foo.helper "$HELPER" &&
-+	check fill <<-\EOF
-+	protocol=https
-+	host=bar
-+	--
-+	username=askpass-username
-+	password=askpass-password
-+	--
-+	askpass: Username for '\''https://bar'\'':
-+	askpass: Password for '\''https://askpass-username@bar'\'':
-+	EOF
-+'
-+
- test_done
 diff --git a/t/t5550-http-fetch.sh b/t/t5550-http-fetch.sh
-index 398a2d2..c59908f 100755
+index 3d6e871..398a2d2 100755
 --- a/t/t5550-http-fetch.sh
 +++ b/t/t5550-http-fetch.sh
-@@ -101,6 +101,18 @@ test_expect_success 'http auth can request both user and pass' '
- 	expect_askpass both user@host
- '
- 
-+test_expect_success 'http auth respects credential helper config' '
-+	test_config_global credential.helper "!f() {
-+		cat >/dev/null
-+		echo username=user@host
-+		echo password=user@host
-+	}; f" &&
-+	>askpass-query &&
-+	echo wrong >askpass-response &&
-+	git clone "$HTTPD_URL/auth/repo.git" clone-auth-helper &&
-+	expect_askpass none
+@@ -49,40 +49,56 @@ test_expect_success 'setup askpass helpers' '
+ 	EOF
+ 	chmod +x askpass &&
+ 	GIT_ASKPASS="$PWD/askpass" &&
+-	export GIT_ASKPASS &&
+-	>askpass-expect-none &&
+-	echo "askpass: Password for '\''$HTTPD_DEST'\'': " >askpass-expect-pass &&
+-	{ echo "askpass: Username for '\''$HTTPD_DEST'\'': " &&
+-	  cat askpass-expect-pass
+-	} >askpass-expect-both
+-'
++	export GIT_ASKPASS
 +'
 +
++expect_askpass() {
++	dest=$HTTPD_DEST/auth/repo.git
++	{
++		case "$1" in
++		none)
++			;;
++		pass)
++			echo "askpass: Password for 'http://$2@$dest': "
++			;;
++		both)
++			echo "askpass: Username for 'http://$dest': "
++			echo "askpass: Password for 'http://$2@$dest': "
++			;;
++		*)
++			false
++			;;
++		esac
++	} >askpass-expect &&
++	test_cmp askpass-expect askpass-query
++}
+ 
+ test_expect_success 'cloning password-protected repository can fail' '
+ 	>askpass-query &&
+ 	echo wrong >askpass-response &&
+ 	test_must_fail git clone "$HTTPD_URL/auth/repo.git" clone-auth-fail &&
+-	test_cmp askpass-expect-both askpass-query
++	expect_askpass both wrong
+ '
+ 
+ test_expect_success 'http auth can use user/pass in URL' '
+ 	>askpass-query &&
+ 	echo wrong >askpass-response &&
+ 	git clone "$HTTPD_URL_USER_PASS/auth/repo.git" clone-auth-none &&
+-	test_cmp askpass-expect-none askpass-query
++	expect_askpass none
+ '
+ 
+ test_expect_success 'http auth can use just user in URL' '
+ 	>askpass-query &&
+ 	echo user@host >askpass-response &&
+ 	git clone "$HTTPD_URL_USER/auth/repo.git" clone-auth-pass &&
+-	test_cmp askpass-expect-pass askpass-query
++	expect_askpass pass user@host
+ '
+ 
+ test_expect_success 'http auth can request both user and pass' '
+ 	>askpass-query &&
+ 	echo user@host >askpass-response &&
+ 	git clone "$HTTPD_URL/auth/repo.git" clone-auth-both &&
+-	test_cmp askpass-expect-both askpass-query
++	expect_askpass both user@host
+ '
+ 
  test_expect_success 'fetch changes via http' '
- 	echo content >>file &&
- 	git commit -a -m two &&
 -- 
 1.7.8.rc2.40.gaf387
