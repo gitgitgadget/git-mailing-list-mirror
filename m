@@ -1,8 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 4/7] revert: allow single-pick in the middle of cherry-pick
- sequence
-Date: Sat, 10 Dec 2011 06:59:48 -0600
-Message-ID: <20111210125948.GE22035@elie.hsd1.il.comcast.net>
+Subject: [PATCH 5/7] revert: do not remove state until sequence is finished
+Date: Sat, 10 Dec 2011 07:02:12 -0600
+Message-ID: <20111210130212.GF22035@elie.hsd1.il.comcast.net>
 References: <CALkWK0=45OwcBoH2TorsgwTbaXjnffVuh0mGxh2+ShN9cuF-=A@mail.gmail.com>
  <20111120094650.GB2278@elie.hsd1.il.comcast.net>
  <20111122111207.GA7399@elie.hsd1.il.comcast.net>
@@ -21,37 +20,37 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
 	Jay Soffian <jaysoffian@gmail.com>
 To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Sat Dec 10 14:00:27 2011
+X-From: git-owner@vger.kernel.org Sat Dec 10 14:02:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZMXS-0004WT-W1
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 14:00:27 +0100
+	id 1RZMZL-00056M-FV
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 14:02:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751504Ab1LJNAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Dec 2011 08:00:21 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:41366 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751448Ab1LJM7y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Dec 2011 07:59:54 -0500
-Received: by iaeh11 with SMTP id h11so200296iae.19
-        for <git@vger.kernel.org>; Sat, 10 Dec 2011 04:59:53 -0800 (PST)
+	id S1751237Ab1LJNCT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Dec 2011 08:02:19 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:50767 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751186Ab1LJNCS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Dec 2011 08:02:18 -0500
+Received: by ggnr5 with SMTP id r5so4186711ggn.19
+        for <git@vger.kernel.org>; Sat, 10 Dec 2011 05:02:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=8M5wMSMmakHWGc2e7is5QtrXgnAqV9c8aeLtuToDd1g=;
-        b=gei2LGzQPXmkY4KWVdTZMme03tqCWSuw2B/LiSBryrebAW3RBlkGWU8SD8TtLfacgO
-         UrOlj3tIIrkmrn68f4PO72l740Ufm+uNEToN53DkfySQE+CU5AuVLSy6VPrrUZnvFohn
-         4ZGO5o9wHE2t570S5V7RTB/xaCP/sjKI840AE=
-Received: by 10.43.65.79 with SMTP id xl15mr5990022icb.6.1323521993365;
-        Sat, 10 Dec 2011 04:59:53 -0800 (PST)
+        bh=eXYReVQoSz8H70EoT4FVnozMUFpLCPh2R/qXQuORdeA=;
+        b=mjMfTb3vHSiXMKscXAEcMlHIUo3Yq4UIznzMw9B8PBvPpQX/IV25g20TpyyS90o7nb
+         lntzvzJ5FYn8fybLp4/fGKL8oeO4hRo7hJA0w4GFrqJDAYjrU8iEv+VPK8yhYZFzonRH
+         LMM62MxGiM83yHNOmkZkF7tn8RbAGnDuaHmcY=
+Received: by 10.182.162.35 with SMTP id xx3mr1376287obb.34.1323522137721;
+        Sat, 10 Dec 2011 05:02:17 -0800 (PST)
 Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id 36sm23322865ibc.6.2011.12.10.04.59.52
+        by mx.google.com with ESMTPS id b7sm11018233obp.5.2011.12.10.05.02.15
         (version=SSLv3 cipher=OTHER);
-        Sat, 10 Dec 2011 04:59:52 -0800 (PST)
+        Sat, 10 Dec 2011 05:02:17 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20111210124644.GA22035@elie.hsd1.il.comcast.net>
 User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
@@ -59,88 +58,85 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186774>
 
-When I messed up a difficult conflict in the middle of a cherry-pick
-sequence, it can be useful to be able to 'git checkout HEAD . && git
-cherry-pick that-one-commit' to restart the conflict resolution.
+As v1.7.8-rc0~141^2~4 (2011-08-04) explains, git cherry-pick removes
+the sequencer state just before applying the final patch.  In the
+single-pick case, that was a good thing, since --abort and --continue
+work fine without access to such state and removing it provides a
+signal that git should not complain about the need to clobber it ("a
+cherry-pick or revert is already in progress") in sequences like the
+following:
 
-Suggested-by: Johannes Sixt <j6t@kdbg.org>
+	git cherry-pick foo
+	git read-tree -m -u HEAD; # forget that; let's try a different one
+	git cherry-pick bar
+
+After the recent patch "allow single-pick in the middle of cherry-pick
+sequence" we don't need that hack any more.  In the new regime, a
+traditional "git cherry-pick <commit>" command never looks at
+.git/sequencer, so we do not need to cripple "git cherry-pick
+<commit>..<commit>" for it any more.
+
+So now you can run "git cherry-pick --abort" near the end of a
+multi-pick sequence and it will abort the entire sequence, instead of
+misbehaving and aborting just the final commit.
+
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-Maybe this should come after patch 6/7, so the use case could use
-"git reset --hard".
-
- builtin/revert.c                |   26 ++++++++++++++++++++++++++
- t/t3510-cherry-pick-sequence.sh |   12 ++++++++++++
- 2 files changed, 38 insertions(+), 0 deletions(-)
+ builtin/revert.c                |   12 +-----------
+ t/t3510-cherry-pick-sequence.sh |    6 +++---
+ 2 files changed, 4 insertions(+), 14 deletions(-)
 
 diff --git a/builtin/revert.c b/builtin/revert.c
-index 71570357..dcb69904 100644
+index dcb69904..28deb85b 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -1072,6 +1072,12 @@ static int sequencer_continue(struct replay_opts *opts)
- 	return pick_commits(todo_list, opts);
- }
- 
-+static int single_pick(struct commit *cmit, struct replay_opts *opts)
-+{
-+	setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
-+	return do_pick_commit(cmit, opts);
-+}
-+
- static int pick_revisions(struct replay_opts *opts)
- {
- 	struct commit_list *todo_list = NULL;
-@@ -1097,6 +1103,26 @@ static int pick_revisions(struct replay_opts *opts)
- 		return sequencer_continue(opts);
+@@ -1018,18 +1018,8 @@ static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
+ 	for (cur = todo_list; cur; cur = cur->next) {
+ 		save_todo(cur, opts);
+ 		res = do_pick_commit(cur->item, opts);
+-		if (res) {
+-			if (!cur->next)
+-				/*
+-				 * An error was encountered while
+-				 * picking the last commit; the
+-				 * sequencer state is useless now --
+-				 * the user simply needs to resolve
+-				 * the conflict and commit
+-				 */
+-				remove_sequencer_state(0);
++		if (res)
+ 			return res;
+-		}
+ 	}
  
  	/*
-+	 * If we were called as "git cherry-pick <commit>", just
-+	 * cherry-pick/revert it, set CHERRY_PICK_HEAD /
-+	 * REVERT_HEAD, and don't touch the sequencer state.
-+	 * This means it is possible to cherry-pick in the middle
-+	 * of a cherry-pick sequence.
-+	 */
-+	if (opts->revs->cmdline.nr == 1 &&
-+	    opts->revs->cmdline.rev->whence == REV_CMD_REV &&
-+	    opts->revs->no_walk &&
-+	    !opts->revs->cmdline.rev->flags) {
-+		struct commit *cmit;
-+		if (prepare_revision_walk(opts->revs))
-+			die(_("revision walk setup failed"));
-+		cmit = get_revision(opts->revs);
-+		if (!cmit || get_revision(opts->revs))
-+			die("BUG: expected exactly one commit from walk");
-+		return single_pick(cmit, opts);
-+	}
-+
-+	/*
- 	 * Start a new cherry-pick/ revert sequence; but
- 	 * first, make sure that an existing one isn't in
- 	 * progress
 diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index 56c95ec1..98a27a23 100755
+index 98a27a23..851b147f 100755
 --- a/t/t3510-cherry-pick-sequence.sh
 +++ b/t/t3510-cherry-pick-sequence.sh
-@@ -50,6 +50,18 @@ test_expect_success 'cherry-pick persists data on failure' '
- 	test_path_is_file .git/sequencer/opts
+@@ -203,10 +203,10 @@ test_expect_success '--abort refuses to clobber unrelated change, harder case' '
+ 	test_cmp_rev initial HEAD
  '
  
-+test_expect_success 'cherry-pick mid-cherry-pick-sequence' '
-+	pristine_detach initial &&
-+	test_must_fail git cherry-pick base..anotherpick &&
-+	test_cmp_rev picked CHERRY_PICK_HEAD &&
-+	# "oops, I forgot that these patches rely on the change from base"
-+	git checkout HEAD foo &&
-+	git cherry-pick base &&
-+	git cherry-pick picked &&
-+	git cherry-pick --continue &&
-+	git diff --exit-code anotherpick
-+'
-+
- test_expect_success 'cherry-pick persists opts correctly' '
+-test_expect_success 'cherry-pick cleans up sequencer state when one commit is left' '
++test_expect_success 'cherry-pick still writes sequencer state when one commit is left' '
  	pristine_detach initial &&
- 	test_must_fail git cherry-pick -s -m 1 --strategy=recursive -X patience -X ours base..anotherpick &&
+ 	test_must_fail git cherry-pick base..picked &&
+-	test_path_is_missing .git/sequencer &&
++	test_path_is_dir .git/sequencer &&
+ 	echo "resolved" >foo &&
+ 	git add foo &&
+ 	git commit &&
+@@ -227,7 +227,7 @@ test_expect_success 'cherry-pick cleans up sequencer state when one commit is le
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_failure '--abort after last commit in sequence' '
++test_expect_success '--abort after last commit in sequence' '
+ 	pristine_detach initial &&
+ 	test_must_fail git cherry-pick base..picked &&
+ 	git cherry-pick --abort &&
 -- 
 1.7.8.rc3
