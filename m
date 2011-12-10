@@ -1,73 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Dec 2011, #03; Fri, 9)
-Date: Fri, 09 Dec 2011 22:13:02 -0800
-Message-ID: <7vfwgtar9t.fsf@alter.siamese.dyndns.org>
-References: <7vk465b834.fsf@alter.siamese.dyndns.org>
- <m3vcppgojy.fsf@localhost.localdomain>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/PATCH] add update to branch support for "floating
+ submodules"
+Date: Sat, 10 Dec 2011 00:19:06 -0600
+Message-ID: <20111210061906.GA11326@elie.hsd1.il.comcast.net>
+References: <20111109174027.GA28825@book.fritz.box>
+ <7vr51htbsy.fsf@alter.siamese.dyndns.org>
+ <20111129220854.GB2812@sandbox-rc.fritz.box>
+ <loom.20111210T062013-538@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 10 07:13:15 2011
+Cc: git@vger.kernel.org, Heiko Voigt <hvoigt@hvoigt.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Leif Gruenwoldt <leifer@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 10 07:19:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZGBN-0004CT-D7
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 07:13:13 +0100
+	id 1RZGHJ-0005W2-CF
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 07:19:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751263Ab1LJGNI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Dec 2011 01:13:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55730 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750815Ab1LJGNG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Dec 2011 01:13:06 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0AD7E2282;
-	Sat, 10 Dec 2011 01:13:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PHFBY68zbdSqdaz09SSjQn629BI=; b=o/WSp9
-	wmtyxwdA0j/CoXHWyBxD54ab6ZyNCrXKdObRlH5YB/Eq9WLL1C7kchwsk4OL8tX8
-	tfG5kScWRt7ki4oi/bctQ6ZyvYcU7N3Lt0Eda9ja2XeWl9eRse3xjX5uCqCt76ne
-	3A5oTUpqVt52G41I6gn9BO+vKpxsnZ0LtImAM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iG/HcS8Q3/6kmQ8v3d/ASMJ6v8F+3g/I
-	6EIIne9nwHEpnDHTpDcy4r1c3/Ct30Htqoh14r0p/1uyZn9alm98tFfNWmCS1CjS
-	rpqpr3MTsYhrGa6gOTuk8qEXpLcBkrMWB7YPunKLgbM1y9XOzi3ixYhOxLzZgXfm
-	qe091Z2KH5Q=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 02CBA2281;
-	Sat, 10 Dec 2011 01:13:05 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7D7182275; Sat, 10 Dec 2011
- 01:13:04 -0500 (EST)
-In-Reply-To: <m3vcppgojy.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Fri, 09 Dec 2011 18:16:02 -0800 (PST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 055F130A-22F6-11E1-9EC6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751766Ab1LJGTR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Dec 2011 01:19:17 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:54294 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751366Ab1LJGTQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Dec 2011 01:19:16 -0500
+Received: by iakc1 with SMTP id c1so5357935iak.19
+        for <git@vger.kernel.org>; Fri, 09 Dec 2011 22:19:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=SEdeRIw1N/u3sT3n84brAPsyKuvucmyCwl2M4bNVI+k=;
+        b=V9756YXzvH/e4CqLBgUC7HNNc2/uy4Uq7Ifi7ZgYrMc321vyU2itsWPzsBXkk02tTh
+         uFJeQi/4eG8J00TNHRFV6PywJqqYbhIITcYA3iv2mVwsv/vGgaWihfXjeHD92VbFmcxL
+         gb83H40ETiDW23/rUFopjkQIRzPA0sTqivS4w=
+Received: by 10.50.163.97 with SMTP id yh1mr6264437igb.37.1323497956094;
+        Fri, 09 Dec 2011 22:19:16 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id v18sm41813439ibh.4.2011.12.09.22.19.14
+        (version=SSLv3 cipher=OTHER);
+        Fri, 09 Dec 2011 22:19:15 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <loom.20111210T062013-538@post.gmane.org>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186725>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+(restoring cc list)
+Hi Leif,
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> --------------------------------------------------
->> [Cooking]
->
->> * jn/gitweb-side-by-side-diff (2011-10-31) 8 commits
->>  ...
->> 
->> Replaces a series from Kato Kazuyoshi on the same topic.
->> Is this ready for 'next'?
->
-> I think it is.
+Leif Gruenwoldt wrote:
 
-Thanks.
+> If I understand the description of "floating submodules", it's something I have 
+> been wanting for a while now! The lack of it is currently a deal breaker for 
+> using submodules within my organisation.
+>
+> Our use case is as follows.
+[...]
+>                                                 When one of the products is in 
+> heavy development we often need to do a lot of work in the common repos. Having 
+> to increment the sha1 of the submodules to track the latest tip would be overly 
+> arduous.
+
+What happens when a bug was introduced in this period of heavy development
+and someone wants to look back in the development history and build each
+version to find which introduced the bug?
+
+If I were part of such a project, I would be tempted to follow one of two
+rules.  Either
+
+ A. Each commit of productA strives to work with the latest version of
+    the common code possible.  Which version of the common code that was
+    tested against gets recorded (perhaps by some record-submodule-versions-
+    and-commit script, or even a pre-commit hook) so others can
+    reproduce the results.
+
+or
+
+ B. Occasionally (e.g., daily or weekly) the "baseline" version of the
+    common code that can be relied on gets bumped, and each commit of
+    productA should work with that version and all later versions for a
+    while.  Everyday development might typically happen with the tip
+    version of the common code which may be faster, have more
+    bugfixes, and otherwise be more pleasant to work with, but commits
+    should work against the baseline version as well.  When it is time
+    to bump the baseline, that fact gets recorded (in a separate
+    commit).
+
+    For this, the '[submodule "<name>"] ignore' setting described in
+    gitmodules(5) might be helpful.
+
+Though of course other variations are possible.
+
+Would you be able to try out using Heiko's patch for a while, adapt it
+to your needs as necessary, and let us know how it goes?
+
+Thanks very much, and good luck,
+Jonathan
