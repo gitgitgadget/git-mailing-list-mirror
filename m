@@ -1,65 +1,70 @@
-From: Leif Gruenwoldt <leifer@gmail.com>
-Subject: Re: [RFC/PATCH] add update to branch support for "floating submodules"
-Date: Sat, 10 Dec 2011 10:27:28 -0500
-Message-ID: <CALFF=ZQKRgx_AodBQH17T9cSe_JFtoKie7DoMMfkTXCyCFospw@mail.gmail.com>
-References: <20111109174027.GA28825@book.fritz.box> <7vr51htbsy.fsf@alter.siamese.dyndns.org>
- <20111129220854.GB2812@sandbox-rc.fritz.box> <loom.20111210T062013-538@post.gmane.org>
- <7vborhaqgw.fsf@alter.siamese.dyndns.org>
+From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+Subject: Re: Access to git repository through squid proxy: The remote end
+ hung up unexpectedly
+Date: Sat, 10 Dec 2011 19:37:53 +0400
+Message-ID: <20111210193753.994055f2.kostix@domain007.com>
+References: <CACjeFCA4h_w2UmYywMBV_P+YZcWAE=zRUz-z5eTfAO+oxWKPjw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 10 16:28:10 2011
+To: Mathieu Peltier <mathieu.peltier@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 10 16:38:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZOqP-0005Jy-BC
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 16:28:09 +0100
+	id 1RZP01-000853-48
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 16:38:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751573Ab1LJP2A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Dec 2011 10:28:00 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:62918 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751190Ab1LJP2A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Dec 2011 10:28:00 -0500
-Received: by iaeh11 with SMTP id h11so349432iae.19
-        for <git@vger.kernel.org>; Sat, 10 Dec 2011 07:27:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=vAm5f7VQtEycCpGCTG3AlshqCAMS1scH3wg4uEh7bKg=;
-        b=s166zRwZLJoj6fDvsndv4OyAtucdQLXggQ++W6X7llfhmyHfeClNeVR+W0WuPj8UEz
-         ysMe41JpqBXkaK77JfFfZvM5L2Yk7+IeOlPHknGGQdVZ9SZno9O9jf8RMp66wvReWXIv
-         dY3f+an6Xkz0A/0BEIE1G2Qf0p8AgEoINTcdc=
-Received: by 10.42.159.195 with SMTP id m3mr6305813icx.33.1323530879538; Sat,
- 10 Dec 2011 07:27:59 -0800 (PST)
-Received: by 10.231.1.32 with HTTP; Sat, 10 Dec 2011 07:27:28 -0800 (PST)
-In-Reply-To: <7vborhaqgw.fsf@alter.siamese.dyndns.org>
+	id S1751788Ab1LJPh6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Dec 2011 10:37:58 -0500
+Received: from mailhub.007spb.ru ([84.204.203.130]:60792 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751719Ab1LJPh5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Dec 2011 10:37:57 -0500
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id pBAFbqjQ025752;
+	Sat, 10 Dec 2011 19:37:53 +0400
+In-Reply-To: <CACjeFCA4h_w2UmYywMBV_P+YZcWAE=zRUz-z5eTfAO+oxWKPjw@mail.gmail.com>
+X-Mailer: Sylpheed 3.1.1 (GTK+ 2.10.14; i686-pc-mingw32)
+X-Antivirus: Dr.Web (R) for Mail Servers on proxysrv host
+X-Antivirus-Code: 100000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186782>
 
-On Sat, Dec 10, 2011 at 1:30 AM, Junio C Hamano <gitster@pobox.com> wrote:
+On Sat, 10 Dec 2011 09:56:07 +0100
+Mathieu Peltier <mathieu.peltier@gmail.com> wrote:
 
-> So that use case does not sound like a good rationale to require addition
-> of floating submodules.
+> Hi,
+> I am trying to access a git repository (git:// URL) through a squid
+> proxy.
+> 
+> squid allows CONNECT for port 9418:
+[...]
+> 2011/12/09 12:22:44 socat[21428] D shutdown()  -> 0
+> fatal: The remote end hung up unexpectedly
+> 
+> I tried to use also nc but I get the same error.
+> Any advice?
+I think you have to verify the git-daemon (you did not say you're using
+git-daemon, but it can be presupposed based on the port number) works
+by itself before starting to wrap it into layers of complexity.
+What happens if you try to clone a git repo directly, without any
+tunneling?  If this is not possible, try to clone on the host running
+git-daemon (use an URL like git://localhost/path/to/repo.git).
+If it fails (I suppose it will), try increasing the daemon verbosity
+(see git-daemon) manpage.
+After all, may be it's as simple as forgetting to `touch` git-export-ok
+file in the repository you're trying to clone.
 
-Ok I will try another scenario :)
-
-Imagine again products A, B and C and a common library. The products are in
-a stable state of development and track a stable branch of the common lib.
-Then imagine an important security fix gets made to the common library. On
-the next pull of products A, B, and C they get this fix for free
-because they were
-floating. They didn't need to communicate with the maintainer of the common
-repo to know this. In fact they don't really care. They just want the
-latest stable
-code for that release branch.
-
-This is how package management on many linux systems works. Dependencies
-get updated and all products reap the benefit (or catastrophe) automatically.
+P.S.
+As a side note: why are you trying to implement such a strange setup?
+Why not just use plain old SSH which just works and provides good level
+of security (contrary to Basic HTTP authentication you might be using).
+If you need a level of control about who can do what with the repository
+you could look at https://github.com/sitaramc/gitolite
