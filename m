@@ -1,62 +1,59 @@
-From: Vincent van Ravesteijn <vfr@lyx.org>
-Subject: Re: [RFC/PATCH] show tracking branches with their associated branch
- names
-Date: Sat, 10 Dec 2011 10:53:31 +0100
-Message-ID: <4EE32C1B.8070306@lyx.org>
-References: <1323502829.1698.6.camel@sdesktop>
+From: Jeff King <peff@peff.net>
+Subject: [PATCHv3 0/13] credential helpers
+Date: Sat, 10 Dec 2011 05:28:28 -0500
+Message-ID: <20111210102827.GA16460@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Santhosh Kumar Mani <santhoshmani@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 10 10:53:48 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 10 11:28:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZJcp-0004IU-3K
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 10:53:47 +0100
+	id 1RZKAs-000558-7u
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 11:28:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752588Ab1LJJxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Dec 2011 04:53:42 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:61062 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752089Ab1LJJxm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Dec 2011 04:53:42 -0500
-Received: by wgbdr13 with SMTP id dr13so7340579wgb.1
-        for <git@vger.kernel.org>; Sat, 10 Dec 2011 01:53:41 -0800 (PST)
-Received: by 10.227.209.9 with SMTP id ge9mr9326011wbb.1.1323510821109;
-        Sat, 10 Dec 2011 01:53:41 -0800 (PST)
-Received: from [192.168.1.52] (host064-007.kpn-gprs.nl. [62.133.64.7])
-        by mx.google.com with ESMTPS id ep13sm15645965wbb.8.2011.12.10.01.53.36
-        (version=SSLv3 cipher=OTHER);
-        Sat, 10 Dec 2011 01:53:37 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <1323502829.1698.6.camel@sdesktop>
+	id S1752704Ab1LJK2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Dec 2011 05:28:33 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46994
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752249Ab1LJK2c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Dec 2011 05:28:32 -0500
+Received: (qmail 13770 invoked by uid 107); 10 Dec 2011 10:35:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 10 Dec 2011 05:35:11 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Dec 2011 05:28:28 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186732>
 
-Op 10-12-2011 8:40, Santhosh Kumar Mani schreef:
-> The "git branch" command, by default, displays the local branches. There
-> is no visual distinction made between the tracking branches and normal
-> local branches. This patch enables the "git branch" to display
-> tracking info for tracking branches:
->
-> Before this patch:
->    $ git branch
->    * master
->      local
->
-> After this patch:
->    $ git branch
->    * master [origin/master]
->      local
->
->
-Did you try "git branch -vv" ?
+Here's the latest re-roll of the credential helpers series. I think this
+one is probably ready to go to 'next'.
 
-Vincent
+It's rebased on the latest tip of 'master' (applying it to an older
+commit will get you a minor textual conflict in strbuf.c). It
+incorporates the erase-safety we discussed, fixes a few commit message
+typos, and tweaks the test scripts to make testing the external OS X
+helper a little easier.
+
+  [01/13]: test-lib: add test_config_global variant
+  [02/13]: t5550: fix typo
+  [03/13]: introduce credentials API
+  [04/13]: credential: add function for parsing url components
+  [05/13]: http: use credential API to get passwords
+  [06/13]: credential: apply helper config
+  [07/13]: credential: add credential.*.username
+  [08/13]: credential: make relevance of http path configurable
+  [09/13]: docs: end-user documentation for the credential subsystem
+  [10/13]: credentials: add "cache" helper
+  [11/13]: strbuf: add strbuf_add*_urlencode
+  [12/13]: credentials: add "store" helper
+  [13/13]: t: add test harness for external credential helpers
+
+-Peff
