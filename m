@@ -1,135 +1,156 @@
-From: "Neal Kreitzinger" <neal@rsss.com>
-Subject: git for change control of software deployment updates
-Date: Fri, 9 Dec 2011 20:37:53 -0600
-Message-ID: <jbugm2$afc$1@dough.gmane.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 10 03:38:17 2011
+From: Tony Wang <wwwjfy@gmail.com>
+Subject: Re: [PATCH] Copy resolve_ref() return value for longer use
+Date: Sat, 10 Dec 2011 11:43:24 +0800
+Message-ID: <626C086D699644D181B9FA573EDFFCA6@gmail.com>
+References: <CACsJy8Aw4_O_GMiK_D=HTENfxGUXTTzCHqM7FkriqU+mQtVWtA@mail.gmail.com>
+ <1320719428-1802-1-git-send-email-pclouds@gmail.com>
+ <7vehxcpns5.fsf@alter.siamese.dyndns.org>
+ <CACsJy8ARAzNWjZfXwnNG0AprCFXLCkiDrE+eFj9icbeNX14xKw@mail.gmail.com>
+ <7vobwgo3l5.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 10 04:50:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZCpM-0005rf-DU
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 03:38:16 +0100
+	id 1RZDx6-0002Qi-1U
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 04:50:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755181Ab1LJCiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Dec 2011 21:38:11 -0500
-Received: from lo.gmane.org ([80.91.229.12]:34137 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751256Ab1LJCiK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2011 21:38:10 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RZCpD-0005qX-HF
-	for git@vger.kernel.org; Sat, 10 Dec 2011 03:38:07 +0100
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Dec 2011 03:38:07 +0100
-Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Dec 2011 03:38:07 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-RFC2646: Format=Flowed; Original
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752509Ab1LJDng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Dec 2011 22:43:36 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:39468 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752129Ab1LJDnf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Dec 2011 22:43:35 -0500
+Received: by iakc1 with SMTP id c1so5189286iak.19
+        for <git@vger.kernel.org>; Fri, 09 Dec 2011 19:43:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject:x-mailer
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=MrfEXxuFIqcq19rfWMR2ByrFJsKBC84RIEIOnQtfDPA=;
+        b=NFyKvpnILx38AasHxldzQorzGlWRJwoX+cH4PXkFFsZcc5rpwpAJ4qrmwbtRsUsoHY
+         6YRIEbvEa4a7h4LSCb82D+GZpYyZAIxp2CeLdR5EuemLmrLiJSxQ+p6+SAPjewjvI+UL
+         ms30JXJqFjfUcBh2NuEMbLCMJq/3vW7j4aojg=
+Received: by 10.42.172.70 with SMTP id m6mr4876234icz.37.1323488614938;
+        Fri, 09 Dec 2011 19:43:34 -0800 (PST)
+Received: from localhost (wwwjfy.net. [68.68.99.210])
+        by mx.google.com with ESMTPS id wo4sm21752526igc.5.2011.12.09.19.43.29
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 09 Dec 2011 19:43:32 -0800 (PST)
+In-Reply-To: <7vobwgo3l5.fsf@alter.siamese.dyndns.org>
+X-Mailer: sparrow 1.5beta1 (build 1034)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186720>
 
-I am considering using git with submodules to deploy most of our updates to 
-our customer linux servers (not including third party rpm updates already 
-tracked by linux distro rpm repository).  Has anyone else done this? 
-Comments?  (Sanity check.)  (I am new to submodules.)
+Hi, 
 
-Here are some rationale and concerns I submit for review:
+I don't know about the procedure, but wonder is any one following this? 
 
-Reasons:
-- (Main Premise)  I maintain dozens of divergent custom versions 
-concurrently with each running on its own server (we do merge these versions 
-eventually and then immediately start diverging again).  (This is the main 
-reason we chose git for scm.)  Hundreds of servers run the 'main generic' 
-version.  Git will allow these branches to deploy to their respective 
-customers.
-- (Main Supporting Premise)  others on the git-newsgroup talk about using 
-git submodules to maintain web sites.  Not sure how robust they are.  In 
-theory, a website seems no different than any other application server.
-- git on the customer server would allow better tracking of what the 
-customer is really running (ie, dirty tree).
-- Submodules will track everything outside of linux distro rpms that we 
-update outside of linux rpms (third party binaries, html, etc.).
-- Submodules containing source will be separate and not deployed.
-- I already use git to deploy test versions of the core software from 
-dev-server to qa-servers (using git-pull --ff-only, git-clone, etc. on the 
-qa-server end).
-- I can do most of the work using git features/git-scripts with a minimum of 
-homegrown bash scripts/tars.
-- git with ssh will make it secure (most customer servers are in vpn 
-anyway).
-- using separate worktree will separate git repos from deployed binaries.
-- git will figure out the 'patches' to transfer in order to effect a version 
-change.
-- versioning of config files (apache, etc.) to aid in troubleshooting.
-- trying to do this with rpm's makes no sense when I can do it with git.
-- trying to do this with homemade scripts/tars makes no sense when I can do 
-this with git.
-- gitweb will make semi-technical support personnel use possible on the 
-customer server in the absence of gitk (gui portion of linux).
-- I can have a development superproject pointing to all submodules, and a 
-deployment superproject pointing to same submodules but not including source 
-code submodules.
-- if fetch/pull are better for this than push I can setup a deployment 
-server that customers have access to.  It seems fetch/pull are more 
-conducive to monitoring success/failure, but push is more conducive to 
-central control.
-- having some history of previous versions seems valuable for rapid 
-remediation of regressions (git checkout <prev-version> -- mybinary).
-- remote tracking of customer server configurations.
-- git could track pre/post-conversion/initialization data file states.
-- track customer server configuration file customizations and merge them 
-with subsequent changes to base version.
-- such a git deployment setup would make emulating a prod server on a test 
-server a matter of course.
+-- 
+BR,
+Tony Wang
 
-Concerns:
-- is there something about git that would make this unsecure during the 
-"patch" transfer (push, fetch, etc)?
-- can I limit disk use (repo history) using shallow-clone or some disk 
-saving tricks?  IOW, repo on customer server only needs sufficient common 
-ancestor to accept updates and not the whole history before the common 
-ancestor.  (The majority of deployed content will be binaries.)
-- customer servers will not have gui portion of linux loaded (minimal VM 
-images on an array in most cases).
-- automation of the execution of data format conversion/initialization 
-programs (receive hook that checks for and executes and waits for completion 
-of such programs) as such commits apply on the repo on the customer server 
-or as an aggregate after all commits apply.  (I think of the new execute 
-option in rebase, but that is different from receiving during a push.)
-- upgrading git versions (breaking deployment system).
-- size limits in git to versioning large data files (works for most 
-customers, but not the huge ones).
-- gitweb is getting smarter and is no longer 'view only' like the old days. 
-Can it be made 'view only'?
-- github (paid version) is too dumbed down to play well with this usage. 
-(I've only read about github but may be asked to use it to some extent.)
-- one little git command could wreak havoc on a live customer server.  Then 
-again, so can one little linux command.  Is there a way to 'sudo' the git 
-commands?
-- I rely on porcelain and do not recreate my own porcelain from plumbing. 
-(I am a porcelain level user.)
-- detection of failures allowing for reset to previous version of software 
-and data.
-- limits to mass deployment (max approx 500 servers in one night). 
-Concurrent pushes?  Concurrent fetches from same remote?
-- is there something else about git that might make this untenable over 
-time?
 
-Thanks in advance.
+On Sunday, November 13, 2011 at 15:59, Junio C Hamano wrote:
 
-v/r,
-neal
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com (mailto:pclouds@gmail.com)> writes:
+> 
+> > I went through all of them. Most of them only checks if return value
+> > is NULL, or does one-time string comparison. Others do xstrdup() to
+> > save the return value. Will update the patch message to reflect this.
+> 
+> 
+> 
+> Thanks. Given your analysis, I think the potential change I alluded to to
+> return allocated memory from the function is probably overkill in the
+> current state of the code.
+> 
+> But as the codepaths around the existing callsites evolve, some of these
+> call sites that are not problematic in today's code can become problematic
+> if we are not careful. I was primarily wondering if an updated API could
+> force us to be careful when making future changes.
+> 
+> And a change along the lines of your suggestion
+> 
+> > ... Though if you don't mind a bigger patch, we could turn
+> > 
+> > const char *resolve_ref(const char *path, const char *sha1, int
+> > reading, int *flag);
+> > 
+> > to
+> > 
+> > int resolve_ref(const char *path, const char *sha1, int reading, int
+> > *flag, char **ref);
+> > 
+> > where *ref is the current return value and is only allocated by
+> > resolve_ref() if ref != NULL.
+> 
+> 
+> 
+> might be one such updated API that makes mistakes harder to make. I dunno.
+> 
+> But if we were to go that route, as the first step, it might make sense to
+> rewrite "only checks if it returns NULL and uses sha1" callers to call
+> either read_ref() or ref_exists(), so that we do not have to worry about
+> leaking at such callers when we later decide to return allocated memory
+> from resolve_ref().
+> 
+> 
+> builtin/branch.c | 3 +--
+> builtin/merge.c | 4 ++--
+> 2 files changed, 3 insertions(+), 4 deletions(-)
+> 
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 51ca6a0..94948a4 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -565,7 +565,6 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
+> static void rename_branch(const char *oldname, const char *newname, int force)
+> {
+> struct strbuf oldref = STRBUF_INIT, newref = STRBUF_INIT, logmsg = STRBUF_INIT;
+> - unsigned char sha1[20];
+> struct strbuf oldsection = STRBUF_INIT, newsection = STRBUF_INIT;
+> int recovery = 0;
+> 
+> @@ -577,7 +576,7 @@ static void rename_branch(const char *oldname, const char *newname, int force)
+> * Bad name --- this could be an attempt to rename a
+> * ref that we used to allow to be created by accident.
+> */
+> - if (resolve_ref(oldref.buf, sha1, 1, NULL))
+> + if (ref_exists(oldref.buf))
+> recovery = 1;
+> else
+> die(_("Invalid branch name: '%s'"), oldname);
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index dffd5ec..42b4f9e 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -420,7 +420,7 @@ static struct object *want_commit(const char *name)
+> static void merge_name(const char *remote, struct strbuf *msg)
+> {
+> struct object *remote_head;
+> - unsigned char branch_head[20], buf_sha[20];
+> + unsigned char branch_head[20];
+> struct strbuf buf = STRBUF_INIT;
+> struct strbuf bname = STRBUF_INIT;
+> const char *ptr;
+> @@ -479,7 +479,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
+> strbuf_addstr(&truname, "refs/heads/");
+> strbuf_addstr(&truname, remote);
+> strbuf_setlen(&truname, truname.len - len);
+> - if (resolve_ref(truname.buf, buf_sha, 1, NULL)) {
+> + if (ref_exists(truname.buf)) {
+> strbuf_addf(msg,
+> "%s\t\tbranch '%s'%s of .\n",
+> sha1_to_hex(remote_head->sha1),
