@@ -1,86 +1,162 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/3] Rename resolve_ref() to resolve_ref_unsafe()
-Date: Sat, 10 Dec 2011 14:55:19 -0600
-Message-ID: <20111210205519.GA24817@elie.hsd1.il.comcast.net>
+Subject: Re: [PATCH 2/3] Guard memory overwriting in resolve_ref's static
+ buffer
+Date: Sat, 10 Dec 2011 15:10:40 -0600
+Message-ID: <20111210211040.GB24817@elie.hsd1.il.comcast.net>
 References: <1323521631-24320-1-git-send-email-pclouds@gmail.com>
- <1323521631-24320-3-git-send-email-pclouds@gmail.com>
+ <1323521631-24320-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Tony Wang <wwwjfy@gmail.com>
 To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 10 21:55:44 2011
+X-From: git-owner@vger.kernel.org Sat Dec 10 22:10:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZTxQ-0001vT-Ci
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 21:55:44 +0100
+	id 1RZUC5-0006KS-NU
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 22:10:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751208Ab1LJUz2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Dec 2011 15:55:28 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:61732 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751105Ab1LJUz1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Dec 2011 15:55:27 -0500
-Received: by ggdk6 with SMTP id k6so11711ggd.19
-        for <git@vger.kernel.org>; Sat, 10 Dec 2011 12:55:27 -0800 (PST)
+	id S1751605Ab1LJVKr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Dec 2011 16:10:47 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:60459 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751105Ab1LJVKq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Dec 2011 16:10:46 -0500
+Received: by iaeh11 with SMTP id h11so708839iae.19
+        for <git@vger.kernel.org>; Sat, 10 Dec 2011 13:10:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=fb4i3MDP09UTfFn98ETxZ7xVRsZzQbmKoFbQwDib1w4=;
-        b=VtJl61sEc3V2/Alzxv4a+6n2PhDn/lPzjTKVxeTgSTFtZNoAOurtEo4JkSaPoOJ8eG
-         mufAS94QHrizVHlbSjsYaqKsZXIMg0ae11dyw33Wvv31tXsuVANzVQq3TumLkqg5vJ1R
-         Ivb/QaFwi40IYTqONzzRNb6a1fsGUZhl+7DkU=
-Received: by 10.100.153.16 with SMTP id a16mr2998573ane.138.1323550527400;
-        Sat, 10 Dec 2011 12:55:27 -0800 (PST)
+        bh=aRx4PvIAuTKNjckG9sOGOrTLx/Eqz6g+8tc8LtMdOZk=;
+        b=JW2go06bje4vra8rIvT0KQ1r5Z+xXb990u4YTZ1p1Q5pmuwRlE00Rwbgp9QW0ha8U9
+         LGW6rIBvCfTJyODyRhOPQ5FD/hybwYk5zqWGeRqglUrARv4Bse/57QRH51oGbPoCoq3l
+         o9+TcycYK8/cUaBkOxGkI60GP78pmlhVUr8Tc=
+Received: by 10.42.136.137 with SMTP id u9mr3778142ict.50.1323551445867;
+        Sat, 10 Dec 2011 13:10:45 -0800 (PST)
 Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id i4sm22006297yhk.21.2011.12.10.12.55.26
+        by mx.google.com with ESMTPS id e2sm50459337ibe.0.2011.12.10.13.10.44
         (version=SSLv3 cipher=OTHER);
-        Sat, 10 Dec 2011 12:55:26 -0800 (PST)
+        Sat, 10 Dec 2011 13:10:45 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <1323521631-24320-3-git-send-email-pclouds@gmail.com>
+In-Reply-To: <1323521631-24320-2-git-send-email-pclouds@gmail.com>
 User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186793>
 
 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-> resolve_ref() may return a pointer to a shared buffer and can be
-> overwritten by the next resolve_ref() calls. Callers need to
-> pay attention, not to keep the pointer when the next call happens.
+> Michael Haggerty
+> has an idea [1] that, instead of passing the same static buffer to
+> caller every time the function is called, we free the old buffer and
+> allocate the new one. This way access to the old (now invalid) buffer
+> may be caught.
+>
+> This patch applies the same principle for resolve_ref() with a
+> few modifications:
 [...]
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -182,7 +182,7 @@ int validate_new_branchname(const char *name, str=
-uct strbuf *ref,
->  		const char *head;
->  		unsigned char sha1[20];
+>  - Rely on mmap/mprotect to catch illegal access. We need valgrind or
+>    some other memory tracking tool to reliably catch this in Michael'=
+s
+>    approach.
+
+I wonder if the lower-tech approach would be so bad in practice.  On
+systems using glibc, if MALLOC_PERTURB_ is set, then the value will
+always be clobbered on free().  It would be possible to do the same
+explicitly in resolve_ref() for platforms without such a feature.
+
+>  - Because mprotect is used instead of munmap, we definitely leak
+>    memory. Hopefully callers will not put resolve_ref() in a
+>    loop that runs 1 million times.
+
+Have you measured the performance impact when GIT_DEBUG_MEMCHECK is not
+set?  (I don't expect major problems, but sometimes code surprises me.)
+
+[...]
+> Also introduce a new target, "make memcheck", that runs tests with th=
+is
+> flag on.
+
+Neat.  Did it catch any bugs?
+
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -865,7 +865,8 @@ extern int read_ref(const char *filename, unsigne=
+d char *sha1);
+>   *
+>   * errno is sometimes set on errors, but not always.
+>   */
+> -extern const char *resolve_ref(const char *ref, unsigned char *sha1,=
+ int reading, int *flag);
+> +#define resolve_ref(ref, sha1, reading, flag) resolve_ref_real(ref, =
+sha1, reading, flag, __FUNCTION__, __LINE__)
+
+__FUNCTION__ is nonstandard, though it's probably supported pretty
+widely and we can do
+
+	#ifndef __FUNCTION__
+	#define __FUNCTION__ something-else
+	#endif
+
+in git-compat-util.h when we discover a platform that doesn't support
+it if needed.  __func__ was introduced in C99.  __LINE__ and __FILE__
+should work everywhere.
+
+[...]
+> --- /dev/null
+> +++ b/t/t0071-memcheck.sh
+> @@ -0,0 +1,12 @@
+> +#!/bin/sh
+> +
+> +test_description=3D'test that GIT_DEBUG_MEMCHECK works correctly'
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'test-resolve-ref must crash' '
+> +	GIT_DEBUG_MEMCHECK=3D1 test-resolve-ref
+> +	exit_code=3D$? &&
+> +	test $exit_code -eq 139
+
+Micronit: something like
+
+	(
+		GIT_DEBUG_MEMCHECK=3D1 &&
+		export GIT_DEBUG_MEMCHECK &&
+		test_expect_code 139 test-resolve-ref
+	)
+
+would fit better in an &&-list.
+
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -60,6 +60,28 @@ void *xmallocz(size_t size)
+>  	return ret;
+>  }
 > =20
-> -		head =3D resolve_ref("HEAD", sha1, 0, NULL);
-> +		head =3D resolve_ref_unsafe("HEAD", sha1, 0, NULL);
+> +void *xmalloc_mmap(size_t size, const char *file, int line)
+> +{
+> +	int *ret;
+> +	size +=3D sizeof(int*) * 3;
+> +	ret =3D mmap(NULL, size, PROT_READ | PROT_WRITE,
+> +		   MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+> +	if (ret =3D=3D (int*)-1)
+> +		die_errno("unable to mmap %lu bytes anonymously",
+> +			  (unsigned long)size);
+> +
+> +	ret[0] =3D (int)file;
+> +	ret[1] =3D line;
+> +	ret[2] =3D size;
+> +	return ret + 3;
 
-I wonder if it would make sense to have a separate function that
-maintains a shared buffer describing what HEAD resolves to, lazily
-loaded.  Would invalidating the cache when appropriate be too fussy
-and subtle?
+Would this work on 64-bit platforms?
 
-[...]
-> +++ b/transport.c
-> @@ -163,7 +163,7 @@ static void set_upstreams(struct transport *trans=
-port, struct ref *refs,
->  		/* Follow symbolic refs (mainly for HEAD). */
->  		localname =3D ref->peer_ref->name;
->  		remotename =3D ref->name;
-> -		tmp =3D resolve_ref(localname, sha, 1, &flag);
-> +		tmp =3D resolve_ref_unsafe(localname, sha, 1, &flag);
-
-Anyway, this patch looks sane.  The reminder seems useful and doesn't
-feel over-the-top.
+How does one retrieve the line and file number?  I guess one is
+expected to retrieve them from the core dump, but a few words of
+advice in Documentation/technical would be helpful.
