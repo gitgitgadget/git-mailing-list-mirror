@@ -1,97 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv3 11/13] strbuf: add strbuf_add*_urlencode
-Date: Sat, 10 Dec 2011 15:09:09 -0500
-Message-ID: <20111210200909.GC17999@sigill.intra.peff.net>
-References: <20111210102827.GA16460@sigill.intra.peff.net>
- <20111210103420.GK16529@sigill.intra.peff.net>
- <m3iplohc6s.fsf@localhost.localdomain>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/3] Rename resolve_ref() to resolve_ref_unsafe()
+Date: Sat, 10 Dec 2011 14:55:19 -0600
+Message-ID: <20111210205519.GA24817@elie.hsd1.il.comcast.net>
+References: <1323521631-24320-1-git-send-email-pclouds@gmail.com>
+ <1323521631-24320-3-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 10 21:10:26 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Tony Wang <wwwjfy@gmail.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 10 21:55:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZTFZ-0004ge-5o
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 21:10:25 +0100
+	id 1RZTxQ-0001vT-Ci
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 21:55:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751592Ab1LJUJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Dec 2011 15:09:14 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47244
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751091Ab1LJUJL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Dec 2011 15:09:11 -0500
-Received: (qmail 17960 invoked by uid 107); 10 Dec 2011 20:15:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 10 Dec 2011 15:15:51 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Dec 2011 15:09:09 -0500
+	id S1751208Ab1LJUz2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Dec 2011 15:55:28 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:61732 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751105Ab1LJUz1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Dec 2011 15:55:27 -0500
+Received: by ggdk6 with SMTP id k6so11711ggd.19
+        for <git@vger.kernel.org>; Sat, 10 Dec 2011 12:55:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=fb4i3MDP09UTfFn98ETxZ7xVRsZzQbmKoFbQwDib1w4=;
+        b=VtJl61sEc3V2/Alzxv4a+6n2PhDn/lPzjTKVxeTgSTFtZNoAOurtEo4JkSaPoOJ8eG
+         mufAS94QHrizVHlbSjsYaqKsZXIMg0ae11dyw33Wvv31tXsuVANzVQq3TumLkqg5vJ1R
+         Ivb/QaFwi40IYTqONzzRNb6a1fsGUZhl+7DkU=
+Received: by 10.100.153.16 with SMTP id a16mr2998573ane.138.1323550527400;
+        Sat, 10 Dec 2011 12:55:27 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id i4sm22006297yhk.21.2011.12.10.12.55.26
+        (version=SSLv3 cipher=OTHER);
+        Sat, 10 Dec 2011 12:55:26 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <m3iplohc6s.fsf@localhost.localdomain>
+In-Reply-To: <1323521631-24320-3-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186792>
 
-On Sat, Dec 10, 2011 at 03:57:59AM -0800, Jakub Narebski wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > +void strbuf_add_urlencode(struct strbuf *sb, const char *s, size_t len,
-> > +			  int reserved)
-> > +{
-> > +	strbuf_grow(sb, len);
-> 
-> What is this `reserved` flag for, and when should one use it?
-> It would be nice to have a short comment...
+> resolve_ref() may return a pointer to a shared buffer and can be
+> overwritten by the next resolve_ref() calls. Callers need to
+> pay attention, not to keep the pointer when the next call happens.
+[...]
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -182,7 +182,7 @@ int validate_new_branchname(const char *name, str=
+uct strbuf *ref,
+>  		const char *head;
+>  		unsigned char sha1[20];
+> =20
+> -		head =3D resolve_ref("HEAD", sha1, 0, NULL);
+> +		head =3D resolve_ref_unsafe("HEAD", sha1, 0, NULL);
 
-It indicates whether one should encode rfc3986 reserved characters. You
-want to use it when encoding the host, username, and password portions
-of a URL (i.e., before the "/"), but not the path (since you don't want
-to encode all of the slashes). If you were breaking down the path more
-(e.g., into a "query" and "fragment" portion), you would care about more
-specific quoting there, but we don't; we treat everything after the
-slash as an opaque blob of path.
+I wonder if it would make sense to have a separate function that
+maintains a shared buffer describing what HEAD resolves to, lazily
+loaded.  Would invalidating the cache when appropriate be too fussy
+and subtle?
 
-Patch to the strbuf api documentation is below. I think it should be
-squashed into patch 12/13.
+[...]
+> +++ b/transport.c
+> @@ -163,7 +163,7 @@ static void set_upstreams(struct transport *trans=
+port, struct ref *refs,
+>  		/* Follow symbolic refs (mainly for HEAD). */
+>  		localname =3D ref->peer_ref->name;
+>  		remotename =3D ref->name;
+> -		tmp =3D resolve_ref(localname, sha, 1, &flag);
+> +		tmp =3D resolve_ref_unsafe(localname, sha, 1, &flag);
 
-> BTW. was it meant to be aligned like this?
-> 
-> > +void strbuf_add_urlencode(struct strbuf *sb, const char *s, size_t len,
-> > +			     int reserved)
-
-It is aligned correctly. When you ident by tabs, the "+" of the diff
-gets soaked in the first tabstop, so it is off-by-one with respect to
-non-tabbed input (it is off even more in the quoted section above,
-because "> > +" gets soaked into the first tabstop). You can see your
-version above also is misaligned when I quote it. :)
-
-If you apply the diff, the result is as you expected.
-
--Peff
-
----
-diff --git a/Documentation/technical/api-strbuf.txt b/Documentation/technical/api-strbuf.txt
-index afe2759..e1ab6c5 100644
---- a/Documentation/technical/api-strbuf.txt
-+++ b/Documentation/technical/api-strbuf.txt
-@@ -270,3 +270,14 @@ same behaviour as well.
- 	third argument can be used to set the environment which the editor is
- 	run in. If the buffer is NULL the editor is launched as usual but the
- 	file's contents are not read into the buffer upon completion.
-+
-+`strbuf_add_urlencode`::
-+
-+	Copy data to the end of the buffer, percent-encoding it as per
-+	rfc3986. If the reserved flag is non-zero, then characters in
-+	the rfc3986 reserved list are percent-encoded; otherwise, they
-+	are copied literally. Characters in the rfc3986 unreserved list
-+	are always copied literally. All other characters are
-+	percent-encoded. Typically, one would use the reserved flag for
-+	the host and user-info sections of a URL, but leave special
-+	characters in the path untouched.
+Anyway, this patch looks sane.  The reminder seems useful and doesn't
+feel over-the-top.
