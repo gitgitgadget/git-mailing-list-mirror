@@ -1,94 +1,106 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH 1/2] t3401: modernize style
-Date: Sat, 10 Dec 2011 00:14:43 -0800
-Message-ID: <CAOeW2eGbwQZRDXn0crMD2eMTkw3eqWeCS3x2p4VhT65q45cs0Q@mail.gmail.com>
-References: <1323449952-14161-1-git-send-email-martin.von.zweigbergk@gmail.com>
-	<CALkWK0mip_pzUDQO=YLxaVwsWEAUdrk_EKcNG94Xr5+N+kzBtw@mail.gmail.com>
-	<20111209200703.GA21280@elie.hsd1.il.comcast.net>
+From: Mathieu Peltier <mathieu.peltier@gmail.com>
+Subject: Access to git repository through squid proxy: The remote end hung up unexpectedly
+Date: Sat, 10 Dec 2011 09:56:07 +0100
+Message-ID: <CACjeFCA4h_w2UmYywMBV_P+YZcWAE=zRUz-z5eTfAO+oxWKPjw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 10 09:14:51 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 10 09:56:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZI54-0004UP-TN
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 09:14:51 +0100
+	id 1RZIjA-0006N5-Fe
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Dec 2011 09:56:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751428Ab1LJIOo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Dec 2011 03:14:44 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:41270 "EHLO
+	id S1752087Ab1LJI4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Dec 2011 03:56:10 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:35139 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751339Ab1LJIOo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Dec 2011 03:14:44 -0500
-Received: by iakc1 with SMTP id c1so5477796iak.19
-        for <git@vger.kernel.org>; Sat, 10 Dec 2011 00:14:43 -0800 (PST)
+	with ESMTP id S1751895Ab1LJI4I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Dec 2011 03:56:08 -0500
+Received: by iakc1 with SMTP id c1so5522201iak.19
+        for <git@vger.kernel.org>; Sat, 10 Dec 2011 00:56:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=XJopoVPTJJSDNlsWY+DcpDMn2HtdpMPnvwi9aKy3e94=;
-        b=L4+wjX4D8dtG9OtYRwWdR7EWHuqMyIcra5KiyyW8vUcV7vw0Ek+dAc9jF5sXD5zIbn
-         srGymYN/09GOsh/KbHIMjcE6MnWRYRHEtWOdA5BvKALIU5d/1+WP3o1SiIyvJ0WsRczt
-         kKlyLcPB+dCX2E/VS2qLJkxCm2GomI8aqXjm0=
-Received: by 10.42.172.70 with SMTP id m6mr5358942icz.37.1323504883677; Sat,
- 10 Dec 2011 00:14:43 -0800 (PST)
-Received: by 10.231.23.213 with HTTP; Sat, 10 Dec 2011 00:14:43 -0800 (PST)
-In-Reply-To: <20111209200703.GA21280@elie.hsd1.il.comcast.net>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=sO9sduT7xY50zk2pXo8TFmnZROX2d1ooLFYzngGVE94=;
+        b=uoKC6mDhhq+zQRKoKESSB/uSqcOhIKY+y8j+HuNqxbcWb/ZHkXZ2kCxNg6G5bBUq6o
+         IkPpavO9BCFEgMB2mVz46iBn184Oebv44Kb1tgKpNzuPUZMIKkuh6QiXNbB83Om4X7Or
+         8jOVvxP+fBWEVdY8ZGvSJNBDhTEDvLq+3BEuY=
+Received: by 10.50.220.231 with SMTP id pz7mr6412665igc.94.1323507367576; Sat,
+ 10 Dec 2011 00:56:07 -0800 (PST)
+Received: by 10.231.33.11 with HTTP; Sat, 10 Dec 2011 00:56:07 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186729>
 
-On Fri, Dec 9, 2011 at 12:07 PM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Ramkumar Ramachandra wrote:
->
->> The motivation is unclear: lazy afternoon? :P
->
-> Perhaps he was reading the list and after noticing a few patches in
-> the same vein, realized that this test script could be made easier to
-> read, too.
+Hi,
+I am trying to access a git repository (git:// URL) through a squid proxy.
 
-Sort of. These patches have been sitting in my repo since late Sept
-and the patches you mention made me decide to send them out now. The
-reason I did this back then was while trying to fix rebase to pick the
-right patches when used with --onto. See this old discussion:
-http://thread.gmane.org/gmane.comp.version-control.git/161917/focus=3D1=
-62041.
-Also in the same series are patches teach rebase to only feed the
-commit names to git-am (wrapped in a silly "From $sha1 Mon
-Sep 17 00:00:00 2001" to please git-mailsplit). These patches have
-been taking way too long, which is why I'm sending these little
-cleanups separately.
+squid allows CONNECT for port 9418:
+$ more /etc/squid/squid.conf
+...
+acl password proxy_auth REQUIRED
+acl git_port port 9418
+...
+http_access allow CONNECT git_port password
+http_access deny CONNECT !SSL_ports
 
->> Martin von Zweigbergk wrote:
->
->>> + =C2=A0 =C2=A0 =C2=A0 echo First > A &&
->>> + =C2=A0 =C2=A0 =C2=A0 git update-index --add A &&
->>> + =C2=A0 =C2=A0 =C2=A0 git commit -m "Add A." &&
->>
->> Style nit: >[^ ] is prevalent FWIW.
->
-> Finally I caught on that you mean that redirection operators tend to
-> be flush against the filename they are redirecting to.
+The proxy server can connect to git server :
+$ telnet git.server.org 9418
+Trying w.x.y.z...
+Connected to git.server.org.
+Escape character is '^]'.
 
-So did I. I think I'll leave the code unchanged, though, because the
-end result, after patch 2/2 is unaffected anyways (it removes
-redirections).
+Here is the error I get on the client side:
+$ git config --list
+core.gitproxy=gitproxy.sh
 
->> While at it, why not change this "test ! -d" to
->> "test_path_is_missing"?
+$ more ~/bin/gitproxy.sh
+#!/bin/sh
+PROXY=x.domain.org
+PROXYPORT=8080
+PROXYAUTH=user:pass
+DEBUG="-d -d -d -d"
+exec socat $DEBUG - PROXY:$PROXY:$1:$2,proxyport=$PROXYPORT,proxyauth=$PROXYAUTH
 
-Will bake it into patch 2/2 if you don't mind. Unless there are other
-comments, that would mean this patch can be applies as is, Junio.
+$ git clone git://git.server.org/gitroot/repo/repo
+Initialized empty Git repository in /tmp/GIT/repo/.git/
+...
+2011/12/09 12:22:44 socat[21428] D socat version 1.7.1.3 on Aug 23 2010 23:26:54
+2011/12/09 12:22:44 socat[21428] D setenv("SOCAT_VERSION", "1.7.1.3", 1)
+...
+2011/12/09 12:22:44 socat[21428] D running on Linux version #1 SMP Tue
+Mar 23 09:47:08 UTC 2010, release x.y
+2011/12/09 12:22:44 socat[21428] D argv[0]: "socat"
+2011/12/09 12:22:44 socat[21428] D argv[1]: "-d"
+2011/12/09 12:22:44 socat[21428] D argv[2]: "-d"
+2011/12/09 12:22:44 socat[21428] D argv[3]: "-d"
+2011/12/09 12:22:44 socat[21428] D argv[4]: "-d"
+2011/12/09 12:22:44 socat[21428] D argv[5]: "-"
+2011/12/09 12:22:44 socat[21428] D argv[6]:
+"PROXY:x.domain.org:git.server.org:9418,proxyport=8080,proxyauth=user:pass"
+...
+2011/12/09 12:22:44 socat[21428] I setting option "proxyport" to "8080"
+2011/12/09 12:22:44 socat[21428] I setting option
+"proxy-authorization" to "user:pass"
+...
+2011/12/09 12:22:44 socat[21428] I sending "CONNECT
+git.server.org:9418 HTTP/1.0\r\n"
+...
+2011/12/09 12:22:44 socat[21428] I proxy_connect: received answer
+"HTTP/1.1 403 OK\r\n"
+2011/12/09 12:22:44 socat[21428] E CONNECT git.server.org:9418: OK
+2011/12/09 12:22:44 socat[21428] N exit(1)
+2011/12/09 12:22:44 socat[21428] I shutdown(3, 2)
+2011/12/09 12:22:44 socat[21428] D shutdown()  -> 0
+fatal: The remote end hung up unexpectedly
 
-> The patch looks good to me, too. =C2=A0Thanks, both.
-
-Thanks to you both, too.
+I tried to use also nc but I get the same error.
+Any advice?
+Thanks in advance,
+Mathieu
