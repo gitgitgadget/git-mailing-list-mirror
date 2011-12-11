@@ -1,71 +1,73 @@
-From: Andrew Ardill <andrew.ardill@gmail.com>
-Subject: Re: Question about commit message wrapping
-Date: Mon, 12 Dec 2011 09:00:37 +1100
-Message-ID: <CAH5451kGn72tLAwdvQFBjSyHSL0rUmaPZrbL7Z-KfHWN-HAuCQ@mail.gmail.com>
-References: <35A5A513-91FD-4EF9-B890-AB3D1550D63F@sidneysm.com>
- <m3zkf1hnh9.fsf@localhost.localdomain> <E085218D-9287-4F82-B34C-8379742F818A@sidneysm.com>
- <201112102030.15504.jnareb@gmail.com>
+From: Hallvard B Furuseth <h.b.furuseth@usit.uio.no>
+Subject: Re: best way to fastforward all tracking branches after a fetch
+Date: Sun, 11 Dec 2011 23:22:50 +0100
+Message-ID: <hbf.20111211x512@bombur.uio.no>
+References: <jbvj5o$skt$1@dough.gmane.org>
+	<1kc4qnw.1xgi3yf14oaw7gM%lists@haller-berlin.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?Sidney_San_Mart=C3=ADn?= <s@sidneysm.com>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 11 23:01:08 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: gelonida@gmail.com (Gelonida N), git@vger.kernel.org
+To: lists@haller-berlin.de (Stefan Haller)
+X-From: git-owner@vger.kernel.org Sun Dec 11 23:42:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZrSF-0006GR-G8
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Dec 2011 23:01:07 +0100
+	id 1RZs6c-0002RC-F1
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Dec 2011 23:42:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752545Ab1LKWBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Dec 2011 17:01:00 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:37552 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752439Ab1LKWBA (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Dec 2011 17:01:00 -0500
-Received: by lagp5 with SMTP id p5so1705682lag.19
-        for <git@vger.kernel.org>; Sun, 11 Dec 2011 14:00:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=v4UlovK2geeT18hhI7v415oYFpzPtuDa9garEe1dEI4=;
-        b=FWB8R3SzvQnQtB7U92Vf8sACp2LL8DKDBmkADQZB60CTs+l0NzDT1RxfBjiYHy3bS1
-         5k4GNvL661FZRPJS1Jr1eyE/fRPHAX5DcNzLTojJWbL/dBKZ3pR8vXpgAWGdg6b5Ff0C
-         1PpRyLshjMRNPZjBncbgrJdChqMCN0JpxcYLI=
-Received: by 10.152.134.10 with SMTP id pg10mr10488191lab.3.1323640858301;
- Sun, 11 Dec 2011 14:00:58 -0800 (PST)
-Received: by 10.152.22.38 with HTTP; Sun, 11 Dec 2011 14:00:37 -0800 (PST)
-In-Reply-To: <201112102030.15504.jnareb@gmail.com>
+	id S1752595Ab1LKWmq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Dec 2011 17:42:46 -0500
+Received: from mail-out2.uio.no ([129.240.10.58]:58488 "EHLO mail-out2.uio.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752421Ab1LKWmp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Dec 2011 17:42:45 -0500
+X-Greylist: delayed 1190 seconds by postgrey-1.27 at vger.kernel.org; Sun, 11 Dec 2011 17:42:44 EST
+Received: from mail-mx5.uio.no ([129.240.10.46])
+	by mail-out2.uio.no with esmtp (Exim 4.75)
+	(envelope-from <hbf@ulrik.uio.no>)
+	id 1RZrnI-00083W-7p; Sun, 11 Dec 2011 23:22:52 +0100
+Received: from bombur.uio.no ([129.240.6.233])
+	by mail-mx5.uio.no with esmtp  (Exim 4.76)
+	(envelope-from <hbf@ulrik.uio.no>)
+	id 1RZrnH-0003Pp-QI; Sun, 11 Dec 2011 23:22:52 +0100
+Received: from hbf by bombur.uio.no with local (Exim 4.72)
+	(envelope-from <hbf@ulrik.uio.no>)
+	id 1RZrnG-0001np-Ji; Sun, 11 Dec 2011 23:22:50 +0100
+In-Reply-To: <1kc4qnw.1xgi3yf14oaw7gM%lists@haller-berlin.de>
+X-Mailer: VM 7.18 under Emacs 22.2.1
+X-UiO-Ratelimit-Test: rcpts/h 3 msgs/h 1 sum rcpts/h 6 sum msgs/h 2 total rcpts 2011 max rcpts/h 17 ratelimit 0
+X-UiO-Spam-info: not spam, SpamAssassin (score=-7.0, required=5.0, autolearn=disabled, RP_MATCHES_RCVD=-2.023,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
+X-UiO-Scanned: 65395C31DB3F79C90D8A0C9301A4541E412F387F
+X-UiO-SPAM-Test: remote_host: 129.240.6.233 spam_score: -69 maxlevel 80 minaction 2 bait 0 mail/h: 1 total 861 max/h 5 blacklist 0 greylist 0 ratelimit 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186819>
 
-Hi,
+Stefan Haller writes:
+>Gelonida N <gelonida@gmail.com> wrote:
+> 
+>> What is the best way to fastforward all fastforwardable tracking
+>> branches after a git fetch?
+> 
+> Here's a script that does this.  It isn't very well tested, I hope I
+> didn't miss any edge cases. Use at your own risk.
 
-On Sunday, December 11, 2011, Jakub Narebski <jnareb@gmail.com> wrote:
-...
+Local branches can track each other.  So the script needs to toposort
+the branches, or to loop until either nothing was done or an error
+happened.  (The latter to prevent an eternal loop on error.)
 
-> Additional and the more serious problem with wrapping on output is
-> related to backward compatibility.  If you have commit message that is
-> wrapped e.g. to 80 characters, and you wrap on output to 72 characters,
-> you would get ugly and nigh unreadable ragged output
+I've wished for a more limited 'git ff' command than this:
+- git update-ref --ff-only, and branch/fetch options based on this.
+- Fast-forward only the branches tracking one particular remote/branch,
+  and maybe branches tracking the fast-forwarded branches.
+- Fast-forward to another remote or branch than the tracked one.
+I have a few aliases for it, but never thought much of a good common
+design.
 
-For what it's worth, I do a lot of reading emails on my phone, which
-force wraps line-length to the width of the display (not a set number
-of characters).
-This is always less than 80.
-
-Emails on this list are almost exclusively sent pre-wrapped to 80
-character line lengths.
-The result is exactly the kind of ragged output you used in your
-example. Changing this behaviour may break backwards compatibility,
-but it is already broken for 'future' compatibility.
-
-Regards,
-
-Andrew Ardill
+-- 
+Hallvard
