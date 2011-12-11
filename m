@@ -1,68 +1,84 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: best way to fastforward all tracking branches after a fetch
-Date: Sun, 11 Dec 2011 20:00:05 +0100
-Message-ID: <m2hb176iiy.fsf@igel.home>
-References: <jbvj5o$skt$1@dough.gmane.org>
-	<20111211022218.GA22749@sita-lt.atc.tcs.com>
-	<jc2l2a$som$1@dough.gmane.org> <m3ehwbge8f.fsf@localhost.localdomain>
+Date: Sun, 11 Dec 2011 20:53:05 +0100
+Message-ID: <201112112053.07548.jnareb@gmail.com>
+References: <jbvj5o$skt$1@dough.gmane.org> <m3ehwbge8f.fsf@localhost.localdomain> <m2hb176iiy.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
 Cc: Gelonida N <gelonida@gmail.com>, git@vger.kernel.org,
 	Sitaram Chamarty <sitaramc@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 11 20:00:15 2011
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Sun Dec 11 20:53:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZodD-0005xm-66
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Dec 2011 20:00:15 +0100
+	id 1RZpSV-0006qX-4a
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Dec 2011 20:53:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752131Ab1LKTAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Dec 2011 14:00:11 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:46151 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751620Ab1LKTAJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Dec 2011 14:00:09 -0500
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id C5AC71C0C169;
-	Sun, 11 Dec 2011 20:00:06 +0100 (CET)
-X-Auth-Info: w6+3u0ARfNKe6fbW9OB6J46dH58V+jt2wq3UX2WG5qk=
-Received: from igel.home (ppp-88-217-99-15.dynamic.mnet-online.de [88.217.99.15])
-	by mail.mnet-online.de (Postfix) with ESMTPA id B613C1C001AE;
-	Sun, 11 Dec 2011 20:00:06 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 0EF3ACA29C; Sun, 11 Dec 2011 20:00:05 +0100 (CET)
-X-Yow: I once decorated my apartment entirely in ten foot salad forks!!
-In-Reply-To: <m3ehwbge8f.fsf@localhost.localdomain> (Jakub Narebski's message
-	of "Sun, 11 Dec 2011 10:22:42 -0800 (PST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.92 (gnu/linux)
+	id S1752355Ab1LKTxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Dec 2011 14:53:11 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:50354 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752335Ab1LKTxJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Dec 2011 14:53:09 -0500
+Received: by eaaj10 with SMTP id j10so259186eaa.19
+        for <git@vger.kernel.org>; Sun, 11 Dec 2011 11:53:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=6uftlM+eM1b8LpVgEnVJz9P5c/wuTZQJWCWJm8PL2bg=;
+        b=M1girNMss42q7JPoVq72/vqu0NL+PdbCA5OIp5+RtT/SYxqQgfjrvI2rn3QkqeKtEJ
+         QXZ23xWZLw0mnq/aBE4guRdsenzdYRqgGGOQWGf+3cabUX5M+ZWk8xvm9hvE7FUnt3eM
+         ZqmGtiJ2H13vddkj+b6DPyRwatvUJhaNJWtjk=
+Received: by 10.213.8.21 with SMTP id f21mr1465168ebf.20.1323633188387;
+        Sun, 11 Dec 2011 11:53:08 -0800 (PST)
+Received: from [192.168.1.13] (abvp14.neoplus.adsl.tpnet.pl. [83.8.213.14])
+        by mx.google.com with ESMTPS id q28sm65260213eea.6.2011.12.11.11.53.06
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 11 Dec 2011 11:53:07 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <m2hb176iiy.fsf@igel.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186809>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Andreas Schwab wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > Something like
+> >
+> >   git for-each-ref '--format=%(refname) %(upstream)' |
+> >   while read refname upstream
+> >   do
+> >   	# there is upstream
+> >   	test -n "$upstream" || break
 
-> Something like
->
->   git for-each-ref '--format=%(refname) %(upstream)' |
->   while read refname upstream
->   do
->   	# there is upstream
->   	test -n "$upstream" || break
->   	# and if fast-forwards
->   	test $(git merge-base $refname $upstream) = $(git rev-parse $refname) || break
->   	git update-ref -m "$message" $refname $upstream
->   done
+Here you should probably also check if we are already up-to-date:
 
-You probably meant s/break/continue/.
+    	test $(git rev-parse $upstream) = $(git rev-parse $refname) || continue
 
-Andreas.
+> >   	# and if fast-forwards
+> >   	test $(git merge-base $refname $upstream) = $(git rev-parse $refname) || break
+> >   	git update-ref -m "$message" $refname $upstream
+> >   done
+> 
+> You probably meant s/break/continue/.
+
+Yes, sorry about that.
+
+BTW. git-update-ref invocation can be replaced by Sitaram's suggestion:
+
+    	git branch -f $refname $upstream
 
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Jakub Narebski
+Poland
