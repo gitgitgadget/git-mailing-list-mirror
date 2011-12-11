@@ -1,138 +1,107 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: best way to fastforward all tracking branches after a fetch
-Date: Sun, 11 Dec 2011 10:22:42 -0800 (PST)
-Message-ID: <m3ehwbge8f.fsf@localhost.localdomain>
-References: <jbvj5o$skt$1@dough.gmane.org>
-	<20111211022218.GA22749@sita-lt.atc.tcs.com>
-	<jc2l2a$som$1@dough.gmane.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Breakage (?) in configure and git_vsnprintf()
+Date: Sun, 11 Dec 2011 19:42:03 +0100
+Message-ID: <4EE4F97B.9000202@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-4
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Sitaram Chamarty <sitaramc@gmail.com>
-To: Gelonida N <gelonida@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 11 19:22:57 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Michal Rokos <michal.rokos@nextsoft.cz>,
+	Brandon Casey <casey@nrlssc.navy.mil>
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Dec 11 19:42:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZo37-0001iR-Fm
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Dec 2011 19:22:57 +0100
+	id 1RZoLr-0008AC-Gq
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Dec 2011 19:42:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751886Ab1LKSWp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Dec 2011 13:22:45 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:46236 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751492Ab1LKSWo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Dec 2011 13:22:44 -0500
-Received: by eaaj10 with SMTP id j10so237294eaa.19
-        for <git@vger.kernel.org>; Sun, 11 Dec 2011 10:22:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=kd3mDV5SrkA61G2uzdIl8oLVsBo+ds9EpaLHDpyFElQ=;
-        b=HourHE10buhSLYrLnr+lNNSS78gBx+iMf3jCXxLPZvFZ9/Y8Go00MJ5kMS0/d0ji8a
-         Hn5JT4ad7SOLLfth8GibJXwBVnCxRI1EeHiKkxPTTUaZFjKu+H3WrsvbT9x3/KwKUCRj
-         WXjRAFRgLM6X+5WeYBXsa8flKON5nh5e7ESvA=
-Received: by 10.213.98.78 with SMTP id p14mr1323149ebn.145.1323627762904;
-        Sun, 11 Dec 2011 10:22:42 -0800 (PST)
-Received: from localhost.localdomain (abvp14.neoplus.adsl.tpnet.pl. [83.8.213.14])
-        by mx.google.com with ESMTPS id x12sm64285133eef.9.2011.12.11.10.22.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 11 Dec 2011 10:22:42 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id pBBIMfpZ021854;
-	Sun, 11 Dec 2011 19:22:42 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id pBBIMeJh021851;
-	Sun, 11 Dec 2011 19:22:40 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <jc2l2a$som$1@dough.gmane.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752131Ab1LKSmP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Dec 2011 13:42:15 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:57465 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752093Ab1LKSmO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Dec 2011 13:42:14 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.134] (p54BED680.dip.t-dialin.net [84.190.214.128])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pBBIg4dI016730
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 11 Dec 2011 19:42:04 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186806>
 
-Don't remove people from Cc, please.
+I found a mysterious bunch of test suite failures when I compiled git on
+a 64-bit Linux 3.0.0 using gcc 4.6.1:
 
-Gelonida N <gelonida@gmail.com> writes:
-> On 12/11/2011 03:22 AM, Sitaram Chamarty wrote:
-> > On Sat, Dec 10, 2011 at 01:26:32PM +0100, Gelonida N wrote:
+    git clean -f -x -d
+    make clean
+    make configure
+    ./configure --prefix=$HOME CFLAGS='-g -O0 -std=c89 -Wall -Werror'
+    make test
 
-> > So what you want would boil down to this script (untested):
-> >=20
-> >     #!/bin/bash
-> >     git status --porcelain -uno | grep . && {echo dirty tree, exiti=
-ng...; exit 1; }
-> >=20
-> >     for b in `git for-each-ref '--format=3D%(refname:short)' refs/h=
-eads`
-> >     do
-> >         git checkout $b
-> >         git merge --ff-only @{u}
-> >     done
->=20
-> Is there no way to distinguish tracking branches from other branches?
-> without checking them out?
->=20
-> In order to save time I'd like to avoid checking out local branches.
+The failure unexpectedly depended on the presence of all three compiler
+options "-std=c89 -Wall -Werror".  There is no difference between -O0
+and -O2.  The breakage is in v1.7.7, v1.7.8, and master (I didn't try
+older versions).
 
-You can use 'upstream' field name in git-for-each-ref invocation,
-for example
+I have been using "-std=c89" when compiling to avoid accidentally using
+newer C features.  Perhaps that is unwise :-)
 
-  git for-each-ref '--format=3D%(refname:short) %(upstream:short)' refs=
-/heads |
-  	grep -e ' [^ ]' |
-  	sed  -e 's/ .*$//
-=20
-This could probably be done using only sed -- grep is not necessary.
+The same test succeeds on 32-bit Linux 2.6.32 using gcc 4.4.3.
 
-> Ideally I would even like to avoid checking out branches, which don't
-> need to be forwarded.
-=20
-You can use git-update-ref plumbing, but you would have to do the
-check if it does fast-forward yourself, and provide reflog message
-yourself too.
-=20
-Something like
+There seem to be two levels to the problem:
 
-  git for-each-ref '--format=3D%(refname) %(upstream)' |
-  while read refname upstream
-  do
-  	# there is upstream
-  	test -n "$upstream" || break
-  	# and if fast-forwards
-  	test $(git merge-base $refname $upstream) =3D $(git rev-parse $refna=
-me) || break
-  	git update-ref -m "$message" $refname $upstream
-  done
 
-> I also had to remember on which branch I was in order to avoid, that =
-I
-> am at a random branch after running the script.
->=20
-> I could imagine something like my snippet below , though I guess,
-> there's something more elegant.
->=20
-> git stash
-> mybranch=3D`git branch | sed -n 's/\* *//p'`
-> # do_script . . .
-> git checkout $mybranch
-> git stash apply
+1. With this choice of compiler options, configure incorrectly convinces
+itself that the system's snprintf() is broken and sets
+SNPRINTF_RETURNS_BOGUS.  From config.log:
 
-Don't use git-branch in scripting.  See __git_ps1 function in
-contrib/completion/git-completion.bash how it can be done:
+configure:5368: checking whether snprintf() and/or vsnprintf() return
+bogus value
+configure:5406: cc -o conftest -g -O0 --std=c89 -Wall -Werror
+conftest.c  >&5
+conftest.c: In function 'test_vsnprintf':
+conftest.c:62:5: error: implicit declaration of function 'vsnprintf'
+[-Werror=implicit-function-declaration]
+conftest.c: In function 'main':
+conftest.c:72:5: error: implicit declaration of function 'snprintf'
+[-Werror=implicit-function-declaration]
+cc1: all warnings being treated as errors
 
-  b=3D"$(git symbolic-ref HEAD 2>/dev/null)" ||
-  b=3D"$(git rev-parse --verify HEAD)"
+configure:5406: $? = 1
+configure: program exited with status 1
 
-Nb. the second part is here only if there is possibility that you are
-on detached HEAD (unnamed branch).
+According to the manpage, snprintf() and vsnprintf() are truly not
+supported for "-std=c89" and indeed they are not declared by any of the
+files included by the test program that configure is using.  (Oddly,
+although they are nominally not supported, vsnprintf() is used anyway in
+the definition of git_vsnprintf().)
 
-HTH (hope that helps)
---=20
-Jakub Nar=EAbski
+If I leave off any of the compilation options "-std=c89 -Wall -Werror"
+or if I toggle the "#ifdef SNPRINTF_RETURNS_BOGUS" line in
+git-compat-util.h off, the problem goes away.
+
+
+2. The configure problem causes git_vsnprintf() to be wrapped around the
+C library version.  This leads to many failures in the test suite.  I
+suppose that git_vsnprintf() is broken in some way.
+
+
+I'm kindof busy with my ref-api patch series so I won't have time to
+look further into this problem in the near future.  But perhaps somebody
+with experience with the configuration system and/or git_vsnprintf() is
+interested.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
