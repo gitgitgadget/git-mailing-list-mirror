@@ -1,65 +1,75 @@
-From: Gelonida N <gelonida@gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
 Subject: Re: best way to fastforward all tracking branches after a fetch
-Date: Sun, 11 Dec 2011 21:27:09 +0100
-Message-ID: <4EE5121D.2050002@gmail.com>
-References: <jbvj5o$skt$1@dough.gmane.org> <1kc4qnw.1xgi3yf14oaw7gM%lists@haller-berlin.de>
+Date: Sun, 11 Dec 2011 21:30:20 +0100
+Message-ID: <m2d3bu7swz.fsf@igel.home>
+References: <jbvj5o$skt$1@dough.gmane.org>
+	<20111211022218.GA22749@sita-lt.atc.tcs.com>
+	<jc2l2a$som$1@dough.gmane.org> <m3ehwbge8f.fsf@localhost.localdomain>
+	<4EE50B5A.3000706@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 11 21:27:28 2011
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Sitaram Chamarty <sitaramc@gmail.com>
+To: Gelonida N <gelonida@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 11 21:30:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZpzc-0001tq-GG
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Dec 2011 21:27:28 +0100
+	id 1RZq2W-0002qC-Ea
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Dec 2011 21:30:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752315Ab1LKU1Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Dec 2011 15:27:24 -0500
-Received: from lo.gmane.org ([80.91.229.12]:46110 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752204Ab1LKU1Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Dec 2011 15:27:24 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RZpzW-0001t3-Jz
-	for git@vger.kernel.org; Sun, 11 Dec 2011 21:27:22 +0100
-Received: from unicorn.dungeon.de ([81.56.82.123])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 11 Dec 2011 21:27:22 +0100
-Received: from gelonida by unicorn.dungeon.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 11 Dec 2011 21:27:22 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: unicorn.dungeon.de
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 ""
-In-Reply-To: <1kc4qnw.1xgi3yf14oaw7gM%lists@haller-berlin.de>
+	id S1752279Ab1LKUaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Dec 2011 15:30:23 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:38124 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752318Ab1LKUaW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Dec 2011 15:30:22 -0500
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id A0B63188B588;
+	Sun, 11 Dec 2011 21:30:20 +0100 (CET)
+X-Auth-Info: XbhFIVllVcjO1qoRbvBpgR82tv54S+l27KT+z6dU8Eo=
+Received: from igel.home (ppp-88-217-99-15.dynamic.mnet-online.de [88.217.99.15])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 1190F1C00056;
+	Sun, 11 Dec 2011 21:30:21 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 83AF5CA29C; Sun, 11 Dec 2011 21:30:20 +0100 (CET)
+X-Yow: I'm working under the direct orders of WAYNE NEWTON to deport
+ consenting adults!
+In-Reply-To: <4EE50B5A.3000706@gmail.com> (Gelonida N.'s message of "Sun, 11
+	Dec 2011 20:58:18 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.92 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186814>
 
-On 12/11/2011 09:14 PM, Stefan Haller wrote:
-> Gelonida N <gelonida@gmail.com> wrote:
-> 
->> What is the best way to fastforward all fastforwardable tracking
->> branches after a git fetch?
-> 
-> Here's a script that does this.  It isn't very well tested, I hope I
-> didn't miss any edge cases. Use at your own risk.
-> 
-> (It doesn't fastforward the branch you're on, on the assumtion that if
-> you said git fetch instead of git pull, you probably had a reason.)
+Gelonida N <gelonida@gmail.com> writes:
 
-Agreed. it might be reasonable to ignore the current branch if it wasn't
-pulled.
+> On 12/11/2011 07:22 PM, Jakub Narebski wrote:
+>> You can use 'upstream' field name in git-for-each-ref invocation,
+>> for example
+>> 
+>>   git for-each-ref '--format=%(refname:short) %(upstream:short)' refs/heads |
+>>   	grep -e ' [^ ]' |
+>>   	sed  -e 's/ .*$//
+>>  
+> Thanks
+>
+>
+>
+>> This could probably be done using only sed -- grep is not necessary.
+> I think the equivalent would be:
+> sed '/ [^ ]/ s/ .*$//'
 
+You need to suppress printing the non-matching lines.
 
-Thanks a lot for the script. I will play with it.
+  sed -n '/ [^ ]/ s/ .*$//p'
 
-> 
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
