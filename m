@@ -1,84 +1,119 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Gelonida N <gelonida@gmail.com>
 Subject: Re: best way to fastforward all tracking branches after a fetch
-Date: Sun, 11 Dec 2011 20:53:05 +0100
-Message-ID: <201112112053.07548.jnareb@gmail.com>
-References: <jbvj5o$skt$1@dough.gmane.org> <m3ehwbge8f.fsf@localhost.localdomain> <m2hb176iiy.fsf@igel.home>
+Date: Sun, 11 Dec 2011 20:58:18 +0100
+Message-ID: <4EE50B5A.3000706@gmail.com>
+References: <jbvj5o$skt$1@dough.gmane.org>	<20111211022218.GA22749@sita-lt.atc.tcs.com>	<jc2l2a$som$1@dough.gmane.org> <m3ehwbge8f.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset=ISO-8859-4
 Content-Transfer-Encoding: 7bit
-Cc: Gelonida N <gelonida@gmail.com>, git@vger.kernel.org,
-	Sitaram Chamarty <sitaramc@gmail.com>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sun Dec 11 20:53:15 2011
+Cc: Sitaram Chamarty <sitaramc@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 11 20:58:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZpSV-0006qX-4a
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Dec 2011 20:53:15 +0100
+	id 1RZpXi-00005O-VQ
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Dec 2011 20:58:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752355Ab1LKTxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Dec 2011 14:53:11 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:50354 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752335Ab1LKTxJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Dec 2011 14:53:09 -0500
-Received: by eaaj10 with SMTP id j10so259186eaa.19
-        for <git@vger.kernel.org>; Sun, 11 Dec 2011 11:53:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=6uftlM+eM1b8LpVgEnVJz9P5c/wuTZQJWCWJm8PL2bg=;
-        b=M1girNMss42q7JPoVq72/vqu0NL+PdbCA5OIp5+RtT/SYxqQgfjrvI2rn3QkqeKtEJ
-         QXZ23xWZLw0mnq/aBE4guRdsenzdYRqgGGOQWGf+3cabUX5M+ZWk8xvm9hvE7FUnt3eM
-         ZqmGtiJ2H13vddkj+b6DPyRwatvUJhaNJWtjk=
-Received: by 10.213.8.21 with SMTP id f21mr1465168ebf.20.1323633188387;
-        Sun, 11 Dec 2011 11:53:08 -0800 (PST)
-Received: from [192.168.1.13] (abvp14.neoplus.adsl.tpnet.pl. [83.8.213.14])
-        by mx.google.com with ESMTPS id q28sm65260213eea.6.2011.12.11.11.53.06
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 11 Dec 2011 11:53:07 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <m2hb176iiy.fsf@igel.home>
-Content-Disposition: inline
+	id S1752361Ab1LKT6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Dec 2011 14:58:35 -0500
+Received: from lo.gmane.org ([80.91.229.12]:33302 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752258Ab1LKT6e (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Dec 2011 14:58:34 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RZpXc-00004v-B9
+	for git@vger.kernel.org; Sun, 11 Dec 2011 20:58:32 +0100
+Received: from unicorn.dungeon.de ([81.56.82.123])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 11 Dec 2011 20:58:32 +0100
+Received: from gelonida by unicorn.dungeon.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 11 Dec 2011 20:58:32 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: unicorn.dungeon.de
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 ""
+In-Reply-To: <m3ehwbge8f.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186810>
 
-Andreas Schwab wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
+On 12/11/2011 07:22 PM, Jakub Narebski wrote:
+> Don't remove people from Cc, please.
+
+OK,
+
 > 
-> > Something like
-> >
-> >   git for-each-ref '--format=%(refname) %(upstream)' |
-> >   while read refname upstream
-> >   do
-> >   	# there is upstream
-> >   	test -n "$upstream" || break
+> Gelonida N <gelonida@gmail.com> writes:
+>> On 12/11/2011 03:22 AM, Sitaram Chamarty wrote:
 
-Here you should probably also check if we are already up-to-date:
-
-    	test $(git rev-parse $upstream) = $(git rev-parse $refname) || continue
-
-> >   	# and if fast-forwards
-> >   	test $(git merge-base $refname $upstream) = $(git rev-parse $refname) || break
-> >   	git update-ref -m "$message" $refname $upstream
-> >   done
+>>
+>> In order to save time I'd like to avoid checking out local branches.
 > 
-> You probably meant s/break/continue/.
+> You can use 'upstream' field name in git-for-each-ref invocation,
+> for example
+> 
+>   git for-each-ref '--format=%(refname:short) %(upstream:short)' refs/heads |
+>   	grep -e ' [^ ]' |
+>   	sed  -e 's/ .*$//
+>  
+Thanks
 
-Yes, sorry about that.
 
-BTW. git-update-ref invocation can be replaced by Sitaram's suggestion:
 
-    	git branch -f $refname $upstream
+> This could probably be done using only sed -- grep is not necessary.
+I think the equivalent would be:
+sed '/ [^ ]/ s/ .*$//'
 
--- 
-Jakub Narebski
-Poland
+
+> 
+>> Ideally I would even like to avoid checking out branches, which don't
+>> need to be forwarded.
+>  
+> You can use git-update-ref plumbing, but you would have to do the
+> check if it does fast-forward yourself, and provide reflog message
+> yourself too.
+>  
+
+True this would probably be fastest. Will read the docs a little to
+understand exactly what you're doing. I'm not that much used to all the
+commands used in the script.
+
+> Something like
+> 
+>   git for-each-ref '--format=%(refname) %(upstream)' |
+>   while read refname upstream
+>   do
+>   	# there is upstream
+>   	test -n "$upstream" || break
+>   	# and if fast-forwards
+>   	test $(git merge-base $refname $upstream) = $(git rev-parse $refname) || break
+>   	git update-ref -m "$message" $refname $upstream
+>   done
+> 
+>> I also had to remember on which branch I was in order to avoid, that I
+>> am at a random branch after running the script.
+>>
+
+> 
+> Don't use git-branch in scripting.  See __git_ps1 function in
+> contrib/completion/git-completion.bash how it can be done:
+> 
+>   b="$(git symbolic-ref HEAD 2>/dev/null)" ||
+>   b="$(git rev-parse --verify HEAD)"
+> 
+> Nb. the second part is here only if there is possibility that you are
+> on detached HEAD (unnamed branch).
+> 
+> HTH (hope that helps)
+
+It definitely helps. Thanks a lot.
+It's always good to see how one can do better after some attempts o some
+self made clumsy scripts not suing all the features of git.
