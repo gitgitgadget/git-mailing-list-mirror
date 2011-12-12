@@ -1,114 +1,56 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Breakage (?) in configure and git_vsnprintf()
-Date: Mon, 12 Dec 2011 09:25:51 -0500
-Message-ID: <20111212142550.GA23875@sigill.intra.peff.net>
-References: <4EE4F97B.9000202@alum.mit.edu>
- <20111212064305.GA16511@sigill.intra.peff.net>
- <m262hmgmrw.fsf@igel.home>
+From: Stephen Bash <bash@genarts.com>
+Subject: Git blame only current branch
+Date: Mon, 12 Dec 2011 10:24:47 -0500 (EST)
+Message-ID: <d615954f-bed8-482d-a2e3-e1e741d6dd23@mail>
+References: <e9e35956-a091-4143-8fd4-3516b54263a6@mail>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	git discussion list <git@vger.kernel.org>,
-	Michal Rokos <michal.rokos@nextsoft.cz>,
-	Brandon Casey <casey@nrlssc.navy.mil>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Mon Dec 12 15:25:59 2011
+Content-Transfer-Encoding: 7bit
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Dec 12 16:24:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ra6pK-0007ar-Oj
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 15:25:59 +0100
+	id 1Ra7kN-0002Dh-R3
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 16:24:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753220Ab1LLOZy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 09:25:54 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48174
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752937Ab1LLOZx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 09:25:53 -0500
-Received: (qmail 805 invoked by uid 107); 12 Dec 2011 14:32:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 Dec 2011 09:32:33 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Dec 2011 09:25:51 -0500
-Content-Disposition: inline
-In-Reply-To: <m262hmgmrw.fsf@igel.home>
+	id S1752119Ab1LLPYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 10:24:51 -0500
+Received: from hq.genarts.com ([173.9.65.1]:19655 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751062Ab1LLPYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 10:24:50 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 37004BEACB9
+	for <git@vger.kernel.org>; Mon, 12 Dec 2011 10:24:53 -0500 (EST)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id N-GfbVrppQCC for <git@vger.kernel.org>;
+	Mon, 12 Dec 2011 10:24:47 -0500 (EST)
+Received: from mail.hq.genarts.com (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 63623BEAC9B
+	for <git@vger.kernel.org>; Mon, 12 Dec 2011 10:24:47 -0500 (EST)
+In-Reply-To: <e9e35956-a091-4143-8fd4-3516b54263a6@mail>
+X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC15 (Mac)/7.1.3_GA_3346)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186913>
 
-On Mon, Dec 12, 2011 at 10:30:27AM +0100, Andreas Schwab wrote:
+Hi all-
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >  	if (maxsize > 0) {
-> > -		ret = vsnprintf(str, maxsize-SNPRINTF_SIZE_CORR, format, ap);
-> > +		va_copy(cp, ap);
-> > +		ret = vsnprintf(str, maxsize-SNPRINTF_SIZE_CORR, format, cp);
-> 
-> You also need to call va_end on the copy.
+I'm curious if there's a method to make git blame merge commits that introduce code to the given branch rather than commits on the original (topic) branch?  For example:
 
-Silly me. Thanks for catching.
+  A--B--C---M--D  master
+   \       /
+    1--2--3       topicA
 
-Junio, here's a corrected version.
+I'd like a mode where 'git blame master ...' shows commit M for lines changed by topicA so I can easily do 'git blame M^ ...' to see changes (on master) prior to the merge of topicA.  Unfortunately 'git blame master ^topicA ...' blames all the changes of topicA to 3 (which reading the docs appears to be the "correct" behavior).
 
--- >8 --
-Subject: [PATCH] compat/snprintf: don't look at va_list twice
+Thanks!
 
-If you define SNPRINTF_RETURNS_BOGUS, we use a special
-git_vsnprintf wrapper assumes that vsnprintf returns "-1"
-instead of the number of characters that you would need to
-store the result.
-
-To do this, it invokes vsnprintf multiple times, growing a
-heap buffer until we have enough space to hold the result.
-However, this means we evaluate the va_list parameter
-multiple times, which is generally a bad thing (it may be
-modified by calls to vsnprintf, yielding undefined
-behavior).
-
-Instead, we must va_copy it and hand the copy to vsnprintf,
-so we always have a pristine va_list.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- compat/snprintf.c |    9 +++++++--
- 1 files changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/compat/snprintf.c b/compat/snprintf.c
-index e1e0e75..42ea1ac 100644
---- a/compat/snprintf.c
-+++ b/compat/snprintf.c
-@@ -19,11 +19,14 @@
- #undef vsnprintf
- int git_vsnprintf(char *str, size_t maxsize, const char *format, va_list ap)
- {
-+	va_list cp;
- 	char *s;
- 	int ret = -1;
- 
- 	if (maxsize > 0) {
--		ret = vsnprintf(str, maxsize-SNPRINTF_SIZE_CORR, format, ap);
-+		va_copy(cp, ap);
-+		ret = vsnprintf(str, maxsize-SNPRINTF_SIZE_CORR, format, cp);
-+		va_end(cp);
- 		if (ret == maxsize-1)
- 			ret = -1;
- 		/* Windows does not NUL-terminate if result fills buffer */
-@@ -42,7 +45,9 @@ int git_vsnprintf(char *str, size_t maxsize, const char *format, va_list ap)
- 		if (! str)
- 			break;
- 		s = str;
--		ret = vsnprintf(str, maxsize-SNPRINTF_SIZE_CORR, format, ap);
-+		va_copy(cp, ap);
-+		ret = vsnprintf(str, maxsize-SNPRINTF_SIZE_CORR, format, cp);
-+		va_end(cp);
- 		if (ret == maxsize-1)
- 			ret = -1;
- 	}
--- 
-1.7.8.13.g74677
+Stephen
