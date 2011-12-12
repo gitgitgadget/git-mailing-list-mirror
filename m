@@ -1,116 +1,193 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH v4 2/2] push: teach --recurse-submodules the on-demand option
-Date: Mon, 12 Dec 2011 18:50:34 -0500
-Message-ID: <CABURp0qkKXCW-U=78OpnejdtdpphhJtOoDubz77m7Gt3o5sC=Q@mail.gmail.com>
-References: <1313791728-11328-1-git-send-email-iveqy@iveqy.com>
- <1313791728-11328-3-git-send-email-iveqy@iveqy.com> <7vmxemls8z.fsf@alter.siamese.dyndns.org>
- <20111017190749.GA3126@sandbox-rc> <7vr52bjljd.fsf@alter.siamese.dyndns.org>
- <4E9DE883.9050105@web.de> <CABURp0okOmsk4JV9Ku5pHJb5vT-kr_fmweNNBKZ_OoRyfZan=Q@mail.gmail.com>
- <4EE6805D.7020708@web.de>
+From: Conrad Irwin <conrad.irwin@gmail.com>
+Subject: =?UTF-8?q?=5BPATCH=5D=20Update=20documentation=20for=20stripspace?=
+Date: Mon, 12 Dec 2011 15:52:51 -0800
+Message-ID: <1323733971-12495-1-git-send-email-conrad.irwin@gmail.com>
+References: <7vwra1z7bg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Dec 13 00:51:22 2011
+Cc: git@vger.kernel.org, Conrad Irwin <conrad.irwin@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 13 00:53:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaFeR-0007tR-JR
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 00:51:19 +0100
+	id 1RaFgW-0000GC-Ec
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 00:53:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754537Ab1LLXvA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Dec 2011 18:51:00 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:38199 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753801Ab1LLXu4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2011 18:50:56 -0500
-Received: by wgbdr13 with SMTP id dr13so12328394wgb.1
-        for <git@vger.kernel.org>; Mon, 12 Dec 2011 15:50:55 -0800 (PST)
+	id S1754517Ab1LLXxU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Dec 2011 18:53:20 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:50142 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753577Ab1LLXxS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 18:53:18 -0500
+Received: by iaeh11 with SMTP id h11so3871505iae.19
+        for <git@vger.kernel.org>; Mon, 12 Dec 2011 15:53:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=jDAdYjFlMEy/0sd9VEnvaishBcVgNfjPSR8e4pRoe0c=;
-        b=CCpAvi5RzOcAlCYMkdPp56azhRC5YracBhcWC+wIuZD6lm9t4UyAfcX69Nnd+kvkGe
-         2BGRrMG2vcr98iCn6un2W/gc55U1dBd5BqJWZr8P41ImTNbFU/a0sXEXtg8U0PISt07T
-         BvPH3s8BhP0253lLsAF7jbRURrGdnOY1mjCXE=
-Received: by 10.227.205.130 with SMTP id fq2mr18645756wbb.17.1323733855207;
- Mon, 12 Dec 2011 15:50:55 -0800 (PST)
-Received: by 10.216.120.199 with HTTP; Mon, 12 Dec 2011 15:50:34 -0800 (PST)
-In-Reply-To: <4EE6805D.7020708@web.de>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=fDCcGFNVRGid47x2i1udF7iN0H6lhRD7+0aPjy3hHxQ=;
+        b=NTkJJ2i26n1A9zvHMumeeDgjkzRY0G6mIrZgQH5++zp6gLX0gjZtm2/aXHXXmNx3+Q
+         jjhuEpuGUfZDv+giHUKCtEf5YH07eiz2k3lbEPlFil/2151pL9LQR/ICuyR+x3YTaBxO
+         n7znnBlK0PTomDw4YudIiegeGx8NRcA5/kSA4=
+Received: by 10.50.17.168 with SMTP id p8mr17127048igd.20.1323733997770;
+        Mon, 12 Dec 2011 15:53:17 -0800 (PST)
+Received: from monteverdi.rapportive.com (173-228-114-254.static.sonic.net. [173.228.114.254])
+        by mx.google.com with ESMTPS id py9sm31761395igc.2.2011.12.12.15.53.16
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 12 Dec 2011 15:53:17 -0800 (PST)
+X-Mailer: git-send-email 1.7.8.164.g00d7e
+In-Reply-To: <7vwra1z7bg.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186978>
 
-On Mon, Dec 12, 2011 at 5:29 PM, Jens Lehmann <Jens.Lehmann@web.de> wro=
-te:
-> Am 12.12.2011 22:16, schrieb Phil Hord:
->> On Tue, Oct 18, 2011 at 4:58 PM, Jens Lehmann <Jens.Lehmann@web.de> =
-wrote:
->>> Am 18.10.2011 00:33, schrieb Junio C Hamano:
->>>> We could even declare that the gitlink for such a
->>>> submodule should record 0{40} SHA-1 in the superproject, but I do =
-not
->>>> think that is necessary.
->>>
->>> Me neither, e.g. the SHA-1 which was the submodules HEAD when it wa=
-s added
->>> should do nicely. And that would avoid referencing a non-existing c=
-ommit
->>> in case you later want to turn a floating submodule into an exact o=
-ne.
->>
->>
->> I'm sorry I missed this comment before.
->>
->> I hope we can allow storing the actual gitlink in the superproject f=
-or
->> each commit even when we're using floating submodules.
+2011/12/12 Junio C Hamano <gitster@pobox.com>:
+> Conrad Irwin <conrad.irwin@gmail.com> writes:
+>> I've moved the *NOTE* into a SEE ALSO section where I think it reads
+>> less opinionatedly =E2=80=95 is that better?
 >
-> I think you misread my statement, I was just talking about the initia=
-l
-> commit containing the newly added submodule, not any subsequent ones.
-> Floating makes differences between the original SHA-1 and the current
-> tip of the branch invisible, so there is nothing to commit.
+> I think it looks a lot worse.
+[snip]
 >
->> =A0I thought-experimented with this a bit last year and came to the
->> conclusion that I should be able to 'float' to tips (developer
->> convenience) and also to store the SHA-1 of each gitlink through
->> history (automated maybe; as-needed).
+> The new example section looks good. Perhaps we can just drop the extr=
+a SEE
+> ALSO and resurrect the *NOTE* from your v1 patch.
 >
-> Which means that after "git submodule update" floated a submodule bra=
-nch
-> further, you would have to commit that in the superproject.
+> Thanks.
 
-Sadly, yes.  Currently I have my CI-server do this for me after it
-verifies each new submodule commit is able to build successfully.
+Done.
 
->> The problem with "float-only" is that it loses history so, for
->> example, git-bisect doesn't work.
->
-> Yep. And different developers can have the same superproject commit
-> checked out but their submodules can be quite different.
+Conrad
 
->> The problem with "float + gitlinks", of course, is that it looks lik=
-e
->> "not floating" to the developers (git-status is dirty unless
->> overridden, etc.)
->
-> Yeah. But what if each "git submodule update" would update the tip of
-> the submodule branch and add that to the superproject? You could foll=
-ow
-> a tip but still produce reproducible trees.
+---8<---
 
-Yes, and that's what I want.
+Tell the user what this command is intended for, and expand the
+description of what it does.
 
-Not what it sounded like was being suggested before, which (to my
-eyes) implied that the submodule gitlinks were useless noise.
+Signed-off-by: Conrad Irwin <conrad.irwin@gmail.com>
+---
+ Documentation/git-stripspace.txt |   69 ++++++++++++++++++++++++++++++=
+++++---
+ builtin/stripspace.c             |    2 +-
+ 2 files changed, 64 insertions(+), 7 deletions(-)
 
-Phil
+diff --git a/Documentation/git-stripspace.txt b/Documentation/git-strip=
+space.txt
+index b78f031..a548444 100644
+--- a/Documentation/git-stripspace.txt
++++ b/Documentation/git-stripspace.txt
+@@ -3,26 +3,83 @@ git-stripspace(1)
+=20
+ NAME
+ ----
+-git-stripspace - Filter out empty lines
++git-stripspace - Remove unnecessary whitespace
+=20
+=20
+ SYNOPSIS
+ --------
+ [verse]
+-'git stripspace' [-s | --strip-comments] < <stream>
++'git stripspace' [-s | --strip-comments] < input
+=20
+ DESCRIPTION
+ -----------
+-Remove multiple empty lines, and empty lines at beginning and end.
++
++Clean the input in the manner used by 'git' for text such as commit
++messages, notes, tags and branch descriptions.
++
++With no arguments, this will:
++
++- remove trailing whitespace from all lines
++- collapse multiple consecutive empty lines into one empty line
++- remove empty lines from the beginning and end of the input
++- add a missing '\n' to the last line if necessary.
++
++In the case where the input consists entirely of whitespace characters=
+, no
++output will be produced.
++
++*NOTE*: This is intended for cleaning metadata, prefer the `--whitespa=
+ce=3Dfix`
++mode of linkgit:git-apply[1] for correcting whitespace of patches or f=
+iles in
++the repository.
+=20
+ OPTIONS
+ -------
+ -s::
+ --strip-comments::
+-	In addition to empty lines, also strip lines starting with '#'.
++	Skip and remove all lines starting with '#'.
++
++EXAMPLES
++--------
++
++Given the following noisy input with '$' indicating the end of a line:
+=20
+-<stream>::
+-	Byte stream to act on.
++--------
++|A brief introduction   $
++|   $
++|$
++|A new paragraph$
++|# with a commented-out line    $
++|explaining lots of stuff.$
++|$
++|# An old paragraph, also commented-out. $
++|      $
++|The end.$
++|  $
++---------
++
++Use 'git stripspace' with no arguments to obtain:
++
++--------
++|A brief introduction$
++|$
++|A new paragraph$
++|# with a commented-out line$
++|explaining lots of stuff.$
++|$
++|# An old paragraph, also commented-out.$
++|$
++|The end.$
++---------
++
++Use 'git stripspace --strip-comments' to obtain:
++
++--------
++|A brief introduction$
++|$
++|A new paragraph$
++|explaining lots of stuff.$
++|$
++|The end.$
++---------
+=20
+ GIT
+ ---
+diff --git a/builtin/stripspace.c b/builtin/stripspace.c
+index 1288ffc..f16986c 100644
+--- a/builtin/stripspace.c
++++ b/builtin/stripspace.c
+@@ -75,7 +75,7 @@ int cmd_stripspace(int argc, const char **argv, const=
+ char *prefix)
+ 				!strcmp(argv[1], "--strip-comments")))
+ 		strip_comments =3D 1;
+ 	else if (argc > 1)
+-		usage("git stripspace [-s | --strip-comments] < <stream>");
++		usage("git stripspace [-s | --strip-comments] < input");
+=20
+ 	if (strbuf_read(&buf, 0, 1024) < 0)
+ 		die_errno("could not read the input");
+--=20
+1.7.8.164.g00d7e
