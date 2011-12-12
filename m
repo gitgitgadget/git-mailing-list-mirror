@@ -1,7 +1,7 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH v2 35/51] get_packed_refs(): return (ref_entry *) instead of (ref_dir *)
-Date: Mon, 12 Dec 2011 06:38:42 +0100
-Message-ID: <1323668338-1764-36-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 41/51] find_containing_direntry(): use (ref_entry *) instead of (ref_dir *)
+Date: Mon, 12 Dec 2011 06:38:48 +0100
+Message-ID: <1323668338-1764-42-git-send-email-mhagger@alum.mit.edu>
 References: <1323668338-1764-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Drew Northup <drew.northup@maine.edu>,
@@ -11,25 +11,25 @@ Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Julian Phillips <julian@quantumfyre.co.uk>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 12 06:41:12 2011
+X-From: git-owner@vger.kernel.org Mon Dec 12 06:41:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZydR-0000k3-UH
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 06:41:10 +0100
+	id 1RZydV-0000k3-C6
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 06:41:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752966Ab1LLFkl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 00:40:41 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:34876 "EHLO
+	id S1753100Ab1LLFk4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 00:40:56 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:34948 "EHLO
 	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752829Ab1LLFkj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 00:40:39 -0500
+	with ESMTP id S1753059Ab1LLFkw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 00:40:52 -0500
 X-Envelope-From: mhagger@alum.mit.edu
 Received: from michael.fritz.box (p54BEB2AB.dip.t-dialin.net [84.190.178.171])
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pBC5d8am015577;
-	Mon, 12 Dec 2011 06:40:30 +0100
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pBC5d8as015577;
+	Mon, 12 Dec 2011 06:40:42 +0100
 X-Mailer: git-send-email 1.7.8
 In-Reply-To: <1323668338-1764-1-git-send-email-mhagger@alum.mit.edu>
 X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
@@ -37,122 +37,180 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186856>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
+Change type of both argument and return value.
+
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c |   33 +++++++++++++++++----------------
- 1 files changed, 17 insertions(+), 16 deletions(-)
+ refs.c |   78 ++++++++++++++++++++++++++++++++--------------------------------
+ 1 files changed, 39 insertions(+), 39 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index b4019e6..6a65a21 100644
+index 439545b..d89c3d0 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -715,7 +715,7 @@ void clear_extra_refs(void)
- 	}
- }
- 
--static struct ref_dir *get_packed_refs(struct ref_cache *refs)
-+static struct ref_entry *get_packed_refs(struct ref_cache *refs)
- {
- 	if (!refs->packed) {
- 		const char *packed_refs_file;
-@@ -732,7 +732,7 @@ static struct ref_dir *get_packed_refs(struct ref_cache *refs)
- 			fclose(f);
- 		}
- 	}
--	return &refs->packed->u.subdir;
-+	return refs->packed;
+@@ -282,38 +282,40 @@ static struct ref_entry *search_ref_dir(struct ref_dir *dir, const char *refname
  }
  
  /*
-@@ -831,9 +831,9 @@ static int resolve_gitlink_packed_ref(struct ref_cache *refs,
- 				      const char *refname, unsigned char *sha1)
- {
- 	struct ref_entry *ref;
--	struct ref_dir *dir = get_packed_refs(refs);
-+	struct ref_entry *direntry = get_packed_refs(refs);
- 
--	ref = find_ref(dir, refname);
-+	ref = find_ref(&direntry->u.subdir, refname);
- 	if (ref == NULL)
- 		return -1;
- 
-@@ -904,8 +904,8 @@ int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sh
+- * If refname is a reference name, find the ref_dir within the dir
++ * If refname is a reference name, find the ref_entry within the dir
+  * tree that should hold refname.  If refname is a directory name
+- * (i.e., ends in '/'), then return that ref_dir itself.  dir must
+- * represent the top-level directory.  Recurse into subdirectories as
+- * necessary.  If mkdir is set, then create any missing directories;
+- * otherwise, return NULL if the desired directory cannot be found.
++ * (i.e., "" or ends in '/'), then return that ref_entry itself.  dir
++ * must represent the top-level directory.  Recurse into
++ * subdirectories as necessary.  If mkdir is set, then create any
++ * missing directories; otherwise, return NULL if the desired
++ * directory cannot be found.
   */
- static int get_packed_ref(const char *refname, unsigned char *sha1)
+-static struct ref_dir *find_containing_dir(struct ref_dir *dir,
+-					   const char *refname, int mkdir)
++static struct ref_entry *find_containing_direntry(struct ref_entry *direntry,
++						  const char *refname, int mkdir)
  {
--	struct ref_dir *packed = get_packed_refs(get_ref_cache(NULL));
--	struct ref_entry *entry = find_ref(packed, refname);
-+	struct ref_entry *packed = get_packed_refs(get_ref_cache(NULL));
-+	struct ref_entry *entry = find_ref(&packed->u.subdir, refname);
- 	if (entry) {
- 		hashcpy(sha1, entry->u.value.sha1);
- 		return 0;
-@@ -1075,8 +1075,8 @@ int peel_ref(const char *refname, unsigned char *sha1)
- 		return -1;
- 
- 	if ((flag & REF_ISPACKED)) {
--		struct ref_dir *dir = get_packed_refs(get_ref_cache(NULL));
--		struct ref_entry *r = find_ref(dir, refname);
-+		struct ref_entry *direntry = get_packed_refs(get_ref_cache(NULL));
-+		struct ref_entry *r = find_ref(&direntry->u.subdir, refname);
- 
- 		if (r != NULL && r->flag & REF_KNOWS_PEELED) {
- 			hashcpy(sha1, r->u.value.peeled);
-@@ -1136,7 +1136,8 @@ static int do_for_each_ref(const char *submodule, const char *base, each_ref_fn
- 	int retval = 0;
- 	struct ref_cache *refs = get_ref_cache(submodule);
- 	struct ref_dir *extra_dir = extra_refs ? &extra_refs->u.subdir : NULL;
--	struct ref_dir *packed_dir = get_packed_refs(refs);
-+	struct ref_entry *packed_direntry = get_packed_refs(refs);
-+	struct ref_dir *packed_dir = &packed_direntry->u.subdir;
- 	struct ref_dir *loose_dir = get_loose_refs(refs);
- 
- 	if (base && *base) {
-@@ -1522,7 +1523,8 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 	 * name is a proper prefix of our refname.
- 	 */
- 	if (missing &&
--	     !is_refname_available(refname, NULL, get_packed_refs(get_ref_cache(NULL)))) {
-+	     !is_refname_available(refname, NULL,
-+				   &get_packed_refs(get_ref_cache(NULL))->u.subdir)) {
- 		last_errno = ENOTDIR;
- 		goto error_return;
+ 	char *refname_copy = xstrdup(refname);
+ 	char *slash;
+-	struct ref_entry *entry;
++	assert(direntry->flag & REF_DIR);
+ 	for (slash = strchr(refname_copy, '/'); slash; slash = strchr(slash + 1, '/')) {
+ 		char tmp = slash[1];
++		struct ref_entry *entry;
+ 		slash[1] = '\0';
+-		entry = search_ref_dir(dir, refname_copy);
++		entry = search_ref_dir(&direntry->u.subdir, refname_copy);
+ 		if (!entry) {
+ 			if (!mkdir) {
+-				dir = NULL;
++				direntry = NULL;
+ 				break;
+ 			}
+ 			entry = create_dir_entry(refname_copy);
+-			add_entry_to_dir(dir, entry);
++			add_entry_to_dir(&direntry->u.subdir, entry);
+ 		}
+ 		slash[1] = tmp;
+ 		assert(entry->flag & REF_DIR);
+-		dir = &entry->u.subdir;
++		direntry = entry;
  	}
-@@ -1602,10 +1604,8 @@ static struct lock_file packlock;
- static int repack_without_ref(const char *refname)
- {
- 	struct repack_without_ref_sb data;
--	struct ref_dir *packed;
--
--	packed = get_packed_refs(get_ref_cache(NULL));
--	if (find_ref(packed, refname) == NULL)
-+	struct ref_entry *packed = get_packed_refs(get_ref_cache(NULL));
-+	if (find_ref(&packed->u.subdir, refname) == NULL)
- 		return 0;
- 	data.refname = refname;
- 	data.fd = hold_lock_file_for_update(&packlock, git_path("packed-refs"), 0);
-@@ -1613,7 +1613,8 @@ static int repack_without_ref(const char *refname)
- 		unable_to_lock_error(git_path("packed-refs"), errno);
- 		return error("cannot delete '%s' from packed refs", refname);
- 	}
--	do_for_each_ref_in_dir(packed, 0, "", repack_without_ref_fn, 0, 0, &data);
-+	do_for_each_ref_in_dir(&packed->u.subdir, 0,
-+			       "", repack_without_ref_fn, 0, 0, &data);
- 	return commit_lock_file(&packlock);
+ 
+ 	free(refname_copy);
+-	return dir;
++	return direntry;
  }
  
-@@ -1684,7 +1685,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 	if (!symref)
- 		return error("refname %s not found", oldrefname);
+ /*
+@@ -324,12 +326,11 @@ static struct ref_dir *find_containing_dir(struct ref_dir *dir,
+ static struct ref_entry *find_ref(struct ref_entry *direntry, const char *refname)
+ {
+ 	struct ref_entry *entry;
+-	struct ref_dir *dir;
+ 	assert(direntry->flag & REF_DIR);
+-	dir = find_containing_dir(&direntry->u.subdir, refname, 0);
+-	if (!dir)
++	direntry = find_containing_direntry(direntry, refname, 0);
++	if (!direntry)
+ 		return NULL;
+-	entry = search_ref_dir(dir, refname);
++	entry = search_ref_dir(&direntry->u.subdir, refname);
+ 	return (entry && !(entry->flag & REF_DIR)) ? entry : NULL;
+ }
  
--	if (!is_refname_available(newrefname, oldrefname, get_packed_refs(refs)))
-+	if (!is_refname_available(newrefname, oldrefname, &get_packed_refs(refs)->u.subdir))
- 		return 1;
+@@ -340,12 +341,11 @@ static struct ref_entry *find_ref(struct ref_entry *direntry, const char *refnam
+  */
+ static int add_ref(struct ref_entry *direntry, struct ref_entry *ref)
+ {
+-	struct ref_dir *dir;
+ 	assert(direntry->flag & REF_DIR);
+-	dir = find_containing_dir(&direntry->u.subdir, ref->name, 1);
+-	if (!dir)
++	direntry = find_containing_direntry(direntry, ref->name, 1);
++	if (!direntry)
+ 		return -1;
+-	add_entry_to_dir(dir, ref);
++	add_entry_to_dir(&direntry->u.subdir, ref);
+ 	return 0;
+ }
  
- 	if (!is_refname_available(newrefname, oldrefname, get_loose_refs(refs)))
+@@ -752,11 +752,11 @@ static void get_ref_dir(struct ref_cache *refs, const char *dirname)
+ 	char *path;
+ 	int dirnamelen = strlen(dirname);
+ 	int pathlen;
+-	struct ref_dir *dir;
++	struct ref_entry *direntry;
+ 
+ 	assert(dirnamelen && dirname[dirnamelen - 1] == '/');
+ 
+-	dir = find_containing_dir(&refs->loose->u.subdir, dirname, 1);
++	direntry = find_containing_direntry(refs->loose, dirname, 1);
+ 
+ 	if (*refs->name)
+ 		path = git_path_submodule(refs->name, "%s", dirname);
+@@ -809,7 +809,8 @@ static void get_ref_dir(struct ref_cache *refs, const char *dirname)
+ 				hashclr(sha1);
+ 				flag |= REF_ISBROKEN;
+ 			}
+-			add_entry_to_dir(dir, create_ref_entry(refname, sha1, flag, 1));
++			add_entry_to_dir(&direntry->u.subdir,
++					 create_ref_entry(refname, sha1, flag, 1));
+ 		}
+ 		free(refname);
+ 		closedir(d);
+@@ -1142,35 +1143,34 @@ static int do_for_each_ref(const char *submodule, const char *base, each_ref_fn
+ {
+ 	int retval = 0;
+ 	struct ref_cache *refs = get_ref_cache(submodule);
+-	struct ref_dir *extra_dir = extra_refs ? &extra_refs->u.subdir : NULL;
++	struct ref_entry *extra_direntry = extra_refs;
+ 	struct ref_entry *packed_direntry = get_packed_refs(refs);
+-	struct ref_dir *packed_dir = &packed_direntry->u.subdir;
+ 	struct ref_entry *loose_direntry = get_loose_refs(refs);
+-	struct ref_dir *loose_dir = &loose_direntry->u.subdir;
+ 
+ 	if (base && *base) {
+-		if (extra_dir)
+-			extra_dir = find_containing_dir(extra_dir, base, 0);
+-		packed_dir = find_containing_dir(packed_dir, base, 0);
+-		loose_dir = find_containing_dir(loose_dir, base, 0);
++		if (extra_direntry)
++			extra_direntry = find_containing_direntry(extra_direntry, base, 0);
++		packed_direntry = find_containing_direntry(packed_direntry, base, 0);
++		loose_direntry = find_containing_direntry(loose_direntry, base, 0);
+ 	}
+ 
+-	if (extra_dir)
++	if (extra_direntry)
+ 		retval = do_for_each_ref_in_dir(
+-				extra_dir, 0,
++				&extra_direntry->u.subdir, 0,
+ 				base, fn, trim, flags, cb_data);
+ 	if (!retval) {
+-		if (packed_dir && loose_dir)
++		if (packed_direntry && loose_direntry)
+ 			retval = do_for_each_ref_in_dirs(
+-					packed_dir, loose_dir,
++					&packed_direntry->u.subdir,
++					&loose_direntry->u.subdir,
+ 					base, fn, trim, flags, cb_data);
+-		else if (packed_dir)
++		else if (packed_direntry)
+ 			retval = do_for_each_ref_in_dir(
+-					packed_dir, 0,
++					&packed_direntry->u.subdir, 0,
+ 					base, fn, trim, flags, cb_data);
+-		else if (loose_dir)
++		else if (loose_direntry)
+ 			retval = do_for_each_ref_in_dir(
+-					loose_dir, 0,
++					&loose_direntry->u.subdir, 0,
+ 					base, fn, trim, flags, cb_data);
+ 	}
+ 
 -- 
 1.7.8
