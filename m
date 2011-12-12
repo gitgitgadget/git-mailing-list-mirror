@@ -1,66 +1,91 @@
-From: andreas.t.auer_gtml_37453@ursus.ath.cx
-Subject: Re: Git blame only current branch
-Date: Mon, 12 Dec 2011 18:19:21 +0100
-Message-ID: <4EE63799.6020409@ursus.ath.cx>
-References: <5e2440c1-8d11-4d92-b42f-14169a62ced1@mail>
+From: Leif Gruenwoldt <leifer@gmail.com>
+Subject: Re: [RFC/PATCH] add update to branch support for "floating submodules"
+Date: Mon, 12 Dec 2011 13:04:42 -0500
+Message-ID: <CALFF=ZRYB1LkAY5WSC4Eydu-N0KNnWLLM2CfbSXZji18yO82gw@mail.gmail.com>
+References: <20111109174027.GA28825@book.fritz.box> <7vr51htbsy.fsf@alter.siamese.dyndns.org>
+ <20111129220854.GB2812@sandbox-rc.fritz.box> <loom.20111210T062013-538@post.gmane.org>
+ <7vborhaqgw.fsf@alter.siamese.dyndns.org> <CALFF=ZQKRgx_AodBQH17T9cSe_JFtoKie7DoMMfkTXCyCFospw@mail.gmail.com>
+ <4EE61EED.50604@ursus.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	git discussion list <git@vger.kernel.org>
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Mon Dec 12 18:20:25 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Andreas T.Auer" <andreas.t.auer_gtml_37453@ursus.ath.cx>
+X-From: git-owner@vger.kernel.org Mon Dec 12 19:05:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ra9Y6-0003Kf-1S
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 18:20:22 +0100
+	id 1RaAFe-0008PI-NS
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 19:05:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753457Ab1LLRUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 12:20:17 -0500
-Received: from brln-4d0cbd2c.pool.mediaWays.net ([77.12.189.44]:11465 "EHLO
-	here" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753227Ab1LLRUQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 12:20:16 -0500
-Received: from [192.168.0.14] (unknown [192.168.0.14])
-	by here (Postfix) with ESMTP id 20AC719F1DA;
-	Mon, 12 Dec 2011 18:20:19 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20111110 Icedove/3.0.11
-In-Reply-To: <5e2440c1-8d11-4d92-b42f-14169a62ced1@mail>
+	id S1753804Ab1LLSFR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Dec 2011 13:05:17 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:46594 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751373Ab1LLSFN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2011 13:05:13 -0500
+Received: by iaeh11 with SMTP id h11so3511255iae.19
+        for <git@vger.kernel.org>; Mon, 12 Dec 2011 10:05:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=zbJpBSt+xLTjjg+evr0WYqlAex0s7pG0Hi48tlIPsOI=;
+        b=RsMlGsY7iIt3jjL0FusG2QMtOpxboQtec5bNlEvOgmLS7NGg64vwVEEQS/Kwn3iEzT
+         CchGBCAlDARAW4SrSbAxs5vyLk87pCzBo3Uk+1xFxRjGDxBO7pE/YeVl8/QYtDMNsBz1
+         cdAWwMEsFuzUkcWfvMlCdesuLxDrPmVSwQdvg=
+Received: by 10.42.163.200 with SMTP id d8mr12807284icy.41.1323713113157; Mon,
+ 12 Dec 2011 10:05:13 -0800 (PST)
+Received: by 10.231.1.32 with HTTP; Mon, 12 Dec 2011 10:04:42 -0800 (PST)
+In-Reply-To: <4EE61EED.50604@ursus.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186921>
+
+On Mon, Dec 12, 2011 at 10:34 AM, Andreas T.Auer
+<andreas.t.auer_gtml_37453@ursus.ath.cx> wrote:
+
+> So you don't want to have a stale submodule as Junio suggested, which=
+ is
+> older than the gitlinked commit in the superproject, but you want to =
+have
+> the newest stable version, which is not yet gitlinked in the superpro=
+ject,
+> right?
+
+Right.
+
+> Wouldn't =A0( cd commonlib ; git pull stable ) instead of
+> git submodule update commonlib
+> work as you want?
+
+Yes that's how we perform business now.
+
+> To be able to configure this update behavior in .gitmodules for _some=
+_
+> submodules, could be helpful in this case.
+
+Yes my thoughts exactly.
 
 
+> So you don't want to add a new commit to the products A, B and C repo=
+s
+> whenever the stable branch of the submodule changes, but on the other=
+ hand
+> when you commit changes to the products it would still make sense to =
+update
+> the gitlink to the current commonlib version together with your chang=
+es,
+> =A0too, right?
 
-On 12.12.2011 18:05 Stephen Bash wrote:
->  ----- Original Message -----
-> > From: "Jeff King" <peff@peff.net> Sent: Monday, December 12, 2011
-> > 11:55:42 AM Subject: Re: Git blame only current branch
-> >
-> > On Mon, Dec 12, 2011 at 10:24:47AM -0500, Stephen Bash wrote:
-> >
-> > Usually when you are interested in seeing merges like this in
-> > git-log, you would use one of "--first-parent" or "--merges".
-> > However, though "git blame" takes revision arguments, it does its
-> > own traversal of the graph that does not respect those options.
->
->  My first thought was --first-parent, and was disappointed when I
->  didn't find it in the blame documentation :)  I think for my purposes
->  --first-parent is better than --merges because there are non-merge
->  commits on the branch(es) of interest (and thus I think the problem
->  would become ill-posed in the --merges case).
->
-> > Modifying it to do --first-parent is pretty easy: ... snip ...
->
->  That's pretty simple...  I'll try to do a little testing this
->  afternoon.
-
-You might need to consider that if the master branch was first merged 
-into topicA before topicA was merged back to the master that the master 
-would only be fast-forwarded and so the first parent of M would be 3 not 
-C. So depending how the developers merged you might get different results.
+Hmm I supose that does make sense. If the commonlib version was auto re=
+corded
+during a commit of the product it would be nice. Then if/when the user
+reconfigured
+the submodule from "floating" to "strict" mode it would then have a
+submodule sha1
+reference. I like how this sounds.
