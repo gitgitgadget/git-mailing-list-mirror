@@ -1,105 +1,142 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFD] Handling of non-UTF8 data in gitweb
-Date: Sun, 11 Dec 2011 21:26:01 -0800
-Message-ID: <7vhb169x92.fsf@alter.siamese.dyndns.org>
-References: <201112041709.32212.jnareb@gmail.com>
- <7vehwhcj3q.fsf@alter.siamese.dyndns.org>
- <201112101718.34848.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	=?utf-8?Q?J=C3=BCrgen?= Kreileder <jk@blackdown.de>,
-	John Hawley <warthog9@kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 12 06:26:12 2011
+From: mhagger@alum.mit.edu
+Subject: [PATCH v2 00/51] ref-api-C and ref-api-D re-roll
+Date: Mon, 12 Dec 2011 06:38:07 +0100
+Message-ID: <1323668338-1764-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Drew Northup <drew.northup@maine.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 12 06:39:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZyOx-0005uQ-Rz
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 06:26:12 +0100
+	id 1RZyc1-0000LO-0O
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 06:39:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752580Ab1LLF0G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 00:26:06 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57069 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751618Ab1LLF0F (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 00:26:05 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D350133AB;
-	Mon, 12 Dec 2011 00:26:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kdXx0hlfC7dgmLU6aLYa8vQv4iw=; b=GjeoZ9
-	4iLBzKhBLQ+3I7jDPbU0vcKyXFuNTC7gYtQz0SrAF4r6M63Da4bwjZZ+ptredNSP
-	1DYGJxykzTfpgmtDKrm5JUYZ1YDQ5PN+uPJU9WVaXqM93qN+lb2wHLyLkGfSkKri
-	eQTBM2tYQFGAFh74c1mdWf4aTet4VluxYDPJo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Fsp4BVnYAN0f4ynyJlD6TdBzAfh4bClE
-	f0rnltNeuxhGzY1B6ixccPwVWUpsjfMzQurER1H0ws0RFty6c6JvX7ri5QSdgcyd
-	F1NoC6hcm1anrn/0UrOpOUcjqN2PDL9CvgYOtFKLZq8FkKdVhOX2NcusVcKDRcHk
-	wAMLbM3CCcw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5F5433AA;
-	Mon, 12 Dec 2011 00:26:03 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 451BE33A9; Mon, 12 Dec 2011
- 00:26:03 -0500 (EST)
-In-Reply-To: <201112101718.34848.jnareb@gmail.com> (Jakub Narebski's message
- of "Sat, 10 Dec 2011 17:18:33 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C89D25AA-2481-11E1-A3A4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1750990Ab1LLFja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 00:39:30 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:34516 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750830Ab1LLFj3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 00:39:29 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from michael.fritz.box (p54BEB2AB.dip.t-dialin.net [84.190.178.171])
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pBC5d8aD015577;
+	Mon, 12 Dec 2011 06:39:08 +0100
+X-Mailer: git-send-email 1.7.8
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186824>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+From: Michael Haggerty <mhagger@alum.mit.edu>
 
-> On Wed, 7 Dec 2011, Junio C Hamano wrote:
->> I think we added and you acked 00f429a (gitweb: Handle non UTF-8 text
->> better, 2007-06-03) for a good reason, and I think the above argues that
->> whatever issue the commit tried to address is a non-issue. Is it really
->> true?
->
-> I think that UTF-8 is much more prevalent character encoding in operating
-> systems, programming languages, APIs, and software applications than it
-> was 4 years ago.
+Following is a re-roll of the combination of the following patch
+series:
 
-Yeah, that was the kind of "reasoning behind it" explanation I was hoping
-to see spelled out for people to agree or disagree.
+ref-api-C == mh/ref-api-3 [1]
+    [PATCH v2 00/12] Use refs API more consistently
 
-But then the updated gitweb won't have trouble showing history of some
-projects that has 4 yours or longer history (hopefully Git itself is not
-among them).
+ref-api-D == mh/ref-api-take-2 [2]
+    [PATCH 00/28] Store references hierarchically in cache
 
-> The proposed
->
->   use open qw(:std :utf8);
->
-> and removal of to_utf8 and $fallback_encoding would be regression compared
-> to post-00f429a... but the tradeoff of more robust UTF-8 handling might be
-> worth it.
->
->> > ... I guess
->> > it could be emulated by defining our own 'utf-8-with-fallback'
->> > encoding, or by defining our own PerlIO layer with PerlIO::via.
->> > But it no longer be simple solution (though still automatic).
->> 
->> Between the current "everybody who read from the input must remember to
->> call to_utf8" and "everybody gets to read utf8 automatically for internal
->> processing", even though the latter may involve one-time pain to set up
->> the framework to do so, the pros-and-cons feels obvious to me.
->
-> There is also a matter of performance (':utf8' and ':encoding(UTF-8)'
-> are AFAIK implemented in C, both the Encode part and PerlIO part).
+ref-api-D-fix-v1 [3]
+    [PATCH] Fix "is_refname_available(): query only possibly-conflicting references"
 
-Would a reasonable first step be to replace the calls to bare "open" with
-a wrapper that simulates the "open" interface (e.g. "sub git_open"), but
-still keep the same behaviour as post-00f429a that could be much slower
-than the native one?  Then a separate patch can build a "regression but
-uses native and much faster" alternative on top, no?
+It differs from the original patch series in the following ways:
+
+* Re-rolled onto the current master.
+
+* Combined some patches that logically belonged together but were
+  split in earlier series (mainly textual changes like variable
+  renamings); made other minor cleanups.
+
+* Incorporated ref-api-D-fix-v1 into the commit that it was fixing.
+
+* Removed any changes to the enforcement of refname checks.  The
+  earlier patch series included some changes that slightly tightened
+  up the checks applied to refnames, and could therefore have
+  theoretically caused problems for people whose repositories
+  currently include invalid reference names.  Following Junio's
+  suggestion, I separated those changes out of this patch series so
+  that they can be addressed separately.
+
+Otherwise, this patch series includes the substance of the earlier
+patch series, which is basically a change to storing reference-caches
+hierarchically and reading loose references lazily.  This, in turn,
+brings big performance improvements for repositories with many
+references (especially many loose references) [4].
+
+[1] http://permalink.gmane.org/gmane.comp.version-control.git/184368
+[2] http://permalink.gmane.org/gmane.comp.version-control.git/184382
+[3] http://permalink.gmane.org/gmane.comp.version-control.git/185423
+[4] http://permalink.gmane.org/gmane.comp.version-control.git/185541
+
+Michael Haggerty (51):
+  struct ref_entry: document name member
+  refs: rename "refname" variables
+  refs: rename parameters result -> sha1
+  clear_ref_array(): rename from free_ref_array()
+  is_refname_available(): remove the "quiet" argument
+  parse_ref_line(): add docstring
+  add_ref(): add docstring
+  is_dup_ref(): extract function from sort_ref_array()
+  refs: change signatures of get_packed_refs() and get_loose_refs()
+  get_ref_dir(): change signature
+  resolve_gitlink_ref(): improve docstring
+  Pass a (ref_cache *) to the resolve_gitlink_*() helper functions
+  resolve_gitlink_ref_recursive(): change to work with struct ref_cache
+  repack_without_ref(): remove temporary
+  create_ref_entry(): extract function from add_ref()
+  add_ref(): take a (struct ref_entry *) parameter
+  do_for_each_ref(): correctly terminate while processesing extra_refs
+  do_for_each_ref_in_array(): new function
+  do_for_each_ref_in_arrays(): new function
+  repack_without_ref(): reimplement using do_for_each_ref_in_array()
+  names_conflict(): new function, extracted from is_refname_available()
+  names_conflict(): simplify implementation
+  is_refname_available(): reimplement using do_for_each_ref_in_array()
+  refs.c: reorder definitions more logically
+  free_ref_entry(): new function
+  check_refname_component(): return 0 for zero-length components
+  struct ref_entry: nest the value part in a union
+  refs.c: rename ref_array -> ref_dir
+  refs: store references hierarchically
+  sort_ref_dir(): do not sort if already sorted
+  refs: sort ref_dirs lazily
+  do_for_each_ref(): only iterate over the subtree that was requested
+  get_ref_dir(): keep track of the current ref_dir
+  refs: wrap top-level ref_dirs in ref_entries
+  get_packed_refs(): return (ref_entry *) instead of (ref_dir *)
+  get_loose_refs(): return (ref_entry *) instead of (ref_dir *)
+  is_refname_available(): take (ref_entry *) instead of (ref_dir *)
+  find_ref(): take (ref_entry *) instead of (ref_dir *)
+  read_packed_refs(): take (ref_entry *) instead of (ref_dir *)
+  add_ref(): take (ref_entry *) instead of (ref_dir *)
+  find_containing_direntry(): use (ref_entry *) instead of (ref_dir *)
+  search_ref_dir(): take (ref_entry *) instead of (ref_dir *)
+  add_entry(): take (ref_entry *) instead of (ref_dir *)
+  do_for_each_ref_in_dir*(): take (ref_entry *) instead of (ref_dir *)
+  sort_ref_dir(): take (ref_entry *) instead of (ref_dir *)
+  struct ref_dir: store a reference to the enclosing ref_cache
+  read_loose_refs(): take a (ref_entry *) as argument
+  refs: read loose references lazily
+  is_refname_available(): query only possibly-conflicting references
+  read_packed_refs(): keep track of the directory being worked in
+  repack_without_ref(): call clear_packed_ref_cache()
+
+ cache.h |    6 +-
+ refs.c  | 1569 ++++++++++++++++++++++++++++++++++++++++----------------------
+ refs.h  |   41 +-
+ 3 files changed, 1041 insertions(+), 575 deletions(-)
+
+-- 
+1.7.8
