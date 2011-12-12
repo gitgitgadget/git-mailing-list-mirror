@@ -1,72 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCHv2 5/5] mv: be quiet about overwriting
-Date: Mon, 12 Dec 2011 16:54:42 -0500
-Message-ID: <20111212215442.GB18310@sigill.intra.peff.net>
-References: <20111212215238.GD9754@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Breakage (?) in configure and git_vsnprintf()
+Date: Mon, 12 Dec 2011 15:56:45 -0600
+Message-ID: <20111212215645.GA3024@elie.hsd1.il.comcast.net>
+References: <4EE4F97B.9000202@alum.mit.edu>
+ <20111212064305.GA16511@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 12 22:54:50 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	git discussion list <git@vger.kernel.org>,
+	Michal Rokos <michal.rokos@nextsoft.cz>,
+	Brandon Casey <casey@nrlssc.navy.mil>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 12 22:57:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaDph-0006Vg-LR
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 22:54:50 +0100
+	id 1RaDro-0007aJ-BA
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 22:57:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754199Ab1LLVyp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 16:54:45 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48356
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754167Ab1LLVyp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 16:54:45 -0500
-Received: (qmail 5920 invoked by uid 107); 12 Dec 2011 22:01:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 Dec 2011 17:01:25 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Dec 2011 16:54:42 -0500
+	id S1754175Ab1LLV44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 16:56:56 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:36707 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754042Ab1LLV4z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 16:56:55 -0500
+Received: by yenm11 with SMTP id m11so4194828yen.19
+        for <git@vger.kernel.org>; Mon, 12 Dec 2011 13:56:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=gJPPyP3PN2twN+n87CRAyt/Wc5nqtSKul3yEMg+Ph4g=;
+        b=ZimJgwxh1Jku0zPGpsN9eeQw8iL9LiKIu8Ua65p3rDOM3Ks5IaCKzfc1pzaKgR2gxw
+         tEzCMA/dHcWvUUWpljdZY0gMrWuApLAX2ufbOz6HByNysh+PE9N4NcuuLMqJZXNA7tSM
+         5pH78ElzNLHvziaEq3lM0RIahCuSD0SbOqvIg=
+Received: by 10.236.155.2 with SMTP id i2mr28789690yhk.115.1323727014818;
+        Mon, 12 Dec 2011 13:56:54 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id f47sm32854133yhh.8.2011.12.12.13.56.53
+        (version=SSLv3 cipher=OTHER);
+        Mon, 12 Dec 2011 13:56:53 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20111212215238.GD9754@sigill.intra.peff.net>
+In-Reply-To: <20111212064305.GA16511@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186962>
 
-When a user asks us to force a mv and overwrite the
-destination, we print a warning. However, since a typical
-use would be:
+Jeff King wrote:
 
-  $ git mv one two
-  fatal: destination exists, source=one, destination=two
-  $ git mv -f one two
-  warning: overwriting 'two'
+> I'll leave the issue of "-std=c89" triggering SNPRINTF_RETURNS_BOGUS to
+> people who know and care about autoconf. My gut is to say "don't do
+> that". Git is not actually pure c89. We typically target systems that
+> are _at least_ c89, but it's more important to match and run well on
+> real-world systems than what was defined in the standard. So we don't
+> depend on c99, but we do depend on quirks and features that were
+> prominent in mid-90's Unix variants.
 
-this warning is just noise. We already know we're
-overwriting; that's why we gave -f!
+Using vsnprintf isn't even wrong from the standards-pedant point of
+view --- vsnprintf has been in POSIX for a long time.  The problem is
+that the configure script is not setting appropriate feature test
+macros such as _XOPEN_SOURCE (like git-compat-util.h does) during its
+feature tests.
 
-This patch silences the warning unless "--verbose" is given.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/mv.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 8dd5a45..2a144b0 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -177,7 +177,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 				 * check both source and destination
- 				 */
- 				if (S_ISREG(st.st_mode) || S_ISLNK(st.st_mode)) {
--					warning(_("overwriting '%s'"), dst);
-+					if (verbose)
-+						warning(_("overwriting '%s'"), dst);
- 					bad = NULL;
- 				} else
- 					bad = _("Cannot overwrite");
--- 
-1.7.8.13.g74677
+Maybe it would be possible to hook the appropriate magic into
+AC_LANG_PROGRAM.
