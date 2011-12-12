@@ -1,75 +1,77 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Breakage (?) in configure and git_vsnprintf()
-Date: Mon, 12 Dec 2011 11:25:24 +0100
-Message-ID: <4EE5D694.7040407@alum.mit.edu>
-References: <4EE4F97B.9000202@alum.mit.edu> <20111212064305.GA16511@sigill.intra.peff.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 1/4] revert: convert resolve_ref() to read_ref_full()
+Date: Mon, 12 Dec 2011 18:20:29 +0700
+Message-ID: <1323688832-32016-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
-	git discussion list <git@vger.kernel.org>,
-	Michal Rokos <michal.rokos@nextsoft.cz>,
-	Brandon Casey <casey@nrlssc.navy.mil>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 12 11:25:52 2011
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 12 12:22:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ra34w-00019Q-Fj
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 11:25:51 +0100
+	id 1Ra3xL-0000Hs-OH
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 12:22:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751710Ab1LLKZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 05:25:46 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:37753 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751105Ab1LLKZq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 05:25:46 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pBCAPOXM002704
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 12 Dec 2011 11:25:24 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
-In-Reply-To: <20111212064305.GA16511@sigill.intra.peff.net>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1752562Ab1LLLV7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Dec 2011 06:21:59 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:51305 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752085Ab1LLLV6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 06:21:58 -0500
+Received: by ggdk6 with SMTP id k6so949489ggd.19
+        for <git@vger.kernel.org>; Mon, 12 Dec 2011 03:21:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=UhRVMmwIoTTcyRzJ4uYrWQ8AwAjGCkxnAuLywynDGiw=;
+        b=wFT4rIzyChKW3kORPo2/R0ujQyDlGclPCQiX5HlzTtd1eZ7MVrPQ3tPfFehrzSTOMT
+         g+AUAPQO90FFQ6d5YVUdJP8yMq+55q8CldxWHzgSrGg09mvfrNjZCTDWVMLKPK9LlHHU
+         9DvTWq3i2s+oNQ4AlsXFEE6AdFvi+5Ae0/CNg=
+Received: by 10.50.77.137 with SMTP id s9mr14440360igw.66.1323688917292;
+        Mon, 12 Dec 2011 03:21:57 -0800 (PST)
+Received: from tre ([115.74.36.175])
+        by mx.google.com with ESMTPS id wo4sm40130486igc.5.2011.12.12.03.21.52
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 12 Dec 2011 03:21:55 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Mon, 12 Dec 2011 18:20:32 +0700
+X-Mailer: git-send-email 1.7.8.36.g69ee2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186905>
 
-On 12/12/2011 07:43 AM, Jeff King wrote:
-> On Sun, Dec 11, 2011 at 07:42:03PM +0100, Michael Haggerty wrote:
->> 2. The configure problem causes git_vsnprintf() to be wrapped around the
->> C library version.  This leads to many failures in the test suite.  I
->> suppose that git_vsnprintf() is broken in some way.
-> 
-> I enabled SNPRINTF_RETURNS_BOGUS manually and was able to see the test
-> suite failures. Very oddly, I could get them while running the full
-> suite in parallel, but when I ran individual scripts, the problem went
-> away. Which makes no sense to me at all.
-> 
-> However, I peeked at the git_vsnprintf function, and one obvious error
-> is that it calls vsnprintf multiple times on the same va_list.
+This is the follow up of c689332 (Convert many resolve_ref() calls to
+read_ref*() and ref_exists() - 2011-11-13). See the said commit for
+rationale.
 
-Thanks for the quick response!  Yes, I think you've hit the nail on the
-head.  (Though I think Andreas is correct that va_end() needs to be
-called on the copies.)  Either with or without va_end(), your patch
-fixes the test suite failures for me.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ builtin/revert.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> I'll leave the issue of "-std=c89" triggering SNPRINTF_RETURNS_BOGUS to
-> people who know and care about autoconf. My gut is to say "don't do
-> that". Git is not actually pure c89. [...]
-
-OK, I can live with that.  Poor Junio will probably be stuck correcting
-my non-c89isms again, though :-(
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 1ea525c..0c52a83 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -901,7 +901,7 @@ static int rollback_single_pick(void)
+ 	if (!file_exists(git_path("CHERRY_PICK_HEAD")) &&
+ 	    !file_exists(git_path("REVERT_HEAD")))
+ 		return error(_("no cherry-pick or revert in progress"));
+-	if (!resolve_ref("HEAD", head_sha1, 0, NULL))
++	if (read_ref_full("HEAD", head_sha1, 0, NULL))
+ 		return error(_("cannot resolve HEAD"));
+ 	if (is_null_sha1(head_sha1))
+ 		return error(_("cannot abort from a branch yet to be born"));
+--=20
+1.7.8.36.g69ee2
