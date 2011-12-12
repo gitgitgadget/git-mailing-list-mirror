@@ -1,78 +1,123 @@
-From: mhagger@alum.mit.edu
-Subject: [PATCH v2 14/51] repack_without_ref(): remove temporary
-Date: Mon, 12 Dec 2011 06:38:21 +0100
-Message-ID: <1323668338-1764-15-git-send-email-mhagger@alum.mit.edu>
-References: <1323668338-1764-1-git-send-email-mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Drew Northup <drew.northup@maine.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johan Herland <johan@herland.net>,
-	Julian Phillips <julian@quantumfyre.co.uk>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 12 06:42:21 2011
+From: Jeff King <peff@peff.net>
+Subject: Re: Breakage (?) in configure and git_vsnprintf()
+Date: Mon, 12 Dec 2011 01:43:05 -0500
+Message-ID: <20111212064305.GA16511@sigill.intra.peff.net>
+References: <4EE4F97B.9000202@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	git discussion list <git@vger.kernel.org>,
+	Michal Rokos <michal.rokos@nextsoft.cz>,
+	Brandon Casey <casey@nrlssc.navy.mil>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Dec 12 07:43:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZyeU-0001E2-Gz
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 06:42:14 +0100
+	id 1RZzbX-0006Mw-P7
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 07:43:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753202Ab1LLFmC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 00:42:02 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:34632 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752140Ab1LLFj5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 00:39:57 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from michael.fritz.box (p54BEB2AB.dip.t-dialin.net [84.190.178.171])
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pBC5d8aR015577;
-	Mon, 12 Dec 2011 06:39:41 +0100
-X-Mailer: git-send-email 1.7.8
-In-Reply-To: <1323668338-1764-1-git-send-email-mhagger@alum.mit.edu>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1751492Ab1LLGnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 01:43:11 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47978
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750931Ab1LLGnJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 01:43:09 -0500
+Received: (qmail 29740 invoked by uid 107); 12 Dec 2011 06:49:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 Dec 2011 01:49:49 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Dec 2011 01:43:05 -0500
+Content-Disposition: inline
+In-Reply-To: <4EE4F97B.9000202@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186876>
 
-From: Michael Haggerty <mhagger@alum.mit.edu>
+On Sun, Dec 11, 2011 at 07:42:03PM +0100, Michael Haggerty wrote:
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> 2. The configure problem causes git_vsnprintf() to be wrapped around the
+> C library version.  This leads to many failures in the test suite.  I
+> suppose that git_vsnprintf() is broken in some way.
+
+I enabled SNPRINTF_RETURNS_BOGUS manually and was able to see the test
+suite failures. Very oddly, I could get them while running the full
+suite in parallel, but when I ran individual scripts, the problem went
+away. Which makes no sense to me at all.
+
+However, I peeked at the git_vsnprintf function, and one obvious error
+is that it calls vsnprintf multiple times on the same va_list.
+
+Fixing that (patch below) makes the test failures go away. I think it's
+an Obviously Correct thing to do, anyway, but I'm slightly unnerved by
+not understanding why it sometimes caused failures and sometimes not.
+Clearly the existing code invokes nasal daemons and anything is allowed
+to happen, but it would be nice to understand what triggers the
+difference.
+
+I'll leave the issue of "-std=c89" triggering SNPRINTF_RETURNS_BOGUS to
+people who know and care about autoconf. My gut is to say "don't do
+that". Git is not actually pure c89. We typically target systems that
+are _at least_ c89, but it's more important to match and run well on
+real-world systems than what was defined in the standard. So we don't
+depend on c99, but we do depend on quirks and features that were
+prominent in mid-90's Unix variants.
+
+-- >8 --
+Subject: [PATCH] compat/snprintf: don't look at va_list twice
+
+If you define SNPRINTF_RETURNS_BOGUS, we use a special
+git_vsnprintf wrapper assumes that vsnprintf returns "-1"
+instead of the number of characters that you would need to
+store the result.
+
+To do this, it invokes vsnprintf multiple times, growing a
+heap buffer until we have enough space to hold the result.
+However, this means we evaluate the va_list parameter
+multiple times, which is generally a bad thing (it may be
+modified by calls to vsnprintf, yielding undefined
+behavior).
+
+Instead, we must va_copy it and hand the copy to vsnprintf,
+so we always have a pristine va_list.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- refs.c |    7 ++-----
- 1 files changed, 2 insertions(+), 5 deletions(-)
+ compat/snprintf.c |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index ba7a8b0..2e7bc0c 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1278,12 +1278,10 @@ static struct lock_file packlock;
- static int repack_without_ref(const char *refname)
+diff --git a/compat/snprintf.c b/compat/snprintf.c
+index e1e0e75..38fc08d 100644
+--- a/compat/snprintf.c
++++ b/compat/snprintf.c
+@@ -19,11 +19,13 @@
+ #undef vsnprintf
+ int git_vsnprintf(char *str, size_t maxsize, const char *format, va_list ap)
  {
- 	struct ref_array *packed;
--	struct ref_entry *ref;
- 	int fd, i;
++	va_list cp;
+ 	char *s;
+ 	int ret = -1;
  
- 	packed = get_packed_refs(get_ref_cache(NULL));
--	ref = search_ref_array(packed, refname);
--	if (ref == NULL)
-+	if (search_ref_array(packed, refname) == NULL)
- 		return 0;
- 	fd = hold_lock_file_for_update(&packlock, git_path("packed-refs"), 0);
- 	if (fd < 0) {
-@@ -1294,8 +1292,7 @@ static int repack_without_ref(const char *refname)
- 	for (i = 0; i < packed->nr; i++) {
- 		char line[PATH_MAX + 100];
- 		int len;
--
--		ref = packed->refs[i];
-+		struct ref_entry *ref = packed->refs[i];
- 
- 		if (!strcmp(refname, ref->name))
- 			continue;
+ 	if (maxsize > 0) {
+-		ret = vsnprintf(str, maxsize-SNPRINTF_SIZE_CORR, format, ap);
++		va_copy(cp, ap);
++		ret = vsnprintf(str, maxsize-SNPRINTF_SIZE_CORR, format, cp);
+ 		if (ret == maxsize-1)
+ 			ret = -1;
+ 		/* Windows does not NUL-terminate if result fills buffer */
+@@ -42,7 +44,8 @@ int git_vsnprintf(char *str, size_t maxsize, const char *format, va_list ap)
+ 		if (! str)
+ 			break;
+ 		s = str;
+-		ret = vsnprintf(str, maxsize-SNPRINTF_SIZE_CORR, format, ap);
++		va_copy(cp, ap);
++		ret = vsnprintf(str, maxsize-SNPRINTF_SIZE_CORR, format, cp);
+ 		if (ret == maxsize-1)
+ 			ret = -1;
+ 	}
 -- 
-1.7.8
+1.7.8.13.g74677
