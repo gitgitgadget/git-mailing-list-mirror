@@ -1,89 +1,95 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/5] mv: make non-directory destination error more clear
-Date: Mon, 12 Dec 2011 02:51:36 -0500
-Message-ID: <20111212075136.GC17532@sigill.intra.peff.net>
+Subject: [PATCH 4/5] mv: improve overwrite warning
+Date: Mon, 12 Dec 2011 02:52:27 -0500
+Message-ID: <20111212075227.GD17532@sigill.intra.peff.net>
 References: <20111212074503.GB16511@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Mon Dec 12 08:51:59 2011
+X-From: git-owner@vger.kernel.org Mon Dec 12 08:52:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ra0g2-0007gV-W1
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 08:51:59 +0100
+	id 1Ra0gc-0007rL-0S
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 08:52:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752318Ab1LLHvu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 02:51:50 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48006
+	id S1752287Ab1LLHwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 02:52:30 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48010
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751209Ab1LLHvi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 02:51:38 -0500
-Received: (qmail 30196 invoked by uid 107); 12 Dec 2011 07:58:18 -0000
+	id S1751309Ab1LLHw3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 02:52:29 -0500
+Received: (qmail 30226 invoked by uid 107); 12 Dec 2011 07:59:09 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 Dec 2011 02:58:18 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Dec 2011 02:51:36 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 Dec 2011 02:59:09 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Dec 2011 02:52:27 -0500
 Content-Disposition: inline
 In-Reply-To: <20111212074503.GB16511@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186883>
 
-If you try to "git mv" multiple files onto another
-non-directory file, you confusingly get the "usage" message:
+When we try to "git mv" over an existing file, the error
+message is fairly informative:
 
-  $ touch one two three
+  $ git mv one two
+  fatal: destination exists, source=one, destination=two
+
+When the user forces the overwrite, we give a warning:
+
+  $ git mv -f one two
+  warning: destination exists; will overwrite!
+
+This is less informative, but still sufficient in the simple
+rename case, as there is only one rename happening.
+
+But when moving files from one directory to another, it
+becomes useless:
+
+  $ mkdir three
+  $ touch one two three/one
   $ git add .
   $ git mv one two three
-  usage: git mv [options] <source>... <destination>
-  [...]
+  fatal: destination exists, source=one, destination=three/one
+  $ git mv -f one two three
+  warning: destination exists; will overwrite!
 
->From the user's perspective, that makes no sense. They just
-gave parameters that exactly match that usage!
+The first message is helpful, but the second one gives us no
+clue about what was overwritten. Instead, let's mirror the
+first form more closely, with:
 
-This behavior dates back to the original C version of "git
-mv", which had a usage message like:
-
-  usage: git mv (<source> <destination> | <source>...  <destination>)
-
-This was slightly less confusing, because it at least
-mentions that there are two ways to invoke (but it still
-isn't clear why what the user provided doesn't work).
-
-Instead, let's show an error message like:
-
-  $ git mv one two three
-  fatal: destination 'three' is not a directory
-
-We could leave the usage message in place, too, but it
-doesn't actually help here. It contains no hints that there
-are two forms, nor that multi-file form requires that the
-endpoint be a directory. So it just becomes useless noise
-that distracts from the real error.
+  $ git mv -f one two three
+  warning: destination exists (will overwrite), source=one, destination=three/one
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/mv.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+This message looks overly long to me, but I wanted to match the existing
+messages. Another option would be just:
+
+  warning: overwriting 'three/one'
+
+ builtin/mv.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
 diff --git a/builtin/mv.c b/builtin/mv.c
-index 11abaf5..ae6c30c 100644
+index ae6c30c..c9ecb03 100644
 --- a/builtin/mv.c
 +++ b/builtin/mv.c
-@@ -94,7 +94,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		destination = copy_pathspec(dest_path[0], argv, argc, 1);
- 	} else {
- 		if (argc != 1)
--			usage_with_options(builtin_mv_usage, builtin_mv_options);
-+			die("destination '%s' is not a directory", dest_path[0]);
- 		destination = dest_path;
- 	}
- 
+@@ -177,7 +177,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 				 * check both source and destination
+ 				 */
+ 				if (S_ISREG(st.st_mode) || S_ISLNK(st.st_mode)) {
+-					warning(_("%s; will overwrite!"), bad);
++					warning(_("%s (will overwrite), source=%s, destination=%s"),
++						bad, src, dst);
+ 					bad = NULL;
+ 				} else
+ 					bad = _("Cannot overwrite");
 -- 
 1.7.8.13.g74677
