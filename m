@@ -1,86 +1,67 @@
-From: Jerome DE VIVIE <j.devivie@prometil.com>
-Subject: Re: [PATCH] tag deletions not rejected with receive.denyDeletes=
- true
-Date: Mon, 12 Dec 2011 15:06:06 +0100 (CET)
-Message-ID: <12967682.2821323698766430.JavaMail.root@promailix.prometil.com>
-References: <6271653.2751323698446271.JavaMail.root@promailix.prometil.com>
+From: Santhosh <santhoshmani@gmail.com>
+Subject: Re: [RFC/PATCH] show tracking branches with their associated branch names
+Date: Mon, 12 Dec 2011 19:49:54 +0530
+Message-ID: <CABtqY3zwRooPUyPrLu3pf0fnHS+WP0XVKDFhZ1S0sR4cq=aP5A@mail.gmail.com>
+References: <1323502829.1698.6.camel@sdesktop>
+	<4EE32C1B.8070306@lyx.org>
+	<1323516226.1698.80.camel@sdesktop>
+	<7vsjkq5h0i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Vincent van Ravesteijn <vfr@lyx.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 12 15:06:20 2011
+X-From: git-owner@vger.kernel.org Mon Dec 12 15:20:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ra6WH-0006Mn-Sz
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 15:06:18 +0100
+	id 1Ra6jZ-0004fh-En
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 15:20:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752681Ab1LLOGN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Dec 2011 09:06:13 -0500
-Received: from promailix.prometil.com ([87.98.147.193]:51143 "EHLO
-	promailix.prometil.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752557Ab1LLOGM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2011 09:06:12 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by promailix.prometil.com (Postfix) with ESMTP id 3F7551BC500;
-	Mon, 12 Dec 2011 15:06:11 +0100 (CET)
-Received: from promailix.prometil.com ([127.0.0.1])
-	by localhost (promailix.prometil.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Fl1htMchoByv; Mon, 12 Dec 2011 15:06:06 +0100 (CET)
-Received: from promailix.prometil.com (mail.prometil.com [87.98.147.193])
-	by promailix.prometil.com (Postfix) with ESMTP id 7DFA81BC3AE;
-	Mon, 12 Dec 2011 15:06:06 +0100 (CET)
-In-Reply-To: <6271653.2751323698446271.JavaMail.root@promailix.prometil.com>
-X-Originating-IP: [193.57.220.1]
-X-Mailer: Zimbra 5.0.18_GA_3011.UBUNTU8 (ZimbraWebClient - FF3.0 (Win)/5.0.18_GA_3011.UBUNTU8)
+	id S1752720Ab1LLOT4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 09:19:56 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:57734 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752467Ab1LLOTz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 09:19:55 -0500
+Received: by ghbf1 with SMTP id f1so1026277ghb.19
+        for <git@vger.kernel.org>; Mon, 12 Dec 2011 06:19:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=nY4dBo4I2x0y13/ad6lQEJU/aEDnQUybiygkqf003XQ=;
+        b=pH8cf/Gfku9y4M2MtiyfAvJqEuDXkU8tkQ6TjIcFKXJGcFxknzZSQ1NGFQgHMEjpos
+         kIH0e+D6sq8szrxnW0fxu5IdUvRHhOigGEFkmvIC78f0CwneMHLmJ4DJJiELrcE+I3YA
+         SBoVFbIwIi4J7u2gI38t6rJTn3dBFMdj3ekyY=
+Received: by 10.236.115.40 with SMTP id d28mr25724077yhh.37.1323699595168;
+ Mon, 12 Dec 2011 06:19:55 -0800 (PST)
+Received: by 10.236.191.225 with HTTP; Mon, 12 Dec 2011 06:19:54 -0800 (PST)
+In-Reply-To: <7vsjkq5h0i.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186911>
 
+On Mon, Dec 12, 2011 at 12:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> It makes sense to make the various information available, but it does not
+> mean it makes sense to add it by default for everybody at all. Given that
+> against all common sense, many newbie web-tips and third-party documents
+> suggest "git branch | sed -ne 's/^\* //p'" as a way to find the current
+> branch in scripts, I am sure such a change will cause trouble to many
+> while only helping a few.
+>
 
-Junio C Hamano <gitster@pobox.com> writes :
-> Our documentation can also use some updates, as it dates to the days =
-back
-> when we more liberally used "refs" and "branches" interchangeably.
+You certainly have a point.
 
-Ok, I have turned the patch below for documentation.
+> I wouldn't mind a new option --verbose-format=... that takes various
+> formatting letters similar to how --pretty=format:... does, though.
+>
 
-=46or protecting tags, I can do it with triggers but its painful with l=
-ots of repositories. I propose to extend receive.denyDeletes with these=
- values:
-- "false"/"none" (existing behavior)
-- "true"/"branches" (existing behavior)
-- "tags": protect tags only
-- "all": protect both tags and branches
+I will explore this option and see if it is worth the trouble.
+Probably I can accomplish this locally with an alias.
 
-Your opinion ?
-
-BR
-J=C3=A9r=C3=B4me
-
-
-Signed-off-by: Jerome de Vivie <jedevivie-ext@airfrance.fr>
----
- Documentation/config.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 5a841da..9c7c7fe 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1642,7 +1642,7 @@ receive.unpackLimit::
-=20
- receive.denyDeletes::
- 	If set to true, git-receive-pack will deny a ref update that deletes
--	the ref. Use this to prevent such a ref deletion via a push.
-+	a branch. Use this to prevent such a branch deletion via a push.
-=20
- receive.denyDeleteCurrent::
- 	If set to true, git-receive-pack will deny a ref update that
---=20
-1.7.6.msysgit.0
+~Santhosh.
