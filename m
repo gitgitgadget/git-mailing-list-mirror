@@ -1,73 +1,69 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/3] test-terminal: give the child an empty stdin TTY
-Date: Mon, 12 Dec 2011 17:25:03 -0600
-Message-ID: <20111212232503.GA12366@elie.hsd1.il.comcast.net>
-References: <b97d14da67bd6097e5b04f6ae3057c0f1d536a0b.1323713230.git.trast@student.ethz.ch>
- <7vfwgp4niu.fsf@alter.siamese.dyndns.org>
- <20111212191602.GA14061@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Makefile: optionally exclude code that needs Unix
+ sockets
+Date: Mon, 12 Dec 2011 15:31:44 -0800
+Message-ID: <7v1us91i5b.fsf@alter.siamese.dyndns.org>
+References: <20111210103943.GA16478@sigill.intra.peff.net>
+ <20111210104130.GI16648@sigill.intra.peff.net> <4EE66DAB.5070407@kdbg.org>
+ <4EE66E58.6040404@kdbg.org> <20111212213951.GB9754@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 13 00:25:20 2011
+X-From: git-owner@vger.kernel.org Tue Dec 13 00:31:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaFFH-0005Ng-8n
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 00:25:19 +0100
+	id 1RaFLe-00089m-K3
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 00:31:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753285Ab1LLXZO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 18:25:14 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:43956 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753227Ab1LLXZN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 18:25:13 -0500
-Received: by qcqz2 with SMTP id z2so4073116qcq.19
-        for <git@vger.kernel.org>; Mon, 12 Dec 2011 15:25:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Yl6OCek9RvA7RO2qHH/zYnYrpxN4X3CR7582LPFxRS0=;
-        b=DHiU4zBR5wen3w743r1KJHWmI3+43qEpmzbD56nixF5VAd5Mj+IFzYNeigK8n7Jv/m
-         HrIK4g2Oufo6NHegU8jkKuFSVtUO9vcsXnYOtTvl7pgXSoTetgQd/I3iiC2XxzznrSgX
-         U3Gne2Hz2HxwaxiKnSqCd9+fAQgdnpfzbNUxw=
-Received: by 10.101.135.32 with SMTP id m32mr37576ann.43.1323732313077;
-        Mon, 12 Dec 2011 15:25:13 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id n24sm11752939yhj.13.2011.12.12.15.25.11
-        (version=SSLv3 cipher=OTHER);
-        Mon, 12 Dec 2011 15:25:12 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20111212191602.GA14061@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1753383Ab1LLXbt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 18:31:49 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37378 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753367Ab1LLXbs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 18:31:48 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 56A076BC9;
+	Mon, 12 Dec 2011 18:31:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HLHYTUcrPoWIUrbf+5itNs9Qgvg=; b=Z/wuln
+	h86zaypkVgFNRR2V65G3doDDIwcklFpnAHJLgMfNX+YL3Em6XtYA5NGru0Eu2Sfi
+	ZA5oFfcoGr/pjwgYRiGrkmDizTk26PbJXlHj06Lh7q53kROBBpZ15GvieODhI1yo
+	vUTe2eCiB8sPJfuWobdFnkffwg3eM4gd3FSSU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=r5sQyhMAIwBmGu/+tWa2AopaRgmC9NCr
+	ibbJZ6EZeC/lh/U7c61+2/vh4cIY9qs7PlPro1UPinYFNjKUWzO7t61r0blPcj2f
+	xm5gQ2XXCF5r9VE0IImPVHJ4CGkea020muSXS0s/WSqt+Hkz2NSOm1hksJAe5WO2
+	joq1QoKoa8Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EA8B6BC1;
+	Mon, 12 Dec 2011 18:31:46 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DA2516BC0; Mon, 12 Dec 2011
+ 18:31:45 -0500 (EST)
+In-Reply-To: <20111212213951.GB9754@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 12 Dec 2011 16:39:51 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 74A28204-2519-11E1-A198-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186972>
 
-Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -198,6 +198,9 @@ else
->  	exec 4>/dev/null 3>/dev/null
->  fi
->
-> +exec 6<&0
-> +exec 0</dev/null
-> +
->  test_failure=0
->  test_count=0
->  test_fixed=0
+> In theory we should also disable the documentation for credential-cache.
+> But that means surgery not only to Documentation/Makefile, but figuring
+> out how to pass the flags down to the actual asciidoc process (since
+> gitcredentials(7) mentions it in the text). Certainly possible, but I
+> don't know if it's worth the effort or not.
 
-Independently of the changes to explicitly pass HEAD to "git shortlog"
-in t7006 (we should) and make test_terminal make stdin into a tty, too
-(if tests still make sure "git log --stdin" launches a pager with
-stdin not a tty, then it should be a fine change), this looks good to
-me.
+I do not think it matters that much. We've been shipping documentation for
+stuff like remote archiver and daemon without conditional compilation, no?
