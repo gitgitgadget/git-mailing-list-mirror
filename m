@@ -1,74 +1,69 @@
-From: Jeff King <peff@peff.net>
+From: Stephen Bash <bash@genarts.com>
 Subject: Re: Git blame only current branch
-Date: Mon, 12 Dec 2011 11:55:42 -0500
-Message-ID: <20111212165542.GA4802@sigill.intra.peff.net>
-References: <e9e35956-a091-4143-8fd4-3516b54263a6@mail>
- <d615954f-bed8-482d-a2e3-e1e741d6dd23@mail>
+Date: Mon, 12 Dec 2011 12:05:25 -0500 (EST)
+Message-ID: <5e2440c1-8d11-4d92-b42f-14169a62ced1@mail>
+References: <20111212165542.GA4802@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Cc: git discussion list <git@vger.kernel.org>
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Mon Dec 12 17:55:52 2011
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 12 18:05:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ra9AL-0007fe-TE
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 17:55:50 +0100
+	id 1Ra9Jq-0004BL-HA
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 18:05:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752118Ab1LLQzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 11:55:45 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48203
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751091Ab1LLQzo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 11:55:44 -0500
-Received: (qmail 1592 invoked by uid 107); 12 Dec 2011 17:02:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 Dec 2011 12:02:25 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Dec 2011 11:55:42 -0500
-Content-Disposition: inline
-In-Reply-To: <d615954f-bed8-482d-a2e3-e1e741d6dd23@mail>
+	id S1753227Ab1LLRFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 12:05:34 -0500
+Received: from hq.genarts.com ([173.9.65.1]:60636 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751959Ab1LLRFd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 12:05:33 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 97E4ABE1283;
+	Mon, 12 Dec 2011 12:05:32 -0500 (EST)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id TMNEEaq7u3EE; Mon, 12 Dec 2011 12:05:25 -0500 (EST)
+Received: from mail.hq.genarts.com (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 46288BE1270;
+	Mon, 12 Dec 2011 12:05:25 -0500 (EST)
+In-Reply-To: <20111212165542.GA4802@sigill.intra.peff.net>
+X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC15 (Mac)/7.1.3_GA_3346)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186917>
 
-On Mon, Dec 12, 2011 at 10:24:47AM -0500, Stephen Bash wrote:
+----- Original Message -----
+> From: "Jeff King" <peff@peff.net>
+> Sent: Monday, December 12, 2011 11:55:42 AM
+> Subject: Re: Git blame only current branch
+> 
+> On Mon, Dec 12, 2011 at 10:24:47AM -0500, Stephen Bash wrote:
+> 
+> > I'm curious if there's a method to make git blame merge commits
+> > that introduce code to the given branch rather than commits on 
+> > the original (topic) branch?  For example:
+> 
+> Usually when you are interested in seeing merges like this in
+> git-log, you would use one of "--first-parent" or "--merges". 
+> However, though "git blame" takes revision arguments, it does
+> its own traversal of the graph that does not respect those 
+> options.
 
-> I'm curious if there's a method to make git blame merge commits that
-> introduce code to the given branch rather than commits on the original
-> (topic) branch?  For example:
+My first thought was --first-parent, and was disappointed when I didn't find it in the blame documentation :)  I think for my purposes --first-parent is better than --merges because there are non-merge commits on the branch(es) of interest (and thus I think the problem would become ill-posed in the --merges case).
 
-Usually when you are interested in seeing merges like this in git-log,
-you would use one of "--first-parent" or "--merges". However, though
-"git blame" takes revision arguments, it does its own traversal of the
-graph that does not respect those options.
+> Modifying it to do --first-parent is pretty easy:
+> ... snip ...
 
-Modifying it to do --first-parent is pretty easy:
+That's pretty simple...  I'll try to do a little testing this afternoon.
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 80febbe..c19a8cd 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1191,6 +1191,8 @@ static int num_scapegoats(struct rev_info *revs, struct commit *commit)
- {
- 	int cnt;
- 	struct commit_list *l = first_scapegoat(revs, commit);
-+	if (revs->first_parent_only)
-+		return l ? 1 : 0;
- 	for (cnt = 0; l; l = l->next)
- 		cnt++;
- 	return cnt;
-
-With that, "git blame --first-parent" produces reasonable results for
-me. But of course I didn't do more than 30 seconds of testing, so it is
-entirely possible there are corner cases or unforeseen side effects.
-
-Handling --merges is probably a little trickier, as you need to consider
-only some commits as scapegoats, but still traverse through everything
-to find the merges.
-
--Peff
+Thanks!
+Stephen
