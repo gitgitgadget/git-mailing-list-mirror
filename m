@@ -1,82 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 08/51] is_dup_ref(): extract function from
- sort_ref_array()
-Date: Mon, 12 Dec 2011 03:33:45 -0500
-Message-ID: <20111212083345.GA16106@sigill.intra.peff.net>
-References: <1323668338-1764-1-git-send-email-mhagger@alum.mit.edu>
- <1323668338-1764-9-git-send-email-mhagger@alum.mit.edu>
+From: Frans Klaver <fransklaver@gmail.com>
+Subject: Re: Question about commit message wrapping
+Date: Mon, 12 Dec 2011 09:41:32 +0100
+Message-ID: <CAH6sp9NwyxZi6KR4U96=sWdiqCseyTLEDoHdw=y9hUx2kHwOpg@mail.gmail.com>
+References: <35A5A513-91FD-4EF9-B890-AB3D1550D63F@sidneysm.com>
+	<m3zkf1hnh9.fsf@localhost.localdomain>
+	<E085218D-9287-4F82-B34C-8379742F818A@sidneysm.com>
+	<201112102030.15504.jnareb@gmail.com>
+	<CAH5451kGn72tLAwdvQFBjSyHSL0rUmaPZrbL7Z-KfHWN-HAuCQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Drew Northup <drew.northup@maine.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johan Herland <johan@herland.net>,
-	Julian Phillips <julian@quantumfyre.co.uk>
-To: mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Mon Dec 12 09:33:53 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	=?UTF-8?Q?Sidney_San_Mart=C3=ADn?= <s@sidneysm.com>,
+	git@vger.kernel.org
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 12 09:41:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ra1Ka-0005rI-N1
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 09:33:53 +0100
+	id 1Ra1S8-0000Jr-9X
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 09:41:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750856Ab1LLIds (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 03:33:48 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48064
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750748Ab1LLIdr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 03:33:47 -0500
-Received: (qmail 30938 invoked by uid 107); 12 Dec 2011 08:40:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 Dec 2011 03:40:27 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Dec 2011 03:33:45 -0500
-Content-Disposition: inline
-In-Reply-To: <1323668338-1764-9-git-send-email-mhagger@alum.mit.edu>
+	id S1750990Ab1LLIle convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Dec 2011 03:41:34 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:59709 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750862Ab1LLIld convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2011 03:41:33 -0500
+Received: by qcqz2 with SMTP id z2so3352055qcq.19
+        for <git@vger.kernel.org>; Mon, 12 Dec 2011 00:41:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=vn4sZ+2HOZSx2tjxbDvLPkuqz7BnLrOSeWYiHOKvg9I=;
+        b=HythEDNlwIGI8D1p9icQkquxT0EpTOjvL2wg+iU9kHse/tlkj7Yo2bigGnDmGjMB83
+         RVfZIUwJ8V7ZzLvzuLz0hRnujUGRicy4IIIXVa2RLpj0aVSFWpJrdtdLgpBMDro7B/od
+         IItTInwP5as31MFdPhh4KCLgo4Zj+9khENZDo=
+Received: by 10.229.65.85 with SMTP id h21mr4107976qci.215.1323679292542; Mon,
+ 12 Dec 2011 00:41:32 -0800 (PST)
+Received: by 10.224.76.82 with HTTP; Mon, 12 Dec 2011 00:41:32 -0800 (PST)
+In-Reply-To: <CAH5451kGn72tLAwdvQFBjSyHSL0rUmaPZrbL7Z-KfHWN-HAuCQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186898>
 
-On Mon, Dec 12, 2011 at 06:38:15AM +0100, mhagger@alum.mit.edu wrote:
+On Sun, Dec 11, 2011 at 11:00 PM, Andrew Ardill <andrew.ardill@gmail.co=
+m> wrote:
 
-> +/*
-> + * Emit a warning and return true iff ref1 and ref2 have the same name
-> + * and the same sha1.  Die if they have the same name but different
-> + * sha1s.
-> + */
-> +static int is_dup_ref(const struct ref_entry *ref1, const struct ref_entry *ref2)
-> +{
-> +	if (!strcmp(ref1->name, ref2->name)) {
-> +		/* Duplicate name; make sure that the SHA1s match: */
-> +		if (hashcmp(ref1->sha1, ref2->sha1))
-> +			die("Duplicated ref, and SHA1s don't match: %s",
-> +			    ref1->name);
-> +		warning("Duplicated ref: %s", ref1->name);
-> +		return 1;
-> +	} else {
-> +		return 0;
-> +	}
-> +}
+>> Additional and the more serious problem with wrapping on output is
+>> related to backward compatibility. =C2=A0If you have commit message =
+that is
+>> wrapped e.g. to 80 characters, and you wrap on output to 72 characte=
+rs,
+>> you would get ugly and nigh unreadable ragged output
+>
+> For what it's worth, I do a lot of reading emails on my phone, which
+> force wraps line-length to the width of the display (not a set number
+> of characters).
+> This is always less than 80.
 
-As a user, I'm not sure what this message means. If I understand the
-context right, this happens when you have duplicate entries in your
-packed-refs file?
+Good point.
 
-This would indicate a bug in git, so should this perhaps say "BUG:" in
-front, or maybe give some more context so that a user understands it is
-not their error, or even a random error on this run, but that git has
-accidentally corrupted the packed-refs file (and their best bet is
-probably to report the bug to us).
+>
+> Emails on this list are almost exclusively sent pre-wrapped to 80
+> character line lengths.
+> The result is exactly the kind of ragged output you used in your
+> example. Changing this behaviour may break backwards compatibility,
+> but it is already broken for 'future' compatibility.
 
-This is obviously not an issue introduced by your patch, as you are
-just moving these error messages around. But maybe while the topic is
-fresh in your mind it is a good time to improve it. I dunno. AFAICT
-nobody has ever actually hit this message, so maybe it doesn't matter.
-:)
-
--Peff
+I am starting to think that we need to somehow keep the current
+behavior, but override at smaller widths. Maybe even use format=3Dflowe=
+d
+in format-patch. On the other hand, the fundamental use with git is to
+communicate code, and I'm not sure how that [cw]ould be handled.
