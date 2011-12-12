@@ -1,72 +1,97 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Breakage (?) in configure and git_vsnprintf()
-Date: Mon, 12 Dec 2011 15:56:45 -0600
-Message-ID: <20111212215645.GA3024@elie.hsd1.il.comcast.net>
-References: <4EE4F97B.9000202@alum.mit.edu>
- <20111212064305.GA16511@sigill.intra.peff.net>
+From: "Frans Klaver" <fransklaver@gmail.com>
+Subject: Re: Question about commit message wrapping
+Date: Mon, 12 Dec 2011 23:16:49 +0100
+Message-ID: <op.v6edibfz0aolir@keputer>
+References: <35A5A513-91FD-4EF9-B890-AB3D1550D63F@sidneysm.com>
+ <m3zkf1hnh9.fsf@localhost.localdomain>
+ <E085218D-9287-4F82-B34C-8379742F818A@sidneysm.com>
+ <201112102030.15504.jnareb@gmail.com>
+ <CAH5451kGn72tLAwdvQFBjSyHSL0rUmaPZrbL7Z-KfHWN-HAuCQ@mail.gmail.com>
+ <CAH6sp9NwyxZi6KR4U96=sWdiqCseyTLEDoHdw=y9hUx2kHwOpg@mail.gmail.com>
+ <4EE62DB9.8030406@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	git discussion list <git@vger.kernel.org>,
-	Michal Rokos <michal.rokos@nextsoft.cz>,
-	Brandon Casey <casey@nrlssc.navy.mil>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 12 22:57:02 2011
+Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: "Andrew Ardill" <andrew.ardill@gmail.com>,
+	"Jakub Narebski" <jnareb@gmail.com>,
+	=?utf-8?Q?Sidney_San_Mart=C3=ADn?= <s@sidneysm.com>,
+	git@vger.kernel.org
+To: "Holger Hellmuth" <hellmuth@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon Dec 12 23:17:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaDro-0007aJ-BA
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 22:57:00 +0100
+	id 1RaEB9-00008K-7u
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 23:16:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754175Ab1LLV44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 16:56:56 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:36707 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754042Ab1LLV4z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 16:56:55 -0500
-Received: by yenm11 with SMTP id m11so4194828yen.19
-        for <git@vger.kernel.org>; Mon, 12 Dec 2011 13:56:55 -0800 (PST)
+	id S1754489Ab1LLWQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 17:16:54 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:51894 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754481Ab1LLWQx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 17:16:53 -0500
+Received: by eekc4 with SMTP id c4so1842009eek.19
+        for <git@vger.kernel.org>; Mon, 12 Dec 2011 14:16:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=gJPPyP3PN2twN+n87CRAyt/Wc5nqtSKul3yEMg+Ph4g=;
-        b=ZimJgwxh1Jku0zPGpsN9eeQw8iL9LiKIu8Ua65p3rDOM3Ks5IaCKzfc1pzaKgR2gxw
-         tEzCMA/dHcWvUUWpljdZY0gMrWuApLAX2ufbOz6HByNysh+PE9N4NcuuLMqJZXNA7tSM
-         5pH78ElzNLHvziaEq3lM0RIahCuSD0SbOqvIg=
-Received: by 10.236.155.2 with SMTP id i2mr28789690yhk.115.1323727014818;
-        Mon, 12 Dec 2011 13:56:54 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id f47sm32854133yhh.8.2011.12.12.13.56.53
-        (version=SSLv3 cipher=OTHER);
-        Mon, 12 Dec 2011 13:56:53 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20111212064305.GA16511@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=content-type:to:cc:subject:references:date:mime-version
+         :content-transfer-encoding:from:message-id:in-reply-to:user-agent;
+        bh=DWyF+wOsSTiLiQcXVXs/e5eHWcxzchMZ2h1M56q0bv0=;
+        b=jMnMYn8rhmLtciXUnUrdRbPSf6jEl1eLdAkCDUZZsK+XcxBev4QgP0HEnfMNhpl6yT
+         orc+2LgNjdCEmsaQCtOrxqSd3LmKYkfB06cUzqcjUTksIzbwK6I8Drs/3HKwnPMMcJnx
+         Jq6nPSuj2Geu/mFkUoT5GuTR6vBTo9mAHAmoY=
+Received: by 10.14.11.222 with SMTP id 70mr3151253eex.186.1323728212597;
+        Mon, 12 Dec 2011 14:16:52 -0800 (PST)
+Received: from keputer (82-136-253-149.ip.telfort.nl. [82.136.253.149])
+        by mx.google.com with ESMTPS id 54sm1842296eeo.10.2011.12.12.14.16.51
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 12 Dec 2011 14:16:51 -0800 (PST)
+In-Reply-To: <4EE62DB9.8030406@ira.uka.de>
+User-Agent: Opera Mail/12.00 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186963>
 
-Jeff King wrote:
+On Mon, 12 Dec 2011 17:37:13 +0100, Holger Hellmuth <hellmuth@ira.uka.de>  
+wrote:
 
-> I'll leave the issue of "-std=c89" triggering SNPRINTF_RETURNS_BOGUS to
-> people who know and care about autoconf. My gut is to say "don't do
-> that". Git is not actually pure c89. We typically target systems that
-> are _at least_ c89, but it's more important to match and run well on
-> real-world systems than what was defined in the standard. So we don't
-> depend on c99, but we do depend on quirks and features that were
-> prominent in mid-90's Unix variants.
+>> I am starting to think that we need to somehow keep the current
+>> behavior, but override at smaller widths. Maybe even use format=flowed
+>> in format-patch.
+>
+> Could you explain what overriding at smaller widths would achieve?  
+> Supporting format=flowed would be nice though.
 
-Using vsnprintf isn't even wrong from the standards-pedant point of
-view --- vsnprintf has been in POSIX for a long time.  The problem is
-that the configure script is not setting appropriate feature test
-macros such as _XOPEN_SOURCE (like git-compat-util.h does) during its
-feature tests.
+I specifically meant trying to detect pre-wrapped text, removing the  
+new-lines where we think it is because of wrapping at 80 characters. So  
+the result would be: perfect on screens up to 80 characters wide, and ok  
+on anything wider.
 
-Maybe it would be possible to hook the appropriate magic into
-AC_LANG_PROGRAM.
+The implementation of that however could affect code in the mail if it  
+isn't done properly.
+
+>
+>> On the other hand, the fundamental use with git is to
+>> communicate code, and I'm not sure how that [cw]ould be handled.
+>
+> I prefer wrapped code to code that is cut of at a specific column.  
+> Wrapped code has much less possibility for misinterpretation. Python  
+> programmers might disagree?
+
+Wrapped code as in auto-wrapped? Or as in manually wrapped? Python  
+programmers have significant white space, but you can still hard wrap  
+stuff, as long as the next statement is properly indented.
+
+>
+> I see your proposal mainly as an improvement to the display of texts,  
+> not code.
+
+Me too.
+
+
+-- 
+Using Opera's revolutionary e-mail client: http://www.opera.com/mail/
