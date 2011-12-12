@@ -1,94 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tag deletions not rejected with receive.denyDeletes=
- true
-Date: Mon, 12 Dec 2011 09:16:44 -0800
-Message-ID: <7v62hl677n.fsf@alter.siamese.dyndns.org>
-References: <12967682.2821323698766430.JavaMail.root@promailix.prometil.com>
+From: andreas.t.auer_gtml_37453@ursus.ath.cx
+Subject: Re: Git blame only current branch
+Date: Mon, 12 Dec 2011 18:19:21 +0100
+Message-ID: <4EE63799.6020409@ursus.ath.cx>
+References: <5e2440c1-8d11-4d92-b42f-14169a62ced1@mail>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jerome DE VIVIE <j.devivie@prometil.com>
-X-From: git-owner@vger.kernel.org Mon Dec 12 18:16:53 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>,
+	git discussion list <git@vger.kernel.org>
+To: Stephen Bash <bash@genarts.com>
+X-From: git-owner@vger.kernel.org Mon Dec 12 18:20:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ra9Ui-0001bN-SN
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 18:16:53 +0100
+	id 1Ra9Y6-0003Kf-1S
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 18:20:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753362Ab1LLRQs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 12:16:48 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62937 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753099Ab1LLRQr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 12:16:47 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DFF72613D;
-	Mon, 12 Dec 2011 12:16:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xBaCZNixLYEng4Bchy+7VVzXTFQ=; b=OaNPdo
-	E2kazLoOPvLwybN3P0IgzArRTX5MlkaDuq6OeWEIcEurXX3r4/kb3n539bzJD8MY
-	H95eiINiEOsxmdCmsNR72SpeQBsF1sjoWD9iGub46l/2Qx7F2faSQY4AyMb4BkWm
-	2Jjil93LIODy3Pcyu2f55ogSBp8W2X3oESxMw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fDR8ltKmeeA07xKoF6CQt5Gz6Xgb6QFw
-	mB6elOVXjT7PALUJJH4v1FG3+retxb0cE1OURJDVU0bGT6BPz85G1GOslYzG4Pzm
-	ILEJxSsf1/i5be5ovBNOCV3fMuZbLpw1CifeRqZQA3mlIWVBreQBp1YpkWdDI8Lp
-	9wqWng0M69c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D72BA613C;
-	Mon, 12 Dec 2011 12:16:46 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3CDF26139; Mon, 12 Dec 2011
- 12:16:46 -0500 (EST)
-In-Reply-To: <12967682.2821323698766430.JavaMail.root@promailix.prometil.com>
- (Jerome DE VIVIE's message of "Mon, 12 Dec 2011 15:06:06 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 11D3A966-24E5-11E1-86E5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753457Ab1LLRUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 12:20:17 -0500
+Received: from brln-4d0cbd2c.pool.mediaWays.net ([77.12.189.44]:11465 "EHLO
+	here" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753227Ab1LLRUQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 12:20:16 -0500
+Received: from [192.168.0.14] (unknown [192.168.0.14])
+	by here (Postfix) with ESMTP id 20AC719F1DA;
+	Mon, 12 Dec 2011 18:20:19 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20111110 Icedove/3.0.11
+In-Reply-To: <5e2440c1-8d11-4d92-b42f-14169a62ced1@mail>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186920>
 
-Jerome DE VIVIE <j.devivie@prometil.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes :
->> Our documentation can also use some updates, as it dates to the days back
->> when we more liberally used "refs" and "branches" interchangeably.
+
+On 12.12.2011 18:05 Stephen Bash wrote:
+>  ----- Original Message -----
+> > From: "Jeff King" <peff@peff.net> Sent: Monday, December 12, 2011
+> > 11:55:42 AM Subject: Re: Git blame only current branch
+> >
+> > On Mon, Dec 12, 2011 at 10:24:47AM -0500, Stephen Bash wrote:
+> >
+> > Usually when you are interested in seeing merges like this in
+> > git-log, you would use one of "--first-parent" or "--merges".
+> > However, though "git blame" takes revision arguments, it does its
+> > own traversal of the graph that does not respect those options.
 >
-> Ok, I have turned the patch below for documentation.
+>  My first thought was --first-parent, and was disappointed when I
+>  didn't find it in the blame documentation :)  I think for my purposes
+>  --first-parent is better than --merges because there are non-merge
+>  commits on the branch(es) of interest (and thus I think the problem
+>  would become ill-posed in the --merges case).
+>
+> > Modifying it to do --first-parent is pretty easy: ... snip ...
+>
+>  That's pretty simple...  I'll try to do a little testing this
+>  afternoon.
 
-Err,.. what I meant by "documentation update" is more like this.
-
- Documentation/config.txt |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 8a7d2d4..8eda8e4 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1653,15 +1653,15 @@ receive.unpackLimit::
- 	`transfer.unpackLimit` is used instead.
- 
- receive.denyDeletes::
--	If set to true, git-receive-pack will deny a ref update that deletes
--	the ref. Use this to prevent such a ref deletion via a push.
-+	If set to true, git-receive-pack will deny an update that deletes
-+	the branch. Use this to prevent a push from deleting a branch.
- 
- receive.denyDeleteCurrent::
--	If set to true, git-receive-pack will deny a ref update that
-+	If set to true, git-receive-pack will deny an update that
- 	deletes the currently checked out branch of a non-bare repository.
- 
- receive.denyCurrentBranch::
--	If set to true or "refuse", git-receive-pack will deny a ref update
-+	If set to true or "refuse", git-receive-pack will deny an update
- 	to the currently checked out branch of a non-bare repository.
- 	Such a push is potentially dangerous because it brings the HEAD
- 	out of sync with the index and working tree. If set to "warn",
+You might need to consider that if the master branch was first merged 
+into topicA before topicA was merged back to the master that the master 
+would only be fast-forwarded and so the first parent of M would be 3 not 
+C. So depending how the developers merged you might get different results.
