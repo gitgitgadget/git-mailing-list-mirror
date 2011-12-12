@@ -1,47 +1,55 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 1/2] Makefile: Windows lacks /dev/tty
-Date: Mon, 12 Dec 2011 22:52:11 +0100
-Message-ID: <4EE6778B.4000803@kdbg.org>
-References: <20111210103943.GA16478@sigill.intra.peff.net> <20111210104130.GI16648@sigill.intra.peff.net> <4EE66DAB.5070407@kdbg.org> <20111212211801.GA9754@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/5] mv: improve overwrite warning
+Date: Mon, 12 Dec 2011 16:52:39 -0500
+Message-ID: <20111212215238.GD9754@sigill.intra.peff.net>
+References: <20111212074503.GB16511@sigill.intra.peff.net>
+ <20111212075227.GD17532@sigill.intra.peff.net>
+ <7vobvd36ms.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 12 22:52:18 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 12 22:52:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaDnF-0005IJ-R0
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 22:52:18 +0100
+	id 1RaDni-0005Uu-7N
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 22:52:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754140Ab1LLVwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 16:52:13 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:59653 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751549Ab1LLVwN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 16:52:13 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id CFB45A7EB7;
-	Mon, 12 Dec 2011 22:52:35 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 364EF19F5F7;
-	Mon, 12 Dec 2011 22:52:11 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <20111212211801.GA9754@sigill.intra.peff.net>
+	id S1754184Ab1LLVwm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 16:52:42 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48345
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751549Ab1LLVwl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 16:52:41 -0500
+Received: (qmail 5811 invoked by uid 107); 12 Dec 2011 21:59:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 Dec 2011 16:59:22 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Dec 2011 16:52:39 -0500
+Content-Disposition: inline
+In-Reply-To: <7vobvd36ms.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186959>
 
-Am 12.12.2011 22:18, schrieb Jeff King:
-> The most recent version of the prompt series has platforms opting into
-> the replacement with HAVE_DEV_TTY.
+On Mon, Dec 12, 2011 at 11:57:31AM -0800, Junio C Hamano wrote:
 
-I see. Obviously, I've tested an earlier iteration. This patch can be
-dropped then.
+> Jeff King <peff@peff.net> writes:
+> 
+> > This message looks overly long to me, but I wanted to match the existing
+> > messages. Another option would be just:
+> >
+> >   warning: overwriting 'three/one'
+> 
+> Yes, I think it makes perfect sense to drop the ugly "source=one destination=two"
+> cruft, both for single-source and multiple-source cases.
 
--- Hannes
+Yeah, the more I look at the message in the patch I sent, the uglier it
+gets. Here's a re-rolled 4 and 5 with the nicer format.
+
+-Peff
