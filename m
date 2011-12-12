@@ -1,50 +1,68 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: BUG: git-p4: can't add files with special chars
-Date: Mon, 12 Dec 2011 20:48:10 +0000
-Message-ID: <4EE6688A.2030105@diamand.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH 1/2] Makefile: Windows lacks /dev/tty
+Date: Mon, 12 Dec 2011 22:10:03 +0100
+Message-ID: <4EE66DAB.5070407@kdbg.org>
+References: <20111210103943.GA16478@sigill.intra.peff.net> <20111210104130.GI16648@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Dec 12 21:48:19 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 12 22:10:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaCnK-00082X-JQ
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 21:48:18 +0100
+	id 1RaD8c-0001fY-Jj
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 22:10:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753965Ab1LLUsO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 15:48:14 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:48997 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753738Ab1LLUsN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 15:48:13 -0500
-Received: by bkcjm19 with SMTP id jm19so1911002bkc.19
-        for <git@vger.kernel.org>; Mon, 12 Dec 2011 12:48:12 -0800 (PST)
-Received: by 10.204.152.3 with SMTP id e3mr11341020bkw.70.1323722892535;
-        Mon, 12 Dec 2011 12:48:12 -0800 (PST)
-Received: from [86.26.7.206] (cpc1-cmbg14-2-0-cust973.5-4.cable.virginmedia.com. [86.26.7.206])
-        by mx.google.com with ESMTPS id fa8sm34996960bkc.14.2011.12.12.12.48.11
-        (version=SSLv3 cipher=OTHER);
-        Mon, 12 Dec 2011 12:48:11 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+	id S1754135Ab1LLVKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 16:10:11 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:45703 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753529Ab1LLVKJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 16:10:09 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 6C1C5A7EC2;
+	Mon, 12 Dec 2011 22:10:29 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 1784319F5F7;
+	Mon, 12 Dec 2011 22:10:04 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <20111210104130.GI16648@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186947>
 
-I just noticed this today. You can't add a file from git to perforce 
-that contains a p4 special character (@,#,% or *).
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+These two patches go on top of jk/credentials.
 
-There is code to cope going the other way round (p4 file with special 
-character in it) but if you create a file in git and then try to git-p4 
-submit, it fails.
+ Makefile |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-I've just tried a quick and simple fix, and it turns out that it's not 
-that easy as the special characters get expanded to %40, %2A and so-on. 
-The % seems to get further expanded by python...
-
-Luke
+diff --git a/Makefile b/Makefile
+index 2c506b3..5b7f6a8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1139,6 +1139,7 @@ ifeq ($(uname_S),Windows)
+ 	NO_CURL = YesPlease
+ 	NO_PYTHON = YesPlease
+ 	BLK_SHA1 = YesPlease
++	NO_DEV_TTY = YesPlease
+ 	NO_POSIX_GOODIES = UnfortunatelyYes
+ 	NATIVE_CRLF = YesPlease
+ 
+@@ -1232,6 +1233,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	ETAGS_TARGET = ETAGS
+ 	NO_INET_PTON = YesPlease
+ 	NO_INET_NTOP = YesPlease
++	NO_DEV_TTY = YesPlease
+ 	NO_POSIX_GOODIES = UnfortunatelyYes
+ 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/win32
+ 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
+-- 
+1.7.8.216.g2e426
