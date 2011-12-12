@@ -1,84 +1,74 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: Question about commit message wrapping
-Date: Mon, 12 Dec 2011 17:37:13 +0100
-Message-ID: <4EE62DB9.8030406@ira.uka.de>
-References: <35A5A513-91FD-4EF9-B890-AB3D1550D63F@sidneysm.com>	<m3zkf1hnh9.fsf@localhost.localdomain>	<E085218D-9287-4F82-B34C-8379742F818A@sidneysm.com>	<201112102030.15504.jnareb@gmail.com>	<CAH5451kGn72tLAwdvQFBjSyHSL0rUmaPZrbL7Z-KfHWN-HAuCQ@mail.gmail.com> <CAH6sp9NwyxZi6KR4U96=sWdiqCseyTLEDoHdw=y9hUx2kHwOpg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git blame only current branch
+Date: Mon, 12 Dec 2011 11:55:42 -0500
+Message-ID: <20111212165542.GA4802@sigill.intra.peff.net>
+References: <e9e35956-a091-4143-8fd4-3516b54263a6@mail>
+ <d615954f-bed8-482d-a2e3-e1e741d6dd23@mail>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Andrew Ardill <andrew.ardill@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	=?UTF-8?B?U2lkbmV5IFNhbiBNYXJ0w61u?= <s@sidneysm.com>,
-	git@vger.kernel.org
-To: Frans Klaver <fransklaver@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 12 17:36:30 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git discussion list <git@vger.kernel.org>
+To: Stephen Bash <bash@genarts.com>
+X-From: git-owner@vger.kernel.org Mon Dec 12 17:55:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ra8rd-000661-Dw
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 17:36:29 +0100
+	id 1Ra9AL-0007fe-TE
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 17:55:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752009Ab1LLQgZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 11:36:25 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:52013 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751373Ab1LLQgY (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2011 11:36:24 -0500
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1Ra8rQ-0003q1-Oc; Mon, 12 Dec 2011 17:36:22 +0100
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1Ra8rQ-0001eZ-Fj; Mon, 12 Dec 2011 17:36:16 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <CAH6sp9NwyxZi6KR4U96=sWdiqCseyTLEDoHdw=y9hUx2kHwOpg@mail.gmail.com>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1323707782.174498000
+	id S1752118Ab1LLQzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 11:55:45 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48203
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751091Ab1LLQzo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 11:55:44 -0500
+Received: (qmail 1592 invoked by uid 107); 12 Dec 2011 17:02:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 Dec 2011 12:02:25 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Dec 2011 11:55:42 -0500
+Content-Disposition: inline
+In-Reply-To: <d615954f-bed8-482d-a2e3-e1e741d6dd23@mail>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186916>
 
-On 12.12.2011 09:41, Frans Klaver wrote:
->> Emails on this list are almost exclusively sent pre-wrapped to 80
->> character line lengths.
->> The result is exactly the kind of ragged output you used in your
->> example. Changing this behaviour may break backwards compatibility,
->> but it is already broken for 'future' compatibility.
+On Mon, Dec 12, 2011 at 10:24:47AM -0500, Stephen Bash wrote:
 
-I don't really see backwards compatibility broken either. At the moment 
-commit messages are usually pre-wrapped at 72 columns, which looks 
-perfect only on 80 column displays, ok on wider displays and bad on 
-narrow displays.
+> I'm curious if there's a method to make git blame merge commits that
+> introduce code to the given branch rather than commits on the original
+> (topic) branch?  For example:
 
-If the requirement to pre-wrap would fall and either 'git log' or 'less' 
-doing the wrap, old commit messages would still look perfect on 80 
-column, ok on wider and bad on narrow displays. Newer commit messages 
-would look good everywhere.
+Usually when you are interested in seeing merges like this in git-log,
+you would use one of "--first-parent" or "--merges". However, though
+"git blame" takes revision arguments, it does its own traversal of the
+graph that does not respect those options.
 
-The only breakage would be that new long commit messages would look bad 
-on older git versions. Because of that the auto-wrap should be 
-implemented first and the "requirement" for 72 columns should fall in a 
-later version.
+Modifying it to do --first-parent is pretty easy:
 
-> I am starting to think that we need to somehow keep the current
-> behavior, but override at smaller widths. Maybe even use format=flowed
-> in format-patch.
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 80febbe..c19a8cd 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1191,6 +1191,8 @@ static int num_scapegoats(struct rev_info *revs, struct commit *commit)
+ {
+ 	int cnt;
+ 	struct commit_list *l = first_scapegoat(revs, commit);
++	if (revs->first_parent_only)
++		return l ? 1 : 0;
+ 	for (cnt = 0; l; l = l->next)
+ 		cnt++;
+ 	return cnt;
 
-Could you explain what overriding at smaller widths would achieve? 
-Supporting format=flowed would be nice though.
+With that, "git blame --first-parent" produces reasonable results for
+me. But of course I didn't do more than 30 seconds of testing, so it is
+entirely possible there are corner cases or unforeseen side effects.
 
-> On the other hand, the fundamental use with git is to
-> communicate code, and I'm not sure how that [cw]ould be handled.
+Handling --merges is probably a little trickier, as you need to consider
+only some commits as scapegoats, but still traverse through everything
+to find the merges.
 
-I prefer wrapped code to code that is cut of at a specific column. 
-Wrapped code has much less possibility for misinterpretation. Python 
-programmers might disagree?
-
-I see your proposal mainly as an improvement to the display of texts, 
-not code.
+-Peff
