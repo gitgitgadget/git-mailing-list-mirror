@@ -1,97 +1,106 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Auto update submodules after merge and reset
-Date: Mon, 12 Dec 2011 23:39:31 +0100
-Message-ID: <4EE682A3.8070704@web.de>
-References: <4ED57EED.4040705@qualcomm.com> <4ED5E9D2.4060503@web.de> <jbnadt$hf8$1@dough.gmane.org> <4EDFE75C.5050201@web.de> <4EE07FCD.8090702@ursus.ath.cx> <CABURp0rcT2FR3uOmhyPUV5W3pu7WuJzjXktmUq0eb4nOiUwDKA@mail.gmail.com> <4EE51D7B.7020806@ursus.ath.cx>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [RFC/PATCH] add update to branch support for "floating submodules"
+Date: Mon, 12 Dec 2011 17:56:52 -0500
+Message-ID: <CABURp0rFOGQ9kAbAn65W3UAHTWbk5prH7spjJnFvL5fqzbFp1w@mail.gmail.com>
+References: <20111109174027.GA28825@book.fritz.box> <7vr51htbsy.fsf@alter.siamese.dyndns.org>
+ <20111129220854.GB2812@sandbox-rc.fritz.box> <loom.20111210T062013-538@post.gmane.org>
+ <7vborhaqgw.fsf@alter.siamese.dyndns.org> <CALFF=ZQKRgx_AodBQH17T9cSe_JFtoKie7DoMMfkTXCyCFospw@mail.gmail.com>
+ <4EE61EED.50604@ursus.ath.cx> <CALFF=ZRYB1LkAY5WSC4Eydu-N0KNnWLLM2CfbSXZji18yO82gw@mail.gmail.com>
+ <4EE64B04.8080405@ursus.ath.cx> <CALFF=ZRB7qjj7VMhzr12ySdHmZsySoqceu5brFht8rX1+W3NPg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Phil Hord <phil.hord@gmail.com>, git@vger.kernel.org
-To: "Andreas T.Auer" <andreas.t.auer_gtml_37453@ursus.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Dec 12 23:39:43 2011
+Cc: "Andreas T.Auer" <andreas.t.auer_gtml_37453@ursus.ath.cx>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Leif Gruenwoldt <leifer@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 12 23:57:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaEX5-0001o5-Rp
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 23:39:40 +0100
+	id 1RaEoB-0001kP-3X
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 23:57:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754406Ab1LLWjf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 17:39:35 -0500
-Received: from fmmailgate02.web.de ([217.72.192.227]:43050 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754326Ab1LLWjf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 17:39:35 -0500
-Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
-	by fmmailgate02.web.de (Postfix) with ESMTP id AED391BB3B26F
-	for <git@vger.kernel.org>; Mon, 12 Dec 2011 23:39:33 +0100 (CET)
-Received: from [192.168.178.25] ([80.187.110.206]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0Lvk56-1Qg8Ge2B3c-017Tds; Mon, 12 Dec 2011 23:39:33
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <4EE51D7B.7020806@ursus.ath.cx>
-X-Provags-ID: V02:K0:2Q8dv1KbTDcnTVaOz1Qkg6SRZrLkXjbxOPL/nupH4ZG
- EjzEzIFRMFH7MpyjgkWdeC+FXgmLpES3Mmbq6CIa6esyKnydqk
- E/NWMfC6I7LeEHm3LVxY1mb3o5/gPMX4dU1qyHukbLb3OW5zZl
- Ni908jgO5kN9n83qnHOw4QmZKsYVvpewht9GANHsAINv7/3kaV
- Koo6Fsa+6N2MUwH81sKLA==
+	id S1752510Ab1LLW5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 17:57:14 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:41785 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751334Ab1LLW5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 17:57:13 -0500
+Received: by mail-ww0-f44.google.com with SMTP id dr13so12249383wgb.1
+        for <git@vger.kernel.org>; Mon, 12 Dec 2011 14:57:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=MpR75dC87TZ1Fv0mMN4Fow4u/g5YyRr33Z7+4N5wzqE=;
+        b=ovyJTsKP96TJtBXSBxe4xLjGrHExvhGaQ/CHg+izVubem0fyP1AYY8Tc7+IRE5333G
+         4OYsZ53leJFBOyPLgRtJpNFGhm4AqCIFtSzmtT7ajlWXRQID9mrG5PHAna43AZqVISLB
+         iNSSFTKSxsZrFy5l67v/GBFoaeBH+qE4og/qA=
+Received: by 10.227.203.131 with SMTP id fi3mr18464607wbb.17.1323730633287;
+ Mon, 12 Dec 2011 14:57:13 -0800 (PST)
+Received: by 10.216.120.199 with HTTP; Mon, 12 Dec 2011 14:56:52 -0800 (PST)
+In-Reply-To: <CALFF=ZRB7qjj7VMhzr12ySdHmZsySoqceu5brFht8rX1+W3NPg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186970>
 
-Am 11.12.2011 22:15, schrieb Andreas T.Auer:
-> 
-> 
-> On 10.12.2011 00:57 Phil Hord wrote:
->>  On Thu, Dec 8, 2011 at 4:13 AM,
->>  <andreas.t.auer_gtml_37453@ursus.ath.cx> wrote:
+On Mon, Dec 12, 2011 at 2:13 PM, Leif Gruenwoldt <leifer@gmail.com> wrote:
+> On Mon, Dec 12, 2011 at 1:42 PM, Andreas T.Auer
+> <andreas.t.auer_gtml_37453@ursus.ath.cx> wrote:
+>
+>> The next question is: Wouldn't you like to have the new stable branch only
+>> pulled in, when the projectX (as the superproject) is currently on that new
+>> development branch (maybe master)?
 >>
->>  Yes, but maybe you can update this information in the .gitmodules
->>  file easily with a command.  Maybe it could be something simpler
->>  than "git sync-gitmodules-branches", but that is essentially what it
->>  would do: it would save the current branch in each submodule as the
->>  "tracked" branch in the .gitmodules file.
-> 
-> Ok, I have read a better description of the "floating submodule" model now, so it is a different use case and somehow it makes sense. In that case there are probably just a few branches that you would like to follow, maybe an "unstable" for the newest development or "stable" for the current release or some maintenance branches.
-> 
->>  Now this makes sense.  I want the same thing.  I want to preserve
->>  history on "old" commits, but I want to "advance to tip" on "new"
->>  commits.
+>> But if you checkout that fixed released version 1.2.9.8, wouldn't it be
+>> better that in that case the gitlinked version of the submodule is checked
+>> out instead of some unrelated new version? I mean, when the gitlinks are
+>> tracked with the projectX commits, this should work well.
 >>
->>  The trouble, I think, is in telling the difference between "old" and
->>   "new".  I think it means there is a switch, like --auto-follow (or
->>  --no-auto-follow for the alternate if core.auto_follow is set).  But
->>   having a config option as the default is likely to break lots of
->>  scripts.
-> 
-> In my use case the branches on the submodules follow the superproject and (mostly) versions that are committed there, it just adds the possibility to keep on working without checking out a branch after an update and without colliding with existing branchnames in the submodule.
+>> And what about a maintenance branch, which is not a fixed version but a
+>> quite stable branch which should only have bugfixes. Shouldn't the auto-pull
+>> be disabled in that case, too?
+>>
+>> I think the "auto-pull" behavior should depend on the currently checked out
+>> branch. So the configuration options should allow the definition of one or
+>> more mappings.
+>
+> Yes. I think you nailed it. The floating behaviour would best be
+> configured per branch.
 
-Using superproject branch names in the submodules make no sense for a
-lot of use cases.
+Yes, I think you nailed it too.  I've been thinking the same thing for
+a while now, but I didn't know how to express it completely.  Some of
+the discussion on here last week gelled the last bits in my mind.
 
-> The other use case wants to follow the commits of that other submodule without checking the corresponding gitlinks into the superproject. But wouldn't it also make sense here to define actually a mapping in the .gitmodule that says "if the branch 'develop' is checkedout in the supermodule then with every submodule update automatically pull the newest 'unstable' commit from the submodule"? Or for "master" follow "stable" or for the "maint" branch follow updates in the "bugfixes" branch.
-> 
-> For example
-> 
-> [submodule "commonlib"]
->     update = heads develop:unstable master:stable maint:bugfixes
+To wit, I think I would want something like this in my project:
 
-Having that configured with "branch=unstable", "branch=stable" etc. in
-.gitmodules on the superprojects branches would be simpler and achieve
-the same functionality.
+Use gitlinks when the superproject HEAD is one of these:
+    refs/heads/maint/*
+    refs/heads/svn/*     (historic branches)
+    refs/tags/*
+    <SHA1> (detached)
 
-> So whenever a defined branch is checked out in the superproject the mapped branch will be checked out in the submodule ("new" commit), but if a (e.g. tagged) commit is checked out ("old" commit) then the gitlink in the superproject is used to check out the referenced commit in the submodule.
+Float on the rest, using the branch given in .gitmodules (which may be
+* to mean "use the same branch as the superproject".)
 
-I think checkout should only use the submodule commit recorded in the
-superproject and a subsequent "git submodule update" should be needed
-to update the submodule to tip. Otherwise you record SHA-1 but still
-won't be able to bisect ...
+But maybe it is foolish of me to keep branches where I really want
+lightweight tags.  If so, I could get away with this:
 
-> In http://thread.gmane.org/gmane.comp.version-control.git/183837 was discussed whether the gitlink in the superproject should be set to all-zero if updates follow the tip or maybe use the SHA1 of the commit when the submodule was added. I think the gitlink should be updated everytime when a new commit in the superproject is created.
+   Float if .git/HEAD begins with "refs/heads"
+   Else, use the SHA1.
 
-Nope, only when "git submodule update" is run. Otherwise you'll spray the
-history with submodule updates totally unrelated to the commits in the
-superproject, which is rather confusing.
+
+> An aside. Would this mean a "git pull" on the product repo would
+> automatically do a pull (git submodule update) on the submodule too?
+
+Good question.
+
+I want to say "eventually, but not yet."  But someone else may
+disagree.  "git pull --recurse-submodules=yes" does not do this yet.
+A separate git-submodule-update is still required.  But I think this
+is a separate issue from floating submodules.
+
+Phil
