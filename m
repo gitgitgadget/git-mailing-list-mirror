@@ -1,111 +1,88 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitk: make "git describe" output clickable, too
-Date: Mon, 12 Dec 2011 11:48:55 -0800
-Message-ID: <7v62hl4llk.fsf@alter.siamese.dyndns.org>
-References: <87mxb0foqe.fsf@rho.meyering.net>
+Subject: Re: [PATCH 1/5] docs: mention "-k" for both forms of "git mv"
+Date: Mon, 12 Dec 2011 11:52:08 -0800
+Message-ID: <7v1us94lg7.fsf@alter.siamese.dyndns.org>
+References: <20111212074503.GB16511@sigill.intra.peff.net>
+ <20111212075031.GA17532@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>, Jim Meyering <jim@meyering.net>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Mon Dec 12 20:49:07 2011
+Cc: Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 12 20:52:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaBs3-0000gu-4Q
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 20:49:07 +0100
+	id 1RaBv6-0002Qg-GG
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 20:52:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753968Ab1LLTtB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 14:49:01 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37799 "EHLO
+	id S1753606Ab1LLTwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 14:52:12 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39460 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753367Ab1LLTs6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 14:48:58 -0500
+	id S1751346Ab1LLTwL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 14:52:11 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DC195E40;
-	Mon, 12 Dec 2011 14:48:57 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9D785F2B;
+	Mon, 12 Dec 2011 14:52:10 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yTXriV+3iWPstnkxx5h6pTJrtbg=; b=n83/Gc
-	Kt8fbcviGVwYksRIWD7kisX8dZWYntXstkSdtO8jgHuX4sbuzVvwbG0/R+Qh4KWL
-	6LYc3efquGpynSZVIjHFAskGtvt/ZpWvTaD9DlMc/XbgVSPLW4T5WPOhF4aVArpo
-	f5vf23ARnDo41xauivySTmS+nRta/WBGWKBfw=
+	:content-type; s=sasl; bh=j7L26AjhbgHeivged+o8u2XkzB8=; b=ABj9uX
+	QFSv1OnQXSvmcTt2htrs+UTedHb9Z8/eRvIZK9T3rWF+2bI/yg+Z3va9lCeakx2G
+	z9LMgR0kX00Ox369PJzroxtOrEOzoRLa201TP/eHDlMXUijkbwGxxFhHdQHnWWal
+	4+xaTaNwSAwuke1yz0rIySYNl+NCi/PhCOTUQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UskRkw/rX7rrekSsjv4W3UUk7J8WAD5o
-	rdNJywjAw8b+XPgGabbGSfQgTmwzn6uzg4ecK2WWLYxXqcUIpqxpsUoh14thgmmM
-	j0uKCYFsOMRMohJkEsw1mGutyprky9pIFINeOR4p5/q1KoveVmY8oHGZBx+F3Nf4
-	oVC8BosJ/p0=
+	:content-type; q=dns; s=sasl; b=YWJYKEJZ281M65lxAKkJLf8KzrkIOhst
+	Y5lXnLmw3BpclZrXZMArWcNVGzXYrTwLYFob61NLIU0IGHvtuCM0aih6JPiYpbJj
+	P6aB/YQKwmb1LJY7aq9E0xcgwoEmCT8Wc/mye/dPMR1e3bu1t0KFnbmLNLGnkutd
+	BChl933yB5Y=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 754515E3F;
-	Mon, 12 Dec 2011 14:48:57 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B152E5F2A;
+	Mon, 12 Dec 2011 14:52:10 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CDAA85E3C; Mon, 12 Dec 2011
- 14:48:56 -0500 (EST)
-In-Reply-To: <87mxb0foqe.fsf@rho.meyering.net> (Jim Meyering's message of
- "Sat, 10 Dec 2011 16:08:57 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 47B935F27; Mon, 12 Dec 2011
+ 14:52:10 -0500 (EST)
+In-Reply-To: <20111212075031.GA17532@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 12 Dec 2011 02:50:31 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5412D01C-24FA-11E1-9A69-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C75DA196-24FA-11E1-A989-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186939>
 
-Jim Meyering <jim@meyering.net> writes:
+Jeff King <peff@peff.net> writes:
 
-> I noticed that automake's contribution guidelines suggest using
-> "git describe" output in commit logs to reference previous commits.
-> By contrast, in coreutils, I had acquired the habit of using a bare SHA1
-> prefix (8 hex digits), since gitk creates clickable links for that, and
-> not for "git describe" output.
+> I actually would rather just see:
 >
-> I prefer the readability of the full "git describe" output, yet want to
-> retain the gitk links, so wrote the following that renders as clickable
-> not just SHA1-like strings, but also an SHA1-like string that is
-> prefixed by "-g".
+>   git mv [options] <source> <destination>
+>   git mv [options] <source>... <destination>
 >
-> Signed-off-by: Jim Meyering <meyering@redhat.com>
-> ---
-> This is relative to master.
-> Think of this as mere proof-of-concept:
+> but if we are going to go that route, we should probably decide on a
+> style and convert all of the descriptions at the same time.
 
-Paul, I think this makes tons of sense. Comments?
+Also most commands when they use these multi-line synopsis style to
+differenciate different invocation contexts do take different set of
+options for different contexts, so we would need to update the option
+descriptions to say "this option only makes sense in this context", etc.
 
-> Ideally, the string preceding the -g would be used to disambiguate
-> the SHA1 prefix, but that would require more code.
+>  Documentation/git-mv.txt |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
 >
-> I confess that I haven't looked to see if documentation needs
-> to be updated or if this would merit test suite additions.
->
->  gitk-git/gitk |    6 +++++-
->  1 files changed, 5 insertions(+), 1 deletions(-)
->
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 4cde0c4..f8eb613 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -6688,7 +6688,7 @@ proc appendwithlinks {text tags} {
->
->      set start [$ctext index "end - 1c"]
->      $ctext insert end $text $tags
-> -    set links [regexp -indices -all -inline {\m[0-9a-f]{6,40}\M} $text]
-> +    set links [regexp -indices -all -inline {(?:\m|-g)[0-9a-f]{6,40}\M} $text]
->      foreach l $links {
->  	set s [lindex $l 0]
->  	set e [lindex $l 1]
-> @@ -6704,6 +6704,10 @@ proc appendwithlinks {text tags} {
->  proc setlink {id lk} {
->      global curview ctext pendinglinks
->
-> +    if {[string range $id 0 1] eq "-g"} {
-> +      set id [string range $id 2 end]
-> +    }
-> +
->      set known 0
->      if {[string length $id] < 40} {
->  	set matches [longid $id]
-> --
-> 1.7.8.163.g9859a
+> diff --git a/Documentation/git-mv.txt b/Documentation/git-mv.txt
+> index b8db373..4be7a71 100644
+> --- a/Documentation/git-mv.txt
+> +++ b/Documentation/git-mv.txt
+> @@ -15,7 +15,7 @@ DESCRIPTION
+>  -----------
+>  This script is used to move or rename a file, directory or symlink.
+>  
+> - git mv [-f] [-n] <source> <destination>
+> + git mv [-f] [-n] [-k] <source> <destination>
+>   git mv [-f] [-n] [-k] <source> ... <destination directory>
+>  
+>  In the first form, it renames <source>, which must exist and be either
