@@ -1,68 +1,114 @@
 From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 1/2] Makefile: Windows lacks /dev/tty
-Date: Mon, 12 Dec 2011 22:10:03 +0100
-Message-ID: <4EE66DAB.5070407@kdbg.org>
-References: <20111210103943.GA16478@sigill.intra.peff.net> <20111210104130.GI16648@sigill.intra.peff.net>
+Subject: [PATCH 2/2] Makefile: optionally exclude code that needs Unix sockets
+Date: Mon, 12 Dec 2011 22:12:56 +0100
+Message-ID: <4EE66E58.6040404@kdbg.org>
+References: <20111210103943.GA16478@sigill.intra.peff.net> <20111210104130.GI16648@sigill.intra.peff.net> <4EE66DAB.5070407@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 12 22:10:20 2011
+X-From: git-owner@vger.kernel.org Mon Dec 12 22:13:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaD8c-0001fY-Jj
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 22:10:18 +0100
+	id 1RaDBJ-00033Q-AE
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 22:13:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754135Ab1LLVKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 16:10:11 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:45703 "EHLO bsmtp.bon.at"
+	id S1754169Ab1LLVNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 16:13:00 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:44123 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753529Ab1LLVKJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 16:10:09 -0500
+	id S1753963Ab1LLVM7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 16:12:59 -0500
 Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 6C1C5A7EC2;
-	Mon, 12 Dec 2011 22:10:29 +0100 (CET)
+	by bsmtp.bon.at (Postfix) with ESMTP id 3D1A52C4002;
+	Mon, 12 Dec 2011 22:13:35 +0100 (CET)
 Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 1784319F5F7;
-	Mon, 12 Dec 2011 22:10:04 +0100 (CET)
+	by dx.sixt.local (Postfix) with ESMTP id E073B19F5F7;
+	Mon, 12 Dec 2011 22:12:56 +0100 (CET)
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <20111210104130.GI16648@sigill.intra.peff.net>
+In-Reply-To: <4EE66DAB.5070407@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186948>
+
+Introduce a configuration option NO_UNIX_SOCKETS to exclude code that
+depends on Unix sockets and use it in MSVC and MinGW builds.
+
+Notice that unix-socket.h was missing from LIB_H before; fix that, too.
 
 Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
-These two patches go on top of jk/credentials.
+All or most of the tests introduced by the series fail on Windows.
+What is the preferred way to exclude them? Mark the all with a
+prerequisite? Or exit early at the beginning of the test file?
 
- Makefile |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ Makefile |   13 ++++++++++---
+ 1 files changed, 10 insertions(+), 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 2c506b3..5b7f6a8 100644
+index 5b7f6a8..77c85db 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1139,6 +1139,7 @@ ifeq ($(uname_S),Windows)
- 	NO_CURL = YesPlease
- 	NO_PYTHON = YesPlease
- 	BLK_SHA1 = YesPlease
-+	NO_DEV_TTY = YesPlease
- 	NO_POSIX_GOODIES = UnfortunatelyYes
- 	NATIVE_CRLF = YesPlease
+@@ -143,6 +143,8 @@ all::
+ #
+ # Define NO_IPV6 if you lack IPv6 support and getaddrinfo().
+ #
++# Define NO_UNIX_SOCKETS if your system does not offer unix sockets.
++#
+ # Define NO_SOCKADDR_STORAGE if your platform does not have struct
+ # sockaddr_storage.
+ #
+@@ -430,8 +432,6 @@ PROGRAM_OBJS += show-index.o
+ PROGRAM_OBJS += upload-pack.o
+ PROGRAM_OBJS += http-backend.o
+ PROGRAM_OBJS += sh-i18n--envsubst.o
+-PROGRAM_OBJS += credential-cache.o
+-PROGRAM_OBJS += credential-cache--daemon.o
+ PROGRAM_OBJS += credential-store.o
  
-@@ -1232,6 +1233,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	ETAGS_TARGET = ETAGS
- 	NO_INET_PTON = YesPlease
- 	NO_INET_NTOP = YesPlease
-+	NO_DEV_TTY = YesPlease
- 	NO_POSIX_GOODIES = UnfortunatelyYes
- 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/win32
- 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
+ PROGRAMS += $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
+@@ -709,7 +709,6 @@ LIB_OBJS += transport-helper.o
+ LIB_OBJS += tree-diff.o
+ LIB_OBJS += tree.o
+ LIB_OBJS += tree-walk.o
+-LIB_OBJS += unix-socket.o
+ LIB_OBJS += unpack-trees.o
+ LIB_OBJS += url.o
+ LIB_OBJS += usage.o
+@@ -1112,6 +1111,7 @@ ifeq ($(uname_S),Windows)
+ 	NO_SYS_POLL_H = YesPlease
+ 	NO_SYMLINK_HEAD = YesPlease
+ 	NO_IPV6 = YesPlease
++	NO_UNIX_SOCKETS = YesPlease
+ 	NO_SETENV = YesPlease
+ 	NO_UNSETENV = YesPlease
+ 	NO_STRCASESTR = YesPlease
+@@ -1206,6 +1206,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	NO_LIBGEN_H = YesPlease
+ 	NO_SYS_POLL_H = YesPlease
+ 	NO_SYMLINK_HEAD = YesPlease
++	NO_UNIX_SOCKETS = YesPlease
+ 	NO_SETENV = YesPlease
+ 	NO_UNSETENV = YesPlease
+ 	NO_STRCASESTR = YesPlease
+@@ -1584,6 +1585,12 @@ ifdef NO_INET_PTON
+ 	LIB_OBJS += compat/inet_pton.o
+ 	BASIC_CFLAGS += -DNO_INET_PTON
+ endif
++ifndef NO_UNIX_SOCKETS
++	LIB_OBJS += unix-socket.o
++	LIB_H += unix-socket.h
++	PROGRAM_OBJS += credential-cache.o
++	PROGRAM_OBJS += credential-cache--daemon.o
++endif
+ 
+ ifdef NO_ICONV
+ 	BASIC_CFLAGS += -DNO_ICONV
 -- 
 1.7.8.216.g2e426
