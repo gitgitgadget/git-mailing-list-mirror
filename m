@@ -1,7 +1,7 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH v2 41/51] find_containing_direntry(): use (ref_entry *) instead of (ref_dir *)
-Date: Mon, 12 Dec 2011 06:38:48 +0100
-Message-ID: <1323668338-1764-42-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 31/51] refs: sort ref_dirs lazily
+Date: Mon, 12 Dec 2011 06:38:38 +0100
+Message-ID: <1323668338-1764-32-git-send-email-mhagger@alum.mit.edu>
 References: <1323668338-1764-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Drew Northup <drew.northup@maine.edu>,
@@ -11,25 +11,25 @@ Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Julian Phillips <julian@quantumfyre.co.uk>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 12 06:41:13 2011
+X-From: git-owner@vger.kernel.org Mon Dec 12 06:41:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZydV-0000k3-C6
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 06:41:13 +0100
+	id 1RZydQ-0000k3-73
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 06:41:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753100Ab1LLFk4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 00:40:56 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:34948 "EHLO
+	id S1752860Ab1LLFke (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 00:40:34 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:34828 "EHLO
 	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753059Ab1LLFkw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 00:40:52 -0500
+	with ESMTP id S1752829Ab1LLFkb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 00:40:31 -0500
 X-Envelope-From: mhagger@alum.mit.edu
 Received: from michael.fritz.box (p54BEB2AB.dip.t-dialin.net [84.190.178.171])
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pBC5d8as015577;
-	Mon, 12 Dec 2011 06:40:42 +0100
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pBC5d8ai015577;
+	Mon, 12 Dec 2011 06:40:21 +0100
 X-Mailer: git-send-email 1.7.8
 In-Reply-To: <1323668338-1764-1-git-send-email-mhagger@alum.mit.edu>
 X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
@@ -37,180 +37,147 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186857>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
-Change type of both argument and return value.
+Sort ref_dirs lazily, when the ordering is needed: for searching via
+search_ref_dir(), and when iterating over the references via
+do_for_each_ref_in_dir() and do_for_each_ref_in_dirs().
+
+This change means that we never have to sort directories recursively,
+so change sort_ref_dirs() to not recurse.
+
+NOTE: the dirs can now be sorted as a side-effect of other function
+calls.  Therefore, it would be problematic to do something from a
+each_ref_fn callback that could provoke the sorting of the directory
+that is currently being iterated over.  This is not so likely, because
+a directory is always sorted just before being iterated over and thus
+can be searched through during the iteration without causing a
+re-sort.  But if a callback function would add a reference to a parent
+directory of the reference in the iteration, then try to resolve a
+reference under that directory, inconsistency could result.
+
+Add a comment in refs.h warning against modifications during
+iteration.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c |   78 ++++++++++++++++++++++++++++++++--------------------------------
- 1 files changed, 39 insertions(+), 39 deletions(-)
+ refs.c |   35 +++++++++++++++--------------------
+ refs.h |    7 +++++--
+ 2 files changed, 20 insertions(+), 22 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 439545b..d89c3d0 100644
+index ce141ea..f01da78 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -282,38 +282,40 @@ static struct ref_entry *search_ref_dir(struct ref_dir *dir, const char *refname
+@@ -256,9 +256,14 @@ static struct ref_entry *search_ref_dir(struct ref_dir *dir, const char *refname
+ 
+ 	/*
+ 	 * We need dir to be sorted so that binary search works.
+-	 * Calling sort_ref_dir() here is not quite as terribly
+-	 * inefficient as it looks, because directories that are
+-	 * already sorted are not re-sorted.
++	 * Calling sort_ref_dir() here is not as terribly inefficient
++	 * as it looks.  (1) If the directory is already sorted, it is
++	 * not re-sorted. (2) When adding a reference,
++	 * search_ref_dir() is only called to find the containing
++	 * subdirectories; there is no search of the directory to
++	 * which the reference will be stored.  Thus adding a bunch of
++	 * references one after the other to a single subdirectory
++	 * doesn't require *any* intermediate sorting.
+ 	 */
+ 	sort_ref_dir(dir);
+ 
+@@ -364,26 +369,16 @@ static int is_dup_ref(const struct ref_entry *ref1, const struct ref_entry *ref2
  }
  
  /*
-- * If refname is a reference name, find the ref_dir within the dir
-+ * If refname is a reference name, find the ref_entry within the dir
-  * tree that should hold refname.  If refname is a directory name
-- * (i.e., ends in '/'), then return that ref_dir itself.  dir must
-- * represent the top-level directory.  Recurse into subdirectories as
-- * necessary.  If mkdir is set, then create any missing directories;
-- * otherwise, return NULL if the desired directory cannot be found.
-+ * (i.e., "" or ends in '/'), then return that ref_entry itself.  dir
-+ * must represent the top-level directory.  Recurse into
-+ * subdirectories as necessary.  If mkdir is set, then create any
-+ * missing directories; otherwise, return NULL if the desired
-+ * directory cannot be found.
+- * Sort the entries in dir and its subdirectories (if they are not
+- * already sorted).
++ * Sort the entries in dir (if they are not already sorted).  Sort
++ * only dir itself, not its subdirectories.
   */
--static struct ref_dir *find_containing_dir(struct ref_dir *dir,
--					   const char *refname, int mkdir)
-+static struct ref_entry *find_containing_direntry(struct ref_entry *direntry,
-+						  const char *refname, int mkdir)
+ static void sort_ref_dir(struct ref_dir *dir)
  {
- 	char *refname_copy = xstrdup(refname);
- 	char *slash;
--	struct ref_entry *entry;
-+	assert(direntry->flag & REF_DIR);
- 	for (slash = strchr(refname_copy, '/'); slash; slash = strchr(slash + 1, '/')) {
- 		char tmp = slash[1];
-+		struct ref_entry *entry;
- 		slash[1] = '\0';
--		entry = search_ref_dir(dir, refname_copy);
-+		entry = search_ref_dir(&direntry->u.subdir, refname_copy);
- 		if (!entry) {
- 			if (!mkdir) {
--				dir = NULL;
-+				direntry = NULL;
- 				break;
- 			}
- 			entry = create_dir_entry(refname_copy);
--			add_entry_to_dir(dir, entry);
-+			add_entry_to_dir(&direntry->u.subdir, entry);
- 		}
- 		slash[1] = tmp;
- 		assert(entry->flag & REF_DIR);
--		dir = &entry->u.subdir;
-+		direntry = entry;
- 	}
+ 	int i, j;
+ 	struct ref_entry *last = NULL;
  
- 	free(refname_copy);
--	return dir;
-+	return direntry;
+-	if (dir->sorted == dir->nr) {
+-		/*
+-		 * This directory is already sorted and de-duped, but
+-		 * we still have to sort subdirectories.
+-		 */
+-		for (i = 0; i < dir->nr; i++) {
+-			struct ref_entry *entry = dir->entries[i];
+-			if (entry->flag & REF_DIR)
+-				sort_ref_dir(&entry->u.subdir);
+-		}
+-		return;
+-	}
++	if (dir->sorted == dir->nr)
++		return; /* This directory is already sorted and de-duped */
+ 
+ 	qsort(dir->entries, dir->nr, sizeof(*dir->entries), ref_entry_cmp);
+ 
+@@ -393,7 +388,6 @@ static void sort_ref_dir(struct ref_dir *dir)
+ 		if (last && is_dup_ref(last, entry)) {
+ 			free_ref_entry(entry);
+ 		} else if (entry->flag & REF_DIR) {
+-			sort_ref_dir(&entry->u.subdir);
+ 			dir->entries[i++] = entry;
+ 			last = NULL;
+ 		} else {
+@@ -430,6 +424,7 @@ static int do_for_each_ref_in_dir(struct ref_dir *dir, int offset,
+ 				  each_ref_fn fn, int trim, int flags, void *cb_data)
+ {
+ 	int i;
++	sort_ref_dir(dir);
+ 	for (i = offset; i < dir->nr; i++) {
+ 		struct ref_entry *entry = dir->entries[i];
+ 		int retval;
+@@ -453,6 +448,8 @@ static int do_for_each_ref_in_dirs(struct ref_dir *dir1,
+ 	int retval;
+ 	int i1 = 0, i2 = 0;
+ 
++	sort_ref_dir(dir1);
++	sort_ref_dir(dir2);
+ 	while (1) {
+ 		struct ref_entry *e1, *e2, *entry;
+ 		int cmp;
+@@ -701,7 +698,6 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+ 		    !get_sha1_hex(refline + 1, sha1))
+ 			hashcpy(last->u.value.peeled, sha1);
+ 	}
+-	sort_ref_dir(dir);
  }
+ 
+ void add_extra_ref(const char *refname, const unsigned char *sha1, int flag)
+@@ -803,7 +799,6 @@ static struct ref_dir *get_loose_refs(struct ref_cache *refs)
+ {
+ 	if (!refs->did_loose) {
+ 		get_ref_dir(refs, "refs", &refs->loose);
+-		sort_ref_dir(&refs->loose);
+ 		refs->did_loose = 1;
+ 	}
+ 	return &refs->loose;
+diff --git a/refs.h b/refs.h
+index d498291..5bb4678 100644
+--- a/refs.h
++++ b/refs.h
+@@ -15,8 +15,11 @@ struct ref_lock {
+ #define REF_ISBROKEN 0x04
  
  /*
-@@ -324,12 +326,11 @@ static struct ref_dir *find_containing_dir(struct ref_dir *dir,
- static struct ref_entry *find_ref(struct ref_entry *direntry, const char *refname)
- {
- 	struct ref_entry *entry;
--	struct ref_dir *dir;
- 	assert(direntry->flag & REF_DIR);
--	dir = find_containing_dir(&direntry->u.subdir, refname, 0);
--	if (!dir)
-+	direntry = find_containing_direntry(direntry, refname, 0);
-+	if (!direntry)
- 		return NULL;
--	entry = search_ref_dir(dir, refname);
-+	entry = search_ref_dir(&direntry->u.subdir, refname);
- 	return (entry && !(entry->flag & REF_DIR)) ? entry : NULL;
- }
- 
-@@ -340,12 +341,11 @@ static struct ref_entry *find_ref(struct ref_entry *direntry, const char *refnam
+- * Calls the specified function for each ref file until it returns nonzero,
+- * and returns the value
++ * Calls the specified function for each ref file until it returns
++ * nonzero, and returns the value.  Please note that it is not safe to
++ * modify references while an iteration is in progress, unless the
++ * same callback function invocation that modifies the reference also
++ * returns a nonzero value to immediately stop the iteration.
   */
- static int add_ref(struct ref_entry *direntry, struct ref_entry *ref)
- {
--	struct ref_dir *dir;
- 	assert(direntry->flag & REF_DIR);
--	dir = find_containing_dir(&direntry->u.subdir, ref->name, 1);
--	if (!dir)
-+	direntry = find_containing_direntry(direntry, ref->name, 1);
-+	if (!direntry)
- 		return -1;
--	add_entry_to_dir(dir, ref);
-+	add_entry_to_dir(&direntry->u.subdir, ref);
- 	return 0;
- }
- 
-@@ -752,11 +752,11 @@ static void get_ref_dir(struct ref_cache *refs, const char *dirname)
- 	char *path;
- 	int dirnamelen = strlen(dirname);
- 	int pathlen;
--	struct ref_dir *dir;
-+	struct ref_entry *direntry;
- 
- 	assert(dirnamelen && dirname[dirnamelen - 1] == '/');
- 
--	dir = find_containing_dir(&refs->loose->u.subdir, dirname, 1);
-+	direntry = find_containing_direntry(refs->loose, dirname, 1);
- 
- 	if (*refs->name)
- 		path = git_path_submodule(refs->name, "%s", dirname);
-@@ -809,7 +809,8 @@ static void get_ref_dir(struct ref_cache *refs, const char *dirname)
- 				hashclr(sha1);
- 				flag |= REF_ISBROKEN;
- 			}
--			add_entry_to_dir(dir, create_ref_entry(refname, sha1, flag, 1));
-+			add_entry_to_dir(&direntry->u.subdir,
-+					 create_ref_entry(refname, sha1, flag, 1));
- 		}
- 		free(refname);
- 		closedir(d);
-@@ -1142,35 +1143,34 @@ static int do_for_each_ref(const char *submodule, const char *base, each_ref_fn
- {
- 	int retval = 0;
- 	struct ref_cache *refs = get_ref_cache(submodule);
--	struct ref_dir *extra_dir = extra_refs ? &extra_refs->u.subdir : NULL;
-+	struct ref_entry *extra_direntry = extra_refs;
- 	struct ref_entry *packed_direntry = get_packed_refs(refs);
--	struct ref_dir *packed_dir = &packed_direntry->u.subdir;
- 	struct ref_entry *loose_direntry = get_loose_refs(refs);
--	struct ref_dir *loose_dir = &loose_direntry->u.subdir;
- 
- 	if (base && *base) {
--		if (extra_dir)
--			extra_dir = find_containing_dir(extra_dir, base, 0);
--		packed_dir = find_containing_dir(packed_dir, base, 0);
--		loose_dir = find_containing_dir(loose_dir, base, 0);
-+		if (extra_direntry)
-+			extra_direntry = find_containing_direntry(extra_direntry, base, 0);
-+		packed_direntry = find_containing_direntry(packed_direntry, base, 0);
-+		loose_direntry = find_containing_direntry(loose_direntry, base, 0);
- 	}
- 
--	if (extra_dir)
-+	if (extra_direntry)
- 		retval = do_for_each_ref_in_dir(
--				extra_dir, 0,
-+				&extra_direntry->u.subdir, 0,
- 				base, fn, trim, flags, cb_data);
- 	if (!retval) {
--		if (packed_dir && loose_dir)
-+		if (packed_direntry && loose_direntry)
- 			retval = do_for_each_ref_in_dirs(
--					packed_dir, loose_dir,
-+					&packed_direntry->u.subdir,
-+					&loose_direntry->u.subdir,
- 					base, fn, trim, flags, cb_data);
--		else if (packed_dir)
-+		else if (packed_direntry)
- 			retval = do_for_each_ref_in_dir(
--					packed_dir, 0,
-+					&packed_direntry->u.subdir, 0,
- 					base, fn, trim, flags, cb_data);
--		else if (loose_dir)
-+		else if (loose_direntry)
- 			retval = do_for_each_ref_in_dir(
--					loose_dir, 0,
-+					&loose_direntry->u.subdir, 0,
- 					base, fn, trim, flags, cb_data);
- 	}
- 
+ typedef int each_ref_fn(const char *refname, const unsigned char *sha1, int flags, void *cb_data);
+ extern int head_ref(each_ref_fn, void *);
 -- 
 1.7.8
