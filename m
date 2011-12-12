@@ -1,85 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Breakage (?) in configure and git_vsnprintf()
-Date: Mon, 12 Dec 2011 03:10:19 -0500
-Message-ID: <20111212081019.GA17725@sigill.intra.peff.net>
-References: <4EE4F97B.9000202@alum.mit.edu>
- <20111212064305.GA16511@sigill.intra.peff.net>
- <4EE5B123.2030708@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] Convert resolve_ref+xstrdup to new resolve_refdup
+ function
+Date: Mon, 12 Dec 2011 00:13:09 -0800
+Message-ID: <7v4nx68ay2.fsf@alter.siamese.dyndns.org>
+References: <1323521631-24320-1-git-send-email-pclouds@gmail.com>
+ <20111210131503.GI22035@elie.hsd1.il.comcast.net>
+ <CACsJy8C0CJyHdtWJ5QVqX9ksHWgdBpm6XekQ+mZP4sxBVA_8vQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	git discussion list <git@vger.kernel.org>,
-	Michal Rokos <michal.rokos@nextsoft.cz>,
-	Brandon Casey <casey@nrlssc.navy.mil>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Dec 12 09:10:27 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Tony Wang <wwwjfy@gmail.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 12 09:13:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ra0xu-0005KL-H0
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 09:10:26 +0100
+	id 1Ra10f-0006G6-BE
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 09:13:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751803Ab1LLIKW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 03:10:22 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48036
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751598Ab1LLIKV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 03:10:21 -0500
-Received: (qmail 30460 invoked by uid 107); 12 Dec 2011 08:17:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 Dec 2011 03:17:01 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Dec 2011 03:10:19 -0500
-Content-Disposition: inline
-In-Reply-To: <4EE5B123.2030708@viscovery.net>
+	id S1751832Ab1LLINN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 03:13:13 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49012 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751598Ab1LLINM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 03:13:12 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 845D52582;
+	Mon, 12 Dec 2011 03:13:11 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SDy0dwManUCKkyPwo1KCsd2wblY=; b=K4EWI+
+	ffDo8vMYonHnY9i3YWctCH7OSTgyi0wowmroTjYWdzcM+EULSTxI18pZYAs/CHdS
+	8WqkTKJC4dWbOt9BpaOdL6/BjVotDDRi+tjVon5dEE/AyqMIPuibYlxhioma31kT
+	Zx3+Kzzh5op9D0CZlAbfjWXXVtMiDle18dhE0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HV0IqRXEDun7ievSsUIMswcWteXjHBqT
+	YJOPp5kw0klX6owgZ7Sw5xpByHU9RERnW6MBBdAkpJ/x/MbSAkhN9hx1wBmJgMxC
+	woRVj7cv/sXGevJlTU2J7X9s/d7qgFPzwHNhbn44fufAPaxBkDcsGEBVeJzMQMCy
+	/TpEdf2Hekc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C1C92581;
+	Mon, 12 Dec 2011 03:13:11 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 06ECD2580; Mon, 12 Dec 2011
+ 03:13:10 -0500 (EST)
+In-Reply-To: <CACsJy8C0CJyHdtWJ5QVqX9ksHWgdBpm6XekQ+mZP4sxBVA_8vQ@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Sat, 10 Dec 2011 22:40:22 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 219D9542-2499-11E1-8E3C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186886>
 
-On Mon, Dec 12, 2011 at 08:45:39AM +0100, Johannes Sixt wrote:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> Am 12/12/2011 7:43, schrieb Jeff King:
-> > I'll leave the issue of "-std=c89" triggering SNPRINTF_RETURNS_BOGUS to
-> > people who know and care about autoconf. My gut is to say "don't do
-> > that".
-> 
-> Right. But Michael's problem was actually that SNPRINTF_RETURNS_BOGUS was
-> set incorrectly; his system has a working snprintf (or so I assume). The
-> reason for the failure is that ./configure's test program produced a
-> warning, and that warning was turned into an error due to -Werror. Without
-> -Werror, the test program would have compiled successfully, and the
-> working snprintf would have been detected.
+> Yeah that slipped in. It should be part of c689332 (Convert many
+> resolve_ref() calls to read_ref*() and ref_exists() - 2011-11-13). I
+> guess either I missed it or it was a new call site after that patch.
+> Split it out as a separate patch?
 
-Right, I understand that. But he has given a set of options that
-shouldn't compile git at all (he tells the compiler not to use snprintf
-via -std=c89, but we require that it exists, because even our
-git_vsnprintf wrapper uses the underlying system vsnprintf).
+Yeah, I think it makes sense to split the unrelated part out and place it
+early in the series. It seems that you will be updating patch 2 in the
+series for __FILE__ anyway so it's not like adding a useless code churn to
+do so.
 
-So yes, the configure script is broken to detect the situation as
-SNPRINTF_RETURNS_BOGUS and not "this platform doesn't have snprintf at
-all"[1]. But I'm saying that the "we do not have snprintf at all" case
-is not all that interesting: git needs it. So I'm not sure compiling
-with -std=c89 really makes sense[2].
-
-If somebody wants to make the configure script more accurate, I
-certainly don't want to stop them. I'm just not sure it is worth
-anybody's time in this case.
-
--Peff
-
-[1] Yes, obviously we do actually have it, but it is somewhat a fluke
-    that it works. We tell the compiler during the compile phase that we
-    don't have it, but then during the link phase it is magically
-    available in libc.
-
-[2] I can convince git to compile on recent Linux with gcc using
-    CFLAGS='-std=c89 -Dinline='.  Turning on "-Wall -Werror" doesn't
-    work because all of the inline functions appear to be unused
-    statics.  But if I understand Michael's problem correctly, wouldn't
-    we be missing the prototype for snprintf, which could cause subtle
-    errors?
+Thanks.
