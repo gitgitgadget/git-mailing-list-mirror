@@ -1,80 +1,85 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 5/5] mv: be quiet about overwriting
-Date: Mon, 12 Dec 2011 02:54:07 -0500
-Message-ID: <20111212075407.GE17532@sigill.intra.peff.net>
-References: <20111212074503.GB16511@sigill.intra.peff.net>
+Subject: Re: Breakage (?) in configure and git_vsnprintf()
+Date: Mon, 12 Dec 2011 03:10:19 -0500
+Message-ID: <20111212081019.GA17725@sigill.intra.peff.net>
+References: <4EE4F97B.9000202@alum.mit.edu>
+ <20111212064305.GA16511@sigill.intra.peff.net>
+ <4EE5B123.2030708@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Mon Dec 12 08:54:16 2011
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	git discussion list <git@vger.kernel.org>,
+	Michal Rokos <michal.rokos@nextsoft.cz>,
+	Brandon Casey <casey@nrlssc.navy.mil>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Dec 12 09:10:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ra0iF-0008JP-Nz
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 08:54:16 +0100
+	id 1Ra0xu-0005KL-H0
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 09:10:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752739Ab1LLHyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Dec 2011 02:54:11 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48013
+	id S1751803Ab1LLIKW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 03:10:22 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48036
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751710Ab1LLHyJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 02:54:09 -0500
-Received: (qmail 30273 invoked by uid 107); 12 Dec 2011 08:00:49 -0000
+	id S1751598Ab1LLIKV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 03:10:21 -0500
+Received: (qmail 30460 invoked by uid 107); 12 Dec 2011 08:17:01 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 Dec 2011 03:00:49 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Dec 2011 02:54:07 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 Dec 2011 03:17:01 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Dec 2011 03:10:19 -0500
 Content-Disposition: inline
-In-Reply-To: <20111212074503.GB16511@sigill.intra.peff.net>
+In-Reply-To: <4EE5B123.2030708@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186885>
 
-When a user asks us to force a mv and overwrite the
-destination, we print a warning. However, since a typical
-use would be:
+On Mon, Dec 12, 2011 at 08:45:39AM +0100, Johannes Sixt wrote:
 
-  $ git mv one two
-  fatal: destination exists, source=one, destination=two
-  $ git mv -f one two
-  warning: destination exists (will overwrite), source=one, destination=two
+> Am 12/12/2011 7:43, schrieb Jeff King:
+> > I'll leave the issue of "-std=c89" triggering SNPRINTF_RETURNS_BOGUS to
+> > people who know and care about autoconf. My gut is to say "don't do
+> > that".
+> 
+> Right. But Michael's problem was actually that SNPRINTF_RETURNS_BOGUS was
+> set incorrectly; his system has a working snprintf (or so I assume). The
+> reason for the failure is that ./configure's test program produced a
+> warning, and that warning was turned into an error due to -Werror. Without
+> -Werror, the test program would have compiled successfully, and the
+> working snprintf would have been detected.
 
-this warning is just noise. We already know we're
-overwriting; that's why we gave -f!
+Right, I understand that. But he has given a set of options that
+shouldn't compile git at all (he tells the compiler not to use snprintf
+via -std=c89, but we require that it exists, because even our
+git_vsnprintf wrapper uses the underlying system vsnprintf).
 
-This patch silences the warning unless "--verbose" is given.
+So yes, the configure script is broken to detect the situation as
+SNPRINTF_RETURNS_BOGUS and not "this platform doesn't have snprintf at
+all"[1]. But I'm saying that the "we do not have snprintf at all" case
+is not all that interesting: git needs it. So I'm not sure compiling
+with -std=c89 really makes sense[2].
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-You could perhaps argue that it is useful in the case of moving multiple
-files into a directory (since it tells you _which_ files were
-overwritten). We could turn the warning on in that case, but I'm
-inclined to leave it. If the user cares about this information, they can
-use "-v" along with "-f".
+If somebody wants to make the configure script more accurate, I
+certainly don't want to stop them. I'm just not sure it is worth
+anybody's time in this case.
 
- builtin/mv.c |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+-Peff
 
-diff --git a/builtin/mv.c b/builtin/mv.c
-index c9ecb03..b6e7e4f 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -177,8 +177,9 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 				 * check both source and destination
- 				 */
- 				if (S_ISREG(st.st_mode) || S_ISLNK(st.st_mode)) {
--					warning(_("%s (will overwrite), source=%s, destination=%s"),
--						bad, src, dst);
-+					if (verbose)
-+						warning(_("%s (will overwrite), source=%s, destination=%s"),
-+							bad, src, dst);
- 					bad = NULL;
- 				} else
- 					bad = _("Cannot overwrite");
--- 
-1.7.8.13.g74677
+[1] Yes, obviously we do actually have it, but it is somewhat a fluke
+    that it works. We tell the compiler during the compile phase that we
+    don't have it, but then during the link phase it is magically
+    available in libc.
+
+[2] I can convince git to compile on recent Linux with gcc using
+    CFLAGS='-std=c89 -Dinline='.  Turning on "-Wall -Werror" doesn't
+    work because all of the inline functions appear to be unused
+    statics.  But if I understand Michael's problem correctly, wouldn't
+    we be missing the prototype for snprintf, which could cause subtle
+    errors?
