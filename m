@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 3/4] Guard memory overwriting in resolve_ref's static buffer
-Date: Mon, 12 Dec 2011 18:20:31 +0700
-Message-ID: <1323688832-32016-3-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 4/4] Rename resolve_ref() to resolve_ref_unsafe()
+Date: Mon, 12 Dec 2011 18:20:32 +0700
+Message-ID: <1323688832-32016-4-git-send-email-pclouds@gmail.com>
 References: <1323688832-32016-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -12,303 +12,398 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 12 12:22:21 2011
+X-From: git-owner@vger.kernel.org Mon Dec 12 12:22:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ra3xc-0000OJ-He
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 12:22:21 +0100
+	id 1Ra3xj-0000Q0-DO
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 12:22:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752632Ab1LLLWP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Dec 2011 06:22:15 -0500
+	id S1752665Ab1LLLWW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Dec 2011 06:22:22 -0500
 Received: from mail-iy0-f174.google.com ([209.85.210.174]:52734 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752085Ab1LLLWO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 06:22:14 -0500
+	with ESMTP id S1752085Ab1LLLWV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 06:22:21 -0500
 Received: by mail-iy0-f174.google.com with SMTP id h11so3065808iae.19
-        for <git@vger.kernel.org>; Mon, 12 Dec 2011 03:22:13 -0800 (PST)
+        for <git@vger.kernel.org>; Mon, 12 Dec 2011 03:22:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=5icsHWZXAQOc8OJQ3yzYfdFtALJX2b9Fvsv4wyOkOvA=;
-        b=TcHlMUIHEcZl603QQof6+eGOpv/vLULjPPWTdUCo+nUOEjNHh/SAbEIPqQ4aHhxUcX
-         1RoiHn6w2C/Dl+6br/g7aQGzXnVP71VW55u4IaFA9tN1izDu9H0Hc+MSEB0RW7EJrCMa
-         bA/aXzs7HIr2uAX/5NSfqHo3uEE3y2ckGDWk8=
-Received: by 10.50.202.65 with SMTP id kg1mr14591789igc.1.1323688932396;
-        Mon, 12 Dec 2011 03:22:12 -0800 (PST)
+        bh=rhvBbJwnJKQ0QLNPloWDtofp98zR957pO2au47ApEf0=;
+        b=JldQnNBCwqnw/IybsAgW5JmK97XuQObW8rjTLuQvNZBQOOQFXOzhE8TdmO7y37Q4Uc
+         1z3fVC2imuftXLRO7ouAcqB6XSCDJx02U8/QFw6EznMc/L20tw/imSbL40dLTZzp32uD
+         +evZFXCHfndXC9U8DJ8IGPve4o/uXaE8vqd0M=
+Received: by 10.42.189.5 with SMTP id dc5mr11326352icb.51.1323688941080;
+        Mon, 12 Dec 2011 03:22:21 -0800 (PST)
 Received: from tre ([115.74.36.175])
-        by mx.google.com with ESMTPS id wo4sm40130911igc.5.2011.12.12.03.22.08
+        by mx.google.com with ESMTPS id mb4sm40117873igc.1.2011.12.12.03.22.15
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 12 Dec 2011 03:22:11 -0800 (PST)
-Received: by tre (sSMTP sendmail emulation); Mon, 12 Dec 2011 18:20:48 +0700
+        Mon, 12 Dec 2011 03:22:19 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Mon, 12 Dec 2011 18:20:55 +0700
 X-Mailer: git-send-email 1.7.8.36.g69ee2
 In-Reply-To: <1323688832-32016-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186908>
 
-There is a potential problem with resolve_ref() and some other
-functions in git. The return value returned by resolve_ref() may
-be changed when the function is called again. Callers must make sure th=
-e
-next call won't happen as long as the value is still being used.
+resolve_ref() may return a pointer to a shared buffer and can be
+overwritten by the next resolve_ref() calls. Callers need to
+pay attention, not to keep the pointer when the next call happens.
 
-It's usually hard to track down this kind of problem.  Michael Haggerty
-has an idea [1] that, instead of passing the same static buffer to
-caller every time the function is called, we free the old buffer and
-allocate the new one. This way access to the old (now invalid) buffer
-may be caught.
+Rename with "_unsafe" suffix to warn developers (or reviewers) before
+introducing new call sites.
 
-This patch applies the same principle for resolve_ref() with a
-few modifications:
+This patch is generated using the following command
 
- - This behavior is enabled when GIT_DEBUG_MEMCHECK is set. The ability
-   is always available. We may be able to ask users to rerun with this
-   flag on in suspicious cases.
-
- - Rely on mmap/mprotect to catch illegal access. We need valgrind or
-   some other memory tracking tool to reliably catch this in Michael's
-   approach.
-
- - Because mprotect is used instead of munmap, we definitely leak
-   memory. Hopefully callers will not put resolve_ref() in a
-   loop that runs 1 million times.
-
- - Save caller location in the allocated buffer so we know who made thi=
-s
-   call in the core dump.
-
-Also introduce a new target, "make memcheck", that runs tests with this
-flag on.
-
-[1] http://comments.gmane.org/gmane.comp.version-control.git/182209
+git grep -l 'resolve_ref(' -- '*.[ch]'|xargs sed -i 's/resolve_ref(/res=
+olve_ref_unsafe(/g'
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Changes include:
+ branch.c               |    2 +-
+ builtin/branch.c       |    2 +-
+ builtin/commit.c       |    2 +-
+ builtin/fsck.c         |    2 +-
+ builtin/log.c          |    4 ++--
+ builtin/receive-pack.c |    2 +-
+ builtin/remote.c       |    2 +-
+ builtin/show-branch.c  |    2 +-
+ builtin/symbolic-ref.c |    2 +-
+ cache.h                |    2 +-
+ refs.c                 |   20 ++++++++++----------
+ remote.c               |    6 +++---
+ test-resolve-ref.c     |    4 ++--
+ transport.c            |    2 +-
+ 14 files changed, 27 insertions(+), 27 deletions(-)
 
-  - __FUNCTION__ to __FILE__ for compiler compatibility
-  - x{malloc,free}_mmap() now put call site information in a struct,
-    it's clearer this way and hopefully will avoid platform issues
-  - update t0071 to follow '&&' convention
-  - add notes where to get caller site info in git-compat-util.h
-
- .gitignore          |    1 +
- Makefile            |    4 ++++
- cache.h             |    3 ++-
- git-compat-util.h   |   20 ++++++++++++++++++++
- refs.c              |   13 +++++++++++--
- t/t0071-memcheck.sh |   11 +++++++++++
- test-resolve-ref.c  |   18 ++++++++++++++++++
- wrapper.c           |   27 +++++++++++++++++++++++++++
- 8 files changed, 94 insertions(+), 3 deletions(-)
- create mode 100755 t/t0071-memcheck.sh
- create mode 100644 test-resolve-ref.c
-
-diff --git a/.gitignore b/.gitignore
-index 8572c8c..470e452 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -179,6 +179,7 @@
- /test-obj-pool
- /test-parse-options
- /test-path-utils
-+/test-resolve-ref
- /test-run-command
- /test-sha1
- /test-sigchain
-diff --git a/Makefile b/Makefile
-index ed82320..d71cf04 100644
---- a/Makefile
-+++ b/Makefile
-@@ -444,6 +444,7 @@ TEST_PROGRAMS_NEED_X +=3D test-obj-pool
- TEST_PROGRAMS_NEED_X +=3D test-parse-options
- TEST_PROGRAMS_NEED_X +=3D test-path-utils
- TEST_PROGRAMS_NEED_X +=3D test-run-command
-+TEST_PROGRAMS_NEED_X +=3D test-resolve-ref
- TEST_PROGRAMS_NEED_X +=3D test-sha1
- TEST_PROGRAMS_NEED_X +=3D test-sigchain
- TEST_PROGRAMS_NEED_X +=3D test-string-pool
-@@ -2241,6 +2242,9 @@ export NO_SVN_TESTS
- test: all
- 	$(MAKE) -C t/ all
+diff --git a/branch.c b/branch.c
+index d91a099..772a4c2 100644
+--- a/branch.c
++++ b/branch.c
+@@ -182,7 +182,7 @@ int validate_new_branchname(const char *name, struc=
+t strbuf *ref,
+ 		const char *head;
+ 		unsigned char sha1[20];
 =20
-+memcheck: all
-+	GIT_DEBUG_MEMCHECK=3D1 $(MAKE) -C t/ all
-+
- test-ctype$X: ctype.o
+-		head =3D resolve_ref("HEAD", sha1, 0, NULL);
++		head =3D resolve_ref_unsafe("HEAD", sha1, 0, NULL);
+ 		if (!is_bare_repository() && head && !strcmp(head, ref->buf))
+ 			die("Cannot force update the current branch.");
+ 	}
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 72c4c31..641bee1 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -251,7 +251,7 @@ static char *resolve_symref(const char *src, const =
+char *prefix)
+ 	int flag;
+ 	const char *dst, *cp;
 =20
- test-date$X: date.o ctype.o
+-	dst =3D resolve_ref(src, sha1, 0, &flag);
++	dst =3D resolve_ref_unsafe(src, sha1, 0, &flag);
+ 	if (!(dst && (flag & REF_ISSYMREF)))
+ 		return NULL;
+ 	if (prefix && (cp =3D skip_prefix(dst, prefix)))
+diff --git a/builtin/commit.c b/builtin/commit.c
+index e36e9ad..4d39d25 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1304,7 +1304,7 @@ static void print_summary(const char *prefix, con=
+st unsigned char *sha1,
+ 	rev.diffopt.break_opt =3D 0;
+ 	diff_setup_done(&rev.diffopt);
+=20
+-	head =3D resolve_ref("HEAD", junk_sha1, 0, NULL);
++	head =3D resolve_ref_unsafe("HEAD", junk_sha1, 0, NULL);
+ 	printf("[%s%s ",
+ 		!prefixcmp(head, "refs/heads/") ?
+ 			head + 11 :
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 30d0dc8..8c479a7 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -563,7 +563,7 @@ static int fsck_head_link(void)
+ 	if (verbose)
+ 		fprintf(stderr, "Checking HEAD link\n");
+=20
+-	head_points_at =3D resolve_ref("HEAD", head_sha1, 0, &flag);
++	head_points_at =3D resolve_ref_unsafe("HEAD", head_sha1, 0, &flag);
+ 	if (!head_points_at)
+ 		return error("Invalid HEAD");
+ 	if (!strcmp(head_points_at, "HEAD"))
+diff --git a/builtin/log.c b/builtin/log.c
+index 4395f3e..89d0cc0 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1040,7 +1040,7 @@ static char *find_branch_name(struct rev_info *re=
+v)
+ 	if (positive < 0)
+ 		return NULL;
+ 	strbuf_addf(&buf, "refs/heads/%s", rev->cmdline.rev[positive].name);
+-	branch =3D resolve_ref(buf.buf, branch_sha1, 1, NULL);
++	branch =3D resolve_ref_unsafe(buf.buf, branch_sha1, 1, NULL);
+ 	if (!branch ||
+ 	    prefixcmp(branch, "refs/heads/") ||
+ 	    hashcmp(rev->cmdline.rev[positive].item->sha1, branch_sha1))
+@@ -1268,7 +1268,7 @@ int cmd_format_patch(int argc, const char **argv,=
+ const char *prefix)
+=20
+ 			rev.pending.objects[0].item->flags |=3D UNINTERESTING;
+ 			add_head_to_pending(&rev);
+-			ref =3D resolve_ref("HEAD", sha1, 1, NULL);
++			ref =3D resolve_ref_unsafe("HEAD", sha1, 1, NULL);
+ 			if (ref && !prefixcmp(ref, "refs/heads/"))
+ 				branch_name =3D xstrdup(ref + strlen("refs/heads/"));
+ 			else
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 5cd6fc7..a1a4b09 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -571,7 +571,7 @@ static void check_aliased_update(struct command *cm=
+d, struct string_list *list)
+ 	int flag;
+=20
+ 	strbuf_addf(&buf, "%s%s", get_git_namespace(), cmd->ref_name);
+-	dst_name =3D resolve_ref(buf.buf, sha1, 0, &flag);
++	dst_name =3D resolve_ref_unsafe(buf.buf, sha1, 0, &flag);
+ 	strbuf_release(&buf);
+=20
+ 	if (!(flag & REF_ISSYMREF))
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 407abfb..583eec9 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -573,7 +573,7 @@ static int read_remote_branches(const char *refname=
+,
+ 	strbuf_addf(&buf, "refs/remotes/%s/", rename->old);
+ 	if (!prefixcmp(refname, buf.buf)) {
+ 		item =3D string_list_append(rename->remote_branches, xstrdup(refname=
+));
+-		symref =3D resolve_ref(refname, orig_sha1, 1, &flag);
++		symref =3D resolve_ref_unsafe(refname, orig_sha1, 1, &flag);
+ 		if (flag & REF_ISSYMREF)
+ 			item->util =3D xstrdup(symref);
+ 		else
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index a1f148e..a59e088 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -789,7 +789,7 @@ int cmd_show_branch(int ac, const char **av, const =
+char *prefix)
+ 		}
+ 	}
+=20
+-	head_p =3D resolve_ref("HEAD", head_sha1, 1, NULL);
++	head_p =3D resolve_ref_unsafe("HEAD", head_sha1, 1, NULL);
+ 	if (head_p) {
+ 		head_len =3D strlen(head_p);
+ 		memcpy(head, head_p, head_len + 1);
+diff --git a/builtin/symbolic-ref.c b/builtin/symbolic-ref.c
+index dea849c..2ef5962 100644
+--- a/builtin/symbolic-ref.c
++++ b/builtin/symbolic-ref.c
+@@ -12,7 +12,7 @@ static void check_symref(const char *HEAD, int quiet)
+ {
+ 	unsigned char sha1[20];
+ 	int flag;
+-	const char *refs_heads_master =3D resolve_ref(HEAD, sha1, 0, &flag);
++	const char *refs_heads_master =3D resolve_ref_unsafe(HEAD, sha1, 0, &=
+flag);
+=20
+ 	if (!refs_heads_master)
+ 		die("No such ref: %s", HEAD);
 diff --git a/cache.h b/cache.h
-index 4887a3e..ba5e911 100644
+index ba5e911..051e7ee 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -865,7 +865,8 @@ extern int read_ref(const char *filename, unsigned =
+@@ -865,7 +865,7 @@ extern int read_ref(const char *filename, unsigned =
 char *sha1);
   *
   * errno is sometimes set on errors, but not always.
   */
--extern const char *resolve_ref(const char *ref, unsigned char *sha1, i=
-nt reading, int *flag);
-+#define resolve_ref(ref, sha1, reading, flag) resolve_ref_real(ref, sh=
+-#define resolve_ref(ref, sha1, reading, flag) resolve_ref_real(ref, sh=
 a1, reading, flag, __FILE__, __LINE__)
-+extern const char *resolve_ref_real(const char *ref, unsigned char *sh=
++#define resolve_ref_unsafe(ref, sha1, reading, flag) resolve_ref_real(=
+ref, sha1, reading, flag, __FILE__, __LINE__)
+ extern const char *resolve_ref_real(const char *ref, unsigned char *sh=
 a1, int reading, int *flag, const char *file, int line);
  extern char *resolve_refdup(const char *ref, unsigned char *sha1, int =
 reading, int *flag);
 =20
- extern int dwim_ref(const char *str, int len, unsigned char *sha1, cha=
-r **ref);
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 77062ed..0cb6e34 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -433,6 +433,26 @@ extern char *xstrndup(const char *str, size_t len)=
-;
- extern void *xrealloc(void *ptr, size_t size);
- extern void *xcalloc(size_t nmemb, size_t size);
- extern void *xmmap(void *start, size_t length, int prot, int flags, in=
-t fd, off_t offset);
-+
-+/*
-+ * These functions are used to allocate new memory blocks and catch
-+ * invalid use after they are released (though the memory is never
-+ * returned to system, so do not allocate too much this way).
-+ *
-+ * mprotect() is used to remove all access to memory when xfree_mmap()
-+ * is called. Invalid access will cause sigsegv. The memory block is
-+ * preceded by struct alloc_header, describing where it is
-+ * allocated. This information can be found in the core dump.
-+ */
-+struct alloc_header {
-+	const char *file;
-+	int line;
-+	int size;
-+	char buf[FLEX_ARRAY];
-+};
-+extern void *xmalloc_mmap(size_t, const char *file, int line);
-+extern void xfree_mmap(void *);
-+
- extern ssize_t xread(int fd, void *buf, size_t len);
- extern ssize_t xwrite(int fd, const void *buf, size_t len);
- extern int xdup(int fd);
 diff --git a/refs.c b/refs.c
-index 8ffb32f..cf8dfcc 100644
+index cf8dfcc..010bb72 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -497,12 +497,21 @@ static int get_packed_ref(const char *ref, unsign=
-ed char *sha1)
+@@ -361,7 +361,7 @@ static int warn_if_dangling_symref(const char *refn=
+ame, const unsigned char *sha
+ 	if (!(flags & REF_ISSYMREF))
+ 		return 0;
+=20
+-	resolves_to =3D resolve_ref(refname, junk, 0, NULL);
++	resolves_to =3D resolve_ref_unsafe(refname, junk, 0, NULL);
+ 	if (!resolves_to || strcmp(resolves_to, d->refname))
+ 		return 0;
+=20
+@@ -616,7 +616,7 @@ const char *resolve_ref_real(const char *ref, unsig=
+ned char *sha1,
+=20
+ char *resolve_refdup(const char *ref, unsigned char *sha1, int reading=
+, int *flag)
+ {
+-	const char *ret =3D resolve_ref(ref, sha1, reading, flag);
++	const char *ret =3D resolve_ref_unsafe(ref, sha1, reading, flag);
+ 	return ret ? xstrdup(ret) : NULL;
+ }
+=20
+@@ -629,7 +629,7 @@ struct ref_filter {
+=20
+ int read_ref_full(const char *ref, unsigned char *sha1, int reading, i=
+nt *flags)
+ {
+-	if (resolve_ref(ref, sha1, reading, flags))
++	if (resolve_ref_unsafe(ref, sha1, reading, flags))
+ 		return 0;
  	return -1;
  }
+@@ -1126,7 +1126,7 @@ int dwim_ref(const char *str, int len, unsigned c=
+har *sha1, char **ref)
 =20
--const char *resolve_ref(const char *ref, unsigned char *sha1, int read=
-ing, int *flag)
-+const char *resolve_ref_real(const char *ref, unsigned char *sha1,
-+			     int reading, int *flag, const char *file, int line)
+ 		this_result =3D refs_found ? sha1_from_ref : sha1;
+ 		mksnpath(fullref, sizeof(fullref), *p, len, str);
+-		r =3D resolve_ref(fullref, this_result, 1, &flag);
++		r =3D resolve_ref_unsafe(fullref, this_result, 1, &flag);
+ 		if (r) {
+ 			if (!refs_found++)
+ 				*ref =3D xstrdup(r);
+@@ -1156,7 +1156,7 @@ int dwim_log(const char *str, int len, unsigned c=
+har *sha1, char **log)
+ 		const char *ref, *it;
+=20
+ 		mksnpath(path, sizeof(path), *p, len, str);
+-		ref =3D resolve_ref(path, hash, 1, NULL);
++		ref =3D resolve_ref_unsafe(path, hash, 1, NULL);
+ 		if (!ref)
+ 			continue;
+ 		if (!stat(git_path("logs/%s", path), &st) &&
+@@ -1192,7 +1192,7 @@ static struct ref_lock *lock_ref_sha1_basic(const=
+ char *ref, const unsigned char
+ 	lock =3D xcalloc(1, sizeof(struct ref_lock));
+ 	lock->lock_fd =3D -1;
+=20
+-	ref =3D resolve_ref(ref, lock->old_sha1, mustexist, &type);
++	ref =3D resolve_ref_unsafe(ref, lock->old_sha1, mustexist, &type);
+ 	if (!ref && errno =3D=3D EISDIR) {
+ 		/* we are trying to lock foo but we used to
+ 		 * have foo/bar which now does not exist;
+@@ -1205,7 +1205,7 @@ static struct ref_lock *lock_ref_sha1_basic(const=
+ char *ref, const unsigned char
+ 			error("there are still refs under '%s'", orig_ref);
+ 			goto error_return;
+ 		}
+-		ref =3D resolve_ref(orig_ref, lock->old_sha1, mustexist, &type);
++		ref =3D resolve_ref_unsafe(orig_ref, lock->old_sha1, mustexist, &typ=
+e);
+ 	}
+ 	if (type_p)
+ 	    *type_p =3D type;
+@@ -1368,7 +1368,7 @@ int rename_ref(const char *oldref, const char *ne=
+wref, const char *logmsg)
+ 	if (log && S_ISLNK(loginfo.st_mode))
+ 		return error("reflog for %s is a symlink", oldref);
+=20
+-	symref =3D resolve_ref(oldref, orig_sha1, 1, &flag);
++	symref =3D resolve_ref_unsafe(oldref, orig_sha1, 1, &flag);
+ 	if (flag & REF_ISSYMREF)
+ 		return error("refname %s is a symbolic ref, renaming it is not suppo=
+rted",
+ 			oldref);
+@@ -1657,7 +1657,7 @@ int write_ref_sha1(struct ref_lock *lock,
+ 		unsigned char head_sha1[20];
+ 		int head_flag;
+ 		const char *head_ref;
+-		head_ref =3D resolve_ref("HEAD", head_sha1, 1, &head_flag);
++		head_ref =3D resolve_ref_unsafe("HEAD", head_sha1, 1, &head_flag);
+ 		if (head_ref && (head_flag & REF_ISSYMREF) &&
+ 		    !strcmp(head_ref, lock->ref_name))
+ 			log_ref_write("HEAD", lock->old_sha1, sha1, logmsg);
+@@ -1994,7 +1994,7 @@ int update_ref(const char *action, const char *re=
+fname,
+ int ref_exists(const char *refname)
  {
- 	int depth =3D MAXDEPTH;
- 	ssize_t len;
- 	char buffer[256];
--	static char ref_buffer[256];
-+	static char real_ref_buffer[256];
-+	static char *ref_buffer;
-+
-+	if (!ref_buffer && !getenv("GIT_DEBUG_MEMCHECK"))
-+		ref_buffer =3D real_ref_buffer;
-+	if (ref_buffer !=3D real_ref_buffer) {
-+		xfree_mmap(ref_buffer);
-+		ref_buffer =3D xmalloc_mmap(256, file, line);
-+	}
-=20
- 	if (flag)
- 		*flag =3D 0;
-diff --git a/t/t0071-memcheck.sh b/t/t0071-memcheck.sh
-new file mode 100755
-index 0000000..8904369
---- /dev/null
-+++ b/t/t0071-memcheck.sh
-@@ -0,0 +1,11 @@
-+#!/bin/sh
-+
-+test_description=3D'test that GIT_DEBUG_MEMCHECK works correctly'
-+. ./test-lib.sh
-+
-+test_expect_success 'test-resolve-ref must crash' '
-+	test-resolve-ref &&
-+	GIT_DEBUG_MEMCHECK=3D1 test_expect_code 139 test-resolve-ref
-+'
-+
-+test_done
-diff --git a/test-resolve-ref.c b/test-resolve-ref.c
-new file mode 100644
-index 0000000..b772038
---- /dev/null
-+++ b/test-resolve-ref.c
-@@ -0,0 +1,18 @@
-+#include "cache.h"
-+
-+int main(int argc, char **argv)
-+{
-+	unsigned char sha1[20];
-+	const char *ref1, *ref2;
-+	setup_git_directory();
-+
-+	/*
-+	 * This is an invalid use of resolve_ref_unsafe(). This
-+	 * function returns a shared buffer, so by the time the second
-+	 * call is made, ref1 must _not_ be accessed any more.
-+	 */
-+	ref1 =3D resolve_ref("HEAD", sha1, 0, NULL);
-+	ref2 =3D resolve_ref("HEAD", sha1, 0, NULL);
-+	printf("ref1 =3D %s\nref2 =3D %s\n", ref1, ref2);
-+	return 0;
-+}
-diff --git a/wrapper.c b/wrapper.c
-index 85f09df..02b6c81 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -60,6 +60,33 @@ void *xmallocz(size_t size)
- 	return ret;
+ 	unsigned char sha1[20];
+-	return !!resolve_ref(refname, sha1, 1, NULL);
++	return !!resolve_ref_unsafe(refname, sha1, 1, NULL);
  }
 =20
-+void *xmalloc_mmap(size_t size, const char *file, int line)
-+{
-+	struct alloc_header *block;
-+	size +=3D offsetof(struct alloc_header,buf);
-+	block =3D mmap(NULL, size, PROT_READ | PROT_WRITE,
-+		   MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
-+	if (block =3D=3D (struct alloc_header*)-1)
-+		die_errno("unable to mmap %lu bytes anonymously",
-+			  (unsigned long)size);
-+
-+	block->file =3D file;
-+	block->line =3D line;
-+	block->size =3D size;
-+	return block->buf;
-+}
-+
-+void xfree_mmap(void *p)
-+{
-+	struct alloc_header *block;
-+
-+	if (!p)
-+		return;
-+	block =3D (struct alloc_header *)((char*)p - offsetof(struct alloc_he=
-ader,buf));
-+	if (mprotect(block, block->size, PROT_NONE) =3D=3D -1)
-+		die_errno("unable to remove memory access");
-+}
-+
- /*
-  * xmemdupz() allocates (len + 1) bytes of memory, duplicates "len" by=
-tes of
-  * "data" to the allocated memory, zero terminates the allocated memor=
-y,
+ struct ref *find_ref_by_name(const struct ref *list, const char *name)
+diff --git a/remote.c b/remote.c
+index 6655bb0..73a3809 100644
+--- a/remote.c
++++ b/remote.c
+@@ -482,7 +482,7 @@ static void read_config(void)
+ 		return;
+ 	default_remote_name =3D xstrdup("origin");
+ 	current_branch =3D NULL;
+-	head_ref =3D resolve_ref("HEAD", sha1, 0, &flag);
++	head_ref =3D resolve_ref_unsafe("HEAD", sha1, 0, &flag);
+ 	if (head_ref && (flag & REF_ISSYMREF) &&
+ 	    !prefixcmp(head_ref, "refs/heads/")) {
+ 		current_branch =3D
+@@ -1007,7 +1007,7 @@ static char *guess_ref(const char *name, struct r=
+ef *peer)
+ 	struct strbuf buf =3D STRBUF_INIT;
+ 	unsigned char sha1[20];
+=20
+-	const char *r =3D resolve_ref(peer->name, sha1, 1, NULL);
++	const char *r =3D resolve_ref_unsafe(peer->name, sha1, 1, NULL);
+ 	if (!r)
+ 		return NULL;
+=20
+@@ -1058,7 +1058,7 @@ static int match_explicit(struct ref *src, struct=
+ ref *dst,
+ 		unsigned char sha1[20];
+ 		int flag;
+=20
+-		dst_value =3D resolve_ref(matched_src->name, sha1, 1, &flag);
++		dst_value =3D resolve_ref_unsafe(matched_src->name, sha1, 1, &flag);
+ 		if (!dst_value ||
+ 		    ((flag & REF_ISSYMREF) &&
+ 		     prefixcmp(dst_value, "refs/heads/")))
+diff --git a/test-resolve-ref.c b/test-resolve-ref.c
+index b772038..59d04e0 100644
+--- a/test-resolve-ref.c
++++ b/test-resolve-ref.c
+@@ -11,8 +11,8 @@ int main(int argc, char **argv)
+ 	 * function returns a shared buffer, so by the time the second
+ 	 * call is made, ref1 must _not_ be accessed any more.
+ 	 */
+-	ref1 =3D resolve_ref("HEAD", sha1, 0, NULL);
+-	ref2 =3D resolve_ref("HEAD", sha1, 0, NULL);
++	ref1 =3D resolve_ref_unsafe("HEAD", sha1, 0, NULL);
++	ref2 =3D resolve_ref_unsafe("HEAD", sha1, 0, NULL);
+ 	printf("ref1 =3D %s\nref2 =3D %s\n", ref1, ref2);
+ 	return 0;
+ }
+diff --git a/transport.c b/transport.c
+index 51814b5..e9797c0 100644
+--- a/transport.c
++++ b/transport.c
+@@ -163,7 +163,7 @@ static void set_upstreams(struct transport *transpo=
+rt, struct ref *refs,
+ 		/* Follow symbolic refs (mainly for HEAD). */
+ 		localname =3D ref->peer_ref->name;
+ 		remotename =3D ref->name;
+-		tmp =3D resolve_ref(localname, sha, 1, &flag);
++		tmp =3D resolve_ref_unsafe(localname, sha, 1, &flag);
+ 		if (tmp && flag & REF_ISSYMREF &&
+ 			!prefixcmp(tmp, "refs/heads/"))
+ 			localname =3D tmp;
 --=20
 1.7.8.36.g69ee2
