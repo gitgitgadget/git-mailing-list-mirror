@@ -1,121 +1,105 @@
-From: Conrad Irwin <conrad.irwin@gmail.com>
-Subject: [PATCH] Update documentation for stripspace
-Date: Sun, 11 Dec 2011 17:59:18 -0800
-Message-ID: <1323655158-5075-1-git-send-email-conrad.irwin@gmail.com>
-Cc: Conrad Irwin <conrad.irwin@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 12 02:59:32 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFD] Handling of non-UTF8 data in gitweb
+Date: Sun, 11 Dec 2011 21:26:01 -0800
+Message-ID: <7vhb169x92.fsf@alter.siamese.dyndns.org>
+References: <201112041709.32212.jnareb@gmail.com>
+ <7vehwhcj3q.fsf@alter.siamese.dyndns.org>
+ <201112101718.34848.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	=?utf-8?Q?J=C3=BCrgen?= Kreileder <jk@blackdown.de>,
+	John Hawley <warthog9@kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 12 06:26:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RZvAy-0004mO-8A
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 02:59:32 +0100
+	id 1RZyOx-0005uQ-Rz
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Dec 2011 06:26:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752761Ab1LLB71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Dec 2011 20:59:27 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:52879 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752700Ab1LLB71 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Dec 2011 20:59:27 -0500
-Received: by iaeh11 with SMTP id h11so2415065iae.19
-        for <git@vger.kernel.org>; Sun, 11 Dec 2011 17:59:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=ytJzYyutN1/Rxmzd2zzF/nxTnV0CMsZg5he0cdUyhtw=;
-        b=LurLcyaLqASwDN0ay0EonZ+NgY6RYR9QugyIstALWL9FCgE5FuvmJ1ksy9RahtRKPD
-         uZWjNzaKT4SQ4MqNynwb9MmFfrgtis8TdD/bC6fKz5XSkBSYyRZVn21vP9yMUyijFxfn
-         IIcB7Vo7beO90lL+y8XJHaAl3aDTqNBzekwvY=
-Received: by 10.50.94.229 with SMTP id df5mr13510749igb.27.1323655166812;
-        Sun, 11 Dec 2011 17:59:26 -0800 (PST)
-Received: from monteverdi.hsd1.ca.comcast.net. (c-69-181-44-79.hsd1.ca.comcast.net. [69.181.44.79])
-        by mx.google.com with ESMTPS id b31sm44747016ibh.9.2011.12.11.17.59.25
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 11 Dec 2011 17:59:25 -0800 (PST)
-X-Mailer: git-send-email 1.7.8.164.g00d7e
+	id S1752580Ab1LLF0G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 00:26:06 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57069 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751618Ab1LLF0F (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 00:26:05 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D350133AB;
+	Mon, 12 Dec 2011 00:26:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kdXx0hlfC7dgmLU6aLYa8vQv4iw=; b=GjeoZ9
+	4iLBzKhBLQ+3I7jDPbU0vcKyXFuNTC7gYtQz0SrAF4r6M63Da4bwjZZ+ptredNSP
+	1DYGJxykzTfpgmtDKrm5JUYZ1YDQ5PN+uPJU9WVaXqM93qN+lb2wHLyLkGfSkKri
+	eQTBM2tYQFGAFh74c1mdWf4aTet4VluxYDPJo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Fsp4BVnYAN0f4ynyJlD6TdBzAfh4bClE
+	f0rnltNeuxhGzY1B6ixccPwVWUpsjfMzQurER1H0ws0RFty6c6JvX7ri5QSdgcyd
+	F1NoC6hcm1anrn/0UrOpOUcjqN2PDL9CvgYOtFKLZq8FkKdVhOX2NcusVcKDRcHk
+	wAMLbM3CCcw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5F5433AA;
+	Mon, 12 Dec 2011 00:26:03 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 451BE33A9; Mon, 12 Dec 2011
+ 00:26:03 -0500 (EST)
+In-Reply-To: <201112101718.34848.jnareb@gmail.com> (Jakub Narebski's message
+ of "Sat, 10 Dec 2011 17:18:33 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C89D25AA-2481-11E1-A3A4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186823>
 
-Tell the user what this command is intended for, and expand the
-description of what it does.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Stop referring to the input as <stream>, as this command reads the
-entire input into memory before processing it.
+> On Wed, 7 Dec 2011, Junio C Hamano wrote:
+>> I think we added and you acked 00f429a (gitweb: Handle non UTF-8 text
+>> better, 2007-06-03) for a good reason, and I think the above argues that
+>> whatever issue the commit tried to address is a non-issue. Is it really
+>> true?
+>
+> I think that UTF-8 is much more prevalent character encoding in operating
+> systems, programming languages, APIs, and software applications than it
+> was 4 years ago.
 
-Signed-off-by: Conrad Irwin <conrad.irwin@gmail.com>
----
- Documentation/git-stripspace.txt |   26 ++++++++++++++++++++------
- builtin/stripspace.c             |    2 +-
- 2 files changed, 21 insertions(+), 7 deletions(-)
+Yeah, that was the kind of "reasoning behind it" explanation I was hoping
+to see spelled out for people to agree or disagree.
 
-diff --git a/Documentation/git-stripspace.txt b/Documentation/git-stripspace.txt
-index b78f031..6667d25 100644
---- a/Documentation/git-stripspace.txt
-+++ b/Documentation/git-stripspace.txt
-@@ -3,26 +3,40 @@ git-stripspace(1)
- 
- NAME
- ----
--git-stripspace - Filter out empty lines
-+git-stripspace - Remove unnecessary whitespace
- 
- 
- SYNOPSIS
- --------
- [verse]
--'git stripspace' [-s | --strip-comments] < <stream>
-+'git stripspace' [-s | --strip-comments] < input
- 
- DESCRIPTION
- -----------
--Remove multiple empty lines, and empty lines at beginning and end.
-+
-+Normalizes input in the manner used by 'git' for user-provided metadata such
-+as commit messages, notes, tags and branch descriptions.
-+
-+When run with no arguments this:
-+
-+- removes trailing whitespace from all lines
-+- collapses multiple consecutive empty lines into one empty line
-+- removes blank lines from the beginning and end of the input
-+- ensures the last line ends with exactly one '\n'.
-+
-+In the case where the input consists entirely of whitespace characters, no
-+output will be produced.
-+
-+*NOTE*: This is intended for cleaning metadata, prefer the `--whitespace=fix`
-+mode of linkgit:git-apply[1] for correcting whitespace of patches or files in
-+the repository.
- 
- OPTIONS
- -------
- -s::
- --strip-comments::
--	In addition to empty lines, also strip lines starting with '#'.
-+	Also remove all lines starting with '#'.
- 
--<stream>::
--	Byte stream to act on.
- 
- GIT
- ---
-diff --git a/builtin/stripspace.c b/builtin/stripspace.c
-index 1288ffc..f16986c 100644
---- a/builtin/stripspace.c
-+++ b/builtin/stripspace.c
-@@ -75,7 +75,7 @@ int cmd_stripspace(int argc, const char **argv, const char *prefix)
- 				!strcmp(argv[1], "--strip-comments")))
- 		strip_comments = 1;
- 	else if (argc > 1)
--		usage("git stripspace [-s | --strip-comments] < <stream>");
-+		usage("git stripspace [-s | --strip-comments] < input");
- 
- 	if (strbuf_read(&buf, 0, 1024) < 0)
- 		die_errno("could not read the input");
--- 
-1.7.8.164.g00d7e
+But then the updated gitweb won't have trouble showing history of some
+projects that has 4 yours or longer history (hopefully Git itself is not
+among them).
+
+> The proposed
+>
+>   use open qw(:std :utf8);
+>
+> and removal of to_utf8 and $fallback_encoding would be regression compared
+> to post-00f429a... but the tradeoff of more robust UTF-8 handling might be
+> worth it.
+>
+>> > ... I guess
+>> > it could be emulated by defining our own 'utf-8-with-fallback'
+>> > encoding, or by defining our own PerlIO layer with PerlIO::via.
+>> > But it no longer be simple solution (though still automatic).
+>> 
+>> Between the current "everybody who read from the input must remember to
+>> call to_utf8" and "everybody gets to read utf8 automatically for internal
+>> processing", even though the latter may involve one-time pain to set up
+>> the framework to do so, the pros-and-cons feels obvious to me.
+>
+> There is also a matter of performance (':utf8' and ':encoding(UTF-8)'
+> are AFAIK implemented in C, both the Encode part and PerlIO part).
+
+Would a reasonable first step be to replace the calls to bare "open" with
+a wrapper that simulates the "open" interface (e.g. "sub git_open"), but
+still keep the same behaviour as post-00f429a that could be much slower
+than the native one?  Then a separate patch can build a "regression but
+uses native and much faster" alternative on top, no?
