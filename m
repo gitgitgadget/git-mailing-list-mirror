@@ -1,82 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git blame only current branch
-Date: Mon, 12 Dec 2011 21:47:11 -0800
-Message-ID: <7vobvdvx9c.fsf@alter.siamese.dyndns.org>
-References: <e9e35956-a091-4143-8fd4-3516b54263a6@mail>
- <d615954f-bed8-482d-a2e3-e1e741d6dd23@mail>
- <20111212165542.GA4802@sigill.intra.peff.net> <8739cpteat.fsf@gmail.com>
+From: "Frans Klaver" <fransklaver@gmail.com>
+Subject: Re: Question about commit message wrapping
+Date: Tue, 13 Dec 2011 07:16:21 +0100
+Message-ID: <op.v6ezpjj90aolir@keputer>
+References: <35A5A513-91FD-4EF9-B890-AB3D1550D63F@sidneysm.com>
+ <m3zkf1hnh9.fsf@localhost.localdomain>
+ <E085218D-9287-4F82-B34C-8379742F818A@sidneysm.com>
+ <201112102030.15504.jnareb@gmail.com>
+ <CAH5451kGn72tLAwdvQFBjSyHSL0rUmaPZrbL7Z-KfHWN-HAuCQ@mail.gmail.com>
+ <CAH6sp9NwyxZi6KR4U96=sWdiqCseyTLEDoHdw=y9hUx2kHwOpg@mail.gmail.com>
+ <4EE62DB9.8030406@ira.uka.de> <op.v6edibfz0aolir@keputer>
+ <4EE6C31C.60909@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Stephen Bash <bash@genarts.com>,
-	git discussion list <git@vger.kernel.org>
-To: Vijay Lakshminarayanan <laksvij@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 13 06:47:21 2011
+Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: "Holger Hellmuth" <hellmuth@ira.uka.de>,
+	"Andrew Ardill" <andrew.ardill@gmail.com>,
+	"Jakub Narebski" <jnareb@gmail.com>,
+	=?utf-8?Q?Sidney_San_Mart=C3=ADn?= <s@sidneysm.com>,
+	git@vger.kernel.org
+To: "Michael Haggerty" <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Dec 13 07:16:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaLCx-0005ip-BC
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 06:47:19 +0100
+	id 1RaLfE-0005j3-1h
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 07:16:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751593Ab1LMFrP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Dec 2011 00:47:15 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46276 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751041Ab1LMFrO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Dec 2011 00:47:14 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8AB135DC4;
-	Tue, 13 Dec 2011 00:47:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aik0bQ08LpXHqP3apXPxJqAegW0=; b=TiR6TW
-	zyED7jUq5PHSlN0MLd/e1mbJC8Dn8mFLEvkhuTDOnIwQtOvYwDyz3inLbQiXXOvO
-	43UHj77qd08TT95s0ea53ilMwHaRVfnGCJ9G0YTmkkVdPZOFUFc5Hdk0fnZXypEs
-	8s6r1HaqEk4NVHBixLsWX3SRUSpccmJNsGPoQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wWMdGBJqsOLV11hHH8d940ZqLBTVniPQ
-	ft2hXTwhJ14wCfDOOnwqXJouePMlh3QXPEN43YibfWq2oPCfZW2B22xVz9jOPjdx
-	68hXUlisewPuHkcDfUUpPxwLOwzD6RyIz3qJHgFOw46VVrKkbM/XNgkqZ5lnloJM
-	EkFIYZ3Hf+w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 81ED45DC3;
-	Tue, 13 Dec 2011 00:47:13 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 137B55DBF; Tue, 13 Dec 2011
- 00:47:12 -0500 (EST)
-In-Reply-To: <8739cpteat.fsf@gmail.com> (Vijay Lakshminarayanan's message of
- "Tue, 13 Dec 2011 07:37:22 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E7E25CC4-254D-11E1-99B3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752064Ab1LMGQ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Dec 2011 01:16:26 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:53762 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751653Ab1LMGQZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Dec 2011 01:16:25 -0500
+Received: by eekc4 with SMTP id c4so1951150eek.19
+        for <git@vger.kernel.org>; Mon, 12 Dec 2011 22:16:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=content-type:to:cc:subject:references:date:mime-version
+         :content-transfer-encoding:from:message-id:in-reply-to:user-agent;
+        bh=ns9zi+E33iCL2Mh7A3rAxDqyZo0P5355rDQHoIqbREo=;
+        b=IidUjkF9jzLTH/8xl0UkBhTp6BO5IHynMYhPfoOtTHr+kkM9semStz8Ene8ffnwAWT
+         txboizHtblH2d6inbg+UmjbGyb1XdpTICLh/7A3T2Lh9a7z/kG8wBTK3eU3HrG6RMmPr
+         KOp/p4f2cQdEzh03ekEz9uciqGP1TalgNI1F0=
+Received: by 10.14.17.213 with SMTP id j61mr3778512eej.96.1323756984217;
+        Mon, 12 Dec 2011 22:16:24 -0800 (PST)
+Received: from keputer (82-136-253-149.ip.telfort.nl. [82.136.253.149])
+        by mx.google.com with ESMTPS id x12sm85053803eef.9.2011.12.12.22.16.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 12 Dec 2011 22:16:23 -0800 (PST)
+In-Reply-To: <4EE6C31C.60909@alum.mit.edu>
+User-Agent: Opera Mail/12.00 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187005>
 
-Vijay Lakshminarayanan <laksvij@gmail.com> writes:
+On Tue, 13 Dec 2011 04:14:36 +0100, Michael Haggerty  
+<mhagger@alum.mit.edu> wrote:
 
-> The code reads fine when there's no numeral 1 around but now it doesn't
-> read well.  I think refactoring
+> On 12/12/2011 11:16 PM, Frans Klaver wrote:
+>> Wrapped code as in auto-wrapped? Or as in manually wrapped? Python
+>> programmers have significant white space, but you can still hard wrap
+>> stuff, as long as the next statement is properly indented.
 >
->     struct commit_list *l
+> This is incorrect.  Python statements can only be broken across lines
+> within unbalanced parenthesis (or using '\' or within a multiline
+> string).  For example,
 >
-> to 
+>     x =
+>         1
 >
->     struct commit_list *lst
+> is a syntax error, while
 >
-> is justified.  Thoughts?
+>     y = (
+>         1
+>         )
+>
+> or
+>
+>     f(1,
+>           2,
+>       3,
+>       4)
+>
+> are both valid.
 
-Not justified at all.
+Hm yes, my statement was quite incomplete. What you describe here is what  
+I meant, and I should have taken the time to word it down properly. Thanks  
+for taking the time to do so.
 
-What is "lst" and why is it not spelled "list"?  It is a disease to drop
-vowels when you do not have to.
 
-If I were to name a new variable that points at one element of a linked
-list and is used to walk the list (surprise!) "element" or perhaps "elem"
-for short, but in the context of that short function I honestly do not see
-much need for such a naming. The variable is extremely short-lived and
-there is no room for confusion.
+
+>
+> FWIW I think automatic wrapping of commit messages is a bad idea.  I
+> wrap my commit messages deliberately to make them look the way I want
+> them to look.  The assumption of an 80-character display has historical
+> reasons, but it is also a relatively comfortable line-width to read
+> (even on wider displays).  And given that commit messages sometimes
+> contain "flowable" paragraph text, sometimes code snippets, sometimes
+> ASCII art, etc, no automatic wrapping will work correctly unless
+> everybody agrees that commit messages must be written in some specific
+> form of markup (or lightweight markup).  And I can't imagine such a
+> thing ever happening.
+>
+> As for "future-proofing", do you really think there will be a lot of
+> programming happening on mobile phones with less than 80-character-wide
+> displays?  (And even my little HTC can easily fit 80 characters if I
+> rotate the phone to "landscape" mode.)
+
+Makes sense.
