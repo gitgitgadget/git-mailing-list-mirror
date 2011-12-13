@@ -1,113 +1,124 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Auto update submodules after merge and reset
-Date: Tue, 13 Dec 2011 22:44:19 +0100
-Message-ID: <4EE7C733.4010209@web.de>
-References: <4ED57EED.4040705@qualcomm.com> <4ED5E9D2.4060503@web.de> <jbnadt$hf8$1@dough.gmane.org> <4EDFE75C.5050201@web.de> <4EE07FCD.8090702@ursus.ath.cx> <CABURp0rcT2FR3uOmhyPUV5W3pu7WuJzjXktmUq0eb4nOiUwDKA@mail.gmail.com> <4EE51D7B.7020806@ursus.ath.cx> <4EE682A3.8070704@web.de> <4EE71E9F.90204@ursus.ath.cx>
+From: Eric Advincula <eric.advincula@gmail.com>
+Subject: Re: [PATCH] Revert "http: don't always prompt for password"
+Date: Tue, 13 Dec 2011 14:22:12 -0700
+Message-ID: <CA+e6NDTQNEJB6Y17ow+yuLp2Bc799wsyQdnS8immMDYdCEyCGA@mail.gmail.com>
+References: <20111213201704.GA12072@sigill.intra.peff.net>
+	<20111213202508.GA12187@sigill.intra.peff.net>
+	<7vaa6wuqjt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Phil Hord <phil.hord@gmail.com>, git@vger.kernel.org
-To: "Andreas T.Auer" <andreas.t.auer_gtml_37453@ursus.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Dec 13 22:44:54 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: multipart/alternative; boundary=f46d0444ef2d334cf104b3ffd8ea
+Cc: Jeff King <peff@peff.net>, Stefan Naewe <stefan.naewe@gmail.com>, 
+	Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org, msysgit@googlegroups.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncCJTu2Lv0GxDulp_3BBoEHmspcQ@googlegroups.com Tue Dec 13 23:02:53 2011
+Return-path: <msysgit+bncCJTu2Lv0GxDulp_3BBoEHmspcQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-fx0-f58.google.com ([209.85.161.58])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Raa9b-0007h2-N3
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 22:44:52 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755646Ab1LMVor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Dec 2011 16:44:47 -0500
-Received: from fmmailgate05.web.de ([217.72.192.243]:60858 "EHLO
-	fmmailgate05.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754374Ab1LMVoq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Dec 2011 16:44:46 -0500
-Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
-	by fmmailgate05.web.de (Postfix) with ESMTP id DAAF267E4F58
-	for <git@vger.kernel.org>; Tue, 13 Dec 2011 22:44:21 +0100 (CET)
-Received: from [192.168.178.25] ([80.187.110.206]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0LqlAw-1R570Y3cw6-00eJ0y; Tue, 13 Dec 2011 22:44:21
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <4EE71E9F.90204@ursus.ath.cx>
-X-Provags-ID: V02:K0:ezdK9kwAvOaAkOa9VzCvkAMpwkmL0YL5tjoj4EI4Sh5
- OrRTRS/ObiKHo1zzSrwPEkTcc0G25NvsKHWwUOCaP4nxbNun27
- QjAGw8JS7HtfCqGLDTocbWNP2fBGb2B+hTPm8ZTaBExiO8aJF3
- H35i72q38LcGuJFiXn7i0aVR9a8iTItSfpjTW7Pswu47URdkH8
- x14rid59h16fimkqQxPQQ==
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187065>
+	(envelope-from <msysgit+bncCJTu2Lv0GxDulp_3BBoEHmspcQ@googlegroups.com>)
+	id 1RaaR2-0008MX-Mb
+	for gcvm-msysgit@m.gmane.org; Tue, 13 Dec 2011 23:02:52 +0100
+Received: by faai28 with SMTP id i28sf2210728faa.3
+        for <gcvm-msysgit@m.gmane.org>; Tue, 13 Dec 2011 14:02:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=onwuBfHrM/0mlxPHv/F0tQxeu/WUDHURkYDQkY9CoZQ=;
+        b=3kGhw8FVqvojRwFgSMlRDoY/Uk2iIK8VlXZ79lmTykqg6ri2CVREr2o+lbuzi22qoT
+         WLB4L4Xbs8Y6ezMX7vlqrtn7Xz/4S382C3rn0RRqa9HNuwaFquZECK/y6ykpATZOA4yu
+         78+g2or5S1II1tij248DcYAaKY8X78kzd9z7g=
+Received: by 10.180.7.138 with SMTP id j10mr118332wia.1.1323813742271;
+        Tue, 13 Dec 2011 14:02:22 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.227.201.213 with SMTP id fb21ls1927572wbb.5.gmail; Tue, 13 Dec
+ 2011 14:02:21 -0800 (PST)
+Received: by 10.180.103.10 with SMTP id fs10mr39854wib.5.1323813741295;
+        Tue, 13 Dec 2011 14:02:21 -0800 (PST)
+Received: by 10.216.144.67 with SMTP id m45mswej;
+        Tue, 13 Dec 2011 13:22:12 -0800 (PST)
+Received: by 10.14.124.207 with SMTP id x55mr180623eeh.8.1323811332326;
+        Tue, 13 Dec 2011 13:22:12 -0800 (PST)
+Received: by 10.14.124.207 with SMTP id x55mr180621eeh.8.1323811332300;
+        Tue, 13 Dec 2011 13:22:12 -0800 (PST)
+Received: from mail-fx0-f48.google.com (mail-fx0-f48.google.com [209.85.161.48])
+        by gmr-mx.google.com with ESMTPS id 41si199951eee.2.2011.12.13.13.22.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 13 Dec 2011 13:22:12 -0800 (PST)
+Received-SPF: pass (google.com: domain of eric.advincula@gmail.com designates 209.85.161.48 as permitted sender) client-ip=209.85.161.48;
+Received: by mail-fx0-f48.google.com with SMTP id q24so977587fan.35
+        for <msysgit@googlegroups.com>; Tue, 13 Dec 2011 13:22:12 -0800 (PST)
+Received: by 10.180.106.70 with SMTP id gs6mr343095wib.41.1323811332115; Tue,
+ 13 Dec 2011 13:22:12 -0800 (PST)
+Received: by 10.216.197.74 with HTTP; Tue, 13 Dec 2011 13:22:12 -0800 (PST)
+In-Reply-To: <7vaa6wuqjt.fsf@alter.siamese.dyndns.org>
+X-Original-Sender: eric.advincula@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of eric.advincula@gmail.com designates 209.85.161.48 as permitted
+ sender) smtp.mail=eric.advincula@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187066>
 
-Am 13.12.2011 10:45, schrieb Andreas T.Auer:
-> On 12.12.2011 23:39 Jens Lehmann wrote:
->>  Am 11.12.2011 22:15, schrieb Andreas T.Auer:
->> > The other use case wants to follow the commits of that other
->> > submodule without checking the corresponding gitlinks into the
->> > superproject. But wouldn't it also make sense here to define
->> > actually a mapping in the .gitmodule that says "if the branch
->> > 'develop' is checkedout in the supermodule then with every
->> > submodule update automatically pull the newest 'unstable' commit
->> > from the submodule"? Or for "master" follow "stable" or for the
->> > "maint" branch follow updates in the "bugfixes" branch.
->> >
->> > For example
->> >
->> > [submodule "commonlib"] update = heads develop:unstable
->> > master:stable maint:bugfixes
->>
->>  Having that configured with "branch=unstable", "branch=stable" etc.
->>  in .gitmodules on the superprojects branches would be simpler and
->>  achieve the same functionality.
-> 
-> Yes, this has been my first thought also, but there is also a good point to keep the .gitmodules stable, or you always have to change the file when branches change their names. So when the maint branch of version 1.3 become an archive branch and the new maint is on 1.4, which was the master before then you have to change the .gitmodules on these branches. I.e. .gitmodules of 1.4 have "stable" and must have "bugfixes" now and .gitmodules of 1.3 has "bugfixes" and must remove the floating completely. I'm not sure that this can always be solved with "easy" merging and therefore it is probably not really simpler, when you have to do this for every new release. Or what do you think?
+--f46d0444ef2d334cf104b3ffd8ea
+Content-Type: text/plain; charset=ISO-8859-1
 
-I never rename branches, so I do not concur ;-) And I think the
-.gitmodules file could benefit from a special merge driver being
-aware of the format and some subtleties (like not just adding a
-"branch" setting but rather creating a merge conflict) anyways.
-So I'd prefer to keep it simple and just use the .gitmodules we
-already have which can be different in different branches.
+Is there an alternative to using git on windows?  I used windows, apache,
+dav for git.
+If there is a better solution please let me know.
 
->> > So whenever a defined branch is checked out in the superproject
->> > the mapped branch will be checked out in the submodule ("new"
->> > commit), but if a (e.g. tagged) commit is checked out ("old"
->> > commit) then the gitlink in the superproject is used to check out
->> > the referenced commit in the submodule.
->>
->>  I think checkout should only use the submodule commit recorded in the
->>  superproject and a subsequent "git submodule update" should be needed
->>  to update the submodule to tip. Otherwise you record SHA-1 but still
->>  won't be able to bisect ...
-> 
-> bisect would leave the branch and therefore uses the recorded SHA1 for the submodule checkout instead of the tip. "follow-the-tip" should only work if the superproject follows the tip.
+Thanks
+Eric
 
-If you follow a tip there won't be any new SHA-1s recorded during
-that following so you could not do a bisect and expect the submodule
-to be what the developer had when doing the commits, no?
+On Tue, Dec 13, 2011 at 2:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> If you configure auto-update on checkout you would not expect that a separate git submodule update has a different behavior.
+> Jeff King <peff@peff.net> writes:
+>
+> > Doing (3) is obviously the easiest thing. And given the complexity of
+> > the other two solutions, I think it makes sense to revert 986bbc08
+> > (i.e., apply this patch), ship a working v1.7.8.1, and then look at
+> > doing one of the other two solutions for v1.7.9.
+>
+> Or just let the "dumb HTTP" die.
+>
+> I thought push over DAV has long been dead; is anybody using it for real?
+>
 
-Sure you do, when auto-update on checkout is active "git submodule update"
-becomes a no-op for the exact submodule model, as "git checkout" will do
-all the work "git submodule update" did before.
+--f46d0444ef2d334cf104b3ffd8ea
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
->> > In http://thread.gmane.org/gmane.comp.version-control.git/183837
->> > was discussed whether the gitlink in the superproject should be
->> > set to all-zero if updates follow the tip or maybe use the SHA1 of
->> > the commit when the submodule was added. I think the gitlink should
->> > be updated everytime when a new commit in the superproject is
->> > created.
->>
->>  Nope, only when "git submodule update" is run. Otherwise you'll
->>  spray the history with submodule updates totally unrelated to the
->>  commits in the superproject, which is rather confusing.
-> 
-> Of course, committing a new version to the superproject should not trigger pulling in a new version for the submodule or an automatic jump to the tip of the submodule. I just meant a normal manual "commit -a" behavior. Putting a 0{40} hash in the gitlink or only the hash of the submodule, when it first was added would be a special treatment that is neither needed nor wanted.
+Is there an alternative to using git on windows? =A0I used windows, apache,=
+ dav for git.<div>If there is a better solution please let me know.</div><d=
+iv><br></div><div>Thanks</div><div>Eric<br><br><div class=3D"gmail_quote">O=
+n Tue, Dec 13, 2011 at 2:09 PM, Junio C Hamano <span dir=3D"ltr">&lt;<a hre=
+f=3D"mailto:gitster@pobox.com">gitster@pobox.com</a>&gt;</span> wrote:<br>
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex"><div class=3D"im">Jeff King &lt;<a href=3D"m=
+ailto:peff@peff.net">peff@peff.net</a>&gt; writes:<br>
+<br>
+&gt; Doing (3) is obviously the easiest thing. And given the complexity of<=
+br>
+&gt; the other two solutions, I think it makes sense to revert 986bbc08<br>
+&gt; (i.e., apply this patch), ship a working v1.7.8.1, and then look at<br=
+>
+&gt; doing one of the other two solutions for v1.7.9.<br>
+<br>
+</div>Or just let the &quot;dumb HTTP&quot; die.<br>
+<br>
+I thought push over DAV has long been dead; is anybody using it for real?<b=
+r>
+</blockquote></div><br></div>
 
-I don't get that, what SHA-1 do you want to put into the gitlink?
-I understand that floating is not about updating the SHA-1 for the
-submodule each commit, right?
+--f46d0444ef2d334cf104b3ffd8ea--
