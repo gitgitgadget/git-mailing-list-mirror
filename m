@@ -1,148 +1,64 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] Guard memory overwriting in resolve_ref's static
- buffer
-Date: Mon, 12 Dec 2011 16:37:22 -0800
-Message-ID: <7v8vmhz4ql.fsf@alter.siamese.dyndns.org>
-References: <1323688832-32016-1-git-send-email-pclouds@gmail.com>
- <1323688832-32016-3-git-send-email-pclouds@gmail.com>
+Subject: Re: [PATCH v2 02/51] refs: rename "refname" variables
+Date: Mon, 12 Dec 2011 16:37:31 -0800
+Message-ID: <7v1us9z4qc.fsf@alter.siamese.dyndns.org>
+References: <1323668338-1764-1-git-send-email-mhagger@alum.mit.edu>
+ <1323668338-1764-3-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 13 01:37:34 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Drew Northup <drew.northup@maine.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Tue Dec 13 01:37:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaGNB-0000n1-O4
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 01:37:34 +0100
+	id 1RaGNH-0000no-Mr
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 01:37:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753739Ab1LMAh0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Dec 2011 19:37:26 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62046 "EHLO
+	id S1753890Ab1LMAhf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 19:37:35 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62084 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753642Ab1LMAhZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2011 19:37:25 -0500
+	id S1753642Ab1LMAhe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 19:37:34 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B7E87978;
-	Mon, 12 Dec 2011 19:37:24 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B61E0797D;
+	Mon, 12 Dec 2011 19:37:33 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=kZHHk+yD/I3DwN8UgWAqmFRN0
-	to=; b=JfyPyUplWM+oCtJNeaRD8M5jWOg6ZnfpZ/cRM01k8VORVlTVicK99Xtw/
-	1XOPBQLqc5vwAi9mALhiUf8RZV0l635p9NyDT+3YhXyIzbkc55LXP3G3bdJ983Ej
-	nxp5vSUn2SGHBYV8ZKYhlC6ke9SLDk3rFf07tBnCnL+tdfYsg4=
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=Y0m4Q6pvXHKcoJ7/Fbac2dt75g4=; b=rDm29F8ITTJNTi36eFGI
+	AeYoTS22OSznoy1Vu9LKODZWwprcjtnSUU+vk9LExOtzloEbrsh2PUz30jxKVd5r
+	e3NwdDARx0oixeAh0euc+YqMuSRvzHXpV+sPDV6uvdsvGqkYzKLPxhUGfps6kfqc
+	ivSx2AYyNjTQiDle/2bpH5A=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=rNhYAXFjJ53uRT9e+10
-	Xb0QJlCm9GyeGxbjcqQbOuoue1q1TnMcspUO19fyIcS7+s5Z9dFyoIrnEeutxKg6
-	JFx+9HDm/WXSakBwPZYRBndLhNNNBF3RV0/B+6fpOsQ8NXkif0kLs4JjdMvAOf8n
-	qMF1LwNakuMxYqTN+Hi7cbkc=
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=tftCxDO8dIikMEwbWGE/jSAFrOE8ZBRSJxj6cC12Ybwi3Z
+	DRN46Bc00pmbT1PDK43C9mQTUI8wJXI09ESRl503QwYJrkLoR76/5LHTyFWr04ql
+	JePuHbYCUkAMNN1UWG5FWXzkSRbTXxQsK5r8SCD/eYbXfKD//gYHZPEmsp3iE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 329BB7977;
-	Mon, 12 Dec 2011 19:37:24 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ACD5C797A;
+	Mon, 12 Dec 2011 19:37:33 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A17107976; Mon, 12 Dec 2011
- 19:37:23 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 314967979; Mon, 12 Dec 2011
+ 19:37:33 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9FBA2894-2522-11E1-9D1C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A56E8C08-2522-11E1-A9F1-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186982>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
-
-> diff --git a/cache.h b/cache.h
-> index 4887a3e..ba5e911 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -865,7 +865,8 @@ extern int read_ref(const char *filename, unsigne=
-d char *sha1);
->   *
->   * errno is sometimes set on errors, but not always.
->   */
-> -extern const char *resolve_ref(const char *ref, unsigned char *sha1,=
- int reading, int *flag);
-> +#define resolve_ref(ref, sha1, reading, flag) resolve_ref_real(ref, =
-sha1, reading, flag, __FILE__, __LINE__)
-> +extern const char *resolve_ref_real(const char *ref, unsigned char *=
-sha1, int reading, int *flag, const char *file, int line);
->  extern char *resolve_refdup(const char *ref, unsigned char *sha1, in=
-t reading, int *flag);
-> =20
->  extern int dwim_ref(const char *str, int len, unsigned char *sha1, c=
-har **ref);
-
-Eek.
-
-> diff --git a/wrapper.c b/wrapper.c
-> index 85f09df..02b6c81 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -60,6 +60,33 @@ void *xmallocz(size_t size)
->  	return ret;
->  }
-> =20
-> +void *xmalloc_mmap(size_t size, const char *file, int line)
-> +{
-> +	struct alloc_header *block;
-> +	size +=3D offsetof(struct alloc_header,buf);
-> +	block =3D mmap(NULL, size, PROT_READ | PROT_WRITE,
-> +		   MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
-> +	if (block =3D=3D (struct alloc_header*)-1)
-> +		die_errno("unable to mmap %lu bytes anonymously",
-> +			  (unsigned long)size);
-> +
-> +	block->file =3D file;
-> +	block->line =3D line;
-> +	block->size =3D size;
-> +	return block->buf;
-> +}
-> +
-
-Double eek. A refname is ordinarily way too small than a page and we sp=
-end
-a full page every time resolve_ref_unsafe() is called. That is acceptab=
-le
-only for debugging build, but then having to patch the main codepath li=
-ke
-the following, renaming the "real" implementation of a rather important
-function is not acceptable in a non-debugging build.
-
-> diff --git a/refs.c b/refs.c
-> index 8ffb32f..cf8dfcc 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -497,12 +497,21 @@ static int get_packed_ref(const char *ref, unsi=
-gned char *sha1)
->  	return -1;
->  }
-> =20
-> -const char *resolve_ref(const char *ref, unsigned char *sha1, int re=
-ading, int *flag)
-> +const char *resolve_ref_real(const char *ref, unsigned char *sha1,
-> +			     int reading, int *flag, const char *file, int line)
->  {
->  	int depth =3D MAXDEPTH;
->  	ssize_t len;
->  	char buffer[256];
-> -	static char ref_buffer[256];
-> +	static char real_ref_buffer[256];
-> +	static char *ref_buffer;
-> +
-> +	if (!ref_buffer && !getenv("GIT_DEBUG_MEMCHECK"))
-> +		ref_buffer =3D real_ref_buffer;
-> +	if (ref_buffer !=3D real_ref_buffer) {
-> +		xfree_mmap(ref_buffer);
-> +		ref_buffer =3D xmalloc_mmap(256, file, line);
-> +	}
-
-I'll drop 3/4 from the series, adjust 4/4, and queue the result as a
-three-patch series for now.
+This added otherwise unnecessary conflicts with topics in flight, but the
+conflicts were nothing Git and a human couldn't manage, and overall it is
+not a bad readability change for the longer-term code health.
 
 Thanks.
