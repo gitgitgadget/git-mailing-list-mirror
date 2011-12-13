@@ -1,168 +1,78 @@
-From: "Jimmy Zakia" <downsyl4@aol.com>
-Subject: Please confirm from Libyian Embassy
-Date: Tue, 13 Dec 2011 13:34:00 -0800
-Message-ID: <201112131235.pBDCZ3ER013100@imr-ma02.mx.aol.com>
-Reply-To: <jimmyzakky20@yahoo.com.hk>
+From: Holger Hellmuth <hellmuth@ira.uka.de>
+Subject: Re: Question about commit message wrapping
+Date: Tue, 13 Dec 2011 14:14:17 +0100
+Message-ID: <4EE74FA9.2020908@ira.uka.de>
+References: <35A5A513-91FD-4EF9-B890-AB3D1550D63F@sidneysm.com> <m3zkf1hnh9.fsf@localhost.localdomain> <E085218D-9287-4F82-B34C-8379742F818A@sidneysm.com> <201112102030.15504.jnareb@gmail.com> <CAH5451kGn72tLAwdvQFBjSyHSL0rUmaPZrbL7Z-KfHWN-HAuCQ@mail.gmail.com> <CAH6sp9NwyxZi6KR4U96=sWdiqCseyTLEDoHdw=y9hUx2kHwOpg@mail.gmail.com> <4EE62DB9.8030406@ira.uka.de> <op.v6edibfz0aolir@keputer> <4EE6C31C.60909@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="----=_NextPart_000_004A_01C2A9A6.51051E26"
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Tue Dec 13 13:36:24 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Frans Klaver <fransklaver@gmail.com>,
+	Andrew Ardill <andrew.ardill@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	=?UTF-8?B?U2lkbmV5IFNhbiBNYXJ0w61u?= <s@sidneysm.com>,
+	git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Dec 13 14:13:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaRap-0005Oh-SA
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 13:36:24 +0100
+	id 1RaSAt-0005W7-DB
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 14:13:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753437Ab1LMMgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Dec 2011 07:36:19 -0500
-Received: from imr-ma02.mx.aol.com ([64.12.206.40]:56061 "EHLO
-	imr-ma02.mx.aol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752611Ab1LMMgS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Dec 2011 07:36:18 -0500
-Received: from mtaout-da03.r1000.mx.aol.com (mtaout-da03.r1000.mx.aol.com [172.29.51.131])
-	by imr-ma02.mx.aol.com (8.14.1/8.14.1) with ESMTP id pBDCZ3ER013100;
-	Tue, 13 Dec 2011 07:35:06 -0500
-Received: from omh-ma01.r1000.mx.aol.com (omh-ma01.r1000.mx.aol.com [172.29.41.7])
-	by mtaout-da03.r1000.mx.aol.com (MUA/Third Party Client Interface) with ESMTP id 905FCE0001DF;
-	Tue, 13 Dec 2011 07:35:05 -0500 (EST)
-Received: from mtaout-db05.r1000.mx.aol.com (mtaout-db05.r1000.mx.aol.com [172.29.51.197])
-	by omh-ma01.r1000.mx.aol.com (AOL Outbound Holding Interface) with ESMTP id 613F3E0002B6;
-	Tue, 13 Dec 2011 07:33:39 -0500 (EST)
-Received: from User (unknown [83.142.106.187])
-	by mtaout-db05.r1000.mx.aol.com (MUA/Third Party Client Interface) with ESMTPA id 0E407E000139;
-	Tue, 13 Dec 2011 07:33:27 -0500 (EST)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-X-AOL-VSS-INFO: 5400.1158/76872
-X-AOL-VSS-CODE: clean
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mx.aol.com;
-	s=20110426; t=1323779619;
-	bh=Aj+fUGI5sjz/KKsYxt2zz2/EqQqPZSyqfzL0QPOSgIY=;
-	h=From:Subject:Date:MIME-Version:Content-Type;
-	b=Eu8d8A5eFWEqXUhenIRVQIJo7l19skC7BZfoVS1g2sStYyV3oUS7kv/4gUDiEkfA1
-	 WTN3LyTBxdqJXhpkj5eq9pcArRnuXNa+Rt6IM03yvH6Oiy5uCLh2keIM5y4koxYxfP
-	 EI4YgpqYS/Tv21IMXC1+X9HyQAGPcOQYqo6M0euk=
-X-AOL-SCOLL-SCORE: 0:5:73066776:93952408  
-X-AOL-SCOLL-URL_COUNT: 0  
-x-aol-global-disposition: G
-X-AOL-VSS-INFO: 5400.1158/76872
-X-AOL-VSS-CODE: clean
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mx.aol.com;
-	s=20110426; t=1323779706;
-	bh=Aj+fUGI5sjz/KKsYxt2zz2/EqQqPZSyqfzL0QPOSgIY=;
-	h=From:Subject:Date:MIME-Version:Content-Type;
-	b=IiOlFnUhBYw7ffYpa3VplKE7aYoqyYw3T5EB5vqw5A84mG+G795ie8zIkWfW8BhwO
-	 dt4d+RMo5KXNvQspyjXFRA1osw9+4FtjSmvreR1U4lgPzPPazy5Jg+RBPKVmoJ+Viy
-	 7FcYkObgU/NX9/QwBYYPeQhOmAsGf5zQVKt5ex5w=
-X-AOL-SCOLL-SCORE: 0:5:74447520:93952408  
-X-AOL-SCOLL-URL_COUNT: 0  
-x-aol-sid: 3039ac1d33834ee74679754e
+	id S1753468Ab1LMNNe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Dec 2011 08:13:34 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:58545 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753452Ab1LMNNd (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Dec 2011 08:13:33 -0500
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1RaSAb-0007k8-SZ; Tue, 13 Dec 2011 14:13:29 +0100
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
+	id 1RaSAb-0003Xg-LM; Tue, 13 Dec 2011 14:13:21 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <4EE6C31C.60909@alum.mit.edu>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1323782009.867532000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 10.3 points;
- *  1.9 DATE_IN_FUTURE_06_12 Date: is 6 to 12 hours after Received: date
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5000]
- *  0.6 RCVD_IN_SORBS_WEB RBL: SORBS: sender is a abuseable web server
- *      [83.142.106.187 listed in dnsbl.sorbs.net]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?83.142.106.187>]
- *  0.8 MSGID_FROM_MTA_HEADER Message-Id was added by a relay
- *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
- *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187017>
 
-This is a multi-part message in MIME format.
+On 13.12.2011 04:14, Michael Haggerty wrote:
+> On 12/12/2011 11:16 PM, Frans Klaver wrote:
+>> Wrapped code as in auto-wrapped? Or as in manually wrapped? Python
+>> programmers have significant white space, but you can still hard wrap
+>> stuff, as long as the next statement is properly indented.
 
-------=_NextPart_000_004A_01C2A9A6.51051E26
-Content-Type: text/plain;
-	charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
+I meant as in auto-wrapped and also not as a permanent change but 
+something done to a long line on output to the screen.
 
-In a brief introduction, I am an embassy attaché with the Libyan Government in the Hague, Netherlands.
-Please kindly see the attachment for more details and respond immediately
+> FWIW I think automatic wrapping of commit messages is a bad idea.  I
+> wrap my commit messages deliberately to make them look the way I want
 
-------=_NextPart_000_004A_01C2A9A6.51051E26
-Content-Type: application/octet-stream;
-	name="attachment.rtf"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
-	filename="attachment.rtf"
+Which you still can do (since hard line endings would not be ignored). 
+On displays wider than your line limit you will still see it exactly 
+like intended. Only on narrow displays your commit message would look 
+bad, admittedly even worse than cut-off lines.
 
-e1xydGYxXGFuc2lcYW5zaWNwZzEyNTJcZGVmZjBcZGVmbGFuZzEwMzN7XGZv
-bnR0Ymx7XGYwXGZzd2lzc1xmY2hhcnNldDAgQXJpYWw7fX0NCntcKlxnZW5l
-cmF0b3IgTXNmdGVkaXQgNS40MS4yMS4yNTAwO31cdmlld2tpbmQ0XHVjMVxw
-YXJkXGYwXGZzMjAgSmltbXkgWmFraWEgU2FobGlccGFyDQpFbWJhc3N5IG9m
-IExpYnlhXHBhcg0KUGFya3dlZyAxNSwgMjU4NUpIXHBhcg0KVGhlIEhhZ3Vl
-LCBUaGUgTmV0aGVybGFuZHMgIFxwYXINClxwYXINCjEzdGggRGVjLiAyMDEx
-XHBhcg0KIFxwYXINCkVtYmFzc3kgb2YgTGlieWEsIFRoZSBIYWd1ZSwgTmV0
-aGVybGFuZHM7IEZ1bmQgVHJhbnNmZXIgQXNzaXN0YW5jZVxwYXINCiBccGFy
-DQpEZWFyIFNpcixccGFyDQogXHBhcg0KSSBoYXZlIGRlY2lkZWQgdG8gY29u
-dGFjdCB5b3UgdG8gYXNzaXN0IHVzIHRyYW5zZmVyIGFuZCBkZXBvc2l0IHRo
-aXMgc3VtIG9mIG1vbmV5IG1lbnRpb25lZCBiZWxvdyBpbnRvIHlvdXIgcGVy
-c29uYWwgYWNjb3VudCBvciBhbnkgb3RoZXIgYWNjb3VudCB5b3UgZGVjaWRl
-IHNhZmUuXHBhcg0KIFxwYXINCkluIGEgYnJpZWYgaW50cm9kdWN0aW9uLCBJ
-IGFtIGFuIGVtYmFzc3kgYXR0YWNoXCdlOSB3aXRoIHRoZSBMaWJ5YW4gR292
-ZXJubWVudCBpbiBUaGUgSGFndWUsIE5ldGhlcmxhbmRzLiBXZSBhcmUgY3Vy
-cmVudGx5IGF1ZGl0aW5nIGFuZCByZWN0aWZ5aW5nIHRoZSBhY2NvdW50IG9m
-IG91ciBGb3JlaWduIE1pc3Npb25zIGFuZCBFbWJhc3NpZXMgYWJyb2FkIGFu
-ZCBpbiBwYXJ0aWN1bGFyIGluIEV1cm9wZS4gVGhpcyBleGNpc2UgaXMgbmVj
-ZXNzaXRhdGVkIGJ5IHRoZSBvbi1nb2luZyBwb2xpdGljYWwgY2hhbmdlIGlu
-IG15IGNvdW50cnkgdW5kZXIgdGhlIE5hdGlvbmFsIFRyYW5zaXRpb25hbCBD
-b3VuY2lsIChOVEMpLiBJdCBpcyBleHBlY3RlZCB0aGF0IHRoZXJlIHdpbGwg
-YmUgbmV3IEFtYmFzc2Fkb3JpYWwgcG9zdGluZyBpbiB0aGUgY29taW5nIG1v
-bnRocyB3aGljaCB3aWxsIGRlZmluaXRlbHkgYWZmZWN0IHRoZSBwcmVzZW50
-IEFtYmFzc2Fkb3IgYW5kIGFsbCBzdGFmZiBvZiBMaWJ5YSBFbWJhc3N5IGlu
-IFRoZSBOZXRoZXJsYW5kcy5ccGFyDQogXHBhcg0KSG93ZXZlciwgaW4gdGhl
-IGNvdXJzZSBvZiBvdXIgYXVkaXRpbmcsIHdlIGhhdmUgaHVnZSBzdW0gb2Yg
-ZXhjZXNzIG1vbmV5IGluIHRoZSB0dW5lIG9mIFVTJDgsNTAwLDAwMC4wMCAo
-RWlnaHQgTWlsbGlvbiwgRml2ZSBIdW5kcmVkIFRob3VzYW5kIFUuUyBEb2xs
-YXJzKSB3aGljaCBpcyBseWluZyBsb29zZSBhbmQgdW5jbGFpbWVkIGluIG9u
-ZSBvZiB0aGUgbG9jYWwgYmFua3MgaGVyZSBpbiBUaGUgTmV0aGVybGFuZHMu
-IFdlIGhhdmUgcXVpY2tseSBhbmQgc21hcnRseSBpbiBjb2xsYWJvcmF0aW9u
-IHdpdGggdGhlIEFtYmFzc2Fkb3IgYW5kIHNvbWUgYXV0aG9yaXRpZXMgaW4g
-dGhlIE5hdGlvbmFsIFRyYW5zaXRpb25hbCBDb3VuY2lsIChOVEMpIGRlY2lk
-ZWQgdG8ga2VlcCB0aGlzIG1vbmV5IHRvIG91cnNlbHZlcy4gV2UgYXJlIHRh
-a2luZyBhZHZhbnRhZ2Ugb2Ygb3VyIHBvc2l0aW9uIGFuZCB0aGF0IG9mIHRo
-ZSBwb2xpdGljYWwgaW5zdGFiaWxpdHkgaW4gbXkgY291bnRyeSB0byBkbyB0
-aGlzIGtub3dpbmcgdGhhdCBub2JvZHkgd2lsbCBmaW5kIG91dC4gSG93ZXZl
-ciwgd2Ugd291bGQgbGlrZSB0byBtb3ZlIHRoaXMgbW9uZXkgZnVydGhlciB0
-byBhbm90aGVyIGZvcmVpZ24gYWNjb3VudCwgcHJlZmVyYWJseSBvdXRzaWRl
-IFRoZSBOZXRoZXJsYW5kcy5ccGFyDQogXHBhcg0KVG8gdGhpcyBlZmZlY3Qs
-IGFuZCBmb3IgcmVhc29uIG9mIGFub255bWl0eSwgd2UgaGF2ZSBjaG9zZW4g
-eW91IHRocm91Z2ggdGhlIGludGVybmF0aW9uYWwgc2VhcmNoIGRpcmVjdG9y
-eSB0byBhc3Npc3QgdXMgaW4gdHJhbnNmZXJyaW5nIGFuZCBkZXBvc2l0aW5n
-IHRoaXMgbW9uZXkgaW4geW91ciBwZXJzb25hbCBiYW5rIGFjY291bnQgb3Ig
-YW55IG90aGVyIGFjY291bnQgeW91IGRlZW1lZCBzYWZlci4gVGhpcyByZWNv
-bW1lbmRhdGlvbiBpcyBiYXNlZCBvbiB0aGUgZmFjdCB0aGF0IHlvdSB3aWxs
-IG5vdCBiZXRyYXkgdGhlIHRydXN0IGFuZCBjb25maWRlbmNlIHdlIGFyZSBy
-ZXBvc2luZyBvbiB5b3UuIFdlIGhhdmUgZGVjaWRlZCB0aGVyZWFmdGVyLCB0
-byBnaXZlIHlvdSAzMCUgb2YgdGhlIFVTJDgsNTAwLDAwMC4wMCBmb3IgeW91
-ciBhc3Npc3RhbmNlIGFuZCBjb3Jyb2JvcmF0aW9uIHdoaWxlIHRoZSByZXN0
-IDcwJSB3aWxsIGJlIHNhZmVseSBrZXB0IGZvciB1cy5ccGFyDQogXHBhcg0K
-UGxlYXNlIGtpbmRseSBpbmRpY2F0ZSB5b3VyIGludGVyZXN0IHRvIGFzc2lz
-dCB1cyBrZWVwIHRoaXMgbW9uZXkgaW4geW91ciBhY2NvdW50IGFzIHNvb24g
-YXMgcG9zc2libGUuIEl0IGlzIGFsc28gbXkgcGxlYXN1cmUgdG8gaW5mb3Jt
-IHlvdSB0aGF0IGV2ZXJ5IGFycmFuZ2VtZW50IHRvIHJlbGVhc2UgdGhlIG1v
-bmV5IGZyb20gdGhlIGJhbmsgaGVyZSBoYXMgYmVlbiBjb25jbHVkZWQuIFRo
-aXMgYnVzaW5lc3MgaXMgdG90YWxseSByaXNrIGZyZWUuXHBhcg0KIFxwYXIN
-CkZpbmFsbHksIHdlIGV4cGVjdCB5b3UgaW4gY29uZmlkZW5jZSBhbmQgdHJ1
-c3QgdG8ga2VlcCBldmVyeSBhc3BlY3Qgb2YgdGhpcyB0cmFuc2FjdGlvbiBz
-ZWNyZXQgYW5kIGNvbmZpZGVudGlhbCBhcyBhbnkgbWlzdGFrZSB3aWxsIHB1
-dCBteSBmdXR1cmUgY2FyZWVyIGluIGplb3BhcmR5LiBJIG1heSBpbnZpdGUg
-eW91IG9yIHZpc2l0IHlvdSBmb3Igb25lIG9uIG9uZSBkaXNjdXNzaW9uIGFu
-ZCBwZXJmZWN0aW9uIG9mIHRoZSBkZWFsIGFzIHNvb24gSSBjb25maXJtIHRo
-YXQgeW91IGNhbiBoYW5kbGUgdGhlIHRyYW5zYWN0aW9uLlxwYXINCiBccGFy
-DQpUaGFua3MgZm9yIHlvdXIgYW50aWNpcGF0ZWQgY28tb3BlcmF0aW9uLCB3
-aGlsZSB3YWl0aW5nIGZvciB5b3VyIGFjY2VwdGFuY2UgdG8gYXNzaXN0IHVz
-LiBccGFyDQogXHBhcg0KWW91cnMgc2luY2VyZWx5LFxwYXINCiAgXHBhcg0K
-SmltbXkgWmFraWEgU2FobGlccGFyDQp9DQoA
+> them to look.  The assumption of an 80-character display has historical
+> reasons, but it is also a relatively comfortable line-width to read
+> (even on wider displays).  And given that commit messages sometimes
+> contain "flowable" paragraph text, sometimes code snippets, sometimes
+> ASCII art, etc, no automatic wrapping will work correctly unless
+> everybody agrees that commit messages must be written in some specific
+> form of markup (or lightweight markup).  And I can't imagine such a
+> thing ever happening.
 
-------=_NextPart_000_004A_01C2A9A6.51051E26--
+With that assumption everyone could be happy with automatic wrapping of 
+lines on screen output. You can hard wrap and it will look exactly as 
+intended. In the same commit message you could also just write a 
+paragraph without hitting the return-key at all and have a commit 
+message that looks good in web browsers and too narrow gitk windows.
