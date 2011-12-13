@@ -1,125 +1,122 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [RFC/PATCH] add update to branch support for "floating submodules"
-Date: Tue, 13 Dec 2011 10:35:44 -0500
-Message-ID: <4EE770D0.5080702@xiplink.com>
-References: <20111109174027.GA28825@book.fritz.box> <7vr51htbsy.fsf@alter.siamese.dyndns.org> <20111129220854.GB2812@sandbox-rc.fritz.box> <loom.20111210T062013-538@post.gmane.org> <7vborhaqgw.fsf@alter.siamese.dyndns.org> <CALFF=ZQKRgx_AodBQH17T9cSe_JFtoKie7DoMMfkTXCyCFospw@mail.gmail.com> <4EE61EED.50604@ursus.ath.cx> <CALFF=ZRYB1LkAY5WSC4Eydu-N0KNnWLLM2CfbSXZji18yO82gw@mail.gmail.com> <4EE64B04.8080405@ursus.ath.cx> <CALFF=ZRB7qjj7VMhzr12ySdHmZsySoqceu5brFht8rX1+W3NPg@mail.gmail.com> <CABURp0rFOGQ9kAbAn65W3UAHTWbk5prH7spjJnFvL5fqzbFp1w@mail.gmail.com>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: [PATCH] gitk: fix the display of files when filtered by path
+Date: Tue, 13 Dec 2011 16:50:50 +0000
+Message-ID: <87hb14wg4l.fsf@fox.patthoyts.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Leif Gruenwoldt <leifer@gmail.com>,
-	"Andreas T.Auer" <andreas.t.auer_gtml_37453@ursus.ath.cx>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 13 16:36:06 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Mackerras <paulus@samba.org>,
+	msysGit <msysgit@googlegroups.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 13 18:12:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaUOh-0002w5-0w
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 16:36:03 +0100
+	id 1RaVtg-0003Gi-1v
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 18:12:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753473Ab1LMPfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Dec 2011 10:35:48 -0500
-Received: from smtp122.iad.emailsrvr.com ([207.97.245.122]:42280 "EHLO
-	smtp122.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753290Ab1LMPfr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Dec 2011 10:35:47 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp42.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id BF9A0148717;
-	Tue, 13 Dec 2011 10:35:46 -0500 (EST)
-X-Virus-Scanned: OK
-Received: by smtp42.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 400C0148803;
-	Tue, 13 Dec 2011 10:35:46 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20111124 Thunderbird/8.0
-In-Reply-To: <CABURp0rFOGQ9kAbAn65W3UAHTWbk5prH7spjJnFvL5fqzbFp1w@mail.gmail.com>
+	id S1754708Ab1LMRMB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Dec 2011 12:12:01 -0500
+Received: from mtaout01-winn.ispmail.ntl.com ([81.103.221.47]:62960 "EHLO
+	mtaout01-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754682Ab1LMRMA (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Dec 2011 12:12:00 -0500
+Received: from know-smtpout-4.server.virginmedia.net ([62.254.123.3])
+          by mtaout01-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20111213171155.MIN27013.mtaout01-winn.ispmail.ntl.com@know-smtpout-4.server.virginmedia.net>;
+          Tue, 13 Dec 2011 17:11:55 +0000
+Received: from [94.171.229.22] (helo=fox.patthoyts.tk)
+	by know-smtpout-4.server.virginmedia.net with esmtpa (Exim 4.63)
+	(envelope-from <patthoyts@users.sourceforge.net>)
+	id 1RaVtT-00067m-O7; Tue, 13 Dec 2011 17:11:55 +0000
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id 1BC06204C8; Tue, 13 Dec 2011 17:11:55 +0000 (GMT)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+X-Url: http://www.patthoyts.tk/
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+X-Cloudmark-Analysis: v=1.1 cv=R50lirqlHffDPPkwUlkuVa99MrvKdVWo//yz83qex8g= c=1 sm=0 a=O9HYxzjLEG8A:10 a=9XFZt7WcSwMA:10 a=kj9zAlcOel0A:10 a=FP58Ms26AAAA:8 a=1vSshlC292vCDhhB4mUA:9 a=MS6zm6YF7NNKexw5M5kA:7 a=CjuIK1q_8ugA:10 a=er7-qRgh4PtJugEs:21 a=WWKIV6sD9VLXeSyK:21 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187032>
 
-On 11-12-12 05:56 PM, Phil Hord wrote:
-> On Mon, Dec 12, 2011 at 2:13 PM, Leif Gruenwoldt <leifer@gmail.com> wrote:
->> On Mon, Dec 12, 2011 at 1:42 PM, Andreas T.Auer
->> <andreas.t.auer_gtml_37453@ursus.ath.cx> wrote:
->>
->>> The next question is: Wouldn't you like to have the new stable branch only
->>> pulled in, when the projectX (as the superproject) is currently on that new
->>> development branch (maybe master)?
->>>
->>> But if you checkout that fixed released version 1.2.9.8, wouldn't it be
->>> better that in that case the gitlinked version of the submodule is checked
->>> out instead of some unrelated new version? I mean, when the gitlinks are
->>> tracked with the projectX commits, this should work well.
->>>
->>> And what about a maintenance branch, which is not a fixed version but a
->>> quite stable branch which should only have bugfixes. Shouldn't the auto-pull
->>> be disabled in that case, too?
->>>
->>> I think the "auto-pull" behavior should depend on the currently checked out
->>> branch. So the configuration options should allow the definition of one or
->>> more mappings.
->>
->> Yes. I think you nailed it. The floating behaviour would best be
->> configured per branch.
-> 
-> Yes, I think you nailed it too.  I've been thinking the same thing for
-> a while now, but I didn't know how to express it completely.  Some of
-> the discussion on here last week gelled the last bits in my mind.
-> 
-> To wit, I think I would want something like this in my project:
-> 
-> Use gitlinks when the superproject HEAD is one of these:
->     refs/heads/maint/*
->     refs/heads/svn/*     (historic branches)
->     refs/tags/*
->     <SHA1> (detached)
-> 
-> Float on the rest, using the branch given in .gitmodules (which may be
-> * to mean "use the same branch as the superproject".)
-> 
-> But maybe it is foolish of me to keep branches where I really want
-> lightweight tags.  If so, I could get away with this:
-> 
->    Float if .git/HEAD begins with "refs/heads"
->    Else, use the SHA1.
+Launching 'gitk -- .' or 'gitk -- ..\t' restricts the display to files
+under the given directory but the file list is left empty. This is because
+the path_filter function fails to match the filenames which are relative
+to the working tree to the filter which is filessytem relative.
+This solves the problem by making both names fully qualified filesystem
+paths before performing the comparison.
 
-Wouldn't this break creating a bugfix topic branch based on an earlier
-revision of the repo?  I wouldn't want such a branch to automatically give me
-the latest submodules.
+Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+---
+ gitk-git/gitk |   38 +++++++++++++++++++++++++++-----------
+ 1 files changed, 27 insertions(+), 11 deletions(-)
 
-I'd prefer to have floating be explicitly configured on a per-branch (or
-per-branch-glob) basis.  So in addition to what Jens described yesterday [1]
-to configure an individual submodule's floating branch, I suggest there also
-be a new section in the .gitmodules file for configuring the super-repo's
-floating branches, e.g.
-
-	[super]
-		floaters = refs/heads/master refs/heads/dev*
-
-	[submodule "Sub1"]
-		path = foo/bar
-		branch = maint
-		url = ...
-
-	[submodule "Sub2"]
-		path = other/place
-		url = ...
-
-This would mean that whenever the super-repo checks out either the "master"
-branch or a branch whose name starts with "dev" (assuming recursive checkouts
-are on):
-
-  * The Sub1 submodule automatically checks out the tip of its
-    "maint" branch.
-
-  * The Sub2 submodule (lacking a "branch" variable) would not float
-    and would check out the commit recorded in the super-repo.
-
-A super-repo recursive-checkout that doesn't match a floaters pattern would
-work in the regular, non-floating way.
-
-		M.
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/186969
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 2a92e20..b728345 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -18,6 +18,26 @@ proc gitdir {} {
+     }
+ }
+ 
++proc gitworktree {} {
++    variable _gitworktree
++    if {[info exists _gitworktree]} {
++	return $_gitworktree
++    }
++    # v1.7.0 introduced --show-toplevel to return the canonical work-tree
++    if {[catch {set _gitworktree [exec git rev-parse --show-toplevel]}]} {
++        # try to set work tree from environment, core.worktree or use
++        # cdup to obtain a relative path to the top of the worktree. If
++        # run from the top, the ./ prefix ensures normalize expands pwd.
++        if {[catch { set _gitworktree $env(GIT_WORK_TREE) }]} {
++	    catch {set _gitworktree [exec git config --get core.worktree]}
++	    if {$_gitworktree eq ""} {
++		set _gitworktree [file normalize ./[exec git rev-parse --show-cdup]]
++	    }
++        }
++    }
++    return $_gitworktree
++}
++
+ # A simple scheduler for compute-intensive stuff.
+ # The aim is to make sure that event handlers for GUI actions can
+ # run at least every 50-100 ms.  Unfortunately fileevent handlers are
+@@ -7376,19 +7396,15 @@ proc startdiff {ids} {
+     }
+ }
+ 
++# If the filename (name) is under any of the passed filter paths
++# then return true to include the file in the listing.
+ proc path_filter {filter name} {
++    set worktree [gitworktree]
+     foreach p $filter {
+-	set l [string length $p]
+-	if {[string index $p end] eq "/"} {
+-	    if {[string compare -length $l $p $name] == 0} {
+-		return 1
+-	    }
+-	} else {
+-	    if {[string compare -length $l $p $name] == 0 &&
+-		([string length $name] == $l ||
+-		 [string index $name $l] eq "/")} {
+-		return 1
+-	    }
++	set fq_p [file normalize $p]
++	set fq_n [file normalize [file join $worktree $name]]
++	if {[string match [file normalize $fq_p]* $fq_n]} {
++	    return 1
+ 	}
+     }
+     return 0
+-- 
+1.7.8.msysgit.0
