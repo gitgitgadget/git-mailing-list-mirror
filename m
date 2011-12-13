@@ -1,133 +1,92 @@
-From: Joe Ratterman <jratt0@gmail.com>
-Subject: [PATCH] Add '-P' as a synonym for '--no-pager' in the git command
-Date: Tue, 13 Dec 2011 16:35:06 -0600
-Message-ID: <1323815706-10560-2-git-send-email-jratt0@gmail.com>
-References: <1323815706-10560-1-git-send-email-jratt0@gmail.com>
-Cc: Joe Ratterman <jratt0@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 13 23:35:38 2011
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [RFC/PATCH] add update to branch support for "floating submodules"
+Date: Tue, 13 Dec 2011 17:42:40 -0500
+Message-ID: <4EE7D4E0.5000305@xiplink.com>
+References: <20111109174027.GA28825@book.fritz.box> <7vr51htbsy.fsf@alter.siamese.dyndns.org> <20111129220854.GB2812@sandbox-rc.fritz.box> <loom.20111210T062013-538@post.gmane.org> <7vborhaqgw.fsf@alter.siamese.dyndns.org> <CALFF=ZQKRgx_AodBQH17T9cSe_JFtoKie7DoMMfkTXCyCFospw@mail.gmail.com> <4EE61EED.50604@ursus.ath.cx> <CALFF=ZRYB1LkAY5WSC4Eydu-N0KNnWLLM2CfbSXZji18yO82gw@mail.gmail.com> <4EE64B04.8080405@ursus.ath.cx> <CALFF=ZRB7qjj7VMhzr12ySdHmZsySoqceu5brFht8rX1+W3NPg@mail.gmail.com> <CABURp0rFOGQ9kAbAn65W3UAHTWbk5prH7spjJnFvL5fqzbFp1w@mail.gmail.com> <4EE770D0.5080702@xiplink.com> <4EE7C15A.3040501@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Phil Hord <phil.hord@gmail.com>,
+	Leif Gruenwoldt <leifer@gmail.com>,
+	"Andreas T.Auer" <andreas.t.auer_gtml_37453@ursus.ath.cx>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Dec 13 23:51:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Raawj-0006yc-Q0
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 23:35:38 +0100
+	id 1RabCF-0005kK-4A
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 23:51:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754773Ab1LMWfU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Dec 2011 17:35:20 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:34093 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753305Ab1LMWfS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Dec 2011 17:35:18 -0500
-Received: by vcbfk14 with SMTP id fk14so149000vcb.19
-        for <git@vger.kernel.org>; Tue, 13 Dec 2011 14:35:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=CBZuZ0IjhLT3lut8PBEsAVPWHbT6eEXtHWnqSvA+/ec=;
-        b=fqYaJ+p8/2mrN3VCfSm0Cl/2diyHWaowXLmRYaN8wotDlWS64tfoHHYnjx6enUU/D2
-         pjT3Nevdz5OX90esvwCtUOsiPnDBwCvqLNDjgBHiUznWNQGwyXeY6k8nvrXZhIKIMbqI
-         TjBWjaRxt/791og1zmV9wmyndgPMttOSN+5SQ=
-Received: by 10.220.227.66 with SMTP id iz2mr2959745vcb.16.1323815718207;
-        Tue, 13 Dec 2011 14:35:18 -0800 (PST)
-Received: from localhost.localdomain (rchp4.rochester.ibm.com. [129.42.161.36])
-        by mx.google.com with ESMTPS id em10sm484385vdc.6.2011.12.13.14.35.17
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 13 Dec 2011 14:35:17 -0800 (PST)
-X-Mailer: git-send-email 1.7.7.1.3.ge148a
-In-Reply-To: <1323815706-10560-1-git-send-email-jratt0@gmail.com>
+	id S1753402Ab1LMWve (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Dec 2011 17:51:34 -0500
+Received: from smtp122.dfw.emailsrvr.com ([67.192.241.122]:50106 "EHLO
+	smtp122.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753227Ab1LMWve (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Dec 2011 17:51:34 -0500
+X-Greylist: delayed 531 seconds by postgrey-1.27 at vger.kernel.org; Tue, 13 Dec 2011 17:51:34 EST
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp12.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id 63A7A3C1270;
+	Tue, 13 Dec 2011 17:42:43 -0500 (EST)
+X-Virus-Scanned: OK
+Received: by smtp12.relay.dfw1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 625653C1383;
+	Tue, 13 Dec 2011 17:42:42 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20111124 Thunderbird/8.0
+In-Reply-To: <4EE7C15A.3040501@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187070>
 
-  Also, add both -P|--no-pager to the existing -p|--paginate in bash
-  completion.
+On 11-12-13 04:19 PM, Jens Lehmann wrote:
+> Am 13.12.2011 16:35, schrieb Marc Branchaud:
+>> I'd prefer to have floating be explicitly configured on a per-branch (or
+>> per-branch-glob) basis.  So in addition to what Jens described yesterday [1]
+>> to configure an individual submodule's floating branch, I suggest there also
+>> be a new section in the .gitmodules file for configuring the super-repo's
+>> floating branches, e.g.
+>>
+>> 	[super]
+>> 		floaters = refs/heads/master refs/heads/dev*
+>>
+>> 	[submodule "Sub1"]
+>> 		path = foo/bar
+>> 		branch = maint
+>> 		url = ...
+>>
+>> 	[submodule "Sub2"]
+>> 		path = other/place
+>> 		url = ...
+> 
+> Hmm, but you can have different .gitmodules files in different branches of
+> the superproject, no?
 
-Signed-off-by: Joe Ratterman <jratt0@gmail.com>
----
- Documentation/git.txt                  |    3 ++-
- contrib/completion/git-completion.bash |    2 +-
- git.c                                  |    4 ++--
- t/t7006-pager.sh                       |    8 ++++++++
- 4 files changed, 13 insertions(+), 4 deletions(-)
+Yes.  I'm not sure I see that as a problem though.
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index e869032..c7f8445 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git' [--version] [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
--    [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
-+    [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--bare]
-     [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
-     [-c <name>=<value>]
-     [--help] <command> [<args>]
-@@ -329,6 +329,7 @@ help ...`.
- 	configuration options (see the "Configuration Mechanism" section
- 	below).
- 
-+-P::
- --no-pager::
- 	Do not pipe git output into a pager.
- 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index cc1bdf9..8b9ea1b 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2640,7 +2640,7 @@ _git ()
- 		case "$i" in
- 		--git-dir=*) __git_dir="${i#--git-dir=}" ;;
- 		--bare)      __git_dir="." ;;
--		--version|-p|--paginate) ;;
-+		--version|-p|--paginate|-P|--no-pager) ;;
- 		--help) command="help"; break ;;
- 		*) command="$i"; break ;;
- 		esac
-diff --git a/git.c b/git.c
-index 8e34903..baa1613 100644
---- a/git.c
-+++ b/git.c
-@@ -7,7 +7,7 @@
- 
- const char git_usage_string[] =
- 	"git [--version] [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
--	"           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]\n"
-+	"           [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--bare]\n"
- 	"           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n"
- 	"           [-c name=value] [--help]\n"
- 	"           <command> [<args>]";
-@@ -103,7 +103,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 			exit(0);
- 		} else if (!strcmp(cmd, "-p") || !strcmp(cmd, "--paginate")) {
- 			use_pager = 1;
--		} else if (!strcmp(cmd, "--no-pager")) {
-+		} else if (!strcmp(cmd, "-P") || !strcmp(cmd, "--no-pager")) {
- 			use_pager = 0;
- 			if (envchanged)
- 				*envchanged = 1;
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index 320e1d1..783915e 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -84,6 +84,14 @@ test_expect_success 'no pager even with --paginate when stdout is a pipe' '
- 	! test -e paginated.out
- '
- 
-+test_expect_success TTY 'no pager with -P' '
-+	rm -f paginated.out ||
-+	cleanup_fail &&
-+
-+	test_terminal git -P log &&
-+	! test -e paginated.out
-+'
-+
- test_expect_success TTY 'no pager with --no-pager' '
- 	rm -f paginated.out ||
- 	cleanup_fail &&
--- 
-1.7.7.1
+> Why not just have the "branch = maint" setting for
+> "Sub1" in the master and the dev branches .gitmodules file and drop it in
+> the other branches?
+
+Because I think that's an error-prone approach.
+
+If the user creates a topic branch off (an ancestor) of master, git doesn't
+know if the user wants floating submodules or not.  If this is a bugfix
+topic, the user would have to edit .gitmodules to turn off floating.  But
+that modified .gitmodules is too easily committed to the branch, and once it
+gets merged back into master suddenly master loses its "floating" feature.
+
+What's more, less-sophisticated users would be wary of editing an "internal"
+file like .gitmodules.
+
+Instead I think it's more intuitive for the repository to define which
+branches get floating submodules and which don't, and IMO a list of
+names/globs is a good way to do that.  The repo's users would need to be
+aware of what the magic branch names are, but I think that's easily
+communicated in the floating-submodule scenarios I've seen posted.  Git could
+also help by telling the user, when a branch is created or it's name is
+displayed, whether or not it's got floating submodules.
+
+		M.
