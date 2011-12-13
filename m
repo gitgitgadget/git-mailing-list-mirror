@@ -1,78 +1,92 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: Question about commit message wrapping
-Date: Tue, 13 Dec 2011 14:14:17 +0100
-Message-ID: <4EE74FA9.2020908@ira.uka.de>
-References: <35A5A513-91FD-4EF9-B890-AB3D1550D63F@sidneysm.com> <m3zkf1hnh9.fsf@localhost.localdomain> <E085218D-9287-4F82-B34C-8379742F818A@sidneysm.com> <201112102030.15504.jnareb@gmail.com> <CAH5451kGn72tLAwdvQFBjSyHSL0rUmaPZrbL7Z-KfHWN-HAuCQ@mail.gmail.com> <CAH6sp9NwyxZi6KR4U96=sWdiqCseyTLEDoHdw=y9hUx2kHwOpg@mail.gmail.com> <4EE62DB9.8030406@ira.uka.de> <op.v6edibfz0aolir@keputer> <4EE6C31C.60909@alum.mit.edu>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH/RFC] Makefile: add 'help' target for target summary
+Date: Tue, 13 Dec 2011 20:16:04 +0700
+Message-ID: <1323782164-11759-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Frans Klaver <fransklaver@gmail.com>,
-	Andrew Ardill <andrew.ardill@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	=?UTF-8?B?U2lkbmV5IFNhbiBNYXJ0w61u?= <s@sidneysm.com>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Dec 13 14:13:40 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 13 14:17:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaSAt-0005W7-DB
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 14:13:39 +0100
+	id 1RaSEg-0007OA-Fy
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 14:17:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753468Ab1LMNNe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Dec 2011 08:13:34 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:58545 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753452Ab1LMNNd (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Dec 2011 08:13:33 -0500
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1RaSAb-0007k8-SZ; Tue, 13 Dec 2011 14:13:29 +0100
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1RaSAb-0003Xg-LM; Tue, 13 Dec 2011 14:13:21 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <4EE6C31C.60909@alum.mit.edu>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1323782009.867532000
+	id S1754645Ab1LMNRN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Dec 2011 08:17:13 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:36252 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751539Ab1LMNRM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Dec 2011 08:17:12 -0500
+Received: by iaeh11 with SMTP id h11so4767606iae.19
+        for <git@vger.kernel.org>; Tue, 13 Dec 2011 05:17:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=Uf/n3ZTf4VSrXbDaATNsu71CfQlgjYOtEGbhrT8GnnM=;
+        b=kwt9gfd/OkfDaQyHhhOzAixSOQgYH1sc3JIF+4MSH/DYcCUebHHjTiQ6Yd4qA80QEc
+         Y9GSzUecnqEQR4KViFmS7vBrTJqejTiiDRHi4ZUqv0anHdS/qgSFd635g4P6Z/fAi/3r
+         4lg25af4k8bkZ1a8N5H7B6XZt51TccK8MLV+E=
+Received: by 10.50.36.230 with SMTP id t6mr19166487igj.83.1323782231749;
+        Tue, 13 Dec 2011 05:17:11 -0800 (PST)
+Received: from tre ([115.74.32.245])
+        by mx.google.com with ESMTPS id x18sm8307299ibi.2.2011.12.13.05.17.08
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 13 Dec 2011 05:17:10 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Tue, 13 Dec 2011 20:16:05 +0700
+X-Mailer: git-send-email 1.7.8.36.g69ee2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187018>
 
-On 13.12.2011 04:14, Michael Haggerty wrote:
-> On 12/12/2011 11:16 PM, Frans Klaver wrote:
->> Wrapped code as in auto-wrapped? Or as in manually wrapped? Python
->> programmers have significant white space, but you can still hard wrap
->> stuff, as long as the next statement is properly indented.
+I find this "make help" very helpful (at work, on a different
+project). With this I don't have to crawl through Makefile when I need
+something but cannot remember what's the target name. It should also
+help discover new targets.
 
-I meant as in auto-wrapped and also not as a permanent change but 
-something done to a long line on output to the screen.
+We may also have "make vars" (or something like that) that shows list
+of user-configurable variables, basically a conversion of the big
+comment block near the makefile's top into a printable target.
 
-> FWIW I think automatic wrapping of commit messages is a bad idea.  I
-> wrap my commit messages deliberately to make them look the way I want
+I don't work with this Makefile much, so this is just an idea. Anyone
+up to turn it to something actually useful?
 
-Which you still can do (since hard line endings would not be ignored). 
-On displays wider than your line limit you will still see it exactly 
-like intended. Only on narrow displays your commit message would look 
-bad, admittedly even worse than cut-off lines.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Makefile |   14 ++++++++++++++
+ 1 files changed, 14 insertions(+), 0 deletions(-)
 
-> them to look.  The assumption of an 80-character display has historical
-> reasons, but it is also a relatively comfortable line-width to read
-> (even on wider displays).  And given that commit messages sometimes
-> contain "flowable" paragraph text, sometimes code snippets, sometimes
-> ASCII art, etc, no automatic wrapping will work correctly unless
-> everybody agrees that commit messages must be written in some specific
-> form of markup (or lightweight markup).  And I can't imagine such a
-> thing ever happening.
-
-With that assumption everyone could be happy with automatic wrapping of 
-lines on screen output. You can hard wrap and it will look exactly as 
-intended. In the same commit message you could also just write a 
-paragraph without hitting the return-key at all and have a commit 
-message that looks good in web browsers and too narrow gitk windows.
+diff --git a/Makefile b/Makefile
+index ed82320..abf6cf9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2603,3 +2603,17 @@ profile-all: profile-clean
+ 	$(MAKE) CFLAGS=3D"$(PROFILE_GEN_CFLAGS)" all
+ 	$(MAKE) CFLAGS=3D"$(PROFILE_GEN_CFLAGS)" -j1 test
+ 	$(MAKE) CFLAGS=3D"$(PROFILE_USE_CFLAGS)" all
++
++.PHONY: help
++
++help:
++	@echo "test		Run the test suite"
++	@echo "coverage	Build git with coverage support"
++	@echo "cover_db	Generate coverage database from *.gcov"
++	@echo "cover_db_html	Generate coverage report"
++	@echo "profile-all	Build git with profiling support"
++	@echo "clean		Clean intermediate files"
++	@echo "distclean	Clean even more for dist packaging"
++	@echo "sparse		Run git with sparse"
++	@echo "cscope		Generate cscope symbol database"
++	@echo "check-docs	Check documentation"
+--=20
+1.7.8.36.g69ee2
