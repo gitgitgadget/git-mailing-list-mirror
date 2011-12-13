@@ -1,117 +1,125 @@
-From: "Andreas T.Auer" <andreas.t.auer_gtml_37453@ursus.ath.cx>
-Subject: Re: Auto update submodules after merge and reset
-Date: Tue, 13 Dec 2011 10:45:03 +0100
-Message-ID: <4EE71E9F.90204@ursus.ath.cx>
-References: <4ED57EED.4040705@qualcomm.com> <4ED5E9D2.4060503@web.de> <jbnadt$hf8$1@dough.gmane.org> <4EDFE75C.5050201@web.de> <4EE07FCD.8090702@ursus.ath.cx> <CABURp0rcT2FR3uOmhyPUV5W3pu7WuJzjXktmUq0eb4nOiUwDKA@mail.gmail.com> <4EE51D7B.7020806@ursus.ath.cx> <4EE682A3.8070704@web.de>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH resend] Do not create commits whose message contains NUL
+Date: Tue, 13 Dec 2011 18:56:08 +0700
+Message-ID: <1323777368-19697-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Phil Hord <phil.hord@gmail.com>, git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Dec 13 10:46:07 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 13 12:57:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaOw2-0005kj-Av
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 10:46:06 +0100
+	id 1RaQz4-0005L7-Qt
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 12:57:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752826Ab1LMJqB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Dec 2011 04:46:01 -0500
-Received: from brln-4d0cbd2c.pool.mediaWays.net ([77.12.189.44]:38755 "EHLO
-	here" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750873Ab1LMJp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Dec 2011 04:45:59 -0500
-Received: from [192.168.0.14] (unknown [192.168.0.14])
-	by here (Postfix) with ESMTP id 20B9E1A1BE2;
-	Tue, 13 Dec 2011 10:46:02 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20111110 Icedove/3.0.11
-In-Reply-To: <4EE682A3.8070704@web.de>
+	id S1753423Ab1LML5S convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Dec 2011 06:57:18 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:56778 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752675Ab1LML5R (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Dec 2011 06:57:17 -0500
+Received: by ghbz12 with SMTP id z12so289477ghb.19
+        for <git@vger.kernel.org>; Tue, 13 Dec 2011 03:57:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=OM7zsQ7+ham23IEGV5Ji8EdefN1oGzJHjX3LHKEoklY=;
+        b=o2/XzJKUhI+bx7FkbJ6mNt0KFCXKEC/5jLipH7/TRzOwX0k2YYPtTE/ZE2txugr6MK
+         xnpyy6evDrGYk3qahuc61Br/Bt5LQZKeHmwhPaUJmMJ+hsdCkDckHfzHddL62wqS7jfr
+         4saCKcUSKSc+WH6Z/UTBubcszxNp1M1gJkAZk=
+Received: by 10.50.163.97 with SMTP id yh1mr19384235igb.37.1323777436575;
+        Tue, 13 Dec 2011 03:57:16 -0800 (PST)
+Received: from tre ([115.74.32.245])
+        by mx.google.com with ESMTPS id g34sm63195687ibk.10.2011.12.13.03.57.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 13 Dec 2011 03:57:15 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Tue, 13 Dec 2011 18:56:08 +0700
+X-Mailer: git-send-email 1.7.8.36.g69ee2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187012>
 
+We assume that the commit log messages are uninterpreted sequences of
+non-NUL bytes (see Documentation/i18n.txt). However the assumption
+does not really stand out and it's quite easy to set an editor to save
+in a NUL-included encoding. Currently we silently cut at the first NUL
+we see.
 
+Make it more obvious that NUL is not welcome by refusing to create
+such commits. Those who deliberately want to create them can still do
+with hash-object.
 
-On 12.12.2011 23:39 Jens Lehmann wrote:
->  Am 11.12.2011 22:15, schrieb Andreas T.Auer:
-> >
-> > In my use case the branches on the submodules follow the
-> > superproject and (mostly) versions that are committed there, it
-> > just adds the possibility to keep on working without checking out
-> > a branch after an update and without colliding with existing
-> > branchnames in the submodule.
->
->  Using superproject branch names in the submodules make no sense for a
->  lot of use cases.
-The most useful workflows for some use cases make no sense for a lot of 
-other use cases. That is why configuration options are useful, right? 
-There is no one-size-fits-all. It surely won't make sense for 
-independent submodules.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ This is from UTF-16 in commit message discussion [1] a few months
+ ago. I don't want to resurrect the discussion again. However I think
+ it's a good idea to stop users from shooting themselves in this case,
+ especially at porcelain level.
+=20
+ There were no comments on this patch previously. So, any comments
+ this time ? Should I drop it?
 
-> > The other use case wants to follow the commits of that other
-> > submodule without checking the corresponding gitlinks into the
-> > superproject. But wouldn't it also make sense here to define
-> > actually a mapping in the .gitmodule that says "if the branch
-> > 'develop' is checkedout in the supermodule then with every
-> > submodule update automatically pull the newest 'unstable' commit
-> > from the submodule"? Or for "master" follow "stable" or for the
-> > "maint" branch follow updates in the "bugfixes" branch.
-> >
-> > For example
-> >
-> > [submodule "commonlib"] update = heads develop:unstable
-> > master:stable maint:bugfixes
->
->  Having that configured with "branch=unstable", "branch=stable" etc.
->  in .gitmodules on the superprojects branches would be simpler and
->  achieve the same functionality.
+ [1] http://thread.gmane.org/gmane.comp.version-control.git/184123/focu=
+s=3D184335
+ commit.c               |    3 +++
+ t/t3900-i18n-commit.sh |    6 ++++++
+ t/t3900/UTF-16.txt     |  Bin 0 -> 32 bytes
+ 3 files changed, 9 insertions(+), 0 deletions(-)
+ create mode 100644 t/t3900/UTF-16.txt
 
-Yes, this has been my first thought also, but there is also a good point 
-to keep the .gitmodules stable, or you always have to change the file 
-when branches change their names. So when the maint branch of version 
-1.3 become an archive branch and the new maint is on 1.4, which was the 
-master before then you have to change the .gitmodules on these branches. 
-I.e. .gitmodules of 1.4 have "stable" and must have "bugfixes" now and 
-.gitmodules of 1.3 has "bugfixes" and must remove the floating 
-completely. I'm not sure that this can always be solved with "easy" 
-merging and therefore it is probably not really simpler, when you have 
-to do this for every new release. Or what do you think?
+diff --git a/commit.c b/commit.c
+index d67b8c7..0775eec 100644
+--- a/commit.c
++++ b/commit.c
+@@ -855,6 +855,9 @@ int commit_tree(const char *msg, size_t msg_len, un=
+signed char *tree,
+=20
+ 	assert_sha1_type(tree, OBJ_TREE);
+=20
++	if (strlen(msg) < msg_len)
++		die(_("cannot commit with NUL in commit message"));
++
+ 	/* Not having i18n.commitencoding is the same as having utf-8 */
+ 	encoding_is_utf8 =3D is_encoding_utf8(git_commit_encoding);
+=20
+diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
+index 1f62c15..d48a7c0 100755
+--- a/t/t3900-i18n-commit.sh
++++ b/t/t3900-i18n-commit.sh
+@@ -34,6 +34,12 @@ test_expect_success 'no encoding header for base cas=
+e' '
+ 	test z =3D "z$E"
+ '
+=20
++test_expect_failure 'UTF-16 refused because of NULs' '
++	echo UTF-16 >F &&
++	git commit -a -F "$TEST_DIRECTORY"/t3900/UTF-16.txt
++'
++
++
+ for H in ISO8859-1 eucJP ISO-2022-JP
+ do
+ 	test_expect_success "$H setup" '
+diff --git a/t/t3900/UTF-16.txt b/t/t3900/UTF-16.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..53296be684253f40964c060=
+4be7fa7ff12e200cb
+GIT binary patch
+literal 32
+mcmezOpWz6@X@-jo=3DNYasZ~@^#h9rjP3@HpR7}6Nh8Mpw;r3yp<
 
-> > So whenever a defined branch is checked out in the superproject
-> > the mapped branch will be checked out in the submodule ("new"
-> > commit), but if a (e.g. tagged) commit is checked out ("old"
-> > commit) then the gitlink in the superproject is used to check out
-> > the referenced commit in the submodule.
->
->  I think checkout should only use the submodule commit recorded in the
->  superproject and a subsequent "git submodule update" should be needed
->  to update the submodule to tip. Otherwise you record SHA-1 but still
->  won't be able to bisect ...
+literal 0
+HcmV?d00001
 
-bisect would leave the branch and therefore uses the recorded SHA1 for 
-the submodule checkout instead of the tip. "follow-the-tip" should only 
-work if the superproject follows the tip.
-If you configure auto-update on checkout you would not expect that a 
-separate git submodule update has a different behavior.
-
-> > In http://thread.gmane.org/gmane.comp.version-control.git/183837
-> > was discussed whether the gitlink in the superproject should be
-> > set to all-zero if updates follow the tip or maybe use the SHA1 of
-> > the commit when the submodule was added. I think the gitlink should
-> > be updated everytime when a new commit in the superproject is
-> > created.
->
->  Nope, only when "git submodule update" is run. Otherwise you'll
->  spray the history with submodule updates totally unrelated to the
->  commits in the superproject, which is rather confusing.
-
-Of course, committing a new version to the superproject should not 
-trigger pulling in a new version for the submodule or an automatic jump 
-to the tip of the submodule. I just meant a normal manual "commit -a" 
-behavior. Putting a 0{40} hash in the gitlink or only the hash of the 
-submodule, when it first was added would be a special treatment that is 
-neither needed nor wanted.
+--=20
+1.7.8.36.g69ee2
