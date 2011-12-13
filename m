@@ -1,193 +1,84 @@
-From: Conrad Irwin <conrad.irwin@gmail.com>
-Subject: =?UTF-8?q?=5BPATCH=5D=20Update=20documentation=20for=20stripspace?=
-Date: Mon, 12 Dec 2011 15:52:51 -0800
-Message-ID: <1323733971-12495-1-git-send-email-conrad.irwin@gmail.com>
-References: <7vwra1z7bg.fsf@alter.siamese.dyndns.org>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: [RFC/PATCH] add update to branch support for "floating submodules"
+Date: Mon, 12 Dec 2011 18:12:11 -0600
+Message-ID: <CA+sFfMfH33hoRxdB01a6h=msVVjf3MwZXd7SFE6UVoVbxJVBoA@mail.gmail.com>
+References: <20111109174027.GA28825@book.fritz.box>
+	<7vr51htbsy.fsf@alter.siamese.dyndns.org>
+	<20111129220854.GB2812@sandbox-rc.fritz.box>
+	<loom.20111210T062013-538@post.gmane.org>
+	<7vborhaqgw.fsf@alter.siamese.dyndns.org>
+	<CALFF=ZQKRgx_AodBQH17T9cSe_JFtoKie7DoMMfkTXCyCFospw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Conrad Irwin <conrad.irwin@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 13 00:53:30 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Leif Gruenwoldt <leifer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 13 01:12:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaFgW-0000GC-Ec
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 00:53:28 +0100
+	id 1RaFyi-0007y9-S2
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 01:12:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754517Ab1LLXxU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Dec 2011 18:53:20 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:50142 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753577Ab1LLXxS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2011 18:53:18 -0500
-Received: by iaeh11 with SMTP id h11so3871505iae.19
-        for <git@vger.kernel.org>; Mon, 12 Dec 2011 15:53:17 -0800 (PST)
+	id S1753685Ab1LMAMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Dec 2011 19:12:12 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:38240 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753060Ab1LMAML (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2011 19:12:11 -0500
+Received: by ggdk6 with SMTP id k6so1770102ggd.19
+        for <git@vger.kernel.org>; Mon, 12 Dec 2011 16:12:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=fDCcGFNVRGid47x2i1udF7iN0H6lhRD7+0aPjy3hHxQ=;
-        b=NTkJJ2i26n1A9zvHMumeeDgjkzRY0G6mIrZgQH5++zp6gLX0gjZtm2/aXHXXmNx3+Q
-         jjhuEpuGUfZDv+giHUKCtEf5YH07eiz2k3lbEPlFil/2151pL9LQR/ICuyR+x3YTaBxO
-         n7znnBlK0PTomDw4YudIiegeGx8NRcA5/kSA4=
-Received: by 10.50.17.168 with SMTP id p8mr17127048igd.20.1323733997770;
-        Mon, 12 Dec 2011 15:53:17 -0800 (PST)
-Received: from monteverdi.rapportive.com (173-228-114-254.static.sonic.net. [173.228.114.254])
-        by mx.google.com with ESMTPS id py9sm31761395igc.2.2011.12.12.15.53.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 12 Dec 2011 15:53:17 -0800 (PST)
-X-Mailer: git-send-email 1.7.8.164.g00d7e
-In-Reply-To: <7vwra1z7bg.fsf@alter.siamese.dyndns.org>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=e00F2hOXOaBJ73T6hra7xE2ohySG6vgotFzfE+Az3b4=;
+        b=IghmVVBVp9MkU093tUDNF2YynyUOojAJkuiJMai5rEPsbQhKqr8NDHvt8zGNmnfp5y
+         E8m2mvG/goUt8BLsS6F15FaEo8mRzItH+dV/iGVqq3UcsyEJbodaj/wfqVLqWE9e+bTb
+         aRpxyUxK+somBt6C9ps/CGyylbJ5GQ182YZHw=
+Received: by 10.182.15.104 with SMTP id w8mr1448156obc.20.1323735131156; Mon,
+ 12 Dec 2011 16:12:11 -0800 (PST)
+Received: by 10.182.77.230 with HTTP; Mon, 12 Dec 2011 16:12:11 -0800 (PST)
+In-Reply-To: <CALFF=ZQKRgx_AodBQH17T9cSe_JFtoKie7DoMMfkTXCyCFospw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/186979>
 
-2011/12/12 Junio C Hamano <gitster@pobox.com>:
-> Conrad Irwin <conrad.irwin@gmail.com> writes:
->> I've moved the *NOTE* into a SEE ALSO section where I think it reads
->> less opinionatedly =E2=80=95 is that better?
+On Sat, Dec 10, 2011 at 9:27 AM, Leif Gruenwoldt <leifer@gmail.com> wrote:
+> On Sat, Dec 10, 2011 at 1:30 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> I think it looks a lot worse.
-[snip]
+>> So that use case does not sound like a good rationale to require addition
+>> of floating submodules.
 >
-> The new example section looks good. Perhaps we can just drop the extr=
-a SEE
-> ALSO and resurrect the *NOTE* from your v1 patch.
+> Ok I will try another scenario :)
 >
-> Thanks.
+> Imagine again products A, B and C and a common library. The products are in
+> a stable state of development and track a stable branch of the common lib.
+> Then imagine an important security fix gets made to the common library. On
+> the next pull of products A, B, and C they get this fix for free
+> because they were
+> floating. They didn't need to communicate with the maintainer of the common
+> repo to know this. In fact they don't really care. They just want the
+> latest stable
+> code for that release branch.
+>
+> This is how package management on many linux systems works. Dependencies
+> get updated and all products reap the benefit (or catastrophe) automatically.
 
-Done.
+What happens if the update to the floating submodule introduces a bug
+that prevents A, B, and/or C from building/running correctly?  If the
+submodule states are not recorded, how would the previously working
+submodule version be restored so that development on A, B, and C,
+could proceed?  I guess each developer could manually checkout @{1} in
+the submodule in their working directory, though that wouldn't work
+for a new clone, and it's not very elegant.
 
-Conrad
+I presume that if A, B, and C, do not care to know exactly what was
+fixed in the common library, they probably do not care to investigate
+the breakage in that repo either.  Or, they may not have the
+expertise.
 
----8<---
-
-Tell the user what this command is intended for, and expand the
-description of what it does.
-
-Signed-off-by: Conrad Irwin <conrad.irwin@gmail.com>
----
- Documentation/git-stripspace.txt |   69 ++++++++++++++++++++++++++++++=
-++++---
- builtin/stripspace.c             |    2 +-
- 2 files changed, 64 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/git-stripspace.txt b/Documentation/git-strip=
-space.txt
-index b78f031..a548444 100644
---- a/Documentation/git-stripspace.txt
-+++ b/Documentation/git-stripspace.txt
-@@ -3,26 +3,83 @@ git-stripspace(1)
-=20
- NAME
- ----
--git-stripspace - Filter out empty lines
-+git-stripspace - Remove unnecessary whitespace
-=20
-=20
- SYNOPSIS
- --------
- [verse]
--'git stripspace' [-s | --strip-comments] < <stream>
-+'git stripspace' [-s | --strip-comments] < input
-=20
- DESCRIPTION
- -----------
--Remove multiple empty lines, and empty lines at beginning and end.
-+
-+Clean the input in the manner used by 'git' for text such as commit
-+messages, notes, tags and branch descriptions.
-+
-+With no arguments, this will:
-+
-+- remove trailing whitespace from all lines
-+- collapse multiple consecutive empty lines into one empty line
-+- remove empty lines from the beginning and end of the input
-+- add a missing '\n' to the last line if necessary.
-+
-+In the case where the input consists entirely of whitespace characters=
-, no
-+output will be produced.
-+
-+*NOTE*: This is intended for cleaning metadata, prefer the `--whitespa=
-ce=3Dfix`
-+mode of linkgit:git-apply[1] for correcting whitespace of patches or f=
-iles in
-+the repository.
-=20
- OPTIONS
- -------
- -s::
- --strip-comments::
--	In addition to empty lines, also strip lines starting with '#'.
-+	Skip and remove all lines starting with '#'.
-+
-+EXAMPLES
-+--------
-+
-+Given the following noisy input with '$' indicating the end of a line:
-=20
--<stream>::
--	Byte stream to act on.
-+--------
-+|A brief introduction   $
-+|   $
-+|$
-+|A new paragraph$
-+|# with a commented-out line    $
-+|explaining lots of stuff.$
-+|$
-+|# An old paragraph, also commented-out. $
-+|      $
-+|The end.$
-+|  $
-+---------
-+
-+Use 'git stripspace' with no arguments to obtain:
-+
-+--------
-+|A brief introduction$
-+|$
-+|A new paragraph$
-+|# with a commented-out line$
-+|explaining lots of stuff.$
-+|$
-+|# An old paragraph, also commented-out.$
-+|$
-+|The end.$
-+---------
-+
-+Use 'git stripspace --strip-comments' to obtain:
-+
-+--------
-+|A brief introduction$
-+|$
-+|A new paragraph$
-+|explaining lots of stuff.$
-+|$
-+|The end.$
-+---------
-=20
- GIT
- ---
-diff --git a/builtin/stripspace.c b/builtin/stripspace.c
-index 1288ffc..f16986c 100644
---- a/builtin/stripspace.c
-+++ b/builtin/stripspace.c
-@@ -75,7 +75,7 @@ int cmd_stripspace(int argc, const char **argv, const=
- char *prefix)
- 				!strcmp(argv[1], "--strip-comments")))
- 		strip_comments =3D 1;
- 	else if (argc > 1)
--		usage("git stripspace [-s | --strip-comments] < <stream>");
-+		usage("git stripspace [-s | --strip-comments] < input");
-=20
- 	if (strbuf_read(&buf, 0, 1024) < 0)
- 		die_errno("could not read the input");
---=20
-1.7.8.164.g00d7e
+-Brandon
