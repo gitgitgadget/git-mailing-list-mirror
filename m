@@ -1,70 +1,149 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Revert "http: don't always prompt for password"
-Date: Tue, 13 Dec 2011 13:09:42 -0800
-Message-ID: <7vaa6wuqjt.fsf@alter.siamese.dyndns.org>
-References: <20111213201704.GA12072@sigill.intra.peff.net>
- <20111213202508.GA12187@sigill.intra.peff.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [RFC/PATCH] add update to branch support for "floating submodules"
+Date: Tue, 13 Dec 2011 22:09:09 +0100
+Message-ID: <4EE7BEF5.6050205@web.de>
+References: <20111109174027.GA28825@book.fritz.box> <7vr51htbsy.fsf@alter.siamese.dyndns.org> <20111129220854.GB2812@sandbox-rc.fritz.box> <loom.20111210T062013-538@post.gmane.org> <7vborhaqgw.fsf@alter.siamese.dyndns.org> <CALFF=ZQKRgx_AodBQH17T9cSe_JFtoKie7DoMMfkTXCyCFospw@mail.gmail.com> <7vaa6x4m5l.fsf@alter.siamese.dyndns.org> <CABURp0pPqpkWXdC+97wR8HZeX=Nbi0bn-3ji+k9LQnj0kFjCnQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Naewe <stefan.naewe@gmail.com>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Eric <eric.advincula@gmail.com>, git@vger.kernel.org,
-	msysgit@googlegroups.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 13 22:09:52 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Leif Gruenwoldt <leifer@gmail.com>, git@vger.kernel.org
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 13 22:10:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaZbj-0007Yq-1v
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 22:09:51 +0100
+	id 1RaZcR-000824-JM
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 22:10:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755906Ab1LMVJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Dec 2011 16:09:46 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37000 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753379Ab1LMVJp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Dec 2011 16:09:45 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A86E079B4;
-	Tue, 13 Dec 2011 16:09:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JYcXFrSjcaN4ksAYxgrRYo9welA=; b=GvamM0
-	0ijgxWCkiBbgZjTLBjI3GN8uO6DfnoV5nNT15Hra+InarfTKDrnCLTWB4F4RjP1I
-	AFv4wWOzi0d9ciOWvbSMm0hmm1kkLP+3xASBPLPbbQaYlFp8qFWN1RLRkcrXi97k
-	AsM9/aikKG8EV9V+/Pnl1wO/OI4ZzkP/X25T8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=q0jl8enyWCtiQ0w6nLXmL4pAENox5sx4
-	PDns+88KDTp6m+Rm7aHSxkDdVk/HtfrLbNepi+fkGfZ3ZD5OVkUi2RMS03VvHpil
-	zjtr9mU6/Bxksy5GIgBJChEZrSIQwhZDEyyG7Qv6tY4gar+Tb+Mhfrx4JrBRg55h
-	1B5IvEBpf8M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DD8279B3;
-	Tue, 13 Dec 2011 16:09:44 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 36F6A79B2; Tue, 13 Dec 2011
- 16:09:44 -0500 (EST)
-In-Reply-To: <20111213202508.GA12187@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 13 Dec 2011 15:25:08 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C7BD1520-25CE-11E1-BDEB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755910Ab1LMVKb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Dec 2011 16:10:31 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:42994 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753692Ab1LMVKa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Dec 2011 16:10:30 -0500
+Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
+	by fmmailgate02.web.de (Postfix) with ESMTP id BAE461BB4DFB5
+	for <git@vger.kernel.org>; Tue, 13 Dec 2011 22:10:28 +0100 (CET)
+Received: from [192.168.178.25] ([80.187.110.206]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0M0hsk-1QkFAM3RpW-00umbJ; Tue, 13 Dec 2011 22:10:28
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <CABURp0pPqpkWXdC+97wR8HZeX=Nbi0bn-3ji+k9LQnj0kFjCnQ@mail.gmail.com>
+X-Provags-ID: V02:K0:6MY+lxDuLlRbX/RSks8ad8MVw/LtFDXoIZka5FPxxu5
+ ADl2XsXi/Dd2Gje6Ulp3xtOzxHIiGO73XC5HOx0vL1Edf9eTtK
+ unZqPVxKkSrdHW3cscauBpRqYZKXnEGlkngbtQXafLTQmsKq9Z
+ kNTIQ2ul4H/UyOYfCr5fk9spmRMGEqphrGvrW2yx4idTlpqBfe
+ n6dj9O5yMDLz0Lifia3RQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187061>
 
-Jeff King <peff@peff.net> writes:
+Am 13.12.2011 15:17, schrieb Phil Hord:
+> On Mon, Dec 12, 2011 at 2:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> [...]
+>> Distro package dependency tracking is a poor analogy for many reasons, but
+>> I'll only touch a few.
+> [...]
+>> Naively, one might think that two branches, branch-1.0 and branch-2.0, can
+>> be defined in the repository of L, tell somebody (like "superproject that
+>> covers all the packages in the distro") that A wants branch-1.0 and B
+>> wants branch-2.0 of L respectively, to emulate this, but if one thinks
+>> further, one would realize that it is insufficient. For one thing, it is
+>> unclear what should happen when both A and B are asked to be checked out,
+>> but more importantly, in dependency requirements on real distro packaging,
+>> the application C could say "I want v1.0 API but v1.4 is broken and not
+>> compatible with me", which won't fit on the two-branches model. A
+>> workaround to add more branches to L could be devised but any workaround
+>> cannot be a good solution that allows a random application C among 47
+>> others to dictate how the branch structure of L project should look like.
+>>
+>> Fortunately, the dependency management is a solved problem by distro
+>> package management and build systems, and they do so without using
+>> anything from submodules. There is no point reinventing these logic in git
+>> submodules and emulating poorly.
+>>
+>> The only remotely plausible analogy around distro packaging would be a
+>> superproject full of all the packages in a distro as its submodules, and
+>> records exact versions of each and every package that goes on a release
+>> CD (or DVD). In that case, you do want to have a central registry that
+>> records what exact version of each package is used to cut the CD and the
+>> mother of all modules superproject could be one way to implement it. But
+>> that is not an example of floating, but is a direct opposite.
+>>
+>> This exchange convinced me further that anybody who wishes to use
+>> "floating" is better off either by doing one or both of the following:
+>>
+>>  - using "exact" but not updating religiously, as the interdepency
+>>   requirement in their project is not strict; or
+>>
+>>  - not using submodules at all, but merely keeping these unrelated A, B, C
+>>   and L as standalone repositories next to each other in the directory
+>>   structure.
+> 
+> My interdependency requirements are not so cut-and-dry.  We use
+> submodules to isolate controlled regions of code.  We may need to
+> share our project with a contractor who is allowed to see code
+> pertaining to "vendorA" but not that for "vendorB" or "VendorN".  But
+> our in-house developers want to have all the vendor code in one place
+> for convenient integration. Submodules do this nicely for us.  We can
+> give the contractor just the main modules and the VendorA modules and
+> he'll be fine.  In-house devs get all the submodules (using the
+> vendor-ALL superproject).
+> 
+> But this necessarily means there is too much coupling for comfort
+> between our submodules.   For example, when an API changes in the main
+> submodule, each of the vendor submodules is affected because they each
+> implement that API in a custom method.  Some of those vendor modules
+> belong to different people.  Submodule synchronization becomes a real
+> chore.
 
-> Doing (3) is obviously the easiest thing. And given the complexity of
-> the other two solutions, I think it makes sense to revert 986bbc08
-> (i.e., apply this patch), ship a working v1.7.8.1, and then look at
-> doing one of the other two solutions for v1.7.9.
+Hmm, maybe having vendor-specific branches in the superproject would
+help here. But that is hard to tell without knowing more details about
+your setup. But I suspect your vendor-ALL superproject is exactly the
+right spot to deal with these kind of problems (and if that isn't easy
+that might be a result of the difficulty of the problem you are trying
+to solve here, keeping different vendors in sync with your API ;-).
 
-Or just let the "dumb HTTP" die.
+> Floating would help, I think.  Instead I do this:
+> 
+>   git pull origin topic_foo && git submodule foreach 'git pull origin topic_foo'
+> 
+>   git submodule foreach 'git push origin topic_foo' && git push origin topic_foo
 
-I thought push over DAV has long been dead; is anybody using it for real?
+This sounds to me like you would need the "--recurse-submodules" option
+implemented for "git pull" and "git push", no? And I miss to see how
+floating would help when the tips of some submodules are not ready to
+work with other submodules tips ...
+
+> But not all my developers are git-gurus yet, and they sometimes mess
+> up their ad hoc scripts or miss important changes they forgot to push
+> in one submodule or another.
+
+Sure, even though current git should help you some by showing changes
+in the submodules.
+
+>  Or worse, their pull or push fails and
+> they can't see the problem for all the noise.  So they email it to me.
+
+We circumvent that by not pulling, but fetching and merging in the
+submodule first and after that in the superproject. You have much more
+control about what is going wrong where (and can have more
+git-experienced people help with - or even do - the merges).
+
+> On my git server, I have a hook that automatically propagates each
+> push to "master" from the submodules into the superproject.  But this
+> is tedious and limited.  And it relies on a centralized server.
+
+But for closely related stuff that is a good option. Our continuous
+integration server shows us quite some breakage between submodules
+before they hit a superproject, which is really helpful.
+
+> You may say this itch is all in my head, but it sure seems real to me.
+
+This definitely is a real problem. Lets see how far git can help you
+here...
