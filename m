@@ -1,8 +1,7 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH 1/6] t5519: push two branches to alternate repo
-Date: Tue, 13 Dec 2011 21:06:46 +0100
-Message-ID: <1323806811-5798-2-git-send-email-mhagger@alum.mit.edu>
-References: <1323806811-5798-1-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 0/6] Handle extra_refs separately from ref_caches
+Date: Tue, 13 Dec 2011 21:06:45 +0100
+Message-ID: <1323806811-5798-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Drew Northup <drew.northup@maine.edu>,
 	Jakub Narebski <jnareb@gmail.com>,
@@ -17,63 +16,64 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaYd1-0001JV-Dd
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 21:07:07 +0100
+	id 1RaYd1-0001JV-Vz
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 21:07:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755687Ab1LMUHB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Dec 2011 15:07:01 -0500
-Received: from mail.berlin.jpk.com ([212.222.128.130]:37191 "EHLO
+	id S1755694Ab1LMUHD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Dec 2011 15:07:03 -0500
+Received: from mail.berlin.jpk.com ([212.222.128.130]:37192 "EHLO
 	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750786Ab1LMUHA (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1755026Ab1LMUHA (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 13 Dec 2011 15:07:00 -0500
 Received: from michael.berlin.jpk.com ([192.168.100.152])
 	by mail.berlin.jpk.com with esmtp (Exim 4.50)
-	id 1RaYUN-0006aj-Bd; Tue, 13 Dec 2011 20:58:11 +0100
+	id 1RaYUM-0006aj-4b; Tue, 13 Dec 2011 20:58:10 +0100
 X-Mailer: git-send-email 1.7.8
-In-Reply-To: <1323806811-5798-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187052>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
-Since each branch in the alternate repo results in an "extra_ref"
-named ".have", pushing two of them results in two extra_refs with the
-same name.  This change to the test therefore makes sure that we can
-handle extra_refs names that are not unique.
+Extra refs don't have much to do with real references, and in fact
+they have to be handled differently.  For example, they do not support
+flags, they might not have unique names (indeed, the names are rather
+meaningless), and they are only ever iterated over, never looked up.
+So seemingly innocent things that one might want to do with real
+references, like check for conflicting duplicates, must not be done
+for extra refs.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
+This patch series creates a new linked-list data structure for the
+extra refs, separates iteration over the extra refs into a new
+function, and changes a test to actually create multiple extra refs
+with the same name.
 
-I'm not sure how well this change fits into the other things that the
-test wants to do, but it triggers the failure mode in ref-api-D v2
-that was predicted by Junio.
+This patch series applies on top of master.  If this approach is
+selected, then the ref-api-D series will have to be rebased on top of
+it and touched up to avoid the problems that it has with duplicate
+extra refs.
 
+By the way, I have been carrying around the CC list of this email for
+quite a while.  If you are tired of being spammed with my patch
+series, send me a private email and I will be happy to remove you from
+future mailings.
+
+Michael Haggerty (6):
+  t5519: push two branches to alternate repo
+  add_extra_ref(): remove flag argument
+  Extract a function do_for_each_extra_ref()
+  Store extra_refs in a separate data structure
+  Omit extra_refs except when iterating using for_each_ref()
+  do_for_each_extra_ref(): simplify signature
+
+ builtin/clone.c            |    4 ++--
+ builtin/receive-pack.c     |    2 +-
+ refs.c                     |   44 ++++++++++++++++++++++++++++++++++----------
+ refs.h                     |    2 +-
  t/t5519-push-alternates.sh |   10 +++++++++-
- 1 files changed, 9 insertions(+), 1 deletions(-)
+ 5 files changed, 47 insertions(+), 15 deletions(-)
 
-diff --git a/t/t5519-push-alternates.sh b/t/t5519-push-alternates.sh
-index c00c9b0..315f65d 100755
---- a/t/t5519-push-alternates.sh
-+++ b/t/t5519-push-alternates.sh
-@@ -17,7 +17,15 @@ test_expect_success setup '
- 		>file &&
- 		git add . &&
- 		git commit -m initial &&
--		git push ../alice-pub master
-+		git checkout -b foo &&
-+		>file1 &&
-+		git add . &&
-+		git commit -m file1 &&
-+		git checkout master &&
-+		>file2 &&
-+		git add . &&
-+		git commit -m file2 &&
-+		git push ../alice-pub master foo
- 	) &&
- 
- 	# Project Bob is a fork of project Alice
 -- 
 1.7.8
