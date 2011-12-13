@@ -1,71 +1,93 @@
-From: "Frans Klaver" <fransklaver@gmail.com>
-Subject: Re: [PATCH v2] Update documentation for stripspace
-Date: Tue, 13 Dec 2011 07:28:36 +0100
-Message-ID: <op.v6ez9yyi0aolir@keputer>
-References: <7vy5ui5h0k.fsf@alter.siamese.dyndns.org>
- <1323728909-7847-1-git-send-email-conrad.irwin@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 28/51] refs.c: rename ref_array -> ref_dir
+Date: Mon, 12 Dec 2011 22:37:02 -0800
+Message-ID: <7vk461vuy9.fsf@alter.siamese.dyndns.org>
+References: <1323668338-1764-1-git-send-email-mhagger@alum.mit.edu>
+ <1323668338-1764-29-git-send-email-mhagger@alum.mit.edu>
+ <7v7h21xps9.fsf@alter.siamese.dyndns.org> <4EE6E61F.8080405@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"Conrad Irwin" <conrad.irwin@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 13 07:28:52 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Drew Northup <drew.northup@maine.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Dec 13 07:37:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaLrA-0000uV-Bd
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 07:28:52 +0100
+	id 1RaLzD-0003VC-11
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Dec 2011 07:37:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751521Ab1LMG2l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Dec 2011 01:28:41 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:53325 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750731Ab1LMG2k convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Dec 2011 01:28:40 -0500
-Received: by eaaj10 with SMTP id j10so973368eaa.19
-        for <git@vger.kernel.org>; Mon, 12 Dec 2011 22:28:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=content-type:to:cc:subject:references:date:mime-version
-         :content-transfer-encoding:from:message-id:in-reply-to:user-agent;
-        bh=4OzGSs/jP7Vc5cW7Gp/GoFycdiMm6LpJ5GzlDv/9E9Q=;
-        b=dcEQYfYrT53N0XyVS1LpBIJ5c59nXLAJK1TtuJz37VmUm/oLcdVD1i9yX69r2hVKX7
-         szxTemoV3sB1aAuR/+qZvPwkYuEra2AjJYN4m3ezB0GPVu5Lmnp9P7RL8UFXzyEdOBG4
-         Y7AGjWM2q7Sv6XKjyaeddIolhqQBkfX9i0Ctc=
-Received: by 10.14.35.80 with SMTP id t56mr3741830eea.19.1323757719410;
-        Mon, 12 Dec 2011 22:28:39 -0800 (PST)
-Received: from keputer (82-136-253-149.ip.telfort.nl. [82.136.253.149])
-        by mx.google.com with ESMTPS id q28sm85166083eea.6.2011.12.12.22.28.38
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 12 Dec 2011 22:28:38 -0800 (PST)
-In-Reply-To: <1323728909-7847-1-git-send-email-conrad.irwin@gmail.com>
-User-Agent: Opera Mail/12.00 (Linux)
+	id S1752093Ab1LMGhH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Dec 2011 01:37:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63266 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751372Ab1LMGhF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Dec 2011 01:37:05 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F724382F;
+	Tue, 13 Dec 2011 01:37:04 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cosr6TX0xi8zbJkFQCaQHn+8qhc=; b=V48exo
+	pdD9Kw8f3a0ve350MJzC7KXU1Y1iuT5QbhtlO9hVUyqg/oW2jFkYgEjFj+qoNT+a
+	ouczoD9aSqcokAVA/WkgHwLXGIIfQyYfAWaw5kPc90wZOAIJsJ/nO4sFL7lSmC90
+	LQ8KNiEvQbARuOT6y7ltyAsqcywWwNUAN5A7M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=m+Pgp6bpYG90eOr73hfRY3Pjyml6/yZt
+	ZoRFNCB7n/owHT1eKcVUu4Dxp5R3q8mdQ8aQgZeiQNVzlwlYh4yRNqcjxz6KxaKv
+	y+Q2OlYgUtfNpWX7jw54RxuQOQ2lpsOmatoaDRddNKMa5EiwV5Ll3cXpKbru0Nwm
+	Bt9ZtagIwlI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 064C7382E;
+	Tue, 13 Dec 2011 01:37:04 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 85848382D; Tue, 13 Dec 2011
+ 01:37:03 -0500 (EST)
+In-Reply-To: <4EE6E61F.8080405@alum.mit.edu> (Michael Haggerty's message of
+ "Tue, 13 Dec 2011 06:43:59 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DE5BCB66-2554-11E1-B32F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187007>
 
-On Mon, 12 Dec 2011 23:28:29 +0100, Conrad Irwin <conrad.irwin@gmail.co=
-m> =20
-wrote:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
->> an incomplete line, i.e. "ensures the output does not end with an
->> incomplete line by adding '\n' at the end if needed".
->
-> Hmm, I'm not sure that's the best way of describing it =E2=80=94 I've=
- gone with:
-> "add a missing '\n' to the last line if necessary.".
+> Apropos testing, it is unsettling that our test suite doesn't show any
+> failures after my changes.  The dir entries in extra_refs are now always
+> sorted and de-duped when do_for_each_ref() is called.  Could it be that
+> duplicate ".have" references never come up in the test suite?  It sounds
+> like an important code path is not being tested.  In particular, I won't
+> be able to test whether my fix works :-/
 
-In most editors/IDE's I know and that support this, this is called "ens=
-ure =20
-new-line at end of file". I find this wording clearer than the above tw=
-o =20
-options.
+I doubt anybody thought of using more than one --reference while cloning
+or having more than one entry in $GIT_DIR/objects/info/alternates in a
+repository that is being pushed into, even though we might have tests for
+simpler single --reference and single alternate cases.
 
-Cheers,
-=46rans
+As to the order of the changes, my gut feeling is that it would make it
+harder to debug your series to delay the removal of "extra_ref" hackery,
+as it would be a corner case that your "hierarchical" structure never has
+to worry about in the end result.
+
+Another possibility is to keep the extra_ref interface in refs.c, without
+any of your changes (i.e. keep it just as a flat list, with the original
+interface to append to it without any dedup and other fancy features) and
+also keep the special casing of it in for_each_ref(). AFAIK, that is the
+only iterator that should care about the extra refs. Thinking about it a
+bit more, removal of add_extra_ref() API may be unnecessarily complex with
+no real gain. For example, extra refs added in builtin/clone.c is used by
+builtin/fetch-pack.c, meaning that the codepath that discovers and
+remembers these extra history anchor points and the codepath that uses
+them while walking the history are not localized and we would need some
+sort of "extra ref API" anyway. I am leaning towards this option.
