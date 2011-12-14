@@ -1,56 +1,60 @@
-From: Thomas Adam <thomas@xteddy.org>
-Subject: Re: [PATCH 1/2] set_ref_status_for_push(): use transport-flags abstraction
-Date: Wed, 14 Dec 2011 10:32:17 +0000
-Message-ID: <CA+39Oz55Ag5c7pfDYpHixk0=UdwuWfRMc+k3uC40jabUpynDXg@mail.gmail.com>
-References: <7vsjkot5nc.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Branch names with slashes
+Date: Wed, 14 Dec 2011 13:52:08 +0100
+Message-ID: <4EE89BF8.6090700@alum.mit.edu>
+References: <CAGcUY13TOodu1BO3DCoNnVvNZ9QkWAbD-RmyqQX6P1q6tcO+yg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 14 11:32:38 2011
+To: Leonardo Kim <dalinaum@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 14 13:52:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ram8c-0005kv-98
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 11:32:38 +0100
+	id 1RaoJt-0006Co-5p
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 13:52:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755260Ab1LNKce (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Dec 2011 05:32:34 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:54834 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753121Ab1LNKcd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2011 05:32:33 -0500
-Received: by ggdk6 with SMTP id k6so578273ggd.19
-        for <git@vger.kernel.org>; Wed, 14 Dec 2011 02:32:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=BEy4fUDFeNi8+Zu5v0LhRlTDp/TOv7KGSWCur6HvCNQ=;
-        b=LejnFr/FW3//YpxcifRtBEeg5Zo5fErWV9GtHiHO0T6EzvZwCQzmwEh+vrd2hKcD/d
-         qr/LUN71cOYJztwLntm5WiL8sCkv6iDjLI2lmIxz1QvhLPbO4ugeKzcr/HVmE6Jl3YYs
-         /3Wr0FyVLkIdPk0RUTBa1KiH+OPcGCXyFMy6o=
-Received: by 10.182.220.99 with SMTP id pv3mr3934127obc.68.1323858752796; Wed,
- 14 Dec 2011 02:32:32 -0800 (PST)
-Received: by 10.182.85.70 with HTTP; Wed, 14 Dec 2011 02:32:17 -0800 (PST)
-In-Reply-To: <7vsjkot5nc.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: dKDjHH7KPFAS_qjZ5zmFWS2Smvc
+	id S1754980Ab1LNMwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Dec 2011 07:52:13 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:34873 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754670Ab1LNMwN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2011 07:52:13 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pBECq8kS010734
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 14 Dec 2011 13:52:09 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
+In-Reply-To: <CAGcUY13TOodu1BO3DCoNnVvNZ9QkWAbD-RmyqQX6P1q6tcO+yg@mail.gmail.com>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187109>
 
-On 13 December 2011 23:26, Junio C Hamano <gitster@pobox.com> wrote:
-> It does not make much sense to have separate "int" parameters to
-> this function with two callsites (why do we need to to begin with?
+On 12/14/2011 11:17 AM, Leonardo Kim wrote:
+> Branch names can contain slashes, so we can use 'development/foo' as a
+> branch name. If I choose 'development' as a branch name, it doesn't
+> work. There is a directory named development at '.git/refs/heads'
+> directory. So we cannot create a file named development for
+> 'refs/heads/development'.
+> 
+> An error message may occurs like below. Unfortunately, It is not of help to me.
+> 'error: 'refs/heads/development/foo' exists; cannot create
+> 'refs/heads/development'.
 
-This last bit should read:
+Assuming that the wording of the error message is not considered part of
+the external API, it is trivial to change it.  What do you suggest?
 
-"Why do we need two to begin with?"
+Michael
 
-Kindly,
-
--- Thomas Adam
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
