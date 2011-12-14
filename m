@@ -1,72 +1,199 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 2/2] push: --ignore-stale option
-Date: Wed, 14 Dec 2011 00:48:54 +0100
-Message-ID: <4EE7E466.4060406@op5.se>
-References: <7vobvct58u.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Revert "http: don't always prompt for password"
+Date: Tue, 13 Dec 2011 19:11:56 -0500
+Message-ID: <20111214001156.GA21940@sigill.intra.peff.net>
+References: <20111213201704.GA12072@sigill.intra.peff.net>
+ <20111213202508.GA12187@sigill.intra.peff.net>
+ <7vaa6wuqjt.fsf@alter.siamese.dyndns.org>
+ <20111213231909.GD12432@sigill.intra.peff.net>
+ <20111213232053.GE12432@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Naewe <stefan.naewe@gmail.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Eric <eric.advincula@gmail.com>, git@vger.kernel.org,
+	msysgit@googlegroups.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 14 00:49:08 2011
+X-From: git-owner@vger.kernel.org Wed Dec 14 01:12:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rac5q-0004HY-U9
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 00:49:07 +0100
+	id 1RacSI-0004tQ-5P
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 01:12:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756061Ab1LMXtB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Dec 2011 18:49:01 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:37209 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755106Ab1LMXtA (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Dec 2011 18:49:00 -0500
-Received: by lagp5 with SMTP id p5so96499lag.19
-        for <git@vger.kernel.org>; Tue, 13 Dec 2011 15:48:59 -0800 (PST)
-Received: by 10.152.124.36 with SMTP id mf4mr164482lab.23.1323820138953;
-        Tue, 13 Dec 2011 15:48:58 -0800 (PST)
-Received: from vix.int.op5.se (sth-vpn1.op5.com. [193.201.96.49])
-        by mx.google.com with ESMTPS id ng10sm592065lab.13.2011.12.13.15.48.56
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 13 Dec 2011 15:48:57 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.24) Gecko/20111108 Fedora/3.1.16-1.fc14 Thunderbird/3.1.16 ThunderGit/0.1a
-In-Reply-To: <7vobvct58u.fsf@alter.siamese.dyndns.org>
+	id S1756214Ab1LNAL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Dec 2011 19:11:59 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49859
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755997Ab1LNAL6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Dec 2011 19:11:58 -0500
+Received: (qmail 25685 invoked by uid 107); 14 Dec 2011 00:18:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 13 Dec 2011 19:18:39 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Dec 2011 19:11:56 -0500
+Content-Disposition: inline
+In-Reply-To: <20111213232053.GE12432@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187081>
 
-On 12/14/2011 12:35 AM, Junio C Hamano wrote:
-> 
->     You however should be testing these 7 before pushing them out anyway,
->     and the sane way to do so is to check one out, test it, push it, and
->     iterate that sequence 7 times. If you do so, a workable alternative is
->     to use the configuration to push the current branch and you do not need
->     this patch series at all.
-> 
->     Perhaps this series encourages a wrong workflow in that sense. I dunno.
-> 
+On Tue, Dec 13, 2011 at 06:20:53PM -0500, Jeff King wrote:
 
-I for one really love it and will probably make an alias to use for most of
-my repos. With 'maint' branches (with topics) being worked on by one team and
-'master' (with topics) being worked on by a different group, but all branches
-generally checked out, tracked and touched by everyone sooner or later, I've
-come to just ignore the "not fast-forward" error. I've never stopped loathing
-it though, since git should just *know* that it doesn't fast-forward because
-I haven't done anything and not because I've done something (and maybe
-forgotten to push) and someone else has done something different, which would
-actually be interesting for me to know.
+> BTW, one other solution, rather than reverting Stefan's patch, is to
+> just re-add the "unconditionally ask for a password" behavior back to
+> git-http-push, but not to the fetching side. Especially if we hope to
+> kill off git-http-push soon (after a deprecation period presumably),
+> then that lets it work in the meantime without hurting the other http
+> code. And it's really easy to do.
 
-So big thumbs up and three loud "hurrah"'s for this.
+And here's what that patch looks like.
 
+Thinking on it more, this is probably better for a maint release than
+reverting Stefan's patch. It un-breaks http-push, and they are no
+differently off than they are with the revert. But it leaves the
+enhancement in place for the smart-http code.
+
+-- >8 --
+Subject: [PATCH] http-push: enable "proactive auth"
+
+Before commit 986bbc08, git was proactive about asking for
+http passwords. It assumed that if you had a username in
+your URL, you would also want a password, and asked for it
+before making any http requests.
+
+However, this could interfere with the use of .netrc (see
+986bbc08 for details). And it was also unnecessary, since
+the http fetching code had learned to recognize an HTTP 401
+and prompt the user then. Furthermore, the proactive prompt
+could interfere with the usage of .netrc (see 986bbc08 for
+details).
+
+Unfortunately, the http push-over-DAV code never learned to
+recognize HTTP 401, and so was broken by this change. This
+patch does a quick fix of re-enabling the "proactive auth"
+strategy only for http-push, leaving the dumb http fetch and
+smart-http as-is.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ http-fetch.c         |    2 +-
+ http-push.c          |    2 +-
+ http.c               |    8 +++++++-
+ http.h               |    3 ++-
+ remote-curl.c        |    2 +-
+ t/t5540-http-push.sh |    2 +-
+ 6 files changed, 13 insertions(+), 6 deletions(-)
+
+diff --git a/http-fetch.c b/http-fetch.c
+index 69299b7..94d47cb 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -67,7 +67,7 @@ int main(int argc, const char **argv)
+ 
+ 	git_config(git_default_config, NULL);
+ 
+-	http_init(NULL, url);
++	http_init(NULL, url, 0);
+ 	walker = get_http_walker(url);
+ 	walker->get_tree = get_tree;
+ 	walker->get_history = get_history;
+diff --git a/http-push.c b/http-push.c
+index 5d01be9..70283e6 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1820,7 +1820,7 @@ int main(int argc, char **argv)
+ 
+ 	memset(remote_dir_exists, -1, 256);
+ 
+-	http_init(NULL, repo->url);
++	http_init(NULL, repo->url, 1);
+ 
+ #ifdef USE_CURL_MULTI
+ 	is_running_queue = 0;
+diff --git a/http.c b/http.c
+index 008ad72..6c90092 100644
+--- a/http.c
++++ b/http.c
+@@ -43,6 +43,7 @@
+ static const char *curl_http_proxy;
+ static const char *curl_cookie_file;
+ static char *user_name, *user_pass, *description;
++static int http_proactive_auth;
+ static const char *user_agent;
+ 
+ #if LIBCURL_VERSION_NUM >= 0x071700
+@@ -279,6 +280,9 @@ static CURL *get_curl_handle(void)
+ 	curl_easy_setopt(result, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+ #endif
+ 
++	if (http_proactive_auth)
++		init_curl_http_auth(result);
++
+ 	if (ssl_cert != NULL)
+ 		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
+ 	if (has_cert_password())
+@@ -367,7 +371,7 @@ static void set_from_env(const char **var, const char *envname)
+ 		*var = val;
+ }
+ 
+-void http_init(struct remote *remote, const char *url)
++void http_init(struct remote *remote, const char *url, int proactive_auth)
+ {
+ 	char *low_speed_limit;
+ 	char *low_speed_time;
+@@ -378,6 +382,8 @@ void http_init(struct remote *remote, const char *url)
+ 
+ 	curl_global_init(CURL_GLOBAL_ALL);
+ 
++	http_proactive_auth = proactive_auth;
++
+ 	if (remote && remote->http_proxy)
+ 		curl_http_proxy = xstrdup(remote->http_proxy);
+ 
+diff --git a/http.h b/http.h
+index 3c332a9..51f6ba7 100644
+--- a/http.h
++++ b/http.h
+@@ -86,7 +86,8 @@ struct buffer {
+ extern void step_active_slots(void);
+ #endif
+ 
+-extern void http_init(struct remote *remote, const char *url);
++extern void http_init(struct remote *remote, const char *url,
++		      int proactive_auth);
+ extern void http_cleanup(void);
+ 
+ extern int data_received;
+diff --git a/remote-curl.c b/remote-curl.c
+index 0e720ee..0757b19 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -859,7 +859,7 @@ int main(int argc, const char **argv)
+ 
+ 	url = strbuf_detach(&buf, NULL);
+ 
+-	http_init(remote, url);
++	http_init(remote, url, 0);
+ 
+ 	do {
+ 		if (strbuf_getline(&buf, stdin, '\n') == EOF) {
+diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
+index 3300227..1eea647 100755
+--- a/t/t5540-http-push.sh
++++ b/t/t5540-http-push.sh
+@@ -160,7 +160,7 @@ test_expect_success 'PUT and MOVE sends object to URLs with SHA-1 hash suffix' '
+ test_http_push_nonff "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo.git \
+ 	"$ROOT_PATH"/test_repo_clone master
+ 
+-test_expect_failure 'push to password-protected repository (user in URL)' '
++test_expect_success 'push to password-protected repository (user in URL)' '
+ 	test_commit pw-user &&
+ 	git push "$HTTPD_URL_USER/auth/dumb/test_repo.git" HEAD &&
+ 	git rev-parse --verify HEAD >expect &&
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+1.7.8.17.gfd3524
