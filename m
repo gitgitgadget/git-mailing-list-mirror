@@ -1,89 +1,83 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/7] revert: give --continue handling its own function
-Date: Wed, 14 Dec 2011 18:46:43 +0530
-Message-ID: <CALkWK0nQm9fCNgP5koo9YUp_jXTzrqZNnGpf81MAbT-K=qRhYQ@mail.gmail.com>
-References: <CALkWK0=45OwcBoH2TorsgwTbaXjnffVuh0mGxh2+ShN9cuF-=A@mail.gmail.com>
- <20111120094650.GB2278@elie.hsd1.il.comcast.net> <20111122111207.GA7399@elie.hsd1.il.comcast.net>
- <20111122112001.GF7399@elie.hsd1.il.comcast.net> <7vr50zd5x0.fsf@alter.siamese.dyndns.org>
- <20111123012721.GA14217@elie.hsd1.il.comcast.net> <4ECCB3A2.5030102@viscovery.net>
- <20111123100452.GA30629@elie.hsd1.il.comcast.net> <4ECCC935.7010407@viscovery.net>
- <20111210124644.GA22035@elie.hsd1.il.comcast.net> <20111210124736.GB22035@elie.hsd1.il.comcast.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 14 14:17:18 2011
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [PATCH v2 1/4] compat/setenv.c: update errno when erroring out
+Date: Wed, 14 Dec 2011 15:07:08 +0100
+Message-ID: <1323871631-2872-2-git-send-email-kusmabite@gmail.com>
+References: <1323871631-2872-1-git-send-email-kusmabite@gmail.com>
+Cc: peff@peff.net, gitster@pobox.com, schwab@linux-m68k.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 14 15:07:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Raohx-0001Qw-Jo
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 14:17:17 +0100
+	id 1RapUW-0001cC-Th
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 15:07:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757188Ab1LNNRI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Dec 2011 08:17:08 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:45242 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757186Ab1LNNRF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2011 08:17:05 -0500
-Received: by faar15 with SMTP id r15so1130871faa.19
-        for <git@vger.kernel.org>; Wed, 14 Dec 2011 05:17:04 -0800 (PST)
+	id S1757317Ab1LNOHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Dec 2011 09:07:24 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:58893 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757264Ab1LNOHU (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2011 09:07:20 -0500
+Received: by lagp5 with SMTP id p5so326742lag.19
+        for <git@vger.kernel.org>; Wed, 14 Dec 2011 06:07:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=jpgTS6A8LqqYGwwM6i7tUQwWU5qLyaeJUnOd2lCuyP4=;
-        b=YYOmIRFTsbg2V9aPW8IzZ7519THNhA0Y4drinwAyDam1eAQe6oJP0BnY3H47Httnwq
-         VIzO+Bv+t270+NvJDCBQntz/xYPtFIWXlO/gXv0POwV8K4ApX4CluFN/exhMCghYiDN3
-         pj2EbLQmc5XG027KBr9ELGdeFxqxAMVv3oCDU=
-Received: by 10.180.90.6 with SMTP id bs6mr4475389wib.63.1323868624423; Wed,
- 14 Dec 2011 05:17:04 -0800 (PST)
-Received: by 10.216.51.141 with HTTP; Wed, 14 Dec 2011 05:16:43 -0800 (PST)
-In-Reply-To: <20111210124736.GB22035@elie.hsd1.il.comcast.net>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=acTyUTKFkCSYpathjuMQtCQ6V84rt13hcoAVUmKkwIk=;
+        b=Oav+BX3EunXk13/M3UIxCUwe6A+0/Bzky7BDNPjsimnNxUM31rX0O6fPOhSnDSJmyR
+         9q5WusZftk2AHkyLNIhwwhSW4P+8APZpPoG5tDeZQPn75IkMkdEa7MBo8ejaOzHFbrS+
+         bqWGdJhn64T0+QCZQ3V7A4PzEfjUk+bzeLcCY=
+Received: by 10.152.110.99 with SMTP id hz3mr2484275lab.29.1323871639087;
+        Wed, 14 Dec 2011 06:07:19 -0800 (PST)
+Received: from localhost ([77.40.159.131])
+        by mx.google.com with ESMTPS id pu10sm2321205lab.10.2011.12.14.06.07.16
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 14 Dec 2011 06:07:17 -0800 (PST)
+X-Mailer: git-send-email 1.7.7.1.msysgit.0.272.g9e47e
+In-Reply-To: <1323871631-2872-1-git-send-email-kusmabite@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187111>
 
-Hi Jonathan,
+Previously, gitsetenv didn't update errno as it should when
+erroring out. Fix this.
 
-Jonathan Nieder wrote:
-> This makes pick_revisions() a little shorter and easier to read
-> straight through.
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+---
+ compat/setenv.c |   10 ++++++++--
+ 1 files changed, 8 insertions(+), 2 deletions(-)
 
-Ah, yes: you've asked about this earlier.  Sounds sane; let's read
-ahead and see if anything jumps out.
-
-> diff --git a/builtin/revert.c b/builtin/revert.c
-> index 1ea525c1..9f6c85c1 100644
-> --- a/builtin/revert.c
-> +++ b/builtin/revert.c
-> @@ -1038,6 +1038,21 @@ static int pick_commits(struct commit_list *to=
-do_list, struct replay_opts *opts)
-> [...]
-> +static int sequencer_continue(struct replay_opts *opts)
-> +{
-> + =C2=A0 =C2=A0 =C2=A0 struct commit_list *todo_list =3D NULL;
-> [...]
-
-> =C2=A0static int pick_revisions(struct replay_opts *opts)
-> =C2=A0{
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct commit_list *todo_list =3D NULL;
-> [...]
-
-This is the only detailed that jumped out- you're filling up two
-different commit_list structures, depending on whether we're
-performing a fresh operation or continuing an existing one.  Okay.
-
-Thanks.
-
-p.s- Sorry about the delay; just returned from a short vacation.
-
--- Ram
+diff --git a/compat/setenv.c b/compat/setenv.c
+index 3a22ea7..89947b7 100644
+--- a/compat/setenv.c
++++ b/compat/setenv.c
+@@ -6,7 +6,10 @@ int gitsetenv(const char *name, const char *value, int replace)
+ 	size_t namelen, valuelen;
+ 	char *envstr;
+ 
+-	if (!name || !value) return -1;
++	if (!name || !value) {
++		errno = EINVAL;
++		return -1;
++	}
+ 	if (!replace) {
+ 		char *oldval = NULL;
+ 		oldval = getenv(name);
+@@ -16,7 +19,10 @@ int gitsetenv(const char *name, const char *value, int replace)
+ 	namelen = strlen(name);
+ 	valuelen = strlen(value);
+ 	envstr = malloc((namelen + valuelen + 2));
+-	if (!envstr) return -1;
++	if (!envstr) {
++		errno = ENOMEM;
++		return -1;
++	}
+ 
+ 	memcpy(envstr, name, namelen);
+ 	envstr[namelen] = '=';
+-- 
+1.7.7.1.msysgit.0.272.g9e47e
