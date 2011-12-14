@@ -1,418 +1,113 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 09/10] revert: allow mixed pick and revert instructions
-Date: Wed, 14 Dec 2011 22:24:36 +0530
-Message-ID: <1323881677-11117-10-git-send-email-artagnon@gmail.com>
-References: <CALkWK0kbV2WFfGVrA9m_Uwd4J8+U9Yde9Wxb-OZE9Y8K+Ta_4A@mail.gmail.com>
- <1323881677-11117-1-git-send-email-artagnon@gmail.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 14 17:55:42 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: tr/pty-all (Re: What's cooking in git.git (Dec 2011, #04; Tue,
+ 13))
+Date: Wed, 14 Dec 2011 09:42:22 -0800
+Message-ID: <7vpqfrqcch.fsf@alter.siamese.dyndns.org>
+References: <7vobvcrlve.fsf@alter.siamese.dyndns.org>
+ <20111214070916.GA14954@elie.hsd1.il.comcast.net>
+ <201112141717.15021.trast@student.ethz.ch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Dec 14 18:42:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ras7E-0004kJ-9X
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 17:55:36 +0100
+	id 1Rasqf-0005ly-UG
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 18:42:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757641Ab1LNQzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Dec 2011 11:55:25 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:61872 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757627Ab1LNQzV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2011 11:55:21 -0500
-Received: by mail-vx0-f174.google.com with SMTP id fk14so763696vcb.19
-        for <git@vger.kernel.org>; Wed, 14 Dec 2011 08:55:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=gdWMDoON6PUJwc6wqLs0Yp22PeH1yUb1etZTdNER41E=;
-        b=notZGSld2J9YoXVlw1XBELdJu53XAL5suWZbCjIrJ25qjIED+gv938/FiOvIJJuqRf
-         vAK7eUMkqYeMDakvVVBJXr0cnevyOarIrNAx34kCrJ80y2MWZOOYmeFmLrsLqyDhegWm
-         8alTSWo9QYLqamPoDTS1NfSmY7PE98TDK6ef8=
-Received: by 10.52.33.50 with SMTP id o18mr5377290vdi.42.1323881720968;
-        Wed, 14 Dec 2011 08:55:20 -0800 (PST)
-Received: from localhost.localdomain ([122.174.116.246])
-        by mx.google.com with ESMTPS id ir2sm2963127vdb.9.2011.12.14.08.55.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 14 Dec 2011 08:55:19 -0800 (PST)
-X-Mailer: git-send-email 1.7.4.1
-In-Reply-To: <1323881677-11117-1-git-send-email-artagnon@gmail.com>
+	id S1757817Ab1LNRma (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Dec 2011 12:42:30 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33251 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757808Ab1LNRm0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2011 12:42:26 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 37CB3421E;
+	Wed, 14 Dec 2011 12:42:25 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZernkNuJw1rg+hc3pqWjnFHiuck=; b=j2dvlo
+	DYjJg4lK5yGwmqpG23aYPzTCPVZSs+g1Keub1KDz9OQqTeHzUIaG7hC70PQyvNzW
+	9HBks23/au4ru/2l8X++Bxim79cZWy502rj/UzDtc4i43cXE1Wi5uk7xAh7WL16w
+	Y6RgGfV3gh1vAgMxXEx7gp2KEevIfVTEJrIbk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rRLz2+c1Fek0s/dEbbgCTE6RcTF8PjH3
+	1gsbMD1fVdSE9m8fBYnz/Fq/vzeI420V+VoU9a7X+8aOiZKc/Rl5nEzUVzw2yiFm
+	WYOtUF5mAz67GG3O3L0FYvGhZcClgIuyqJzq8yWrZIMUum04ZYraz5FclTfY0531
+	JIsQtpFmMeI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E3FB421D;
+	Wed, 14 Dec 2011 12:42:25 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A66E2421B; Wed, 14 Dec 2011
+ 12:42:24 -0500 (EST)
+In-Reply-To: <201112141717.15021.trast@student.ethz.ch> (Thomas Rast's
+ message of "Wed, 14 Dec 2011 17:17:14 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FB9B43EC-267A-11E1-AD0C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187155>
 
-Parse the instruction sheet in '.git/sequencer/todo' as a list of
-(action, operand) pairs, instead of assuming that all instructions use
-the same action.  Now you can do:
+Thomas Rast <trast@student.ethz.ch> writes:
 
-  pick fdc0b12 picked
-  revert 965fed4 anotherpick
+> Jonathan Nieder wrote:
+>> Junio C Hamano wrote:
+>> > Will merge to 'next' after taking another look.
+>> 
+>> The middle commit looks good.  The bottom commit could be improved as
+>> discussed at [1], but I guess that can happen in-tree.
+>> 
+>> However, the top commit ("test test-terminal's sanity") still does not
+>> seem right to me.
+>
+> I wasn't under the impression that we were done with this, either :-)
+>
+>> It makes the same test run three times.  Probably I should send an
+>> alternate patch to get that sanity-check to run once, but I am also
+>> not convinced the sanity-check is needed at all --- wouldn't any test
+>> that is relying on output from test_terminal act as a sanity check for
+>> it already?
+>
+> It didn't.  Or more precisely, Michael Haggerty ran into the behavior
+> of
+>
+>   git rev-parse ... | while read sha; do git checkout $sha; make test; done
+>
+> couldn't make any sense of it, and reported it on IRC.  So in some
+> sense, it took infrequent circumstances and two developers' time; next
+> time around I'd prefer it to be detected automatically.
+>
+>> As an aside, I also still believe that running "git shortlog" without
+>> explicitly passing "HEAD" when testing how it reacts to [core] pager
+>> configuration was a bug and a distraction, hence the patch at [2].
+>
+> Why not.  Some other test should verify how shortlog reacts to the
+> tty-ness of stdin, but that's yet another direction.
+>
+>> I also find Jeff's patch [3] appealing.
+>
+> Me too, though wonder whether feeding a file full of garbage wouldn't
+> be better, so as to trip up commands that try to read only from a
+> non-tty stdin.
 
-For cherry-pick and revert, this means that a 'git cherry-pick
---continue' can continue an ongoing revert operation and viceversa.
+Well, I guess I was too quick to pull the trigger after sending the
+"What's cooking" out. Sorry about that.
 
-Helped-by: Jonathan Nieder <jrnider@gmail.com>
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/revert.c                |  107 ++++++++++++++++++---------------------
- sequencer.h                     |    6 ++
- t/t3510-cherry-pick-sequence.sh |   58 +++++++++++++++++++++
- 3 files changed, 114 insertions(+), 57 deletions(-)
+On the other hand, I think these require relatively low impact changes
+that can be handled in-tree and the downsides of the series like running
+prerequisite tests more than once are not serious show stoppers, so it
+isn't a disaster ;-)
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index ed062ea..50af439 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -459,7 +459,8 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts)
- 	return run_command_v_opt(args, RUN_GIT_CMD);
- }
- 
--static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
-+static int do_pick_commit(struct commit *commit, enum replay_action action,
-+			struct replay_opts *opts)
- {
- 	unsigned char head[20];
- 	struct commit *base, *next, *parent;
-@@ -534,7 +535,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 
- 	defmsg = git_pathdup("MERGE_MSG");
- 
--	if (opts->action == REPLAY_REVERT) {
-+	if (action == REPLAY_REVERT) {
- 		base = commit;
- 		base_label = msg.label;
- 		next = parent;
-@@ -575,7 +576,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 		}
- 	}
- 
--	if (!opts->strategy || !strcmp(opts->strategy, "recursive") || opts->action == REPLAY_REVERT) {
-+	if (!opts->strategy || !strcmp(opts->strategy, "recursive") || action == REPLAY_REVERT) {
- 		res = do_recursive_merge(base, next, base_label, next_label,
- 					 head, &msgbuf, opts);
- 		write_message(&msgbuf, defmsg);
-@@ -605,7 +606,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 		write_cherry_pick_head(commit, "REVERT_HEAD");
- 
- 	if (res) {
--		error(opts->action == REPLAY_REVERT
-+		error(action == REPLAY_REVERT
- 		      ? _("could not revert %s... %s")
- 		      : _("could not apply %s... %s"),
- 		      find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV),
-@@ -675,54 +676,54 @@ static void read_and_refresh_cache(struct replay_opts *opts)
-  *     assert(commit_list_count(list) == 2);
-  *     return list;
-  */
--static struct commit_list **commit_list_append(struct commit *commit,
--					       struct commit_list **next)
-+static struct replay_insn_list **replay_insn_list_append(enum replay_action action,
-+						struct commit *operand,
-+						struct replay_insn_list **next)
- {
--	struct commit_list *new = xmalloc(sizeof(struct commit_list));
--	new->item = commit;
-+	struct replay_insn_list *new = xmalloc(sizeof(*new));
-+	new->action = action;
-+	new->operand = operand;
- 	*next = new;
- 	new->next = NULL;
- 	return &new->next;
- }
- 
--static int format_todo(struct strbuf *buf, struct commit_list *todo_list,
--		struct replay_opts *opts)
-+static int format_todo(struct strbuf *buf, struct replay_insn_list *todo_list)
- {
--	struct commit_list *cur = NULL;
--	const char *sha1_abbrev = NULL;
--	const char *action_str = opts->action == REPLAY_REVERT ? "revert" : "pick";
--	const char *subject;
--	int subject_len;
-+	struct replay_insn_list *cur;
- 
- 	for (cur = todo_list; cur; cur = cur->next) {
--		sha1_abbrev = find_unique_abbrev(cur->item->object.sha1, DEFAULT_ABBREV);
--		subject_len = find_commit_subject(cur->item->buffer, &subject);
-+		const char *sha1_abbrev, *action_str, *subject;
-+		int subject_len;
-+
-+		action_str = cur->action == REPLAY_REVERT ? "revert" : "pick";
-+		sha1_abbrev = find_unique_abbrev(cur->operand->object.sha1, DEFAULT_ABBREV);
-+		subject_len = find_commit_subject(cur->operand->buffer, &subject);
- 		strbuf_addf(buf, "%s %s %.*s\n", action_str, sha1_abbrev,
- 			subject_len, subject);
- 	}
- 	return 0;
- }
- 
--static struct commit *parse_insn_line(char *bol, char *eol, struct replay_opts *opts)
-+static int parse_insn_line(char *bol, char *eol, struct replay_insn_list *item)
- {
- 	unsigned char commit_sha1[20];
--	enum replay_action action;
- 	char *end_of_object_name;
- 	int saved, status, padding;
- 
- 	if (!prefixcmp(bol, "pick")) {
--		action = REPLAY_PICK;
-+		item->action = REPLAY_PICK;
- 		bol += strlen("pick");
- 	} else if (!prefixcmp(bol, "revert")) {
--		action = REPLAY_REVERT;
-+		item->action = REPLAY_REVERT;
- 		bol += strlen("revert");
- 	} else
--		return NULL;
-+		return -1;
- 
- 	/* Eat up extra spaces/ tabs before object name */
- 	padding = strspn(bol, " \t");
- 	if (!padding)
--		return NULL;
-+		return -1;
- 	bol += padding;
- 
- 	end_of_object_name = bol + strcspn(bol, " \t\n");
-@@ -731,37 +732,29 @@ static struct commit *parse_insn_line(char *bol, char *eol, struct replay_opts *
- 	status = get_sha1(bol, commit_sha1);
- 	*end_of_object_name = saved;
- 
--	/*
--	 * Verify that the action matches up with the one in
--	 * opts; we don't support arbitrary instructions
--	 */
--	if (action != opts->action) {
--		const char *action_str;
--		action_str = action == REPLAY_REVERT ? "revert" : "cherry-pick";
--		error(_("Cannot %s during a %s"), action_str, action_name(opts));
--		return NULL;
--	}
--
- 	if (status < 0)
--		return NULL;
-+		return -1;
- 
--	return lookup_commit_reference(commit_sha1);
-+	item->operand = lookup_commit_reference(commit_sha1);
-+	if (!item->operand)
-+		return -1;
-+
-+	item->next = NULL;
-+	return 0;
- }
- 
--static int parse_insn_buffer(char *buf, struct commit_list **todo_list,
--			struct replay_opts *opts)
-+static int parse_insn_buffer(char *buf, struct replay_insn_list **todo_list)
- {
--	struct commit_list **next = todo_list;
--	struct commit *commit;
-+	struct replay_insn_list **next = todo_list;
-+	struct replay_insn_list item = { 0, NULL, NULL };
- 	char *p = buf;
- 	int i;
- 
- 	for (i = 1; *p; i++) {
- 		char *eol = strchrnul(p, '\n');
--		commit = parse_insn_line(p, eol, opts);
--		if (!commit)
-+		if (parse_insn_line(p, eol, &item) < 0)
- 			return error(_("Could not parse line %d."), i);
--		next = commit_list_append(commit, next);
-+		next = replay_insn_list_append(item.action, item.operand, next);
- 		p = *eol ? eol + 1 : eol;
- 	}
- 	if (!*todo_list)
-@@ -769,8 +762,7 @@ static int parse_insn_buffer(char *buf, struct commit_list **todo_list,
- 	return 0;
- }
- 
--static void read_populate_todo(struct commit_list **todo_list,
--			struct replay_opts *opts)
-+static void read_populate_todo(struct replay_insn_list **todo_list)
- {
- 	const char *todo_file = git_path(SEQ_TODO_FILE);
- 	struct strbuf buf = STRBUF_INIT;
-@@ -786,7 +778,7 @@ static void read_populate_todo(struct commit_list **todo_list,
- 	}
- 	close(fd);
- 
--	res = parse_insn_buffer(buf.buf, todo_list, opts);
-+	res = parse_insn_buffer(buf.buf, todo_list);
- 	strbuf_release(&buf);
- 	if (res)
- 		die(_("Unusable instruction sheet: %s"), todo_file);
-@@ -835,18 +827,18 @@ static void read_populate_opts(struct replay_opts **opts_ptr)
- 		die(_("Malformed options sheet: %s"), opts_file);
- }
- 
--static void walk_revs_populate_todo(struct commit_list **todo_list,
-+static void walk_revs_populate_todo(struct replay_insn_list **todo_list,
- 				struct replay_opts *opts)
- {
- 	struct rev_info revs;
- 	struct commit *commit;
--	struct commit_list **next;
-+	struct replay_insn_list **next;
- 
- 	prepare_revs(&revs, opts);
- 
- 	next = todo_list;
- 	while ((commit = get_revision(&revs)))
--		next = commit_list_append(commit, next);
-+		next = replay_insn_list_append(opts->action, commit, next);
- }
- 
- static int create_seq_dir(void)
-@@ -944,7 +936,7 @@ fail:
- 	return -1;
- }
- 
--static void save_todo(struct commit_list *todo_list, struct replay_opts *opts)
-+static void save_todo(struct replay_insn_list *todo_list)
- {
- 	const char *todo_file = git_path(SEQ_TODO_FILE);
- 	static struct lock_file todo_lock;
-@@ -952,7 +944,7 @@ static void save_todo(struct commit_list *todo_list, struct replay_opts *opts)
- 	int fd;
- 
- 	fd = hold_lock_file_for_update(&todo_lock, todo_file, LOCK_DIE_ON_ERROR);
--	if (format_todo(&buf, todo_list, opts) < 0)
-+	if (format_todo(&buf, todo_list) < 0)
- 		die(_("Could not format %s."), todo_file);
- 	if (write_in_full(fd, buf.buf, buf.len) < 0) {
- 		strbuf_release(&buf);
-@@ -996,9 +988,10 @@ static void save_opts(struct replay_opts *opts)
- 	}
- }
- 
--static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
-+static int pick_commits(struct replay_insn_list *todo_list,
-+			struct replay_opts *opts)
- {
--	struct commit_list *cur;
-+	struct replay_insn_list *cur;
- 	int res;
- 
- 	setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
-@@ -1008,8 +1001,8 @@ static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
- 	read_and_refresh_cache(opts);
- 
- 	for (cur = todo_list; cur; cur = cur->next) {
--		save_todo(cur, opts);
--		res = do_pick_commit(cur->item, opts);
-+		save_todo(cur);
-+		res = do_pick_commit(cur->operand, cur->action, opts);
- 		if (res) {
- 			if (!cur->next)
- 				/*
-@@ -1034,7 +1027,7 @@ static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
- 
- static int pick_revisions(struct replay_opts *opts)
- {
--	struct commit_list *todo_list = NULL;
-+	struct replay_insn_list *todo_list = NULL;
- 	unsigned char sha1[20];
- 
- 	read_and_refresh_cache(opts);
-@@ -1054,7 +1047,7 @@ static int pick_revisions(struct replay_opts *opts)
- 		if (!file_exists(git_path(SEQ_TODO_FILE)))
- 			return error(_("No %s in progress"), action_name(opts));
- 		read_populate_opts(&opts);
--		read_populate_todo(&todo_list, opts);
-+		read_populate_todo(&todo_list);
- 
- 		/* Verify that the conflict has been resolved */
- 		if (!index_differs_from("HEAD", 0))
-diff --git a/sequencer.h b/sequencer.h
-index 9b1b94d..648f7bf 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -19,6 +19,12 @@ enum replay_subcommand {
- 	REPLAY_ROLLBACK
- };
- 
-+struct replay_insn_list {
-+	enum replay_action action;
-+	struct commit *operand;
-+	struct replay_insn_list *next;
-+};
-+
- /*
-  * Removes SEQ_OLD_DIR and renames SEQ_DIR to SEQ_OLD_DIR, ignoring
-  * any errors.  Intended to be used by 'git reset'.
-diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index 1bfbe41..9b19917 100755
---- a/t/t3510-cherry-pick-sequence.sh
-+++ b/t/t3510-cherry-pick-sequence.sh
-@@ -356,4 +356,62 @@ test_expect_success 'commit descriptions in insn sheet are optional' '
- 	test_line_count = 4 commits
- '
- 
-+test_expect_success 'revert --continue continues after cherry-pick' '
-+	pristine_detach initial &&
-+	test_expect_code 1 git cherry-pick base..anotherpick &&
-+	echo "c" >foo &&
-+	git add foo &&
-+	git commit &&
-+	git revert --continue &&
-+	test_path_is_missing .git/sequencer &&
-+	{
-+		git rev-list HEAD |
-+		git diff-tree --root --stdin |
-+		sed "s/$_x40/OBJID/g"
-+	} >actual &&
-+	cat >expect <<-\EOF &&
-+	OBJID
-+	:100644 100644 OBJID OBJID M	foo
-+	OBJID
-+	:100644 100644 OBJID OBJID M	foo
-+	OBJID
-+	:100644 100644 OBJID OBJID M	unrelated
-+	OBJID
-+	:000000 100644 OBJID OBJID A	foo
-+	:000000 100644 OBJID OBJID A	unrelated
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'mixed pick and revert instructions' '
-+	pristine_detach initial &&
-+	test_expect_code 1 git cherry-pick base..anotherpick &&
-+	echo "c" >foo &&
-+	git add foo &&
-+	git commit &&
-+	oldsha=`git rev-parse --short HEAD~1` &&
-+	echo "revert $oldsha unrelatedpick" >>.git/sequencer/todo &&
-+	git cherry-pick --continue &&
-+	test_path_is_missing .git/sequencer &&
-+	{
-+		git rev-list HEAD |
-+		git diff-tree --root --stdin |
-+		sed "s/$_x40/OBJID/g"
-+	} >actual &&
-+	cat >expect <<-\EOF &&
-+	OBJID
-+	:100644 100644 OBJID OBJID M	unrelated
-+	OBJID
-+	:100644 100644 OBJID OBJID M	foo
-+	OBJID
-+	:100644 100644 OBJID OBJID M	foo
-+	OBJID
-+	:100644 100644 OBJID OBJID M	unrelated
-+	OBJID
-+	:000000 100644 OBJID OBJID A	foo
-+	:000000 100644 OBJID OBJID A	unrelated
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-1.7.4.1
+Thanks both for noticing and commenting. Very much appreciated.
