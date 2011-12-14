@@ -1,60 +1,89 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Branch names with slashes
-Date: Wed, 14 Dec 2011 13:52:08 +0100
-Message-ID: <4EE89BF8.6090700@alum.mit.edu>
-References: <CAGcUY13TOodu1BO3DCoNnVvNZ9QkWAbD-RmyqQX6P1q6tcO+yg@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 1/7] revert: give --continue handling its own function
+Date: Wed, 14 Dec 2011 18:46:43 +0530
+Message-ID: <CALkWK0nQm9fCNgP5koo9YUp_jXTzrqZNnGpf81MAbT-K=qRhYQ@mail.gmail.com>
+References: <CALkWK0=45OwcBoH2TorsgwTbaXjnffVuh0mGxh2+ShN9cuF-=A@mail.gmail.com>
+ <20111120094650.GB2278@elie.hsd1.il.comcast.net> <20111122111207.GA7399@elie.hsd1.il.comcast.net>
+ <20111122112001.GF7399@elie.hsd1.il.comcast.net> <7vr50zd5x0.fsf@alter.siamese.dyndns.org>
+ <20111123012721.GA14217@elie.hsd1.il.comcast.net> <4ECCB3A2.5030102@viscovery.net>
+ <20111123100452.GA30629@elie.hsd1.il.comcast.net> <4ECCC935.7010407@viscovery.net>
+ <20111210124644.GA22035@elie.hsd1.il.comcast.net> <20111210124736.GB22035@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Leonardo Kim <dalinaum@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 14 13:52:26 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 14 14:17:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RaoJt-0006Co-5p
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 13:52:25 +0100
+	id 1Raohx-0001Qw-Jo
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 14:17:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754980Ab1LNMwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Dec 2011 07:52:13 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:34873 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754670Ab1LNMwN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2011 07:52:13 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pBECq8kS010734
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 14 Dec 2011 13:52:09 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
-In-Reply-To: <CAGcUY13TOodu1BO3DCoNnVvNZ9QkWAbD-RmyqQX6P1q6tcO+yg@mail.gmail.com>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1757188Ab1LNNRI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Dec 2011 08:17:08 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:45242 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757186Ab1LNNRF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2011 08:17:05 -0500
+Received: by faar15 with SMTP id r15so1130871faa.19
+        for <git@vger.kernel.org>; Wed, 14 Dec 2011 05:17:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=jpgTS6A8LqqYGwwM6i7tUQwWU5qLyaeJUnOd2lCuyP4=;
+        b=YYOmIRFTsbg2V9aPW8IzZ7519THNhA0Y4drinwAyDam1eAQe6oJP0BnY3H47Httnwq
+         VIzO+Bv+t270+NvJDCBQntz/xYPtFIWXlO/gXv0POwV8K4ApX4CluFN/exhMCghYiDN3
+         pj2EbLQmc5XG027KBr9ELGdeFxqxAMVv3oCDU=
+Received: by 10.180.90.6 with SMTP id bs6mr4475389wib.63.1323868624423; Wed,
+ 14 Dec 2011 05:17:04 -0800 (PST)
+Received: by 10.216.51.141 with HTTP; Wed, 14 Dec 2011 05:16:43 -0800 (PST)
+In-Reply-To: <20111210124736.GB22035@elie.hsd1.il.comcast.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187110>
 
-On 12/14/2011 11:17 AM, Leonardo Kim wrote:
-> Branch names can contain slashes, so we can use 'development/foo' as a
-> branch name. If I choose 'development' as a branch name, it doesn't
-> work. There is a directory named development at '.git/refs/heads'
-> directory. So we cannot create a file named development for
-> 'refs/heads/development'.
-> 
-> An error message may occurs like below. Unfortunately, It is not of help to me.
-> 'error: 'refs/heads/development/foo' exists; cannot create
-> 'refs/heads/development'.
+Hi Jonathan,
 
-Assuming that the wording of the error message is not considered part of
-the external API, it is trivial to change it.  What do you suggest?
+Jonathan Nieder wrote:
+> This makes pick_revisions() a little shorter and easier to read
+> straight through.
 
-Michael
+Ah, yes: you've asked about this earlier.  Sounds sane; let's read
+ahead and see if anything jumps out.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+> diff --git a/builtin/revert.c b/builtin/revert.c
+> index 1ea525c1..9f6c85c1 100644
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -1038,6 +1038,21 @@ static int pick_commits(struct commit_list *to=
+do_list, struct replay_opts *opts)
+> [...]
+> +static int sequencer_continue(struct replay_opts *opts)
+> +{
+> + =C2=A0 =C2=A0 =C2=A0 struct commit_list *todo_list =3D NULL;
+> [...]
+
+> =C2=A0static int pick_revisions(struct replay_opts *opts)
+> =C2=A0{
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct commit_list *todo_list =3D NULL;
+> [...]
+
+This is the only detailed that jumped out- you're filling up two
+different commit_list structures, depending on whether we're
+performing a fresh operation or continuing an existing one.  Okay.
+
+Thanks.
+
+p.s- Sorry about the delay; just returned from a short vacation.
+
+-- Ram
