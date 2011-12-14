@@ -1,144 +1,92 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 10/10] revert: report fine-grained error messages from insn parser
-Date: Wed, 14 Dec 2011 22:24:37 +0530
-Message-ID: <1323881677-11117-11-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 07/10] t3510 (cherry-pick-sequencer): remove malformed sheet 2
+Date: Wed, 14 Dec 2011 22:24:34 +0530
+Message-ID: <1323881677-11117-8-git-send-email-artagnon@gmail.com>
 References: <CALkWK0kbV2WFfGVrA9m_Uwd4J8+U9Yde9Wxb-OZE9Y8K+Ta_4A@mail.gmail.com>
  <1323881677-11117-1-git-send-email-artagnon@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 14 17:55:38 2011
+X-From: git-owner@vger.kernel.org Wed Dec 14 17:55:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ras7E-0004kJ-QS
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 17:55:37 +0100
+	id 1Ras7D-0004kJ-04
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 17:55:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757637Ab1LNQz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Dec 2011 11:55:27 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:35295 "EHLO
+	id S1757626Ab1LNQzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Dec 2011 11:55:15 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:61872 "EHLO
 	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757629Ab1LNQzY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2011 11:55:24 -0500
-Received: by vcbfk14 with SMTP id fk14so764128vcb.19
-        for <git@vger.kernel.org>; Wed, 14 Dec 2011 08:55:24 -0800 (PST)
+	with ESMTP id S1757608Ab1LNQzN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2011 11:55:13 -0500
+Received: by mail-vx0-f174.google.com with SMTP id fk14so763696vcb.19
+        for <git@vger.kernel.org>; Wed, 14 Dec 2011 08:55:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=lqxb7TgvzahNHSuS2ze/Bm1R/Fg7+ENgmlzbkfbeaQ0=;
-        b=Q0sCYuiL4HFfOhtu1pdJ48KGwKApDzR11KHDU5CFBFrgjlgP0+pYWA3ariMcN94gXQ
-         fs+ZHxFXratkISMJJ9vpQkTkuQdCpmanzdX/axyfWLQxNckrSc1Ty3CZqXRvyWNDrKSP
-         c2ZYFW9fpEpZ/HiJXhoFVGjdeM0FhlYA4GlvQ=
-Received: by 10.52.94.97 with SMTP id db1mr5579963vdb.16.1323881724195;
-        Wed, 14 Dec 2011 08:55:24 -0800 (PST)
+        bh=jTFRExzSJ5nrOpaMTff9AotRAyzWolto7BPHKbmLqRs=;
+        b=u2KjNst+QcwysMlYUdIF2PmEGcWmVHJD6F4BSC1NJnrWLG6HpfcAMbk4XI5bJYJ3pT
+         BCfkbfs8+JsNM/okF90dwdPCaDsi4LqTk6VZrRVpgBpTIJSxna8wXziqYAGDfMwNXidp
+         0FJUGx0ydF9qvd2tSlu+C759KvERORtgIHltg=
+Received: by 10.52.88.51 with SMTP id bd19mr5417971vdb.118.1323881713328;
+        Wed, 14 Dec 2011 08:55:13 -0800 (PST)
 Received: from localhost.localdomain ([122.174.116.246])
-        by mx.google.com with ESMTPS id ir2sm2963127vdb.9.2011.12.14.08.55.21
+        by mx.google.com with ESMTPS id ir2sm2963127vdb.9.2011.12.14.08.55.10
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 14 Dec 2011 08:55:23 -0800 (PST)
+        Wed, 14 Dec 2011 08:55:12 -0800 (PST)
 X-Mailer: git-send-email 1.7.4.1
 In-Reply-To: <1323881677-11117-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187152>
 
-Three kinds of errors can arise from parsing '.git/sequencer/todo':
-1. Unrecognized action
-2. Missing space after valid action prefix
-3. Malformed object name
-4. Object name does not refer to a valid commit
+The next patch allows mixing "pick" and "revert" instruction in the
+same instruction sheet.  By removing the "malformed instruction sheet
+2" test in advance, it'll be easier to see the changes made by the
+future patches that touch this file.
 
-Since we would like to make the instruction sheet user-editable in the
-future (much like the 'rebase -i' sheet), report more fine-grained
-parse errors prefixed with the filename and line number.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- builtin/revert.c |   37 ++++++++++++++++++++++++++-----------
- 1 files changed, 26 insertions(+), 11 deletions(-)
+ t/t3510-cherry-pick-sequence.sh |   15 ++-------------
+ 1 files changed, 2 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 50af439..d106c3c 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -705,11 +705,14 @@ static int format_todo(struct strbuf *buf, struct replay_insn_list *todo_list)
- 	return 0;
- }
+diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+index 163ce7d..1bfbe41 100755
+--- a/t/t3510-cherry-pick-sequence.sh
++++ b/t/t3510-cherry-pick-sequence.sh
+@@ -309,7 +309,7 @@ test_expect_success '--signoff is not automatically propagated to resolved confl
+ 	grep "Signed-off-by:" anotherpick_msg
+ '
  
--static int parse_insn_line(char *bol, char *eol, struct replay_insn_list *item)
-+static int parse_insn_line(char *bol, char *eol,
-+			struct replay_insn_list *item, int lineno)
- {
-+	const char *todo_file = git_path(SEQ_TODO_FILE);
- 	unsigned char commit_sha1[20];
- 	char *end_of_object_name;
- 	int saved, status, padding;
-+	size_t error_len;
+-test_expect_success 'malformed instruction sheet 1' '
++test_expect_success 'malformed instruction sheet, action' '
+ 	pristine_detach initial &&
+ 	test_expect_code 1 git cherry-pick base..anotherpick &&
+ 	echo "resolved" >foo &&
+@@ -320,18 +320,7 @@ test_expect_success 'malformed instruction sheet 1' '
+ 	test_expect_code 128 git cherry-pick --continue
+ '
  
- 	if (!prefixcmp(bol, "pick")) {
- 		item->action = REPLAY_PICK;
-@@ -717,13 +720,19 @@ static int parse_insn_line(char *bol, char *eol, struct replay_insn_list *item)
- 	} else if (!prefixcmp(bol, "revert")) {
- 		item->action = REPLAY_REVERT;
- 		bol += strlen("revert");
--	} else
--		return -1;
-+	} else {
-+		error_len = eol - bol > 255 ? 255 : eol - bol;
-+		return error(_("%s:%d: Unrecognized action: %.*s"),
-+			todo_file, lineno, (int)error_len, bol);
-+	}
- 
- 	/* Eat up extra spaces/ tabs before object name */
- 	padding = strspn(bol, " \t");
--	if (!padding)
--		return -1;
-+	if (!padding) {
-+		error_len = eol - bol > 255 ? 255 : eol - bol;
-+		return error(_("%s:%d: Missing space after action: %.*s"),
-+			todo_file, lineno, (int)error_len, bol);
-+	}
- 	bol += padding;
- 
- 	end_of_object_name = bol + strcspn(bol, " \t\n");
-@@ -732,12 +741,18 @@ static int parse_insn_line(char *bol, char *eol, struct replay_insn_list *item)
- 	status = get_sha1(bol, commit_sha1);
- 	*end_of_object_name = saved;
- 
--	if (status < 0)
--		return -1;
-+	if (status < 0) {
-+		error_len = eol - bol > 255 ? 255 : eol - bol;
-+		return error(_("%s:%d: Malformed object name: %.*s"),
-+			todo_file, lineno, (int)error_len, bol);
-+	}
- 
- 	item->operand = lookup_commit_reference(commit_sha1);
--	if (!item->operand)
--		return -1;
-+	if (!item->operand) {
-+		error_len = eol - bol > 255 ? 255 : eol - bol;
-+		return error(_("%s:%d: Not a valid commit: %.*s"),
-+			todo_file, lineno, (int)error_len, bol);
-+	}
- 
- 	item->next = NULL;
- 	return 0;
-@@ -752,8 +767,8 @@ static int parse_insn_buffer(char *buf, struct replay_insn_list **todo_list)
- 
- 	for (i = 1; *p; i++) {
- 		char *eol = strchrnul(p, '\n');
--		if (parse_insn_line(p, eol, &item) < 0)
--			return error(_("Could not parse line %d."), i);
-+		if (parse_insn_line(p, eol, &item, i) < 0)
-+			return -1;
- 		next = replay_insn_list_append(item.action, item.operand, next);
- 		p = *eol ? eol + 1 : eol;
- 	}
+-test_expect_success 'malformed instruction sheet 2' '
+-	pristine_detach initial &&
+-	test_expect_code 1 git cherry-pick base..anotherpick &&
+-	echo "resolved" >foo &&
+-	git add foo &&
+-	git commit &&
+-	sed "s/pick/revert/" .git/sequencer/todo >new_sheet &&
+-	cp new_sheet .git/sequencer/todo &&
+-	test_expect_code 128 git cherry-pick --continue
+-'
+-
+-test_expect_success 'malformed instruction sheet 3' '
++test_expect_success 'malformed instruction sheet, object name' '
+ 	pristine_detach initial &&
+ 	test_expect_code 1 git cherry-pick base..anotherpick &&
+ 	echo "resolved" >foo &&
 -- 
 1.7.4.1
