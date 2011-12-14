@@ -1,94 +1,73 @@
-From: johnnyutahh <git.nabble.com@johnnyutahh.com>
-Subject: Re: Tracking file metadata in git -- fix metastore or enhance git?
-Date: Tue, 13 Dec 2011 20:54:52 -0800 (PST)
-Message-ID: <1323838492627-7092383.post@n2.nabble.com>
-References: <BANLkTikkb3DUOtP9NUtNMNV5Z+oJ7AFHfg@mail.gmail.com> <BANLkTimTszUC+4d3tMTP-cxG3AoWmr08HA@mail.gmail.com> <20110418004550.GA2529@elie>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] use constants for sideband communication channels
+Date: Tue, 13 Dec 2011 20:56:35 -0800
+Message-ID: <7vk45zsqd8.fsf@alter.siamese.dyndns.org>
+References: <1323800931-37123-1-git-send-email-iheffner@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 14 05:54:59 2011
+Cc: git@vger.kernel.org, "Jeff King" <peff@peff.net>,
+	"Dave Olszewski" <cxreg@pobox.com>
+To: iheffner@gmail.com
+X-From: git-owner@vger.kernel.org Wed Dec 14 05:56:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ragrq-0002pW-Lq
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 05:54:59 +0100
+	id 1RagtW-0003Jj-S5
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 05:56:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756714Ab1LNEyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Dec 2011 23:54:54 -0500
-Received: from sam.nabble.com ([216.139.236.26]:57628 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753216Ab1LNEyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Dec 2011 23:54:53 -0500
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <git.nabble.com@johnnyutahh.com>)
-	id 1Ragrk-0003pg-LM
-	for git@vger.kernel.org; Tue, 13 Dec 2011 20:54:52 -0800
-In-Reply-To: <20110418004550.GA2529@elie>
+	id S1754347Ab1LNE4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Dec 2011 23:56:38 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62575 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751115Ab1LNE4i (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Dec 2011 23:56:38 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 45EB367F6;
+	Tue, 13 Dec 2011 23:56:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9E9zHUu+WLuDsB6UAUtxQYq6d2M=; b=v1Vvtn
+	aum9d575Bg+CLmiCqO8yNGKxLma5RKbKdMsrCb50NGCoV6MFjYXszFmUcYfb5gaV
+	YP8spQQJM0FjcKgaLZOcbTuKD308lko+cM4KNneuTv97MgPiMHEzQtcjtXOdoZY/
+	D0EiRcCe1KmmN3CF6XEPtNR2CfhAATewGmktk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=h8jMExNSawmLCVlyxCGhyFQKyAPLiz49
+	yy1XuzpH4ccbBSSfb5JZhMeCSFhn0MCYvfwKZF73OxEKP7Xh0ANJ1+Ijfpl+nxVQ
+	8ZhQtaDy7KCw6AE3WJvfhSc/WQmKSD5Pjntc48gTDe5Otu2HoDoW7As0ZZ3NspUh
+	Nxc4ARuRWeI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CF1D67F5;
+	Tue, 13 Dec 2011 23:56:37 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A8CC267F4; Tue, 13 Dec 2011
+ 23:56:36 -0500 (EST)
+In-Reply-To: <1323800931-37123-1-git-send-email-iheffner@gmail.com>
+ (iheffner@gmail.com's message of "Tue, 13 Dec 2011 10:28:48 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 00780E10-2610-11E1-BA92-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187094>
 
-Following up on 
-http://git.661346.n2.nabble.com/Tracking-file-metadata-in-git-fix-metastore-or-enhance-git-td6251248.html
-this discussion re: git file-metadata-management , posted this:
+iheffner@gmail.com writes:
 
-http://superuser.com/questions/367729/how-to-reuse-extend-etckeepers-metadata-engine-for-git-control-of-non-etc-file
+> In order to make more clear how the different channels in sidechannel.c
+> are to be used, I'm proposing some macros/constants which can be used in
+> place of the "magic numbers" that mean little or nothing to someone not
+> familiar with the protocol.
 
-Any further movement on this topic?
+I am not fundamentally opposed to the stated goal, but the posted patches
+make the resulting code way too wide for comfortable reading. Can we use a
+bit shorter symbols?
 
-
-
-Jonathan Nieder-2 wrote
-> 
-> Hi again,
-> 
-> Not sure if my thoughts will be useful here since you dropped me from
-> the cc list.  But anyway:
-> 
-> Richard Hartmann wrote:
-> 
->> here are the three options:
->>
->> 1) fix metastore
->> 2) default to gitperms
->> 3) extend git
->>
->> I still think 3) would be best, but someone would need to step up to
->> do this. Is anyone up for this task? If not, we will have to resort to
->> 1) or 2)
-> 
-> The usual practice in git development is
-> 
->  (1) people make scripts wrapping plumbing commands (see git(1)) that
->      work well for themselves
->  (2) they tell the git list about it and publish it
->  (3) an idea emerges that this is suitable for inclusion, and it
->      gets included
-> 
-> In particular, git's design is not so monolithic --- "extend git" can
-> mean "add a script" or "add a builtin" so it is not so involved as you
-> seem to think.  See also contrib/README for a place to stop on the
-> way.
-> 
-> Anyway, if you want something the just works, my suggestion is (4) use
-> the hook scripts from etckeeper.  Last time I looked into this they
-> worked better than metastore.
-> 
-> Hope that helps.
-> Jonathan
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@.kernel
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
-
-
---
-View this message in context: http://git.661346.n2.nabble.com/Tracking-file-metadata-in-git-fix-metastore-or-enhance-git-tp6251248p7092383.html
-Sent from the git mailing list archive at Nabble.com.
+Perhaps a good way to start would be to first refrain from using these
+symbols, but give a prominent comment near the API functions that are used
+to send and receive sideband data to explain which band is used for what
+purpose, which should be enough for people who are writing the code to
+link with these functions.
