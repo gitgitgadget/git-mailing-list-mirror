@@ -1,93 +1,80 @@
-From: Sebastian Morr <sebastian@morr.cc>
-Subject: [PATCH] stash: Fix multiple error messages on create if no HEAD
-Date: Wed, 14 Dec 2011 01:14:32 +0100
-Message-ID: <20111214001432.GA2959@thinkpad>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 28/51] refs.c: rename ref_array -> ref_dir
+Date: Tue, 13 Dec 2011 16:19:19 -0800
+Message-ID: <7vborct37c.fsf@alter.siamese.dyndns.org>
+References: <1323668338-1764-1-git-send-email-mhagger@alum.mit.edu>
+ <1323668338-1764-29-git-send-email-mhagger@alum.mit.edu>
+ <7v7h21xps9.fsf@alter.siamese.dyndns.org> <4EE6E61F.8080405@alum.mit.edu>
+ <7vk461vuy9.fsf@alter.siamese.dyndns.org> <4EE7A387.3070400@alum.mit.edu>
+ <4EE7CDF2.3040408@alum.mit.edu> <7vzkewt5qu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 14 01:14:42 2011
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Drew Northup <drew.northup@maine.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Dec 14 01:19:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RacUa-0005hg-Cn
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 01:14:40 +0100
+	id 1RacZC-0007dP-Ox
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 01:19:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756208Ab1LNAOg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Dec 2011 19:14:36 -0500
-Received: from static.148.34.47.78.clients.your-server.de ([78.47.34.148]:48131
-	"EHLO morr.cc" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753329Ab1LNAOg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Dec 2011 19:14:36 -0500
-Received: by morr.cc (Postfix, from userid 1001)
-	id 5B9644763F7F; Wed, 14 Dec 2011 01:14:34 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on morr.cc
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED autolearn=ham
-	version=3.3.1
-Received: from thinkpad (port-92-196-84-34.dynamic.qsc.de [92.196.84.34])
-	by morr.cc (Postfix) with ESMTPSA id D5D664763F7D
-	for <git@vger.kernel.org>; Wed, 14 Dec 2011 01:14:33 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756219Ab1LNATW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Dec 2011 19:19:22 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44440 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753419Ab1LNATV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Dec 2011 19:19:21 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 592116370;
+	Tue, 13 Dec 2011 19:19:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=p+X9oFyFbFRCwKVtONb1gjT9Sfk=; b=get1K9
+	htG3f0ebrDCFbPofNDmRNn9pZrqRVfvrM/lvqh8pJhNofPDxRyNGolWNGnXf49vT
+	vXLToOFMva9bcpLcdZMRP6uq/sRXxhRR//oj6KrYR8TuhqrkRudFiqWg0gC+kFMc
+	YksiiRoH7elMnwCGFQaOSfcqE1g8P4PExFQAQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uXIde5KVAMAWRWJSRciVXdfkiTpAaTg9
+	kJ7mPeVc2XazAg+J/FV34LeQ902gzIWNDW/chC+d3Tu6ce4kSBULdal8AtjXtVBM
+	zkTVq9zsOcCY0UPKH/MHYbLHalGx6IU+ACrGN0WUaycP4bIQw2cSQz2Nj7Pg+BGV
+	SF81UITClPk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4FB89636F;
+	Tue, 13 Dec 2011 19:19:21 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D2B78636E; Tue, 13 Dec 2011
+ 19:19:20 -0500 (EST)
+In-Reply-To: <7vzkewt5qu.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 13 Dec 2011 15:24:25 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 44C2C906-25E9-11E1-85FA-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187085>
 
-create_stash() checks whether HEAD is valid via rev-parse. If this is
-not the case, both itself as well as rev-parse print an error message.
-Make rev-parse quiet.
+Junio C Hamano <gitster@pobox.com> writes:
 
-In no_changes(), diff-index is called, which dies unquietly if there is
-no commit. Hide it's stderr.
+>> Namely, we should figure out what code wants to set extra refs and or
+>> wants to include extra refs in its iteration over references. The
+>> setters don't have to be changed, but the readers should be.
+>
+> You read me correctly. That is exactly what I meant by "extra ref API" in
+> my earlier response.
 
-Signed-off-by: Sebastian Morr <sebastian@morr.cc>
----
-
-This bugged me: In a new, empty repository:
-
-    $ git stash
-    fatal: bad revision 'HEAD'
-    fatal: bad revision 'HEAD'
-    fatal: Needed a single revision
-    You do not have the initial commit yet
-
-With this patch:
-
-    $ git stash
-    You do not have the initial commit yet
-
-With the --quiet option, I wouldn't expect diff-index to print error
-messages. But it does so (via revision.c, setup_revisions()). Is this
-wanted?
-
- git-stash.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/git-stash.sh b/git-stash.sh
-index c766692..07b6511 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -34,7 +34,7 @@ else
- fi
- 
- no_changes () {
--	git diff-index --quiet --cached HEAD --ignore-submodules -- &&
-+	git diff-index --quiet --cached HEAD --ignore-submodules -- 2>/dev/null &&
- 	git diff-files --quiet --ignore-submodules &&
- 	(test -z "$untracked" || test -z "$(untracked_files)")
- }
-@@ -67,7 +67,7 @@ create_stash () {
- 	fi
- 
- 	# state of the base commit
--	if b_commit=$(git rev-parse --verify HEAD)
-+	if b_commit=$(git rev-parse --quiet --verify HEAD)
- 	then
- 		head=$(git rev-list --oneline -n 1 HEAD --)
- 	else
--- 
-1.7.8.168.gd6118.dirty
+Actually, I do not think it even needs to be the "extra *REF* API". The
+only thing that matters is that these commits are considered to be extra
+anchor point in the history, in addition to the usual rule of considering
+that everything reachable from our refs is complete. The data structure to
+hold them does not even have to be a "struct ref". Just an array of object
+names (or "struct object *") should suffice.
