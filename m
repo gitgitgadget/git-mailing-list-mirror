@@ -1,73 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] use constants for sideband communication channels
-Date: Tue, 13 Dec 2011 20:56:35 -0800
-Message-ID: <7vk45zsqd8.fsf@alter.siamese.dyndns.org>
-References: <1323800931-37123-1-git-send-email-iheffner@gmail.com>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: [PATCH resend] Do not create commits whose message contains NUL
+Date: Wed, 14 Dec 2011 14:23:29 +0900
+Message-ID: <buomxavwwtq.fsf@dhlpc061.dev.necel.com>
+References: <1323777368-19697-1-git-send-email-pclouds@gmail.com>
+ <20111213175932.GA1663@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Jeff King" <peff@peff.net>,
-	"Dave Olszewski" <cxreg@pobox.com>
-To: iheffner@gmail.com
-X-From: git-owner@vger.kernel.org Wed Dec 14 05:56:46 2011
+Content-Type: text/plain
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 14 06:23:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RagtW-0003Jj-S5
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 05:56:43 +0100
+	id 1RahJj-0003JQ-19
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 06:23:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754347Ab1LNE4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Dec 2011 23:56:38 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62575 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751115Ab1LNE4i (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Dec 2011 23:56:38 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 45EB367F6;
-	Tue, 13 Dec 2011 23:56:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9E9zHUu+WLuDsB6UAUtxQYq6d2M=; b=v1Vvtn
-	aum9d575Bg+CLmiCqO8yNGKxLma5RKbKdMsrCb50NGCoV6MFjYXszFmUcYfb5gaV
-	YP8spQQJM0FjcKgaLZOcbTuKD308lko+cM4KNneuTv97MgPiMHEzQtcjtXOdoZY/
-	D0EiRcCe1KmmN3CF6XEPtNR2CfhAATewGmktk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=h8jMExNSawmLCVlyxCGhyFQKyAPLiz49
-	yy1XuzpH4ccbBSSfb5JZhMeCSFhn0MCYvfwKZF73OxEKP7Xh0ANJ1+Ijfpl+nxVQ
-	8ZhQtaDy7KCw6AE3WJvfhSc/WQmKSD5Pjntc48gTDe5Otu2HoDoW7As0ZZ3NspUh
-	Nxc4ARuRWeI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CF1D67F5;
-	Tue, 13 Dec 2011 23:56:37 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A8CC267F4; Tue, 13 Dec 2011
- 23:56:36 -0500 (EST)
-In-Reply-To: <1323800931-37123-1-git-send-email-iheffner@gmail.com>
- (iheffner@gmail.com's message of "Tue, 13 Dec 2011 10:28:48 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 00780E10-2610-11E1-BA92-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751027Ab1LNFXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Dec 2011 00:23:34 -0500
+Received: from relmlor1.renesas.com ([210.160.252.171]:37477 "EHLO
+	relmlor1.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750774Ab1LNFXd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2011 00:23:33 -0500
+Received: from relmlir1.idc.renesas.com ([10.200.68.151])
+ by relmlor1.idc.renesas.com ( SJSMS)
+ with ESMTP id <0LW600IFUHN86Z20@relmlor1.idc.renesas.com> for
+ git@vger.kernel.org; Wed, 14 Dec 2011 14:23:32 +0900 (JST)
+Received: from relmlac4.idc.renesas.com ([10.200.69.24])
+ by relmlir1.idc.renesas.com (SJSMS)
+ with ESMTP id <0LW6009OVHN7GHD0@relmlir1.idc.renesas.com> for
+ git@vger.kernel.org; Wed, 14 Dec 2011 14:23:32 +0900 (JST)
+Received: by relmlac4.idc.renesas.com (Postfix, from userid 0)
+	id 1BB5748093; Wed, 14 Dec 2011 14:23:32 +0900 (JST)
+Received: from relmlac4.idc.renesas.com (localhost [127.0.0.1])
+	by relmlac4.idc.renesas.com (Postfix) with ESMTP id 0ED1248087; Wed,
+ 14 Dec 2011 14:23:32 +0900 (JST)
+Received: from relmlii2.idc.renesas.com [10.200.68.66]	by
+ relmlac4.idc.renesas.com with ESMTP id QAD31513; Wed,
+ 14 Dec 2011 14:23:32 +0900
+X-IronPort-AV: E=Sophos;i="4.71,349,1320591600";   d="scan'208";a="59567204"
+Received: from unknown (HELO relay41.aps.necel.com) ([10.29.19.9])
+ by relmlii2.idc.renesas.com with ESMTP; Wed, 14 Dec 2011 14:23:31 +0900
+Received: from dhlpc061 (dhlpc061.dev.necel.com [10.114.98.108])
+	by relay41.aps.necel.com (8.14.4+Sun/8.14.4) with ESMTP id pBE5NUHk022588;
+ Wed, 14 Dec 2011 14:23:31 +0900 (JST)
+Received: by dhlpc061 (Postfix, from userid 31295)	id 885C752E1F5; Wed,
+ 14 Dec 2011 14:23:30 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-reply-to: <20111213175932.GA1663@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187095>
 
-iheffner@gmail.com writes:
+Jeff King <peff@peff.net> writes:
+>      But maybe it would be nicer to say something like:
+>
+>        error: your commit message contains NUL characters.
+>        hint: This is often caused by using multibyte encodings such as
+>        hint: UTF-16. Please check your editor settings.
 
-> In order to make more clear how the different channels in sidechannel.c
-> are to be used, I'm proposing some macros/constants which can be used in
-> place of the "magic numbers" that mean little or nothing to someone not
-> familiar with the protocol.
+I think the error message with the hint is much better for users, but
+isn't the term "multibyte" a little misleading here?  It seems like
+it's really _wide_ encodings that are generally the culprit.
 
-I am not fundamentally opposed to the stated goal, but the posted patches
-make the resulting code way too wide for comfortable reading. Can we use a
-bit shorter symbols?
+[UTF-16 of course is particularly nasty in that it uses both units which
+are wider than a byte ("wide"), _and_ multiple units per code-point....]
 
-Perhaps a good way to start would be to first refrain from using these
-symbols, but give a prominent comment near the API functions that are used
-to send and receive sideband data to explain which band is used for what
-purpose, which should be enough for people who are writing the code to
-link with these functions.
+Thanks,
+
+-Miles
+
+-- 
+Quack, n. A murderer without a license.
