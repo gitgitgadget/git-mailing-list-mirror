@@ -1,100 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 4/4] use wrapper for unchecked setenv/putenv calls
-Date: Wed, 14 Dec 2011 13:16:58 -0500
-Message-ID: <20111214181658.GA1691@sigill.intra.peff.net>
-References: <1323871631-2872-1-git-send-email-kusmabite@gmail.com>
- <1323871631-2872-5-git-send-email-kusmabite@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] Do not create commits whose message contains NUL
+Date: Wed, 14 Dec 2011 10:19:16 -0800
+Message-ID: <7vzkevow2j.fsf@alter.siamese.dyndns.org>
+References: <1323777368-19697-1-git-send-email-pclouds@gmail.com>
+ <1323871699-8839-1-git-send-email-pclouds@gmail.com>
+ <1323871699-8839-4-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com, schwab@linux-m68k.org
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 14 19:17:12 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Miles Bader <miles@gnu.org>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 14 19:19:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RatO7-00072I-Ir
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 19:17:07 +0100
+	id 1RatQM-0008Bh-2I
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 19:19:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757889Ab1LNSRD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Dec 2011 13:17:03 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50165
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757885Ab1LNSRB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2011 13:17:01 -0500
-Received: (qmail 581 invoked by uid 107); 14 Dec 2011 18:23:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Dec 2011 13:23:42 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Dec 2011 13:16:58 -0500
-Content-Disposition: inline
-In-Reply-To: <1323871631-2872-5-git-send-email-kusmabite@gmail.com>
+	id S1757592Ab1LNSTV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Dec 2011 13:19:21 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49085 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755373Ab1LNSTT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2011 13:19:19 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F032D4C59;
+	Wed, 14 Dec 2011 13:19:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=ObbL4S95Zyyx
+	c9tOHb+fnlMdKC0=; b=qa00Cm3mZEH+y2WlXb01wnN3YoUA16L1GXBD6N3fTLV1
+	e9JO3rCtfXCmlESJgpVYcYCMSdnvs6DVun3aipUPpbJT1+W4Dp23TpDKT8amtOGn
+	VyLjwf0KMJfhW8T8tzjF9o9hSFLRdNoRTrDD0Yk4Kcia+3u0ygy6PoXRbuUSIeo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=tRVtqC
+	2RQ0tp5BZYPNGE0T+ORZDPaod40Q2fxKqiqkW2fk8LFsFtpOV3mEV9NodEAFWDSj
+	nnW3a04VKWA1YGk3PWFWOJxcnc0HySg4tlxN3feE1vyFkMKb2iW+XFRr6vtmEzsR
+	aZVTQWHjYgyqOZmwgALgW5NDCNd86ZHI4DlYE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E81F24C58;
+	Wed, 14 Dec 2011 13:19:18 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 782834C57; Wed, 14 Dec 2011
+ 13:19:18 -0500 (EST)
+In-Reply-To: <1323871699-8839-4-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 14 Dec
+ 2011 21:08:19 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2323A7B0-2680-11E1-8A97-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187162>
 
-On Wed, Dec 14, 2011 at 03:07:11PM +0100, Erik Faye-Lund wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> This avoids us from accidentally dropping state, possibly leading
-> to unexpected behaviour.
+> We assume that the commit log messages are uninterpreted sequences of
+> non-NUL bytes (see Documentation/i18n.txt). However the assumption
+> does not really stand out and it's quite easy to set an editor to sav=
+e
+> in a NUL-included encoding. Currently we silently cut at the first NU=
+L
+> we see.
+>
+> Make it more obvious that NUL is not welcome by refusing to create
+> such commits. Those who deliberately want to create them can still do
+> with hash-object.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
 
-I do think this is fine in a "be extra cautious" kind of way.
+Limiting the Porcelain layer to deal only with reasonable text encoding=
+s
+(yes, I am declaring that utf16 is not among them) is perfectly fine, b=
+ut
+I was somehow hoping that you would allow the option for the low-level
+function commit_tree() to create a commit object with binary blob in th=
+e
+body part, especially after seeing the patch 1/3 to do so.
 
-> This is especially important on Windows, where the maximum size of
-> the environment is 32 kB.
+Certainly that kind of usage would not give the binary blob literally i=
+n
+"git log" output, but it is with or without the issue around NUL byte. =
+A
+custom program linked with commit.c to call commit_tree() may not be us=
+ing
+the data structure to store anything that is meant to be read by "git l=
+og"
+to begin with.
 
-But does your patch actually detect that? As Andreas pointed out, these
-limits don't typically come into play at setenv time. Instead, the
-environment is allocated on the heap, and then the result is passed to
-exec/spawn, which will fail.
-
-So your patch is really detecting a failure to malloc, not an overflow
-of the environment size, and Windows is just as (un)likely to run out of
-heap as any other platform.
-
-You can check how your platform behaves by applying this patch:
-
-diff --git a/git.c b/git.c
-index f10e434..57f6b12 100644
---- a/git.c
-+++ b/git.c
-@@ -223,6 +223,16 @@ static int handle_alias(int *argcp, const char ***argv)
- 				alias_argv[i] = (*argv)[i];
- 			alias_argv[argc] = NULL;
- 
-+			/* make gigantic environment */
-+			{
-+				int len = 256 * 1024;
-+				char *buf = xmalloc(len);
-+				memset(buf, 'z', len);
-+				buf[len-1] = '\0';
-+				if (setenv("FOO", buf, 1))
-+					die("setenv failed");
-+			}
-+
- 			ret = run_command_v_opt(alias_argv, RUN_USING_SHELL);
- 			if (ret >= 0)   /* normal exit */
- 				exit(ret);
-
-and then running:
-
-  git -c alias.foo='!echo ok' foo
-
-which yields:
-
-  fatal: cannot exec 'echo ok': Argument list too long
-
-on Linux.
-
--Peff
-
-PS I tried to come up with an invocation of git that would demonstrate
-   this, but it turns out it's really hard. The contents of environment
-   variables we set are either constants, come from the environment (so
-   they can't be too big already!), or come from filesystem paths. So
-   it's possible to overflow now, but you have to have a nearly-full
-   environment in the first place, and then have a long path that tips
-   it over the limit.
+Not a strong veto at all, just throwing out something to think about.
