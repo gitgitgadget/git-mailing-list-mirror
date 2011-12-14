@@ -1,58 +1,89 @@
-From: =?iso-8859-1?Q?Sidney_San_Mart=EDn?= <s@sidneysm.com>
-Subject: Re: Question about commit message wrapping
-Date: Wed, 14 Dec 2011 16:07:35 -0500
-Message-ID: <65F00919-FFF9-4196-99EA-8E8C318BE47F@sidneysm.com>
-References: <35A5A513-91FD-4EF9-B890-AB3D1550D63F@sidneysm.com> <m3zkf1hnh9.fsf@localhost.localdomain> <E085218D-9287-4F82-B34C-8379742F818A@sidneysm.com> <201112102030.15504.jnareb@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1251.1)
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 14 22:07:46 2011
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: How to run http server tests?
+Date: Wed, 14 Dec 2011 22:20:07 +0100
+Message-ID: <4EE91307.6080504@kdbg.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 14 22:20:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Raw3G-0003fZ-4n
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 22:07:46 +0100
+	id 1RawFN-0001xP-Mz
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 22:20:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758150Ab1LNVHj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Dec 2011 16:07:39 -0500
-Received: from mail-qw0-f53.google.com ([209.85.216.53]:48130 "EHLO
-	mail-qw0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757142Ab1LNVHh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2011 16:07:37 -0500
-Received: by qadb15 with SMTP id b15so857028qad.19
-        for <git@vger.kernel.org>; Wed, 14 Dec 2011 13:07:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sidneysm.com; s=google;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=GhNsqAZHy15rk2xswweX7TP7CSoEUP5SOcZmGs7j38k=;
-        b=R3IsqR366qvqt+SGjSYOQEmWaOG/d3D1PkdJBCI3I2qTeza2OyoUUHvXYg6K5W+Vjg
-         lNcri1W9QyKcRR2KxP0xPngzaLJmBA0OPGPI967ajcJZ9jll6vsfL28ln062kRdFo+Ag
-         SGjv9WLOsK3Ztgw1IAVTAUKN0fatIf5E1h7hQ=
-Received: by 10.224.198.10 with SMTP id em10mr634137qab.44.1323896856143;
-        Wed, 14 Dec 2011 13:07:36 -0800 (PST)
-Received: from [172.20.1.57] (rrcs-184-75-21-194.nyc.biz.rr.com. [184.75.21.194])
-        by mx.google.com with ESMTPS id du5sm8047717qab.14.2011.12.14.13.07.35
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 14 Dec 2011 13:07:35 -0800 (PST)
-In-Reply-To: <201112102030.15504.jnareb@gmail.com>
-X-Mailer: Apple Mail (2.1251.1)
+	id S1756947Ab1LNVUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Dec 2011 16:20:13 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:29554 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755364Ab1LNVUM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2011 16:20:12 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 7FF771000B
+	for <git@vger.kernel.org>; Wed, 14 Dec 2011 22:18:56 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 8BA3819F3B8
+	for <git@vger.kernel.org>; Wed, 14 Dec 2011 22:20:07 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187168>
 
-On Dec 10, 2011, at 2:30 PM, Jakub Narebski wrote:
+I have a hard time running tests that use lib-httpd.sh.
 
-> BTW. In Polish (and Czech) typography there is rule that you don't le=
-ave
-> single-letter prepositions like 'i' ('and' in English) hanging at the=
- end
-> of the line... automatic wrapper cannot ensure that.
+I run the tests like this:
 
-I meant to ask=85 how is that rule followed by browsers/on the web?
+  LIB_HTTPD_MODULE_PATH=/usr/lib64/apache2 GIT_TEST_HTTPD=Yes \
+      sh -x t5541-http-push.sh -v -i
+
+and I have to apply this patch because I do not have mod_cgi on my
+system (OpenSuse 11.4):
+
+diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+index 0a4cdfa..e5cb3f9 100644
+--- a/t/lib-httpd/apache.conf
++++ b/t/lib-httpd/apache.conf
+@@ -13,4 +13,4 @@ ErrorLog error.log
+ </IfModule>
+-<IfModule !mod_cgi.c>
+-       LoadModule cgi_module modules/mod_cgi.so
++<IfModule !mod_scgi.c>
++       LoadModule scgi_module modules/mod_scgi.so
+ </IfModule>
+
+
+I see t5541-http-push.sh #2 fail with:
+
+++ cd '/home/jsixt/Src/git/git/t/trash directory.t5541-http-push'
+++ git clone http://127.0.0.1:5541/smart/test_repo.git/ test_repo_clone
+Cloning into 'test_repo_clone'...
+fatal: http://127.0.0.1:5541/smart/test_repo.git/info/refs not found:
+did you run git update-server-info on the server?
+
+t5551-http-fetch.sh fails at #3 here:
+
+++ GIT_CURL_VERBOSE=1
+++ git clone --quiet http://127.0.0.1:5551/smart/repo.git clone
++ eval_ret=128
+
+In this case, 'git clone' output is redirected to file 'err'; it has the
+same error as above.
+
+t5561-http-backend.sh fails at #3 like so:
+
++++ diff -u exp act
+--- exp 2011-12-14 21:14:49.000000000 +0000
++++ act 2011-12-14 21:14:49.000000000 +0000
+@@ -1 +1 @@
+-HTTP/1.1 200 OK
++HTTP/1.1 404 Not Found
+
+Can someone help?
+
+Thanks,
+-- Hannes
